@@ -1,4 +1,4 @@
-<template>
+3<template>
   <div id="wrapper">
     <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
     <main>
@@ -8,7 +8,7 @@
         </span>
         <system-information></system-information>
       </div>
-
+      <router-link to="/login">login</router-link>
       <div class="right-side">
         <div class="doc">
           <div class="title">Getting Started</div>

@@ -1,6 +1,7 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, ipcMain, BrowserWindow, shell } from 'electron'
+import Authentication from './auth'
 
 /**
  * Set `__static` path to static files in production
@@ -44,6 +45,26 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+let auth = new Authentication()
+
+// TODO: error handling
+ipcMain.on('get-auth-link', (event, _) => {
+  auth.getAuthorizationUrl()
+    .catch(err => console.error(err))
+    .then((url) => {
+      console.log(url)
+      event.sender.send('auth-link-reply', url)
+      shell.openExternal(url)
+    })
+})
+
+// TODO: error handling
+ipcMain.on('get-access-token', (event, code) => {
+  auth.getAccessToken(code)
+    .catch(err => console.error(err))
+    .then(token => console.log(token))
 })
 
 /**
