@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'global-header',
   data () {
@@ -29,7 +31,16 @@ export default {
       defaultActive: '1'
     }
   },
+  computed: {
+    ...mapState({
+      instances: state => state.GlobalHeader.instances
+    })
+  },
   created () {
+    this.$store.dispatch('GlobalHeader/listInstances')
+      .catch(() => {
+        this.$router.push({ path: '/login' })
+      })
   },
   methods: {
     instanceSelected (key, keyPath) {

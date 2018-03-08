@@ -6,6 +6,16 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/login',
+      name: 'login',
+      component: require('@/components/Login').default
+    },
+    {
+      path: '/authorize',
+      name: 'authorize',
+      component: require('@/components/Authorize').default
+    },
+    {
       path: '/',
       name: 'global-header',
       component: require('@/components/GlobalHeader').default,
@@ -14,16 +24,6 @@ export default new Router({
           path: '',
           name: 'timeline-space',
           component: require('@/components/TimelineSpace').default
-        },
-        {
-          path: 'login',
-          name: 'login',
-          component: require('@/components/Login').default
-        },
-        {
-          path: 'authorize',
-          name: 'authorize',
-          component: require('@/components/Authorize').default
         }
       ]
     },

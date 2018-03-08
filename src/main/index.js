@@ -1,6 +1,10 @@
 'use strict'
 
 import { app, ipcMain, BrowserWindow, shell } from 'electron'
+import Datastore from 'nedb'
+import storage from 'electron-json-storage'
+import empty from 'is-empty'
+
 import Authentication from './auth'
 
 /**
@@ -15,6 +19,11 @@ let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
+
+let db = new Datastore({
+  filename: 'whalebird.db',
+  autoload: true
+})
 
 function createWindow () {
   /**
@@ -47,7 +56,7 @@ app.on('activate', () => {
   }
 })
 
-let auth = new Authentication()
+let auth = new Authentication(db)
 
 // TODO: error handling
 ipcMain.on('get-auth-link', (event, _) => {
@@ -76,6 +85,28 @@ ipcMain.on('load-access-token', (event, _) => {
     .then((token) => {
       event.sender.send('local-access-token', token)
     })
+})
+
+ipcMain.on('list-instances', (event, _) => {
+  auth.listInstances()
+    .catch((err) => {
+      console.error(err)
+      event.sender.send('empty-instances', err)
+    })
+    .then((instances) => {
+      event.sender.send('instances', instances)
+    })
+})
+
+ipcMain.on('get-instance-token', (event, _) => {
+  storage.get('config', (err, data) => {
+    if (err || empty(data)) {
+      console.log(err)
+      event.sender.send('error-instance-token', err)
+    } else {
+      event.sender.send('instance-token', data.token)
+    }
+  })
 })
 
 /**

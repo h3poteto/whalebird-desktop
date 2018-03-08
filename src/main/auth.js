@@ -1,12 +1,12 @@
 import Mastodon from 'mastodon-api'
-import storage from 'electron-json-storage'
 import empty from 'is-empty'
 
 const appName = 'whalebird'
 const scope = 'read write follow'
 
 export default class Authentication {
-  constructor (baseURL = 'https://mstdn.jp') {
+  constructor (db, baseURL = 'https://mstdn.jp') {
+    this.db = db
     this.baseURL = baseURL
     this.clientId = ''
     this.clientSecret = ''
@@ -20,10 +20,11 @@ export default class Authentication {
         this.clientSecret = res.client_secret
 
         const json = {
+          baseURL: this.baseURL,
           clientId: this.clientId,
           clientSecret: this.clientSecret
         }
-        storage.set('client', json, (err) => {
+        this.db.insert(json, (err, _) => {
           if (err) throw err
         })
 
@@ -36,24 +37,51 @@ export default class Authentication {
       Mastodon.getAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
         .catch(err => reject(err))
         .then((token) => {
-          const json = {
-            accessToken: token
-          }
-          storage.set('token', json, (err) => {
-            reject(err)
-          })
-          resolve(token)
+          this.db.findOne(
+            {
+              baseURL: this.baseURL,
+              clientId: this.clientId,
+              clientSecret: this.clientSecret
+            },
+            (err, doc) => {
+              if (err) return reject(err)
+              const json = Object.assign(doc, {
+                accessToken: token
+              })
+              this.db.update(doc, json, (err, _) => {
+                if (err) return reject(err)
+                resolve(token)
+              })
+            }
+          )
         })
+    })
+  }
+
+  listInstances () {
+    return new Promise((resolve, reject) => {
+      this.db.find({}, (err, doc) => {
+        if (err) return reject(err)
+        if (empty(doc)) reject(new EmptyTokenError('empty'))
+        const instances = doc.map((e, i, array) => {
+          return e.baseURL
+        })
+        resolve(instances)
+      })
     })
   }
 
   loadTokenFromLocal () {
     return new Promise((resolve, reject) => {
-      storage.get('token', (err, json) => {
-        if (err) return reject(err)
-        if (empty(json)) return reject(new EmptyTokenError())
-        return resolve(json.accessToken)
-      })
+      this.db.findOne(
+        {
+          baseURL: this.baseURL
+        },
+        (err, doc) => {
+          if (err) return reject(err)
+          return resolve(doc.accessToken)
+        }
+      )
     })
   }
   // TODO: Refresh access token when expired
