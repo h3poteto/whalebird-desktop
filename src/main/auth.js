@@ -1,8 +1,8 @@
 import Mastodon from 'mastodon-api'
+import storage from 'electron-json-storage'
 
 const appName = 'whalebird'
 const scope = 'read write follow'
-const redirectURI = 'urn:ietf:wg:oauth:2.0:oob'
 
 export default class Authentication {
   constructor (baseURL = 'https://mstdn.jp') {
@@ -12,24 +12,39 @@ export default class Authentication {
   }
 
   getAuthorizationUrl () {
-    return Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope, redirectURI)
+    return Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
       .catch(err => console.error(err))
       .then((res) => {
-        console.log('Please save \'id\', \'client_id\' and \'client_secret\' in your program and use it from now on!')
-        console.log(res)
-
         this.clientId = res.client_id
         this.clientSecret = res.client_secret
 
-        return Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL, scope, redirectURI)
+        const json = {
+          clientId: this.clientId,
+          clientSecret: this.clientSecret
+        }
+        storage.set('client', json, (err) => {
+          if (err) throw err
+        })
+
+        return Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL)
       })
   }
 
   getAccessToken (code) {
-    console.log(code)
-    console.log(this.clientId)
-    console.log(this.clientSecret)
-    console.log(this.baseURL)
-    return Mastodon.getAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
+    return new Promise((resolve, reject) => {
+      Mastodon.getAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
+        .catch(err => reject(err))
+        .then((token) => {
+          const json = {
+            accessToken: token
+          }
+          storage.set('token', json, (err) => {
+            reject(err)
+          })
+          resolve(token)
+        })
+    })
   }
+
+  // TODO: Refresh access token when expired
 }
