@@ -5,14 +5,17 @@ const appName = 'whalebird'
 const scope = 'read write follow'
 
 export default class Authentication {
-  constructor (db, baseURL = 'https://mstdn.jp') {
+  constructor (db) {
     this.db = db
-    this.baseURL = baseURL
+    this.baseURL = ''
     this.clientId = ''
     this.clientSecret = ''
   }
 
-  getAuthorizationUrl () {
+  getAuthorizationUrl (baseURL = 'https://mastodon.social') {
+    this.baseURL = baseURL
+    this.clientId = ''
+    this.clientSecret = ''
     return Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
       .catch(err => console.error(err))
       .then((res) => {
@@ -22,7 +25,8 @@ export default class Authentication {
         const json = {
           baseURL: this.baseURL,
           clientId: this.clientId,
-          clientSecret: this.clientSecret
+          clientSecret: this.clientSecret,
+          accessToken: ''
         }
         this.db.insert(json, (err, _) => {
           if (err) throw err
@@ -37,34 +41,27 @@ export default class Authentication {
       Mastodon.getAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
         .catch(err => reject(err))
         .then((token) => {
-          this.db.findOne(
-            {
-              baseURL: this.baseURL,
-              clientId: this.clientId,
-              clientSecret: this.clientSecret
-            },
-            (err, doc) => {
-              if (err) return reject(err)
-              const json = Object.assign(doc, {
-                accessToken: token
-              })
-              this.db.update(doc, json, (err, _) => {
-                if (err) return reject(err)
-                resolve(token)
-              })
-            }
-          )
+          const search = {
+            baseURL: this.baseURL,
+            clientId: this.clientId,
+            clientSecret: this.clientSecret
+          }
+          this.db.update(search, {$set: { accessToken: token }}, {}, (err, num) => {
+            if (err) return reject(err)
+            resolve(token)
+          })
         })
     })
   }
 
+  // TODO: ignore unauthorized records which does not have accessToken.
   listInstances () {
     return new Promise((resolve, reject) => {
       this.db.find({}, (err, doc) => {
         if (err) return reject(err)
         if (empty(doc)) reject(new EmptyTokenError('empty'))
         const instances = doc.map((e, i, array) => {
-          return e.baseURL
+          return { baseURL: e.baseURL, id: e._id }
         })
         resolve(instances)
       })

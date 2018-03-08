@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  name: 'timeline-space'
+  name: 'timeline-space',
+  created () {
+    console.log(this.$route.params.id)
+  }
 }
 </script>
 

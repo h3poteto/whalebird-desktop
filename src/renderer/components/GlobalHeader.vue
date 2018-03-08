@@ -9,9 +9,9 @@
       background-color="#545c64"
       text-color="#909399"
       active-text-color="#ffffff">
-      <el-menu-item index="1">
+      <el-menu-item :index="index.toString()" v-for="(instance, index) in instances" v-bind:key="instance.id">
         <i class="el-icon-menu"></i>
-        <span slot="title">First server</span>
+        <span slot="title">{{ instance.baseURL }}</span>
       </el-menu-item>
     </el-menu>
     <div class="content">
@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       isCollapse: true,
-      defaultActive: '1'
+      defaultActive: '0'
     }
   },
   computed: {
@@ -38,8 +38,11 @@ export default {
   },
   created () {
     this.$store.dispatch('GlobalHeader/listInstances')
+      .then((instances) => {
+        return this.$router.push({ path: `/${instances[0].id}` })
+      })
       .catch(() => {
-        this.$router.push({ path: '/login' })
+        return this.$router.push({ path: '/login' })
       })
   },
   methods: {

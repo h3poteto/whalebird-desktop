@@ -12,6 +12,9 @@ const Authorize = {
           console.log(arg)
           resolve(arg)
         })
+        ipcRenderer.on('error-access-token', (event, err) => {
+          console.log(err)
+        })
       })
     }
   }

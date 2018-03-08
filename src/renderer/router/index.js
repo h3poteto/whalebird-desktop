@@ -21,8 +21,8 @@ export default new Router({
       component: require('@/components/GlobalHeader').default,
       children: [
         {
-          path: '',
-          name: 'timeline-space',
+          path: ':id',
+          name: 'timeline-space/',
           component: require('@/components/TimelineSpace').default
         }
       ]

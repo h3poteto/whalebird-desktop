@@ -59,8 +59,8 @@ app.on('activate', () => {
 let auth = new Authentication(db)
 
 // TODO: error handling
-ipcMain.on('get-auth-link', (event, _) => {
-  auth.getAuthorizationUrl()
+ipcMain.on('get-auth-link', (event, domain) => {
+  auth.getAuthorizationUrl(`https://${domain}`)
     .catch(err => console.error(err))
     .then((url) => {
       console.log(url)
@@ -73,7 +73,15 @@ ipcMain.on('get-auth-link', (event, _) => {
 ipcMain.on('get-access-token', (event, code) => {
   auth.getAccessToken(code)
     .catch(err => console.error(err))
-    .then(token => console.log(token))
+    .then((token) => {
+      db.findOne({
+        accessToken: token
+      }, (err, doc) => {
+        if (err) return event.sender.send('error-access-token', err)
+        if (empty(doc)) return event.sender.send('error-access-token', 'error document is empty')
+        event.sender.send('access-token-reply', doc._id)
+      })
+    })
 })
 
 ipcMain.on('load-access-token', (event, _) => {
