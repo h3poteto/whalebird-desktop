@@ -12,10 +12,14 @@ export default class Authentication {
     this.clientSecret = ''
   }
 
-  getAuthorizationUrl (baseURL = 'https://mastodon.social') {
+  setOtherInstance (baseURL) {
     this.baseURL = baseURL
     this.clientId = ''
     this.clientSecret = ''
+  }
+
+  getAuthorizationUrl (baseURL = 'https://mastodon.social') {
+    this.setOtherInstance(baseURL)
     return Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
       .catch(err => console.error(err))
       .then((res) => {
@@ -54,10 +58,9 @@ export default class Authentication {
     })
   }
 
-  // TODO: ignore unauthorized records which does not have accessToken.
   listInstances () {
     return new Promise((resolve, reject) => {
-      this.db.find({}, (err, doc) => {
+      this.db.find({accessToken: { $ne: '' }}, (err, doc) => {
         if (err) return reject(err)
         if (empty(doc)) reject(new EmptyTokenError('empty'))
         const instances = doc.map((e, i, array) => {
