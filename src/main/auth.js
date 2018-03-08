@@ -1,5 +1,6 @@
 import Mastodon from 'mastodon-api'
 import storage from 'electron-json-storage'
+import empty from 'is-empty'
 
 const appName = 'whalebird'
 const scope = 'read write follow'
@@ -46,5 +47,20 @@ export default class Authentication {
     })
   }
 
+  loadTokenFromLocal () {
+    return new Promise((resolve, reject) => {
+      storage.get('token', (err, json) => {
+        if (err) return reject(err)
+        if (empty(json)) return reject(new EmptyTokenError())
+        return resolve(json.accessToken)
+      })
+    })
+  }
   // TODO: Refresh access token when expired
+}
+
+class EmptyTokenError {
+  constructor (message) {
+    this.message = message
+  }
 }

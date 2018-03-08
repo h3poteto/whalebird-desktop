@@ -7,6 +7,20 @@
 <script>
 export default {
   name: 'login',
+  created () {
+    this.$store.dispatch('Login/checkToken')
+      .catch(() => {
+        this.$message({
+          message: 'Please login',
+          type: 'error'
+        })
+      })
+      .then(() => {
+        // TODO: redirect to home timeline
+        console.log('ok')
+        this.$router.push({ path: '/timelinespace' })
+      })
+  },
   methods: {
     login () {
       this.$store.dispatch('Login/fetchLogin')

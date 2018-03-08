@@ -21,6 +21,11 @@ export default new Router({
       component: require('@/components/Authorize').default
     },
     {
+      path: '/timelinespace',
+      name: 'timeline-space',
+      component: require('@/components/TimelineSpace').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

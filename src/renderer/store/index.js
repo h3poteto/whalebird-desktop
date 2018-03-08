@@ -4,6 +4,7 @@ import createLogger from 'vuex/dist/logger'
 
 import Login from './Login'
 import Authorize from './Authorize'
+import TimelineSpace from './TimelineSpace'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     : [],
   modules: {
     Login,
-    Authorize
+    Authorize,
+    TimelineSpace
   }
 })

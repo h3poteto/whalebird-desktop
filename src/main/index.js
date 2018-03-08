@@ -67,6 +67,17 @@ ipcMain.on('get-access-token', (event, code) => {
     .then(token => console.log(token))
 })
 
+ipcMain.on('load-access-token', (event, _) => {
+  auth.loadTokenFromLocal()
+    .catch((err) => {
+      console.errror(err)
+      event.sender.send('error-access-token', err)
+    })
+    .then((token) => {
+      event.sender.send('local-access-token', token)
+    })
+})
+
 /**
  * Auto Updater
  *
