@@ -7,23 +7,25 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'landing-page',
-      component: require('@/components/LandingPage').default
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: require('@/components/Login').default
-    },
-    {
-      path: '/authorize',
-      name: 'authorize',
-      component: require('@/components/Authorize').default
-    },
-    {
-      path: '/timelinespace',
-      name: 'timeline-space',
-      component: require('@/components/TimelineSpace').default
+      name: 'global-header',
+      component: require('@/components/GlobalHeader').default,
+      children: [
+        {
+          path: '',
+          name: 'timeline-space',
+          component: require('@/components/TimelineSpace').default
+        },
+        {
+          path: 'login',
+          name: 'login',
+          component: require('@/components/Login').default
+        },
+        {
+          path: 'authorize',
+          name: 'authorize',
+          component: require('@/components/Authorize').default
+        }
+      ]
     },
     {
       path: '*',

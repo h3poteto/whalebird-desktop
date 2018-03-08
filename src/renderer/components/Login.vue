@@ -16,9 +16,8 @@ export default {
         })
       })
       .then(() => {
-        // TODO: redirect to home timeline
-        console.log('ok')
-        this.$router.push({ path: '/timelinespace' })
+        // redirect to home timeline
+        this.$router.push({ path: '/' })
       })
   },
   methods: {
