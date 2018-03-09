@@ -1,5 +1,10 @@
 <template>
   <div id="side_menu">
+    <div class="profile-wrapper">
+      <div class="profile">
+        {{ instance.baseURL }}
+      </div>
+    </div>
     <el-menu
       default-active="1"
       background-color="#373d48"
@@ -32,8 +37,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'side-menu',
+  computed: {
+    ...mapState({
+      instance: state => state.TimelineSpace.SideMenu.instance
+    })
+  },
+  created () {
+    this.$store.dispatch('TimelineSpace/SideMenu/fetchInstance', this.$route.params.id)
+  },
   methods: {
     id () {
       return this.$route.params.id
@@ -44,11 +59,27 @@ export default {
 
 <style lang="scss" scoped>
 #side_menu {
-  .timeline-menu {
+  .profile-wrapper {
+    background-color: #373d48;
     position: fixed;
     top: 0;
     left: 65px;
+    width: 144px;
+    height: 40px;
+
+    .profile {
+      color: #ffffff;
+      font-weight: bold;
+      padding: 10px 20px;
+    }
+  }
+
+  .timeline-menu {
+    position: fixed;
+    top: 40px;
+    left: 65px;
     height: 100%;
+    width: 144px;
   }
 }
 </style>
