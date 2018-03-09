@@ -1,12 +1,18 @@
 <template>
 <div id="timeline_space">
-  timeline
+  <side-menu></side-menu>
+  <div class="content">
+    <router-view></router-view>
+  </div>
 </div>
 </template>
 
 <script>
+import SideMenu from './TimelineSpace/SideMenu'
+
 export default {
   name: 'timeline-space',
+  components: { SideMenu },
   created () {
     console.log(this.$route.params.id)
   }
@@ -14,4 +20,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.content {
+  margin-left: 145px;
+}
 </style>

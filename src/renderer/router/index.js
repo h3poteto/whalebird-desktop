@@ -21,9 +21,36 @@ export default new Router({
       component: require('@/components/GlobalHeader').default,
       children: [
         {
-          path: ':id',
+          path: ':id/',
           name: 'timeline-space/',
-          component: require('@/components/TimelineSpace').default
+          component: require('@/components/TimelineSpace').default,
+          children: [
+            {
+              path: 'home',
+              name: 'home',
+              component: require('@/components/TimelineSpace/Home').default
+            },
+            {
+              path: 'notification',
+              name: 'notification',
+              component: require('@/components/TimelineSpace/Notification').default
+            },
+            {
+              path: 'fav',
+              name: 'fav',
+              component: require('@/components/TimelineSpace/Fav').default
+            },
+            {
+              path: 'local',
+              name: 'local',
+              component: require('@/components/TimelineSpace/Local').default
+            },
+            {
+              path: 'global',
+              name: 'global',
+              component: require('@/components/TimelineSpace/Global').default
+            }
+          ]
         }
       ]
     },
