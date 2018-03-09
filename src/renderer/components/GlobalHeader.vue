@@ -2,11 +2,11 @@
   <div id="global_header">
     <el-menu
       :default-active="defaultActive"
-      class="el-menu-vertical"
+      class="el-menu-vertical instance-menu"
       @open="instanceSelected"
       @close="instanceClosed"
       :collapse="isCollapse"
-      background-color="#545c64"
+      background-color="#4a5664"
       text-color="#909399"
       active-text-color="#ffffff">
       <el-menu-item :index="index.toString()" v-for="(instance, index) in instances" v-bind:key="instance.id">
@@ -14,7 +14,7 @@
         <span slot="title">{{ instance.baseURL }}</span>
       </el-menu-item>
     </el-menu>
-    <div class="content">
+    <div class="space">
       <router-view></router-view>
     </div>
   </div>
@@ -39,7 +39,7 @@ export default {
   created () {
     this.$store.dispatch('GlobalHeader/listInstances')
       .then((instances) => {
-        return this.$router.push({ path: `/${instances[0].id}` })
+        return this.$router.push({ path: `/${instances[0].id}/home` })
       })
       .catch(() => {
         return this.$router.push({ path: '/login' })
@@ -63,7 +63,7 @@ html, body, #app, #global_header {
 }
 
 #global_header {
-  .el-menu {
+  .instance-menu {
     height: 100%;
     position: fixed;
     top: 0;
@@ -71,7 +71,7 @@ html, body, #app, #global_header {
     width: 65px;
   }
 
-  .content {
+  .space {
     margin-left: 65px;
   }
 }

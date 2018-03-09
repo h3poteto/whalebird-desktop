@@ -25,7 +25,7 @@ export default {
     authorizeSubmit () {
       this.$store.dispatch('Authorize/submit', this.authorizeForm.code)
         .then((id) => {
-          this.$router.push({ path: `/${id}` })
+          this.$router.push({ path: `/${id}/home` })
         })
     }
   }

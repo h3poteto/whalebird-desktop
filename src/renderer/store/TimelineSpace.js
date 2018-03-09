@@ -1,8 +1,10 @@
+import SideMenu from './TimelineSpace/SideMenu'
+
 const TimelineSpace = {
   namespaced: true,
-  state: {},
-  mutations: {},
-  actions: {}
+  modules: {
+    SideMenu
+  }
 }
 
 export default TimelineSpace

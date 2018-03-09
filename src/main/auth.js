@@ -58,6 +58,7 @@ export default class Authentication {
     })
   }
 
+  // TODO: このクラスにいる必要性がない，外に出したい
   listInstances () {
     return new Promise((resolve, reject) => {
       this.db.find({accessToken: { $ne: '' }}, (err, doc) => {
