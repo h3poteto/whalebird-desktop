@@ -36,6 +36,21 @@ export default class Account {
       )
     })
   }
+
+  getAccount (id) {
+    return new Promise((resolve, reject) => {
+      this.db.findOne(
+        {
+          _id: id
+        },
+        (err, doc) => {
+          if (err) return reject(err)
+          if (empty(doc)) return reject(new EmptyRecordError('empty'))
+          resolve(doc)
+        }
+      )
+    })
+  }
 }
 
 class EmptyRecordError {
