@@ -2,7 +2,8 @@
   <div id="side_menu">
     <div class="profile-wrapper">
       <div class="profile">
-        {{ instance.baseURL }}
+        <span>@{{ username }}</span>
+        <span>{{ instance.baseURL }}</span>
       </div>
     </div>
     <el-menu
@@ -43,11 +44,13 @@ export default {
   name: 'side-menu',
   computed: {
     ...mapState({
-      instance: state => state.TimelineSpace.SideMenu.instance
+      instance: state => state.TimelineSpace.SideMenu.instance,
+      username: state => state.TimelineSpace.SideMenu.username
     })
   },
   created () {
     this.$store.dispatch('TimelineSpace/SideMenu/fetchInstance', this.$route.params.id)
+    this.$store.dispatch('TimelineSpace/SideMenu/username', this.$route.params.id)
   },
   methods: {
     id () {
@@ -64,8 +67,8 @@ export default {
     position: fixed;
     top: 0;
     left: 65px;
-    width: 144px;
-    height: 40px;
+    width: 180px;
+    height: 60px;
 
     .profile {
       color: #ffffff;
@@ -76,10 +79,10 @@ export default {
 
   .timeline-menu {
     position: fixed;
-    top: 40px;
+    top: 60px;
     left: 65px;
     height: 100%;
-    width: 144px;
+    width: 180px;
   }
 }
 </style>

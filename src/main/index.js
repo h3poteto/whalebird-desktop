@@ -125,6 +125,17 @@ ipcMain.on('get-instance', (event, id) => {
     })
 })
 
+ipcMain.on('get-local-account', (event, id) => {
+  const account = new Account(db)
+  account.getAccount(id)
+    .catch((err) => {
+      event.sender.send('error-get-local-account', err)
+    })
+    .then((token) => {
+      event.sender.send('response-get-local-account', token)
+    })
+})
+
 /**
  * Auto Updater
  *
