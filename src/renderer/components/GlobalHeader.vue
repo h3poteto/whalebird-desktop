@@ -6,10 +6,11 @@
       @open="instanceSelected"
       @close="instanceClosed"
       :collapse="isCollapse"
+      :route="true"
       background-color="#4a5664"
       text-color="#909399"
       active-text-color="#ffffff">
-      <el-menu-item :index="index.toString()" v-for="(instance, index) in instances" v-bind:key="instance.id">
+      <el-menu-item :index="index.toString()" v-for="(instance, index) in instances" v-bind:key="instance.id" :route="{path: `/${instance.id}/home`}">
         <i class="el-icon-menu"></i>
         <span slot="title">{{ instance.baseURL }}</span>
       </el-menu-item>
@@ -57,6 +58,8 @@ export default {
 </script>
 
 <style lang="scss">
+body { font-family: 'Source Sans Pro', sans-serif; }
+
 html, body, #app, #global_header {
   height: 100%;
   margin: 0;

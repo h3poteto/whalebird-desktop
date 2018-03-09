@@ -10,6 +10,7 @@ const BabiliWebpackPlugin = require('babili-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
 
 /**
  * List of node_modules to include in webpack bundle
@@ -123,7 +124,12 @@ let rendererConfig = {
         : false
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new GoogleFontsPlugin({
+      fonts: [
+        { family: "Source Sans Pro" }
+      ]
+    })
   ],
   output: {
     filename: '[name].js',
