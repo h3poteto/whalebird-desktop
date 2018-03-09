@@ -16,11 +16,11 @@ const SideMenu = {
   actions: {
     fetchInstance ({ commit }, id) {
       ipcRenderer.send('get-instance', id)
-      ipcRenderer.on('empty-instance', (event, err) => {
+      ipcRenderer.on('error-get-instance', (event, err) => {
         // TODO: handle error
         console.log(err)
       })
-      ipcRenderer.on('instance', (event, instance) => {
+      ipcRenderer.on('response-get-instance', (event, instance) => {
         commit('updateInstance', instance)
       })
     }

@@ -1,5 +1,4 @@
 import Mastodon from 'mastodon-api'
-import empty from 'is-empty'
 
 const appName = 'whalebird'
 const scope = 'read write follow'
@@ -57,39 +56,5 @@ export default class Authentication {
         })
     })
   }
-
-  // TODO: このクラスにいる必要性がない，外に出したい
-  listInstances () {
-    return new Promise((resolve, reject) => {
-      this.db.find({accessToken: { $ne: '' }}, (err, doc) => {
-        if (err) return reject(err)
-        if (empty(doc)) reject(new EmptyTokenError('empty'))
-        const instances = doc.map((e, i, array) => {
-          return { baseURL: e.baseURL, id: e._id }
-        })
-        resolve(instances)
-      })
-    })
-  }
-
-  loadTokenFromLocal () {
-    return new Promise((resolve, reject) => {
-      this.db.findOne(
-        {
-          baseURL: this.baseURL
-        },
-        (err, doc) => {
-          if (err) return reject(err)
-          return resolve(doc.accessToken)
-        }
-      )
-    })
-  }
   // TODO: Refresh access token when expired
-}
-
-class EmptyTokenError {
-  constructor (message) {
-    this.message = message
-  }
 }
