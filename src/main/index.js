@@ -6,6 +6,7 @@ import storage from 'electron-json-storage'
 import empty from 'is-empty'
 
 import Authentication from './auth'
+import Account from './account'
 
 /**
  * Set `__static` path to static files in production
@@ -58,81 +59,70 @@ app.on('activate', () => {
 
 let auth = new Authentication(db)
 
-// TODO: error handling
-ipcMain.on('get-auth-link', (event, domain) => {
+ipcMain.on('get-auth-url', (event, domain) => {
   auth.getAuthorizationUrl(`https://${domain}`)
-    .catch(err => console.error(err))
+    .catch((err) => {
+      console.error(err)
+      event.sender.send('error-get-auth-url', err)
+    })
     .then((url) => {
       console.log(url)
-      event.sender.send('auth-link-reply', url)
+      event.sender.send('response-get-auth-url', url)
       shell.openExternal(url)
     })
 })
 
-// TODO: error handling
 ipcMain.on('get-access-token', (event, code) => {
   auth.getAccessToken(code)
-    .catch(err => console.error(err))
+    .catch((err) => {
+      console.error(err)
+      event.sender.send('error-get-access-token', err)
+    })
     .then((token) => {
       db.findOne({
         accessToken: token
       }, (err, doc) => {
-        if (err) return event.sender.send('error-access-token', err)
-        if (empty(doc)) return event.sender.send('error-access-token', 'error document is empty')
-        event.sender.send('access-token-reply', doc._id)
+        if (err) return event.sender.send('error-get-access-token', err)
+        if (empty(doc)) return event.sender.send('error-get-access-token', 'error document is empty')
+        event.sender.send('response-get-access-token', doc._id)
       })
     })
 })
 
-ipcMain.on('load-access-token', (event, _) => {
-  auth.loadTokenFromLocal()
-    .catch((err) => {
-      console.errror(err)
-      event.sender.send('error-access-token', err)
-    })
-    .then((token) => {
-      event.sender.send('local-access-token', token)
-    })
-})
-
-ipcMain.on('list-instances', (event, _) => {
-  auth.listInstances()
-    .catch((err) => {
-      console.error(err)
-      event.sender.send('empty-instances', err)
-    })
-    .then((instances) => {
-      event.sender.send('instances', instances)
-    })
-})
-
-// storage access
-ipcMain.on('get-instance-token', (event, _) => {
+// json storage
+ipcMain.on('get-social-token', (event, _) => {
   storage.get('config', (err, data) => {
     if (err || empty(data)) {
       console.log(err)
-      event.sender.send('error-instance-token', err)
+      event.sender.send('error-get-social-token', err)
     } else {
-      event.sender.send('instance-token', data.token)
+      event.sender.send('response-get-social-token', data.token)
     }
   })
 })
 
-// db
+// nedb
+ipcMain.on('list-instances', (event, _) => {
+  const account = new Account(db)
+  account.listInstances()
+    .catch((err) => {
+      console.error(err)
+      event.sender.send('error-list-instances', err)
+    })
+    .then((instances) => {
+      event.sender.send('response-list-instances', instances)
+    })
+})
+
 ipcMain.on('get-instance', (event, id) => {
-  db.findOne(
-    {
-      _id: id
-    },
-    (err, doc) => {
-      if (err || empty(doc)) return event.sender.send('empty-instance', err)
-      const instance = {
-        baseURL: doc.baseURL,
-        id: doc.id
-      }
-      event.sender.send('instance', instance)
-    }
-  )
+  const account = new Account(db)
+  account.getInstance(id)
+    .catch((err) => {
+      event.sender.send('error-get-instance', err)
+    })
+    .then((instance) => {
+      event.sender.send('response-get-instance', instance)
+    })
 })
 
 /**
