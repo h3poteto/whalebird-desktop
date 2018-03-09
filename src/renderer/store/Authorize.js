@@ -8,11 +8,11 @@ const Authorize = {
     submit ({ commit }, code) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-access-token', code)
-        ipcRenderer.on('access-token-reply', (event, arg) => {
-          console.log(arg)
-          resolve(arg)
+        ipcRenderer.on('response-get-access-token', (event, id) => {
+          console.log(id)
+          resolve(id)
         })
-        ipcRenderer.on('error-access-token', (event, err) => {
+        ipcRenderer.on('error-get-access-token', (event, err) => {
           console.log(err)
         })
       })
