@@ -32,7 +32,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+body { font-family: 'Source Sans Pro', sans-serif; }
+
 #authorize {
   text-align: center;
 }
