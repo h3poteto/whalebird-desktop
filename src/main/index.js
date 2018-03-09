@@ -106,6 +106,7 @@ ipcMain.on('list-instances', (event, _) => {
     })
 })
 
+// storage access
 ipcMain.on('get-instance-token', (event, _) => {
   storage.get('config', (err, data) => {
     if (err || empty(data)) {
@@ -115,6 +116,23 @@ ipcMain.on('get-instance-token', (event, _) => {
       event.sender.send('instance-token', data.token)
     }
   })
+})
+
+// db
+ipcMain.on('get-instance', (event, id) => {
+  db.findOne(
+    {
+      _id: id
+    },
+    (err, doc) => {
+      if (err || empty(doc)) return event.sender.send('empty-instance', err)
+      const instance = {
+        baseURL: doc.baseURL,
+        id: doc.id
+      }
+      event.sender.send('instance', instance)
+    }
+  )
 })
 
 /**
