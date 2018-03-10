@@ -115,25 +115,14 @@ ipcMain.on('list-accounts', (event, _) => {
     })
 })
 
-ipcMain.on('get-instance', (event, id) => {
-  const account = new Account(db)
-  account.getInstance(id)
-    .catch((err) => {
-      event.sender.send('error-get-instance', err)
-    })
-    .then((instance) => {
-      event.sender.send('response-get-instance', instance)
-    })
-})
-
 ipcMain.on('get-local-account', (event, id) => {
   const account = new Account(db)
   account.getAccount(id)
     .catch((err) => {
       event.sender.send('error-get-local-account', err)
     })
-    .then((token) => {
-      event.sender.send('response-get-local-account', token)
+    .then((account) => {
+      event.sender.send('response-get-local-account', account)
     })
 })
 
