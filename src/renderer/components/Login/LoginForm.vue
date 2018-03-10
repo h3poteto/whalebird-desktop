@@ -35,9 +35,23 @@ export default {
   },
   methods: {
     login () {
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.$store.dispatch('Login/fetchLogin', this.selectedInstance)
         .then((url) => {
+          loading.close()
           this.$router.push({ path: '/authorize' })
+        })
+        .catch(() => {
+          loading.close()
+          this.$message({
+            message: 'Could not get authorize url',
+            type: 'error'
+          })
         })
     },
     changeInstance (value) {
