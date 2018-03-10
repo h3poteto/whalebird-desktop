@@ -3,7 +3,7 @@
     <div class="profile-wrapper">
       <div class="profile">
         <span>@{{ username }}</span>
-        <span>{{ instance.baseURL }}</span>
+        <span>{{ account.domain }}</span>
       </div>
     </div>
     <el-menu
@@ -44,13 +44,21 @@ export default {
   name: 'side-menu',
   computed: {
     ...mapState({
-      instance: state => state.TimelineSpace.SideMenu.instance,
+      account: state => state.TimelineSpace.SideMenu.account,
       username: state => state.TimelineSpace.SideMenu.username
     })
   },
   created () {
-    this.$store.dispatch('TimelineSpace/SideMenu/fetchInstance', this.$route.params.id)
-    this.$store.dispatch('TimelineSpace/SideMenu/username', this.$route.params.id)
+    this.$store.dispatch('TimelineSpace/SideMenu/fetchAccount', this.$route.params.id)
+      .then((account) => {
+        this.$store.dispatch('TimelineSpace/SideMenu/username', account)
+      })
+      .catch(() => {
+        this.$message({
+          message: 'Could not find account',
+          type: 'error'
+        })
+      })
   },
   methods: {
     id () {
