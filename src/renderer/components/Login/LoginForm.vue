@@ -6,6 +6,7 @@
         <el-radio class="instance-list" v-for="instance in instances" v-bind:key="instance.id" :label="instance.name" border></el-radio>
       </el-radio-group>
     </el-form-item>
+    <p v-if="instances.length === 0">Could not find instance</p>
     <el-form-item class="submit">
       <el-button type="text" class="back" @click="back"><icon name="chevron-left"></icon></el-button>
       <el-button type="primary" class="login" @click="login" v-if="selectedInstance !== null">Login</el-button>
