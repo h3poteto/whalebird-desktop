@@ -21,21 +21,21 @@ const SideMenu = {
   actions: {
     fetchInstance ({ commit }, id) {
       ipcRenderer.send('get-instance', id)
-      ipcRenderer.on('error-get-instance', (event, err) => {
+      ipcRenderer.once('error-get-instance', (event, err) => {
         // TODO: handle error
         console.log(err)
       })
-      ipcRenderer.on('response-get-instance', (event, instance) => {
+      ipcRenderer.once('response-get-instance', (event, instance) => {
         commit('updateInstance', instance)
       })
     },
     username ({ commit }, id) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-local-account', id)
-        ipcRenderer.on('error-get-local-account', (event, err) => {
+        ipcRenderer.once('error-get-local-account', (event, err) => {
           reject(err)
         })
-        ipcRenderer.on('response-get-local-account', (event, account) => {
+        ipcRenderer.once('response-get-local-account', (event, account) => {
           const client = new Mastodon(
             {
               access_token: account.accessToken,
