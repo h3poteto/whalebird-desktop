@@ -2,17 +2,17 @@
   <div id="global_header">
     <el-menu
       :default-active="defaultActive"
-      class="el-menu-vertical instance-menu"
-      @open="instanceSelected"
-      @close="instanceClosed"
+      class="el-menu-vertical account-menu"
+      @open="accountSelected"
+      @close="accountClosed"
       :collapse="isCollapse"
       :route="true"
       background-color="#4a5664"
       text-color="#909399"
       active-text-color="#ffffff">
-      <el-menu-item :index="index.toString()" v-for="(instance, index) in instances" v-bind:key="instance.id" :route="{path: `/${instance.id}/home`}">
+      <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account.id" :route="{path: `/${account.id}/home`}">
         <i class="el-icon-menu"></i>
-        <span slot="title">{{ instance.baseURL }}</span>
+        <span slot="title">{{ account.baseURL }}</span>
       </el-menu-item>
     </el-menu>
     <div class="space">
@@ -34,23 +34,23 @@ export default {
   },
   computed: {
     ...mapState({
-      instances: state => state.GlobalHeader.instances
+      accounts: state => state.GlobalHeader.accounts
     })
   },
   created () {
-    this.$store.dispatch('GlobalHeader/listInstances')
-      .then((instances) => {
-        return this.$router.push({ path: `/${instances[0].id}/home` })
+    this.$store.dispatch('GlobalHeader/listAccounts')
+      .then((accounts) => {
+        return this.$router.push({ path: `/${accounts[0]._id}/home` })
       })
       .catch(() => {
         return this.$router.push({ path: '/login' })
       })
   },
   methods: {
-    instanceSelected (key, keyPath) {
+    accountSelected (key, keyPath) {
       console.log(key, keyPath)
     },
-    instanceClosed (key, keyPath) {
+    accountClosed (key, keyPath) {
       console.log(key, keyPath)
     }
   }
@@ -66,7 +66,7 @@ html, body, #app, #global_header {
 }
 
 #global_header {
-  .instance-menu {
+  .account-menu {
     height: 100%;
     position: fixed;
     top: 0;

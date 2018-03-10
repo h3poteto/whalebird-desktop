@@ -11,15 +11,16 @@ const GlobalHeader = {
     }
   },
   actions: {
-    listInstances ({ commit }) {
+    listAccounts ({ commit }) {
       return new Promise((resolve, reject) => {
-        ipcRenderer.send('list-instances', 'list')
-        ipcRenderer.once('error-list-instances', (event, err) => {
+        ipcRenderer.send('list-accounts', 'list')
+        ipcRenderer.once('error-list-accounts', (event, err) => {
           reject(err)
         })
-        ipcRenderer.once('response-list-instances', (event, instances) => {
-          commit('updateAccounts', instances)
-          resolve(instances)
+        ipcRenderer.once('response-list-accounts', (event, accounts) => {
+          commit('updateAccounts', accounts)
+          console.log(accounts)
+          resolve(accounts)
         })
       })
     }
