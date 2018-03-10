@@ -7,18 +7,21 @@ export default class Authentication {
   constructor (db) {
     this.db = db
     this.baseURL = ''
+    this.domain = ''
+    this.clientId = ''
+    this.clientSecret = ''
+    this.protocol = 'https'
+  }
+
+  setOtherInstance (domain) {
+    this.baseURL = `${this.protocol}://${domain}`
+    this.domain = domain
     this.clientId = ''
     this.clientSecret = ''
   }
 
-  setOtherInstance (baseURL) {
-    this.baseURL = baseURL
-    this.clientId = ''
-    this.clientSecret = ''
-  }
-
-  getAuthorizationUrl (baseURL = 'https://mastodon.social') {
-    this.setOtherInstance(baseURL)
+  getAuthorizationUrl (domain = 'mastodon.social') {
+    this.setOtherInstance(domain)
     return Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
       .catch(err => console.error(err))
       .then((res) => {
@@ -27,6 +30,7 @@ export default class Authentication {
 
         const json = {
           baseURL: this.baseURL,
+          domain: this.domain,
           clientId: this.clientId,
           clientSecret: this.clientSecret,
           accessToken: ''
@@ -46,6 +50,7 @@ export default class Authentication {
         .then((token) => {
           const search = {
             baseURL: this.baseURL,
+            domain: this.domain,
             clientId: this.clientId,
             clientSecret: this.clientSecret
           }
