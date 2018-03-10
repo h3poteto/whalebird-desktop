@@ -5,15 +5,12 @@ export default class Account {
     this.db = db
   }
 
-  listInstances () {
+  listAccounts () {
     return new Promise((resolve, reject) => {
-      this.db.find({accessToken: { $ne: '' }}, (err, doc) => {
+      this.db.find({accessToken: { $ne: '' }}, (err, docs) => {
         if (err) return reject(err)
-        if (empty(doc)) return reject(new EmptyRecordError('empty'))
-        const instances = doc.map((e, i, array) => {
-          return { baseURL: e.baseURL, id: e._id }
-        })
-        resolve(instances)
+        if (empty(docs)) return reject(new EmptyRecordError('empty'))
+        resolve(docs)
       })
     })
   }
@@ -29,7 +26,7 @@ export default class Account {
           if (empty(doc)) return reject(new EmptyRecordError('empty'))
           const instance = {
             baseURL: doc.baseURL,
-            id: doc.id
+            id: doc._id
           }
           resolve(instance)
         }

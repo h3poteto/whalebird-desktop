@@ -102,15 +102,15 @@ ipcMain.on('get-social-token', (event, _) => {
 })
 
 // nedb
-ipcMain.on('list-instances', (event, _) => {
+ipcMain.on('list-accounts', (event, _) => {
   const account = new Account(db)
-  account.listInstances()
+  account.listAccounts()
     .catch((err) => {
       console.error(err)
-      event.sender.send('error-list-instances', err)
+      event.sender.send('error-list-accounts', err)
     })
-    .then((instances) => {
-      event.sender.send('response-list-instances', instances)
+    .then((accounts) => {
+      event.sender.send('response-list-accounts', accounts)
     })
 })
 

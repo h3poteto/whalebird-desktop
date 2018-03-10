@@ -3,23 +3,24 @@ import { ipcRenderer } from 'electron'
 const GlobalHeader = {
   namespaced: true,
   state: {
-    instances: []
+    accounts: []
   },
   mutations: {
-    updateInstances (state, instances) {
-      state.instances = instances
+    updateAccounts (state, accounts) {
+      state.accounts = accounts
     }
   },
   actions: {
-    listInstances ({ commit }) {
+    listAccounts ({ commit }) {
       return new Promise((resolve, reject) => {
-        ipcRenderer.send('list-instances', 'list')
-        ipcRenderer.on('error-list-instances', (event, err) => {
+        ipcRenderer.send('list-accounts', 'list')
+        ipcRenderer.once('error-list-accounts', (event, err) => {
           reject(err)
         })
-        ipcRenderer.on('response-list-instances', (event, instances) => {
-          commit('updateInstances', instances)
-          resolve(instances)
+        ipcRenderer.once('response-list-accounts', (event, accounts) => {
+          commit('updateAccounts', accounts)
+          console.log(accounts)
+          resolve(accounts)
         })
       })
     }
