@@ -21,12 +21,13 @@ const Login = {
   },
   actions: {
     searchInstance ({ commit }, domain) {
+      console.log(domain)
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-social-token', 'get')
-        ipcRenderer.on('error-get-social-token', (event, err) => {
+        ipcRenderer.once('error-get-social-token', (event, err) => {
           reject(err)
         })
-        ipcRenderer.on('response-get-social-token', (event, token) => {
+        ipcRenderer.once('response-get-social-token', (event, token) => {
           axios
             .get(`https://instances.social/api/1.0/instances/search?q=${domain}`, {
               'headers': { 'Authorization': `Bearer ${token}` }
@@ -41,10 +42,10 @@ const Login = {
     fetchLogin ({ commit }, instance) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-auth-url', instance)
-        ipcRenderer.on('error-get-auth-url', (event, err) => {
+        ipcRenderer.once('error-get-auth-url', (event, err) => {
           reject(err)
         })
-        ipcRenderer.on('response-get-auth-url', (event, url) => {
+        ipcRenderer.once('response-get-auth-url', (event, url) => {
           resolve(url)
         })
       })
