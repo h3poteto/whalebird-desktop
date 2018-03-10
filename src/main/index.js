@@ -60,7 +60,7 @@ app.on('activate', () => {
 let auth = new Authentication(db)
 
 ipcMain.on('get-auth-url', (event, domain) => {
-  auth.getAuthorizationUrl(`https://${domain}`)
+  auth.getAuthorizationUrl(domain)
     .catch((err) => {
       console.error(err)
       event.sender.send('error-get-auth-url', err)
