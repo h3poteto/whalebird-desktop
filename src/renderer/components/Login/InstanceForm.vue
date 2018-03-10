@@ -35,6 +35,7 @@ export default {
           this.$store.commit('Login/changePage', 2)
         })
         .catch(() => {
+          loading.close()
           this.$message({
             message: 'Could not search instance',
             type: 'error'

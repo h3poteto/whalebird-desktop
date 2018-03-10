@@ -68,6 +68,7 @@ ipcMain.on('get-auth-url', (event, domain) => {
     .then((url) => {
       console.log(url)
       event.sender.send('response-get-auth-url', url)
+      // Open authorize url in default browser.
       shell.openExternal(url)
     })
 })
