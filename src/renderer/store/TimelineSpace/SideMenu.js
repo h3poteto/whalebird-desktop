@@ -4,50 +4,48 @@ import Mastodon from 'mastodon-api'
 const SideMenu = {
   namespaced: true,
   state: {
-    instance: {
-      baseURL: '',
+    account: {
+      domain: '',
       id: ''
     },
     username: ''
   },
   mutations: {
-    updateInstance (state, instance) {
-      state.instance = instance
+    updateAccount (state, account) {
+      state.account = account
     },
-    updateUsername (state, body) {
-      state.username = body.username
+    updateUsername (state, username) {
+      state.username = username
     }
   },
   actions: {
-    fetchInstance ({ commit }, id) {
-      ipcRenderer.send('get-instance', id)
-      ipcRenderer.once('error-get-instance', (event, err) => {
-        // TODO: handle error
-        console.log(err)
-      })
-      ipcRenderer.once('response-get-instance', (event, instance) => {
-        commit('updateInstance', instance)
-      })
-    },
-    username ({ commit }, id) {
+    fetchAccount ({ commit }, id) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-local-account', id)
         ipcRenderer.once('error-get-local-account', (event, err) => {
+          // TODO: handle error
+          console.log(err)
           reject(err)
         })
         ipcRenderer.once('response-get-local-account', (event, account) => {
-          const client = new Mastodon(
-            {
-              access_token: account.accessToken,
-              api_url: account.baseURL + '/api/v1'
-
-            })
-          client.get('/accounts/verify_credentials', {})
-            .then((res) => {
-              commit('updateUsername', res.data)
-              resolve(res)
-            })
+          commit('updateAccount', account)
+          resolve(account)
         })
+      })
+    },
+    username ({ commit }, account) {
+      return new Promise((resolve, reject) => {
+        const client = new Mastodon(
+          {
+            access_token: account.accessToken,
+            api_url: account.baseURL + '/api/v1'
+
+          })
+        client.get('/accounts/verify_credentials', {})
+          .then((res) => {
+            commit('updateUsername', res.data.username)
+            resolve(res)
+          })
       })
     }
   }

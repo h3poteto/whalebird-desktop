@@ -15,25 +15,6 @@ export default class Account {
     })
   }
 
-  getInstance (id) {
-    return new Promise((resolve, reject) => {
-      this.db.findOne(
-        {
-          _id: id
-        },
-        (err, doc) => {
-          if (err) return reject(err)
-          if (empty(doc)) return reject(new EmptyRecordError('empty'))
-          const instance = {
-            baseURL: doc.baseURL,
-            id: doc._id
-          }
-          resolve(instance)
-        }
-      )
-    })
-  }
-
   getAccount (id) {
     return new Promise((resolve, reject) => {
       this.db.findOne(
