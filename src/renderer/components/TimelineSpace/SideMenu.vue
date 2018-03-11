@@ -44,21 +44,9 @@ export default {
   name: 'side-menu',
   computed: {
     ...mapState({
-      account: state => state.TimelineSpace.SideMenu.account,
-      username: state => state.TimelineSpace.SideMenu.username
+      account: state => state.TimelineSpace.account,
+      username: state => state.TimelineSpace.username
     })
-  },
-  created () {
-    this.$store.dispatch('TimelineSpace/SideMenu/fetchAccount', this.$route.params.id)
-      .then((account) => {
-        this.$store.dispatch('TimelineSpace/SideMenu/username', account)
-      })
-      .catch(() => {
-        this.$message({
-          message: 'Could not find account',
-          type: 'error'
-        })
-      })
   },
   methods: {
     id () {
