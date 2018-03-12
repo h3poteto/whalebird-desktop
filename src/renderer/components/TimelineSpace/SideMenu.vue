@@ -17,11 +17,11 @@
         <icon name="home"></icon>
         <span>Home</span>
       </el-menu-item>
-      <el-menu-item index="2" :route="{path: `/${id()}/notification`}">
+      <el-menu-item index="2" :route="{path: `/${id()}/notifications`}">
         <icon name="bell"></icon>
         <span>Notification</span>
       </el-menu-item>
-      <el-menu-item index="3" :route="{path: `/${id()}/fav`}">
+      <el-menu-item index="3" :route="{path: `/${id()}/favorites`}">
         <icon name="star"></icon>
         <span>Fav</span>
       </el-menu-item>
