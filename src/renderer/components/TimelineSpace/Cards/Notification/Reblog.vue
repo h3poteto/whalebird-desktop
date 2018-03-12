@@ -1,11 +1,12 @@
 <template>
-  <div id="fav">
-    fav
+  <div id="reblog">
+    reblog
   </div>
 </template>
 
 <script>
 export default {
-  name: 'fav'
+  name: 'reblog',
+  props: ['message']
 }
 </script>
