@@ -14,7 +14,8 @@ const TimelineSpace = {
     },
     username: '',
     homeTimeline: [],
-    notifications: []
+    notifications: [],
+    newTootModal: false
   },
   mutations: {
     updateAccount (state, account) {
@@ -34,6 +35,9 @@ const TimelineSpace = {
     },
     insertNotifications (state, notifications) {
       state.notifications = state.notifications.concat(notifications)
+    },
+    changeNewTootModal (state, modal) {
+      state.newTootModal = modal
     }
   },
   actions: {
@@ -81,6 +85,15 @@ const TimelineSpace = {
     },
     stopUserStreaming ({ commit }) {
       ipcRenderer.send('stop-user-streaming')
+    },
+    watchShortcutEvents ({ commit }, account) {
+      ipcRenderer.on('CmdOrCtrl+N', () => {
+        console.log('new toot')
+        commit('changeNewTootModal', true)
+      })
+      ipcRenderer.on('CmdOrCtrl+R', () => {
+        console.log('reply')
+      })
     },
     fetchHomeTimeline ({ commit }, account) {
       return new Promise((resolve, reject) => {

@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, ipcMain, BrowserWindow, shell } from 'electron'
+import { app, ipcMain, BrowserWindow, shell, Menu } from 'electron'
 import Datastore from 'nedb'
 import storage from 'electron-json-storage'
 import empty from 'is-empty'
@@ -28,6 +28,39 @@ let db = new Datastore({
 })
 
 function createWindow () {
+  /**
+   * Set menu
+   */
+  const template = [
+    {
+      label: 'Toot',
+      submenu: [
+        {
+          label: 'New Toot',
+          accelerator: 'CmdOrCtrl+N',
+          role: 'toot',
+          click: () => {
+            mainWindow.webContents.send('CmdOrCtrl+N')
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Reply',
+          accelerator: 'CmdOrCtrl+R',
+          role: 'reply',
+          click: () => {
+            mainWindow.webContents.send('CmdOrCtrl+R')
+          }
+        }
+      ]
+    }
+  ]
+
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+
   /**
    * Initial window options
    */
