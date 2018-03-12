@@ -20,6 +20,7 @@ export default {
         this.$store.dispatch('TimelineSpace/startUserStreaming', account)
         this.$store.dispatch('TimelineSpace/username', account)
         this.$store.dispatch('TimelineSpace/fetchNotifications', account)
+        this.$store.dispatch('TimelineSpace/watchShortcutEvents', account)
       })
       .catch(() => {
         this.$message({
