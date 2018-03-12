@@ -8,8 +8,8 @@
       <el-input type="textarea" v-model="tootForm.body" class="body"></el-input>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button>Cancel</el-button>
-      <el-button type="primary">Toot</el-button>
+      <el-button @click="close">Cancel</el-button>
+      <el-button type="primary" @click="toot">Toot</el-button>
     </span>
   </el-dialog>
 </template>
@@ -32,6 +32,26 @@ export default {
       set (value) {
         this.$store.commit('TimelineSpace/changeNewTootModal', value)
       }
+    }
+  },
+  methods: {
+    close () {
+      this.$store.commit('TimelineSpace/changeNewTootModal', false)
+    },
+    toot () {
+      this.$store.dispatch('TimelineSpace/postToot', this.tootForm.body)
+        .then(() => {
+          this.$message({
+            message: 'Toot',
+            type: 'success'
+          })
+        })
+        .catch(() => {
+          this.$message({
+            message: 'Could not toot',
+            type: 'error'
+          })
+        })
     }
   }
 }
