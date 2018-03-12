@@ -25,6 +25,9 @@ export default {
           type: 'error'
         })
       })
+  },
+  beforeDestroy () {
+    this.$store.dispatch('TimelineSpace/stopUserStreaming')
   }
 }
 </script>

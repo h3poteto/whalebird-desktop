@@ -72,6 +72,9 @@ const TimelineSpace = {
       ipcRenderer.on('notification-start-user-streaming', (event, notification) => {
         commit('appendNotification', notification)
       })
+    },
+    stopUserStreaming ({ commit }) {
+      ipcRenderer.send('stop-user-streaming')
     }
   }
 }
