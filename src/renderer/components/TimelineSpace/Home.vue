@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
+    <div class="home-timeline" v-for="message in timeline" v-bind:key="message.id">
       <toot :message="message"></toot>
     </div>
   </div>
@@ -17,9 +17,6 @@ export default {
     ...mapState({
       timeline: state => state.TimelineSpace.homeTimeline
     })
-  },
-  created () {
-    // TODO: Get recent timeline and concat timeline before stream
   }
 }
 </script>

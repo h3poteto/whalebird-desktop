@@ -24,10 +24,13 @@ const TimelineSpace = {
       state.username = username
     },
     appendHomeTimeline (state, update) {
-      state.homeTimeline = state.homeTimeline.concat([update])
+      state.homeTimeline = [update].concat(state.homeTimeline)
     },
     appendNotification (state, notification) {
-      state.notification = state.notification.concat([notification])
+      state.notification = [notification].concat(state.notification)
+    },
+    insertHomeTimeline (state, messages) {
+      state.homeTimeline = state.homeTimeline.concat(messages)
     }
   },
   actions: {
@@ -75,6 +78,24 @@ const TimelineSpace = {
     },
     stopUserStreaming ({ commit }) {
       ipcRenderer.send('stop-user-streaming')
+    },
+    fetchHomeTimeline ({ commit }, account) {
+      return new Promise((resolve, reject) => {
+        const client = new Mastodon(
+          {
+            access_token: account.accessToken,
+            api_url: account.baseURL + '/api/v1'
+          }
+        )
+        client.get('/timelines/home', { limit: 40 })
+          .then((res) => {
+            commit('insertHomeTimeline', res.data)
+            resolve()
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
     }
   }
 }
