@@ -19,7 +19,6 @@ const GlobalHeader = {
         })
         ipcRenderer.once('response-list-accounts', (event, accounts) => {
           commit('updateAccounts', accounts)
-          console.log(accounts)
           resolve(accounts)
         })
       })

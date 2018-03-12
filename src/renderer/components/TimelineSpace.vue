@@ -14,7 +14,21 @@ export default {
   name: 'timeline-space',
   components: { SideMenu },
   created () {
-    console.log(this.$route.params.id)
+    this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
+      .then((account) => {
+        this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
+        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+        this.$store.dispatch('TimelineSpace/username', account)
+      })
+      .catch(() => {
+        this.$message({
+          message: 'Could not find account',
+          type: 'error'
+        })
+      })
+  },
+  beforeDestroy () {
+    this.$store.dispatch('TimelineSpace/stopUserStreaming')
   }
 }
 </script>
