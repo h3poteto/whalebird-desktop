@@ -1,11 +1,12 @@
 <template>
-  <div id="notification">
-    notification
+  <div id="follow">
+    follow
   </div>
 </template>
 
 <script>
 export default {
-  name: 'notification'
+  name: 'follow',
+  props: ['message']
 }
 </script>
