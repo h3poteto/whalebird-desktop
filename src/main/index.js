@@ -137,6 +137,12 @@ ipcMain.on('start-user-streaming', (event, ac) => {
       event.sender.send('error-start-user-streaming', err)
     })
     .then((account) => {
+      // Stop old user streaming
+      if (userStreaming !== null) {
+        userStreaming.stop()
+        userStreaming = null
+      }
+
       userStreaming = new Streaming(account)
       userStreaming.startUserStreaming(
         (update) => {
