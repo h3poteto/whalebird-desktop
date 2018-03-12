@@ -128,6 +128,8 @@ ipcMain.on('get-local-account', (event, id) => {
 })
 
 // streaming
+let userStreaming = null
+
 ipcMain.on('start-user-streaming', (event, ac) => {
   const account = new Account(db)
   account.getAccount(ac._id)
@@ -135,8 +137,8 @@ ipcMain.on('start-user-streaming', (event, ac) => {
       event.sender.send('error-start-user-streaming', err)
     })
     .then((account) => {
-      const streaming = new Streaming(account)
-      streaming.startUserStreaming(
+      userStreaming = new Streaming(account)
+      userStreaming.startUserStreaming(
         (update) => {
           event.sender.send('update-start-user-streaming', update)
         },
@@ -149,6 +151,12 @@ ipcMain.on('start-user-streaming', (event, ac) => {
       )
     })
 })
+
+ipcMain.on('stop-user-streaming', (event, _) => {
+  userStreaming.stop()
+  userStreaming = null
+})
+
 /**
  * Auto Updater
  *
