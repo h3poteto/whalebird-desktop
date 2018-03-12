@@ -7,6 +7,7 @@ import empty from 'is-empty'
 
 import Authentication from './auth'
 import Account from './account'
+import Streaming from './streaming'
 
 /**
  * Set `__static` path to static files in production
@@ -126,6 +127,28 @@ ipcMain.on('get-local-account', (event, id) => {
     })
 })
 
+// streaming
+ipcMain.on('start-user-streaming', (event, ac) => {
+  const account = new Account(db)
+  account.getAccount(ac._id)
+    .catch((err) => {
+      event.sender.send('error-start-user-streaming', err)
+    })
+    .then((account) => {
+      const streaming = new Streaming(account)
+      streaming.startUserStreaming(
+        (update) => {
+          event.sender.send('update-start-user-streaming', update)
+        },
+        (notification) => {
+          event.sender.send('notification-start-user-streaming', notification)
+        },
+        (err) => {
+          event.sender.send('error-start-user-streaming', err)
+        }
+      )
+    })
+})
 /**
  * Auto Updater
  *

@@ -12,7 +12,9 @@ const TimelineSpace = {
       domain: '',
       id: ''
     },
-    username: ''
+    username: '',
+    homeTimeline: [],
+    notification: []
   },
   mutations: {
     updateAccount (state, account) {
@@ -20,6 +22,12 @@ const TimelineSpace = {
     },
     updateUsername (state, username) {
       state.username = username
+    },
+    appendHomeTimeline (state, update) {
+      state.homeTimeline = state.homeTimeline.concat([update])
+    },
+    appendNotification (state, notification) {
+      state.notification = state.notification.concat([notification])
     }
   },
   actions: {
@@ -50,6 +58,19 @@ const TimelineSpace = {
             commit('updateUsername', res.data.username)
             resolve(res)
           })
+      })
+    },
+    startUserStreaming ({ commit }, account) {
+      ipcRenderer.send('start-user-streaming', account)
+      // TODO: when get notification, create notify and display badge in sidemenu
+      ipcRenderer.once('error-start-userstreaming', (event, err) => {
+        console.log(err)
+      })
+      ipcRenderer.on('update-start-user-streaming', (event, update) => {
+        commit('appendHomeTimeline', update)
+      })
+      ipcRenderer.on('notification-start-user-streaming', (event, notification) => {
+        commit('appendNotification', notification)
       })
     }
   }
