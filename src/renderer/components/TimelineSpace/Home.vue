@@ -8,7 +8,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Toot from './Toot'
+import Toot from './Cards/Toot'
 
 export default {
   name: 'home',

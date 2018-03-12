@@ -31,14 +31,14 @@ export default new Router({
               component: require('@/components/TimelineSpace/Home').default
             },
             {
-              path: 'notification',
-              name: 'notification',
-              component: require('@/components/TimelineSpace/Notification').default
+              path: 'notifications',
+              name: 'notifications',
+              component: require('@/components/TimelineSpace/Notifications').default
             },
             {
-              path: 'fav',
-              name: 'fav',
-              component: require('@/components/TimelineSpace/Fav').default
+              path: 'favorites',
+              name: 'favorites',
+              component: require('@/components/TimelineSpace/Favorites').default
             },
             {
               path: 'local',

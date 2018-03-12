@@ -14,7 +14,7 @@ const TimelineSpace = {
     },
     username: '',
     homeTimeline: [],
-    notification: []
+    notifications: []
   },
   mutations: {
     updateAccount (state, account) {
@@ -26,11 +26,14 @@ const TimelineSpace = {
     appendHomeTimeline (state, update) {
       state.homeTimeline = [update].concat(state.homeTimeline)
     },
-    appendNotification (state, notification) {
-      state.notification = [notification].concat(state.notification)
+    appendNotifications (state, notifications) {
+      state.notifications = [notifications].concat(state.notifications)
     },
     insertHomeTimeline (state, messages) {
       state.homeTimeline = state.homeTimeline.concat(messages)
+    },
+    insertNotifications (state, notifications) {
+      state.notifications = state.notifications.concat(notifications)
     }
   },
   actions: {
@@ -90,6 +93,24 @@ const TimelineSpace = {
         client.get('/timelines/home', { limit: 40 })
           .then((res) => {
             commit('insertHomeTimeline', res.data)
+            resolve()
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
+    },
+    fetchNotifications ({ commit }, account) {
+      return new Promise((resolve, reject) => {
+        const client = new Mastodon(
+          {
+            access_token: account.accessToken,
+            api_url: account.baseURL + '/api/v1'
+          }
+        )
+        client.get('/notifications', { limit: 30 })
+          .then((res) => {
+            commit('insertNotifications', res.data)
             resolve()
           })
           .catch((err) => {
