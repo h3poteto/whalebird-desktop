@@ -130,8 +130,34 @@ const TimelineSpace = {
             reject(err)
           })
       })
+    },
+    postToot ({ commit, state }, body) {
+      return new Promise((resolve, reject) => {
+        if (state.account.accessToken === undefined || state.account.accessToken === null) {
+          return reject(new AuthenticationError())
+        }
+        const client = new Mastodon(
+          {
+            access_token: state.account.accessToken,
+            api_url: state.account.baseURL + '/api/v1'
+          }
+        )
+        client.post('/statuses', {
+          status: body
+        })
+          .then((res) => {
+            commit('changeNewTootModal', false)
+            resolve(res)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
     }
   }
 }
 
 export default TimelineSpace
+
+class AuthenticationError {
+}
