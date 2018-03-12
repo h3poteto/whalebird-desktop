@@ -76,7 +76,7 @@ const TimelineSpace = {
         commit('appendHomeTimeline', update)
       })
       ipcRenderer.on('notification-start-user-streaming', (event, notification) => {
-        commit('appendNotification', notification)
+        commit('appendNotifications', notification)
       })
     },
     stopUserStreaming ({ commit }) {
