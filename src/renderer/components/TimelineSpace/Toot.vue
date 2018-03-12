@@ -9,7 +9,7 @@
           {{ message.account.display_name }}
         </div>
         <div class="timestamp">
-          {{ message.created_at }}
+          {{ parseDatetime(message.created_at) }}
         </div>
       </div>
       <div class="content" v-html="message.content"></div>
@@ -25,9 +25,16 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'toot',
-  props: ['message']
+  props: ['message'],
+  methods: {
+    parseDatetime (datetime) {
+      return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+    }
+  }
 }
 </script>
 
