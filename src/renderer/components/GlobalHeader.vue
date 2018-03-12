@@ -65,6 +65,10 @@ html, body, #app, #global_header {
   margin: 0;
 }
 
+p {
+  margin: 0;
+}
+
 #global_header {
   .account-menu {
     height: 100%;
