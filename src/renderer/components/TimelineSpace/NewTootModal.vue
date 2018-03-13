@@ -5,7 +5,9 @@
     width="400px"
     custom-class="new-toot-modal">
     <el-form :model="tootForm">
-      <el-input type="textarea" v-model="tootForm.body" class="body"></el-input>
+      <div class="body">
+        <textarea v-model="tootForm.body" ref="body"></textarea>
+      </div>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="close">Cancel</el-button>
@@ -32,6 +34,11 @@ export default {
       set (value) {
         this.$store.commit('TimelineSpace/changeNewTootModal', value)
       }
+    }
+  },
+  updated () {
+    if (this.newTootModal) {
+      this.$refs.body.focus()
     }
   },
   methods: {
@@ -72,9 +79,24 @@ export default {
 
     .body {
       textarea {
+        display: block;
+        padding: 5px 15px;
+        line-height: 1.5;
+        box-sizing: border-box;
+        width: 100%;
+        font-size: inherit;
+        color: #606266;
+        background-color: #ffffff;
+        background-image: none;
         border: 0;
+        border-radius: 4px;
         resize: none;
         height: 120px;
+        transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+      }
+
+      textarea:focus {
+        outline: 0;
       }
     }
   }

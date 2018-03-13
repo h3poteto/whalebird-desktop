@@ -88,7 +88,6 @@ const TimelineSpace = {
     },
     watchShortcutEvents ({ commit }, account) {
       ipcRenderer.on('CmdOrCtrl+N', () => {
-        console.log('new toot')
         commit('changeNewTootModal', true)
       })
       ipcRenderer.on('CmdOrCtrl+R', () => {
