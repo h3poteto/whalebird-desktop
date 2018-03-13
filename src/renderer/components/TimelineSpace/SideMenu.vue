@@ -7,29 +7,29 @@
       </div>
     </div>
     <el-menu
-      default-active="1"
+      :default-active="$route.path"
       background-color="#373d48"
       text-color="#909399"
       active-text-color="#ffffff"
       :router="true"
       class="el-menu-vertical timeline-menu">
-      <el-menu-item index="1" :route="{path: `/${id()}/home`}">
+      <el-menu-item :index="`/${id()}/home`">
         <icon name="home"></icon>
         <span>Home</span>
       </el-menu-item>
-      <el-menu-item index="2" :route="{path: `/${id()}/notifications`}">
+      <el-menu-item :index="`/${id()}/notifications`">
         <icon name="bell"></icon>
         <span>Notification</span>
       </el-menu-item>
-      <el-menu-item index="3" :route="{path: `/${id()}/favorites`}">
+      <el-menu-item :index="`/${id()}/favorites`">
         <icon name="star"></icon>
-        <span>Fav</span>
+        <span>Favorite</span>
       </el-menu-item>
-      <el-menu-item index="4" :route="{path: `/${id()}/local`}">
+      <el-menu-item :index="`/${id()}/local`">
         <icon name="users"></icon>
         <span>LocalTimeline</span>
       </el-menu-item>
-      <el-menu-item index="5" :route="{path: `/${id()}/global`}">
+      <el-menu-item :index="`/${id()}/global`">
         <icon name="globe"></icon>
         <span>PublicTimeline</span>
       </el-menu-item>
