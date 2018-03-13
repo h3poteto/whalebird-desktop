@@ -69,11 +69,6 @@ const TimelineSpace = {
       })
     },
     startUserStreaming ({ commit }, account) {
-      ipcRenderer.send('start-user-streaming', account)
-      ipcRenderer.once('error-start-userstreaming', (event, err) => {
-        // handle error
-        console.log(err)
-      })
       ipcRenderer.on('update-start-user-streaming', (event, update) => {
         commit('appendHomeTimeline', update)
       })
@@ -83,6 +78,13 @@ const TimelineSpace = {
           router.push(`/${account._id}/notifications`)
         }
         commit('appendNotifications', notification)
+      })
+
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('start-user-streaming', account)
+        ipcRenderer.once('error-start-userstreaming', (event, err) => {
+          reject(err)
+        })
       })
     },
     stopUserStreaming ({ commit }) {
