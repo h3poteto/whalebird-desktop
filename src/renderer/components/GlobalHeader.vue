@@ -10,7 +10,7 @@
       background-color="#4a5664"
       text-color="#909399"
       active-text-color="#ffffff">
-      <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account.id" :route="{path: `/${account.id}/home`}">
+      <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account._id" :route="{path: `/${account._id}/home`}">
         <i class="el-icon-menu"></i>
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>

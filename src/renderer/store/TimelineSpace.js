@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
+import router from '../router'
 
 const TimelineSpace = {
   namespaced: true,
@@ -10,7 +11,7 @@ const TimelineSpace = {
   state: {
     account: {
       domain: '',
-      id: ''
+      _id: ''
     },
     username: '',
     homeTimeline: [],
@@ -61,7 +62,6 @@ const TimelineSpace = {
           {
             access_token: account.accessToken,
             api_url: account.baseURL + '/api/v1'
-
           })
         client.get('/accounts/verify_credentials', {})
           .then((res) => {
@@ -72,7 +72,6 @@ const TimelineSpace = {
     },
     startUserStreaming ({ commit }, account) {
       ipcRenderer.send('start-user-streaming', account)
-      // TODO: when get notification, create notify and display badge in sidemenu
       ipcRenderer.once('error-start-userstreaming', (event, err) => {
         console.log(err)
       })
@@ -80,6 +79,10 @@ const TimelineSpace = {
         commit('appendHomeTimeline', update)
       })
       ipcRenderer.on('notification-start-user-streaming', (event, notification) => {
+        let notify = buildNotification(notification)
+        notify.onclick = () => {
+          router.push(`/${account._id}/notifications`)
+        }
         commit('appendNotifications', notification)
       })
     },
@@ -159,4 +162,25 @@ const TimelineSpace = {
 export default TimelineSpace
 
 class AuthenticationError {
+}
+
+function buildNotification (notification) {
+  switch (notification.type) {
+    case 'favourite':
+      return new Notification('Favourite', {
+        body: `${notification.account.display_name} favourited your status`
+      })
+    case 'follow':
+      return new Notification('Follow', {
+        body: `${notification.account.display_name} is now following you`
+      })
+    case 'mention':
+      return new Notification(`${notification.status.account.display_name}`, {
+        body: `${notification.status.content}`
+      })
+    case 'reblog':
+      return new Notification('Reblog', {
+        body: `${notification.account.display_name} boosted your status`
+      })
+  }
 }
