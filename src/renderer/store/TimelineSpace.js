@@ -1,12 +1,14 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
+import Favourites from './TimelineSpace/Favourites'
 import router from '../router'
 
 const TimelineSpace = {
   namespaced: true,
   modules: {
-    SideMenu
+    SideMenu,
+    Favourites
   },
   state: {
     account: {
