@@ -10,6 +10,7 @@
       </div>
     </el-form>
     <span slot="footer" class="dialog-footer">
+      <span class="text-count">{{ 500 - tootForm.body.length }}</span>
       <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="toot">Toot</el-button>
     </span>
@@ -46,6 +47,12 @@ export default {
       this.$store.commit('TimelineSpace/changeNewTootModal', false)
     },
     toot () {
+      if (this.tootForm.body.length <= 0 || this.tootForm.body.length >= 500) {
+        return this.$message({
+          message: 'Toot length should be 1 to 500',
+          type: 'error'
+        })
+      }
       this.$store.dispatch('TimelineSpace/postToot', this.tootForm.body)
         .then(() => {
           this.tootForm.body = ''
@@ -104,6 +111,11 @@ export default {
 
   .el-dialog__footer {
     background-color: #f2f6fc;
+
+    .text-count {
+      padding-right: 24px;
+      color: #909399;
+    }
   }
 }
 </style>
