@@ -21,9 +21,9 @@
         <icon name="bell"></icon>
         <span>Notification</span>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/favorites`">
+      <el-menu-item :index="`/${id()}/favourites`">
         <icon name="star"></icon>
-        <span>Favorite</span>
+        <span>Favourite</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/local`">
         <icon name="users"></icon>

@@ -36,9 +36,9 @@ export default new Router({
               component: require('@/components/TimelineSpace/Notifications').default
             },
             {
-              path: 'favorites',
-              name: 'favorites',
-              component: require('@/components/TimelineSpace/Favorites').default
+              path: 'favourites',
+              name: 'favourites',
+              component: require('@/components/TimelineSpace/Favourites').default
             },
             {
               path: 'local',
