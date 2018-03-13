@@ -2,7 +2,6 @@
 
 import { app, ipcMain, BrowserWindow, shell, Menu } from 'electron'
 import Datastore from 'nedb'
-import storage from 'electron-json-storage'
 import empty from 'is-empty'
 
 import Authentication from './auth'
@@ -124,16 +123,13 @@ ipcMain.on('get-access-token', (event, code) => {
     })
 })
 
-// json storage
+// environments
 ipcMain.on('get-social-token', (event, _) => {
-  storage.get('config', (err, data) => {
-    if (err || empty(data)) {
-      console.log(err)
-      event.sender.send('error-get-social-token', err)
-    } else {
-      event.sender.send('response-get-social-token', data.token)
-    }
-  })
+  const token = process.env.SOCIAL_TOKEN
+  if (empty(token)) {
+    return event.sender.send('error-get-social-token', new EmptyTokenError())
+  }
+  event.sender.send('response-get-social-token', token)
 })
 
 // nedb
@@ -215,3 +211,5 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
  */
+
+class EmptyTokenError {}

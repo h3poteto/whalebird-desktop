@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
-    "electron-json-storage": "^4.0.2",
     "element-ui": "^2.2.1",
     "google-fonts-webpack-plugin": "^0.4.4",
     "is-empty": "^1.2.0",
