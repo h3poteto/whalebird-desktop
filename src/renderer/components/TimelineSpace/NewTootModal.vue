@@ -6,7 +6,7 @@
     custom-class="new-toot-modal">
     <el-form :model="tootForm">
       <div class="body">
-        <textarea v-model="tootForm.body" ref="body"></textarea>
+        <textarea v-model="tootForm.body" ref="body" @keyup.ctrl.enter.exact="toot" @keyup.meta.enter.exact="toot"></textarea>
       </div>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -48,6 +48,7 @@ export default {
     toot () {
       this.$store.dispatch('TimelineSpace/postToot', this.tootForm.body)
         .then(() => {
+          this.tootForm.body = ''
           this.$message({
             message: 'Toot',
             type: 'success'
