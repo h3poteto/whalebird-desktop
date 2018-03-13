@@ -27,6 +27,12 @@ export default {
         .then((id) => {
           this.$router.push({ path: `/${id}/home` })
         })
+        .catch(() => {
+          this.$message({
+            message: 'Could not authorize the code',
+            type: 'error'
+          })
+        })
     }
   }
 }

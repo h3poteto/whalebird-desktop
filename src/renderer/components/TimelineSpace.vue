@@ -19,9 +19,33 @@ export default {
     this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
       .then((account) => {
         this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch timeline',
+              type: 'error'
+            })
+          })
         this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+          .catch(() => {
+            this.$message({
+              message: 'Could not start user streaming',
+              type: 'error'
+            })
+          })
         this.$store.dispatch('TimelineSpace/username', account)
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch username',
+              type: 'error'
+            })
+          })
         this.$store.dispatch('TimelineSpace/fetchNotifications', account)
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch notification',
+              type: 'error'
+            })
+          })
         this.$store.dispatch('TimelineSpace/watchShortcutEvents', account)
       })
       .catch(() => {
