@@ -38,11 +38,19 @@ export default {
     })
   },
   created () {
+    const loading = this.$loading({
+      lock: true,
+      text: 'Loading',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
     this.$store.dispatch('GlobalHeader/listAccounts')
       .then((accounts) => {
+        loading.close()
         return this.$router.push({ path: `/${accounts[0]._id}/home` })
       })
       .catch(() => {
+        loading.close()
         return this.$router.push({ path: '/login' })
       })
   },
