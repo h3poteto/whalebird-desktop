@@ -46,8 +46,6 @@ const TimelineSpace = {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-local-account', id)
         ipcRenderer.once('error-get-local-account', (event, err) => {
-          // TODO: handle error
-          console.log(err)
           reject(err)
         })
         ipcRenderer.once('response-get-local-account', (event, account) => {
@@ -63,18 +61,14 @@ const TimelineSpace = {
             access_token: account.accessToken,
             api_url: account.baseURL + '/api/v1'
           })
-        client.get('/accounts/verify_credentials', {})
-          .then((res) => {
-            commit('updateUsername', res.data.username)
-            resolve(res)
-          })
+        client.get('/accounts/verify_credentials', (err, data, res) => {
+          if (err) return reject(err)
+          commit('updateUsername', data.username)
+          resolve(res)
+        })
       })
     },
     startUserStreaming ({ commit }, account) {
-      ipcRenderer.send('start-user-streaming', account)
-      ipcRenderer.once('error-start-userstreaming', (event, err) => {
-        console.log(err)
-      })
       ipcRenderer.on('update-start-user-streaming', (event, update) => {
         commit('appendHomeTimeline', update)
       })
@@ -85,6 +79,13 @@ const TimelineSpace = {
         }
         commit('appendNotifications', notification)
       })
+
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('start-user-streaming', account)
+        ipcRenderer.once('error-start-userstreaming', (event, err) => {
+          reject(err)
+        })
+      })
     },
     stopUserStreaming ({ commit }) {
       ipcRenderer.send('stop-user-streaming')
@@ -94,6 +95,7 @@ const TimelineSpace = {
         commit('changeNewTootModal', true)
       })
       ipcRenderer.on('CmdOrCtrl+R', () => {
+        // TODO: reply window
         console.log('reply')
       })
     },
@@ -105,14 +107,11 @@ const TimelineSpace = {
             api_url: account.baseURL + '/api/v1'
           }
         )
-        client.get('/timelines/home', { limit: 40 })
-          .then((res) => {
-            commit('insertHomeTimeline', res.data)
-            resolve()
-          })
-          .catch((err) => {
-            reject(err)
-          })
+        client.get('/timelines/home', { limit: 40 }, (err, data, res) => {
+          if (err) return reject(err)
+          commit('insertHomeTimeline', data)
+          resolve(res)
+        })
       })
     },
     fetchNotifications ({ commit }, account) {
@@ -123,14 +122,11 @@ const TimelineSpace = {
             api_url: account.baseURL + '/api/v1'
           }
         )
-        client.get('/notifications', { limit: 30 })
-          .then((res) => {
-            commit('insertNotifications', res.data)
-            resolve()
-          })
-          .catch((err) => {
-            reject(err)
-          })
+        client.get('/notifications', { limit: 30 }, (err, data, res) => {
+          if (err) return reject(err)
+          commit('insertNotifications', data)
+          resolve(res)
+        })
       })
     },
     postToot ({ commit, state }, body) {
@@ -146,14 +142,11 @@ const TimelineSpace = {
         )
         client.post('/statuses', {
           status: body
+        }, (err, data, res) => {
+          if (err) return reject(err)
+          commit('changeNewTootModal', false)
+          resolve(res)
         })
-          .then((res) => {
-            commit('changeNewTootModal', false)
-            resolve(res)
-          })
-          .catch((err) => {
-            reject(err)
-          })
       })
     }
   }
@@ -161,8 +154,7 @@ const TimelineSpace = {
 
 export default TimelineSpace
 
-class AuthenticationError {
-}
+class AuthenticationError {}
 
 function buildNotification (notification) {
   switch (notification.type) {

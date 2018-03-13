@@ -9,11 +9,10 @@ const Authorize = {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-access-token', code)
         ipcRenderer.once('response-get-access-token', (event, id) => {
-          console.log(id)
           resolve(id)
         })
         ipcRenderer.once('error-get-access-token', (event, err) => {
-          console.log(err)
+          reject(err)
         })
       })
     }
