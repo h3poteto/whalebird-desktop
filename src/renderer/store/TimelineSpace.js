@@ -46,8 +46,6 @@ const TimelineSpace = {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-local-account', id)
         ipcRenderer.once('error-get-local-account', (event, err) => {
-          // TODO: handle error
-          console.log(err)
           reject(err)
         })
         ipcRenderer.once('response-get-local-account', (event, account) => {
@@ -73,6 +71,7 @@ const TimelineSpace = {
     startUserStreaming ({ commit }, account) {
       ipcRenderer.send('start-user-streaming', account)
       ipcRenderer.once('error-start-userstreaming', (event, err) => {
+        // handle error
         console.log(err)
       })
       ipcRenderer.on('update-start-user-streaming', (event, update) => {
@@ -94,6 +93,7 @@ const TimelineSpace = {
         commit('changeNewTootModal', true)
       })
       ipcRenderer.on('CmdOrCtrl+R', () => {
+        // TODO: reply window
         console.log('reply')
       })
     },
