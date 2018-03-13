@@ -66,7 +66,7 @@ html, body, #app, #global_header {
 }
 
 p {
-  margin: 0;
+  margin: 8px 0;
 }
 
 #global_header {
