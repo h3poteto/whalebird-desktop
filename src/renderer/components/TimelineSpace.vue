@@ -4,15 +4,17 @@
   <div class="content">
     <router-view></router-view>
   </div>
+  <new-toot-modal></new-toot-modal>
 </div>
 </template>
 
 <script>
 import SideMenu from './TimelineSpace/SideMenu'
+import NewTootModal from './TimelineSpace/NewTootModal'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu },
+  components: { SideMenu, NewTootModal },
   created () {
     this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
       .then((account) => {
@@ -20,6 +22,7 @@ export default {
         this.$store.dispatch('TimelineSpace/startUserStreaming', account)
         this.$store.dispatch('TimelineSpace/username', account)
         this.$store.dispatch('TimelineSpace/fetchNotifications', account)
+        this.$store.dispatch('TimelineSpace/watchShortcutEvents', account)
       })
       .catch(() => {
         this.$message({
@@ -35,8 +38,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .content {
   margin-left: 180px;
 }
+
 </style>
