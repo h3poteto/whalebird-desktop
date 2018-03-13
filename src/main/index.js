@@ -32,12 +32,28 @@ function createWindow () {
    */
   const template = [
     {
+      label: 'Whalebird',
+      submenu: [
+        {
+          label: 'About Whalebird',
+          role: 'about'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Quit',
+          accelerator: 'CmdOrCtrl+Q',
+          role: 'quit'
+        }
+      ]
+    },
+    {
       label: 'Toot',
       submenu: [
         {
           label: 'New Toot',
           accelerator: 'CmdOrCtrl+N',
-          role: 'toot',
           click: () => {
             mainWindow.webContents.send('CmdOrCtrl+N')
           }
@@ -48,10 +64,60 @@ function createWindow () {
         {
           label: 'Reply',
           accelerator: 'CmdOrCtrl+R',
-          role: 'reply',
           click: () => {
             mainWindow.webContents.send('CmdOrCtrl+R')
           }
+        }
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        {
+          label: 'Undo',
+          accelerator: 'CmdOrCtrl+Z',
+          role: 'undo'
+        },
+        {
+          label: 'Redo',
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          role: 'redo'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+X',
+          role: 'cut'
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+C',
+          role: 'copy'
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+V',
+          role: 'paste'
+        },
+        {
+          label: 'Select All',
+          accelerator: 'CmdOrCtrl+A',
+          role: 'selectall'
+        }
+      ]
+    },
+    {
+      label: 'Window',
+      submenu: [
+        {
+          label: 'Close Window',
+          role: 'close'
+        },
+        {
+          label: 'Minimize',
+          role: 'minimize'
         }
       ]
     }
