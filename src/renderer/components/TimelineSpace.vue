@@ -16,10 +16,20 @@ export default {
   name: 'timeline-space',
   components: { SideMenu, NewTootModal },
   created () {
+    const loading = this.$loading({
+      lock: true,
+      text: 'Loading',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
     this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
       .then((account) => {
         this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
+          .then(() => {
+            loading.close()
+          })
           .catch(() => {
+            loading.close()
             this.$message({
               message: 'Could not fetch timeline',
               type: 'error'
@@ -49,6 +59,7 @@ export default {
         this.$store.dispatch('TimelineSpace/watchShortcutEvents', account)
       })
       .catch(() => {
+        loading.close()
         this.$message({
           message: 'Could not find account',
           type: 'error'
