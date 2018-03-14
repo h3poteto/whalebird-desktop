@@ -12,7 +12,7 @@
           {{ parseDatetime(message.created_at) }}
         </div>
       </div>
-      <div class="content" v-html="message.content"></div>
+      <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
       <div class="tool-box">
         <el-button type="text"><icon name="reply" scale="0.9"></icon></el-button>
         <el-button type="text"><icon name="retweet" scale="0.9"></icon></el-button>
@@ -26,6 +26,7 @@
 
 <script>
 import moment from 'moment'
+import { shell } from 'electron'
 
 export default {
   name: 'toot',
@@ -33,8 +34,24 @@ export default {
   methods: {
     parseDatetime (datetime) {
       return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+    },
+    tootClick (e) {
+      const link = findLink(e.target)
+      if (link !== null) {
+        shell.openExternal(link)
+      }
     }
   }
+}
+
+function findLink (target) {
+  if (target.localName === 'a') {
+    return target.href
+  }
+  if (target.parentNode === undefined || target.parentNode === null) {
+    return null
+  }
+  return findLink(target.parentNode)
 }
 </script>
 
