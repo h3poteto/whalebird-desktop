@@ -14,9 +14,15 @@
       </div>
       <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
       <div class="tool-box">
-        <el-button type="text" @click="openReply(message)"><icon name="reply" scale="0.9"></icon></el-button>
-        <el-button type="text"><icon name="retweet" scale="0.9"></icon></el-button>
-        <el-button type="text" @click="changeFavourite(message)" :class="message.favourited ? 'favourited' : ''"><icon name="star" scale="0.9"></icon></el-button>
+        <el-button type="text" @click="openReply(message)">
+          <icon name="reply" scale="0.9"></icon>
+        </el-button>
+        <el-button type="text" @click="changeReblog(message)" :class="message.reblogged ? 'reblogged' : ''">
+          <icon name="retweet" scale="0.9"></icon>
+        </el-button>
+        <el-button type="text" @click="changeFavourite(message)" :class="message.favourited ? 'favourited' : ''">
+          <icon name="star" scale="0.9"></icon>
+        </el-button>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -43,6 +49,31 @@ export default {
     },
     openReply (message) {
       this.$store.dispatch('TimelineSpace/NewTootModal/openReply', message)
+    },
+    changeReblog (message) {
+      if (message.reblogged) {
+        this.$store.dispatch('TimelineSpace/Cards/Toot/unreblog', message)
+          .then((data) => {
+            this.$emit('update', data)
+          })
+          .catch(() => {
+            this.$message({
+              message: 'Faild to unreblog',
+              type: 'error'
+            })
+          })
+      } else {
+        this.$store.dispatch('TimelineSpace/Cards/Toot/reblog', message)
+          .then((data) => {
+            this.$emit('update', data)
+          })
+          .catch(() => {
+            this.$message({
+              message: 'Faild to reblog',
+              type: 'error'
+            })
+          })
+      }
     },
     changeFavourite (message) {
       if (message.favourited) {
@@ -133,6 +164,10 @@ function findLink (target) {
         margin: 0 8px;
         padding: 0;
         color: #909399;
+      }
+
+      .reblogged {
+        color: #409eff;
       }
 
       .favourited {
