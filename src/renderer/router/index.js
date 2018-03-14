@@ -46,9 +46,9 @@ export default new Router({
               component: require('@/components/TimelineSpace/Local').default
             },
             {
-              path: 'global',
-              name: 'global',
-              component: require('@/components/TimelineSpace/Global').default
+              path: 'public',
+              name: 'public',
+              component: require('@/components/TimelineSpace/Public').default
             }
           ]
         }
