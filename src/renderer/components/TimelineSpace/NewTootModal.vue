@@ -3,7 +3,7 @@
     title="New Toot"
     :visible.sync="newTootModal"
     width="400px"
-    custom-class="new-toot-modal" v-on:submit.prevent="toot">
+    class="new-toot-modal" v-on:submit.prevent="toot">
     <el-form :model="tootForm">
       <div class="body">
         <textarea v-model="tootForm.body" ref="body" @keyup.ctrl.enter.exact="toot" @keyup.meta.enter.exact="toot"></textarea>
@@ -72,8 +72,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.new-toot-modal {
+<style lang="scss" scoped>
+.new-toot-modal /deep/ {
   .el-dialog__header {
     background-color: #4a5664;
 
