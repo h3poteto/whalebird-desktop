@@ -1,7 +1,7 @@
 <template>
   <div id="favourites">
     <div class="fav" v-for="message in favourites" v-bind:key="message.id">
-      <toot :message="message"></toot>
+      <toot :message="message" v-on:update="updateToot"></toot>
     </div>
   </div>
 </template>
@@ -37,6 +37,11 @@ export default {
           type: 'error'
         })
       })
+  },
+  methods: {
+    updateToot (message) {
+      this.$store.commit('TimelineSpace/Favourites/updateToot', message)
+    }
   }
 }
 </script>
