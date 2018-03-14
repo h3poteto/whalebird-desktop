@@ -23,6 +23,8 @@ const Local = {
       })
     },
     stopLocalStreaming ({ commit }) {
+      ipcRenderer.removeAllListeners('error-start-local-streaming')
+      ipcRenderer.removeAllListeners('update-start-local-streaming')
       ipcRenderer.send('stop-local-streaming')
     }
   }
