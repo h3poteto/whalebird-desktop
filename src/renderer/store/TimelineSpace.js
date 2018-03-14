@@ -94,7 +94,9 @@ const TimelineSpace = {
       })
     },
     stopUserStreaming ({ commit }) {
-      // TODO: remove ipcRenderer listeners
+      ipcRenderer.removeAll('update-start-user-streaming')
+      ipcRenderer.removeAll('notification-start-user-streaming')
+      ipcRenderer.removeAll('error-start-user-streaming')
       ipcRenderer.send('stop-user-streaming')
     },
     watchShortcutEvents ({ commit }, account) {
