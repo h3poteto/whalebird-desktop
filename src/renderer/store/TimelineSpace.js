@@ -51,12 +51,21 @@ const TimelineSpace = {
       state.homeTimeline = state.homeTimeline.map((toot) => {
         if (toot.id === message.id) {
           return message
+        } else if (toot.reblog !== null && toot.reblog.id === message.id) {
+          // When user reblog/favourite a reblogged toot, target message is a original toot.
+          // So, a message which is received now is original toot.
+          const reblog = {
+            reblog: message
+          }
+          return Object.assign(toot, reblog)
         } else {
           return toot
         }
       })
 
       state.notifications = state.notifications.map((notification) => {
+        // I want to update toot only mention.
+        // Because Toot component don't use status information when other patterns.
         if (notification.type === 'mention' && notification.status.id === message.id) {
           const status = {
             status: message
