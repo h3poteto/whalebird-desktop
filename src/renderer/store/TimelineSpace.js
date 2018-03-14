@@ -25,8 +25,7 @@ const TimelineSpace = {
     },
     username: '',
     homeTimeline: [],
-    notifications: [],
-    replyToMessage: null
+    notifications: []
   },
   mutations: {
     updateAccount (state, account) {
@@ -67,9 +66,6 @@ const TimelineSpace = {
           return notification
         }
       })
-    },
-    setReplyTo (state, message) {
-      state.replyToMessage = message
     }
   },
   actions: {
@@ -166,10 +162,6 @@ const TimelineSpace = {
           resolve(res)
         })
       })
-    },
-    openReply ({ commit }, message) {
-      commit('setReplyTo', message)
-      commit('changeNewTootModal', true)
     }
   }
 }
