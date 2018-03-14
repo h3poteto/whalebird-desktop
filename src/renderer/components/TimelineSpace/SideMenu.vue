@@ -29,7 +29,7 @@
         <icon name="users"></icon>
         <span>LocalTimeline</span>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/global`">
+      <el-menu-item :index="`/${id()}/public`">
         <icon name="globe"></icon>
         <span>PublicTimeline</span>
       </el-menu-item>

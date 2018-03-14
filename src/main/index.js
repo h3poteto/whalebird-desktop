@@ -291,6 +291,39 @@ ipcMain.on('stop-local-streaming', (event, _) => {
   localStreaming = null
 })
 
+let publicStreaming = null
+
+ipcMain.on('start-public-streaming', (event, ac) => {
+  const account = new Account(db)
+  account.getAccount(ac._id)
+    .catch((err) => {
+      event.sender.send('error-start-public-streaming', err)
+    })
+    .then((account) => {
+      // Stop old public streaming
+      if (publicStreaming !== null) {
+        publicStreaming.stop()
+        publicStreaming = null
+      }
+
+      publicStreaming = new Streaming(account)
+      publicStreaming.start(
+        '/streaming/public',
+        (update) => {
+          event.sender.send('update-start-public-streaming', update)
+        },
+        (err) => {
+          event.sender.send('error-start-public-streaming', err)
+        }
+      )
+    })
+})
+
+ipcMain.on('stop-public-streaming', (event, _) => {
+  publicStreaming.stop()
+  publicStreaming = null
+})
+
 /**
  * Auto Updater
  *

@@ -3,6 +3,7 @@ import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
 import Favourites from './TimelineSpace/Favourites'
 import Local from './TimelineSpace/Local'
+import Public from './TimelineSpace/Public'
 import router from '../router'
 
 const TimelineSpace = {
@@ -10,7 +11,8 @@ const TimelineSpace = {
   modules: {
     SideMenu,
     Favourites,
-    Local
+    Local,
+    Public
   },
   state: {
     account: {
