@@ -2,13 +2,17 @@ import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
 import Favourites from './TimelineSpace/Favourites'
+import Local from './TimelineSpace/Local'
+import Public from './TimelineSpace/Public'
 import router from '../router'
 
 const TimelineSpace = {
   namespaced: true,
   modules: {
     SideMenu,
-    Favourites
+    Favourites,
+    Local,
+    Public
   },
   state: {
     account: {
@@ -84,15 +88,18 @@ const TimelineSpace = {
 
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-user-streaming', account)
-        ipcRenderer.once('error-start-userstreaming', (event, err) => {
+        ipcRenderer.once('error-start-user-streaming', (event, err) => {
           reject(err)
         })
       })
     },
     stopUserStreaming ({ commit }) {
+      ipcRenderer.removeAll('update-start-user-streaming')
+      ipcRenderer.removeAll('notification-start-user-streaming')
+      ipcRenderer.removeAll('error-start-user-streaming')
       ipcRenderer.send('stop-user-streaming')
     },
-    watchShortcutEvents ({ commit }, account) {
+    watchShortcutEvents ({ commit }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {
         commit('changeNewTootModal', true)
       })
@@ -100,6 +107,10 @@ const TimelineSpace = {
         // TODO: reply window
         console.log('reply')
       })
+    },
+    removeShortcutEvents () {
+      ipcRenderer.removeAll('CmdOrCtrl+N')
+      ipcRenderer.removeAll('CmdOrCtrl+R')
     },
     fetchHomeTimeline ({ commit }, account) {
       return new Promise((resolve, reject) => {

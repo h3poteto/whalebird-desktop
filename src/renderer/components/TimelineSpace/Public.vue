@@ -1,6 +1,6 @@
 <template>
-  <div id="local">
-    <div class="local-timeline" v-for="message in timeline" v-bind:key="message.id">
+  <div id="public">
+    <div class="public-timeline" v-for="message in timeline" v-bind:key="message.id">
       <toot :message="message"></toot>
     </div>
   </div>
@@ -11,25 +11,25 @@ import { mapState } from 'vuex'
 import Toot from './Cards/Toot'
 
 export default {
-  name: 'local',
+  name: 'public',
   components: { Toot },
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.account,
-      timeline: state => state.TimelineSpace.Local.timeline
+      timeline: state => state.TimelineSpace.Public.timeline
     })
   },
   created () {
-    this.$store.dispatch('TimelineSpace/Local/startLocalStreaming', this.account)
+    this.$store.dispatch('TimelineSpace/Public/startPublicStreaming', this.account)
   },
   beforeDestroy () {
-    this.$store.dispatch('TimelineSpace/Local/stopLocalStreaming')
+    this.$store.dispatch('TimelineSpace/Public/stopPublicStreaming')
   }
 }
 </script>
 
 <style lang="scss" scoped>
-#local {
+#public {
   margin-left: 16px;
 }
 </style>

@@ -258,6 +258,72 @@ ipcMain.on('stop-user-streaming', (event, _) => {
   userStreaming = null
 })
 
+let localStreaming = null
+
+ipcMain.on('start-local-streaming', (event, ac) => {
+  const account = new Account(db)
+  account.getAccount(ac._id)
+    .catch((err) => {
+      event.sender.send('error-start-local-streaming', err)
+    })
+    .then((account) => {
+      // Stop old local streaming
+      if (localStreaming !== null) {
+        localStreaming.stop()
+        localStreaming = null
+      }
+
+      localStreaming = new Streaming(account)
+      localStreaming.start(
+        '/streaming/public/local',
+        (update) => {
+          event.sender.send('update-start-local-streaming', update)
+        },
+        (err) => {
+          event.sender.send('error-start-local-streaming', err)
+        }
+      )
+    })
+})
+
+ipcMain.on('stop-local-streaming', (event, _) => {
+  localStreaming.stop()
+  localStreaming = null
+})
+
+let publicStreaming = null
+
+ipcMain.on('start-public-streaming', (event, ac) => {
+  const account = new Account(db)
+  account.getAccount(ac._id)
+    .catch((err) => {
+      event.sender.send('error-start-public-streaming', err)
+    })
+    .then((account) => {
+      // Stop old public streaming
+      if (publicStreaming !== null) {
+        publicStreaming.stop()
+        publicStreaming = null
+      }
+
+      publicStreaming = new Streaming(account)
+      publicStreaming.start(
+        '/streaming/public',
+        (update) => {
+          event.sender.send('update-start-public-streaming', update)
+        },
+        (err) => {
+          event.sender.send('error-start-public-streaming', err)
+        }
+      )
+    })
+})
+
+ipcMain.on('stop-public-streaming', (event, _) => {
+  publicStreaming.stop()
+  publicStreaming = null
+})
+
 /**
  * Auto Updater
  *

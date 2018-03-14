@@ -22,6 +22,7 @@ export default {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
+    this.$store.dispatch('TimelineSpace/watchShortcutEvents')
     this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
       .then((account) => {
         this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
@@ -32,13 +33,6 @@ export default {
             loading.close()
             this.$message({
               message: 'Could not fetch timeline',
-              type: 'error'
-            })
-          })
-        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
-          .catch(() => {
-            this.$message({
-              message: 'Could not start user streaming',
               type: 'error'
             })
           })
@@ -56,7 +50,13 @@ export default {
               type: 'error'
             })
           })
-        this.$store.dispatch('TimelineSpace/watchShortcutEvents', account)
+        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+          .catch(() => {
+            this.$message({
+              message: 'Could not start user streaming',
+              type: 'error'
+            })
+          })
       })
       .catch(() => {
         loading.close()
@@ -68,6 +68,7 @@ export default {
   },
   beforeDestroy () {
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
+    this.$store.dispatch('TimelineSpace/removeShortcutEvents')
   }
 }
 </script>
