@@ -16,7 +16,7 @@
       <div class="tool-box">
         <el-button type="text"><icon name="reply" scale="0.9"></icon></el-button>
         <el-button type="text"><icon name="retweet" scale="0.9"></icon></el-button>
-        <el-button type="text" @click="addFavourite(message)"><icon name="star" scale="0.9"></icon></el-button>
+        <el-button type="text" @click="addFavourite(message)" :class="message.favourited ? 'favourited' : ''"><icon name="star" scale="0.9"></icon></el-button>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -114,6 +114,10 @@ function findLink (target) {
         margin: 0 8px;
         padding: 0;
         color: #909399;
+      }
+
+      .favourited {
+        color: #e6a23c;
       }
     }
   }
