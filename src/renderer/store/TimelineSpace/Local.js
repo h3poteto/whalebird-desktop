@@ -8,6 +8,15 @@ const Local = {
   mutations: {
     appendTimeline (state, update) {
       state.timeline = [update].concat(state.timeline)
+    },
+    updateToot (state, message) {
+      state.timeline = state.timeline.map((toot) => {
+        if (toot.id === message.id) {
+          return message
+        } else {
+          return toot
+        }
+      })
     }
   },
   actions: {
