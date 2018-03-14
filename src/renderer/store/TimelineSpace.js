@@ -4,6 +4,7 @@ import SideMenu from './TimelineSpace/SideMenu'
 import Favourites from './TimelineSpace/Favourites'
 import Local from './TimelineSpace/Local'
 import Public from './TimelineSpace/Public'
+import Cards from './TimelineSpace/Cards'
 import router from '../router'
 
 const TimelineSpace = {
@@ -12,7 +13,8 @@ const TimelineSpace = {
     SideMenu,
     Favourites,
     Local,
-    Public
+    Public,
+    Cards
   },
   state: {
     account: {
