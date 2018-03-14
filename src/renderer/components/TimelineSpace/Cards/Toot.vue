@@ -1,12 +1,12 @@
 <template>
   <div class="toot">
     <div class="icon">
-      <img :src="contributorIcon(message)" />
+      <img :src="originalMessage(message).account.avatar" />
     </div>
     <div class="detail">
       <div class="toot-header">
         <div class="user">
-          {{ contributorName(message) }}
+          {{ originalMessage(message).account.display_name }}
         </div>
         <div class="timestamp">
           {{ parseDatetime(message.created_at) }}
@@ -26,10 +26,10 @@
         <el-button type="text" @click="openReply(message)">
           <icon name="reply" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" @click="changeReblog(message)" :class="message.reblogged ? 'reblogged' : ''">
+        <el-button type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : ''">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" @click="changeFavourite(message)" :class="message.favourited ? 'favourited' : ''">
+        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : ''">
           <icon name="star" scale="0.9"></icon>
         </el-button>
       </div>
@@ -47,18 +47,11 @@ export default {
   name: 'toot',
   props: ['message'],
   methods: {
-    contributorIcon (message) {
+    originalMessage (message) {
       if (message.reblog !== null) {
-        return message.reblog.account.avatar
+        return message.reblog
       } else {
-        return message.account.avatar
-      }
-    },
-    contributorName (message) {
-      if (message.reblog !== null) {
-        return message.reblog.account.display_name
-      } else {
-        return message.account.display_name
+        return message
       }
     },
     parseDatetime (datetime) {
