@@ -5,6 +5,7 @@ import Favourites from './TimelineSpace/Favourites'
 import Local from './TimelineSpace/Local'
 import Public from './TimelineSpace/Public'
 import Cards from './TimelineSpace/Cards'
+import NewTootModal from './TimelineSpace/NewTootModal'
 import router from '../router'
 
 const TimelineSpace = {
@@ -14,7 +15,8 @@ const TimelineSpace = {
     Favourites,
     Local,
     Public,
-    Cards
+    Cards,
+    NewTootModal
   },
   state: {
     account: {
@@ -23,8 +25,7 @@ const TimelineSpace = {
     },
     username: '',
     homeTimeline: [],
-    notifications: [],
-    newTootModal: false
+    notifications: []
   },
   mutations: {
     updateAccount (state, account) {
@@ -44,9 +45,6 @@ const TimelineSpace = {
     },
     insertNotifications (state, notifications) {
       state.notifications = state.notifications.concat(notifications)
-    },
-    changeNewTootModal (state, modal) {
-      state.newTootModal = modal
     },
     updateToot (state, message) {
       // Replace target message in homeTimeline and notifications
@@ -124,7 +122,7 @@ const TimelineSpace = {
     },
     watchShortcutEvents ({ commit }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {
-        commit('changeNewTootModal', true)
+        commit('TimelineSpace/NewTootModal/changeModal', true, { root: true })
       })
       ipcRenderer.on('CmdOrCtrl+R', () => {
         // TODO: reply window
@@ -164,33 +162,11 @@ const TimelineSpace = {
           resolve(res)
         })
       })
-    },
-    postToot ({ commit, state }, body) {
-      return new Promise((resolve, reject) => {
-        if (state.account.accessToken === undefined || state.account.accessToken === null) {
-          return reject(new AuthenticationError())
-        }
-        const client = new Mastodon(
-          {
-            access_token: state.account.accessToken,
-            api_url: state.account.baseURL + '/api/v1'
-          }
-        )
-        client.post('/statuses', {
-          status: body
-        }, (err, data, res) => {
-          if (err) return reject(err)
-          commit('changeNewTootModal', false)
-          resolve(res)
-        })
-      })
     }
   }
 }
 
 export default TimelineSpace
-
-class AuthenticationError {}
 
 function buildNotification (notification) {
   switch (notification.type) {
