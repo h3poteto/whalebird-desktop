@@ -16,7 +16,7 @@
       <div class="tool-box">
         <el-button type="text"><icon name="reply" scale="0.9"></icon></el-button>
         <el-button type="text"><icon name="retweet" scale="0.9"></icon></el-button>
-        <el-button type="text" @click="addFavourite(message)" :class="message.favourited ? 'favourited' : ''"><icon name="star" scale="0.9"></icon></el-button>
+        <el-button type="text" @click="changeFavourite(message)" :class="message.favourited ? 'favourited' : ''"><icon name="star" scale="0.9"></icon></el-button>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -41,14 +41,24 @@ export default {
         shell.openExternal(link)
       }
     },
-    addFavourite (message) {
-      this.$store.dispatch('TimelineSpace/Cards/Toot/addFavourite', message)
-        .catch(() => {
-          this.$message({
-            message: 'Failed to favourite',
-            type: 'error'
+    changeFavourite (message) {
+      if (message.favourited) {
+        this.$store.dispatch('TimelineSpace/Cards/Toot/removeFavourite', message)
+          .catch(() => {
+            this.$message({
+              message: 'Failed to unfavourite',
+              type: 'error'
+            })
           })
-        })
+      } else {
+        this.$store.dispatch('TimelineSpace/Cards/Toot/addFavourite', message)
+          .catch(() => {
+            this.$message({
+              message: 'Failed to favourite',
+              type: 'error'
+            })
+          })
+      }
     }
   }
 }
