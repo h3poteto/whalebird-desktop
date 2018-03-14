@@ -22,9 +22,9 @@ export default {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
+    this.$store.dispatch('TimelineSpace/watchShortcutEvents')
     this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
       .then((account) => {
-        this.$store.dispatch('TimelineSpace/watchShortcutEvents', account)
         this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
           .then(() => {
             loading.close()
@@ -68,6 +68,7 @@ export default {
   },
   beforeDestroy () {
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
+    this.$store.dispatch('TimelineSpace/removeShortcutEvents')
   }
 }
 </script>
