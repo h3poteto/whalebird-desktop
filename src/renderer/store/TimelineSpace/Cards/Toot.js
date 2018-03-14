@@ -15,8 +15,11 @@ const Toot = {
         )
         client.post(`/statuses/${message.id}/reblog`, {}, (err, data, res) => {
           if (err) return reject(err)
-          commit('TimelineSpace/updateToot', data, { root: true })
-          resolve(data)
+          // API returns new status when reblog.
+          // Reblog target status is in the data.reblog.
+          // So I send data.reblog as status for update local timeline.
+          commit('TimelineSpace/updateToot', data.reblog, { root: true })
+          resolve(data.reblog)
         })
       })
     },

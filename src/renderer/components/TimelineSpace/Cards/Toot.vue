@@ -17,7 +17,7 @@
         <el-button type="text" @click="openReply(message)">
           <icon name="reply" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" @click="changeReblog(message)">
+        <el-button type="text" @click="changeReblog(message)" :class="message.reblogged ? 'reblogged' : ''">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
         <el-button type="text" @click="changeFavourite(message)" :class="message.favourited ? 'favourited' : ''">
@@ -164,6 +164,10 @@ function findLink (target) {
         margin: 0 8px;
         padding: 0;
         color: #909399;
+      }
+
+      .reblogged {
+        color: #409eff;
       }
 
       .favourited {
