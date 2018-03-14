@@ -42,7 +42,7 @@ export default {
       }
     },
     openReply (message) {
-      this.$store.dispatch('TimelineSpace/openReply', message)
+      this.$store.dispatch('TimelineSpace/NewTootModal/openReply', message)
     },
     changeFavourite (message) {
       if (message.favourited) {

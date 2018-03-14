@@ -3,11 +3,19 @@ import Mastodon from 'mastodon-api'
 const NewTootModal = {
   namespaced: true,
   state: {
-    modalOpen: false
+    modalOpen: false,
+    status: '',
+    replyToMessage: null
   },
   mutations: {
     changeModal (state, value) {
       state.modalOpen = value
+    },
+    setReplyTo (state, message) {
+      state.replyToMessage = message
+    },
+    updateStatus (state, status) {
+      state.status = status
     }
   },
   actions: {
@@ -25,9 +33,16 @@ const NewTootModal = {
         client.post('/statuses', form, (err, data, res) => {
           if (err) return reject(err)
           commit('changeModal', false)
+          commit('setReplyTo', null)
+          commit('updateStatus', '')
           resolve(res)
         })
       })
+    },
+    openReply ({ commit }, message) {
+      commit('setReplyTo', message)
+      commit('updateStatus', `@${message.account.acct} `)
+      commit('changeModal', true)
     }
   }
 }
