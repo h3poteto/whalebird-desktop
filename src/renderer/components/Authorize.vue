@@ -1,6 +1,6 @@
 <template>
 <div id="authorize">
-  <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form">
+  <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form" v-on:submit.prevent="authorizeSubmit">
     <el-form-item label="Please paste authorization code from your browser:">
       <el-input v-model="authorizeForm.code"></el-input>
     </el-form-item>

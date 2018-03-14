@@ -24,7 +24,7 @@ export default {
 <style lang="scss">
 body { font-family: 'Source Sans Pro', sans-serif; }
 
-html, body, #app, #login {
+html, body, #app {
   height: 100%;
   margin: 0;
 }
@@ -33,6 +33,7 @@ html, body, #app, #login {
   background-color: #292f3f;
   color: #ffffff;
   text-align: center;
+  min-height: 100%;
 
   .el-form-item__label {
     color: #f0f3f9;

@@ -1,6 +1,6 @@
 <template>
 <div id="login_form">
-  <el-form ref="loginForm" label-width="120px" label-position="top">
+  <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="login">
     <el-form-item label="Select instance">
       <el-radio-group v-model="loginForm.selectInstance" @change="changeInstance" class="instance-group">
         <el-radio class="instance-list" v-for="instance in instances" v-bind:key="instance.id" :label="instance.name" border></el-radio>
@@ -78,6 +78,10 @@ export default {
   border-color: #606266;
   color: #dcdfe6;
   margin-bottom: 10px;
+}
+
+.submit {
+  margin: 0;
 }
 
 .back {
