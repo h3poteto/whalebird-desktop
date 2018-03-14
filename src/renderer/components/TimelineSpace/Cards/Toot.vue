@@ -1,18 +1,27 @@
 <template>
   <div class="toot">
     <div class="icon">
-      <img :src="message.account.avatar" />
+      <img :src="contributorIcon(message)" />
     </div>
     <div class="detail">
       <div class="toot-header">
         <div class="user">
-          {{ message.account.display_name }}
+          {{ contributorName(message) }}
         </div>
         <div class="timestamp">
           {{ parseDatetime(message.created_at) }}
         </div>
       </div>
       <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
+      <div class="reblogger" v-if="message.reblog !== null">
+        <icon name="retweet"></icon>
+        <span class="reblogger-icon">
+          <img :src="message.account.avatar" />
+        </span>
+        <span class="reblogger-name">
+          {{ message.account.display_name }}
+        </span>
+      </div>
       <div class="tool-box">
         <el-button type="text" @click="openReply(message)">
           <icon name="reply" scale="0.9"></icon>
@@ -38,6 +47,20 @@ export default {
   name: 'toot',
   props: ['message'],
   methods: {
+    contributorIcon (message) {
+      if (message.reblog !== null) {
+        return message.reblog.account.avatar
+      } else {
+        return message.account.avatar
+      }
+    },
+    contributorName (message) {
+      if (message.reblog !== null) {
+        return message.reblog.account.display_name
+      } else {
+        return message.account.display_name
+      }
+    },
     parseDatetime (datetime) {
       return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
     },
@@ -157,6 +180,22 @@ function findLink (target) {
       font-size: 14px;
       color: #303133;
       margin: 4px 0 8px;
+    }
+
+    .reblogger {
+      color: #909399;
+
+      .reblogger-icon {
+        img {
+          width: 16px;
+          height: 16px;
+          border-radius: 2px;
+        }
+      }
+
+      .reblogger-name {
+        font-size: 12px;
+      }
     }
 
     .tool-box {
