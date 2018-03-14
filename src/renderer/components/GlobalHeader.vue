@@ -14,6 +14,10 @@
         <i class="el-icon-menu"></i>
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
+      <el-menu-item index="/login" @click="login">
+        <i class="el-icon-plus"></i>
+        <span slot="new">New</span>
+      </el-menu-item>
     </el-menu>
     <div class="space">
       <router-view></router-view>
@@ -60,6 +64,9 @@ export default {
     },
     accountClosed (key, keyPath) {
       console.log(key, keyPath)
+    },
+    login () {
+      return this.$router.push({ path: '/login' })
     }
   }
 }
