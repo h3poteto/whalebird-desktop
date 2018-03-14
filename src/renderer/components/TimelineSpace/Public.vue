@@ -1,7 +1,7 @@
 <template>
   <div id="public">
     <div class="public-timeline" v-for="message in timeline" v-bind:key="message.id">
-      <toot :message="message"></toot>
+      <toot :message="message" v-on:update="updateToot"></toot>
     </div>
   </div>
 </template>
@@ -24,6 +24,11 @@ export default {
   },
   beforeDestroy () {
     this.$store.dispatch('TimelineSpace/Public/stopPublicStreaming')
+  },
+  methods: {
+    updateToot (message) {
+      this.$store.commit('TimelineSpace/Public/updateToot', message)
+    }
   }
 }
 </script>

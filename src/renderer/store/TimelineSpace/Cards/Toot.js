@@ -16,7 +16,7 @@ const Toot = {
         client.post(`/statuses/${message.id}/favourite`, {}, (err, data, res) => {
           if (err) return reject(err)
           commit('TimelineSpace/updateToot', data, { root: true })
-          resolve(res)
+          resolve(data)
         })
       })
     },
@@ -31,7 +31,7 @@ const Toot = {
         client.post(`/statuses/${message.id}/unfavourite`, {}, (err, data, res) => {
           if (err) return reject(err)
           commit('TimelineSpace/updateToot', data, { root: true })
-          resolve(res)
+          resolve(data)
         })
       })
     }
