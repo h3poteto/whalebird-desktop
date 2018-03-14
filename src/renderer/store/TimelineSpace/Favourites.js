@@ -8,6 +8,15 @@ const Favourites = {
   mutations: {
     insertFavourites (state, favourites) {
       state.favourites = favourites
+    },
+    updateToot (state, message) {
+      state.favourites = state.favourites.map((toot) => {
+        if (toot.id === message.id) {
+          return message
+        } else {
+          return toot
+        }
+      })
     }
   },
   actions: {

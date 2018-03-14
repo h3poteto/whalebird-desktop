@@ -44,6 +44,9 @@ export default {
     changeFavourite (message) {
       if (message.favourited) {
         this.$store.dispatch('TimelineSpace/Cards/Toot/removeFavourite', message)
+          .then((data) => {
+            this.$emit('update', data)
+          })
           .catch(() => {
             this.$message({
               message: 'Failed to unfavourite',
@@ -52,6 +55,9 @@ export default {
           })
       } else {
         this.$store.dispatch('TimelineSpace/Cards/Toot/addFavourite', message)
+          .then((data) => {
+            this.$emit('update', data)
+          })
           .catch(() => {
             this.$message({
               message: 'Failed to favourite',
