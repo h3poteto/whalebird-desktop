@@ -124,9 +124,9 @@ const TimelineSpace = {
       })
     },
     stopUserStreaming ({ commit }) {
-      ipcRenderer.removeAll('update-start-user-streaming')
-      ipcRenderer.removeAll('notification-start-user-streaming')
-      ipcRenderer.removeAll('error-start-user-streaming')
+      ipcRenderer.removeAllListeners('update-start-user-streaming')
+      ipcRenderer.removeAllListeners('notification-start-user-streaming')
+      ipcRenderer.removeAllListeners('error-start-user-streaming')
       ipcRenderer.send('stop-user-streaming')
     },
     watchShortcutEvents ({ commit }) {
@@ -139,8 +139,8 @@ const TimelineSpace = {
       })
     },
     removeShortcutEvents () {
-      ipcRenderer.removeAll('CmdOrCtrl+N')
-      ipcRenderer.removeAll('CmdOrCtrl+R')
+      ipcRenderer.removeAllListeners('CmdOrCtrl+N')
+      ipcRenderer.removeAllListeners('CmdOrCtrl+R')
     },
     fetchHomeTimeline ({ commit }, account) {
       return new Promise((resolve, reject) => {
