@@ -1,6 +1,6 @@
 <template>
 <div id="instance_form">
-  <el-form ref="instanceForm" label-width="120px" label-position="top" class="instance-form">
+  <el-form ref="instanceForm" label-width="120px" label-position="top" class="instance-form" v-on:submit.prevent="search">
     <el-form-item label="Domain name">
       <el-input v-model="instanceForm.domain" class="input"></el-input>
     </el-form-item>
