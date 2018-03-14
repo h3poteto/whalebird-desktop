@@ -14,7 +14,7 @@
       </div>
       <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
       <div class="tool-box">
-        <el-button type="text"><icon name="reply" scale="0.9"></icon></el-button>
+        <el-button type="text" @click="openReply(message)"><icon name="reply" scale="0.9"></icon></el-button>
         <el-button type="text"><icon name="retweet" scale="0.9"></icon></el-button>
         <el-button type="text" @click="changeFavourite(message)" :class="message.favourited ? 'favourited' : ''"><icon name="star" scale="0.9"></icon></el-button>
       </div>
@@ -40,6 +40,9 @@ export default {
       if (link !== null) {
         shell.openExternal(link)
       }
+    },
+    openReply (message) {
+      this.$store.dispatch('TimelineSpace/openReply', message)
     },
     changeFavourite (message) {
       if (message.favourited) {
