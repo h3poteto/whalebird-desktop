@@ -4,13 +4,13 @@
     :visible.sync="newTootModal"
     width="400px"
     class="new-toot-modal" v-on:submit.prevent="toot">
-    <el-form :model="tootForm">
-      <div class="body">
-        <textarea v-model="tootForm.body" ref="body" @keyup.ctrl.enter.exact="toot" @keyup.meta.enter.exact="toot"></textarea>
+    <el-form>
+      <div class="status">
+        <textarea v-model="status" ref="status" @keyup.ctrl.enter.exact="toot" @keyup.meta.enter.exact="toot"></textarea>
       </div>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <span class="text-count">{{ 500 - tootForm.body.length }}</span>
+      <span class="text-count">{{ 500 - status.length }}</span>
       <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="toot">Toot</el-button>
     </span>
@@ -18,44 +18,63 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'new-toot-modal',
-  data () {
-    return {
-      tootForm: {
-        body: ''
-      }
-    }
-  },
   computed: {
+    ...mapState({
+      replyToId: (state) => {
+        if (state.TimelineSpace.NewTootModal.replyToMessage !== null) {
+          return state.TimelineSpace.NewTootModal.replyToMessage.id
+        } else {
+          return null
+        }
+      }
+    }),
     newTootModal: {
       get () {
-        return this.$store.state.TimelineSpace.newTootModal
+        return this.$store.state.TimelineSpace.NewTootModal.modalOpen
       },
       set (value) {
-        this.$store.commit('TimelineSpace/changeNewTootModal', value)
+        this.$store.commit('TimelineSpace/NewTootModal/changeModal', value)
+      }
+    },
+    status: {
+      get () {
+        return this.$store.state.TimelineSpace.NewTootModal.status
+      },
+      set (value) {
+        this.$store.commit('TimelineSpace/NewTootModal/updateStatus', value)
       }
     }
   },
   updated () {
     if (this.newTootModal) {
-      this.$refs.body.focus()
+      this.$refs.status.focus()
     }
   },
   methods: {
     close () {
-      this.$store.commit('TimelineSpace/changeNewTootModal', false)
+      this.$store.commit('TimelineSpace/NewTootModal/changeModal', false)
     },
     toot () {
-      if (this.tootForm.body.length <= 0 || this.tootForm.body.length >= 500) {
+      if (this.status.length <= 0 || this.status.length >= 500) {
         return this.$message({
           message: 'Toot length should be 1 to 500',
           type: 'error'
         })
       }
-      this.$store.dispatch('TimelineSpace/postToot', this.tootForm.body)
+      let form = {
+        status: this.status
+      }
+      if (this.replyToId !== null) {
+        form = Object.assign(form, {
+          in_reply_to_id: this.replyToId
+        })
+      }
+      this.$store.dispatch('TimelineSpace/NewTootModal/postToot', form)
         .then(() => {
-          this.tootForm.body = ''
           this.$message({
             message: 'Toot',
             type: 'success'
@@ -85,7 +104,7 @@ export default {
   .el-dialog__body {
     padding: 0;
 
-    .body {
+    .status {
       textarea {
         display: block;
         padding: 5px 15px;
