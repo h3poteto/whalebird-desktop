@@ -47,6 +47,27 @@ const TimelineSpace = {
     },
     changeNewTootModal (state, modal) {
       state.newTootModal = modal
+    },
+    updateToot (state, message) {
+      // Replace target message in homeTimeline and notifications
+      state.homeTimeline = state.homeTimeline.map((toot) => {
+        if (toot.id === message.id) {
+          return message
+        } else {
+          return toot
+        }
+      })
+
+      state.notifications = state.notifications.map((notification) => {
+        if (notification.type === 'mention' && notification.status.id === message.id) {
+          const status = {
+            status: message
+          }
+          return Object.assign(notification, status)
+        } else {
+          return notification
+        }
+      })
     }
   },
   actions: {
