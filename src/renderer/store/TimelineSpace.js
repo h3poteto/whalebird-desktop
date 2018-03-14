@@ -2,13 +2,15 @@ import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
 import Favourites from './TimelineSpace/Favourites'
+import Local from './TimelineSpace/Local'
 import router from '../router'
 
 const TimelineSpace = {
   namespaced: true,
   modules: {
     SideMenu,
-    Favourites
+    Favourites,
+    Local
   },
   state: {
     account: {
@@ -84,7 +86,7 @@ const TimelineSpace = {
 
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-user-streaming', account)
-        ipcRenderer.once('error-start-userstreaming', (event, err) => {
+        ipcRenderer.once('error-start-user-streaming', (event, err) => {
           reject(err)
         })
       })
