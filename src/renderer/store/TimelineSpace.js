@@ -99,7 +99,7 @@ const TimelineSpace = {
       ipcRenderer.removeAll('error-start-user-streaming')
       ipcRenderer.send('stop-user-streaming')
     },
-    watchShortcutEvents ({ commit }, account) {
+    watchShortcutEvents ({ commit }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {
         commit('changeNewTootModal', true)
       })
@@ -107,6 +107,10 @@ const TimelineSpace = {
         // TODO: reply window
         console.log('reply')
       })
+    },
+    removeShortcutEvents () {
+      ipcRenderer.removeAll('CmdOrCtrl+N')
+      ipcRenderer.removeAll('CmdOrCtrl+R')
     },
     fetchHomeTimeline ({ commit }, account) {
       return new Promise((resolve, reject) => {
