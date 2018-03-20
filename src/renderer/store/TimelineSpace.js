@@ -75,6 +75,12 @@ const TimelineSpace = {
           return notification
         }
       })
+    },
+    clearTimeline (state) {
+      state.timeline = []
+    },
+    clearNotifications (state) {
+      state.notifications = []
     }
   },
   actions: {
@@ -171,6 +177,18 @@ const TimelineSpace = {
           resolve(res)
         })
       })
+    },
+    clearAccount ({ commit }) {
+      commit(
+        'updateAccount',
+        {
+          domain: '',
+          _id: ''
+        }
+      )
+    },
+    clearUsername ({ commit }) {
+      commit('updateUsername', '')
     }
   }
 }

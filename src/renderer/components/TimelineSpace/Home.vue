@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div class="home-timeline" v-for="message in timeline" v-bind:key="message.id">
+    <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
       <toot :message="message"></toot>
     </div>
   </div>

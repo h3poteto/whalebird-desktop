@@ -1,5 +1,10 @@
 <template>
 <div id="login">
+  <div class="close">
+    <el-button type="text" @click="close">
+      <i class="el-icon-close"></i>
+    </el-button>
+  </div>
   <instance-form v-if="page == 1"></instance-form>
   <login-form v-if="page == 2"></login-form>
 </div>
@@ -12,12 +17,17 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'login',
+  components: { InstanceForm, LoginForm },
   computed: {
     ...mapState({
       page: state => state.Login.page
     })
   },
-  components: { InstanceForm, LoginForm }
+  methods: {
+    close () {
+      return this.$router.push({ path: '/' })
+    }
+  }
 }
 </script>
 
@@ -34,6 +44,10 @@ html, body, #app {
   color: #ffffff;
   text-align: center;
   min-height: 100%;
+
+  .close {
+    text-align: right;
+  }
 
   .el-form-item__label {
     color: #f0f3f9;
