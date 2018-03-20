@@ -67,6 +67,10 @@ export default {
       })
   },
   beforeDestroy () {
+    this.$store.dispatch('TimelineSpace/clearAccount')
+    this.$store.dispatch('TimelineSpace/clearUsername')
+    this.$store.commit('TimelineSpace/clearTimeline')
+    this.$store.commit('TimelineSpace/clearNotifications')
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
     this.$store.dispatch('TimelineSpace/removeShortcutEvents')
   }

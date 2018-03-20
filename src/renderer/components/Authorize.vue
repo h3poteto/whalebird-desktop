@@ -1,5 +1,10 @@
 <template>
 <div id="authorize">
+  <div class="close">
+    <el-button type="text" @click="close">
+      <i class="el-icon-close"></i>
+    </el-button>
+  </div>
   <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form" v-on:submit.prevent="authorizeSubmit">
     <el-form-item label="Please paste authorization code from your browser:">
       <el-input v-model="authorizeForm.code"></el-input>
@@ -33,6 +38,9 @@ export default {
             type: 'error'
           })
         })
+    },
+    close () {
+      return this.$router.push({ path: '/' })
     }
   }
 }
