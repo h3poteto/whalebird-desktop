@@ -59,6 +59,10 @@ html, body, #app, #authorize {
   color: #ffffff;
   text-align: center;
 
+  .close {
+    text-align: right;
+  }
+
   .authorize-form {
     width: 500px;
     margin: 0 auto;
