@@ -10,7 +10,7 @@
       <el-input v-model="authorizeForm.code"></el-input>
     </el-form-item>
     <el-form-item class="submit">
-      <el-button type="primary" @click="authorizeSubmit">Submit</el-button>
+      <el-button type="primary" @click="authorizeSubmit" native-type="submit">Submit</el-button>
     </el-form-item>
   </el-form>
 </div>
