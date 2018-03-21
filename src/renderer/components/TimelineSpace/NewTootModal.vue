@@ -6,7 +6,7 @@
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
       <div class="status">
-        <textarea v-model="status" ref="status" @keyup.ctrl.enter.exact="toot" @keyup.enter.exact="enter" @keydown="keydown" @keyup="keyup"></textarea>
+        <textarea v-model="status" ref="status" @keyup.meta.enter.exact="toot" @keyup.ctrl.enter.exact="toot" @keyup.enter.exact="enter" @keydown="keydown" @keyup="keyup"></textarea>
       </div>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -64,12 +64,12 @@ export default {
       this.$store.commit('TimelineSpace/NewTootModal/changeModal', false)
     },
     keydown (e) {
-      if (e.keyCode === 17) {
+      if (e.keyCode === 17 || e.keyCode === 93) {
         this.ctrlPressed = true
       }
     },
     keyup (e) {
-      if (e.keyCode === 17) {
+      if (e.keyCode === 17 || e.keyCode === 93) {
         setTimeout(() => {
           this.ctrlPressed = false
         }, 100)
