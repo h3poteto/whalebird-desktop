@@ -50,6 +50,7 @@ export default {
       this.$store.dispatch('Login/fetchLogin', this.selectedInstance)
         .then((url) => {
           loading.close()
+          this.$store.dispatch('Login/pageBack')
           this.$router.push({ path: '/authorize' })
         })
         .catch(() => {

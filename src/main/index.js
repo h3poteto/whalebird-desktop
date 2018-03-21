@@ -284,8 +284,10 @@ ipcMain.on('start-user-streaming', (event, ac) => {
 })
 
 ipcMain.on('stop-user-streaming', (event, _) => {
-  userStreaming.stop()
-  userStreaming = null
+  if (userStreaming !== null) {
+    userStreaming.stop()
+    userStreaming = null
+  }
 })
 
 let localStreaming = null
