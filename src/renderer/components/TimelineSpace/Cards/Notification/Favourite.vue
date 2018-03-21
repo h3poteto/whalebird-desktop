@@ -1,5 +1,5 @@
 <template>
-  <div class="favourite">
+  <div class="favourite" tabIndex="0">
     <div class="action">
       <div class="action-mark">
         <icon name="star" scale="0.7"></icon>
@@ -51,7 +51,7 @@ export default {
 .fill-line {
   height: 1px;
   background-color: #f2f6fc;
-  margin: 4px 0;
+  margin: 4px 0 0;
 }
 
 .bold {
@@ -59,7 +59,7 @@ export default {
 }
 
 .favourite {
-  margin-top: 8px;
+  padding: 8px 0 0 16px;
 
   .action {
     margin-right: 8px;
@@ -124,5 +124,10 @@ export default {
       }
     }
   }
+}
+
+.favourite:focus {
+  outline: 0;
+  background-color: #f2f6fc;
 }
 </style>
