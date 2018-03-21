@@ -57,6 +57,19 @@ const Login = {
       commit('changePage', 1)
       commit('updateInstances', [])
       commit('changeInstance', null)
+    },
+    confirmInstance ({ commit }, domain) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`https://${domain}/api/v1/instance`)
+          .then((res) => {
+            commit('changeInstance', domain)
+            resolve(res)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
     }
   }
 }
