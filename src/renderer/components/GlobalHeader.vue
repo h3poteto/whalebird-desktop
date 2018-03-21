@@ -3,7 +3,7 @@
     <el-menu
       :default-active="defaultActive"
       class="el-menu-vertical account-menu"
-      :collapse="isCollapse"
+      :collapse="true"
       :route="true"
       background-color="#4a5664"
       text-color="#909399"
@@ -28,35 +28,27 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'global-header',
-  data () {
-    return {
-      isCollapse: true,
-      defaultActive: '0'
-    }
-  },
   computed: {
     ...mapState({
+      defaultActive: state => state.GlobalHeader.defaultActive,
       accounts: state => state.GlobalHeader.accounts
     })
   },
   created () {
-    const loading = this.$loading({
-      lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    })
-    this.$store.dispatch('GlobalHeader/listAccounts')
-      .then((accounts) => {
-        loading.close()
-        return this.$router.push({ path: `/${accounts[0]._id}/home` })
-      })
-      .catch(() => {
-        loading.close()
-        return this.$router.push({ path: '/login' })
-      })
+    this.initialize()
   },
+
   methods: {
+    async initialize () {
+      await this.$store.dispatch('GlobalHeader/removeShortcutEvents')
+      this.$store.dispatch('GlobalHeader/watchShortcutEvents')
+      try {
+        const accounts = await this.$store.dispatch('GlobalHeader/listAccounts')
+        return this.$router.push({ path: `/${accounts[0]._id}/home` })
+      } catch (err) {
+        return this.$router.push({ path: '/login' })
+      }
+    },
     login () {
       return this.$router.push({ path: '/login' })
     },

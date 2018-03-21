@@ -142,14 +142,9 @@ const TimelineSpace = {
       ipcRenderer.on('CmdOrCtrl+N', () => {
         commit('TimelineSpace/NewTootModal/changeModal', true, { root: true })
       })
-      ipcRenderer.on('CmdOrCtrl+R', () => {
-        // TODO: reply window
-        console.log('reply')
-      })
     },
     async removeShortcutEvents () {
       ipcRenderer.removeAllListeners('CmdOrCtrl+N')
-      ipcRenderer.removeAllListeners('CmdOrCtrl+R')
       return 'removeShortcutEvents'
     },
     fetchHomeTimeline ({ commit }, account) {
