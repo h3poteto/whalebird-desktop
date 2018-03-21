@@ -57,16 +57,6 @@ function createWindow () {
           click: () => {
             mainWindow.webContents.send('CmdOrCtrl+N')
           }
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Reply',
-          accelerator: 'CmdOrCtrl+R',
-          click: () => {
-            mainWindow.webContents.send('CmdOrCtrl+R')
-          }
         }
       ]
     },
