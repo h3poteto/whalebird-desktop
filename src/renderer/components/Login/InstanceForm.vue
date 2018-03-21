@@ -2,10 +2,10 @@
 <div id="instance_form">
   <el-form ref="instanceForm" label-width="120px" label-position="top" class="instance-form" v-on:submit.prevent="search">
     <el-form-item label="Domain name">
-      <el-input v-model="instanceForm.domain" class="input"></el-input>
+      <el-input v-model="instanceForm.domain" class="input" ref="domain" autofocus></el-input>
     </el-form-item>
     <el-form-item class="submit">
-      <el-button type="primary" @click="search">Search</el-button>
+      <el-button type="primary" @click="search" native-type="submit">Search</el-button>
     </el-form-item>
   </el-form>
 </div>
@@ -20,6 +20,9 @@ export default {
         domain: ''
       }
     }
+  },
+  mounted () {
+    this.$refs.domain.$el.getElementsByTagName('input')[0].focus()
   },
   methods: {
     search () {
