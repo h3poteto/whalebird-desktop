@@ -77,7 +77,7 @@ const TimelineSpace = {
       })
     },
     clearTimeline (state) {
-      state.timeline = []
+      state.homeTimeline = []
     },
     clearNotifications (state) {
       state.notifications = []
@@ -88,9 +88,11 @@ const TimelineSpace = {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-local-account', id)
         ipcRenderer.once('error-get-local-account', (event, err) => {
+          ipcRenderer.removeAllListeners('response-get-local-account')
           reject(err)
         })
         ipcRenderer.once('response-get-local-account', (event, account) => {
+          ipcRenderer.removeAllListeners('error-get-local-account')
           commit('updateAccount', account)
           resolve(account)
         })
@@ -129,11 +131,12 @@ const TimelineSpace = {
         })
       })
     },
-    stopUserStreaming ({ commit }) {
+    async stopUserStreaming ({ commit }) {
       ipcRenderer.removeAllListeners('update-start-user-streaming')
       ipcRenderer.removeAllListeners('notification-start-user-streaming')
       ipcRenderer.removeAllListeners('error-start-user-streaming')
       ipcRenderer.send('stop-user-streaming')
+      return 'stopUserStreaming'
     },
     watchShortcutEvents ({ commit }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {
@@ -144,9 +147,10 @@ const TimelineSpace = {
         console.log('reply')
       })
     },
-    removeShortcutEvents () {
+    async removeShortcutEvents () {
       ipcRenderer.removeAllListeners('CmdOrCtrl+N')
       ipcRenderer.removeAllListeners('CmdOrCtrl+R')
+      return 'removeShortcutEvents'
     },
     fetchHomeTimeline ({ commit }, account) {
       return new Promise((resolve, reject) => {
@@ -178,7 +182,15 @@ const TimelineSpace = {
         })
       })
     },
-    clearAccount ({ commit }) {
+    async clearTimeline ({ commit }) {
+      commit('clearTimeline')
+      return 'clearTimeline'
+    },
+    async clearNotifications ({ commit }) {
+      commit('clearNotifications')
+      return 'clearNotifications'
+    },
+    async clearAccount ({ commit }) {
       commit(
         'updateAccount',
         {
@@ -186,9 +198,11 @@ const TimelineSpace = {
           _id: ''
         }
       )
+      return 'clearAccount'
     },
-    clearUsername ({ commit }) {
+    async clearUsername ({ commit }) {
       commit('updateUsername', '')
+      return 'clearUsername'
     }
   }
 }
