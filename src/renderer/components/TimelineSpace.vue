@@ -5,16 +5,18 @@
     <router-view></router-view>
   </div>
   <new-toot-modal></new-toot-modal>
+  <jump-modal></jump-modal>
 </div>
 </template>
 
 <script>
 import SideMenu from './TimelineSpace/SideMenu'
 import NewTootModal from './TimelineSpace/NewTootModal'
+import JumpModal from './TimelineSpace/JumpModal'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu, NewTootModal },
+  components: { SideMenu, NewTootModal, JumpModal },
   created () {
     const loading = this.$loading({
       lock: true,

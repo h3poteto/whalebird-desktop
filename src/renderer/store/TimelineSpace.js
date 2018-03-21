@@ -6,6 +6,7 @@ import Local from './TimelineSpace/Local'
 import Public from './TimelineSpace/Public'
 import Cards from './TimelineSpace/Cards'
 import NewTootModal from './TimelineSpace/NewTootModal'
+import JumpModal from './TimelineSpace/JumpModal'
 import router from '../router'
 
 const TimelineSpace = {
@@ -16,7 +17,8 @@ const TimelineSpace = {
     Local,
     Public,
     Cards,
-    NewTootModal
+    NewTootModal,
+    JumpModal
   },
   state: {
     account: {
@@ -141,6 +143,9 @@ const TimelineSpace = {
     watchShortcutEvents ({ commit }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {
         commit('TimelineSpace/NewTootModal/changeModal', true, { root: true })
+      })
+      ipcRenderer.on('CmdOrCtrl+K', () => {
+        commit('TimelineSpace/JumpModal/changeModal', true, { root: true })
       })
     },
     async removeShortcutEvents () {
