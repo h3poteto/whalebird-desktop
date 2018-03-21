@@ -3,14 +3,12 @@
     <el-menu
       :default-active="defaultActive"
       class="el-menu-vertical account-menu"
-      @open="accountSelected"
-      @close="accountClosed"
       :collapse="isCollapse"
       :route="true"
       background-color="#4a5664"
       text-color="#909399"
       active-text-color="#ffffff">
-      <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account._id" :route="{path: `/${account._id}/home`}">
+      <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account._id" :route="{path: `/${account._id}/home`}" @click="select(account)">
         <i class="el-icon-menu"></i>
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
@@ -20,7 +18,7 @@
       </el-menu-item>
     </el-menu>
     <div class="space">
-      <router-view></router-view>
+      <router-view :key="$route.params.id"></router-view>
     </div>
   </div>
 </template>
@@ -59,14 +57,12 @@ export default {
       })
   },
   methods: {
-    accountSelected (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    accountClosed (key, keyPath) {
-      console.log(key, keyPath)
-    },
     login () {
       return this.$router.push({ path: '/login' })
+    },
+    select (account) {
+      console.log(account._id)
+      return this.$router.push({ path: `/${account._id}/home` })
     }
   }
 }
