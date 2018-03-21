@@ -26,120 +26,150 @@ let db = new Datastore({
   autoload: true
 })
 
+async function listAccounts () {
+  try {
+    const account = new Account(db)
+    const accounts = await account.listAccounts()
+    return accounts
+  } catch (err) {
+    return []
+  }
+}
+
 function createWindow () {
   /**
-   * Set menu
+   * List accounts
    */
-  const template = [
-    {
-      label: 'Whalebird',
-      submenu: [
-        {
-          label: 'About Whalebird',
-          role: 'about'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Quit',
-          accelerator: 'CmdOrCtrl+Q',
-          role: 'quit'
-        }
-      ]
-    },
-    {
-      label: 'Toot',
-      submenu: [
-        {
-          label: 'New Toot',
-          accelerator: 'CmdOrCtrl+N',
+  listAccounts()
+    .then((accounts) => {
+      const accountsChange = accounts.map((a, index) => {
+        return {
+          label: a.domain,
+          accelerator: `CmdOrCtrl+${index + 1}`,
           click: () => {
-            mainWindow.webContents.send('CmdOrCtrl+N')
-          }
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Reply',
-          accelerator: 'CmdOrCtrl+R',
-          click: () => {
-            mainWindow.webContents.send('CmdOrCtrl+R')
+            mainWindow.webContents.send('change-account', Object.assign(a, { index: index }))
           }
         }
-      ]
-    },
-    {
-      label: 'Edit',
-      submenu: [
+      })
+      /**
+       * Set menu
+       */
+      const template = [
         {
-          label: 'Undo',
-          accelerator: 'CmdOrCtrl+Z',
-          role: 'undo'
+          label: 'Whalebird',
+          submenu: [
+            {
+              label: 'About Whalebird',
+              role: 'about'
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Quit',
+              accelerator: 'CmdOrCtrl+Q',
+              role: 'quit'
+            }
+          ]
         },
         {
-          label: 'Redo',
-          accelerator: 'Shift+CmdOrCtrl+Z',
-          role: 'redo'
+          label: 'Toot',
+          submenu: [
+            {
+              label: 'New Toot',
+              accelerator: 'CmdOrCtrl+N',
+              click: () => {
+                mainWindow.webContents.send('CmdOrCtrl+N')
+              }
+            }
+          ]
         },
         {
-          type: 'separator'
+          label: 'Edit',
+          submenu: [
+            {
+              label: 'Undo',
+              accelerator: 'CmdOrCtrl+Z',
+              role: 'undo'
+            },
+            {
+              label: 'Redo',
+              accelerator: 'Shift+CmdOrCtrl+Z',
+              role: 'redo'
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Cut',
+              accelerator: 'CmdOrCtrl+X',
+              role: 'cut'
+            },
+            {
+              label: 'Copy',
+              accelerator: 'CmdOrCtrl+C',
+              role: 'copy'
+            },
+            {
+              label: 'Paste',
+              accelerator: 'CmdOrCtrl+V',
+              role: 'paste'
+            },
+            {
+              label: 'Select All',
+              accelerator: 'CmdOrCtrl+A',
+              role: 'selectall'
+            }
+          ]
         },
         {
-          label: 'Cut',
-          accelerator: 'CmdOrCtrl+X',
-          role: 'cut'
-        },
-        {
-          label: 'Copy',
-          accelerator: 'CmdOrCtrl+C',
-          role: 'copy'
-        },
-        {
-          label: 'Paste',
-          accelerator: 'CmdOrCtrl+V',
-          role: 'paste'
-        },
-        {
-          label: 'Select All',
-          accelerator: 'CmdOrCtrl+A',
-          role: 'selectall'
+          label: 'Window',
+          submenu: [
+            {
+              label: 'Close Window',
+              role: 'close'
+            },
+            {
+              label: 'Minimize',
+              role: 'minimize'
+            },
+            {
+              type: 'separator'
+            }
+          ].concat(accountsChange)
+            .concat([
+              {
+                type: 'separator'
+              },
+              {
+                label: 'Jump to',
+                accelerator: 'CmdOrCtrl+K',
+                click: () => {
+                  mainWindow.webContents.send('CmdOrCtrl+K')
+                }
+              }
+            ])
         }
       ]
-    },
-    {
-      label: 'Window',
-      submenu: [
-        {
-          label: 'Close Window',
-          role: 'close'
-        },
-        {
-          label: 'Minimize',
-          role: 'minimize'
-        }
-      ]
-    }
-  ]
 
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+      const menu = Menu.buildFromTemplate(template)
+      Menu.setApplicationMenu(menu)
 
-  /**
-   * Initial window options
-   */
-  mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
-  })
+      /**
+       * Initial window options
+       */
+      mainWindow = new BrowserWindow({
+        height: 563,
+        useContentSize: true,
+        width: 1000
+      })
 
-  mainWindow.loadURL(winURL)
+      mainWindow.loadURL(winURL)
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+      mainWindow.on('closed', () => {
+        mainWindow = null
+      })
+    })
 }
 
 app.on('ready', createWindow)
@@ -254,8 +284,10 @@ ipcMain.on('start-user-streaming', (event, ac) => {
 })
 
 ipcMain.on('stop-user-streaming', (event, _) => {
-  userStreaming.stop()
-  userStreaming = null
+  if (userStreaming !== null) {
+    userStreaming.stop()
+    userStreaming = null
+  }
 })
 
 let localStreaming = null

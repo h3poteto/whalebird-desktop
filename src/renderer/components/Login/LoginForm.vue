@@ -14,7 +14,7 @@
     </template>
     <el-form-item class="submit">
       <el-button type="text" class="back" @click="back"><icon name="chevron-left"></icon></el-button>
-      <el-button type="primary" class="login" @click="login" v-if="selectedInstance !== null">Login</el-button>
+      <el-button type="primary" class="login" @click="login" native-type="submit" v-if="selectedInstance !== null">Login</el-button>
     </el-form-item>
   </el-form>
 </div>
@@ -50,6 +50,7 @@ export default {
       this.$store.dispatch('Login/fetchLogin', this.selectedInstance)
         .then((url) => {
           loading.close()
+          this.$store.dispatch('Login/pageBack')
           this.$router.push({ path: '/authorize' })
         })
         .catch(() => {
