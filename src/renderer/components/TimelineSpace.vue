@@ -22,57 +22,64 @@ export default {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
-    this.$store.dispatch('TimelineSpace/watchShortcutEvents')
-    this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
-      .then((account) => {
-        this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
-          .then(() => {
-            loading.close()
-          })
-          .catch(() => {
-            loading.close()
-            this.$message({
-              message: 'Could not fetch timeline',
-              type: 'error'
-            })
-          })
-        this.$store.dispatch('TimelineSpace/username', account)
-          .catch(() => {
-            this.$message({
-              message: 'Could not fetch username',
-              type: 'error'
-            })
-          })
-        this.$store.dispatch('TimelineSpace/fetchNotifications', account)
-          .catch(() => {
-            this.$message({
-              message: 'Could not fetch notification',
-              type: 'error'
-            })
-          })
-        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
-          .catch(() => {
-            this.$message({
-              message: 'Could not start user streaming',
-              type: 'error'
-            })
-          })
+    this.initialize()
+      .then(() => {
+        loading.close()
       })
       .catch(() => {
         loading.close()
+      })
+  },
+  beforeDestroy () {
+    this.$store.dispatch('TimelineSpace/stopUserStreaming')
+  },
+  methods: {
+    async clear () {
+      await this.$store.dispatch('TimelineSpace/clearAccount')
+      await this.$store.dispatch('TimelineSpace/clearUsername')
+      await this.$store.dispatch('TimelineSpace/clearTimeline')
+      await this.$store.dispatch('TimelineSpace/clearNotifications')
+      await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
+      return 'clear'
+    },
+    async initialize () {
+      await this.clear()
+
+      this.$store.dispatch('TimelineSpace/watchShortcutEvents')
+      try {
+        const account = await this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
+        try {
+          await this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
+        } catch (err) {
+          this.$message({
+            message: 'Could not fetch timeline',
+            type: 'error'
+          })
+        }
+        try {
+          await this.$store.dispatch('TimelineSpace/username', account)
+        } catch (err) {
+          this.$message({
+            message: 'Could not fetch username',
+            type: 'error'
+          })
+        }
+        try {
+          await this.$store.dispatch('TimelineSpace/fetchNotifications', account)
+        } catch (err) {
+          this.$message({
+            message: 'Could not fetch notification',
+            type: 'error'
+          })
+        }
+        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+      } catch (err) {
         this.$message({
           message: 'Could not find account',
           type: 'error'
         })
-      })
-  },
-  beforeDestroy () {
-    this.$store.dispatch('TimelineSpace/clearAccount')
-    this.$store.dispatch('TimelineSpace/clearUsername')
-    this.$store.commit('TimelineSpace/clearTimeline')
-    this.$store.commit('TimelineSpace/clearNotifications')
-    this.$store.dispatch('TimelineSpace/stopUserStreaming')
-    this.$store.dispatch('TimelineSpace/removeShortcutEvents')
+      }
+    }
   }
 }
 </script>
