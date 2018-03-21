@@ -137,6 +137,18 @@ function createWindow () {
               type: 'separator'
             }
           ].concat(accountsChange)
+            .concat([
+              {
+                type: 'separator'
+              },
+              {
+                label: 'Jump to',
+                accelerator: 'CmdOrCtrl+K',
+                click: () => {
+                  mainWindow.webContents.send('CmdOrCtrl+K')
+                }
+              }
+            ])
         }
       ]
 

@@ -3,8 +3,8 @@
     title="New Toot"
     :visible.sync="newTootModal"
     width="400px"
-    class="new-toot-modal" v-on:submit.prevent="toot">
-    <el-form>
+    class="new-toot-modal">
+    <el-form v-on:submit.prevent="toot">
       <div class="status">
         <textarea v-model="status" ref="status" @keyup.ctrl.enter.exact="toot" @keyup.meta.enter.exact="toot"></textarea>
       </div>
