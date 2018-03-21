@@ -45,9 +45,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-#favourites {
-  margin-left: 16px;
-}
-</style>

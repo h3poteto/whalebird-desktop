@@ -32,9 +32,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-#public {
-  margin-left: 16px;
-}
-</style>
