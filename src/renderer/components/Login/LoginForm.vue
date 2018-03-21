@@ -1,12 +1,17 @@
 <template>
 <div id="login_form">
-  <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="login">
+  <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="login" class="login-form">
     <el-form-item label="Select instance">
       <el-radio-group v-model="loginForm.selectInstance" @change="changeInstance" class="instance-group">
         <el-radio class="instance-list" v-for="instance in instances" v-bind:key="instance.id" :label="instance.name" border></el-radio>
       </el-radio-group>
     </el-form-item>
-    <p v-if="instances.length === 0">Could not find instance</p>
+    <template v-if="instances.length === 0">
+      <el-form-item label="Could not find instance, please write host name">
+        <el-input v-model="loginForm.domainName"></el-input>
+      </el-form-item>
+      <el-button type="primary" @click="confirm" v-if="selectedInstance === null">Search</el-button>
+    </template>
     <el-form-item class="submit">
       <el-button type="text" class="back" @click="back"><icon name="chevron-left"></icon></el-button>
       <el-button type="primary" class="login" @click="login" v-if="selectedInstance !== null">Login</el-button>
@@ -23,7 +28,8 @@ export default {
   data () {
     return {
       loginForm: {
-        selectInstance: ''
+        selectInstance: '',
+        domainName: ''
       }
     }
   },
@@ -59,32 +65,50 @@ export default {
     },
     back () {
       this.$store.dispatch('Login/pageBack')
+    },
+    confirm () {
+      this.$store.dispatch('Login/confirmInstance', this.loginForm.domainName)
+        .then(() => {
+          this.$message({
+            message: `${this.loginForm.domainName} is confirmed, please login`,
+            type: 'success'
+          })
+        })
+        .catch(() => {
+          this.$message({
+            message: `${this.loginForm.domainName} does not exist`,
+            type: 'error'
+          })
+        })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.instance-group {
-  width: 300px;
-  text-align: left;
+.login-form {
   margin: 0 auto;
-}
-
-.instance-list {
-  display: block;
   width: 300px;
-  margin-left: 0 !important;
-  border-color: #606266;
-  color: #dcdfe6;
-  margin-bottom: 10px;
-}
 
-.submit {
-  margin: 0;
-}
+  .instance-group {
+    text-align: left;
+    margin: 0 auto;
+  }
 
-.back {
-  margin-right: 20px;
+  .instance-list {
+    display: block;
+    margin-left: 0 !important;
+    border-color: #606266;
+    color: #dcdfe6;
+    margin-bottom: 10px;
+  }
+
+  .submit {
+    margin: 0;
+  }
+
+  .back {
+    margin-right: 20px;
+  }
 }
 </style>
