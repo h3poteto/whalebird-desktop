@@ -37,6 +37,14 @@ const GlobalHeader = {
     async removeShortcutEvents () {
       ipcRenderer.removeAllListeners('change-account')
       return 'removeShortcutEvents'
+    },
+    schmearMenu ({ commit, state }, id) {
+      const index = state.accounts.findIndex((a) => {
+        return a._id === id
+      })
+      if (index !== undefined) {
+        commit('changeDefaultActive', index.toString())
+      }
     }
   }
 }

@@ -37,14 +37,17 @@ export default {
   created () {
     this.initialize()
   },
-
   methods: {
     async initialize () {
       await this.$store.dispatch('GlobalHeader/removeShortcutEvents')
       this.$store.dispatch('GlobalHeader/watchShortcutEvents')
       try {
         const accounts = await this.$store.dispatch('GlobalHeader/listAccounts')
-        return this.$router.push({ path: `/${accounts[0]._id}/home` })
+        if (this.$route.params.id === undefined) {
+          return this.$router.push({ path: `/${accounts[0]._id}/home` })
+        } else {
+          return this.$store.dispatch('GlobalHeader/schmearMenu', this.$route.params.id)
+        }
       } catch (err) {
         return this.$router.push({ path: '/login' })
       }
