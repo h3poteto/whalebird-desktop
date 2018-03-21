@@ -1,5 +1,5 @@
 <template>
-  <div class="toot">
+  <div class="toot" tabIndex="0">
     <div class="icon">
       <img :src="originalMessage(message).account.avatar" />
     </div>
@@ -23,13 +23,13 @@
         </span>
       </div>
       <div class="tool-box">
-        <el-button type="text" @click="openReply(message)">
+        <el-button type="text" @click="openReply(message)" class="reply">
           <icon name="reply" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : ''">
+        <el-button type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : ''">
+        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
       </div>
@@ -133,11 +133,13 @@ function findLink (target) {
 <style lang="scss" scoped>
 .fill-line {
   height: 1px;
-  background-color: #f2f6fc;
-  margin: 4px 0;
+  background-color: #ebeef5;
+  margin: 4px 0 0;
 }
 
 .toot {
+  padding: 4px 0 0 16px;
+
   .icon {
     float: left;
 
@@ -149,9 +151,7 @@ function findLink (target) {
   }
 
   .detail {
-    margin-left: 42px;
-    margin-right: 8px;
-    margin-top: 8px;
+    margin: 0 8px 0 42px;
 
     .toot-header {
       .user {
@@ -206,6 +206,17 @@ function findLink (target) {
         color: #e6a23c;
       }
     }
+
+    .reply:hover,
+    .reblog:hover,
+    .favourite:hover {
+      color: #409eff;
+    }
   }
+}
+
+.toot:focus {
+  background-color: #f2f6fc;
+  outline: 0;
 }
 </style>

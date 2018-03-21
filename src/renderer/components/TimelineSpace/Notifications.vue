@@ -20,9 +20,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.notifications {
-  margin-left: 16px;
-}
-</style>
