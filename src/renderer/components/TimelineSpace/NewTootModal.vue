@@ -6,7 +6,7 @@
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
       <div class="status">
-        <textarea v-model="status" ref="status" @keyup.ctrl.enter.exact="toot" @keyup.meta.enter.exact="toot"></textarea>
+        <textarea v-model="status" ref="status" @keyup.ctrl.enter.exact="toot" @keyup.enter.exact="enter" @keydown="keydown" @keyup="keyup"></textarea>
       </div>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -22,6 +22,11 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'new-toot-modal',
+  data () {
+    return {
+      ctrlPressed: false
+    }
+  },
   computed: {
     ...mapState({
       replyToId: (state) => {
@@ -57,6 +62,23 @@ export default {
   methods: {
     close () {
       this.$store.commit('TimelineSpace/NewTootModal/changeModal', false)
+    },
+    keydown (e) {
+      if (e.keyCode === 17) {
+        this.ctrlPressed = true
+      }
+    },
+    keyup (e) {
+      if (e.keyCode === 17) {
+        setTimeout(() => {
+          this.ctrlPressed = false
+        }, 100)
+      }
+    },
+    enter () {
+      if (this.ctrlPressed) {
+        this.toot()
+      }
     },
     toot () {
       if (this.status.length <= 0 || this.status.length >= 500) {
