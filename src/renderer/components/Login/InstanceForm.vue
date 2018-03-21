@@ -5,7 +5,7 @@
       <el-input v-model="instanceForm.domain" class="input"></el-input>
     </el-form-item>
     <el-form-item class="submit">
-      <el-button type="primary" @click="search">Search</el-button>
+      <el-button type="primary" @click="search" native-type="submit">Search</el-button>
     </el-form-item>
   </el-form>
 </div>
