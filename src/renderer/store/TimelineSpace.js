@@ -150,6 +150,7 @@ const TimelineSpace = {
     },
     async removeShortcutEvents () {
       ipcRenderer.removeAllListeners('CmdOrCtrl+N')
+      ipcRenderer.removeAllListeners('CmdOrCtrl+K')
       return 'removeShortcutEvents'
     },
     fetchHomeTimeline ({ commit }, account) {
