@@ -64,18 +64,18 @@ export default {
     top: 0;
     left: 65px;
     width: 180px;
-    height: 60px;
+    height: 70px;
 
     .profile {
       color: #ffffff;
       font-weight: bold;
-      padding: 10px 20px;
+      padding: 20px 20px 10px;
     }
   }
 
   .timeline-menu {
     position: fixed;
-    top: 60px;
+    top: 70px;
     left: 65px;
     height: 100%;
     width: 180px;
