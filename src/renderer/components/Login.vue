@@ -5,19 +5,17 @@
       <i class="el-icon-close"></i>
     </el-button>
   </div>
-  <instance-form v-if="page == 1"></instance-form>
-  <login-form v-if="page == 2"></login-form>
+  <login-form></login-form>
 </div>
 </template>
 
 <script>
-import InstanceForm from './Login/InstanceForm'
 import LoginForm from './Login/LoginForm'
 import { mapState } from 'vuex'
 
 export default {
   name: 'login',
-  components: { InstanceForm, LoginForm },
+  components: { LoginForm },
   computed: {
     ...mapState({
       page: state => state.Login.page
@@ -25,6 +23,7 @@ export default {
   },
   methods: {
     close () {
+      this.$store.dispatch('Login/pageBack')
       return this.$router.push({ path: '/' })
     }
   }

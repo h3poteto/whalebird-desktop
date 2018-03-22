@@ -1,19 +1,11 @@
 <template>
 <div id="login_form">
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="login" class="login-form">
-    <el-form-item label="Select instance">
-      <el-radio-group v-model="loginForm.selectInstance" @change="changeInstance" class="instance-group">
-        <el-radio class="instance-list" v-for="instance in instances" v-bind:key="instance.id" :label="instance.name" border></el-radio>
-      </el-radio-group>
+    <el-form-item label="Please write host name">
+      <el-input v-model="loginForm.domainName"></el-input>
     </el-form-item>
-    <template v-if="instances.length === 0">
-      <el-form-item label="Could not find instance, please write host name">
-        <el-input v-model="loginForm.domainName"></el-input>
-      </el-form-item>
-      <el-button type="primary" @click="confirm" v-if="selectedInstance === null">Search</el-button>
-    </template>
+    <el-button type="primary" @click="confirm" v-if="selectedInstance === null">Search</el-button>
     <el-form-item class="submit">
-      <el-button type="text" class="back" @click="back"><icon name="chevron-left"></icon></el-button>
       <el-button type="primary" class="login" @click="login" native-type="submit" v-if="selectedInstance !== null">Login</el-button>
     </el-form-item>
   </el-form>
@@ -28,14 +20,12 @@ export default {
   data () {
     return {
       loginForm: {
-        selectInstance: '',
         domainName: ''
       }
     }
   },
   computed: {
     ...mapState({
-      instances: state => state.Login.instances,
       selectedInstance: state => state.Login.selectedInstance
     })
   },
@@ -60,12 +50,6 @@ export default {
             type: 'error'
           })
         })
-    },
-    changeInstance (value) {
-      this.$store.dispatch('Login/changeInstance', value)
-    },
-    back () {
-      this.$store.dispatch('Login/pageBack')
     },
     confirm () {
       this.$store.dispatch('Login/confirmInstance', this.loginForm.domainName)
