@@ -1,8 +1,13 @@
 <template>
 <div id="timeline_space">
   <side-menu></side-menu>
-  <div class="content">
-    <router-view></router-view>
+  <div class="page">
+    <div class="header">
+      <header-menu></header-menu>
+    </div>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
   <new-toot-modal></new-toot-modal>
   <jump-modal></jump-modal>
@@ -11,12 +16,13 @@
 
 <script>
 import SideMenu from './TimelineSpace/SideMenu'
+import HeaderMenu from './TimelineSpace/HeaderMenu'
 import NewTootModal from './TimelineSpace/NewTootModal'
 import JumpModal from './TimelineSpace/JumpModal'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu, NewTootModal, JumpModal },
+  components: { SideMenu, HeaderMenu, NewTootModal, JumpModal },
   created () {
     const loading = this.$loading({
       lock: true,
@@ -87,8 +93,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.content {
+.page {
   margin-left: 180px;
+
+  .header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 245px;
+    height: 48px;
+    background-color: #ffffff;
+    border-bottom: solid 1px #dcdfe6;
+  }
+
+  .content {
+    margin-top: 60px;
+  }
 }
 
 </style>
