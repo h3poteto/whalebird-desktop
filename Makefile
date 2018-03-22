@@ -19,4 +19,4 @@ install: package.json
 release-build: package.json
 	npm run pack
 package: release-build
-	electron-packager ./ whalebird --platform=${PLATFORM} --arch=x64 --electron-version=1.8.3  --build-version=${VERSION} --asar --out=packages --ignore="^/src" --ignore="^/test" --ignore="^/.electron-vue" --ignore="^/.envrc" --prune=true $(ICON) $(CERT)
+	electron-packager ./ whalebird --platform=${PLATFORM} --arch=x64 --electron-version=1.8.3  --build-version=${VERSION} --asar --out=packages --ignore="^/src" --ignore="^/test" --ignore="^/.electron-vue" --ignore="^/.envrc" --prune=true $(ICON) $(CERT) --overwrite
