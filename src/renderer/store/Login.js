@@ -6,7 +6,7 @@ const Login = {
   state: {
     instances: [],
     selectedInstance: null,
-    page: 1
+    page: 2
   },
   mutations: {
     updateInstances (state, instances) {
@@ -16,12 +16,12 @@ const Login = {
       state.selectedInstance = instance
     },
     changePage (state, page) {
-      state.page = page
+      // Invalidate page changer until implement instance search form
+      // state.page = page
     }
   },
   actions: {
     searchInstance ({ commit }, domain) {
-      console.log(domain)
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-social-token', 'get')
         ipcRenderer.once('error-get-social-token', (event, err) => {
