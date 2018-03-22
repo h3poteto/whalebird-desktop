@@ -9,8 +9,12 @@
     <el-form-item label="Please paste authorization code from your browser:">
       <el-input v-model="authorizeForm.code"></el-input>
     </el-form-item>
+    <!-- Dummy form to guard submitting with enter -->
+    <el-form-item class="hidden">
+      <el-input></el-input>
+    </el-form-item>
     <el-form-item class="submit">
-      <el-button type="primary" @click="authorizeSubmit" native-type="submit">Submit</el-button>
+      <el-button type="primary" @click="authorizeSubmit">Submit</el-button>
     </el-form-item>
   </el-form>
 </div>
@@ -76,6 +80,10 @@ html, body, #app, #authorize {
     background-color: #373d48;
     color: #ffffff;
     border: 0;
+  }
+
+  .hidden {
+    display: none;
   }
 }
 </style>
