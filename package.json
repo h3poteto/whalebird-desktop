@@ -2,8 +2,12 @@
   "name": "whalebird",
   "version": "0.1.0",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
-  "description": "A mastodon client",
-  "license": null,
+  "description": "A desktop mastodon client",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h3poteto/whalebird-desktop.git"
+  },
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
