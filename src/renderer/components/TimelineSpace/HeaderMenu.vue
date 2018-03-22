@@ -1,12 +1,30 @@
 <template>
 <div id="header_menu">
-  <div class="channel">#Home</div>
+  <div class="channel">#{{ channelName() }}</div>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'header-menu'
+  name: 'header-menu',
+  methods: {
+    channelName () {
+      switch (this.$route.name) {
+        case 'home':
+          return 'Home'
+        case 'notifications':
+          return 'Notification'
+        case 'favourites':
+          return 'Favourite'
+        case 'local':
+          return 'LocalTimeline'
+        case 'public':
+          return 'PublicTimeline'
+        default:
+          return 'Home'
+      }
+    }
+  }
 }
 </script>
 
