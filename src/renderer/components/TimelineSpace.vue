@@ -107,7 +107,7 @@ export default {
   }
 
   .content {
-    margin-top: 60px;
+    margin-top: 48px;
   }
 }
 
