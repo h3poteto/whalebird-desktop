@@ -11,6 +11,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
+const WebpackObfuscator = require('webpack-obfuscator')
 
 /**
  * List of node_modules to include in webpack bundle
@@ -177,6 +178,15 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+    new WebpackObfuscator ({
+      rotateUnicodeArray: true,
     })
   )
 }

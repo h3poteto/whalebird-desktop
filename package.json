@@ -1,6 +1,6 @@
 {
   "name": "whalebird",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
   "description": "A mastodon client",
   "license": null,
@@ -128,6 +128,7 @@
     "webpack": "^3.5.2",
     "webpack-dev-server": "^2.7.1",
     "webpack-hot-middleware": "^2.18.2",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "webpack-obfuscator": "^0.14.3"
   }
 }
