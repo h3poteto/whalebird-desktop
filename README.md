@@ -1,28 +1,56 @@
 # whalebird
 
-> A mastodon client
+Whalebird is a mastodon client for desktop application. If you want to use release build, please download from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
-#### Build Setup
+## Feature
+
+- Slack like interface
+- Notify to desktop
+- Streaming
+- Many keyboard shortcuts
+- Manage multiple accounts
+
+## Install
+### Mac
+
+Download from [release page](https://github.com/h3poteto/whalebird-desktop/releases), and to decompress. I recommend that you move `whalebird.app` to `/Applications`.
+
+Please wait for distribute in Mac app store, I'm preparing.
+
+### Linux
+
+Download from [release page](https://github.com/h3poteto/whalebird-desktop/releases), and to decompress. I'm preparing deb and rmp packages.
+
+### Windows
+
+TODO.
+Please wait...
+
+## Development
 
 ``` bash
+# clone this repository
+$ git clone https://github.com/h3poteto/whalebird-desktop.git
+$ cd whalebird-desktop
+
 # install dependencies
-npm install
+$ npm install
 
 # serve with hot reload at localhost:9080
-npm run dev
-
-# build electron application for production
-npm run build
-
-# run unit & end-to-end tests
-npm test
-
-
-# lint all JS/Vue component files in `src/`
-npm run lint
-
+$ npm run dev
 ```
 
----
+## Release
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[1c165f7](https://github.com/SimulatedGREG/electron-vue/tree/1c165f7c5e56edaf48be0fbb70838a1af26bb015) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+I prepared Makefile for production release.
+
+```bash
+# for linux
+$ make VERSION=0.1.0 PLATFORM=linux
+
+# for mac
+$ make VERSION=0.1.0 PLATFORM=darwin CERTNAME="Develper ID Application: NAME (ID)"
+```
+
+# License
+The software is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
