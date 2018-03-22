@@ -21,8 +21,12 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
+const userData = app.getPath('userData')
+const databasePath = process.env.NODE_ENV === 'production'
+  ? userData + '/db/whalebird.db'
+  : 'whalebird.db'
 let db = new Datastore({
-  filename: 'whalebird.db',
+  filename: databasePath,
   autoload: true
 })
 
