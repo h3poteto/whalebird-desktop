@@ -9,6 +9,10 @@
     <el-form-item label="Please paste authorization code from your browser:">
       <el-input v-model="authorizeForm.code"></el-input>
     </el-form-item>
+    <!-- Dummy form to guard submitting with enter -->
+    <el-form-item class="hidden">
+      <el-input></el-input>
+    </el-form-item>
     <el-form-item class="submit">
       <el-button type="primary" @click="authorizeSubmit" native-type="submit">Submit</el-button>
     </el-form-item>

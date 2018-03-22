@@ -1,12 +1,16 @@
 <template>
 <div id="login_form">
-  <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="login" class="login-form">
+  <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm" class="login-form">
     <el-form-item label="Please write host name">
       <el-input v-model="loginForm.domainName"></el-input>
     </el-form-item>
+    <!-- Dummy form to guard submitting with enter -->
+    <el-form-item class="hidden">
+      <el-input></el-input>
+    </el-form-item>
     <el-button type="primary" @click="confirm" v-if="selectedInstance === null">Search</el-button>
     <el-form-item class="submit">
-      <el-button type="primary" class="login" @click="login" native-type="submit" v-if="selectedInstance !== null">Login</el-button>
+      <el-button type="primary" class="login" @click="login" v-if="selectedInstance !== null">Login</el-button>
     </el-form-item>
   </el-form>
 </div>
@@ -94,6 +98,10 @@ export default {
 
   .back {
     margin-right: 20px;
+  }
+
+  .hidden {
+    display: none;
   }
 }
 </style>
