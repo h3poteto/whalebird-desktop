@@ -25,9 +25,11 @@ const Login = {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-social-token', 'get')
         ipcRenderer.once('error-get-social-token', (event, err) => {
+          ipcRenderer.removeAllListeners('response-get-social-token')
           reject(err)
         })
         ipcRenderer.once('response-get-social-token', (event, token) => {
+          ipcRenderer.removeAllListeners('error-get-social-token')
           axios
             .get(`https://instances.social/api/1.0/instances/search?q=${domain}`, {
               'headers': { 'Authorization': `Bearer ${token}` }
@@ -43,10 +45,11 @@ const Login = {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-auth-url', instance)
         ipcRenderer.once('error-get-auth-url', (event, err) => {
-          // TODO: remove events
+          ipcRenderer.removeAllListeners('response-get-auth-url')
           reject(err)
         })
         ipcRenderer.once('response-get-auth-url', (event, url) => {
+          ipcRenderer.removeAllListeners('response-get-auth-url')
           resolve(url)
         })
       })
