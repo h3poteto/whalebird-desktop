@@ -2,6 +2,8 @@
 
 Whalebird is a mastodon client for desktop application. If you want to use release build, please download from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
+![demo](screenshot.png)
+
 ## Feature
 
 - Slack like interface
