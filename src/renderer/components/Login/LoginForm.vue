@@ -1,8 +1,8 @@
 <template>
 <div id="login_form">
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm" class="login-form">
-    <el-form-item label="Please write host name">
-      <el-input v-model="loginForm.domainName"></el-input>
+    <el-form-item label="At first, let's login a mastodon instance. Please write host name which you want to login.">
+      <el-input v-model="loginForm.domainName" placeholder="mastodon.social"></el-input>
     </el-form-item>
     <!-- Dummy form to guard submitting with enter -->
     <el-form-item class="hidden">
