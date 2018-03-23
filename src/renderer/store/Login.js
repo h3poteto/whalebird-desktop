@@ -5,6 +5,7 @@ const Login = {
   namespaced: true,
   state: {
     instances: [],
+    domainName: '',
     selectedInstance: null,
     page: 2
   },
@@ -18,6 +19,9 @@ const Login = {
     changePage (state, page) {
       // Invalidate page changer until implement instance search form
       // state.page = page
+    },
+    updateDomainName (state, domain) {
+      state.domainName = domain
     }
   },
   actions: {
@@ -74,6 +78,10 @@ const Login = {
             reject(err)
           })
       })
+    },
+    updateDomainName ({ commit }, domain) {
+      commit('updateDomainName', domain)
+      commit('changeInstance', null)
     }
   }
 }
