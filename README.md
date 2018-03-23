@@ -2,6 +2,8 @@
 
 Whalebird is a mastodon client for desktop application. If you want to use release build, please download from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
+![demo](screenshot.png)
+
 ## Feature
 
 - Slack like interface
@@ -9,6 +11,20 @@ Whalebird is a mastodon client for desktop application. If you want to use relea
 - Streaming
 - Many keyboard shortcuts
 - Manage multiple accounts
+
+### Shortcuts
+
+<table>
+<thead>
+<tr><th></th><th>OSX</th><th>Linux, Windows</th></tr>
+</thead>
+<tbody>
+<tr><td> Toot, Reply                    </td><td>             <kbd>Cmd + Enter</kbd>         </td><td> <kbd>Ctrl + Enter</kbd>      </td></tr>
+<tr><td> Change accounts                </td><td>             <kbd>Cmd + 1, 2, 3...</kbd>    </td><td> <kbd>Ctrl + 1, 2, 3...</kbd> </td></tr>
+<tr><td> Jump to another timeline       </td><td>             <kbd>Cmd + k</kbd>             </td><td> <kbd>Ctrl + k</kbd>          </td></tr>
+<tr><td> Open new toot window           </td><td>             <kbd>Cmd + n</kbd>             </td><td> <kbd>Ctrl + n</kbd>          </td></tr>
+</tbody>
+</table>
 
 ## Install
 ### Mac
