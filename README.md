@@ -6,7 +6,7 @@ Whalebird is a mastodon client for desktop application. If you want to use relea
 
 ## Feature
 
-- Slack like interface
+- An interface like slack
 - Notify to desktop
 - Streaming
 - Many keyboard shortcuts
