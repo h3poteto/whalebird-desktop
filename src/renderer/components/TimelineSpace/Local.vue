@@ -15,7 +15,6 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
-      account: state => state.TimelineSpace.account,
       timeline: state => state.TimelineSpace.Local.timeline
     })
   },
@@ -40,14 +39,14 @@ export default {
   methods: {
     async initialize () {
       try {
-        await this.$store.dispatch('TimelineSpace/Local/fetchLocalTimeline', this.account)
+        await this.$store.dispatch('TimelineSpace/Local/fetchLocalTimeline')
       } catch (err) {
         this.$message({
           message: 'Could not fetch timeline',
           type: 'error'
         })
       }
-      this.$store.dispatch('TimelineSpace/Local/startLocalStreaming', this.account)
+      this.$store.dispatch('TimelineSpace/Local/startLocalStreaming')
     },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Local/updateToot', message)

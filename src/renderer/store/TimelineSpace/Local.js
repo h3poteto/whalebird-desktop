@@ -31,12 +31,12 @@ const Local = {
     }
   },
   actions: {
-    fetchLocalTimeline ({ commit }, account) {
+    fetchLocalTimeline ({ state, commit, rootState }) {
       return new Promise((resolve, reject) => {
         const client = new Mastodon(
           {
-            access_token: account.accessToken,
-            api_url: account.baseURL + '/api/v1'
+            access_token: rootState.TimelineSpace.account.accessToken,
+            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
           }
         )
         client.get('/timelines/public', { limit: 40, local: true }, (err, data, res) => {
@@ -46,12 +46,12 @@ const Local = {
         })
       })
     },
-    startLocalStreaming ({ commit }, account) {
+    startLocalStreaming ({ state, commit, rootState }) {
       ipcRenderer.on('update-start-local-streaming', (event, update) => {
         commit('appendTimeline', update)
       })
       return new Promise((resolve, reject) => {
-        ipcRenderer.send('start-local-streaming', account)
+        ipcRenderer.send('start-local-streaming', rootState.TimelineSpace.account)
         ipcRenderer.once('error-start-local-streaming', (event, err) => {
           reject(err)
         })
