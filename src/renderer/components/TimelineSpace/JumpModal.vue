@@ -10,6 +10,10 @@
           <li v-for="c in filterdChannel" :class="c.name === selectedChannel.name ? 'channel-list-item selected' : 'channel-list-item'" @click="jump(c)" @mouseover="changeSelected(c)">{{ c.name }}</li>
         </ul>
       </div>
+      <!-- Dummy form to guard submitting with enter -->
+      <el-form-item class="hidden">
+        <el-input></el-input>
+      </el-form-item>
     </el-form>
   </el-dialog>
 </template>
@@ -123,6 +127,10 @@ export default {
         color: #ffffff;
       }
     }
+  }
+
+  .hidden {
+    display: none;
   }
 }
 </style>
