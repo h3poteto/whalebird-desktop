@@ -6,7 +6,7 @@ const Favourites = {
     favourites: []
   },
   mutations: {
-    insertFavourites (state, favourites) {
+    updateFavourites (state, favourites) {
       state.favourites = favourites
     },
     updateToot (state, message) {
@@ -37,7 +37,7 @@ const Favourites = {
         )
         client.get('/favourites', { limit: 40 }, (err, data, res) => {
           if (err) return reject(err)
-          commit('insertFavourites', data)
+          commit('updateFavourites', data)
           resolve(res)
         })
       })
