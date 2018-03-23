@@ -20,12 +20,35 @@ export default {
     })
   },
   created () {
-    this.$store.dispatch('TimelineSpace/Local/startLocalStreaming', this.account)
+    const loading = this.$loading({
+      lock: true,
+      text: 'Loading',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
+    this.initialize()
+      .then(() => {
+        loading.close()
+      })
+      .catch(() => {
+        loading.close()
+      })
   },
   beforeDestroy () {
     this.$store.dispatch('TimelineSpace/Local/stopLocalStreaming')
   },
   methods: {
+    async initialize () {
+      try {
+        await this.$store.dispatch('TimelineSpace/Local/fetchLocalTimeline', this.account)
+      } catch (err) {
+        this.$message({
+          message: 'Could not fetch timeline',
+          type: 'error'
+        })
+      }
+      this.$store.dispatch('TimelineSpace/Local/startLocalStreaming', this.account)
+    },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Local/updateToot', message)
     }
