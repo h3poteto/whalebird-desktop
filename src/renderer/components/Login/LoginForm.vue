@@ -2,7 +2,7 @@
 <div id="login_form">
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm" class="login-form">
     <el-form-item label="At first, let's login a mastodon instance. Please write host name which you want to login.">
-      <el-input v-model="loginForm.domainName" placeholder="mastodon.social"></el-input>
+      <el-input v-model="domainName" placeholder="mastodon.social"></el-input>
     </el-form-item>
     <!-- Dummy form to guard submitting with enter -->
     <el-form-item class="hidden">
@@ -21,17 +21,18 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'login-form',
-  data () {
-    return {
-      loginForm: {
-        domainName: ''
-      }
-    }
-  },
   computed: {
     ...mapState({
       selectedInstance: state => state.Login.selectedInstance
-    })
+    }),
+    domainName: {
+      get () {
+        return this.$store.state.Login.domainName
+      },
+      set (value) {
+        this.$store.dispatch('Login/updateDomainName', value)
+      }
+    }
   },
   methods: {
     login () {
@@ -56,16 +57,16 @@ export default {
         })
     },
     confirm () {
-      this.$store.dispatch('Login/confirmInstance', this.loginForm.domainName)
+      this.$store.dispatch('Login/confirmInstance', this.domainName)
         .then(() => {
           this.$message({
-            message: `${this.loginForm.domainName} is confirmed, please login`,
+            message: `${this.domainName} is confirmed, please login`,
             type: 'success'
           })
         })
         .catch(() => {
           this.$message({
-            message: `${this.loginForm.domainName} does not exist`,
+            message: `${this.domainName} does not exist`,
             type: 'error'
           })
         })
