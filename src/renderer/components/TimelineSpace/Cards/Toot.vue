@@ -13,6 +13,11 @@
         </div>
       </div>
       <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
+      <div class="attachments">
+        <div class="media" v-for="media in originalMessage(message).media_attachments">
+          <img :src="media.preview_url" />
+        </div>
+      </div>
       <div class="reblogger" v-if="message.reblog !== null">
         <icon name="retweet"></icon>
         <span class="reblogger-icon">
@@ -175,6 +180,15 @@ function findLink (target) {
       color: #303133;
       margin: 4px 0 8px;
       word-wrap: break-word;
+    }
+
+    .attachments {
+      .media {
+        img {
+          width: 200px;
+          max-width: 100%;
+        }
+      }
     }
 
     .reblogger {
