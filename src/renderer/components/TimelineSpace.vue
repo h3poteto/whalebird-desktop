@@ -2,9 +2,9 @@
 <div id="timeline_space">
   <side-menu></side-menu>
   <div class="page">
-    <div class="header">
+    <header class="header" style="-webkit-app-region: drag;">
       <header-menu></header-menu>
-    </div>
+    </header>
     <div class="content">
       <router-view></router-view>
     </div>
