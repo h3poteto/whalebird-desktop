@@ -62,6 +62,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "electron-log": "^2.2.14",
+    "electron-window-state": "^4.1.1",
     "element-ui": "^2.2.1",
     "google-fonts-webpack-plugin": "^0.4.4",
     "is-empty": "^1.2.0",
