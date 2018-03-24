@@ -1,4 +1,5 @@
 import Mastodon from 'mastodon-api'
+import log from 'electron-log'
 
 export default class Streaming {
   constructor (account) {
@@ -14,7 +15,7 @@ export default class Streaming {
 
   startUserStreaming (updateCallback, notificationCallback, errCallback) {
     this.listener = this.client.stream('/streaming/user')
-    console.log('/streaming/user started')
+    log.info('/streaming/user started')
 
     this.listener.on('message', (msg) => {
       switch (msg.event) {
@@ -25,7 +26,7 @@ export default class Streaming {
           notificationCallback(msg.data)
           break
         default:
-          console.log(msg)
+          log.debug(msg)
           break
       }
     })
@@ -37,7 +38,7 @@ export default class Streaming {
 
   start (path, updateCallback, errCallback) {
     this.listener = this.client.stream(path)
-    console.log(`${path} started`)
+    log.info(`${path} started`)
 
     this.listener.on('message', (msg) => {
       switch (msg.event) {
@@ -56,6 +57,6 @@ export default class Streaming {
 
   stop () {
     this.listener.stop()
-    console.log('streaming stopped')
+    log.info('streaming stopped')
   }
 }

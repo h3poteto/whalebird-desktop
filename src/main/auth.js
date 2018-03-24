@@ -1,4 +1,5 @@
 import Mastodon from 'mastodon-api'
+import log from 'electron-log'
 
 const appName = 'whalebird'
 const scope = 'read write follow'
@@ -23,7 +24,7 @@ export default class Authentication {
   getAuthorizationUrl (domain = 'mastodon.social') {
     this.setOtherInstance(domain)
     return Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
-      .catch(err => console.error(err))
+      .catch(err => log.error(err))
       .then((res) => {
         this.clientId = res.client_id
         this.clientSecret = res.client_secret
