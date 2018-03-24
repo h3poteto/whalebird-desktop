@@ -187,6 +187,7 @@ function findLink (target) {
         img {
           width: 200px;
           max-width: 100%;
+          border-radius: 8px;
         }
       }
     }
