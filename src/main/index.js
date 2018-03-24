@@ -4,6 +4,7 @@ import { app, ipcMain, BrowserWindow, shell, Menu } from 'electron'
 import Datastore from 'nedb'
 import empty from 'is-empty'
 import log from 'electron-log'
+import windowStateKeeper from 'electron-window-state'
 
 import Authentication from './auth'
 import Account from './account'
@@ -170,13 +171,20 @@ function createWindow () {
       /**
        * Initial window options
        */
+      let mainWindowState = windowStateKeeper({
+        defaultWidth: 1000,
+        height: 563
+      })
       mainWindow = new BrowserWindow({
         titleBarStyle: 'hidden',
-        height: 563,
+        x: mainWindowState.x,
+        y: mainWindowState.y,
+        width: mainWindowState.width,
+        height: mainWindowState.height,
         useContentSize: true,
-        width: 1000,
         icon: require('path').join(__dirname, '../../build/icons/256x256.png')
       })
+      mainWindowState.manage(mainWindow)
 
       mainWindow.loadURL(winURL)
 
