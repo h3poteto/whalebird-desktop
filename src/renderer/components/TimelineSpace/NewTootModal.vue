@@ -42,7 +42,7 @@ export default {
         return this.$store.state.TimelineSpace.NewTootModal.modalOpen
       },
       set (value) {
-        this.$store.commit('TimelineSpace/NewTootModal/changeModal', value)
+        this.$store.dispatch('TimelineSpace/NewTootModal/changeModal', value)
       }
     },
     status: {
