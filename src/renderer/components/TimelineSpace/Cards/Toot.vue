@@ -174,6 +174,7 @@ function findLink (target) {
       font-size: 14px;
       color: #303133;
       margin: 4px 0 8px;
+      word-wrap: break-word;
     }
 
     .reblogger {
