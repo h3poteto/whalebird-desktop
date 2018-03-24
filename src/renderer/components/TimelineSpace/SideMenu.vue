@@ -1,8 +1,8 @@
 <template>
   <div id="side_menu">
-    <div class="profile-wrapper">
+    <div class="profile-wrapper" style="-webkit-app-region: drag;">
       <div class="profile">
-        <span>@{{ username }}</span>
+        <div>@{{ username }}</div>
         <span>{{ account.domain }}</span>
       </div>
     </div>
