@@ -69,7 +69,10 @@ export default {
     .profile {
       color: #ffffff;
       font-weight: bold;
-      padding: 20px 20px 10px;
+      padding: 20px 8px 10px 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
