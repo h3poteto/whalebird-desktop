@@ -3,10 +3,17 @@
 import { app, ipcMain, BrowserWindow, shell, Menu } from 'electron'
 import Datastore from 'nedb'
 import empty from 'is-empty'
+import log from 'electron-log'
 
 import Authentication from './auth'
 import Account from './account'
 import Streaming from './streaming'
+
+/**
+ * Set log level
+ */
+log.transports.console.level = 'debug'
+log.transports.file.level = 'info'
 
 /**
  * Set `__static` path to static files in production
@@ -198,11 +205,11 @@ let auth = new Authentication(db)
 ipcMain.on('get-auth-url', (event, domain) => {
   auth.getAuthorizationUrl(domain)
     .catch((err) => {
-      console.error(err)
+      log.error(err)
       event.sender.send('error-get-auth-url', err)
     })
     .then((url) => {
-      console.log(url)
+      log.debug(url)
       event.sender.send('response-get-auth-url', url)
       // Open authorize url in default browser.
       shell.openExternal(url)
@@ -212,7 +219,7 @@ ipcMain.on('get-auth-url', (event, domain) => {
 ipcMain.on('get-access-token', (event, code) => {
   auth.getAccessToken(code)
     .catch((err) => {
-      console.error(err)
+      log.error(err)
       event.sender.send('error-get-access-token', err)
     })
     .then((token) => {
@@ -240,7 +247,7 @@ ipcMain.on('list-accounts', (event, _) => {
   const account = new Account(db)
   account.listAccounts()
     .catch((err) => {
-      console.error(err)
+      log.error(err)
       event.sender.send('error-list-accounts', err)
     })
     .then((accounts) => {
@@ -252,6 +259,7 @@ ipcMain.on('get-local-account', (event, id) => {
   const account = new Account(db)
   account.getAccount(id)
     .catch((err) => {
+      log.error(err)
       event.sender.send('error-get-local-account', err)
     })
     .then((account) => {
@@ -266,6 +274,7 @@ ipcMain.on('start-user-streaming', (event, ac) => {
   const account = new Account(db)
   account.getAccount(ac._id)
     .catch((err) => {
+      log.error(err)
       event.sender.send('error-start-user-streaming', err)
     })
     .then((account) => {
@@ -284,6 +293,7 @@ ipcMain.on('start-user-streaming', (event, ac) => {
           event.sender.send('notification-start-user-streaming', notification)
         },
         (err) => {
+          log.error(err)
           event.sender.send('error-start-user-streaming', err)
         }
       )
@@ -303,6 +313,7 @@ ipcMain.on('start-local-streaming', (event, ac) => {
   const account = new Account(db)
   account.getAccount(ac._id)
     .catch((err) => {
+      log.error(err)
       event.sender.send('error-start-local-streaming', err)
     })
     .then((account) => {
@@ -319,6 +330,7 @@ ipcMain.on('start-local-streaming', (event, ac) => {
           event.sender.send('update-start-local-streaming', update)
         },
         (err) => {
+          log.error(err)
           event.sender.send('error-start-local-streaming', err)
         }
       )
@@ -336,6 +348,7 @@ ipcMain.on('start-public-streaming', (event, ac) => {
   const account = new Account(db)
   account.getAccount(ac._id)
     .catch((err) => {
+      log.error(err)
       event.sender.send('error-start-public-streaming', err)
     })
     .then((account) => {
@@ -352,6 +365,7 @@ ipcMain.on('start-public-streaming', (event, ac) => {
           event.sender.send('update-start-public-streaming', update)
         },
         (err) => {
+          log.error(err)
           event.sender.send('error-start-public-streaming', err)
         }
       )
