@@ -83,6 +83,10 @@ p {
     left: 0;
     width: 65px;
     padding-top: 24px;
+
+    .el-tooltip {
+      outline: 0;
+    }
   }
 
   .space {
