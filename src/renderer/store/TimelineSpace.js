@@ -42,11 +42,11 @@ const TimelineSpace = {
     appendNotifications (state, notifications) {
       state.notifications = [notifications].concat(state.notifications)
     },
-    insertHomeTimeline (state, messages) {
-      state.homeTimeline = state.homeTimeline.concat(messages)
+    updateHomeTimeline (state, messages) {
+      state.homeTimeline = messages
     },
-    insertNotifications (state, notifications) {
-      state.notifications = state.notifications.concat(notifications)
+    updateNotifications (state, notifications) {
+      state.notifications = notifications
     },
     updateToot (state, message) {
       // Replace target message in homeTimeline and notifications
@@ -163,7 +163,7 @@ const TimelineSpace = {
         )
         client.get('/timelines/home', { limit: 40 }, (err, data, res) => {
           if (err) return reject(err)
-          commit('insertHomeTimeline', data)
+          commit('updateHomeTimeline', data)
           resolve(res)
         })
       })
@@ -178,7 +178,7 @@ const TimelineSpace = {
         )
         client.get('/notifications', { limit: 30 }, (err, data, res) => {
           if (err) return reject(err)
-          commit('insertNotifications', data)
+          commit('updateNotifications', data)
           resolve(res)
         })
       })
