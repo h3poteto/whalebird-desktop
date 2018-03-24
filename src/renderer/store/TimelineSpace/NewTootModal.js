@@ -43,6 +43,13 @@ const NewTootModal = {
       commit('setReplyTo', message)
       commit('updateStatus', `@${message.account.acct} `)
       commit('changeModal', true)
+    },
+    changeModal ({ commit }, value) {
+      commit('changeModal', value)
+      if (!value) {
+        commit('updateStatus', '')
+        commit('setReplyTo', null)
+      }
     }
   }
 }
