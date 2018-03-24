@@ -82,6 +82,7 @@ p {
     top: 0;
     left: 0;
     width: 65px;
+    padding-top: 24px;
   }
 
   .space {
