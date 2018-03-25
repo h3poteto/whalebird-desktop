@@ -128,8 +128,11 @@ let rendererConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
     new GoogleFontsPlugin({
       fonts: [
-        { family: "Source Sans Pro" }
-      ]
+        { family: "Source Sans Pro" },
+        { family: "Noto Sans" },
+        { family: "Noto Serif" }
+      ],
+      local: process.env.NODE_ENV === 'production' ? true : false
     })
   ],
   output: {
