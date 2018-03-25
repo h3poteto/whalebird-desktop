@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
-body { font-family: 'Source Sans Pro', sans-serif; }
+body { font-family: 'Noto Sans', 'Source Sans Pro', sans-serif; }
 
 html, body, #app {
   height: 100%;
