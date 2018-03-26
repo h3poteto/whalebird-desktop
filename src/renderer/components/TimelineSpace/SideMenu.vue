@@ -16,10 +16,14 @@
       <el-menu-item :index="`/${id()}/home`">
         <icon name="home"></icon>
         <span>Home</span>
+        <el-badge is-dot :hidden="!unreadHomeTimeline">
+        </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/notifications`">
         <icon name="bell"></icon>
         <span>Notification</span>
+        <el-badge is-dot :hidden="!unreadNotifications">
+        </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/favourites`">
         <icon name="star"></icon>
@@ -45,7 +49,9 @@ export default {
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.account,
-      username: state => state.TimelineSpace.username
+      username: state => state.TimelineSpace.username,
+      unreadHomeTimeline: state => state.TimelineSpace.SideMenu.unreadHomeTimeline,
+      unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications
     })
   },
   methods: {
@@ -76,12 +82,18 @@ export default {
     }
   }
 
-  .timeline-menu {
+  .timeline-menu /deep/ {
     position: fixed;
     top: 70px;
     left: 65px;
     height: 100%;
     width: 180px;
+
+    .el-badge__content {
+      background-color: #409eff;
+      border: none;
+      margin-left: 4px;
+    }
   }
 }
 </style>

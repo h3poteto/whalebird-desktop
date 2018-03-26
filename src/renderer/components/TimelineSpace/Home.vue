@@ -17,6 +17,14 @@ export default {
     ...mapState({
       timeline: state => state.TimelineSpace.homeTimeline
     })
+  },
+  mounted () {
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
+  },
+  beforeUpdate () {
+    if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
+    }
   }
 }
 </script>

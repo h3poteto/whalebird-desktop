@@ -117,6 +117,7 @@ const TimelineSpace = {
     startUserStreaming ({ commit }, account) {
       ipcRenderer.on('update-start-user-streaming', (event, update) => {
         commit('appendHomeTimeline', update)
+        commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
       })
       ipcRenderer.on('notification-start-user-streaming', (event, notification) => {
         let notify = buildNotification(notification)
@@ -124,6 +125,7 @@ const TimelineSpace = {
           router.push(`/${account._id}/notifications`)
         }
         commit('appendNotifications', notification)
+        commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
       })
 
       return new Promise((resolve, reject) => {
