@@ -17,6 +17,14 @@ export default {
     ...mapState({
       notifications: state => state.TimelineSpace.notifications
     })
+  },
+  mounted () {
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
+  },
+  beforeUpdate () {
+    if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
+    }
   }
 }
 </script>
