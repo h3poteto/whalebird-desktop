@@ -13,6 +13,9 @@ import Notification from './Cards/Notification'
 export default {
   name: 'notifications',
   components: { Notification },
+  mounted () {
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
+  },
   computed: {
     ...mapState({
       notifications: state => state.TimelineSpace.notifications
