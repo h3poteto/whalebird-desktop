@@ -13,13 +13,18 @@ import Notification from './Cards/Notification'
 export default {
   name: 'notifications',
   components: { Notification },
-  mounted () {
-    this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
-  },
   computed: {
     ...mapState({
       notifications: state => state.TimelineSpace.notifications
     })
+  },
+  mounted () {
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
+  },
+  beforeUpdate () {
+    if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
+    }
   }
 }
 </script>
