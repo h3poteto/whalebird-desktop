@@ -25,7 +25,7 @@
             {{ parseDatetime(message.status.created_at) }}
           </div>
         </div>
-        <div class="content" v-html="message.status.content"></div>
+        <div class="content" v-html="message.status.content" @click.capture.prevent="tootClick"></div>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -35,6 +35,7 @@
 
 <script>
 import moment from 'moment'
+import { shell } from 'electron'
 
 export default {
   name: 'reblog',
@@ -49,8 +50,27 @@ export default {
     },
     parseDatetime (datetime) {
       return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+    },
+    tootClick (e) {
+      const link = findLink(e.target)
+      if (link !== null) {
+        shell.openExternal(link)
+      }
     }
   }
+}
+
+function findLink (target) {
+  if (target.localName === 'a') {
+    return target.href
+  }
+  if (target.parentNode === undefined || target.parentNode === null) {
+    return null
+  }
+  if (target.parentNode.getAttribute('class') === 'reblog') {
+    return null
+  }
+  return findLink(target.parentNode)
 }
 </script>
 
