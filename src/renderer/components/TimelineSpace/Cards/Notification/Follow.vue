@@ -5,7 +5,7 @@
         <icon name="user-plus" scale="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold">{{ message.account.display_name }}</span> is now following you
+        <span class="bold">{{ username(message.account) }}</span> is now following you
       </div>
       <div class="action-icon">
         <img :src="message.account.avatar" />
@@ -19,7 +19,16 @@
 <script>
 export default {
   name: 'follow',
-  props: ['message']
+  props: ['message'],
+  methods: {
+    username (account) {
+      if (account.display_name !== '') {
+        return account.display_name
+      } else {
+        return account.username
+      }
+    }
+  }
 }
 </script>
 
