@@ -10,7 +10,6 @@ const BabiliWebpackPlugin = require('babili-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
 const WebpackObfuscator = require('webpack-obfuscator')
 
 /**
@@ -125,15 +124,7 @@ let rendererConfig = {
         : false
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new GoogleFontsPlugin({
-      fonts: [
-        { family: "Source Sans Pro" },
-        { family: "Noto Sans" },
-        { family: "Noto Serif" }
-      ],
-      local: process.env.NODE_ENV === 'production' ? true : false
-    })
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
     filename: '[name].js',

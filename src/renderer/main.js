@@ -5,6 +5,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 
+import './assets/fonts/fonts.css'
 import App from './App'
 import router from './router'
 import store from './store'
