@@ -32,9 +32,6 @@ const NewTootModal = {
         )
         client.post('/statuses', form, (err, data, res) => {
           if (err) return reject(err)
-          commit('changeModal', false)
-          commit('setReplyTo', null)
-          commit('updateStatus', '')
           resolve(res)
         })
       })
@@ -45,11 +42,11 @@ const NewTootModal = {
       commit('changeModal', true)
     },
     changeModal ({ commit }, value) {
-      commit('changeModal', value)
       if (!value) {
         commit('updateStatus', '')
         commit('setReplyTo', null)
       }
+      commit('changeModal', value)
     }
   }
 }
