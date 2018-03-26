@@ -2,7 +2,7 @@
   "name": "Whalebird",
   "version": "0.2.1",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
-  "description": "A Electron based mastodon client for Windows, Mac and Linux",
+  "description": "A Electron based Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "Whalebird for mastodon",
+    "productName": "Whalebird for Mastodon",
     "appId": "org.whalebird.desktop",
     "directories": {
       "output": "build"
