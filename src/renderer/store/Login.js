@@ -65,6 +65,7 @@ const Login = {
       commit('changePage', 1)
       commit('updateInstances', [])
       commit('changeInstance', null)
+      commit('updateDomainName', '')
     },
     confirmInstance ({ commit }, domain) {
       return new Promise((resolve, reject) => {
