@@ -214,11 +214,11 @@ function buildNotification (notification) {
   switch (notification.type) {
     case 'favourite':
       return new Notification('Favourite', {
-        body: `${notification.account.display_name} favourited your status`
+        body: `${username(notification.account)} favourited your status`
       })
     case 'follow':
       return new Notification('Follow', {
-        body: `${notification.account.display_name} is now following you`
+        body: `${username(notification.account)} is now following you`
       })
     case 'mention':
       return new Notification(`${notification.status.account.display_name}`, {
@@ -226,7 +226,15 @@ function buildNotification (notification) {
       })
     case 'reblog':
       return new Notification('Reblog', {
-        body: `${notification.account.display_name} boosted your status`
+        body: `${username(notification.account)} boosted your status`
       })
+  }
+}
+
+function username (account) {
+  if (account.display_name !== '') {
+    return account.display_name
+  } else {
+    return account.username
   }
 }
