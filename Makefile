@@ -6,7 +6,7 @@ CERTNAME = ""
 ICON = ""
 CERT = ""
 ifeq (${PLATFORM}, darwin)
-	ICON = --icon=./build/icons/whalebird.icns
+	ICON = --icon=./build/icons/icon.icns
 	CERT = --sign='${CERTNAME}'
 endif
 ifeq (${PLATFORM}, win32)

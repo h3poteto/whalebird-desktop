@@ -1,4 +1,4 @@
-# whalebird
+# Whalebird
 
 Whalebird is a mastodon client for desktop application. If you want to use release build, please download from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
@@ -16,7 +16,7 @@ Whalebird is a mastodon client for desktop application. If you want to use relea
 
 <table>
 <thead>
-<tr><th></th><th>OSX</th><th>Linux, Windows</th></tr>
+<tr><th></th><th>Mac</th><th>Linux, Windows</th></tr>
 </thead>
 <tbody>
 <tr><td> Toot, Reply                    </td><td>             <kbd>Cmd + Enter</kbd>         </td><td> <kbd>Ctrl + Enter</kbd>      </td></tr>
@@ -39,8 +39,7 @@ Download from [release page](https://github.com/h3poteto/whalebird-desktop/relea
 
 ### Windows
 
-TODO.
-Please wait...
+Download from [release page](https://github.com/h3poteto/whalebird-desktop/releases), and to decompress. I'm preparing installer.
 
 ## Development
 
@@ -58,14 +57,15 @@ $ npm run dev
 
 ## Release
 
-I prepared Makefile for production release.
+When you build release packages, please use `electron-builder`. Now I don't use `electron-packager`.
 
 ```bash
 # for linux
-$ make VERSION=0.1.0 PLATFORM=linux
+$ npm run build:linux
 
 # for mac
-$ make VERSION=0.1.0 PLATFORM=darwin CERTNAME="Develper ID Application: NAME (ID)"
+# This command automatically loads the Developer ID Application certificate from your keychain.
+$ npm run build:mac
 ```
 
 # License
