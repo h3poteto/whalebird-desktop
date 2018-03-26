@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     close () {
-      this.$store.commit('TimelineSpace/NewTootModal/changeModal', false)
+      this.$store.dispatch('TimelineSpace/NewTootModal/changeModal', false)
     },
     keydown (e) {
       if (e.keyCode === 17 || e.keyCode === 93) {
@@ -97,6 +97,7 @@ export default {
       }
       this.$store.dispatch('TimelineSpace/NewTootModal/postToot', form)
         .then(() => {
+          this.close()
           this.$message({
             message: 'Toot',
             type: 'success'
