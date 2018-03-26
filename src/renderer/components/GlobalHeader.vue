@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style lang="scss">
-body { font-family: 'Noto Sans', 'Source Sans Pro', sans-serif; }
+body { font-family: 'Noto Sans', sans-serif; }
 
 html, body, #app, #global_header {
   height: 100%;
