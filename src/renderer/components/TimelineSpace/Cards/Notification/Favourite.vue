@@ -5,7 +5,7 @@
         <icon name="star" scale="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold">{{ message.account.display_name }}</span> favourited your status
+        <span class="bold">{{ username(message.account) }}</span> favourited your status
       </div>
       <div class="action-icon">
         <img :src="message.account.avatar" />
@@ -19,7 +19,7 @@
       <div class="detail">
         <div class="toot-header">
           <div class="user">
-            {{ message.status.account.display_name }}
+            {{ username(message.status.account) }}
           </div>
           <div class="timestamp">
             {{ parseDatetime(message.status.created_at) }}
@@ -40,6 +40,13 @@ export default {
   name: 'favourite',
   props: ['message'],
   methods: {
+    username (account) {
+      if (account.display_name !== '') {
+        return account.display_name
+      } else {
+        return account.username
+      }
+    },
     parseDatetime (datetime) {
       return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
     }

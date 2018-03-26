@@ -6,7 +6,7 @@
     <div class="detail">
       <div class="toot-header">
         <div class="user">
-          {{ originalMessage(message).account.display_name }}
+          {{ username(originalMessage(message).account) }}
         </div>
         <div class="timestamp">
           {{ parseDatetime(message.created_at) }}
@@ -24,7 +24,7 @@
           <img :src="message.account.avatar" />
         </span>
         <span class="reblogger-name">
-          {{ message.account.display_name }}
+          {{ username(message.account) }}
         </span>
       </div>
       <div class="tool-box">
@@ -57,6 +57,13 @@ export default {
         return message.reblog
       } else {
         return message
+      }
+    },
+    username (account) {
+      if (account.display_name !== '') {
+        return account.display_name
+      } else {
+        return account.username
       }
     },
     parseDatetime (datetime) {
