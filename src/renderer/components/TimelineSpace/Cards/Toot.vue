@@ -138,6 +138,9 @@ function findLink (target) {
   if (target.parentNode === undefined || target.parentNode === null) {
     return null
   }
+  if (target.parentNode.getAttribute('class') === 'toot') {
+    return null
+  }
   return findLink(target.parentNode)
 }
 </script>
