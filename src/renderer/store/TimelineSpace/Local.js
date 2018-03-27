@@ -4,7 +4,8 @@ import Mastodon from 'mastodon-api'
 const Local = {
   namespaced: true,
   state: {
-    timeline: []
+    timeline: [],
+    lazyLoading: false
   },
   mutations: {
     appendTimeline (state, update) {
@@ -12,6 +13,9 @@ const Local = {
     },
     updateTimeline (state, messages) {
       state.timeline = messages
+    },
+    insertTimeline (state, messages) {
+      state.timeline = state.timeline.concat(messages)
     },
     updateToot (state, message) {
       state.timeline = state.timeline.map((toot) => {
@@ -28,6 +32,9 @@ const Local = {
           return toot
         }
       })
+    },
+    changeLazyLoading (state, value) {
+      state.lazyLoading = value
     }
   },
   actions: {
@@ -61,6 +68,24 @@ const Local = {
       ipcRenderer.removeAllListeners('error-start-local-streaming')
       ipcRenderer.removeAllListeners('update-start-local-streaming')
       ipcRenderer.send('stop-local-streaming')
+    },
+    lazyFetchTimeline ({ state, commit, rootState }, last) {
+      return new Promise((resolve, reject) => {
+        if (state.lazyLoading) {
+          return resolve()
+        }
+        commit('changeLazyLoading', true)
+        const client = new Mastodon(
+          {
+            access_token: rootState.TimelineSpace.account.accessToken,
+            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
+          })
+        client.get('/timelines/public', { max_id: last.id, limit: 40, local: true }, (err, data, res) => {
+          if (err) return reject(err)
+          commit('TimelineSpace/Local/insertTimeline', data, { root: true })
+          commit('changeLazyLoading', false)
+        })
+      })
     }
   }
 }
