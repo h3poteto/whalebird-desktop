@@ -1,4 +1,11 @@
 # Change Log
+## [Unreleased]
+### Added
+- [#150](https://github.com/h3poteto/whalebird-desktop/pull/150) Add lazy loading in timelines
+
+### Changed
+- [#147](https://github.com/h3poteto/whalebird-desktop/pull/147) Archive old statuses when close timeline, because it is too heavy
+
 ## [0.2.1] - 2018-03-27
 ### Added
 - [#142](https://github.com/h3poteto/whalebird-desktop/pull/142) Show unread marks in side menu
