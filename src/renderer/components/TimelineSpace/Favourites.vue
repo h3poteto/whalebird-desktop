@@ -3,6 +3,8 @@
     <div class="fav" v-for="message in favourites" v-bind:key="message.id">
       <toot :message="message" v-on:update="updateToot"></toot>
     </div>
+    <div class="loading-card" v-loading="lazyLoading">
+    </div>
   </div>
 </template>
 
@@ -16,7 +18,8 @@ export default {
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.account,
-      favourites: state => state.TimelineSpace.Favourites.favourites
+      favourites: state => state.TimelineSpace.Favourites.favourites,
+      lazyLoading: state => state.TimelineSpace.Favourites.lazyLoading
     })
   },
   created () {
@@ -38,10 +41,32 @@ export default {
         })
       })
   },
+  mounted () {
+    window.addEventListener('scroll', this.onScroll)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.onScroll)
+  },
   methods: {
     updateToot (message) {
       this.$store.commit('TimelineSpace/Favourites/updateToot', message)
+    },
+    onScroll (event) {
+      if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('favourites').clientHeight - 10) && !this.lazyloading) {
+        this.$store.dispatch('TimelineSpace/Favourites/lazyFetchFavourites', this.favourites[this.favourites.length - 1])
+      }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.loading-card {
+  background-color: #ffffff;
+  height: 60px;
+}
+
+.loading-card:empty {
+  height: 0;
+}
+</style>
