@@ -1,9 +1,13 @@
 # Change Log
-## [Unreleased]
+## [0.2.1] - 2018-03-27
+### Added
+- [#142](https://github.com/h3poteto/whalebird-desktop/pull/142) Show unread marks in side menu
+
 ### Changed
 - [#137](https://github.com/h3poteto/whalebird-desktop/pull/137) Use electron-builder instead of electron-packager when build release packages
 
 ### Fixed
+- [#144](https://github.com/h3poteto/whalebird-desktop/pull/144) Open link on the default browser in notifications
 - [#140](https://github.com/h3poteto/whalebird-desktop/pull/140) Refactor closing modal window when post new toot
 - [#139](https://github.com/h3poteto/whalebird-desktop/pull/139) Show username if display_name is blank
 
