@@ -83,6 +83,12 @@ const TimelineSpace = {
     },
     clearNotifications (state) {
       state.notifications = []
+    },
+    archiveHomeTimeline (state) {
+      state.homeTimeline = state.homeTimeline.slice(0, 40)
+    },
+    archiveNotifications (state) {
+      state.notifications = state.notifications.slice(0, 40)
     }
   },
   actions: {

@@ -25,6 +25,9 @@ export default {
     if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
     }
+  },
+  destroyed () {
+    this.$store.commit('TimelineSpace/archiveNotifications')
   }
 }
 </script>

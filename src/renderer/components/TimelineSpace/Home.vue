@@ -25,6 +25,9 @@ export default {
     if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
     }
+  },
+  destroyed () {
+    this.$store.commit('TimelineSpace/archiveHomeTimeline')
   }
 }
 </script>
