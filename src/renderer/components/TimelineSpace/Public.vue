@@ -3,6 +3,8 @@
     <div class="public-timeline" v-for="message in timeline" v-bind:key="message.id">
       <toot :message="message" v-on:update="updateToot"></toot>
     </div>
+    <div class="loading-card" v-loading="lazyLoading">
+    </div>
   </div>
 </template>
 
@@ -15,7 +17,8 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
-      timeline: state => state.TimelineSpace.Public.timeline
+      timeline: state => state.TimelineSpace.Public.timeline,
+      lazyLoading: state => state.TimelineSpace.Public.lazyLoading
     })
   },
   created () {
@@ -32,9 +35,13 @@ export default {
       .catch(() => {
         loading.close()
       })
+    window.addEventListener('scroll', this.onScroll)
   },
   beforeDestroy () {
     this.$store.dispatch('TimelineSpace/Public/stopPublicStreaming')
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
     async initialize () {
@@ -50,7 +57,23 @@ export default {
     },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Public/updateToot', message)
+    },
+    onScroll (event) {
+      if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('public').clientHeight - 10) && !this.lazyloading) {
+        this.$store.dispatch('TimelineSpace/Public/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
+      }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.loading-card {
+  background-color: #ffffff;
+  height: 60px;
+}
+
+.loading-card:empty {
+  height: 0;
+}
+</style>

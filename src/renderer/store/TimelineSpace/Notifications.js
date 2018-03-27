@@ -1,6 +1,6 @@
 import Mastodon from 'mastodon-api'
 
-const Home = {
+const Notifications = {
   namespaced: true,
   state: {
     lazyLoading: false
@@ -11,7 +11,7 @@ const Home = {
     }
   },
   actions: {
-    lazyFetchTimeline ({ state, commit, rootState }, last) {
+    lazyFetchNotifications ({ state, commit, rootState }, last) {
       return new Promise((resolve, reject) => {
         if (state.lazyLoading) {
           return resolve()
@@ -22,9 +22,9 @@ const Home = {
             access_token: rootState.TimelineSpace.account.accessToken,
             api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
           })
-        client.get('/timelines/home', { max_id: last.id, limit: 40 }, (err, data, res) => {
+        client.get('/notifications', { max_id: last.id, limit: 30 }, (err, data, res) => {
           if (err) return reject(err)
-          commit('TimelineSpace/insertHomeTimeline', data, { root: true })
+          commit('TimelineSpace/insertNotifications', data, { root: true })
           commit('changeLazyLoading', false)
         })
       })
@@ -32,4 +32,4 @@ const Home = {
   }
 }
 
-export default Home
+export default Notifications

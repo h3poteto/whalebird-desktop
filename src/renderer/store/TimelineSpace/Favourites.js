@@ -3,11 +3,15 @@ import Mastodon from 'mastodon-api'
 const Favourites = {
   namespaced: true,
   state: {
-    favourites: []
+    favourites: [],
+    lazyLoading: false
   },
   mutations: {
     updateFavourites (state, favourites) {
       state.favourites = favourites
+    },
+    insertFavourites (state, favourites) {
+      state.favourites = state.favourites.concat(favourites)
     },
     updateToot (state, message) {
       state.favourites = state.favourites.map((toot) => {
@@ -24,6 +28,9 @@ const Favourites = {
           return toot
         }
       })
+    },
+    changeLazyLoading (state, value) {
+      state.lazyLoading = value
     }
   },
   actions: {
@@ -39,6 +46,28 @@ const Favourites = {
           if (err) return reject(err)
           commit('updateFavourites', data)
           resolve(res)
+        })
+      })
+    },
+    lazyFetchFavourites ({ state, commit, rootState }, last) {
+      return new Promise((resolve, reject) => {
+        if (state.lazyLoading) {
+          return resolve()
+        }
+        commit('changeLazyLoading', true)
+        const client = new Mastodon(
+          {
+            access_token: rootState.TimelineSpace.account.accessToken,
+            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
+          })
+        console.log(last.id)
+        // Note: Now this API's explanation and implementation are reversed.
+        // So if the bug has resolved, please use max_id instead of since_id.
+        // https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#favourites
+        client.get('/favourites', { since_id: last.id, limit: 40 }, (err, data, res) => {
+          if (err) return reject(err)
+          commit('insertFavourites', data)
+          commit('changeLazyLoading', false)
         })
       })
     }

@@ -1,6 +1,8 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
+import Home from './TimelineSpace/Home'
+import Notifications from './TimelineSpace/Notifications'
 import Favourites from './TimelineSpace/Favourites'
 import Local from './TimelineSpace/Local'
 import Public from './TimelineSpace/Public'
@@ -13,6 +15,8 @@ const TimelineSpace = {
   namespaced: true,
   modules: {
     SideMenu,
+    Home,
+    Notifications,
     Favourites,
     Local,
     Public,
@@ -39,14 +43,20 @@ const TimelineSpace = {
     appendHomeTimeline (state, update) {
       state.homeTimeline = [update].concat(state.homeTimeline)
     },
-    appendNotifications (state, notifications) {
-      state.notifications = [notifications].concat(state.notifications)
+    appendNotifications (state, notification) {
+      state.notifications = [notification].concat(state.notifications)
     },
     updateHomeTimeline (state, messages) {
       state.homeTimeline = messages
     },
     updateNotifications (state, notifications) {
       state.notifications = notifications
+    },
+    insertHomeTimeline (state, messages) {
+      state.homeTimeline = state.homeTimeline.concat(messages)
+    },
+    insertNotifications (state, notifications) {
+      state.notifications = state.notifications.concat(notifications)
     },
     updateToot (state, message) {
       // Replace target message in homeTimeline and notifications
