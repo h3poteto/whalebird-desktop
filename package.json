@@ -35,7 +35,8 @@
       "output": "build"
     },
     "files": [
-      "dist/electron/**/*"
+      "dist/electron/**/*",
+      "build/icons/*"
     ],
     "dmg": {
       "contents": [
