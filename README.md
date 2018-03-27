@@ -30,17 +30,18 @@ Whalebird is a mastodon client for desktop application. If you want to use relea
 ## Install
 ### Mac
 
-Download from [release page](https://github.com/h3poteto/whalebird-desktop/releases), and to decompress. I recommend that you move `whalebird.app` to `/Applications`.
+You can download `.dmg` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
 Please wait for distribute in Mac app store, I'm preparing.
 
 ### Linux
 
-Download from [release page](https://github.com/h3poteto/whalebird-desktop/releases), and to decompress. I'm preparing deb and rmp packages.
+You can download `.deb` or `.rpm` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+If you do not want to use package manager, please download `.tar.bz2` file and docompress it.
 
 ### Windows
 
-Download from [release page](https://github.com/h3poteto/whalebird-desktop/releases), and to decompress. I'm preparing installer.
+You can download `.msi` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
 ## Development
 
