@@ -9,6 +9,7 @@ import Public from './TimelineSpace/Public'
 import Cards from './TimelineSpace/Cards'
 import NewTootModal from './TimelineSpace/NewTootModal'
 import JumpModal from './TimelineSpace/JumpModal'
+import Modals from './TimelineSpace/Modals'
 import router from '../router'
 
 const TimelineSpace = {
@@ -22,7 +23,8 @@ const TimelineSpace = {
     Public,
     Cards,
     NewTootModal,
-    JumpModal
+    JumpModal,
+    Modals
   },
   state: {
     account: {

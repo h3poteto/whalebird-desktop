@@ -15,7 +15,7 @@
       <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
       <div class="attachments">
         <div class="media" v-for="media in originalMessage(message).media_attachments">
-          <img :src="media.preview_url" />
+          <img :src="media.preview_url" @click="openImage(media.url)"/>
         </div>
       </div>
       <div class="reblogger" v-if="message.reblog !== null">
@@ -127,6 +127,9 @@ export default {
             })
           })
       }
+    },
+    openImage (url) {
+      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', url)
     }
   }
 }
@@ -195,6 +198,7 @@ function findLink (target) {
     .attachments {
       .media {
         img {
+          cursor: zoom-in;
           width: 200px;
           max-width: 100%;
           border-radius: 8px;

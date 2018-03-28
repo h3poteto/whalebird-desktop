@@ -11,6 +11,7 @@
   </div>
   <new-toot-modal></new-toot-modal>
   <jump-modal></jump-modal>
+  <image-viewer></image-viewer>
 </div>
 </template>
 
@@ -19,10 +20,11 @@ import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import NewTootModal from './TimelineSpace/NewTootModal'
 import JumpModal from './TimelineSpace/JumpModal'
+import ImageViewer from './TimelineSpace/Modals/ImageViewer'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, NewTootModal, JumpModal },
+  components: { SideMenu, HeaderMenu, NewTootModal, JumpModal, ImageViewer },
   created () {
     const loading = this.$loading({
       lock: true,
