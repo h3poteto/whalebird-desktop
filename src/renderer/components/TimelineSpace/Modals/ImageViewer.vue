@@ -1,6 +1,6 @@
 <template>
 <div id="image" v-if="modalOpen">
-  <div class="image-wrapper">
+  <div class="image-wrapper" @keyup.esc.exact="close" tabindex="-1" ref="wrapper">
     <div class="image-header">
       <i class="el-icon-close" @click="close"></i>
     </div>
@@ -22,6 +22,11 @@ export default {
       imageURL: state => state.TimelineSpace.Modals.ImageViewer.imageURL
     })
   },
+  updated () {
+    if (this.modalOpen) {
+      this.$refs.wrapper.focus()
+    }
+  },
   methods: {
     close () {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
@@ -38,6 +43,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  outline: 0;
 
   .image-header {
     width: 100%;
