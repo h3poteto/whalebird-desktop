@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
+import SideBar from './TimelineSpace/SideBar'
 import Home from './TimelineSpace/Home'
 import Notifications from './TimelineSpace/Notifications'
 import Favourites from './TimelineSpace/Favourites'
@@ -15,6 +16,7 @@ const TimelineSpace = {
   namespaced: true,
   modules: {
     SideMenu,
+    SideBar,
     Home,
     Notifications,
     Favourites,
