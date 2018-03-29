@@ -9,11 +9,15 @@
         <textarea v-model="status" ref="status" @keyup.meta.enter.exact="toot" @keyup.ctrl.enter.exact="toot" @keyup.enter.exact="enter" @keydown="keydown" @keyup="keyup"></textarea>
       </div>
     </el-form>
-    <span slot="footer" class="dialog-footer">
+    <div slot="footer" class="dialog-footer">
+      <div class="upload-image">
+        <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
+        <input name="image" type="file" class="image-input" ref="image" />
+      </div>
       <span class="text-count">{{ 500 - status.length }}</span>
       <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="toot">Toot</el-button>
-    </span>
+    </div>
   </el-dialog>
 </template>
 
@@ -24,7 +28,8 @@ export default {
   name: 'new-toot',
   data () {
     return {
-      ctrlPressed: false
+      ctrlPressed: false,
+      attachedFiles: []
     }
   },
   computed: {
@@ -109,6 +114,12 @@ export default {
             type: 'error'
           })
         })
+    },
+    selectImage () {
+      this.$refs.image.click()
+    },
+    uploadImage (e) {
+      console.log(e.target.files)
     }
   }
 }
@@ -153,6 +164,14 @@ export default {
 
   .el-dialog__footer {
     background-color: #f2f6fc;
+
+    .upload-image {
+      text-align: left;
+
+      .image-input {
+        display: none;
+      }
+    }
 
     .text-count {
       padding-right: 24px;
