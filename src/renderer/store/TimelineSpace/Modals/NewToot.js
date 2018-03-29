@@ -1,6 +1,6 @@
 import Mastodon from 'mastodon-api'
 
-const NewTootModal = {
+const NewToot = {
   namespaced: true,
   state: {
     modalOpen: false,
@@ -51,6 +51,6 @@ const NewTootModal = {
   }
 }
 
-export default NewTootModal
+export default NewToot
 
 class AuthenticationError {}
