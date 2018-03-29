@@ -25,6 +25,9 @@ const NewToot = {
     },
     appendAttachedMedias (state, media) {
       state.attachedMedias = state.attachedMedias.concat([media])
+    },
+    clearAttachedMedias (state) {
+      state.attachedMedias = []
     }
   },
   actions: {
@@ -54,6 +57,8 @@ const NewToot = {
       if (!value) {
         commit('updateStatus', '')
         commit('setReplyTo', null)
+        commit('changeBlockSubmit', false)
+        commit('clearAttachedMedias')
       }
       commit('changeModal', value)
     },
