@@ -1,6 +1,8 @@
 # Change Log
 ## [Unreleased]
 ### Added
+- [#153](https://github.com/h3poteto/whalebird-desktop/pull/153) Attach images in toot
+- [#152](https://github.com/h3poteto/whalebird-desktop/pull/152) Open images in modal window when click the preview
 - [#150](https://github.com/h3poteto/whalebird-desktop/pull/150) Add lazy loading in timelines
 
 ### Changed
