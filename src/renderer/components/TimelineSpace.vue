@@ -5,12 +5,7 @@
     <header class="header" style="-webkit-app-region: drag;">
       <header-menu></header-menu>
     </header>
-    <div class="content">
-      <div :class="openSideBar? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'">
-        <router-view></router-view>
-      </div>
-      <side-bar></side-bar>
-    </div>
+    <contents></contents>
   </div>
   <new-toot></new-toot>
   <jump-modal></jump-modal>
@@ -19,22 +14,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import NewToot from './TimelineSpace/Modals/NewToot'
 import JumpModal from './TimelineSpace/JumpModal'
 import ImageViewer from './TimelineSpace/Modals/ImageViewer'
-import SideBar from './TimelineSpace/SideBar'
+import Contents from './TimelineSpace/Contents'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, NewToot, JumpModal, ImageViewer, SideBar },
-  computed: {
-    ...mapState({
-      openSideBar: state => state.TimelineSpace.SideBar.openSideBar
-    })
-  },
+  components: { SideMenu, HeaderMenu, NewToot, JumpModal, ImageViewer, Contents },
   created () {
     const loading = this.$loading({
       lock: true,
@@ -121,24 +110,6 @@ export default {
     height: 48px;
     background-color: #ffffff;
     border-bottom: solid 1px #dcdfe6;
-  }
-
-  .content {
-    padding-top: 48px;
-    height: 100%;
-    box-sizing: border-box;
-
-    .timeline-wrapper {
-      height: 100%;
-      width: 100%;
-      overflow: auto;
-    }
-
-    .timeline-wrapper-with-side-bar {
-      height: 100%;
-      width: -webkit-calc(100% - 180px);
-      overflow: auto;
-    }
   }
 }
 

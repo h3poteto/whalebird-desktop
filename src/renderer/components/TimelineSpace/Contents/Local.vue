@@ -1,6 +1,6 @@
 <template>
-  <div id="public">
-    <div class="public-timeline" v-for="message in timeline" v-bind:key="message.id">
+  <div id="local">
+    <div class="local-timeline" v-for="message in timeline" v-bind:key="message.id">
       <toot :message="message" v-on:update="updateToot"></toot>
     </div>
     <div class="loading-card" v-loading="lazyLoading">
@@ -13,12 +13,12 @@ import { mapState } from 'vuex'
 import Toot from './Cards/Toot'
 
 export default {
-  name: 'public',
+  name: 'local',
   components: { Toot },
   computed: {
     ...mapState({
-      timeline: state => state.TimelineSpace.Public.timeline,
-      lazyLoading: state => state.TimelineSpace.Public.lazyLoading
+      timeline: state => state.TimelineSpace.Contents.Local.timeline,
+      lazyLoading: state => state.TimelineSpace.Contents.Local.lazyLoading
     })
   },
   created () {
@@ -38,7 +38,7 @@ export default {
     window.addEventListener('scroll', this.onScroll)
   },
   beforeDestroy () {
-    this.$store.dispatch('TimelineSpace/Public/stopPublicStreaming')
+    this.$store.dispatch('TimelineSpace/Contents/Local/stopLocalStreaming')
   },
   destroyed () {
     window.removeEventListener('scroll', this.onScroll)
@@ -46,21 +46,21 @@ export default {
   methods: {
     async initialize () {
       try {
-        await this.$store.dispatch('TimelineSpace/Public/fetchPublicTimeline')
+        await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline')
       } catch (err) {
         this.$message({
           message: 'Could not fetch timeline',
           type: 'error'
         })
       }
-      this.$store.dispatch('TimelineSpace/Public/startPublicStreaming')
+      this.$store.dispatch('TimelineSpace/Contents/Local/startLocalStreaming')
     },
     updateToot (message) {
-      this.$store.commit('TimelineSpace/Public/updateToot', message)
+      this.$store.commit('TimelineSpace/Contents/Local/updateToot', message)
     },
     onScroll (event) {
-      if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('public').clientHeight - 10) && !this.lazyloading) {
-        this.$store.dispatch('TimelineSpace/Public/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
+      if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('local').clientHeight - 10) && !this.lazyloading) {
+        this.$store.dispatch('TimelineSpace/Contents/Local/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
       }
     }
   }

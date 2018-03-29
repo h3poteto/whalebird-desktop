@@ -1,30 +1,18 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
-import SideBar from './TimelineSpace/SideBar'
-import Home from './TimelineSpace/Home'
-import Notifications from './TimelineSpace/Notifications'
-import Favourites from './TimelineSpace/Favourites'
-import Local from './TimelineSpace/Local'
-import Public from './TimelineSpace/Public'
-import Cards from './TimelineSpace/Cards'
 import JumpModal from './TimelineSpace/JumpModal'
 import Modals from './TimelineSpace/Modals'
+import Contents from './TimelineSpace/Contents'
 import router from '../router'
 
 const TimelineSpace = {
   namespaced: true,
   modules: {
     SideMenu,
-    SideBar,
-    Home,
-    Notifications,
-    Favourites,
-    Local,
-    Public,
-    Cards,
     JumpModal,
-    Modals
+    Modals,
+    Contents
   },
   state: {
     account: {
