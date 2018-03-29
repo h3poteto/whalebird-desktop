@@ -101,6 +101,17 @@ export default {
           in_reply_to_id: this.replyToId
         })
       }
+      if (this.attachedMedias.length > 0) {
+        if (this.attachedMedias.length > 4) {
+          return this.$message({
+            message: 'You can only attach up to 4 images',
+            type: 'error'
+          })
+        }
+        form = Object.assign(form, {
+          media_ids: this.attachedMedias.map((m) => { return m.id })
+        })
+      }
       this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
         .then(() => {
           this.close()
