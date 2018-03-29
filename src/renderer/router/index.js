@@ -28,27 +28,27 @@ export default new Router({
             {
               path: 'home',
               name: 'home',
-              component: require('@/components/TimelineSpace/Home').default
+              component: require('@/components/TimelineSpace/Contents/Home').default
             },
             {
               path: 'notifications',
               name: 'notifications',
-              component: require('@/components/TimelineSpace/Notifications').default
+              component: require('@/components/TimelineSpace/Contents/Notifications').default
             },
             {
               path: 'favourites',
               name: 'favourites',
-              component: require('@/components/TimelineSpace/Favourites').default
+              component: require('@/components/TimelineSpace/Contents/Favourites').default
             },
             {
               path: 'local',
               name: 'local',
-              component: require('@/components/TimelineSpace/Local').default
+              component: require('@/components/TimelineSpace/Contents/Local').default
             },
             {
               path: 'public',
               name: 'public',
-              component: require('@/components/TimelineSpace/Public').default
+              component: require('@/components/TimelineSpace/Contents/Public').default
             }
           ]
         }

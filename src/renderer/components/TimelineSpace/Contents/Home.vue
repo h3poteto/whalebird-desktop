@@ -18,7 +18,7 @@ export default {
   computed: {
     ...mapState({
       timeline: state => state.TimelineSpace.homeTimeline,
-      lazyLoading: state => state.TimelineSpace.Home.lazyLoading
+      lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading
     })
   },
   mounted () {
@@ -37,7 +37,7 @@ export default {
   methods: {
     onScroll (event) {
       if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('home').clientHeight - 10) && !this.lazyloading) {
-        this.$store.dispatch('TimelineSpace/Home/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
+        this.$store.dispatch('TimelineSpace/Contents/Home/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
       }
     }
   }

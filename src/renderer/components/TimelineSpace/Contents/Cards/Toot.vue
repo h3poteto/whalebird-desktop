@@ -80,7 +80,7 @@ export default {
     },
     changeReblog (message) {
       if (message.reblogged) {
-        this.$store.dispatch('TimelineSpace/Cards/Toot/unreblog', message)
+        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/unreblog', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -91,7 +91,7 @@ export default {
             })
           })
       } else {
-        this.$store.dispatch('TimelineSpace/Cards/Toot/reblog', message)
+        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/reblog', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -105,7 +105,7 @@ export default {
     },
     changeFavourite (message) {
       if (message.favourited) {
-        this.$store.dispatch('TimelineSpace/Cards/Toot/removeFavourite', message)
+        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/removeFavourite', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -116,7 +116,7 @@ export default {
             })
           })
       } else {
-        this.$store.dispatch('TimelineSpace/Cards/Toot/addFavourite', message)
+        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/addFavourite', message)
           .then((data) => {
             this.$emit('update', data)
           })

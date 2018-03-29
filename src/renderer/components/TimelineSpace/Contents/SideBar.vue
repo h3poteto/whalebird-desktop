@@ -14,12 +14,12 @@ export default {
   name: 'side-bar',
   computed: {
     ...mapState({
-      openSideBar: state => state.TimelineSpace.SideBar.openSideBar
+      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar
     })
   },
   methods: {
     close () {
-      this.$store.dispatch('TimelineSpace/SideBar/close')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/close')
     }
   }
 }

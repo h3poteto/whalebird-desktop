@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 
-const Local = {
+const Public = {
   namespaced: true,
   state: {
     timeline: [],
@@ -38,7 +38,7 @@ const Local = {
     }
   },
   actions: {
-    fetchLocalTimeline ({ state, commit, rootState }) {
+    fetchPublicTimeline ({ state, commit, rootState }) {
       return new Promise((resolve, reject) => {
         const client = new Mastodon(
           {
@@ -46,28 +46,28 @@ const Local = {
             api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
           }
         )
-        client.get('/timelines/public', { limit: 40, local: true }, (err, data, res) => {
+        client.get('/timelines/public', { limit: 40 }, (err, data, res) => {
           if (err) return reject(err)
           commit('updateTimeline', data)
           resolve(res)
         })
       })
     },
-    startLocalStreaming ({ state, commit, rootState }) {
-      ipcRenderer.on('update-start-local-streaming', (event, update) => {
+    startPublicStreaming ({ state, commit, rootState }) {
+      ipcRenderer.on('update-start-public-streaming', (event, update) => {
         commit('appendTimeline', update)
       })
       return new Promise((resolve, reject) => {
-        ipcRenderer.send('start-local-streaming', rootState.TimelineSpace.account)
-        ipcRenderer.once('error-start-local-streaming', (event, err) => {
+        ipcRenderer.send('start-public-streaming', rootState.TimelineSpace.account)
+        ipcRenderer.once('error-start-public-streaming', (event, err) => {
           reject(err)
         })
       })
     },
-    stopLocalStreaming ({ commit }) {
-      ipcRenderer.removeAllListeners('error-start-local-streaming')
-      ipcRenderer.removeAllListeners('update-start-local-streaming')
-      ipcRenderer.send('stop-local-streaming')
+    stopPublicStreaming ({ commit }) {
+      ipcRenderer.removeAllListeners('error-start-public-streaming')
+      ipcRenderer.removeAllListeners('update-start-public-streaming')
+      ipcRenderer.send('stop-public-streaming')
     },
     lazyFetchTimeline ({ state, commit, rootState }, last) {
       return new Promise((resolve, reject) => {
@@ -80,9 +80,9 @@ const Local = {
             access_token: rootState.TimelineSpace.account.accessToken,
             api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
           })
-        client.get('/timelines/public', { max_id: last.id, limit: 40, local: true }, (err, data, res) => {
+        client.get('/timelines/public', { max_id: last.id, limit: 40 }, (err, data, res) => {
           if (err) return reject(err)
-          commit('TimelineSpace/Local/insertTimeline', data, { root: true })
+          commit('insertTimeline', data)
           commit('changeLazyLoading', false)
         })
       })
@@ -90,4 +90,4 @@ const Local = {
   }
 }
 
-export default Local
+export default Public
