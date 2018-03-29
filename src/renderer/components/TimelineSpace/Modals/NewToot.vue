@@ -9,6 +9,12 @@
         <textarea v-model="status" ref="status" @keyup.meta.enter.exact="toot" @keyup.ctrl.enter.exact="toot" @keyup.enter.exact="enter" @keydown="keydown" @keyup="keyup"></textarea>
       </div>
     </el-form>
+    <div class="preview">
+      <div class="image-wrapper" v-for="media in attachedMedias" v-on:key="media.id">
+        <img :src="media.preview_url" class="preview-image" />
+        <icon class="remove-image" name="times-circle" @click="removeAttachment(media)"></icon>
+      </div>
+    </div>
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
         <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
@@ -148,6 +154,9 @@ export default {
             type: 'error'
           })
         })
+    },
+    removeAttachment (media) {
+      // TODO:
     }
   }
 }
@@ -186,6 +195,27 @@ export default {
 
       textarea:focus {
         outline: 0;
+      }
+    }
+
+    .preview {
+      box-sizing: border-box;
+      padding: 0 12px;
+
+      .image-wrapper {
+        position: relative;
+        display: inline-block;
+
+        .preview-image {
+          width: 60px;
+        }
+
+        .remove-image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          cursor: pointer;
+        }
       }
     }
   }
