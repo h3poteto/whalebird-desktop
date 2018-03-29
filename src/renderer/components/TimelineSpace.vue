@@ -7,23 +7,19 @@
     </header>
     <contents></contents>
   </div>
-  <new-toot></new-toot>
-  <jump-modal></jump-modal>
-  <image-viewer></image-viewer>
+  <modals></modals>
 </div>
 </template>
 
 <script>
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
-import NewToot from './TimelineSpace/Modals/NewToot'
-import JumpModal from './TimelineSpace/JumpModal'
-import ImageViewer from './TimelineSpace/Modals/ImageViewer'
 import Contents from './TimelineSpace/Contents'
+import Modals from './TimelineSpace/Modals'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, NewToot, JumpModal, ImageViewer, Contents },
+  components: { SideMenu, HeaderMenu, Modals, Contents },
   created () {
     const loading = this.$loading({
       lock: true,

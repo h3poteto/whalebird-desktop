@@ -1,7 +1,6 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
-import JumpModal from './TimelineSpace/JumpModal'
 import Modals from './TimelineSpace/Modals'
 import Contents from './TimelineSpace/Contents'
 import router from '../router'
@@ -10,7 +9,6 @@ const TimelineSpace = {
   namespaced: true,
   modules: {
     SideMenu,
-    JumpModal,
     Modals,
     Contents
   },
@@ -153,7 +151,7 @@ const TimelineSpace = {
         commit('TimelineSpace/Modals/NewToot/changeModal', true, { root: true })
       })
       ipcRenderer.on('CmdOrCtrl+K', () => {
-        commit('TimelineSpace/JumpModal/changeModal', true, { root: true })
+        commit('TimelineSpace/Modals/Jump/changeModal', true, { root: true })
       })
     },
     async removeShortcutEvents () {
