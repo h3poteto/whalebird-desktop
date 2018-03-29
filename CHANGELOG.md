@@ -1,5 +1,5 @@
 # Change Log
-## [Unreleased]
+## [2.2.2] - 2018-03-29
 ### Added
 - [#153](https://github.com/h3poteto/whalebird-desktop/pull/153) Attach images in toot
 - [#152](https://github.com/h3poteto/whalebird-desktop/pull/152) Open images in modal window when click the preview
