@@ -12,17 +12,18 @@
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-on:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
-        <icon class="remove-image" name="times-circle" @click="removeAttachment(media)"></icon>
+        <el-button size="small" type="text" @click="removeAttachment(media)" class="remove-image"><icon name="times-circle"></icon></el-button>
       </div>
     </div>
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
         <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
-        <input name="image" type="file" class="image-input" ref="image" @change="updateImage"/>
+        <input name="image" type="file" class="image-input" ref="image" @change="updateImage" :key="attachedImageId"/>
       </div>
       <span class="text-count">{{ 500 - status.length }}</span>
       <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="toot" v-loading="blockSubmit">Toot</el-button>
+      <div class="clearfix"></div>
     </div>
   </el-dialog>
 </template>
@@ -34,7 +35,8 @@ export default {
   name: 'new-toot',
   data () {
     return {
-      ctrlPressed: false
+      ctrlPressed: false,
+      attachedImageId: 0
     }
   },
   computed: {
@@ -73,6 +75,7 @@ export default {
   },
   methods: {
     close () {
+      this.resetImage()
       this.$store.dispatch('TimelineSpace/Modals/NewToot/changeModal', false)
     },
     keydown (e) {
@@ -137,6 +140,7 @@ export default {
       this.$refs.image.click()
     },
     updateImage (e) {
+      this.resetImage()
       if (e.target.files.item(0) === null || e.target.files.item(0) === undefined) {
         return
       }
@@ -156,7 +160,10 @@ export default {
         })
     },
     removeAttachment (media) {
-      // TODO:
+      this.$store.commit('TimelineSpace/Modals/NewToot/removeMedia', media)
+    },
+    resetImage () {
+      ++this.attachedImageId
     }
   }
 }
@@ -208,12 +215,14 @@ export default {
 
         .preview-image {
           width: 60px;
+          margin-right: 8px;
         }
 
         .remove-image {
           position: absolute;
           top: 0;
           left: 0;
+          padding: 0;
           cursor: pointer;
         }
       }
@@ -225,6 +234,7 @@ export default {
 
     .upload-image {
       text-align: left;
+      float: left;
 
       .image-input {
         display: none;
