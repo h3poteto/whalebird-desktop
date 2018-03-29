@@ -1,7 +1,8 @@
+
 const SideBar = {
   namespaced: true,
   state: {
-    openSideBar: true
+    openSideBar: false
   },
   mutations: {
     changeOpenSideBar (state, value) {
