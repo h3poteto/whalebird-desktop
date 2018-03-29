@@ -91,6 +91,7 @@ p {
 
   .space {
     margin-left: 65px;
+    height: 100%;
   }
 }
 </style>
