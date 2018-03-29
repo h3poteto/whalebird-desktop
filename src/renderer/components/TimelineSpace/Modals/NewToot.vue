@@ -21,7 +21,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'new-toot-modal',
+  name: 'new-toot',
   data () {
     return {
       ctrlPressed: false
@@ -30,8 +30,8 @@ export default {
   computed: {
     ...mapState({
       replyToId: (state) => {
-        if (state.TimelineSpace.NewTootModal.replyToMessage !== null) {
-          return state.TimelineSpace.NewTootModal.replyToMessage.id
+        if (state.TimelineSpace.Modals.NewToot.replyToMessage !== null) {
+          return state.TimelineSpace.Modals.NewToot.replyToMessage.id
         } else {
           return null
         }
@@ -39,18 +39,18 @@ export default {
     }),
     newTootModal: {
       get () {
-        return this.$store.state.TimelineSpace.NewTootModal.modalOpen
+        return this.$store.state.TimelineSpace.Modals.NewToot.modalOpen
       },
       set (value) {
-        this.$store.dispatch('TimelineSpace/NewTootModal/changeModal', value)
+        this.$store.dispatch('TimelineSpace/Modals/NewToot/changeModal', value)
       }
     },
     status: {
       get () {
-        return this.$store.state.TimelineSpace.NewTootModal.status
+        return this.$store.state.TimelineSpace.Modals.NewToot.status
       },
       set (value) {
-        this.$store.commit('TimelineSpace/NewTootModal/updateStatus', value)
+        this.$store.commit('TimelineSpace/Modals/NewToot/updateStatus', value)
       }
     }
   },
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     close () {
-      this.$store.dispatch('TimelineSpace/NewTootModal/changeModal', false)
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/changeModal', false)
     },
     keydown (e) {
       if (e.keyCode === 17 || e.keyCode === 93) {
@@ -95,7 +95,7 @@ export default {
           in_reply_to_id: this.replyToId
         })
       }
-      this.$store.dispatch('TimelineSpace/NewTootModal/postToot', form)
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
         .then(() => {
           this.close()
           this.$message({
