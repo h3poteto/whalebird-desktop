@@ -1,11 +1,11 @@
 <template>
   <div class="toot" tabIndex="0">
     <div class="icon">
-      <img :src="originalMessage(message).account.avatar" />
+      <img :src="originalMessage(message).account.avatar" @click="openUser(originalMessage(message).account)"/>
     </div>
     <div class="detail">
       <div class="toot-header">
-        <div class="user">
+        <div class="user" @click="openUser(originalMessage(message).account)">
           {{ username(originalMessage(message).account) }}
         </div>
         <div class="timestamp">
@@ -80,7 +80,7 @@ export default {
     },
     changeReblog (message) {
       if (message.reblogged) {
-        this.$store.dispatch('TimelineSpace/Cards/Toot/unreblog', message)
+        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/unreblog', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -91,7 +91,7 @@ export default {
             })
           })
       } else {
-        this.$store.dispatch('TimelineSpace/Cards/Toot/reblog', message)
+        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/reblog', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -105,7 +105,7 @@ export default {
     },
     changeFavourite (message) {
       if (message.favourited) {
-        this.$store.dispatch('TimelineSpace/Cards/Toot/removeFavourite', message)
+        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/removeFavourite', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -116,7 +116,7 @@ export default {
             })
           })
       } else {
-        this.$store.dispatch('TimelineSpace/Cards/Toot/addFavourite', message)
+        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/addFavourite', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -130,6 +130,9 @@ export default {
     },
     openImage (url) {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', url)
+    },
+    openUser (account) {
+      console.log(account)
     }
   }
 }

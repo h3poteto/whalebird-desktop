@@ -1,28 +1,16 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
-import Home from './TimelineSpace/Home'
-import Notifications from './TimelineSpace/Notifications'
-import Favourites from './TimelineSpace/Favourites'
-import Local from './TimelineSpace/Local'
-import Public from './TimelineSpace/Public'
-import Cards from './TimelineSpace/Cards'
-import JumpModal from './TimelineSpace/JumpModal'
 import Modals from './TimelineSpace/Modals'
+import Contents from './TimelineSpace/Contents'
 import router from '../router'
 
 const TimelineSpace = {
   namespaced: true,
   modules: {
     SideMenu,
-    Home,
-    Notifications,
-    Favourites,
-    Local,
-    Public,
-    Cards,
-    JumpModal,
-    Modals
+    Modals,
+    Contents
   },
   state: {
     account: {
@@ -163,7 +151,7 @@ const TimelineSpace = {
         commit('TimelineSpace/Modals/NewToot/changeModal', true, { root: true })
       })
       ipcRenderer.on('CmdOrCtrl+K', () => {
-        commit('TimelineSpace/JumpModal/changeModal', true, { root: true })
+        commit('TimelineSpace/Modals/Jump/changeModal', true, { root: true })
       })
     },
     async removeShortcutEvents () {

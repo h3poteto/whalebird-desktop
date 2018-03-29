@@ -18,8 +18,8 @@ export default {
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.account,
-      favourites: state => state.TimelineSpace.Favourites.favourites,
-      lazyLoading: state => state.TimelineSpace.Favourites.lazyLoading
+      favourites: state => state.TimelineSpace.Contents.Favourites.favourites,
+      lazyLoading: state => state.TimelineSpace.Contents.Favourites.lazyLoading
     })
   },
   created () {
@@ -29,7 +29,7 @@ export default {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
-    this.$store.dispatch('TimelineSpace/Favourites/fetchFavourites', this.account)
+    this.$store.dispatch('TimelineSpace/Contents/Favourites/fetchFavourites', this.account)
       .then(() => {
         loading.close()
       })
@@ -49,11 +49,11 @@ export default {
   },
   methods: {
     updateToot (message) {
-      this.$store.commit('TimelineSpace/Favourites/updateToot', message)
+      this.$store.commit('TimelineSpace/Contents/Favourites/updateToot', message)
     },
     onScroll (event) {
       if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('favourites').clientHeight - 10) && !this.lazyloading) {
-        this.$store.dispatch('TimelineSpace/Favourites/lazyFetchFavourites', this.favourites[this.favourites.length - 1])
+        this.$store.dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites', this.favourites[this.favourites.length - 1])
       }
     }
   }
