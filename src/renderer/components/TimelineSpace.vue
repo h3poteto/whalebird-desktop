@@ -9,7 +9,7 @@
       <router-view></router-view>
     </div>
   </div>
-  <new-toot-modal></new-toot-modal>
+  <new-toot></new-toot>
   <jump-modal></jump-modal>
   <image-viewer></image-viewer>
 </div>
@@ -18,13 +18,13 @@
 <script>
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
-import NewTootModal from './TimelineSpace/NewTootModal'
+import NewToot from './TimelineSpace/Modals/NewToot'
 import JumpModal from './TimelineSpace/JumpModal'
 import ImageViewer from './TimelineSpace/Modals/ImageViewer'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, NewTootModal, JumpModal, ImageViewer },
+  components: { SideMenu, HeaderMenu, NewToot, JumpModal, ImageViewer },
   created () {
     const loading = this.$loading({
       lock: true,

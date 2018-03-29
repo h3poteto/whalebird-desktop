@@ -76,7 +76,7 @@ export default {
       }
     },
     openReply (message) {
-      this.$store.dispatch('TimelineSpace/NewTootModal/openReply', message)
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', message)
     },
     changeReblog (message) {
       if (message.reblogged) {
