@@ -5,26 +5,21 @@
     <header class="header" style="-webkit-app-region: drag;">
       <header-menu></header-menu>
     </header>
-    <div class="content">
-      <router-view></router-view>
-    </div>
+    <contents></contents>
   </div>
-  <new-toot></new-toot>
-  <jump-modal></jump-modal>
-  <image-viewer></image-viewer>
+  <modals></modals>
 </div>
 </template>
 
 <script>
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
-import NewToot from './TimelineSpace/Modals/NewToot'
-import JumpModal from './TimelineSpace/JumpModal'
-import ImageViewer from './TimelineSpace/Modals/ImageViewer'
+import Contents from './TimelineSpace/Contents'
+import Modals from './TimelineSpace/Modals'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, NewToot, JumpModal, ImageViewer },
+  components: { SideMenu, HeaderMenu, Modals, Contents },
   created () {
     const loading = this.$loading({
       lock: true,
@@ -95,8 +90,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#timeline_space {
+  height: 100%;
+}
 .page {
   margin-left: 180px;
+  height: 100%;
+  box-sizing: border-box;
 
   .header {
     width: 100%;
@@ -106,10 +106,6 @@ export default {
     height: 48px;
     background-color: #ffffff;
     border-bottom: solid 1px #dcdfe6;
-  }
-
-  .content {
-    margin-top: 48px;
   }
 }
 

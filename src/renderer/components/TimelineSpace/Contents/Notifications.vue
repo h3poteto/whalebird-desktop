@@ -18,7 +18,7 @@ export default {
   computed: {
     ...mapState({
       notifications: state => state.TimelineSpace.notifications,
-      lazyLoading: state => state.TimelineSpace.Notifications.lazyLoading
+      lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading
     })
   },
   mounted () {
@@ -37,7 +37,7 @@ export default {
   methods: {
     onScroll (event) {
       if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('notifications').clientHeight - 10) && !this.lazyloading) {
-        this.$store.dispatch('TimelineSpace/Notifications/lazyFetchNotifications', this.notifications[this.notifications.length - 1])
+        this.$store.dispatch('TimelineSpace/Contents/Notifications/lazyFetchNotifications', this.notifications[this.notifications.length - 1])
       }
     }
   }
