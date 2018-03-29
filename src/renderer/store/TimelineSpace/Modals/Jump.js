@@ -1,6 +1,6 @@
-import router from '../../router'
+import router from '../../../router'
 
-const JumpModal = {
+const Jump = {
   namespaced: true,
   state: {
     modalOpen: false,
@@ -55,4 +55,4 @@ const JumpModal = {
   }
 }
 
-export default JumpModal
+export default Jump

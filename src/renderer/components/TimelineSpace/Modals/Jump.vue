@@ -22,18 +22,18 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'jump-modal',
+  name: 'jump',
   computed: {
     ...mapState({
-      channelList: state => state.TimelineSpace.JumpModal.channelList,
-      selectedChannel: state => state.TimelineSpace.JumpModal.selectedChannel
+      channelList: state => state.TimelineSpace.Modals.Jump.channelList,
+      selectedChannel: state => state.TimelineSpace.Modals.Jump.selectedChannel
     }),
     channel: {
       get () {
-        return this.$store.state.TimelineSpace.JumpModal.channel
+        return this.$store.state.TimelineSpace.Modals.Jump.channel
       },
       set (value) {
-        this.$store.commit('TimelineSpace/JumpModal/updateChannel', value)
+        this.$store.commit('TimelineSpace/Modals/Jump/updateChannel', value)
       }
     },
     filterdChannel () {
@@ -41,16 +41,16 @@ export default {
     },
     jumpModal: {
       get () {
-        return this.$store.state.TimelineSpace.JumpModal.modalOpen
+        return this.$store.state.TimelineSpace.Modals.Jump.modalOpen
       },
       set (value) {
-        this.$store.commit('TimelineSpace/JumpModal/changeModal', value)
+        this.$store.commit('TimelineSpace/Modals/Jump/changeModal', value)
       }
     }
   },
   watch: {
     channel (newChannel, oldChannel) {
-      this.$store.commit('TimelineSpace/JumpModal/changeSelected', this.filterChannelForm()[0])
+      this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', this.filterChannelForm()[0])
     }
   },
   updated () {
@@ -72,7 +72,7 @@ export default {
         return e.name === this.selectedChannel.name
       })
       if (i !== undefined && i < (filterd.length - 1)) {
-        this.$store.commit('TimelineSpace/JumpModal/changeSelected', filterd[i + 1])
+        this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', filterd[i + 1])
       }
     },
     prevChannel () {
@@ -81,17 +81,17 @@ export default {
         return e.name === this.selectedChannel.name
       })
       if (i !== undefined && i > 0) {
-        this.$store.commit('TimelineSpace/JumpModal/changeSelected', filterd[i - 1])
+        this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', filterd[i - 1])
       }
     },
     changeSelected (channel) {
-      this.$store.commit('TimelineSpace/JumpModal/changeSelected', channel)
+      this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', channel)
     },
     jumpCurrentSelected () {
-      this.$store.dispatch('TimelineSpace/JumpModal/jumpCurrentSelected')
+      this.$store.dispatch('TimelineSpace/Modals/Jump/jumpCurrentSelected')
     },
     jump (channel) {
-      this.$store.dispatch('TimelineSpace/JumpModal/jump', channel)
+      this.$store.dispatch('TimelineSpace/Modals/Jump/jump', channel)
     }
   }
 }
