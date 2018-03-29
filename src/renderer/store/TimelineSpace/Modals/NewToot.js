@@ -28,6 +28,9 @@ const NewToot = {
     },
     clearAttachedMedias (state) {
       state.attachedMedias = []
+    },
+    removeMedia (state, media) {
+      state.attachedMedias = state.attachedMedias.filter(m => m.id !== media.id)
     }
   },
   actions: {
