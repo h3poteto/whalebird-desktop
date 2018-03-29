@@ -12,11 +12,11 @@
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
         <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
-        <input name="image" type="file" class="image-input" ref="image" />
+        <input name="image" type="file" class="image-input" ref="image" @change="updateImage"/>
       </div>
       <span class="text-count">{{ 500 - status.length }}</span>
       <el-button @click="close">Cancel</el-button>
-      <el-button type="primary" @click="toot">Toot</el-button>
+      <el-button type="primary" @click="toot" v-loading="blockSubmit">Toot</el-button>
     </div>
   </el-dialog>
 </template>
@@ -28,8 +28,7 @@ export default {
   name: 'new-toot',
   data () {
     return {
-      ctrlPressed: false,
-      attachedFiles: []
+      ctrlPressed: false
     }
   },
   computed: {
@@ -40,7 +39,9 @@ export default {
         } else {
           return null
         }
-      }
+      },
+      attachedMedias: state => state.TimelineSpace.Modals.NewToot.attachedMedias,
+      blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit
     }),
     newTootModal: {
       get () {
@@ -118,8 +119,24 @@ export default {
     selectImage () {
       this.$refs.image.click()
     },
-    uploadImage (e) {
-      console.log(e.target.files)
+    updateImage (e) {
+      if (e.target.files.item(0) === null || e.target.files.item(0) === undefined) {
+        return
+      }
+      if (!e.target.files.item(0).type.includes('image')) {
+        this.$message({
+          message: 'You can only attach images',
+          type: 'error'
+        })
+        return
+      }
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', e.target.files.item(0))
+        .catch(() => {
+          this.$message({
+            message: 'Could not attach the file',
+            type: 'error'
+          })
+        })
     }
   }
 }
