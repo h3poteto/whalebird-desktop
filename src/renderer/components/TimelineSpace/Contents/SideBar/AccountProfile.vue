@@ -11,7 +11,7 @@
       <div class="account">
         @{{ account.acct }}
       </div>
-      <div class="note" v-html="account.note"></div>
+      <div class="note" v-html="account.note" @click.capture.prevent="noteClick"></div>
     </div>
   </div>
   <el-row class="basic-info">
@@ -36,6 +36,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { shell } from 'electron'
 
 export default {
   name: 'account-profile',
@@ -51,8 +52,27 @@ export default {
       } else {
         return account.username
       }
+    },
+    noteClick (e) {
+      const link = findLink(e.target)
+      if (link !== null) {
+        shell.openExternal(link)
+      }
     }
   }
+}
+
+function findLink (target) {
+  if (target.localName === 'a') {
+    return target.href
+  }
+  if (target.parentNode === undefined || target.parentNode === null) {
+    return null
+  }
+  if (target.parentNode.getAttribute('class') === 'note') {
+    return null
+  }
+  return findLink(target.parentNode)
 }
 </script>
 
