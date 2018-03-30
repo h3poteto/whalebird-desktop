@@ -1,4 +1,11 @@
 # Change Log
+## [Unrelease]
+### Added
+- [#155](https://github.com/h3poteto/whalebird-desktop/pull/155) [#157](https://github.com/h3poteto/whalebird-desktop/pull/157) [#158](https://github.com/h3poteto/whalebird-desktop/pull/158) Add account profile page in side bar
+
+### Fixed
+- [#159](https://github.com/h3poteto/whalebird-desktop/pull/159) Set max height in the image viewer
+
 ## [2.2.2] - 2018-03-29
 ### Added
 - [#153](https://github.com/h3poteto/whalebird-desktop/pull/153) Attach images in toot
