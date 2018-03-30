@@ -35,13 +35,13 @@ export default {
       .catch(() => {
         loading.close()
       })
-    window.addEventListener('scroll', this.onScroll)
+    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   beforeDestroy () {
     this.$store.dispatch('TimelineSpace/Contents/Local/stopLocalStreaming')
   },
   destroyed () {
-    window.removeEventListener('scroll', this.onScroll)
+    document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
   },
   methods: {
     async initialize () {
@@ -59,7 +59,7 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Local/updateToot', message)
     },
     onScroll (event) {
-      if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('local').clientHeight - 10) && !this.lazyloading) {
+      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('local').clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Local/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
       }
     }

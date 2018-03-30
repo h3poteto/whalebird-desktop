@@ -60,7 +60,6 @@ const Favourites = {
             access_token: rootState.TimelineSpace.account.accessToken,
             api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
           })
-        console.log(last.id)
         // Note: Now this API's explanation and implementation are reversed.
         // So if the bug has resolved, please use max_id instead of since_id.
         // https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#favourites

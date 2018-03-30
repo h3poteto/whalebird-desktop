@@ -1,6 +1,6 @@
 <template>
 <div id="contents">
-  <div :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'">
+  <div id="scrollable" :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'">
     <router-view></router-view>
   </div>
   <side-bar></side-bar>
@@ -38,7 +38,7 @@ export default {
 
   .timeline-wrapper-with-side-bar {
     height: 100%;
-    width: -webkit-calc(100% - 180px);
+    width: -webkit-calc(100% - 320px);
     overflow: auto;
   }
 }
