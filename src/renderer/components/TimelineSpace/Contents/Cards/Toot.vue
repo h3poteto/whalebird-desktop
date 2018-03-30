@@ -132,7 +132,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', url)
     },
     openUser (account) {
-      console.log(account)
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     }
   }
 }
@@ -169,6 +171,7 @@ function findLink (target) {
       width: 36px;
       height: 36px;
       border-radius: 4px;
+      cursor: pointer;
     }
   }
 
@@ -181,6 +184,7 @@ function findLink (target) {
         font-weight: 800;
         color: #303133;
         font-size: 14px;
+        cursor: pointer;
       }
 
       .timestamp {
