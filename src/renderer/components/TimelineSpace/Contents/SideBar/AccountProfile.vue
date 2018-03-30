@@ -28,6 +28,9 @@
       <div class="count">{{ account.followers_count }}</div>
     </el-col>
   </el-row>
+  <div class="timeline">
+    Comming soon...
+  </div>
 </div>
 </template>
 
@@ -109,5 +112,10 @@ export default {
   .info:first-of-type {
     border: none;
   }
+}
+
+.timeline {
+  font-size: 12px;
+  padding: 12px;
 }
 </style>
