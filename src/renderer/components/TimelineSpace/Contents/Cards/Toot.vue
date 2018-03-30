@@ -18,7 +18,7 @@
           <img :src="media.preview_url" @click="openImage(media.url)"/>
         </div>
       </div>
-      <div class="reblogger" v-if="message.reblog !== null">
+      <div class="reblogger" v-if="message.reblog !== null" @click="openUser(message.account)">
         <icon name="retweet"></icon>
         <span class="reblogger-icon">
           <img :src="message.account.avatar" />
@@ -215,6 +215,7 @@ function findLink (target) {
 
     .reblogger {
       color: #909399;
+      cursor: pointer;
 
       .reblogger-icon {
         img {
