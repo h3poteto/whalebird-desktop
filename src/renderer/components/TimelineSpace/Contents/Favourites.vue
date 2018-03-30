@@ -42,17 +42,17 @@ export default {
       })
   },
   mounted () {
-    window.addEventListener('scroll', this.onScroll)
+    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   destroyed () {
-    window.removeEventListener('scroll', this.onScroll)
+    document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
   },
   methods: {
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/Favourites/updateToot', message)
     },
     onScroll (event) {
-      if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('favourites').clientHeight - 10) && !this.lazyloading) {
+      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('favourites').clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites', this.favourites[this.favourites.length - 1])
       }
     }

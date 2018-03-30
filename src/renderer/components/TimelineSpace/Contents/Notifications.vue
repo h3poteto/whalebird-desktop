@@ -23,7 +23,7 @@ export default {
   },
   mounted () {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
-    window.addEventListener('scroll', this.onScroll)
+    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   beforeUpdate () {
     if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications) {
@@ -32,11 +32,11 @@ export default {
   },
   destroyed () {
     this.$store.commit('TimelineSpace/archiveNotifications')
-    window.removeEventListener('scroll', this.onScroll)
+    document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
   },
   methods: {
     onScroll (event) {
-      if (((document.documentElement.clientHeight + event.target.defaultView.scrollY) >= document.getElementById('notifications').clientHeight - 10) && !this.lazyloading) {
+      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('notifications').clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Notifications/lazyFetchNotifications', this.notifications[this.notifications.length - 1])
       }
     }
