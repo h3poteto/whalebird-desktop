@@ -5,7 +5,7 @@
         <icon name="user-plus" scale="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold">{{ username(message.account) }}</span> is now following you
+        <span class="bold" @click="openUser(message.account)">{{ username(message.account) }}</span> is now following you
       </div>
       <div class="action-icon">
         <img :src="message.account.avatar" />
@@ -27,6 +27,11 @@ export default {
       } else {
         return account.username
       }
+    },
+    openUser (account) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     }
   }
 }
@@ -61,6 +66,10 @@ export default {
       margin-left: 10px;
       font-size: 14px;
       float: left;
+
+      .bold {
+        cursor: pointer;
+      }
     }
 
     .action-icon {
