@@ -2,6 +2,15 @@
 <div id="account_profile">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
+      <div class="follow-follower" v-if="relationship !== null">
+        <div class="follower-status">
+        </div>
+        <div class="follow-status">
+          <icon name="user-times" scale="1.5" class="unfollow" v-if="relationship.following"></icon>
+          <icon name="user-plus" scale="1.5" class="follow" v-else></icon>
+        </div>
+        <div class="clearfix"></div>
+      </div>
       <div class="icon">
         <img :src="account.avatar" />
       </div>
@@ -42,7 +51,8 @@ export default {
   name: 'account-profile',
   computed: {
     ...mapState({
-      account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account
+      account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
+      relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship
     })
   },
   methods: {
@@ -89,6 +99,19 @@ function findLink (target) {
   box-sizing: border-box;
   word-wrap: break-word;
   font-size: 14px;
+
+  .follow-follower {
+    .follower-status {
+      float: left;
+    }
+    .follow-status {
+      float: right;
+
+      .unfollow {
+        color: #409eff;
+      }
+    }
+  }
 
   .icon {
     padding: 12px;

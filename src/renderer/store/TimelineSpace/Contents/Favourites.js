@@ -67,6 +67,7 @@ const Favourites = {
           if (err) return reject(err)
           commit('insertFavourites', data)
           commit('changeLazyLoading', false)
+          resolve(res)
         })
       })
     }
