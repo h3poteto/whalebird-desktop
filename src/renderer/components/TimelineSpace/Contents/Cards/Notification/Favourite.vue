@@ -5,7 +5,7 @@
         <icon name="star" scale="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold">{{ username(message.account) }}</span> favourited your status
+        <span class="bold" @click="openUser(message.account)">{{ username(message.account) }}</span> favourited your status
       </div>
       <div class="action-icon">
         <img :src="message.account.avatar" />
@@ -13,12 +13,12 @@
     </div>
     <div class="clearfix"></div>
     <div class="target">
-      <div class="icon">
+      <div class="icon" @click="openUser(message.status.account)">
         <img :src="message.status.account.avatar" />
       </div>
       <div class="detail">
         <div class="toot-header">
-          <div class="user">
+          <div class="user" @click="openUser(message.status.account)">
             {{ username(message.status.account) }}
           </div>
           <div class="timestamp">
@@ -56,6 +56,11 @@ export default {
       if (link !== null) {
         shell.openExternal(link)
       }
+    },
+    openUser (account) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     }
   }
 }
@@ -103,6 +108,10 @@ function findLink (target) {
       margin-left: 10px;
       font-size: 14px;
       float: left;
+
+      .bold {
+        cursor: pointer;
+      }
     }
 
     .action-icon {
@@ -121,6 +130,7 @@ function findLink (target) {
     .icon {
       float: left;
       width: 42px;
+      cursor: pointer;
 
       img {
         width: 32px;
@@ -137,6 +147,7 @@ function findLink (target) {
         .user {
           float: left;
           font-size: 14px;
+          cursor: pointer;
         }
 
         .timestamp {
