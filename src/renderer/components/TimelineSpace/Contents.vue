@@ -1,6 +1,6 @@
 <template>
 <div id="contents">
-  <div :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'">
+  <div id="scrollable" :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'">
     <router-view></router-view>
   </div>
   <side-bar></side-bar>
