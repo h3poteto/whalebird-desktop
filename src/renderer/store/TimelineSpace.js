@@ -227,8 +227,9 @@ function buildNotification (notification) {
         body: `${username(notification.account)} is now following you`
       })
     case 'mention':
+      // Clean html tags
       return new Notification(`${notification.status.account.display_name}`, {
-        body: `${notification.status.content}`
+        body: `${notification.status.content.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')}`
       })
     case 'reblog':
       return new Notification('Reblog', {
