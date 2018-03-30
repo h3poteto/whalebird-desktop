@@ -4,6 +4,8 @@
     <div class="header">
       <div class="follow-follower" v-if="relationship !== null">
         <div class="follower-status">
+          <span class="status" v-if="relationship.followed_by">Follows you</span>
+          <span class="status" v-else>Doesn't follow you</span>
         </div>
         <div class="follow-status">
           <icon name="user-times" scale="1.5" class="unfollow" v-if="relationship.following"></icon>
@@ -25,11 +27,11 @@
   </div>
   <el-row class="basic-info">
     <el-col :span="8"class="info">
-      <div class="title">Posts</div>
+      <div class="title">Toots</div>
       <div class="count">{{ account.statuses_count }}</div>
     </el-col>
     <el-col :span="8"class="info">
-      <div class="title">Following</div>
+      <div class="title">Follows</div>
       <div class="count">{{ account.following_count }}</div>
     </el-col>
     <el-col :span="8"class="info">
@@ -103,6 +105,12 @@ function findLink (target) {
   .follow-follower {
     .follower-status {
       float: left;
+
+      .status {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 4px 8px;
+      }
     }
     .follow-status {
       float: right;
