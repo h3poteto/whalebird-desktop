@@ -66,6 +66,10 @@ export default {
       margin-left: 10px;
       font-size: 14px;
       float: left;
+      max-width: 80%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       .bold {
         cursor: pointer;

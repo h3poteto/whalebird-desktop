@@ -108,6 +108,7 @@ function findLink (target) {
       margin-left: 10px;
       font-size: 14px;
       float: left;
+      max-width: 80%;
 
       .bold {
         cursor: pointer;
