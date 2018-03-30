@@ -5,7 +5,7 @@
         <icon name="retweet" scala="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold">{{ username(message.account) }}</span> boosted your status
+        <span class="bold" @clikc="openUser(message.account)">{{ username(message.account) }}</span> boosted your status
       </div>
       <div class="action-icon">
         <img :src="message.account.avatar" />
@@ -56,6 +56,11 @@ export default {
       if (link !== null) {
         shell.openExternal(link)
       }
+    },
+    openUser (account) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     }
   }
 }
@@ -103,6 +108,10 @@ function findLink (target) {
       margin-left: 10px;
       font-size: 14px;
       float: left;
+
+      .bold {
+        cursor: pointer;
+      }
     }
 
     .action-icon {
