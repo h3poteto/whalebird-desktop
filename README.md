@@ -58,8 +58,8 @@ $ npm run dev
 ```
 
 ## Release
-
-When you build release packages, please use `electron-builder`. Now I don't use `electron-packager`.
+### Binary
+When you build release packages, please use `electron-builder`.
 
 ```bash
 # for linux
@@ -69,6 +69,26 @@ $ npm run build:linux
 # This command automatically loads the Developer ID Application certificate from your keychain.
 $ npm run build:mac
 ```
+
+### AppStore
+
+Please prepare certificates on your Apple developer console. The following keys are required:
+
+- Mac App Distribution: `3rd Party Mac Developer Application: NAME (TEAM_ID)`
+- Mac Installer Distribution: `3rd Party Mac Developer Installer: NAME (TEAM_ID)`
+
+and register your KeyChain.
+
+Then, create a Mac App ID like `org.whalebird.desktop`.
+
+```bash
+$ npm run build:mas
+
+# This command automatically loads the certificates from you keychain.
+$ ./appStore.sh
+```
+
+After that, the `.pkg` file is created under `./packages`.
 
 # License
 The software is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
