@@ -1,5 +1,6 @@
 <template>
-  <div id="account_profile">
+<div id="account_profile">
+  <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
       <div class="icon">
         <img :src="account.avatar" />
@@ -12,21 +13,22 @@
       </div>
       <div class="note" v-html="account.note"></div>
     </div>
-    <el-row class="basic-info">
-      <el-col :span="8"class="info">
-        <div class="title">Posts</div>
-        <div class="count">{{ account.statuses_count }}</div>
-      </el-col>
-      <el-col :span="8"class="info">
-        <div class="title">Following</div>
-        <div class="count">{{ account.following_count }}</div>
-      </el-col>
-      <el-col :span="8"class="info">
-        <div class="title">Followers</div>
-        <div class="count">{{ account.followers_count }}</div>
-      </el-col>
-    </el-row>
   </div>
+  <el-row class="basic-info">
+    <el-col :span="8"class="info">
+      <div class="title">Posts</div>
+      <div class="count">{{ account.statuses_count }}</div>
+    </el-col>
+    <el-col :span="8"class="info">
+      <div class="title">Following</div>
+      <div class="count">{{ account.following_count }}</div>
+    </el-col>
+    <el-col :span="8"class="info">
+      <div class="title">Followers</div>
+      <div class="count">{{ account.followers_count }}</div>
+    </el-col>
+  </el-row>
+</div>
 </template>
 
 <script>
@@ -52,8 +54,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.header-background {
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
 .header {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
   text-align: center;
   padding: 12px;
   box-sizing: border-box;

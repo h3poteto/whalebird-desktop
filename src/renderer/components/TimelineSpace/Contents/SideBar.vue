@@ -46,6 +46,10 @@ export default {
     border-top: solid 1px #dcdfe6;
     border-bottom: solid 1px #dcdfe6;
     text-align: right;
+
+    .el-icon-close {
+      cursor: pointer;
+    }
   }
 }
 </style>
