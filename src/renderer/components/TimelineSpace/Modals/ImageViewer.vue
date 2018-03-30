@@ -68,6 +68,7 @@ export default {
 
     img {
       max-width: 80%;
+      max-height: 80%;
     }
   }
 }
