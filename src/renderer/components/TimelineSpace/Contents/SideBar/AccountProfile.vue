@@ -2,6 +2,21 @@
 <div id="account_profile">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
+      <div class="follow-follower" v-if="relationship !== null && relationship !== ''">
+        <div class="follower-status">
+          <span class="status" v-if="relationship.followed_by">Follows you</span>
+          <span class="status" v-else>Doesn't follow you</span>
+        </div>
+        <div class="follow-status">
+          <div v-if="relationship.following" class="unfollow" @click="unfollow(account)">
+            <icon name="user-times" scale="1.5"></icon>
+          </div>
+          <div v-else class="follow" @click="follow(account)">
+            <icon name="user-plus" scale="1.5"></icon>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
       <div class="icon">
         <img :src="account.avatar" />
       </div>
@@ -16,11 +31,11 @@
   </div>
   <el-row class="basic-info">
     <el-col :span="8"class="info">
-      <div class="title">Posts</div>
+      <div class="title">Toots</div>
       <div class="count">{{ account.statuses_count }}</div>
     </el-col>
     <el-col :span="8"class="info">
-      <div class="title">Following</div>
+      <div class="title">Follows</div>
       <div class="count">{{ account.following_count }}</div>
     </el-col>
     <el-col :span="8"class="info">
@@ -42,7 +57,8 @@ export default {
   name: 'account-profile',
   computed: {
     ...mapState({
-      account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account
+      account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
+      relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship
     })
   },
   methods: {
@@ -58,6 +74,24 @@ export default {
       if (link !== null) {
         shell.openExternal(link)
       }
+    },
+    follow (account) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
+        .catch(() => {
+          this.$message({
+            message: 'Could not follow this user',
+            type: 'error'
+          })
+        })
+    },
+    unfollow (account) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
+        .catch(() => {
+          this.$message({
+            message: 'Could not unfollow this user',
+            type: 'error'
+          })
+        })
     }
   }
 }
@@ -89,6 +123,30 @@ function findLink (target) {
   box-sizing: border-box;
   word-wrap: break-word;
   font-size: 14px;
+
+  .follow-follower {
+    .follower-status {
+      float: left;
+
+      .status {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 4px 8px;
+      }
+    }
+    .follow-status {
+      float: right;
+
+      .follow {
+        cursor: pointer;
+      }
+
+      .unfollow {
+        color: #409eff;
+        cursor: pointer;
+      }
+    }
+  }
 
   .icon {
     padding: 12px;

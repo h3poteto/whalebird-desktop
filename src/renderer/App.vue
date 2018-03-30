@@ -10,6 +10,10 @@
   }
 </script>
 
-<style>
-  /* CSS */
+<style lang="scss">
+.clearfix:after {
+  content:" ";
+  display:block;
+  clear:both;
+}
 </style>
