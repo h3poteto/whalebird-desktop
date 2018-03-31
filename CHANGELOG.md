@@ -1,12 +1,14 @@
 # Change Log
-## [Unrelease]
+## [0.2.3] - 2018-03-31
 ### Added
 - [#155](https://github.com/h3poteto/whalebird-desktop/pull/155) [#157](https://github.com/h3poteto/whalebird-desktop/pull/157) [#158](https://github.com/h3poteto/whalebird-desktop/pull/158) Add account profile page in side bar
 
 ### Fixed
+- [#166](https://github.com/h3poteto/whalebird-desktop/pull/166) Reset ctrl key event handler when close new toot modal
+- [#162](https://github.com/h3poteto/whalebird-desktop/pull/162) Remove html tags in reply notifications
 - [#159](https://github.com/h3poteto/whalebird-desktop/pull/159) Set max height in the image viewer
 
-## [2.2.2] - 2018-03-29
+## [0.2.2] - 2018-03-29
 ### Added
 - [#153](https://github.com/h3poteto/whalebird-desktop/pull/153) Attach images in toot
 - [#152](https://github.com/h3poteto/whalebird-desktop/pull/152) Open images in modal window when click the preview
