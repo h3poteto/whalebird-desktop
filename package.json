@@ -62,7 +62,8 @@
       "icon": "build/icons/icon.icns",
       "target": [
         "dmg"
-      ]
+      ],
+      "category": "public.app-category.social-networking"
     },
     "win": {
       "icon": "build/icons/icon.ico",
@@ -73,7 +74,8 @@
       "target": [
         "deb",
         "rpm"
-      ]
+      ],
+      "category": "Network"
     }
   },
   "dependencies": {
