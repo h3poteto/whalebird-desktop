@@ -77,6 +77,7 @@ export default {
     close () {
       this.resetImage()
       this.$store.dispatch('TimelineSpace/Modals/NewToot/changeModal', false)
+      this.ctrlPressed = false
     },
     keydown (e) {
       if (e.keyCode === 17 || e.keyCode === 93) {
