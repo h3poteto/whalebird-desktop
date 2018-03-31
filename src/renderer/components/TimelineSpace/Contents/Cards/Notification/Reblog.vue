@@ -5,7 +5,7 @@
         <icon name="retweet" scala="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold" @clikc="openUser(message.account)">{{ username(message.account) }}</span> boosted your status
+        <span class="bold" @click="openUser(message.account)">{{ username(message.account) }}</span> boosted your status
       </div>
       <div class="action-icon">
         <img :src="message.account.avatar" />
