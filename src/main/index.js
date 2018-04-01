@@ -298,6 +298,17 @@ ipcMain.on('update-account', (event, acct) => {
     })
 })
 
+ipcMain.on('remove-account', (event, id) => {
+  const account = new Account(db)
+  account.removeAccount(id)
+    .then(() => {
+      event.sender.send('response-remove-account')
+    })
+    .catch((err) => {
+      event.sender.send('error-remove-account', err)
+    })
+})
+
 // streaming
 let userStreaming = null
 
