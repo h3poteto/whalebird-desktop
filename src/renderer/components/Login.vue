@@ -30,15 +30,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-body { font-family: 'Noto Sans', 'Source Sans Pro', sans-serif; }
-
-html, body, #app {
-  height: 100%;
-  margin: 0;
-}
-
-#login {
+<style lang="scss" scoped>
+#login /deep/ {
   background-color: #292f3f;
   color: #ffffff;
   text-align: center;
