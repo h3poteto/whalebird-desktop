@@ -75,6 +75,21 @@ export default class Account {
       )
     })
   }
+
+  removeAccount (id) {
+    return new Promise((resolve, reject) => {
+      this.db.remove(
+        {
+          _id: id
+        },
+        { multi: true },
+        (err, numRemoved) => {
+          if (err) return reject(err)
+          resolve(numRemoved)
+        }
+      )
+    })
+  }
 }
 
 class EmptyRecordError {

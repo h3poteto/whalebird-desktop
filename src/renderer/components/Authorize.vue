@@ -50,18 +50,12 @@ export default {
 }
 </script>
 
-<style lang="scss">
-body { font-family: 'Noto Sans', 'Source Sans Pro', sans-serif; }
-
-html, body, #app, #authorize {
-  height: 100%;
-  margin: 0;
-}
-
-#authorize {
+<style lang="scss" scoped>
+#authorize /deep/ {
   background-color: #292f3f;
   color: #ffffff;
   text-align: center;
+  min-height: 100%;
 
   .close {
     text-align: right;
