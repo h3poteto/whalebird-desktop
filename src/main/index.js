@@ -79,6 +79,16 @@ function createWindow () {
               type: 'separator'
             },
             {
+              label: 'Preferences...',
+              accelerator: 'CmdOrCtrl+,',
+              click: () => {
+                mainWindow.webContents.send('open-preferences')
+              }
+            },
+            {
+              type: 'separator'
+            },
+            {
               label: 'Quit',
               accelerator: 'CmdOrCtrl+Q',
               role: 'quit'
