@@ -2,7 +2,7 @@
   <div id="side_menu">
     <div class="profile-wrapper" style="-webkit-app-region: drag;">
       <div class="profile">
-        <div>@{{ username }}</div>
+        <div>@{{ account.username }}</div>
         <span>{{ account.domain }}</span>
       </div>
     </div>
@@ -49,7 +49,6 @@ export default {
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.account,
-      username: state => state.TimelineSpace.username,
       unreadHomeTimeline: state => state.TimelineSpace.SideMenu.unreadHomeTimeline,
       unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications
     })

@@ -32,8 +32,8 @@ const winURL = process.env.NODE_ENV === 'development'
 // https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
 const databasePath = process.env.NODE_ENV === 'production'
-  ? userData + '/db/whalebird.db'
-  : 'whalebird.db'
+  ? userData + '/db/account.db'
+  : 'account.db'
 let db = new Datastore({
   filename: databasePath,
   autoload: true
@@ -208,19 +208,19 @@ app.on('activate', () => {
   }
 })
 
-let auth = new Authentication(db)
+let auth = new Authentication(new Account(db))
 
 ipcMain.on('get-auth-url', (event, domain) => {
   auth.getAuthorizationUrl(domain)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-get-auth-url', err)
-    })
     .then((url) => {
       log.debug(url)
       event.sender.send('response-get-auth-url', url)
       // Open authorize url in default browser.
       shell.openExternal(url)
+    })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-get-auth-url', err)
     })
 })
 
@@ -272,6 +272,19 @@ ipcMain.on('get-local-account', (event, id) => {
     })
     .then((account) => {
       event.sender.send('response-get-local-account', account)
+    })
+})
+
+ipcMain.on('update-account', (event, acct) => {
+  const account = new Account(db)
+  const id = acct._id
+  delete acct._id
+  account.updateAccount(id, acct)
+    .then((ac) => {
+      event.sender.send('response-update-account', ac)
+    })
+    .catch((err) => {
+      event.sender.send('error-update-account', err)
     })
 })
 

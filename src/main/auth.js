@@ -1,12 +1,11 @@
 import Mastodon from 'mastodon-api'
-import log from 'electron-log'
 
 const appName = 'whalebird'
 const scope = 'read write follow'
 
 export default class Authentication {
-  constructor (db) {
-    this.db = db
+  constructor (accountDB) {
+    this.db = accountDB
     this.baseURL = ''
     this.domain = ''
     this.clientId = ''
@@ -21,46 +20,38 @@ export default class Authentication {
     this.clientSecret = ''
   }
 
-  getAuthorizationUrl (domain = 'mastodon.social') {
+  async getAuthorizationUrl (domain = 'mastodon.social') {
     this.setOtherInstance(domain)
-    return Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
-      .catch(err => log.error(err))
-      .then((res) => {
-        this.clientId = res.client_id
-        this.clientSecret = res.client_secret
+    const res = await Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
+    this.clientId = res.client_id
+    this.clientSecret = res.client_secret
 
-        const json = {
-          baseURL: this.baseURL,
-          domain: this.domain,
-          clientId: this.clientId,
-          clientSecret: this.clientSecret,
-          accessToken: ''
-        }
-        this.db.insert(json, (err, _) => {
-          if (err) throw err
-        })
-
-        return Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL)
-      })
+    // TODO: Save order number
+    const json = {
+      baseURL: this.baseURL,
+      domain: this.domain,
+      clientId: this.clientId,
+      clientSecret: this.clientSecret,
+      accessToken: '',
+      username: '',
+      accountId: ''
+    }
+    await this.db.insertAccount(json)
+    const url = await Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL)
+    return url
   }
 
-  getAccessToken (code) {
-    return new Promise((resolve, reject) => {
-      Mastodon.getAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
-        .catch(err => reject(err))
-        .then((token) => {
-          const search = {
-            baseURL: this.baseURL,
-            domain: this.domain,
-            clientId: this.clientId,
-            clientSecret: this.clientSecret
-          }
-          this.db.update(search, {$set: { accessToken: token }}, {}, (err, num) => {
-            if (err) return reject(err)
-            resolve(token)
-          })
-        })
-    })
+  async getAccessToken (code) {
+    const token = await Mastodon.getAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
+    const search = {
+      baseURL: this.baseURL,
+      domain: this.domain,
+      clientId: this.clientId,
+      clientSecret: this.clientSecret
+    }
+    const rec = await this.db.searchAccount(search)
+    await this.db.updateAccount(rec._id, { accessToken: token })
+    return token
   }
   // TODO: Refresh access token when expired
 }
