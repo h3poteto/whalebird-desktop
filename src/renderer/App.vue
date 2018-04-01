@@ -17,6 +17,17 @@
 </script>
 
 <style lang="scss">
+body { font-family: 'Noto Sans', sans-serif; }
+
+html, body, #app, #global_header {
+  height: 100%;
+  margin: 0;
+}
+
+p {
+  margin: 8px 0;
+}
+
 .clearfix:after {
   content:" ";
   display:block;
