@@ -15,18 +15,15 @@ const TimelineSpace = {
   state: {
     account: {
       domain: '',
-      _id: ''
+      _id: '',
+      username: ''
     },
-    username: '',
     homeTimeline: [],
     notifications: []
   },
   mutations: {
     updateAccount (state, account) {
       state.account = account
-    },
-    updateUsername (state, username) {
-      state.username = username
     },
     appendHomeTimeline (state, update) {
       state.homeTimeline = [update].concat(state.homeTimeline)
@@ -90,7 +87,7 @@ const TimelineSpace = {
     }
   },
   actions: {
-    fetchAccount ({ commit }, id) {
+    localAccount ({ dispatch, commit }, id) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-local-account', id)
         ipcRenderer.once('error-get-local-account', (event, err) => {
@@ -99,12 +96,24 @@ const TimelineSpace = {
         })
         ipcRenderer.once('response-get-local-account', (event, account) => {
           ipcRenderer.removeAllListeners('error-get-local-account')
-          commit('updateAccount', account)
-          resolve(account)
+
+          if (account.username === undefined || account.username === null || account.username === '') {
+            dispatch('fetchAccount', account)
+              .then((acct) => {
+                commit('updateAccount', acct)
+                resolve(acct)
+              })
+              .catch((err) => {
+                reject(err)
+              })
+          } else {
+            commit('updateAccount', account)
+            resolve(account)
+          }
         })
       })
     },
-    username ({ commit }, account) {
+    fetchAccount ({ commit }, account) {
       return new Promise((resolve, reject) => {
         const client = new Mastodon(
           {
@@ -113,8 +122,18 @@ const TimelineSpace = {
           })
         client.get('/accounts/verify_credentials', (err, data, res) => {
           if (err) return reject(err)
-          commit('updateUsername', data.username)
-          resolve(res)
+          ipcRenderer.send('update-account', Object.assign(account, {
+            username: data.username,
+            accountId: data.id
+          }))
+          ipcRenderer.once('error-update-account', (event, err) => {
+            ipcRenderer.removeAllListeners('response-update-account')
+            reject(err)
+          })
+          ipcRenderer.once('response-update-account', (event, account) => {
+            ipcRenderer.removeAllListeners('error-update-account')
+            resolve(account)
+          })
         })
       })
     },
@@ -202,14 +221,11 @@ const TimelineSpace = {
         'updateAccount',
         {
           domain: '',
-          _id: ''
+          _id: '',
+          username: ''
         }
       )
       return 'clearAccount'
-    },
-    async clearUsername ({ commit }) {
-      commit('updateUsername', '')
-      return 'clearUsername'
     }
   }
 }
