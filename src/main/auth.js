@@ -5,8 +5,8 @@ const appName = 'whalebird'
 const scope = 'read write follow'
 
 export default class Authentication {
-  constructor (db) {
-    this.db = db
+  constructor (accountDB) {
+    this.db = accountDB
     this.baseURL = ''
     this.domain = ''
     this.clientId = ''
@@ -23,25 +23,38 @@ export default class Authentication {
 
   getAuthorizationUrl (domain = 'mastodon.social') {
     this.setOtherInstance(domain)
-    return Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
-      .catch(err => log.error(err))
-      .then((res) => {
-        this.clientId = res.client_id
-        this.clientSecret = res.client_secret
+    return new Promise((resolve, reject) => {
+      Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
+        .catch(err => log.error(err))
+        .then((res) => {
+          this.clientId = res.client_id
+          this.clientSecret = res.client_secret
 
-        const json = {
-          baseURL: this.baseURL,
-          domain: this.domain,
-          clientId: this.clientId,
-          clientSecret: this.clientSecret,
-          accessToken: ''
-        }
-        this.db.insert(json, (err, _) => {
-          if (err) throw err
+          // TODO: Save order number
+          const json = {
+            baseURL: this.baseURL,
+            domain: this.domain,
+            clientId: this.clientId,
+            clientSecret: this.clientSecret,
+            accessToken: '',
+            username: '',
+            accountId: ''
+          }
+          this.db.insertAccount(json)
+            .then((doc) => {
+              Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL)
+                .then((url) => {
+                  resolve(url)
+                })
+                .catch((err) => {
+                  reject(err)
+                })
+            })
+            .catch((err) => {
+              reject(err)
+            })
         })
-
-        return Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL)
-      })
+    })
   }
 
   getAccessToken (code) {
@@ -55,10 +68,14 @@ export default class Authentication {
             clientId: this.clientId,
             clientSecret: this.clientSecret
           }
-          this.db.update(search, {$set: { accessToken: token }}, {}, (err, num) => {
-            if (err) return reject(err)
-            resolve(token)
-          })
+          this.db.searchAccount(search)
+            .then((rec) => {
+              this.db.updateAccount(rec._id, { accessToken: token })
+                .then((doc) => {
+                  resolve(token)
+                })
+                .catch(err => reject(err))
+            })
         })
     })
   }
