@@ -63,19 +63,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-body { font-family: 'Noto Sans', sans-serif; }
-
-html, body, #app, #global_header {
-  height: 100%;
-  margin: 0;
-}
-
-p {
-  margin: 8px 0;
-}
-
-#global_header {
+<style lang="scss" scoped>
+#global_header /deep/ {
   .account-menu {
     height: 100%;
     position: fixed;

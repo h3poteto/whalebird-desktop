@@ -79,6 +79,16 @@ function createWindow () {
               type: 'separator'
             },
             {
+              label: 'Preferences...',
+              accelerator: 'CmdOrCtrl+,',
+              click: () => {
+                mainWindow.webContents.send('open-preferences')
+              }
+            },
+            {
+              type: 'separator'
+            },
+            {
               label: 'Quit',
               accelerator: 'CmdOrCtrl+Q',
               role: 'quit'
@@ -285,6 +295,17 @@ ipcMain.on('update-account', (event, acct) => {
     })
     .catch((err) => {
       event.sender.send('error-update-account', err)
+    })
+})
+
+ipcMain.on('remove-account', (event, id) => {
+  const account = new Account(db)
+  account.removeAccount(id)
+    .then(() => {
+      event.sender.send('response-remove-account')
+    })
+    .catch((err) => {
+      event.sender.send('error-remove-account', err)
     })
 })
 

@@ -16,6 +16,23 @@ export default new Router({
       component: require('@/components/Authorize').default
     },
     {
+      path: '/preferences/',
+      name: 'preferences',
+      component: require('@/components/Preferences').default,
+      children: [
+        {
+          path: 'general',
+          name: 'general',
+          component: require('@/components/Preferences/General').default
+        },
+        {
+          path: 'account',
+          name: 'account',
+          component: require('@/components/Preferences/Account').default
+        }
+      ]
+    },
+    {
       path: '/',
       name: 'global-header',
       component: require('@/components/GlobalHeader').default,

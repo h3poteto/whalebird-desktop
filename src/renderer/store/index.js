@@ -2,10 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
 
+import App from './App'
 import GlobalHeader from './GlobalHeader'
 import Login from './Login'
 import Authorize from './Authorize'
 import TimelineSpace from './TimelineSpace'
+import Preferences from './Preferences'
 
 Vue.use(Vuex)
 
@@ -15,9 +17,11 @@ export default new Vuex.Store({
     ? [createLogger()]
     : [],
   modules: {
+    App,
     GlobalHeader,
     Login,
     Authorize,
-    TimelineSpace
+    TimelineSpace,
+    Preferences
   }
 })
