@@ -8,7 +8,8 @@
         :data="accounts"
         stripe
         empty-text="No accounts"
-        style="width: 100%">
+        style="width: 100%"
+        v-loading="accountLoading">
         <el-table-column
           prop="username"
           label="Username"
@@ -40,7 +41,8 @@ export default {
   name: 'account',
   computed: {
     ...mapState({
-      accounts: state => state.Preferences.Account.accounts
+      accounts: state => state.Preferences.Account.accounts,
+      accountLoading: state => state.Preferences.Account.accountLoading
     })
   },
   created () {
@@ -48,14 +50,19 @@ export default {
     this.loadAccounts()
   },
   methods: {
-    loadAccounts () {
-      this.$store.dispatch('Preferences/Account/loadAccounts')
-        .catch(() => {
-          this.$message({
-            message: 'Failed to load accounts',
-            type: 'error'
-          })
+    async loadAccounts () {
+      this.$store.commit('Preferences/Account/updateAccountLoading', true)
+      try {
+        const accounts = await this.$store.dispatch('Preferences/Account/loadAccounts')
+        await this.$store.dispatch('Preferences/Account/fetchUsername', accounts)
+        this.$store.commit('Preferences/Account/updateAccountLoading', false)
+      } catch (err) {
+        this.$store.commit('Preferences/Account/updateAccountLoading', false)
+        return this.$message({
+          message: 'Failed to load accounts',
+          type: 'error'
         })
+      }
     },
     deleteAccount (account) {
       // TODO:
