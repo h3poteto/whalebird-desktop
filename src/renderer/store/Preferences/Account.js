@@ -72,6 +72,19 @@ const Account = {
           })
         })
       }))
+    },
+    removeAccount ({ commit }, account) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('remove-account', account._id)
+        ipcRenderer.once('error-remove-account', (event, err) => {
+          ipcRenderer.removeAllListeners('response-remove-account')
+          reject(err)
+        })
+        ipcRenderer.once('response-remove-account', (event) => {
+          ipcRenderer.removeAllListeners('error-remove-account')
+          resolve()
+        })
+      })
     }
   }
 }

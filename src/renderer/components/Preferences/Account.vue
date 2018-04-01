@@ -23,8 +23,9 @@
           label="Association">
           <template slot-scope="scope">
             <el-button
-              @click.native.prevent="deleteAccount(scope.$index, accounts)"
-              type="text" icon="el-icon-close">
+              @click.native.prevent="removeAccount(scope.$index, accounts)"
+              type="text">
+              <i class="el-icon-close"></i> Remove association
             </el-button>
           </template>
         </el-table-column>
@@ -39,6 +40,11 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'account',
+  data () {
+    return {
+      openRemoveDialog: false
+    }
+  },
   computed: {
     ...mapState({
       accounts: state => state.Preferences.Account.accounts,
@@ -64,8 +70,17 @@ export default {
         })
       }
     },
-    deleteAccount (account) {
-      // TODO:
+    removeAccount (index, accounts) {
+      this.$store.dispatch('Preferences/Account/removeAccount', accounts[index])
+        .then(() => {
+          this.loadAccounts()
+        })
+        .catch(() => {
+          this.$message({
+            message: 'Failed to remove the association',
+            type: 'error'
+          })
+        })
     }
   }
 }
