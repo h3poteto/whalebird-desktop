@@ -41,7 +41,6 @@ export default {
   methods: {
     async clear () {
       await this.$store.dispatch('TimelineSpace/clearAccount')
-      await this.$store.dispatch('TimelineSpace/clearUsername')
       await this.$store.dispatch('TimelineSpace/clearTimeline')
       await this.$store.dispatch('TimelineSpace/clearNotifications')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
@@ -52,20 +51,12 @@ export default {
 
       this.$store.dispatch('TimelineSpace/watchShortcutEvents')
       try {
-        const account = await this.$store.dispatch('TimelineSpace/fetchAccount', this.$route.params.id)
+        const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id)
         try {
           await this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
         } catch (err) {
           this.$message({
             message: 'Could not fetch timeline',
-            type: 'error'
-          })
-        }
-        try {
-          await this.$store.dispatch('TimelineSpace/username', account)
-        } catch (err) {
-          this.$message({
-            message: 'Could not fetch username',
             type: 'error'
           })
         }
