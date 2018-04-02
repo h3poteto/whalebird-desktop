@@ -92,7 +92,6 @@ function findLink (target) {
 
 .favourite {
   padding: 8px 0 0 16px;
-  background-color: #ffffff;
 
   .action {
     margin-right: 8px;

@@ -95,7 +95,6 @@ export default {
     top: 0;
     left: 245px;
     height: 48px;
-    background-color: #ffffff;
     border-bottom: solid 1px #dcdfe6;
   }
 }
