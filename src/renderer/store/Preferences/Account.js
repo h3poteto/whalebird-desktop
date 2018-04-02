@@ -56,7 +56,17 @@ const Account = {
       })
     },
     backwardAccount ({ commit }, account) {
-
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('backward-account', account)
+        ipcRenderer.once('error-backward-account', (event, err) => {
+          ipcRenderer.removeAllListeners('response-forward-account')
+          reject(err)
+        })
+        ipcRenderer.once('response-backward-account', (event) => {
+          ipcRenderer.removeAllListeners('error-backward-account')
+          resolve()
+        })
+      })
     }
   }
 }
