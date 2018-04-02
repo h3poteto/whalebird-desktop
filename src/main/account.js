@@ -111,8 +111,25 @@ export default class Account {
       }
     )
     await this.updateAccount(backwarded._id, Object.assign(backwarded, { order: (backwarded.order + 1) }))
-    // Forward account order.
+    // Forward account order
     const updated = await this.updateAccount(ac._id, Object.assign(ac, { order: (ac.order - 1) }))
+    return updated
+  }
+
+  async backwardAccount (ac) {
+    const length = await this.countAuthorizedAccounts()
+    if (ac.order >= length) {
+      return ac.order
+    }
+    // Find account which is forwarded
+    const forwarded = await this.searchAccount(
+      {
+        order: ac.order + 1
+      }
+    )
+    await this.updateAccount(forwarded._id, Object.assign(forwarded, { order: (forwarded.order - 1) }))
+    // Backward account order
+    const updated = await this.updateAccount(ac._id, Object.assign(ac, { order: (ac.order + 1) }))
     return updated
   }
 }

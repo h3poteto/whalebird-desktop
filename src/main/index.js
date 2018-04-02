@@ -320,6 +320,17 @@ ipcMain.on('forward-account', (event, acct) => {
     })
 })
 
+ipcMain.on('backward-account', (event, acct) => {
+  const account = new Account(db)
+  account.backwardAccount(acct)
+    .then(() => {
+      event.sender.send('response-backward-account')
+    })
+    .catch((err) => {
+      event.sender.send('error-backward-account', err)
+    })
+})
+
 // streaming
 let userStreaming = null
 
