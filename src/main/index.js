@@ -309,6 +309,28 @@ ipcMain.on('remove-account', (event, id) => {
     })
 })
 
+ipcMain.on('forward-account', (event, acct) => {
+  const account = new Account(db)
+  account.forwardAccount(acct)
+    .then(() => {
+      event.sender.send('response-forward-account')
+    })
+    .catch((err) => {
+      event.sender.send('error-forward-account', err)
+    })
+})
+
+ipcMain.on('backward-account', (event, acct) => {
+  const account = new Account(db)
+  account.backwardAccount(acct)
+    .then(() => {
+      event.sender.send('response-backward-account')
+    })
+    .catch((err) => {
+      event.sender.send('error-backward-account', err)
+    })
+})
+
 // streaming
 let userStreaming = null
 

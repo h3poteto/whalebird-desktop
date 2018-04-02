@@ -44,6 +44,7 @@ export default {
       try {
         const accounts = await this.$store.dispatch('GlobalHeader/listAccounts')
         if (this.$route.params.id === undefined) {
+          this.$store.dispatch('GlobalHeader/schmearMenu', accounts[0]._id)
           return this.$router.push({ path: `/${accounts[0]._id}/home` })
         } else {
           return this.$store.dispatch('GlobalHeader/schmearMenu', this.$route.params.id)
