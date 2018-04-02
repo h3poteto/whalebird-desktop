@@ -56,6 +56,12 @@ export default {
         })
       }
       this.$store.dispatch('TimelineSpace/Contents/Public/startPublicStreaming')
+        .catch(() => {
+          this.$message({
+            message: 'Failed to start streaming',
+            type: 'error'
+          })
+        })
     },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/Public/updateToot', message)
