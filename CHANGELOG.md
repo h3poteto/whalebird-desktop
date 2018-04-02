@@ -1,4 +1,18 @@
 # Change Log
+## [Unreleased]
+### Added
+- [#176](https://github.com/h3poteto/whalebird-desktop/pull/176) Set accounts order in preferences
+- [#172](https://github.com/h3poteto/whalebird-desktop/pull/172) Create account preferences page
+
+### Changed
+- [#175](https://github.com/h3poteto/whalebird-desktop/pull/175) Save account username in local db
+
+### Fixed
+- [#179](https://github.com/h3poteto/whalebird-desktop/pull/179) Set global background color to white
+- [#177](https://github.com/h3poteto/whalebird-desktop/pull/177) Skip removeEvents when dom does not have a target element
+- [#170](https://github.com/h3poteto/whalebird-desktop/pull/170) Fix click event on reblog in notifications
+- [#169](https://github.com/h3poteto/whalebird-desktop/pull/169) Set build category for mac and linux
+
 ## [0.2.3] - 2018-03-31
 ### Added
 - [#155](https://github.com/h3poteto/whalebird-desktop/pull/155) [#157](https://github.com/h3poteto/whalebird-desktop/pull/157) [#158](https://github.com/h3poteto/whalebird-desktop/pull/158) Add account profile page in side bar
