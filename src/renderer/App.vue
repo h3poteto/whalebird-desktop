@@ -19,6 +19,10 @@
 <style lang="scss">
 body { font-family: 'Noto Sans', sans-serif; }
 
+html, body, #app {
+  background-color: #ffffff;
+}
+
 html, body, #app, #global_header {
   height: 100%;
   margin: 0;
