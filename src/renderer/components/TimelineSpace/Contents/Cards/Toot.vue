@@ -162,7 +162,6 @@ function findLink (target) {
 
 .toot {
   padding: 4px 0 0 16px;
-  background-color: #ffffff;
 
   .icon {
     float: left;

@@ -71,7 +71,6 @@ export default {
 
 <style lang="scss" scoped>
 .loading-card {
-  background-color: #ffffff;
   height: 60px;
 }
 
