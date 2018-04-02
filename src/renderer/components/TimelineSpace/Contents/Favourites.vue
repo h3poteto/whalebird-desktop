@@ -45,7 +45,9 @@ export default {
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   destroyed () {
-    document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+    if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
+      document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+    }
   },
   methods: {
     updateToot (message) {
