@@ -32,7 +32,9 @@ export default {
   },
   destroyed () {
     this.$store.commit('TimelineSpace/archiveHomeTimeline')
-    document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+    if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
+      document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+    }
   },
   methods: {
     onScroll (event) {
