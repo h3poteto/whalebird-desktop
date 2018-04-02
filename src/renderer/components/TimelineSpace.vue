@@ -69,6 +69,12 @@ export default {
           })
         }
         this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+          .catch(() => {
+            this.$message({
+              message: 'Failed to start streaming',
+              type: 'error'
+            })
+          })
       } catch (err) {
         this.$message({
           message: 'Could not find account',
