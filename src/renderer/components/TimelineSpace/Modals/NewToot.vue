@@ -192,7 +192,6 @@ export default {
         width: 100%;
         font-size: inherit;
         color: #606266;
-        background-color: #ffffff;
         background-image: none;
         border: 0;
         border-radius: 4px;

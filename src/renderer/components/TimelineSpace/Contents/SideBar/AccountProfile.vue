@@ -170,7 +170,6 @@ function findLink (target) {
 }
 
 .basic-info {
-  background-color: #ffffff;
   border-top: solid 1px #dcdfe6;
   border-bottom: solid 1px #dcdfe6;
 
