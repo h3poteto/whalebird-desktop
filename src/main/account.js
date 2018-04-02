@@ -99,6 +99,22 @@ export default class Account {
       )
     })
   }
+
+  async forwardAccount (ac) {
+    if (ac.order <= 1) {
+      return ac.order
+    }
+    // Find account which is backwarded
+    const backwarded = await this.searchAccount(
+      {
+        order: ac.order - 1
+      }
+    )
+    await this.updateAccount(backwarded._id, Object.assign(backwarded, { order: (backwarded.order + 1) }))
+    // Forward account order.
+    const updated = await this.updateAccount(ac._id, Object.assign(ac, { order: (ac.order - 1) }))
+    return updated
+  }
 }
 
 class EmptyRecordError {

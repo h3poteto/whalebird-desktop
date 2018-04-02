@@ -12,8 +12,7 @@
         v-loading="accountLoading">
         <el-table-column
           prop="username"
-          label="Username"
-          width="240">
+          label="Username">
         </el-table-column>
         <el-table-column
           prop="domain"
@@ -27,6 +26,18 @@
               type="text">
               <i class="el-icon-close"></i> Remove association
             </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="Order"
+          width="60">
+          <template slot-scope="scope">
+            <div>
+              <el-button class="arrow-up" type="text" icon="el-icon-arrow-up" @click.native.prevent="forward(scope.$index, accounts)"></el-button>
+            </div>
+            <div>
+              <el-button class="arrow-down" type="text" icon="el-icon-arrow-down" @click.native.prevent="backward(scope.$index, accounts)"></el-button>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -59,8 +70,7 @@ export default {
     async loadAccounts () {
       this.$store.commit('Preferences/Account/updateAccountLoading', true)
       try {
-        const accounts = await this.$store.dispatch('Preferences/Account/loadAccounts')
-        await this.$store.dispatch('Preferences/Account/fetchUsername', accounts)
+        await this.$store.dispatch('Preferences/Account/loadAccounts')
         this.$store.commit('Preferences/Account/updateAccountLoading', false)
       } catch (err) {
         this.$store.commit('Preferences/Account/updateAccountLoading', false)
@@ -81,10 +91,29 @@ export default {
             type: 'error'
           })
         })
+    },
+    forward (index, accounts) {
+      this.$store.dispatch('Preferences/Account/forwardAccount', accounts[index])
+        .then(() => {
+          this.loadAccounts()
+        })
+    },
+    backward (index, accounts) {
+      this.$store.dispatch('Preferences/Account/backwardAccount', accounts[index])
+        .then(() => {
+          this.loadAccounts()
+        })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.allow-up {
+  padding: 0;
+}
+
+.allow-down {
+  padding: 0;
+}
 </style>
