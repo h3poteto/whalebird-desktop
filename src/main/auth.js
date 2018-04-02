@@ -26,7 +26,7 @@ export default class Authentication {
     this.clientId = res.client_id
     this.clientSecret = res.client_secret
 
-    // TODO: Save order number
+    const count = await this.db.countAuthorizedAccounts()
     const json = {
       baseURL: this.baseURL,
       domain: this.domain,
@@ -34,7 +34,8 @@ export default class Authentication {
       clientSecret: this.clientSecret,
       accessToken: '',
       username: '',
-      accountId: ''
+      accountId: '',
+      order: count + 1
     }
     await this.db.insertAccount(json)
     const url = await Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL)

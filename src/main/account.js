@@ -17,10 +17,19 @@ export default class Account {
 
   listAccounts () {
     return new Promise((resolve, reject) => {
-      this.db.find({accessToken: { $ne: '' }}, (err, docs) => {
+      this.db.find({accessToken: { $ne: '' }}).sort({ order: 1 }).exec((err, docs) => {
         if (err) return reject(err)
         if (empty(docs)) return reject(new EmptyRecordError('empty'))
         resolve(docs)
+      })
+    })
+  }
+
+  countAuthorizedAccounts () {
+    return new Promise((resolve, reject) => {
+      this.db.count({accessToken: { $ne: '' }}, (err, count) => {
+        if (err) return reject(err)
+        resolve(count)
       })
     })
   }
@@ -89,6 +98,39 @@ export default class Account {
         }
       )
     })
+  }
+
+  async forwardAccount (ac) {
+    if (ac.order <= 1) {
+      return ac.order
+    }
+    // Find account which is backwarded
+    const backwarded = await this.searchAccount(
+      {
+        order: ac.order - 1
+      }
+    )
+    await this.updateAccount(backwarded._id, Object.assign(backwarded, { order: (backwarded.order + 1) }))
+    // Forward account order
+    const updated = await this.updateAccount(ac._id, Object.assign(ac, { order: (ac.order - 1) }))
+    return updated
+  }
+
+  async backwardAccount (ac) {
+    const length = await this.countAuthorizedAccounts()
+    if (ac.order >= length) {
+      return ac.order
+    }
+    // Find account which is forwarded
+    const forwarded = await this.searchAccount(
+      {
+        order: ac.order + 1
+      }
+    )
+    await this.updateAccount(forwarded._id, Object.assign(forwarded, { order: (forwarded.order - 1) }))
+    // Backward account order
+    const updated = await this.updateAccount(ac._id, Object.assign(ac, { order: (ac.order + 1) }))
+    return updated
   }
 }
 
