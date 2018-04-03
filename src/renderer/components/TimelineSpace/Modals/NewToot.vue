@@ -6,7 +6,7 @@
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
       <div class="status">
-        <textarea v-model="status" ref="status" @keyup.meta.enter.exact="toot" @keyup.ctrl.enter.exact="toot" @keyup.enter.exact="enter" @keydown="keydown" @keyup="keyup"></textarea>
+        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()"></textarea>
       </div>
     </el-form>
     <div class="preview">
@@ -35,7 +35,6 @@ export default {
   name: 'new-toot',
   data () {
     return {
-      ctrlPressed: false,
       attachedImageId: 0
     }
   },
@@ -77,24 +76,6 @@ export default {
     close () {
       this.resetImage()
       this.$store.dispatch('TimelineSpace/Modals/NewToot/changeModal', false)
-      this.ctrlPressed = false
-    },
-    keydown (e) {
-      if (e.keyCode === 17 || e.keyCode === 93) {
-        this.ctrlPressed = true
-      }
-    },
-    keyup (e) {
-      if (e.keyCode === 17 || e.keyCode === 93) {
-        setTimeout(() => {
-          this.ctrlPressed = false
-        }, 100)
-      }
-    },
-    enter () {
-      if (this.ctrlPressed) {
-        this.toot()
-      }
     },
     toot () {
       if (this.status.length <= 0 || this.status.length >= 500) {
