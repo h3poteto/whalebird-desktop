@@ -57,13 +57,13 @@ const NewToot = {
       commit('changeModal', true)
     },
     changeModal ({ commit }, value) {
+      commit('changeModal', value)
       if (!value) {
         commit('updateStatus', '')
         commit('setReplyTo', null)
         commit('changeBlockSubmit', false)
         commit('clearAttachedMedias')
       }
-      commit('changeModal', value)
     },
     uploadImage ({ state, commit, rootState }, image) {
       return new Promise((resolve, reject) => {
