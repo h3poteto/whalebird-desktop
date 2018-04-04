@@ -19,12 +19,12 @@
         </div>
         <div class="clearfix"></div>
       </div>
-      <div class="reblogger" v-if="message.reblog !== null" @click="openUser(message.account)">
+      <div class="reblogger" v-if="message.reblog !== null">
         <icon name="retweet"></icon>
-        <span class="reblogger-icon">
+        <span class="reblogger-icon" @click="openUser(message.account)">
           <img :src="message.account.avatar" />
         </span>
-        <span class="reblogger-name">
+        <span class="reblogger-name" @click="openUser(message.account)">
           {{ username(message.account) }}
         </span>
       </div>
@@ -217,18 +217,19 @@ function findLink (target) {
 
     .reblogger {
       color: #909399;
-      cursor: pointer;
 
       .reblogger-icon {
         img {
           width: 16px;
           height: 16px;
           border-radius: 2px;
+          cursor: pointer;
         }
       }
 
       .reblogger-name {
         font-size: 12px;
+        cursor: pointer;
       }
     }
 
