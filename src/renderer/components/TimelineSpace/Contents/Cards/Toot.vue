@@ -17,6 +17,7 @@
         <div class="media" v-for="media in originalMessage(message).media_attachments">
           <img :src="media.preview_url" @click="openImage(media.url)"/>
         </div>
+        <div class="clearfix"></div>
       </div>
       <div class="reblogger" v-if="message.reblog !== null" @click="openUser(message.account)">
         <icon name="retweet"></icon>
@@ -203,6 +204,8 @@ function findLink (target) {
 
     .attachments {
       .media {
+        float: left;
+        margin-right: 8px;
         img {
           cursor: zoom-in;
           max-width: 200px;
