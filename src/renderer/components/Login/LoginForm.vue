@@ -7,9 +7,22 @@
     <el-form-item class="hidden">
       <el-input></el-input>
     </el-form-item>
-    <el-button type="primary" @click="confirm" v-if="selectedInstance === null">Search</el-button>
+    <el-button
+      type="primary"
+      @click="confirm"
+      v-if="selectedInstance === null"
+      v-loading="searching"
+      element-loading-background="rgba(0, 0, 0, 0.8)">
+      Search
+    </el-button>
     <el-form-item class="submit">
-      <el-button type="primary" class="login" @click="login" v-if="selectedInstance !== null">Login</el-button>
+      <el-button
+        type="primary"
+        class="login"
+        @click="login"
+        v-if="selectedInstance !== null">
+        Login
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -21,7 +34,8 @@ export default {
   name: 'login-form',
   computed: {
     ...mapState({
-      selectedInstance: state => state.Login.selectedInstance
+      selectedInstance: state => state.Login.selectedInstance,
+      searching: state => state.Login.searching
     }),
     domainName: {
       get () {
