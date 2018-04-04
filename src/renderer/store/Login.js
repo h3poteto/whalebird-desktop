@@ -7,7 +7,8 @@ const Login = {
     instances: [],
     domainName: '',
     selectedInstance: null,
-    page: 2
+    page: 2,
+    searching: false
   },
   mutations: {
     updateInstances (state, instances) {
@@ -22,6 +23,9 @@ const Login = {
     },
     updateDomainName (state, domain) {
       state.domainName = domain
+    },
+    changeSearching (state, value) {
+      state.searching = value
     }
   },
   actions: {
@@ -69,13 +73,16 @@ const Login = {
     },
     confirmInstance ({ commit }, domain) {
       return new Promise((resolve, reject) => {
+        commit('changeSearching', true)
         axios
           .get(`https://${domain}/api/v1/instance`)
           .then((res) => {
+            commit('changeSearching', false)
             commit('changeInstance', domain)
             resolve(res)
           })
           .catch((err) => {
+            commit('changeSearching', false)
             reject(err)
           })
       })
