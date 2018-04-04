@@ -205,8 +205,8 @@ function findLink (target) {
       .media {
         img {
           cursor: zoom-in;
-          width: 200px;
-          max-width: 100%;
+          max-width: 200px;
+          max-height: 200px;
           border-radius: 8px;
         }
       }
