@@ -1,12 +1,17 @@
 <template>
-<div id="login">
-  <div class="close">
-    <el-button type="text" @click="close">
-      <i class="el-icon-close"></i>
-    </el-button>
-  </div>
-  <login-form></login-form>
-</div>
+<el-container id="login">
+  <el-header>
+    <el-row>
+      <el-col :span="24" class="close">
+        <el-button type="text" icon="el-icon-close" @click="close" class="close-button">
+        </el-button>
+      </el-col>
+    </el-row>
+  </el-header>
+  <el-container>
+    <login-form></login-form>
+  </el-container>
+</el-container>
 </template>
 
 <script>
@@ -39,6 +44,10 @@ export default {
 
   .close {
     text-align: right;
+
+    .close-button {
+      font-size: 24px;
+    }
   }
 
   .el-form-item__label {
