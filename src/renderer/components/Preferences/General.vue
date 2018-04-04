@@ -1,6 +1,6 @@
 <template>
 <div id="general">
-  general
+  Comming soon
 </div>
 </template>
 
