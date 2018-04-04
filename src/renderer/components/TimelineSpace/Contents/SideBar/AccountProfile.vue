@@ -1,5 +1,9 @@
 <template>
-<div id="account_profile">
+<div id="account_profile"
+     v-loading="loading"
+     element-loading-text="Loading..."
+     element-loading-spinner="el-icon-loading"
+     element-loading-background="rgba(0, 0, 0, 0.8)">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
       <div class="follow-follower" v-if="relationship !== null && relationship !== ''">
@@ -58,7 +62,8 @@ export default {
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
-      relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship
+      relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship,
+      loading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.loading
     })
   },
   methods: {
