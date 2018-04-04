@@ -1,13 +1,22 @@
 # Change Log
+
 ## [Unreleased]
+### Fixed
+- [#187](https://github.com/h3poteto/whalebird-desktop/pull/187) fix: Open user profile on reblogger icon and reblogger name
+- [#185](https://github.com/h3poteto/whalebird-desktop/pull/185) fix: Set font size of close button in login
+- [#184](https://github.com/h3poteto/whalebird-desktop/pull/184) Set limit to attachment height
+
+## [0.3.0] - 2018-04-03
 ### Added
 - [#176](https://github.com/h3poteto/whalebird-desktop/pull/176) Set accounts order in preferences
 - [#172](https://github.com/h3poteto/whalebird-desktop/pull/172) Create account preferences page
 
 ### Changed
+- [#182](https://github.com/h3poteto/whalebird-desktop/pull/180) Use vue-shortkey at shortcut when post new toot
 - [#175](https://github.com/h3poteto/whalebird-desktop/pull/175) Save account username in local db
 
 ### Fixed
+- [#180](https://github.com/h3poteto/whalebird-desktop/pull/180) Show error message when failed to start streaming
 - [#179](https://github.com/h3poteto/whalebird-desktop/pull/179) Set global background color to white
 - [#177](https://github.com/h3poteto/whalebird-desktop/pull/177) Skip removeEvents when dom does not have a target element
 - [#170](https://github.com/h3poteto/whalebird-desktop/pull/170) Fix click event on reblog in notifications
