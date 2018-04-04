@@ -4,7 +4,8 @@ const AccountProfile = {
   namespaced: true,
   state: {
     account: null,
-    relationship: null
+    relationship: null,
+    loading: false
   },
   mutations: {
     changeAccount (state, account) {
@@ -12,6 +13,9 @@ const AccountProfile = {
     },
     changeRelationship (state, relationship) {
       state.relationship = relationship
+    },
+    changeLoading (state, value) {
+      state.loading = value
     }
   },
   actions: {
@@ -36,12 +40,14 @@ const AccountProfile = {
     },
     follow ({ state, commit, rootState }, account) {
       return new Promise((resolve, reject) => {
+        commit('changeLoading', true)
         const client = new Mastodon(
           {
             access_token: rootState.TimelineSpace.account.accessToken,
             api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
           })
         client.post(`/accounts/${account.id}/follow`, {}, (err, data, res) => {
+          commit('changeLoading', false)
           if (err) return reject(err)
           commit('changeRelationship', data)
           resolve(res)
@@ -50,12 +56,14 @@ const AccountProfile = {
     },
     unfollow ({ state, commit, rootState }, account) {
       return new Promise((resolve, reject) => {
+        commit('changeLoading', true)
         const client = new Mastodon(
           {
             access_token: rootState.TimelineSpace.account.accessToken,
             api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
           })
         client.post(`/accounts/${account.id}/unfollow`, {}, (err, data, res) => {
+          commit('changeLoading', false)
           if (err) return reject(err)
           commit('changeRelationship', data)
           resolve(res)
