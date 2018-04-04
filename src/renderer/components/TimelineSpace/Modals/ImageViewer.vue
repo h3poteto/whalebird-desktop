@@ -2,7 +2,7 @@
 <div id="image" v-if="modalOpen">
   <div class="image-wrapper" @keyup.esc.exact="close" tabindex="-1" ref="wrapper">
     <div class="image-header">
-      <i class="el-icon-close" @click="close"></i>
+      <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
     </div>
     <div class="image-content">
       <img :src="imageURL">
@@ -51,11 +51,9 @@ export default {
     padding: 8px 8px 0 0 ;
     color: #409eff;
     box-sizing: border-box;
-    font-size: 18px;
 
-    i {
-      font-weight: 800;
-      cursor: pointer;
+    .close-button {
+      font-size: 24px;
     }
   }
 
