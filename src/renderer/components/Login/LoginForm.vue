@@ -1,5 +1,4 @@
 <template>
-<div id="login_form">
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm" class="login-form">
     <el-form-item label="At first, let's login a mastodon instance. Please write host name which you want to login.">
       <el-input v-model="domainName" placeholder="mastodon.social"></el-input>
@@ -13,7 +12,6 @@
       <el-button type="primary" class="login" @click="login" v-if="selectedInstance !== null">Login</el-button>
     </el-form-item>
   </el-form>
-</div>
 </template>
 
 <script>

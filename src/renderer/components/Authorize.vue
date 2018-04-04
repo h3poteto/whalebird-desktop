@@ -1,22 +1,27 @@
 <template>
 <div id="authorize">
-  <div class="close">
-    <el-button type="text" @click="close">
-      <i class="el-icon-close"></i>
-    </el-button>
-  </div>
-  <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form" v-on:submit.prevent="authorizeSubmit">
-    <el-form-item label="Please paste authorization code from your browser:">
-      <el-input v-model="authorizeForm.code"></el-input>
-    </el-form-item>
-    <!-- Dummy form to guard submitting with enter -->
-    <el-form-item class="hidden">
-      <el-input></el-input>
-    </el-form-item>
-    <el-form-item class="submit">
-      <el-button type="primary" @click="authorizeSubmit">Submit</el-button>
-    </el-form-item>
-  </el-form>
+  <el-header>
+    <el-row>
+      <el-col :span="24" class="close">
+        <el-button type="text" icon="el-icon-close" @click="close" class="close-button">
+        </el-button>
+      </el-col>
+    </el-row>
+  </el-header>
+  <el-container>
+    <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form" v-on:submit.prevent="authorizeSubmit">
+      <el-form-item label="Please paste authorization code from your browser:">
+        <el-input v-model="authorizeForm.code"></el-input>
+      </el-form-item>
+      <!-- Dummy form to guard submitting with enter -->
+      <el-form-item class="hidden">
+        <el-input></el-input>
+      </el-form-item>
+      <el-form-item class="submit">
+        <el-button type="primary" @click="authorizeSubmit">Submit</el-button>
+      </el-form-item>
+    </el-form>
+  </el-container>
 </div>
 </template>
 
@@ -59,6 +64,10 @@ export default {
 
   .close {
     text-align: right;
+
+    .close-button {
+      font-size: 24px;
+    }
   }
 
   .authorize-form {
