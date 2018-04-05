@@ -444,10 +444,19 @@ ipcMain.on('stop-public-streaming', (event, _) => {
 })
 
 // sounds
-ipcMain.on('operation-sound', (event, _) => {
+ipcMain.on('operation-sound01', (event, _) => {
   const sound = process.env.NODE_ENV === 'development'
-    ? path.join(__dirname, '../../build/sounds/operation_sound.wav')
-    : path.join(process.resourcesPath, 'build/sounds/operation_sound.wav')
+    ? path.join(__dirname, '../../build/sounds/operation_sound01.wav')
+    : path.join(process.resourcesPath, 'build/sounds/operation_sound01.wav')
+  simplayer(sound, (err) => {
+    if (err) log.error(err)
+  })
+})
+
+ipcMain.on('operation-sound02', (event, _) => {
+  const sound = process.env.NODE_ENV === 'development'
+    ? path.join(__dirname, '../../build/sounds/operation_sound02.wav')
+    : path.join(process.resourcesPath, 'build/sounds/operation_sound02.wav')
   simplayer(sound, (err) => {
     if (err) log.error(err)
   })

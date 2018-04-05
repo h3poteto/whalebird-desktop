@@ -1,4 +1,5 @@
 import Mastodon from 'mastodon-api'
+import { ipcRenderer } from 'electron'
 import fs from 'fs'
 
 const NewToot = {
@@ -47,6 +48,7 @@ const NewToot = {
         )
         client.post('/statuses', form, (err, data, res) => {
           if (err) return reject(err)
+          ipcRenderer.send('operation-sound02')
           resolve(res)
         })
       })
