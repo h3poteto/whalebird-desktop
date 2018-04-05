@@ -132,6 +132,24 @@ export default class Account {
     const updated = await this.updateAccount(ac._id, Object.assign(ac, { order: (ac.order + 1) }))
     return updated
   }
+
+  /*
+   * cleanup
+   * Check order of all accounts, and fix if order is negative value or over the length.
+   */
+  async cleanup () {
+    const accounts = await this.listAccounts()
+    if (accounts.length < 1) {
+      return accounts.length
+    }
+    if (accounts[0].order < 1 || accounts[accounts.length - 1].order > accounts.length) {
+      await Promise.all(accounts.map(async (element, index) => {
+        const update = await this.updateAccount(element._id, Object.assign(element, { order: index + 1 }))
+        return update
+      }))
+    }
+    return null
+  }
 }
 
 class EmptyRecordError {
