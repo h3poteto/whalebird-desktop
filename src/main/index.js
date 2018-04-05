@@ -5,6 +5,8 @@ import Datastore from 'nedb'
 import empty from 'is-empty'
 import log from 'electron-log'
 import windowStateKeeper from 'electron-window-state'
+import simplayer from 'simplayer'
+import path from 'path'
 
 import Authentication from './auth'
 import Account from './account'
@@ -21,7 +23,7 @@ log.transports.file.level = 'info'
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
 let mainWindow
@@ -192,7 +194,7 @@ function createWindow () {
         width: mainWindowState.width,
         height: mainWindowState.height,
         useContentSize: true,
-        icon: require('path').join(__dirname, '../../build/icons/256x256.png')
+        icon: path.join(__dirname, '../../build/icons/256x256.png')
       })
       mainWindowState.manage(mainWindow)
 
@@ -439,6 +441,16 @@ ipcMain.on('start-public-streaming', (event, ac) => {
 ipcMain.on('stop-public-streaming', (event, _) => {
   publicStreaming.stop()
   publicStreaming = null
+})
+
+// sounds
+ipcMain.on('operation-sound', (event, _) => {
+  const sound = process.env.NODE_ENV === 'development'
+    ? path.join(__dirname, '../../build/sounds/operation_sound.wav')
+    : path.join(process.resourcesPath, 'build/sounds/operation_sound.wav')
+  simplayer(sound, (err) => {
+    if (err) log.error(err)
+  })
 })
 
 /**
