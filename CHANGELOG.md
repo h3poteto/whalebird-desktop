@@ -1,7 +1,12 @@
 # Change Log
 
 ## [Unreleased]
+### Changed
+- [#191](https://github.com/h3poteto/whalebird-desktop/pull/191) Sound a system sound when user favourite or reblog
+
 ### Fixed
+- [#192](https://github.com/h3poteto/whalebird-desktop/pull/192) Rescue order when account order is unexpected value
+- [#189](https://github.com/h3poteto/whalebird-desktop/pull/189) Show loading when user actions
 - [#187](https://github.com/h3poteto/whalebird-desktop/pull/187) fix: Open user profile on reblogger icon and reblogger name
 - [#185](https://github.com/h3poteto/whalebird-desktop/pull/185) fix: Set font size of close button in login
 - [#184](https://github.com/h3poteto/whalebird-desktop/pull/184) Set limit to attachment height
