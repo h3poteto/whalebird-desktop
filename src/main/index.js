@@ -44,6 +44,7 @@ let db = new Datastore({
 async function listAccounts () {
   try {
     const account = new Account(db)
+    await account.cleanup()
     const accounts = await account.listAccounts()
     return accounts
   } catch (err) {
