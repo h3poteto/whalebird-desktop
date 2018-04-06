@@ -48,7 +48,7 @@
     </el-col>
   </el-row>
   <div class="timeline">
-    Comming soon...
+    <timeline :account="account"></timeline>
   </div>
 </div>
 </template>
@@ -56,9 +56,13 @@
 <script>
 import { mapState } from 'vuex'
 import { shell } from 'electron'
+import Timeline from './AccountProfile/Timeline'
 
 export default {
   name: 'account-profile',
+  components: {
+    Timeline
+  },
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
@@ -116,6 +120,10 @@ function findLink (target) {
 </script>
 
 <style lang="scss" scoped>
+#account_profile {
+  height: 100%;
+}
+
 .header-background {
   background-position: 50% 50%;
   background-size: cover;
