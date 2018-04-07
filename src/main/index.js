@@ -11,6 +11,7 @@ import path from 'path'
 import Authentication from './auth'
 import Account from './account'
 import Streaming from './streaming'
+import Preferences from './preferences'
 
 /**
  * Set log level
@@ -33,17 +34,24 @@ const winURL = process.env.NODE_ENV === 'development'
 
 // https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
-const databasePath = process.env.NODE_ENV === 'production'
+const accountDBPath = process.env.NODE_ENV === 'production'
   ? userData + '/db/account.db'
   : 'account.db'
-let db = new Datastore({
-  filename: databasePath,
+let accountDB = new Datastore({
+  filename: accountDBPath,
   autoload: true
 })
+const preferencesDBPath = process.env.NODE_ENV === 'production'
+  ? userData + './db/preferences.json'
+  : 'preferences.json'
+
+const soundBasePath = process.env.NODE_ENV === 'development'
+  ? path.join(__dirname, '../../build/sounds/')
+  : path.join(process.resourcesPath, 'build/sounds/')
 
 async function listAccounts () {
   try {
-    const account = new Account(db)
+    const account = new Account(accountDB)
     await account.cleanup()
     const accounts = await account.listAccounts()
     return accounts
@@ -221,7 +229,7 @@ app.on('activate', () => {
   }
 })
 
-let auth = new Authentication(new Account(db))
+let auth = new Authentication(new Account(accountDB))
 
 ipcMain.on('get-auth-url', (event, domain) => {
   auth.getAuthorizationUrl(domain)
@@ -244,7 +252,7 @@ ipcMain.on('get-access-token', (event, code) => {
       event.sender.send('error-get-access-token', err)
     })
     .then((token) => {
-      db.findOne({
+      accountDB.findOne({
         accessToken: token
       }, (err, doc) => {
         if (err) return event.sender.send('error-get-access-token', err)
@@ -265,7 +273,7 @@ ipcMain.on('get-social-token', (event, _) => {
 
 // nedb
 ipcMain.on('list-accounts', (event, _) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   account.listAccounts()
     .catch((err) => {
       log.error(err)
@@ -277,7 +285,7 @@ ipcMain.on('list-accounts', (event, _) => {
 })
 
 ipcMain.on('get-local-account', (event, id) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   account.getAccount(id)
     .catch((err) => {
       log.error(err)
@@ -289,7 +297,7 @@ ipcMain.on('get-local-account', (event, id) => {
 })
 
 ipcMain.on('update-account', (event, acct) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   const id = acct._id
   delete acct._id
   account.updateAccount(id, acct)
@@ -302,7 +310,7 @@ ipcMain.on('update-account', (event, acct) => {
 })
 
 ipcMain.on('remove-account', (event, id) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   account.removeAccount(id)
     .then(() => {
       event.sender.send('response-remove-account')
@@ -313,7 +321,7 @@ ipcMain.on('remove-account', (event, id) => {
 })
 
 ipcMain.on('forward-account', (event, acct) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   account.forwardAccount(acct)
     .then(() => {
       event.sender.send('response-forward-account')
@@ -324,7 +332,7 @@ ipcMain.on('forward-account', (event, acct) => {
 })
 
 ipcMain.on('backward-account', (event, acct) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   account.backwardAccount(acct)
     .then(() => {
       event.sender.send('response-backward-account')
@@ -338,7 +346,7 @@ ipcMain.on('backward-account', (event, acct) => {
 let userStreaming = null
 
 ipcMain.on('start-user-streaming', (event, ac) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   account.getAccount(ac._id)
     .catch((err) => {
       log.error(err)
@@ -377,7 +385,7 @@ ipcMain.on('stop-user-streaming', (event, _) => {
 let localStreaming = null
 
 ipcMain.on('start-local-streaming', (event, ac) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   account.getAccount(ac._id)
     .catch((err) => {
       log.error(err)
@@ -412,7 +420,7 @@ ipcMain.on('stop-local-streaming', (event, _) => {
 let publicStreaming = null
 
 ipcMain.on('start-public-streaming', (event, ac) => {
-  const account = new Account(db)
+  const account = new Account(accountDB)
   account.getAccount(ac._id)
     .catch((err) => {
       log.error(err)
@@ -445,22 +453,55 @@ ipcMain.on('stop-public-streaming', (event, _) => {
 })
 
 // sounds
-ipcMain.on('operation-sound01', (event, _) => {
-  const sound = process.env.NODE_ENV === 'development'
-    ? path.join(__dirname, '../../build/sounds/operation_sound01.wav')
-    : path.join(process.resourcesPath, 'build/sounds/operation_sound01.wav')
-  simplayer(sound, (err) => {
-    if (err) log.error(err)
-  })
+ipcMain.on('fav-rt-action-sound', (event, _) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.load()
+    .then((conf) => {
+      if (conf.general.sound.fav_rb) {
+        const sound = path.join(soundBasePath, 'operation_sound01.wav')
+        simplayer(sound, (err) => {
+          if (err) log.error(err)
+        })
+      }
+    })
+    .catch(err => log.error(err))
 })
 
-ipcMain.on('operation-sound02', (event, _) => {
-  const sound = process.env.NODE_ENV === 'development'
-    ? path.join(__dirname, '../../build/sounds/operation_sound02.wav')
-    : path.join(process.resourcesPath, 'build/sounds/operation_sound02.wav')
-  simplayer(sound, (err) => {
-    if (err) log.error(err)
-  })
+ipcMain.on('toot-action-sound', (event, _) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.load()
+    .then((conf) => {
+      if (conf.general.sound.toot) {
+        const sound = path.join(soundBasePath, 'operation_sound02.wav')
+        simplayer(sound, (err) => {
+          if (err) log.error(err)
+        })
+      }
+    })
+    .catch(err => log.error(err))
+})
+
+// preferences
+ipcMain.on('get-preferences', (event, _) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.load()
+    .then((conf) => {
+      event.sender.send('response-get-preferences', conf)
+    })
+    .catch((err) => {
+      event.sender.send('error-get-preferences', err)
+    })
+})
+
+ipcMain.on('save-preferences', (event, data) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.save(data)
+    .then((conf) => {
+      event.sender.send('response-save-preferences', conf)
+    })
+    .catch((err) => {
+      event.sender.send('error-save-preferences', err)
+    })
 })
 
 /**
