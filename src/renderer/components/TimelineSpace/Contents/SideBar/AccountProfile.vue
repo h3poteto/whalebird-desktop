@@ -34,21 +34,29 @@
     </div>
   </div>
   <el-row class="basic-info">
-    <el-col :span="8"class="info">
-      <div class="title">Toots</div>
-      <div class="count">{{ account.statuses_count }}</div>
+    <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
+      <el-button type="text" class="tab" @click="changeTab(1)">
+        <div class="title">Toots</div>
+        <div class="count">{{ account.statuses_count }}</div>
+      </el-button>
     </el-col>
-    <el-col :span="8"class="info">
-      <div class="title">Follows</div>
-      <div class="count">{{ account.following_count }}</div>
+    <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
+      <el-button type="text" class="tab" @click="changeTab(2)">
+        <div class="title">Follows</div>
+        <div class="count">{{ account.following_count }}</div>
+      </el-button>
     </el-col>
-    <el-col :span="8"class="info">
-      <div class="title">Followers</div>
-      <div class="count">{{ account.followers_count }}</div>
+    <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
+      <el-button type="text" class="tab" @click="changeTab(3)">
+        <div class="title">Followers</div>
+        <div class="count">{{ account.followers_count }}</div>
+      </el-button>
     </el-col>
   </el-row>
   <div class="timeline">
-    Comming soon...
+    <timeline :account="account" v-if="activeTab === 1"></timeline>
+    <follows v-if="activeTab === 2"></follows>
+    <followers v-if="activeTab === 3"></followers>
   </div>
 </div>
 </template>
@@ -56,9 +64,22 @@
 <script>
 import { mapState } from 'vuex'
 import { shell } from 'electron'
+import Timeline from './AccountProfile/Timeline'
+import Follows from './AccountProfile/Follows'
+import Followers from './AccountProfile/Followers'
 
 export default {
   name: 'account-profile',
+  components: {
+    Timeline,
+    Follows,
+    Followers
+  },
+  data () {
+    return {
+      activeTab: 1
+    }
+  },
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
@@ -97,6 +118,9 @@ export default {
             type: 'error'
           })
         })
+    },
+    changeTab (index) {
+      this.activeTab = index
     }
   }
 }
@@ -116,6 +140,10 @@ function findLink (target) {
 </script>
 
 <style lang="scss" scoped>
+#account_profile {
+  height: 100%;
+}
+
 .header-background {
   background-position: 50% 50%;
   background-size: cover;
@@ -175,30 +203,46 @@ function findLink (target) {
 }
 
 .basic-info {
-  border-top: solid 1px #dcdfe6;
-  border-bottom: solid 1px #dcdfe6;
-
   .info {
+    border-top: solid 1px #dcdfe6;
+    border-bottom: solid 1px #dcdfe6;
     border-left: solid 1px #dcdfe6;
-    padding: 8px 4px;
+    padding: 0 4px;
+
+    .tab {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      text-align: left;
+      line-height: 20px;
+    }
 
     .title {
-      font-size: 10px;
+      font-size: 11px;
       color: #909399;
     }
 
     .count {
       font-weight: 800;
+      font-size: 16px;
+      color: #303133;
+    }
+  }
+
+  .info-active {
+    border-bottom: solid 1px #409eff;
+
+    .count {
+      color: #409eff;
     }
   }
 
   .info:first-of-type {
-    border: none;
+    border-left: none;
   }
 }
 
 .timeline {
   font-size: 12px;
-  padding: 12px;
 }
 </style>

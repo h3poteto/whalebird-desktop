@@ -1,7 +1,11 @@
 import Mastodon from 'mastodon-api'
+import Timeline from './AccountProfile/Timeline'
 
 const AccountProfile = {
   namespaced: true,
+  modules: {
+    Timeline
+  },
   state: {
     account: null,
     relationship: null,
