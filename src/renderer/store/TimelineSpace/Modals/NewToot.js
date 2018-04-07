@@ -48,7 +48,7 @@ const NewToot = {
         )
         client.post('/statuses', form, (err, data, res) => {
           if (err) return reject(err)
-          ipcRenderer.send('operation-sound02')
+          ipcRenderer.send('toot-action-sound')
           resolve(res)
         })
       })
