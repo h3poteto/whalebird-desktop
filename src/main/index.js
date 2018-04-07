@@ -45,6 +45,10 @@ const preferencesDBPath = process.env.NODE_ENV === 'production'
   ? userData + './db/preferences.json'
   : 'preferences.json'
 
+const soundBasePath = process.env.NODE_ENV === 'development'
+  ? path.join(__dirname, '../../build/sounds/')
+  : path.join(process.resourcesPath, 'build/sounds/')
+
 async function listAccounts () {
   try {
     const account = new Account(accountDB)
@@ -449,22 +453,32 @@ ipcMain.on('stop-public-streaming', (event, _) => {
 })
 
 // sounds
-ipcMain.on('operation-sound01', (event, _) => {
-  const sound = process.env.NODE_ENV === 'development'
-    ? path.join(__dirname, '../../build/sounds/operation_sound01.wav')
-    : path.join(process.resourcesPath, 'build/sounds/operation_sound01.wav')
-  simplayer(sound, (err) => {
-    if (err) log.error(err)
-  })
+ipcMain.on('fav-rt-action-sound', (event, _) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.load()
+    .then((conf) => {
+      if (conf.general.sound.fav_rb) {
+        const sound = path.join(soundBasePath, 'operation_sound01.wav')
+        simplayer(sound, (err) => {
+          if (err) log.error(err)
+        })
+      }
+    })
+    .catch(err => log.error(err))
 })
 
-ipcMain.on('operation-sound02', (event, _) => {
-  const sound = process.env.NODE_ENV === 'development'
-    ? path.join(__dirname, '../../build/sounds/operation_sound02.wav')
-    : path.join(process.resourcesPath, 'build/sounds/operation_sound02.wav')
-  simplayer(sound, (err) => {
-    if (err) log.error(err)
-  })
+ipcMain.on('toot-action-sound', (event, _) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.load()
+    .then((conf) => {
+      if (conf.general.sound.toot) {
+        const sound = path.join(soundBasePath, 'operation_sound02.wav')
+        simplayer(sound, (err) => {
+          if (err) log.error(err)
+        })
+      }
+    })
+    .catch(err => log.error(err))
 })
 
 // preferences
