@@ -8,7 +8,7 @@ const App = {
   actions: {
     watchShortcutsEvents () {
       ipcRenderer.on('open-preferences', (event) => {
-        router.push('/preferences/account')
+        router.push('/preferences/general')
       })
     },
     removeShortcutsEvents () {

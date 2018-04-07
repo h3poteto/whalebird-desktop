@@ -22,15 +22,17 @@ const General = {
   actions: {
     loadGeneral ({ commit }) {
       return new Promise((resolve, reject) => {
+        commit('changeLoading', true)
         ipcRenderer.send('get-preferences')
         ipcRenderer.once('error-get-preferences', (event, err) => {
           ipcRenderer.removeAllListeners('response-get-preferences')
+          commit('changeLoading', false)
           reject(err)
         })
         ipcRenderer.once('response-get-preferences', (event, conf) => {
           ipcRenderer.removeAllListeners('error-get-preferences')
-          console.log(conf)
           commit('updateGeneral', conf.general)
+          commit('changeLoading', false)
           resolve(conf)
         })
       })
@@ -51,7 +53,6 @@ const General = {
       })
       ipcRenderer.once('response-save-preferences', (event, conf) => {
         ipcRenderer.removeAllListeners('error-save-preferences')
-        console.log(conf)
         commit('updateGeneral', conf.general)
         commit('changeLoading', false)
       })
