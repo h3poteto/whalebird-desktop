@@ -55,8 +55,8 @@
   </el-row>
   <div class="timeline">
     <timeline :account="account" v-if="activeTab === 1"></timeline>
-    <follows v-if="activeTab === 2"></follows>
-    <followers v-if="activeTab === 3"></followers>
+    <follows :account="account" v-if="activeTab === 2"></follows>
+    <followers :account="account" v-if="activeTab === 3"></followers>
   </div>
 </div>
 </template>

@@ -1,10 +1,14 @@
 import Mastodon from 'mastodon-api'
 import Timeline from './AccountProfile/Timeline'
+import Follows from './AccountProfile/Follows'
+import Followers from './AccountProfile/Followers'
 
 const AccountProfile = {
   namespaced: true,
   modules: {
-    Timeline
+    Timeline,
+    Follows,
+    Followers
   },
   state: {
     account: null,
