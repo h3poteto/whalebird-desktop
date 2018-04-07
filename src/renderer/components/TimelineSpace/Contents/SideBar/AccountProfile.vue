@@ -87,6 +87,11 @@ export default {
       loading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.loading
     })
   },
+  watch: {
+    account: function () {
+      this.activeTab = 1
+    }
+  },
   methods: {
     username (account) {
       if (account.display_name !== '') {

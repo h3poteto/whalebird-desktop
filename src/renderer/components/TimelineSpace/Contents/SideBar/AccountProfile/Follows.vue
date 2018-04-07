@@ -30,6 +30,12 @@ export default {
   methods: {
     load () {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchFollows', this.account)
+        .catch(() => {
+          this.message({
+            message: 'Could not get follows',
+            type: 'error'
+          })
+        })
     }
   }
 }
