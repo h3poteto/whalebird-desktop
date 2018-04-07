@@ -55,8 +55,8 @@
   </el-row>
   <div class="timeline">
     <timeline :account="account" v-if="activeTab === 1"></timeline>
-    <follows v-if="activeTab === 2"></follows>
-    <followers v-if="activeTab === 3"></followers>
+    <follows :account="account" v-if="activeTab === 2"></follows>
+    <followers :account="account" v-if="activeTab === 3"></followers>
   </div>
 </div>
 </template>
@@ -86,6 +86,11 @@ export default {
       relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship,
       loading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.loading
     })
+  },
+  watch: {
+    account: function () {
+      this.activeTab = 1
+    }
   },
   methods: {
     username (account) {
