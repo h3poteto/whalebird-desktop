@@ -30,6 +30,12 @@ export default {
   methods: {
     load () {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/fetchTimeline', this.account)
+        .catch(() => {
+          this.message({
+            message: 'Could not get timeline',
+            type: 'error'
+          })
+        })
     }
   }
 }
