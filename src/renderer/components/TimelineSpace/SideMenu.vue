@@ -37,6 +37,13 @@
         <icon name="globe"></icon>
         <span>PublicTimeline</span>
       </el-menu-item>
+      <li class="el-menu-item menu-item-title">
+        <icon name="list-ul"></icon>
+        <span>Lists</span>
+      </li>
+      <el-menu-item index="3" class="sub-menu">
+        <span>#List1</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -92,6 +99,22 @@ export default {
       background-color: #409eff;
       border: none;
       margin-left: 4px;
+    }
+
+    .menu-item-title {
+      color: rgb(144, 147, 153);
+      cursor: default;
+    }
+
+    .menu-item-title:hover {
+      background-color: inherit;
+    }
+
+    .sub-menu {
+      padding-left: 45px !important;
+      height: 32px;
+      line-height: 32px;
+      font-size: 14px;
     }
   }
 }
