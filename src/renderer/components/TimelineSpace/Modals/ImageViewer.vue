@@ -51,6 +51,7 @@ export default {
     padding: 8px 8px 0 0 ;
     color: #409eff;
     box-sizing: border-box;
+    position: fixed;
 
     .close-button {
       font-size: 24px;
