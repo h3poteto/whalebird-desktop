@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
+import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Modals from './TimelineSpace/Modals'
 import Contents from './TimelineSpace/Contents'
 import router from '../router'
@@ -9,6 +10,7 @@ const TimelineSpace = {
   namespaced: true,
   modules: {
     SideMenu,
+    HeaderMenu,
     Modals,
     Contents
   },
