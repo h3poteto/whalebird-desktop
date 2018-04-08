@@ -66,6 +66,11 @@ export default new Router({
               path: 'public',
               name: 'public',
               component: require('@/components/TimelineSpace/Contents/Public').default
+            },
+            {
+              path: 'lists/:list_id',
+              name: 'lists',
+              component: require('@/components/TimelineSpace/Contents/Lists').default
             }
           ]
         }

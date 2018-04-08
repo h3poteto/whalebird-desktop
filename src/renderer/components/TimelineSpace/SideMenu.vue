@@ -41,9 +41,11 @@
         <icon name="list-ul"></icon>
         <span>Lists</span>
       </li>
-      <el-menu-item index="3" class="sub-menu">
-        <span>#List1</span>
-      </el-menu-item>
+      <template v-for="list in lists">
+        <el-menu-item :index="`/${id()}/lists/${list.id}`" class="sub-menu" v-on:key="list.id">
+          <span>#{{ list.title }}</span>
+        </el-menu-item>
+      </template>
     </el-menu>
   </div>
 </template>
@@ -57,7 +59,8 @@ export default {
     ...mapState({
       account: state => state.TimelineSpace.account,
       unreadHomeTimeline: state => state.TimelineSpace.SideMenu.unreadHomeTimeline,
-      unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications
+      unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications,
+      lists: state => state.TimelineSpace.SideMenu.lists
     })
   },
   methods: {
