@@ -40,7 +40,7 @@
       "output": "build"
     },
     "extraResources": [
-      "build/sounds/"
+      "build/sounds/*"
     ],
     "files": [
       "dist/electron/**/*",
@@ -70,7 +70,7 @@
     },
     "win": {
       "icon": "build/icons/icon.ico",
-      "target": "msi"
+      "target": "nsis"
     },
     "linux": {
       "icon": "build/icons",
