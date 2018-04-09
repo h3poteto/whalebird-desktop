@@ -1,7 +1,7 @@
 <template>
 <div id="lists">
   <div class="list-timeline" v-for="message in timeline" v-bind:key="message.id">
-    <toot :message="message"></toot>
+    <toot :message="message" v-on:update="updateToot"></toot>
   </div>
 </div>
 </template>
@@ -46,6 +46,9 @@ export default {
             type: 'error'
           })
         })
+    },
+    updateToot (message) {
+      this.$store.commit('TimelineSpace/Contents/Lists/updateToot', message)
     }
   }
 }
