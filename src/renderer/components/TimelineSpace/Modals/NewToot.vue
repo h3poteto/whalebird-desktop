@@ -10,7 +10,7 @@
       </div>
     </el-form>
     <div class="preview">
-      <div class="image-wrapper" v-for="media in attachedMedias" v-on:key="media.id">
+      <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
         <el-button size="small" type="text" @click="removeAttachment(media)" class="remove-image"><icon name="times-circle"></icon></el-button>
       </div>
