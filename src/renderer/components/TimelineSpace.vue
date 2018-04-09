@@ -50,37 +50,36 @@ export default {
       await this.clear()
 
       this.$store.dispatch('TimelineSpace/watchShortcutEvents')
-      try {
-        const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id)
-        try {
-          await this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
-        } catch (err) {
-          this.$message({
-            message: 'Could not fetch timeline',
-            type: 'error'
-          })
-        }
-        try {
-          await this.$store.dispatch('TimelineSpace/fetchNotifications', account)
-        } catch (err) {
-          this.$message({
-            message: 'Could not fetch notification',
-            type: 'error'
-          })
-        }
-        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
-          .catch(() => {
-            this.$message({
-              message: 'Failed to start streaming',
-              type: 'error'
-            })
-          })
-      } catch (err) {
+      const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch(() => {
         this.$message({
           message: 'Could not find account',
           type: 'error'
         })
+      })
+      try {
+        await this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
+      } catch (err) {
+        this.$message({
+          message: 'Could not fetch timeline',
+          type: 'error'
+        })
       }
+      try {
+        await this.$store.dispatch('TimelineSpace/fetchNotifications', account)
+      } catch (err) {
+        this.$message({
+          message: 'Could not fetch notification',
+          type: 'error'
+        })
+      }
+      this.$store.dispatch('TimelineSpace/SideMenu/fetchLists', account)
+      this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+        .catch(() => {
+          this.$message({
+            message: 'Failed to start streaming',
+            type: 'error'
+          })
+        })
     }
   }
 }
