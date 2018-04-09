@@ -22,13 +22,34 @@ export default {
     })
   },
   created () {
+    const loading = this.$loading({
+      lock: true,
+      text: 'Loading',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
     this.load()
+      .then(() => {
+        loading.close()
+      })
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   watch: {
     list_id: function () {
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.load()
+        .then(() => {
+          loading.close()
+        })
     }
+  },
+  beforeDestroy () {
+    this.$store.dispatch('TimelineSpace/Contents/Lists/stopStreaming')
   },
   destroyed () {
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
@@ -36,30 +57,29 @@ export default {
     }
   },
   methods: {
-    load () {
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-      this.$store.dispatch('TimelineSpace/Contents/Lists/fetchTimeline', this.list_id)
-        .then(() => {
-          loading.close()
+    async load () {
+      await this.$store.dispatch('TimelineSpace/Contents/Lists/stopStreaming')
+      try {
+        await this.$store.dispatch('TimelineSpace/Contents/Lists/fetchTimeline', this.list_id)
+      } catch (err) {
+        this.$message({
+          message: 'Failed to get timeline',
+          type: 'error'
         })
+      }
+      this.$store.dispatch('TimelineSpace/Contents/Lists/startStreaming', this.list_id)
         .catch(() => {
-          loading.close()
           this.$message({
-            message: 'Failed to get timeline',
+            message: 'Failed to start streaming',
             type: 'error'
           })
         })
+      return 'started'
     },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/Lists/updateToot', message)
     },
     onScroll (event) {
-      console.log(document.getElementsByName('lists'))
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementsByName('lists')[0].clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Lists/lazyFetchTimeline', {
           list_id: this.list_id,
