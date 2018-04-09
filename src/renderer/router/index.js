@@ -70,7 +70,8 @@ export default new Router({
             {
               path: 'lists/:list_id',
               name: 'lists',
-              component: require('@/components/TimelineSpace/Contents/Lists').default
+              component: require('@/components/TimelineSpace/Contents/Lists').default,
+              props: true
             }
           ]
         }
