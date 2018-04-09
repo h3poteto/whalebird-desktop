@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 
 const Lists = {
@@ -7,6 +8,9 @@ const Lists = {
     lazyLoading: false
   },
   mutations: {
+    appendTimeline (state, update) {
+      state.timeline = [update].concat(state.timeline)
+    },
     updateTimeline (state, timeline) {
       state.timeline = timeline
     },
@@ -46,6 +50,28 @@ const Lists = {
           commit('updateTimeline', data)
           resolve(res)
         })
+      })
+    },
+    startStreaming ({ state, commit, rootState }, listID) {
+      ipcRenderer.on('update-start-list-streaming', (event, update) => {
+        commit('appendTimeline', update)
+      })
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('start-list-streaming', {
+          list_id: listID,
+          account: rootState.TimelineSpace.account
+        })
+        ipcRenderer.once('error-start-list-streaming', (event, err) => {
+          reject(err)
+        })
+      })
+    },
+    stopStreaming ({ commit }) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.removeAllListeners('error-start-list-streaming')
+        ipcRenderer.removeAllListeners('update-start-list-streaming')
+        ipcRenderer.send('stop-list-streaming')
+        resolve()
       })
     },
     lazyFetchTimeline ({ state, commit, rootState }, obj) {

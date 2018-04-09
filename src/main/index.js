@@ -452,6 +452,36 @@ ipcMain.on('stop-public-streaming', (event, _) => {
   publicStreaming = null
 })
 
+let listStreaming = null
+
+ipcMain.on('start-list-streaming', (event, obj) => {
+  const account = new Account(accountDB)
+  account.getAccount(obj.account._id)
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-list-streaming', err)
+    })
+    .then((account) => {
+      // Stop old list streaming
+      if (listStreaming !== null) {
+        listStreaming.stop()
+        listStreaming = null
+      }
+
+      listStreaming = new Streaming(account)
+      listStreaming.start(
+        `/streaming/list?list=${obj.list_id}`,
+        (update) => {
+          event.sender.send('update-start-list-streaming', update)
+        },
+        (err) => {
+          log.error(err)
+          event.sendeer.send('error-start-list-streaming', err)
+        }
+      )
+    })
+})
+
 // sounds
 ipcMain.on('fav-rt-action-sound', (event, _) => {
   const preferences = new Preferences(preferencesDBPath)
