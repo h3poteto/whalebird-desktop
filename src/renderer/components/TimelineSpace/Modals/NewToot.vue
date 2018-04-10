@@ -6,7 +6,7 @@
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
       <div class="status">
-        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()"></textarea>
+        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()" autofocus></textarea>
       </div>
     </el-form>
     <div class="preview">
@@ -67,9 +67,13 @@ export default {
       }
     }
   },
-  updated () {
-    if (this.newTootModal) {
-      this.$refs.status.focus()
+  watch: {
+    newTootModal: function (newState, oldState) {
+      if (!oldState && newState) {
+        this.$nextTick(function () {
+          this.$refs.status.focus()
+        })
+      }
     }
   },
   methods: {
