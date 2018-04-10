@@ -56,12 +56,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import moment from 'moment'
 import { shell } from 'electron'
 
 export default {
-  name: 'toot',
-  props: ['message'],
+  name: 'toot-detail',
+  computed: {
+    ...mapState({
+      message: state => state.TimelineSpace.Contents.SideBar.TootDetail.message
+    })
+  },
   methods: {
     originalMessage (message) {
       if (message.reblog !== null) {
