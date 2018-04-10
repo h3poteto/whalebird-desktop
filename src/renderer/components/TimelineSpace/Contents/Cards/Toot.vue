@@ -38,6 +38,9 @@
         <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
+        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
+          <icon name="ellipsis-h" scale="0.9"></icon>
+        </el-button>
       </div>
     </div>
     <div class="clearfix"></div>
