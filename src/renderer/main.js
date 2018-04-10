@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import ElementUI from 'element-ui'
+import Popover from 'vue-js-popover'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -11,6 +12,7 @@ import router from './router'
 import store from './store'
 
 Vue.use(ElementUI)
+Vue.use(Popover)
 Vue.component('icon', Icon)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))

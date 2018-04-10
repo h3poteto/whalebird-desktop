@@ -38,9 +38,16 @@
         <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
+        <el-button type="text" v-popover:menu.bottom>
           <icon name="ellipsis-h" scale="0.9"></icon>
         </el-button>
+        <popover name="menu" :width="120">
+          <ul class="toot-menu">
+            <li>
+              View Toot Detail
+            </li>
+          </ul>
+        </popover>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -249,6 +256,33 @@ function findLink (target) {
 
       .favourited {
         color: #e6a23c;
+      }
+
+      div[data-popover="menu"] {
+        box-shadow: none;
+        border: 1px solid #ddd;
+
+        &::before{
+          filter: drop-shadow(0 -1px 0px #ddd);
+        }
+      }
+
+      .toot-menu{
+        padding: 0;
+        font-size: 0.8em;
+        margin-left: 0.5em;
+        list-style-type: none;
+        text-align: center;
+
+        li{
+          padding-bottom: 0.5em;
+          border-bottom: 1px solid #ddd;
+
+          &:last-child{
+            border: 0;
+            padding: 0;
+          }
+        }
       }
     }
 
