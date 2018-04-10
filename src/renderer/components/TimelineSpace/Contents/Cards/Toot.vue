@@ -43,7 +43,7 @@
         </el-button>
         <popover name="menu" :width="120">
           <ul class="toot-menu">
-            <li>
+            <li role="button" @click="openDetail(message)">
               View Toot Detail
             </li>
           </ul>
@@ -88,6 +88,9 @@ export default {
     },
     openReply (message) {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', message)
+    },
+    openDetail (message) {
+      this.$store.dispatch('TimelineSpace/Modals/Toot/openToot', message)
     },
     changeReblog (message) {
       if (message.reblogged) {
