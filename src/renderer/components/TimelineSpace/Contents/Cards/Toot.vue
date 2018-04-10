@@ -38,10 +38,10 @@
         <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" v-popover:menu.bottom>
+        <el-button type="text" v-popover="{ name: message.id }">
           <icon name="ellipsis-h" scale="0.9"></icon>
         </el-button>
-        <popover name="menu" :width="120">
+        <popover :name="message.id" :width="120">
           <ul class="toot-menu">
             <li role="button" @click="openDetail(message)">
               View Toot Detail
@@ -88,6 +88,11 @@ export default {
     },
     openReply (message) {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', message)
+    },
+    openDetail (message) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
     changeReblog (message) {
       if (message.reblogged) {
@@ -145,11 +150,6 @@ export default {
     openUser (account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    openDetail (message) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     }
   }
@@ -261,15 +261,6 @@ function findLink (target) {
 
       .favourited {
         color: #e6a23c;
-      }
-
-      div[data-popover="menu"] {
-        box-shadow: none;
-        border: 1px solid #ddd;
-
-        &::before{
-          filter: drop-shadow(0 -1px 0px #ddd);
-        }
       }
 
       .toot-menu{
