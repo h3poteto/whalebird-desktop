@@ -90,7 +90,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', message)
     },
     openDetail (message) {
-      this.$store.dispatch('TimelineSpace/Modals/Toot/openToot', message)
+
     },
     changeReblog (message) {
       if (message.reblogged) {
