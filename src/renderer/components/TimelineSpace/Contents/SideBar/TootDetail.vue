@@ -38,16 +38,6 @@
         <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" v-popover:menu.bottom>
-          <icon name="ellipsis-h" scale="0.9"></icon>
-        </el-button>
-        <popover name="menu" :width="120">
-          <ul class="toot-menu">
-            <li role="button" @click="openDetail(message)">
-              View Toot Detail
-            </li>
-          </ul>
-        </popover>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -67,7 +57,14 @@ export default {
       message: state => state.TimelineSpace.Contents.SideBar.TootDetail.message
     })
   },
+  created () {
+    this.load()
+  },
   methods: {
+    load () {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/fetchToot', this.message)
+        .catch(() => {})
+    },
     originalMessage (message) {
       if (message.reblog !== null) {
         return message.reblog
