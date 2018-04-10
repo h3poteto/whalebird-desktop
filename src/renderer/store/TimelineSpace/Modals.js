@@ -1,4 +1,5 @@
 import NewToot from './Modals/NewToot'
+import Toot from './Modals/Toot'
 import ImageViewer from './Modals/ImageViewer'
 import Jump from './Modals/Jump'
 
@@ -7,6 +8,7 @@ const Modals = {
   modules: {
     ImageViewer,
     NewToot,
+    Toot,
     Jump
   }
 }
