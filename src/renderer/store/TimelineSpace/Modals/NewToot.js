@@ -9,7 +9,8 @@ const NewToot = {
     status: '',
     replyToMessage: null,
     blockSubmit: false,
-    attachedMedias: []
+    attachedMedias: [],
+    visibility: 'public'
   },
   mutations: {
     changeModal (state, value) {
@@ -32,6 +33,9 @@ const NewToot = {
     },
     removeMedia (state, media) {
       state.attachedMedias = state.attachedMedias.filter(m => m.id !== media.id)
+    },
+    changeVisibility (state, value) {
+      state.visibility = value
     }
   },
   actions: {

@@ -20,6 +20,17 @@
         <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
         <input name="image" type="file" class="image-input" ref="image" @change="updateImage" :key="attachedImageId"/>
       </div>
+      <div class="privacy">
+        <el-dropdown trigger="click" @command="changeVisibility">
+          <el-button size="small" type="text"><icon :name="visibilityIcon"></icon></el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="public"><icon name="globe" class="privacy-icon"></icon>Public</el-dropdown-item>
+            <el-dropdown-item command="unlisted"><icon name="unlock" class="privacy-icon"></icon>Unlisted</el-dropdown-item>
+            <el-dropdown-item command="private"><icon name="lock" class="privacy-icon"></icon>Private</el-dropdown-item>
+            <el-dropdown-item command="direct"><icon name="envelope" class="privacy-icon" scale="0.8"></icon>Direct</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
       <span class="text-count">{{ 500 - status.length }}</span>
       <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="toot" v-loading="blockSubmit">Toot</el-button>
@@ -48,7 +59,22 @@ export default {
         }
       },
       attachedMedias: state => state.TimelineSpace.Modals.NewToot.attachedMedias,
-      blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit
+      blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit,
+      visibility: state => state.TimelineSpace.Modals.NewToot.visibility,
+      visibilityIcon: (state) => {
+        switch (state.TimelineSpace.Modals.NewToot.visibility) {
+          case 'public':
+            return 'globe'
+          case 'unlisted':
+            return 'unlock'
+          case 'private':
+            return 'lock'
+          case 'direct':
+            return 'envelope'
+          default:
+            return 'globe'
+        }
+      }
     }),
     newTootModal: {
       get () {
@@ -89,7 +115,8 @@ export default {
         })
       }
       let form = {
-        status: this.status
+        status: this.status,
+        visibility: this.visibility
       }
       if (this.replyToId !== null) {
         form = Object.assign(form, {
@@ -160,6 +187,9 @@ export default {
     },
     resetImage () {
       ++this.attachedImageId
+    },
+    changeVisibility (level) {
+      this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibility', level)
     }
   }
 }
@@ -236,10 +266,19 @@ export default {
       }
     }
 
+    .privacy {
+      float: left;
+      margin-left: 8px;
+    }
+
     .text-count {
       padding-right: 24px;
       color: #909399;
     }
   }
+}
+
+.privacy-icon {
+  margin-right: 4px;
 }
 </style>
