@@ -4,16 +4,12 @@ const TootDetail = {
   namespaced: true,
   state: {
     message: null,
-    loading: false,
     ancestors: [],
     descendants: []
   },
   mutations: {
     changeToot (state, message) {
       state.message = message
-    },
-    changeLoading (state, value) {
-      state.loading = value
     },
     updateAncestors (state, ancestors) {
       state.ancestors = ancestors
@@ -28,7 +24,6 @@ const TootDetail = {
     },
     fetchToot ({ state, commit, rootState }, message) {
       return new Promise((resolve, reject) => {
-        commit('TimelineSpace/Contents/SideBar/TootDetail/changeLoading', true, { root: true })
         const client = new Mastodon(
           {
             access_token: rootState.TimelineSpace.account.accessToken,
@@ -38,7 +33,6 @@ const TootDetail = {
           if (err) return reject(err)
           commit('updateAncestors', data.ancestors)
           commit('updateDescendants', data.descendants)
-          commit('TimelineSpace/Contents/SideBar/TootDetail/changeLoading', false, { root: true })
           resolve(res)
         })
       })
