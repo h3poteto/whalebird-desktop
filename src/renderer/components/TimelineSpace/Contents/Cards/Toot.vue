@@ -3,7 +3,7 @@
     <div class="icon">
       <img :src="originalMessage(message).account.avatar" @click="openUser(originalMessage(message).account)"/>
     </div>
-    <div class="detail">
+    <div class="detail" @click="openDetail(message)">
       <div class="toot-header">
         <div class="user" @click="openUser(originalMessage(message).account)">
           {{ username(originalMessage(message).account) }}
