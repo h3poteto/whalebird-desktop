@@ -20,6 +20,17 @@
         <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
         <input name="image" type="file" class="image-input" ref="image" @change="updateImage" :key="attachedImageId"/>
       </div>
+      <div class="privacy">
+        <el-dropdown trigger="click">
+          <el-button size="small" type="text"><icon name="globe"></icon></el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item><icon name="globe" class="privacy-icon"></icon>Public</el-dropdown-item>
+            <el-dropdown-item><icon name="unlock" class="privacy-icon"></icon>Unlisted</el-dropdown-item>
+            <el-dropdown-item><icon name="lock" class="privacy-icon"></icon>Private</el-dropdown-item>
+            <el-dropdown-item><icon name="envelope" class="privacy-icon" scale="0.8"></icon>Direct</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
       <span class="text-count">{{ 500 - status.length }}</span>
       <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="toot" v-loading="blockSubmit">Toot</el-button>
@@ -236,10 +247,19 @@ export default {
       }
     }
 
+    .privacy {
+      float: left;
+      margin-left: 8px;
+    }
+
     .text-count {
       padding-right: 24px;
       color: #909399;
     }
   }
+}
+
+.privacy-icon {
+  margin-right: 4px;
 }
 </style>
