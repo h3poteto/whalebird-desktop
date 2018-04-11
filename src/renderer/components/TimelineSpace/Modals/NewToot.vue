@@ -21,13 +21,13 @@
         <input name="image" type="file" class="image-input" ref="image" @change="updateImage" :key="attachedImageId"/>
       </div>
       <div class="privacy">
-        <el-dropdown trigger="click">
-          <el-button size="small" type="text"><icon name="globe"></icon></el-button>
+        <el-dropdown trigger="click" @command="changeVisibility">
+          <el-button size="small" type="text"><icon :name="visibilityIcon"></icon></el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item><icon name="globe" class="privacy-icon"></icon>Public</el-dropdown-item>
-            <el-dropdown-item><icon name="unlock" class="privacy-icon"></icon>Unlisted</el-dropdown-item>
-            <el-dropdown-item><icon name="lock" class="privacy-icon"></icon>Private</el-dropdown-item>
-            <el-dropdown-item><icon name="envelope" class="privacy-icon" scale="0.8"></icon>Direct</el-dropdown-item>
+            <el-dropdown-item command="public"><icon name="globe" class="privacy-icon"></icon>Public</el-dropdown-item>
+            <el-dropdown-item command="unlisted"><icon name="unlock" class="privacy-icon"></icon>Unlisted</el-dropdown-item>
+            <el-dropdown-item command="private"><icon name="lock" class="privacy-icon"></icon>Private</el-dropdown-item>
+            <el-dropdown-item command="direct"><icon name="envelope" class="privacy-icon" scale="0.8"></icon>Direct</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -59,7 +59,21 @@ export default {
         }
       },
       attachedMedias: state => state.TimelineSpace.Modals.NewToot.attachedMedias,
-      blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit
+      blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit,
+      visibilityIcon: (state) => {
+        switch (state.TimelineSpace.Modals.NewToot.visibility) {
+          case 'public':
+            return 'globe'
+          case 'unlisted':
+            return 'unlock'
+          case 'private':
+            return 'lock'
+          case 'direct':
+            return 'envelope'
+          default:
+            return 'globe'
+        }
+      }
     }),
     newTootModal: {
       get () {
@@ -171,6 +185,9 @@ export default {
     },
     resetImage () {
       ++this.attachedImageId
+    },
+    changeVisibility (level) {
+      this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibility', level)
     }
   }
 }
