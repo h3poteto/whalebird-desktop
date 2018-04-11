@@ -60,6 +60,7 @@ export default {
       },
       attachedMedias: state => state.TimelineSpace.Modals.NewToot.attachedMedias,
       blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit,
+      visibility: state => state.TimelineSpace.Modals.NewToot.visibility,
       visibilityIcon: (state) => {
         switch (state.TimelineSpace.Modals.NewToot.visibility) {
           case 'public':
@@ -114,7 +115,8 @@ export default {
         })
       }
       let form = {
-        status: this.status
+        status: this.status,
+        visibility: this.visibility
       }
       if (this.replyToId !== null) {
         form = Object.assign(form, {
