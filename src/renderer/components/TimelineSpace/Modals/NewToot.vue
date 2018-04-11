@@ -108,6 +108,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/changeModal', false)
     },
     toot () {
+      if (!this.newTootModal) {
+        return
+      }
       if (this.status.length <= 0 || this.status.length >= 500) {
         return this.$message({
           message: 'Toot length should be 1 to 500',
