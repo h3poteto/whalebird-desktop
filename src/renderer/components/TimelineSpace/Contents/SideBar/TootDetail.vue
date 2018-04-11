@@ -29,6 +29,11 @@ export default {
   created () {
     this.load()
   },
+  watch: {
+    message: function () {
+      this.load()
+    }
+  },
   methods: {
     load () {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/fetchToot', this.message)
