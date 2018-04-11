@@ -3,7 +3,7 @@
     <div class="icon">
       <img :src="originalMessage(message).account.avatar" @click="openUser(originalMessage(message).account)"/>
     </div>
-    <div class="detail">
+    <div class="detail" @click="openDetail(message)">
       <div class="toot-header">
         <div class="user" @click="openUser(originalMessage(message).account)">
           {{ username(originalMessage(message).account) }}
@@ -38,6 +38,16 @@
         <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
+        <el-button type="text" v-popover="{ name: message.id }">
+          <icon name="ellipsis-h" scale="0.9"></icon>
+        </el-button>
+        <popover :name="message.id" :width="120">
+          <ul class="toot-menu">
+            <li role="button" @click="openDetail(message)">
+              View Toot Detail
+            </li>
+          </ul>
+        </popover>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -78,6 +88,11 @@ export default {
     },
     openReply (message) {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', message)
+    },
+    openDetail (message) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
     changeReblog (message) {
       if (message.reblogged) {
@@ -246,6 +261,24 @@ function findLink (target) {
 
       .favourited {
         color: #e6a23c;
+      }
+
+      .toot-menu{
+        padding: 0;
+        font-size: 0.8em;
+        margin-left: 0.5em;
+        list-style-type: none;
+        text-align: center;
+
+        li{
+          padding-bottom: 0.5em;
+          border-bottom: 1px solid #ddd;
+
+          &:last-child{
+            border: 0;
+            padding: 0;
+          }
+        }
       }
     }
 
