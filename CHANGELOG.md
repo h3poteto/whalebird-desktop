@@ -1,6 +1,22 @@
 # Change Log
 
 ## [Unreleased]
+### Add
+- [#200](https://github.com/h3poteto/whalebird-desktop/pull/200) Show lists in side menu
+
+### Changed
+- [#201](https://github.com/h3poteto/whalebird-desktop/pull/201) Show loading when user post new toot
+
+### Fixed
+- [#204](https://github.com/h3poteto/whalebird-desktop/pull/204) Set focus in watch directive on newToot
+- [#198](https://github.com/h3poteto/whalebird-desktop/pull/198) Fix image position in ImageViewer
+
+## [0.3.1] - 2018-04-08
+### Added
+- [#196](https://github.com/h3poteto/whalebird-desktop/pull/196) Add sound setting in preferences, and save setting data in json
+- [#195](https://github.com/h3poteto/whalebird-desktop/pull/195) Show follows/followers in account profile
+- [#194](https://github.com/h3poteto/whalebird-desktop/pull/194) Show user's timeline in account profile
+
 ### Changed
 - [#191](https://github.com/h3poteto/whalebird-desktop/pull/191) Sound a system sound when user favourite or reblog
 
