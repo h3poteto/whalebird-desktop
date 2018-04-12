@@ -274,6 +274,10 @@ function findLink (target) {
           padding-bottom: 0.5em;
           border-bottom: 1px solid #ddd;
 
+          &:hover{
+            cursor: pointer;
+          }
+
           &:last-child{
             border: 0;
             padding: 0;
