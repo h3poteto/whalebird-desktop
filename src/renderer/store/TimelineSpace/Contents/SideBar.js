@@ -1,14 +1,17 @@
 import AccountProfile from './SideBar/AccountProfile'
+import TootDetail from './SideBar/TootDetail'
 
 const SideBar = {
   namespaced: true,
   modules: {
-    AccountProfile
+    AccountProfile,
+    TootDetail
   },
   state: {
     openSideBar: false,
     // 0: blank
     // 1: account-profile
+    // 2: toot-detail
     component: 0
   },
   mutations: {
@@ -26,6 +29,9 @@ const SideBar = {
     },
     openAccountComponent ({ commit }) {
       commit('changeComponent', 1)
+    },
+    openTootComponent ({ commit }) {
+      commit('changeComponent', 2)
     }
   }
 }

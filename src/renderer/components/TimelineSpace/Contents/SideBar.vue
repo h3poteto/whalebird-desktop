@@ -4,16 +4,19 @@
     <i class="el-icon-close" @click="close"></i>
   </div>
   <account-profile v-if="component === 1"></account-profile>
+  <toot-detail v-if="component === 2"></toot-detail>
 </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import TootDetail from './SideBar/TootDetail'
 import AccountProfile from './SideBar/AccountProfile'
 
 export default {
   name: 'side-bar',
   components: {
+    TootDetail,
     AccountProfile
   },
   computed: {
