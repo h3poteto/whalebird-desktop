@@ -1,0 +1,10 @@
+linter:
+  eslint:
+    npm_install: true
+    dir:
+      - src
+      - test
+    options:
+      config: '.eslintrc.js'
+      ext: '.js,.vue'
+      ignore-path: .eslintignore
