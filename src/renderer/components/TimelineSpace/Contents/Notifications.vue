@@ -3,7 +3,7 @@
     <div class="notifications" v-for="message in notifications" v-bind:key="message.id">
       <notification :message="message"></notification>
     </div>
-    <div class="loading-card" v-loading="lazyLoading">
+    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
   </div>
 </template>
@@ -18,7 +18,8 @@ export default {
   computed: {
     ...mapState({
       notifications: state => state.TimelineSpace.notifications,
-      lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading
+      lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
+      backgroundColor: state => state.App.theme.background_color
     })
   },
   mounted () {
