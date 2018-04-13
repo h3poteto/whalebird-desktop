@@ -1,6 +1,6 @@
 <template>
 <transition name="slide-detail">
-  <div id="side_bar" v-if="openSideBar">
+  <div id="side_bar" v-if="openSideBar" :style="theme">
     <div class="header">
       <i class="el-icon-close" @click="close"></i>
     </div>
@@ -24,7 +24,13 @@ export default {
   computed: {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
-      component: state => state.TimelineSpace.Contents.SideBar.component
+      component: state => state.TimelineSpace.Contents.SideBar.component,
+      theme: (state) => {
+        return {
+          '--theme-border-color': state.App.theme.border_color,
+          '--theme-header-color': state.App.theme.selected_background_color
+        }
+      }
     })
   },
   methods: {
@@ -37,19 +43,22 @@ export default {
 
 <style lang="scss" scoped>
 #side_bar {
+  --theme-border-color: #ebeef5;
+  --theme-header-color: #f2f6fc;
+
   position: fixed;
   top: 48px;
   right: 0;
   width: 320px;
   height: calc(100% - 48px);
   overflow: auto;
-  border-left: solid 1px #dcdfe6;
+  border-left: solid 1px var(--theme-border-color);
 
   .header {
-    background-color: #f3f6fc;
+    background-color: var(--theme-header-color);
     padding: 4px 8px;
-    border-top: solid 1px #dcdfe6;
-    border-bottom: solid 1px #dcdfe6;
+    border-top: solid 1px var(--theme-border-color);
+    border-bottom: solid 1px var(--theme-border-color);
     text-align: right;
 
     .el-icon-close {
