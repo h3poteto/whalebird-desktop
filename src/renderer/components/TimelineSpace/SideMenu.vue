@@ -31,11 +31,11 @@
       </el-menu-item>
       <el-menu-item :index="`/${id()}/local`">
         <icon name="users"></icon>
-        <span>LocalTimeline</span>
+        <span>Local timeline</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/public`">
         <icon name="globe"></icon>
-        <span>PublicTimeline</span>
+        <span>Public timeline</span>
       </el-menu-item>
       <li class="el-menu-item menu-item-title">
         <icon name="list-ul"></icon>
