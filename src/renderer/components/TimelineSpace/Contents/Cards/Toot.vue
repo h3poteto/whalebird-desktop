@@ -1,5 +1,5 @@
 <template>
-  <div class="toot" tabIndex="0">
+  <div class="toot" tabIndex="0" :style="theme">
     <div class="icon">
       <img :src="originalMessage(message).account.avatar" @click="openUser(originalMessage(message).account)"/>
     </div>
@@ -58,10 +58,22 @@
 <script>
 import moment from 'moment'
 import { shell } from 'electron'
+import { mapState } from 'vuex'
 
 export default {
   name: 'toot',
   props: ['message'],
+  computed: {
+    ...mapState({
+      theme: (state) => {
+        return {
+          '--theme-primary-color': state.App.theme.primary_color,
+          '--theme-selected-background-color': state.App.theme.selected_background_color,
+          '--theme-border-color': state.App.theme.border_color
+        }
+      }
+    })
+  },
   methods: {
     originalMessage (message) {
       if (message.reblog !== null) {
@@ -170,13 +182,11 @@ function findLink (target) {
 </script>
 
 <style lang="scss" scoped>
-.fill-line {
-  height: 1px;
-  background-color: #ebeef5;
-  margin: 4px 0 0;
-}
 
 .toot {
+  --theme-primary-color: #303133;
+  --theme-border-color: #ebeef5;
+
   padding: 4px 0 0 16px;
 
   .icon {
@@ -197,7 +207,7 @@ function findLink (target) {
       .user {
         float: left;
         font-weight: 800;
-        color: #303133;
+        color: var(--theme-primary-color);
         font-size: 14px;
         cursor: pointer;
       }
@@ -212,7 +222,7 @@ function findLink (target) {
 
     .content {
       font-size: 14px;
-      color: #303133;
+      color: var(--theme-primary-color);
       margin: 4px 0 8px;
       word-wrap: break-word;
     }
@@ -292,10 +302,17 @@ function findLink (target) {
       color: #409eff;
     }
   }
+
+  .fill-line {
+    height: 1px;
+    background-color: var(--theme-border-color);
+    margin: 4px 0 0;
+  }
 }
 
 .toot:focus {
-  background-color: #f2f6fc;
+  --theme-selected-background-color: #f2f6fc;
+  background-color: var(--theme-selected-background-color);
   outline: 0;
 }
 </style>

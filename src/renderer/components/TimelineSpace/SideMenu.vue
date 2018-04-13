@@ -1,5 +1,5 @@
 <template>
-  <div id="side_menu">
+  <div id="side_menu" :style="theme">
     <div class="profile-wrapper" style="-webkit-app-region: drag;">
       <div class="profile">
         <div>@{{ account.username }}</div>
@@ -8,7 +8,7 @@
     </div>
     <el-menu
       :default-active="$route.path"
-      background-color="#373d48"
+      :background-color="themeColor"
       text-color="#909399"
       active-text-color="#ffffff"
       :router="true"
@@ -60,7 +60,13 @@ export default {
       account: state => state.TimelineSpace.account,
       unreadHomeTimeline: state => state.TimelineSpace.SideMenu.unreadHomeTimeline,
       unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications,
-      lists: state => state.TimelineSpace.SideMenu.lists
+      lists: state => state.TimelineSpace.SideMenu.lists,
+      themeColor: state => state.App.theme.side_menu_color,
+      theme: (state) => {
+        return {
+          '--theme-background-color': state.App.theme.side_menu_color
+        }
+      }
     })
   },
   methods: {
@@ -73,8 +79,10 @@ export default {
 
 <style lang="scss" scoped>
 #side_menu {
+  --theme-background-color: #373d48;
+
   .profile-wrapper {
-    background-color: #373d48;
+    background-color: var(--theme-background-color);
     position: fixed;
     top: 0;
     left: 65px;
@@ -97,6 +105,7 @@ export default {
     left: 65px;
     height: 100%;
     width: 180px;
+    border: none;
 
     .el-badge__content {
       background-color: #409eff;

@@ -1,26 +1,41 @@
 <template>
-  <div id="app">
+  <div id="app" :style="theme">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Whalebird',
-    created () {
-      this.$store.dispatch('App/watchShortcutsEvents')
-    },
-    destroyed () {
-      this.$store.dispatch('App/removeShortcutsEvents')
-    }
+import { mapState } from 'vuex'
+
+export default {
+  name: 'Whalebird',
+  computed: {
+    ...mapState({
+      theme: (state) => {
+        return {
+          '--theme-background-color': state.App.theme.background_color,
+          '--theme-primary-color': state.App.theme.primary_color
+        }
+      }
+    })
+  },
+  created () {
+    this.$store.dispatch('App/watchShortcutsEvents')
+  },
+  destroyed () {
+    this.$store.dispatch('App/removeShortcutsEvents')
   }
+}
 </script>
 
 <style lang="scss">
 body { font-family: 'Noto Sans', sans-serif; }
 
 html, body, #app {
-  background-color: #ffffff;
+  --theme-background-color: #ffffff;
+  --theme-primary-color: #303133;
+  background-color: var(--theme-background-color);
+  color: var(--theme-primary-color);
 }
 
 html, body, #app, #global_header {
