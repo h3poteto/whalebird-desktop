@@ -41,7 +41,7 @@
         <el-button type="text" v-popover="{ name: message.id }">
           <icon name="ellipsis-h" scale="0.9"></icon>
         </el-button>
-        <popover :name="message.id" :width="120">
+        <popover :name="message.id" :width="120" class="action-pop-over">
           <ul class="toot-menu">
             <li role="button" @click="openDetail(message)">
               View Toot Detail
@@ -307,6 +307,10 @@ function findLink (target) {
     height: 1px;
     background-color: var(--theme-border-color);
     margin: 4px 0 0;
+  }
+
+  .action-pop-over {
+    color: #303133;
   }
 }
 
