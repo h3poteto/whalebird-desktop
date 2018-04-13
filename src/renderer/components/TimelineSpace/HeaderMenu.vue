@@ -14,7 +14,7 @@ export default {
       title: state => state.TimelineSpace.HeaderMenu.title,
       theme: (state) => {
         return {
-          '--theme-background-color': state.App.theme.selected_background_color
+          '--theme-background-color': state.App.theme.header_menu_color
         }
       }
     })

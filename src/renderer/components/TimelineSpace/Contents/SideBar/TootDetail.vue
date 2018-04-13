@@ -1,5 +1,5 @@
 <template>
-  <div class="toot-detail" ref="detail">
+  <div class="toot-detail" ref="detail" :style="theme">
     <div class="toot-ancestors" v-for="(message, index) in ancestors" v-bind:key="'ancestors-' + index">
       <toot :message="message"></toot>
     </div>
@@ -23,7 +23,12 @@ export default {
     ...mapState({
       message: state => state.TimelineSpace.Contents.SideBar.TootDetail.message,
       ancestors: state => state.TimelineSpace.Contents.SideBar.TootDetail.ancestors,
-      descendants: state => state.TimelineSpace.Contents.SideBar.TootDetail.descendants
+      descendants: state => state.TimelineSpace.Contents.SideBar.TootDetail.descendants,
+      theme: (state) => {
+        return {
+          '--theme-selected-color': state.App.theme.selected_background_color
+        }
+      }
     })
   },
   created () {
@@ -53,10 +58,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.original-toot{
-  .toot{
-    background-color: #f2f6fc;
-    outline: 0;
+.toot-detail {
+  --theme-selected-color: #f2f6fc;
+
+  .original-toot {
+    .toot {
+      background-color: var(--theme-selected-color);
+      outline: 0;
+    }
   }
 }
 </style>

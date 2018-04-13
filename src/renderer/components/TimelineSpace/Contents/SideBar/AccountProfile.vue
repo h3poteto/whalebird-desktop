@@ -3,7 +3,8 @@
      v-loading="loading"
      element-loading-text="Loading..."
      element-loading-spinner="el-icon-loading"
-     element-loading-background="rgba(0, 0, 0, 0.8)">
+     element-loading-background="rgba(0, 0, 0, 0.8)"
+     :style="theme">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
       <div class="follow-follower" v-if="relationship !== null && relationship !== ''">
@@ -84,7 +85,14 @@ export default {
     ...mapState({
       account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
       relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship,
-      loading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.loading
+      loading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.loading,
+      theme: (state) => {
+        return {
+          '--theme-mask-color': state.App.theme.wrapper_mask_color,
+          '--theme-border-color': state.App.theme.border_color,
+          '--theme-primary-color': state.App.theme.primary_color
+        }
+      }
     })
   },
   watch: {
@@ -147,107 +155,110 @@ function findLink (target) {
 <style lang="scss" scoped>
 #account_profile {
   height: 100%;
-}
+  --theme-mask-color: rgba(255, 255, 255, 0.7);
+  --theme-border-color: #ebeef5;
+  --theme-primary-color: #303133;
 
-.header-background {
-  background-position: 50% 50%;
-  background-size: cover;
-}
-
-.header {
-  background-color: rgba(255, 255, 255, 0.7);
-  text-align: center;
-  padding: 12px;
-  box-sizing: border-box;
-  word-wrap: break-word;
-  font-size: 14px;
-
-  .follow-follower {
-    .follower-status {
-      float: left;
-
-      .status {
-        border-radius: 4px;
-        background-color: rgba(0, 0, 0, 0.3);
-        padding: 4px 8px;
-      }
-    }
-    .follow-status {
-      float: right;
-
-      .follow {
-        cursor: pointer;
-      }
-
-      .unfollow {
-        color: #409eff;
-        cursor: pointer;
-      }
-    }
+  .header-background {
+    background-position: 50% 50%;
+    background-size: cover;
   }
 
-  .icon {
+  .header {
+    background-color: var(--theme-mask-color);
+    text-align: center;
     padding: 12px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    font-size: 14px;
 
-    img {
-      width: 72px;
-      border-radius: 8px;
-    }
-  }
+    .follow-follower {
+      .follower-status {
+        float: left;
 
-  .username {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 24px;
-    margin: 0 auto 12px auto;
-  }
+        .status {
+          border-radius: 4px;
+          background-color: rgba(0, 0, 0, 0.3);
+          padding: 4px 8px;
+        }
+      }
+      .follow-status {
+        float: right;
 
-  .account {
-    color: #409eff;
-  }
-}
+        .follow {
+          cursor: pointer;
+        }
 
-.basic-info {
-  .info {
-    border-top: solid 1px #dcdfe6;
-    border-bottom: solid 1px #dcdfe6;
-    border-left: solid 1px #dcdfe6;
-    padding: 0 4px;
-
-    .tab {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      text-align: left;
-      line-height: 20px;
+        .unfollow {
+          color: #409eff;
+          cursor: pointer;
+        }
+      }
     }
 
-    .title {
-      font-size: 11px;
-      color: #909399;
+    .icon {
+      padding: 12px;
+
+      img {
+        width: 72px;
+        border-radius: 8px;
+      }
     }
 
-    .count {
-      font-weight: 800;
-      font-size: 16px;
-      color: #303133;
+    .username {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 24px;
+      margin: 0 auto 12px auto;
     }
-  }
 
-  .info-active {
-    border-bottom: solid 1px #409eff;
-
-    .count {
+    .account {
       color: #409eff;
     }
   }
 
-  .info:first-of-type {
-    border-left: none;
-  }
-}
+  .basic-info {
+    .info {
+      border-top: solid 1px var(--theme-border-color);
+      border-bottom: solid 1px var(--theme-border-color);
+      border-left: solid 1px var(--theme-border-color);
+      padding: 0 4px;
 
-.timeline {
-  font-size: 12px;
+      .tab {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        text-align: left;
+        line-height: 20px;
+      }
+
+      .title {
+        font-size: 11px;
+        color: #909399;
+      }
+
+      .count {
+        font-weight: 800;
+        font-size: 16px;
+        color: var(--theme-primary-color);
+      }
+    }
+
+    .info-active {
+      border-bottom: solid 1px #409eff;
+
+      .count {
+        color: #409eff;
+      }
+    }
+
+    .info:first-of-type {
+      border-left: none;
+    }
+  }
+
+  .timeline {
+    font-size: 12px;
+  }
 }
 </style>
