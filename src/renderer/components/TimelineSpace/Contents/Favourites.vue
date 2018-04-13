@@ -3,7 +3,7 @@
     <div class="fav" v-for="message in favourites" v-bind:key="message.id">
       <toot :message="message" v-on:update="updateToot"></toot>
     </div>
-    <div class="loading-card" v-loading="lazyLoading">
+    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
   </div>
 </template>
@@ -19,7 +19,8 @@ export default {
     ...mapState({
       account: state => state.TimelineSpace.account,
       favourites: state => state.TimelineSpace.Contents.Favourites.favourites,
-      lazyLoading: state => state.TimelineSpace.Contents.Favourites.lazyLoading
+      lazyLoading: state => state.TimelineSpace.Contents.Favourites.lazyLoading,
+      backgroundColor: state => state.App.theme.background_color
     })
   },
   created () {
