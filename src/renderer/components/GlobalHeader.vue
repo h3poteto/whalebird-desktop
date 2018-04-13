@@ -5,7 +5,7 @@
       class="el-menu-vertical account-menu"
       :collapse="true"
       :route="true"
-      background-color="#4a5664"
+      :background-color="themeColor"
       text-color="#909399"
       active-text-color="#ffffff">
       <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account._id" :route="{path: `/${account._id}/home`}" @click="select(account)">
@@ -31,7 +31,8 @@ export default {
   computed: {
     ...mapState({
       defaultActive: state => state.GlobalHeader.defaultActive,
-      accounts: state => state.GlobalHeader.accounts
+      accounts: state => state.GlobalHeader.accounts,
+      themeColor: state => state.App.theme.global_header_color
     })
   },
   created () {

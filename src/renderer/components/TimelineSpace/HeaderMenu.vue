@@ -1,5 +1,5 @@
 <template>
-<div id="header_menu">
+<div id="header_menu" :style="theme">
   <div class="channel">{{ title }}</div>
 </div>
 </template>
@@ -11,7 +11,12 @@ export default {
   name: 'header-menu',
   computed: {
     ...mapState({
-      title: state => state.TimelineSpace.HeaderMenu.title
+      title: state => state.TimelineSpace.HeaderMenu.title,
+      theme: (state) => {
+        return {
+          '--theme-background-color': state.App.theme.selected_background_color
+        }
+      }
     })
   },
   created () {
@@ -54,6 +59,9 @@ export default {
 
 <style lang="scss" scoped>
 #header_menu {
+  --theme-background-color: inherit;
+  background-color: var(--theme-background-color);
+
   .channel {
     padding: 12px 24px;
     font-weight: bold;
