@@ -3,7 +3,7 @@
     <div class="local-timeline" v-for="message in timeline" v-bind:key="message.id">
       <toot :message="message" v-on:update="updateToot"></toot>
     </div>
-    <div class="loading-card" v-loading="lazyLoading">
+    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
   </div>
 </template>
@@ -18,7 +18,8 @@ export default {
   computed: {
     ...mapState({
       timeline: state => state.TimelineSpace.Contents.Local.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.Local.lazyLoading
+      lazyLoading: state => state.TimelineSpace.Contents.Local.lazyLoading,
+      backgroundColor: state => state.App.theme.background_color
     })
   },
   created () {
