@@ -1,11 +1,13 @@
 <template>
-<div id="side_bar" v-if="openSideBar">
-  <div class="header">
-    <i class="el-icon-close" @click="close"></i>
+<transition name="slide-detail">
+  <div id="side_bar" v-if="openSideBar">
+    <div class="header">
+      <i class="el-icon-close" @click="close"></i>
+    </div>
+    <account-profile v-if="component === 1"></account-profile>
+    <toot-detail v-if="component === 2"></toot-detail>
   </div>
-  <account-profile v-if="component === 1"></account-profile>
-  <toot-detail v-if="component === 2"></toot-detail>
-</div>
+</transition>
 </template>
 
 <script>
@@ -54,5 +56,13 @@ export default {
       cursor: pointer;
     }
   }
+}
+
+.slide-detail-enter-active, .slide-detail-leave-active {
+  transition: all 0.5s;
+}
+.slide-detail-enter, .slide-detail-leave-to {
+  margin-right: -320px;
+  opacity: 0;
 }
 </style>
