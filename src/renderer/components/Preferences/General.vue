@@ -1,6 +1,9 @@
 <template>
-<div id="general" v-loading="loading">
+<div id="general" v-loading="loading" :style="theme">
   <h2>General</h2>
+  <div class="theme">
+    <h3>Theme color</h3>
+  </div>
   <div class="sounds">
     <h3>Sounds</h3>
     <table class="sounds">
@@ -36,7 +39,12 @@ export default {
   name: 'general',
   computed: {
     ...mapState({
-      loading: state => state.Preferences.General.loading
+      loading: state => state.Preferences.General.loading,
+      theme: (state) => {
+        return {
+          '--theme-secondary-color': state.App.theme.secondary_color
+        }
+      }
     }),
     sound_fav_rb: {
       get () {
@@ -72,23 +80,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sounds {
-  color: #606266;
-  width: 100%;
-  box-sizing: border-box;
+#general {
+  --theme-secondary-color: #909399;
 
-  td {
-    padding: 16px 0;
+  .theme {
+    color: var(--theme-secondary-color);
   }
 
-  .title {
-    text-align: right;
-    width: 50%;
-  }
+  .sounds {
+    color: var(--theme-secondary-color);
+    width: 100%;
+    box-sizing: border-box;
 
-  .status {
-    width: 50%;
-    text-align: center;
+    td {
+      padding: 16px 0;
+    }
+
+    .title {
+      text-align: right;
+      width: 50%;
+    }
+
+    .status {
+      width: 50%;
+      text-align: center;
+    }
   }
 }
 </style>

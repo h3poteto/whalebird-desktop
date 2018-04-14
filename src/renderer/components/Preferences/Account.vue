@@ -1,12 +1,12 @@
 <template>
-<div id="account">
+<div id="account" :style="theme">
   <h2>Account</h2>
   <div class="connected-account">
     <h3>Connected Accounts</h3>
     <template>
       <el-table
         :data="accounts"
-        stripe
+        tooltip-effect="dark"
         empty-text="No accounts"
         style="width: 100%"
         v-loading="accountLoading">
@@ -59,7 +59,14 @@ export default {
   computed: {
     ...mapState({
       accounts: state => state.Preferences.Account.accounts,
-      accountLoading: state => state.Preferences.Account.accountLoading
+      accountLoading: state => state.Preferences.Account.accountLoading,
+      theme: (state) => {
+        return {
+          '--theme-secondary-color': state.App.theme.secondary_color,
+          '--theme-background-color': state.App.theme.background_color,
+          '--theme-border-color': state.App.theme.border_color
+        }
+      }
     })
   },
   created () {
@@ -109,6 +116,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#account {
+  --theme-secondary-color: #909399;
+  --theme-bacgrkound-color: #ffffff;
+  --theme-border-color: #ebeef5;
+
+  .el-table /deep/ {
+    tr,
+    th,
+    td {
+      background-color: var(--theme-background-color);
+      color: var(--theme-secondary-color);
+      border-bottom: 1px solid var(--theme-border-color);
+    }
+
+  }
+
+  .el-table::before {
+    background-color: var(--theme-border-color);
+  }
+}
+
 .allow-up {
   padding: 0;
 }
