@@ -1,23 +1,27 @@
 import { ipcRenderer } from 'electron'
 import router from '../router'
+import { LightTheme, DarkTheme } from '../utils/theme'
 
 const App = {
   namespaced: true,
   state: {
-    theme: {
-      background_color: '#282c37', // #ffffff
-      selected_background_color: '#313543', // #f2f6fc
-      global_header_color: '#393f4f', // #4a5664
-      side_menu_color: '#191b22', // #373d48
-      primary_color: '#ffffff', // #303133
-      regular_color: '#ebeef5', // #606266
-      secondary_color: '#e4e7ed', // #909399
-      border_color: '#606266', // #ebeef5
-      header_menu_color: '#444b5d', // #ffffff
-      wrapper_mask_color: 'rgba(0, 0, 0, 0.7)' // rgba(255, 255, 255, 0.7)
+    theme: LightTheme
+  },
+  mutations: {
+    updateTheme (state, themeName) {
+      switch (themeName) {
+        case 'light':
+          state.theme = LightTheme
+          break
+        case 'dark':
+          state.theme = DarkTheme
+          break
+        default:
+          state.theme = LightTheme
+          break
+      }
     }
   },
-  mutations: {},
   actions: {
     watchShortcutsEvents () {
       ipcRenderer.on('open-preferences', (event) => {
@@ -26,6 +30,16 @@ const App = {
     },
     removeShortcutsEvents () {
       ipcRenderer.removeAllListeners('open-preferences')
+    },
+    loadPreferences ({ commit }) {
+      ipcRenderer.send('get-preferences')
+      ipcRenderer.once('error-get-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-get-preferences')
+      })
+      ipcRenderer.once('response-get-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-get-preferences')
+        commit('updateTheme', conf.general.theme)
+      })
     }
   }
 }

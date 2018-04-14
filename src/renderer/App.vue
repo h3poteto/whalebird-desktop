@@ -21,6 +21,7 @@ export default {
   },
   created () {
     this.$store.dispatch('App/watchShortcutsEvents')
+    this.$store.dispatch('App/loadPreferences')
   },
   destroyed () {
     this.$store.dispatch('App/removeShortcutsEvents')

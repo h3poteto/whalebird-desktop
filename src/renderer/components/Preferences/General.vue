@@ -3,6 +3,8 @@
   <h2>General</h2>
   <div class="theme">
     <h3>Theme color</h3>
+    <el-radio v-model="theme" label="white">White</el-radio>
+    <el-radio v-model="theme" label="dark">Dark</el-radio>
   </div>
   <div class="sounds">
     <h3>Sounds</h3>
@@ -46,6 +48,14 @@ export default {
         }
       }
     }),
+    theme: {
+      get () {
+        return this.$store.state.Preferences.General.general.theme || 'white'
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/General/updateTheme', value)
+      }
+    },
     sound_fav_rb: {
       get () {
         return this.$store.state.Preferences.General.general.sound.fav_rb

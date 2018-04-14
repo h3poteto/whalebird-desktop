@@ -48,7 +48,8 @@ export default {
       theme: (state) => {
         return {
           '--theme-border-color': state.App.theme.border_color,
-          '--theme-secondary-color': state.App.theme.secondary_color
+          '--theme-secondary-color': state.App.theme.secondary_color,
+          '--theme-background-color': state.App.theme.background_color
         }
       }
     })
@@ -69,6 +70,7 @@ export default {
 
 <style lang="scss" scoped>
 #preferences {
+  --theme-background-color: #ffffff;
   --theme-border-color: #ebeef5;
   --theme-secondary-color: #909399;
   height: 100%;
@@ -87,6 +89,7 @@ export default {
     padding-left: 24px;
 
     .el-menu {
+      background-color: var(--theme-background-color);
       border-right: solid 1px var(--theme-border-color);
     }
 
@@ -98,6 +101,9 @@ export default {
       }
 
       .el-menu-item {
+        transition: none;
+        -webkit-transition: none;
+
         .icon {
           color: var(--theme-secondary-color);
         }
