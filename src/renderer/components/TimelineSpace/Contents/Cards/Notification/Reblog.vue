@@ -1,5 +1,5 @@
 <template>
-  <div class="reblog" tabIndex="0">
+  <div class="reblog" tabIndex="0" :style="theme">
     <div class="action">
       <div class="action-mark">
         <icon name="retweet" scala="0.7"></icon>
@@ -36,10 +36,20 @@
 <script>
 import moment from 'moment'
 import { shell } from 'electron'
+import { mapState } from 'vuex'
 
 export default {
   name: 'reblog',
   props: ['message'],
+  computed: {
+    ...mapState({
+      theme: (state) => {
+        return {
+          '--theme-border-color': state.App.theme.border_color
+        }
+      }
+    })
+  },
   methods: {
     username (account) {
       if (account.display_name !== '') {
@@ -80,17 +90,12 @@ function findLink (target) {
 </script>
 
 <style lang="scss" scoped>
-.fill-line {
-  height: 1px;
-  background-color: #f2f6fc;
-  margin: 4px 0 0;
-}
-
 .bold {
   font-weight: bold;
 }
 
 .reblog {
+  --theme-border-color: #ebeef5;
   padding: 8px 0 0 16px;
 
   .action {
@@ -160,6 +165,12 @@ function findLink (target) {
         margin: 4px 0 8px;
       }
     }
+  }
+
+  .fill-line {
+    height: 1px;
+    background-color: var(--theme-border-color);
+    margin: 4px 0 0;
   }
 }
 
