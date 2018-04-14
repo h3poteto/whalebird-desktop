@@ -70,6 +70,12 @@ export default {
     onScroll (event) {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('local').clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Local/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch timeline',
+              type: 'error'
+            })
+          })
       }
     }
   }
