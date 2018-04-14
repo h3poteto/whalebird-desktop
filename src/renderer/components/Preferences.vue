@@ -1,5 +1,5 @@
 <template>
-  <el-container id="preferences">
+  <el-container id="preferences" :style="theme">
     <el-header class="header">
       <el-row>
         <el-col :span="23">
@@ -15,6 +15,8 @@
         <el-menu
           :default-active="defaultActive"
           class="setting-menu"
+          :text-color="primaryColor"
+          :background-color="backgroundColor"
           :route="true">
           <el-menu-item index="1" :route="{path: '/preferences/general'}" @click="general">
             <icon name="cog" class="icon" scale="1.3"></icon>
@@ -40,7 +42,16 @@ export default {
   name: 'preferences',
   computed: {
     ...mapState({
-      defaultActive: state => state.Preferences.defaultActive
+      defaultActive: state => state.Preferences.defaultActive,
+      primaryColor: state => state.App.theme.primary_color,
+      backgroundColor: state => state.App.theme.background_color,
+      theme: (state) => {
+        return {
+          '--theme-border-color': state.App.theme.border_color,
+          '--theme-secondary-color': state.App.theme.secondary_color,
+          '--theme-background-color': state.App.theme.background_color
+        }
+      }
     })
   },
   methods: {
@@ -59,41 +70,51 @@ export default {
 
 <style lang="scss" scoped>
 #preferences {
+  --theme-background-color: #ffffff;
+  --theme-border-color: #ebeef5;
+  --theme-secondary-color: #909399;
   height: 100%;
-}
 
-.header {
-  text-align: center;
-  border-bottom: 1px solid #dcdfe6;
+  .header {
+    text-align: center;
+    border-bottom: 1px solid var(--theme-border-color);
 
-  .close-button {
-    font-size: 24px;
-  }
-}
-
-.menu {
-  text-align: right;
-  padding-left: 24px;
-
-  .setting-menu /deep/ {
-    height: 100%;
-
-    .icon {
-      margin-right: 9px;
-    }
-
-    .el-menu-item {
-      .icon {
-        color: #909399;
-      }
-    }
-
-    .is-active {
-      .icon {
-        color: #409eff;
-      }
+    .close-button {
+      font-size: 24px;
     }
   }
 
+  .menu {
+    text-align: right;
+    padding-left: 24px;
+
+    .el-menu {
+      background-color: var(--theme-background-color);
+      border-right: solid 1px var(--theme-border-color);
+    }
+
+    .setting-menu /deep/ {
+      height: 100%;
+
+      .icon {
+        margin-right: 9px;
+      }
+
+      .el-menu-item {
+        transition: none;
+        -webkit-transition: none;
+
+        .icon {
+          color: var(--theme-secondary-color);
+        }
+      }
+
+      .is-active {
+        .icon {
+          color: #409eff;
+        }
+      }
+    }
+  }
 }
 </style>

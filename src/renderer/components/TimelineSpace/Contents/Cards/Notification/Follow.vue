@@ -1,5 +1,5 @@
 <template>
-  <div class="follow" tabIndex="0">
+  <div class="follow" tabIndex="0" :style="theme">
     <div class="action">
       <div class="action-mark">
         <icon name="user-plus" scale="0.7"></icon>
@@ -17,9 +17,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'follow',
   props: ['message'],
+  computed: {
+    ...mapState({
+      theme: (state) => {
+        return {
+          '--theme-border-color': state.App.theme.border_color
+        }
+      }
+    })
+  },
   methods: {
     username (account) {
       if (account.display_name !== '') {
@@ -38,17 +49,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fill-line {
-  height: 1px;
-  background-color: #f2f6fc;
-  margin: 4px 0 0;
-}
-
 .bold {
   font-weight: bold;
 }
 
 .follow {
+  --theme-border-color: #ebeef5;
   padding: 8px 0 0 16px;
 
   .action {
@@ -85,6 +91,12 @@ export default {
         border-radius: 2px;
       }
     }
+  }
+
+  .fill-line {
+    height: 1px;
+    background-color: var(--theme-border-color);
+    margin: 4px 0 0;
   }
 }
 

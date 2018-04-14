@@ -6,7 +6,8 @@ const Base = {
     sound: {
       fav_rb: true,
       toot: true
-    }
+    },
+    theme: 'white'
   }
 }
 
