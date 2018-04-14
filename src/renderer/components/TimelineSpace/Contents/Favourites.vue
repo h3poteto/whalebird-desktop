@@ -57,6 +57,12 @@ export default {
     onScroll (event) {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('favourites').clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites', this.favourites[this.favourites.length - 1])
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch favourites',
+              type: 'error'
+            })
+          })
       }
     }
   }
