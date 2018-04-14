@@ -37,6 +37,14 @@ html, body, #app {
   --theme-primary-color: #303133;
   background-color: var(--theme-background-color);
   color: var(--theme-primary-color);
+
+  a:link,
+  a:visited,
+  a:hover,
+  a:active,
+  a:focus {
+    color: #409eff;
+  }
 }
 
 html, body, #app, #global_header {
