@@ -50,6 +50,9 @@ const Favourites = {
       })
     },
     lazyFetchFavourites ({ state, commit, rootState }, last) {
+      if (last === undefined || last === null) {
+        return null
+      }
       return new Promise((resolve, reject) => {
         if (state.lazyLoading) {
           return resolve()

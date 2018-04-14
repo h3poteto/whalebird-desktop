@@ -41,6 +41,12 @@ export default {
     onScroll (event) {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('notifications').clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Notifications/lazyFetchNotifications', this.notifications[this.notifications.length - 1])
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch notification',
+              type: 'error'
+            })
+          })
       }
     }
   }
