@@ -26,7 +26,8 @@ export default {
     ...mapState({
       theme: (state) => {
         return {
-          '--theme-border-color': state.App.theme.border_color
+          '--theme-border-color': state.App.theme.border_color,
+          '--theme-selected-background-color': state.App.theme.selected_background_color
         }
       }
     })
@@ -101,7 +102,8 @@ export default {
 }
 
 .follow:focus {
+  --theme-selected-background-color: #f2f6fc;
+  background-color: var(--theme-selected-background-color);
   outline: 0;
-  background-color: #f2f6fc;
 }
 </style>
