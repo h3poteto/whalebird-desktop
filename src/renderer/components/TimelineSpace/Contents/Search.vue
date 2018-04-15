@@ -14,14 +14,19 @@
         <div class="clearfix"></div>
       </el-form>
     </div>
+    <div class="search-result">
+      <search-account></search-account>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import SearchAccount from './Search/Account'
 
 export default {
   name: 'search',
+  components: { SearchAccount },
   data () {
     return {
       target: 'account',
