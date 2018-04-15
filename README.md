@@ -41,7 +41,7 @@ If you do not want to use package manager, please download `.tar.bz2` file and d
 
 ### Windows
 
-You can download `.msi` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+You can download `.exe` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
 ## Development
 
