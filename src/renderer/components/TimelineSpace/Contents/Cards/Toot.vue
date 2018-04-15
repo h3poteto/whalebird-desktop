@@ -41,13 +41,7 @@
         <el-button type="text" v-popover="{ name: message.id }">
           <icon name="ellipsis-h" scale="0.9"></icon>
         </el-button>
-        <popover :name="message.id" :width="120" class="action-pop-over">
-          <ul class="toot-menu">
-            <li role="button" @click="openDetail(message)">
-              View Toot Detail
-            </li>
-          </ul>
-        </popover>
+        <toot-menu :key="message.id" :message="message" :name="message.id"></toot-menu>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -59,10 +53,12 @@
 import moment from 'moment'
 import { shell } from 'electron'
 import { mapState } from 'vuex'
+import TootMenu from './Popover/TootMenu'
 
 export default {
   name: 'toot',
   props: ['message'],
+  components: { TootMenu },
   computed: {
     ...mapState({
       theme: (state) => {
@@ -105,6 +101,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+    },
+    openBrowser (message) {
+      console.log(message)
     },
     changeReblog (message) {
       if (message.reblogged) {
@@ -271,28 +270,6 @@ function findLink (target) {
 
       .favourited {
         color: #e6a23c;
-      }
-
-      .toot-menu{
-        padding: 0;
-        font-size: 0.8em;
-        margin-left: 0.5em;
-        list-style-type: none;
-        text-align: center;
-
-        li{
-          padding-bottom: 0.5em;
-          border-bottom: 1px solid #ddd;
-
-          &:hover{
-            cursor: pointer;
-          }
-
-          &:last-child{
-            border: 0;
-            padding: 0;
-          }
-        }
       }
     }
 
