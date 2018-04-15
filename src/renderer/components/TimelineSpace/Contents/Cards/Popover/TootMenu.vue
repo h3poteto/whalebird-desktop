@@ -41,6 +41,7 @@ export default {
     font-size: 0.8em;
     list-style-type: none;
     text-align: left;
+    color: #303133;
 
     li {
       box-sizing: border-box;
