@@ -41,16 +41,7 @@
         <el-button type="text" v-popover="{ name: message.id }">
           <icon name="ellipsis-h" scale="0.9"></icon>
         </el-button>
-        <popover :name="message.id" :width="120" class="action-pop-over">
-          <ul class="toot-menu">
-            <li role="button" @click="openDetail(message)">
-              View Toot Detail
-            </li>
-            <li role="button" @click="openBrowser(message)">
-              Open in Browser
-            </li>
-          </ul>
-        </popover>
+        <toot-menu :key="message.id" :message="message" :name="message.id"></toot-menu>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -62,10 +53,12 @@
 import moment from 'moment'
 import { shell } from 'electron'
 import { mapState } from 'vuex'
+import TootMenu from './Popover/TootMenu'
 
 export default {
   name: 'toot',
   props: ['message'],
+  components: { TootMenu },
   computed: {
     ...mapState({
       theme: (state) => {
@@ -277,24 +270,6 @@ function findLink (target) {
 
       .favourited {
         color: #e6a23c;
-      }
-
-      .toot-menu {
-        padding: 0;
-        font-size: 0.8em;
-        list-style-type: none;
-        text-align: left;
-
-        li {
-          box-sizing: border-box;
-          padding-left: 0.5em;
-          padding-bottom: 0.5em;
-
-          &:hover {
-            background-color: #f2f6fc;
-            cursor: pointer;
-          }
-        }
       }
     }
 
