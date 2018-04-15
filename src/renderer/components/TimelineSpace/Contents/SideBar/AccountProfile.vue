@@ -21,6 +21,21 @@
           </div>
         </div>
         <div class="clearfix"></div>
+        <div class="more">
+          <popper trigger="click" :options="{placement: 'bottom'}">
+            <div class="popper">
+              <ul class="menu-list">
+                <li role="button" @click="openBrowser(account)">
+                  Open in Browser
+                </li>
+              </ul>
+            </div>
+
+            <el-button slot="reference" type="text">
+              <icon name="ellipsis-h"></icon>
+            </el-button>
+          </popper>
+        </div>
       </div>
       <div class="icon">
         <img :src="account.avatar" />
@@ -134,6 +149,9 @@ export default {
     },
     changeTab (index) {
       this.activeTab = index
+    },
+    openBrowser (account) {
+      shell.openExternal(account.url)
     }
   }
 }
@@ -192,6 +210,30 @@ function findLink (target) {
         .unfollow {
           color: #409eff;
           cursor: pointer;
+        }
+      }
+
+      .more {
+        float: right;
+
+        .menu-list {
+          padding: 0;
+          font-size: 0.8em;
+          list-style-type: none;
+          line-height: 20px;
+          text-align: left;
+          color: #303133;
+
+          li {
+            box-sizing: border-box;
+            padding-left: 0.5em;
+            padding-bottom: 0.5em;
+
+            &:hover {
+              background-color: #f2f6fc;
+              cursor: pointer;
+            }
+          }
         }
       }
     }
