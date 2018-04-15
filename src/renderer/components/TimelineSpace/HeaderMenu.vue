@@ -40,10 +40,13 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Favourite')
           break
         case 'local':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'LocalTimeline')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Local timeline')
           break
         case 'public':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'PublicTimeline')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Public timeline')
+          break
+        case 'search':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Search')
           break
         case 'lists':
           this.$store.dispatch('TimelineSpace/HeaderMenu/fetchList', this.$route.params.list_id)
