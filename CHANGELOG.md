@@ -1,13 +1,32 @@
 # Change Log
 
 ## [Unreleased]
-### Add
+### Added
+- [#222](https://github.com/h3poteto/whalebird-desktop/pull/222) Add lists channels in jump modal
+- [#214](https://github.com/h3poteto/whalebird-desktop/pull/214) Set theme color and setting theme in preferences
+
+
+### Changed
+- [#218](https://github.com/h3poteto/whalebird-desktop/pull/218) Open toot detail when double click
+- [#216](https://github.com/h3poteto/whalebird-desktop/pull/216) Add side bar transition effect
+
+### Fixed
+- [#221](https://github.com/h3poteto/whalebird-desktop/pull/221) Change link color for dark theme
+- [#220](https://github.com/h3poteto/whalebird-desktop/pull/220) Handle error when lazy loading
+- [#219](https://github.com/h3poteto/whalebird-desktop/pull/219) Selected background color when dark theme
+- [#217](https://github.com/h3poteto/whalebird-desktop/pull/217) Fix label in side menu
+
+## [0.4.0] - 2018-04-12
+### Added
+- [#207](https://github.com/h3poteto/whalebird-desktop/pull/207) Change visibility level of toot
+- [#206](https://github.com/h3poteto/whalebird-desktop/pull/206) Allow user view toot detail at sidebar
 - [#200](https://github.com/h3poteto/whalebird-desktop/pull/200) Show lists in side menu
 
 ### Changed
 - [#201](https://github.com/h3poteto/whalebird-desktop/pull/201) Show loading when user post new toot
 
 ### Fixed
+- [#208](https://github.com/h3poteto/whalebird-desktop/pull/208) Block toot when new toot modal is closed
 - [#204](https://github.com/h3poteto/whalebird-desktop/pull/204) Set focus in watch directive on newToot
 - [#198](https://github.com/h3poteto/whalebird-desktop/pull/198) Fix image position in ImageViewer
 
