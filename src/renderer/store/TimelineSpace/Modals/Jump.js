@@ -5,7 +5,7 @@ const Jump = {
   state: {
     modalOpen: false,
     channel: '',
-    channelList: [
+    defaultChannelList: [
       {
         name: 'Home',
         path: 'home'
@@ -19,14 +19,15 @@ const Jump = {
         path: 'favourites'
       },
       {
-        name: 'LocalTimeline',
+        name: 'Local timeline',
         path: 'local'
       },
       {
-        name: 'PublicTimeline',
+        name: 'Public timeline',
         path: 'public'
       }
     ],
+    listChannelList: [],
     selectedChannel: {
       name: 'Home',
       path: 'home'
@@ -41,6 +42,14 @@ const Jump = {
     },
     changeSelected (state, value) {
       state.selectedChannel = value
+    },
+    updateListChannel (state, list) {
+      state.listChannelList = list.map((l) => {
+        return {
+          name: `#${l.title}`,
+          path: `lists/${l.id}`
+        }
+      })
     }
   },
   actions: {
@@ -51,6 +60,9 @@ const Jump = {
     jump ({ state, commit, rootState }, channel) {
       commit('changeModal', false)
       router.push({ path: `/${rootState.TimelineSpace.account._id}/${channel.path}` })
+    },
+    syncListChannel ({ state, commit, rootState }) {
+      commit('updateListChannel', rootState.TimelineSpace.SideMenu.lists)
     }
   }
 }
