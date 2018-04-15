@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
-      <toot :message="message"></toot>
+      <toot :message="message" :key="message.id"></toot>
     </div>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
