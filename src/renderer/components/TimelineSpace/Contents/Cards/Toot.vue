@@ -46,6 +46,9 @@
             <li role="button" @click="openDetail(message)">
               View Toot Detail
             </li>
+            <li role="button" @click="openBrowser(message)">
+              Open in Browser
+            </li>
           </ul>
         </popover>
       </div>
@@ -105,6 +108,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+    },
+    openBrowser (message) {
+      console.log(message)
     },
     changeReblog (message) {
       if (message.reblogged) {
@@ -273,24 +279,20 @@ function findLink (target) {
         color: #e6a23c;
       }
 
-      .toot-menu{
+      .toot-menu {
         padding: 0;
         font-size: 0.8em;
-        margin-left: 0.5em;
         list-style-type: none;
-        text-align: center;
+        text-align: left;
 
-        li{
+        li {
+          box-sizing: border-box;
+          padding-left: 0.5em;
           padding-bottom: 0.5em;
-          border-bottom: 1px solid #ddd;
 
-          &:hover{
+          &:hover {
+            background-color: #f2f6fc;
             cursor: pointer;
-          }
-
-          &:last-child{
-            border: 0;
-            padding: 0;
           }
         }
       }
