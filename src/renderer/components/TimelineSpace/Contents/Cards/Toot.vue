@@ -38,10 +38,22 @@
         <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" v-popover="{ name: message.id }">
-          <icon name="ellipsis-h" scale="0.9"></icon>
-        </el-button>
-        <toot-menu :key="message.id" :message="message" :name="message.id"></toot-menu>
+        <popper trigger="click" :options="{placement: 'bottom'}">
+          <div class="popper toot-menu">
+            <ul class="menu-list">
+              <li role="button" @click="openDetail(message)">
+                View Toot Detail
+              </li>
+              <li role="button" @click="openBrowser(message)">
+                Open in Browser
+              </li>
+            </ul>
+          </div>
+
+          <el-button slot="reference" type="text">
+            <icon name="ellipsis-h" scale="0.9"></icon>
+          </el-button>
+        </popper>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -53,12 +65,10 @@
 import moment from 'moment'
 import { shell } from 'electron'
 import { mapState } from 'vuex'
-import TootMenu from './Popover/TootMenu'
 
 export default {
   name: 'toot',
   props: ['message'],
-  components: { TootMenu },
   computed: {
     ...mapState({
       theme: (state) => {
@@ -102,8 +112,8 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    openBrowser (message) {
-      console.log(message)
+    openBrowser () {
+      shell.openExternal(this.message.url)
     },
     changeReblog (message) {
       if (message.reblogged) {
@@ -270,6 +280,30 @@ function findLink (target) {
 
       .favourited {
         color: #e6a23c;
+      }
+
+      .toot-menu {
+        padding-right: 8px;
+
+        .menu-list {
+          padding: 0;
+          font-size: 0.8em;
+          list-style-type: none;
+          line-height: 20px;
+          text-align: left;
+          color: #303133;
+
+          li {
+            box-sizing: border-box;
+            padding-left: 0.5em;
+            padding-bottom: 0.5em;
+
+            &:hover {
+              background-color: #f2f6fc;
+              cursor: pointer;
+            }
+          }
+        }
       }
     }
 
