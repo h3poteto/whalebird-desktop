@@ -25,7 +25,9 @@ export default {
   name: 'jump',
   computed: {
     ...mapState({
-      channelList: state => state.TimelineSpace.Modals.Jump.channelList,
+      channelList: (state) => {
+        return state.TimelineSpace.Modals.Jump.defaultChannelList.concat(state.TimelineSpace.Modals.Jump.listChannelList)
+      },
       selectedChannel: state => state.TimelineSpace.Modals.Jump.selectedChannel
     }),
     channel: {
@@ -49,15 +51,18 @@ export default {
     }
   },
   watch: {
-    channel (newChannel, oldChannel) {
+    channel: function (newChannel, oldChannel) {
       this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', this.filterChannelForm()[0])
-    }
-  },
-  updated () {
-    if (this.jumpModal) {
-      this.$refs.channel.focus()
-    } else {
-      this.channel = ''
+    },
+    jumpModal: function (newModal, oldModal) {
+      if (!oldModal && newModal) {
+        this.$nextTick(function () {
+          this.$store.dispatch('TimelineSpace/Modals/Jump/syncListChannel')
+          this.$refs.channel.focus()
+        })
+      } else {
+        this.channel = ''
+      }
     }
   },
   methods: {
