@@ -10,7 +10,7 @@
             :value="item.target">
           </el-option>
         </el-select>
-        <el-input placeholder="keyword" class="search-keyword"></el-input>
+        <input v-model="query" placeholder="keyword" class="search-keyword" v-shortkey="['enter']" @shortkey="search" autofocus></input>
         <div class="clearfix"></div>
       </el-form>
     </div>
@@ -30,7 +30,8 @@ export default {
           target: 'account',
           label: 'Account'
         }
-      ]
+      ],
+      query: ''
     }
   },
   computed: {
@@ -43,6 +44,17 @@ export default {
         }
       }
     })
+  },
+  methods: {
+    search () {
+      switch (this.target) {
+        case 'account':
+          this.$store.dispatch('TimelineSpace/Contents/Search/Account/search', this.query)
+          break
+        default:
+          break
+      }
+    }
   }
 }
 </script>
@@ -72,16 +84,19 @@ export default {
       }
     }
 
-    .search-keyword /deep/ {
+    .search-keyword {
       float: left;
       width: 80%;
-
-      .el-input__inner {
-        background-color: var(--theme-background-color);
-        border: none;
-        border-radius: 0 4px 4px 0;
-        color: var(--theme-primary-color);
-      }
+      background-color: var(--theme-background-color);
+      border: none;
+      border-radius: 0 4px 4px 0;
+      color: var(--theme-primary-color);
+      line-height: 40px;
+      height: 40px;
+      padding: 0 15px;
+      outline: 0;
+      font-size: 14px;
+      box-sizing: border-box;
     }
   }
 }
