@@ -42,6 +42,7 @@ export default {
     this.$store.dispatch('TimelineSpace/Contents/Local/stopLocalStreaming')
   },
   destroyed () {
+    this.$store.commit('TimelineSpace/Contents/Local/updateTimeline', [])
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
     }
