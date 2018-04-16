@@ -1,6 +1,6 @@
 <template>
   <div id="search" :style="theme">
-    <div class="search-header">
+    <div class="search-header" v-loading="loading" :element-loading-background="loadingBackground">
       <el-form :inline="true">
         <el-select v-model="target" placeholder="search" class="search-target">
           <el-option
@@ -41,6 +41,8 @@ export default {
   },
   computed: {
     ...mapState({
+      loading: state => state.TimelineSpace.Contents.Search.loading,
+      loadingBackground: state => state.App.theme.wrapper_mask_color,
       theme: (state) => {
         return {
           '--theme-background-color': state.App.theme.background_color,
@@ -55,6 +57,12 @@ export default {
       switch (this.target) {
         case 'account':
           this.$store.dispatch('TimelineSpace/Contents/Search/Account/search', this.query)
+            .catch(() => {
+              this.$message({
+                message: 'Could not search',
+                type: 'error'
+              })
+            })
           break
         default:
           break
