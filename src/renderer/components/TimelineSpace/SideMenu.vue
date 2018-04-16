@@ -37,6 +37,10 @@
         <icon name="globe"></icon>
         <span>Public timeline</span>
       </el-menu-item>
+      <el-menu-item :index="`/${id()}/search`">
+        <icon name="search"></icon>
+        <span>Search</span>
+      </el-menu-item>
       <li class="el-menu-item menu-item-title">
         <icon name="list-ul"></icon>
         <span>Lists</span>
