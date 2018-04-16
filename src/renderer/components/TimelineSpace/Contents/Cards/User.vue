@@ -1,5 +1,5 @@
 <template>
-<div class="user" @click="openUser(user)">
+<div class="user" @click="openUser(user)" :style="theme">
   <div class="icon">
     <img :src="user.avatar" />
   </div>
@@ -15,9 +15,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'user',
   props: [ 'user' ],
+  computed: {
+    ...mapState({
+      theme: (state) => {
+        return {
+          '--theme-border-color': state.App.theme.border_color
+        }
+      }
+    })
+  },
   methods: {
     username (account) {
       if (account.display_name !== '') {
@@ -37,10 +48,12 @@ export default {
 
 <style lang="scss" scoped>
 .user {
+  --theme-border-color: #ebeef5;
+
   display: flex;
   box-sizing: border-box;
   padding: 4px 12px 8px;
-  border-bottom: 1px solid #ebeef5;
+  border-bottom: 1px solid var(--theme-border-color);
   cursor: pointer;
 
   .icon {
