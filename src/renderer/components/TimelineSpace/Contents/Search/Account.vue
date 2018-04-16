@@ -17,6 +17,9 @@ export default {
     ...mapState({
       results: state => state.TimelineSpace.Contents.Search.Account.results
     })
+  },
+  destroyed () {
+    this.$store.commit('TimelineSpace/Contents/Search/Account/updateResults', [])
   }
 }
 </script>
