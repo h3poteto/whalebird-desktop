@@ -1,5 +1,5 @@
 <template>
-  <div class="toot" tabIndex="0" :style="theme">
+  <div class="toot" tabIndex="0">
     <div class="icon">
       <img :src="originalMessage(message).account.avatar" @click="openUser(originalMessage(message).account)"/>
     </div>
@@ -64,22 +64,10 @@
 <script>
 import moment from 'moment'
 import { shell } from 'electron'
-import { mapState } from 'vuex'
 
 export default {
   name: 'toot',
   props: ['message'],
-  computed: {
-    ...mapState({
-      theme: (state) => {
-        return {
-          '--theme-primary-color': state.App.theme.primary_color,
-          '--theme-selected-background-color': state.App.theme.selected_background_color,
-          '--theme-border-color': state.App.theme.border_color
-        }
-      }
-    })
-  },
   methods: {
     originalMessage (message) {
       if (message.reblog !== null) {
@@ -193,9 +181,6 @@ function findLink (target) {
 <style lang="scss" scoped>
 
 .toot {
-  --theme-primary-color: #303133;
-  --theme-border-color: #ebeef5;
-
   padding: 8px 0 0 16px;
 
   .icon {
@@ -330,7 +315,6 @@ function findLink (target) {
 }
 
 .toot:focus {
-  --theme-selected-background-color: #f2f6fc;
   background-color: var(--theme-selected-background-color);
   outline: 0;
 }

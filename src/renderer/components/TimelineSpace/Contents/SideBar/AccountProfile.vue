@@ -3,8 +3,7 @@
      v-loading="loading"
      element-loading-text="Loading..."
      element-loading-spinner="el-icon-loading"
-     element-loading-background="rgba(0, 0, 0, 0.8)"
-     :style="theme">
+     element-loading-background="rgba(0, 0, 0, 0.8)">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
       <div class="follow-follower" v-if="relationship !== null && relationship !== ''">
@@ -173,9 +172,6 @@ function findLink (target) {
 <style lang="scss" scoped>
 #account_profile {
   height: 100%;
-  --theme-mask-color: rgba(255, 255, 255, 0.7);
-  --theme-border-color: #ebeef5;
-  --theme-primary-color: #303133;
 
   .header-background {
     background-position: 50% 50%;
@@ -183,7 +179,7 @@ function findLink (target) {
   }
 
   .header {
-    background-color: var(--theme-mask-color);
+    background-color: var(--theme-wrapper-mask-color);
     text-align: center;
     padding: 12px;
     box-sizing: border-box;

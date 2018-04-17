@@ -2,7 +2,7 @@
 <div id="timeline_space">
   <side-menu></side-menu>
   <div class="page">
-    <header class="header" style="-webkit-app-region: drag;" :style="theme">
+    <header class="header" style="-webkit-app-region: drag;">
       <header-menu></header-menu>
     </header>
     <contents></contents>
@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Contents from './TimelineSpace/Contents'
@@ -21,15 +20,6 @@ import Modals from './TimelineSpace/Modals'
 export default {
   name: 'timeline-space',
   components: { SideMenu, HeaderMenu, Modals, Contents },
-  computed: {
-    ...mapState({
-      theme: (state) => {
-        return {
-          '--theme-border-color': state.App.theme.border_color
-        }
-      }
-    })
-  },
   created () {
     const loading = this.$loading({
       lock: true,
@@ -105,8 +95,6 @@ export default {
   box-sizing: border-box;
 
   .header {
-    --theme-border-color: #dcdfe6;
-
     width: 100%;
     position: fixed;
     top: 0;
