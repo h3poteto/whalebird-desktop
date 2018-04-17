@@ -1,5 +1,5 @@
 <template>
-  <div id="side_menu" :style="theme">
+  <div id="side_menu">
     <div class="profile-wrapper" style="-webkit-app-region: drag;">
       <div class="profile">
         <div>@{{ account.username }}</div>
@@ -65,12 +65,7 @@ export default {
       unreadHomeTimeline: state => state.TimelineSpace.SideMenu.unreadHomeTimeline,
       unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications,
       lists: state => state.TimelineSpace.SideMenu.lists,
-      themeColor: state => state.App.theme.side_menu_color,
-      theme: (state) => {
-        return {
-          '--theme-background-color': state.App.theme.side_menu_color
-        }
-      }
+      themeColor: state => state.App.theme.side_menu_color
     })
   },
   methods: {
@@ -83,10 +78,8 @@ export default {
 
 <style lang="scss" scoped>
 #side_menu {
-  --theme-background-color: #373d48;
-
   .profile-wrapper {
-    background-color: var(--theme-background-color);
+    background-color: var(--theme-side-menu-color);
     position: fixed;
     top: 0;
     left: 65px;
