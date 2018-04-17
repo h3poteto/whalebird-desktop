@@ -196,7 +196,7 @@ function findLink (target) {
   --theme-primary-color: #303133;
   --theme-border-color: #ebeef5;
 
-  padding: 4px 0 0 16px;
+  padding: 8px 0 0 16px;
 
   .icon {
     float: left;
@@ -219,6 +219,10 @@ function findLink (target) {
         color: var(--theme-primary-color);
         font-size: 14px;
         cursor: pointer;
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .timestamp {
