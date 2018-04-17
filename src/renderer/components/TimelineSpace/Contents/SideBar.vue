@@ -33,6 +33,9 @@ export default {
       }
     })
   },
+  beforeDestroy () {
+    this.close()
+  },
   methods: {
     close () {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/close')

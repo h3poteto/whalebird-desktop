@@ -23,7 +23,8 @@ const SideBar = {
     }
   },
   actions: {
-    close ({ commit }) {
+    close ({ dispatch, commit }) {
+      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/close', {}, { root: true })
       commit('changeOpenSideBar', false)
       commit('changeComponent', 0)
     },
