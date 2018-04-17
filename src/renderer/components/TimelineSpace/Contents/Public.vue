@@ -42,6 +42,7 @@ export default {
     this.$store.dispatch('TimelineSpace/Contents/Public/stopPublicStreaming')
   },
   destroyed () {
+    this.$store.commit('TimelineSpace/Contents/Public/updateTimeline', [])
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
     }
