@@ -6,7 +6,8 @@
     <div class="detail" v-on:dblclick="openDetail(message)">
       <div class="toot-header">
         <div class="user" @click="openUser(originalMessage(message).account)">
-          {{ username(originalMessage(message).account) }}
+          <span class="display-name">{{ username(originalMessage(message).account) }}</span>
+          <span class="acct">@{{ originalMessage(message).account.username }}</span>
         </div>
         <div class="timestamp">
           {{ parseDatetime(message.created_at) }}
@@ -200,14 +201,22 @@ function findLink (target) {
     .toot-header {
       .user {
         float: left;
-        font-weight: 800;
-        color: var(--theme-primary-color);
         font-size: 14px;
         cursor: pointer;
         white-space: nowrap;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        .display-name {
+          font-weight: 800;
+          color: var(--theme-primary-color);
+        }
+
+        .acct {
+          font-weight: normal;
+          color: var(--theme-secondary-color);
+        }
       }
 
       .timestamp {
