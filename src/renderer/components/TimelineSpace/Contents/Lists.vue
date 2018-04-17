@@ -53,6 +53,7 @@ export default {
     this.$store.dispatch('TimelineSpace/Contents/Lists/stopStreaming')
   },
   destroyed () {
+    this.$store.commit('TimelineSpace/Contents/Lists/updateTimeline', [])
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
     }
