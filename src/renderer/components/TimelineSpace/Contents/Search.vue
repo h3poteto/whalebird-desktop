@@ -1,5 +1,5 @@
 <template>
-  <div id="search" :style="theme">
+  <div id="search">
     <div class="search-header" v-loading="loading" :element-loading-background="loadingBackground">
       <el-form :inline="true">
         <el-select v-model="target" placeholder="search" class="search-target">
@@ -42,14 +42,7 @@ export default {
   computed: {
     ...mapState({
       loading: state => state.TimelineSpace.Contents.Search.loading,
-      loadingBackground: state => state.App.theme.wrapper_mask_color,
-      theme: (state) => {
-        return {
-          '--theme-background-color': state.App.theme.background_color,
-          '--theme-selected-background-color': state.App.theme.selected_background_color,
-          '--theme-primary-color': state.App.theme.primary_color
-        }
-      }
+      loadingBackground: state => state.App.theme.wrapper_mask_color
     })
   },
   methods: {
@@ -74,11 +67,6 @@ export default {
 
 <style lang="scss" scoped>
 #search {
-  --theme-background-color: #ffffff;
-  --theme-selected-background-color: #f2f6fc;
-  --theme-primary-color: #303133;
-  --theme-border-color: #ebeef5;
-
   border-top: 1px solid var(--theme-border-color);
 
   .search-header {

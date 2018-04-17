@@ -1,5 +1,5 @@
 <template>
-  <div class="favourite" tabIndex="0" :style="theme">
+  <div class="favourite" tabIndex="0">
     <div class="action">
       <div class="action-mark">
         <icon name="star" scale="0.7"></icon>
@@ -36,21 +36,10 @@
 <script>
 import moment from 'moment'
 import { shell } from 'electron'
-import { mapState } from 'vuex'
 
 export default {
   name: 'favourite',
   props: ['message'],
-  computed: {
-    ...mapState({
-      theme: (state) => {
-        return {
-          '--theme-border-color': state.App.theme.border_color,
-          '--theme-selected-background-color': state.App.theme.selected_background_color
-        }
-      }
-    })
-  },
   methods: {
     username (account) {
       if (account.display_name !== '') {
@@ -96,8 +85,6 @@ function findLink (target) {
 }
 
 .favourite {
-  --theme-border-color: #ebeef5;
-
   padding: 8px 0 0 16px;
 
   .action {
@@ -179,7 +166,6 @@ function findLink (target) {
 }
 
 .favourite:focus {
-  --theme-selected-background-color: #f2f6fc;
   background-color: var(--theme-selected-background-color);
   outline: 0;
 }

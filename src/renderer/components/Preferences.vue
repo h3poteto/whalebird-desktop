@@ -1,5 +1,5 @@
 <template>
-  <el-container id="preferences" :style="theme">
+  <el-container id="preferences">
     <el-header class="header">
       <el-row>
         <el-col :span="23">
@@ -44,14 +44,7 @@ export default {
     ...mapState({
       defaultActive: state => state.Preferences.defaultActive,
       primaryColor: state => state.App.theme.primary_color,
-      backgroundColor: state => state.App.theme.background_color,
-      theme: (state) => {
-        return {
-          '--theme-border-color': state.App.theme.border_color,
-          '--theme-secondary-color': state.App.theme.secondary_color,
-          '--theme-background-color': state.App.theme.background_color
-        }
-      }
+      backgroundColor: state => state.App.theme.background_color
     })
   },
   methods: {
@@ -70,9 +63,6 @@ export default {
 
 <style lang="scss" scoped>
 #preferences {
-  --theme-background-color: #ffffff;
-  --theme-border-color: #ebeef5;
-  --theme-secondary-color: #909399;
   height: 100%;
 
   .header {

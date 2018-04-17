@@ -1,5 +1,5 @@
 <template>
-<div id="general" v-loading="loading" :style="theme">
+<div id="general" v-loading="loading">
   <h2>General</h2>
   <div class="theme">
     <h3>Theme color</h3>
@@ -41,12 +41,7 @@ export default {
   name: 'general',
   computed: {
     ...mapState({
-      loading: state => state.Preferences.General.loading,
-      theme: (state) => {
-        return {
-          '--theme-secondary-color': state.App.theme.secondary_color
-        }
-      }
+      loading: state => state.Preferences.General.loading
     }),
     theme: {
       get () {
@@ -91,8 +86,6 @@ export default {
 
 <style lang="scss" scoped>
 #general {
-  --theme-secondary-color: #909399;
-
   .theme {
     color: var(--theme-secondary-color);
   }
