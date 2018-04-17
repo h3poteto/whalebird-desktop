@@ -13,7 +13,7 @@
     </div>
     <div class="clearfix"></div>
     <div class="target">
-      <div class="icon">
+      <div class="icon" @click="openUser(message.status.account)">
         <img :src="message.status.account.avatar" />
       </div>
       <div class="detail">
@@ -136,6 +136,7 @@ function findLink (target) {
     .icon {
       float: left;
       width: 42px;
+      cursor: pointer;
 
       img {
         width: 32px;
