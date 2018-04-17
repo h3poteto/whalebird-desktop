@@ -77,6 +77,9 @@ const AccountProfile = {
           resolve(res)
         })
       })
+    },
+    close ({ commit }) {
+      commit('changeAccount', null)
     }
   }
 }
