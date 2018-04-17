@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 ### Added
+- [#239](https://github.com/h3poteto/whalebird-desktop/pull/239) Add about window for linux and windows
+
+### Fixed
+- [#238](https://github.com/h3poteto/whalebird-desktop/pull/238) Close side bar when user change account
+- [#236](https://github.com/h3poteto/whalebird-desktop/pull/236) Clear timeline after components are destroyed
+
+## [0.5.0] - 2018-04-18
+### Added
+- [#232](https://github.com/h3poteto/whalebird-desktop/pull/232) Search page to find account
+- [#231](https://github.com/h3poteto/whalebird-desktop/pull/231) Add menu in account profile to open account in browser
+- [#226](https://github.com/h3poteto/whalebird-desktop/pull/226) Open toot detail in browser
 - [#222](https://github.com/h3poteto/whalebird-desktop/pull/222) Add lists channels in jump modal
 - [#214](https://github.com/h3poteto/whalebird-desktop/pull/214) Set theme color and setting theme in preferences
 
@@ -11,6 +22,7 @@
 - [#216](https://github.com/h3poteto/whalebird-desktop/pull/216) Add side bar transition effect
 
 ### Fixed
+- [#230](https://github.com/h3poteto/whalebird-desktop/pull/230) Change popover library because vue-js-popover has some bugs
 - [#221](https://github.com/h3poteto/whalebird-desktop/pull/221) Change link color for dark theme
 - [#220](https://github.com/h3poteto/whalebird-desktop/pull/220) Handle error when lazy loading
 - [#219](https://github.com/h3poteto/whalebird-desktop/pull/219) Selected background color when dark theme
