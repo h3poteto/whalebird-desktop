@@ -7,6 +7,7 @@ import log from 'electron-log'
 import windowStateKeeper from 'electron-window-state'
 import simplayer from 'simplayer'
 import path from 'path'
+import openAboutWindow from 'about-window'
 
 import Authentication from './auth'
 import Account from './account'
@@ -84,7 +85,15 @@ function createWindow () {
           submenu: [
             {
               label: 'About Whalebird',
-              role: 'about'
+              role: 'about',
+              click: () => {
+                openAboutWindow({
+                  icon_path: path.resolve(__dirname, '../../build/icons/256x256.png'),
+                  copyright: 'Copyright (c) 2018 AkiraFukushima',
+                  package_json_dir: path.resolve(__dirname, '../../'),
+                  open_devtools: process.env.NODE_ENV !== 'production'
+                })
+              }
             },
             {
               type: 'separator'
@@ -203,7 +212,7 @@ function createWindow () {
         width: mainWindowState.width,
         height: mainWindowState.height,
         useContentSize: true,
-        icon: path.join(__dirname, '../../build/icons/256x256.png')
+        icon: path.resolve(__dirname, '../../build/icons/256x256.png')
       })
       mainWindowState.manage(mainWindow)
 
