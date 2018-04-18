@@ -46,7 +46,7 @@ const App = {
       ipcRenderer.once('response-get-preferences', (event, conf) => {
         ipcRenderer.removeAllListeners('error-get-preferences')
         commit('updateTheme', conf.general.theme)
-        commit('updateDisplayNameStyle', conf.general.displayName || 0)
+        commit('updateDisplayNameStyle', conf.general.displayNameStyle)
       })
     }
   }
