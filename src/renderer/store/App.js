@@ -5,7 +5,11 @@ import { LightTheme, DarkTheme } from '../utils/theme'
 const App = {
   namespaced: true,
   state: {
-    theme: LightTheme
+    theme: LightTheme,
+    // 0: display name and username
+    // 1: display name
+    // 2: username
+    displayNameStyle: 0
   },
   mutations: {
     updateTheme (state, themeName) {
@@ -20,6 +24,9 @@ const App = {
           state.theme = LightTheme
           break
       }
+    },
+    updateDisplayNameStyle (state, value) {
+      state.displayNameStyle = value
     }
   },
   actions: {
@@ -39,6 +46,7 @@ const App = {
       ipcRenderer.once('response-get-preferences', (event, conf) => {
         ipcRenderer.removeAllListeners('error-get-preferences')
         commit('updateTheme', conf.general.theme)
+        commit('updateDisplayNameStyle', conf.general.displayName || 0)
       })
     }
   }
