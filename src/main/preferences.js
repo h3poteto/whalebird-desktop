@@ -7,7 +7,8 @@ const Base = {
       fav_rb: true,
       toot: true
     },
-    theme: 'white'
+    theme: 'white',
+    displayName: 0
   }
 }
 

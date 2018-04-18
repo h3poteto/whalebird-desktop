@@ -7,7 +7,7 @@
       <div class="toot-header">
         <div class="user" @click="openUser(originalMessage(message).account)">
           <span class="display-name">{{ username(originalMessage(message).account) }}</span>
-          <span class="acct">@{{ originalMessage(message).account.username }}</span>
+          <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
         </div>
         <div class="timestamp">
           {{ parseDatetime(message.created_at) }}
@@ -65,10 +65,16 @@
 <script>
 import moment from 'moment'
 import { shell } from 'electron'
+import { mapState } from 'vuex'
 
 export default {
   name: 'toot',
   props: ['message'],
+  computed: {
+    ...mapState({
+      displayNameStyle: state => state.App.displayNameStyle
+    })
+  },
   methods: {
     originalMessage (message) {
       if (message.reblog !== null) {
@@ -78,10 +84,31 @@ export default {
       }
     },
     username (account) {
-      if (account.display_name !== '') {
-        return account.display_name
-      } else {
-        return account.username
+      switch (this.displayNameStyle) {
+        case 0:
+          if (account.display_name !== '') {
+            return account.display_name
+          } else {
+            return account.username
+          }
+        case 1:
+          if (account.display_name !== '') {
+            return account.display_name
+          } else {
+            return account.username
+          }
+        case 2:
+          return `@${account.username}`
+      }
+    },
+    accountName (account) {
+      switch (this.displayNameStyle) {
+        case 0:
+          return `@${account.username}`
+        case 1:
+          return ''
+        case 2:
+          return ''
       }
     },
     parseDatetime (datetime) {
