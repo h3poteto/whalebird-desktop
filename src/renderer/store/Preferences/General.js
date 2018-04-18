@@ -8,7 +8,8 @@ const General = {
         fav_rb: true,
         toot: true
       },
-      theme: 'white'
+      theme: 'white',
+      displayNameStyle: 0
     },
     loading: false
   },
@@ -56,6 +57,23 @@ const General = {
         commit('updateGeneral', conf.general)
         dispatch('App/loadPreferences', null, { root: true })
         commit('changeLoading', false)
+      })
+    },
+    updateDisplayNameStyle ({ dispatch, commit, state }, value) {
+      const newGeneral = Object.assign({}, state.general, {
+        displayNameStyle: value
+      })
+      const config = {
+        general: newGeneral
+      }
+      ipcRenderer.send('save-preferences', config)
+      ipcRenderer.once('error-save-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-save-preferences')
+      })
+      ipcRenderer.once('response-save-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-save-preferences')
+        dispatch('App/loadPreferences', null, { root: true })
+        commit('updateGeneral', conf.general)
       })
     },
     updateSound ({ commit, state }, sound) {

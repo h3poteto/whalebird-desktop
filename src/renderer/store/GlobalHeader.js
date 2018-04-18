@@ -32,8 +32,8 @@ const GlobalHeader = {
     },
     watchShortcutEvents ({ commit }) {
       ipcRenderer.on('change-account', (event, account) => {
-        router.push(`/${account._id}/home`)
         commit('changeDefaultActive', account.index.toString())
+        router.push(`/${account._id}/home`)
       })
     },
     async removeShortcutEvents () {

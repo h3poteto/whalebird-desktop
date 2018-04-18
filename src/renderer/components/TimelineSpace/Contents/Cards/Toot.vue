@@ -6,7 +6,8 @@
     <div class="detail" v-on:dblclick="openDetail(message)">
       <div class="toot-header">
         <div class="user" @click="openUser(originalMessage(message).account)">
-          {{ username(originalMessage(message).account) }}
+          <span class="display-name">{{ username(originalMessage(message).account) }}</span>
+          <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
         </div>
         <div class="timestamp">
           {{ parseDatetime(message.created_at) }}
@@ -64,10 +65,16 @@
 <script>
 import moment from 'moment'
 import { shell } from 'electron'
+import { mapState } from 'vuex'
 
 export default {
   name: 'toot',
   props: ['message'],
+  computed: {
+    ...mapState({
+      displayNameStyle: state => state.App.displayNameStyle
+    })
+  },
   methods: {
     originalMessage (message) {
       if (message.reblog !== null) {
@@ -77,10 +84,31 @@ export default {
       }
     },
     username (account) {
-      if (account.display_name !== '') {
-        return account.display_name
-      } else {
-        return account.username
+      switch (this.displayNameStyle) {
+        case 0:
+          if (account.display_name !== '') {
+            return account.display_name
+          } else {
+            return account.username
+          }
+        case 1:
+          if (account.display_name !== '') {
+            return account.display_name
+          } else {
+            return account.username
+          }
+        case 2:
+          return `@${account.username}`
+      }
+    },
+    accountName (account) {
+      switch (this.displayNameStyle) {
+        case 0:
+          return `@${account.username}`
+        case 1:
+          return ''
+        case 2:
+          return ''
       }
     },
     parseDatetime (datetime) {
@@ -200,14 +228,22 @@ function findLink (target) {
     .toot-header {
       .user {
         float: left;
-        font-weight: 800;
-        color: var(--theme-primary-color);
         font-size: 14px;
         cursor: pointer;
         white-space: nowrap;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        .display-name {
+          font-weight: 800;
+          color: var(--theme-primary-color);
+        }
+
+        .acct {
+          font-weight: normal;
+          color: var(--theme-secondary-color);
+        }
       }
 
       .timestamp {

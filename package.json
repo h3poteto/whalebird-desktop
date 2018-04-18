@@ -92,6 +92,7 @@
     "mastodon-api": "^1.3.0",
     "moment": "^2.21.0",
     "nedb": "^1.8.0",
+    "object-assign-deep": "^0.4.0",
     "simplayer": "0.0.8",
     "vue": "^2.3.3",
     "vue-awesome": "^2.3.5",
