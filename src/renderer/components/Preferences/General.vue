@@ -1,14 +1,36 @@
 <template>
 <div id="general" v-loading="loading">
   <h2>General</h2>
-  <div class="theme">
-    <h3>Theme color</h3>
-    <el-radio v-model="theme" label="white">White</el-radio>
-    <el-radio v-model="theme" label="dark">Dark</el-radio>
+  <div class="appearance">
+    <h3>Appearance</h3>
+    <table class="theme">
+      <tbody>
+        <tr>
+          <td class="title">Theme color:</td>
+          <td class="status">
+            <el-radio v-model="theme" label="white">White</el-radio>
+            <el-radio v-model="theme" label="dark">Dark</el-radio>
+          </td>
+        </tr>
+        <tr>
+          <td class="title">Display name style:</td>
+          <td class="status">
+            <el-select v-model="displayNameStyle" placeholder="style">
+              <el-option
+                v-for="style in nameStyles"
+                :key="style.value"
+                :label="style.name"
+                :value="style.value">
+              </el-option>
+            </el-select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <div class="sounds">
     <h3>Sounds</h3>
-    <table class="sounds">
+    <table>
       <tbody>
         <tr>
           <td class="title">Favourite, Reblog action sound:</td>
@@ -39,6 +61,24 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'general',
+  data () {
+    return {
+      nameStyles: [
+        {
+          name: 'DisplayName and username',
+          value: 0
+        },
+        {
+          name: 'DisplayName',
+          value: 1
+        },
+        {
+          name: 'username',
+          value: 2
+        }
+      ]
+    }
+  },
   computed: {
     ...mapState({
       loading: state => state.Preferences.General.loading
@@ -49,6 +89,14 @@ export default {
       },
       set (value) {
         this.$store.dispatch('Preferences/General/updateTheme', value)
+      }
+    },
+    displayNameStyle: {
+      get () {
+        return this.$store.state.Preferences.General.general.displayNameStyle
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/General/updateDisplayNameStyle', value)
       }
     },
     sound_fav_rb: {
@@ -86,14 +134,38 @@ export default {
 
 <style lang="scss" scoped>
 #general {
-  .theme {
+  .appearance {
     color: var(--theme-secondary-color);
+    width: 100%;
+    box-sizing: border-box;
+
+    table {
+      width: 100%;
+    }
+
+    td {
+      padding: 16px 0;
+    }
+
+    .title {
+      text-align: right;
+      width: 50%;
+    }
+
+    .status {
+      width: 50%;
+      text-align: center;
+    }
   }
 
   .sounds {
     color: var(--theme-secondary-color);
     width: 100%;
     box-sizing: border-box;
+
+    table {
+      width: 100%;
+    }
 
     td {
       padding: 16px 0;
