@@ -1,5 +1,5 @@
-import empty from 'is-empty'
 import storage from 'electron-json-storage'
+import objectAssignDeep from 'object-assign-deep'
 
 const Base = {
   general: {
@@ -7,7 +7,8 @@ const Base = {
       fav_rb: true,
       toot: true
     },
-    theme: 'white'
+    theme: 'white',
+    displayNameStyle: 0
   }
 }
 
@@ -20,8 +21,7 @@ export default class Preferences {
   async load () {
     try {
       const preferences = await this.get()
-      if (empty(preferences)) return Base
-      return preferences
+      return objectAssignDeep({}, Base, preferences)
     } catch (err) {
       return Base
     }
