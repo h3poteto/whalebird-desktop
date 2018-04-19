@@ -5,7 +5,8 @@ const GlobalHeader = {
   namespaced: true,
   state: {
     defaultActive: '0',
-    accounts: []
+    accounts: [],
+    changing: false
   },
   mutations: {
     changeDefaultActive (state, index) {
@@ -13,6 +14,9 @@ const GlobalHeader = {
     },
     updateAccounts (state, accounts) {
       state.accounts = accounts
+    },
+    updateChanging (state, value) {
+      state.changing = value
     }
   },
   actions: {
@@ -30,8 +34,13 @@ const GlobalHeader = {
         })
       })
     },
-    watchShortcutEvents ({ commit }) {
+    watchShortcutEvents ({ state, commit }) {
       ipcRenderer.on('change-account', (event, account) => {
+        if (state.changing) {
+          return null
+        }
+        // changing finish after loading
+        commit('updateChanging', true)
         commit('changeDefaultActive', account.index.toString())
         router.push(`/${account._id}/home`)
       })
