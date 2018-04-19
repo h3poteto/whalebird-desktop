@@ -224,6 +224,9 @@ function createWindow () {
     })
 }
 
+// Do not lower the rendering priority of Chromium when background
+app.commandLine.appendSwitch('disable-renderer-backgrounding')
+
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
