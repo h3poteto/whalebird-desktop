@@ -30,9 +30,11 @@ export default {
     this.initialize()
       .then(() => {
         loading.close()
+        this.$store.commit('GlobalHeader/updateChanging', false)
       })
       .catch(() => {
         loading.close()
+        this.$store.commit('GlobalHeader/updateChanging', false)
       })
   },
   beforeDestroy () {
