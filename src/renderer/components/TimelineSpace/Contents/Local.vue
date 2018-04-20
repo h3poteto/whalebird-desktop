@@ -1,9 +1,11 @@
 <template>
   <div id="local">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
-    <div class="local-timeline" v-for="message in timeline" v-bind:key="message.id">
-      <toot :message="message" v-on:update="updateToot"></toot>
-    </div>
+    <transition-group name="timeline" tag="div">
+      <div class="local-timeline" v-for="message in timeline" v-bind:key="message.id">
+        <toot :message="message" v-on:update="updateToot"></toot>
+      </div>
+    </transition-group>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
   </div>
@@ -122,3 +124,4 @@ export default {
   }
 }
 </style>
+<style src="@/assets/timeline-transition.scss"></style>
