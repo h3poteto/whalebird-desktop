@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
       <toot :message="message" :key="message.id"></toot>
     </div>
@@ -20,7 +21,8 @@ export default {
       timeline: state => state.TimelineSpace.homeTimeline,
       lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
       backgroundColor: state => state.App.theme.background_color,
-      heading: state => state.TimelineSpace.heading
+      heading: state => state.TimelineSpace.heading,
+      unread: state => state.TimelineSpace.unreadHomeTimeline
     })
   },
   mounted () {
@@ -63,11 +65,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loading-card {
-  height: 60px;
-}
+#home {
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 48px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
 
-.loading-card:empty {
-  height: 0;
+    &:empty {
+      display: none;
+    }
+  }
+
+  .loading-card {
+    height: 60px;
+  }
+
+  .loading-card:empty {
+    height: 0;
+  }
 }
 </style>
