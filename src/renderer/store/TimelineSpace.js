@@ -81,8 +81,7 @@ const TimelineSpace = {
       ipcRenderer.on('update-start-user-streaming', (event, update) => {
         commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
         // Sometimes archive old statuses
-        // TODO: random
-        if (rootState.TimelineSpace.Contents.Home.heading) {
+        if (rootState.TimelineSpace.Contents.Home.heading && Math.random() > 0.8) {
           commit('TimelineSpace/Contents/Home/archiveTimeline', null, { root: true })
         }
         commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
@@ -93,7 +92,7 @@ const TimelineSpace = {
           router.push(`/${account._id}/notifications`)
         }
         commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
-        if (rootState.TimelineSpace.Contents.Notifications.heading) {
+        if (rootState.TimelineSpace.Contents.Notifications.heading && Math.random() > 0.8) {
           commit('TimelineSpace/Contents/Notifications/archiveNotifications', null, { root: true })
         }
         commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
