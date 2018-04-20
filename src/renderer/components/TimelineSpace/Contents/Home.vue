@@ -18,11 +18,11 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
-      timeline: state => state.TimelineSpace.homeTimeline,
+      timeline: state => state.TimelineSpace.Contents.Home.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
       backgroundColor: state => state.App.theme.background_color,
-      heading: state => state.TimelineSpace.heading,
-      unread: state => state.TimelineSpace.unreadHomeTimeline
+      heading: state => state.TimelineSpace.Contents.Home.heading,
+      unread: state => state.TimelineSpace.Contents.Home.unreadTimeline
     })
   },
   mounted () {
@@ -35,9 +35,9 @@ export default {
     }
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/changeHeading', true)
-    this.$store.commit('TimelineSpace/mergeHomeTimeline')
-    this.$store.commit('TimelineSpace/archiveHomeTimeline')
+    this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
+    this.$store.commit('TimelineSpace/Contents/Home/archiveTimeline')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
@@ -57,10 +57,10 @@ export default {
       }
       // for unread control
       if ((event.target.scrollTop > 10) && this.heading) {
-        this.$store.commit('TimelineSpace/changeHeading', false)
+        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
-        this.$store.commit('TimelineSpace/changeHeading', true)
-        this.$store.commit('TimelineSpace/mergeHomeTimeline')
+        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
       }
     }
   }
