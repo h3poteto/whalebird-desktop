@@ -17,7 +17,7 @@ export default {
   components: { Notification },
   computed: {
     ...mapState({
-      notifications: state => state.TimelineSpace.notifications,
+      notifications: state => state.TimelineSpace.Contents.Notifications.notifications,
       lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
       backgroundColor: state => state.App.theme.background_color
     })
@@ -32,7 +32,7 @@ export default {
     }
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/archiveNotifications')
+    this.$store.commit('TimelineSpace/Contents/Notifications/archiveNotifications')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
     }

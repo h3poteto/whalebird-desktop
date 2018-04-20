@@ -19,87 +19,11 @@ const TimelineSpace = {
       domain: '',
       _id: '',
       username: ''
-    },
-    heading: true,
-    homeTimeline: [],
-    unreadHomeTimeline: [],
-    notifications: []
+    }
   },
   mutations: {
     updateAccount (state, account) {
       state.account = account
-    },
-    changeHeading (state, value) {
-      state.heading = value
-    },
-    appendHomeTimeline (state, update) {
-      if (state.heading) {
-        state.homeTimeline = [update].concat(state.homeTimeline)
-      } else {
-        state.unreadHomeTimeline = [update].concat(state.unreadHomeTimeline)
-      }
-    },
-    mergeHomeTimeline (state) {
-      state.homeTimeline = state.unreadHomeTimeline.concat(state.homeTimeline)
-      state.unreadHomeTimeline = []
-    },
-    appendNotifications (state, notification) {
-      state.notifications = [notification].concat(state.notifications)
-    },
-    updateHomeTimeline (state, messages) {
-      state.homeTimeline = messages
-    },
-    updateNotifications (state, notifications) {
-      state.notifications = notifications
-    },
-    insertHomeTimeline (state, messages) {
-      state.homeTimeline = state.homeTimeline.concat(messages)
-    },
-    insertNotifications (state, notifications) {
-      state.notifications = state.notifications.concat(notifications)
-    },
-    updateToot (state, message) {
-      // Replace target message in homeTimeline and notifications
-      state.homeTimeline = state.homeTimeline.map((toot) => {
-        if (toot.id === message.id) {
-          return message
-        } else if (toot.reblog !== null && toot.reblog.id === message.id) {
-          // When user reblog/favourite a reblogged toot, target message is a original toot.
-          // So, a message which is received now is original toot.
-          const reblog = {
-            reblog: message
-          }
-          return Object.assign(toot, reblog)
-        } else {
-          return toot
-        }
-      })
-
-      state.notifications = state.notifications.map((notification) => {
-        // I want to update toot only mention.
-        // Because Toot component don't use status information when other patterns.
-        if (notification.type === 'mention' && notification.status.id === message.id) {
-          const status = {
-            status: message
-          }
-          return Object.assign(notification, status)
-        } else {
-          return notification
-        }
-      })
-    },
-    clearTimeline (state) {
-      state.homeTimeline = []
-      state.unreadHomeTimeline = []
-    },
-    clearNotifications (state) {
-      state.notifications = []
-    },
-    archiveHomeTimeline (state) {
-      state.homeTimeline = state.homeTimeline.slice(0, 40)
-    },
-    archiveNotifications (state) {
-      state.notifications = state.notifications.slice(0, 40)
     }
   },
   actions: {
@@ -155,10 +79,10 @@ const TimelineSpace = {
     },
     startUserStreaming ({ state, commit }, account) {
       ipcRenderer.on('update-start-user-streaming', (event, update) => {
-        commit('appendHomeTimeline', update)
+        commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
         // Sometimes archive old statuses
         if (state.heading) {
-          commit('archiveHomeTimeline')
+          commit('TimelineSpace/Contents/Home/archiveTimeline', null, { root: true })
         }
         commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
       })
@@ -167,7 +91,7 @@ const TimelineSpace = {
         notify.onclick = () => {
           router.push(`/${account._id}/notifications`)
         }
-        commit('appendNotifications', notification)
+        commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
         commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
       })
 
@@ -197,44 +121,6 @@ const TimelineSpace = {
       ipcRenderer.removeAllListeners('CmdOrCtrl+N')
       ipcRenderer.removeAllListeners('CmdOrCtrl+K')
       return 'removeShortcutEvents'
-    },
-    fetchHomeTimeline ({ commit }, account) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: account.accessToken,
-            api_url: account.baseURL + '/api/v1'
-          }
-        )
-        client.get('/timelines/home', { limit: 40 }, (err, data, res) => {
-          if (err) return reject(err)
-          commit('updateHomeTimeline', data)
-          resolve(res)
-        })
-      })
-    },
-    fetchNotifications ({ commit }, account) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: account.accessToken,
-            api_url: account.baseURL + '/api/v1'
-          }
-        )
-        client.get('/notifications', { limit: 30 }, (err, data, res) => {
-          if (err) return reject(err)
-          commit('updateNotifications', data)
-          resolve(res)
-        })
-      })
-    },
-    async clearTimeline ({ commit }) {
-      commit('clearTimeline')
-      return 'clearTimeline'
-    },
-    async clearNotifications ({ commit }) {
-      commit('clearNotifications')
-      return 'clearNotifications'
     },
     async clearAccount ({ commit }) {
       commit(
