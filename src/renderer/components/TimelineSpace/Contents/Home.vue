@@ -35,9 +35,12 @@ export default {
     }
   },
   destroyed () {
+    this.$store.commit('TimelineSpace/changeHeading', true)
+    this.$store.commit('TimelineSpace/mergeHomeTimeline')
     this.$store.commit('TimelineSpace/archiveHomeTimeline')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scrollable').scrollTop = 0
     }
   },
   methods: {
