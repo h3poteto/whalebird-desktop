@@ -1,14 +1,16 @@
 <template>
-<div id="image" v-if="modalOpen">
-  <div class="image-wrapper" @keyup.esc.exact="close" tabindex="-1" ref="wrapper">
-    <div class="image-header">
-      <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
-    </div>
-    <div class="image-content">
-      <img :src="imageURL">
+<transition name="image-viewer">
+  <div id="image" v-if="modalOpen" @click="close">
+    <div class="image-wrapper" @keyup.esc.exact="close" tabindex="-1" ref="wrapper">
+      <div class="image-header">
+        <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
+      </div>
+      <div class="image-content">
+        <img :src="imageURL">
+      </div>
     </div>
   </div>
-</div>
+</transition>
 </template>
 
 <script>
@@ -70,5 +72,12 @@ export default {
       max-height: 80%;
     }
   }
+}
+
+.image-viewer-enter-active, .image-viewer-leave-active {
+  transition: opacity 0.5s;
+}
+.image-viewer-enter, .image-viewer-leave-to {
+  opacity: 0;
 }
 </style>
