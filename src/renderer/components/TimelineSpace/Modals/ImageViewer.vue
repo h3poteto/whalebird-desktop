@@ -1,6 +1,6 @@
 <template>
 <transition name="image-viewer">
-  <div id="image" v-if="modalOpen">
+  <div id="image" v-if="modalOpen" @click="close">
     <div class="image-wrapper" @keyup.esc.exact="close" tabindex="-1" ref="wrapper">
       <div class="image-header">
         <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
