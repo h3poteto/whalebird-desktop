@@ -19,7 +19,8 @@ export default {
     ...mapState({
       timeline: state => state.TimelineSpace.homeTimeline,
       lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color
+      backgroundColor: state => state.App.theme.background_color,
+      heading: state => state.TimelineSpace.heading
     })
   },
   mounted () {
@@ -39,6 +40,7 @@ export default {
   },
   methods: {
     onScroll (event) {
+      // for lazyLoading
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('home').clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Home/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
           .catch(() => {
@@ -47,6 +49,13 @@ export default {
               type: 'error'
             })
           })
+      }
+      // for unread control
+      if ((event.target.scrollTop > 10) && this.heading) {
+        this.$store.commit('TimelineSpace/changeHeading', false)
+      } else if ((event.target.scrollTop <= 10) && !this.heading) {
+        this.$store.commit('TimelineSpace/changeHeading', true)
+        this.$store.commit('TimelineSpace/mergeHomeTimeline')
       }
     }
   }
