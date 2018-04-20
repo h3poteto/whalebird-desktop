@@ -20,15 +20,28 @@ const TimelineSpace = {
       _id: '',
       username: ''
     },
+    heading: true,
     homeTimeline: [],
+    unreadHomeTimeline: [],
     notifications: []
   },
   mutations: {
     updateAccount (state, account) {
       state.account = account
     },
+    changeHeading (state, value) {
+      state.heading = value
+    },
     appendHomeTimeline (state, update) {
-      state.homeTimeline = [update].concat(state.homeTimeline)
+      if (state.heading) {
+        state.homeTimeline = [update].concat(state.homeTimeline)
+      } else {
+        state.unreadHomeTimeline = [update].concat(state.unreadHomeTimeline)
+      }
+    },
+    mergeHomeTimeline (state) {
+      state.homeTimeline = state.unreadHomeTimeline.concat(state.homeTimeline)
+      state.unreadHomeTimeline = []
     },
     appendNotifications (state, notification) {
       state.notifications = [notification].concat(state.notifications)
@@ -77,6 +90,7 @@ const TimelineSpace = {
     },
     clearTimeline (state) {
       state.homeTimeline = []
+      state.unreadHomeTimeline = []
     },
     clearNotifications (state) {
       state.notifications = []
@@ -139,9 +153,13 @@ const TimelineSpace = {
         })
       })
     },
-    startUserStreaming ({ commit }, account) {
+    startUserStreaming ({ state, commit }, account) {
       ipcRenderer.on('update-start-user-streaming', (event, update) => {
         commit('appendHomeTimeline', update)
+        // Sometimes archive old statuses
+        if (state.heading) {
+          commit('archiveHomeTimeline')
+        }
         commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
       })
       ipcRenderer.on('notification-start-user-streaming', (event, notification) => {
