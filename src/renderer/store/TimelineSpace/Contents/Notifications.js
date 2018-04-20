@@ -4,17 +4,30 @@ const Notifications = {
   namespaced: true,
   state: {
     lazyLoading: false,
-    notifications: []
+    heading: true,
+    notifications: [],
+    unreadNotifications: []
   },
   mutations: {
     changeLazyLoading (state, value) {
       state.lazyLoading = value
     },
+    changeHeading (state, value) {
+      state.heading = value
+    },
     appendNotifications (state, notification) {
-      state.notifications = [notification].concat(state.notifications)
+      if (state.heading) {
+        state.notifications = [notification].concat(state.notifications)
+      } else {
+        state.unreadNotifications = [notification].concat(state.unreadNotifications)
+      }
     },
     updateNotifications (state, notifications) {
       state.notifications = notifications
+    },
+    mergeNotifications (state) {
+      state.notifications = state.unreadNotifications.concat(state.notifications)
+      state.unreadNotifications = []
     },
     insertNotifications (state, notifications) {
       state.notifications = state.notifications.concat(notifications)
@@ -37,7 +50,7 @@ const Notifications = {
       state.notifications = []
     },
     archiveNotifications (state) {
-      state.notifications = state.notifications.slice(0, 40)
+      state.notifications = state.notifications.slice(0, 30)
     }
   },
   actions: {
