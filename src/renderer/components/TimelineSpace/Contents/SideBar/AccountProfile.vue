@@ -184,7 +184,7 @@ function findLink (target) {
     padding: 12px;
     box-sizing: border-box;
     word-wrap: break-word;
-    font-size: 14px;
+    font-size: 1rem;
 
     .follow-follower {
       .follower-status {
@@ -214,7 +214,7 @@ function findLink (target) {
 
         .menu-list {
           padding: 0;
-          font-size: 0.8em;
+          font-size: 0.8rem;
           list-style-type: none;
           line-height: 20px;
           text-align: left;
@@ -246,7 +246,7 @@ function findLink (target) {
     .username {
       overflow: hidden;
       text-overflow: ellipsis;
-      font-size: 24px;
+      font-size: 1.71rem;
       margin: 0 auto 12px auto;
     }
 
@@ -271,13 +271,13 @@ function findLink (target) {
       }
 
       .title {
-        font-size: 11px;
+        font-size: 0.8rem;
         color: #909399;
       }
 
       .count {
         font-weight: 800;
-        font-size: 16px;
+        font-size: 1.14rem;
         color: var(--theme-primary-color);
       }
     }
@@ -296,7 +296,7 @@ function findLink (target) {
   }
 
   .timeline {
-    font-size: 12px;
+    font-size: 0.85rem;
   }
 }
 </style>

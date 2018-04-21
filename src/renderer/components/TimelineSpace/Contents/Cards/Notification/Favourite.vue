@@ -99,7 +99,7 @@ function findLink (target) {
 
     .action-detail {
       margin-left: 10px;
-      font-size: 14px;
+      font-size: 1rem;
       float: left;
       max-width: 80%;
 
@@ -140,19 +140,19 @@ function findLink (target) {
       .toot-header {
         .user {
           float: left;
-          font-size: 14px;
+          font-size: 1rem;
           cursor: pointer;
         }
 
         .timestamp {
-          font-size: 14px;
+          font-size: 1rem;
           text-align: right;
           width: 100%;
         }
       }
 
       .content {
-        font-size: 14px;
+        font-size: 1rem;
         margin: 4px 0 8px;
       }
     }

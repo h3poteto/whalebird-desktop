@@ -85,6 +85,7 @@ export default {
     left: 65px;
     width: 180px;
     height: 70px;
+    font-size: 16px;
 
     .profile {
       color: #ffffff;
