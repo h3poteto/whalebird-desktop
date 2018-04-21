@@ -5,17 +5,37 @@ const Lists = {
   namespaced: true,
   state: {
     timeline: [],
-    lazyLoading: false
+    unreadTimeline: [],
+    lazyLoading: false,
+    heading: true
   },
   mutations: {
+    changeHeading (state, value) {
+      state.heading = value
+    },
     appendTimeline (state, update) {
-      state.timeline = [update].concat(state.timeline)
+      if (state.heading) {
+        state.timeline = [update].concat(state.timeline)
+      } else {
+        state.unreadTimeline = [update].concat(state.unreadTimeline)
+      }
     },
     updateTimeline (state, timeline) {
       state.timeline = timeline
     },
+    mergeTimeline (state) {
+      state.timeline = state.unreadTimeline.concat(state.timeline)
+      state.unreadTimeline = []
+    },
     insertTimeline (state, messages) {
       state.timeline = state.timeline.concat(messages)
+    },
+    archiveTimeline (state) {
+      state.timeline = state.timeline.slice(0, 40)
+    },
+    clearTimeline (state) {
+      state.timeline = []
+      state.unreadTimeline = []
     },
     updateToot (state, message) {
       state.timeline = state.timeline.map((toot) => {
@@ -55,6 +75,9 @@ const Lists = {
     startStreaming ({ state, commit, rootState }, listID) {
       ipcRenderer.on('update-start-list-streaming', (event, update) => {
         commit('appendTimeline', update)
+        if (state.heading && Math.random() > 0.8) {
+          commit('archiveTimeline')
+        }
       })
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-list-streaming', {
