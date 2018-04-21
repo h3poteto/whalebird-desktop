@@ -1,5 +1,6 @@
 <template>
-<div name="lists">
+<div name="lists" id="lists">
+  <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div class="list-timeline" v-for="message in timeline" v-bind:key="message.id">
     <toot :message="message" v-on:update="updateToot"></toot>
   </div>
@@ -19,7 +20,9 @@ export default {
     ...mapState({
       timeline: state => state.TimelineSpace.Contents.Lists.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Lists.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color
+      backgroundColor: state => state.App.theme.background_color,
+      heading: state => state.TimelineSpace.Contents.Lists.heading,
+      unread: state => state.TimelineSpace.Contents.Lists.unreadTimeline
     })
   },
   created () {
@@ -53,9 +56,13 @@ export default {
     this.$store.dispatch('TimelineSpace/Contents/Lists/stopStreaming')
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/Contents/Lists/updateTimeline', [])
+    this.$store.commit('TimelineSpace/Contents/Lists/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/Lists/mergeTimeline')
+    this.$store.commit('TimelineSpace/Contents/Lists/archiveTimeline')
+    this.$store.commit('TimelineSpace/Contents/Lists/clearTimeline')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scrollable').scrollTop = 0
     }
   },
   methods: {
@@ -88,17 +95,40 @@ export default {
           last: this.timeline[this.timeline.length - 1]
         })
       }
+      // for unread control
+      if ((event.target.scrollTop > 10) && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Lists/changeHeading', false)
+      } else if ((event.target.scrollTop <= 10) && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Lists/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Lists/mergeTimeline')
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.loading-card {
-  height: 60px;
-}
+#lists {
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 48px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
 
-.loading-card:empty {
-  height: 0;
+    &:empty {
+      display: none;
+    }
+  }
+
+  .loading-card {
+    height: 60px;
+  }
+
+  .loading-card:empty {
+    height: 0;
+  }
 }
 </style>

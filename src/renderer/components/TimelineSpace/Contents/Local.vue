@@ -1,5 +1,6 @@
 <template>
   <div id="local">
+    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div class="local-timeline" v-for="message in timeline" v-bind:key="message.id">
       <toot :message="message" v-on:update="updateToot"></toot>
     </div>
@@ -19,7 +20,9 @@ export default {
     ...mapState({
       timeline: state => state.TimelineSpace.Contents.Local.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Local.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color
+      backgroundColor: state => state.App.theme.background_color,
+      heading: state => state.TimelineSpace.Contents.Local.heading,
+      unread: state => state.TimelineSpace.Contents.Local.unreadTimeline
     })
   },
   created () {
@@ -42,9 +45,13 @@ export default {
     this.$store.dispatch('TimelineSpace/Contents/Local/stopLocalStreaming')
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/Contents/Local/updateTimeline', [])
+    this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/Local/mergeTimeline')
+    this.$store.commit('TimelineSpace/Contents/Local/archiveTimeline')
+    this.$store.commit('TimelineSpace/Contents/Local/clearTimeline')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scrollable').scrollTop = 0
     }
   },
   methods: {
@@ -78,17 +85,40 @@ export default {
             })
           })
       }
+      // for unread control
+      if ((event.target.scrollTop > 10) && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Local/changeHeading', false)
+      } else if ((event.target.scrollTop <= 10) && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Local/mergeTimeline')
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.loading-card {
-  height: 60px;
-}
+#local {
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 48px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
 
-.loading-card:empty {
-  height: 0;
+    &:empty {
+      display: none;
+    }
+  }
+
+  .loading-card {
+    height: 60px;
+  }
+
+  .loading-card:empty {
+    height: 0;
+  }
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div id="notifications">
+    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div class="notifications" v-for="message in notifications" v-bind:key="message.id">
       <notification :message="message"></notification>
     </div>
@@ -17,9 +18,11 @@ export default {
   components: { Notification },
   computed: {
     ...mapState({
-      notifications: state => state.TimelineSpace.notifications,
+      notifications: state => state.TimelineSpace.Contents.Notifications.notifications,
       lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color
+      backgroundColor: state => state.App.theme.background_color,
+      heading: state => state.TimelineSpace.Contents.Notifications.heading,
+      unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications
     })
   },
   mounted () {
@@ -32,9 +35,12 @@ export default {
     }
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/archiveNotifications')
+    this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
+    this.$store.commit('TimelineSpace/Contents/Notifications/archiveNotifications')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scrollable').scrollTop = 0
     }
   },
   methods: {
@@ -48,17 +54,40 @@ export default {
             })
           })
       }
+      // for unread control
+      if ((event.target.scrollTop > 10) && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
+      } else if ((event.target.scrollTop <= 10) && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.loading-card {
-  height: 60px;
-}
+#notifications {
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 48px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
 
-.loading-card:empty {
-  height: 0;
+    &:empty {
+      display: none;
+    }
+  }
+
+  .loading-card {
+    height: 60px;
+  }
+
+  .loading-card:empty {
+    height: 0;
+  }
 }
 </style>

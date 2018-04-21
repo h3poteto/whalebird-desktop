@@ -43,8 +43,8 @@ export default {
   methods: {
     async clear () {
       await this.$store.dispatch('TimelineSpace/clearAccount')
-      await this.$store.dispatch('TimelineSpace/clearTimeline')
-      await this.$store.dispatch('TimelineSpace/clearNotifications')
+      await this.$store.commit('TimelineSpace/Contents/Home/clearTimeline')
+      await this.$store.commit('TimelineSpace/Contents/Notifications/clearNotifications')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
       return 'clear'
     },
@@ -59,7 +59,7 @@ export default {
         })
       })
       try {
-        await this.$store.dispatch('TimelineSpace/fetchHomeTimeline', account)
+        await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
       } catch (err) {
         this.$message({
           message: 'Could not fetch timeline',
@@ -67,7 +67,7 @@ export default {
         })
       }
       try {
-        await this.$store.dispatch('TimelineSpace/fetchNotifications', account)
+        await this.$store.dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', account)
       } catch (err) {
         this.$message({
           message: 'Could not fetch notification',
