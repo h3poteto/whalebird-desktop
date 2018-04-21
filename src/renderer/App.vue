@@ -62,6 +62,8 @@ html, body, #app {
   a:focus {
     color: #409eff;
   }
+
+  font-size: 14px;
 }
 
 html, body, #app, #global_header {
