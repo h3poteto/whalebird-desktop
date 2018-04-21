@@ -49,6 +49,7 @@ export default {
     this.$store.commit('TimelineSpace/Contents/Favourites/updateFavourites', [])
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scrollable').scrollTop = 0
     }
   },
   methods: {
