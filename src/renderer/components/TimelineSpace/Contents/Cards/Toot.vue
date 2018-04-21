@@ -228,7 +228,7 @@ function findLink (target) {
     .toot-header {
       .user {
         float: left;
-        font-size: 1rem;
+        font-size: var(--base-font-size);
         cursor: pointer;
         white-space: nowrap;
         max-width: 100%;
@@ -247,7 +247,7 @@ function findLink (target) {
       }
 
       .timestamp {
-        font-size: 1rem;
+        font-size: var(--base-font-size);
         text-align: right;
         width: 100%;
         color: #909399;
@@ -255,7 +255,7 @@ function findLink (target) {
     }
 
     .content {
-      font-size: 1rem;
+      font-size: var(--base-font-size);
       color: var(--theme-primary-color);
       margin: 4px 0 8px;
       word-wrap: break-word;
@@ -287,7 +287,7 @@ function findLink (target) {
       }
 
       .reblogger-name {
-        font-size: 0.86rem;
+        font-size: calc(var(--base-font-size) * 0.86);
         cursor: pointer;
       }
     }

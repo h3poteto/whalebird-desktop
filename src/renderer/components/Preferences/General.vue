@@ -13,6 +13,12 @@
           </td>
         </tr>
         <tr>
+          <td class="title">Font size:</td>
+          <td class="status">
+            <el-input-number :value="fontSize" :min="9" :max="18" @change="updateFontSize"></el-input-number>
+          </td>
+        </tr>
+        <tr>
           <td class="title">Display name style:</td>
           <td class="status">
             <el-select v-model="displayNameStyle" placeholder="style">
@@ -81,7 +87,8 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: state => state.Preferences.General.loading
+      loading: state => state.Preferences.General.loading,
+      fontSize: state => state.Preferences.General.general.fontSize
     }),
     theme: {
       get () {
@@ -128,6 +135,11 @@ export default {
           type: 'error'
         })
       })
+  },
+  methods: {
+    updateFontSize (value) {
+      this.$store.dispatch('Preferences/General/updateFontSize', value)
+    }
   }
 }
 </script>
