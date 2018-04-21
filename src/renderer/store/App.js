@@ -6,6 +6,7 @@ const App = {
   namespaced: true,
   state: {
     theme: LightTheme,
+    fontSize: 14,
     // 0: display name and username
     // 1: display name
     // 2: username
@@ -24,6 +25,9 @@ const App = {
           state.theme = LightTheme
           break
       }
+    },
+    updateFontSize (state, value) {
+      state.fontSize = value
     },
     updateDisplayNameStyle (state, value) {
       state.displayNameStyle = value
@@ -47,6 +51,7 @@ const App = {
         ipcRenderer.removeAllListeners('error-get-preferences')
         commit('updateTheme', conf.general.theme)
         commit('updateDisplayNameStyle', conf.general.displayNameStyle)
+        commit('updateFontSize', conf.general.fontSize)
       })
     }
   }
