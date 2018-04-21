@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
       <toot :message="message" :key="message.id"></toot>
     </div>
@@ -17,9 +18,11 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
-      timeline: state => state.TimelineSpace.homeTimeline,
+      timeline: state => state.TimelineSpace.Contents.Home.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color
+      backgroundColor: state => state.App.theme.background_color,
+      heading: state => state.TimelineSpace.Contents.Home.heading,
+      unread: state => state.TimelineSpace.Contents.Home.unreadTimeline
     })
   },
   mounted () {
@@ -32,13 +35,17 @@ export default {
     }
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/archiveHomeTimeline')
+    this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
+    this.$store.commit('TimelineSpace/Contents/Home/archiveTimeline')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scrollable').scrollTop = 0
     }
   },
   methods: {
     onScroll (event) {
+      // for lazyLoading
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('home').clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Home/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
           .catch(() => {
@@ -48,17 +55,40 @@ export default {
             })
           })
       }
+      // for unread control
+      if ((event.target.scrollTop > 10) && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
+      } else if ((event.target.scrollTop <= 10) && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.loading-card {
-  height: 60px;
-}
+#home {
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 48px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
 
-.loading-card:empty {
-  height: 0;
+    &:empty {
+      display: none;
+    }
+  }
+
+  .loading-card {
+    height: 60px;
+  }
+
+  .loading-card:empty {
+    height: 0;
+  }
 }
 </style>
