@@ -22,7 +22,8 @@ export default {
           '--theme-secondary-color': state.App.theme.secondary_color,
           '--theme-border-color': state.App.theme.border_color,
           '--theme-header-menu-color': state.App.theme.header_menu_color,
-          '--theme-wrapper-mask-color': state.App.theme.wrapper_mask_color
+          '--theme-wrapper-mask-color': state.App.theme.wrapper_mask_color,
+          '--base-font-size': `${state.App.fontSize}px`
         }
       }
     })
@@ -62,6 +63,10 @@ html, body, #app {
   a:focus {
     color: #409eff;
   }
+
+  --base-font-size: 14px;
+
+  font-size: var(--base-font-size);
 }
 
 html, body, #app, #global_header {

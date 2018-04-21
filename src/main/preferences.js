@@ -8,6 +8,7 @@ const Base = {
       toot: true
     },
     theme: 'white',
+    fontSize: 14,
     displayNameStyle: 0
   }
 }

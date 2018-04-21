@@ -9,6 +9,7 @@ const General = {
         toot: true
       },
       theme: 'white',
+      fontSize: 14,
       displayNameStyle: 0
     },
     loading: false
@@ -57,6 +58,23 @@ const General = {
         commit('updateGeneral', conf.general)
         dispatch('App/loadPreferences', null, { root: true })
         commit('changeLoading', false)
+      })
+    },
+    updateFontSize ({ dispatch, commit, state }, fontSize) {
+      const newGeneral = Object.assign({}, state.general, {
+        fontSize: fontSize
+      })
+      const config = {
+        general: newGeneral
+      }
+      ipcRenderer.send('save-preferences', config)
+      ipcRenderer.once('error-save-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-save-preferences')
+      })
+      ipcRenderer.once('response-save-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-save-preferences')
+        commit('updateGeneral', conf.general)
+        dispatch('App/loadPreferences', null, { root: true })
       })
     },
     updateDisplayNameStyle ({ dispatch, commit, state }, value) {
