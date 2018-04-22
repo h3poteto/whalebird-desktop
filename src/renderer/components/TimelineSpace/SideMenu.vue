@@ -2,7 +2,16 @@
   <div id="side_menu">
     <div class="profile-wrapper" style="-webkit-app-region: drag;">
       <div class="profile">
-        <div>@{{ account.username }}</div>
+        <div>@{{ account.username }}
+          <el-dropdown trigger="click" @command="handleProfile">
+            <span class="el-dropdown-link">
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="edit">Edit profile</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
         <span>{{ account.domain }}</span>
       </div>
     </div>
@@ -56,6 +65,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { shell } from 'electron'
 
 export default {
   name: 'side-menu',
@@ -71,6 +81,13 @@ export default {
   methods: {
     id () {
       return this.$route.params.id
+    },
+    handleProfile (command) {
+      switch (command) {
+        case 'edit':
+          shell.openExternal(this.account.baseURL + '/settings/profile')
+          break
+      }
     }
   }
 }
@@ -94,6 +111,10 @@ export default {
       box-sizing: border-box;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      .el-dropdown-link {
+        cursor: pointer;
+      }
     }
   }
 
