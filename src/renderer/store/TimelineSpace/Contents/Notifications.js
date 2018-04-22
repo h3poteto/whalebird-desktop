@@ -85,7 +85,7 @@ const Notifications = {
           })
         client.get('/notifications', { max_id: last.id, limit: 30 }, (err, data, res) => {
           if (err) return reject(err)
-          commit('TimelineSpace/insertNotifications', data, { root: true })
+          commit('insertNotifications', data)
           commit('changeLazyLoading', false)
         })
       })
