@@ -354,6 +354,11 @@ ipcMain.on('backward-account', (event, acct) => {
     })
 })
 
+ipcMain.on('refresh-accounts', (event, _) => {
+  const account = new Account(accountDB)
+  account.refreshAccounts()
+})
+
 // streaming
 let userStreaming = null
 
