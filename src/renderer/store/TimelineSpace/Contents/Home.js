@@ -89,7 +89,7 @@ const Home = {
           })
         client.get('/timelines/home', { max_id: last.id, limit: 40 }, (err, data, res) => {
           if (err) return reject(err)
-          commit('insertTimeline')
+          commit('insertTimeline', data)
           commit('changeLazyLoading', false)
         })
       })
