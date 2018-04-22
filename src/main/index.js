@@ -310,9 +310,7 @@ ipcMain.on('get-local-account', (event, id) => {
 
 ipcMain.on('update-account', (event, acct) => {
   const account = new Account(accountDB)
-  const id = acct._id
-  delete acct._id
-  account.updateAccount(id, acct)
+  account.refresh(acct)
     .then((ac) => {
       event.sender.send('response-update-account', ac)
     })
