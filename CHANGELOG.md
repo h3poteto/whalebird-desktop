@@ -1,10 +1,26 @@
 # Change Log
 
 ## [Unreleased]
+### Fixed
+- [#265](https://github.com/h3poteto/whalebird-desktop/pull/265) Fix change status in home and notifications
+- [#263](https://github.com/h3poteto/whalebird-desktop/pull/263) Background color of focused in notifications
+
+## [0.6.0] - 2018-04-22
 ### Added
+- [#261](https://github.com/h3poteto/whalebird-desktop/pull/261) Add profile dropdown menu for user's profile
+- [#250](https://github.com/h3poteto/whalebird-desktop/pull/250) Allow to change font-size
 - [#239](https://github.com/h3poteto/whalebird-desktop/pull/239) Add about window for linux and windows
 
+### Changed
+- [#260](https://github.com/h3poteto/whalebird-desktop/pull/260) Display avatar in global header
+- [#249](https://github.com/h3poteto/whalebird-desktop/pull/249) Add image viewer transition
+- [#247](https://github.com/h3poteto/whalebird-desktop/pull/247) Archive timeline and store unread timeline
+- [#246](https://github.com/h3poteto/whalebird-desktop/pull/246) Disable renderer backgrounding of chromium
+- [#243](https://github.com/h3poteto/whalebird-desktop/pull/243) Change format of username
+- [#240](https://github.com/h3poteto/whalebird-desktop/pull/240) Hide overflowed username when width is narrow
+
 ### Fixed
+- [#245](https://github.com/h3poteto/whalebird-desktop/pull/245) Block changing account when loading timeline
 - [#238](https://github.com/h3poteto/whalebird-desktop/pull/238) Close side bar when user change account
 - [#236](https://github.com/h3poteto/whalebird-desktop/pull/236) Clear timeline after components are destroyed
 
