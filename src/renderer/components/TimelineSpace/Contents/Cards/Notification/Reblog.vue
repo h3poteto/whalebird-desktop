@@ -165,7 +165,6 @@ function findLink (target) {
 }
 
 .reblog:focus {
-  --theme-selected-background-color: #f2f6fc;
   background-color: var(--theme-selected-background-color);
   outline: 0;
 }
