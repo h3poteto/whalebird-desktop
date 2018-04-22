@@ -1,4 +1,5 @@
 import empty from 'is-empty'
+import Mastodon from 'mastodon-api'
 
 export default class Account {
   constructor (db) {
@@ -149,6 +150,39 @@ export default class Account {
       }))
     }
     return null
+  }
+
+  async refreshAccounts () {
+    const accounts = await this.listAccounts()
+    if (accounts.length < 1) {
+      return accounts.length
+    }
+    const results = await Promise.all(accounts.map(async (account) => {
+      const refresh = await this.refresh(account)
+      return refresh
+    }))
+    return results
+  }
+
+  refresh (account) {
+    return new Promise((resolve, reject) => {
+      const client = new Mastodon(
+        {
+          access_token: account.accessToken,
+          api_url: account.baseURL + '/api/v1'
+        }
+      )
+      client.get('/accounts/verify_credentials', (err, data, res) => {
+        if (err) return reject(err)
+        const json = {
+          username: data.username,
+          accountId: data.id,
+          avatar: data.avatar
+        }
+        this.updateAccount(account._id, json)
+          .then(ac => resolve(ac))
+      })
+    })
   }
 }
 

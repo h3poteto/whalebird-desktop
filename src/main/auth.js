@@ -35,6 +35,7 @@ export default class Authentication {
       accessToken: '',
       username: '',
       accountId: '',
+      avatar: '',
       order: count + 1
     }
     await this.db.insertAccount(json)

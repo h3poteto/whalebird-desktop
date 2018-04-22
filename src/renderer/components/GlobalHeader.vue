@@ -9,7 +9,8 @@
       text-color="#909399"
       active-text-color="#ffffff">
       <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account._id" :route="{path: `/${account._id}/home`}" @click="select(account)">
-        <i class="el-icon-menu"></i>
+        <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
+        <img v-else :src="account.avatar" class="avatar" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
       <el-menu-item index="/login" @click="login">
@@ -77,6 +78,21 @@ export default {
 
     .el-tooltip {
       outline: 0;
+      text-align: center;
+      padding: 0 !important;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      mix-blend-mode: overlay;
+    }
+
+    .is-active {
+      .avatar {
+        mix-blend-mode: normal;
+      }
     }
   }
 
