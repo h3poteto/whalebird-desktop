@@ -2,7 +2,7 @@
   <div id="home">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
-      <toot :message="message" :key="message.id"></toot>
+      <toot :message="message" :key="message.id" v-on:update="updateToot"></toot>
     </div>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
@@ -62,6 +62,9 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
       }
+    },
+    updateToot (message) {
+      this.$store.commit('TimelineSpace/Contents/Home/updateToot', message)
     }
   }
 }
