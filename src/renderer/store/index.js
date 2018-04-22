@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
-import shortkey from 'vue-shortkey'
 
 import App from './App'
 import GlobalHeader from './GlobalHeader'
@@ -11,7 +10,6 @@ import TimelineSpace from './TimelineSpace'
 import Preferences from './Preferences'
 
 Vue.use(Vuex)
-Vue.use(shortkey)
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
