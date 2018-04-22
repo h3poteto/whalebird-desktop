@@ -1,5 +1,4 @@
 import { ipcRenderer } from 'electron'
-import Mastodon from 'mastodon-api'
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Modals from './TimelineSpace/Modals'
@@ -55,25 +54,14 @@ const TimelineSpace = {
     },
     fetchAccount ({ commit }, account) {
       return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: account.accessToken,
-            api_url: account.baseURL + '/api/v1'
-          })
-        client.get('/accounts/verify_credentials', (err, data, res) => {
-          if (err) return reject(err)
-          ipcRenderer.send('update-account', Object.assign(account, {
-            username: data.username,
-            accountId: data.id
-          }))
-          ipcRenderer.once('error-update-account', (event, err) => {
-            ipcRenderer.removeAllListeners('response-update-account')
-            reject(err)
-          })
-          ipcRenderer.once('response-update-account', (event, account) => {
-            ipcRenderer.removeAllListeners('error-update-account')
-            resolve(account)
-          })
+        ipcRenderer.send('update-account', account)
+        ipcRenderer.once('error-update-account', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-account')
+          reject(err)
+        })
+        ipcRenderer.once('response-update-account', (event, account) => {
+          ipcRenderer.removeAllListeners('error-update-account')
+          resolve(account)
         })
       })
     },
