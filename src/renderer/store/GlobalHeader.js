@@ -20,7 +20,7 @@ const GlobalHeader = {
     }
   },
   actions: {
-    listAccounts ({ commit }) {
+    listAccounts ({ dispatch, commit }) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('list-accounts', 'list')
         ipcRenderer.once('error-list-accounts', (event, err) => {
@@ -30,9 +30,14 @@ const GlobalHeader = {
         ipcRenderer.once('response-list-accounts', (event, accounts) => {
           ipcRenderer.removeAllListeners('error-list-accounts')
           commit('updateAccounts', accounts)
+          dispatch('refreshAccounts')
           resolve(accounts)
         })
       })
+    },
+    // Fetch account informations and save current state when GlobalHeader is displayed
+    refreshAccounts ({ commit, state }) {
+      ipcRenderer.send('refresh-accounts')
     },
     watchShortcutEvents ({ state, commit }) {
       ipcRenderer.on('change-account', (event, account) => {
