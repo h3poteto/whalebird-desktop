@@ -39,9 +39,12 @@ const GlobalHeader = {
     refreshAccounts ({ commit, state }) {
       ipcRenderer.send('refresh-accounts')
     },
-    watchShortcutEvents ({ state, commit }) {
+    watchShortcutEvents ({ state, commit, rootState }) {
       ipcRenderer.on('change-account', (event, account) => {
         if (state.changing) {
+          return null
+        }
+        if (rootState.route.params.id === account._id) {
           return null
         }
         // changing finish after loading

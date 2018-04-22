@@ -100,7 +100,8 @@
     "vue-popperjs": "^1.2.6",
     "vue-router": "^2.5.3",
     "vue-shortkey": "^3.1.0",
-    "vuex": "^2.3.1"
+    "vuex": "^2.3.1",
+    "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
