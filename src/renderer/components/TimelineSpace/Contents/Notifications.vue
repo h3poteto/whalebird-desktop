@@ -1,9 +1,11 @@
 <template>
   <div id="notifications">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
-    <div class="notifications" v-for="message in notifications" v-bind:key="message.id">
-      <notification :message="message"></notification>
-    </div>
+    <transition-group name="timeline" tag="div">
+      <div class="notifications" v-for="message in notifications" v-bind:key="message.id">
+        <notification :message="message"></notification>
+      </div>
+    </transition-group>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
   </div>
@@ -91,3 +93,4 @@ export default {
   }
 }
 </style>
+<style src="@/assets/timeline-transition.scss"></style>
