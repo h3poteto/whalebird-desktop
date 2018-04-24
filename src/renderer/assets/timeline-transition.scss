@@ -1,0 +1,9 @@
+.timeline-enter-active, .timeline-leave-active {
+  transition: all 0.1s;
+}
+.timeline-enter, .timeline-leave-to {
+  opacity: 0;
+}
+.timeline-move {
+  transition: transform 0.1s;
+}
