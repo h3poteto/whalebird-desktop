@@ -1,5 +1,5 @@
 <template>
-<div name="lists" id="lists">
+<div name="lists">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <transition-group name="timeline" tag="div">
     <div class="list-timeline" v-for="message in timeline" v-bind:key="message.id">
@@ -110,28 +110,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#lists {
-  .unread {
-    position: fixed;
-    right: 24px;
-    top: 48px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 0 0 2px 2px;
+.unread {
+  position: fixed;
+  right: 24px;
+  top: 48px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 0 0 2px 2px;
 
-    &:empty {
-      display: none;
-    }
+  &:empty {
+    display: none;
   }
+}
 
-  .loading-card {
-    height: 60px;
-  }
+.loading-card {
+  height: 60px;
+}
 
-  .loading-card:empty {
-    height: 0;
-  }
+.loading-card:empty {
+  height: 0;
 }
 </style>
 <style src="@/assets/timeline-transition.scss"></style>
