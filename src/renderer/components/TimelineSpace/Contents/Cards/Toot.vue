@@ -48,6 +48,9 @@
               <li role="button" @click="openBrowser(message)">
                 Open in Browser
               </li>
+              <li role="button" @click="copyLink(message)">
+                Copy Link to Toot
+              </li>
             </ul>
           </div>
 
@@ -64,7 +67,7 @@
 
 <script>
 import moment from 'moment'
-import { shell } from 'electron'
+import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
 
 export default {
@@ -128,8 +131,11 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    openBrowser () {
-      shell.openExternal(this.message.url)
+    openBrowser (message) {
+      shell.openExternal(message.url)
+    },
+    copyLink (message) {
+      clipboard.writeText(message.url, 'toot-link')
     },
     changeReblog (message) {
       if (message.reblogged) {
