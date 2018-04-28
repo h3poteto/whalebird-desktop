@@ -6,7 +6,9 @@
         <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
       </div>
       <div class="image-content">
+        <span class="button-area"><el-button type="text" v-show="!isFirst"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
         <img :src="imageURL">
+        <span class="button-area"><el-button type="text" v-show="!isLast"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
       </div>
     </div>
   </div>
@@ -20,9 +22,17 @@ export default {
   name: 'image-viewer',
   computed: {
     ...mapState({
-      modalOpen: state => state.TimelineSpace.Modals.ImageViewer.modalOpen,
-      imageURL: state => state.TimelineSpace.Modals.ImageViewer.imageURL
-    })
+      modalOpen: state => state.TimelineSpace.Modals.ImageViewer.modalOpen
+    }),
+    imageURL () {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
+    },
+    isFirst () {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/isFirst']
+    },
+    isLast () {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/isLast']
+    }
   },
   updated () {
     if (this.modalOpen) {
@@ -32,6 +42,12 @@ export default {
   methods: {
     close () {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
+    },
+    decrementIndex () {
+      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
+    },
+    incrementIndex () {
+      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
     }
   }
 }
@@ -79,5 +95,13 @@ export default {
 }
 .image-viewer-enter, .image-viewer-leave-to {
   opacity: 0;
+}
+.button-area {
+  display: inline-block;
+  width: 52px;
+  height: 77px;
+  i {
+    font-size: 50px;
+  }
 }
 </style>
