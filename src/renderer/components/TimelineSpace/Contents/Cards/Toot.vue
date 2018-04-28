@@ -36,7 +36,7 @@
         <el-button type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited' : 'favourite'">
+        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited animated bounceIn' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
         <popper trigger="click" :options="{placement: 'bottom'}">
