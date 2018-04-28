@@ -15,8 +15,8 @@
       </div>
       <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
       <div class="attachments">
-        <div class="media" v-for="media in originalMessage(message).media_attachments">
-          <img :src="media.preview_url" @click="openImage(media.url)"/>
+        <div class="media" v-for="media in mediaAttachements(message)">
+          <img :src="media.preview_url" @click="openImage(media.url, mediaAttachements(message))"/>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -187,13 +187,25 @@ export default {
           })
       }
     },
-    openImage (url) {
-      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', url)
+    openImage (url, rawMediaList) {
+      const mediaList = rawMediaList.map((media) => {
+        return media.url
+      })
+      const currentIndex = mediaList.indexOf(url)
+      this.$store.dispatch(
+        'TimelineSpace/Modals/ImageViewer/openModal',
+        {
+          currentIndex: currentIndex,
+          mediaList: mediaList
+        })
     },
     openUser (account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+    },
+    mediaAttachements (message) {
+      return this.originalMessage(message).media_attachments
     }
   }
 }
