@@ -84,3 +84,4 @@ p {
   clear:both;
 }
 </style>
+<style src="animate.css/animate.min.css"></style>
