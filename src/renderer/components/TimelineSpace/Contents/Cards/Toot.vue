@@ -42,6 +42,9 @@
         <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited animated bounceIn' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
+        <span class="count">
+          {{ favouritesCount(message) }}
+        </span>
         <popper trigger="click" :options="{placement: 'bottom'}">
           <div class="popper toot-menu">
             <ul class="menu-list">
@@ -213,6 +216,12 @@ export default {
     reblogsCount (message) {
       if (this.originalMessage(message).reblogs_count > 0) {
         return this.originalMessage(message).reblogs_count
+      }
+      return ''
+    },
+    favouritesCount (message) {
+      if (this.originalMessage(message).favourites_count > 0) {
+        return this.originalMessage(message).favourites_count
       }
       return ''
     }
