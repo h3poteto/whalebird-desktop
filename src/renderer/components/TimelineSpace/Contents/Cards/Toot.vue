@@ -36,6 +36,9 @@
         <el-button type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
+        <span class="count">
+          {{ reblogsCount(message) }}
+        </span>
         <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited animated bounceIn' : 'favourite'">
           <icon name="star" scale="0.9"></icon>
         </el-button>
@@ -206,6 +209,12 @@ export default {
     },
     mediaAttachements (message) {
       return this.originalMessage(message).media_attachments
+    },
+    reblogsCount (message) {
+      if (this.originalMessage(message).reblogs_count > 0) {
+        return this.originalMessage(message).reblogs_count
+      }
+      return ''
     }
   }
 }
@@ -323,6 +332,12 @@ function findLink (target) {
 
       .favourited {
         color: #e6a23c;
+      }
+
+      .count {
+        font-size: 0.8em;
+        color: #909399;
+        margin: 0 0 4px -8px;
       }
 
       .toot-menu {
