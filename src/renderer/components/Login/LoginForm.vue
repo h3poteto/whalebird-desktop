@@ -1,6 +1,6 @@
 <template>
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm" class="login-form">
-    <el-form-item label="At first, let's login a mastodon instance. Please write host name which you want to login.">
+    <el-form-item label="First, let's log in to a Mastodon instance. Please enter an instance domain name.">
       <el-input v-model="domainName" placeholder="mastodon.social"></el-input>
     </el-form-item>
     <!-- Dummy form to guard submitting with enter -->

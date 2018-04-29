@@ -40,7 +40,7 @@ export default {
         .catch(() => {
           loading.close()
           this.$message({
-            message: 'Could not search instance',
+            message: 'Instance not found',
             type: 'error'
           })
         })
