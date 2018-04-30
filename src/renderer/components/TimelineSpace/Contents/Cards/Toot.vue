@@ -153,7 +153,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Faild to unreblog',
+              message: 'Failed to unreblog',
               type: 'error'
             })
           })
@@ -164,7 +164,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Faild to reblog',
+              message: 'Failed to reblog',
               type: 'error'
             })
           })
@@ -231,6 +231,16 @@ export default {
       return this.$store.state.TimelineSpace.account.accountId === this.originalMessage(message).account.id
     },
     deleteToot (message) {
+      this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/deleteToot', message)
+        .then((message) => {
+          this.$emit('delete', message)
+        })
+        .catch(() => {
+          this.$message({
+            message: 'Failed to delete the toot',
+            type: 'error'
+          })
+        })
     }
   }
 }

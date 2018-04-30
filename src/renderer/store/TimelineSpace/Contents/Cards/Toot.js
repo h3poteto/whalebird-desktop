@@ -66,6 +66,20 @@ const Toot = {
           resolve(data)
         })
       })
+    },
+    deleteToot ({ state, commit, rootState }, message) {
+      return new Promise((resolve, reject) => {
+        const client = new Mastodon(
+          {
+            access_token: rootState.TimelineSpace.account.accessToken,
+            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
+          }
+        )
+        client.delete(`/statuses/${message.id}`, {}, (err, data, res) => {
+          if (err) return reject(err)
+          resolve(message)
+        })
+      })
     }
   }
 }
