@@ -1,7 +1,26 @@
 # Change Log
 
 ## [Unreleased]
+### Added
+- [#279](https://github.com/h3poteto/whalebird-desktop/pull/279) Add toot delete button
+- [#277](https://github.com/h3poteto/whalebird-desktop/pull/277) Show favourites count in toot
+- [#272](https://github.com/h3poteto/whalebird-desktop/pull/272) Show reblogs count in toot
+- [#270](https://github.com/h3poteto/whalebird-desktop/pull/270) Move image list of a toot
+- [#268](https://github.com/h3poteto/whalebird-desktop/pull/268) Add a button which copy link to toot
+
+### Changed
+- [#269](https://github.com/h3poteto/whalebird-desktop/pull/269) Add favourite effect
+
 ### Fixed
+- [#278](https://github.com/h3poteto/whalebird-desktop/pull/278) Stop streaming when window is closed in macOS
+- [#275](https://github.com/h3poteto/whalebird-desktop/pull/275) Wording changes
+
+## [0.6.1] - 2018-04-25
+### Changed
+- [#248](https://github.com/h3poteto/whalebird-desktop/pull/248) Add transition effect to timeline
+
+### Fixed
+- [#266](https://github.com/h3poteto/whalebird-desktop/pull/266) Insert error of timeline when lazy loading
 - [#265](https://github.com/h3poteto/whalebird-desktop/pull/265) Fix change status in home and notifications
 - [#263](https://github.com/h3poteto/whalebird-desktop/pull/263) Background color of focused in notifications
 
