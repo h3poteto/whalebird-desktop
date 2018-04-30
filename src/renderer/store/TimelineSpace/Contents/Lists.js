@@ -53,6 +53,15 @@ const Lists = {
         }
       })
     },
+    deleteToot (state, message) {
+      state.timeline = state.timeline.filter((toot) => {
+        if (toot.reblog !== null && toot.reblog.id === message.id) {
+          return false
+        } else {
+          return toot.id !== message.id
+        }
+      })
+    },
     changeLazyLoading (state, value) {
       state.lazyLoading = value
     }

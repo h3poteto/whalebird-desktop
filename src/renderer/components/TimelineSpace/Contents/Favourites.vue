@@ -1,7 +1,7 @@
 <template>
   <div id="favourites">
     <div class="fav" v-for="message in favourites" v-bind:key="message.id">
-      <toot :message="message" v-on:update="updateToot"></toot>
+      <toot :message="message" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
     </div>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
@@ -55,6 +55,9 @@ export default {
   methods: {
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/Favourites/updateToot', message)
+    },
+    deleteToot (message) {
+      this.$store.commit('TimelineSpace/Contents/Favourites/deleteToot', message)
     },
     onScroll (event) {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('favourites').clientHeight - 10) && !this.lazyloading) {
