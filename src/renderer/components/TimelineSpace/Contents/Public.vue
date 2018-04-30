@@ -3,7 +3,7 @@
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <transition-group name="timeline" tag="div">
       <div class="public-timeline" v-for="message in timeline" v-bind:key="message.id">
-        <toot :message="message" v-on:update="updateToot"></toot>
+        <toot :message="message" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
       </div>
     </transition-group>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
@@ -76,6 +76,9 @@ export default {
     },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/Public/updateToot', message)
+    },
+    deleteToot (message) {
+      this.$store.commit('TimelineSpace/Contents/Public/deleteToot', message)
     },
     onScroll (event) {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('public').clientHeight - 10) && !this.lazyloading) {
