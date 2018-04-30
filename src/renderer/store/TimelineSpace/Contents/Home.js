@@ -55,6 +55,15 @@ const Home = {
           return toot
         }
       })
+    },
+    deleteToot (state, message) {
+      state.timeline = state.timeline.filter((toot) => {
+        if (toot.reblog !== null && toot.reblog.id === message.id) {
+          return false
+        } else {
+          return toot.id !== message.id
+        }
+      })
     }
   },
   actions: {
