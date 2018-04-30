@@ -57,9 +57,11 @@
               <li role="button" @click="copyLink(message)">
                 Copy Link to Toot
               </li>
+              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage(message)">
+                Delete
+              </li>
             </ul>
           </div>
-
           <el-button slot="reference" type="text">
             <icon name="ellipsis-h" scale="0.9"></icon>
           </el-button>
@@ -224,6 +226,11 @@ export default {
         return this.originalMessage(message).favourites_count
       }
       return ''
+    },
+    isMyMessage (message) {
+      return this.$store.state.TimelineSpace.account.accountId === this.originalMessage(message).account.id
+    },
+    deleteToot (message) {
     }
   }
 }
@@ -350,10 +357,9 @@ function findLink (target) {
       }
 
       .toot-menu {
-        padding-right: 8px;
-
         .menu-list {
           padding: 0;
+          margin: 4px 0;
           font-size: 0.8em;
           list-style-type: none;
           line-height: 20px;
@@ -362,12 +368,18 @@ function findLink (target) {
 
           li {
             box-sizing: border-box;
-            padding-left: 0.5em;
-            padding-bottom: 0.5em;
+            margin: 0;
+            padding: 0 1.1em 0.5em;
 
             &:hover {
               background-color: #f2f6fc;
               cursor: pointer;
+            }
+
+            &.separate {
+              border-top: 1px solid var(--theme-border-color);
+              padding-top: 4px;
+              margin-top: 2px;
             }
           }
         }
