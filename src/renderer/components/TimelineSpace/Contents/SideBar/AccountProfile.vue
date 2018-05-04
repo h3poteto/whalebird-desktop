@@ -112,6 +112,9 @@ export default {
   watch: {
     account: function () {
       this.activeTab = 1
+    },
+    loading: function (newState, oldState) {
+      this.$emit('change-loading', newState)
     }
   },
   methods: {
@@ -171,8 +174,6 @@ function findLink (target) {
 
 <style lang="scss" scoped>
 #account_profile {
-  height: 100%;
-
   .header-background {
     background-position: 50% 50%;
     background-size: cover;

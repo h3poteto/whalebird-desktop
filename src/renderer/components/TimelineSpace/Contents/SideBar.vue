@@ -2,10 +2,13 @@
 <transition name="slide-detail">
   <div id="side_bar" v-if="openSideBar">
     <div class="header">
+      <i class="el-icon-loading" v-show="loading"></i>
       <i class="el-icon-close" @click="close"></i>
     </div>
-    <account-profile v-if="component === 1"></account-profile>
-    <toot-detail v-if="component === 2"></toot-detail>
+    <div class="scrollable">
+      <account-profile v-if="component === 1" v-on:change-loading="changeLoading"></account-profile>
+      <toot-detail v-if="component === 2"></toot-detail>
+    </div>
   </div>
 </transition>
 </template>
@@ -21,6 +24,11 @@ export default {
     TootDetail,
     AccountProfile
   },
+  data () {
+    return {
+      loading: false
+    }
+  },
   computed: {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
@@ -33,6 +41,9 @@ export default {
   methods: {
     close () {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/close')
+    },
+    changeLoading (value) {
+      this.loading = value
     }
   }
 }
@@ -45,7 +56,6 @@ export default {
   right: 0;
   width: 320px;
   height: calc(100% - 48px);
-  overflow: auto;
   border-left: solid 1px var(--theme-border-color);
 
   .header {
@@ -54,10 +64,17 @@ export default {
     border-top: solid 1px var(--theme-border-color);
     border-bottom: solid 1px var(--theme-border-color);
     text-align: right;
+    height: 30px;
+    box-sizing: border-box;
 
     .el-icon-close {
       cursor: pointer;
     }
+  }
+
+  .scrollable {
+    overflow: auto;
+    height: calc(100% - 30px);
   }
 }
 
