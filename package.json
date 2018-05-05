@@ -76,7 +76,8 @@
       "icon": "build/icons",
       "target": [
         "deb",
-        "rpm"
+        "rpm",
+        "snap"
       ],
       "category": "Network"
     }
@@ -123,7 +124,7 @@
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^1.7.5",
-    "electron-builder": "^19.56.2",
+    "electron-builder": "^20.5.1",
     "electron-debug": "^1.4.0",
     "electron-devtools-installer": "^2.2.0",
     "electron-packager": "^11.2.0",
