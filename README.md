@@ -1,7 +1,13 @@
 # Whalebird
 [![GitHub release](http://img.shields.io/github/release/h3poteto/whalebird-desktop.svg?style=flat-square)](https://github.com/h3poteto/whalebird-desktop/releases)
 
-Whalebird is a mastodon client for desktop application. If you want to use release build, please download from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+Whalebird is a mastodon client for desktop application. If you want to use this app, please install
+
+Mac App Store: https://itunes.apple.com/us/app/whalebird/id1378283354
+
+snapcraft: https://snapcraft.io/whalebird
+
+or please download binary from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
 ![demo](screenshot.gif)
 
