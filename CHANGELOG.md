@@ -1,6 +1,14 @@
 # Change Log
 
-## [Unreleased]
+## [1.0.0] - 2018-05-05
+### Changed
+- [#280](https://github.com/h3poteto/whalebird-desktop/pull/280) Updated package lists to update vue-router & vuex versions to 3.0.1
+
+### Fixed
+- [#281](https://github.com/h3poteto/whalebird-desktop/pull/281) Fix loading circle in sidebar
+
+
+## [0.6.2] - 2018-04-30
 ### Added
 - [#279](https://github.com/h3poteto/whalebird-desktop/pull/279) Add toot delete button
 - [#277](https://github.com/h3poteto/whalebird-desktop/pull/277) Show favourites count in toot
