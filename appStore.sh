@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh -f
 
 # Name of your app.
 APP="Whalebird for Mastodon"
@@ -15,6 +15,11 @@ PARENT_PLIST="./plist/parent.plist"
 LOGINHELPER_PLIST="./plist/loginhelper.plist"
 
 FRAMEWORKS_PATH="$APP_PATH/Contents/Frameworks"
+
+# At first, rename app.asar.unpacked directory.
+# Because electron-builder does not store app.asar.unpacked directory.
+# I want to store unpacked files at the same directory as electron-builder.
+mv $APP_PATH/Contents/Resources/app.asar.unpacked/* $APP_PATH/Contents/Resources/
 
 codesign -s "$APP_KEY" -f --entitlements "$CHILD_PLIST" "$FRAMEWORKS_PATH/Electron Framework.framework/Versions/A/Electron Framework"
 codesign -s "$APP_KEY" -f --entitlements "$CHILD_PLIST" "$FRAMEWORKS_PATH/Electron Framework.framework/Versions/A/Libraries/libffmpeg.dylib"
