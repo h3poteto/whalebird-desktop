@@ -1,13 +1,13 @@
 <template>
   <div class="toot-detail" ref="detail">
     <div class="toot-ancestors" v-for="(message, index) in ancestors" v-bind:key="'ancestors-' + index">
-      <toot :message="message"></toot>
+      <toot :message="message" v-on:update="updateAncestorsToot" v-on:delete="deleteAncestorsToot"></toot>
     </div>
     <div class="original-toot" ref="original">
-      <toot :message="message"></toot>
+      <toot :message="message" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
     </div>
     <div class="toot-descendants" v-for="(message, index) in descendants" v-bind:key="'descendants' + index">
-      <toot :message="message"></toot>
+      <toot :message="message" v-on:update="updateDescendantsToot" v-on:delete="deleteDescendantsToot"></toot>
     </div>
   </div>
 </template>
@@ -47,6 +47,24 @@ export default {
             type: 'error'
           })
         })
+    },
+    updateAncestorsToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateAncestorsToot', message)
+    },
+    deleteAncestorsToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteAncestorsToot', message)
+    },
+    updateToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateToot', message)
+    },
+    deleteToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteToot', message)
+    },
+    updateDescendantsToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateDescendantsToot', message)
+    },
+    deleteDescendantsToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteDescendantsToot', message)
     }
   }
 }
