@@ -10,7 +10,7 @@ const Timeline = {
       state.timeline = timeline
     },
     updateToot (state, message) {
-      // Replace target message in homeTimeline and notifications
+      // Replace target message in timeline
       state.timeline = state.timeline.map((toot) => {
         if (toot.id === message.id) {
           return message
