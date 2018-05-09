@@ -10,7 +10,7 @@
           <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
         </div>
         <div class="timestamp">
-          {{ parseDatetime(message.created_at) }}
+          {{ parseDatetime(originalMessage(message).created_at) }}
         </div>
       </div>
       <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
