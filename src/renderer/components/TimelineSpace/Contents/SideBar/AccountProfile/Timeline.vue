@@ -1,7 +1,7 @@
 <template>
 <div id="account_timeline">
   <template v-for="message in timeline">
-    <toot :message="message" v-bind:key="message.id"></toot>
+    <toot :message="message" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
   </template>
 </div>
 </template>
@@ -36,6 +36,12 @@ export default {
             type: 'error'
           })
         })
+    },
+    updateToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/updateToot', message)
+    },
+    deleteToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/deleteToot', message)
     }
   }
 }
