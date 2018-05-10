@@ -97,9 +97,9 @@ const Home = {
             api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
           })
         client.get('/timelines/home', { max_id: last.id, limit: 40 }, (err, data, res) => {
+          commit('changeLazyLoading', false)
           if (err) return reject(err)
           commit('insertTimeline', data)
-          commit('changeLazyLoading', false)
         })
       })
     }
