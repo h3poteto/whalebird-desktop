@@ -15,6 +15,9 @@
           <div v-if="relationship.following" class="unfollow" @click="unfollow(account)">
             <icon name="user-times" scale="1.5"></icon>
           </div>
+          <div v-else-if="relationship.requested">
+            <icon name="hourglass" scale="1.5"></icon>
+          </div>
           <div v-else class="follow" @click="follow(account)">
             <icon name="user-plus" scale="1.5"></icon>
           </div>
