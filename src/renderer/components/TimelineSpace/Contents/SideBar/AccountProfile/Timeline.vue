@@ -3,6 +3,8 @@
   <template v-for="message in timeline">
     <toot :message="message" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
   </template>
+  <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
+  </div>
 </div>
 </template>
 
@@ -16,11 +18,21 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
-      timeline: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.timeline
+      timeline: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.timeline,
+      lazyLoading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.lazyLoading,
+      backgroundColor: state => state.App.theme.background_color
     })
   },
   created () {
     this.load()
+  },
+  mounted () {
+    document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
+  },
+  destroyed () {
+    if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
+      document.getElementById('sidebar_scrollable').removeEventListener('scroll', this.onScroll)
+    }
   },
   watch: {
     account: function (newAccount, oldAccount) {
@@ -37,6 +49,23 @@ export default {
           })
         })
     },
+    onScroll (event) {
+      // for lazyLoading
+      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('account_profile').clientHeight - 10) && !this.lazyloading) {
+        this.$store.dispatch(
+          'TimelineSpace/Contents/SideBar/AccountProfile/Timeline/lazyFetchTimeline',
+          {
+            account: this.account,
+            last: this.timeline[this.timeline.length - 1]
+          })
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch account timeline',
+              type: 'error'
+            })
+          })
+      }
+    },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/updateToot', message)
     },
@@ -48,4 +77,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .loading-card {
+    height: 60px;
+  }
+
+  .loading-card:empty {
+    height: 0;
+  }
 </style>
