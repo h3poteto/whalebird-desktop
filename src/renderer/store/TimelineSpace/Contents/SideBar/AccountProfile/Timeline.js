@@ -3,11 +3,18 @@ import Mastodon from 'mastodon-api'
 const Timeline = {
   namespaced: true,
   state: {
-    timeline: []
+    timeline: [],
+    lazyLoading: false
   },
   mutations: {
     updateTimeline (state, timeline) {
       state.timeline = timeline
+    },
+    insertTimeline (state, messages) {
+      state.timeline = state.timeline.concat(messages)
+    },
+    changeLazyLoading (state, value) {
+      state.lazyLoading = value
     },
     updateToot (state, message) {
       // Replace target message in timeline
@@ -50,6 +57,28 @@ const Timeline = {
           commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
           commit('updateTimeline', data)
           resolve(res)
+        })
+      })
+    },
+    lazyFetchTimeline ({ state, commit, rootState }, info) {
+      const last = info.last
+      if (last === undefined || last === null) {
+        return null
+      }
+      return new Promise((resolve, reject) => {
+        if (state.lazyLoading) {
+          return resolve()
+        }
+        commit('changeLazyLoading', true)
+        const client = new Mastodon(
+          {
+            access_token: rootState.TimelineSpace.account.accessToken,
+            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
+          })
+        client.get(`/accounts/${info.account.id}/statuses`, { max_id: last.id, limit: 40 }, (err, data, res) => {
+          commit('changeLazyLoading', false)
+          if (err) return reject(err)
+          commit('insertTimeline', data)
         })
       })
     }
