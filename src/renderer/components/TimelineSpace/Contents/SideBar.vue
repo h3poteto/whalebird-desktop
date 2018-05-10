@@ -5,7 +5,7 @@
       <i class="el-icon-loading" v-show="loading"></i>
       <i class="el-icon-close" @click="close"></i>
     </div>
-    <div class="scrollable">
+    <div id="sidebar_scrollable">
       <account-profile v-if="component === 1" v-on:change-loading="changeLoading"></account-profile>
       <toot-detail v-if="component === 2"></toot-detail>
     </div>
@@ -72,7 +72,7 @@ export default {
     }
   }
 
-  .scrollable {
+  #sidebar_scrollable {
     overflow: auto;
     height: calc(100% - 30px);
   }
