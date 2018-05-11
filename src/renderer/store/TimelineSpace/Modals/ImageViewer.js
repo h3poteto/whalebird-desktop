@@ -44,11 +44,15 @@ const ImageViewer = {
     imageURL (state) {
       return state.mediaList[state.currentIndex]
     },
-    isFirst (state) {
-      return state.currentIndex === 0 && state.mediaList.length > 1
+    showLeft (state) {
+      const notFirst = (state.currentIndex > 0)
+      const isManyItem = (state.mediaList.length > 1)
+      return (notFirst && isManyItem)
     },
-    isLast (state) {
-      return state.currentIndex === (state.mediaList.length - 1) && state.mediaList.length > 1
+    showRight (state) {
+      const notLast = (state.currentIndex < (state.mediaList.length - 1))
+      const isManyItem = (state.mediaList.length > 1)
+      return (notLast && isManyItem)
     }
   }
 }

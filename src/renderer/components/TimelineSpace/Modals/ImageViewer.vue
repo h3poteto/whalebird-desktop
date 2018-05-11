@@ -6,9 +6,9 @@
         <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
       </div>
       <div class="image-content">
-        <span class="button-area"><el-button type="text" v-show="!isFirst"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
+        <span class="button-area"><el-button type="text" v-show="showLeft"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
         <img :src="imageURL">
-        <span class="button-area"><el-button type="text" v-show="!isLast"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
+        <span class="button-area"><el-button type="text" v-show="showRight"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
       </div>
     </div>
   </div>
@@ -27,11 +27,11 @@ export default {
     imageURL () {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
     },
-    isFirst () {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/isFirst']
+    showLeft () {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/showLeft']
     },
-    isLast () {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/isLast']
+    showRight () {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/showRight']
     }
   },
   updated () {
