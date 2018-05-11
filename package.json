@@ -86,6 +86,7 @@
     "about-window": "^1.11.0",
     "animate.css": "^3.6.1",
     "axios": "^0.18.0",
+    "deep-extend": "^0.5.1",
     "electron-json-storage": "^4.0.2",
     "electron-log": "^2.2.14",
     "electron-window-state": "^4.1.1",
