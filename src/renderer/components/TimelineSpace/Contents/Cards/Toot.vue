@@ -132,7 +132,7 @@ export default {
       }
     },
     openReply (message) {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', message)
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', this.originalMessage(message))
     },
     openDetail (message) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
