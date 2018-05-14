@@ -32,7 +32,7 @@ export default {
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   beforeUpdate () {
-    if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline) {
+    if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
     }
   },

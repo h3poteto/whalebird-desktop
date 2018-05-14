@@ -99,6 +99,7 @@ const TimelineSpace = {
         if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
           commit('TimelineSpace/Contents/Local/archiveTimeline', {}, { root: true })
         }
+        commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
       })
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-local-streaming', account)
