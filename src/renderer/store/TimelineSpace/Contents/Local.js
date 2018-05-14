@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import Mastodon from 'mastodon-api'
 
 const Local = {
@@ -67,12 +66,12 @@ const Local = {
     }
   },
   actions: {
-    fetchLocalTimeline ({ state, commit, rootState }) {
+    fetchLocalTimeline ({ commit }, account) {
       return new Promise((resolve, reject) => {
         const client = new Mastodon(
           {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
+            access_token: account.accessToken,
+            api_url: account.baseURL + '/api/v1'
           }
         )
         client.get('/timelines/public', { limit: 40, local: true }, (err, data, res) => {
@@ -81,25 +80,6 @@ const Local = {
           resolve(res)
         })
       })
-    },
-    startLocalStreaming ({ state, commit, rootState }) {
-      ipcRenderer.on('update-start-local-streaming', (event, update) => {
-        commit('appendTimeline', update)
-        if (state.heading && Math.random() > 0.8) {
-          commit('archiveTimeline')
-        }
-      })
-      return new Promise((resolve, reject) => {
-        ipcRenderer.send('start-local-streaming', rootState.TimelineSpace.account)
-        ipcRenderer.once('error-start-local-streaming', (event, err) => {
-          reject(err)
-        })
-      })
-    },
-    stopLocalStreaming ({ commit }) {
-      ipcRenderer.removeAllListeners('error-start-local-streaming')
-      ipcRenderer.removeAllListeners('update-start-local-streaming')
-      ipcRenderer.send('stop-local-streaming')
     },
     lazyFetchTimeline ({ state, commit, rootState }, last) {
       if (last === undefined || last === null) {
