@@ -237,6 +237,18 @@ app.on('window-all-closed', () => {
     userStreaming.stop()
     userStreaming = null
   }
+  if (localStreaming !== null) {
+    localStreaming.stop()
+    localStreaming = null
+  }
+  if (publicStreaming !== null) {
+    publicStreaming.stop()
+    publicStreaming = null
+  }
+  if (listStreaming !== null) {
+    listStreaming.stop()
+    listStreaming = null
+  }
   if (process.platform !== 'darwin') {
     app.quit()
   }
