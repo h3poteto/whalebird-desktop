@@ -28,7 +28,13 @@ export default {
     })
   },
   mounted () {
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+  },
+  beforeUpdate () {
+    if (this.$store.state.TimelineSpace.SideMenu.unreadLocalTimeline && this.heading) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
+    }
   },
   destroyed () {
     this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
