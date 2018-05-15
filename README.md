@@ -36,14 +36,17 @@ or please download binary from [release page](https://github.com/h3poteto/whaleb
 ## Install
 ### Mac
 
-You can download `.dmg` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+You can install the app from Mac App Store: https://itunes.apple.com/us/app/whalebird/id1378283354
 
-Please wait for distribute in Mac app store, I'm preparing.
+Or you can download `.dmg` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+
 
 ### Linux
 
 You can download `.deb` or `.rpm` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 If you do not want to use package manager, please download `.tar.bz2` file and docompress it.
+
+Or please install the app from snapcraft.io: https://snapcraft.io/whalebird
 
 ### Windows
 
