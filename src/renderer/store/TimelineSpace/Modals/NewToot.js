@@ -59,7 +59,8 @@ const NewToot = {
     },
     openReply ({ commit }, message) {
       commit('setReplyTo', message)
-      commit('updateStatus', `@${message.account.acct} `)
+      const mentionAccounts = message.mentions.map(a => a.acct)
+      commit('updateStatus', `@${message.account.acct} ${mentionAccounts.map(m => `@${m} `)}`)
       commit('changeModal', true)
     },
     changeModal ({ commit }, value) {
