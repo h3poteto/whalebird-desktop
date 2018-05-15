@@ -39,11 +39,13 @@ export default {
   },
   beforeDestroy () {
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
+    this.$store.dispatch('TimelineSpace/stopLocalStreaming')
   },
   methods: {
     async clear () {
       await this.$store.dispatch('TimelineSpace/clearAccount')
       await this.$store.commit('TimelineSpace/Contents/Home/clearTimeline')
+      await this.$store.commit('TimelineSpace/Contents/Local/clearTimeline')
       await this.$store.commit('TimelineSpace/Contents/Notifications/clearNotifications')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
       return 'clear'
@@ -74,6 +76,14 @@ export default {
           type: 'error'
         })
       }
+      try {
+        await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
+      } catch (err) {
+        this.$message({
+          message: 'Could not fetch local timeline',
+          type: 'error'
+        })
+      }
       this.$store.dispatch('TimelineSpace/SideMenu/fetchLists', account)
       this.$store.dispatch('TimelineSpace/startUserStreaming', account)
         .catch(() => {
@@ -82,6 +92,7 @@ export default {
             type: 'error'
           })
         })
+      this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
     }
   }
 }

@@ -41,6 +41,8 @@
       <el-menu-item :index="`/${id()}/local`">
         <icon name="users"></icon>
         <span>Local timeline</span>
+        <el-badge is-dot :hidden="!unreadLocalTimeline">
+        </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/public`">
         <icon name="globe"></icon>
@@ -74,6 +76,7 @@ export default {
       account: state => state.TimelineSpace.account,
       unreadHomeTimeline: state => state.TimelineSpace.SideMenu.unreadHomeTimeline,
       unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications,
+      unreadLocalTimeline: state => state.TimelineSpace.SideMenu.unreadLocalTimeline,
       lists: state => state.TimelineSpace.SideMenu.lists,
       themeColor: state => state.App.theme.side_menu_color
     })

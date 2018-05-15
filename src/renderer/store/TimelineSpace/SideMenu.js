@@ -5,6 +5,7 @@ const SideMenu = {
   state: {
     unreadHomeTimeline: false,
     unreadNotifications: false,
+    unreadLocalTimeline: false,
     lists: []
   },
   mutations: {
@@ -13,6 +14,9 @@ const SideMenu = {
     },
     changeUnreadNotifications (state, value) {
       state.unreadNotifications = value
+    },
+    changeUnreadLocalTimeline (state, value) {
+      state.unreadLocalTimeline = value
     },
     updateLists (state, lists) {
       state.lists = lists
