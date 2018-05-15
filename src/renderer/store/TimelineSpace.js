@@ -93,12 +93,33 @@ const TimelineSpace = {
         })
       })
     },
+    startLocalStreaming ({ state, commit, rootState }, account) {
+      ipcRenderer.on('update-start-local-streaming', (event, update) => {
+        commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
+        if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
+          commit('TimelineSpace/Contents/Local/archiveTimeline', {}, { root: true })
+        }
+        commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
+      })
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('start-local-streaming', account)
+        ipcRenderer.once('error-start-local-streaming', (event, err) => {
+          reject(err)
+        })
+      })
+    },
     async stopUserStreaming ({ commit }) {
       ipcRenderer.removeAllListeners('update-start-user-streaming')
       ipcRenderer.removeAllListeners('notification-start-user-streaming')
       ipcRenderer.removeAllListeners('error-start-user-streaming')
       ipcRenderer.send('stop-user-streaming')
       return 'stopUserStreaming'
+    },
+    async stopLocalStreaming ({ commit }) {
+      ipcRenderer.removeAllListeners('error-start-local-streaming')
+      ipcRenderer.removeAllListeners('update-start-local-streaming')
+      ipcRenderer.send('stop-local-streaming')
+      return 'stopLocalStreaming'
     },
     watchShortcutEvents ({ commit }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {

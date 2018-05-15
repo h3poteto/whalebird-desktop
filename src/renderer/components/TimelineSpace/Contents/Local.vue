@@ -27,53 +27,25 @@ export default {
       unread: state => state.TimelineSpace.Contents.Local.unreadTimeline
     })
   },
-  created () {
-    const loading = this.$loading({
-      lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    })
-    this.initialize()
-      .then(() => {
-        loading.close()
-      })
-      .catch(() => {
-        loading.close()
-      })
+  mounted () {
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
-  beforeDestroy () {
-    this.$store.dispatch('TimelineSpace/Contents/Local/stopLocalStreaming')
+  beforeUpdate () {
+    if (this.$store.state.TimelineSpace.SideMenu.unreadLocalTimeline && this.heading) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
+    }
   },
   destroyed () {
     this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Local/mergeTimeline')
     this.$store.commit('TimelineSpace/Contents/Local/archiveTimeline')
-    this.$store.commit('TimelineSpace/Contents/Local/clearTimeline')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
     }
   },
   methods: {
-    async initialize () {
-      try {
-        await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline')
-      } catch (err) {
-        this.$message({
-          message: 'Could not fetch timeline',
-          type: 'error'
-        })
-      }
-      this.$store.dispatch('TimelineSpace/Contents/Local/startLocalStreaming')
-        .catch(() => {
-          this.$message({
-            message: 'Failed to start streaming',
-            type: 'error'
-          })
-        })
-    },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/Local/updateToot', message)
     },

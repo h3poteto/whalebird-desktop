@@ -67,6 +67,9 @@
           </el-button>
         </popper>
       </div>
+      <div class="application">
+        via {{ application(message) }}
+      </div>
     </div>
     <div class="clearfix"></div>
     <div class="fill-line"></div>
@@ -241,6 +244,14 @@ export default {
             type: 'error'
           })
         })
+    },
+    application (message) {
+      let msg = this.originalMessage(message)
+      if (msg.application !== undefined &&
+          msg.application !== null) {
+        return msg.application.name
+      }
+      return 'Web'
     }
   }
 }
@@ -346,6 +357,8 @@ function findLink (target) {
     }
 
     .tool-box {
+      float: left;
+
       button {
         margin: 0 8px;
         padding: 0;
@@ -394,6 +407,11 @@ function findLink (target) {
           }
         }
       }
+    }
+
+    .application {
+      float: right;
+      color: #909399;
     }
 
     .reply:hover,
