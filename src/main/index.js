@@ -374,6 +374,12 @@ ipcMain.on('backward-account', (event, acct) => {
 ipcMain.on('refresh-accounts', (event, _) => {
   const account = new Account(accountDB)
   account.refreshAccounts()
+    .then((accounts) => {
+      event.sender.send('response-refresh-accounts', accounts)
+    })
+    .catch((err) => {
+      event.sender.send('error-refresh-accounts', err)
+    })
 })
 
 // streaming
