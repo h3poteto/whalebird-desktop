@@ -1,6 +1,6 @@
 import Mastodon from 'mastodon-api'
 
-const appName = 'whalebird'
+const appName = 'Whalebird'
 const scope = 'read write follow'
 
 export default class Authentication {
@@ -22,6 +22,7 @@ export default class Authentication {
 
   async getAuthorizationUrl (domain = 'mastodon.social') {
     this.setOtherInstance(domain)
+    // Waiting for merge this pull request: https://github.com/vanita5/mastodon-api/pull/8
     const res = await Mastodon.createOAuthApp(this.baseURL + '/api/v1/apps', appName, scope)
     this.clientId = res.client_id
     this.clientSecret = res.client_secret

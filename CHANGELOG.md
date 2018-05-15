@@ -1,5 +1,28 @@
 # Change Log
 
+## [Unreleased]
+### Added
+- [#304](https://github.com/h3poteto/whalebird-desktop/pull/304) Add a background streaming for local timeline
+
+### Changed
+- [#305](https://github.com/h3poteto/whalebird-desktop/pull/305) Show the application from which the status was posted
+- [#307](https://github.com/h3poteto/whalebird-desktop/pull/307) Fill all account name when the status is multiple replied
+
+## [1.0.1] - 2018-05-13
+### Added
+- [#296](https://github.com/h3poteto/whalebird-desktop/pull/296) Add lazyLoading in account profile timeline
+- [#295](https://github.com/h3poteto/whalebird-desktop/pull/295) Add following status for requested
+
+### Changed
+- [#294](https://github.com/h3poteto/whalebird-desktop/pull/294) Show original status timestamp in reblogged toot
+- [#292](https://github.com/h3poteto/whalebird-desktop/pull/292) Update toot status in SideBar
+
+### Fixed
+- [#298](https://github.com/h3poteto/whalebird-desktop/pull/298) Ran the new 'npm audit' and updated some of the packages that are mentioned
+- [#297](https://github.com/h3poteto/whalebird-desktop/pull/297) Fix image list arrow
+- [#289](https://github.com/h3poteto/whalebird-desktop/pull/289) Add asar unpacked resource for sounds in electron packager
+
+
 ## [1.0.0] - 2018-05-05
 ### Changed
 - [#280](https://github.com/h3poteto/whalebird-desktop/pull/280) Updated package lists to update vue-router & vuex versions to 3.0.1
