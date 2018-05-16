@@ -37,7 +37,18 @@ const GlobalHeader = {
     },
     // Fetch account informations and save current state when GlobalHeader is displayed
     refreshAccounts ({ commit, state }) {
-      ipcRenderer.send('refresh-accounts')
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('refresh-accounts')
+        ipcRenderer.once('error-refresh-accounts', (event, err) => {
+          ipcRenderer.removeAllListeners('response-refresh-accounts')
+          reject(err)
+        })
+        ipcRenderer.once('response-refresh-accounts', (event, accounts) => {
+          ipcRenderer.removeAllListeners('error-refresh-accounts')
+          commit('updateAccounts', accounts)
+          resolve(accounts)
+        })
+      })
     },
     watchShortcutEvents ({ state, commit, rootState }) {
       ipcRenderer.on('change-account', (event, account) => {
