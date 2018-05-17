@@ -144,6 +144,9 @@ const TimelineSpace = {
         }
       )
       return 'clearAccount'
+    },
+    async clearUnread ({ dispatch }) {
+      dispatch('TimelineSpace/SideMenu/clearUnread', {}, { root: true })
     }
   }
 }
