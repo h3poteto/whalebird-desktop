@@ -48,6 +48,7 @@ export default {
       await this.$store.commit('TimelineSpace/Contents/Local/clearTimeline')
       await this.$store.commit('TimelineSpace/Contents/Notifications/clearNotifications')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
+      await this.$store.dispatch('TimelineSpace/clearUnread')
       return 'clear'
     },
     async initialize () {
