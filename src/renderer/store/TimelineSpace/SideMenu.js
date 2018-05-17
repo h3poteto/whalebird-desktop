@@ -37,6 +37,11 @@ const SideMenu = {
           resolve(res)
         })
       })
+    },
+    clearUnread ({ commit }) {
+      commit('changeUnreadHomeTimeline', false)
+      commit('changeUnreadNotifications', false)
+      commit('changeUnreadLocalTimeline', false)
     }
   }
 }
