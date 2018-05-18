@@ -7,7 +7,7 @@
       </div>
       <div class="image-content">
         <span class="button-area"><el-button type="text" v-show="showLeft"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
-        <img :src="imageURL">
+        <Media :src="imageURL"></Media>
         <span class="button-area"><el-button type="text" v-show="showRight"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
       </div>
     </div>
@@ -16,10 +16,14 @@
 </template>
 
 <script>
+import Media from './Media'
 import { mapState } from 'vuex'
 
 export default {
   name: 'image-viewer',
+  components: {
+    Media
+  },
   computed: {
     ...mapState({
       modalOpen: state => state.TimelineSpace.Modals.ImageViewer.modalOpen
@@ -82,11 +86,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    img {
-      max-width: 80%;
-      max-height: 80%;
-    }
   }
 }
 
