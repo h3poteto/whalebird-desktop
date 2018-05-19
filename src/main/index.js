@@ -229,29 +229,13 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding')
 
 app.on('ready', createWindow)
 
-// In macOS, this method is called when user click x button.
-// When this time, streaming must stop.
-// https://github.com/electron/electron/blob/master/docs/api/app.md#event-window-all-closed
 app.on('window-all-closed', () => {
-  if (userStreaming !== null) {
-    userStreaming.stop()
-    userStreaming = null
-  }
-  if (localStreaming !== null) {
-    localStreaming.stop()
-    localStreaming = null
-  }
-  if (publicStreaming !== null) {
-    publicStreaming.stop()
-    publicStreaming = null
-  }
-  if (listStreaming !== null) {
-    listStreaming.stop()
-    listStreaming = null
-  }
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  app.quit()
+  // This is a single-window application.
+  // So quit application when main window is closed.
+  // if (process.platform !== 'darwin') {
+  //   app.quit()
+  // }
 })
 
 app.on('activate', () => {
