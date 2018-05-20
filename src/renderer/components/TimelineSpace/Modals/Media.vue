@@ -1,8 +1,6 @@
 <template>
-  <div class="media">
-    <img :src="src" v-if="isImageFile()">
-    <video :src="src" v-else-if="isMovieFile()" controls></video>
-  </div>
+  <img :src="src" v-if="isImageFile()">
+  <video :src="src" v-else-if="isMovieFile()" controls></video>
 </template>
 
 <script>
@@ -25,11 +23,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.media {
-  img, video {
-    max-width: 80%;
-    max-height: 80%;
-  }
+img,
+video {
+  max-width: 80%;
+  max-height: 80%;
 }
 </style>
 
