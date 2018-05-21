@@ -1,6 +1,6 @@
 <template>
-  <img :src="src" v-if="isImageFile()">
-  <video :src="src" v-else-if="isMovieFile()" controls></video>
+  <video :src="src" v-if="isMovieFile()" controls></video>
+  <img :src="src" v-else>
 </template>
 
 <script>
@@ -11,9 +11,6 @@ export default {
   methods: {
     file_ext () {
       return this.src.split('.').pop().toLowerCase()
-    },
-    isImageFile () {
-      return ['jpg', 'gif', 'png'].indexOf(this.file_ext()) >= 0
     },
     isMovieFile () {
       return ['mp4'].indexOf(this.file_ext()) >= 0
