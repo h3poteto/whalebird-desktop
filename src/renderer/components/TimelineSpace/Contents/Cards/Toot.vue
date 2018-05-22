@@ -13,7 +13,18 @@
           {{ parseDatetime(originalMessage(message).created_at) }}
         </div>
       </div>
-      <div class="content" v-html="message.content" @click.capture.prevent="tootClick"></div>
+      <div class="content-wrapper">
+        <div class="spoiler" v-show="spoilered(message)">
+          {{ originalMessage(message).spoiler_text }}
+          <el-button v-show="!isShowContent(message)" type="text" @click="showContent = true">
+            Show more
+          </el-button>
+          <el-button v-show="isShowContent(message)" type="text" @click="showContent = false">
+            Hide
+          </el-button>
+        </div>
+        <div class="content" v-show="isShowContent(message)" v-html="originalMessage(message).content" @click.capture.prevent="tootClick"></div>
+      </div>
       <div class="attachments">
         <div class="media" v-for="media in mediaAttachements(message)">
           <img :src="media.preview_url" @click="openImage(media.url, mediaAttachements(message))"/>
@@ -83,6 +94,11 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'toot',
+  data () {
+    return {
+      showContent: false
+    }
+  },
   props: ['message'],
   computed: {
     ...mapState({
@@ -252,6 +268,12 @@ export default {
         return msg.application.name
       }
       return 'Web'
+    },
+    spoilered (message) {
+      return this.originalMessage(message).spoiler_text.length > 0
+    },
+    isShowContent (message) {
+      return this.originalMessage(message).spoiler_text.length <= 0 || this.showContent
     }
   }
 }
@@ -318,11 +340,14 @@ function findLink (target) {
       }
     }
 
-    .content {
+    .content-wrapper {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
-      margin: 4px 0 8px;
-      word-wrap: break-word;
+
+      .content {
+        margin: 4px 0 8px;
+        word-wrap: break-word;
+      }
     }
 
     .attachments {
