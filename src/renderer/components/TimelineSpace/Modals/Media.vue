@@ -1,8 +1,6 @@
 <template>
-  <div class="media">
-    <img :src="src" v-if="isImageFile()">
-    <video :src="src" v-else-if="isMovieFile()" controls></video>
-  </div>
+  <video :src="src" v-if="isMovieFile()" controls></video>
+  <img :src="src" v-else>
 </template>
 
 <script>
@@ -14,9 +12,6 @@ export default {
     file_ext () {
       return this.src.split('.').pop().toLowerCase()
     },
-    isImageFile () {
-      return ['jpg', 'gif', 'png'].indexOf(this.file_ext()) >= 0
-    },
     isMovieFile () {
       return ['mp4'].indexOf(this.file_ext()) >= 0
     }
@@ -25,11 +20,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.media {
-  img, video {
-    max-width: 80%;
-    max-height: 80%;
-  }
+img,
+video {
+  max-width: 80%;
+  max-height: 80%;
 }
 </style>
 
