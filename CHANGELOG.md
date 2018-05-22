@@ -2,11 +2,34 @@
 
 ## [Unreleased]
 ### Added
+- [#331](https://github.com/h3poteto/whalebird-desktop/pull/331) Show content warning status and control visibility
+
+
+## [1.1.1] - 2018-05-22
+### Changed
+- [#321](https://github.com/h3poteto/whalebird-desktop/pull/321) Quit application when window is closed
+- [#320](https://github.com/h3poteto/whalebird-desktop/pull/320) Use forked repository for mastodon-api
+
+### Fixed
+- [#324](https://github.com/h3poteto/whalebird-desktop/pull/324) Show image as a picture if the extension is unknown in Media
+- [#322](https://github.com/h3poteto/whalebird-desktop/pull/322) Fix image size in image viewer
+
+
+## [1.1.0] - 2018-05-18
+### Added
 - [#304](https://github.com/h3poteto/whalebird-desktop/pull/304) Add a background streaming for local timeline
 
 ### Changed
-- [#305](https://github.com/h3poteto/whalebird-desktop/pull/305) Show the application from which the status was posted
+- [#315](https://github.com/h3poteto/whalebird-desktop/pull/315) Show movie on Image Viewer
 - [#307](https://github.com/h3poteto/whalebird-desktop/pull/307) Fill all account name when the status is multiple replied
+- [#305](https://github.com/h3poteto/whalebird-desktop/pull/305) Show the application from which the status was posted
+
+### Fixed
+
+- [#313](https://github.com/h3poteto/whalebird-desktop/pull/313) Clear unread mark when change account
+- [#310](https://github.com/h3poteto/whalebird-desktop/pull/310) Update icon when user add a new account
+- [#308](https://github.com/h3poteto/whalebird-desktop/pull/308) Fix application name, and add comment for website
+
 
 ## [1.0.1] - 2018-05-13
 ### Added
