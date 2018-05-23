@@ -26,8 +26,16 @@
         <div class="content" v-show="isShowContent(message)" v-html="originalMessage(message).content" @click.capture.prevent="tootClick"></div>
       </div>
       <div class="attachments">
-        <div class="media" v-for="media in mediaAttachements(message)">
-          <img :src="media.preview_url" @click="openImage(media.url, mediaAttachements(message))"/>
+        <el-button v-show="sensitive(message) && !isShowAttachments(message)" class="show-sensitive" type="info" @click="showAttachments = true">
+          Show sensitive contents
+        </el-button>
+        <div v-show="isShowAttachments(message)">
+          <el-button v-show="sensitive(message) && isShowAttachments(message)" class="hide-sensitive" type="text" @click="showAttachments = false">
+            <icon name="eye" class="hide"></icon>
+          </el-button>
+          <div class="media" v-for="media in mediaAttachments(message)">
+            <img :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))"/>
+          </div>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -96,7 +104,8 @@ export default {
   name: 'toot',
   data () {
     return {
-      showContent: false
+      showContent: false,
+      showAttachments: false
     }
   },
   props: ['message'],
@@ -231,7 +240,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    mediaAttachements (message) {
+    mediaAttachments (message) {
       return this.originalMessage(message).media_attachments
     },
     reblogsCount (message) {
@@ -273,7 +282,13 @@ export default {
       return this.originalMessage(message).spoiler_text.length > 0
     },
     isShowContent (message) {
-      return this.originalMessage(message).spoiler_text.length <= 0 || this.showContent
+      return !this.spoilered(message) || this.showContent
+    },
+    sensitive (message) {
+      return this.originalMessage(message).sensitive && this.mediaAttachments(message).length > 0
+    },
+    isShowAttachments (message) {
+      return !this.sensitive(message) || this.showAttachments
     }
   }
 }
@@ -351,6 +366,25 @@ function findLink (target) {
     }
 
     .attachments {
+      position: relative;
+
+      .show-sensitive {
+        padding: 20px 32px;
+        margin-bottom: 4px;
+      }
+
+      .hide-sensitive {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 4px;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.9);
+        }
+      }
+
       .media {
         float: left;
         margin-right: 8px;
