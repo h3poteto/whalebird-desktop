@@ -57,10 +57,12 @@ const NewToot = {
         })
       })
     },
-    openReply ({ commit }, message) {
+    openReply ({ commit, rootState }, message) {
       commit('setReplyTo', message)
-      const mentionAccounts = message.mentions.map(a => a.acct)
-      commit('updateStatus', `@${message.account.acct} ${mentionAccounts.map(m => `@${m} `)}`)
+      const mentionAccounts = [message.account.acct].concat(message.mentions.map(a => a.acct))
+        .filter((a, i, self) => self.indexOf(a) === i)
+        .filter((a) => a !== rootState.TimelineSpace.account.username)
+      commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')}`)
       commit('changeModal', true)
     },
     changeModal ({ commit }, value) {
