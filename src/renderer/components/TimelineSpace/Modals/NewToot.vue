@@ -31,7 +31,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div class="sensitive">
+      <div class="sensitive" v-if="attachedMedias.length > 0">
         <el-button size="small" type="text" @click="changeSensitive">
           <icon name="eye-slash" v-if="sensitive"></icon>
           <icon name="eye" v-else></icon>
