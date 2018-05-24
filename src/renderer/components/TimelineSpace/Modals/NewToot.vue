@@ -31,6 +31,12 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+      <div class="sensitive" v-if="attachedMedias.length > 0">
+        <el-button size="small" type="text" @click="changeSensitive">
+          <icon name="eye-slash" v-if="sensitive"></icon>
+          <icon name="eye" v-else></icon>
+        </el-button>
+      </div>
       <span class="text-count">{{ 500 - status.length }}</span>
       <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="toot" v-loading="blockSubmit">Toot</el-button>
@@ -61,6 +67,7 @@ export default {
       attachedMedias: state => state.TimelineSpace.Modals.NewToot.attachedMedias,
       blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit,
       visibility: state => state.TimelineSpace.Modals.NewToot.visibility,
+      sensitive: state => state.TimelineSpace.Modals.NewToot.sensitive,
       visibilityIcon: (state) => {
         switch (state.TimelineSpace.Modals.NewToot.visibility) {
           case 'public':
@@ -119,7 +126,8 @@ export default {
       }
       let form = {
         status: this.status,
-        visibility: this.visibility
+        visibility: this.visibility,
+        sensitive: this.sensitive
       }
       if (this.replyToId !== null) {
         form = Object.assign(form, {
@@ -193,6 +201,9 @@ export default {
     },
     changeVisibility (level) {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibility', level)
+    },
+    changeSensitive () {
+      this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
     }
   }
 }
@@ -270,6 +281,11 @@ export default {
     }
 
     .privacy {
+      float: left;
+      margin-left: 8px;
+    }
+
+    .sensitive {
       float: left;
       margin-left: 8px;
     }
