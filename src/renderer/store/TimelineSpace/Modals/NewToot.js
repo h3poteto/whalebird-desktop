@@ -10,7 +10,8 @@ const NewToot = {
     replyToMessage: null,
     blockSubmit: false,
     attachedMedias: [],
-    visibility: 'public'
+    visibility: 'public',
+    sensitive: false
   },
   mutations: {
     changeModal (state, value) {
@@ -36,6 +37,9 @@ const NewToot = {
     },
     changeVisibility (state, value) {
       state.visibility = value
+    },
+    changeSensitive (state, value) {
+      state.sensitive = value
     }
   },
   actions: {
@@ -70,6 +74,7 @@ const NewToot = {
         commit('setReplyTo', null)
         commit('changeBlockSubmit', false)
         commit('clearAttachedMedias')
+        commit('changeSensitive', false)
       }
     },
     uploadImage ({ state, commit, rootState }, image) {
