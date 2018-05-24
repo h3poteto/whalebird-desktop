@@ -11,7 +11,8 @@ const NewToot = {
     blockSubmit: false,
     attachedMedias: [],
     visibility: 'public',
-    sensitive: false
+    sensitive: false,
+    spoiler: ''
   },
   mutations: {
     changeModal (state, value) {
@@ -40,6 +41,9 @@ const NewToot = {
     },
     changeSensitive (state, value) {
       state.sensitive = value
+    },
+    updateSpoiler (state, value) {
+      state.spoiler = value
     }
   },
   actions: {
@@ -75,6 +79,7 @@ const NewToot = {
         commit('changeBlockSubmit', false)
         commit('clearAttachedMedias')
         commit('changeSensitive', false)
+        commit('updateSpoiler', '')
       }
     },
     uploadImage ({ state, commit, rootState }, image) {
