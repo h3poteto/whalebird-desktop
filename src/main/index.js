@@ -500,7 +500,7 @@ ipcMain.on('start-list-streaming', (event, obj) => {
         },
         (err) => {
           log.error(err)
-          event.sendeer.send('error-start-list-streaming', err)
+          event.sender.send('error-start-list-streaming', err)
         }
       )
     })
