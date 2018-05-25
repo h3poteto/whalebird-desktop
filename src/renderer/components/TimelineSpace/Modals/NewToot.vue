@@ -5,8 +5,11 @@
     width="400px"
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
+      <div class="spoiler" v-if="showContentWarning">
+        <el-input placeholder="Write your warning here" v-model="spoiler"></el-input>
+      </div>
       <div class="status">
-        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()" autofocus></textarea>
+        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()" autofocus placeholder="What is on your mind?"></textarea>
       </div>
     </el-form>
     <div class="preview">
@@ -31,6 +34,17 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+      <div class="sensitive" v-if="attachedMedias.length > 0">
+        <el-button size="small" type="text" @click="changeSensitive">
+          <icon name="eye-slash" v-if="sensitive"></icon>
+          <icon name="eye" v-else></icon>
+        </el-button>
+      </div>
+      <div class="content-warning">
+        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning">
+          CW
+        </el-button>
+      </div>
       <span class="text-count">{{ 500 - status.length }}</span>
       <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="toot" v-loading="blockSubmit">Toot</el-button>
@@ -46,7 +60,8 @@ export default {
   name: 'new-toot',
   data () {
     return {
-      attachedImageId: 0
+      attachedImageId: 0,
+      showContentWarning: false
     }
   },
   computed: {
@@ -61,6 +76,7 @@ export default {
       attachedMedias: state => state.TimelineSpace.Modals.NewToot.attachedMedias,
       blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit,
       visibility: state => state.TimelineSpace.Modals.NewToot.visibility,
+      sensitive: state => state.TimelineSpace.Modals.NewToot.sensitive,
       visibilityIcon: (state) => {
         switch (state.TimelineSpace.Modals.NewToot.visibility) {
           case 'public':
@@ -91,11 +107,20 @@ export default {
       set (value) {
         this.$store.commit('TimelineSpace/Modals/NewToot/updateStatus', value)
       }
+    },
+    spoiler: {
+      get () {
+        return this.$store.state.TimelineSpace.Modals.NewToot.spoiler
+      },
+      set (value) {
+        this.$store.commit('TimelineSpace/Modals/NewToot/updateSpoiler', value)
+      }
     }
   },
   watch: {
     newTootModal: function (newState, oldState) {
       if (!oldState && newState) {
+        this.showContentWarning = false
         this.$nextTick(function () {
           this.$refs.status.focus()
         })
@@ -119,7 +144,9 @@ export default {
       }
       let form = {
         status: this.status,
-        visibility: this.visibility
+        visibility: this.visibility,
+        sensitive: this.sensitive,
+        spoiler_text: this.spoiler
       }
       if (this.replyToId !== null) {
         form = Object.assign(form, {
@@ -193,6 +220,9 @@ export default {
     },
     changeVisibility (level) {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibility', level)
+    },
+    changeSensitive () {
+      this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
     }
   }
 }
@@ -210,6 +240,16 @@ export default {
 
   .el-dialog__body {
     padding: 0;
+
+    .spoiler {
+      box-sizing: border-box;
+      padding: 4px 0;
+      background-color: #4a5664;
+
+      input {
+        border-radius: 0;
+      }
+    }
 
     .status {
       textarea {
@@ -272,6 +312,20 @@ export default {
     .privacy {
       float: left;
       margin-left: 8px;
+    }
+
+    .sensitive {
+      float: left;
+      margin-left: 8px;
+    }
+
+    .content-warning {
+      float: left;
+      margin-left: 8px;
+
+      span {
+        font-weight: 800;
+      }
     }
 
     .text-count {

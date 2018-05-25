@@ -86,7 +86,7 @@
           </el-button>
         </popper>
       </div>
-      <div class="application">
+      <div class="application" v-if="application(message) !== null">
         via {{ application(message) }}
       </div>
     </div>
@@ -276,7 +276,7 @@ export default {
           msg.application !== null) {
         return msg.application.name
       }
-      return 'Web'
+      return null
     },
     spoilered (message) {
       return this.originalMessage(message).spoiler_text.length > 0
