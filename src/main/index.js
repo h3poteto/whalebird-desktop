@@ -116,16 +116,11 @@ function createWindow () {
           ]
         },
         {
-          label: 'Toot',
-          submenu: [
-            {
-              label: 'New Toot',
-              accelerator: 'CmdOrCtrl+N',
-              click: () => {
-                mainWindow.webContents.send('CmdOrCtrl+N')
-              }
-            }
-          ]
+          label: 'New Toot',
+          accelerator: 'CmdOrCtrl+N',
+          click: () => {
+            mainWindow.webContents.send('CmdOrCtrl+N')
+          }
         },
         {
           label: 'Edit',
