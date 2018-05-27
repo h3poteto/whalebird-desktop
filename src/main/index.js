@@ -213,6 +213,8 @@ function createWindow () {
 
       mainWindow.loadURL(winURL)
 
+      mainWindow.webContents.on('will-navigate', (event) => event.preventDefault())
+
       mainWindow.on('closed', () => {
         mainWindow = null
       })
