@@ -21,7 +21,7 @@
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
         <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
-        <input name="image" type="file" class="image-input" ref="image" @change="updateImage" :key="attachedImageId"/>
+        <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedImageId"/>
       </div>
       <div class="privacy">
         <el-dropdown trigger="click" @command="changeVisibility">
@@ -127,6 +127,14 @@ export default {
       }
     }
   },
+  mounted () {
+    document.addEventListener('drop', e => {
+      e.preventDefault()
+      e.stopPropagation()
+      this.onDrop(e)
+      return false
+    })
+  },
   methods: {
     close () {
       this.resetImage()
@@ -192,19 +200,23 @@ export default {
     selectImage () {
       this.$refs.image.click()
     },
-    updateImage (e) {
-      this.resetImage()
+    onChangeImage (e) {
       if (e.target.files.item(0) === null || e.target.files.item(0) === undefined) {
         return
       }
-      if (!e.target.files.item(0).type.includes('image')) {
+      const file = e.target.files.item(0)
+      if (!file.type.includes('image')) {
         this.$message({
           message: 'You can only attach images',
           type: 'error'
         })
         return
       }
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', e.target.files.item(0))
+      this.updateImage(file)
+    },
+    updateImage (file) {
+      this.resetImage()
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
         .catch(() => {
           this.$message({
             message: 'Could not attach the file',
@@ -223,6 +235,20 @@ export default {
     },
     changeSensitive () {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
+    },
+    onDrop (e) {
+      if (e.dataTransfer.files.item(0) === null || e.dataTransfer.files.item(0) === undefined) {
+        return
+      }
+      const file = e.dataTransfer.files.item(0)
+      if (!file.type.includes('image')) {
+        this.$message({
+          message: 'You can only attach images',
+          type: 'error'
+        })
+        return
+      }
+      this.updateImage(file)
     }
   }
 }
