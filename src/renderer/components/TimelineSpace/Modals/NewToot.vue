@@ -274,7 +274,7 @@ export default {
 
       input {
         border-radius: 0;
-        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Bookerly', serif;
 
         &::placeholder {
           color: #c0c4cc;
@@ -297,7 +297,7 @@ export default {
         resize: none;
         height: 120px;
         transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Bookerly', serif;
 
         &::placeholder {
           color: #c0c4cc;

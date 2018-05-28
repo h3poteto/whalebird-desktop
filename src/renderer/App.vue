@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss">
-body { font-family: 'Noto Sans', sans-serif; }
+body { font-family: 'Bookerly', serif; }
 
 html, body, #app {
   --theme-background-color: #ffffff;
