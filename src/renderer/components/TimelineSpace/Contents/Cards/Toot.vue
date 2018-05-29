@@ -12,6 +12,7 @@
         <div class="timestamp">
           {{ parseDatetime(originalMessage(message).created_at) }}
         </div>
+        <div class="clearfix"></div>
       </div>
       <div class="content-wrapper">
         <div class="spoiler" v-show="spoilered(message)">
@@ -324,7 +325,9 @@ function findLink (target) {
   }
 
   .detail {
-    margin: 0 8px 0 42px;
+    margin: 0 8px 0 8px;
+    float: left;
+    width: calc(100% - 52px);
 
     .toot-header {
       .user {
@@ -352,6 +355,7 @@ function findLink (target) {
         text-align: right;
         width: 100%;
         color: #909399;
+        flota: right;
       }
     }
 
