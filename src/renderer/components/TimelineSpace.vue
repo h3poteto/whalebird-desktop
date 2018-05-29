@@ -109,7 +109,7 @@ export default {
   box-sizing: border-box;
 
   .header {
-    width: 100%;
+    width: calc(100% - 245px);
     position: fixed;
     top: 0;
     left: 245px;
