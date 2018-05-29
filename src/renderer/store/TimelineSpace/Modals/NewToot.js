@@ -70,7 +70,7 @@ const NewToot = {
       const mentionAccounts = [message.account.acct].concat(message.mentions.map(a => a.acct))
         .filter((a, i, self) => self.indexOf(a) === i)
         .filter((a) => a !== rootState.TimelineSpace.account.username)
-      commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')}`)
+      commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
       commit('changeModal', true)
     },
     changeModal ({ commit }, value) {
