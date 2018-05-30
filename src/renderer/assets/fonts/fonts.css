@@ -1,4 +1,4 @@
-/* === Noto Sans - regular */
+/* === Noto Sans - regular
 @font-face {
 	font-family: 'Noto Sans';
 	font-style: normal;
@@ -7,4 +7,15 @@
 	src: local("Noto Sans Regular"),
 		local("NotoSans-Regular"),
 		url("./NotoSans-Regular.ttf") format("truetype");
+}
+*/
+/* === Bookerly - Regular */
+@font-face {
+	font-family: 'Bookerly';
+	font-style: normal;
+	font-weight: 400;
+	src: url("./Bookerly-Regular.ttf");
+	src: local("Bookerly Regular"),
+		local("Bookerly-Regular"),
+		url("./Bookerly-Regular.ttf") format("truetype");
 }
