@@ -1,6 +1,11 @@
 <template>
 <div id="header_menu">
   <div class="channel">{{ title }}</div>
+  <div class="tools">
+    <el-button type="text" class="toot" @click="openNewTootModal">
+      <icon name="regular/comment"></icon>
+    </el-button>
+  </div>
 </div>
 </template>
 
@@ -50,6 +55,9 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Home')
           break
       }
+    },
+    openNewTootModal () {
+      this.$store.commit('TimelineSpace/Modals/NewToot/changeModal', true)
     }
   }
 }
@@ -58,11 +66,29 @@ export default {
 <style lang="scss" scoped>
 #header_menu {
   background-color: var(--theme-background-color);
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: stretch;
 
   .channel {
-    padding: 12px 24px;
     font-weight: bold;
     font-size: 18px;
+    margin-right: auto;
+  }
+
+  .tools {
+    font-size: 18px;
+
+    .toot {
+      color: var(--theme-secondary-color);
+      padding: 0;
+
+      &:hover {
+        color: #409eff;
+      }
+    }
   }
 }
 </style>
