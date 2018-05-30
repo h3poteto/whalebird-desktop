@@ -2,8 +2,27 @@
 
 ## [Unreleased]
 ### Added
+- [#349](https://github.com/h3poteto/whalebird-desktop/pull/349) Add toot button on header menu
+
+### Fixed
+- [#348](https://github.com/h3poteto/whalebird-desktop/pull/348) Add a space after username in reply
+
+## [1.2.0] - 2018-05-29
+### Added
+- [#343](https://github.com/h3poteto/whalebird-desktop/pull/343) Allow drag & drop action to upload files
+- [#338](https://github.com/h3poteto/whalebird-desktop/pull/338) Set spoiler text when new toot
+- [#337](https://github.com/h3poteto/whalebird-desktop/pull/337) Set sensitive in new toot modal
+- [#336](https://github.com/h3poteto/whalebird-desktop/pull/336) Hide sensitive medias by default
 - [#331](https://github.com/h3poteto/whalebird-desktop/pull/331) Show content warning status and control visibility
 
+### Changed
+- [#339](https://github.com/h3poteto/whalebird-desktop/pull/339) Hide application when can not detect application
+
+### Fixed
+- [#346](https://github.com/h3poteto/whalebird-desktop/pull/346) Fix float setting in toot view
+- [#345](https://github.com/h3poteto/whalebird-desktop/pull/345) Fix font and color of placeholder in new toot modal
+- [#340](https://github.com/h3poteto/whalebird-desktop/pull/340) Fix typo in list streaming
+- [#335](https://github.com/h3poteto/whalebird-desktop/pull/335) Guard duplicate username in reply
 
 ## [1.1.1] - 2018-05-22
 ### Changed
