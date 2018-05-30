@@ -13,6 +13,12 @@ import Authentication from './auth'
 import Account from './account'
 import Streaming from './streaming'
 import Preferences from './preferences'
+import ContextMenu from 'electron-context-menu'
+
+/**
+ * Context menu
+ */
+ContextMenu()
 
 /**
  * Set log level
