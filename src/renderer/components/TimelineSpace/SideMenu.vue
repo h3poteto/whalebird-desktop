@@ -48,6 +48,10 @@
         <icon name="globe"></icon>
         <span>Public timeline</span>
       </el-menu-item>
+      <el-menu-item :index="`/${id()}/hashtag/`">
+        <icon name="hashtag"></icon>
+        <span>Hashtag</span>
+      </el-menu-item>
       <el-menu-item :index="`/${id()}/search`">
         <icon name="search"></icon>
         <span>Search</span>
