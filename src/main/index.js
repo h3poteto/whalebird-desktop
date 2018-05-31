@@ -514,6 +514,46 @@ ipcMain.on('start-list-streaming', (event, obj) => {
     })
 })
 
+ipcMain.on('stop-list-streaming', (event, _) => {
+  listStreaming.stop()
+  listStreaming = null
+})
+
+let tagStreaming = null
+
+ipcMain.on('start-tag-streaming', (event, obj) => {
+  const account = new Account(accountDB)
+  account.getAccount(obj.account._id)
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-tag-streaming', err)
+    })
+    .then((account) => {
+      // Stop old tag streaming
+      if (tagStreaming !== null) {
+        tagStreaming.stop()
+        tagStreaming = null
+      }
+
+      tagStreaming = new Streaming(account)
+      tagStreaming.start(
+        `/streaming/hashtag?tag=${obj.tag}`,
+        (update) => {
+          event.sender.send('update-start-tag-streaming', update)
+        },
+        (err) => {
+          log.error(err)
+          event.sender.send('error-start-tag-streaming', err)
+        }
+      )
+    })
+})
+
+ipcMain.on('stop-list-streaming', (event, _) => {
+  listStreaming.stop()
+  listStreaming = null
+})
+
 // sounds
 ipcMain.on('fav-rt-action-sound', (event, _) => {
   const preferences = new Preferences(preferencesDBPath)
