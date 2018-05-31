@@ -16,7 +16,7 @@
       </div>
     </div>
     <el-menu
-      :default-active="$route.path"
+      :default-active="activeRoute"
       :background-color="themeColor"
       text-color="#909399"
       active-text-color="#ffffff"
@@ -48,7 +48,7 @@
         <icon name="globe"></icon>
         <span>Public timeline</span>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/hashtag/`">
+      <el-menu-item :index="`/${id()}/hashtag`">
         <icon name="hashtag"></icon>
         <span>Hashtag</span>
       </el-menu-item>
@@ -82,10 +82,14 @@ export default {
       unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications,
       unreadLocalTimeline: state => state.TimelineSpace.SideMenu.unreadLocalTimeline,
       lists: state => state.TimelineSpace.SideMenu.lists,
-      themeColor: state => state.App.theme.side_menu_color
+      themeColor: state => state.App.theme.side_menu_color,
+      overrideActivePath: state => state.TimelineSpace.SideMenu.overrideActivePath
     })
   },
   methods: {
+    activeRoute () {
+      return this.overrideActivePath || this.$route.path
+    },
     id () {
       return this.$route.params.id
     },

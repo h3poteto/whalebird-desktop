@@ -51,6 +51,7 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       this.reset()
+      this.$store.commit('TimelineSpace/SideMenu/updateOverrideActivePath', `${this.$route.params.id}/hashtag`)
       this.load(this.$route.params.tag)
         .then(() => {
           loading.close()
@@ -83,6 +84,7 @@ export default {
       return true
     },
     reset () {
+      this.$store.commit('TimelineSpace/SideMenu/updateOverrideActivePath', null)
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/archiveTimeline')
