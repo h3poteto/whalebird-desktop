@@ -16,7 +16,7 @@
       </div>
     </div>
     <el-menu
-      :default-active="activeRoute"
+      default-active="activeRoute"
       :background-color="themeColor"
       text-color="#909399"
       active-text-color="#ffffff"
