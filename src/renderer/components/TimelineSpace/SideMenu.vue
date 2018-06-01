@@ -16,7 +16,7 @@
       </div>
     </div>
     <el-menu
-      default-active="activeRoute"
+      :default-active="activeRoute()"
       :background-color="themeColor"
       text-color="#909399"
       active-text-color="#ffffff"
@@ -88,7 +88,11 @@ export default {
   },
   methods: {
     activeRoute () {
-      return this.overrideActivePath || this.$route.path
+      if (this.overrideActivePath === null) {
+        return this.$route.path
+      } else {
+        return this.overrideActivePath
+      }
     },
     id () {
       return this.$route.params.id

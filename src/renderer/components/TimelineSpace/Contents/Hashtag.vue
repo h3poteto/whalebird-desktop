@@ -42,7 +42,7 @@ export default {
       return this.$route.name === 'tag'
     },
     back () {
-      this.$router.push({ name: 'hashtag-list' })
+      this.$router.push({ path: `/${this.id()}/hashtag` })
     }
   }
 }
