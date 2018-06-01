@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron'
 import List from './Hashtag/List'
 import Tag from './Hashtag/Tag'
 
@@ -6,6 +7,11 @@ const Hashtag = {
   modules: {
     List,
     Tag
+  },
+  actions: {
+    saveTag (_, tag) {
+      ipcRenderer.send('save-hashtag', tag)
+    }
   }
 }
 
