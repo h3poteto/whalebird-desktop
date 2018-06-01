@@ -51,7 +51,6 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       this.reset()
-      this.$store.commit('TimelineSpace/SideMenu/updateOverrideActivePath', `${this.$route.params.id}/hashtag`)
       this.load(this.$route.params.tag)
         .then(() => {
           loading.close()
@@ -67,6 +66,8 @@ export default {
   },
   methods: {
     async load (tag) {
+      this.$store.commit('TimelineSpace/SideMenu/updateOverrideActivePath', `/${this.$route.params.id}/hashtag`)
+
       await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag)
         .catch(() => {
           this.$message({
