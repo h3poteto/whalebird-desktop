@@ -31,6 +31,13 @@ export default {
       tag: ''
     }
   },
+  watch: {
+    '$route': function (route) {
+      if (route.name === 'tag') {
+        this.tag = route.params.tag
+      }
+    }
+  },
   methods: {
     id () {
       return this.$route.params.id
