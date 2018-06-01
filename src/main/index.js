@@ -8,12 +8,13 @@ import windowStateKeeper from 'electron-window-state'
 import simplayer from 'simplayer'
 import path from 'path'
 import openAboutWindow from 'about-window'
+import ContextMenu from 'electron-context-menu'
 
 import Authentication from './auth'
 import Account from './account'
 import Streaming from './streaming'
 import Preferences from './preferences'
-import ContextMenu from 'electron-context-menu'
+import Hashtags from './hashtags'
 
 /**
  * Context menu
@@ -48,6 +49,14 @@ let accountDB = new Datastore({
   filename: accountDBPath,
   autoload: true
 })
+const hashtagsDBPath = process.env.NODE_ENV === 'production'
+  ? userData + '/db/hashtags.db'
+  : 'hashtags.db'
+let hashtagsDB = new Datastore({
+  filename: hashtagsDBPath,
+  autoload: true
+})
+
 const preferencesDBPath = process.env.NODE_ENV === 'production'
   ? userData + './db/preferences.json'
   : 'preferences.json'
@@ -605,6 +614,15 @@ ipcMain.on('save-preferences', (event, data) => {
     })
     .catch((err) => {
       event.sender.send('error-save-preferences', err)
+    })
+})
+
+// hashtag
+ipcMain.on('save-hashtag', (event, tag) => {
+  const hashtags = new Hashtags(hashtagsDB)
+  hashtags.insertTag(tag)
+    .catch((err) => {
+      log.error(err)
     })
 })
 

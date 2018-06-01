@@ -12,7 +12,7 @@
           <input v-model="tag" placeholder="Tag name" class="search-keyword" v-shortkey="['enter']" @shortkey="search" autofocus></input>
         </div>
         <div class="form-item" v-show="tagPage()">
-          <el-button type="text">
+          <el-button type="text" @click="save">
             <icon name="thumbtack"></icon>
           </el-button>
         </div>
@@ -43,6 +43,9 @@ export default {
     },
     back () {
       this.$router.push({ path: `/${this.id()}/hashtag` })
+    },
+    save () {
+      this.$store.dispatch('TimelineSpace/Contents/Hashtag/saveTag', this.tag)
     }
   }
 }
