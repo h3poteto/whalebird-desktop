@@ -626,6 +626,17 @@ ipcMain.on('save-hashtag', (event, tag) => {
     })
 })
 
+ipcMain.on('list-hashtags', (event, _) => {
+  const hashtags = new Hashtags(hashtagsDB)
+  hashtags.listTags()
+    .then((tags) => {
+      event.sender.send('response-list-hashtags', tags)
+    })
+    .catch((err) => {
+      event.sender.send('error-list-hashtags', err)
+    })
+})
+
 /**
  * Auto Updater
  *
