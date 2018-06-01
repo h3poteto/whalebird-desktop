@@ -39,7 +39,7 @@ export default new Router({
       children: [
         {
           path: ':id/',
-          name: 'timeline-space/',
+          name: 'timeline-space',
           component: require('@/components/TimelineSpace').default,
           children: [
             {
@@ -66,6 +66,23 @@ export default new Router({
               path: 'public',
               name: 'public',
               component: require('@/components/TimelineSpace/Contents/Public').default
+            },
+            {
+              path: 'hashtag/',
+              component: require('@/components/TimelineSpace/Contents/Hashtag').default,
+              children: [
+                {
+                  path: '',
+                  name: 'hashtag-list',
+                  component: require('@/components/TimelineSpace/Contents/Hashtag/List').default
+                },
+                {
+                  path: ':tag',
+                  name: 'tag',
+                  component: require('@/components/TimelineSpace/Contents/Hashtag/Tag').default,
+                  props: true
+                }
+              ]
             },
             {
               path: 'search',
