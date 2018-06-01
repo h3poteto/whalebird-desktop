@@ -49,7 +49,7 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Hashtag')
           break
         case 'tag':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$route.params.tag)
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', `#${this.$route.params.tag}`)
           break
         case 'search':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Search')

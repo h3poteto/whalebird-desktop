@@ -69,7 +69,6 @@ export default new Router({
             },
             {
               path: 'hashtag/',
-              name: 'hashtag',
               component: require('@/components/TimelineSpace/Contents/Hashtag').default,
               children: [
                 {

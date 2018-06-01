@@ -515,8 +515,10 @@ ipcMain.on('start-list-streaming', (event, obj) => {
 })
 
 ipcMain.on('stop-list-streaming', (event, _) => {
-  listStreaming.stop()
-  listStreaming = null
+  if (listStreaming !== null) {
+    listStreaming.stop()
+    listStreaming = null
+  }
 })
 
 let tagStreaming = null
@@ -549,9 +551,9 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
     })
 })
 
-ipcMain.on('stop-list-streaming', (event, _) => {
-  listStreaming.stop()
-  listStreaming = null
+ipcMain.on('stop-tag-streaming', (event, _) => {
+  tagStreaming.stop()
+  tagStreaming = null
 })
 
 // sounds
