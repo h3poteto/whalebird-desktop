@@ -21,4 +21,19 @@ export default class Hashtags {
       })
     })
   }
+
+  removeTag (tag) {
+    return new Promise((resolve, reject) => {
+      this.db.remove(
+        {
+          tagName: tag.tagName
+        },
+        { multi: true },
+        (err, numRemoved) => {
+          if (err) return reject(err)
+          resolve(numRemoved)
+        }
+      )
+    })
+  }
 }
