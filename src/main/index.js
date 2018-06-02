@@ -637,6 +637,17 @@ ipcMain.on('list-hashtags', (event, _) => {
     })
 })
 
+ipcMain.on('remove-hashtag', (event, tag) => {
+  const hashtags = new Hashtags(hashtagsDB)
+  hashtags.removeTag(tag)
+    .then(() => {
+      event.sender.send('response-remove-hashtag')
+    })
+    .catch((err) => {
+      event.sender.send('error-remove-hashtag', err)
+    })
+})
+
 /**
  * Auto Updater
  *
