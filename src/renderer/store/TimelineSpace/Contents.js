@@ -7,6 +7,7 @@ import Public from './Contents/Public'
 import Search from './Contents/Search'
 import Lists from './Contents/Lists'
 import Cards from './Contents/Cards'
+import Hashtag from './Contents/Hashtag'
 
 const Contents = {
   namespaced: true,
@@ -19,7 +20,8 @@ const Contents = {
     Public,
     Search,
     Lists,
-    Cards
+    Cards,
+    Hashtag
   }
 }
 

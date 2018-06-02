@@ -8,12 +8,13 @@ import windowStateKeeper from 'electron-window-state'
 import simplayer from 'simplayer'
 import path from 'path'
 import openAboutWindow from 'about-window'
+import ContextMenu from 'electron-context-menu'
 
 import Authentication from './auth'
 import Account from './account'
 import Streaming from './streaming'
 import Preferences from './preferences'
-import ContextMenu from 'electron-context-menu'
+import Hashtags from './hashtags'
 
 /**
  * Context menu
@@ -48,6 +49,14 @@ let accountDB = new Datastore({
   filename: accountDBPath,
   autoload: true
 })
+const hashtagsDBPath = process.env.NODE_ENV === 'production'
+  ? userData + '/db/hashtags.db'
+  : 'hashtags.db'
+let hashtagsDB = new Datastore({
+  filename: hashtagsDBPath,
+  autoload: true
+})
+
 const preferencesDBPath = process.env.NODE_ENV === 'production'
   ? userData + './db/preferences.json'
   : 'preferences.json'
@@ -514,6 +523,48 @@ ipcMain.on('start-list-streaming', (event, obj) => {
     })
 })
 
+ipcMain.on('stop-list-streaming', (event, _) => {
+  if (listStreaming !== null) {
+    listStreaming.stop()
+    listStreaming = null
+  }
+})
+
+let tagStreaming = null
+
+ipcMain.on('start-tag-streaming', (event, obj) => {
+  const account = new Account(accountDB)
+  account.getAccount(obj.account._id)
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-tag-streaming', err)
+    })
+    .then((account) => {
+      // Stop old tag streaming
+      if (tagStreaming !== null) {
+        tagStreaming.stop()
+        tagStreaming = null
+      }
+
+      tagStreaming = new Streaming(account)
+      tagStreaming.start(
+        `/streaming/hashtag?tag=${obj.tag}`,
+        (update) => {
+          event.sender.send('update-start-tag-streaming', update)
+        },
+        (err) => {
+          log.error(err)
+          event.sender.send('error-start-tag-streaming', err)
+        }
+      )
+    })
+})
+
+ipcMain.on('stop-tag-streaming', (event, _) => {
+  tagStreaming.stop()
+  tagStreaming = null
+})
+
 // sounds
 ipcMain.on('fav-rt-action-sound', (event, _) => {
   const preferences = new Preferences(preferencesDBPath)
@@ -563,6 +614,37 @@ ipcMain.on('save-preferences', (event, data) => {
     })
     .catch((err) => {
       event.sender.send('error-save-preferences', err)
+    })
+})
+
+// hashtag
+ipcMain.on('save-hashtag', (event, tag) => {
+  const hashtags = new Hashtags(hashtagsDB)
+  hashtags.insertTag(tag)
+    .catch((err) => {
+      log.error(err)
+    })
+})
+
+ipcMain.on('list-hashtags', (event, _) => {
+  const hashtags = new Hashtags(hashtagsDB)
+  hashtags.listTags()
+    .then((tags) => {
+      event.sender.send('response-list-hashtags', tags)
+    })
+    .catch((err) => {
+      event.sender.send('error-list-hashtags', err)
+    })
+})
+
+ipcMain.on('remove-hashtag', (event, tag) => {
+  const hashtags = new Hashtags(hashtagsDB)
+  hashtags.removeTag(tag)
+    .then(() => {
+      event.sender.send('response-remove-hashtag')
+    })
+    .catch((err) => {
+      event.sender.send('error-remove-hashtag', err)
     })
 })
 

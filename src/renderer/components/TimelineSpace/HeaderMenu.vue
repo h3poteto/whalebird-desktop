@@ -45,6 +45,12 @@ export default {
         case 'public':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Public timeline')
           break
+        case 'hashtag-list':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Hashtag')
+          break
+        case 'tag':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', `#${this.$route.params.tag}`)
+          break
         case 'search':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Search')
           break
@@ -52,6 +58,7 @@ export default {
           this.$store.dispatch('TimelineSpace/HeaderMenu/fetchList', this.$route.params.list_id)
           break
         default:
+          console.log(this.$route)
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Home')
           break
       }
