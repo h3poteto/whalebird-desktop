@@ -155,9 +155,14 @@ export default {
       return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
     },
     tootClick (e) {
+      if (isTag(e.target)) {
+        const tag = `/${this.$route.params.id}/hashtag/${e.target.innerText}`
+        this.$router.push({ path: tag })
+        return tag
+      }
       const link = findLink(e.target)
       if (link !== null) {
-        shell.openExternal(link)
+        return shell.openExternal(link)
       }
     },
     openReply (message) {
@@ -305,6 +310,19 @@ function findLink (target) {
     return null
   }
   return findLink(target.parentNode)
+}
+
+function isTag (target) {
+  if (target.getAttribute('class') && target.getAttribute('class').includes('hashtag')) {
+    return true
+  }
+  if (target.parentNode === undefined || target.parentNode === null) {
+    return false
+  }
+  if (target.parentNode.getAttribute('class') === 'toot') {
+    return false
+  }
+  return isTag(target.parentNode)
 }
 </script>
 
