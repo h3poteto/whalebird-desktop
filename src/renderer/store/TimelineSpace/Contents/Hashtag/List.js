@@ -24,6 +24,20 @@ const List = {
         })
         ipcRenderer.send('list-hashtags')
       })
+    },
+    removeTag ({ dispatch }, tag) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.once('response-remove-hashtag', (event, _) => {
+          ipcRenderer.removeAllListeners('error-remove-hashtag')
+          dispatch('listTags')
+          resolve('deleted')
+        })
+        ipcRenderer.once('error-remove-hashtag', (event, err) => {
+          ipcRenderer.removeAllListeners('response-remove-hashtag')
+          reject(err)
+        })
+        ipcRenderer.send('remove-hashtag', tag)
+      })
     }
   }
 }
