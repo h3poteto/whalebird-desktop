@@ -31,6 +31,11 @@ export default {
       tag: ''
     }
   },
+  mounted () {
+    if (this.$route.name === 'tag') {
+      this.tag = this.$route.params.tag
+    }
+  },
   watch: {
     '$route': function (route) {
       if (route.name === 'tag') {
