@@ -100,6 +100,7 @@
 import moment from 'moment'
 import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
+import { findLink, isTag } from '../../../utils/link'
 
 export default {
   name: 'toot',
@@ -155,9 +156,14 @@ export default {
       return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
     },
     tootClick (e) {
+      if (isTag(e.target)) {
+        const tag = `/${this.$route.params.id}/hashtag/${e.target.innerText}`
+        this.$router.push({ path: tag })
+        return tag
+      }
       const link = findLink(e.target)
       if (link !== null) {
-        shell.openExternal(link)
+        return shell.openExternal(link)
       }
     },
     openReply (message) {
@@ -292,19 +298,6 @@ export default {
       return !this.sensitive(message) || this.showAttachments
     }
   }
-}
-
-function findLink (target) {
-  if (target.localName === 'a') {
-    return target.href
-  }
-  if (target.parentNode === undefined || target.parentNode === null) {
-    return null
-  }
-  if (target.parentNode.getAttribute('class') === 'toot') {
-    return null
-  }
-  return findLink(target.parentNode)
 }
 </script>
 
