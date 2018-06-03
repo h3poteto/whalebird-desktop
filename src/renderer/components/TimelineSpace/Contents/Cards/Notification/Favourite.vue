@@ -36,6 +36,7 @@
 <script>
 import moment from 'moment'
 import { shell } from 'electron'
+import { findLink, isTag } from '../../../../utils/link'
 
 export default {
   name: 'favourite',
@@ -52,9 +53,14 @@ export default {
       return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
     },
     tootClick (e) {
+      if (isTag(e.target)) {
+        const tag = `/${this.$route.params.id}/hashtag/${e.target.innerText}`
+        this.$router.push({ path: tag })
+        return tag
+      }
       const link = findLink(e.target)
       if (link !== null) {
-        shell.openExternal(link)
+        return shell.openExternal(link)
       }
     },
     openUser (account) {
@@ -63,19 +69,6 @@ export default {
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     }
   }
-}
-
-function findLink (target) {
-  if (target.localName === 'a') {
-    return target.href
-  }
-  if (target.parentNode === undefined || target.parentNode === null) {
-    return null
-  }
-  if (target.parentNode.getAttribute('class') === 'favourite') {
-    return null
-  }
-  return findLink(target.parentNode)
 }
 </script>
 
