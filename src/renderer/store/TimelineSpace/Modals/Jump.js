@@ -25,6 +25,14 @@ const Jump = {
       {
         name: 'Public timeline',
         path: 'public'
+      },
+      {
+        name: 'Hashtag',
+        path: 'hashtag'
+      },
+      {
+        name: 'Search',
+        path: 'search'
       }
     ],
     listChannelList: [],
