@@ -137,9 +137,10 @@ export default {
     position: fixed;
     top: 70px;
     left: 65px;
-    height: 100%;
+    height: calc(100% - 70px);
     width: 180px;
     border: none;
+    overflow-y: auto;
 
     .el-badge__content {
       background-color: #409eff;
