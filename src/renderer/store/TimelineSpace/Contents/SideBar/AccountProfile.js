@@ -27,6 +27,21 @@ const AccountProfile = {
     }
   },
   actions: {
+    searchAccount ({ commit, rootState }, accountURL) {
+      return new Promise((resolve, reject) => {
+        const client = new Mastodon(
+          {
+            access_token: rootState.TimelineSpace.account.accessToken,
+            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
+          }
+        )
+        client.get('/search', { q: accountURL }, (err, data, res) => {
+          if (err) return reject(err)
+          if (data.accounts.length <= 0) return reject(new AccountNotFound('not found'))
+          resolve(data.accounts[0])
+        })
+      })
+    },
     changeAccount ({ commit, dispatch }, account) {
       dispatch('fetchRelationship', account)
       commit('changeAccount', account)
@@ -81,6 +96,12 @@ const AccountProfile = {
     close ({ commit }) {
       commit('changeAccount', null)
     }
+  }
+}
+
+class AccountNotFound {
+  constructor (msg) {
+    this.msg = msg
   }
 }
 

@@ -8,6 +8,14 @@
     <div id="sidebar_scrollable">
       <account-profile v-if="component === 1" v-on:change-loading="changeLoading"></account-profile>
       <toot-detail v-if="component === 2"></toot-detail>
+      <div
+        class="loading"
+        v-loading="true"
+        element-loading-text="Loading..."
+        element-loading-spinner="el-icon-loading"
+        :element-loading-background="backgroundColor"
+        v-else>
+      </div>
     </div>
   </div>
 </transition>
@@ -32,7 +40,8 @@ export default {
   computed: {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
-      component: state => state.TimelineSpace.Contents.SideBar.component
+      component: state => state.TimelineSpace.Contents.SideBar.component,
+      backgroundColor: state => state.App.theme.background_color
     })
   },
   beforeDestroy () {
@@ -75,6 +84,10 @@ export default {
   #sidebar_scrollable {
     overflow: auto;
     height: calc(100% - 30px);
+  }
+
+  .loading {
+    height: 100%;
   }
 }
 
