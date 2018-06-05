@@ -23,3 +23,16 @@ export function isTag (target) {
   }
   return isTag(target.parentNode)
 }
+
+export function findAccount (target) {
+  if (target.getAttribute('class') && target.getAttribute('class').includes('u-url')) {
+    return target.href
+  }
+  if (target.parentNode === undefined || target.parentNode === null) {
+    return null
+  }
+  if (target.parentNode.getAttribute('class') === 'toot') {
+    return null
+  }
+  return findAccount(target.parentNode)
+}
