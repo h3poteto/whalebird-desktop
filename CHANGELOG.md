@@ -2,7 +2,21 @@
 
 ## [Unreleased]
 ### Added
+- [#372](https://github.com/h3poteto/whalebird-desktop/pull/372) Add shortcut key to jump
+
+### Fixed
+- [#371](https://github.com/h3poteto/whalebird-desktop/pull/371) Add hashtag and search page in jump list
+- [#369](https://github.com/h3poteto/whalebird-desktop/pull/369) Enable scroll in side menu
+
+## [1.3.0] - 2018-06-04
+### Added
+- [#362](https://github.com/h3poteto/whalebird-desktop/pull/362) Remove registered hashtag
+- [#359](https://github.com/h3poteto/whalebird-desktop/pull/359) Add hashtag page and show tag timeline
+- [#354](https://github.com/h3poteto/whalebird-desktop/pull/354) Set context menu
 - [#349](https://github.com/h3poteto/whalebird-desktop/pull/349) Add toot button on header menu
+
+### Changed
+- [#364](https://github.com/h3poteto/whalebird-desktop/pull/364) Open tag timeline page when click tag in toot
 
 ### Fixed
 - [#348](https://github.com/h3poteto/whalebird-desktop/pull/348) Add a space after username in reply
