@@ -128,10 +128,14 @@ const TimelineSpace = {
       ipcRenderer.on('CmdOrCtrl+K', () => {
         commit('TimelineSpace/Modals/Jump/changeModal', true, { root: true })
       })
+      ipcRenderer.on('CmdOrCtrl+T', () => {
+        commit('TimelineSpace/Modals/Jump/changeModal', true, { root: true })
+      })
     },
     async removeShortcutEvents () {
       ipcRenderer.removeAllListeners('CmdOrCtrl+N')
       ipcRenderer.removeAllListeners('CmdOrCtrl+K')
+      ipcRenderer.removeAllListeners('CmdOrCtrl+T')
       return 'removeShortcutEvents'
     },
     async clearAccount ({ commit }) {
