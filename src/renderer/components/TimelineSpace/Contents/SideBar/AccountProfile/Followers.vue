@@ -31,7 +31,7 @@ export default {
     load () {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchFollowers', this.account)
         .catch(() => {
-          this.message({
+          this.$message({
             message: 'Could not get followers',
             type: 'error'
           })
