@@ -99,6 +99,7 @@
     "mastodon-api": "github:h3poteto/mastodon-api#lib",
     "moment": "^2.21.0",
     "mousetrap": "^1.6.2",
+    "mstdn-api": "^0.1.2",
     "nedb": "^1.8.0",
     "object-assign-deep": "^0.4.0",
     "rc": "^1.2.7",
