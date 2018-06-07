@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, ipcMain, BrowserWindow, shell, Menu, globalShortcut } from 'electron'
+import { app, ipcMain, BrowserWindow, shell, Menu } from 'electron'
 import Datastore from 'nedb'
 import empty from 'is-empty'
 import log from 'electron-log'
@@ -237,10 +237,6 @@ function createWindow () {
 
       mainWindow.on('closed', () => {
         mainWindow = null
-      })
-
-      globalShortcut.register('CommandOrControl+T', () => {
-        mainWindow.webContents.send('CmdOrCtrl+T')
       })
     })
 }
