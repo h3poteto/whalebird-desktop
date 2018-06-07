@@ -16,6 +16,7 @@ import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Contents from './TimelineSpace/Contents'
 import Modals from './TimelineSpace/Modals'
+import Mousetrap from 'mousetrap'
 
 export default {
   name: 'timeline-space',
@@ -36,6 +37,11 @@ export default {
         loading.close()
         this.$store.commit('GlobalHeader/updateChanging', false)
       })
+  },
+  mounted () {
+    Mousetrap.bind(['command+t', 'ctrl+t'], () => {
+      this.$store.commit('TimelineSpace/Modals/Jump/changeModal', true)
+    })
   },
   beforeDestroy () {
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
