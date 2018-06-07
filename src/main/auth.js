@@ -1,8 +1,8 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'mstdn-api'
 
 const appName = 'Whalebird'
 const appURL = 'https://whalebird.org'
-const scope = 'read write follow'
+const scope = [Mastodon.Scope.READ, Mastodon.Scope.WRITE, Mastodon.Scope.FOLLOW]
 
 export default class Authentication {
   constructor (accountDB) {
@@ -23,15 +23,17 @@ export default class Authentication {
 
   async getAuthorizationUrl (domain = 'mastodon.social') {
     this.setOtherInstance(domain)
-    const res = await Mastodon.createOAuthApp(
-      this.baseURL + '/api/v1/apps',
+    const appData = await Mastodon.registerApp(
       appName,
-      scope,
-      'urn:ietf:wg:oauth:2.0:oob',
-      appURL
+      {
+        scopes: scope,
+        redirect_urls: 'urn:ietf:wg:oauth:2.0:oob',
+        website: appURL
+      },
+      this.baseUrl
     )
-    this.clientId = res.client_id
-    this.clientSecret = res.client_secret
+    this.clientId = appData.clientId
+    this.clientSecret = appData.clientSecret
 
     const count = await this.db.countAuthorizedAccounts()
     const json = {
@@ -46,12 +48,11 @@ export default class Authentication {
       order: count + 1
     }
     await this.db.insertAccount(json)
-    const url = await Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL)
-    return url
+    return appData.url
   }
 
   async getAccessToken (code) {
-    const token = await Mastodon.getAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
+    const tokenData = await Mastodon.fetchAccessToken(this.clientId, this.clientSecret, code, 'urn:ietf:wg:oauth:2.0:oob', this.baseURL)
     const search = {
       baseURL: this.baseURL,
       domain: this.domain,
@@ -59,8 +60,8 @@ export default class Authentication {
       clientSecret: this.clientSecret
     }
     const rec = await this.db.searchAccount(search)
-    await this.db.updateAccount(rec._id, { accessToken: token })
-    return token
+    await this.db.updateAccount(rec._id, { accessToken: tokenData.accessToken })
+    return tokenData.accessToken
   }
   // TODO: Refresh access token when expired
 }
