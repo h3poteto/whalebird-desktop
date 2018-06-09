@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const appName = 'Whalebird'
 const appURL = 'https://whalebird.org'
@@ -23,15 +23,15 @@ export default class Authentication {
 
   async getAuthorizationUrl (domain = 'mastodon.social') {
     this.setOtherInstance(domain)
-    const res = await Mastodon.createOAuthApp(
-      this.baseURL + '/api/v1/apps',
-      appName,
-      scope,
-      'urn:ietf:wg:oauth:2.0:oob',
-      appURL
+    const res = await Mastodon.registerApp(
+      appName, {
+        scopes: scope,
+        website: appURL
+      },
+      this.baseURL
     )
-    this.clientId = res.client_id
-    this.clientSecret = res.client_secret
+    this.clientId = res.clientId
+    this.clientSecret = res.clientSecret
 
     const count = await this.db.countAuthorizedAccounts()
     const json = {
@@ -46,12 +46,11 @@ export default class Authentication {
       order: count + 1
     }
     await this.db.insertAccount(json)
-    const url = await Mastodon.getAuthorizationUrl(this.clientId, this.clientSecret, this.baseURL)
-    return url
+    return res.url
   }
 
   async getAccessToken (code) {
-    const token = await Mastodon.getAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
+    const token = await Mastodon.fetchAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
     const search = {
       baseURL: this.baseURL,
       domain: this.domain,
@@ -59,8 +58,9 @@ export default class Authentication {
       clientSecret: this.clientSecret
     }
     const rec = await this.db.searchAccount(search)
-    await this.db.updateAccount(rec._id, { accessToken: token })
-    return token
+    const accessToken = token.access_token
+    await this.db.updateAccount(rec._id, { accessToken: accessToken })
+    return accessToken
   }
   // TODO: Refresh access token when expired
 }

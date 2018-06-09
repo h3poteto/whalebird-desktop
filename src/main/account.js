@@ -1,5 +1,5 @@
 import empty from 'is-empty'
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 export default class Account {
   constructor (db) {
@@ -167,21 +167,23 @@ export default class Account {
   refresh (account) {
     return new Promise((resolve, reject) => {
       const client = new Mastodon(
-        {
-          access_token: account.accessToken,
-          api_url: account.baseURL + '/api/v1'
-        }
+        account.accessToken,
+        account.baseURL + '/api/v1'
       )
-      client.get('/accounts/verify_credentials', (err, data, res) => {
-        if (err) return reject(err)
-        const json = {
-          username: data.username,
-          accountId: data.id,
-          avatar: data.avatar
-        }
-        this.updateAccount(account._id, json)
-          .then(ac => resolve(ac))
-      })
+      client.get('/accounts/verify_credentials')
+        .then(data => {
+          console.log(data)
+          const json = {
+            username: data.username,
+            accountId: data.id,
+            avatar: data.avatar
+          }
+          this.updateAccount(account._id, json)
+            .then(ac => resolve(ac))
+        })
+        .catch(err => {
+          return reject(err)
+        })
     })
   }
 }
