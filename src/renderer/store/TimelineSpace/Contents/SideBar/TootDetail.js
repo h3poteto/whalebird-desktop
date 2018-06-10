@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const TootDetail = {
   namespaced: true,
@@ -92,19 +92,16 @@ const TootDetail = {
       commit('changeToot', message)
     },
     fetchToot ({ state, commit, rootState }, message) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.get(`/statuses/${message.id}/context`, { limit: 40 }, (err, data, res) => {
-          if (err) return reject(err)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get(`/statuses/${message.id}/context`, { limit: 40 })
+        .then(data => {
           commit('updateAncestors', data.ancestors)
           commit('updateDescendants', data.descendants)
-          resolve(res)
+          return data
         })
-      })
     }
   }
 }

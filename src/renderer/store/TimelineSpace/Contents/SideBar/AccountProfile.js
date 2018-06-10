@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 import Timeline from './AccountProfile/Timeline'
 import Follows from './AccountProfile/Follows'
 import Followers from './AccountProfile/Followers'
@@ -28,70 +28,65 @@ const AccountProfile = {
   },
   actions: {
     searchAccount ({ commit, rootState }, accountURL) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          }
-        )
-        client.get('/search', { q: accountURL }, (err, data, res) => {
-          if (err) return reject(err)
-          if (data.accounts.length <= 0) return reject(new AccountNotFound('not found'))
-          resolve(data.accounts[0])
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get('/search', { q: accountURL })
+        .then(data => {
+          if (data.accounts.length <= 0) throw new AccountNotFound('not found')
+          return data.accounts[0]
         })
-      })
     },
     changeAccount ({ commit, dispatch }, account) {
       dispatch('fetchRelationship', account)
       commit('changeAccount', account)
     },
     fetchRelationship ({ state, commit, rootState }, account) {
-      return new Promise((resolve, reject) => {
-        commit('changeRelationship', null)
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.get('/accounts/relationships', { id: [account.id] }, (err, data, res) => {
-          if (err) return reject(err)
+      commit('changeRelationship', null)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get('/accounts/relationships', { id: [account.id] })
+        .then(data => {
           commit('changeRelationship', data[0])
-          resolve(res)
+          return data
         })
-      })
     },
     follow ({ state, commit, rootState }, account) {
-      return new Promise((resolve, reject) => {
-        commit('changeLoading', true)
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.post(`/accounts/${account.id}/follow`, {}, (err, data, res) => {
+      commit('changeLoading', true)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post(`/accounts/${account.id}/follow`)
+        .then(data => {
           commit('changeLoading', false)
-          if (err) return reject(err)
           commit('changeRelationship', data)
-          resolve(res)
+          return data
         })
-      })
+        .catch(err => {
+          commit('changeLoading', false)
+          throw err
+        })
     },
     unfollow ({ state, commit, rootState }, account) {
-      return new Promise((resolve, reject) => {
-        commit('changeLoading', true)
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.post(`/accounts/${account.id}/unfollow`, {}, (err, data, res) => {
+      commit('changeLoading', true)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post(`/accounts/${account.id}/unfollow`)
+        .then(data => {
           commit('changeLoading', false)
-          if (err) return reject(err)
           commit('changeRelationship', data)
-          resolve(res)
+          return data
         })
-      })
+        .catch(err => {
+          commit('changeLoading', false)
+          throw err
+        })
     },
     close ({ commit }) {
       commit('changeAccount', null)
