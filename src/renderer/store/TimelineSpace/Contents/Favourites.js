@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const Favourites = {
   namespaced: true,
@@ -44,44 +44,41 @@ const Favourites = {
   },
   actions: {
     fetchFavourites ({ commit }, account) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: account.accessToken,
-            api_url: account.baseURL + '/api/v1'
-          }
-        )
-        client.get('/favourites', { limit: 40 }, (err, data, res) => {
-          if (err) return reject(err)
+      const client = new Mastodon(
+        account.accessToken,
+        account.baseURL + '/api/v1'
+      )
+      return client.get('/favourites', { limit: 40 })
+        .then(data => {
           commit('updateFavourites', data)
-          resolve(res)
+          return data
         })
-      })
     },
     lazyFetchFavourites ({ state, commit, rootState }, last) {
       if (last === undefined || last === null) {
-        return null
+        return Promise.resolve(null)
       }
-      return new Promise((resolve, reject) => {
-        if (state.lazyLoading) {
-          return resolve()
-        }
-        commit('changeLazyLoading', true)
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        // Note: Now this API's explanation and implementation are reversed.
-        // So if the bug has resolved, please use max_id instead of since_id.
-        // https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#favourites
-        client.get('/favourites', { since_id: last.id, limit: 40 }, (err, data, res) => {
-          if (err) return reject(err)
-          commit('insertFavourites', data)
+      if (state.lazyLoading) {
+        return Promise.resolve(null)
+      }
+      commit('changeLazyLoading', true)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      // Note: Now this API's explanation and implementation are reversed.
+      // So if the bug has resolved, please use max_id instead of since_id.
+      // https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#favourites
+      return client.get('/favourites', { since_id: last.id, limit: 40 })
+        .then(data => {
           commit('changeLazyLoading', false)
-          resolve(res)
+          commit('insertFavourites', data)
+          return data
         })
-      })
+        .catch(err => {
+          commit('changeLazyLoading', false)
+          throw err
+        })
     }
   }
 }

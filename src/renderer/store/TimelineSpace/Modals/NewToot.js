@@ -1,6 +1,5 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 import { ipcRenderer } from 'electron'
-import fs from 'fs'
 
 const NewToot = {
   namespaced: true,
@@ -48,22 +47,18 @@ const NewToot = {
   },
   actions: {
     postToot ({ state, commit, rootState }, form) {
-      return new Promise((resolve, reject) => {
-        if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
-          return reject(new AuthenticationError())
-        }
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          }
-        )
-        client.post('/statuses', form, (err, data, res) => {
-          if (err) return reject(err)
+      if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
+        throw new AuthenticationError()
+      }
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post('/statuses', form)
+        .then(data => {
           ipcRenderer.send('toot-action-sound')
-          resolve(res)
+          return data
         })
-      })
     },
     openReply ({ commit, rootState }, message) {
       commit('setReplyTo', message)
@@ -85,25 +80,28 @@ const NewToot = {
       }
     },
     uploadImage ({ state, commit, rootState }, image) {
-      return new Promise((resolve, reject) => {
-        commit('changeBlockSubmit', true)
-        if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
-          return reject(new AuthenticationError())
-        }
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          }
-        )
-        client.post('/media', { file: fs.createReadStream(image.path) }, (err, data, res) => {
+      commit('changeBlockSubmit', true)
+      if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
+        throw new AuthenticationError()
+      }
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      const formData = new FormData()
+      formData.append('file', image)
+      return client.post('/media', formData)
+        .then(data => {
           commit('changeBlockSubmit', false)
-          if (err) return reject(err)
-          if (data.type !== 'image') reject(new UnknownTypeError())
+          if (data.type !== 'image') throw new UnknownTypeError()
           commit('appendAttachedMedias', data)
-          resolve(res)
+          return data
         })
-      })
+        .catch(err => {
+          commit('changeBlockSubmit', false)
+          console.error(err)
+          throw err
+        })
     }
   }
 }

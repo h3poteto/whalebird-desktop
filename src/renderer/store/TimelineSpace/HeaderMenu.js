@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const HeaderMenu = {
   namespaced: true,
@@ -12,19 +12,15 @@ const HeaderMenu = {
   },
   actions: {
     fetchList ({ state, commit, rootState }, listID) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          }
-        )
-        client.get(`/lists/${listID}`, {}, (err, data, res) => {
-          if (err) return reject(err)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get(`/lists/${listID}`)
+        .then(data => {
           commit('updateTitle', `#${data.title}`)
-          resolve(res)
+          return data
         })
-      })
     }
   }
 }
