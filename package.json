@@ -96,7 +96,6 @@
     "hawk": "^7.0.7",
     "hoek": "^5.0.3",
     "is-empty": "^1.2.0",
-    "mastodon-api": "github:h3poteto/mastodon-api#lib",
     "megalodon": "^0.1.0",
     "moment": "^2.21.0",
     "mousetrap": "^1.6.2",

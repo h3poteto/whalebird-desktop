@@ -165,26 +165,19 @@ export default class Account {
   }
 
   refresh (account) {
-    return new Promise((resolve, reject) => {
-      const client = new Mastodon(
-        account.accessToken,
-        account.baseURL + '/api/v1'
-      )
-      client.get('/accounts/verify_credentials')
-        .then(data => {
-          console.log(data)
-          const json = {
-            username: data.username,
-            accountId: data.id,
-            avatar: data.avatar
-          }
-          this.updateAccount(account._id, json)
-            .then(ac => resolve(ac))
-        })
-        .catch(err => {
-          return reject(err)
-        })
-    })
+    const client = new Mastodon(
+      account.accessToken,
+      account.baseURL + '/api/v1'
+    )
+    return client.get('/accounts/verify_credentials')
+      .then(data => {
+        const json = {
+          username: data.username,
+          accountId: data.id,
+          avatar: data.avatar
+        }
+        return this.updateAccount(account._id, json)
+      })
   }
 }
 

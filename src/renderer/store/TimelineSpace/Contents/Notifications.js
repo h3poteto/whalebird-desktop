@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const Notifications = {
   namespaced: true,
@@ -55,40 +55,38 @@ const Notifications = {
   },
   actions: {
     fetchNotifications ({ commit }, account) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: account.accessToken,
-            api_url: account.baseURL + '/api/v1'
-          }
-        )
-        client.get('/notifications', { limit: 30 }, (err, data, res) => {
-          if (err) return reject(err)
+      const client = new Mastodon(
+        account.accessToken,
+        account.baseURL + '/api/v1'
+      )
+      return client.get('/notifications', { limit: 30 })
+        .then(data => {
           commit('updateNotifications', data)
-          resolve(res)
+          return data
         })
-      })
     },
     lazyFetchNotifications ({ state, commit, rootState }, last) {
       if (last === undefined || last === null) {
-        return null
+        return Promise.resolve(null)
       }
-      return new Promise((resolve, reject) => {
-        if (state.lazyLoading) {
-          return resolve()
-        }
-        commit('changeLazyLoading', true)
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.get('/notifications', { max_id: last.id, limit: 30 }, (err, data, res) => {
-          if (err) return reject(err)
-          commit('insertNotifications', data)
+      if (state.lazyLoading) {
+        return Promise.resolve(null)
+      }
+      commit('changeLazyLoading', true)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get('/notifications', { max_id: last.id, limit: 30 })
+        .then(data => {
           commit('changeLazyLoading', false)
+          commit('insertNotifications', data)
+          return data
         })
-      })
+        .catch(err => {
+          commit('changeLazyLoading', false)
+          throw err
+        })
     }
   }
 }
