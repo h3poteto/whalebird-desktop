@@ -1,14 +1,12 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 import log from 'electron-log'
 
 export default class Streaming {
   constructor (account) {
     this.account = account
     this.client = new Mastodon(
-      {
-        access_token: account.accessToken,
-        api_url: account.baseURL + '/api/v1'
-      }
+      account.accessToken,
+      account.baseURL + '/api/v1'
     )
     this.listener = null
   }
