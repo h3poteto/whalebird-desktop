@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const SideMenu = {
   namespaced: true,
@@ -28,19 +28,15 @@ const SideMenu = {
   },
   actions: {
     fetchLists ({ commit }, account) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: account.accessToken,
-            api_url: account.baseURL + '/api/v1'
-          }
-        )
-        client.get('/lists', {}, (err, data, res) => {
-          if (err) return reject(err)
+      const client = new Mastodon(
+        account.accessToken,
+        account.baseURL + '/api/v1'
+      )
+      return client.get('/lists')
+        .then(data => {
           commit('updateLists', data)
-          resolve(res)
+          return data
         })
-      })
     },
     clearUnread ({ commit }) {
       commit('changeUnreadHomeTimeline', false)
