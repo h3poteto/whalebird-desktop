@@ -72,7 +72,7 @@ const Tag = {
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
-      return client.get(`/timelines/tag/${tag}`, { limit: 40 })
+      return client.get(`/timelines/tag/${encodeURIComponent(tag)}`, { limit: 40 })
         .then(data => {
           commit('updateTimeline', data)
         })
@@ -86,7 +86,7 @@ const Tag = {
       })
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-tag-streaming', {
-          tag: tag,
+          tag: encodeURIComponent(tag),
           account: rootState.TimelineSpace.account
         })
         ipcRenderer.once('error-start-tag-streaming', (event, err) => {
@@ -104,6 +104,9 @@ const Tag = {
     },
     lazyFetchTimeline ({ state, commit, rootState }, obj) {
       if (state.lazyLoading) {
+        return Promise.resolve(null)
+      }
+      if (obj.last === undefined || obj.last === null) {
         return Promise.resolve(null)
       }
       commit('changeLazyLoading', true)
