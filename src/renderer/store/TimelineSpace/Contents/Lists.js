@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const Lists = {
   namespaced: true,
@@ -68,18 +68,15 @@ const Lists = {
   },
   actions: {
     fetchTimeline ({ state, commit, rootState }, listID) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.get(`/timelines/list/${listID}`, { limit: 40 }, (err, data, res) => {
-          if (err) return reject(err)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get(`/timelines/list/${listID}`, { limit: 40 })
+        .then(data => {
           commit('updateTimeline', data)
-          resolve(res)
+          return data
         })
-      })
     },
     startStreaming ({ state, commit, rootState }, listID) {
       ipcRenderer.on('update-start-list-streaming', (event, update) => {
@@ -107,22 +104,24 @@ const Lists = {
       })
     },
     lazyFetchTimeline ({ state, commit, rootState }, obj) {
-      return new Promise((resolve, reject) => {
-        if (state.lazyLoading) {
-          return resolve()
-        }
-        commit('changeLazyLoading', true)
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.get(`/timelines/list/${obj.list_id}`, { max_id: obj.last.id, limit: 40 }, (err, data, res) => {
-          if (err) return reject(err)
+      if (state.lazyLoading) {
+        return Promise.resolve(null)
+      }
+      commit('changeLazyLoading', true)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get(`/timelines/list/${obj.list_id}`, { max_id: obj.last.id, limit: 40 })
+        .then(data => {
           commit('insertTimeline', data)
           commit('changeLazyLoading', false)
+          return data
         })
-      })
+        .catch(err => {
+          commit('changeLazyLoading', false)
+          throw err
+        })
     }
   }
 }

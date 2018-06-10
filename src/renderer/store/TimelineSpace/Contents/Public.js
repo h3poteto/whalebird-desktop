@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const Public = {
   namespaced: true,
@@ -68,19 +68,14 @@ const Public = {
   },
   actions: {
     fetchPublicTimeline ({ state, commit, rootState }) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          }
-        )
-        client.get('/timelines/public', { limit: 40 }, (err, data, res) => {
-          if (err) return reject(err)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get('/timelines/public', { limit: 40 })
+        .then(data => {
           commit('updateTimeline', data)
-          resolve(res)
         })
-      })
     },
     startPublicStreaming ({ state, commit, rootState }) {
       ipcRenderer.on('update-start-public-streaming', (event, update) => {
@@ -103,24 +98,26 @@ const Public = {
     },
     lazyFetchTimeline ({ state, commit, rootState }, last) {
       if (last === undefined || last === null) {
-        return null
+        return Promise.resolve(null)
       }
-      return new Promise((resolve, reject) => {
-        if (state.lazyLoading) {
-          return resolve()
-        }
-        commit('changeLazyLoading', true)
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.get('/timelines/public', { max_id: last.id, limit: 40 }, (err, data, res) => {
-          if (err) return reject(err)
+      if (state.lazyLoading) {
+        return Promise.resolve(null)
+      }
+      commit('changeLazyLoading', true)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get('/timelines/public', { max_id: last.id, limit: 40 })
+        .then(data => {
           commit('insertTimeline', data)
           commit('changeLazyLoading', false)
+          return data
         })
-      })
+        .catch(err => {
+          commit('changeLazyLoading', false)
+          throw err
+        })
     }
   }
 }

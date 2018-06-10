@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const Follows = {
   namespaced: true,
@@ -12,20 +12,17 @@ const Follows = {
   },
   actions: {
     fetchFollows ({ state, commit, rootState }, account) {
-      return new Promise((resolve, reject) => {
-        commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.get(`/accounts/${account.id}/following`, { limit: 80 }, (err, data, res) => {
-          if (err) return reject(err)
+      commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get(`/accounts/${account.id}/following`, { limit: 80 })
+        .then(data => {
           commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
           commit('updateFollows', data)
-          resolve(res)
+          return data
         })
-      })
     }
   }
 }

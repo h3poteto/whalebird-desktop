@@ -1,4 +1,4 @@
-import Mastodon from 'mastodon-api'
+import Mastodon from 'megalodon'
 
 const Local = {
   namespaced: true,
@@ -67,40 +67,38 @@ const Local = {
   },
   actions: {
     fetchLocalTimeline ({ commit }, account) {
-      return new Promise((resolve, reject) => {
-        const client = new Mastodon(
-          {
-            access_token: account.accessToken,
-            api_url: account.baseURL + '/api/v1'
-          }
-        )
-        client.get('/timelines/public', { limit: 40, local: true }, (err, data, res) => {
-          if (err) return reject(err)
+      const client = new Mastodon(
+        account.accessToken,
+        account.baseURL + '/api/v1'
+      )
+      return client.get('/timelines/public', { limit: 40, local: true })
+        .then(data => {
           commit('updateTimeline', data)
-          resolve(res)
+          return data
         })
-      })
     },
     lazyFetchTimeline ({ state, commit, rootState }, last) {
       if (last === undefined || last === null) {
-        return null
+        return Promise.resolve(null)
       }
-      return new Promise((resolve, reject) => {
-        if (state.lazyLoading) {
-          return resolve()
-        }
-        commit('changeLazyLoading', true)
-        const client = new Mastodon(
-          {
-            access_token: rootState.TimelineSpace.account.accessToken,
-            api_url: rootState.TimelineSpace.account.baseURL + '/api/v1'
-          })
-        client.get('/timelines/public', { max_id: last.id, limit: 40, local: true }, (err, data, res) => {
-          if (err) return reject(err)
-          commit('insertTimeline', data)
+      if (state.lazyLoading) {
+        return Promise.resolve(null)
+      }
+      commit('changeLazyLoading', true)
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get('/timelines/public', { max_id: last.id, limit: 40, local: true })
+        .then(data => {
           commit('changeLazyLoading', false)
+          commit('insertTimeline', data)
+          return data
         })
-      })
+        .catch(err => {
+          commit('changeLazyLoading', false)
+          throw err
+        })
     }
   }
 }
