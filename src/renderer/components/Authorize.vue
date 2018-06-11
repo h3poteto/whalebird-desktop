@@ -18,7 +18,13 @@
         <el-input></el-input>
       </el-form-item>
       <el-form-item class="submit">
-        <el-button type="primary" @click="authorizeSubmit">Submit</el-button>
+        <el-button
+          type="primary"
+          @click="authorizeSubmit"
+          v-loading="submitting"
+          element-loading-background="rgba(0, 0, 0, 0.8)">
+          Submit
+        </el-button>
       </el-form-item>
     </el-form>
   </el-container>
@@ -32,20 +38,32 @@ export default {
     return {
       authorizeForm: {
         code: ''
-      }
+      },
+      submitting: false
     }
   },
   methods: {
     authorizeSubmit () {
+      this.submitting = true
       this.$store.dispatch('Authorize/submit', this.authorizeForm.code)
+        .finally(() => {
+          this.submitting = false
+        })
         .then((id) => {
           this.$router.push({ path: `/${id}/home` })
         })
-        .catch(() => {
-          this.$message({
-            message: 'Could not authorize the code',
-            type: 'error'
-          })
+        .catch((err) => {
+          if (err.name === 'DuplicateRecordError') {
+            this.$message({
+              message: 'Can not login the same account of the same domain',
+              type: 'error'
+            })
+          } else {
+            this.$message({
+              message: 'Failed to authorize',
+              type: 'error'
+            })
+          }
         })
     },
     close () {

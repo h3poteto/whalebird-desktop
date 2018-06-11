@@ -62,6 +62,17 @@ export default class Account {
     })
   }
 
+  searchAccounts (obj) {
+    return new Promise((resolve, reject) => {
+      this.db.find(
+        obj,
+        (err, docs) => {
+          if (err) return reject(err)
+          resolve(docs)
+        })
+    })
+  }
+
   updateAccount (id, obj) {
     return new Promise((resolve, reject) => {
       this.db.update(
@@ -179,10 +190,36 @@ export default class Account {
         return this.updateAccount(account._id, json)
       })
   }
+
+  // Confirm the access token, and check duplicate
+  async fetchAccount (account, accessToken) {
+    const client = new Mastodon(
+      accessToken,
+      account.baseURL + '/api/v1'
+    )
+    const data = await client.get('/accounts/verify_credentials')
+    const query = {
+      baseURL: account.baseURL,
+      username: data.username
+    }
+    const duplicates = await this.searchAccounts(query)
+    if (duplicates.length > 0) {
+      throw new DuplicateRecordError(`${data.username}@${account.baseURL} is duplicated`)
+    }
+    return data
+  }
 }
 
-class EmptyRecordError {
-  constructor (message) {
-    this.message = message
+class EmptyRecordError extends Error {
+  constructor (msg) {
+    super(msg)
+    this.name = 'EmptyRecordError'
+  }
+}
+
+class DuplicateRecordError extends Error {
+  constructor (msg) {
+    super(msg)
+    this.name = 'DuplicateRecordError'
   }
 }

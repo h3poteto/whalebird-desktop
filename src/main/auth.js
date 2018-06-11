@@ -59,7 +59,13 @@ export default class Authentication {
     }
     const rec = await this.db.searchAccount(search)
     const accessToken = token.access_token
-    await this.db.updateAccount(rec._id, { accessToken: accessToken })
+    const data = await this.db.fetchAccount(rec, accessToken)
+    await this.db.updateAccount(rec._id, {
+      username: data.username,
+      accountId: data.id,
+      avatar: data.avatar,
+      accessToken: accessToken
+    })
     return accessToken
   }
   // TODO: Refresh access token when expired
