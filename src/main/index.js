@@ -279,10 +279,6 @@ ipcMain.on('get-auth-url', (event, domain) => {
 
 ipcMain.on('get-access-token', (event, code) => {
   auth.getAccessToken(code)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-get-access-token', err)
-    })
     .then((token) => {
       accountDB.findOne({
         accessToken: token
@@ -291,6 +287,10 @@ ipcMain.on('get-access-token', (event, code) => {
         if (empty(doc)) return event.sender.send('error-get-access-token', 'error document is empty')
         event.sender.send('response-get-access-token', doc._id)
       })
+    })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-get-access-token', err)
     })
 })
 
