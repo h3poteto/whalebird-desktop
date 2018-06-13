@@ -43,6 +43,19 @@
       </el-table>
     </template>
   </div>
+  <div class="reset">
+    <el-popover
+      placement="top"
+      width="160"
+      v-model="deletePopoverVisible">
+      <p>Are you sure to remove all associations?</p>
+      <div style="text-align: right; margin: 0">
+        <el-button size="mini" type="text" @click="deletePopoverVisible = false">cancel</el-button>
+        <el-button type="danger" size="mini" @click="removeAllAssociations">confirm</el-button>
+      </div>
+      <el-button slot="reference" type="danger">Remove all associations</el-button>
+    </el-popover>
+  </div>
 </div>
 </template>
 
@@ -53,7 +66,8 @@ export default {
   name: 'account',
   data () {
     return {
-      openRemoveDialog: false
+      openRemoveDialog: false,
+      deletePopoverVisible: false
     }
   },
   computed: {
@@ -103,6 +117,13 @@ export default {
         .then(() => {
           this.loadAccounts()
         })
+    },
+    removeAllAssociations () {
+      this.deletePopoverVisible = false
+      this.$store.dispatch('Preferences/Account/removeAllAccounts')
+        .then(() => {
+          this.$router.push('/login')
+        })
     }
   }
 }
@@ -123,6 +144,11 @@ export default {
 
   .el-table::before {
     background-color: var(--theme-border-color);
+  }
+
+  .reset {
+    margin: 24px 12px;
+    text-align: right;
   }
 }
 
