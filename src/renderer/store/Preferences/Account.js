@@ -67,6 +67,19 @@ const Account = {
           resolve()
         })
       })
+    },
+    removeAllAccounts () {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('remove-all-accounts')
+        ipcRenderer.once('error-remove-all-accounts', (event, err) => {
+          ipcRenderer.removeAllListeners('response-remove-all-accounts')
+          reject(err)
+        })
+        ipcRenderer.once('response-remove-all-accounts', (event) => {
+          ipcRenderer.removeAllListeners('error-remove-all-accounts')
+          resolve()
+        })
+      })
     }
   }
 }

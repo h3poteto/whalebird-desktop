@@ -383,6 +383,18 @@ ipcMain.on('refresh-accounts', (event, _) => {
     })
 })
 
+ipcMain.on('remove-all-accounts', (event, _) => {
+  const account = new Account(accountDB)
+  account.removeAll()
+    .then(() => {
+      event.sender.send('response-remove-all-accounts')
+    })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-remove-all-accounts', err)
+    })
+})
+
 // streaming
 let userStreaming = null
 
