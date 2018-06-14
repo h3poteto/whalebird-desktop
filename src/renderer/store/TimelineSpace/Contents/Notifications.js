@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron'
 import Mastodon from 'megalodon'
 
 const Notifications = {
@@ -87,6 +88,9 @@ const Notifications = {
           commit('changeLazyLoading', false)
           throw err
         })
+    },
+    resetBadge () {
+      ipcRenderer.send('reset-badge')
     }
   }
 }
