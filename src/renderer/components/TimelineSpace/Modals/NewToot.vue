@@ -128,12 +128,10 @@ export default {
     }
   },
   mounted () {
-    document.addEventListener('drop', e => {
-      e.preventDefault()
-      e.stopPropagation()
-      this.onDrop(e)
-      return false
-    })
+    document.addEventListener('drop', this.onDrop)
+  },
+  destroyed () {
+    document.removeEventListener('drop', this.onDrop)
   },
   methods: {
     close () {
@@ -205,9 +203,9 @@ export default {
         return
       }
       const file = e.target.files.item(0)
-      if (!file.type.includes('image')) {
+      if (!file.type.includes('image') && !file.type.includes('video')) {
         this.$message({
-          message: 'You can only attach images',
+          message: 'You can only attach images or videos',
           type: 'error'
         })
         return
@@ -237,18 +235,21 @@ export default {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
     },
     onDrop (e) {
+      e.preventDefault()
+      e.stopPropagation()
       if (e.dataTransfer.files.item(0) === null || e.dataTransfer.files.item(0) === undefined) {
-        return
+        return false
       }
       const file = e.dataTransfer.files.item(0)
-      if (!file.type.includes('image')) {
+      if (!file.type.includes('image') && !file.type.includes('video')) {
         this.$message({
-          message: 'You can only attach images',
+          message: 'You can only attach images or videos',
           type: 'error'
         })
-        return
+        return false
       }
       this.updateImage(file)
+      return false
     }
   }
 }
