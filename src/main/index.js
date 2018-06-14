@@ -395,6 +395,13 @@ ipcMain.on('remove-all-accounts', (event, _) => {
     })
 })
 
+// badge
+ipcMain.on('reset-badge', () => {
+  if (process.platform === 'darwin') {
+    app.dock.setBadge('')
+  }
+})
+
 // streaming
 let userStreaming = null
 
@@ -419,6 +426,9 @@ ipcMain.on('start-user-streaming', (event, ac) => {
         },
         (notification) => {
           event.sender.send('notification-start-user-streaming', notification)
+          if (process.platform === 'darwin') {
+            app.dock.setBadge('•')
+          }
         },
         (err) => {
           log.error(err)

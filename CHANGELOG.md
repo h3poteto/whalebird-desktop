@@ -2,6 +2,30 @@
 
 ## [Unreleased]
 ### Added
+- [#391](https://github.com/h3poteto/whalebird-desktop/pull/391) Remove all account associations
+
+### Changed
+- [#392](https://github.com/h3poteto/whalebird-desktop/pull/392) Allow movies as media when post toot
+
+### Fixed
+- [#389](https://github.com/h3poteto/whalebird-desktop/pull/389) Block to login the same account of the same domain
+- [#384](https://github.com/h3poteto/whalebird-desktop/pull/384) Encode tags for non ascii tags
+
+## [1.3.3] - 2018-06-10
+### Changed
+- [#379](https://github.com/h3poteto/whalebird-desktop/pull/379) Use megalodon instead of mastodon-api as mastodon api client
+
+### Fixed
+- [#384](https://github.com/h3poteto/whalebird-desktop/pull/384) Encode tag for non ascii tags
+
+
+## [1.3.2] - 2018-06-06
+### Fixed
+- [#376](https://github.com/h3poteto/whalebird-desktop/pull/376) Remove global shortcut and use mousetrap
+
+## [1.3.1] - 2018-06-06
+### Added
+- [#373](https://github.com/h3poteto/whalebird-desktop/pull/373) Open account profile when click account name in toot
 - [#372](https://github.com/h3poteto/whalebird-desktop/pull/372) Add shortcut key to jump
 
 ### Fixed
