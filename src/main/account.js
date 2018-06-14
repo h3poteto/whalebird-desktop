@@ -112,6 +112,19 @@ export default class Account {
     })
   }
 
+  removeAll () {
+    return new Promise((resolve, reject) => {
+      this.db.remove(
+        {},
+        { multi: true },
+        (err, numRemoved) => {
+          if (err) return reject(err)
+          resolve(numRemoved)
+        }
+      )
+    })
+  }
+
   async forwardAccount (ac) {
     if (ac.order <= 1) {
       return ac.order
