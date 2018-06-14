@@ -29,6 +29,7 @@ export default {
   },
   mounted () {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
+    this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   beforeUpdate () {
