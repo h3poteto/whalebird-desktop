@@ -395,6 +395,11 @@ ipcMain.on('remove-all-accounts', (event, _) => {
     })
 })
 
+// badge
+ipcMain.on('reset-badge', () => {
+  app.dock.setBadge('')
+})
+
 // streaming
 let userStreaming = null
 
@@ -418,6 +423,7 @@ ipcMain.on('start-user-streaming', (event, ac) => {
           event.sender.send('update-start-user-streaming', update)
         },
         (notification) => {
+          app.dock.setBadge('•')
           event.sender.send('notification-start-user-streaming', notification)
         },
         (err) => {
