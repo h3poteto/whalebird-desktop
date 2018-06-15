@@ -30,6 +30,9 @@
                 <li role="button" @click="openBrowser(account)">
                   Open in Browser
                 </li>
+                <li role="button" @click="addToList(account)">
+                  Manage List Memeberships
+                </li>
               </ul>
             </div>
 
@@ -157,6 +160,10 @@ export default {
     },
     openBrowser (account) {
       shell.openExternal(account.url)
+    },
+    addToList (account) {
+      this.$store.dispatch('TimelineSpace/Modals/ListMembership/setAccount', account)
+      this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', true)
     }
   }
 }
