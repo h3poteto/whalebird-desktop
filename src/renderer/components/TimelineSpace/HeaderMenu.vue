@@ -55,6 +55,9 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Search')
           break
         case 'lists':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Lists')
+          break
+        case 'list':
           this.$store.dispatch('TimelineSpace/HeaderMenu/fetchList', this.$route.params.list_id)
           break
         default:
