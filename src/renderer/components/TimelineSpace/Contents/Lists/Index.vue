@@ -1,9 +1,9 @@
 <template>
   <div id="lists">
     <div class="list" v-for="list in lists" :key="list.id">
-      <span class="title">
+      <router-link tag="span" class="title" :to="`/${id()}/lists/${list.id}`">
         {{ list.title }}
-      </span>
+      </router-link>
     </div>
   </div>
 </template>
@@ -31,6 +31,9 @@ export default {
       })
   },
   methods: {
+    id () {
+      return this.$route.params.id
+    },
     fetch () {
       return this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists')
         .catch(() => {
@@ -49,6 +52,10 @@ export default {
   .list {
     padding: 12px 24px;
     border-bottom: 1px solid var(--theme-border-color);
+
+    .title {
+      cursor: pointer;
+    }
   }
 }
 </style>
