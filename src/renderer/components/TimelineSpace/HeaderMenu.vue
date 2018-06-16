@@ -3,7 +3,7 @@
   <div class="channel">{{ title }}</div>
   <div class="tools">
     <el-button type="text" class="toot" @click="openNewTootModal">
-      <icon name="regular/comment"></icon>
+      <icon name="regular/edit"></icon>
     </el-button>
   </div>
 </div>
