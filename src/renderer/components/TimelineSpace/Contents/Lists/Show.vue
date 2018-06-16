@@ -1,5 +1,5 @@
 <template>
-<div name="lists">
+<div name="list">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <transition-group name="timeline" tag="div">
     <div class="list-timeline" v-for="message in timeline" v-bind:key="message.id">
@@ -12,19 +12,19 @@
 
 <script>
 import { mapState } from 'vuex'
-import Toot from './Cards/Toot'
+import Toot from '../Cards/Toot'
 
 export default {
-  name: 'lists',
+  name: 'list',
   props: ['list_id'],
   components: { Toot },
   computed: {
     ...mapState({
-      timeline: state => state.TimelineSpace.Contents.Lists.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.Lists.lazyLoading,
+      timeline: state => state.TimelineSpace.Contents.Lists.Show.timeline,
+      lazyLoading: state => state.TimelineSpace.Contents.Lists.Show.lazyLoading,
       backgroundColor: state => state.App.theme.background_color,
-      heading: state => state.TimelineSpace.Contents.Lists.heading,
-      unread: state => state.TimelineSpace.Contents.Lists.unreadTimeline
+      heading: state => state.TimelineSpace.Contents.Lists.Show.heading,
+      unread: state => state.TimelineSpace.Contents.Lists.Show.unreadTimeline
     })
   },
   created () {
@@ -55,13 +55,13 @@ export default {
     }
   },
   beforeDestroy () {
-    this.$store.dispatch('TimelineSpace/Contents/Lists/stopStreaming')
+    this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/Contents/Lists/changeHeading', true)
-    this.$store.commit('TimelineSpace/Contents/Lists/mergeTimeline')
-    this.$store.commit('TimelineSpace/Contents/Lists/archiveTimeline')
-    this.$store.commit('TimelineSpace/Contents/Lists/clearTimeline')
+    this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/Lists/Show/mergeTimeline')
+    this.$store.commit('TimelineSpace/Contents/Lists/Show/archiveTimeline')
+    this.$store.commit('TimelineSpace/Contents/Lists/Show/clearTimeline')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
@@ -69,16 +69,16 @@ export default {
   },
   methods: {
     async load () {
-      await this.$store.dispatch('TimelineSpace/Contents/Lists/stopStreaming')
+      await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
       try {
-        await this.$store.dispatch('TimelineSpace/Contents/Lists/fetchTimeline', this.list_id)
+        await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', this.list_id)
       } catch (err) {
         this.$message({
           message: 'Failed to get timeline',
           type: 'error'
         })
       }
-      this.$store.dispatch('TimelineSpace/Contents/Lists/startStreaming', this.list_id)
+      this.$store.dispatch('TimelineSpace/Contents/Lists/Show/startStreaming', this.list_id)
         .catch(() => {
           this.$message({
             message: 'Failed to start streaming',
@@ -88,24 +88,24 @@ export default {
       return 'started'
     },
     updateToot (message) {
-      this.$store.commit('TimelineSpace/Contents/Lists/updateToot', message)
+      this.$store.commit('TimelineSpace/Contents/Lists/Show/updateToot', message)
     },
     deleteToot (message) {
-      this.$store.commit('TimelineSpace/Contents/Lists/deleteToot', message)
+      this.$store.commit('TimelineSpace/Contents/Lists/Show/deleteToot', message)
     },
     onScroll (event) {
-      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementsByName('lists')[0].clientHeight - 10) && !this.lazyloading) {
-        this.$store.dispatch('TimelineSpace/Contents/Lists/lazyFetchTimeline', {
+      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementsByName('list')[0].clientHeight - 10) && !this.lazyloading) {
+        this.$store.dispatch('TimelineSpace/Contents/Lists/Show/lazyFetchTimeline', {
           list_id: this.list_id,
           last: this.timeline[this.timeline.length - 1]
         })
       }
       // for unread control
       if ((event.target.scrollTop > 10) && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Lists/changeHeading', false)
+        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', false)
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Lists/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Lists/mergeTimeline')
+        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Lists/Show/mergeTimeline')
       }
     }
   }
