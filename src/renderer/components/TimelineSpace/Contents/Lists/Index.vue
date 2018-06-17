@@ -9,9 +9,14 @@
     </el-form>
   </div>
   <div class="list" v-for="list in lists" :key="list.id">
-    <router-link tag="span" class="title" :to="`/${id()}/lists/${list.id}`">
+    <router-link tag="div" class="title" :to="`/${id()}/lists/${list.id}`">
       {{ list.title }}
     </router-link>
+    <div class="tools">
+      <el-button type="text" @click="edit(list)">
+        Edit
+      </el-button>
+    </div>
   </div>
 </div>
 </template>
@@ -71,6 +76,9 @@ export default {
       } finally {
         this.creating = false
       }
+    },
+    edit (list) {
+      return this.$router.push(`/${this.id()}/lists/${list.id}/edit`)
     }
   }
 }
@@ -105,7 +113,11 @@ export default {
   }
 
   .list {
-    padding: 12px 24px;
+    padding: 4px 24px;
+    display: flex;
+    flex-dirrection: row;
+    align-items: baseline;
+    justify-content: space-between;
     border-bottom: 1px solid var(--theme-border-color);
 
     .title {
