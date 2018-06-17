@@ -95,6 +95,12 @@ export default new Router({
               component: require('@/components/TimelineSpace/Contents/Lists/Index').default
             },
             {
+              path: 'lists/:list_id/edit',
+              name: 'edit-list',
+              component: require('@/components/TimelineSpace/Contents/Lists/Edit').default,
+              props: true
+            },
+            {
               path: 'lists/:list_id',
               name: 'list',
               component: require('@/components/TimelineSpace/Contents/Lists/Show').default,
