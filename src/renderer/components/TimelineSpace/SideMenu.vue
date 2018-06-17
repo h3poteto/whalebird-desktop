@@ -56,10 +56,10 @@
         <icon name="search"></icon>
         <span>Search</span>
       </el-menu-item>
-      <li class="el-menu-item menu-item-title">
+      <el-menu-item :index="`/${id()}/lists`">
         <icon name="list-ul"></icon>
         <span>Lists</span>
-      </li>
+      </el-menu-item>
       <template v-for="list in lists">
         <el-menu-item :index="`/${id()}/lists/${list.id}`" class="sub-menu" v-bind:key="list.id">
           <span>#{{ list.title }}</span>

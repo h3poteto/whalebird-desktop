@@ -3,7 +3,7 @@
   <div class="channel">{{ title }}</div>
   <div class="tools">
     <el-button type="text" class="toot" @click="openNewTootModal">
-      <icon name="regular/comment"></icon>
+      <icon name="regular/edit"></icon>
     </el-button>
   </div>
 </div>
@@ -55,6 +55,9 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Search')
           break
         case 'lists':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Lists')
+          break
+        case 'list':
           this.$store.dispatch('TimelineSpace/HeaderMenu/fetchList', this.$route.params.list_id)
           break
         default:

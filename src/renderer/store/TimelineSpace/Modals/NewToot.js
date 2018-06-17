@@ -93,7 +93,7 @@ const NewToot = {
       return client.post('/media', formData)
         .then(data => {
           commit('changeBlockSubmit', false)
-          if (data.type !== 'image') throw new UnknownTypeError()
+          if (data.type === 'unknown') throw new UnknownTypeError()
           commit('appendAttachedMedias', data)
           return data
         })
