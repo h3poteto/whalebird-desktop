@@ -2,6 +2,7 @@ import NewToot from './Modals/NewToot'
 import ImageViewer from './Modals/ImageViewer'
 import Jump from './Modals/Jump'
 import ListMembership from './Modals/ListMembership'
+import AddListMember from './Modals/AddListMember'
 
 const Modals = {
   namespaced: true,
@@ -9,7 +10,8 @@ const Modals = {
     ImageViewer,
     NewToot,
     Jump,
-    ListMembership
+    ListMembership,
+    AddListMember
   }
 }
 
