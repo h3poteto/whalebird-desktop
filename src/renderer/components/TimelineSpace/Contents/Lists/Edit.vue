@@ -1,9 +1,14 @@
 <template>
-  <div class="members">
-    <template v-for="account in members">
-      <user :user="account" :remove="true" @removeAccount="removeAccount"></user>
-    </template>
+<div class="members">
+  <div class="add-account">
+    <el-button type="text" class="add-button" @click="addAccount">
+      <icon name="plus"></icon>
+    </el-button>
   </div>
+  <template v-for="account in members">
+    <user :user="account" :remove="true" @removeAccount="removeAccount"></user>
+  </template>
+</div>
 </template>
 
 <script>
@@ -62,6 +67,10 @@ export default {
       } finally {
         loading.close()
       }
+    },
+    addAccount () {
+      this.$store.commit('TimelineSpace/Modals/AddListMember/setListId', this.list_id)
+      this.$store.dispatch('TimelineSpace/Modals/AddListMember/changeModal', true)
     }
   }
 }
@@ -69,5 +78,13 @@ export default {
 
 <style lang="scss" scoped>
 .members {
+  .add-account {
+    text-align: center;
+    border-bottom: 1px solid var(--theme-border-color);
+
+    .add-button {
+      width: 100%;
+    }
+  }
 }
 </style>
