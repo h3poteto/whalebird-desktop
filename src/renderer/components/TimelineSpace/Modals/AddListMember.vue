@@ -50,7 +50,8 @@ export default {
   computed: {
     ...mapState({
       loadingBackground: state => state.App.theme.wrapper_mask_color,
-      accounts: state => state.TimelineSpace.Modals.AddListMember.accounts
+      accounts: state => state.TimelineSpace.Modals.AddListMember.accounts,
+      listId: state => state.TimelineSpace.Modals.AddListMember.targetListId
     }),
     addListMemberModal: {
       get () {
@@ -76,6 +77,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/AddListMember/add', user)
         .then(() => {
           this.addListMemberModal = false
+          this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', this.listId)
         })
         .catch(() => {
           this.$message({
