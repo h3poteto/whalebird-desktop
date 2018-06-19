@@ -65,19 +65,22 @@ const NewToot = {
       const mentionAccounts = [message.account.acct].concat(message.mentions.map(a => a.acct))
         .filter((a, i, self) => self.indexOf(a) === i)
         .filter((a) => a !== rootState.TimelineSpace.account.username)
+      commit('changeModal', true)
       commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
+      commit('changeVisibility', message.visibility)
+    },
+    openModal ({ commit }) {
       commit('changeModal', true)
     },
-    changeModal ({ commit }, value) {
-      commit('changeModal', value)
-      if (!value) {
-        commit('updateStatus', '')
-        commit('setReplyTo', null)
-        commit('changeBlockSubmit', false)
-        commit('clearAttachedMedias')
-        commit('changeSensitive', false)
-        commit('updateSpoiler', '')
-      }
+    closeModal ({ commit }) {
+      commit('changeModal', false)
+      commit('updateStatus', '')
+      commit('setReplyTo', null)
+      commit('changeBlockSubmit', false)
+      commit('clearAttachedMedias')
+      commit('changeSensitive', false)
+      commit('updateSpoiler', '')
+      commit('changeVisibility', 'public')
     },
     uploadImage ({ state, commit, rootState }, image) {
       commit('changeBlockSubmit', true)
