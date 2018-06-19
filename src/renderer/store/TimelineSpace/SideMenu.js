@@ -27,7 +27,8 @@ const SideMenu = {
     }
   },
   actions: {
-    fetchLists ({ commit }, account) {
+    fetchLists ({ commit, rootState }, account = null) {
+      if (account === null) account = rootState.TimelineSpace.account
       const client = new Mastodon(
         account.accessToken,
         account.baseURL + '/api/v1'
