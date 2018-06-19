@@ -11,13 +11,28 @@
       @{{ user.acct }}
     </div>
   </div>
+  <div class="tool" v-if="remove">
+    <el-button type="text" @click.stop.prevent="removeAccount(user)">
+      <icon name="times"></icon>
+    </el-button>
+  </div>
+  </div>
 </div>
 </template>
 
 <script>
 export default {
   name: 'user',
-  props: [ 'user' ],
+  props: {
+    user: {
+      type: Object,
+      default: {}
+    },
+    remove: {
+      type: Boolean,
+      default: false
+    }
+  },
   methods: {
     username (account) {
       if (account.display_name !== '') {
@@ -30,6 +45,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+    },
+    removeAccount (account) {
+      this.$emit('removeAccount', account)
     }
   }
 }
@@ -65,6 +83,10 @@ export default {
       width: auto;
       word-wrap: break-word;
     }
+  }
+
+  .tool {
+    margin-left: auto;
   }
 }
 </style>
