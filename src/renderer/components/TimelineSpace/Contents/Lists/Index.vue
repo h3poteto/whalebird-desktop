@@ -76,6 +76,7 @@ export default {
       } finally {
         this.creating = false
       }
+      await this.$store.dispatch('TimelineSpace/SideMenu/fetchLists')
     },
     edit (list) {
       return this.$router.push(`/${this.id()}/lists/${list.id}/edit`)
