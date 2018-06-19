@@ -121,9 +121,9 @@ const TimelineSpace = {
       ipcRenderer.send('stop-local-streaming')
       return 'stopLocalStreaming'
     },
-    watchShortcutEvents ({ commit }) {
+    watchShortcutEvents ({ commit, dispatch }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {
-        commit('TimelineSpace/Modals/NewToot/changeModal', true, { root: true })
+        dispatch('TimelineSpace/Modals/NewToot/openModal', {}, { root: true })
       })
       ipcRenderer.on('CmdOrCtrl+K', () => {
         commit('TimelineSpace/Modals/Jump/changeModal', true, { root: true })

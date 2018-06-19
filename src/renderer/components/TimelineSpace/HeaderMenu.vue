@@ -70,7 +70,7 @@ export default {
       }
     },
     openNewTootModal () {
-      this.$store.commit('TimelineSpace/Modals/NewToot/changeModal', true)
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
     }
   }
 }
