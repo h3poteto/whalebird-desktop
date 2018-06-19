@@ -1,7 +1,23 @@
 # Change Log
 
-## [Unreleased]
+## [1.4.0] - 2018-06-20
 ### Added
+- [#403](https://github.com/h3poteto/whalebird-desktop/pull/403) Create list editting page which can manage list memberships
+- [#401](https://github.com/h3poteto/whalebird-desktop/pull/401) Create lists in lists page
+- [#398](https://github.com/h3poteto/whalebird-desktop/pull/398) Add lists page
+- [#395](https://github.com/h3poteto/whalebird-desktop/pull/395) Open the manage lists window of an account on account profile
+
+### Changed
+- [#404](https://github.com/h3poteto/whalebird-desktop/pull/404) Set visibility from source message when reply
+- [#399](https://github.com/h3poteto/whalebird-desktop/pull/399) Update toot icon
+
+### Fixed
+- [#408](https://github.com/h3poteto/whalebird-desktop/pull/408) Reload side menu after create a list
+- [#400](https://github.com/h3poteto/whalebird-desktop/pull/400) Allow video to post toot
+
+## [1.3.4] - 2018-06-15
+### Added
+- [#394](https://github.com/h3poteto/whalebird-desktop/pull/394) Show icon badge when receive notifications
 - [#391](https://github.com/h3poteto/whalebird-desktop/pull/391) Remove all account associations
 
 ### Changed
