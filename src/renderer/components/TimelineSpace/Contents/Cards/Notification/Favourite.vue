@@ -36,7 +36,7 @@
 <script>
 import moment from 'moment'
 import { shell } from 'electron'
-import { findLink, isTag } from '../../../../utils/link'
+import { findAccount, findLink, isTag } from '../../../../utils/link'
 
 export default {
   name: 'favourite',
@@ -57,6 +57,23 @@ export default {
         const tag = `/${this.$route.params.id}/hashtag/${e.target.innerText}`
         this.$router.push({ path: tag })
         return tag
+      }
+      const accountURL = findAccount(e.target)
+      if (accountURL !== null) {
+        this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', accountURL)
+          .then((account) => {
+            this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+            this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+          })
+          .catch(() => {
+            this.$message({
+              message: 'Account not found',
+              type: 'error'
+            })
+            this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
+          })
+        return accountURL
       }
       const link = findLink(e.target)
       if (link !== null) {
