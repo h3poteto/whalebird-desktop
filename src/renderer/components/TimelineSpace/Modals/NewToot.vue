@@ -97,7 +97,11 @@ export default {
         return this.$store.state.TimelineSpace.Modals.NewToot.modalOpen
       },
       set (value) {
-        this.$store.dispatch('TimelineSpace/Modals/NewToot/changeModal', value)
+        if (value) {
+          this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
+        } else {
+          this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
+        }
       }
     },
     status: {
@@ -136,7 +140,7 @@ export default {
   methods: {
     close () {
       this.resetImage()
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/changeModal', false)
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
     toot () {
       if (!this.newTootModal) {
