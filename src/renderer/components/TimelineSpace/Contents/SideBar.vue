@@ -7,7 +7,7 @@
     </div>
     <div id="sidebar_scrollable">
       <account-profile v-if="component === 1" v-on:change-loading="changeLoading"></account-profile>
-      <toot-detail v-if="component === 2"></toot-detail>
+      <toot-detail v-else-if="component === 2"></toot-detail>
       <div
         class="loading"
         v-loading="true"
