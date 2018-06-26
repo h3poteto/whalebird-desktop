@@ -1,6 +1,8 @@
 <template>
 <div name="tag">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
+  <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
+  </div>
   <transition-group name="timeline" tag="div">
     <div class="tag-timeline" v-for="message in timeline" v-bind:key="message.id">
       <toot :message="message" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
@@ -115,6 +117,47 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
       }
+    },
+    async reload () {
+      const tag = this.$route.params.tag
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch(() => {
+        this.$message({
+          message: 'Could not find account',
+          type: 'error'
+        })
+      })
+
+      await this.$store.dispatch('TimelineSpace/stopUserStreaming')
+      await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
+      await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/stopStreaming')
+
+      await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
+      await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
+      await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag)
+        .catch(() => {
+          this.$message({
+            message: 'Could not fetch timeline with tag',
+            type: 'error'
+          })
+        })
+
+      this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+      this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+      this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/startStreaming', tag)
+        .catch(() => {
+          loading.close()
+          this.$message({
+            message: 'Failed to restart streaming',
+            type: 'error'
+          })
+        })
+      loading.close()
     }
   }
 }
