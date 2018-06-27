@@ -26,7 +26,8 @@ export default {
       lazyLoading: state => state.TimelineSpace.Contents.Lists.Show.lazyLoading,
       backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Lists.Show.heading,
-      unread: state => state.TimelineSpace.Contents.Lists.Show.unreadTimeline
+      unread: state => state.TimelineSpace.Contents.Lists.Show.unreadTimeline,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload
     })
   },
   created () {
@@ -54,6 +55,14 @@ export default {
         .then(() => {
           loading.close()
         })
+    },
+    startReload: function (newState, oldState) {
+      if (!oldState && newState) {
+        this.reload()
+          .finally(() => {
+            this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
+          })
+      }
     }
   },
   beforeDestroy () {
