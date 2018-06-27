@@ -76,7 +76,20 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
     },
     reload () {
-      this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
+      switch (this.title) {
+        case 'Home':
+        case 'Notification':
+        case 'Favourite':
+        case 'Local timeline':
+        case 'Public timeline':
+        case 'Hashtag':
+        case `#${this.$route.params.tag}`:
+        case 'Lists':
+          this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
+          break
+        default:
+          console.log('Not impletemented')
+      }
     }
   }
 }
