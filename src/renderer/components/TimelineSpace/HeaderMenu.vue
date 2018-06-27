@@ -2,8 +2,11 @@
 <div id="header_menu">
   <div class="channel">{{ title }}</div>
   <div class="tools">
-    <el-button type="text" class="toot" @click="openNewTootModal">
+    <el-button type="text" class="action" @click="openNewTootModal">
       <icon name="regular/edit"></icon>
+    </el-button>
+    <el-button type="text" class="action" @click="reload">
+      <icon name="sync-alt"></icon>
     </el-button>
   </div>
 </div>
@@ -71,6 +74,9 @@ export default {
     },
     openNewTootModal () {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
+    },
+    reload () {
+      this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
     }
   }
 }
@@ -94,7 +100,7 @@ export default {
   .tools {
     font-size: 18px;
 
-    .toot {
+    .action {
       color: var(--theme-secondary-color);
       padding: 0;
 
