@@ -26,7 +26,8 @@ export default {
       lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
       backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Notifications.heading,
-      unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications
+      unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload
     })
   },
   mounted () {
@@ -46,6 +47,16 @@ export default {
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
+    }
+  },
+  watch: {
+    startReload: function (newState, oldState) {
+      if (!oldState && newState) {
+        this.reload()
+          .finally(() => {
+            this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
+          })
+      }
     }
   },
   methods: {
