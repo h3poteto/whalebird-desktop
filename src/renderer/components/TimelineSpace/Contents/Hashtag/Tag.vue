@@ -19,13 +19,15 @@ import Toot from '../Cards/Toot'
 export default {
   name: 'tag',
   components: { Toot },
+  props: ['tag'],
   computed: {
     ...mapState({
       timeline: state => state.TimelineSpace.Contents.Hashtag.Tag.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Hashtag.Tag.lazyLoading,
       backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Hashtag.Tag.heading,
-      unread: state => state.TimelineSpace.Contents.Hashtag.Tag.unreadTimeline
+      unread: state => state.TimelineSpace.Contents.Hashtag.Tag.unreadTimeline,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload
     })
   },
   mounted () {
@@ -35,7 +37,7 @@ export default {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
-    this.load(this.$route.params.tag)
+    this.load(this.tag)
       .then(() => {
         loading.close()
       })
@@ -45,7 +47,7 @@ export default {
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   watch: {
-    '$route': function () {
+    tag: function (newTag, oldTag) {
       const loading = this.$loading({
         lock: true,
         text: 'Loading',
@@ -53,13 +55,21 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       this.reset()
-      this.load(this.$route.params.tag)
+      this.load(newTag)
         .then(() => {
           loading.close()
         })
         .catch(() => {
           loading.close()
         })
+    },
+    startReload: function (newState, oldState) {
+      if (!oldState && newState) {
+        this.reload()
+          .finally(() => {
+            this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
+          })
+      }
     }
   },
   beforeDestroy () {
@@ -106,7 +116,7 @@ export default {
     onScroll (event) {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementsByName('tag')[0].clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/lazyFetchTimeline', {
-          tag: this.$route.params.tag,
+          tag: this.tag,
           last: this.timeline[this.timeline.length - 1]
         })
       }
@@ -119,7 +129,7 @@ export default {
       }
     },
     async reload () {
-      const tag = this.$route.params.tag
+      const tag = this.tag
       const loading = this.$loading({
         lock: true,
         text: 'Loading',
