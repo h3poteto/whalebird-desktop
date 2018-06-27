@@ -3,11 +3,15 @@ import Mastodon from 'megalodon'
 const HeaderMenu = {
   namespaced: true,
   state: {
-    title: 'Home'
+    title: 'Home',
+    reload: false
   },
   mutations: {
     updateTitle (state, title) {
       state.title = title
+    },
+    changeReload (state, value) {
+      state.reload = value
     }
   },
   actions: {

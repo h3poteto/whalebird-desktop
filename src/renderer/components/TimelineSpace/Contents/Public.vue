@@ -1,6 +1,8 @@
 <template>
   <div id="public">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
+    <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
+    </div>
     <transition-group name="timeline" tag="div">
       <div class="public-timeline" v-for="message in timeline" v-bind:key="message.id">
         <toot :message="message" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
@@ -24,7 +26,8 @@ export default {
       lazyLoading: state => state.TimelineSpace.Contents.Public.lazyLoading,
       backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Public.heading,
-      unread: state => state.TimelineSpace.Contents.Public.unreadTimeline
+      unread: state => state.TimelineSpace.Contents.Public.unreadTimeline,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload
     })
   },
   created () {
@@ -54,6 +57,16 @@ export default {
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
+    }
+  },
+  watch: {
+    startReload: function (newState, oldState) {
+      if (!oldState && newState) {
+        this.reload()
+          .finally(() => {
+            this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
+          })
+      }
     }
   },
   methods: {
@@ -97,6 +110,46 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Public/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Public/mergeTimeline')
       }
+    },
+    async reload () {
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch(() => {
+        this.$message({
+          message: 'Could not find account',
+          type: 'error'
+        })
+      })
+      await this.$store.dispatch('TimelineSpace/stopUserStreaming')
+      await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
+      await this.$store.dispatch('TimelineSpace/Contents/Public/stopPublicStreaming')
+
+      await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
+      await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
+      await this.$store.dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline')
+        .catch(() => {
+          loading.close()
+          this.$message({
+            message: 'Could not fetch public timeline',
+            type: 'error'
+          })
+        })
+
+      this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+      this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+      this.$store.dispatch('TimelineSpace/Contents/Public/startPublicStreaming')
+        .catch(() => {
+          loading.close()
+          this.$message({
+            message: 'Failed to restart streaming',
+            type: 'error'
+          })
+        })
+      loading.close()
     }
   }
 }
