@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.4.1] - 2018-06-28
+### Added
+- [#412](https://github.com/h3poteto/whalebird-desktop/pull/412) Add reload button and reload each timeline
+- [#381](https://github.com/h3poteto/whalebird-desktop/pull/381) Allow reload pages with shortcut keys
+
+### Fixed
+- [#411](https://github.com/h3poteto/whalebird-desktop/pull/411) Fix display state of loading in side bar
+- [#410](https://github.com/h3poteto/whalebird-desktop/pull/410) Fix findLink method to detect link, tag, and account
+
 ## [1.4.0] - 2018-06-20
 ### Added
 - [#403](https://github.com/h3poteto/whalebird-desktop/pull/403) Create list editting page which can manage list memberships
