@@ -65,7 +65,7 @@
         <span class="count">
           {{ favouritesCount(message) }}
         </span>
-        <popper trigger="click" :options="{placement: 'bottom'}">
+        <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
           <div class="popper toot-menu">
             <ul class="menu-list">
               <li role="button" @click="openDetail(message)">
@@ -190,13 +190,15 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+      this.$refs.popper.doClose()
     },
     openBrowser (message) {
       shell.openExternal(message.url)
+      this.$refs.popper.doClose()
     },
     copyLink (message) {
-      console.log(message)
       clipboard.writeText(message.url, 'toot-link')
+      this.$refs.popper.doClose()
     },
     changeReblog (message) {
       if (message.reblogged) {
