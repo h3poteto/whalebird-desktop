@@ -71,10 +71,10 @@
               <li role="button" @click="openDetail(message)">
                 View Toot Detail
               </li>
-              <li role="button" @click="openBrowser(message)">
+              <li role="button" @click="openBrowser(originalMessage(message))">
                 Open in Browser
               </li>
-              <li role="button" @click="copyLink(message)">
+              <li role="button" @click="copyLink(originalMessage(message))">
                 Copy Link to Toot
               </li>
               <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage(message)">
@@ -195,6 +195,7 @@ export default {
       shell.openExternal(message.url)
     },
     copyLink (message) {
+      console.log(message)
       clipboard.writeText(message.url, 'toot-link')
     },
     changeReblog (message) {
