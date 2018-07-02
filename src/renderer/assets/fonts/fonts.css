@@ -8,14 +8,3 @@
 		local("Bookerly-Regular"),
 		url("./Bookerly-Regular.ttf") format("truetype");
 }
-
-/* === Lato - regular */
-@font-face {
-	font-family: 'Lato';
-	font-style: normal;
-	font-weight: 400;
-	src: url("./Lato-Regular.ttf");
-	src: local("Lato Regular"),
-		local("Lato-Regular"),
-		url("./Lato-Regular.ttf") format("truetype");
-}
