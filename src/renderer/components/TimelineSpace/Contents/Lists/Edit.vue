@@ -29,12 +29,7 @@ export default {
   },
   methods: {
     async init () {
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+      this.$store.commit('TimelineSpace/changeLoading', true)
       try {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', this.list_id)
       } catch (err) {
@@ -43,16 +38,11 @@ export default {
           type: 'error'
         })
       } finally {
-        loading.close()
+        this.$store.commit('TimelineSpace/changeLoading', false)
       }
     },
     async removeAccount (account) {
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+      this.$store.commit('TimelineSpace/changeLoading', true)
       try {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/removeAccount', {
           account: account,
@@ -65,7 +55,7 @@ export default {
           type: 'error'
         })
       } finally {
-        loading.close()
+        this.$store.commit('TimelineSpace/changeLoading', false)
       }
     },
     addAccount () {

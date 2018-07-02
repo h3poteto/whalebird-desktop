@@ -18,11 +18,15 @@ const TimelineSpace = {
       domain: '',
       _id: '',
       username: ''
-    }
+    },
+    loading: false
   },
   mutations: {
     updateAccount (state, account) {
       state.account = account
+    },
+    changeLoading (state, value) {
+      state.loading = value
     }
   },
   actions: {
