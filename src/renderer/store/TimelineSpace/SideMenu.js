@@ -7,7 +7,8 @@ const SideMenu = {
     unreadNotifications: false,
     unreadLocalTimeline: false,
     lists: [],
-    overrideActivePath: null
+    overrideActivePath: null,
+    collapse: false
   },
   mutations: {
     changeUnreadHomeTimeline (state, value) {
@@ -24,6 +25,9 @@ const SideMenu = {
     },
     updateOverrideActivePath (state, path) {
       state.overrideActivePath = path
+    },
+    changeCollapse (state, collapse) {
+      state.collapse = collapse
     }
   },
   actions: {

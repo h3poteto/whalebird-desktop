@@ -6,7 +6,7 @@
   element-loading-spinner="el-icon-loading"
   element-loading-background="rgba(0, 0, 0, 0.8)">
   <side-menu></side-menu>
-  <div class="page">
+  <div :class="collapse ? 'page-narrow':'page'">
     <header class="header" style="-webkit-app-region: drag;">
       <header-menu></header-menu>
     </header>
@@ -29,7 +29,8 @@ export default {
   components: { SideMenu, HeaderMenu, Modals, Contents },
   computed: {
     ...mapState({
-      loading: state => state.TimelineSpace.loading
+      loading: state => state.TimelineSpace.loading,
+      collapse: state => state.TimelineSpace.SideMenu.collapse
     })
   },
   created () {
@@ -121,6 +122,21 @@ export default {
     position: fixed;
     top: 0;
     left: 245px;
+    height: 48px;
+    border-bottom: solid 1px var(--theme-border-color);
+  }
+}
+
+.page-narrow {
+  margin-left: 76px;
+  height: 100%;
+  box-sizing: border-box;
+
+  .header {
+    width: calc(100% - 141px);
+    position: fixed;
+    top: 0;
+    left: 141px;
     height: 48px;
     border-bottom: solid 1px var(--theme-border-color);
   }
