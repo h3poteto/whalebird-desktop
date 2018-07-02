@@ -31,29 +31,19 @@ export default {
     })
   },
   created () {
-    const loading = this.$loading({
-      lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    })
+    this.$store.commit('TimelineSpace/changeLoading', true)
     this.load()
-      .then(() => {
-        loading.close()
+      .finally(() => {
+        this.$store.commit('TimelineSpace/changeLoading', false)
       })
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   watch: {
     list_id: function () {
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+      this.$store.commit('TimelineSpace/changeLoading', true)
       this.load()
-        .then(() => {
-          loading.close()
+        .finally(() => {
+          this.$store.commit('TimelineSpace/changeLoading', false)
         })
     },
     startReload: function (newState, oldState) {
@@ -120,43 +110,42 @@ export default {
       }
     },
     async reload () {
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-      const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch(() => {
-        this.$message({
-          message: 'Could not find account',
-          type: 'error'
-        })
-      })
-
-      await this.$store.dispatch('TimelineSpace/stopUserStreaming')
-      await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
-      await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
-
-      await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
-      await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
-      await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', this.list_id)
-        .catch(() => {
+      this.$store.commit('TimelineSpace/changeLoading', true)
+      try {
+        const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch((err) => {
           this.$message({
-            message: 'Could not fetch timeline',
+            message: 'Could not find account',
             type: 'error'
           })
+          throw err
         })
 
-      this.$store.dispatch('TimelineSpace/startUserStreaming', account)
-      this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
-      this.$store.dispatch('TimelineSpace/Contents/Lists/Show/startStreaming', this.list_id)
-        .catch(() => {
-          this.$message({
-            message: 'Failed to restart streaming',
-            type: 'error'
+        await this.$store.dispatch('TimelineSpace/stopUserStreaming')
+        await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
+        await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
+
+        await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
+        await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
+        await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', this.list_id)
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch timeline',
+              type: 'error'
+            })
           })
-        })
-      loading.close()
+
+        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+        this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+        this.$store.dispatch('TimelineSpace/Contents/Lists/Show/startStreaming', this.list_id)
+          .catch(() => {
+            this.$message({
+              message: 'Failed to restart streaming',
+              type: 'error'
+            })
+          })
+      } finally {
+        this.$store.commit('TimelineSpace/changeLoading', false)
+      }
     }
   }
 }

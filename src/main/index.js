@@ -476,8 +476,10 @@ ipcMain.on('start-local-streaming', (event, ac) => {
 })
 
 ipcMain.on('stop-local-streaming', (event, _) => {
-  localStreaming.stop()
-  localStreaming = null
+  if (localStreaming !== null) {
+    localStreaming.stop()
+    localStreaming = null
+  }
 })
 
 let publicStreaming = null
@@ -511,8 +513,10 @@ ipcMain.on('start-public-streaming', (event, ac) => {
 })
 
 ipcMain.on('stop-public-streaming', (event, _) => {
-  publicStreaming.stop()
-  publicStreaming = null
+  if (publicStreaming !== null) {
+    publicStreaming.stop()
+    publicStreaming = null
+  }
 })
 
 let listStreaming = null
@@ -583,8 +587,10 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
 })
 
 ipcMain.on('stop-tag-streaming', (event, _) => {
-  tagStreaming.stop()
-  tagStreaming = null
+  if (tagStreaming !== null) {
+    tagStreaming.stop()
+    tagStreaming = null
+  }
 })
 
 // sounds
