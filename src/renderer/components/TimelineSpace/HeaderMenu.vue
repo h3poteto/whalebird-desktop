@@ -76,15 +76,16 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
     },
     reload () {
-      switch (this.title) {
-        case 'Home':
-        case 'Notification':
-        case 'Favourite':
-        case 'Local timeline':
-        case 'Public timeline':
-        case 'Hashtag':
-        case `#${this.$route.params.tag}`:
-        case 'Lists':
+      switch (this.$route.name) {
+        case 'home':
+        case 'notifications':
+        case 'favourites':
+        case 'local':
+        case 'public':
+        case 'hashtag-list':
+        case `tag`:
+        case 'lists':
+        case 'list':
           this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
           break
         default:
