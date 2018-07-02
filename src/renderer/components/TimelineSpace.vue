@@ -1,5 +1,10 @@
 <template>
-<div id="timeline_space">
+<div
+  id="timeline_space"
+  v-loading="loading"
+  element-loading-text="Loading..."
+  element-loading-spinner="el-icon-loading"
+  element-loading-background="rgba(0, 0, 0, 0.8)">
   <side-menu></side-menu>
   <div class="page">
     <header class="header" style="-webkit-app-region: drag;">
@@ -12,6 +17,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Contents from './TimelineSpace/Contents'
@@ -21,20 +27,16 @@ import Mousetrap from 'mousetrap'
 export default {
   name: 'timeline-space',
   components: { SideMenu, HeaderMenu, Modals, Contents },
-  created () {
-    const loading = this.$loading({
-      lock: true,
-      text: 'Loading',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
+  computed: {
+    ...mapState({
+      loading: state => state.TimelineSpace.loading
     })
+  },
+  created () {
+    this.$store.commit('TimelineSpace/changeLoading', true)
     this.initialize()
-      .then(() => {
-        loading.close()
-        this.$store.commit('GlobalHeader/updateChanging', false)
-      })
-      .catch(() => {
-        loading.close()
+      .finally(() => {
+        this.$store.commit('TimelineSpace/changeLoading', false)
         this.$store.commit('GlobalHeader/updateChanging', false)
       })
   },

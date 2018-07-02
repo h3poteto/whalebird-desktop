@@ -85,41 +85,38 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Home/deleteToot', message)
     },
     async reload () {
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-      const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch(() => {
-        this.$message({
-          message: 'Could not find account',
-          type: 'error'
-        })
-      })
-      await this.$store.dispatch('TimelineSpace/stopUserStreaming')
-      await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
-
-      await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
-        .catch(() => {
-          loading.close()
+      this.$store.commit('TimelineSpace/changeLoading', true)
+      try {
+        const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch((err) => {
           this.$message({
-            message: 'Could not fetch timeline',
+            message: 'Could not find account',
             type: 'error'
           })
+          throw err
         })
-      await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
+        await this.$store.dispatch('TimelineSpace/stopUserStreaming')
+        await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
 
-      this.$store.dispatch('TimelineSpace/startUserStreaming', account)
-        .catch(() => {
-          loading.close()
-          this.$message({
-            message: 'Failed to restart streaming',
-            type: 'error'
+        await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
+          .catch(() => {
+            this.$message({
+              message: 'Could not fetch timeline',
+              type: 'error'
+            })
           })
-        })
-      this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
-      loading.close()
+        await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
+
+        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
+          .catch(() => {
+            this.$message({
+              message: 'Failed to restart streaming',
+              type: 'error'
+            })
+          })
+        this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+      } finally {
+        this.$store.commit('TimelineSpace/changeLoading', false)
+      }
     }
   }
 }
