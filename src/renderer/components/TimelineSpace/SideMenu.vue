@@ -18,10 +18,10 @@
         <span>{{ account.domain }}</span>
       </div>
       <div class="collapse">
-        <el-button type="text" class="release-collapse" @click="collapse = false" v-if="collapse">
+        <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse">
           <i class="el-icon-arrow-right"></i>
         </el-button>
-        <el-button type="text" class="do-collapse" @click="collapse = true" v-else>
+        <el-button type="text" class="do-collapse" @click="doCollapse" v-else>
           <i class="el-icon-arrow-left"></i>
         </el-button>
       </div>
@@ -96,16 +96,12 @@ export default {
       unreadLocalTimeline: state => state.TimelineSpace.SideMenu.unreadLocalTimeline,
       lists: state => state.TimelineSpace.SideMenu.lists,
       themeColor: state => state.App.theme.side_menu_color,
-      overrideActivePath: state => state.TimelineSpace.SideMenu.overrideActivePath
-    }),
-    collapse: {
-      get () {
-        return this.$store.state.TimelineSpace.SideMenu.collapse
-      },
-      set (value) {
-        this.$store.commit('TimelineSpace/SideMenu/changeCollapse', value)
-      }
-    }
+      overrideActivePath: state => state.TimelineSpace.SideMenu.overrideActivePath,
+      collapse: state => state.TimelineSpace.SideMenu.collapse
+    })
+  },
+  created () {
+    this.$store.dispatch('TimelineSpace/SideMenu/readCollapse')
   },
   methods: {
     activeRoute () {
@@ -124,6 +120,12 @@ export default {
           shell.openExternal(this.account.baseURL + '/settings/profile')
           break
       }
+    },
+    doCollapse () {
+      this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', true)
+    },
+    releaseCollapse () {
+      this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', false)
     }
   }
 }
