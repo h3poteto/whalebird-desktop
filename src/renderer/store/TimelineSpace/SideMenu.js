@@ -1,4 +1,5 @@
 import Mastodon from 'megalodon'
+import { ipcRenderer } from 'electron'
 
 const SideMenu = {
   namespaced: true,
@@ -47,6 +48,16 @@ const SideMenu = {
       commit('changeUnreadHomeTimeline', false)
       commit('changeUnreadNotifications', false)
       commit('changeUnreadLocalTimeline', false)
+    },
+    changeCollapse ({ commit }, value) {
+      commit('changeCollapse', value)
+      ipcRenderer.send('change-collapse', value)
+    },
+    readCollapse ({ commit }) {
+      ipcRenderer.send('get-collapse')
+      ipcRenderer.once('response-get-collapse', (event, value) => {
+        commit('changeCollapse', value)
+      })
     }
   }
 }
