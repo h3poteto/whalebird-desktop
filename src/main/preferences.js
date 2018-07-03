@@ -10,6 +10,9 @@ const Base = {
     theme: 'white',
     fontSize: 14,
     displayNameStyle: 0
+  },
+  state: {
+    collapse: false
   }
 }
 
@@ -46,5 +49,12 @@ export default class Preferences {
         return resolve(data)
       })
     })
+  }
+
+  async update (obj) {
+    const current = await this.load()
+    const data = objectAssignDeep({}, current, obj)
+    const result = await this.save(data)
+    return result
   }
 }
