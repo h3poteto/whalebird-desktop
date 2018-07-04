@@ -1,7 +1,7 @@
 <template>
-  <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm" class="login-form">
-    <el-form-item label="First, let's log in to a Mastodon instance. Please enter an instance domain name.">
-      <el-input v-model="domainName" placeholder="mastodon.social"></el-input>
+  <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm('loginForm')" class="login-form" :rules="rules" :model="form">
+    <el-form-item label="First, let's log in to a Mastodon instance. Please enter an instance domain name." prop="domainName">
+      <el-input v-model="form.domainName" placeholder="mastodon.social"></el-input>
     </el-form-item>
     <!-- Dummy form to guard submitting with enter -->
     <el-form-item class="hidden">
@@ -9,7 +9,7 @@
     </el-form-item>
     <el-button
       type="primary"
-      @click="confirm"
+      @click="confirm('loginForm')"
       v-if="selectedInstance === null"
       v-loading="searching"
       element-loading-background="rgba(0, 0, 0, 0.8)">
@@ -32,19 +32,32 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'login-form',
+  data () {
+    return {
+      form: {
+        domainName: ''
+      },
+      rules: {
+        domainName: [
+          {
+            type: 'string',
+            required: true,
+            message: 'Domain name is required'
+          },
+          {
+            pattern: /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/,
+            trigger: 'change',
+            message: 'Please write only domain name'
+          }
+        ]
+      }
+    }
+  },
   computed: {
     ...mapState({
       selectedInstance: state => state.Login.selectedInstance,
       searching: state => state.Login.searching
-    }),
-    domainName: {
-      get () {
-        return this.$store.state.Login.domainName
-      },
-      set (value) {
-        this.$store.dispatch('Login/updateDomainName', value)
-      }
-    }
+    })
   },
   methods: {
     login () {
@@ -68,20 +81,30 @@ export default {
           })
         })
     },
-    confirm () {
-      this.$store.dispatch('Login/confirmInstance', this.domainName)
-        .then(() => {
+    confirm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$store.dispatch('Login/confirmInstance', this.form.domainName)
+            .then(() => {
+              this.$message({
+                message: `${this.form.domainName} is confirmed, please login`,
+                type: 'success'
+              })
+            })
+            .catch(() => {
+              this.$message({
+                message: `${this.form.domainName} does not exist`,
+                type: 'error'
+              })
+            })
+        } else {
           this.$message({
-            message: `${this.domainName} is confirmed, please login`,
-            type: 'success'
-          })
-        })
-        .catch(() => {
-          this.$message({
-            message: `${this.domainName} does not exist`,
+            message: 'Please write only domain name',
             type: 'error'
           })
-        })
+          return false
+        }
+      })
     }
   }
 }
