@@ -645,6 +645,27 @@ ipcMain.on('save-preferences', (event, data) => {
     })
 })
 
+ipcMain.on('change-collapse', (event, value) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.update(
+    {
+      state: {
+        collapse: value
+      }
+    })
+    .catch((err) => {
+      log.error(err)
+    })
+})
+
+ipcMain.on('get-collapse', (event, _) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.load()
+    .then((conf) => {
+      event.sender.send('response-get-collapse', conf.state.collapse)
+    })
+})
+
 // hashtag
 ipcMain.on('save-hashtag', (event, tag) => {
   const hashtags = new Hashtags(hashtagsDB)

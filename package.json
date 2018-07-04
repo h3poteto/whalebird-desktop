@@ -1,6 +1,6 @@
 {
   "name": "Whalebird",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
   "description": "A Electron based Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
@@ -9,8 +9,8 @@
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
   },
   "config": {
-    "buildVersion": "26",
-    "appVersion": "1.4.1"
+    "buildVersion": "27",
+    "appVersion": "1.4.2"
   },
   "main": "./dist/electron/main.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "build:mac": "node .electron-vue/build.js && electron-builder --mac --x64",
     "build:linux": "node .electron-vue/build.js && electron-builder --linux --x64",
     "build:windows": "node .electron-vue/build.js && electron-builder --win --x64",
-    "build:mas": "npm run pack && electron-packager ./ 'Whalebird' --platform=mas --arch=x64 --electron-version=1.8.6 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/test' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/whalebird.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=org.whalebird.desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
+    "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Whalebird' --platform=mas --arch=x64 --electron-version=1.8.6 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/test' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/whalebird.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=org.whalebird.desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
     "dev": "node .electron-vue/dev-runner.js",
     "e2e": "npm run pack && mocha test/e2e",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src test",
