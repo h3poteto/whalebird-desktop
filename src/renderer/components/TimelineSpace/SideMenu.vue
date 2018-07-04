@@ -172,13 +172,21 @@ export default {
       margin-top: 24px;
 
       .do-collapse {
-        color: #606266;
+        color: #dcdfe6;
         padding: 0;
+
+        &:hover {
+          color: #409eff;
+        }
       }
 
       .release-collapse {
-        color: #606266;
+        color: #dcdfe6;
         padding: 0;
+
+        &:hover {
+          color: #409eff;
+        }
       }
     }
   }
