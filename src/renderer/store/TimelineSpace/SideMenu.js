@@ -1,4 +1,5 @@
 import Mastodon from 'megalodon'
+import { ipcRenderer } from 'electron'
 
 const SideMenu = {
   namespaced: true,
@@ -7,7 +8,8 @@ const SideMenu = {
     unreadNotifications: false,
     unreadLocalTimeline: false,
     lists: [],
-    overrideActivePath: null
+    overrideActivePath: null,
+    collapse: false
   },
   mutations: {
     changeUnreadHomeTimeline (state, value) {
@@ -24,6 +26,9 @@ const SideMenu = {
     },
     updateOverrideActivePath (state, path) {
       state.overrideActivePath = path
+    },
+    changeCollapse (state, collapse) {
+      state.collapse = collapse
     }
   },
   actions: {
@@ -43,6 +48,16 @@ const SideMenu = {
       commit('changeUnreadHomeTimeline', false)
       commit('changeUnreadNotifications', false)
       commit('changeUnreadLocalTimeline', false)
+    },
+    changeCollapse ({ commit }, value) {
+      commit('changeCollapse', value)
+      ipcRenderer.send('change-collapse', value)
+    },
+    readCollapse ({ commit }) {
+      ipcRenderer.send('get-collapse')
+      ipcRenderer.once('response-get-collapse', (event, value) => {
+        commit('changeCollapse', value)
+      })
     }
   }
 }

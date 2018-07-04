@@ -1,7 +1,10 @@
 <template>
   <div id="side_menu">
-    <div class="profile-wrapper" style="-webkit-app-region: drag;">
-      <div class="profile">
+    <div :class="collapse ? 'profile-wrapper narrow-menu':'profile-wrapper'" style="-webkit-app-region: drag;">
+      <div class="profile-narrow" v-if="collapse">
+        <img :src="account.avatar" class="avatar" />
+      </div>
+      <div class="profile-wide" v-else>
         <div>@{{ account.username }}
           <el-dropdown trigger="click" @command="handleProfile">
             <span class="el-dropdown-link">
@@ -14,14 +17,24 @@
         </div>
         <span>{{ account.domain }}</span>
       </div>
+      <div class="collapse">
+        <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse">
+          <i class="el-icon-arrow-right"></i>
+        </el-button>
+        <el-button type="text" class="do-collapse" @click="doCollapse" v-else>
+          <i class="el-icon-arrow-left"></i>
+        </el-button>
+      </div>
+      <div class="clearfix"></div>
     </div>
     <el-menu
       :default-active="activeRoute()"
       :background-color="themeColor"
       text-color="#909399"
+      :collapse="collapse"
       active-text-color="#ffffff"
       :router="true"
-      class="el-menu-vertical timeline-menu">
+      :class="collapse ? 'el-menu-vertical timeline-menu narrow-menu':'el-menu-vertical timeline-menu'">
       <el-menu-item :index="`/${id()}/home`">
         <icon name="home"></icon>
         <span>Home</span>
@@ -83,8 +96,12 @@ export default {
       unreadLocalTimeline: state => state.TimelineSpace.SideMenu.unreadLocalTimeline,
       lists: state => state.TimelineSpace.SideMenu.lists,
       themeColor: state => state.App.theme.side_menu_color,
-      overrideActivePath: state => state.TimelineSpace.SideMenu.overrideActivePath
+      overrideActivePath: state => state.TimelineSpace.SideMenu.overrideActivePath,
+      collapse: state => state.TimelineSpace.SideMenu.collapse
     })
+  },
+  created () {
+    this.$store.dispatch('TimelineSpace/SideMenu/readCollapse')
   },
   methods: {
     activeRoute () {
@@ -103,6 +120,12 @@ export default {
           shell.openExternal(this.account.baseURL + '/settings/profile')
           break
       }
+    },
+    doCollapse () {
+      this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', true)
+    },
+    releaseCollapse () {
+      this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', false)
     }
   }
 }
@@ -119,7 +142,8 @@ export default {
     height: 70px;
     font-size: 16px;
 
-    .profile {
+    .profile-wide {
+      float: left;
       color: #ffffff;
       font-weight: bold;
       padding: 20px 8px 10px 20px;
@@ -129,6 +153,32 @@ export default {
 
       .el-dropdown-link {
         cursor: pointer;
+      }
+    }
+
+    .profile-narrow {
+      float: left;
+
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin: 18px 12px;
+      }
+    }
+
+    .collapse {
+      float: right;
+      margin-top: 24px;
+
+      .do-collapse {
+        color: #606266;
+        padding: 0;
+      }
+
+      .release-collapse {
+        color: #606266;
+        padding: 0;
       }
     }
   }
@@ -163,6 +213,10 @@ export default {
       line-height: 32px;
       font-size: 14px;
     }
+  }
+
+  .narrow-menu {
+    width: 76px;
   }
 }
 </style>
