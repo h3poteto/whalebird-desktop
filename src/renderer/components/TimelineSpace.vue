@@ -4,7 +4,8 @@
   v-loading="loading"
   element-loading-text="Loading..."
   element-loading-spinner="el-icon-loading"
-  element-loading-background="rgba(0, 0, 0, 0.8)">
+  element-loading-background="rgba(0, 0, 0, 0.8)"
+  >
   <side-menu></side-menu>
   <div :class="collapse ? 'page-narrow':'page'">
     <header class="header" style="-webkit-app-region: drag;">
@@ -13,6 +14,7 @@
     <contents></contents>
   </div>
   <modals></modals>
+  <receive-drop v-show="droppableVisible"></receive-drop>
 </div>
 </template>
 
@@ -23,10 +25,17 @@ import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Contents from './TimelineSpace/Contents'
 import Modals from './TimelineSpace/Modals'
 import Mousetrap from 'mousetrap'
+import ReceiveDrop from './TimelineSpace/ReceiveDrop'
 
 export default {
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, Modals, Contents },
+  components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop },
+  data () {
+    return {
+      dropTarget: null,
+      droppableVisible: false
+    }
+  },
   computed: {
     ...mapState({
       loading: state => state.TimelineSpace.loading,
@@ -42,11 +51,19 @@ export default {
       })
   },
   mounted () {
+    window.addEventListener('dragenter', this.onDragEnter)
+    window.addEventListener('dragleave', this.onDragLeave)
+    window.addEventListener('dragover', this.onDragOver)
+    window.addEventListener('drop', this.handleDrop)
     Mousetrap.bind(['command+t', 'ctrl+t'], () => {
       this.$store.commit('TimelineSpace/Modals/Jump/changeModal', true)
     })
   },
   beforeDestroy () {
+    window.removeEventListener('dragenter', this.onDragEnter)
+    window.removeEventListener('dragleave', this.onDragLeave)
+    window.removeEventListener('dragover', this.onDragOver)
+    window.removeEventListener('drop', this.handleDrop)
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
     this.$store.dispatch('TimelineSpace/stopLocalStreaming')
   },
@@ -103,6 +120,44 @@ export default {
           })
         })
       this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+    },
+    handleDrop (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      this.droppableVisible = false
+      if (e.dataTransfer.files.item(0) === null || e.dataTransfer.files.item(0) === undefined) {
+        return false
+      }
+      const file = e.dataTransfer.files.item(0)
+      if (!file.type.includes('image') && !file.type.includes('video')) {
+        this.$message({
+          message: 'You can only attach images or videos',
+          type: 'error'
+        })
+        return false
+      }
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaId')
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
+        .catch(() => {
+          this.$message({
+            message: 'Could not attach the file',
+            type: 'error'
+          })
+        })
+      return false
+    },
+    onDragEnter (e) {
+      this.dropTarget = e.target
+      this.droppableVisible = true
+    },
+    onDragLeave (e) {
+      if (e.target === this.dropTarget) {
+        this.droppableVisible = false
+      }
+    },
+    onDragOver (e) {
+      e.preventDefault()
     }
   }
 }
