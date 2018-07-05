@@ -11,7 +11,8 @@ const NewToot = {
     attachedMedias: [],
     visibility: 'public',
     sensitive: false,
-    spoiler: ''
+    spoiler: '',
+    attachedMediaId: 0
   },
   mutations: {
     changeModal (state, value) {
@@ -43,6 +44,9 @@ const NewToot = {
     },
     updateSpoiler (state, value) {
       state.spoiler = value
+    },
+    updateMediaId (state, value) {
+      state.attachedMediaId = value
     }
   },
   actions: {
@@ -105,6 +109,12 @@ const NewToot = {
           console.error(err)
           throw err
         })
+    },
+    incrementMediaId ({ commit, state }) {
+      commit('updateMediaId', state.attachedMediaId + 1)
+    },
+    resetMediaId ({ commit }) {
+      commit('updateMediaId', 0)
     }
   }
 }
