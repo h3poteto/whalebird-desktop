@@ -21,7 +21,7 @@
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
         <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
-        <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedImageId"/>
+        <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId"/>
       </div>
       <div class="privacy">
         <el-dropdown trigger="click" @command="changeVisibility">
@@ -60,7 +60,6 @@ export default {
   name: 'new-toot',
   data () {
     return {
-      attachedImageId: 0,
       showContentWarning: false
     }
   },
@@ -74,6 +73,7 @@ export default {
         }
       },
       attachedMedias: state => state.TimelineSpace.Modals.NewToot.attachedMedias,
+      attachedMediaId: state => state.TimelineSpace.Modals.NewToot.attachedMediaId,
       blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit,
       visibility: state => state.TimelineSpace.Modals.NewToot.visibility,
       sensitive: state => state.TimelineSpace.Modals.NewToot.sensitive,
@@ -131,15 +131,9 @@ export default {
       }
     }
   },
-  mounted () {
-    document.addEventListener('drop', this.onDrop)
-  },
-  destroyed () {
-    document.removeEventListener('drop', this.onDrop)
-  },
   methods: {
     close () {
-      this.resetImage()
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaId')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
     toot () {
@@ -217,7 +211,7 @@ export default {
       this.updateImage(file)
     },
     updateImage (file) {
-      this.resetImage()
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaId')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
         .catch(() => {
           this.$message({
@@ -229,31 +223,11 @@ export default {
     removeAttachment (media) {
       this.$store.commit('TimelineSpace/Modals/NewToot/removeMedia', media)
     },
-    resetImage () {
-      ++this.attachedImageId
-    },
     changeVisibility (level) {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibility', level)
     },
     changeSensitive () {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
-    },
-    onDrop (e) {
-      e.preventDefault()
-      e.stopPropagation()
-      if (e.dataTransfer.files.item(0) === null || e.dataTransfer.files.item(0) === undefined) {
-        return false
-      }
-      const file = e.dataTransfer.files.item(0)
-      if (!file.type.includes('image') && !file.type.includes('video')) {
-        this.$message({
-          message: 'You can only attach images or videos',
-          type: 'error'
-        })
-        return false
-      }
-      this.updateImage(file)
-      return false
     }
   }
 }
