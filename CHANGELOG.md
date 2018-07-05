@@ -1,5 +1,28 @@
 # Change Log
 
+## [Unreleased]
+### Added
+- [#428](https://github.com/h3poteto/whalebird-desktop/pull/428) Add stylelint and check in sider
+- [#427](https://github.com/h3poteto/whalebird-desktop/pull/427) Allow drop file to upload the media to mastodon
+- [#425](https://github.com/h3poteto/whalebird-desktop/pull/425) Validate domain name at login
+
+### Changed
+- [#426](https://github.com/h3poteto/whalebird-desktop/pull/426) Change color of collapse button
+
+
+## [1.4.2] - 2018-07-04
+### Added
+- [#422](https://github.com/h3poteto/whalebird-desktop/pull/422) Add small window layout menu
+
+### Changed
+- [#421](https://github.com/h3poteto/whalebird-desktop/pull/421) Use Lato font in textarea because backtic is broken in Noto
+- [#420](https://github.com/h3poteto/whalebird-desktop/pull/420) Display loading on the timeline space instead of loading covering the whole
+
+### Fixed
+- [#419](https://github.com/h3poteto/whalebird-desktop/pull/419) Fix target message when the message is reblogged in toot menu
+- [#418](https://github.com/h3poteto/whalebird-desktop/pull/418) Skip stop streaming if the object is not initialized
+
+
 ## [1.4.1] - 2018-06-28
 ### Added
 - [#412](https://github.com/h3poteto/whalebird-desktop/pull/412) Add reload button and reload each timeline

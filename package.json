@@ -1,6 +1,6 @@
 {
   "name": "Whalebird",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
   "description": "A Electron based Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
@@ -9,8 +9,8 @@
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
   },
   "config": {
-    "buildVersion": "27",
-    "appVersion": "1.4.2"
+    "buildVersion": "28",
+    "appVersion": "1.4.3"
   },
   "main": "./dist/electron/main.js",
   "scripts": {
@@ -26,6 +26,7 @@
     "e2e": "npm run pack && mocha test/e2e",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src test",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src test",
+    "stylelint": "stylelint '**/*.vue' --syntax scss",
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
@@ -168,6 +169,9 @@
     "sass-loader": "^6.0.7",
     "spectron": "^3.7.1",
     "style-loader": "^0.18.2",
+    "stylelint": "^9.3.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-processor-html": "^1.0.0",
     "url-loader": "^1.0.1",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^13.0.5",
