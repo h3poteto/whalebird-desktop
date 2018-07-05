@@ -8,3 +8,12 @@ linter:
       config: '.eslintrc.js'
       ext: '.js,.vue'
       ignore-path: .eslintignore
+
+  stylelint:
+    npm_install: true
+    options:
+      config: .stylelintrc.json
+      ignore-path: .stylelintignore
+      syntax: scss
+      ignore-disables: true
+      glob: '**/*.vue'
