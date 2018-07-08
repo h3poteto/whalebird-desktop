@@ -6,7 +6,8 @@ const Home = {
     lazyLoading: false,
     heading: true,
     timeline: [],
-    unreadTimeline: []
+    unreadTimeline: [],
+    filter: ''
   },
   mutations: {
     changeLazyLoading (state, value) {
@@ -64,6 +65,9 @@ const Home = {
           return toot.id !== message.id
         }
       })
+    },
+    changeFilter (state, filter) {
+      state.filter = filter
     }
   },
   actions: {

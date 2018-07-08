@@ -8,6 +8,26 @@
     <el-button type="text" class="action" @click="reload">
       <icon name="sync-alt"></icon>
     </el-button>
+    <el-popover
+      placement="left-start"
+      width="320"
+      popper-class="theme-popover"
+      trigger="click"
+      v-model="filterVisible">
+      <div>
+        <el-form>
+          <el-form-item label="Filter">
+            <el-input v-model="filter"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="applyFilter(filter)">Apply</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <el-button slot="reference" type="text" class="action">
+        <icon name="sliders-h"></icon>
+      </el-button>
+    </el-popover>
   </div>
 </div>
 </template>
@@ -17,6 +37,12 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'header-menu',
+  data () {
+    return {
+      filter: '',
+      filterVisible: false
+    }
+  },
   computed: {
     ...mapState({
       title: state => state.TimelineSpace.HeaderMenu.title
@@ -24,10 +50,12 @@ export default {
   },
   created () {
     this.channelName()
+    this.loadFilter()
   },
   watch: {
     '$route': function () {
       this.channelName()
+      this.loadFilter()
     }
   },
   methods: {
@@ -89,8 +117,27 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
           break
         default:
-          console.log('Not impletemented')
+          console.log('Not implemented')
       }
+    },
+    loadFilter () {
+      switch (this.$route.name) {
+        case 'home':
+          this.filter = this.$store.state.TimelineSpace.Contents.Home.filter
+          break
+        default:
+          console.log('Not implemented')
+      }
+    },
+    applyFilter (filter) {
+      switch (this.$route.name) {
+        case 'home':
+          this.$store.commit('TimelineSpace/Contents/Home/changeFilter', filter)
+          break
+        default:
+          console.log('Not implemented')
+      }
+      this.filterVisible = false
     }
   }
 }
@@ -117,6 +164,7 @@ export default {
     .action {
       color: var(--theme-secondary-color);
       padding: 0;
+      margin-left: 8px;
 
       &:hover {
         color: #409eff;
