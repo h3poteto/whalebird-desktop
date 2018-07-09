@@ -5,7 +5,7 @@
     <el-button type="text" class="action" @click="openNewTootModal">
       <icon name="regular/edit"></icon>
     </el-button>
-    <el-button type="text" class="action" @click="reload">
+    <el-button v-show="reloadable()" type="text" class="action" @click="reload">
       <icon name="sync-alt"></icon>
     </el-button>
     <el-popover
@@ -24,7 +24,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <el-button slot="reference" type="text" class="action">
+      <el-button v-show="filterable()" slot="reference" type="text" class="action">
         <icon name="sliders-h"></icon>
       </el-button>
     </el-popover>
@@ -110,9 +110,7 @@ export default {
         case 'favourites':
         case 'local':
         case 'public':
-        case 'hashtag-list':
-        case `tag`:
-        case 'lists':
+        case 'tag':
         case 'list':
           this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
           break
@@ -120,10 +118,27 @@ export default {
           console.log('Not implemented')
       }
     },
+    reloadable () {
+      switch (this.$route.name) {
+        case 'home':
+        case 'notifications':
+        case 'favourites':
+        case 'local':
+        case 'public':
+        case 'tag':
+        case 'list':
+          return true
+        default:
+          return false
+      }
+    },
     loadFilter () {
       switch (this.$route.name) {
         case 'home':
           this.filter = this.$store.state.TimelineSpace.Contents.Home.filter
+          break
+        case 'notifications':
+          this.filter = this.$store.state.TimelineSpace.Contents.Notifications.filter
           break
         default:
           console.log('Not implemented')
@@ -134,10 +149,22 @@ export default {
         case 'home':
           this.$store.commit('TimelineSpace/Contents/Home/changeFilter', filter)
           break
+        case 'notifications':
+          this.$store.commit('TimelineSpace/Contents/Notifications/changeFilter', filter)
+          break
         default:
           console.log('Not implemented')
       }
       this.filterVisible = false
+    },
+    filterable () {
+      switch (this.$route.name) {
+        case 'home':
+        case 'notifications':
+          return true
+        default:
+          return false
+      }
     }
   }
 }

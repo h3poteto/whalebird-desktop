@@ -1,9 +1,9 @@
 <template>
 <div id="notification">
   <favourite v-if="message.type === 'favourite'" :message="message"></favourite>
-  <follow v-if="message.type === 'follow'" :message="message"></follow>
-  <mention v-if="message.type === 'mention'" :message="message"></mention>
-  <reblog v-if="message.type == 'reblog'" :message="message"></reblog>
+  <follow v-else-if="message.type === 'follow'" :message="message"></follow>
+  <mention v-else-if="message.type === 'mention'" :message="message" :filter="filter"></mention>
+  <reblog v-else-if="message.type == 'reblog'" :message="message"></reblog>
 </div>
 </template>
 
@@ -15,7 +15,16 @@ import Reblog from './Notification/Reblog'
 
 export default {
   name: 'notification',
-  props: ['message'],
+  props: {
+    message: {
+      type: Object,
+      default: {}
+    },
+    filter: {
+      type: String,
+      default: ''
+    }
+  },
   components: { Favourite, Follow, Mention, Reblog }
 }
 </script>

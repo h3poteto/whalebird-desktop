@@ -1,6 +1,6 @@
 <template>
   <div class="mention">
-    <toot :message="message.status" v-on:update="updateToot"></toot>
+    <toot :message="message.status" :filter="filter" v-on:update="updateToot"></toot>
   </div>
 </template>
 
@@ -9,7 +9,16 @@ import Toot from '../Toot'
 
 export default {
   name: 'mention',
-  props: ['message'],
+  props: {
+    message: {
+      type: Object,
+      default: {}
+    },
+    filter: {
+      type: String,
+      default: ''
+    }
+  },
   components: { Toot },
   methods: {
     updateToot (message) {
