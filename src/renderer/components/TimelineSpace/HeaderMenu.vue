@@ -140,6 +140,9 @@ export default {
         case 'notifications':
           this.filter = this.$store.state.TimelineSpace.Contents.Notifications.filter
           break
+        case 'favourites':
+          this.filter = this.$store.state.TimelineSpace.Contents.Favourites.filter
+          break
         default:
           console.log('Not implemented')
       }
@@ -152,6 +155,9 @@ export default {
         case 'notifications':
           this.$store.commit('TimelineSpace/Contents/Notifications/changeFilter', filter)
           break
+        case 'favourites':
+          this.$store.commit('TimelineSpace/Contents/Favourites/changeFilter', filter)
+          break
         default:
           console.log('Not implemented')
       }
@@ -161,6 +167,7 @@ export default {
       switch (this.$route.name) {
         case 'home':
         case 'notifications':
+        case 'favourites':
           return true
         default:
           return false

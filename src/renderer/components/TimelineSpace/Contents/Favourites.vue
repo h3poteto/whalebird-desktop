@@ -3,7 +3,7 @@
     <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
     </div>
     <div class="fav" v-for="message in favourites" v-bind:key="message.id">
-      <toot :message="message" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+      <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
     </div>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
     </div>
@@ -23,7 +23,8 @@ export default {
       favourites: state => state.TimelineSpace.Contents.Favourites.favourites,
       lazyLoading: state => state.TimelineSpace.Contents.Favourites.lazyLoading,
       backgroundColor: state => state.App.theme.background_color,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
+      filter: state => state.TimelineSpace.Contents.Favourites.filter
     })
   },
   created () {
