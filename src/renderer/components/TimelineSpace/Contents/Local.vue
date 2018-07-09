@@ -5,7 +5,7 @@
     </div>
     <transition-group name="timeline" tag="div">
       <div class="local-timeline" v-for="message in timeline" v-bind:key="message.id">
-        <toot :message="message" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+        <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
       </div>
     </transition-group>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
@@ -27,7 +27,8 @@ export default {
       backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Local.heading,
       unread: state => state.TimelineSpace.Contents.Local.unreadTimeline,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
+      filter: state => state.TimelineSpace.Contents.Local.filter
     })
   },
   mounted () {
