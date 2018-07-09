@@ -1,5 +1,9 @@
 <template>
-  <div class="reblog" tabIndex="0">
+<div class="status" tabIndex="0">
+  <div v-if="filtered(message)" class="filtered">
+    Filtered
+  </div>
+  <div v-else class="reblog">
     <div class="action">
       <div class="action-mark">
         <icon name="retweet" scala="0.7"></icon>
@@ -29,8 +33,9 @@
       </div>
     </div>
     <div class="clearfix"></div>
-    <div class="fill-line"></div>
   </div>
+  <div class="fill-line"></div>
+</div>
 </template>
 
 <script>
@@ -40,7 +45,16 @@ import { findAccount, findLink, isTag } from '../../../../utils/link'
 
 export default {
   name: 'reblog',
-  props: ['message'],
+  props: {
+    message: {
+      type: Object,
+      default: {}
+    },
+    filter: {
+      type: String,
+      default: ''
+    }
+  },
   methods: {
     username (account) {
       if (account.display_name !== '') {
@@ -84,6 +98,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+    },
+    filtered (message) {
+      return this.filter.length > 0 && message.status.content.includes(this.filter)
     }
   }
 }
@@ -166,16 +183,23 @@ export default {
       }
     }
   }
-
-  .fill-line {
-    height: 1px;
-    background-color: var(--theme-border-color);
-    margin: 4px 0 0;
-  }
 }
 
-.reblog:focus {
+.filtered {
+  align-items: center;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+}
+
+.status:focus {
   background-color: var(--theme-selected-background-color);
   outline: 0;
+}
+
+.fill-line {
+  height: 1px;
+  background-color: var(--theme-border-color);
+  margin: 4px 0 0;
 }
 </style>
