@@ -1,6 +1,6 @@
 <template>
 <div id="notification">
-  <favourite v-if="message.type === 'favourite'" :message="message"></favourite>
+  <favourite v-if="message.type === 'favourite'" :message="message" :filter="filter"></favourite>
   <follow v-else-if="message.type === 'follow'" :message="message"></follow>
   <mention v-else-if="message.type === 'mention'" :message="message" :filter="filter"></mention>
   <reblog v-else-if="message.type == 'reblog'" :message="message"></reblog>
