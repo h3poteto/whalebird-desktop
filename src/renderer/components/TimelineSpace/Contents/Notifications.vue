@@ -5,7 +5,7 @@
     </div>
     <transition-group name="timeline" tag="div">
       <div class="notifications" v-for="message in notifications" v-bind:key="message.id">
-        <notification :message="message"></notification>
+        <notification :message="message" :filter="filter"></notification>
       </div>
     </transition-group>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
@@ -27,7 +27,8 @@ export default {
       backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Notifications.heading,
       unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
+      filter: state => state.TimelineSpace.Contents.Notifications.filter
     })
   },
   mounted () {
