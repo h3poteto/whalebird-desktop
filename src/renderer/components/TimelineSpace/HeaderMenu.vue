@@ -143,6 +143,9 @@ export default {
         case 'favourites':
           this.filter = this.$store.state.TimelineSpace.Contents.Favourites.filter
           break
+        case 'local':
+          this.filter = this.$store.state.TimelineSpace.Contents.Local.filter
+          break
         default:
           console.log('Not implemented')
       }
@@ -158,6 +161,9 @@ export default {
         case 'favourites':
           this.$store.commit('TimelineSpace/Contents/Favourites/changeFilter', filter)
           break
+        case 'local':
+          this.$store.commit('TimelineSpace/Contents/Local/changeFilter', filter)
+          break
         default:
           console.log('Not implemented')
       }
@@ -168,6 +174,7 @@ export default {
         case 'home':
         case 'notifications':
         case 'favourites':
+        case 'local':
           return true
         default:
           return false
