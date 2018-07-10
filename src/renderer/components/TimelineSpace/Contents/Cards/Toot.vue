@@ -1,5 +1,9 @@
 <template>
-  <div class="toot" tabIndex="0">
+<div class="status" tabIndex="0">
+  <div v-if="filtered(message)" class="filtered">
+    Filtered
+  </div>
+  <div v-else class="toot">
     <div class="icon">
       <img :src="originalMessage(message).account.avatar" @click="openUser(originalMessage(message).account)"/>
     </div>
@@ -92,8 +96,9 @@
       </div>
     </div>
     <div class="clearfix"></div>
-    <div class="fill-line"></div>
   </div>
+  <div class="fill-line"></div>
+</div>
 </template>
 
 <script>
@@ -110,7 +115,16 @@ export default {
       showAttachments: false
     }
   },
-  props: ['message'],
+  props: {
+    message: {
+      type: Object,
+      default: {}
+    },
+    filter: {
+      type: String,
+      default: ''
+    }
+  },
   computed: {
     ...mapState({
       displayNameStyle: state => state.App.displayNameStyle
@@ -316,6 +330,9 @@ export default {
     },
     isShowAttachments (message) {
       return !this.sensitive(message) || this.showAttachments
+    },
+    filtered (message) {
+      return this.filter.length > 0 && this.originalMessage(message).content.search(this.filter) >= 0
     }
   }
 }
@@ -497,19 +514,26 @@ export default {
     }
   }
 
-  .fill-line {
-    height: 1px;
-    background-color: var(--theme-border-color);
-    margin: 4px 0 0;
-  }
-
   .action-pop-over {
     color: #303133;
   }
 }
 
-.toot:focus {
+.filtered {
+  align-items: center;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+}
+
+.status:focus {
   background-color: var(--theme-selected-background-color);
   outline: 0;
+}
+
+.fill-line {
+  height: 1px;
+  background-color: var(--theme-border-color);
+  margin: 4px 0 0;
 }
 </style>

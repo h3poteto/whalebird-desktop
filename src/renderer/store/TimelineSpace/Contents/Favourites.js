@@ -4,7 +4,8 @@ const Favourites = {
   namespaced: true,
   state: {
     favourites: [],
-    lazyLoading: false
+    lazyLoading: false,
+    filter: ''
   },
   mutations: {
     updateFavourites (state, favourites) {
@@ -40,6 +41,9 @@ const Favourites = {
     },
     changeLazyLoading (state, value) {
       state.lazyLoading = value
+    },
+    changeFilter (state, filter) {
+      state.filter = filter
     }
   },
   actions: {

@@ -7,7 +7,8 @@ const Notifications = {
     lazyLoading: false,
     heading: true,
     notifications: [],
-    unreadNotifications: []
+    unreadNotifications: [],
+    filter: ''
   },
   mutations: {
     changeLazyLoading (state, value) {
@@ -52,6 +53,9 @@ const Notifications = {
     },
     archiveNotifications (state) {
       state.notifications = state.notifications.slice(0, 30)
+    },
+    changeFilter (state, filter) {
+      state.filter = filter
     }
   },
   actions: {
