@@ -1,7 +1,7 @@
 <template>
 <div class="status" tabIndex="0">
-  <div v-if="filterd(message)" class="filterd">
-    Filterd
+  <div v-if="filtered(message)" class="filtered">
+    Filtered
   </div>
   <div v-else class="toot">
     <div class="icon">
@@ -331,7 +331,7 @@ export default {
     isShowAttachments (message) {
       return !this.sensitive(message) || this.showAttachments
     },
-    filterd (message) {
+    filtered (message) {
       return this.filter.length > 0 && this.originalMessage(message).content.includes(this.filter)
     }
   }
@@ -519,7 +519,7 @@ export default {
   }
 }
 
-.filterd {
+.filtered {
   align-items: center;
   display: flex;
   height: 40px;
