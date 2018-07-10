@@ -17,7 +17,7 @@
       <div>
         <el-form>
           <el-form-item label="Filter">
-            <el-input v-model="filter"></el-input>
+            <el-input v-model="filter" placeholder="Filter out by regular expressions"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="applyFilter(filter)">Apply</el-button>

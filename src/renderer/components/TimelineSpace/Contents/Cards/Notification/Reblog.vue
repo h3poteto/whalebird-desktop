@@ -100,7 +100,7 @@ export default {
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
     filtered (message) {
-      return this.filter.length > 0 && message.status.content.includes(this.filter)
+      return this.filter.length > 0 && message.status.content.search(this.filter) >= 0
     }
   }
 }

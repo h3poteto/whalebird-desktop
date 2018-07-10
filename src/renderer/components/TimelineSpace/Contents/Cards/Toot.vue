@@ -332,7 +332,7 @@ export default {
       return !this.sensitive(message) || this.showAttachments
     },
     filtered (message) {
-      return this.filter.length > 0 && this.originalMessage(message).content.includes(this.filter)
+      return this.filter.length > 0 && this.originalMessage(message).content.search(this.filter) >= 0
     }
   }
 }
