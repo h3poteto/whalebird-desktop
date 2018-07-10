@@ -13,7 +13,8 @@ export default new Router({
     {
       path: '/authorize',
       name: 'authorize',
-      component: require('@/components/Authorize').default
+      component: require('@/components/Authorize').default,
+      props: (route) => ({ url: route.query.url })
     },
     {
       path: '/preferences/',
