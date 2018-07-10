@@ -71,7 +71,7 @@ export default {
         .then((url) => {
           loading.close()
           this.$store.dispatch('Login/pageBack')
-          this.$router.push({ path: '/authorize' })
+          this.$router.push({ path: '/authorize', query: { url: url } })
         })
         .catch(() => {
           loading.close()
