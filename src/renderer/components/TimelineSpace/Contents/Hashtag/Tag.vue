@@ -22,12 +22,12 @@ export default {
   props: ['tag'],
   computed: {
     ...mapState({
+      backgroundColor: state => state.App.theme.background_color,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
       timeline: state => state.TimelineSpace.Contents.Hashtag.Tag.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Hashtag.Tag.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Hashtag.Tag.heading,
       unread: state => state.TimelineSpace.Contents.Hashtag.Tag.unreadTimeline,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
       filter: state => state.TimelineSpace.Contents.Hashtag.Tag.filter
     })
   },
