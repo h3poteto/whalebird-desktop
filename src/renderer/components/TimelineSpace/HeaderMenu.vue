@@ -146,6 +146,9 @@ export default {
         case 'local':
           this.filter = this.$store.state.TimelineSpace.Contents.Local.filter
           break
+        case 'public':
+          this.filter = this.$store.state.TimelineSpace.Contents.Public.filter
+          break
         default:
           console.log('Not implemented')
       }
@@ -164,6 +167,9 @@ export default {
         case 'local':
           this.$store.commit('TimelineSpace/Contents/Local/changeFilter', filter)
           break
+        case 'public':
+          this.$store.commit('TimelineSpace/Contents/Public/changeFilter', filter)
+          break
         default:
           console.log('Not implemented')
       }
@@ -175,6 +181,7 @@ export default {
         case 'notifications':
         case 'favourites':
         case 'local':
+        case 'public':
           return true
         default:
           return false
