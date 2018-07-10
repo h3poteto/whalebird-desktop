@@ -7,7 +7,8 @@ const Show = {
     timeline: [],
     unreadTimeline: [],
     lazyLoading: false,
-    heading: true
+    heading: true,
+    filter: ''
   },
   mutations: {
     changeHeading (state, value) {
@@ -64,6 +65,9 @@ const Show = {
     },
     changeLazyLoading (state, value) {
       state.lazyLoading = value
+    },
+    changeFilter (state, filter) {
+      state.filter = filter
     }
   },
   actions: {

@@ -67,6 +67,10 @@ html, body, #app {
   --base-font-size: 14px;
 
   font-size: var(--base-font-size);
+
+  .theme-popover {
+    background-color: #d9e1e8;
+  }
 }
 
 html, body, #app, #global_header {

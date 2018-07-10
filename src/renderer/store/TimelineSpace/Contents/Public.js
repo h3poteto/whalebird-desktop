@@ -7,7 +7,8 @@ const Public = {
     timeline: [],
     unreadTimeline: [],
     lazyLoading: false,
-    heading: true
+    heading: true,
+    filter: ''
   },
   mutations: {
     changeHeading (state, value) {
@@ -64,6 +65,9 @@ const Public = {
     },
     changeLazyLoading (state, value) {
       state.lazyLoading = value
+    },
+    changeFilter (state, filter) {
+      state.filter = filter
     }
   },
   actions: {

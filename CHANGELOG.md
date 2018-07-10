@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 ### Added
+- [#429](https://github.com/h3poteto/whalebird-desktop/pull/429) Add filter for timelines based on regexp
+
+## [1.4.3] - 2018-07-06
+### Added
 - [#428](https://github.com/h3poteto/whalebird-desktop/pull/428) Add stylelint and check in sider
 - [#427](https://github.com/h3poteto/whalebird-desktop/pull/427) Allow drop file to upload the media to mastodon
 - [#425](https://github.com/h3poteto/whalebird-desktop/pull/425) Validate domain name at login

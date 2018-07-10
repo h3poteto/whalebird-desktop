@@ -5,7 +5,7 @@
     </div>
     <transition-group name="timeline" tag="div">
       <div class="public-timeline" v-for="message in timeline" v-bind:key="message.id">
-        <toot :message="message" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+        <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
       </div>
     </transition-group>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
@@ -22,12 +22,13 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
+      backgroundColor: state => state.App.theme.background_color,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
       timeline: state => state.TimelineSpace.Contents.Public.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Public.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Public.heading,
       unread: state => state.TimelineSpace.Contents.Public.unreadTimeline,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload
+      filter: state => state.TimelineSpace.Contents.Public.filter
     })
   },
   created () {
