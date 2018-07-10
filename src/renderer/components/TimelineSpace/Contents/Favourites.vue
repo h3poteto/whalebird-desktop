@@ -19,11 +19,11 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
+      backgroundColor: state => state.App.theme.background_color,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
       account: state => state.TimelineSpace.account,
       favourites: state => state.TimelineSpace.Contents.Favourites.favourites,
       lazyLoading: state => state.TimelineSpace.Contents.Favourites.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
       filter: state => state.TimelineSpace.Contents.Favourites.filter
     })
   },

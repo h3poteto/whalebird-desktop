@@ -22,12 +22,12 @@ export default {
   components: { Notification },
   computed: {
     ...mapState({
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
+      backgroundColor: state => state.App.theme.background_color,
       notifications: state => state.TimelineSpace.Contents.Notifications.notifications,
       lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Notifications.heading,
       unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
       filter: state => state.TimelineSpace.Contents.Notifications.filter
     })
   },

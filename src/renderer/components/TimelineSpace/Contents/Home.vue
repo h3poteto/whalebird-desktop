@@ -22,12 +22,12 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
+      backgroundColor: state => state.App.theme.background_color,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
       timeline: state => state.TimelineSpace.Contents.Home.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color,
       heading: state => state.TimelineSpace.Contents.Home.heading,
       unread: state => state.TimelineSpace.Contents.Home.unreadTimeline,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
       filter: state => state.TimelineSpace.Contents.Home.filter
     })
   },
