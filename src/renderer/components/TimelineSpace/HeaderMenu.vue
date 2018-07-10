@@ -149,6 +149,9 @@ export default {
         case 'public':
           this.filter = this.$store.state.TimelineSpace.Contents.Public.filter
           break
+        case 'tag':
+          this.filter = this.$store.state.TimelineSpace.Contents.Hashtag.Tag.filter
+          break
         default:
           console.log('Not implemented')
       }
@@ -170,6 +173,9 @@ export default {
         case 'public':
           this.$store.commit('TimelineSpace/Contents/Public/changeFilter', filter)
           break
+        case 'tag':
+          this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeFilter', filter)
+          break
         default:
           console.log('Not implemented')
       }
@@ -182,6 +188,7 @@ export default {
         case 'favourites':
         case 'local':
         case 'public':
+        case 'tag':
           return true
         default:
           return false
