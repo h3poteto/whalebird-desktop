@@ -1,39 +1,52 @@
 <template>
 <div id="authorize">
-  <el-header>
-    <el-row>
-      <el-col :span="24" class="close">
-        <el-button type="text" icon="el-icon-close" @click="close" class="close-button">
-        </el-button>
-      </el-col>
-    </el-row>
-  </el-header>
-  <el-container>
-    <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form" v-on:submit.prevent="authorizeSubmit">
-      <el-form-item label="Please paste authorization code from your browser:">
-        <el-input v-model="authorizeForm.code"></el-input>
-      </el-form-item>
-      <!-- Dummy form to guard submitting with enter -->
-      <el-form-item class="hidden">
-        <el-input></el-input>
-      </el-form-item>
-      <el-form-item class="submit">
-        <el-button
-          type="primary"
-          @click="authorizeSubmit"
-          v-loading="submitting"
-          element-loading-background="rgba(0, 0, 0, 0.8)">
-          Submit
-        </el-button>
-      </el-form-item>
-    </el-form>
-  </el-container>
+  <div>
+    <el-header>
+      <el-row>
+        <el-col :span="24" class="close">
+          <el-button type="text" icon="el-icon-close" @click="close" class="close-button">
+          </el-button>
+        </el-col>
+      </el-row>
+    </el-header>
+    <el-main>
+      <div class="authorization-url">
+        <p>Now authorization page is opened in your browser.</p>
+        <p>If it is not opened, please open the following URL manually.</p>
+        <p class="url">{{ $route.query.url }}</p>
+      </div>
+      <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form" v-on:submit.prevent="authorizeSubmit">
+        <el-form-item label="Please paste authorization code from your browser:">
+          <el-input v-model="authorizeForm.code"></el-input>
+        </el-form-item>
+        <!-- Dummy form to guard submitting with enter -->
+        <el-form-item class="hidden">
+          <el-input></el-input>
+        </el-form-item>
+        <el-form-item class="submit">
+          <el-button
+            type="primary"
+            @click="authorizeSubmit"
+            v-loading="submitting"
+            element-loading-background="rgba(0, 0, 0, 0.8)">
+            Submit
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </el-main>
+  </div>
 </div>
 </template>
 
 <script>
 export default {
   name: 'authorize',
+  props: {
+    url: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       authorizeForm: {
@@ -41,6 +54,9 @@ export default {
       },
       submitting: false
     }
+  },
+  mounted () {
+    console.log(this.url)
   },
   methods: {
     authorizeSubmit () {
@@ -85,6 +101,16 @@ export default {
 
     .close-button {
       font-size: 24px;
+    }
+  }
+
+  .authorization-url {
+    margin: 0 auto 64px;
+    max-width: 80%;
+
+    .url {
+      color: #909399;
+      word-wrap: break-word;
     }
   }
 
