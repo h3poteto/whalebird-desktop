@@ -24,7 +24,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="more">
-          <popper trigger="click" :options="{placement: 'bottom'}">
+          <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
             <div class="popper">
               <ul class="menu-list">
                 <li role="button" @click="openBrowser(account)">
@@ -160,10 +160,12 @@ export default {
     },
     openBrowser (account) {
       shell.openExternal(account.url)
+      this.$refs.popper.doClose()
     },
     addToList (account) {
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/setAccount', account)
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', true)
+      this.$refs.popper.doClose()
     }
   }
 }
