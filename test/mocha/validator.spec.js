@@ -1,4 +1,4 @@
-var assert = require('assert')
+import assert from 'assert'
 import { domainFormat } from '../../src/renderer/utils/validator'
 
 describe('validator', () => {
@@ -33,6 +33,13 @@ describe('validator', () => {
     })
     context('string is jp domain', () => {
       const domain = 'mstdn.co.jp'
+      it('should match', () => {
+        const res = domain.search(domainFormat)
+        assert.equal(res, 0)
+      })
+    })
+    context('string contains hyphone', () => {
+      const domain = 'music-mastodon.social'
       it('should match', () => {
         const res = domain.search(domainFormat)
         assert.equal(res, 0)
