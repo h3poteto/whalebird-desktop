@@ -29,6 +29,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { domainFormat } from '../../utils/validator'
 
 export default {
   name: 'login-form',
@@ -45,7 +46,7 @@ export default {
             message: 'Domain name is required'
           },
           {
-            pattern: /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/,
+            pattern: domainFormat,
             trigger: 'change',
             message: 'Please write only domain name'
           }

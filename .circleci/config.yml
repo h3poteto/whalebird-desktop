@@ -19,6 +19,5 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: Eslint
-          command: NODE_ENV=production npm run lint
-
+          name: mocha
+          command: npm run mocha
