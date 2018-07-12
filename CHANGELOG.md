@@ -1,8 +1,16 @@
 # Change Log
 
 ## [Unreleased]
+### Fixed
+- [#435](https://github.com/h3poteto/whalebird-desktop/pull/435) Allow subdomain when login
+
+## [1.5.0] - 2018-07-12
 ### Added
+- [#431](https://github.com/h3poteto/whalebird-desktop/pull/431) Show authorization url to rescue it is not opened
 - [#429](https://github.com/h3poteto/whalebird-desktop/pull/429) Add filter for timelines based on regexp
+
+### Fixed
+- [#432](https://github.com/h3poteto/whalebird-desktop/pull/432) Close popover after do some actions
 
 ## [1.4.3] - 2018-07-06
 ### Added
