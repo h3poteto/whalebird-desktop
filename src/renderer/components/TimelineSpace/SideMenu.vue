@@ -25,7 +25,6 @@
           <i class="el-icon-arrow-left"></i>
         </el-button>
       </div>
-      <div class="clearfix"></div>
     </div>
     <el-menu
       :default-active="activeRoute()"
@@ -141,9 +140,9 @@ export default {
     width: 180px;
     height: 70px;
     font-size: 16px;
+    display: flex;
 
     .profile-wide {
-      float: left;
       color: #ffffff;
       font-weight: bold;
       padding: 20px 8px 10px 20px;
@@ -168,7 +167,6 @@ export default {
     }
 
     .collapse {
-      float: right;
       margin-top: 24px;
 
       .do-collapse {
