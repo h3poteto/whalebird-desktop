@@ -31,6 +31,13 @@ describe('validator', () => {
         assert.equal(res, 0)
       })
     })
+    context('string is subdomain', () => {
+      const domain = 'social.tchncs.de'
+      it('should match', () => {
+        const res = domain.search(domainFormat)
+        assert.equal(res, 0)
+      })
+    })
     context('string is jp domain', () => {
       const domain = 'mstdn.co.jp'
       it('should match', () => {
