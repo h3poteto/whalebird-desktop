@@ -2,8 +2,14 @@
   "name": "Whalebird",
   "version": "1.5.1",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
-  "description": "A Electron based Mastodon client for Windows, Mac and Linux",
+  "description": "An Electron based Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
+  "keywords": [
+    "mastodon",
+    "client",
+    "electron",
+    "vue"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
