@@ -1,9 +1,9 @@
 <template>
 <div class="status" tabIndex="0">
-  <div v-if="filtered(message)" class="filtered">
+  <div v-show="filtered(message)" class="filtered">
     Filtered
   </div>
-  <div v-else class="toot">
+  <div v-show="!filtered(message)" class="toot">
     <div class="icon">
       <img :src="originalMessage(message).account.avatar" @click="openUser(originalMessage(message).account)"/>
     </div>
@@ -44,7 +44,7 @@
         </div>
         <div class="clearfix"></div>
       </div>
-      <div class="reblogger" v-if="message.reblog !== null">
+      <div class="reblogger" v-show="message.reblog !== null">
         <icon name="retweet"></icon>
         <span class="reblogger-icon" @click="openUser(message.account)">
           <img :src="message.account.avatar" />
@@ -81,7 +81,7 @@
               <li role="button" @click="copyLink(originalMessage(message))">
                 Copy Link to Toot
               </li>
-              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage(message)">
+              <li role="button" class="separate" @click="deleteToot(message)" v-show="isMyMessage(message)">
                 Delete
               </li>
             </ul>
@@ -91,7 +91,7 @@
           </el-button>
         </popper>
       </div>
-      <div class="application" v-if="application(message) !== null">
+      <div class="application" v-show="application(message) !== null">
         via {{ application(message) }}
       </div>
     </div>
