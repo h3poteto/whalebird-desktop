@@ -1,9 +1,9 @@
 <template>
 <div class="status" tabIndex="0">
-  <div v-if="filtered(message)" class="filtered">
+  <div v-show="filtered(message)" class="filtered">
     Filtered
   </div>
-  <div v-else class="favourite">
+  <div v-show="!filtered(message)" class="favourite">
     <div class="action">
       <div class="action-mark">
         <icon name="star" scale="0.7"></icon>

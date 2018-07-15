@@ -5,7 +5,7 @@
     width="400px"
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
-      <div class="spoiler" v-if="showContentWarning">
+      <div class="spoiler" v-show="showContentWarning">
         <el-input placeholder="Write your warning here" v-model="spoiler"></el-input>
       </div>
       <div class="status">
@@ -34,10 +34,10 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div class="sensitive" v-if="attachedMedias.length > 0">
+      <div class="sensitive" v-show="attachedMedias.length > 0">
         <el-button size="small" type="text" @click="changeSensitive">
-          <icon name="eye-slash" v-if="sensitive"></icon>
-          <icon name="eye" v-else></icon>
+          <icon name="eye-slash" v-show="sensitive"></icon>
+          <icon name="eye" v-show="!sensitive"></icon>
         </el-button>
       </div>
       <div class="content-warning">

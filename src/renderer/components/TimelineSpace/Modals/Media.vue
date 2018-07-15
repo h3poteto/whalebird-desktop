@@ -6,7 +6,10 @@
 <script>
 export default {
   props: {
-    src: String
+    src: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
     file_ext () {
