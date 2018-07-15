@@ -57,7 +57,10 @@
         <el-button type="text" @click="openReply(message)" class="reply">
           <icon name="reply" scale="0.9"></icon>
         </el-button>
-        <el-button type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'">
+        <el-button v-show="locked(message)" type="text" class="locked">
+          <icon name="lock" scale="0.9"></icon>
+        </el-button>
+        <el-button v-show="!locked(message)" type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
         <span class="count">
@@ -333,6 +336,9 @@ export default {
     },
     filtered (message) {
       return this.filter.length > 0 && this.originalMessage(message).content.search(this.filter) >= 0
+    },
+    locked (message) {
+      return message.visibility === 'private' || message.visibility === 'direct'
     }
   }
 }
