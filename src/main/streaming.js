@@ -15,18 +15,12 @@ export default class Streaming {
     this.listener = this.client.stream('/streaming/user')
     log.info('/streaming/user started')
 
-    this.listener.on('message', (msg) => {
-      switch (msg.event) {
-        case 'update':
-          updateCallback(msg.data)
-          break
-        case 'notification':
-          notificationCallback(msg.data)
-          break
-        default:
-          log.debug(msg)
-          break
-      }
+    this.listener.on('update', (status) => {
+      updateCallback(status)
+    })
+
+    this.listener.on('notification', (notification) => {
+      notificationCallback(notification)
     })
 
     this.listener.on('error', (err) => {
@@ -38,14 +32,8 @@ export default class Streaming {
     this.listener = this.client.stream(path)
     log.info(`${path} started`)
 
-    this.listener.on('message', (msg) => {
-      switch (msg.event) {
-        case 'update':
-          updateCallback(msg.data)
-          break
-        default:
-          break
-      }
+    this.listener.on('update', (status) => {
+      updateCallback(status)
     })
 
     this.listener.on('error', (err) => {
