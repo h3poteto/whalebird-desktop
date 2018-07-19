@@ -1,7 +1,21 @@
 # Change Log
 
-## [Unreleased]
+## [1.5.2]
+### Added
+- [#443](https://github.com/h3poteto/whalebird-desktop/pull/443) Add scroll top button in timeline
+
+### Changed
+- [#440](https://github.com/h3poteto/whalebird-desktop/pull/440) Update megalodon version to 0.2.0
+- [#438](https://github.com/h3poteto/whalebird-desktop/pull/438) Change boost icon when the status is private
+
 ### Fixed
+- [#437](https://github.com/h3poteto/whalebird-desktop/pull/437) Use v-show instead of v-if where it is not necessary
+
+
+
+## [1.5.1] - 2018-07-13
+### Fixed
+- [#436](https://github.com/h3poteto/whalebird-desktop/pull/436) Use flex box instead of float at side menu
 - [#435](https://github.com/h3poteto/whalebird-desktop/pull/435) Allow subdomain when login
 
 ## [1.5.0] - 2018-07-12
