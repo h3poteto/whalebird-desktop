@@ -8,13 +8,13 @@ export default function scrollTop (element, point = 0) {
   const range = start - point
   // Progress of scroll: 0 ~ 100
   let progress = 0
-
+  const boost = range > 200 ? range / 200 : 2.0
   /**
    * Scroll calling recursion.
    **/
   const move = function () {
     progress++
-    const nextPos = start - range * (range / 200) * easeOut(progress / 100)
+    const nextPos = start - range * boost * easeOut(progress / 100)
 
     // Stop the recursion
     if (nextPos <= 0) {
