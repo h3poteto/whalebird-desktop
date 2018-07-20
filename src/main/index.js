@@ -124,6 +124,29 @@ function createWindow () {
               type: 'separator'
             },
             {
+              label: 'Services',
+              role: 'services',
+              submenu: []
+            },
+            {
+              type: 'separator'
+            },
+            {
+              label: 'Hide Whalebird',
+              role: 'hide'
+            },
+            {
+              label: 'Hide Othres',
+              role: 'hideothers'
+            },
+            {
+              label: 'Show All',
+              role: 'unhide'
+            },
+            {
+              type: 'separator'
+            },
+            {
               label: 'Quit',
               accelerator: 'CmdOrCtrl+Q',
               role: 'quit'
