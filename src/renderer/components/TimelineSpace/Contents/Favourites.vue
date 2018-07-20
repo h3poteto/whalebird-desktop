@@ -1,22 +1,32 @@
 <template>
-  <div id="favourites">
-    <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
-    </div>
-    <div class="fav" v-for="message in favourites" v-bind:key="message.id">
-      <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
-    </div>
-    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
-    </div>
+<div id="favourites">
+  <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
+  <div class="fav" v-for="message in favourites" v-bind:key="message.id">
+    <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+  </div>
+  <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
+  </div>
+  <div class="upper" v-show="!heading">
+    <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle>
+    </el-button>
+  </div>
+</div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import Toot from './Cards/Toot'
+import scrollTop from '../../utils/scroll'
 
 export default {
   name: 'favourites',
   components: { Toot },
+  data () {
+    return {
+      heading: true
+    }
+  },
   computed: {
     ...mapState({
       backgroundColor: state => state.App.theme.background_color,
@@ -77,6 +87,12 @@ export default {
             })
           })
       }
+      // for upper
+      if ((event.target.scrollTop > 10) && this.heading) {
+        this.heading = false
+      } else if ((event.target.scrollTop <= 10) && !this.heading) {
+        this.heading = true
+      }
     },
     async reload () {
       this.$store.commit('TimelineSpace/changeLoading', true)
@@ -107,6 +123,12 @@ export default {
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
+    },
+    upper () {
+      scrollTop(
+        document.getElementById('scrollable'),
+        0
+      )
     }
   }
 }
@@ -119,5 +141,11 @@ export default {
 
 .loading-card:empty {
   height: 0;
+}
+
+.upper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 </style>
