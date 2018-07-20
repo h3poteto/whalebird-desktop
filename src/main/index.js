@@ -247,12 +247,11 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding')
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
-  app.quit()
-  // This is a single-window application.
-  // So quit application when main window is closed.
-  // if (process.platform !== 'darwin') {
-  //   app.quit()
-  // }
+  // this action is called when user click the close button.
+  // In macOS, close button does not shutdown application. It is hide application window.
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
 })
 
 app.on('activate', () => {
