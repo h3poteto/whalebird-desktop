@@ -1,21 +1,26 @@
 <template>
-  <div id="home">
-    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
-    <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
-    </div>
-    <transition-group name="timeline" tag="div">
-      <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
-        <toot :message="message" :filter="filter" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
-      </div>
-    </transition-group>
-    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
-    </div>
+<div id="home">
+  <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
+  <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
+  <transition-group name="timeline" tag="div">
+    <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
+      <toot :message="message" :filter="filter" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+    </div>
+  </transition-group>
+  <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
+  </div>
+  <div class="upper" v-show="!heading">
+    <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle>
+    </el-button>
+  </div>
+</div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import Toot from './Cards/Toot'
+import scrollTop from '../../utils/scroll'
 
 export default {
   name: 'home',
@@ -118,6 +123,12 @@ export default {
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
+    },
+    upper () {
+      scrollTop(
+        document.getElementById('scrollable'),
+        0
+      )
     }
   }
 }
@@ -145,6 +156,12 @@ export default {
 
   .loading-card:empty {
     height: 0;
+  }
+
+  .upper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
   }
 }
 </style>
