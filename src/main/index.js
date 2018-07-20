@@ -92,6 +92,34 @@ function createWindow () {
         }
       })
       /**
+       * For mac menu
+       */
+      const macGeneralMenu = process.platform !== 'darwin' ? [] : [
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Services',
+          role: 'services',
+          submenu: []
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Hide Whalebird',
+          role: 'hide'
+        },
+        {
+          label: 'Hide Othres',
+          role: 'hideothers'
+        },
+        {
+          label: 'Show All',
+          role: 'unhide'
+        }
+      ]
+      /**
        * Set menu
        */
       const template = [
@@ -120,29 +148,7 @@ function createWindow () {
                 mainWindow.webContents.send('open-preferences')
               }
             },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Services',
-              role: 'services',
-              submenu: []
-            },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Hide Whalebird',
-              role: 'hide'
-            },
-            {
-              label: 'Hide Othres',
-              role: 'hideothers'
-            },
-            {
-              label: 'Show All',
-              role: 'unhide'
-            },
+            ...macGeneralMenu,
             {
               type: 'separator'
             },
