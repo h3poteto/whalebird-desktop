@@ -210,6 +210,15 @@ function createWindow () {
           ]
         },
         {
+          label: 'View',
+          submenu: [
+            {
+              label: 'Toggle Full Screen',
+              role: 'togglefullscreen'
+            }
+          ]
+        },
+        {
           label: 'Window',
           submenu: [
             {
