@@ -76,207 +76,223 @@ async function listAccounts () {
   }
 }
 
-function createWindow () {
+async function changeAccount (account, index) {
+  // In MacOS, user can hide the window.
+  // In this time, mainWindow in not exist, so we have to create window.
+  if (mainWindow === null) {
+    await createWindow()
+    // We have to wait the web contents is loaded.
+    mainWindow.webContents.on('did-finish-load', () => {
+      mainWindow.webContents.send('change-account', Object.assign(account, { index: index }))
+    })
+  } else {
+    mainWindow.webContents.send('change-account', Object.assign(account, { index: index }))
+  }
+}
+
+async function createWindow () {
   /**
    * List accounts
    */
-  listAccounts()
-    .then((accounts) => {
-      const accountsChange = accounts.map((a, index) => {
-        return {
-          label: a.domain,
-          accelerator: `CmdOrCtrl+${index + 1}`,
+  const accounts = await listAccounts()
+  const accountsChange = accounts.map((a, index) => {
+    return {
+      label: a.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(a, index)
+    }
+  })
+  /**
+   * For mac menu
+   */
+  const macGeneralMenu = process.platform !== 'darwin' ? [] : [
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Services',
+      role: 'services',
+      submenu: []
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Hide Whalebird',
+      role: 'hide'
+    },
+    {
+      label: 'Hide Othres',
+      role: 'hideothers'
+    },
+    {
+      label: 'Show All',
+      role: 'unhide'
+    }
+  ]
+  /**
+   * Set application menu
+   */
+  const template = [
+    {
+      label: 'Whalebird',
+      submenu: [
+        {
+          label: 'About Whalebird',
+          role: 'about',
           click: () => {
-            mainWindow.webContents.send('change-account', Object.assign(a, { index: index }))
+            openAboutWindow({
+              icon_path: path.resolve(__dirname, '../../build/icons/256x256.png'),
+              copyright: 'Copyright (c) 2018 AkiraFukushima',
+              package_json_dir: path.resolve(__dirname, '../../'),
+              open_devtools: process.env.NODE_ENV !== 'production'
+            })
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Preferences...',
+          accelerator: 'CmdOrCtrl+,',
+          click: () => {
+            mainWindow.webContents.send('open-preferences')
+          }
+        },
+        ...macGeneralMenu,
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Quit',
+          accelerator: 'CmdOrCtrl+Q',
+          role: 'quit'
+        }
+      ]
+    },
+    {
+      label: 'Toot',
+      submenu: [
+        {
+          label: 'New Toot',
+          accelerator: 'CmdOrCtrl+N',
+          click: () => {
+            mainWindow.webContents.send('CmdOrCtrl+N')
           }
         }
-      })
-      /**
-       * For mac menu
-       */
-      const macGeneralMenu = process.platform !== 'darwin' ? [] : [
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        {
+          label: 'Undo',
+          accelerator: 'CmdOrCtrl+Z',
+          role: 'undo'
+        },
+        {
+          label: 'Redo',
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          role: 'redo'
+        },
         {
           type: 'separator'
         },
         {
-          label: 'Services',
-          role: 'services',
-          submenu: []
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+X',
+          role: 'cut'
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+C',
+          role: 'copy'
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+V',
+          role: 'paste'
+        },
+        {
+          label: 'Select All',
+          accelerator: 'CmdOrCtrl+A',
+          role: 'selectall'
+        }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Toggle Full Screen',
+          role: 'togglefullscreen'
+        }
+      ]
+    },
+    {
+      label: 'Window',
+      submenu: [
+        {
+          label: 'Close Window',
+          role: 'close'
+        },
+        {
+          label: 'Minimize',
+          role: 'minimize'
         },
         {
           type: 'separator'
-        },
-        {
-          label: 'Hide Whalebird',
-          role: 'hide'
-        },
-        {
-          label: 'Hide Othres',
-          role: 'hideothers'
-        },
-        {
-          label: 'Show All',
-          role: 'unhide'
         }
-      ]
-      /**
-       * Set menu
-       */
-      const template = [
-        {
-          label: 'Whalebird',
-          submenu: [
-            {
-              label: 'About Whalebird',
-              role: 'about',
-              click: () => {
-                openAboutWindow({
-                  icon_path: path.resolve(__dirname, '../../build/icons/256x256.png'),
-                  copyright: 'Copyright (c) 2018 AkiraFukushima',
-                  package_json_dir: path.resolve(__dirname, '../../'),
-                  open_devtools: process.env.NODE_ENV !== 'production'
-                })
-              }
-            },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Preferences...',
-              accelerator: 'CmdOrCtrl+,',
-              click: () => {
-                mainWindow.webContents.send('open-preferences')
-              }
-            },
-            ...macGeneralMenu,
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Quit',
-              accelerator: 'CmdOrCtrl+Q',
-              role: 'quit'
+      ].concat(accountsChange)
+        .concat([
+          {
+            type: 'separator'
+          },
+          {
+            label: 'Jump to',
+            accelerator: 'CmdOrCtrl+K',
+            click: () => {
+              mainWindow.webContents.send('CmdOrCtrl+K')
             }
-          ]
-        },
-        {
-          label: 'Toot',
-          submenu: [
-            {
-              label: 'New Toot',
-              accelerator: 'CmdOrCtrl+N',
-              click: () => {
-                mainWindow.webContents.send('CmdOrCtrl+N')
-              }
-            }
-          ]
-        },
-        {
-          label: 'Edit',
-          submenu: [
-            {
-              label: 'Undo',
-              accelerator: 'CmdOrCtrl+Z',
-              role: 'undo'
-            },
-            {
-              label: 'Redo',
-              accelerator: 'Shift+CmdOrCtrl+Z',
-              role: 'redo'
-            },
-            {
-              type: 'separator'
-            },
-            {
-              label: 'Cut',
-              accelerator: 'CmdOrCtrl+X',
-              role: 'cut'
-            },
-            {
-              label: 'Copy',
-              accelerator: 'CmdOrCtrl+C',
-              role: 'copy'
-            },
-            {
-              label: 'Paste',
-              accelerator: 'CmdOrCtrl+V',
-              role: 'paste'
-            },
-            {
-              label: 'Select All',
-              accelerator: 'CmdOrCtrl+A',
-              role: 'selectall'
-            }
-          ]
-        },
-        {
-          label: 'View',
-          submenu: [
-            {
-              label: 'Toggle Full Screen',
-              role: 'togglefullscreen'
-            }
-          ]
-        },
-        {
-          label: 'Window',
-          submenu: [
-            {
-              label: 'Close Window',
-              role: 'close'
-            },
-            {
-              label: 'Minimize',
-              role: 'minimize'
-            },
-            {
-              type: 'separator'
-            }
-          ].concat(accountsChange)
-            .concat([
-              {
-                type: 'separator'
-              },
-              {
-                label: 'Jump to',
-                accelerator: 'CmdOrCtrl+K',
-                click: () => {
-                  mainWindow.webContents.send('CmdOrCtrl+K')
-                }
-              }
-            ])
-        }
-      ]
+          }
+        ])
+    }
+  ]
 
-      const menu = Menu.buildFromTemplate(template)
-      Menu.setApplicationMenu(menu)
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
 
-      /**
-       * Initial window options
-       */
-      let mainWindowState = windowStateKeeper({
-        defaultWidth: 1000,
-        height: 563
-      })
-      mainWindow = new BrowserWindow({
-        titleBarStyle: 'hidden',
-        x: mainWindowState.x,
-        y: mainWindowState.y,
-        width: mainWindowState.width,
-        height: mainWindowState.height,
-        useContentSize: true,
-        icon: path.resolve(__dirname, '../../build/icons/256x256.png')
-      })
-      mainWindowState.manage(mainWindow)
+  /**
+   * Set dock menu for mac
+   */
+  const dockMenu = Menu.buildFromTemplate(accountsChange)
+  app.dock.setMenu(dockMenu)
 
-      mainWindow.loadURL(winURL)
+  /**
+   * Initial window options
+   */
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    height: 563
+  })
+  mainWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    useContentSize: true,
+    icon: path.resolve(__dirname, '../../build/icons/256x256.png')
+  })
+  mainWindowState.manage(mainWindow)
 
-      mainWindow.webContents.on('will-navigate', (event) => event.preventDefault())
+  mainWindow.loadURL(winURL)
 
-      mainWindow.on('closed', () => {
-        mainWindow = null
-      })
-    })
+  mainWindow.webContents.on('will-navigate', (event) => event.preventDefault())
+
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
 }
 
 // Do not lower the rendering priority of Chromium when background
