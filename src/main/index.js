@@ -265,8 +265,10 @@ async function createWindow () {
   /**
    * Set dock menu for mac
    */
-  const dockMenu = Menu.buildFromTemplate(accountsChange)
-  app.dock.setMenu(dockMenu)
+  if (process.platform === 'darwin') {
+    const dockMenu = Menu.buildFromTemplate(accountsChange)
+    app.dock.setMenu(dockMenu)
+  }
 
   /**
    * Initial window options
