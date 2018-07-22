@@ -242,20 +242,20 @@ async function createWindow () {
         },
         {
           type: 'separator'
-        }
-      ].concat(accountsChange)
-        .concat([
-          {
-            type: 'separator'
-          },
-          {
-            label: 'Jump to',
-            accelerator: 'CmdOrCtrl+K',
-            click: () => {
-              mainWindow.webContents.send('CmdOrCtrl+K')
-            }
+        },
+        {
+          label: 'Jump to',
+          accelerator: 'CmdOrCtrl+K',
+          enabled: true,
+          click: () => {
+            mainWindow.webContents.send('CmdOrCtrl+K')
           }
-        ])
+        },
+        {
+          type: 'separator'
+        },
+        ...accountsChange
+      ]
     }
   ]
 
@@ -308,6 +308,15 @@ app.on('window-all-closed', () => {
   // In macOS, close button does not shutdown application. It is hide application window.
   if (process.platform !== 'darwin') {
     app.quit()
+  } else {
+    // In MacOS, we should change disable some menu items.
+    const menu = Menu.getApplicationMenu()
+    // Preferences
+    menu.items[0].submenu.items[2].enabled = false
+    // New Toot
+    menu.items[1].submenu.items[0].enabled = false
+    // Jump to
+    menu.items[4].submenu.items[3].enabled = false
   }
 })
 

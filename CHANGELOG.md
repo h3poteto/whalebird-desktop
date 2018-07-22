@@ -1,6 +1,20 @@
 # Change Log
 
-## [1.5.2]
+## [1.5.3]
+### Added
+- [#446](https://github.com/h3poteto/whalebird-desktop/pull/446) Hide and show application in mac
+
+### Changed
+- [#448](https://github.com/h3poteto/whalebird-desktop/pull/448) Update electron version to 2.0.5
+
+### Fixed
+- [#450](https://github.com/h3poteto/whalebird-desktop/pull/450) Fix scroll-behavior because custom scroll function is already defined
+- [#449](https://github.com/h3poteto/whalebird-desktop/pull/449) Disable some menu item when window is hidden in mac
+- [#445](https://github.com/h3poteto/whalebird-desktop/pull/445) Fix scroll speed when range is too small
+
+
+
+## [1.5.2] - 2018-07-20
 ### Added
 - [#443](https://github.com/h3poteto/whalebird-desktop/pull/443) Add scroll top button in timeline
 
