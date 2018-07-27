@@ -31,9 +31,9 @@ export default {
         q: name,
         following: true
       })
-        .then(data => {
-          commit('updateAccounts', data)
-          return data
+        .then(res => {
+          commit('updateAccounts', res.data)
+          return res.data
         })
     },
     add ({ state, rootState }, account) {

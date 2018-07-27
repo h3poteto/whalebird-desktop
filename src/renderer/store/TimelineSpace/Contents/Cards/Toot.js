@@ -12,12 +12,12 @@ const Toot = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/statuses/${message.id}/reblog`)
-        .then(data => {
+        .then(res => {
           // API returns new status when reblog.
           // Reblog target status is in the data.reblog.
           // So I send data.reblog as status for update local timeline.
           ipcRenderer.send('fav-rt-action-sound')
-          return data.reblog
+          return res.data.reblog
         })
     },
     unreblog ({ state, commit, rootState }, message) {
@@ -33,9 +33,9 @@ const Toot = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/statuses/${message.id}/favourite`)
-        .then(data => {
+        .then(res => {
           ipcRenderer.send('fav-rt-action-sound')
-          return data
+          return res.data
         })
     },
     removeFavourite ({ state, commit, rootState }, message) {

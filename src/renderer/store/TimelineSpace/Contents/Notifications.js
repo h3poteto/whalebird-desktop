@@ -65,9 +65,9 @@ const Notifications = {
         account.baseURL + '/api/v1'
       )
       return client.get('/notifications', { limit: 30 })
-        .then(data => {
-          commit('updateNotifications', data)
-          return data
+        .then(res => {
+          commit('updateNotifications', res.data)
+          return res.data
         })
     },
     lazyFetchNotifications ({ state, commit, rootState }, last) {
@@ -83,10 +83,10 @@ const Notifications = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/notifications', { max_id: last.id, limit: 30 })
-        .then(data => {
+        .then(res => {
           commit('changeLazyLoading', false)
-          commit('insertNotifications', data)
-          return data
+          commit('insertNotifications', res.data)
+          return res.data
         })
         .catch(err => {
           commit('changeLazyLoading', false)

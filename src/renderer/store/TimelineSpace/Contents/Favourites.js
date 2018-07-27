@@ -1,11 +1,13 @@
 import Mastodon from 'megalodon'
+import parse from 'parse-link-header'
 
 const Favourites = {
   namespaced: true,
   state: {
     favourites: [],
     lazyLoading: false,
-    filter: ''
+    filter: '',
+    maxId: null
   },
   mutations: {
     updateFavourites (state, favourites) {
@@ -44,6 +46,9 @@ const Favourites = {
     },
     changeFilter (state, filter) {
       state.filter = filter
+    },
+    changeMaxId (state, id) {
+      state.maxId = id
     }
   },
   actions: {
@@ -53,15 +58,15 @@ const Favourites = {
         account.baseURL + '/api/v1'
       )
       return client.get('/favourites', { limit: 40 })
-        .then(data => {
-          commit('updateFavourites', data)
-          return data
+        .then(res => {
+          commit('updateFavourites', res.data)
+          // Parse link header
+          const link = parse(res.headers.link)
+          commit('changeMaxId', link.next.max_id)
+          return res.data
         })
     },
-    lazyFetchFavourites ({ state, commit, rootState }, last) {
-      if (last === undefined || last === null) {
-        return Promise.resolve(null)
-      }
+    lazyFetchFavourites ({ state, commit, rootState }) {
       if (state.lazyLoading) {
         return Promise.resolve(null)
       }
@@ -70,14 +75,15 @@ const Favourites = {
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
-      // Note: Now this API's explanation and implementation are reversed.
-      // So if the bug has resolved, please use max_id instead of since_id.
-      // https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#favourites
-      return client.get('/favourites', { since_id: last.id, limit: 40 })
-        .then(data => {
+      console.log(state.maxId)
+      return client.get('/favourites', { max_id: state.maxId, limit: 40 })
+        .then(res => {
           commit('changeLazyLoading', false)
-          commit('insertFavourites', data)
-          return data
+          commit('insertFavourites', res.data)
+          // Parse link header
+          const link = parse(res.headers.link)
+          commit('changeMaxId', link.next.max_id)
+          return res.data
         })
         .catch(err => {
           commit('changeLazyLoading', false)
