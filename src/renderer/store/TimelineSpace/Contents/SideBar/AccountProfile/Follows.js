@@ -18,10 +18,10 @@ const Follows = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/accounts/${account.id}/following`, { limit: 80 })
-        .then(data => {
+        .then(res => {
           commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
-          commit('updateFollows', data)
-          return data
+          commit('updateFollows', res.data)
+          return res.data
         })
     }
   }

@@ -39,9 +39,9 @@ const SideMenu = {
         account.baseURL + '/api/v1'
       )
       return client.get('/lists')
-        .then(data => {
-          commit('updateLists', data)
-          return data
+        .then(res => {
+          commit('updateLists', res.data)
+          return res.data
         })
     },
     clearUnread ({ commit }) {

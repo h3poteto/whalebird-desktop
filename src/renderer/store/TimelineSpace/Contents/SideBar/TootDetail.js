@@ -97,10 +97,10 @@ const TootDetail = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/statuses/${message.id}/context`, { limit: 40 })
-        .then(data => {
-          commit('updateAncestors', data.ancestors)
-          commit('updateDescendants', data.descendants)
-          return data
+        .then(res => {
+          commit('updateAncestors', res.data.ancestors)
+          commit('updateDescendants', res.data.descendants)
+          return res.data
         })
     }
   }
