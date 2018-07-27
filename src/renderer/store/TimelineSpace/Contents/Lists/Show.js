@@ -77,9 +77,9 @@ const Show = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/timelines/list/${listID}`, { limit: 40 })
-        .then(data => {
-          commit('updateTimeline', data)
-          return data
+        .then(res => {
+          commit('updateTimeline', res.data)
+          return res.data
         })
     },
     startStreaming ({ state, commit, rootState }, listID) {
@@ -117,10 +117,10 @@ const Show = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/timelines/list/${obj.list_id}`, { max_id: obj.last.id, limit: 40 })
-        .then(data => {
-          commit('insertTimeline', data)
+        .then(res => {
+          commit('insertTimeline', res.data)
           commit('changeLazyLoading', false)
-          return data
+          return res.data
         })
         .catch(err => {
           commit('changeLazyLoading', false)

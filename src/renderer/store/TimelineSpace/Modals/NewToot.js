@@ -59,9 +59,9 @@ const NewToot = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post('/statuses', form)
-        .then(data => {
+        .then(res => {
           ipcRenderer.send('toot-action-sound')
-          return data
+          return res.data
         })
     },
     openReply ({ commit, rootState }, message) {
@@ -98,11 +98,11 @@ const NewToot = {
       const formData = new FormData()
       formData.append('file', image)
       return client.post('/media', formData)
-        .then(data => {
+        .then(res => {
           commit('changeBlockSubmit', false)
-          if (data.type === 'unknown') throw new UnknownTypeError()
-          commit('appendAttachedMedias', data)
-          return data
+          if (res.data.type === 'unknown') throw new UnknownTypeError()
+          commit('appendAttachedMedias', res.data)
+          return res.data
         })
         .catch(err => {
           commit('changeBlockSubmit', false)
