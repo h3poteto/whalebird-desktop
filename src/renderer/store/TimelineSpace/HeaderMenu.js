@@ -21,9 +21,9 @@ const HeaderMenu = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/lists/${listID}`)
-        .then(data => {
-          commit('updateTitle', `#${data.title}`)
-          return data
+        .then(res => {
+          commit('updateTitle', `#${res.data.title}`)
+          return res.data
         })
     }
   }
