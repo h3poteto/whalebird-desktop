@@ -1,6 +1,19 @@
 # Change Log
 
-## [1.5.3]
+## [1.5.4]
+### Changed
+- [#457](https://github.com/h3poteto/whalebird-desktop/pull/457) Add splash screen when starting the window
+
+### Changed
+- [#460](https://github.com/h3poteto/whalebird-desktop/pull/460) Update eslint-config-standard
+- [#459](https://github.com/h3poteto/whalebird-desktop/pull/459) Update eslint
+- [#456](https://github.com/h3poteto/whalebird-desktop/pull/456) Update deprecated plugins
+
+### Fixed
+- [#458](https://github.com/h3poteto/whalebird-desktop/pull/458) Corrected typo in webpack config
+- [#454](https://github.com/h3poteto/whalebird-desktop/pull/454) Update megalodon and fix lazy loading in favourite
+
+## [1.5.3] - 2018-07-23
 ### Added
 - [#446](https://github.com/h3poteto/whalebird-desktop/pull/446) Hide and show application in mac
 
