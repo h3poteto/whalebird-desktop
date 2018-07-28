@@ -42,7 +42,7 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 const splashURL = process.env.NODE_ENV === 'development'
-  ? path.resolve(__dirname, '../../dist/electron/static/splash-screen.html')
+  ? path.resolve(__dirname, '../../static/splash-screen.html')
   : `file://${__dirname}/static/splash-screen.html`
 
 // https://github.com/louischatriot/nedb/issues/459
@@ -304,8 +304,8 @@ async function createWindow () {
   mainWindow = Splashscreen.initSplashScreen(config)
 
   mainWindowState.manage(mainWindow)
-  console.log(winURL)
-  // mainWindow.loadURL(winURL)
+
+  mainWindow.loadURL(winURL)
 
   mainWindow.webContents.on('will-navigate', (event) => event.preventDefault())
 
