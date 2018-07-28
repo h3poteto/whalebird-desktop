@@ -1,7 +1,7 @@
 # Change Log
 
 ## [1.5.4]
-### Changed
+### Added
 - [#457](https://github.com/h3poteto/whalebird-desktop/pull/457) Add splash screen when starting the window
 
 ### Changed
