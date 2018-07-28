@@ -43,7 +43,7 @@ const winURL = process.env.NODE_ENV === 'development'
 
 const splashURL = process.env.NODE_ENV === 'development'
   ? path.resolve(__dirname, '../../static/splash-screen.html')
-  : `file://${__dirname}/static/splash-screen.html`
+  : `${__dirname}/static/splash-screen.html`
 
 // https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
