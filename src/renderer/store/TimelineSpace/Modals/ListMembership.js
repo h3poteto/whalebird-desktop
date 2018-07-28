@@ -36,9 +36,9 @@ const ListMembership = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/accounts/${account.id}/lists`)
-        .then(data => {
-          commit('changeBelongToLists', data.map(l => l.id))
-          return data
+        .then(res => {
+          commit('changeBelongToLists', res.data.map(l => l.id))
+          return res.data
         })
     },
     fetchLists ({ commit, rootState }) {
@@ -47,9 +47,9 @@ const ListMembership = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/lists')
-        .then(data => {
-          commit('changeLists', data)
-          return data
+        .then(res => {
+          commit('changeLists', res.data)
+          return res.data
         })
     },
     async changeBelongToLists ({ rootState, commit, state }, belongToLists) {

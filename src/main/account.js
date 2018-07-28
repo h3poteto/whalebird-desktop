@@ -194,11 +194,11 @@ export default class Account {
       account.baseURL + '/api/v1'
     )
     return client.get('/accounts/verify_credentials')
-      .then(data => {
+      .then(res => {
         const json = {
-          username: data.username,
-          accountId: data.id,
-          avatar: data.avatar
+          username: res.data.username,
+          accountId: res.data.id,
+          avatar: res.data.avatar
         }
         return this.updateAccount(account._id, json)
       })

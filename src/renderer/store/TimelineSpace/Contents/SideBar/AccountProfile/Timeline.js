@@ -51,10 +51,10 @@ const Timeline = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/accounts/${account.id}/statuses`, { limit: 40 })
-        .then(data => {
+        .then(res => {
           commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
-          commit('updateTimeline', data)
-          return data
+          commit('updateTimeline', res.data)
+          return res.data
         })
     },
     lazyFetchTimeline ({ state, commit, rootState }, info) {
@@ -71,10 +71,10 @@ const Timeline = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/accounts/${info.account.id}/statuses`, { max_id: last.id, limit: 40 })
-        .then(data => {
+        .then(res => {
           commit('changeLazyLoading', false)
-          commit('insertTimeline', data)
-          return data
+          commit('insertTimeline', res.data)
+          return res.data
         })
         .catch(err => {
           commit('changeLazyLoading', false)

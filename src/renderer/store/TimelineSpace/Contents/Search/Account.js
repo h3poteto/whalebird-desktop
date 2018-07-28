@@ -18,10 +18,10 @@ const Account = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/search', { q: query })
-        .then(data => {
-          commit('updateResults', data.accounts)
+        .then(res => {
+          commit('updateResults', res.data.accounts)
           commit('TimelineSpace/Contents/Search/changeLoading', false, { root: true })
-          return data
+          return res.data
         })
         .catch(err => {
           commit('TimelineSpace/Contents/Search/changeLoading', false, { root: true })

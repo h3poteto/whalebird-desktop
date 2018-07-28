@@ -77,8 +77,8 @@ const Public = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/timelines/public', { limit: 40 })
-        .then(data => {
-          commit('updateTimeline', data)
+        .then(res => {
+          commit('updateTimeline', res.data)
         })
     },
     startPublicStreaming ({ state, commit, rootState }) {
@@ -113,10 +113,10 @@ const Public = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/timelines/public', { max_id: last.id, limit: 40 })
-        .then(data => {
-          commit('insertTimeline', data)
+        .then(res => {
+          commit('insertTimeline', res.data)
           commit('changeLazyLoading', false)
-          return data
+          return res.data
         })
         .catch(err => {
           commit('changeLazyLoading', false)

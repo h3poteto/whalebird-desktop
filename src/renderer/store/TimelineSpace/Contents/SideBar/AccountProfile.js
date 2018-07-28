@@ -33,9 +33,9 @@ const AccountProfile = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/search', { q: accountURL })
-        .then(data => {
-          if (data.accounts.length <= 0) throw new AccountNotFound('not found')
-          return data.accounts[0]
+        .then(res => {
+          if (res.data.accounts.length <= 0) throw new AccountNotFound('not found')
+          return res.data.accounts[0]
         })
     },
     changeAccount ({ commit, dispatch }, account) {
@@ -49,9 +49,9 @@ const AccountProfile = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/accounts/relationships', { id: [account.id] })
-        .then(data => {
-          commit('changeRelationship', data[0])
-          return data
+        .then(res => {
+          commit('changeRelationship', res.data[0])
+          return res.data
         })
     },
     follow ({ state, commit, rootState }, account) {
@@ -61,10 +61,10 @@ const AccountProfile = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/accounts/${account.id}/follow`)
-        .then(data => {
+        .then(res => {
           commit('changeLoading', false)
-          commit('changeRelationship', data)
-          return data
+          commit('changeRelationship', res.data)
+          return res.data
         })
         .catch(err => {
           commit('changeLoading', false)
@@ -78,10 +78,10 @@ const AccountProfile = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/accounts/${account.id}/unfollow`)
-        .then(data => {
+        .then(res => {
           commit('changeLoading', false)
-          commit('changeRelationship', data)
-          return data
+          commit('changeRelationship', res.data)
+          return res.data
         })
         .catch(err => {
           commit('changeLoading', false)

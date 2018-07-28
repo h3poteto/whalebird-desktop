@@ -76,9 +76,9 @@ const Local = {
         account.baseURL + '/api/v1'
       )
       return client.get('/timelines/public', { limit: 40, local: true })
-        .then(data => {
-          commit('updateTimeline', data)
-          return data
+        .then(res => {
+          commit('updateTimeline', res.data)
+          return res.data
         })
     },
     lazyFetchTimeline ({ state, commit, rootState }, last) {
@@ -94,10 +94,10 @@ const Local = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/timelines/public', { max_id: last.id, limit: 40, local: true })
-        .then(data => {
+        .then(res => {
           commit('changeLazyLoading', false)
-          commit('insertTimeline', data)
-          return data
+          commit('insertTimeline', res.data)
+          return res.data
         })
         .catch(err => {
           commit('changeLazyLoading', false)
