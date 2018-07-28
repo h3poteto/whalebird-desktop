@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, ipcMain, BrowserWindow, shell, Menu } from 'electron'
+import { app, ipcMain, shell, Menu } from 'electron'
 import Datastore from 'nedb'
 import empty from 'is-empty'
 import log from 'electron-log'
@@ -9,6 +9,7 @@ import simplayer from 'simplayer'
 import path from 'path'
 import openAboutWindow from 'about-window'
 import ContextMenu from 'electron-context-menu'
+import * as Splashscreen from '@trodi/electron-splashscreen'
 
 import Authentication from './auth'
 import Account from './account'
@@ -39,6 +40,10 @@ let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
+
+const splashURL = process.env.NODE_ENV === 'development'
+  ? path.resolve(__dirname, '../../static/splash-screen.html')
+  : `${__dirname}/static/splash-screen.html`
 
 // https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
@@ -277,7 +282,8 @@ async function createWindow () {
     defaultWidth: 1000,
     height: 563
   })
-  mainWindow = new BrowserWindow({
+  //  mainWindow = new BrowserWindow({
+  const mainOpts = {
     titleBarStyle: 'hidden',
     transparent: true,
     x: mainWindowState.x,
@@ -286,7 +292,17 @@ async function createWindow () {
     height: mainWindowState.height,
     useContentSize: true,
     icon: path.resolve(__dirname, '../../build/icons/256x256.png')
-  })
+  }
+  const config = {
+    windowOpts: mainOpts,
+    templateUrl: splashURL,
+    splashScreenOpts: {
+      width: 425,
+      height: 325
+    }
+  }
+  mainWindow = Splashscreen.initSplashScreen(config)
+
   mainWindowState.manage(mainWindow)
 
   mainWindow.loadURL(winURL)
