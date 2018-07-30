@@ -64,6 +64,12 @@ const GlobalHeader = {
         router.push(`/${account._id}/home`)
       })
     },
+    selectAccount ({ state, commit }, account) {
+      commit('updateChanging', true)
+      const index = state.accounts.findIndex(a => a._id === account._id)
+      commit('changeDefaultActive', index.toString())
+      router.push({ path: `/${account._id}/home` })
+    },
     async removeShortcutEvents () {
       ipcRenderer.removeAllListeners('change-account')
       return 'removeShortcutEvents'
