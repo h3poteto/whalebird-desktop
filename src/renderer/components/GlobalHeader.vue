@@ -59,8 +59,7 @@ export default {
       return this.$router.push({ path: '/login' })
     },
     select (account) {
-      console.log(account._id)
-      return this.$router.push({ path: `/${account._id}/home` })
+      return this.$store.dispatch('GlobalHeader/selectAccount', account)
     }
   }
 }
