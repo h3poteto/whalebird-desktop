@@ -52,30 +52,34 @@ const Favourites = {
     }
   },
   actions: {
-    fetchFavourites ({ commit }, account) {
+    async fetchFavourites ({ commit }, account) {
       const client = new Mastodon(
         account.accessToken,
         account.baseURL + '/api/v1'
       )
-      return client.get('/favourites', { limit: 40 })
-        .then(res => {
-          commit('updateFavourites', res.data)
-          // Parse link header
-          const link = parse(res.headers.link)
-          commit('changeMaxId', link.next.max_id)
-          return res.data
-        })
+      const res = await client.get('/favourites', { limit: 40 })
+      commit('updateFavourites', res.data)
+      // Parse link header
+      try {
+        const link = parse(res.headers.link)
+        commit('changeMaxId', link.next.max_id)
+      } catch (err) {
+        console.error(err)
+      }
+      return res.data
     },
     lazyFetchFavourites ({ state, commit, rootState }) {
       if (state.lazyLoading) {
         return Promise.resolve(null)
+      }
+      if (!state.maxId) {
+        return null
       }
       commit('changeLazyLoading', true)
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
-      console.log(state.maxId)
       return client.get('/favourites', { max_id: state.maxId, limit: 40 })
         .then(res => {
           commit('changeLazyLoading', false)
