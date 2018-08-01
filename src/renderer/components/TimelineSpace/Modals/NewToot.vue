@@ -55,6 +55,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import Visibility from '../../../../constants/visibility'
 
 export default {
   name: 'new-toot',
@@ -79,13 +80,13 @@ export default {
       sensitive: state => state.TimelineSpace.Modals.NewToot.sensitive,
       visibilityIcon: (state) => {
         switch (state.TimelineSpace.Modals.NewToot.visibility) {
-          case 'public':
+          case Visibility.Public.value:
             return 'globe'
-          case 'unlisted':
+          case Visibility.Unlisted.value:
             return 'unlock'
-          case 'private':
+          case Visibility.Private.value:
             return 'lock'
-          case 'direct':
+          case Visibility.Direct.value:
             return 'envelope'
           default:
             return 'globe'
@@ -209,7 +210,7 @@ export default {
       this.$store.commit('TimelineSpace/Modals/NewToot/removeMedia', media)
     },
     changeVisibility (level) {
-      this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibility', level)
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/changeVisibility', level)
     },
     changeSensitive () {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
