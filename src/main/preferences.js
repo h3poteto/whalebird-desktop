@@ -9,7 +9,8 @@ const Base = {
     },
     theme: 'white',
     fontSize: 14,
-    displayNameStyle: 0
+    displayNameStyle: 0,
+    tootVisibility: 0
   },
   state: {
     collapse: false
