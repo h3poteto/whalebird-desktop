@@ -39,11 +39,21 @@ const NewToot = {
     },
     /**
      * changeVisibility
+     * Update visibility using Visibility constants
      * @param state vuex state object
      * @param visibility Visibility constants object
      **/
     changeVisibility (state, visibility) {
       state.visibility = visibility.value
+    },
+    /**
+     * changeVisibilityValue
+     * Update visibility using direct value
+     * @param state vuex state object
+     * @param value visibility value
+     **/
+    changeVisibilityValue (state, value) {
+      state.visibility = value
     },
     changeSensitive (state, value) {
       state.sensitive = value
@@ -79,8 +89,12 @@ const NewToot = {
       commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
       dispatch('changeVisibility', message.visibility)
     },
-    openModal ({ commit }) {
+    openModal ({ dispatch, commit }) {
       commit('changeModal', true)
+      ipcRenderer.send('get-preferences')
+      ipcRenderer.once('response-get-preferences', (event, conf) => {
+        commit('changeVisibilityValue', conf.general.tootVisibility)
+      })
     },
     closeModal ({ commit }) {
       commit('changeModal', false)

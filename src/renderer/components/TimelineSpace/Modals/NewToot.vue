@@ -147,9 +147,12 @@ export default {
           type: 'error'
         })
       }
+      const visibilityKey = Object.keys(Visibility).find((key) => {
+        return Visibility[key].value === this.visibility
+      })
       let form = {
         status: this.status,
-        visibility: this.visibility,
+        visibility: Visibility[visibilityKey].name,
         sensitive: this.sensitive,
         spoiler_text: this.spoiler
       }
