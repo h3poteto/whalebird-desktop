@@ -169,29 +169,14 @@ export default {
         })
       }
 
-      const loading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-
       this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
-        .then(() => {
-          this.close()
-          loading.close()
-          this.$message({
-            message: 'Toot',
-            type: 'success'
-          })
-        })
         .catch(() => {
-          loading.close()
           this.$message({
             message: 'Could not toot',
             type: 'error'
           })
         })
+      this.close()
     },
     selectImage () {
       this.$refs.image.click()
