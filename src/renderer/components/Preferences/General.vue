@@ -34,6 +34,26 @@
       </tbody>
     </table>
   </div>
+  <div class="toot">
+    <h3>Toot</h3>
+    <table>
+      <tbody>
+        <tr>
+          <td class="title">Default Visibility:</td>
+          <td class="status">
+            <el-select v-model="tootVisibility" placeholder="visibility">
+              <el-option
+                v-for="v in visibilities"
+                :key="v.value"
+                :label="v.name"
+                :value="v.value">
+              </el-option>
+            </el-select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <div class="sounds">
     <h3>Sounds</h3>
     <table>
@@ -82,6 +102,20 @@ export default {
           name: 'username',
           value: 2
         }
+      ],
+      visibilities: [
+        {
+          name: 'public',
+          value: 0
+        },
+        {
+          name: 'unlisted',
+          value: 1
+        },
+        {
+          name: 'private',
+          value: 2
+        }
       ]
     }
   },
@@ -104,6 +138,14 @@ export default {
       },
       set (value) {
         this.$store.dispatch('Preferences/General/updateDisplayNameStyle', value)
+      }
+    },
+    tootVisibility: {
+      get () {
+        return this.$store.state.Preferences.General.general.tootVisibility
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/General/updateTootVisibility', value)
       }
     },
     sound_fav_rb: {
@@ -146,52 +188,40 @@ export default {
 
 <style lang="scss" scoped>
 #general {
+  table {
+    width: 100%;
+  }
+
+  td {
+    padding: 16px 0;
+  }
+
+  .title {
+    text-align: right;
+    width: 50%;
+  }
+
+  .status {
+    width: 50%;
+    text-align: center;
+  }
+
   .appearance {
     color: var(--theme-secondary-color);
     width: 100%;
     box-sizing: border-box;
+  }
 
-    table {
-      width: 100%;
-    }
-
-    td {
-      padding: 16px 0;
-    }
-
-    .title {
-      text-align: right;
-      width: 50%;
-    }
-
-    .status {
-      width: 50%;
-      text-align: center;
-    }
+  .toot {
+    color: var(--theme-secondary-color);
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .sounds {
     color: var(--theme-secondary-color);
     width: 100%;
     box-sizing: border-box;
-
-    table {
-      width: 100%;
-    }
-
-    td {
-      padding: 16px 0;
-    }
-
-    .title {
-      text-align: right;
-      width: 50%;
-    }
-
-    .status {
-      width: 50%;
-      text-align: center;
-    }
   }
 }
 </style>
