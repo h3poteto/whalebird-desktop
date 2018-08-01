@@ -84,6 +84,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import Visibility from '../../../constants/visibility'
 
 export default {
   name: 'general',
@@ -104,18 +105,9 @@ export default {
         }
       ],
       visibilities: [
-        {
-          name: 'public',
-          value: 0
-        },
-        {
-          name: 'unlisted',
-          value: 1
-        },
-        {
-          name: 'private',
-          value: 2
-        }
+        Visibility.Public,
+        Visibility.Unlisted,
+        Visibility.Private
       ]
     }
   },

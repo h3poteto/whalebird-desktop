@@ -1,5 +1,6 @@
 import storage from 'electron-json-storage'
 import objectAssignDeep from 'object-assign-deep'
+import Visibility from '../constants/visibility'
 
 const Base = {
   general: {
@@ -10,7 +11,7 @@ const Base = {
     theme: 'white',
     fontSize: 14,
     displayNameStyle: 0,
-    tootVisibility: 0
+    tootVisibility: Visibility.Public.value
   },
   state: {
     collapse: false

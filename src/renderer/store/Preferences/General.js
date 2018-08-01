@@ -1,4 +1,5 @@
 import { ipcRenderer } from 'electron'
+import Visibility from '../../../constants/visibility'
 
 const General = {
   namespaced: true,
@@ -11,7 +12,7 @@ const General = {
       theme: 'white',
       fontSize: 14,
       displayNameStyle: 0,
-      tootVisibility: 0
+      tootVisibility: Visibility.Public.value
     },
     loading: false
   },
