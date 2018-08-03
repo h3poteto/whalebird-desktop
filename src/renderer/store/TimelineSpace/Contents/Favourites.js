@@ -64,11 +64,12 @@ const Favourites = {
         const link = parse(res.headers.link)
         commit('changeMaxId', link.next.max_id)
       } catch (err) {
+        commit('changeMaxId', null)
         console.error(err)
       }
       return res.data
     },
-    lazyFetchFavourites ({ state, commit, rootState }) {
+    async lazyFetchFavourites ({ state, commit, rootState }) {
       if (state.lazyLoading) {
         return Promise.resolve(null)
       }
@@ -80,19 +81,20 @@ const Favourites = {
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
-      return client.get('/favourites', { max_id: state.maxId, limit: 40 })
-        .then(res => {
+      const res = await client.get('/favourites', { max_id: state.maxId, limit: 40 })
+        .finally(() => {
           commit('changeLazyLoading', false)
-          commit('insertFavourites', res.data)
-          // Parse link header
-          const link = parse(res.headers.link)
-          commit('changeMaxId', link.next.max_id)
-          return res.data
         })
-        .catch(err => {
-          commit('changeLazyLoading', false)
-          throw err
-        })
+      commit('insertFavourites', res.data)
+      // Parse link header
+      try {
+        const link = parse(res.headers.link)
+        commit('changeMaxId', link.next.max_id)
+      } catch (err) {
+        commit('changeMaxId', null)
+        console.error(err)
+      }
+      return res.data
     }
   }
 }
