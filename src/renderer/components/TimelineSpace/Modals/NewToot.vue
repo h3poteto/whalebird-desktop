@@ -9,7 +9,7 @@
         <el-input placeholder="Write your warning here" v-model="spoiler"></el-input>
       </div>
       <div class="status">
-        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()" autofocus placeholder="What is on your mind?"></textarea>
+        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()" v-on:input="suggestAccount" autofocus placeholder="What is on your mind?"></textarea>
       </div>
     </el-form>
     <div class="preview">
@@ -56,12 +56,19 @@
 <script>
 import { mapState } from 'vuex'
 import Visibility from '../../../../constants/visibility'
+import suggestText from '../../../utils/suggestText'
 
 export default {
   name: 'new-toot',
   data () {
     return {
-      showContentWarning: false
+      showContentWarning: false,
+      accounts: [
+        '@h3poteto@mstdn.io',
+        '@h3_poteto@friends.nico',
+        '@h3poteto@social.mikutter.hachune.net'
+      ],
+      filteredAccount: []
     }
   },
   computed: {
@@ -134,6 +141,7 @@ export default {
   },
   methods: {
     close () {
+      this.filteredAccount = []
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaId')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
@@ -217,6 +225,16 @@ export default {
     },
     changeSensitive () {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
+    },
+    suggestAccount (e) {
+      // e.target.sectionStart: Cursor position
+      // e.target.value: current value of the textarea
+      const [start, word] = suggestText(e.target.value, e.target.selectionStart, '@')
+      if (!start || !word) {
+        return false
+      }
+      this.filteredAccount = this.accounts.filter((a) => a.startsWith(word))
+      console.log(this.filteredAccount)
     }
   }
 }
