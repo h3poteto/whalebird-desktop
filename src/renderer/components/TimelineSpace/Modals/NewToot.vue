@@ -8,9 +8,11 @@
       <div class="spoiler" v-show="showContentWarning">
         <el-input placeholder="Write your warning here" v-model="spoiler"></el-input>
       </div>
-      <div class="status">
-        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()" v-on:input="suggestAccount" autofocus placeholder="What is on your mind?"></textarea>
-      </div>
+      <Status
+        v-model="status"
+        :opened="newTootModal"
+        @toot="toot"
+        />
     </el-form>
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
@@ -56,19 +58,16 @@
 <script>
 import { mapState } from 'vuex'
 import Visibility from '../../../../constants/visibility'
-import suggestText from '../../../utils/suggestText'
+import Status from './NewToot/Status'
 
 export default {
   name: 'new-toot',
+  components: {
+    Status
+  },
   data () {
     return {
-      showContentWarning: false,
-      accounts: [
-        '@h3poteto@mstdn.io',
-        '@h3_poteto@friends.nico',
-        '@h3poteto@social.mikutter.hachune.net'
-      ],
-      filteredAccount: []
+      showContentWarning: false
     }
   },
   computed: {
@@ -133,9 +132,6 @@ export default {
     newTootModal: function (newState, oldState) {
       if (!oldState && newState) {
         this.showContentWarning = false
-        this.$nextTick(function () {
-          this.$refs.status.focus()
-        })
       }
     }
   },
@@ -225,16 +221,6 @@ export default {
     },
     changeSensitive () {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
-    },
-    suggestAccount (e) {
-      // e.target.sectionStart: Cursor position
-      // e.target.value: current value of the textarea
-      const [start, word] = suggestText(e.target.value, e.target.selectionStart, '@')
-      if (!start || !word) {
-        return false
-      }
-      this.filteredAccount = this.accounts.filter((a) => a.startsWith(word))
-      console.log(this.filteredAccount)
     }
   }
 }
@@ -264,33 +250,6 @@ export default {
 
         &::placeholder {
           color: #c0c4cc;
-        }
-      }
-    }
-
-    .status {
-      textarea {
-        display: block;
-        padding: 5px 15px;
-        line-height: 1.5;
-        box-sizing: border-box;
-        width: 100%;
-        font-size: inherit;
-        color: #606266;
-        background-image: none;
-        border: 0;
-        border-radius: 4px;
-        resize: none;
-        height: 120px;
-        transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-        font-family: 'Lato', sans-serif;
-
-        &::placeholder {
-          color: #c0c4cc;
-        }
-
-        &:focus {
-          outline: 0;
         }
       }
     }
