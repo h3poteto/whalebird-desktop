@@ -6,9 +6,9 @@
         <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
       </div>
       <div class="image-content">
-        <span class="button-area"><el-button type="text" v-show="showLeft"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
+        <span class="button-area"><el-button type="text" v-show="showLeft" v-shortkey="['arrowleft']" @shortkey.native="decrementIndex()"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
         <Media :src="imageURL"></Media>
-        <span class="button-area"><el-button type="text" v-show="showRight"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
+        <span class="button-area"><el-button type="text" v-show="showRight" v-shortkey="['arrowright']" @shortkey.native="incrementIndex()"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
       </div>
     </div>
   </div>
@@ -48,10 +48,10 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
     },
     decrementIndex () {
-      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
+      if (this.showLeft) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
     },
     incrementIndex () {
-      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
+      if (this.showRight) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
     }
   }
 }
