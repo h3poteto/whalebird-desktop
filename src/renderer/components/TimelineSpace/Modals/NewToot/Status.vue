@@ -16,7 +16,7 @@
     v-model="openSuggest">
     <ul class="suggest-list">
       <li
-        v-for="(item, index) in filteredAccount"
+        v-for="(item, index) in filteredAccounts"
         :key="index"
         @click="insertAccount(item)"
         @shortkey="insertAccount(item)"
@@ -50,9 +50,11 @@ export default {
         '@h3_poteto@friends.nico',
         '@h3poteto@social.mikutter.hachune.net'
       ],
-      filteredAccount: [],
+      filteredAccounts: [],
       openSuggest: false,
-      highlightedIndex: 0
+      highlightedIndex: 0,
+      startIndex: null,
+      matchWord: null
     }
   },
   computed: {
@@ -82,28 +84,34 @@ export default {
       if (!start || !word) {
         return false
       }
-      this.filteredAccount = this.accounts.filter((a) => a.startsWith(word))
-      if (this.filteredAccount.length === 0) {
+      this.filteredAccounts = this.accounts.filter((a) => a.startsWith(word))
+      if (this.filteredAccounts.length === 0) {
         return false
       }
       this.openSuggest = true
-    },
-    insertAccount (account) {
-      console.log(account)
-      this.openSuggest = false
+      this.startIndex = start
+      this.matchWord = word
     },
     suggestHighlight (index) {
       if (index < 0) {
         this.highlightedIndex = 0
-      } else if (index >= this.filteredAccount.length) {
-        this.highlightedIndex = this.filteredAccount.length - 1
+      } else if (index >= this.filteredAccounts.length) {
+        this.highlightedIndex = this.filteredAccounts.length - 1
       } else {
         this.highlightedIndex = index
       }
     },
-    selectAccount () {
-      console.log(this.highlightedIndex)
+    insertAccount (account) {
+      console.log(account)
+      const str = `${this.status.slice(0, this.startIndex - 1)}${account} ${this.status.slice(this.startIndex + this.matchWord.length)}`
+      this.status = str
       this.openSuggest = false
+      this.startIndex = null
+      this.matchWord = null
+    },
+    selectCurrentAccount () {
+      const account = this.filteredAccounts[this.highlightedIndex]
+      this.insertAccount(account)
     },
     handleKey (event) {
       switch (event.srcKey) {
@@ -114,8 +122,8 @@ export default {
           this.suggestHighlight(this.highlightedIndex + 1)
           break
         case 'enter':
-          this.selectAccount()
-          return true
+          this.selectCurrentAccount()
+          break
         default:
           return true
       }
