@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import suggestText from '../../../../utils/suggestText'
 
 export default {
@@ -45,12 +46,6 @@ export default {
   },
   data () {
     return {
-      accounts: [
-        '@h3poteto@mstdn.io',
-        '@h3_poteto@friends.nico',
-        '@h3poteto@social.mikutter.hachune.net'
-      ],
-      filteredAccounts: [],
       openSuggest: false,
       highlightedIndex: 0,
       startIndex: null,
@@ -58,6 +53,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      filteredAccounts: state => state.TimelineSpace.Modals.NewToot.Status.filteredAccounts
+    }),
     status: {
       get: function () {
         return this.value
@@ -73,11 +71,13 @@ export default {
         this.$nextTick(function () {
           this.$refs.status.focus()
         })
+      } else if (oldState && !newState) {
+        this.closeSuggest()
       }
     }
   },
   methods: {
-    suggestAccount (e) {
+    async suggestAccount (e) {
       // e.target.sectionStart: Cursor position
       // e.target.value: current value of the textarea
       const [start, word] = suggestText(e.target.value, e.target.selectionStart, '@')
@@ -85,19 +85,21 @@ export default {
         this.closeSuggest()
         return false
       }
-      this.filteredAccounts = this.accounts.filter((a) => a.startsWith(word))
-      if (this.filteredAccounts.length === 0) {
-        this.closeSuggest()
-        return false
+      try {
+        await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/searchAccount', word)
+        this.openSuggest = true
+        this.startIndex = start
+        this.matchWord = word
+      } catch (err) {
+        console.log(err)
       }
-      this.openSuggest = true
-      this.startIndex = start
-      this.matchWord = word
     },
     closeSuggest () {
       this.openSuggest = false
       this.startIndex = null
       this.matchWord = null
+      this.highlightedIndex = 0
+      this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredAccounts')
     },
     suggestHighlight (index) {
       if (index < 0) {
@@ -109,11 +111,9 @@ export default {
       }
     },
     insertAccount (account) {
-      const str = `${this.status.slice(0, this.startIndex - 1)}${account} ${this.status.slice(this.startIndex + this.matchWord.length)}`
+      const str = `${this.status.slice(0, this.startIndex)}${account} ${this.status.slice(this.startIndex + this.matchWord.length)}`
       this.status = str
-      this.openSuggest = false
-      this.startIndex = null
-      this.matchWord = null
+      this.closeSuggest()
     },
     selectCurrentAccount () {
       const account = this.filteredAccounts[this.highlightedIndex]
@@ -153,7 +153,7 @@ export default {
     border-radius: 4px;
     resize: none;
     height: 120px;
-    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color 0.2s cubic-bezier(0.645, 0.045, 9.355, 1);
     font-family: 'Lato', sans-serif;
 
     &::placeholder {
