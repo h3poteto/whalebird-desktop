@@ -139,6 +139,10 @@ export default {
         case 'enter':
           this.selectCurrentAccount()
           break
+        case 'linux':
+        case 'mac':
+          this.$emit('toot')
+          break
         default:
           return true
       }
