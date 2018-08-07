@@ -82,15 +82,22 @@ export default {
       // e.target.value: current value of the textarea
       const [start, word] = suggestText(e.target.value, e.target.selectionStart, '@')
       if (!start || !word) {
+        this.closeSuggest()
         return false
       }
       this.filteredAccounts = this.accounts.filter((a) => a.startsWith(word))
       if (this.filteredAccounts.length === 0) {
+        this.closeSuggest()
         return false
       }
       this.openSuggest = true
       this.startIndex = start
       this.matchWord = word
+    },
+    closeSuggest () {
+      this.openSuggest = false
+      this.startIndex = null
+      this.matchWord = null
     },
     suggestHighlight (index) {
       if (index < 0) {
@@ -102,7 +109,6 @@ export default {
       }
     },
     insertAccount (account) {
-      console.log(account)
       const str = `${this.status.slice(0, this.startIndex - 1)}${account} ${this.status.slice(this.startIndex + this.matchWord.length)}`
       this.status = str
       this.openSuggest = false
