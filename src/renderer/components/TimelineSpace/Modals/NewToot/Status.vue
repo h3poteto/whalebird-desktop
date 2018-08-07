@@ -5,7 +5,7 @@
     ref="status"
     v-shortkey="openSuggest ? {up: ['arrowup'], down: ['arrowdown'], enter: ['enter']} : {linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}"
     @shortkey="handleKey"
-    v-on:input="suggestAccount"
+    v-on:input="startSuggest"
     placeholder="What is on your mind?"
     autofocus>
   </textarea>
@@ -77,6 +77,15 @@ export default {
     }
   },
   methods: {
+    startSuggest (e) {
+      const currentValue = e.target.value
+      // Start suggest after user stop writing
+      setTimeout(() => {
+        if (currentValue === this.status) {
+          this.suggestAccount(e)
+        }
+      }, 500)
+    },
     async suggestAccount (e) {
       // e.target.sectionStart: Cursor position
       // e.target.value: current value of the textarea
