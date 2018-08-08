@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#login /deep/ {
+#login {
   background-color: #292f3f;
   color: #ffffff;
   text-align: center;
@@ -48,16 +48,6 @@ export default {
     .close-button {
       font-size: 24px;
     }
-  }
-
-  .el-form-item__label {
-    color: #f0f3f9;
-  }
-
-  .el-input__inner {
-    background-color: #373d48;
-    color: #ffffff;
-    border: 0;
   }
 }
 </style>
