@@ -5,7 +5,14 @@
     class="jump-modal">
     <el-form class="jump-form" v-on:submit.prevent="jump">
       <div class="channel">
-        <input type="text" v-model="channel" placeholder="Jump to..." ref="channel" @keyup.enter.exact="jumpCurrentSelected" @keyup.down.exact="nextChannel" @keyup.up.exact="prevChannel" />
+        <input
+          type="text"
+          v-model="channel"
+          placeholder="Jump to..."
+          ref="channel"
+          v-shortkey="{next: ['arrowdown'], prev: ['arrowup'], select: ['enter']}"
+          @shortkey="handleKey"
+          />
         <ul class="channel-list">
           <li v-for="c in filterdChannel" :class="c.name === selectedChannel.name ? 'channel-list-item selected' : 'channel-list-item'" @click="jump(c)" @mouseover="changeSelected(c)">{{ c.name }}</li>
         </ul>
@@ -93,10 +100,26 @@ export default {
       this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', channel)
     },
     jumpCurrentSelected () {
+      console.log('catch')
       this.$store.dispatch('TimelineSpace/Modals/Jump/jumpCurrentSelected')
     },
     jump (channel) {
       this.$store.dispatch('TimelineSpace/Modals/Jump/jump', channel)
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'next':
+          this.nextChannel()
+          break
+        case 'prev':
+          this.prevChannel()
+          break
+        case 'select':
+          this.jumpCurrentSelected()
+          break
+        default:
+          return true
+      }
     }
   }
 }
