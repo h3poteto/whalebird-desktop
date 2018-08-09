@@ -1,0 +1,37 @@
+{
+  "main_menu": {
+    "application": {
+      "name": "Whalebird",
+      "about": "About Whalebird",
+      "preferences": "Preferences...",
+      "services": "Services",
+      "hide": "Hide Whalebird",
+      "hide_others": "Hide Others",
+      "show_all": "Show All",
+      "quit": "Quit"
+    },
+    "toot": {
+      "name": "Toot",
+      "new": "New Toot"
+    },
+    "edit": {
+      "name": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "select_all": "Select All"
+    },
+    "view": {
+      "name": "View",
+      "toggle_full_screen": "Toggle Full Screen"
+    },
+    "window": {
+      "name": "Window",
+      "close": "Close Window",
+      "minimize": "Minimize",
+      "jump_to": "Jump to"
+    }
+  }
+}
