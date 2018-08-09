@@ -1,7 +1,7 @@
 <template>
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm('loginForm')" class="login-form" :rules="rules" :model="form">
     <el-form-item label="First, let's log in to a Mastodon instance. Please enter an instance domain name." prop="domainName">
-      <el-input v-model="form.domainName" placeholder="mastodon.social"></el-input>
+      <el-input v-model="form.domainName" placeholder="mastodon.social" v-shortkey="['enter']" @shortkey.native="handleKey"></el-input>
     </el-form-item>
     <!-- Dummy form to guard submitting with enter -->
     <el-form-item class="hidden">
@@ -106,15 +106,32 @@ export default {
           return false
         }
       })
+    },
+    handleKey (event) {
+      if (!this.selectedInstance) {
+        this.confirm('loginForm')
+      } else {
+        this.login()
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.login-form {
+.login-form /deep/ {
   margin: 0 auto;
   width: 300px;
+
+  .el-form-item__label {
+    color: #f0f3f9;
+  }
+
+  .el-input__inner {
+    background-color: #373d48;
+    color: #fff;
+    border: 0;
+  }
 
   .instance-group {
     text-align: left;

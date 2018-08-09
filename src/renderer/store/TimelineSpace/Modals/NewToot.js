@@ -1,15 +1,20 @@
 import Mastodon from 'megalodon'
 import { ipcRenderer } from 'electron'
+import Visibility from '../../../../constants/visibility'
+import Status from './NewToot/Status'
 
 const NewToot = {
   namespaced: true,
+  modules: {
+    Status
+  },
   state: {
     modalOpen: false,
     status: '',
     replyToMessage: null,
     blockSubmit: false,
     attachedMedias: [],
-    visibility: 'public',
+    visibility: Visibility.Public.value,
     sensitive: false,
     spoiler: '',
     attachedMediaId: 0
@@ -36,7 +41,22 @@ const NewToot = {
     removeMedia (state, media) {
       state.attachedMedias = state.attachedMedias.filter(m => m.id !== media.id)
     },
-    changeVisibility (state, value) {
+    /**
+     * changeVisibility
+     * Update visibility using Visibility constants
+     * @param state vuex state object
+     * @param visibility Visibility constants object
+     **/
+    changeVisibility (state, visibility) {
+      state.visibility = visibility.value
+    },
+    /**
+     * changeVisibilityValue
+     * Update visibility using direct value
+     * @param state vuex state object
+     * @param value visibility value
+     **/
+    changeVisibilityValue (state, value) {
       state.visibility = value
     },
     changeSensitive (state, value) {
@@ -64,17 +84,21 @@ const NewToot = {
           return res.data
         })
     },
-    openReply ({ commit, rootState }, message) {
+    openReply ({ dispatch, commit, rootState }, message) {
       commit('setReplyTo', message)
       const mentionAccounts = [message.account.acct].concat(message.mentions.map(a => a.acct))
         .filter((a, i, self) => self.indexOf(a) === i)
         .filter((a) => a !== rootState.TimelineSpace.account.username)
       commit('changeModal', true)
       commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
-      commit('changeVisibility', message.visibility)
+      dispatch('changeVisibility', message.visibility)
     },
-    openModal ({ commit }) {
+    openModal ({ dispatch, commit }) {
       commit('changeModal', true)
+      ipcRenderer.send('get-preferences')
+      ipcRenderer.once('response-get-preferences', (event, conf) => {
+        commit('changeVisibilityValue', conf.general.tootVisibility)
+      })
     },
     closeModal ({ commit }) {
       commit('changeModal', false)
@@ -84,7 +108,7 @@ const NewToot = {
       commit('clearAttachedMedias')
       commit('changeSensitive', false)
       commit('updateSpoiler', '')
-      commit('changeVisibility', 'public')
+      commit('changeVisibility', Visibility.Public)
     },
     uploadImage ({ state, commit, rootState }, image) {
       commit('changeBlockSubmit', true)
@@ -115,6 +139,18 @@ const NewToot = {
     },
     resetMediaId ({ commit }) {
       commit('updateMediaId', 0)
+    },
+    /**
+     * changeVisibility
+     * @param commit vuex commit object
+     * @param level visibility level string object
+     **/
+    changeVisibility ({ commit }, level) {
+      Object.keys(Visibility).map((key, index) => {
+        if (Visibility[key].name === level) {
+          commit('changeVisibility', Visibility[key])
+        }
+      })
     }
   }
 }

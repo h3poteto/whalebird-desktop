@@ -8,9 +8,11 @@
       <div class="spoiler" v-show="showContentWarning">
         <el-input placeholder="Write your warning here" v-model="spoiler"></el-input>
       </div>
-      <div class="status">
-        <textarea v-model="status" ref="status" v-shortkey="{linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}" @shortkey="toot()" autofocus placeholder="What is on your mind?"></textarea>
-      </div>
+      <Status
+        v-model="status"
+        :opened="newTootModal"
+        @toot="toot"
+        />
     </el-form>
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
@@ -55,9 +57,14 @@
 
 <script>
 import { mapState } from 'vuex'
+import Visibility from '../../../../constants/visibility'
+import Status from './NewToot/Status'
 
 export default {
   name: 'new-toot',
+  components: {
+    Status
+  },
   data () {
     return {
       showContentWarning: false
@@ -79,13 +86,13 @@ export default {
       sensitive: state => state.TimelineSpace.Modals.NewToot.sensitive,
       visibilityIcon: (state) => {
         switch (state.TimelineSpace.Modals.NewToot.visibility) {
-          case 'public':
+          case Visibility.Public.value:
             return 'globe'
-          case 'unlisted':
+          case Visibility.Unlisted.value:
             return 'unlock'
-          case 'private':
+          case Visibility.Private.value:
             return 'lock'
-          case 'direct':
+          case Visibility.Direct.value:
             return 'envelope'
           default:
             return 'globe'
@@ -125,14 +132,12 @@ export default {
     newTootModal: function (newState, oldState) {
       if (!oldState && newState) {
         this.showContentWarning = false
-        this.$nextTick(function () {
-          this.$refs.status.focus()
-        })
       }
     }
   },
   methods: {
     close () {
+      this.filteredAccount = []
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaId')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
@@ -146,9 +151,12 @@ export default {
           type: 'error'
         })
       }
+      const visibilityKey = Object.keys(Visibility).find((key) => {
+        return Visibility[key].value === this.visibility
+      })
       let form = {
         status: this.status,
-        visibility: this.visibility,
+        visibility: Visibility[visibilityKey].name,
         sensitive: this.sensitive,
         spoiler_text: this.spoiler
       }
@@ -209,7 +217,7 @@ export default {
       this.$store.commit('TimelineSpace/Modals/NewToot/removeMedia', media)
     },
     changeVisibility (level) {
-      this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibility', level)
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/changeVisibility', level)
     },
     changeSensitive () {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
@@ -242,33 +250,6 @@ export default {
 
         &::placeholder {
           color: #c0c4cc;
-        }
-      }
-    }
-
-    .status {
-      textarea {
-        display: block;
-        padding: 5px 15px;
-        line-height: 1.5;
-        box-sizing: border-box;
-        width: 100%;
-        font-size: inherit;
-        color: #606266;
-        background-image: none;
-        border: 0;
-        border-radius: 4px;
-        resize: none;
-        height: 120px;
-        transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-        font-family: 'Bookerly', serif;
-        
-	&::placeholder {
-          color: #c0c4cc;
-        }
-
-        &:focus {
-          outline: 0;
         }
       }
     }
