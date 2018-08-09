@@ -1,9 +1,13 @@
 import Mastodon from 'megalodon'
 import { ipcRenderer } from 'electron'
 import Visibility from '../../../../constants/visibility'
+import Status from './NewToot/Status'
 
 const NewToot = {
   namespaced: true,
+  modules: {
+    Status
+  },
   state: {
     modalOpen: false,
     status: '',

@@ -285,7 +285,6 @@ async function createWindow () {
   //  mainWindow = new BrowserWindow({
   const mainOpts = {
     titleBarStyle: 'hidden',
-    transparent: true,
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,
