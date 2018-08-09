@@ -1,0 +1,37 @@
+{
+  "main_menu": {
+    "application": {
+      "name": "Whalebird",
+      "about": "Whalebirdについて",
+      "preferences": "設定...",
+      "services": "サービス",
+      "hide": "Whalebirdを隠す",
+      "hide_others": "ほかを隠す",
+      "show_all": "すべてを表示",
+      "quit": "終了"
+    },
+    "toot": {
+      "name": "トゥート",
+      "new": "トゥート"
+    },
+    "edit": {
+      "name": "編集",
+      "undo": "取り消す",
+      "redo": "やり直す",
+      "cut": "カット",
+      "copy": "コピー",
+      "paste": "ペースト",
+      "select_all": "すべてを選択"
+    },
+    "view": {
+      "name": "表示",
+      "toggle_full_screen": "フルスクリーンにする"
+    },
+    "window": {
+      "name": "ウィンドウ",
+      "close": "閉じる",
+      "minimize": "縮小",
+      "jump_to": "ジャンプ"
+    }
+  }
+}
