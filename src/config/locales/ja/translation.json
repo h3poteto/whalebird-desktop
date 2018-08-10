@@ -33,5 +33,16 @@
       "minimize": "縮小",
       "jump_to": "ジャンプ"
     }
+  },
+  "side_menu": {
+    "edit_profile": "編集",
+    "home": "ホーム",
+    "notification": "通知",
+    "favourite": "お気に入り",
+    "local": "ローカルタイムライン",
+    "public": "連合タイムライン",
+    "hashtag": "ハッシュタグ",
+    "search": "検索",
+    "lists": "リスト"
   }
 }
