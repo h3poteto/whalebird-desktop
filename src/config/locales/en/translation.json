@@ -44,5 +44,21 @@
     "hashtag": "Hashtag",
     "search": "Search",
     "lists": "Lists"
+  },
+  "header_menu": {
+    "home": "Home",
+    "notification": "Notification",
+    "favourite": "Favourite",
+    "local": "Local timeline",
+    "public": "Public timeline",
+    "hashtag": "Hashtag",
+    "search": "Search",
+    "lists": "Lists",
+    "members": "Members",
+    "filter": {
+      "title": "Filter",
+      "placeholder": "Filter out by regular expressions",
+      "apply": "Apply"
+    }
   }
 }
