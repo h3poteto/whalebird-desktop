@@ -60,5 +60,46 @@
       "placeholder": "Filter out by regular expressions",
       "apply": "Apply"
     }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "general": {
+      "title": "General",
+      "appearance": "Appearance",
+      "theme_color": "Theme color:",
+      "white": "white",
+      "dark": "dark",
+      "font_size": "Font size:",
+      "display_style": {
+        "title": "Display style:",
+        "display_name_and_username": "Display name and username",
+        "display_name": "Display name",
+        "username": "Username"
+      },
+      "toot": "Toot",
+      "visibility": {
+        "title": "Default visibility:",
+        "public": "Public",
+        "unlisted": "Unlisted",
+        "private": "Private",
+        "direct": "Direct"
+      },
+      "sounds": "Sounds",
+      "fav_rb_sound": "Favoute and Boost:",
+      "toot_sound": "Toot:"
+    },
+    "account": {
+      "title": "Account",
+      "connected": "Connected Account",
+      "username": "Username",
+      "domain": "Domain",
+      "association": "Association",
+      "order": "Order",
+      "remove_association": "Remove assocication",
+      "remove_all_associations": "Remove all associations",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "confirm_message": "Are you sure to remove all associations?"
+    }
   }
 }

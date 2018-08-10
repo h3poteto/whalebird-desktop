@@ -1,25 +1,25 @@
 <template>
 <div id="general" v-loading="loading">
-  <h2>General</h2>
+  <h2>{{ $t('preferences.general.title') }}</h2>
   <div class="appearance">
-    <h3>Appearance</h3>
+    <h3>{{ $t('preferences.general.appearance') }}</h3>
     <table class="theme">
       <tbody>
         <tr>
-          <td class="title">Theme color:</td>
+          <td class="title">{{ $t('preferences.general.theme_color') }}</td>
           <td class="status">
-            <el-radio v-model="theme" label="white">White</el-radio>
-            <el-radio v-model="theme" label="dark">Dark</el-radio>
+            <el-radio v-model="theme" label="white">{{ $t('preferences.general.white') }}</el-radio>
+            <el-radio v-model="theme" label="dark">{{ $t('preferences.general.dark') }}</el-radio>
           </td>
         </tr>
         <tr>
-          <td class="title">Font size:</td>
+          <td class="title">{{ $t('preferences.general.font_size') }}</td>
           <td class="status">
             <el-input-number :value="fontSize" :min="9" :max="18" @change="updateFontSize"></el-input-number>
           </td>
         </tr>
         <tr>
-          <td class="title">Display name style:</td>
+          <td class="title">{{ $t('preferences.general.display_style.title') }}</td>
           <td class="status">
             <el-select v-model="displayNameStyle" placeholder="style">
               <el-option
@@ -35,11 +35,11 @@
     </table>
   </div>
   <div class="toot">
-    <h3>Toot</h3>
+    <h3>{{ $t('preferences.general.toot') }}</h3>
     <table>
       <tbody>
         <tr>
-          <td class="title">Default Visibility:</td>
+          <td class="title">{{ $t('preferences.general.visibility.title') }}</td>
           <td class="status">
             <el-select v-model="tootVisibility" placeholder="visibility">
               <el-option
@@ -55,11 +55,11 @@
     </table>
   </div>
   <div class="sounds">
-    <h3>Sounds</h3>
+    <h3>{{ $t('preferences.general.sounds') }}</h3>
     <table>
       <tbody>
         <tr>
-          <td class="title">Favourite, Reblog action sound:</td>
+          <td class="title">{{ $t('preferences.general.fav_rb_sound') }}</td>
           <td class="status">
             <el-switch
               v-model="sound_fav_rb"
@@ -68,7 +68,7 @@
           </td>
         </tr>
         <tr>
-          <td class="title">Toot action sound:</td>
+          <td class="title">{{ $t('preferences.general.toot_sound') }}</td>
           <td class="status">
             <el-switch
               v-model="sound_toot"
@@ -90,20 +90,6 @@ export default {
   name: 'general',
   data () {
     return {
-      nameStyles: [
-        {
-          name: 'DisplayName and username',
-          value: 0
-        },
-        {
-          name: 'DisplayName',
-          value: 1
-        },
-        {
-          name: 'username',
-          value: 2
-        }
-      ],
       visibilities: [
         Visibility.Public,
         Visibility.Unlisted,
@@ -158,6 +144,24 @@ export default {
         this.$store.dispatch('Preferences/General/updateSound', {
           toot: value
         })
+      }
+    },
+    nameStyles: {
+      get () {
+        return [
+          {
+            name: this.$t('preferences.general.display_style.display_name_and_username'),
+            value: 0
+          },
+          {
+            name: this.$t('preferences.general.display_style.display_name'),
+            value: 1
+          },
+          {
+            name: this.$t('preferences.general.display_style.username'),
+            value: 2
+          }
+        ]
       }
     }
   },

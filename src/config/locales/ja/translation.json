@@ -60,5 +60,46 @@
       "placeholder": "正規表現でフィルター",
       "apply": "適用"
     }
+  },
+  "preferences": {
+    "title": "設定",
+    "general": {
+      "title": "一般",
+      "appearance": "外観",
+      "theme_color": "テーマカラー:",
+      "white": "標準",
+      "dark": "ダーク",
+      "font_size": "フォントサイズ:",
+      "display_style": {
+        "title": "ユーザ名の表示形式:",
+        "display_name_and_username": "表示名+ユーザー名",
+        "display_name": "表示名",
+        "username": "ユーザー名"
+      },
+      "toot": "トゥート",
+      "visibility": {
+        "title": "公開設定:",
+        "public": "公開",
+        "unlisted": "未収載",
+        "private": "フォロワー限定",
+        "direct": "ダイレクト"
+      },
+      "sounds": "効果音",
+      "fav_rb_sound": "お気に入り，ブースト時:",
+      "toot_sound": "トゥート時:"
+    },
+    "account": {
+      "title": "アカウント",
+      "connected": "登録済みアカウント",
+      "username": "ユーザー名",
+      "domain": "ドメイン名",
+      "association": "連携",
+      "order": "順序",
+      "remove_association": "連携を削除",
+      "remove_all_associations": "全ての連携を削除",
+      "confirm": "確認",
+      "cancel": "キャンセル",
+      "confirm_message": "本当に全ての連携を削除しますか？"
+    }
   }
 }
