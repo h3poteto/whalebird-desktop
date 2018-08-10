@@ -139,18 +139,6 @@ const NewToot = {
     },
     resetMediaId ({ commit }) {
       commit('updateMediaId', 0)
-    },
-    /**
-     * changeVisibility
-     * @param commit vuex commit object
-     * @param level visibility level string object
-     **/
-    changeVisibility ({ commit }, level) {
-      Object.keys(Visibility).map((key, index) => {
-        if (Visibility[key].name === level) {
-          commit('changeVisibility', Visibility[key])
-        }
-      })
     }
   }
 }

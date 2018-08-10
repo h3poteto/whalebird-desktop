@@ -101,5 +101,12 @@
       "cancel": "Cancel",
       "confirm_message": "Are you sure to remove all associations?"
     }
+  },
+  "new_toot": {
+    "title": "New Toot",
+    "cw": "Write your waring here",
+    "status": "What is on your mind?",
+    "cancel": "Cancel",
+    "toot": "Toot"
   }
 }
