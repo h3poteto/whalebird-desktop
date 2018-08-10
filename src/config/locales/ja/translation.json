@@ -44,5 +44,21 @@
     "hashtag": "ハッシュタグ",
     "search": "検索",
     "lists": "リスト"
+  },
+  "header_menu": {
+    "home": "ホーム",
+    "notification": "通知",
+    "favourite": "お気に入り",
+    "local": "ローカルタイムライン",
+    "public": "連合タイムライン",
+    "hashtag": "ハッシュタグ",
+    "search": "検索",
+    "lists": "リスト",
+    "members": "メンバー",
+    "filter": {
+      "title": "フィルター",
+      "placeholder": "正規表現でフィルター",
+      "apply": "適用"
+    }
   }
 }
