@@ -6,7 +6,7 @@
     v-shortkey="openSuggest ? {up: ['arrowup'], down: ['arrowdown'], enter: ['enter']} : {linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}"
     @shortkey="handleKey"
     v-on:input="startSuggest"
-    placeholder="What is on your mind?"
+    :placeholder="$t('new_toot.status')"
     autofocus>
   </textarea>
   <el-popover
