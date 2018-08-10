@@ -4,6 +4,7 @@ import Backend from 'i18next-sync-fs-backend'
 
 const options = {
   initImmediate: false,
+  lng: 'ja',
   backend: {
     // path where resources get loaded from
     loadPath: path.resolve(__dirname, './locales/{{lng}}/{{ns}}.json'),

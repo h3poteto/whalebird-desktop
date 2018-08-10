@@ -33,5 +33,16 @@
       "minimize": "Minimize",
       "jump_to": "Jump to"
     }
+  },
+  "side_menu": {
+    "edit_profile": "Edit profile",
+    "home": "Home",
+    "notification": "Notification",
+    "favourite": "Favourite",
+    "local": "Local timeline",
+    "public": "Public timeline",
+    "hashtag": "Hashtag",
+    "search": "Search",
+    "lists": "Lists"
   }
 }
