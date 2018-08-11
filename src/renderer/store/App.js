@@ -1,16 +1,16 @@
 import { ipcRenderer } from 'electron'
 import router from '../router'
 import { LightTheme, DarkTheme } from '../utils/theme'
+import Visibility from '../../constants/visibility'
+import DisplayStyle from '../../constants/displayStyle'
 
 const App = {
   namespaced: true,
   state: {
     theme: LightTheme,
     fontSize: 14,
-    // 0: display name and username
-    // 1: display name
-    // 2: username
-    displayNameStyle: 0
+    displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
+    tootVisibility: Visibility.Public.value
   },
   mutations: {
     updateTheme (state, themeName) {

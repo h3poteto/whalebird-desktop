@@ -1,6 +1,7 @@
 import storage from 'electron-json-storage'
 import objectAssignDeep from 'object-assign-deep'
 import Visibility from '../constants/visibility'
+import DisplayStyle from '../constants/displayStyle'
 
 const Base = {
   general: {
@@ -10,7 +11,7 @@ const Base = {
     },
     theme: 'white',
     fontSize: 14,
-    displayNameStyle: 0,
+    displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
     tootVisibility: Visibility.Public.value
   },
   state: {

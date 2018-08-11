@@ -169,7 +169,7 @@ export default {
       })
       let form = {
         status: this.status,
-        visibility: Visibility[visibilityKey].name,
+        visibility: Visibility[visibilityKey].key,
         sensitive: this.sensitive,
         spoiler_text: this.spoiler
       }

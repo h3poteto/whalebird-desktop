@@ -85,6 +85,7 @@
 <script>
 import { mapState } from 'vuex'
 import Visibility from '../../../constants/visibility'
+import DisplayStyle from '../../../constants/displayStyle'
 
 export default {
   name: 'general',
@@ -94,6 +95,11 @@ export default {
         Visibility.Public,
         Visibility.Unlisted,
         Visibility.Private
+      ],
+      nameStyles: [
+        DisplayStyle.DisplayNameAndUsername,
+        DisplayStyle.DisplayName,
+        DisplayStyle.Username
       ]
     }
   },
@@ -144,24 +150,6 @@ export default {
         this.$store.dispatch('Preferences/General/updateSound', {
           toot: value
         })
-      }
-    },
-    nameStyles: {
-      get () {
-        return [
-          {
-            name: this.$t('preferences.general.display_style.display_name_and_username'),
-            value: 0
-          },
-          {
-            name: this.$t('preferences.general.display_style.display_name'),
-            value: 1
-          },
-          {
-            name: this.$t('preferences.general.display_style.username'),
-            value: 2
-          }
-        ]
       }
     }
   },

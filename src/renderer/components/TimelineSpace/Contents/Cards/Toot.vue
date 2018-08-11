@@ -109,6 +109,7 @@ import moment from 'moment'
 import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
 import { findAccount, findLink, isTag } from '../../../utils/link'
+import DisplayStyle from '../../../../../constants/displayStyle'
 
 export default {
   name: 'toot',
@@ -143,29 +144,28 @@ export default {
     },
     username (account) {
       switch (this.displayNameStyle) {
-        case 0:
+        case DisplayStyle.DisplayNameAndUsername.value:
           if (account.display_name !== '') {
             return account.display_name
           } else {
             return account.username
           }
-        case 1:
+        case DisplayStyle.DisplayName.value:
           if (account.display_name !== '') {
             return account.display_name
           } else {
             return account.username
           }
-        case 2:
+        case DisplayStyle.Username.value:
           return `@${account.username}`
       }
     },
     accountName (account) {
       switch (this.displayNameStyle) {
-        case 0:
+        case DisplayStyle.DisplayNameAndUsername.value:
           return `@${account.username}`
-        case 1:
-          return ''
-        case 2:
+        case DisplayStyle.DisplayName.value:
+        case DisplayStyle.Username.value:
           return ''
       }
     },
