@@ -67,8 +67,10 @@
       "title": "一般",
       "appearance": "外観",
       "theme_color": "テーマカラー:",
-      "white": "標準",
-      "dark": "ダーク",
+      "theme": {
+        "light": "標準",
+        "dark": "ダーク"
+      },
       "font_size": "フォントサイズ:",
       "display_style": {
         "title": "ユーザ名の表示形式:",

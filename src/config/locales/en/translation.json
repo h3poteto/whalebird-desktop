@@ -67,8 +67,10 @@
       "title": "General",
       "appearance": "Appearance",
       "theme_color": "Theme color:",
-      "white": "white",
-      "dark": "dark",
+      "theme": {
+        "light": "Light",
+        "dark": "Dark"
+      },
       "font_size": "Font size:",
       "display_style": {
         "title": "Display style:",

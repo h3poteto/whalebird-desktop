@@ -3,6 +3,7 @@ import router from '../router'
 import { LightTheme, DarkTheme } from '../utils/theme'
 import Visibility from '../../constants/visibility'
 import DisplayStyle from '../../constants/displayStyle'
+import Theme from '../../constants/theme'
 
 const App = {
   namespaced: true,
@@ -13,12 +14,12 @@ const App = {
     tootVisibility: Visibility.Public.value
   },
   mutations: {
-    updateTheme (state, themeName) {
-      switch (themeName) {
-        case 'light':
+    updateTheme (state, themeKey) {
+      switch (themeKey) {
+        case Theme.Light.key:
           state.theme = LightTheme
           break
-        case 'dark':
+        case Theme.Dark.key:
           state.theme = DarkTheme
           break
         default:

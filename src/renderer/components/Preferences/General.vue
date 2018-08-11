@@ -8,8 +8,7 @@
         <tr>
           <td class="title">{{ $t('preferences.general.theme_color') }}</td>
           <td class="status">
-            <el-radio v-model="theme" label="white">{{ $t('preferences.general.white') }}</el-radio>
-            <el-radio v-model="theme" label="dark">{{ $t('preferences.general.dark') }}</el-radio>
+            <el-radio v-for="t in themes" :key="t.key" v-model="theme" :label="t.key">{{ t.name }}</el-radio>
           </td>
         </tr>
         <tr>
@@ -86,6 +85,7 @@
 import { mapState } from 'vuex'
 import Visibility from '../../../constants/visibility'
 import DisplayStyle from '../../../constants/displayStyle'
+import Theme from '../../../constants/theme'
 
 export default {
   name: 'general',
@@ -100,6 +100,10 @@ export default {
         DisplayStyle.DisplayNameAndUsername,
         DisplayStyle.DisplayName,
         DisplayStyle.Username
+      ],
+      themes: [
+        Theme.Light,
+        Theme.Dark
       ]
     }
   },
@@ -110,7 +114,7 @@ export default {
     }),
     theme: {
       get () {
-        return this.$store.state.Preferences.General.general.theme || 'white'
+        return this.$store.state.Preferences.General.general.theme
       },
       set (value) {
         this.$store.dispatch('Preferences/General/updateTheme', value)
