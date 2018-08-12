@@ -39,8 +39,8 @@
     "home": "ホーム",
     "notification": "通知",
     "favourite": "お気に入り",
-    "local": "ローカルタイムライン",
-    "public": "連合タイムライン",
+    "local": "ローカル",
+    "public": "連合",
     "hashtag": "ハッシュタグ",
     "search": "検索",
     "lists": "リスト"
@@ -110,5 +110,8 @@
     "status": "今なにしてる?",
     "cancel": "キャンセル",
     "toot": "トゥート！"
+  },
+  "jump": {
+    "jump_to": "移動..."
   }
 }

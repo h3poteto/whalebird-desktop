@@ -110,5 +110,8 @@
     "status": "What is on your mind?",
     "cancel": "Cancel",
     "toot": "Toot"
+  },
+  "jump": {
+    "jump_to": "Jump to..."
   }
 }
