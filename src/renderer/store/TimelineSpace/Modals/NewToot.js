@@ -1,6 +1,6 @@
 import Mastodon from 'megalodon'
 import { ipcRenderer } from 'electron'
-import Visibility from '../../../../constants/visibility'
+import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 
 const NewToot = {
