@@ -145,5 +145,8 @@
       "follows": "Follows",
       "followers": "Followers"
     }
+  },
+  "hashtag": {
+    "tag_name": "Tag name"
   }
 }

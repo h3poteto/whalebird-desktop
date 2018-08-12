@@ -145,5 +145,8 @@
       "follows": "フォロー",
       "followers": "フォロワー"
     }
+  },
+  "hashtag": {
+    "tag_name": "タグ名"
   }
 }
