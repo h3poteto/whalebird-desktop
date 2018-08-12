@@ -22,17 +22,17 @@
         <div class="spoiler" v-show="spoilered(message)">
           {{ originalMessage(message).spoiler_text }}
           <el-button v-show="!isShowContent(message)" type="text" @click="showContent = true">
-            Show more
+            {{ $t('toot.show_more') }}
           </el-button>
           <el-button v-show="isShowContent(message)" type="text" @click="showContent = false">
-            Hide
+            {{ $t('toot.hide')}}
           </el-button>
         </div>
         <div class="content" v-show="isShowContent(message)" v-html="originalMessage(message).content" @click.capture.prevent="tootClick"></div>
       </div>
       <div class="attachments">
         <el-button v-show="sensitive(message) && !isShowAttachments(message)" class="show-sensitive" type="info" @click="showAttachments = true">
-          Show sensitive contents
+          {{ $t('toot.sensitive') }}
         </el-button>
         <div v-show="isShowAttachments(message)">
           <el-button v-show="sensitive(message) && isShowAttachments(message)" class="hide-sensitive" type="text" @click="showAttachments = false">
@@ -76,16 +76,16 @@
           <div class="popper toot-menu">
             <ul class="menu-list">
               <li role="button" @click="openDetail(message)">
-                View Toot Detail
+                {{ $t('toot.view_toot_detail') }}
               </li>
               <li role="button" @click="openBrowser(originalMessage(message))">
-                Open in Browser
+                {{ $t('toot.open_in_browser') }}
               </li>
               <li role="button" @click="copyLink(originalMessage(message))">
-                Copy Link to Toot
+                {{ $t('toot.copy_link_to_toot') }}
               </li>
               <li role="button" class="separate" @click="deleteToot(message)" v-show="isMyMessage(message)">
-                Delete
+                {{ $t('toot.delete') }}
               </li>
             </ul>
           </div>
@@ -95,7 +95,7 @@
         </popper>
       </div>
       <div class="application" v-show="application(message) !== null">
-        via {{ application(message) }}
+        {{ $t('toot.via', { application: application(message) }) }}
       </div>
     </div>
     <div class="clearfix"></div>
