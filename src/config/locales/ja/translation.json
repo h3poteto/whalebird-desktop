@@ -113,5 +113,15 @@
   },
   "jump": {
     "jump_to": "移動..."
+  },
+  "toot": {
+    "show_more": "続きを見る",
+    "hide": "隠す",
+    "sensitive": "表示する",
+    "view_toot_detail": "詳細",
+    "open_in_browser": "ブラウザで開く",
+    "copy_link_to_toot": "コピー",
+    "delete": "削除する",
+    "via": "{{application}} より"
   }
 }
