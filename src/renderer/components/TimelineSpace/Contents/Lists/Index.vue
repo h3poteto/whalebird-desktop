@@ -2,7 +2,7 @@
 <div id="lists">
   <div class="new-list" v-loading="creating" :element-loading-background="loadingBackground">
     <el-form :inline="true">
-      <input v-model="title" placeholder="New List" class="list-title"></input>
+      <input v-model="title" :placeholder="$t('lists.index.new_list')" class="list-title"></input>
       <el-button type="text" class="create" @click="createList">
         <icon name="plus"></icon>
       </el-button>
@@ -14,7 +14,7 @@
     </router-link>
     <div class="tools">
       <el-button type="text" @click="edit(list)">
-        Edit
+        {{ $t('lists.index.edit') }}
       </el-button>
     </div>
   </div>

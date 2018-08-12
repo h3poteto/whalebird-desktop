@@ -153,5 +153,11 @@
     "search": "Search",
     "account": "Account",
     "keyword": "keyword"
+  },
+  "lists": {
+    "index": {
+      "new_list": "New List",
+      "edit": "Edit"
+    }
   }
 }
