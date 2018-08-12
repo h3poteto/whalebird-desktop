@@ -114,6 +114,13 @@
     },
     "jump": {
       "jump_to": "Jump to..."
+    },
+    "add_list_member": {
+      "title": "Add Member to List",
+      "account_name": "Account name"
+    },
+    "list_membership": {
+      "title": "List Memberships"
     }
   },
   "cards": {
