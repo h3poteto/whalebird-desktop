@@ -114,6 +114,13 @@
     },
     "jump": {
       "jump_to": "移動..."
+    },
+    "add_list_member": {
+      "title": "リストに追加",
+      "account_name": "アカウント名"
+    },
+    "list_membership": {
+      "title": "リストメンバー管理"
     }
   },
   "cards": {

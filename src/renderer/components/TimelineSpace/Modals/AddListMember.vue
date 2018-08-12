@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="Add Member to List"
+    :title="$t('modals.add_list_member.title')"
     :visible.sync="addListMemberModal"
     width="400px"
     class="add-member">
