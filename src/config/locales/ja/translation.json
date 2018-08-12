@@ -153,5 +153,11 @@
     "search": "検索",
     "account": "アカウント",
     "keyword": "キーワード"
+  },
+  "lists": {
+    "index": {
+      "new_list": "新規リスト",
+      "edit": "編集"
+    }
   }
 }
