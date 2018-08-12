@@ -127,7 +127,7 @@ async function createWindow () {
       role: 'hide'
     },
     {
-      label: 'Hide Othres',
+      label: 'Hide Others',
       role: 'hideothers'
     },
     {

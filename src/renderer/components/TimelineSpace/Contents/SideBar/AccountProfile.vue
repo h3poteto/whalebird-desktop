@@ -31,7 +31,7 @@
                   Open in Browser
                 </li>
                 <li role="button" @click="addToList(account)">
-                  Manage List Memeberships
+                  Manage List Memberships
                 </li>
               </ul>
             </div>
