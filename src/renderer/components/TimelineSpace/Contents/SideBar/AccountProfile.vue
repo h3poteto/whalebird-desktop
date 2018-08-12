@@ -8,8 +8,8 @@
     <div class="header">
       <div class="follow-follower" v-if="relationship !== null && relationship !== ''">
         <div class="follower-status">
-          <span class="status" v-if="relationship.followed_by">Follows you</span>
-          <span class="status" v-else>Doesn't follow you</span>
+          <span class="status" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</span>
+          <span class="status" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</span>
         </div>
         <div class="follow-status">
           <div v-if="relationship.following" class="unfollow" @click="unfollow(account)">
@@ -28,10 +28,10 @@
             <div class="popper">
               <ul class="menu-list">
                 <li role="button" @click="openBrowser(account)">
-                  Open in Browser
+                  {{ $t('side_bar.account_profile.open_in_browser') }}
                 </li>
                 <li role="button" @click="addToList(account)">
-                  Manage List Memberships
+                  {{ $t('side_bar.account_profile.manage_list_memberships') }}
                 </li>
               </ul>
             </div>
@@ -57,19 +57,19 @@
   <el-row class="basic-info">
     <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
       <el-button type="text" class="tab" @click="changeTab(1)">
-        <div class="title">Toots</div>
+        <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
         <div class="count">{{ account.statuses_count }}</div>
       </el-button>
     </el-col>
     <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
       <el-button type="text" class="tab" @click="changeTab(2)">
-        <div class="title">Follows</div>
+        <div class="title">{{ $t('side_bar.account_profile.follows') }}</div>
         <div class="count">{{ account.following_count }}</div>
       </el-button>
     </el-col>
     <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
       <el-button type="text" class="tab" @click="changeTab(3)">
-        <div class="title">Followers</div>
+        <div class="title">{{ $t('side_bar.account_profile.followers') }}</div>
         <div class="count">{{ account.followers_count }}</div>
       </el-button>
     </el-col>
