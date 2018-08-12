@@ -104,25 +104,29 @@
       "confirm_message": "Are you sure to remove all associations?"
     }
   },
-  "new_toot": {
-    "title": "New Toot",
-    "cw": "Write your waring here",
-    "status": "What is on your mind?",
-    "cancel": "Cancel",
-    "toot": "Toot"
+  "modals": {
+    "new_toot": {
+      "title": "New Toot",
+      "cw": "Write your waring here",
+      "status": "What is on your mind?",
+      "cancel": "Cancel",
+      "toot": "Toot"
+    },
+    "jump": {
+      "jump_to": "Jump to..."
+    }
   },
-  "jump": {
-    "jump_to": "Jump to..."
-  },
-  "toot": {
-    "show_more": "Show more",
-    "hide": "Hide",
-    "sensitive": "Show sensitive content",
-    "view_toot_detail": "View Toot Detail",
-    "open_in_browser": "Open in Browser",
-    "copy_link_to_toot": "Copy Link to Toot",
-    "delete": "Delete",
-    "via": "via {{application}}"
+  "cards": {
+    "toot": {
+      "show_more": "Show more",
+      "hide": "Hide",
+      "sensitive": "Show sensitive content",
+      "view_toot_detail": "View Toot Detail",
+      "open_in_browser": "Open in Browser",
+      "copy_link_to_toot": "Copy Link to Toot",
+      "delete": "Delete",
+      "via": "via {{application}}"
+    }
   },
   "side_bar": {
     "account_profile": {

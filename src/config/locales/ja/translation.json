@@ -104,25 +104,29 @@
       "confirm_message": "本当に全ての連携を削除しますか？"
     }
   },
-  "new_toot": {
-    "title": "トゥート",
-    "cw": "ここに警告を書いてください",
-    "status": "今なにしてる?",
-    "cancel": "キャンセル",
-    "toot": "トゥート！"
+  "modals": {
+    "new_toot": {
+      "title": "トゥート",
+      "cw": "ここに警告を書いてください",
+      "status": "今なにしてる?",
+      "cancel": "キャンセル",
+      "toot": "トゥート！"
+    },
+    "jump": {
+      "jump_to": "移動..."
+    }
   },
-  "jump": {
-    "jump_to": "移動..."
-  },
-  "toot": {
-    "show_more": "続きを見る",
-    "hide": "隠す",
-    "sensitive": "表示する",
-    "view_toot_detail": "詳細",
-    "open_in_browser": "ブラウザで開く",
-    "copy_link_to_toot": "コピー",
-    "delete": "削除する",
-    "via": "{{application}} より"
+  "cards": {
+    "toot": {
+      "show_more": "続きを見る",
+      "hide": "隠す",
+      "sensitive": "表示する",
+      "view_toot_detail": "詳細",
+      "open_in_browser": "ブラウザで開く",
+      "copy_link_to_toot": "コピー",
+      "delete": "削除する",
+      "via": "{{application}} より"
+    }
   },
   "side_bar": {
     "account_profile": {

@@ -8,7 +8,7 @@
         <input
           type="text"
           v-model="channel"
-          :placeholder="$t('jump.jump_to')"
+          :placeholder="$t('modals.jump.jump_to')"
           ref="channel"
           v-shortkey="{next: ['arrowdown'], prev: ['arrowup'], select: ['enter']}"
           @shortkey="handleKey"
