@@ -17,9 +17,9 @@ export default {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/lists')
-        .then((data) => {
-          commit('changeLists', data)
-          return data
+        .then((res) => {
+          commit('changeLists', res.data)
+          return res.data
         })
     },
     createList ({ rootState }, title) {
