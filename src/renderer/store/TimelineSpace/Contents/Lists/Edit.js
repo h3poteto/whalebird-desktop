@@ -19,8 +19,8 @@ export default {
       return client.get(`/lists/${listId}/accounts`, {
         limit: 0
       })
-        .then((data) => {
-          commit('changeMembers', data)
+        .then((res) => {
+          commit('changeMembers', res.data)
         })
     },
     removeAccount ({ rootState }, obj) {
