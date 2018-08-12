@@ -69,7 +69,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Visibility from '../../../../constants/visibility'
+import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 
 export default {

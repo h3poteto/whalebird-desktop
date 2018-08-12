@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
-import Visibility from '../../../constants/visibility'
-import DisplayStyle from '../../../constants/displayStyle'
-import Theme from '../../../constants/theme'
+import Visibility from '~/src/constants/visibility'
+import DisplayStyle from '~/src/constants/displayStyle'
+import Theme from '~/src/constants/theme'
 
 const General = {
   namespaced: true,

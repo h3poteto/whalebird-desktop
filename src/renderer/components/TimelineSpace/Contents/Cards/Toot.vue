@@ -109,7 +109,7 @@ import moment from 'moment'
 import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
 import { findAccount, findLink, isTag } from '../../../utils/link'
-import DisplayStyle from '../../../../../constants/displayStyle'
+import DisplayStyle from '~/src/constants/displayStyle'
 
 export default {
   name: 'toot',

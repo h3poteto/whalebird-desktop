@@ -14,7 +14,7 @@ import './assets/fonts/fonts.css'
 import App from './App'
 import router from './router'
 import store from './store'
-import i18next from '../config/i18n'
+import i18next from '~/src/config/i18n'
 
 Vue.use(ElementUI)
 Vue.use(shortkey)
