@@ -148,5 +148,10 @@
   },
   "hashtag": {
     "tag_name": "タグ名"
+  },
+  "search": {
+    "search": "検索",
+    "account": "アカウント",
+    "keyword": "キーワード"
   }
 }
