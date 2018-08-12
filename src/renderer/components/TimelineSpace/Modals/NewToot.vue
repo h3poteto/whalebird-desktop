@@ -1,12 +1,12 @@
 <template>
   <el-dialog
-    :title="$t('new_toot.title')"
+    :title="$t('modals.new_toot.title')"
     :visible.sync="newTootModal"
     width="400px"
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
       <div class="spoiler" v-show="showContentWarning">
-        <el-input :placeholder="$t('new_toot.cw')" v-model="spoiler"></el-input>
+        <el-input :placeholder="$t('modals.new_toot.cw')" v-model="spoiler"></el-input>
       </div>
       <Status
         v-model="status"
@@ -60,8 +60,8 @@
         </el-button>
       </div>
       <span class="text-count">{{ 500 - status.length }}</span>
-      <el-button @click="close">{{ $t('new_toot.cancel') }}</el-button>
-      <el-button type="primary" @click="toot" v-loading="blockSubmit">{{ $t('new_toot.toot') }}</el-button>
+      <el-button @click="close">{{ $t('modals.new_toot.cancel') }}</el-button>
+      <el-button type="primary" @click="toot" v-loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
       <div class="clearfix"></div>
     </div>
   </el-dialog>

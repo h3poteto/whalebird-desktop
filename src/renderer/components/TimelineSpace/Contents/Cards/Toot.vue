@@ -22,17 +22,17 @@
         <div class="spoiler" v-show="spoilered(message)">
           {{ originalMessage(message).spoiler_text }}
           <el-button v-show="!isShowContent(message)" type="text" @click="showContent = true">
-            {{ $t('toot.show_more') }}
+            {{ $t('cards.toot.show_more') }}
           </el-button>
           <el-button v-show="isShowContent(message)" type="text" @click="showContent = false">
-            {{ $t('toot.hide')}}
+            {{ $t('cards.toot.hide')}}
           </el-button>
         </div>
         <div class="content" v-show="isShowContent(message)" v-html="originalMessage(message).content" @click.capture.prevent="tootClick"></div>
       </div>
       <div class="attachments">
         <el-button v-show="sensitive(message) && !isShowAttachments(message)" class="show-sensitive" type="info" @click="showAttachments = true">
-          {{ $t('toot.sensitive') }}
+          {{ $t('cards.toot.sensitive') }}
         </el-button>
         <div v-show="isShowAttachments(message)">
           <el-button v-show="sensitive(message) && isShowAttachments(message)" class="hide-sensitive" type="text" @click="showAttachments = false">
@@ -76,16 +76,16 @@
           <div class="popper toot-menu">
             <ul class="menu-list">
               <li role="button" @click="openDetail(message)">
-                {{ $t('toot.view_toot_detail') }}
+                {{ $t('cards.toot.view_toot_detail') }}
               </li>
               <li role="button" @click="openBrowser(originalMessage(message))">
-                {{ $t('toot.open_in_browser') }}
+                {{ $t('cards.toot.open_in_browser') }}
               </li>
               <li role="button" @click="copyLink(originalMessage(message))">
-                {{ $t('toot.copy_link_to_toot') }}
+                {{ $t('cards.toot.copy_link_to_toot') }}
               </li>
               <li role="button" class="separate" @click="deleteToot(message)" v-show="isMyMessage(message)">
-                {{ $t('toot.delete') }}
+                {{ $t('cards.toot.delete') }}
               </li>
             </ul>
           </div>
@@ -95,7 +95,7 @@
         </popper>
       </div>
       <div class="application" v-show="application(message) !== null">
-        {{ $t('toot.via', { application: application(message) }) }}
+        {{ $t('cards.toot.via', { application: application(message) }) }}
       </div>
     </div>
     <div class="clearfix"></div>
