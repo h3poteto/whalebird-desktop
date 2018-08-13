@@ -44,7 +44,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/fetchTimeline', this.account)
         .catch(() => {
           this.message({
-            message: 'Could not get timeline',
+            message: this.$t('message.timeline_fetch_error'),
             type: 'error'
           })
         })
@@ -60,7 +60,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Could not fetch account timeline',
+              message: this.$t('message.timeline_fetch_error'),
               type: 'error'
             })
           })

@@ -11,12 +11,12 @@
     </el-header>
     <el-main>
       <div class="authorization-url">
-        <p>Now authorization page is opened in your browser.</p>
-        <p>If it is not opened, please open the following URL manually.</p>
+        <p>{{ $t('authorize.manually_1') }}</p>
+        <p>{{ $t('authorize.manually_2') }}</p>
         <p class="url">{{ $route.query.url }}</p>
       </div>
       <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form" v-on:submit.prevent="authorizeSubmit">
-        <el-form-item label="Please paste authorization code from your browser:">
+        <el-form-item :label="$t('authorize.code_label')">
           <el-input v-model="authorizeForm.code"></el-input>
         </el-form-item>
         <!-- Dummy form to guard submitting with enter -->
@@ -29,7 +29,7 @@
             @click="authorizeSubmit"
             v-loading="submitting"
             element-loading-background="rgba(0, 0, 0, 0.8)">
-            Submit
+            {{ $t('authorize.submit') }}
           </el-button>
         </el-form-item>
       </el-form>
@@ -71,12 +71,12 @@ export default {
         .catch((err) => {
           if (err.name === 'DuplicateRecordError') {
             this.$message({
-              message: 'Can not login the same account of the same domain',
+              message: this.$t('message.authorize_duplicate_error'),
               type: 'error'
             })
           } else {
             this.$message({
-              message: 'Failed to authorize',
+              message: this.$t('message.authorize_error'),
               type: 'error'
             })
           }

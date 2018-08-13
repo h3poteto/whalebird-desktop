@@ -3,7 +3,7 @@
     <el-header class="header">
       <el-row>
         <el-col :span="23">
-          <h3>Preferences</h3>
+          <h3>{{ $t('preferences.title') }}</h3>
         </el-col>
         <el-col :span="1">
           <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
@@ -20,11 +20,11 @@
           :route="true">
           <el-menu-item index="1" :route="{path: '/preferences/general'}" @click="general">
             <icon name="cog" class="icon" scale="1.3"></icon>
-            <span>General</span>
+            <span>{{ $t('preferences.general.title') }}</span>
           </el-menu-item>
           <el-menu-item index="2" :route="{path: '/preferences/account'}" @click="account">
             <icon name="user" class="icon" scale="1.3"></icon>
-            <span>Account</span>
+            <span>{{ $t('preferences.account.title') }}</span>
           </el-menu-item>
         </el-menu>
       </el-aside>

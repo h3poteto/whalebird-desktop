@@ -2,7 +2,7 @@
 <div id="lists">
   <div class="new-list" v-loading="creating" :element-loading-background="loadingBackground">
     <el-form :inline="true">
-      <input v-model="title" placeholder="New List" class="list-title"></input>
+      <input v-model="title" :placeholder="$t('lists.index.new_list')" class="list-title"></input>
       <el-button type="text" class="create" @click="createList">
         <icon name="plus"></icon>
       </el-button>
@@ -14,7 +14,7 @@
     </router-link>
     <div class="tools">
       <el-button type="text" @click="edit(list)">
-        Edit
+        {{ $t('lists.index.edit') }}
       </el-button>
     </div>
   </div>
@@ -53,7 +53,7 @@ export default {
       return this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists')
         .catch(() => {
           this.$message({
-            message: 'Failed to fetch lists',
+            message: this.$t('message.lists_fetch_error'),
             type: 'error'
           })
         })
@@ -65,7 +65,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists')
       } catch (err) {
         this.$message({
-          message: 'Failed to create a list',
+          message: this.$t('message.list_create_error'),
           type: 'error'
         })
       } finally {
