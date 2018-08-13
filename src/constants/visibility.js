@@ -1,18 +1,24 @@
+import i18n from '../config/i18n'
+
 export default {
   Public: {
-    name: 'public',
-    value: 0
+    name: i18n.t('preferences.general.visibility.public'),
+    value: 0,
+    key: 'public'
   },
   Unlisted: {
-    name: 'unlisted',
-    value: 1
+    name: i18n.t('preferences.general.visibility.unlisted'),
+    value: 1,
+    key: 'unlisted'
   },
   Private: {
-    name: 'private',
-    value: 2
+    name: i18n.t('preferences.general.visibility.private'),
+    value: 2,
+    key: 'private'
   },
   Direct: {
-    name: 'direct',
-    value: 3
+    name: i18n.t('preferences.general.visibility.direct'),
+    value: 3,
+    key: 'direct'
   }
 }

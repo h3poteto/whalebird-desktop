@@ -73,14 +73,14 @@ export default {
       await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag)
         .catch(() => {
           this.$message({
-            message: 'Could not fetch timeline',
+            message: this.$t('message.timeline_fetch_error'),
             type: 'error'
           })
         })
       this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/startStreaming', tag)
         .catch(() => {
           this.$message({
-            message: 'Could not start streaming',
+            message: this.$t('message.start_streaming_error'),
             type: 'error'
           })
         })
@@ -124,7 +124,7 @@ export default {
       try {
         const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch((err) => {
           this.$message({
-            message: 'Could not find account',
+            message: this.$t('message.account_load_error'),
             type: 'error'
           })
           throw err
@@ -139,7 +139,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag)
           .catch(() => {
             this.$message({
-              message: 'Could not fetch timeline with tag',
+              message: this.$t('message.timeline_fetch_error'),
               type: 'error'
             })
           })
@@ -149,7 +149,7 @@ export default {
         this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/startStreaming', tag)
           .catch(() => {
             this.$message({
-              message: 'Failed to restart streaming',
+              message: this.$t('message.start_streaming_error'),
               type: 'error'
             })
           })

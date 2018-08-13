@@ -1,12 +1,12 @@
 <template>
   <el-dialog
-    title="New Toot"
+    :title="$t('modals.new_toot.title')"
     :visible.sync="newTootModal"
     width="400px"
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
       <div class="spoiler" v-show="showContentWarning">
-        <el-input placeholder="Write your warning here" v-model="spoiler"></el-input>
+        <el-input :placeholder="$t('modals.new_toot.cw')" v-model="spoiler"></el-input>
       </div>
       <Status
         v-model="status"
@@ -29,10 +29,22 @@
         <el-dropdown trigger="click" @command="changeVisibility">
           <el-button size="small" type="text"><icon :name="visibilityIcon"></icon></el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="public"><icon name="globe" class="privacy-icon"></icon>Public</el-dropdown-item>
-            <el-dropdown-item command="unlisted"><icon name="unlock" class="privacy-icon"></icon>Unlisted</el-dropdown-item>
-            <el-dropdown-item command="private"><icon name="lock" class="privacy-icon"></icon>Private</el-dropdown-item>
-            <el-dropdown-item command="direct"><icon name="envelope" class="privacy-icon" scale="0.8"></icon>Direct</el-dropdown-item>
+            <el-dropdown-item :command="visibilityList.Public.value">
+              <icon name="globe" class="privacy-icon"></icon>
+              {{ visibilityList.Public.name }}
+            </el-dropdown-item>
+            <el-dropdown-item :command="visibilityList.Unlisted.value">
+              <icon name="unlock" class="privacy-icon"></icon>
+              {{ visibilityList.Unlisted.name }}
+            </el-dropdown-item>
+            <el-dropdown-item :command="visibilityList.Private.value">
+              <icon name="lock" class="privacy-icon"></icon>
+              {{ visibilityList.Private.name }}
+            </el-dropdown-item>
+            <el-dropdown-item :command="visibilityList.Direct.value">
+              <icon name="envelope" class="privacy-icon" scale="0.8"></icon>
+              {{ visibilityList.Direct.name }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -48,8 +60,8 @@
         </el-button>
       </div>
       <span class="text-count">{{ 500 - status.length }}</span>
-      <el-button @click="close">Cancel</el-button>
-      <el-button type="primary" @click="toot" v-loading="blockSubmit">Toot</el-button>
+      <el-button @click="close">{{ $t('modals.new_toot.cancel') }}</el-button>
+      <el-button type="primary" @click="toot" v-loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
       <div class="clearfix"></div>
     </div>
   </el-dialog>
@@ -57,7 +69,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Visibility from '../../../../constants/visibility'
+import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 
 export default {
@@ -67,7 +79,8 @@ export default {
   },
   data () {
     return {
-      showContentWarning: false
+      showContentWarning: false,
+      visibilityList: Visibility
     }
   },
   computed: {
@@ -147,7 +160,7 @@ export default {
       }
       if (this.status.length <= 0 || this.status.length >= 500) {
         return this.$message({
-          message: 'Toot length should be 1 to 500',
+          message: this.$t('validation.new_toot.toot_length', {min: 1, max: 500}),
           type: 'error'
         })
       }
@@ -156,7 +169,7 @@ export default {
       })
       let form = {
         status: this.status,
-        visibility: Visibility[visibilityKey].name,
+        visibility: Visibility[visibilityKey].key,
         sensitive: this.sensitive,
         spoiler_text: this.spoiler
       }
@@ -168,7 +181,7 @@ export default {
       if (this.attachedMedias.length > 0) {
         if (this.attachedMedias.length > 4) {
           return this.$message({
-            message: 'You can only attach up to 4 images',
+            message: this.$t('validation.new_toot.attach_length', {max: 4}),
             type: 'error'
           })
         }
@@ -180,7 +193,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
         .catch(() => {
           this.$message({
-            message: 'Could not toot',
+            message: this.$t('message.toot_error'),
             type: 'error'
           })
         })
@@ -196,7 +209,7 @@ export default {
       const file = e.target.files.item(0)
       if (!file.type.includes('image') && !file.type.includes('video')) {
         this.$message({
-          message: 'You can only attach images or videos',
+          message: this.$t('validation.new_toot.attach_image'),
           type: 'error'
         })
         return
@@ -208,7 +221,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
         .catch(() => {
           this.$message({
-            message: 'Could not attach the file',
+            message: this.$t('message.attach_error'),
             type: 'error'
           })
         })
@@ -217,7 +230,7 @@ export default {
       this.$store.commit('TimelineSpace/Modals/NewToot/removeMedia', media)
     },
     changeVisibility (level) {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/changeVisibility', level)
+      this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibilityValue', level)
     },
     changeSensitive () {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)

@@ -82,7 +82,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Account not found',
+              message: this.$t('message.find_account_error'),
               type: 'error'
             })
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)

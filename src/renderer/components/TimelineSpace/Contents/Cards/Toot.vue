@@ -22,17 +22,17 @@
         <div class="spoiler" v-show="spoilered(message)">
           {{ originalMessage(message).spoiler_text }}
           <el-button v-show="!isShowContent(message)" type="text" @click="showContent = true">
-            Show more
+            {{ $t('cards.toot.show_more') }}
           </el-button>
           <el-button v-show="isShowContent(message)" type="text" @click="showContent = false">
-            Hide
+            {{ $t('cards.toot.hide')}}
           </el-button>
         </div>
         <div class="content" v-show="isShowContent(message)" v-html="originalMessage(message).content" @click.capture.prevent="tootClick"></div>
       </div>
       <div class="attachments">
         <el-button v-show="sensitive(message) && !isShowAttachments(message)" class="show-sensitive" type="info" @click="showAttachments = true">
-          Show sensitive contents
+          {{ $t('cards.toot.sensitive') }}
         </el-button>
         <div v-show="isShowAttachments(message)">
           <el-button v-show="sensitive(message) && isShowAttachments(message)" class="hide-sensitive" type="text" @click="showAttachments = false">
@@ -76,16 +76,16 @@
           <div class="popper toot-menu">
             <ul class="menu-list">
               <li role="button" @click="openDetail(message)">
-                View Toot Detail
+                {{ $t('cards.toot.view_toot_detail') }}
               </li>
               <li role="button" @click="openBrowser(originalMessage(message))">
-                Open in Browser
+                {{ $t('cards.toot.open_in_browser') }}
               </li>
               <li role="button" @click="copyLink(originalMessage(message))">
-                Copy Link to Toot
+                {{ $t('cards.toot.copy_link_to_toot') }}
               </li>
               <li role="button" class="separate" @click="deleteToot(message)" v-show="isMyMessage(message)">
-                Delete
+                {{ $t('cards.toot.delete') }}
               </li>
             </ul>
           </div>
@@ -95,7 +95,7 @@
         </popper>
       </div>
       <div class="application" v-show="application(message) !== null">
-        via {{ application(message) }}
+        {{ $t('cards.toot.via', { application: application(message) }) }}
       </div>
     </div>
     <div class="clearfix"></div>
@@ -109,6 +109,7 @@ import moment from 'moment'
 import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
 import { findAccount, findLink, isTag } from '../../../utils/link'
+import DisplayStyle from '~/src/constants/displayStyle'
 
 export default {
   name: 'toot',
@@ -143,29 +144,28 @@ export default {
     },
     username (account) {
       switch (this.displayNameStyle) {
-        case 0:
+        case DisplayStyle.DisplayNameAndUsername.value:
           if (account.display_name !== '') {
             return account.display_name
           } else {
             return account.username
           }
-        case 1:
+        case DisplayStyle.DisplayName.value:
           if (account.display_name !== '') {
             return account.display_name
           } else {
             return account.username
           }
-        case 2:
+        case DisplayStyle.Username.value:
           return `@${account.username}`
       }
     },
     accountName (account) {
       switch (this.displayNameStyle) {
-        case 0:
+        case DisplayStyle.DisplayNameAndUsername.value:
           return `@${account.username}`
-        case 1:
-          return ''
-        case 2:
+        case DisplayStyle.DisplayName.value:
+        case DisplayStyle.Username.value:
           return ''
       }
     },
@@ -188,7 +188,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Account not found',
+              message: this.$t('message.find_account_error'),
               type: 'error'
             })
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
@@ -225,7 +225,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Failed to unreblog',
+              message: this.$t('message.unreblog_error'),
               type: 'error'
             })
           })
@@ -236,7 +236,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Failed to reblog',
+              message: this.$t('message.reblog_error'),
               type: 'error'
             })
           })
@@ -250,7 +250,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Failed to unfavourite',
+              message: this.$t('message.unfavourite_error'),
               type: 'error'
             })
           })
@@ -261,7 +261,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Failed to favourite',
+              message: this.$t('message.favourite_error'),
               type: 'error'
             })
           })
@@ -309,7 +309,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: 'Failed to delete the toot',
+            message: this.$t('message.delete_error'),
             type: 'error'
           })
         })

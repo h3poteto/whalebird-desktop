@@ -1,6 +1,6 @@
 <template>
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm('loginForm')" class="login-form" :rules="rules" :model="form">
-    <el-form-item label="First, let's log in to a Mastodon instance. Please enter an instance domain name." prop="domainName">
+    <el-form-item :label="$t('login.domain_name_label')" prop="domainName">
       <el-input v-model="form.domainName" placeholder="mastodon.social" v-shortkey="['enter']" @shortkey.native="handleKey"></el-input>
     </el-form-item>
     <!-- Dummy form to guard submitting with enter -->
@@ -13,7 +13,7 @@
       v-if="selectedInstance === null"
       v-loading="searching"
       element-loading-background="rgba(0, 0, 0, 0.8)">
-      Search
+      {{ $t('login.search') }}
     </el-button>
     <el-form-item class="submit">
       <el-button
@@ -21,7 +21,7 @@
         class="login"
         @click="login"
         v-if="selectedInstance !== null">
-        Login
+        {{ $t('login.login') }}
       </el-button>
     </el-form-item>
   </el-form>
@@ -37,20 +37,6 @@ export default {
     return {
       form: {
         domainName: ''
-      },
-      rules: {
-        domainName: [
-          {
-            type: 'string',
-            required: true,
-            message: 'Domain name is required'
-          },
-          {
-            pattern: domainFormat,
-            trigger: 'change',
-            message: 'Please write only domain name'
-          }
-        ]
       }
     }
   },
@@ -58,7 +44,25 @@ export default {
     ...mapState({
       selectedInstance: state => state.Login.selectedInstance,
       searching: state => state.Login.searching
-    })
+    }),
+    rules: {
+      get () {
+        return {
+          domainName: [
+            {
+              type: 'string',
+              required: true,
+              message: this.$t('validation.login.require_domain_name')
+            },
+            {
+              pattern: domainFormat,
+              trigger: 'change',
+              message: this.$t('validation.login.domain_format')
+            }
+          ]
+        }
+      }
+    }
   },
   methods: {
     login () {
@@ -77,7 +81,7 @@ export default {
         .catch(() => {
           loading.close()
           this.$message({
-            message: 'Could not get authorize url',
+            message: this.$t('message.authorize_url_error'),
             type: 'error'
           })
         })
@@ -88,19 +92,19 @@ export default {
           this.$store.dispatch('Login/confirmInstance', this.form.domainName)
             .then(() => {
               this.$message({
-                message: `${this.form.domainName} is confirmed, please login`,
+                message: this.$t('message.domain_confirmed', {domain: this.form.domainName}),
                 type: 'success'
               })
             })
             .catch(() => {
               this.$message({
-                message: `${this.form.domainName} does not exist`,
+                message: this.$t('message.domain_doesnt_exist', {domain: this.form.domainName}),
                 type: 'error'
               })
             })
         } else {
           this.$message({
-            message: 'Please write only domain name',
+            message: this.$t('validation.login.domain_format'),
             type: 'error'
           })
           return false

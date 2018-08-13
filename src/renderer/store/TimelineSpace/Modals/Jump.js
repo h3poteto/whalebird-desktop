@@ -1,4 +1,5 @@
 import router from '../../../router'
+import i18n from '~/src/config/i18n'
 
 const Jump = {
   namespaced: true,
@@ -7,37 +8,37 @@ const Jump = {
     channel: '',
     defaultChannelList: [
       {
-        name: 'Home',
+        name: i18n.t('side_menu.home'),
         path: 'home'
       },
       {
-        name: 'Notification',
+        name: i18n.t('side_menu.notification'),
         path: 'notifications'
       },
       {
-        name: 'Favourite',
+        name: i18n.t('side_menu.favourite'),
         path: 'favourites'
       },
       {
-        name: 'Local timeline',
+        name: i18n.t('side_menu.local'),
         path: 'local'
       },
       {
-        name: 'Public timeline',
+        name: i18n.t('side_menu.public'),
         path: 'public'
       },
       {
-        name: 'Hashtag',
+        name: i18n.t('side_menu.hashtag'),
         path: 'hashtag'
       },
       {
-        name: 'Search',
+        name: i18n.t('side_menu.search'),
         path: 'search'
       }
     ],
     listChannelList: [],
     selectedChannel: {
-      name: 'Home',
+      name: i18n.t('side_menu.home'),
       path: 'home'
     }
   },
