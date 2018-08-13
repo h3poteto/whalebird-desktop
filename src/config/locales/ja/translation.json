@@ -159,5 +159,50 @@
       "new_list": "新規リスト",
       "edit": "編集"
     }
+  },
+  "message": {
+    "account_load_error": "アカウントの読み込みに失敗しました",
+    "account_remove_error": "アカウントの削除に失敗しました",
+    "preferences_load_error": "設定の読み込みに失敗しました",
+    "timeline_fetch_error": "タイムラインの読み込みに失敗しました",
+    "notification_fetch_error": "通知の読み込みに失敗しました",
+    "favourite_fetch_error": "お気に入りの読み込みに失敗しました",
+    "start_streaming_error": "ストリーミングを開始できませんでした",
+    "attach_error": "ファイルを添付できませんでした",
+    "authorize_duplicate_error": "同一ドメイン同一アカウントではログインできません",
+    "authorize_error": "認証に失敗しました",
+    "followers_fetch_error": "フォロワーの取得に失敗しました",
+    "follows_fetch_error": "フォローの取得に失敗しました",
+    "toot_fetch_error": "トゥート詳細の読み込みに失敗しました",
+    "follow_error": "フォローに失敗しました",
+    "unfollow_error": "フォロー解除に失敗しました",
+    "lists_fetch_error": "リストの読み込みに失敗しました",
+    "list_create_error": "リストの作成に失敗しました",
+    "members_fetch_error": "メンバーの取得に失敗しました",
+    "remove_user_error": "ユーザの削除に失敗しました",
+    "find_account_error": "アカウントが見つかりません",
+    "reblog_error": "ブーストできませんでした",
+    "unreblog_error": "ブースト解除に失敗しました",
+    "favourite_error": "お気に入りできませんでした",
+    "unfavourite_error": "お気に入り解除に失敗しました",
+    "delete_error": "トゥート削除に失敗しました",
+    "search_error": "検索に失敗しました",
+    "toot_error": "トゥートに失敗しました",
+    "update_list_memberships_error": "リストメンバーの更新に失敗しました",
+    "add_user_error": "メンバー追加に失敗しました",
+    "authorize_url_error": "認証用URLの取得に失敗しました",
+    "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
+    "domain_doesnt_exist": "{{domain}} は存在しません"
+  },
+  "validation": {
+    "login": {
+      "rquire_domain_name": "ドメイン名は必須です",
+      "domain_format": "ドメイン名のみを入力してください"
+    },
+    "new_toot": {
+      "toot_length": "トゥートの長さは {{min}} から {{max}}文字である必要があります",
+      "attach_length": "添付ファイルは {{max}} つまでです",
+      "attach_image": "画像かビデオしか添付できません"
+    }
   }
 }

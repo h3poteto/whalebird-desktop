@@ -141,7 +141,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
         .catch(() => {
           this.$message({
-            message: 'Could not follow this user',
+            message: this.$t('message.follow_error'),
             type: 'error'
           })
         })
@@ -150,7 +150,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
         .catch(() => {
           this.$message({
-            message: 'Could not unfollow this user',
+            message: this.$t('message.unfollow_error'),
             type: 'error'
           })
         })

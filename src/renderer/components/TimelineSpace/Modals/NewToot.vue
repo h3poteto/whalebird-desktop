@@ -160,7 +160,7 @@ export default {
       }
       if (this.status.length <= 0 || this.status.length >= 500) {
         return this.$message({
-          message: 'Toot length should be 1 to 500',
+          message: this.$t('validation.new_toot.toot_length', {min: 1, max: 500}),
           type: 'error'
         })
       }
@@ -181,7 +181,7 @@ export default {
       if (this.attachedMedias.length > 0) {
         if (this.attachedMedias.length > 4) {
           return this.$message({
-            message: 'You can only attach up to 4 images',
+            message: this.$t('validation.new_toot.attach_length', {max: 4}),
             type: 'error'
           })
         }
@@ -193,7 +193,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
         .catch(() => {
           this.$message({
-            message: 'Could not toot',
+            message: this.$t('message.toot_error'),
             type: 'error'
           })
         })
@@ -209,7 +209,7 @@ export default {
       const file = e.target.files.item(0)
       if (!file.type.includes('image') && !file.type.includes('video')) {
         this.$message({
-          message: 'You can only attach images or videos',
+          message: this.$t('validation.new_toot.attach_image'),
           type: 'error'
         })
         return
@@ -221,7 +221,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
         .catch(() => {
           this.$message({
-            message: 'Could not attach the file',
+            message: this.$t('message.attach_error'),
             type: 'error'
           })
         })
