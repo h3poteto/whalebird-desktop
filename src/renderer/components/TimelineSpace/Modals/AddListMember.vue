@@ -81,7 +81,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: 'Failed to add user',
+            message: this.$t('message.add_user_error'),
             type: 'error'
           })
         })

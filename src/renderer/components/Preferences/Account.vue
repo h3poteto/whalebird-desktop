@@ -85,13 +85,13 @@ export default {
       this.$store.commit('Preferences/Account/updateAccountLoading', true)
       try {
         await this.$store.dispatch('Preferences/Account/loadAccounts')
-        this.$store.commit('Preferences/Account/updateAccountLoading', false)
       } catch (err) {
-        this.$store.commit('Preferences/Account/updateAccountLoading', false)
         return this.$message({
-          message: 'Failed to load accounts',
+          message: this.$t('message.account_load_error'),
           type: 'error'
         })
+      } finally {
+        this.$store.commit('Preferences/Account/updateAccountLoading', false)
       }
     },
     removeAccount (index, accounts) {
@@ -101,7 +101,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: 'Failed to remove the association',
+            message: this.$t('message.account_remove_error'),
             type: 'error'
           })
         })

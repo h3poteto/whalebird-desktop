@@ -161,7 +161,7 @@ export default {
     this.$store.dispatch('Preferences/General/loadGeneral')
       .catch(() => {
         this.$message({
-          message: 'Failed to load preferences',
+          message: this.$t('message.preferences_load_error'),
           type: 'error'
         })
       })

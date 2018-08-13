@@ -56,7 +56,7 @@ export default {
           this.$store.dispatch('TimelineSpace/Contents/Search/Account/search', this.query)
             .catch(() => {
               this.$message({
-                message: 'Could not search',
+                message: this.$t('message.search_error'),
                 type: 'error'
               })
             })

@@ -188,7 +188,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Account not found',
+              message: this.$t('message.find_account_error'),
               type: 'error'
             })
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
@@ -225,7 +225,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Failed to unreblog',
+              message: this.$t('message.unreblog_error'),
               type: 'error'
             })
           })
@@ -236,7 +236,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Failed to reblog',
+              message: this.$t('message.reblog_error'),
               type: 'error'
             })
           })
@@ -250,7 +250,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Failed to unfavourite',
+              message: this.$t('message.unfavourite_error'),
               type: 'error'
             })
           })
@@ -261,7 +261,7 @@ export default {
           })
           .catch(() => {
             this.$message({
-              message: 'Failed to favourite',
+              message: this.$t('message.favourite_error'),
               type: 'error'
             })
           })
@@ -309,7 +309,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: 'Failed to delete the toot',
+            message: this.$t('message.delete_error'),
             type: 'error'
           })
         })

@@ -71,12 +71,12 @@ export default {
         .catch((err) => {
           if (err.name === 'DuplicateRecordError') {
             this.$message({
-              message: 'Can not login the same account of the same domain',
+              message: this.$t('message.authorize_duplicate_error'),
               type: 'error'
             })
           } else {
             this.$message({
-              message: 'Failed to authorize',
+              message: this.$t('message.authorize_error'),
               type: 'error'
             })
           }

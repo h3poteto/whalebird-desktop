@@ -53,7 +53,7 @@ export default {
       return this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists')
         .catch(() => {
           this.$message({
-            message: 'Failed to fetch lists',
+            message: this.$t('message.lists_fetch_error'),
             type: 'error'
           })
         })
@@ -65,7 +65,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists')
       } catch (err) {
         this.$message({
-          message: 'Failed to create a list',
+          message: this.$t('message.list_create_error'),
           type: 'error'
         })
       } finally {

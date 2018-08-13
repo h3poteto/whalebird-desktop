@@ -159,5 +159,50 @@
       "new_list": "New List",
       "edit": "Edit"
     }
+  },
+  "message": {
+    "account_load_error": "Failed to load accounts",
+    "account_remove_error": "Failed to remove the account",
+    "preferences_load_error": "Failed to load preferences",
+    "timeline_fetch_error": "Failed to fetch timeline",
+    "notification_fetch_error": "Failed to fetch notification",
+    "favourite_fetch_error": "Failed to fetch favorite",
+    "start_streaming_error": "Failed to start streaming",
+    "attach_error": "Could not attach the file",
+    "authorize_duplicate_error": "Can not login the same account of the same domain",
+    "authorize_error": "Failed to authorize",
+    "followers_fetch_error": "Failed to fetch followers",
+    "follows_fetch_error": "Failed to fetch follows",
+    "toot_fetch_error": "Failed to fetch the toot detail",
+    "follow_error": "Failed to follow the user",
+    "unfollow_error": "Failed to unfollow the user",
+    "lists_fetch_error": "Failed to fetch lists",
+    "list_create_error": "Failed to create a list",
+    "members_fetch_error": "Failed to fetch members",
+    "remove_user_error": "Failed to remove the user",
+    "find_account_error": "Account not found",
+    "reblog_error": "Failed to reblog",
+    "unreblog_error": "Failed to unreblog",
+    "favourite_error": "Failed to favourite",
+    "unfavourite_error": "Failed to unfavourite",
+    "delete_error": "Failed to delete the toot",
+    "search_error": "Failed to search",
+    "toot_error": "Failed to toot",
+    "update_list_memberships_error": "Failed to update the list memberships",
+    "add_user_error": "Failed to add user",
+    "authorize_url_error": "Failed to get authorize url",
+    "domain_confirmed": "{{domain}} is confirmed, please login",
+    "domain_doesnt_exist": "{{domain}} does not exist"
+  },
+  "validation": {
+    "login": {
+      "rquire_domain_name": "Domain name is required",
+      "domain_format": "Please write only domain name"
+    },
+    "new_toot": {
+      "toot_length": "Toot length should be {{min}} to {{max}}",
+      "attach_length": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos"
+    }
   }
 }

@@ -37,20 +37,6 @@ export default {
     return {
       form: {
         domainName: ''
-      },
-      rules: {
-        domainName: [
-          {
-            type: 'string',
-            required: true,
-            message: 'Domain name is required'
-          },
-          {
-            pattern: domainFormat,
-            trigger: 'change',
-            message: 'Please write only domain name'
-          }
-        ]
       }
     }
   },
@@ -58,7 +44,25 @@ export default {
     ...mapState({
       selectedInstance: state => state.Login.selectedInstance,
       searching: state => state.Login.searching
-    })
+    }),
+    rules: {
+      get () {
+        return {
+          domainName: [
+            {
+              type: 'string',
+              required: true,
+              message: this.$t('validation.login.require_domain_name')
+            },
+            {
+              pattern: domainFormat,
+              trigger: 'change',
+              message: this.$t('validation.login.domain_format')
+            }
+          ]
+        }
+      }
+    }
   },
   methods: {
     login () {
@@ -77,7 +81,7 @@ export default {
         .catch(() => {
           loading.close()
           this.$message({
-            message: 'Could not get authorize url',
+            message: this.$t('message.authorize_url_error'),
             type: 'error'
           })
         })
@@ -88,19 +92,19 @@ export default {
           this.$store.dispatch('Login/confirmInstance', this.form.domainName)
             .then(() => {
               this.$message({
-                message: `${this.form.domainName} is confirmed, please login`,
+                message: this.$t('message.domain_confirmed', {domain: this.form.domainName}),
                 type: 'success'
               })
             })
             .catch(() => {
               this.$message({
-                message: `${this.form.domainName} does not exist`,
+                message: this.$t('domain_doesnt_exist', {domain: this.form.domainName}),
                 type: 'error'
               })
             })
         } else {
           this.$message({
-            message: 'Please write only domain name',
+            message: this.$t('validation.login.domain_format'),
             type: 'error'
           })
           return false
