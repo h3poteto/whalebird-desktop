@@ -34,7 +34,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', this.list_id)
       } catch (err) {
         this.$message({
-          message: 'Failed to fetch members',
+          message: this.$t('message.members_fetch_error'),
           type: 'error'
         })
       } finally {
@@ -51,7 +51,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', this.list_id)
       } catch (err) {
         this.$message({
-          message: 'Failed to remove user',
+          message: this.$t('message.remove_user_error'),
           type: 'error'
         })
       } finally {

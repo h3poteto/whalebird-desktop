@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="List Memberships"
+    :title="$t('modals.list_membership.title')"
     :visible.sync="listMembershipModal"
     width="400px"
     class="list-membership-modal"
@@ -50,7 +50,7 @@ export default {
         return this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeBelongToLists', value)
           .catch(() => {
             this.$message({
-              message: 'Failed to update list memberships',
+              message: this.$t('message.update_list_memberships_error'),
               type: 'error'
             })
           })
@@ -72,7 +72,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Modals/ListMembership/fetchLists')
       } catch (err) {
         this.$message({
-          message: 'Failed to fetch list',
+          message: this.$t('message.lists_fetch_error'),
           type: 'error'
         })
       } finally {

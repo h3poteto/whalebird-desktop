@@ -1,0 +1,222 @@
+{
+  "main_menu": {
+    "application": {
+      "name": "Whalebird",
+      "about": "About Whalebird",
+      "preferences": "Preferences...",
+      "services": "Services",
+      "hide": "Hide Whalebird",
+      "hide_others": "Hide Others",
+      "show_all": "Show All",
+      "quit": "Quit"
+    },
+    "toot": {
+      "name": "Toot",
+      "new": "New Toot"
+    },
+    "edit": {
+      "name": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "select_all": "Select All"
+    },
+    "view": {
+      "name": "View",
+      "toggle_full_screen": "Toggle Full Screen"
+    },
+    "window": {
+      "name": "Window",
+      "close": "Close Window",
+      "minimize": "Minimize",
+      "jump_to": "Jump to"
+    }
+  },
+  "side_menu": {
+    "edit_profile": "Edit profile",
+    "home": "Home",
+    "notification": "Notification",
+    "favourite": "Favourite",
+    "local": "Local timeline",
+    "public": "Public timeline",
+    "hashtag": "Hashtag",
+    "search": "Search",
+    "lists": "Lists"
+  },
+  "header_menu": {
+    "home": "Home",
+    "notification": "Notification",
+    "favourite": "Favourite",
+    "local": "Local timeline",
+    "public": "Public timeline",
+    "hashtag": "Hashtag",
+    "search": "Search",
+    "lists": "Lists",
+    "members": "Members",
+    "filter": {
+      "title": "Filter",
+      "placeholder": "Filter out by regular expressions",
+      "apply": "Apply"
+    }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "general": {
+      "title": "General",
+      "appearance": "Appearance",
+      "theme_color": "Theme color:",
+      "theme": {
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "font_size": "Font size:",
+      "display_style": {
+        "title": "Display style:",
+        "display_name_and_username": "Display name and username",
+        "display_name": "Display name",
+        "username": "Username"
+      },
+      "toot": "Toot",
+      "visibility": {
+        "title": "Default visibility:",
+        "public": "Public",
+        "unlisted": "Unlisted",
+        "private": "Private",
+        "direct": "Direct"
+      },
+      "sounds": "Sounds",
+      "fav_rb_sound": "Favoute and Boost:",
+      "toot_sound": "Toot:"
+    },
+    "account": {
+      "title": "Account",
+      "connected": "Connected Account",
+      "username": "Username",
+      "domain": "Domain",
+      "association": "Association",
+      "order": "Order",
+      "remove_association": "Remove assocication",
+      "remove_all_associations": "Remove all associations",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "confirm_message": "Are you sure to remove all associations?"
+    }
+  },
+  "modals": {
+    "new_toot": {
+      "title": "New Toot",
+      "cw": "Write your waring here",
+      "status": "What is on your mind?",
+      "cancel": "Cancel",
+      "toot": "Toot"
+    },
+    "jump": {
+      "jump_to": "Jump to..."
+    },
+    "add_list_member": {
+      "title": "Add Member to List",
+      "account_name": "Account name"
+    },
+    "list_membership": {
+      "title": "List Memberships"
+    }
+  },
+  "cards": {
+    "toot": {
+      "show_more": "Show more",
+      "hide": "Hide",
+      "sensitive": "Show sensitive content",
+      "view_toot_detail": "View Toot Detail",
+      "open_in_browser": "Open in Browser",
+      "copy_link_to_toot": "Copy Link to Toot",
+      "delete": "Delete",
+      "via": "via {{application}}"
+    }
+  },
+  "side_bar": {
+    "account_profile": {
+      "follows_you": "Follows you",
+      "doesnt_follow_you": "Doesn't follow you",
+      "open_in_browser": "Open in Browser",
+      "manage_list_memberships": "Manage List Memberships",
+      "toots": "Toots",
+      "follows": "Follows",
+      "followers": "Followers"
+    }
+  },
+  "hashtag": {
+    "tag_name": "Tag name"
+  },
+  "search": {
+    "search": "Search",
+    "account": "Account",
+    "keyword": "keyword"
+  },
+  "lists": {
+    "index": {
+      "new_list": "New List",
+      "edit": "Edit"
+    }
+  },
+  "login": {
+    "domain_name_label": "First, let's log in to a Mastodon instance. Please enter an instance domain name.",
+    "search": "Search",
+    "login": "Login"
+  },
+  "authorize": {
+    "manually_1": "Now authorization page is opened in your browser.",
+    "manually_2": "If it is not opened, please open the following URL manually.",
+    "code_label": "Please paste authorization code from your browser:",
+    "submit": "Submit"
+  },
+  "receive_drop": {
+    "drop_message": "Drop to Upload to Mastodon"
+  },
+  "message": {
+    "account_load_error": "Failed to load accounts",
+    "account_remove_error": "Failed to remove the account",
+    "preferences_load_error": "Failed to load preferences",
+    "timeline_fetch_error": "Failed to fetch timeline",
+    "notification_fetch_error": "Failed to fetch notification",
+    "favourite_fetch_error": "Failed to fetch favorite",
+    "start_streaming_error": "Failed to start streaming",
+    "attach_error": "Could not attach the file",
+    "authorize_duplicate_error": "Can not login the same account of the same domain",
+    "authorize_error": "Failed to authorize",
+    "followers_fetch_error": "Failed to fetch followers",
+    "follows_fetch_error": "Failed to fetch follows",
+    "toot_fetch_error": "Failed to fetch the toot detail",
+    "follow_error": "Failed to follow the user",
+    "unfollow_error": "Failed to unfollow the user",
+    "lists_fetch_error": "Failed to fetch lists",
+    "list_create_error": "Failed to create a list",
+    "members_fetch_error": "Failed to fetch members",
+    "remove_user_error": "Failed to remove the user",
+    "find_account_error": "Account not found",
+    "reblog_error": "Failed to reblog",
+    "unreblog_error": "Failed to unreblog",
+    "favourite_error": "Failed to favourite",
+    "unfavourite_error": "Failed to unfavourite",
+    "delete_error": "Failed to delete the toot",
+    "search_error": "Failed to search",
+    "toot_error": "Failed to toot",
+    "update_list_memberships_error": "Failed to update the list memberships",
+    "add_user_error": "Failed to add user",
+    "authorize_url_error": "Failed to get authorize url",
+    "domain_confirmed": "{{domain}} is confirmed, please login",
+    "domain_doesnt_exist": "{{domain}} does not exist"
+  },
+  "validation": {
+    "login": {
+      "rquire_domain_name": "Domain name is required",
+      "domain_format": "Please write only domain name"
+    },
+    "new_toot": {
+      "toot_length": "Toot length should be {{min}} to {{max}}",
+      "attach_length": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos"
+    }
+  }
+}

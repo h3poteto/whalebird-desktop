@@ -16,11 +16,11 @@
       v-model="filterVisible">
       <div>
         <el-form>
-          <el-form-item label="Filter">
-            <el-input v-model="filter" placeholder="Filter out by regular expressions"></el-input>
+          <el-form-item :label="$t('header_menu.filter.title')">
+            <el-input v-model="filter" :placeholder="$t('header_menu.filter.placeholder')"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="applyFilter(filter)">Apply</el-button>
+            <el-button type="primary" @click="applyFilter(filter)">{{ $t('header_menu.filter.apply') }}</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -62,41 +62,41 @@ export default {
     channelName () {
       switch (this.$route.name) {
         case 'home':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Home')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.home'))
           break
         case 'notifications':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Notification')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.notification'))
           break
         case 'favourites':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Favourite')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.favourite'))
           break
         case 'local':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Local timeline')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.local'))
           break
         case 'public':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Public timeline')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.public'))
           break
         case 'hashtag-list':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Hashtag')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.hashtag'))
           break
         case 'tag':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', `#${this.$route.params.tag}`)
           break
         case 'search':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Search')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.search'))
           break
         case 'lists':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Lists')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.lists'))
           break
         case 'edit-list':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Members')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.members'))
           break
         case 'list':
           this.$store.dispatch('TimelineSpace/HeaderMenu/fetchList', this.$route.params.list_id)
           break
         default:
           console.log(this.$route)
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Home')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.home'))
           break
       }
     },

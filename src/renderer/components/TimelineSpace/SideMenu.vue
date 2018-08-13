@@ -11,7 +11,7 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="edit">Edit profile</el-dropdown-item>
+              <el-dropdown-item command="edit">{{ $t("side_menu.edit_profile") }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -36,41 +36,41 @@
       :class="collapse ? 'el-menu-vertical timeline-menu narrow-menu':'el-menu-vertical timeline-menu'">
       <el-menu-item :index="`/${id()}/home`">
         <icon name="home"></icon>
-        <span>Home</span>
+        <span>{{ $t("side_menu.home") }}</span>
         <el-badge is-dot :hidden="!unreadHomeTimeline">
         </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/notifications`">
         <icon name="bell"></icon>
-        <span>Notification</span>
+        <span>{{ $t("side_menu.notification") }}</span>
         <el-badge is-dot :hidden="!unreadNotifications">
         </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/favourites`">
         <icon name="star"></icon>
-        <span>Favourite</span>
+        <span>{{ $t("side_menu.favourite") }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/local`">
         <icon name="users"></icon>
-        <span>Local timeline</span>
+        <span>{{ $t("side_menu.local") }}</span>
         <el-badge is-dot :hidden="!unreadLocalTimeline">
         </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/public`">
         <icon name="globe"></icon>
-        <span>Public timeline</span>
+        <span>{{ $t("side_menu.public") }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/hashtag`">
         <icon name="hashtag"></icon>
-        <span>Hashtag</span>
+        <span>{{ $t("side_menu.hashtag") }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/search`">
         <icon name="search"></icon>
-        <span>Search</span>
+        <span>{{ $t("side_menu.search") }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/lists`">
         <icon name="list-ul"></icon>
-        <span>Lists</span>
+        <span>{{ $t("side_menu.lists") }}</span>
       </el-menu-item>
       <template v-for="list in lists">
         <el-menu-item :index="`/${id()}/lists/${list.id}`" class="sub-menu" v-bind:key="list.id">
