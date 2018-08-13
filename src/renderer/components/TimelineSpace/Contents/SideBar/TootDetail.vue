@@ -43,7 +43,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: 'Could not fetch toot detail',
+            message: this.$t('message.toot_fetch_error'),
             type: 'error'
           })
         })

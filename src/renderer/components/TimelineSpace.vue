@@ -83,7 +83,7 @@ export default {
       this.$store.dispatch('TimelineSpace/watchShortcutEvents')
       const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch(() => {
         this.$message({
-          message: 'Could not find account',
+          message: this.$t('message.account_load_error'),
           type: 'error'
         })
       })
@@ -91,7 +91,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
       } catch (err) {
         this.$message({
-          message: 'Could not fetch timeline',
+          message: this.$t('message.timeline_fetch_error'),
           type: 'error'
         })
       }
@@ -99,7 +99,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', account)
       } catch (err) {
         this.$message({
-          message: 'Could not fetch notification',
+          message: this.$t('message.notification_fetch_error'),
           type: 'error'
         })
       }
@@ -107,7 +107,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
       } catch (err) {
         this.$message({
-          message: 'Could not fetch local timeline',
+          message: this.$t('message.timeline_fetch_error'),
           type: 'error'
         })
       }
@@ -115,7 +115,7 @@ export default {
       this.$store.dispatch('TimelineSpace/startUserStreaming', account)
         .catch(() => {
           this.$message({
-            message: 'Failed to start streaming',
+            message: this.$t('message.start_streaming_error'),
             type: 'error'
           })
         })
@@ -131,7 +131,7 @@ export default {
       const file = e.dataTransfer.files.item(0)
       if (!file.type.includes('image') && !file.type.includes('video')) {
         this.$message({
-          message: 'You can only attach images or videos',
+          message: this.$t('validation.new_toot.attach_image'),
           type: 'error'
         })
         return false
@@ -141,7 +141,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
         .catch(() => {
           this.$message({
-            message: 'Could not attach the file',
+            message: this.$t('message.attach_error'),
             type: 'error'
           })
         })

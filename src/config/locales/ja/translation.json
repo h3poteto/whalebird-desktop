@@ -1,0 +1,222 @@
+{
+  "main_menu": {
+    "application": {
+      "name": "Whalebird",
+      "about": "Whalebirdについて",
+      "preferences": "設定...",
+      "services": "サービス",
+      "hide": "Whalebirdを隠す",
+      "hide_others": "ほかを隠す",
+      "show_all": "すべてを表示",
+      "quit": "終了"
+    },
+    "toot": {
+      "name": "トゥート",
+      "new": "トゥート"
+    },
+    "edit": {
+      "name": "編集",
+      "undo": "取り消す",
+      "redo": "やり直す",
+      "cut": "カット",
+      "copy": "コピー",
+      "paste": "ペースト",
+      "select_all": "すべてを選択"
+    },
+    "view": {
+      "name": "表示",
+      "toggle_full_screen": "フルスクリーンにする"
+    },
+    "window": {
+      "name": "ウィンドウ",
+      "close": "閉じる",
+      "minimize": "縮小",
+      "jump_to": "ジャンプ"
+    }
+  },
+  "side_menu": {
+    "edit_profile": "編集",
+    "home": "ホーム",
+    "notification": "通知",
+    "favourite": "お気に入り",
+    "local": "ローカル",
+    "public": "連合",
+    "hashtag": "ハッシュタグ",
+    "search": "検索",
+    "lists": "リスト"
+  },
+  "header_menu": {
+    "home": "ホーム",
+    "notification": "通知",
+    "favourite": "お気に入り",
+    "local": "ローカルタイムライン",
+    "public": "連合タイムライン",
+    "hashtag": "ハッシュタグ",
+    "search": "検索",
+    "lists": "リスト",
+    "members": "メンバー",
+    "filter": {
+      "title": "フィルター",
+      "placeholder": "正規表現でフィルター",
+      "apply": "適用"
+    }
+  },
+  "preferences": {
+    "title": "設定",
+    "general": {
+      "title": "一般",
+      "appearance": "外観",
+      "theme_color": "テーマカラー:",
+      "theme": {
+        "light": "標準",
+        "dark": "ダーク"
+      },
+      "font_size": "フォントサイズ:",
+      "display_style": {
+        "title": "ユーザ名の表示形式:",
+        "display_name_and_username": "表示名+ユーザー名",
+        "display_name": "表示名",
+        "username": "ユーザー名"
+      },
+      "toot": "トゥート",
+      "visibility": {
+        "title": "公開設定:",
+        "public": "公開",
+        "unlisted": "未収載",
+        "private": "フォロワー限定",
+        "direct": "ダイレクト"
+      },
+      "sounds": "効果音",
+      "fav_rb_sound": "お気に入り，ブースト時:",
+      "toot_sound": "トゥート時:"
+    },
+    "account": {
+      "title": "アカウント",
+      "connected": "登録済みアカウント",
+      "username": "ユーザー名",
+      "domain": "ドメイン名",
+      "association": "連携",
+      "order": "順序",
+      "remove_association": "連携を削除",
+      "remove_all_associations": "全ての連携を削除",
+      "confirm": "確認",
+      "cancel": "キャンセル",
+      "confirm_message": "本当に全ての連携を削除しますか？"
+    }
+  },
+  "modals": {
+    "new_toot": {
+      "title": "トゥート",
+      "cw": "ここに警告を書いてください",
+      "status": "今なにしてる?",
+      "cancel": "キャンセル",
+      "toot": "トゥート！"
+    },
+    "jump": {
+      "jump_to": "移動..."
+    },
+    "add_list_member": {
+      "title": "リストに追加",
+      "account_name": "アカウント名"
+    },
+    "list_membership": {
+      "title": "リストメンバー管理"
+    }
+  },
+  "cards": {
+    "toot": {
+      "show_more": "続きを見る",
+      "hide": "隠す",
+      "sensitive": "表示する",
+      "view_toot_detail": "詳細",
+      "open_in_browser": "ブラウザで開く",
+      "copy_link_to_toot": "コピー",
+      "delete": "削除する",
+      "via": "{{application}} より"
+    }
+  },
+  "side_bar": {
+    "account_profile": {
+      "follows_you": "フォローされています",
+      "doesnt_follow_you": "フォローされていません",
+      "open_in_browser": "ブラウザで開く",
+      "manage_list_memberships": "リストの管理",
+      "toots": "トゥート",
+      "follows": "フォロー",
+      "followers": "フォロワー"
+    }
+  },
+  "hashtag": {
+    "tag_name": "タグ名"
+  },
+  "search": {
+    "search": "検索",
+    "account": "アカウント",
+    "keyword": "キーワード"
+  },
+  "lists": {
+    "index": {
+      "new_list": "新規リスト",
+      "edit": "編集"
+    }
+  },
+  "login": {
+    "domain_name_label": "ドメイン名を入力してマストドンにログインしてください．",
+    "search": "検索",
+    "login": "ログイン"
+  },
+  "authorize": {
+    "manually_1": "認証用ページが自動的に開きます．",
+    "manually_2": "もし開かない場合は，以下のURLから手動で認証用ページを開いてください．",
+    "code_label": "ブラウザに表示された認証コードを貼り付けてください",
+    "submit": "認証"
+  },
+  "receive_drop": {
+    "drop_message": "ファイルをドロップしてください"
+  },
+  "message": {
+    "account_load_error": "アカウントの読み込みに失敗しました",
+    "account_remove_error": "アカウントの削除に失敗しました",
+    "preferences_load_error": "設定の読み込みに失敗しました",
+    "timeline_fetch_error": "タイムラインの読み込みに失敗しました",
+    "notification_fetch_error": "通知の読み込みに失敗しました",
+    "favourite_fetch_error": "お気に入りの読み込みに失敗しました",
+    "start_streaming_error": "ストリーミングを開始できませんでした",
+    "attach_error": "ファイルを添付できませんでした",
+    "authorize_duplicate_error": "同一ドメイン同一アカウントではログインできません",
+    "authorize_error": "認証に失敗しました",
+    "followers_fetch_error": "フォロワーの取得に失敗しました",
+    "follows_fetch_error": "フォローの取得に失敗しました",
+    "toot_fetch_error": "トゥート詳細の読み込みに失敗しました",
+    "follow_error": "フォローに失敗しました",
+    "unfollow_error": "フォロー解除に失敗しました",
+    "lists_fetch_error": "リストの読み込みに失敗しました",
+    "list_create_error": "リストの作成に失敗しました",
+    "members_fetch_error": "メンバーの取得に失敗しました",
+    "remove_user_error": "ユーザの削除に失敗しました",
+    "find_account_error": "アカウントが見つかりません",
+    "reblog_error": "ブーストできませんでした",
+    "unreblog_error": "ブースト解除に失敗しました",
+    "favourite_error": "お気に入りできませんでした",
+    "unfavourite_error": "お気に入り解除に失敗しました",
+    "delete_error": "トゥート削除に失敗しました",
+    "search_error": "検索に失敗しました",
+    "toot_error": "トゥートに失敗しました",
+    "update_list_memberships_error": "リストメンバーの更新に失敗しました",
+    "add_user_error": "メンバー追加に失敗しました",
+    "authorize_url_error": "認証用URLの取得に失敗しました",
+    "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
+    "domain_doesnt_exist": "{{domain}} は存在しません"
+  },
+  "validation": {
+    "login": {
+      "rquire_domain_name": "ドメイン名は必須です",
+      "domain_format": "ドメイン名のみを入力してください"
+    },
+    "new_toot": {
+      "toot_length": "トゥートの長さは {{min}} から {{max}}文字である必要があります",
+      "attach_length": "添付ファイルは {{max}} つまでです",
+      "attach_image": "画像かビデオしか添付できません"
+    }
+  }
+}

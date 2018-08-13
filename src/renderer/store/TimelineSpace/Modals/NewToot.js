@@ -1,6 +1,6 @@
 import Mastodon from 'megalodon'
 import { ipcRenderer } from 'electron'
-import Visibility from '../../../../constants/visibility'
+import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 
 const NewToot = {
@@ -45,10 +45,14 @@ const NewToot = {
      * changeVisibility
      * Update visibility using Visibility constants
      * @param state vuex state object
-     * @param visibility Visibility constants object
+     * @param level Visibility level
      **/
-    changeVisibility (state, visibility) {
-      state.visibility = visibility.value
+    changeVisibility (state, level) {
+      Object.keys(Visibility).map((key, index) => {
+        if (Visibility[key].key === level) {
+          this.visibility = Visibility[key].value
+        }
+      })
     },
     /**
      * changeVisibilityValue
@@ -91,14 +95,11 @@ const NewToot = {
         .filter((a) => a !== rootState.TimelineSpace.account.username)
       commit('changeModal', true)
       commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
-      dispatch('changeVisibility', message.visibility)
+      commit('changeVisibility', message.visibility)
     },
-    openModal ({ dispatch, commit }) {
+    openModal ({ dispatch, commit, rootState }) {
       commit('changeModal', true)
-      ipcRenderer.send('get-preferences')
-      ipcRenderer.once('response-get-preferences', (event, conf) => {
-        commit('changeVisibilityValue', conf.general.tootVisibility)
-      })
+      commit('changeVisibilityValue', rootState.tootVisibility)
     },
     closeModal ({ commit }) {
       commit('changeModal', false)
@@ -139,18 +140,6 @@ const NewToot = {
     },
     resetMediaId ({ commit }) {
       commit('updateMediaId', 0)
-    },
-    /**
-     * changeVisibility
-     * @param commit vuex commit object
-     * @param level visibility level string object
-     **/
-    changeVisibility ({ commit }, level) {
-      Object.keys(Visibility).map((key, index) => {
-        if (Visibility[key].name === level) {
-          commit('changeVisibility', Visibility[key])
-        }
-      })
     }
   }
 }

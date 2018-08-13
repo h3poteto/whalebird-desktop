@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="Add Member to List"
+    :title="$t('modals.add_list_member.title')"
     :visible.sync="addListMemberModal"
     width="400px"
     class="add-member">
@@ -81,7 +81,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: 'Failed to add user',
+            message: this.$t('message.add_user_error'),
             type: 'error'
           })
         })

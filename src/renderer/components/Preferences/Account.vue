@@ -1,8 +1,8 @@
 <template>
 <div id="account">
-  <h2>Account</h2>
+  <h2>{{ $t('preferences.account.title') }}</h2>
   <div class="connected-account">
-    <h3>Connected Accounts</h3>
+    <h3>{{ $t('preferences.account.connected') }}</h3>
     <template>
       <el-table
         :data="accounts"
@@ -12,24 +12,24 @@
         v-loading="accountLoading">
         <el-table-column
           prop="username"
-          label="Username">
+          :label="$t('preferences.account.username')">
         </el-table-column>
         <el-table-column
           prop="domain"
-          label="Domain">
+          :label="$t('preferences.account.domain')">
         </el-table-column>
         <el-table-column
-          label="Association">
+          :label="$t('preferences.account.association')">
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="removeAccount(scope.$index, accounts)"
               type="text">
-              <i class="el-icon-close"></i> Remove association
+              <i class="el-icon-close"></i> {{ $t('preferences.account.remove_association') }}
             </el-button>
           </template>
         </el-table-column>
         <el-table-column
-          label="Order"
+          :label="$t('preferences.account.order')"
           width="60">
           <template slot-scope="scope">
             <div>
@@ -48,12 +48,12 @@
       placement="top"
       width="160"
       v-model="deletePopoverVisible">
-      <p>Are you sure to remove all associations?</p>
+      <p>{{ $t('preferences.account.confirm_message') }}</p>
       <div style="text-align: right; margin: 0">
-        <el-button size="mini" type="text" @click="deletePopoverVisible = false">cancel</el-button>
-        <el-button type="danger" size="mini" @click="removeAllAssociations">confirm</el-button>
+        <el-button size="mini" type="text" @click="deletePopoverVisible = false">{{ $t('preferences.account.cancel') }}</el-button>
+        <el-button type="danger" size="mini" @click="removeAllAssociations">{{ $t('preferences.account.confirm') }}</el-button>
       </div>
-      <el-button slot="reference" type="danger">Remove all associations</el-button>
+      <el-button slot="reference" type="danger">{{ $t('preferences.account.remove_all_associations') }}</el-button>
     </el-popover>
   </div>
 </div>
@@ -85,13 +85,13 @@ export default {
       this.$store.commit('Preferences/Account/updateAccountLoading', true)
       try {
         await this.$store.dispatch('Preferences/Account/loadAccounts')
-        this.$store.commit('Preferences/Account/updateAccountLoading', false)
       } catch (err) {
-        this.$store.commit('Preferences/Account/updateAccountLoading', false)
         return this.$message({
-          message: 'Failed to load accounts',
+          message: this.$t('message.account_load_error'),
           type: 'error'
         })
+      } finally {
+        this.$store.commit('Preferences/Account/updateAccountLoading', false)
       }
     },
     removeAccount (index, accounts) {
@@ -101,7 +101,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: 'Failed to remove the association',
+            message: this.$t('message.account_remove_error'),
             type: 'error'
           })
         })

@@ -32,7 +32,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchFollowers', this.account)
         .catch(() => {
           this.$message({
-            message: 'Could not get followers',
+            message: this.$t('message.followers_fetch_error'),
             type: 'error'
           })
         })
