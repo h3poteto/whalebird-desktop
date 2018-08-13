@@ -102,6 +102,10 @@
       "confirm": "Confirm",
       "cancel": "Cancel",
       "confirm_message": "Are you sure to remove all associations?"
+    },
+    "language": {
+      "title": "Language",
+      "display_language": "language"
     }
   },
   "modals": {
