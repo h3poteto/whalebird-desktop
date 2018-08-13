@@ -33,19 +33,14 @@ const Login = {
     pageBack ({ commit }) {
       commit('changeInstance', null)
     },
-    confirmInstance ({ commit }, domain) {
-      return new Promise((resolve, reject) => {
-        commit('changeSearching', true)
-        axios
-          .get(`https://${domain}/api/v1/instance`)
-          .then((res) => {
-            commit('changeInstance', domain)
-            resolve(res)
-          })
-          .finally(() => {
-            commit('changeSearching', false)
-          })
-      })
+    async confirmInstance ({ commit }, domain) {
+      commit('changeSearching', true)
+      const res = await axios.get(`https://${domain}/api/v1/instance`)
+        .finally(() => {
+          commit('changeSearching', false)
+        })
+      commit('changeInstance', domain)
+      return res.data
     }
   }
 }
