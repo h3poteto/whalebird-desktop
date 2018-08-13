@@ -171,6 +171,9 @@
     "code_label": "Please paste authorization code from your browser:",
     "submit": "Submit"
   },
+  "receive_drop": {
+    "drop_message": "Drop to Upload to Mastodon"
+  },
   "message": {
     "account_load_error": "Failed to load accounts",
     "account_remove_error": "Failed to remove the account",
