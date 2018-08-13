@@ -171,6 +171,9 @@
     "code_label": "ブラウザに表示された認証コードを貼り付けてください",
     "submit": "認証"
   },
+  "receive_drop": {
+    "drop_message": "ファイルをドロップしてください"
+  },
   "message": {
     "account_load_error": "アカウントの読み込みに失敗しました",
     "account_remove_error": "アカウントの削除に失敗しました",

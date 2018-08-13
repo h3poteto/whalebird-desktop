@@ -2,7 +2,7 @@
 <div id="receive_drop">
   <div class="drop-area">
     <div class="drop-message">
-      <h1>Drop to Upload to Mastodon</h1>
+      <h1>{{ $t('receive_drop.drop_message') }}</h1>
     </div>
   </div>
 </div>
