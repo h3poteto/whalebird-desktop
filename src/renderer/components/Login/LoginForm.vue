@@ -1,6 +1,6 @@
 <template>
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm('loginForm')" class="login-form" :rules="rules" :model="form">
-    <el-form-item label="First, let's log in to a Mastodon instance. Please enter an instance domain name." prop="domainName">
+    <el-form-item :label="$t('login.domain_name_label')" prop="domainName">
       <el-input v-model="form.domainName" placeholder="mastodon.social" v-shortkey="['enter']" @shortkey.native="handleKey"></el-input>
     </el-form-item>
     <!-- Dummy form to guard submitting with enter -->
@@ -13,7 +13,7 @@
       v-if="selectedInstance === null"
       v-loading="searching"
       element-loading-background="rgba(0, 0, 0, 0.8)">
-      Search
+      {{ $t('login.search') }}
     </el-button>
     <el-form-item class="submit">
       <el-button
@@ -21,7 +21,7 @@
         class="login"
         @click="login"
         v-if="selectedInstance !== null">
-        Login
+        {{ $t('login.login') }}
       </el-button>
     </el-form-item>
   </el-form>
@@ -98,7 +98,7 @@ export default {
             })
             .catch(() => {
               this.$message({
-                message: this.$t('domain_doesnt_exist', {domain: this.form.domainName}),
+                message: this.$t('message.domain_doesnt_exist', {domain: this.form.domainName}),
                 type: 'error'
               })
             })

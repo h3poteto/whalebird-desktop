@@ -160,6 +160,17 @@
       "edit": "Edit"
     }
   },
+  "login": {
+    "domain_name_label": "First, let's log in to a Mastodon instance. Please enter an instance domain name.",
+    "search": "Search",
+    "login": "Login"
+  },
+  "authorize": {
+    "manually_1": "Now authorization page is opened in your browser.",
+    "manually_2": "If it is not opened, please open the following URL manually.",
+    "code_label": "Please paste authorization code from your browser:",
+    "submit": "Submit"
+  },
   "message": {
     "account_load_error": "Failed to load accounts",
     "account_remove_error": "Failed to remove the account",

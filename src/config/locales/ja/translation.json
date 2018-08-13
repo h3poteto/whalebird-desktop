@@ -160,6 +160,17 @@
       "edit": "編集"
     }
   },
+  "login": {
+    "domain_name_label": "ドメイン名を入力してマストドンにログインしてください．",
+    "search": "検索",
+    "login": "ログイン"
+  },
+  "authorize": {
+    "manually_1": "認証用ページが自動的に開きます．",
+    "manually_2": "もし開かない場合は，以下のURLから手動で認証用ページを開いてください．",
+    "code_label": "ブラウザに表示された認証コードを貼り付けてください",
+    "submit": "認証"
+  },
   "message": {
     "account_load_error": "アカウントの読み込みに失敗しました",
     "account_remove_error": "アカウントの削除に失敗しました",
