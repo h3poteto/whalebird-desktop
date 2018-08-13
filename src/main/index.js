@@ -109,7 +109,6 @@ async function createWindow () {
     }
   })
 
-  i18n.changeLanguage('ja')
   /**
    * Set application menu
    */
