@@ -3,6 +3,7 @@ import objectAssignDeep from 'object-assign-deep'
 import Visibility from '../constants/visibility'
 import DisplayStyle from '../constants/displayStyle'
 import Theme from '../constants/theme'
+import Language from '../constants/language'
 
 const Base = {
   general: {
@@ -17,6 +18,9 @@ const Base = {
   },
   state: {
     collapse: false
+  },
+  language: {
+    language: Language.en.key
   }
 }
 

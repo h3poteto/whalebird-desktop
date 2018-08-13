@@ -102,6 +102,10 @@
       "confirm": "確認",
       "cancel": "キャンセル",
       "confirm_message": "本当に全ての連携を削除しますか？"
+    },
+    "language": {
+      "title": "言語",
+      "display_language": "表示言語"
     }
   },
   "modals": {

@@ -44,15 +44,19 @@ const App = {
       ipcRenderer.removeAllListeners('open-preferences')
     },
     loadPreferences ({ commit }) {
-      ipcRenderer.send('get-preferences')
-      ipcRenderer.once('error-get-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-get-preferences')
-      })
-      ipcRenderer.once('response-get-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-get-preferences')
-        commit('updateTheme', conf.general.theme)
-        commit('updateDisplayNameStyle', conf.general.displayNameStyle)
-        commit('updateFontSize', conf.general.fontSize)
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('get-preferences')
+        ipcRenderer.once('error-get-preferences', (event, err) => {
+          ipcRenderer.removeAllListeners('response-get-preferences')
+          reject(err)
+        })
+        ipcRenderer.once('response-get-preferences', (event, conf) => {
+          ipcRenderer.removeAllListeners('error-get-preferences')
+          commit('updateTheme', conf.general.theme)
+          commit('updateDisplayNameStyle', conf.general.displayNameStyle)
+          commit('updateFontSize', conf.general.fontSize)
+          resolve(conf)
+        })
       })
     }
   }
