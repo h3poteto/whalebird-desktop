@@ -102,6 +102,17 @@
       "confirm": "Confirm",
       "cancel": "Cancel",
       "confirm_message": "Are you sure to remove all associations?"
+    },
+    "language": {
+      "title": "Language",
+      "display_language": "language",
+      "notice": "Require relaunch",
+      "confirm": {
+        "title": "Warning",
+        "message": "You have to restart this application. Continue?",
+        "ok": "Restart Now",
+        "cancel": "Cancel"
+      }
     }
   },
   "modals": {

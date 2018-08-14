@@ -8,7 +8,7 @@
         <tr>
           <td class="title">{{ $t('preferences.general.theme_color') }}</td>
           <td class="status">
-            <el-radio v-for="t in themes" :key="t.key" v-model="theme" :label="t.key">{{ t.name }}</el-radio>
+            <el-radio v-for="t in themes" :key="t.key" v-model="theme" :label="t.key">{{ $t(t.name) }}</el-radio>
           </td>
         </tr>
         <tr>
@@ -24,7 +24,7 @@
               <el-option
                 v-for="style in nameStyles"
                 :key="style.value"
-                :label="style.name"
+                :label="$t(style.name)"
                 :value="style.value">
               </el-option>
             </el-select>
@@ -44,7 +44,7 @@
               <el-option
                 v-for="v in visibilities"
                 :key="v.value"
-                :label="v.name"
+                :label="$t(v.name)"
                 :value="v.value">
               </el-option>
             </el-select>

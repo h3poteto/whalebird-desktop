@@ -26,6 +26,10 @@
             <icon name="user" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.account.title') }}</span>
           </el-menu-item>
+          <el-menu-item index="3" :route="{path: '/preferences/language'}" @click="language">
+            <icon name="language" class="icon" scale="1.3"></icon>
+            <span>{{ $t('preferences.language.title') }}</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>
@@ -56,6 +60,9 @@ export default {
     },
     account () {
       this.$router.push('/preferences/account')
+    },
+    language () {
+      this.$router.push('/preferences/language')
     }
   }
 }

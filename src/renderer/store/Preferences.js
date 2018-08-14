@@ -1,11 +1,13 @@
 import General from './Preferences/General'
 import Account from './Preferences/Account'
+import Language from './Preferences/Language'
 
 const Preferences = {
   namespaced: true,
   modules: {
     General,
-    Account
+    Account,
+    Language
   },
   state: {
     defaultActive: '1'
