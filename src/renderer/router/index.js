@@ -30,6 +30,11 @@ export default new Router({
           path: 'account',
           name: 'account',
           component: require('@/components/Preferences/Account').default
+        },
+        {
+          path: 'language',
+          name: 'language',
+          component: require('@/components/Preferences/Language').default
         }
       ]
     },

@@ -17,6 +17,7 @@ import Streaming from './streaming'
 import Preferences from './preferences'
 import Hashtags from './hashtags'
 import i18n from '../config/i18n'
+import Language from '../constants/language'
 
 /**
  * Context menu
@@ -96,6 +97,16 @@ async function changeAccount (account, index) {
   }
 }
 
+async function getLanguage () {
+  try {
+    const preferences = new Preferences(preferencesDBPath)
+    const conf = await preferences.load()
+    return conf.language.language
+  } catch (err) {
+    return Language.en.key
+  }
+}
+
 async function createWindow () {
   /**
    * List accounts
@@ -108,6 +119,12 @@ async function createWindow () {
       click: () => changeAccount(a, index)
     }
   })
+
+  /**
+   * Get language
+   */
+  const language = await getLanguage()
+  i18n.changeLanguage(language)
 
   /**
    * Set application menu
@@ -593,6 +610,20 @@ ipcMain.on('get-collapse', (event, _) => {
     })
 })
 
+ipcMain.on('change-language', (event, value) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.update(
+    {
+      language: {
+        language: value
+      }
+    })
+    .then((conf) => {
+      i18n.changeLanguage(conf.language.language)
+      event.sender.send('response-change-language', conf.language.language)
+    })
+})
+
 // hashtag
 ipcMain.on('save-hashtag', (event, tag) => {
   const hashtags = new Hashtags(hashtagsDB)
@@ -622,6 +653,12 @@ ipcMain.on('remove-hashtag', (event, tag) => {
     .catch((err) => {
       event.sender.send('error-remove-hashtag', err)
     })
+})
+
+// Application control
+ipcMain.on('relaunch', (event, _) => {
+  app.relaunch()
+  app.exit()
 })
 
 /**
