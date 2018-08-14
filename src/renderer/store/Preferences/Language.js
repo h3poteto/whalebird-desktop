@@ -36,6 +36,9 @@ export default {
       ipcRenderer.once('response-change-language', (event, value) => {
         commit('changeLanguage', value)
       })
+    },
+    relaunch () {
+      ipcRenderer.send('relaunch')
     }
   }
 }

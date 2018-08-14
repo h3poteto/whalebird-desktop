@@ -15,6 +15,7 @@
                 :value="lang.key">
               </el-option>
             </el-select>
+            <p class="notice">{{ $t('preferences.language.notice') }}</p>
           </td>
         </tr>
       </tbody>
@@ -42,12 +43,33 @@ export default {
         return this.$store.state.Preferences.Language.language.language
       },
       set (value) {
-        return this.$store.dispatch('Preferences/Language/changeLanguage', value)
+        this.$store.dispatch('Preferences/Language/changeLanguage', value)
+          .then(() => {
+            this.confirm()
+          })
       }
     }
   },
   created () {
     this.$store.dispatch('Preferences/Language/loadLanguage')
+  },
+  methods: {
+    confirm () {
+      this.$confirm(
+        this.$t('preferences.language.confirm.message'),
+        this.$t('preferences.language.confirm.title'),
+        {
+          confirmButtonText: this.$t('preferences.language.confirm.ok'),
+          cancelButtonText: this.$t('preferences.language.confirm.cancel'),
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          this.$store.dispatch('Preferences/Language/relaunch')
+        })
+        .cancel(() => {
+        })
+    }
   }
 }
 </script>
@@ -70,6 +92,11 @@ export default {
   .status {
     width: 50%;
     text-align: center;
+
+    .notice {
+      color: #c0c4cc;
+      font-size: 12px;
+    }
   }
 }
 </style>
