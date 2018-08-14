@@ -224,6 +224,7 @@
   },
   "validation": {
     "login": {
+      "loading": "Loading...",
       "rquire_domain_name": "Domain name is required",
       "domain_format": "Please write only domain name"
     },
