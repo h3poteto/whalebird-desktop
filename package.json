@@ -15,7 +15,7 @@
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
   },
   "config": {
-    "buildVersion": "37",
+    "buildVersion": "38",
     "appVersion": "2.0.0"
   },
   "main": "./dist/electron/main.js",
