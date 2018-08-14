@@ -655,6 +655,12 @@ ipcMain.on('remove-hashtag', (event, tag) => {
     })
 })
 
+// Application control
+ipcMain.on('relaunch', (event, _) => {
+  app.relaunch()
+  app.exit()
+})
+
 /**
  * Auto Updater
  *
