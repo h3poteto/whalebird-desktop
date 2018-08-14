@@ -31,19 +31,19 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item :command="visibilityList.Public.value">
               <icon name="globe" class="privacy-icon"></icon>
-              {{ visibilityList.Public.name }}
+              {{ $t(visibilityList.Public.name) }}
             </el-dropdown-item>
             <el-dropdown-item :command="visibilityList.Unlisted.value">
               <icon name="unlock" class="privacy-icon"></icon>
-              {{ visibilityList.Unlisted.name }}
+              {{ $t(visibilityList.Unlisted.name) }}
             </el-dropdown-item>
             <el-dropdown-item :command="visibilityList.Private.value">
               <icon name="lock" class="privacy-icon"></icon>
-              {{ visibilityList.Private.name }}
+              {{ $t(visibilityList.Private.name) }}
             </el-dropdown-item>
             <el-dropdown-item :command="visibilityList.Direct.value">
               <icon name="envelope" class="privacy-icon" scale="0.8"></icon>
-              {{ visibilityList.Direct.name }}
+              {{ $t(visibilityList.Direct.name) }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
