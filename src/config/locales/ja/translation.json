@@ -102,6 +102,17 @@
       "confirm": "確認",
       "cancel": "キャンセル",
       "confirm_message": "本当に全ての連携を削除しますか？"
+    },
+    "language": {
+      "title": "言語",
+      "display_language": "表示言語",
+      "notice": "再起動が必要です",
+      "confirm": {
+        "title": "再起動します",
+        "message": "設定を有効化するために再起動する必要があります",
+        "ok": "再起動する",
+        "cancel": "キャンセル"
+      }
     }
   },
   "modals": {

@@ -99,7 +99,7 @@ const NewToot = {
     },
     openModal ({ dispatch, commit, rootState }) {
       commit('changeModal', true)
-      commit('changeVisibilityValue', rootState.tootVisibility)
+      commit('changeVisibilityValue', rootState.App.tootVisibility)
     },
     closeModal ({ commit }) {
       commit('changeModal', false)
