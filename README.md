@@ -36,6 +36,15 @@ Whalebird is a mastodon client for desktop application.
 
 Or you can download `.dmg` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
+So on, you can install from Homebrew:
+
+```
+$ brew update
+$ brew install whalebird
+```
+
+:sparkles: Thanks to [@singingwolfboy](https://github.com/singingwolfboy) for adding it to homebrew-cask.
+
 
 ### Linux
 
