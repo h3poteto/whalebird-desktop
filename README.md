@@ -43,7 +43,7 @@ $ brew update
 $ brew install whalebird
 ```
 
-:sparkles: Thanks to [@singingwolfboy](https://github.com/singingwolfboy) for adding it to homebrew-cask.
+:sparkles: Thanks to [@singingwolfboy](https://github.com/singingwolfboy) for adding it to [homebrew-cask](https://github.com/Homebrew/homebrew-cask/blob/cf568882b6e012956ca404a16be2db36ca873002/Casks/whalebird.rb).
 
 
 ### Linux
@@ -51,7 +51,11 @@ $ brew install whalebird
 You can download `.deb` or `.rpm` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 If you do not want to use package manager, please download `.tar.bz2` file and docompress it.
 
-Or please install the app from snapcraft.io: https://snapcraft.io/whalebird
+Or please install the app from [snapcraft.io](https://snapcraft.io/whalebird).
+
+```
+$ sudo snap install whalebird
+```
 
 ### Windows
 
