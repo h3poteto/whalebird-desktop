@@ -1,0 +1,10 @@
+{
+  "timeline": {
+    "loading": "Loading..."
+  },
+  "validation": {
+    "login": {
+      "loading": "Loading..."
+    }
+  }
+}

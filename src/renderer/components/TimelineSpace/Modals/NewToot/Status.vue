@@ -3,7 +3,7 @@
   <textarea
     v-model="status"
     ref="status"
-    v-shortkey="openSuggest ? {up: ['arrowup'], down: ['arrowdown'], enter: ['enter']} : {linux: ['ctrl', 'enter'], mac: ['meta', 'enter']}"
+    v-shortkey="openSuggest ? {up: ['arrowup'], down: ['arrowdown'], enter: ['enter']} : {linux: ['ctrl', 'enter'], mac: ['meta', 'enter'], left: ['arrowleft'], right: ['arrowright']}"
     @shortkey="handleKey"
     v-on:input="startSuggest"
     :placeholder="$t('modals.new_toot.status')"
@@ -129,6 +129,7 @@ export default {
       this.insertAccount(account)
     },
     handleKey (event) {
+      const current = event.target.selectionStart
       switch (event.srcKey) {
         case 'up':
           this.suggestHighlight(this.highlightedIndex - 1)
@@ -138,6 +139,12 @@ export default {
           break
         case 'enter':
           this.selectCurrentAccount()
+          break
+        case 'left':
+          event.target.setSelectionRange(current - 1, current - 1)
+          break
+        case 'right':
+          event.target.setSelectionRange(current + 1, current + 1)
           break
         case 'linux':
         case 'mac':
