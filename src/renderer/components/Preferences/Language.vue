@@ -33,6 +33,7 @@ export default {
     return {
       languages: [
         Language.en,
+        Language.fr,
         Language.ja
       ]
     }
