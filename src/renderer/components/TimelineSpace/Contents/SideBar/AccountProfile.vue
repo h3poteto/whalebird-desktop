@@ -6,7 +6,7 @@
      element-loading-background="rgba(0, 0, 0, 0.8)">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
-      <div class="follow-follower" v-if="relationship !== null && relationship !== ''">
+      <div class="follow-follower" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
         <div class="follower-status">
           <span class="status" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</span>
           <span class="status" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</span>
@@ -18,7 +18,7 @@
           <div v-else-if="relationship.requested">
             <icon name="hourglass" scale="1.5"></icon>
           </div>
-          <div v-else-if="account.username!==user.username" class="follow" @click="follow(account)">
+          <div v-else class="follow" @click="follow(account)">
             <icon name="user-plus" scale="1.5"></icon>
           </div>
         </div>
