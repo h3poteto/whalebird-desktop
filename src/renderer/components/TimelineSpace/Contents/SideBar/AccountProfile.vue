@@ -18,7 +18,7 @@
           <div v-else-if="relationship.requested">
             <icon name="hourglass" scale="1.5"></icon>
           </div>
-          <div v-else class="follow" @click="follow(account)">
+          <div v-else-if="account.username!==user.username" class="follow" @click="follow(account)">
             <icon name="user-plus" scale="1.5"></icon>
           </div>
         </div>
@@ -104,6 +104,7 @@ export default {
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
+      user: state => state.TimelineSpace.account,
       relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship,
       loading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.loading,
       theme: (state) => {
