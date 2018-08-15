@@ -2,7 +2,7 @@
 <div
   id="timeline_space"
   v-loading="loading"
-  :element-loading-text="$t('timeline.loading')"
+  :element-loading-text="$t('message.loading')"
   element-loading-spinner="el-icon-loading"
   element-loading-background="rgba(0, 0, 0, 0.8)"
   >
