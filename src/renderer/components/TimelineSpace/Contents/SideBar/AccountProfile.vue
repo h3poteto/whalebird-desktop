@@ -1,7 +1,7 @@
 <template>
 <div id="account_profile"
      v-loading="loading"
-     element-loading-text="Loading..."
+     :element-loading-text="$t('message.loading')"
      element-loading-spinner="el-icon-loading"
      element-loading-background="rgba(0, 0, 0, 0.8)">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">

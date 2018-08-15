@@ -11,7 +11,7 @@
       <div
         class="loading"
         v-loading="true"
-        element-loading-text="Loading..."
+        :element-loading-text="$t('message.loading')"
         element-loading-spinner="el-icon-loading"
         :element-loading-background="backgroundColor"
         v-else>

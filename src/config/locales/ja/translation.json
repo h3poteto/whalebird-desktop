@@ -217,15 +217,12 @@
     "add_user_error": "メンバー追加に失敗しました",
     "authorize_url_error": "認証用URLの取得に失敗しました",
     "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
-    "domain_doesnt_exist": "{{domain}} は存在しません"
-  },
-  "timeline": {
+    "domain_doesnt_exist": "{{domain}} は存在しません",
     "loading": "読み込み中..."
   },
   "validation": {
     "login": {
-      "loading": "読み込み中...",
-      "rquire_domain_name": "ドメイン名は必須です",
+      "require_domain_name": "ドメイン名は必須です",
       "domain_format": "ドメイン名のみを入力してください"
     },
     "new_toot": {
