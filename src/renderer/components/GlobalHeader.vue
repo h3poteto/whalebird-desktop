@@ -10,7 +10,7 @@
       active-text-color="#ffffff">
       <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account._id" :route="{path: `/${account._id}/home`}" @click="select(account)">
         <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
-        <img v-else :src="account.avatar" class="avatar" />
+        <img v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
       <el-menu-item index="/login" @click="login">
