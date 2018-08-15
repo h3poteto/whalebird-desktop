@@ -1,13 +1,10 @@
 # Whalebird
+[![CircleCI](https://img.shields.io/circleci/project/github/h3poteto/whalebird-desktop.svg?style=flat-square)](https://circleci.com/gh/h3poteto/whalebird-desktop)
 [![GitHub release](http://img.shields.io/github/release/h3poteto/whalebird-desktop.svg?style=flat-square)](https://github.com/h3poteto/whalebird-desktop/releases)
+[![App Store](https://img.shields.io/itunes/v/1378283354.svg?style=flat-square)](https://itunes.apple.com/us/app/whalebird/id1378283354)
 
-Whalebird is a mastodon client for desktop application. If you want to use this app, please install
 
-Mac App Store: https://itunes.apple.com/us/app/whalebird/id1378283354
-
-snapcraft: https://snapcraft.io/whalebird
-
-or please download binary from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+Whalebird is a mastodon client for desktop application.
 
 ![demo](screenshot.gif)
 
@@ -35,10 +32,18 @@ or please download binary from [release page](https://github.com/h3poteto/whaleb
 
 ## Install
 ### Mac
-
-You can install the app from Mac App Store: https://itunes.apple.com/us/app/whalebird/id1378283354
+[![App Store](app-store.svg)](https://itunes.apple.com/us/app/whalebird/id1378283354)
 
 Or you can download `.dmg` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+
+So on, you can install from Homebrew:
+
+```
+$ brew update
+$ brew install whalebird
+```
+
+:sparkles: Thanks to [@singingwolfboy](https://github.com/singingwolfboy) for adding it to [homebrew-cask](https://github.com/Homebrew/homebrew-cask/blob/cf568882b6e012956ca404a16be2db36ca873002/Casks/whalebird.rb).
 
 
 ### Linux
@@ -46,7 +51,11 @@ Or you can download `.dmg` from [release page](https://github.com/h3poteto/whale
 You can download `.deb` or `.rpm` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 If you do not want to use package manager, please download `.tar.bz2` file and docompress it.
 
-Or please install the app from snapcraft.io: https://snapcraft.io/whalebird
+Or please install the app from [snapcraft.io](https://snapcraft.io/whalebird).
+
+```
+$ sudo snap install whalebird
+```
 
 ### Windows
 
