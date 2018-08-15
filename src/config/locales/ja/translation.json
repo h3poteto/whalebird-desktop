@@ -219,8 +219,12 @@
     "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
     "domain_doesnt_exist": "{{domain}} は存在しません"
   },
+  "timeline": {
+    "loading": "読み込み中..."
+  },
   "validation": {
     "login": {
+      "loading": "読み込み中...",
       "rquire_domain_name": "ドメイン名は必須です",
       "domain_format": "ドメイン名のみを入力してください"
     },
