@@ -63,6 +63,15 @@ You can download `.exe` from [release page](https://github.com/h3poteto/whalebir
 
 ## Development
 
+We'd love you to contribute to Homebrew.
+
+### Minimum requirements for development
+
+* Node.js greater than or equal version 8.9.0
+* npm or yarn
+
+### Getting started
+
 ``` bash
 # clone this repository
 $ git clone https://github.com/h3poteto/whalebird-desktop.git
