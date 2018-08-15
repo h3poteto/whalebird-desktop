@@ -87,7 +87,7 @@
         "direct": "Direct"
       },
       "sounds": "Sounds",
-      "fav_rb_sound": "Favoute and Boost:",
+      "fav_rb_sound": "Favorite and Boost:",
       "toot_sound": "Toot:"
     },
     "account": {
@@ -118,7 +118,7 @@
   "modals": {
     "new_toot": {
       "title": "New Toot",
-      "cw": "Write your waring here",
+      "cw": "Write your warning here",
       "status": "What is on your mind?",
       "cancel": "Cancel",
       "toot": "Toot"
@@ -219,8 +219,12 @@
     "domain_confirmed": "{{domain}} is confirmed, please login",
     "domain_doesnt_exist": "{{domain}} does not exist"
   },
+  "timeline": {
+    "loading": "Loading..."
+  },
   "validation": {
     "login": {
+      "loading": "Loading...",
       "rquire_domain_name": "Domain name is required",
       "domain_format": "Please write only domain name"
     },

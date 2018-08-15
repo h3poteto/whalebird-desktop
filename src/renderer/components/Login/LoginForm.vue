@@ -68,7 +68,7 @@ export default {
     login () {
       const loading = this.$loading({
         lock: true,
-        text: 'Loading',
+        text: this.$t('validation.login.loading'),
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
