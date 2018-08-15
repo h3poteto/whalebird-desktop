@@ -217,15 +217,12 @@
     "add_user_error": "Failed to add user",
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
-    "domain_doesnt_exist": "{{domain}} does not exist"
-  },
-  "timeline": {
+    "domain_doesnt_exist": "{{domain}} does not exist",
     "loading": "Loading..."
   },
   "validation": {
     "login": {
-      "loading": "Loading...",
-      "rquire_domain_name": "Domain name is required",
+      "require_domain_name": "Domain name is required",
       "domain_format": "Please write only domain name"
     },
     "new_toot": {
