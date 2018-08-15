@@ -1,6 +1,50 @@
 # Change Log
 
-## [1.5.4]
+## [2.0.0] -2018-08-15
+### Added
+- [#492](https://github.com/h3poteto/whalebird-desktop/pull/492) i18n + English spelling typos + French l10n
+- [#488](https://github.com/h3poteto/whalebird-desktop/pull/488) Switch language in preferences
+- [#483](https://github.com/h3poteto/whalebird-desktop/pull/483) Translate languages using i18next
+- [#472](https://github.com/h3poteto/whalebird-desktop/pull/472) Support for arrow keys when display medias
+- [#471](https://github.com/h3poteto/whalebird-desktop/pull/471) Suggest account name in new toot
+
+### Changed
+- [#489](https://github.com/h3poteto/whalebird-desktop/pull/489) Update electron version to 2.0.7
+- [#476](https://github.com/h3poteto/whalebird-desktop/pull/476) Check and submit instance with enter key in login form
+
+### Fixed
+- [#495](https://github.com/h3poteto/whalebird-desktop/pull/495) Fix loading message for japanese
+- [#494](https://github.com/h3poteto/whalebird-desktop/pull/494) Handle arrowleft and arrowright key in textarea
+- [#490](https://github.com/h3poteto/whalebird-desktop/pull/490) Fix build setting for locales
+- [#487](https://github.com/h3poteto/whalebird-desktop/pull/487) spelling typos
+- [#486](https://github.com/h3poteto/whalebird-desktop/pull/486) Fix API response of lists
+- [#475](https://github.com/h3poteto/whalebird-desktop/pull/475) Use vue-shortkey in jump modal because sometimes jump modal is freeze
+- [#474](https://github.com/h3poteto/whalebird-desktop/pull/474) Disable transparent becasue user can not change window size
+
+
+
+## [1.5.6] - 2018-08-07
+### Added
+- [#461](https://github.com/h3poteto/whalebird-desktop/pull/461) Add toot visibility setting and use it in new toot modal
+
+### Changed
+- [#468](https://github.com/h3poteto/whalebird-desktop/pull/468) Close new toot modal immediately after post toot
+
+### Fixed
+- [#470](https://github.com/h3poteto/whalebird-desktop/pull/470)Rescue error in lazy loading in favourite
+- [#467](https://github.com/h3poteto/whalebird-desktop/pull/467) Catch raise when the response does not have link header of favourites
+
+
+
+## [1.5.5] - 208-07-31
+### Fixed
+- [#465](https://github.com/h3poteto/whalebird-desktop/pull/457) Fix account switching in global header menu
+- [#464](https://github.com/h3poteto/whalebird-desktop/pull/457) Fix electron, and electron-json-storage version
+- [#462](https://github.com/h3poteto/whalebird-desktop/pull/457) Fix scroll of splash screen
+
+
+
+## [1.5.4] - 2018-07-29
 ### Added
 - [#457](https://github.com/h3poteto/whalebird-desktop/pull/457) Add splash screen when starting the window
 
