@@ -1,7 +1,7 @@
 # Whalebird
 [![CircleCI](https://img.shields.io/circleci/project/github/h3poteto/whalebird-desktop.svg?style=flat-square)](https://circleci.com/gh/h3poteto/whalebird-desktop)
 [![GitHub release](http://img.shields.io/github/release/h3poteto/whalebird-desktop.svg?style=flat-square)](https://github.com/h3poteto/whalebird-desktop/releases)
-[![iTunes App Store](https://img.shields.io/itunes/v/1378283354.svg?style=flat-square)](https://itunes.apple.com/us/app/whalebird/id1378283354)
+[![App Store](https://img.shields.io/itunes/v/1378283354.svg?style=flat-square)](https://itunes.apple.com/us/app/whalebird/id1378283354)
 
 
 Whalebird is a mastodon client for desktop application.
@@ -32,9 +32,7 @@ Whalebird is a mastodon client for desktop application.
 
 ## Install
 ### Mac
-
-You can install the app from Mac App Store.
-[https://itunes.apple.com/us/app/whalebird/id1378283354]
+[![App Store](app-store.svg)](https://itunes.apple.com/us/app/whalebird/id1378283354)
 
 Or you can download `.dmg` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
