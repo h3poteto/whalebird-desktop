@@ -3,7 +3,7 @@
   <textarea
     v-model="status"
     ref="status"
-    v-shortkey="openSuggest ? {up: ['arrowup'], down: ['arrowdown'], enter: ['enter']} : {linux: ['ctrl', 'enter'], mac: ['meta', 'enter'], left: ['arrowleft'], right: ['arrowright']}"
+    v-shortkey="openSuggest ? {up: ['arrowup'], down: ['arrowdown'], enter: ['enter'], esc: ['esc']} : {linux: ['ctrl', 'enter'], mac: ['meta', 'enter'], left: ['arrowleft'], right: ['arrowright']}"
     @shortkey="handleKey"
     v-on:input="startSuggest"
     :placeholder="$t('modals.new_toot.status')"
@@ -139,6 +139,9 @@ export default {
           break
         case 'enter':
           this.selectCurrentAccount()
+          break
+        case 'esc':
+          this.closeSuggest()
           break
         case 'left':
           event.target.setSelectionRange(current - 1, current - 1)
