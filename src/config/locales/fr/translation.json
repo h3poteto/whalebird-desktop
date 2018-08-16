@@ -122,8 +122,8 @@
       "status": "Qu'avez-vous en tête ?",
       "cancel": "Annuler",
       "toot": "Pouet!",
-      "close_confirm": "Êtes-vous sûr de vouloir fermer?",
-      "close_confirm_ok": "Redémarrer",
+      "close_confirm": "Êtes-vous certain de vouloir fermer ce nouveau pouet ?",
+      "close_confirm_ok": "Oui",
       "close_confirm_cancel": "Annuler"
     },
     "jump": {
