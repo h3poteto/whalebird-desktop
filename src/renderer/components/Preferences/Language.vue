@@ -32,6 +32,7 @@ export default {
   data () {
     return {
       languages: [
+        Language.de,
         Language.en,
         Language.fr,
         Language.ja
