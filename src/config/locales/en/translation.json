@@ -121,7 +121,10 @@
       "cw": "Write your warning here",
       "status": "What is on your mind?",
       "cancel": "Cancel",
-      "toot": "Toot"
+      "toot": "Toot",
+      "close_confirm": "Are you sure to close new toot?",
+      "close_confirm_ok": "OK",
+      "close_confirm_cancel": "Cancel"
     },
     "jump": {
       "jump_to": "Jump to..."

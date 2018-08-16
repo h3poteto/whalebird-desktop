@@ -121,7 +121,10 @@
       "cw": "ここに警告を書いてください",
       "status": "今なにしてる?",
       "cancel": "キャンセル",
-      "toot": "トゥート！"
+      "toot": "トゥート！",
+      "close_confirm": "本当に閉じますか？",
+      "close_confirm_ok": "閉じる",
+      "close_confirm_cancel": "キャンセル"
     },
     "jump": {
       "jump_to": "移動..."
