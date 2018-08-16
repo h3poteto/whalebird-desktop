@@ -63,7 +63,7 @@ You can download `.exe` from [release page](https://github.com/h3poteto/whalebir
 
 ## Development
 
-We'd love you to contribute to Homebrew.
+We'd love you to contribute to Whalebird.
 
 ### Minimum requirements for development
 
