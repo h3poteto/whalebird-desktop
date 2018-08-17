@@ -121,7 +121,10 @@
       "cw": "Schreibe hier deine Warnung",
       "status": "Was geht dir durch den Kopf?",
       "cancel": "Abbrechen",
-      "toot": "Toot"
+      "toot": "Toot",
+      "close_confirm": "Möchtest du wirklich schließen?",
+      "close_confirm_ok": "Schließen",
+      "close_confirm_cancel": "Abbrechen"
     },
     "jump": {
       "jump_to": "Springe zu..."
