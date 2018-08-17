@@ -2,6 +2,7 @@
   <el-dialog
     :title="$t('modals.new_toot.title')"
     :visible.sync="newTootModal"
+    :before-close="closeConfirm"
     width="400px"
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot">
@@ -234,6 +235,22 @@ export default {
     },
     changeSensitive () {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
+    },
+    closeConfirm (done) {
+      if (this.status.length === 0) {
+        done()
+      } else {
+        this.$confirm(
+          this.$t('modals.new_toot.close_confirm'),
+          {
+            confirmButtonText: this.$t('modals.new_toot.close_confirm_ok'),
+            cancelButtonText: this.$t('modals.new_toot.close_confirm_cancel')
+          })
+          .then(_ => {
+            done()
+          })
+          .catch(_ => {})
+      }
     }
   }
 }
