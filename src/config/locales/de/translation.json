@@ -1,0 +1,234 @@
+{
+  "main_menu": {
+    "application": {
+      "name": "Whalebird",
+      "about": "Über Whalebird",
+      "preferences": "Einstellungen...",
+      "services": "Dienste",
+      "hide": "Whalebird verstecken",
+      "hide_others": "Andere verstecken",
+      "show_all": "Alle anzeigen",
+      "quit": "Beenden"
+    },
+    "toot": {
+      "name": "Toot",
+      "new": "Neuer Toot"
+    },
+    "edit": {
+      "name": "Bearbeiten",
+      "undo": "Rückgängig",
+      "redo": "Wiederholen",
+      "cut": "Ausschneiden",
+      "copy": "Kopieren",
+      "paste": "Einfügen",
+      "select_all": "Alle auswählen"
+    },
+    "view": {
+      "name": "Ansicht",
+      "toggle_full_screen": "Vollbild umschalten"
+    },
+    "window": {
+      "name": "Fenster",
+      "close": "Fenster schließen",
+      "minimize": "Minimieren",
+      "jump_to": "Springe zu"
+    }
+  },
+  "side_menu": {
+    "edit_profile": "Profil bearbeiten",
+    "home": "Home",
+    "notification": "Benachrichtigung",
+    "favourite": "Favorit",
+    "local": "Lokale Timeline",
+    "public": "Öffenliche Timeline",
+    "hashtag": "Hashtag",
+    "search": "Suche",
+    "lists": "Listen"
+  },
+  "header_menu": {
+    "home": "Home",
+    "notification": "Benachrichtigung",
+    "favourite": "Favorit",
+    "local": "Lokale Timeline",
+    "public": "Öffenliche Timeline",
+    "hashtag": "Hashtag",
+    "search": "Suche",
+    "lists": "Listen",
+    "members": "Mitglieder",
+    "filter": {
+      "title": "Filter",
+      "placeholder": "Mit regulären Ausdrücken filtern",
+      "apply": "Übernehmen"
+    }
+  },
+  "preferences": {
+    "title": "Einstellungen",
+    "general": {
+      "title": "Allgemein",
+      "appearance": "Anzeige",
+      "theme_color": "Themenfarbe:",
+      "theme": {
+        "light": "Hell",
+        "dark": "Dunkel"
+      },
+      "font_size": "Schriftgröße:",
+      "display_style": {
+        "title": "Anzeigestil:",
+        "display_name_and_username": "Anzeige- und Benutzername",
+        "display_name": "Anzeigename",
+        "username": "Benutzername"
+      },
+      "toot": "Toot",
+      "visibility": {
+        "title": "Standard-Sichtbarkeit:",
+        "public": "Öffenlich",
+        "unlisted": "Nicht gelistet",
+        "private": "Privat",
+        "direct": "Direkt"
+      },
+      "sounds": "Klänge",
+      "fav_rb_sound": "Favorit und Boost:",
+      "toot_sound": "Toot:"
+    },
+    "account": {
+      "title": "Konto",
+      "connected": "Verbundenes Konto",
+      "username": "Benutzername",
+      "domain": "Domain",
+      "association": "Verbindung",
+      "order": "Reihenfolge",
+      "remove_association": "Verbindung trennen",
+      "remove_all_associations": "Alle Verbindungen trennen",
+      "confirm": "Bestätigen",
+      "cancel": "Abbrechen",
+      "confirm_message": "Möchtest du wirklich alle Verbindungen trennen?"
+    },
+    "language": {
+      "title": "Sprache",
+      "display_language": "sprache",
+      "notice": "Erfordert Neustart",
+      "confirm": {
+        "title": "Warnung",
+        "message": "Du musst diese Anwendung neu starten. Fortfahren?",
+        "ok": "Jetzt neu starten",
+        "cancel": "Abbrechen"
+      }
+    }
+  },
+  "modals": {
+    "new_toot": {
+      "title": "Neuer Toot",
+      "cw": "Schreibe hier deine Warnung",
+      "status": "Was geht dir durch den Kopf?",
+      "cancel": "Abbrechen",
+      "toot": "Toot"
+    },
+    "jump": {
+      "jump_to": "Springe zu..."
+    },
+    "add_list_member": {
+      "title": "Mitglied der Liste hinzufügen",
+      "account_name": "Kontoname"
+    },
+    "list_membership": {
+      "title": "Listen-Mitgliedschaften"
+    }
+  },
+  "cards": {
+    "toot": {
+      "show_more": "Mehr anzeigen",
+      "hide": "Verbergen",
+      "sensitive": "Sensible inhalte anzeigen",
+      "view_toot_detail": "Zeige Toot-Details",
+      "open_in_browser": "Im Browser öffnen",
+      "copy_link_to_toot": "Link zum Toot kopieren",
+      "delete": "Löschen",
+      "via": "via {{application}}"
+    }
+  },
+  "side_bar": {
+    "account_profile": {
+      "follows_you": "Folgt dir",
+      "doesnt_follow_you": "Folgt dir nicht",
+      "open_in_browser": "Im Browser öffnen",
+      "manage_list_memberships": "Listen-Mitgliedschaften verwalten",
+      "toots": "Toots",
+      "follows": "Follows",
+      "followers": "Followers"
+    }
+  },
+  "hashtag": {
+    "tag_name": "Tagname"
+  },
+  "search": {
+    "search": "Suche",
+    "account": "Konto",
+    "keyword": "stichwort"
+  },
+  "lists": {
+    "index": {
+      "new_list": "Neue Liste",
+      "edit": "Bearbeiten"
+    }
+  },
+  "login": {
+    "domain_name_label": "Als erstes wollen wir uns bei einer Mastodon-Instanz anmelden. Bitte gib den Domainnamen einer Instanz an.",
+    "search": "Suche",
+    "login": "Anmelden"
+  },
+  "authorize": {
+    "manually_1": "Jetzt wird die Zugriffsseite in deinem Browser geöffnet.",
+    "manually_2": "Falls nicht, öffne bitte die folgende URL von Hand.",
+    "code_label": "Bitte füge den Zugrifsscode aus dem Browser ein:",
+    "submit": "Absenden"
+  },
+  "receive_drop": {
+    "drop_message": "Fallenlassen zum Hochladen auf Mastodon"
+  },
+  "message": {
+    "account_load_error": "Konten konnten nicht geladen werden",
+    "account_remove_error": "Das Konto konnte nicht entfernt werden.",
+    "preferences_load_error": "Einstellungen konnten nicht geladen werden",
+    "timeline_fetch_error": "Timeline konnte nicht abgerufen werden",
+    "notification_fetch_error": "Benachrichtigung konnte nicht abgerufen werden",
+    "favourite_fetch_error": "Favorit konnte nicht abgerufen werden",
+    "start_streaming_error": "Streaming konnte nicht gestartet werden",
+    "attach_error": "Kontte Datei nicht anhängen",
+    "authorize_duplicate_error": "Kann nicht das gleiche Konto der gleichen Domain einloggen",
+    "authorize_error": "Autorisierung fehlgeschlagen",
+    "followers_fetch_error": "Follower konnten nicht abgerufen werden",
+    "follows_fetch_error": "Follows konnten nicht abgerufen werden",
+    "toot_fetch_error": "Die Toot-Details konnten nicht abgerufen werden",
+    "follow_error": "Konnte dem Benutzer nicht folgen",
+    "unfollow_error": "Konnte das Folgen des Benutzer nicht beenden",
+    "lists_fetch_error": "Konte Listen nicht abrufen",
+    "list_create_error": "Konnte keine Liste erstellen",
+    "members_fetch_error": "Konnte Mitglieder nicht abrufen",
+    "remove_user_error": "Entfernen des Benutzers fehlgeschlagen",
+    "find_account_error": "Konto nicht gefunden",
+    "reblog_error": "Reblog fehlgeschlagen",
+    "unreblog_error": "Widerruf des Reblogs fehlgeschlagen",
+    "favourite_error": "Favorisieren fehlgeschlagen",
+    "unfavourite_error": "Widerruf des Favorisierens fehlgeschlagen",
+    "delete_error": "Löschen des Toots fehlgeschlagen",
+    "search_error": "Suche fehlgeschlagen",
+    "toot_error": "Toot fehlgeschlagen",
+    "update_list_memberships_error": "Konnte Listen-Mitgliedschaften nicht aktualisieren",
+    "add_user_error": "Hinzufügen des Benutzers fehlgeschlagen",
+    "authorize_url_error": "Konnte Zugrifss-URL nicht laden",
+    "domain_confirmed": "{{domain}} ist bestätigt, bitte einloggen",
+    "domain_doesnt_exist": "{{domain}} existiert nicht",
+    "loading": "Laden..."
+  },
+  "validation": {
+    "login": {
+      "require_domain_name": "Domainname wird benötigt",
+      "domain_format": "Bitte gib nur den Domainnamen an"
+    },
+    "new_toot": {
+      "toot_length": "Länge des Toots sollte zwischen {{min}} und {{max}} sein",
+      "attach_length": "Du kannst maximal {{max}} Bilder anhängen",
+      "attach_image": "Du kannst nur Bilder oder Videos anhängen"
+    }
+  }
+}
