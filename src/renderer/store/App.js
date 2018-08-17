@@ -32,6 +32,9 @@ const App = {
     },
     updateDisplayNameStyle (state, value) {
       state.displayNameStyle = value
+    },
+    updateTootVisibility (state, value) {
+      state.tootVisibility = value
     }
   },
   actions: {
@@ -55,6 +58,7 @@ const App = {
           commit('updateTheme', conf.general.theme)
           commit('updateDisplayNameStyle', conf.general.displayNameStyle)
           commit('updateFontSize', conf.general.fontSize)
+          commit('updateTootVisibility', conf.general.tootVisibility)
           resolve(conf)
         })
       })
