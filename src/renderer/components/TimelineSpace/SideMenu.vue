@@ -11,6 +11,7 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="show">{{ $t("side_menu.show_profile") }}</el-dropdown-item>
               <el-dropdown-item command="edit">{{ $t("side_menu.edit_profile") }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -115,6 +116,16 @@ export default {
     },
     handleProfile (command) {
       switch (command) {
+        case 'show':
+          const accountURL = `${this.account.baseURL}/@${this.account.username}`
+          this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', accountURL)
+            .then((account) => {
+              this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+              this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+            })
+
+          this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+          break
         case 'edit':
           shell.openExternal(this.account.baseURL + '/settings/profile')
           break

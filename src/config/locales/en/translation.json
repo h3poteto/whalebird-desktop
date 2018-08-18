@@ -35,6 +35,7 @@
     }
   },
   "side_menu": {
+    "show_profile": "Show profile",
     "edit_profile": "Edit profile",
     "home": "Home",
     "notification": "Notification",
