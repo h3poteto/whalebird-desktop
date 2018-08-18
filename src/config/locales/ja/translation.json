@@ -35,7 +35,8 @@
     }
   },
   "side_menu": {
-    "edit_profile": "編集",
+    "show_profile": "プロフィール確認",
+    "edit_profile": "プロフィール編集",
     "home": "ホーム",
     "notification": "通知",
     "favourite": "お気に入り",
