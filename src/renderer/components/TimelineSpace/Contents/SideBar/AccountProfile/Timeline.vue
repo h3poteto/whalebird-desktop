@@ -43,7 +43,7 @@ export default {
     load () {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/fetchTimeline', this.account)
         .catch(() => {
-          this.message({
+          this.$message({
             message: this.$t('message.timeline_fetch_error'),
             type: 'error'
           })
