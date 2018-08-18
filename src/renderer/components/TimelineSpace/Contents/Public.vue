@@ -4,7 +4,7 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="public-timeline" v-for="message in timeline" v-bind:key="message.id">
+    <div class="public-timeline" v-for="message in timeline" :key="message.id">
       <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
     </div>
   </transition-group>
