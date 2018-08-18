@@ -20,7 +20,7 @@
       </div>
       <div class="content-wrapper">
         <div class="spoiler" v-show="spoilered(message)">
-          {{ originalMessage(message).spoiler_text }}
+          <span v-html="spoilerText(message)"></span>
           <el-button v-show="!isShowContent(message)" type="text" @click="showContent = true">
             {{ $t('cards.toot.show_more') }}
           </el-button>
@@ -344,6 +344,10 @@ export default {
     status (message) {
       const original = this.originalMessage(message)
       return emojify(original.content, original.emojis)
+    },
+    spoilerText (message) {
+      const original = this.originalMessage(message)
+      return emojify(original.spoiler_text, original.emojis)
     }
   }
 }
@@ -400,18 +404,18 @@ export default {
       }
     }
 
-    .content-wrapper {
+    .content-wrapper /deep/ {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
-      .content /deep/ {
+      .content {
         margin: 4px 0 8px;
         word-wrap: break-word;
+      }
 
-        .emojione {
-          width: 20px;
-          height: 20px;
-        }
+      .emojione {
+        width: 20px;
+        height: 20px;
       }
     }
 
