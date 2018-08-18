@@ -1,4 +1,8 @@
 export default {
+  de: {
+    name: 'Deutsch',
+    key: 'de'
+  },
   en: {
     name: 'English',
     key: 'en'

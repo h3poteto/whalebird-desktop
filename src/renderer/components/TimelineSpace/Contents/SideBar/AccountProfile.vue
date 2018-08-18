@@ -1,29 +1,19 @@
 <template>
 <div id="account_profile"
      v-loading="loading"
-     element-loading-text="Loading..."
+     :element-loading-text="$t('message.loading')"
      element-loading-spinner="el-icon-loading"
      element-loading-background="rgba(0, 0, 0, 0.8)">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
-      <div class="follow-follower" v-if="relationship !== null && relationship !== ''">
+      <div class="follow-follower" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
         <div class="follower-status">
           <span class="status" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</span>
           <span class="status" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</span>
         </div>
-        <div class="follow-status">
-          <div v-if="relationship.following" class="unfollow" @click="unfollow(account)">
-            <icon name="user-times" scale="1.5"></icon>
-          </div>
-          <div v-else-if="relationship.requested">
-            <icon name="hourglass" scale="1.5"></icon>
-          </div>
-          <div v-else class="follow" @click="follow(account)">
-            <icon name="user-plus" scale="1.5"></icon>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="more">
+      </div>
+      <div class="user-info">
+        <div class="more" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
           <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
             <div class="popper">
               <ul class="menu-list">
@@ -37,13 +27,24 @@
             </div>
 
             <el-button slot="reference" type="text">
-              <icon name="ellipsis-h"></icon>
+              <icon name="cog" scale="1.4"></icon>
             </el-button>
           </popper>
         </div>
-      </div>
-      <div class="icon">
-        <img :src="account.avatar" />
+        <div class="icon">
+          <img :src="account.avatar" />
+        </div>
+        <div class="follow-status" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
+          <div v-if="relationship.following" class="unfollow" @click="unfollow(account)">
+            <icon name="user-times" scale="1.5"></icon>
+          </div>
+          <div v-else-if="relationship.requested">
+            <icon name="hourglass" scale="1.5"></icon>
+          </div>
+          <div v-else class="follow" @click="follow(account)">
+            <icon name="user-plus" scale="1.5"></icon>
+          </div>
+        </div>
       </div>
       <div class="username">
         {{ username(account) }}
@@ -104,6 +105,7 @@ export default {
   computed: {
     ...mapState({
       account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
+      user: state => state.TimelineSpace.account,
       relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship,
       loading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.loading,
       theme: (state) => {
@@ -200,18 +202,23 @@ function findLink (target) {
     font-size: var(--base-font-size);
 
     .follow-follower {
-      .follower-status {
-        float: left;
+      text-align: left;
 
+      .follower-status {
         .status {
           border-radius: 4px;
           background-color: rgba(0, 0, 0, 0.3);
           padding: 4px 8px;
         }
       }
-      .follow-status {
-        float: right;
+    }
 
+    .user-info {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .follow-status {
         .follow {
           cursor: pointer;
         }
@@ -223,8 +230,6 @@ function findLink (target) {
       }
 
       .more {
-        float: right;
-
         .menu-list {
           padding: 0;
           font-size: calc(var(--base-font-size) * 0.8);
@@ -245,14 +250,14 @@ function findLink (target) {
           }
         }
       }
-    }
 
-    .icon {
-      padding: 12px;
+      .icon {
+        padding: 12px;
 
-      img {
-        width: 72px;
-        border-radius: 8px;
+        img {
+          width: 72px;
+          border-radius: 8px;
+        }
       }
     }
 

@@ -35,7 +35,8 @@
     }
   },
   "side_menu": {
-    "edit_profile": "編集",
+    "show_profile": "プロフィール確認",
+    "edit_profile": "プロフィール編集",
     "home": "ホーム",
     "notification": "通知",
     "favourite": "お気に入り",
@@ -121,7 +122,10 @@
       "cw": "ここに警告を書いてください",
       "status": "今なにしてる?",
       "cancel": "キャンセル",
-      "toot": "トゥート！"
+      "toot": "トゥート！",
+      "close_confirm": "本当に閉じますか？",
+      "close_confirm_ok": "閉じる",
+      "close_confirm_cancel": "キャンセル"
     },
     "jump": {
       "jump_to": "移動..."
@@ -217,15 +221,12 @@
     "add_user_error": "メンバー追加に失敗しました",
     "authorize_url_error": "認証用URLの取得に失敗しました",
     "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
-    "domain_doesnt_exist": "{{domain}} は存在しません"
-  },
-  "timeline": {
+    "domain_doesnt_exist": "{{domain}} は存在しません",
     "loading": "読み込み中..."
   },
   "validation": {
     "login": {
-      "loading": "読み込み中...",
-      "rquire_domain_name": "ドメイン名は必須です",
+      "require_domain_name": "ドメイン名は必須です",
       "domain_format": "ドメイン名のみを入力してください"
     },
     "new_toot": {

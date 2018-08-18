@@ -35,6 +35,7 @@
     }
   },
   "side_menu": {
+    "show_profile": "Show profile",
     "edit_profile": "Edit profile",
     "home": "Home",
     "notification": "Notification",
@@ -121,7 +122,10 @@
       "cw": "Write your warning here",
       "status": "What is on your mind?",
       "cancel": "Cancel",
-      "toot": "Toot"
+      "toot": "Toot",
+      "close_confirm": "Are you sure to close new toot?",
+      "close_confirm_ok": "OK",
+      "close_confirm_cancel": "Cancel"
     },
     "jump": {
       "jump_to": "Jump to..."
@@ -217,15 +221,12 @@
     "add_user_error": "Failed to add user",
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
-    "domain_doesnt_exist": "{{domain}} does not exist"
-  },
-  "timeline": {
+    "domain_doesnt_exist": "{{domain}} does not exist",
     "loading": "Loading..."
   },
   "validation": {
     "login": {
-      "loading": "Loading...",
-      "rquire_domain_name": "Domain name is required",
+      "require_domain_name": "Domain name is required",
       "domain_format": "Please write only domain name"
     },
     "new_toot": {

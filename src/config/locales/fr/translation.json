@@ -35,6 +35,7 @@
     }
   },
   "side_menu": {
+    "show_profile": "Voir le profil",
     "edit_profile": "Éditer mon profil",
     "home": "Accueil",
     "notification": "Notifications",
@@ -121,7 +122,10 @@
       "cw": "Écrivez votre avertissement ici",
       "status": "Qu'avez-vous en tête ?",
       "cancel": "Annuler",
-      "toot": "Pouet!"
+      "toot": "Pouet!",
+      "close_confirm": "Êtes-vous certain de vouloir fermer ce nouveau pouet ?",
+      "close_confirm_ok": "Oui",
+      "close_confirm_cancel": "Annuler"
     },
     "jump": {
       "jump_to": "Aller à..."
@@ -217,15 +221,12 @@
     "add_user_error": "Erreur lors de l'ajout d'un utilisateur⋅trice",
     "authorize_url_error": "Erreur à la récupération de l'URL d'autorisation",
     "domain_confirmed": "{{domain}} est confirmé, veuillez à présent vous connecter",
-    "domain_doesnt_exist": "{{domain}} n'existe pas"
-  },
-  "timeline": {
+    "domain_doesnt_exist": "{{domain}} n'existe pas",
     "loading": "Chargement..."
   },
   "validation": {
     "login": {
-      "loading": "Chargement...",
-      "rquire_domain_name": "Un nom de domaine est requis",
+      "require_domain_name": "Un nom de domaine est requis",
       "domain_format": "Veuillez uniquement indiquer le nom de domaine"
     },
     "new_toot": {
