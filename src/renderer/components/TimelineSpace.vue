@@ -120,6 +120,7 @@ export default {
           })
         })
       this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+      this.$store.dispatch('TimelineSpace/fetchEmojis', account)
     },
     handleDrop (e) {
       e.preventDefault()
