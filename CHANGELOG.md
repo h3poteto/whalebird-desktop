@@ -1,6 +1,32 @@
 # Change Log
 
-## [2.0.0] -2018-08-15
+## [Unreleased]
+### Added
+- [#519](https://github.com/h3poteto/whalebird-desktop/pull/519) Suggest custom emojis in new toot
+- [#516](https://github.com/h3poteto/whalebird-desktop/pull/516) Parse emoji and show emoji in toot
+- [#514](https://github.com/h3poteto/whalebird-desktop/pull/514) Add description how to add language in README
+- [#513](https://github.com/h3poteto/whalebird-desktop/pull/513) Add show profile menu
+
+
+## [2.0.1] - 2018-08-18
+### Added
+- [#503](https://github.com/h3poteto/whalebird-desktop/pull/503) Add confirm modal when close new toot
+- [#502](https://github.com/h3poteto/whalebird-desktop/pull/502) Added German translation
+- [#500](https://github.com/h3poteto/whalebird-desktop/pull/500) Show account name when hovering on global header
+
+### Changed
+- [#510](https://github.com/h3poteto/whalebird-desktop/pull/510) Change location of follow/unfollow and more info button in account profile
+- [#498](https://github.com/h3poteto/whalebird-desktop/pull/498) Add minimum requirements for contribution in README
+- [#496](https://github.com/h3poteto/whalebird-desktop/pull/496) Update README
+
+### Fixed
+- [#511](https://github.com/h3poteto/whalebird-desktop/pull/511) Fix Deutsch for close confirm modal
+- [#509](https://github.com/h3poteto/whalebird-desktop/pull/509) Update default toot visibility of new toot
+- [#499](https://github.com/h3poteto/whalebird-desktop/pull/499) Hide follower menue for own user account
+- [#497](https://github.com/h3poteto/whalebird-desktop/pull/497) Translate loading message for each languages
+
+
+## [2.0.0] - 2018-08-15
 ### Added
 - [#492](https://github.com/h3poteto/whalebird-desktop/pull/492) i18n + English spelling typos + French l10n
 - [#488](https://github.com/h3poteto/whalebird-desktop/pull/488) Switch language in preferences
