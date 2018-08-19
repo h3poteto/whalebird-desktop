@@ -28,6 +28,7 @@
           <div class="timestamp">
             {{ parseDatetime(message.status.created_at) }}
           </div>
+          <div class="clearfix"></div>
         </div>
         <div class="content-wrapper">
           <div class="spoiler" v-show="spoilered(message.status)">
@@ -218,6 +219,8 @@ export default {
       color: #909399;
 
       .toot-header {
+        height: 24px;
+
         .user {
           float: left;
           font-size: var(--base-font-size);
@@ -232,10 +235,10 @@ export default {
 
       .content-wrapper /deep/ {
         font-size: var(--base-font-size);
+        margin: 0;
 
         .content {
           font-size: var(--base-font-size);
-          margin: 4px 0 8px;
           word-wrap: break-word;
         }
 
