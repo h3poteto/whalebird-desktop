@@ -29,7 +29,18 @@
             {{ parseDatetime(message.status.created_at) }}
           </div>
         </div>
-        <div class="content" v-html="message.status.content" @click.capture.prevent="tootClick"></div>
+        <div class="content-wrapper">
+          <div class="spoiler" v-show="spoilered(message.status)">
+            <span v-html="spoilerText(message.status)"></span>
+            <el-button v-show="!isShowContent(message.status)" type="text" @click="showContent = true">
+              {{ $t('cards.toot.show_more') }}
+            </el-button>
+            <el-button v-show="isShowContent(message.status)" type="text" @click="showContent = false">
+              {{ $t('cards.toot.hide')}}
+            </el-button>
+          </div>
+          <div class="content" v-show="isShowContent(message.status)" v-html="status(message.status)" @click.capture.prevent="tootClick"></div>
+        </div>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -42,6 +53,7 @@
 import moment from 'moment'
 import { shell } from 'electron'
 import { findAccount, findLink, isTag } from '../../../../utils/link'
+import emojify from '~/src/renderer/utils/emojify'
 
 export default {
   name: 'reblog',
@@ -53,6 +65,11 @@ export default {
     filter: {
       type: String,
       default: ''
+    }
+  },
+  data () {
+    return {
+      showContent: false
     }
   },
   methods: {
@@ -101,6 +118,18 @@ export default {
     },
     filtered (message) {
       return this.filter.length > 0 && message.status.content.search(this.filter) >= 0
+    },
+    spoilered (message) {
+      return message.spoiler_text.length > 0
+    },
+    isShowContent (message) {
+      return !this.spoilered(message) || this.showContent
+    },
+    status (message) {
+      return emojify(message.content, message.emojis)
+    },
+    spoilerText (message) {
+      return emojify(message.spoiler_text, message.emojis)
     }
   }
 }
@@ -177,9 +206,19 @@ export default {
         }
       }
 
-      .content {
+      .content-wrapper /deep/ {
         font-size: var(--base-font-size);
-        margin: 4px 0 8px;
+
+        .content {
+          font-size: var(--base-font-size);
+          margin: 4px 0 8px;
+          word-wrap: break-word;
+        }
+
+        .emojione {
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
