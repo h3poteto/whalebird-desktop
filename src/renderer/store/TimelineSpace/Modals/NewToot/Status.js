@@ -7,7 +7,12 @@ const Status = {
   },
   mutations: {
     updateFilteredAccounts (state, accounts) {
-      state.filteredAccounts = accounts.map(a => a.acct)
+      state.filteredAccounts = accounts.map((a) => {
+        return {
+          name: `@${a.acct}`,
+          image: null
+        }
+      })
     },
     clearFilteredAccounts (state) {
       state.filteredAccounts = []
