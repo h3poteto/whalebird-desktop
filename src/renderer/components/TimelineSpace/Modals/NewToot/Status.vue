@@ -22,7 +22,7 @@
         @shortkey="insertItem(item)"
         @mouseover="highlightedIndex = index"
         :class="{'highlighted': highlightedIndex === index}">
-        {{ item }}
+        {{ item.name }}
       </li>
     </ul>
   </el-popover>
@@ -50,17 +50,13 @@ export default {
       highlightedIndex: 0,
       startIndex: null,
       matchWord: null,
-      filteredSuggestion: [],
-      emojis: [
-        ':python:',
-        ':slack:',
-        ':nodejs'
-      ]
+      filteredSuggestion: []
     }
   },
   computed: {
     ...mapState({
-      filteredAccounts: state => state.TimelineSpace.Modals.NewToot.Status.filteredAccounts
+      filteredAccounts: state => state.TimelineSpace.Modals.NewToot.Status.filteredAccounts,
+      emojis: state => state.TimelineSpace.emojis
     }),
     status: {
       get: function () {
@@ -126,7 +122,7 @@ export default {
         this.closeSuggest()
         return false
       }
-      const filtered = this.emojis.filter(emoji => emoji.includes(word))
+      const filtered = this.emojis.filter(emoji => emoji.name.includes(word))
       if (filtered.length > 0) {
         this.openSuggest = true
         this.startIndex = start
@@ -155,7 +151,7 @@ export default {
       }
     },
     insertItem (item) {
-      const str = `${this.status.slice(0, this.startIndex)}${item} ${this.status.slice(this.startIndex + this.matchWord.length)}`
+      const str = `${this.status.slice(0, this.startIndex - 1)}${item.name} ${this.status.slice(this.startIndex + this.matchWord.length)}`
       this.status = str
       this.closeSuggest()
     },
