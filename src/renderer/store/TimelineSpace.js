@@ -1,4 +1,5 @@
 import { ipcRenderer } from 'electron'
+import Mastodon from 'megalodon'
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Modals from './TimelineSpace/Modals'
@@ -19,7 +20,8 @@ const TimelineSpace = {
       _id: '',
       username: ''
     },
-    loading: false
+    loading: false,
+    emojis: []
   },
   mutations: {
     updateAccount (state, account) {
@@ -27,6 +29,14 @@ const TimelineSpace = {
     },
     changeLoading (state, value) {
       state.loading = value
+    },
+    updateEmojis (state, emojis) {
+      state.emojis = emojis.map((e) => {
+        return {
+          name: `:${e.shortcode}:`,
+          image: e.url
+        }
+      })
     }
   },
   actions: {
@@ -151,6 +161,11 @@ const TimelineSpace = {
     },
     async clearUnread ({ dispatch }) {
       dispatch('TimelineSpace/SideMenu/clearUnread', {}, { root: true })
+    },
+    async fetchEmojis ({ commit }, account) {
+      const data = await Mastodon.get('/custom_emojis', {}, account.baseURL + '/api/v1')
+      commit('updateEmojis', data)
+      return data
     }
   }
 }
