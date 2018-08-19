@@ -29,7 +29,32 @@
             {{ parseDatetime(message.status.created_at) }}
           </div>
         </div>
-        <div class="content" v-html="message.status.content" @click.capture.prevent="tootClick"></div>
+        <div class="content-wrapper">
+          <div class="spoiler" v-show="spoilered(message.status)">
+            <span v-html="spoilerText(message.status)"></span>
+            <el-button v-show="!isShowContent(message.status)" type="text" @click="showContent = true">
+              {{ $t('cards.toot.show_more') }}
+            </el-button>
+            <el-button v-show="isShowContent(message.status)" type="text" @click="showContent = false">
+              {{ $t('cards.toot.hide')}}
+            </el-button>
+          </div>
+          <div class="content" v-show="isShowContent(message.status)" v-html="status(message.status)" @click.capture.prevent="tootClick"></div>
+        </div>
+        <div class="attachments">
+          <el-button v-show="sensitive(message.status) && !isShowAttachments(message.status)" class="show-sensitive" type="info" @click="showAttachments = true">
+            {{ $t('cards.toot.sensitive') }}
+          </el-button>
+          <div v-show="isShowAttachments(message.status)">
+            <el-button v-show="sensitive(message.status) && isShowAttachments(message.status)" class="hide-sensitive" type="text" @click="showAttachments = false">
+              <icon name="eye" class="hide"></icon>
+            </el-button>
+            <div class="media" v-for="media in mediaAttachments(message.status)">
+              <img :src="media.preview_url" />
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -42,6 +67,7 @@
 import moment from 'moment'
 import { shell } from 'electron'
 import { findAccount, findLink, isTag } from '../../../../utils/link'
+import emojify from '~/src/renderer/utils/emojify'
 
 export default {
   name: 'reblog',
@@ -53,6 +79,12 @@ export default {
     filter: {
       type: String,
       default: ''
+    }
+  },
+  data () {
+    return {
+      showContent: false,
+      showAttachments: false
     }
   },
   methods: {
@@ -99,8 +131,29 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
+    mediaAttachments (message) {
+      return message.media_attachments
+    },
     filtered (message) {
       return this.filter.length > 0 && message.status.content.search(this.filter) >= 0
+    },
+    spoilered (message) {
+      return message.spoiler_text.length > 0
+    },
+    isShowContent (message) {
+      return !this.spoilered(message) || this.showContent
+    },
+    sensitive (message) {
+      return message.sensitive && this.mediaAttachments(message).length > 0
+    },
+    isShowAttachments (message) {
+      return !this.sensitive(message) || this.showAttachments
+    },
+    status (message) {
+      return emojify(message.content, message.emojis)
+    },
+    spoilerText (message) {
+      return emojify(message.spoiler_text, message.emojis)
     }
   }
 }
@@ -177,9 +230,51 @@ export default {
         }
       }
 
-      .content {
+      .content-wrapper /deep/ {
         font-size: var(--base-font-size);
-        margin: 4px 0 8px;
+
+        .content {
+          font-size: var(--base-font-size);
+          margin: 4px 0 8px;
+          word-wrap: break-word;
+        }
+
+        .emojione {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .attachments {
+        position: relative;
+
+        .show-sensitive {
+          padding: 20px 32px;
+          margin-bottom: 4px;
+        }
+
+        .hide-sensitive {
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 4px;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+          }
+        }
+
+        .media {
+          float: left;
+          margin-right: 8px;
+
+          img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+          }
+        }
       }
     }
   }
