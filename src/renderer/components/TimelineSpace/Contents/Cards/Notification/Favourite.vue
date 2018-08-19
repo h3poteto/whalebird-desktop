@@ -41,6 +41,20 @@
           </div>
           <div class="content" v-show="isShowContent(message.status)" v-html="status(message.status)" @click.capture.prevent="tootClick"></div>
         </div>
+        <div class="attachments">
+          <el-button v-show="sensitive(message.status) && !isShowAttachments(message.status)" class="show-sensitive" type="info" @click="showAttachments = true">
+            {{ $t('cards.toot.sensitive') }}
+          </el-button>
+          <div v-show="isShowAttachments(message.status)">
+            <el-button v-show="sensitive(message.status) && isShowAttachments(message.status)" class="hide-sensitive" type="text" @click="showAttachments = false">
+              <icon name="eye" class="hide"></icon>
+            </el-button>
+            <div class="media" v-for="media in mediaAttachments(message.status)">
+              <img :src="media.preview_url" />
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -69,7 +83,8 @@ export default {
   },
   data () {
     return {
-      showContent: false
+      showContent: false,
+      showAttachments: false
     }
   },
   methods: {
@@ -116,6 +131,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
+    mediaAttachments (message) {
+      return message.media_attachments
+    },
     filtered (message) {
       return this.filter.length > 0 && message.status.content.search(this.filter) >= 0
     },
@@ -124,6 +142,12 @@ export default {
     },
     isShowContent (message) {
       return !this.spoilered(message) || this.showContent
+    },
+    sensitive (message) {
+      return message.sensitive && this.mediaAttachments(message).length > 0
+    },
+    isShowAttachments (message) {
+      return !this.sensitive(message) || this.showAttachments
     },
     status (message) {
       return emojify(message.content, message.emojis)
@@ -219,6 +243,38 @@ export default {
         .emojione {
           width: 20px;
           height: 20px;
+        }
+      }
+
+      .attachments {
+        position: relative;
+
+        .show-sensitive {
+          padding: 20px 32px;
+          margin-bottom: 4px;
+        }
+
+        .hide-sensitive {
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 4px;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+          }
+        }
+
+        .media {
+          float: left;
+          margin-right: 8px;
+
+          img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+          }
         }
       }
     }
