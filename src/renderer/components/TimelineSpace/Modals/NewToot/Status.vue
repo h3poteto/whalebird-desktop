@@ -22,6 +22,9 @@
         @shortkey="insertItem(item)"
         @mouseover="highlightedIndex = index"
         :class="{'highlighted': highlightedIndex === index}">
+        <span v-if="item.image">
+          <img :src="item.image" class="icon" />
+        </span>
         {{ item.name }}
       </li>
     </ul>
@@ -236,6 +239,13 @@ export default {
       line-height: 34px;
       box-sizing: border-box;
       cursor: pointer;
+
+      .icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+      }
     }
 
     .highlighted {
