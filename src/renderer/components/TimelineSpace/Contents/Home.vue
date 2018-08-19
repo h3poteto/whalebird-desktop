@@ -4,8 +4,8 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="home-timeline" v-for="(message, index) in timeline" v-bind:key="index">
-      <toot :message="message" :filter="filter" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+    <div class="home-timeline" v-for="message in timeline" :key="message.id">
+      <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
     </div>
   </transition-group>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">

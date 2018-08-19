@@ -20,7 +20,7 @@
       </div>
       <div class="content-wrapper">
         <div class="spoiler" v-show="spoilered(message)">
-          {{ originalMessage(message).spoiler_text }}
+          <span v-html="spoilerText(message)"></span>
           <el-button v-show="!isShowContent(message)" type="text" @click="showContent = true">
             {{ $t('cards.toot.show_more') }}
           </el-button>
@@ -28,7 +28,7 @@
             {{ $t('cards.toot.hide')}}
           </el-button>
         </div>
-        <div class="content" v-show="isShowContent(message)" v-html="originalMessage(message).content" @click.capture.prevent="tootClick"></div>
+        <div class="content" v-show="isShowContent(message)" v-html="status(message)" @click.capture.prevent="tootClick"></div>
       </div>
       <div class="attachments">
         <el-button v-show="sensitive(message) && !isShowAttachments(message)" class="show-sensitive" type="info" @click="showAttachments = true">
@@ -110,6 +110,7 @@ import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
 import { findAccount, findLink, isTag } from '../../../utils/link'
 import DisplayStyle from '~/src/constants/displayStyle'
+import emojify from '~/src/renderer/utils/emojify'
 
 export default {
   name: 'toot',
@@ -339,6 +340,14 @@ export default {
     },
     locked (message) {
       return message.visibility === 'private' || message.visibility === 'direct'
+    },
+    status (message) {
+      const original = this.originalMessage(message)
+      return emojify(original.content, original.emojis)
+    },
+    spoilerText (message) {
+      const original = this.originalMessage(message)
+      return emojify(original.spoiler_text, original.emojis)
     }
   }
 }
@@ -395,13 +404,18 @@ export default {
       }
     }
 
-    .content-wrapper {
+    .content-wrapper /deep/ {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
       .content {
         margin: 4px 0 8px;
         word-wrap: break-word;
+      }
+
+      .emojione {
+        width: 20px;
+        height: 20px;
       }
     }
 
