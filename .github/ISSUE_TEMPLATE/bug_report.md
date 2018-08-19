@@ -5,7 +5,7 @@ about: Create a report to help us improve
 ---
 
 ## Description
-A clear and concise description of what the bug is.
+<!-- A clear and concise description of what the bug is. -->
 
 ## How To Reproduce
 1.

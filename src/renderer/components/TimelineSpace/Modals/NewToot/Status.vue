@@ -16,13 +16,16 @@
     v-model="openSuggest">
     <ul class="suggest-list">
       <li
-        v-for="(item, index) in filteredAccounts"
+        v-for="(item, index) in filteredSuggestion"
         :key="index"
-        @click="insertAccount(item)"
-        @shortkey="insertAccount(item)"
+        @click="insertItem(item)"
+        @shortkey="insertItem(item)"
         @mouseover="highlightedIndex = index"
         :class="{'highlighted': highlightedIndex === index}">
-        {{ item }}
+        <span v-if="item.image">
+          <img :src="item.image" class="icon" />
+        </span>
+        {{ item.name }}
       </li>
     </ul>
   </el-popover>
@@ -49,12 +52,14 @@ export default {
       openSuggest: false,
       highlightedIndex: 0,
       startIndex: null,
-      matchWord: null
+      matchWord: null,
+      filteredSuggestion: []
     }
   },
   computed: {
     ...mapState({
-      filteredAccounts: state => state.TimelineSpace.Modals.NewToot.Status.filteredAccounts
+      filteredAccounts: state => state.TimelineSpace.Modals.NewToot.Status.filteredAccounts,
+      emojis: state => state.TimelineSpace.emojis
     }),
     status: {
       get: function () {
@@ -82,9 +87,15 @@ export default {
       // Start suggest after user stop writing
       setTimeout(() => {
         if (currentValue === this.status) {
-          this.suggestAccount(e)
+          this.suggest(e)
         }
       }, 500)
+    },
+    async suggest (e) {
+      const ac = await this.suggestAccount(e)
+      if (!ac) {
+        this.suggestEmoji(e)
+      }
     },
     async suggestAccount (e) {
       // e.target.sectionStart: Cursor position
@@ -99,34 +110,57 @@ export default {
         this.openSuggest = true
         this.startIndex = start
         this.matchWord = word
+        this.filteredSuggestion = this.filteredAccounts
+        return true
       } catch (err) {
         console.log(err)
+        return false
       }
+    },
+    suggestEmoji (e) {
+      // e.target.sectionStart: Cursor position
+      // e.target.value: current value of the textarea
+      const [start, word] = suggestText(e.target.value, e.target.selectionStart, ':')
+      if (!start || !word) {
+        this.closeSuggest()
+        return false
+      }
+      const filtered = this.emojis.filter(emoji => emoji.name.includes(word))
+      if (filtered.length > 0) {
+        this.openSuggest = true
+        this.startIndex = start
+        this.matchWord = word
+        this.filteredSuggestion = filtered
+      } else {
+        this.openSuggest = false
+      }
+      return true
     },
     closeSuggest () {
       this.openSuggest = false
       this.startIndex = null
       this.matchWord = null
       this.highlightedIndex = 0
+      this.filteredSuggestion = []
       this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredAccounts')
     },
     suggestHighlight (index) {
       if (index < 0) {
         this.highlightedIndex = 0
-      } else if (index >= this.filteredAccounts.length) {
-        this.highlightedIndex = this.filteredAccounts.length - 1
+      } else if (index >= this.filteredSuggestion.length) {
+        this.highlightedIndex = this.filteredSuggestion.length - 1
       } else {
         this.highlightedIndex = index
       }
     },
-    insertAccount (account) {
-      const str = `${this.status.slice(0, this.startIndex)}${account} ${this.status.slice(this.startIndex + this.matchWord.length)}`
+    insertItem (item) {
+      const str = `${this.status.slice(0, this.startIndex - 1)}${item.name} ${this.status.slice(this.startIndex + this.matchWord.length)}`
       this.status = str
       this.closeSuggest()
     },
-    selectCurrentAccount () {
-      const account = this.filteredAccounts[this.highlightedIndex]
-      this.insertAccount(account)
+    selectCurrentItem () {
+      const item = this.filteredSuggestion[this.highlightedIndex]
+      this.insertItem(item)
     },
     handleKey (event) {
       const current = event.target.selectionStart
@@ -138,7 +172,7 @@ export default {
           this.suggestHighlight(this.highlightedIndex + 1)
           break
         case 'enter':
-          this.selectCurrentAccount()
+          this.selectCurrentItem()
           break
         case 'esc':
           this.closeSuggest()
@@ -205,6 +239,13 @@ export default {
       line-height: 34px;
       box-sizing: border-box;
       cursor: pointer;
+
+      .icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+      }
     }
 
     .highlighted {
