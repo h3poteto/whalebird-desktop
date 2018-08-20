@@ -148,7 +148,11 @@
       "open_in_browser": "Otwórz w przeglądarce",
       "copy_link_to_toot": "Skopiuj odnośnik do wpisu",
       "delete": "Usuń",
-      "via": "przez {{application}}"
+      "via": "przez {{application}}",
+      "reply": "Odpowiadać",
+      "reblog": "Podbić wpisu",
+      "fav": "Ulubiony",
+      "detail": "Szczegół"
     }
   },
   "side_bar": {

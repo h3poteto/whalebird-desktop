@@ -149,7 +149,11 @@
       "open_in_browser": "Ouvrir dans un navigateur",
       "copy_link_to_toot": "Copier le lien du pouet",
       "delete": "Effacer",
-      "via": "par {{application}}"
+      "via": "par {{application}}",
+      "reply": "Répondre",
+      "reblog": "Du partage du pouet",
+      "fav": "Préféré",
+      "detail": "Détails"
     }
   },
   "side_bar": {

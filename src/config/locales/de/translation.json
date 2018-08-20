@@ -149,7 +149,11 @@
       "open_in_browser": "Im Browser öffnen",
       "copy_link_to_toot": "Link zum Toot kopieren",
       "delete": "Löschen",
-      "via": "via {{application}}"
+      "via": "via {{application}}",
+      "reply": "Antworten",
+      "reblog": "Reblog",
+      "fav": "Favorit",
+      "detail": "Toot details"
     }
   },
   "side_bar": {

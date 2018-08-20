@@ -149,7 +149,11 @@
       "open_in_browser": "ブラウザで開く",
       "copy_link_to_toot": "コピー",
       "delete": "削除する",
-      "via": "{{application}} より"
+      "via": "{{application}} より",
+      "reply": "返信",
+      "reblog": "ブースト",
+      "fav": "お気に入り",
+      "detail": "詳細"
     }
   },
   "side_bar": {
