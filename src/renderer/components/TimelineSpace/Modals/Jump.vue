@@ -100,8 +100,9 @@ export default {
       this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', channel)
     },
     jumpCurrentSelected () {
-      console.log('catch')
-      this.$store.dispatch('TimelineSpace/Modals/Jump/jumpCurrentSelected')
+      if (this.jumpModal) {
+        this.$store.dispatch('TimelineSpace/Modals/Jump/jumpCurrentSelected')
+      }
     },
     jump (channel) {
       this.$store.dispatch('TimelineSpace/Modals/Jump/jump', channel)
