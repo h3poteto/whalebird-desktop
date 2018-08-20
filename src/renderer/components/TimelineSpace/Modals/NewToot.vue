@@ -12,6 +12,7 @@
       <Status
         v-model="status"
         :opened="newTootModal"
+        @paste="onPaste"
         @toot="toot"
         />
     </el-form>
@@ -70,6 +71,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 
@@ -215,6 +217,22 @@ export default {
         })
         return
       }
+      this.updateImage(file)
+    },
+    onPaste (e) {
+      const mimeTypes = clipboard.availableFormats().filter(type => type.startsWith('image'))
+      if (mimeTypes.length === 0) {
+        return
+      }
+      e.preventDefault()
+      const image = clipboard.readImage()
+      let data
+      if (/^image\/jpe?g$/.test(mimeTypes[0])) {
+        data = image.toJPEG(100)
+      } else {
+        data = image.toPNG()
+      }
+      const file = new File([data], 'clipboard.picture', { type: mimeTypes[0] })
       this.updateImage(file)
     },
     updateImage (file) {

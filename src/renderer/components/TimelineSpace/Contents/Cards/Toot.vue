@@ -60,7 +60,10 @@
         <el-button v-show="locked(message)" type="text" class="locked">
           <icon name="lock" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="!locked(message)" type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'">
+        <el-button v-show="directed(message)" type="text" class="directed">
+          <icon name="envelope" scale="0.9"></icon>
+        </el-button>
+        <el-button v-show="!locked(message)&&!directed(message)" type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
         <span class="count">
@@ -149,22 +152,22 @@ export default {
           if (account.display_name !== '') {
             return account.display_name
           } else {
-            return account.username
+            return account.acct
           }
         case DisplayStyle.DisplayName.value:
           if (account.display_name !== '') {
             return account.display_name
           } else {
-            return account.username
+            return account.acct
           }
         case DisplayStyle.Username.value:
-          return `@${account.username}`
+          return account.acct
       }
     },
     accountName (account) {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
-          return `@${account.username}`
+          return `@${account.acct}`
         case DisplayStyle.DisplayName.value:
         case DisplayStyle.Username.value:
           return ''
@@ -339,7 +342,10 @@ export default {
       return this.filter.length > 0 && this.originalMessage(message).content.search(this.filter) >= 0
     },
     locked (message) {
-      return message.visibility === 'private' || message.visibility === 'direct'
+      return message.visibility === 'private'
+    },
+    directed (message) {
+      return message.visibility === 'direct'
     },
     status (message) {
       const original = this.originalMessage(message)

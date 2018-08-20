@@ -35,7 +35,9 @@ export default {
         Language.de,
         Language.en,
         Language.fr,
-        Language.ja
+        Language.ja,
+        Language.ko,
+        Language.pl
       ]
     }
   },
