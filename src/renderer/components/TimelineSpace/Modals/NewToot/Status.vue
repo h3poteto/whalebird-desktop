@@ -71,10 +71,16 @@ export default {
       }
     }
   },
+  mounted () {
+    // When change account, the new toot modal is recreated.
+    // So can not catch open event in watch.
+    this.$refs.status.focus()
+  },
   watch: {
     opened: function (newState, oldState) {
       if (!oldState && newState) {
         this.$nextTick(function () {
+          console.log('focus')
           this.$refs.status.focus()
         })
       } else if (oldState && !newState) {
