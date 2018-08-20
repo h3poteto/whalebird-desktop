@@ -60,7 +60,9 @@
       "title": "Filtrer",
       "placeholder": "Filtrer par une expression régulière",
       "apply": "Appliquer"
-    }
+    },
+    "new_toot": "Pouet",
+    "reload": "Recharger"
   },
   "preferences": {
     "title": "Préférences",

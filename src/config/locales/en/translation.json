@@ -60,7 +60,9 @@
       "title": "Filter",
       "placeholder": "Filter out by regular expressions",
       "apply": "Apply"
-    }
+    },
+    "new_toot": "Toot",
+    "reload": "Reload"
   },
   "preferences": {
     "title": "Preferences",
@@ -147,7 +149,11 @@
       "open_in_browser": "Open in Browser",
       "copy_link_to_toot": "Copy Link to Toot",
       "delete": "Delete",
-      "via": "via {{application}}"
+      "via": "via {{application}}",
+      "reply": "Reply",
+      "reblog": "Reblog",
+      "fav": "Favourite",
+      "detail": "Toot detail"
     }
   },
   "side_bar": {

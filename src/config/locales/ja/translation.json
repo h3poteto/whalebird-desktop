@@ -60,7 +60,9 @@
       "title": "フィルター",
       "placeholder": "正規表現でフィルター",
       "apply": "適用"
-    }
+    },
+    "new_toot": "トゥート",
+    "reload": "再読み込み"
   },
   "preferences": {
     "title": "設定",
