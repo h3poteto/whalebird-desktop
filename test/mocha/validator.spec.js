@@ -52,5 +52,12 @@ describe('validator', () => {
         assert.strictEqual(res, 0)
       })
     })
+    context('string is short domain', () => {
+      const domain = 'id.cc'
+      it('should match', () => {
+        const res = domain.search(domainFormat)
+        assert.strictEqual(res, 0)
+      })
+    })
   })
 })

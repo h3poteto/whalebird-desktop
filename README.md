@@ -40,7 +40,7 @@ So on, you can install from Homebrew:
 
 ```
 $ brew update
-$ brew install whalebird
+$ brew cask install whalebird
 ```
 
 :sparkles: Thanks to [@singingwolfboy](https://github.com/singingwolfboy) for adding it to [homebrew-cask](https://github.com/Homebrew/homebrew-cask/blob/cf568882b6e012956ca404a16be2db36ca873002/Casks/whalebird.rb).
