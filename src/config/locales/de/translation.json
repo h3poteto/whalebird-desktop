@@ -60,7 +60,9 @@
       "title": "Filter",
       "placeholder": "Mit regulären Ausdrücken filtern",
       "apply": "Übernehmen"
-    }
+    },
+    "new_toot": "Toot",
+    "reload": "Neu laden"
   },
   "preferences": {
     "title": "Einstellungen",

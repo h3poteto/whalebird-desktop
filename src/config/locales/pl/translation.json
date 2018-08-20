@@ -59,7 +59,9 @@
       "title": "Filtruj",
       "placeholder": "Filtruj z użyciem wyrażeń regularnych",
       "apply": "Zastosuj"
-    }
+    },
+    "new_toot": "Wpisy",
+    "reload": "Przeładować"
   },
   "preferences": {
     "title": "Preferencje",
