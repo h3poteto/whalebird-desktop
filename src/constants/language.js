@@ -14,5 +14,9 @@ export default {
   ja: {
     name: '日本語',
     key: 'ja'
+  },
+  pl: {
+    name: 'polski',
+    key: 'pl'
   }
 }
