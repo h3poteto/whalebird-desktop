@@ -1,22 +1,22 @@
 export default {
   de: {
-      name: 'Deutsch',
-      key: 'de'
+    name: 'Deutsch',
+    key: 'de'
   },
   en: {
-      name: 'English',
-      key: 'en'
+    name: 'English',
+    key: 'en'
   },
   fr: {
-      name: 'Français',
-      key: 'fr'
+    name: 'Français',
+    key: 'fr'
   },
   ja: {
-      name: '日本語',
-      key: 'ja'
+    name: '日本語',
+    key: 'ja'
   },
   ko: {
-      name: '한국어',
-      key: 'ko'
+    name: '한국어',
+    key: 'ko'
   }
 }
