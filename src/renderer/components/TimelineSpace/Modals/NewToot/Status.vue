@@ -5,6 +5,7 @@
     ref="status"
     v-shortkey="openSuggest ? {up: ['arrowup'], down: ['arrowdown'], enter: ['enter'], esc: ['esc']} : {linux: ['ctrl', 'enter'], mac: ['meta', 'enter'], left: ['arrowleft'], right: ['arrowright']}"
     @shortkey="handleKey"
+    @paste="onPaste"
     v-on:input="startSuggest"
     :placeholder="$t('modals.new_toot.status')"
     autofocus>
@@ -161,6 +162,9 @@ export default {
     selectCurrentItem () {
       const item = this.filteredSuggestion[this.highlightedIndex]
       this.insertItem(item)
+    },
+    onPaste (e) {
+      this.$emit('paste', e)
     },
     handleKey (event) {
       const current = event.target.selectionStart
