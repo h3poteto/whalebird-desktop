@@ -149,22 +149,22 @@ export default {
           if (account.display_name !== '') {
             return account.display_name
           } else {
-            return account.username
+            return account.acct
           }
         case DisplayStyle.DisplayName.value:
           if (account.display_name !== '') {
             return account.display_name
           } else {
-            return account.username
+            return account.acct
           }
         case DisplayStyle.Username.value:
-          return `@${account.username}`
+          return account.acct
       }
     },
     accountName (account) {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
-          return `@${account.username}`
+          return `@${account.acct}`
         case DisplayStyle.DisplayName.value:
         case DisplayStyle.Username.value:
           return ''
