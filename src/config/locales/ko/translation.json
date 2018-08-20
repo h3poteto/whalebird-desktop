@@ -149,7 +149,11 @@
       "open_in_browser": "브라우저에서 열기",
       "copy_link_to_toot": "툿 링크 열기",
       "delete": "삭제",
-      "via": "{{application}}으로 열기"
+      "via": "{{application}}으로 열기",
+      "reply": "댓글",
+      "reblog": "수 없습니다",
+      "fav": "특히 잘하는",
+      "detail": "세부 묘사"
     }
   },
   "side_bar": {
