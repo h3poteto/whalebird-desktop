@@ -18,5 +18,9 @@ export default {
   ko: {
     name: '한국어',
     key: 'ko'
+  },
+  pl: {
+    name: 'polski',
+    key: 'pl'
   }
 }

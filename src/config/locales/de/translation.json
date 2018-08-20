@@ -3,7 +3,7 @@
     "application": {
       "name": "Whalebird",
       "about": "Über Whalebird",
-      "preferences": "Einstellungen...",
+      "preferences": "Einstellungen …",
       "services": "Dienste",
       "hide": "Whalebird verstecken",
       "hide_others": "Andere verstecken",
@@ -106,7 +106,7 @@
     },
     "language": {
       "title": "Sprache",
-      "display_language": "sprache",
+      "display_language": "Sprache",
       "notice": "Erfordert Neustart",
       "confirm": {
         "title": "Warnung",
@@ -158,7 +158,7 @@
       "manage_list_memberships": "Listen-Mitgliedschaften verwalten",
       "toots": "Toots",
       "follows": "Follows",
-      "followers": "Followers"
+      "followers": "Follower"
     }
   },
   "hashtag": {
