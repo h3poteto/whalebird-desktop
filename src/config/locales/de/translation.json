@@ -35,8 +35,11 @@
     }
   },
   "side_menu": {
+    "profile": "Profil",
     "show_profile": "Profil ansehen",
     "edit_profile": "Profil bearbeiten",
+    "collapse": "Zusammenbruch",
+    "expand": "Erweitern",
     "home": "Home",
     "notification": "Benachrichtigung",
     "favourite": "Favorit",

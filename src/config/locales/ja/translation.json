@@ -35,8 +35,11 @@
     }
   },
   "side_menu": {
+    "profile": "プロフィール",
     "show_profile": "プロフィール確認",
     "edit_profile": "プロフィール編集",
+    "collapse": "縮小",
+    "expand": "拡大",
     "home": "ホーム",
     "notification": "通知",
     "favourite": "お気に入り",
