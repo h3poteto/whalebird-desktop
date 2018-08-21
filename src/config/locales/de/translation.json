@@ -127,7 +127,11 @@
       "toot": "Toot",
       "close_confirm": "Möchtest du wirklich schließen?",
       "close_confirm_ok": "Schließen",
-      "close_confirm_cancel": "Abbrechen"
+      "close_confirm_cancel": "Abbrechen",
+      "add_image": "Bild hinzufügen",
+      "change_visibility": "Sichtbarkeit ändern",
+      "add_cw": "Inhalt hinzufügen Warnung",
+      "change_sensitive": "Ändern Sie empfindlich"
     },
     "jump": {
       "jump_to": "Springe zu..."

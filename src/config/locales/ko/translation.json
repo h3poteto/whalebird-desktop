@@ -127,7 +127,11 @@
       "toot": "툿",
       "close_confirm": "정말로 툿 작성을 그만두시겠습니까?",
       "close_confirm_ok": "예",
-      "close_confirm_cancel": "취소"
+      "close_confirm_cancel": "취소",
+      "add_image": "내용 추가 경고",
+      "change_visibility": "공개 설정 변경",
+      "add_cw": "내용 추가 경고",
+      "change_sensitive": "민감한 변경"
     },
     "jump": {
       "jump_to": "이동하기"

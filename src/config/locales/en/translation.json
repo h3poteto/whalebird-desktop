@@ -127,7 +127,11 @@
       "toot": "Toot",
       "close_confirm": "Are you sure to close new toot?",
       "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Cancel"
+      "close_confirm_cancel": "Cancel",
+      "add_image": "Add images",
+      "change_visibility": "Change visibility",
+      "add_cw": "Add contents warning",
+      "change_sensitive": "Change sensitive"
     },
     "jump": {
       "jump_to": "Jump to..."
