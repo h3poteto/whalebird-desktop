@@ -170,6 +170,10 @@
     "account_profile": {
       "follows_you": "Abonné⋅e",
       "doesnt_follow_you": "Pas abonné⋅e",
+      "detail": "Détail",
+      "follow": "Suivre",
+      "unfollow": "Ne pas suivre",
+      "follow_requested": "Suivre demande",
       "open_in_browser": "Ouvrir dans un navigateur",
       "manage_list_memberships": "Inscriptions aux listes",
       "toots": "Pouets",

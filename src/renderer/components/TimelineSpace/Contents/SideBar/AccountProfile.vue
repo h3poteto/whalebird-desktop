@@ -26,7 +26,7 @@
               </ul>
             </div>
 
-            <el-button slot="reference" type="text">
+            <el-button slot="reference" type="text" :title="$t('side_bar.account_profile.detail')">
               <icon name="cog" scale="1.4"></icon>
             </el-button>
           </popper>
@@ -35,13 +35,13 @@
           <img :src="account.avatar" />
         </div>
         <div class="follow-status" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
-          <div v-if="relationship.following" class="unfollow" @click="unfollow(account)">
+          <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
             <icon name="user-times" scale="1.5"></icon>
           </div>
-          <div v-else-if="relationship.requested">
+          <div v-else-if="relationship.requested" :title="$t('side_bar.account_profile.follow_requested')">
             <icon name="hourglass" scale="1.5"></icon>
           </div>
-          <div v-else class="follow" @click="follow(account)">
+          <div v-else class="follow" @click="follow(account)" :title="$t('side_bar.account_profile.follow')">
             <icon name="user-plus" scale="1.5"></icon>
           </div>
         </div>
