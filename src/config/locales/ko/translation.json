@@ -12,12 +12,12 @@
     },
     "toot": {
       "name": "툿",
-      "new": "새 툿 작성"
+      "new": "새 툿"
     },
     "edit": {
       "name": "수정",
       "undo": "되돌리기",
-      "redo": "되되돌리기",
+      "redo": "재실행",
       "cut": "잘라내기",
       "copy": "복사",
       "paste": "붙여넣기",
@@ -41,8 +41,8 @@
     "profile": "프로필",
     "show_profile": "프로필 보이기",
     "edit_profile": "프로필 변경",
-    "collapse": "무너짐",
-    "expand": "넓히다",
+    "collapse": "접기",
+    "expand": "펼치기",
     "home": "홈",
     "notification": "알림",
     "favourite": "즐겨찾기",
@@ -67,8 +67,8 @@
       "placeholder": "정규식 필터링",
       "apply": "적용"
     },
-    "new_toot": "툿",
-    "reload": "다시로드"
+    "new_toot": "새 툿",
+    "reload": "새로고침"
   },
   "preferences": {
     "title": "설정",
@@ -77,8 +77,8 @@
       "appearance": "외관",
       "theme_color": "테마 색상:",
       "theme": {
-        "light": "라이트 테마",
-        "dark": "다크 테마"
+        "light": "밝은 테마",
+        "dark": "어두운 테마"
       },
       "font_size": "폰트 크기:",
       "display_style": {
@@ -115,10 +115,10 @@
     "language": {
       "title": "언어",
       "display_language": "언어",
-      "notice": "재실행 필요",
+      "notice": "재실행이 필요합니다",
       "confirm": {
-        "title": "알림",
-        "message": "어플리케이션을 재실행하셔야 합니다, 진행하시겠습니까?",
+        "title": "경고",
+        "message": "어플리케이션을 재실행해야 합니다, 진행하시겠습니까?",
         "ok": "지금 재실행",
         "cancel": "취소"
       }
@@ -157,23 +157,23 @@
       "sensitive": "민감한 미디어 표시",
       "view_toot_detail": "툿 세부 정보 보기",
       "open_in_browser": "브라우저에서 열기",
-      "copy_link_to_toot": "툿 링크 열기",
+      "copy_link_to_toot": "툿 링크 복사하기",
       "delete": "삭제",
-      "via": "{{application}}으로 열기",
-      "reply": "댓글",
-      "reblog": "수 없습니다",
-      "fav": "특히 잘하는",
-      "detail": "세부 묘사"
+      "via": "{{application}}에서",
+      "reply": "답장",
+      "reblog": "리블로그",
+      "fav": "즐겨찾기",
+      "detail": "세부 사항"
     }
   },
   "side_bar": {
     "account_profile": {
       "follows_you": "사용자를 팔로우하고 있습니다",
       "doesnt_follow_you": "사용자를 팔로우하고 있지 않습니다",
-      "detail": "세부 묘사",
-      "follow": "따르다",
-      "unfollow": "팔로우 해제",
-      "follow_requested": "팔로우하기",
+      "detail": "세부 사항",
+      "follow": "팔로우",
+      "unfollow": "언팔로우",
+      "follow_requested": "팔로우 요청중", //not sure
       "open_in_browser": "브라우저에서 열기",
       "manage_list_memberships": "리스트 멤버 관리",
       "toots": "툿",
@@ -196,7 +196,7 @@
     }
   },
   "login": {
-    "domain_name_label": "우선, 마스토돈 인스턴스에 로그인 해보도록 하죠. 인스턴스 도메인을 입력해주세요.",
+    "domain_name_label": "우선, 마스토돈 인스턴스에 로그인 해볼거예요. 인스턴스 도메인을 입력해주세요.",
     "search": "검색",
     "login": "로그인"
   },
