@@ -170,6 +170,10 @@
     "account_profile": {
       "follows_you": "Śledzi Cię",
       "doesnt_follow_you": "Nie śledzi Cię",
+      "detail": "Szczegół",
+      "follow": "Śledzić",
+      "unfollow": "Nie obserwuj",
+      "follow_requested": "Śledź prośbę",
       "open_in_browser": "Otwórz w przeglądarce",
       "manage_list_memberships": "Zarządzaj przynależnością do grup",
       "toots": "Wpisy",

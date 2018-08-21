@@ -170,6 +170,10 @@
     "account_profile": {
       "follows_you": "フォローされています",
       "doesnt_follow_you": "フォローされていません",
+      "detail": "詳細",
+      "follow": "フォローする",
+      "unfollow": "フォロー解除する",
+      "follow_requested": "フォロー承認待ち",
       "open_in_browser": "ブラウザで開く",
       "manage_list_memberships": "リストの管理",
       "toots": "トゥート",
