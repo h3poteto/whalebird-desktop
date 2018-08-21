@@ -20,7 +20,7 @@ export default {
     key: 'ko'
   },
   pl: {
-    name: 'polski',
+    name: 'Polski',
     key: 'pl'
   }
 }

@@ -1,238 +1,258 @@
-i{
-    "main_menu": {
-        "application": {
-            "name": "Whalebird",
-            "about": "Whalebird에 관하여",
-            "preferences": "설정",
-            "services": "서비스",
-            "hide": "Whalebird 숨기기",
-            "hide_others": "나머지 숨기기",
-            "show_all": "모두 보이기",
-            "quit": "나가기"
-        },
-        "toot": {
-            "name": "툿",
-            "new": "새 툿"
-        },
-        "edit": {
-            "name": "수정",
-            "undo": "되돌리기",
-            "redo": "재실행",
-            "cut": "잘라내기",
-            "copy": "복사",
-            "paste": "붙여넣기",
-            "select_all": "모두 선택"
-        },
-        "view": {
-            "name": "보이기",
-            "toggle_full_screen": "화면 최대화"
-        },
-        "window": {
-            "name": "창",
-            "close": "창 닫기",
-            "minimize": "최소화",
-            "jump_to": "이동하기"
-        }
+{
+  "main_menu": {
+    "application": {
+      "name": "Whalebird",
+      "about": "Whalebird에 관하여",
+      "preferences": "설정",
+      "services": "서비스",
+      "hide": "Whalebird 숨기기",
+      "hide_others": "나머지 숨기기",
+      "show_all": "모두 보이기",
+      "quit": "나가기"
     },
-    "side_menu": {
-        "show_profile": "프로필 보이기",
-        "edit_profile": "프로필 변경",
-        "home": "홈",
-        "notification": "알림",
-        "favourite": "즐겨찾기",
-        "local": "로컬",
-        "public": "연합",
-        "hashtag": "해시태그",
-        "search": "검색",
-        "lists": "리스트"
+    "toot": {
+      "name": "툿",
+      "new": "새 툿"
     },
-    "header_menu": {
-        "home": "홈",
-        "notification": "알림",
-        "favourite": "즐겨찾기",
-        "local": "로컬",
-        "public": "연합",
-        "hashtag": "연합",
-        "search": "검색",
-        "lists": "리스트",
-        "members": "멤버",
-        "filter": {
-            "title": "필터",
-            "placeholder": "정규식 필터링",
-            "apply": "적용"
-        }
+    "edit": {
+      "name": "수정",
+      "undo": "되돌리기",
+      "redo": "재실행",
+      "cut": "잘라내기",
+      "copy": "복사",
+      "paste": "붙여넣기",
+      "select_all": "모두 선택"
     },
-    "preferences": {
-        "title": "설정",
-        "general": {
-            "title": "일반",
-            "appearance": "외관",
-            "theme_color": "테마 색상:",
-            "theme": {
-                "light": "밝은 테마",
-                "dark": "어두운 테마"
-            },
-            "font_size": "폰트 크기:",
-            "display_style": {
-                "title": "표시 형식:",
-                "display_name_and_username": "이름과 유저명",
-                "display_name": "이름 보이기",
-                "username": "유저명 보이기"
-            },
-            "toot": "툿",
-            "visibility": {
-                "title": "기본 공개 설정:",
-                "public": "공개",
-                "unlisted": "미등록",
-                "private": "비공개",
-                "direct": "다이렉트"
-            },
-            "sounds": "사운드",
-            "fav_rb_sound": "즐겨찾기 및 부스트:",
-            "toot_sound": "툿:"
-        },
-        "account": {
-            "title": "계정",
-            "connected": "연결된 계정",
-            "username": "유저명",
-            "domain": "도메인",
-            "association": "연결 상황",
-            "order": "순서 변경",
-            "remove_association": "연결 끊기",
-            "remove_all_associations": "모든 연결 끊기",
-            "confirm": "확인",
-            "cancel": "취소",
-            "confirm_message": "모든 연결을 중단하시겠습니까?"
-        },
-        "language": {
-            "title": "언어",
-            "display_language": "언어",
-            "notice": "재실행 필요",
-            "confirm": {
-                "title": "알림",
-                "message": "어플리케이션을 재실행하셔야 합니다, 진행하시겠습니까?",
-                "ok": "지금 재실행",
-                "cancel": "취소"
-            }
-        }
+    "view": {
+      "name": "보이기",
+      "toggle_full_screen": "화면 최대화"
     },
-    "modals": {
-        "new_toot": {
-            "title": "새 툿",
-            "cw": "여기에 경고 문구를 입력하세요",
-            "status": "무슨 일이 일어나고 있나요",
-            "cancel": "취소",
-            "toot": "툿",
-            "close_confirm": "정말로 툿 작성을 그만두시겠습니까?",
-            "close_confirm_ok": "예",
-            "close_confirm_cancel": "취소"
-        },
-        "jump": {
-            "jump_to": "이동하기"
-        },
-        "add_list_member": {
-            "title": "리스트에 멤버 추가",
-            "account_name": "계정 명"
-        },
-        "list_membership": {
-            "title": "리스트 멤버 구성"
-        }
-    },
-    "cards": {
-        "toot": {
-            "show_more": "더보기",
-            "hide": "숨기기",
-            "sensitive": "민감한 미디어 표시",
-            "view_toot_detail": "툿 세부 정보 보기",
-            "open_in_browser": "브라우저에서 열기",
-            "copy_link_to_toot": "툿 링크 복사하기",
-            "delete": "삭제",
-            "via": "{{application}}에서"
-        }
-    },
-    "side_bar": {
-        "account_profile": {
-            "follows_you": "사용자를 팔로우하고 있습니다",
-            "doesnt_follow_you": "사용자를 팔로우하고 있지 않습니다",
-            "open_in_browser": "브라우저에서 열기",
-            "manage_list_memberships": "리스트 멤버 관리",
-            "toots": "툿",
-            "follows": "팔로잉",
-            "followers": "팔로워"
-        }
-    },
-    "hashtag": {
-        "tag_name": "태그명"
-    },
-    "search": {
-        "search": "검색",
-        "account": "계정",
-        "keyword": "키워드"
-    },
-    "lists": {
-        "index": {
-            "new_list": "새 리스트",
-            "edit": "편집"
-        }
-    },
-    "login": {
-        "domain_name_label": "우선, 마스토돈 인스턴스에 로그인 해보도록 하죠. 인스턴스 도메인을 입력해주세요.",
-        "search": "검색",
-        "login": "로그인"
-    },
-    "authorize": {
-        "manually_1": "브라우저에서 인증 페이지가 열릴 거예요!",
-        "manually_2": "열리지 않았다면 아래 URL을 수동으로 입력해주세요!",
-        "code_label": "브라우저의 인증 코드를 여기에 붙여넣어 주세요:",
-        "submit": "제출"
-    },
-    "receive_drop": {
-        "drop_message": "여기에 놓아 업로드하세요"
-    },
-    "message": {
-        "account_load_error": "계정을 로드할 수 없습니다",
-        "account_remove_error": "계정을 제거할 수 없습니다",
-        "preferences_load_error": "설정을 로드할 수 없습니다",
-        "timeline_fetch_error": "타임라인을 가져올 수 없습니다",
-        "notification_fetch_error": "알림을 가져올 수 없습니다",
-        "favourite_fetch_error": "즐겨찾기를 가져올 수 없습니다",
-        "start_streaming_error": "스트리밍을 시작할 수 없습니다",
-        "attach_error": "파일을 첨부할 수 없습니다",
-        "authorize_duplicate_error": "한 도메인에 중복해서 로그인할 수 없습니다",
-        "authorize_error": "인증을 완료할 수 없습니다",
-        "followers_fetch_error": "팔로워 정보를 가져올 수 없습니다",
-        "follows_fetch_error": "팔로잉 정보를 가져올 수 없습니다",
-        "toot_fetch_error": "툿 세부정보를 가져올 수 없습니다",
-        "follow_error": "해당 사용자를 팔로우할 수 없습니다",
-        "unfollow_error": "해당 사용자를 언팔로우 할 수 없습니다",
-        "lists_fetch_error": "리스트를 가져올 수 없습니다",
-        "list_create_error": "리스트를 만들 수 없습니다",
-        "members_fetch_error": "멤버 정보를 가져올 수 없습니다",
-        "remove_user_error": "해당 사용자를 제거할 수 없습니다",
-        "find_account_error": "해당 계정을 찾을 수 없습니다",
-        "reblog_error": "리블로그 할 수 없습니다",
-        "unreblog_error": "리블로그를 취소할 수 없습니다",
-        "favourite_error": "즐겨찾기 할 수 없습니다",
-        "unfavourite_error": "즐겨찾기를 취소할 수 없습니다",
-        "delete_error": "툿을 삭제할 수 없습니다",
-        "search_error": "찾을 수 없습니다",
-        "toot_error": "툿을 발송할 수 없습니다",
-        "update_list_memberships_error": "리스트 멤버 구성을 업데이트할 수 없습니다",
-        "add_user_error": "사용자를 추가할 수 없습니다",
-        "authorize_url_error": "인증 url을 가져올 수 없습니다",
-        "domain_confirmed": "{{domain}} 도메인이 확인되었습니다. 로그인해주시기 바랍니다.",
-        "domain_doesnt_exist": "{{domain}} 도메인이 존재하지 않습니다",
-        "loading": "로딩중..."
-    },
-    "validation": {
-        "login": {
-            "require_domain_name": "도메인 이름은 필수항목입니다",
-            "domain_format": "도메인 이름만 입력해주시기 바랍니다"
-        },
-        "new_toot": {
-            "toot_length": "툿 길이는 최소 {{min}} 자 부터 최대 {{max}} 자 까지입니다",
-            "attach_length": "이미지는 최대 {{max}} 장까지 첨부하실 수 있습니다",
-            "attach_image": "이미지나 비디오만 첨부할 수 있습니다"
-        }
+    "window": {
+      "name": "창",
+      "close": "창 닫기",
+      "minimize": "최소화",
+      "jump_to": "이동하기"
     }
+  },
+  "global_header": {
+    "add_new_account": "새 계정 추가"
+  },
+  "side_menu": {
+    "profile": "프로필",
+    "show_profile": "프로필 보이기",
+    "edit_profile": "프로필 변경",
+    "collapse": "접기",
+    "expand": "펼치기",
+    "home": "홈",
+    "notification": "알림",
+    "favourite": "즐겨찾기",
+    "local": "로컬",
+    "public": "연합",
+    "hashtag": "해시태그",
+    "search": "검색",
+    "lists": "리스트"
+  },
+  "header_menu": {
+    "home": "홈",
+    "notification": "알림",
+    "favourite": "즐겨찾기",
+    "local": "로컬",
+    "public": "연합",
+    "hashtag": "연합",
+    "search": "검색",
+    "lists": "리스트",
+    "members": "멤버",
+    "filter": {
+      "title": "필터",
+      "placeholder": "정규식 필터링",
+      "apply": "적용"
+    },
+    "new_toot": "새 툿",
+    "reload": "새로고침"
+  },
+  "preferences": {
+    "title": "설정",
+    "general": {
+      "title": "일반",
+      "appearance": "외관",
+      "theme_color": "테마 색상:",
+      "theme": {
+        "light": "밝은 테마",
+        "dark": "어두운 테마"
+      },
+      "font_size": "폰트 크기:",
+      "display_style": {
+        "title": "표시 형식:",
+        "display_name_and_username": "이름과 유저명",
+        "display_name": "이름 보이기",
+        "username": "유저명 보이기"
+      },
+      "toot": "툿",
+      "visibility": {
+        "title": "기본 공개 설정:",
+        "public": "공개",
+        "unlisted": "미등록",
+        "private": "비공개",
+        "direct": "다이렉트"
+      },
+      "sounds": "사운드",
+      "fav_rb_sound": "즐겨찾기 및 부스트:",
+      "toot_sound": "툿:"
+    },
+    "account": {
+      "title": "계정",
+      "connected": "연결된 계정",
+      "username": "유저명",
+      "domain": "도메인",
+      "association": "연결 상황",
+      "order": "순서 변경",
+      "remove_association": "연결 끊기",
+      "remove_all_associations": "모든 연결 끊기",
+      "confirm": "확인",
+      "cancel": "취소",
+      "confirm_message": "모든 연결을 중단하시겠습니까?"
+    },
+    "language": {
+      "title": "언어",
+      "display_language": "언어",
+      "notice": "재실행이 필요합니다",
+      "confirm": {
+        "title": "경고",
+        "message": "어플리케이션을 재실행해야 합니다, 진행하시겠습니까?",
+        "ok": "지금 재실행",
+        "cancel": "취소"
+      }
+    }
+  },
+  "modals": {
+    "new_toot": {
+      "title": "새 툿",
+      "cw": "여기에 경고 문구를 입력하세요",
+      "status": "무슨 일이 일어나고 있나요",
+      "cancel": "취소",
+      "toot": "툿",
+      "close_confirm": "정말로 툿 작성을 그만두시겠습니까?",
+      "close_confirm_ok": "예",
+      "close_confirm_cancel": "취소",
+      "add_image": "내용 추가 경고",
+      "change_visibility": "공개 설정 변경",
+      "add_cw": "내용 추가 경고",
+      "change_sensitive": "민감한 변경"
+    },
+    "jump": {
+      "jump_to": "이동하기"
+    },
+    "add_list_member": {
+      "title": "리스트에 멤버 추가",
+      "account_name": "계정 명"
+    },
+    "list_membership": {
+      "title": "리스트 멤버 구성"
+    }
+  },
+  "cards": {
+    "toot": {
+      "show_more": "더보기",
+      "hide": "숨기기",
+      "sensitive": "민감한 미디어 표시",
+      "view_toot_detail": "툿 세부 정보 보기",
+      "open_in_browser": "브라우저에서 열기",
+      "copy_link_to_toot": "툿 링크 복사하기",
+      "delete": "삭제",
+      "via": "{{application}}에서",
+      "reply": "답장",
+      "reblog": "리블로그",
+      "fav": "즐겨찾기",
+      "detail": "세부 사항"
+    }
+  },
+  "side_bar": {
+    "account_profile": {
+      "follows_you": "사용자를 팔로우하고 있습니다",
+      "doesnt_follow_you": "사용자를 팔로우하고 있지 않습니다",
+      "detail": "세부 사항",
+      "follow": "팔로우",
+      "unfollow": "언팔로우",
+      "follow_requested": "팔로우 요청중", //not sure
+      "open_in_browser": "브라우저에서 열기",
+      "manage_list_memberships": "리스트 멤버 관리",
+      "toots": "툿",
+      "follows": "팔로잉",
+      "followers": "팔로워"
+    }
+  },
+  "hashtag": {
+    "tag_name": "태그명"
+  },
+  "search": {
+    "search": "검색",
+    "account": "계정",
+    "keyword": "키워드"
+  },
+  "lists": {
+    "index": {
+      "new_list": "새 리스트",
+      "edit": "편집"
+    }
+  },
+  "login": {
+    "domain_name_label": "우선, 마스토돈 인스턴스에 로그인 해볼거예요. 인스턴스 도메인을 입력해주세요.",
+    "search": "검색",
+    "login": "로그인"
+  },
+  "authorize": {
+    "manually_1": "브라우저에서 인증 페이지가 열릴 거예요!",
+    "manually_2": "열리지 않았다면 아래 URL을 수동으로 입력해주세요!",
+    "code_label": "브라우저의 인증 코드를 여기에 붙여넣어 주세요:",
+    "submit": "제출"
+  },
+  "receive_drop": {
+    "drop_message": "여기에 놓아 업로드하세요"
+  },
+  "message": {
+    "account_load_error": "계정을 로드할 수 없습니다",
+    "account_remove_error": "계정을 제거할 수 없습니다",
+    "preferences_load_error": "설정을 로드할 수 없습니다",
+    "timeline_fetch_error": "타임라인을 가져올 수 없습니다",
+    "notification_fetch_error": "알림을 가져올 수 없습니다",
+    "favourite_fetch_error": "즐겨찾기를 가져올 수 없습니다",
+    "start_streaming_error": "스트리밍을 시작할 수 없습니다",
+    "attach_error": "파일을 첨부할 수 없습니다",
+    "authorize_duplicate_error": "한 도메인에 중복해서 로그인할 수 없습니다",
+    "authorize_error": "인증을 완료할 수 없습니다",
+    "followers_fetch_error": "팔로워 정보를 가져올 수 없습니다",
+    "follows_fetch_error": "팔로잉 정보를 가져올 수 없습니다",
+    "toot_fetch_error": "툿 세부정보를 가져올 수 없습니다",
+    "follow_error": "해당 사용자를 팔로우할 수 없습니다",
+    "unfollow_error": "해당 사용자를 언팔로우 할 수 없습니다",
+    "lists_fetch_error": "리스트를 가져올 수 없습니다",
+    "list_create_error": "리스트를 만들 수 없습니다",
+    "members_fetch_error": "멤버 정보를 가져올 수 없습니다",
+    "remove_user_error": "해당 사용자를 제거할 수 없습니다",
+    "find_account_error": "해당 계정을 찾을 수 없습니다",
+    "reblog_error": "리블로그 할 수 없습니다",
+    "unreblog_error": "리블로그를 취소할 수 없습니다",
+    "favourite_error": "즐겨찾기 할 수 없습니다",
+    "unfavourite_error": "즐겨찾기를 취소할 수 없습니다",
+    "delete_error": "툿을 삭제할 수 없습니다",
+    "search_error": "찾을 수 없습니다",
+    "toot_error": "툿을 발송할 수 없습니다",
+    "update_list_memberships_error": "리스트 멤버 구성을 업데이트할 수 없습니다",
+    "add_user_error": "사용자를 추가할 수 없습니다",
+    "authorize_url_error": "인증 url을 가져올 수 없습니다",
+    "domain_confirmed": "{{domain}} 도메인이 확인되었습니다. 로그인해주시기 바랍니다.",
+    "domain_doesnt_exist": "{{domain}} 도메인이 존재하지 않습니다",
+    "loading": "로딩중..."
+  },
+  "validation": {
+    "login": {
+      "require_domain_name": "도메인 이름은 필수항목입니다",
+      "domain_format": "도메인 이름만 입력해주시기 바랍니다"
+    },
+    "new_toot": {
+      "toot_length": "툿 길이는 최소 {{min}} 자 부터 최대 {{max}} 자 까지입니다",
+      "attach_length": "이미지는 최대 {{max}} 장까지 첨부하실 수 있습니다",
+      "attach_image": "이미지나 비디오만 첨부할 수 있습니다"
+    }
+  }
 }

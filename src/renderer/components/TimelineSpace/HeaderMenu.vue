@@ -2,10 +2,10 @@
 <div id="header_menu">
   <div class="channel">{{ title }}</div>
   <div class="tools">
-    <el-button type="text" class="action" @click="openNewTootModal">
+    <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
       <icon name="regular/edit"></icon>
     </el-button>
-    <el-button v-show="reloadable()" type="text" class="action" @click="reload">
+    <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
       <icon name="sync-alt"></icon>
     </el-button>
     <el-popover
@@ -24,7 +24,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <el-button v-show="filterable()" slot="reference" type="text" class="action">
+      <el-button v-show="filterable()" slot="reference" type="text" class="action" :title="$t('header_menu.filter.title')">
         <icon name="sliders-h"></icon>
       </el-button>
     </el-popover>

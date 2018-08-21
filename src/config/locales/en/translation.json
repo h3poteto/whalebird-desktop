@@ -34,9 +34,15 @@
       "jump_to": "Jump to"
     }
   },
+  "global_header": {
+    "add_new_account": "Add new account"
+  },
   "side_menu": {
+    "profile": "Profile",
     "show_profile": "Show profile",
     "edit_profile": "Edit profile",
+    "collapse": "Collapse",
+    "expand": "Expand",
     "home": "Home",
     "notification": "Notification",
     "favourite": "Favourite",
@@ -60,7 +66,9 @@
       "title": "Filter",
       "placeholder": "Filter out by regular expressions",
       "apply": "Apply"
-    }
+    },
+    "new_toot": "Toot",
+    "reload": "Reload"
   },
   "preferences": {
     "title": "Preferences",
@@ -125,7 +133,11 @@
       "toot": "Toot",
       "close_confirm": "Are you sure to close new toot?",
       "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Cancel"
+      "close_confirm_cancel": "Cancel",
+      "add_image": "Add images",
+      "change_visibility": "Change visibility",
+      "add_cw": "Add contents warning",
+      "change_sensitive": "Change sensitive"
     },
     "jump": {
       "jump_to": "Jump to..."
@@ -147,13 +159,21 @@
       "open_in_browser": "Open in Browser",
       "copy_link_to_toot": "Copy Link to Toot",
       "delete": "Delete",
-      "via": "via {{application}}"
+      "via": "via {{application}}",
+      "reply": "Reply",
+      "reblog": "Reblog",
+      "fav": "Favourite",
+      "detail": "Toot details"
     }
   },
   "side_bar": {
     "account_profile": {
       "follows_you": "Follows you",
       "doesnt_follow_you": "Doesn't follow you",
+      "detail": "Detail",
+      "follow": "Follow",
+      "unfollow": "Unfollow",
+      "follow_requested": "Follow requested",
       "open_in_browser": "Open in Browser",
       "manage_list_memberships": "Manage List Memberships",
       "toots": "Toots",

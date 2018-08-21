@@ -2,8 +2,18 @@
 <div id="favourites">
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
-  <div class="fav" v-for="message in favourites" v-bind:key="message.id">
-    <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+  <div class="fav" v-for="(message, index) in favourites" v-bind:key="message.id">
+    <toot
+      :message="message"
+      :filter="filter"
+      :focused="index === focusedIndex"
+      v-on:update="updateToot"
+      v-on:delete="deleteToot"
+      @focusNext="focusNext"
+      @focusPrev="focusPrev"
+      @selectToot="focusToot(index)"
+      >
+    </toot>
   </div>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
   </div>
@@ -24,7 +34,8 @@ export default {
   components: { Toot },
   data () {
     return {
-      heading: true
+      heading: true,
+      focusedIndex: null
     }
   },
   computed: {
@@ -68,6 +79,13 @@ export default {
             this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
           })
       }
+    },
+    focusedIndex: function (newState, oldState) {
+      if (newState >= 0 && this.heading) {
+        this.heading = false
+      } else if (newState === null && !this.heading) {
+        this.heading = true
+      }
     }
   },
   methods: {
@@ -92,6 +110,7 @@ export default {
         this.heading = false
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
         this.heading = true
+        this.focusedIndex = null
       }
     },
     async reload () {
@@ -129,6 +148,24 @@ export default {
         document.getElementById('scrollable'),
         0
       )
+      this.focusedIndex = null
+    },
+    focusNext () {
+      if (this.focusedIndex === null) {
+        this.focusedIndex = 0
+      } else if (this.focusedIndex < this.favourites.length) {
+        this.focusedIndex++
+      }
+    },
+    focusPrev () {
+      if (this.focusedIndex === 0) {
+        this.focusedIndex = null
+      } else if (this.focusedIndex > 0) {
+        this.focusedIndex--
+      }
+    },
+    focusToot (index) {
+      this.focusedIndex = index
     }
   }
 }
