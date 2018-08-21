@@ -1,4 +1,4 @@
-{
+i{
     "main_menu": {
         "application": {
             "name": "Whalebird",
@@ -12,7 +12,7 @@
         },
         "toot": {
             "name": "툿",
-            "new": "새 툿 작성"
+            "new": "새 툿"
         },
         "edit": {
             "name": "수정",
