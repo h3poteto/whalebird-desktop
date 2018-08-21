@@ -34,6 +34,9 @@
       "jump_to": "이동하기"
     }
   },
+  "global_header": {
+    "add_new_account": "새 계정 추가"
+  },
   "side_menu": {
     "profile": "프로필",
     "show_profile": "프로필 보이기",

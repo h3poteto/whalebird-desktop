@@ -34,6 +34,9 @@
       "jump_to": "Aller à"
     }
   },
+  "global_header": {
+    "add_new_account": "Ajouter un nouveau compte"
+  },
   "side_menu": {
     "profile": "Profil",
     "show_profile": "Voir le profil",
