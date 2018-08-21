@@ -145,9 +145,9 @@ i{
             "sensitive": "민감한 미디어 표시",
             "view_toot_detail": "툿 세부 정보 보기",
             "open_in_browser": "브라우저에서 열기",
-            "copy_link_to_toot": "툿 링크 열기",
+            "copy_link_to_toot": "툿 링크 복사하기",
             "delete": "삭제",
-            "via": "{{application}}으로 열기"
+            "via": "{{application}}에서"
         }
     },
     "side_bar": {
