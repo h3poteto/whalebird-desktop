@@ -34,9 +34,15 @@
       "jump_to": "Aller à"
     }
   },
+  "global_header": {
+    "add_new_account": "Ajouter un nouveau compte"
+  },
   "side_menu": {
+    "profile": "Profil",
     "show_profile": "Voir le profil",
     "edit_profile": "Éditer mon profil",
+    "collapse": "Effondrer",
+    "expand": "Développer",
     "home": "Accueil",
     "notification": "Notifications",
     "favourite": "Favoris",
@@ -60,7 +66,9 @@
       "title": "Filtrer",
       "placeholder": "Filtrer par une expression régulière",
       "apply": "Appliquer"
-    }
+    },
+    "new_toot": "Pouet",
+    "reload": "Recharger"
   },
   "preferences": {
     "title": "Préférences",
@@ -125,7 +133,11 @@
       "toot": "Pouet!",
       "close_confirm": "Êtes-vous certain de vouloir fermer ce nouveau pouet ?",
       "close_confirm_ok": "Oui",
-      "close_confirm_cancel": "Annuler"
+      "close_confirm_cancel": "Annuler",
+      "add_image": "Ajouter une image",
+      "change_visibility": "Changer la visibilité",
+      "add_cw": "Ajouter un avertissement de contenu",
+      "change_sensitive": "Changer sensible"
     },
     "jump": {
       "jump_to": "Aller à..."
@@ -147,13 +159,21 @@
       "open_in_browser": "Ouvrir dans un navigateur",
       "copy_link_to_toot": "Copier le lien du pouet",
       "delete": "Effacer",
-      "via": "par {{application}}"
+      "via": "par {{application}}",
+      "reply": "Répondre",
+      "reblog": "Du partage du pouet",
+      "fav": "Préféré",
+      "detail": "Détails"
     }
   },
   "side_bar": {
     "account_profile": {
       "follows_you": "Abonné⋅e",
       "doesnt_follow_you": "Pas abonné⋅e",
+      "detail": "Détail",
+      "follow": "Suivre",
+      "unfollow": "Ne pas suivre",
+      "follow_requested": "Suivre demande",
       "open_in_browser": "Ouvrir dans un navigateur",
       "manage_list_memberships": "Inscriptions aux listes",
       "toots": "Pouets",
