@@ -81,7 +81,7 @@ export default {
       }
     },
     focusedIndex: function (newState, oldState) {
-      if (newState > 0 && this.heading) {
+      if (newState >= 0 && this.heading) {
         this.heading = false
       } else if (newState === null && !this.heading) {
         this.heading = true

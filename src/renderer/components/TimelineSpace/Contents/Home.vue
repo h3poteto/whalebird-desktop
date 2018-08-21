@@ -79,7 +79,7 @@ export default {
       }
     },
     focusedIndex: function (newState, oldState) {
-      if (newState > 0 && this.heading) {
+      if (newState >= 0 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
