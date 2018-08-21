@@ -24,12 +24,16 @@
     </div>
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
-        <el-button size="small" type="text" @click="selectImage"><icon name="camera"></icon></el-button>
+        <el-button size="small" type="text" @click="selectImage" :title="$t('modals.new_toot.add_image')">
+          <icon name="camera"></icon>
+        </el-button>
         <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId"/>
       </div>
       <div class="privacy">
         <el-dropdown trigger="click" @command="changeVisibility">
-          <el-button size="small" type="text"><icon :name="visibilityIcon"></icon></el-button>
+          <el-button size="small" type="text" :title="$t('modals.new_toot.change_visibility')">
+            <icon :name="visibilityIcon"></icon>
+          </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item :command="visibilityList.Public.value">
               <icon name="globe" class="privacy-icon"></icon>
@@ -51,13 +55,13 @@
         </el-dropdown>
       </div>
       <div class="sensitive" v-show="attachedMedias.length > 0">
-        <el-button size="small" type="text" @click="changeSensitive">
+        <el-button size="small" type="text" @click="changeSensitive" :title="$t('modals.new_toot.change_sensitive')">
           <icon name="eye-slash" v-show="sensitive"></icon>
           <icon name="eye" v-show="!sensitive"></icon>
         </el-button>
       </div>
       <div class="content-warning">
-        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning">
+        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning" :title="$t('modals.new_toot.add_cw')">
           CW
         </el-button>
       </div>

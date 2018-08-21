@@ -126,7 +126,11 @@
       "toot": "Wyślij",
       "close_confirm": "Czy na pewno chcesz porzucić tworzenie wpisu?",
       "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Anuluj"
+      "close_confirm_cancel": "Anuluj",
+      "add_image": "Dodaj obraz",
+      "change_visibility": "Zmień widoczność",
+      "add_cw": "Dodaj ostrzeżenie zawartości",
+      "change_sensitive": "Zmień wrażliwy"
     },
     "jump": {
       "jump_to": "Przejdź do…"

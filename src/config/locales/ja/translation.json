@@ -127,7 +127,11 @@
       "toot": "トゥート！",
       "close_confirm": "本当に閉じますか？",
       "close_confirm_ok": "閉じる",
-      "close_confirm_cancel": "キャンセル"
+      "close_confirm_cancel": "キャンセル",
+      "add_image": "画像を添付",
+      "change_visibility": "プライバシー設定",
+      "add_cw": "閲覧注意を追加",
+      "change_sensitive": "メディアの閲覧注意設定"
     },
     "jump": {
       "jump_to": "移動..."
