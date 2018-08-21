@@ -17,7 +17,7 @@ i{
         "edit": {
             "name": "수정",
             "undo": "되돌리기",
-            "redo": "되되돌리기",
+            "redo": "재실행",
             "cut": "잘라내기",
             "copy": "복사",
             "paste": "붙여넣기",
@@ -69,8 +69,8 @@ i{
             "appearance": "외관",
             "theme_color": "테마 색상:",
             "theme": {
-                "light": "라이트 테마",
-                "dark": "다크 테마"
+                "light": "밝은 테마",
+                "dark": "어두운 테마"
             },
             "font_size": "폰트 크기:",
             "display_style": {
