@@ -80,7 +80,6 @@ export default {
     opened: function (newState, oldState) {
       if (!oldState && newState) {
         this.$nextTick(function () {
-          console.log('focus')
           this.$refs.status.focus()
         })
       } else if (oldState && !newState) {
