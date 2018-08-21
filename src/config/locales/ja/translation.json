@@ -34,6 +34,9 @@
       "jump_to": "ジャンプ"
     }
   },
+  "global_header": {
+    "add_new_account": "アカウントを追加"
+  },
   "side_menu": {
     "profile": "プロフィール",
     "show_profile": "プロフィール確認",

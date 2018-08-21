@@ -13,7 +13,7 @@
         <img v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
-      <el-menu-item index="/login" @click="login">
+      <el-menu-item index="/login" @click="login" :title="$t('global_header.add_new_account')">
         <i class="el-icon-plus"></i>
         <span slot="new">New</span>
       </el-menu-item>
