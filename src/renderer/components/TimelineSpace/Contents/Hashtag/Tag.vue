@@ -4,8 +4,18 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="tag-timeline" v-for="message in timeline" v-bind:key="message.id">
-      <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+    <div class="tag-timeline" v-for="(message, index) in timeline" v-bind:key="message.uri">
+      <toot
+        :message="message"
+        :filter="filter"
+        :focused="index === focusedIndex"
+        v-on:update="updateToot"
+        v-on:delete="deleteToot"
+        @focusNext="focusNext"
+        @focusPrev="focusPrev"
+        @selectToot="focusToot(index)"
+        >
+      </toot>
     </div>
   </transition-group>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
@@ -25,6 +35,11 @@ export default {
   name: 'tag',
   components: { Toot },
   props: ['tag'],
+  data () {
+    return {
+      focusedIndex: null
+    }
+  },
   computed: {
     ...mapState({
       backgroundColor: state => state.App.theme.background_color,
@@ -59,6 +74,14 @@ export default {
           .finally(() => {
             this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
           })
+      }
+    },
+    focusedIndex: function (newState, oldState) {
+      if (newState >= 0 && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', false)
+      } else if (newState === null && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
       }
     }
   },
@@ -116,6 +139,7 @@ export default {
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
+        this.focusedIndex = null
       }
     },
     async reload () {
@@ -134,7 +158,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
         await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/stopStreaming')
 
-        await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
+        await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetchTimeline', account)
         await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
         await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag)
           .catch(() => {
@@ -162,6 +186,24 @@ export default {
         document.getElementById('scrollable'),
         0
       )
+      this.focusedIndex = null
+    },
+    focusNext () {
+      if (this.focusedIndex === null) {
+        this.focusedIndex = 0
+      } else if (this.focusedIndex < this.timeline.length) {
+        this.focusedIndex++
+      }
+    },
+    focusPrev () {
+      if (this.focusedIndex === 0) {
+        this.focusedIndex = null
+      } else if (this.focusedIndex > 0) {
+        this.focusedIndex--
+      }
+    },
+    focusToot (index) {
+      this.focusedIndex = index
     }
   }
 }
