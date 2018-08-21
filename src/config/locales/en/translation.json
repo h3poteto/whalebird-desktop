@@ -98,7 +98,7 @@
       "domain": "Domain",
       "association": "Association",
       "order": "Order",
-      "remove_association": "Remove assocication",
+      "remove_association": "Remove association",
       "remove_all_associations": "Remove all associations",
       "confirm": "Confirm",
       "cancel": "Cancel",
@@ -123,7 +123,7 @@
       "status": "What is on your mind?",
       "cancel": "Cancel",
       "toot": "Toot",
-      "close_confirm": "Are you sure to close new toot?",
+      "close_confirm": "Are you sure you want to close new toot?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Cancel"
     },
@@ -181,7 +181,7 @@
     "login": "Login"
   },
   "authorize": {
-    "manually_1": "Now authorization page is opened in your browser.",
+    "manually_1": "The authorization page should now be opened in your browser.",
     "manually_2": "If it is not opened, please open the following URL manually.",
     "code_label": "Please paste authorization code from your browser:",
     "submit": "Submit"
