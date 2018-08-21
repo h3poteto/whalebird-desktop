@@ -35,8 +35,11 @@
     }
   },
   "side_menu": {
+    "profile": "프로필",
     "show_profile": "프로필 보이기",
     "edit_profile": "프로필 변경",
+    "collapse": "무너짐",
+    "expand": "넓히다",
     "home": "홈",
     "notification": "알림",
     "favourite": "즐겨찾기",

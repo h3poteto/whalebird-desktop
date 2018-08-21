@@ -35,8 +35,11 @@
     }
   },
   "side_menu": {
+    "profile": "Profile",
     "show_profile": "Show profile",
     "edit_profile": "Edit profile",
+    "collapse": "Collapse",
+    "expand": "Expand",
     "home": "Home",
     "notification": "Notification",
     "favourite": "Favourite",
