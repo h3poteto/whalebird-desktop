@@ -34,9 +34,15 @@
       "jump_to": "Springe zu"
     }
   },
+  "global_header": {
+    "add_new_account": "Neues Konto hinzufügen"
+  },
   "side_menu": {
+    "profile": "Profil",
     "show_profile": "Profil ansehen",
     "edit_profile": "Profil bearbeiten",
+    "collapse": "Zusammenbruch",
+    "expand": "Erweitern",
     "home": "Home",
     "notification": "Benachrichtigung",
     "favourite": "Favorit",
@@ -60,7 +66,9 @@
       "title": "Filter",
       "placeholder": "Mit regulären Ausdrücken filtern",
       "apply": "Übernehmen"
-    }
+    },
+    "new_toot": "Toot",
+    "reload": "Neu laden"
   },
   "preferences": {
     "title": "Einstellungen",
@@ -125,7 +133,11 @@
       "toot": "Toot",
       "close_confirm": "Möchtest du wirklich schließen?",
       "close_confirm_ok": "Schließen",
-      "close_confirm_cancel": "Abbrechen"
+      "close_confirm_cancel": "Abbrechen",
+      "add_image": "Bild hinzufügen",
+      "change_visibility": "Sichtbarkeit ändern",
+      "add_cw": "Inhalt hinzufügen Warnung",
+      "change_sensitive": "Ändern Sie empfindlich"
     },
     "jump": {
       "jump_to": "Springe zu..."
@@ -147,13 +159,21 @@
       "open_in_browser": "Im Browser öffnen",
       "copy_link_to_toot": "Link zum Toot kopieren",
       "delete": "Löschen",
-      "via": "via {{application}}"
+      "via": "via {{application}}",
+      "reply": "Antworten",
+      "reblog": "Reblog",
+      "fav": "Favorit",
+      "detail": "Toot details"
     }
   },
   "side_bar": {
     "account_profile": {
       "follows_you": "Folgt dir",
       "doesnt_follow_you": "Folgt dir nicht",
+      "detail": "Detail",
+      "follow": "Folgen",
+      "unfollow": "Nicht folgen",
+      "follow_requested": "Folgen Sie angefordert",
       "open_in_browser": "Im Browser öffnen",
       "manage_list_memberships": "Listen-Mitgliedschaften verwalten",
       "toots": "Toots",

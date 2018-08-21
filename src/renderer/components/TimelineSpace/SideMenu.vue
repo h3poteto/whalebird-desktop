@@ -6,7 +6,7 @@
       </div>
       <div class="profile-wide" v-else>
         <div>@{{ account.username }}
-          <el-dropdown trigger="click" @command="handleProfile">
+          <el-dropdown trigger="click" @command="handleProfile" :title="$t('side_menu.profile')">
             <span class="el-dropdown-link">
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
@@ -19,10 +19,10 @@
         <span>{{ account.domain }}</span>
       </div>
       <div class="collapse">
-        <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse">
+        <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse" :title="$t('side_menu.expand')">
           <i class="el-icon-arrow-right"></i>
         </el-button>
-        <el-button type="text" class="do-collapse" @click="doCollapse" v-else>
+        <el-button type="text" class="do-collapse" @click="doCollapse" v-else :title="$t('side_menu.collapse')">
           <i class="el-icon-arrow-left"></i>
         </el-button>
       </div>
