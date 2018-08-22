@@ -1,5 +1,5 @@
 <template>
-<div id="notifications">
+<div id="notifications" v-shortkey="{next: ['j']}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
@@ -157,6 +157,15 @@ export default {
     },
     focusNotification (index) {
       this.focusedIndex = index
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'next':
+          if (!this.focusedIndex) {
+            this.focusedIndex = 0
+          }
+          break
+      }
     }
   }
 }
