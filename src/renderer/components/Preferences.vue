@@ -54,6 +54,7 @@ export default {
   methods: {
     close () {
       this.$router.push('/')
+      this.$store.commit('Preferences/changeActive', '1')
     },
     general () {
       this.$router.push('/preferences/general')
