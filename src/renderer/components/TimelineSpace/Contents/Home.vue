@@ -105,7 +105,6 @@ export default {
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
-        this.focusedIndex = null
       }
     },
     updateToot (message) {
