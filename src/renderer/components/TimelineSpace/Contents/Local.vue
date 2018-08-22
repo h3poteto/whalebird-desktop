@@ -78,7 +78,7 @@ export default {
           })
       }
     },
-    focusedIndex: function (newState, oldState) {
+    focusedId: function (newState, oldState) {
       if (newState && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Local/changeHeading', false)
       } else if (newState === null && !this.heading) {

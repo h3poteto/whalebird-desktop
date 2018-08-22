@@ -80,7 +80,7 @@ export default {
           })
       }
     },
-    focusedIndex: function (newState, oldState) {
+    focusedId: function (newState, oldState) {
       if (newState && this.heading) {
         this.heading = false
       } else if (newState === null && !this.heading) {
