@@ -1,5 +1,5 @@
 <template>
-<div id="favourites">
+<div id="favourites" v-shortkey="{next: ['j']}" @shortkey="handleKey">
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <div class="fav" v-for="message in favourites" v-bind:key="message.id">
@@ -167,6 +167,15 @@ export default {
     },
     focusToot (message) {
       this.focusedId = message.id
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'next':
+          if (!this.focusedId) {
+            this.focusedId = this.favourites[0].uri
+          }
+          break
+      }
     }
   }
 }
