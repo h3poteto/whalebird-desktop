@@ -4,16 +4,16 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="local-timeline" v-for="(message, index) in timeline" :key="message.uri">
+    <div class="local-timeline" v-for="message in timeline" :key="message.uri">
       <toot
         :message="message"
         :filter="filter"
-        :focused="index === focusedIndex"
+        :focused="message.uri === focusedId"
         v-on:update="updateToot"
         v-on:delete="deleteToot"
         @focusNext="focusNext"
         @focusPrev="focusPrev"
-        @selectToot="focusToot(index)"
+        @selectToot="focusToot(message)"
         >
       </toot>
     </div>
@@ -37,7 +37,7 @@ export default {
   components: { Toot },
   data () {
     return {
-      focusedIndex: null
+      focusedId: null
     }
   },
   computed: {
@@ -79,7 +79,7 @@ export default {
       }
     },
     focusedIndex: function (newState, oldState) {
-      if (newState >= 0 && this.heading) {
+      if (newState && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Local/changeHeading', false)
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
@@ -151,24 +151,26 @@ export default {
         document.getElementById('scrollable'),
         0
       )
-      this.focusedIndex = null
+      this.focusedId = null
     },
     focusNext () {
-      if (this.focusedIndex === null) {
-        this.focusedIndex = 0
-      } else if (this.focusedIndex < this.timeline.length) {
-        this.focusedIndex++
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === -1) {
+        this.focusedId = this.timeline[0].uri
+      } else if (currentIndex < this.timeline.length) {
+        this.focusedId = this.timeline[currentIndex + 1].uri
       }
     },
     focusPrev () {
-      if (this.focusedIndex === 0) {
-        this.focusedIndex = null
-      } else if (this.focusedIndex > 0) {
-        this.focusedIndex--
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === 0) {
+        this.focusedId = null
+      } else if (currentIndex > 0) {
+        this.focusedId = this.timeline[currentIndex - 1].uri
       }
     },
-    focusToot (index) {
-      this.focusedIndex = index
+    focusToot (message) {
+      this.focusedId = message.uri
     }
   }
 }
