@@ -2,7 +2,7 @@
 <div
   class="status"
   tabIndex="0"
-  v-shortkey="{next: ['j'], prev: ['k']}"
+  v-shortkey="focused ? {next: ['j'], prev: ['k'], reply: ['r'], boost: ['b'], fav: ['f'], open: ['o'], profile: ['p']} : {}"
   @shortkey="handleTootControl"
   ref="status"
   @click="$emit('selectToot')"
@@ -391,6 +391,21 @@ export default {
           break
         case 'prev':
           this.$emit('focusPrev')
+          break
+        case 'reply':
+          this.openReply(this.message)
+          break
+        case 'boost':
+          this.changeReblog(this.message)
+          break
+        case 'fav':
+          this.changeFavourite(this.message)
+          break
+        case 'open':
+          this.openDetail(this.message)
+          break
+        case 'profile':
+          this.openUser(this.originalMessage(this.message).account)
           break
       }
     }
