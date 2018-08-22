@@ -1,6 +1,15 @@
 <template>
   <div class="mention">
-    <toot :message="message.status" :filter="filter" v-on:update="updateToot"></toot>
+    <toot
+      :message="message.status"
+      :filter="filter"
+      :focused="focused"
+      v-on:update="updateToot"
+      @focusNext="$emit('focusNext')"
+      @focusPrev="$emit('focusPrev')"
+      @selectToot="$emit('select')"
+      >
+    </toot>
   </div>
 </template>
 
@@ -17,6 +26,10 @@ export default {
     filter: {
       type: String,
       default: ''
+    },
+    focused: {
+      type: Boolean,
+      default: false
     }
   },
   components: { Toot },
