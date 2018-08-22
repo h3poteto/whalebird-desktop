@@ -4,8 +4,18 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="list-timeline" v-for="message in timeline" v-bind:key="message.id">
-      <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+    <div class="list-timeline" v-for="message in timeline" v-bind:key="message.uri">
+      <toot
+        :message="message"
+        :filter="filter"
+        :focused="message.uri === focusedId"
+        v-on:update="updateToot"
+        v-on:delete="deleteToot"
+        @focusNext="focusNext"
+        @focusPrev="focusPrev"
+        @selectToot="focusToot(message)"
+        >
+      </toot>
     </div>
   </transition-group>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
@@ -25,6 +35,11 @@ export default {
   name: 'list',
   props: ['list_id'],
   components: { Toot },
+  data () {
+    return {
+      focusedId: null
+    }
+  },
   computed: {
     ...mapState({
       backgroundColor: state => state.App.theme.background_color,
@@ -58,6 +73,14 @@ export default {
           .finally(() => {
             this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
           })
+      }
+    },
+    focusedId: function (newState, oldState) {
+      if (newState && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', false)
+      } else if (newState === null && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Lists/Show/mergeTimeline')
       }
     }
   },
@@ -130,7 +153,7 @@ export default {
         await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
 
-        await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
+        await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', account)
         await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', this.list_id)
           .catch(() => {
@@ -158,6 +181,26 @@ export default {
         document.getElementById('scrollable'),
         0
       )
+      this.focusedId = null
+    },
+    focusNext () {
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === -1) {
+        this.focusedId = this.timeline[0].uri
+      } else if (currentIndex < this.timeline.length) {
+        this.focusedId = this.timeline[currentIndex + 1].uri
+      }
+    },
+    focusPrev () {
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === 0) {
+        this.focusedId = null
+      } else if (currentIndex > 0) {
+        this.focusedId = this.timeline[currentIndex - 1].uri
+      }
+    },
+    focusToot (message) {
+      this.focusedId = message.uri
     }
   }
 }
