@@ -2,7 +2,7 @@
 <div
   class="follow"
   tabIndex="0"
-  v-shortkey="{next: ['j'], prev: ['k']}"
+  v-shortkey="focused ? {next: ['j'], prev: ['k']} : {}"
   @shortkey="handleStatusControl"
   ref="status"
   @click="$emit('select')"
