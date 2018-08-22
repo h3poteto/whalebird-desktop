@@ -1,5 +1,5 @@
 <template>
-<div id="public">
+<div id="public" v-shortkey="{next: ['j']}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
@@ -194,6 +194,15 @@ export default {
     },
     focusToot (message) {
       this.focusedId = message.uri
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'next':
+          if (!this.focusedId) {
+            this.focusedId = this.timeline[0].uri
+          }
+          break
+      }
     }
   }
 }
