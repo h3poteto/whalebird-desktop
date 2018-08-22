@@ -5,6 +5,8 @@
   :element-loading-text="$t('message.loading')"
   element-loading-spinner="el-icon-loading"
   element-loading-background="rgba(0, 0, 0, 0.8)"
+  v-shortkey="{help: ['h']}"
+  @shortkey="handleKey"
   >
   <side-menu></side-menu>
   <div :class="collapse ? 'page-narrow':'page'">
@@ -159,6 +161,13 @@ export default {
     },
     onDragOver (e) {
       e.preventDefault()
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'help':
+          this.$store.commit('TimelineSpace/Modals/Shortcut/changeModal', true)
+          break
+      }
     }
   }
 }
