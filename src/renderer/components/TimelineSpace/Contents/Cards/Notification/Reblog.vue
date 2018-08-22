@@ -1,5 +1,12 @@
 <template>
-<div class="status" tabIndex="0">
+<div
+  class="status"
+  tabIndex="0"
+  v-shortkey="{next: ['j'], prev: ['k']}"
+  @shortkey="handleStatusControl"
+  ref="status"
+  @click="$emit('select')"
+  >
   <div v-show="filtered(message)" class="filtered">
     Filtered
   </div>
@@ -80,12 +87,34 @@ export default {
     filter: {
       type: String,
       default: ''
+    },
+    focused: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
       showContent: false,
       showAttachments: false
+    }
+  },
+  mounted () {
+    if (this.focused) {
+      this.$refs.status.focus()
+    }
+  },
+  watch: {
+    focused: function (newState, oldState) {
+      if (newState) {
+        this.$nextTick(function () {
+          this.$refs.status.focus()
+        })
+      } else if (oldState && !newState) {
+        this.$nextTick(function () {
+          this.$refs.status.blur()
+        })
+      }
     }
   },
   methods: {
@@ -155,6 +184,16 @@ export default {
     },
     spoilerText (message) {
       return emojify(message.spoiler_text, message.emojis)
+    },
+    handleStatusControl (event) {
+      switch (event.srcKey) {
+        case 'next':
+          this.$emit('focusNext')
+          break
+        case 'prev':
+          this.$emit('focusPrev')
+          break
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
 <div
   class="status"
   tabIndex="0"
-  v-shortkey="{next: ['ctrl', 'n'], prev: ['ctrl', 'p']}"
+  v-shortkey="{next: ['j'], prev: ['k']}"
   @shortkey="handleTootControl"
   ref="status"
   @click="$emit('selectToot')"
