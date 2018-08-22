@@ -130,7 +130,6 @@ export default {
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Public/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Public/mergeTimeline')
-        this.focusedIndex = null
       }
     },
     async reload () {

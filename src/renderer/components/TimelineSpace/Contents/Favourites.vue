@@ -110,7 +110,6 @@ export default {
         this.heading = false
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
         this.heading = true
-        this.focusedIndex = null
       }
     },
     async reload () {
