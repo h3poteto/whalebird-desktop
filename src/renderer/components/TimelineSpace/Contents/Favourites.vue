@@ -3,7 +3,17 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <div class="fav" v-for="message in favourites" v-bind:key="message.id">
-    <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+    <toot
+      :message="message"
+      :filter="filter"
+      :focused="message.uri === focusedId"
+      v-on:update="updateToot"
+      v-on:delete="deleteToot"
+      @focusNext="focusNext"
+      @focusPrev="focusPrev"
+      @selectToot="focusToot(message)"
+      >
+    </toot>
   </div>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
   </div>
@@ -24,7 +34,8 @@ export default {
   components: { Toot },
   data () {
     return {
-      heading: true
+      heading: true,
+      focusedId: null
     }
   },
   computed: {
@@ -67,6 +78,13 @@ export default {
           .finally(() => {
             this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
           })
+      }
+    },
+    focusedId: function (newState, oldState) {
+      if (newState && this.heading) {
+        this.heading = false
+      } else if (newState === null && !this.heading) {
+        this.heading = true
       }
     }
   },
@@ -129,6 +147,26 @@ export default {
         document.getElementById('scrollable'),
         0
       )
+      this.focusedId = null
+    },
+    focusNext () {
+      const currentIndex = this.favourites.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === -1) {
+        this.focusedId = this.favourites[0].uri
+      } else if (currentIndex < this.favourites.length) {
+        this.focusedId = this.favourites[currentIndex + 1].uri
+      }
+    },
+    focusPrev () {
+      const currentIndex = this.favourites.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === 0) {
+        this.focusedId = null
+      } else if (currentIndex > 0) {
+        this.focusedId = this.favourites[currentIndex - 1].uri
+      }
+    },
+    focusToot (message) {
+      this.focusedId = message.id
     }
   }
 }
