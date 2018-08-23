@@ -1,5 +1,5 @@
 <template>
-<div name="list">
+<div name="list" v-shortkey="shortcutEnabled ? {next:['j']} : {}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
@@ -9,6 +9,7 @@
         :message="message"
         :filter="filter"
         :focused="message.uri === focusedId"
+        :overlaid="modalOpened"
         v-on:update="updateToot"
         v-on:delete="deleteToot"
         @focusNext="focusNext"
@@ -27,7 +28,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Toot from '../Cards/Toot'
 import scrollTop from '../../../utils/scroll'
 
@@ -49,7 +50,13 @@ export default {
       heading: state => state.TimelineSpace.Contents.Lists.Show.heading,
       unread: state => state.TimelineSpace.Contents.Lists.Show.unreadTimeline,
       filter: state => state.TimelineSpace.Contents.Lists.Show.filter
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ]),
+    shortcutEnabled: function () {
+      return !this.focusedId && !this.modalOpened
+    }
   },
   created () {
     this.$store.commit('TimelineSpace/changeLoading', true)
@@ -201,6 +208,13 @@ export default {
     },
     focusToot (message) {
       this.focusedId = message.uri
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'next':
+          this.focusedId = this.timeline[0].uri
+          break
+      }
     }
   }
 }
