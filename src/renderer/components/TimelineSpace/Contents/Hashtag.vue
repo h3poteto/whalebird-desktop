@@ -9,7 +9,7 @@
           </el-button>
         </div>
         <div class="form-item input">
-          <input v-model="tag" :placeholder="$t('hashtag.tag_name')" class="search-keyword" v-shortkey="['enter']" @shortkey="search" autofocus></input>
+          <input v-model="tag" :placeholder="$t('hashtag.tag_name')" class="search-keyword" v-shortkey.avoid v-on:keyup.enter="search" autofocus></input>
         </div>
         <div class="form-item" v-show="tagPage()">
           <el-button type="text" @click="save">

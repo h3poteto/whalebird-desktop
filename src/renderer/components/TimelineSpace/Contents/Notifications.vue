@@ -1,5 +1,5 @@
 <template>
-<div id="notifications" v-shortkey="{next: ['j']}" @shortkey="handleKey">
+<div id="notifications" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
@@ -9,6 +9,7 @@
         :message="message"
         :filter="filter"
         :focused="index === focusedIndex"
+        :overlaid="modalOpened"
         @focusNext="focusNext"
         @focusPrev="focusPrev"
         @selectNotification="focusNotification(index)"
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Notification from './Cards/Notification'
 import scrollTop from '../../utils/scroll'
 
@@ -47,7 +48,13 @@ export default {
       heading: state => state.TimelineSpace.Contents.Notifications.heading,
       unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications,
       filter: state => state.TimelineSpace.Contents.Notifications.filter
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ]),
+    shortcutEnabled: function () {
+      return !this.focusedIndex && !this.modalOpened
+    }
   },
   mounted () {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
@@ -161,9 +168,7 @@ export default {
     handleKey (event) {
       switch (event.srcKey) {
         case 'next':
-          if (!this.focusedIndex) {
-            this.focusedIndex = 0
-          }
+          this.focusedIndex = 0
           break
       }
     }
