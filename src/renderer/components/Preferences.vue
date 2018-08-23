@@ -11,6 +11,7 @@
       </el-row>
     </el-header>
     <el-container>
+      <div v-shortkey="['esc']" @shortkey="close"></div>
       <el-aside width="240px" class="menu">
         <el-menu
           :default-active="defaultActive"
