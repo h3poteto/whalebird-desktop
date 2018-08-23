@@ -4,6 +4,7 @@
       :message="message.status"
       :filter="filter"
       :focused="focused"
+      :overlaid="overlaid"
       v-on:update="updateToot"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
@@ -28,6 +29,10 @@ export default {
       default: ''
     },
     focused: {
+      type: Boolean,
+      default: false
+    },
+    overlaid: {
       type: Boolean,
       default: false
     }

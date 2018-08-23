@@ -2,7 +2,7 @@
 <div
   class="status"
   tabIndex="0"
-  v-shortkey="focused ? {next: ['j'], prev: ['k']} : {}"
+  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k']} : {}"
   @shortkey="handleStatusControl"
   ref="status"
   @click="$emit('select')"
@@ -91,12 +91,21 @@ export default {
     focused: {
       type: Boolean,
       default: false
+    },
+    overlaid: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
       showContent: false,
       showAttachments: false
+    }
+  },
+  computed: {
+    shortcutEnabled: function () {
+      return this.focused && !this.overlaid
     }
   },
   mounted () {
