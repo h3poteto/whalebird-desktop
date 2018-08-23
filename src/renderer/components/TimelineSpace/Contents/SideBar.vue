@@ -1,6 +1,6 @@
 <template>
 <transition name="slide-detail">
-  <div id="side_bar" v-if="openSideBar">
+  <div id="side_bar" v-if="openSideBar" v-shortkey="['esc']" @shortkey="close">
     <div class="header">
       <i class="el-icon-loading" v-show="loading"></i>
       <i class="el-icon-close" @click="close"></i>
