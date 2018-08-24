@@ -42,19 +42,6 @@ const NewToot = {
       state.attachedMedias = state.attachedMedias.filter(m => m.id !== media.id)
     },
     /**
-     * changeVisibility
-     * Update visibility using Visibility constants
-     * @param state vuex state object
-     * @param level Visibility level
-     **/
-    changeVisibility (state, level) {
-      Object.keys(Visibility).map((key, index) => {
-        if (Visibility[key].key === level) {
-          this.visibility = Visibility[key].value
-        }
-      })
-    },
-    /**
      * changeVisibilityValue
      * Update visibility using direct value
      * @param state vuex state object
@@ -95,7 +82,14 @@ const NewToot = {
         .filter((a) => a !== rootState.TimelineSpace.account.username)
       commit('changeModal', true)
       commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
-      commit('changeVisibility', message.visibility)
+      let value = Visibility.Public.value
+      Object.keys(Visibility).map((key, index) => {
+        const target = Visibility[key]
+        if (target.key === message.visibility) {
+          value = target.value
+        }
+      })
+      commit('changeVisibilityValue', value)
     },
     openModal ({ dispatch, commit, rootState }) {
       commit('changeModal', true)
@@ -109,7 +103,7 @@ const NewToot = {
       commit('clearAttachedMedias')
       commit('changeSensitive', false)
       commit('updateSpoiler', '')
-      commit('changeVisibility', Visibility.Public)
+      commit('changeVisibilityValue', Visibility.Public.value)
     },
     uploadImage ({ state, commit, rootState }, image) {
       commit('changeBlockSubmit', true)
