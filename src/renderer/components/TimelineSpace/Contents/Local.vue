@@ -1,5 +1,5 @@
 <template>
-<div id="local" v-shortkey="{next: ['j']}" @shortkey="handleKey">
+<div id="local" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
@@ -9,6 +9,7 @@
         :message="message"
         :filter="filter"
         :focused="message.uri === focusedId"
+        :overlaid="modalOpened"
         v-on:update="updateToot"
         v-on:delete="deleteToot"
         @focusNext="focusNext"
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Toot from './Cards/Toot'
 import scrollTop from '../../utils/scroll'
 
@@ -49,7 +50,13 @@ export default {
       heading: state => state.TimelineSpace.Contents.Local.heading,
       unread: state => state.TimelineSpace.Contents.Local.unreadTimeline,
       filter: state => state.TimelineSpace.Contents.Local.filter
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ]),
+    shortcutEnabled: function () {
+      return !this.focusedId && !this.modalOpened
+    }
   },
   mounted () {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
@@ -79,6 +86,7 @@ export default {
       }
     },
     focusedId: function (newState, oldState) {
+      console.log(newState)
       if (newState && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Local/changeHeading', false)
       } else if (newState === null && !this.heading) {
@@ -155,6 +163,7 @@ export default {
     },
     focusNext () {
       const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      console.log(currentIndex)
       if (currentIndex === -1) {
         this.focusedId = this.timeline[0].uri
       } else if (currentIndex < this.timeline.length) {
@@ -171,13 +180,12 @@ export default {
     },
     focusToot (message) {
       this.focusedId = message.uri
+      console.log(this.focusedId)
     },
     handleKey (event) {
       switch (event.srcKey) {
         case 'next':
-          if (!this.focusedId) {
-            this.focusedId = this.timeline[0].uri
-          }
+          this.focusedId = this.timeline[0].uri
           break
       }
     }

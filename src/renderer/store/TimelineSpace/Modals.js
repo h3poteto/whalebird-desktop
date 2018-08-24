@@ -14,6 +14,17 @@ const Modals = {
     ListMembership,
     AddListMember,
     Shortcut
+  },
+  getters: {
+    modalOpened: (state, getters, rootState) => {
+      const imageViewer = rootState.TimelineSpace.Modals.ImageViewer.modalOpen
+      const newToot = rootState.TimelineSpace.Modals.NewToot.modalOpen
+      const jump = rootState.TimelineSpace.Modals.Jump.modalOpen
+      const listMembership = rootState.TimelineSpace.Modals.ListMembership.modalOpen
+      const addListMember = rootState.TimelineSpace.Modals.AddListMember.modalOpen
+      const shortcut = rootState.TimelineSpace.Modals.Jump.modalOpen
+      return imageViewer || newToot || jump || listMembership || addListMember || shortcut
+    }
   }
 }
 

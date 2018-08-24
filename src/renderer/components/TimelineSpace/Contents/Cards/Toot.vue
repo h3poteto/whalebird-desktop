@@ -2,7 +2,7 @@
 <div
   class="status"
   tabIndex="0"
-  v-shortkey="focused ? {next: ['j'], prev: ['k'], reply: ['r'], boost: ['b'], fav: ['f'], open: ['o'], profile: ['p']} : {}"
+  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], reply: ['r'], boost: ['b'], fav: ['f'], open: ['o'], profile: ['p']} : {}"
   @shortkey="handleTootControl"
   ref="status"
   @click="$emit('selectToot')"
@@ -142,12 +142,19 @@ export default {
     focused: {
       type: Boolean,
       default: false
+    },
+    overlaid: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     ...mapState({
       displayNameStyle: state => state.App.displayNameStyle
-    })
+    }),
+    shortcutEnabled: function () {
+      return this.focused && !this.overlaid
+    }
   },
   mounted () {
     if (this.focused) {
@@ -387,6 +394,7 @@ export default {
     handleTootControl (event) {
       switch (event.srcKey) {
         case 'next':
+          console.log(this.shortcutEnabled)
           this.$emit('focusNext')
           break
         case 'prev':

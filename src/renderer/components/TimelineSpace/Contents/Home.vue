@@ -1,5 +1,5 @@
 <template>
-<div id="home" v-shortkey="{next: ['j']}" @shortkey="handleKey">
+<div id="home" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
@@ -9,6 +9,7 @@
         :message="message"
         :filter="filter"
         :focused="message.uri === focusedId"
+        :overlaid="modalOpened"
         v-on:update="updateToot"
         v-on:delete="deleteToot"
         @focusNext="focusNext"
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Toot from './Cards/Toot'
 import scrollTop from '../../utils/scroll'
 
@@ -49,7 +50,13 @@ export default {
       heading: state => state.TimelineSpace.Contents.Home.heading,
       unread: state => state.TimelineSpace.Contents.Home.unreadTimeline,
       filter: state => state.TimelineSpace.Contents.Home.filter
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ]),
+    shortcutEnabled: function () {
+      return !this.focusedId && !this.modalOpened
+    }
   },
   mounted () {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
@@ -176,9 +183,7 @@ export default {
     handleKey (event) {
       switch (event.srcKey) {
         case 'next':
-          if (!this.focusedId) {
-            this.focusedId = this.timeline[0].uri
-          }
+          this.focusedId = this.timeline[0].uri
           break
       }
     }

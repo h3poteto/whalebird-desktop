@@ -10,7 +10,7 @@
             :value="item.target">
           </el-option>
         </el-select>
-        <input v-model="query" :placeholder="$t('search.keyword')" class="search-keyword" v-shortkey="['enter']" @shortkey="search" autofocus></input>
+        <input v-model="query" :placeholder="$t('search.keyword')" class="search-keyword" v-shortkey.avoid v-on:keyup.enter="search" autofocus></input>
         <div class="clearfix"></div>
       </el-form>
     </div>

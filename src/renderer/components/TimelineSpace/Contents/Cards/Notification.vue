@@ -4,6 +4,7 @@
              :message="message"
              :filter="filter"
              :focused="focused"
+             :overlaid="overlaid"
              @focusNext="$emit('focusNext')"
              @focusPrev="$emit('focusPrev')"
              @select="$emit('selectNotification')"
@@ -12,6 +13,7 @@
   <follow v-else-if="message.type === 'follow'"
           :message="message"
           :focused="focused"
+          :overlaid="overlaid"
           @focusNext="$emit('focusNext')"
           @focusPrev="$emit('focusPrev')"
           @select="$emit('selectNotification')"
@@ -21,6 +23,7 @@
             :message="message"
             :filter="filter"
             :focused="focused"
+            :overlaid="overlaid"
             @focusNext="$emit('focusNext')"
             @focusPrev="$emit('focusPrev')"
             @select="$emit('selectNotification')"
@@ -30,6 +33,7 @@
            :message="message"
            :filter="filter"
            :focused="focused"
+           :overlaid="overlaid"
            @focusNext="$emit('focusNext')"
            @focusPrev="$emit('focusPrev')"
            @select="$emit('selectNotification')"
@@ -58,6 +62,10 @@ export default {
     focused: {
       type: Boolean,
       defalt: false
+    },
+    overlaid: {
+      type: Boolean,
+      default: false
     }
   },
   components: { Favourite, Follow, Mention, Reblog }
