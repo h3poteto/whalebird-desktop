@@ -5,6 +5,8 @@
   :element-loading-text="$t('message.loading')"
   element-loading-spinner="el-icon-loading"
   element-loading-background="rgba(0, 0, 0, 0.8)"
+  v-shortkey="shortcutEnabled ? {help: ['h']} : {}"
+  @shortkey="handleKey"
   >
   <side-menu></side-menu>
   <div :class="collapse ? 'page-narrow':'page'">
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Contents from './TimelineSpace/Contents'
@@ -40,7 +42,13 @@ export default {
     ...mapState({
       loading: state => state.TimelineSpace.loading,
       collapse: state => state.TimelineSpace.SideMenu.collapse
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ]),
+    shortcutEnabled: function () {
+      return !this.modalOpened
+    }
   },
   created () {
     this.$store.commit('TimelineSpace/changeLoading', true)
@@ -159,6 +167,13 @@ export default {
     },
     onDragOver (e) {
       e.preventDefault()
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'help':
+          this.$store.commit('TimelineSpace/Modals/Shortcut/changeModal', true)
+          break
+      }
     }
   }
 }

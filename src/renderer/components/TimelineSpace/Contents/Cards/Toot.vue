@@ -1,5 +1,12 @@
 <template>
-<div class="status" tabIndex="0">
+<div
+  class="status"
+  tabIndex="0"
+  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], reply: ['r'], boost: ['b'], fav: ['f'], open: ['o'], profile: ['p']} : {}"
+  @shortkey="handleTootControl"
+  ref="status"
+  @click="$emit('selectToot')"
+  >
   <div v-show="filtered(message)" class="filtered">
     Filtered
   </div>
@@ -35,7 +42,7 @@
           {{ $t('cards.toot.sensitive') }}
         </el-button>
         <div v-show="isShowAttachments(message)">
-          <el-button v-show="sensitive(message) && isShowAttachments(message)" class="hide-sensitive" type="text" @click="showAttachments = false">
+          <el-button v-show="sensitive(message) && isShowAttachments(message)" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
             <icon name="eye" class="hide"></icon>
           </el-button>
           <div class="media" v-for="media in mediaAttachments(message)">
@@ -54,7 +61,7 @@
         </span>
       </div>
       <div class="tool-box">
-        <el-button type="text" @click="openReply(message)" class="reply">
+        <el-button type="text" @click="openReply(message)" class="reply" :title="$t('cards.toot.reply')">
           <icon name="reply" scale="0.9"></icon>
         </el-button>
         <el-button v-show="locked(message)" type="text" class="locked">
@@ -63,13 +70,13 @@
         <el-button v-show="directed(message)" type="text" class="directed">
           <icon name="envelope" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="!locked(message)&&!directed(message)" type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'">
+        <el-button v-show="!locked(message)&&!directed(message)" type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'" :title="$t('cards.toot.reblog')">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
         <span class="count">
           {{ reblogsCount(message) }}
         </span>
-        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited animated bounceIn' : 'favourite'">
+        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited animated bounceIn' : 'favourite'" :title="$t('cards.toot.fav')">
           <icon name="star" scale="0.9"></icon>
         </el-button>
         <span class="count">
@@ -92,7 +99,7 @@
               </li>
             </ul>
           </div>
-          <el-button slot="reference" type="text">
+          <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
             <icon name="ellipsis-h" scale="0.9"></icon>
           </el-button>
         </popper>
@@ -131,12 +138,41 @@ export default {
     filter: {
       type: String,
       default: ''
+    },
+    focused: {
+      type: Boolean,
+      default: false
+    },
+    overlaid: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     ...mapState({
       displayNameStyle: state => state.App.displayNameStyle
-    })
+    }),
+    shortcutEnabled: function () {
+      return this.focused && !this.overlaid
+    }
+  },
+  mounted () {
+    if (this.focused) {
+      this.$refs.status.focus()
+    }
+  },
+  watch: {
+    focused: function (newState, oldState) {
+      if (newState) {
+        this.$nextTick(function () {
+          this.$refs.status.focus()
+        })
+      } else if (oldState && !newState) {
+        this.$nextTick(function () {
+          this.$refs.status.blur()
+        })
+      }
+    }
   },
   methods: {
     originalMessage (message) {
@@ -354,6 +390,32 @@ export default {
     spoilerText (message) {
       const original = this.originalMessage(message)
       return emojify(original.spoiler_text, original.emojis)
+    },
+    handleTootControl (event) {
+      switch (event.srcKey) {
+        case 'next':
+          console.log(this.shortcutEnabled)
+          this.$emit('focusNext')
+          break
+        case 'prev':
+          this.$emit('focusPrev')
+          break
+        case 'reply':
+          this.openReply(this.message)
+          break
+        case 'boost':
+          this.changeReblog(this.message)
+          break
+        case 'fav':
+          this.changeFavourite(this.message)
+          break
+        case 'open':
+          this.openDetail(this.message)
+          break
+        case 'profile':
+          this.openUser(this.originalMessage(this.message).account)
+          break
+      }
     }
   }
 }

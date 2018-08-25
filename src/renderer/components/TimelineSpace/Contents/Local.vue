@@ -1,11 +1,22 @@
 <template>
-<div id="local">
+<div id="local" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="local-timeline" v-for="message in timeline" :key="message.id">
-      <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+    <div class="local-timeline" v-for="message in timeline" :key="message.uri">
+      <toot
+        :message="message"
+        :filter="filter"
+        :focused="message.uri === focusedId"
+        :overlaid="modalOpened"
+        v-on:update="updateToot"
+        v-on:delete="deleteToot"
+        @focusNext="focusNext"
+        @focusPrev="focusPrev"
+        @selectToot="focusToot(message)"
+        >
+      </toot>
     </div>
   </transition-group>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
@@ -18,13 +29,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Toot from './Cards/Toot'
 import scrollTop from '../../utils/scroll'
 
 export default {
   name: 'local',
   components: { Toot },
+  data () {
+    return {
+      focusedId: null
+    }
+  },
   computed: {
     ...mapState({
       backgroundColor: state => state.App.theme.background_color,
@@ -34,7 +50,13 @@ export default {
       heading: state => state.TimelineSpace.Contents.Local.heading,
       unread: state => state.TimelineSpace.Contents.Local.unreadTimeline,
       filter: state => state.TimelineSpace.Contents.Local.filter
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ]),
+    shortcutEnabled: function () {
+      return !this.focusedId && !this.modalOpened
+    }
   },
   mounted () {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
@@ -61,6 +83,15 @@ export default {
           .finally(() => {
             this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
           })
+      }
+    },
+    focusedId: function (newState, oldState) {
+      console.log(newState)
+      if (newState && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Local/changeHeading', false)
+      } else if (newState === null && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Local/mergeTimeline')
       }
     }
   },
@@ -128,6 +159,35 @@ export default {
         document.getElementById('scrollable'),
         0
       )
+      this.focusedId = null
+    },
+    focusNext () {
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      console.log(currentIndex)
+      if (currentIndex === -1) {
+        this.focusedId = this.timeline[0].uri
+      } else if (currentIndex < this.timeline.length) {
+        this.focusedId = this.timeline[currentIndex + 1].uri
+      }
+    },
+    focusPrev () {
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === 0) {
+        this.focusedId = null
+      } else if (currentIndex > 0) {
+        this.focusedId = this.timeline[currentIndex - 1].uri
+      }
+    },
+    focusToot (message) {
+      this.focusedId = message.uri
+      console.log(this.focusedId)
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'next':
+          this.focusedId = this.timeline[0].uri
+          break
+      }
     }
   }
 }

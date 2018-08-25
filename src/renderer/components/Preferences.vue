@@ -11,6 +11,7 @@
       </el-row>
     </el-header>
     <el-container>
+      <div v-shortkey="['esc']" @shortkey="close"></div>
       <el-aside width="240px" class="menu">
         <el-menu
           :default-active="defaultActive"
@@ -54,6 +55,7 @@ export default {
   methods: {
     close () {
       this.$router.push('/')
+      this.$store.commit('Preferences/changeActive', '1')
     },
     general () {
       this.$router.push('/preferences/general')

@@ -1,9 +1,20 @@
 <template>
-<div id="favourites">
+<div id="favourites" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <div class="fav" v-for="message in favourites" v-bind:key="message.id">
-    <toot :message="message" :filter="filter" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+    <toot
+      :message="message"
+      :filter="filter"
+      :focused="message.uri === focusedId"
+      :overlaid="modalOpened"
+      v-on:update="updateToot"
+      v-on:delete="deleteToot"
+      @focusNext="focusNext"
+      @focusPrev="focusPrev"
+      @selectToot="focusToot(message)"
+      >
+    </toot>
   </div>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
   </div>
@@ -15,7 +26,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Toot from './Cards/Toot'
 import scrollTop from '../../utils/scroll'
 
@@ -24,7 +35,8 @@ export default {
   components: { Toot },
   data () {
     return {
-      heading: true
+      heading: true,
+      focusedId: null
     }
   },
   computed: {
@@ -35,7 +47,13 @@ export default {
       favourites: state => state.TimelineSpace.Contents.Favourites.favourites,
       lazyLoading: state => state.TimelineSpace.Contents.Favourites.lazyLoading,
       filter: state => state.TimelineSpace.Contents.Favourites.filter
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ]),
+    shortcutEnabled: function () {
+      return !this.focusedId && !this.modalOpened
+    }
   },
   created () {
     this.$store.commit('TimelineSpace/changeLoading', true)
@@ -67,6 +85,13 @@ export default {
           .finally(() => {
             this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
           })
+      }
+    },
+    focusedId: function (newState, oldState) {
+      if (newState && this.heading) {
+        this.heading = false
+      } else if (newState === null && !this.heading) {
+        this.heading = true
       }
     }
   },
@@ -129,6 +154,33 @@ export default {
         document.getElementById('scrollable'),
         0
       )
+      this.focusedId = null
+    },
+    focusNext () {
+      const currentIndex = this.favourites.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === -1) {
+        this.focusedId = this.favourites[0].uri
+      } else if (currentIndex < this.favourites.length) {
+        this.focusedId = this.favourites[currentIndex + 1].uri
+      }
+    },
+    focusPrev () {
+      const currentIndex = this.favourites.findIndex(toot => this.focusedId === toot.uri)
+      if (currentIndex === 0) {
+        this.focusedId = null
+      } else if (currentIndex > 0) {
+        this.focusedId = this.favourites[currentIndex - 1].uri
+      }
+    },
+    focusToot (message) {
+      this.focusedId = message.id
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'next':
+          this.focusedId = this.favourites[0].uri
+          break
+      }
     }
   }
 }

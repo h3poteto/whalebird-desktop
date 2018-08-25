@@ -1,9 +1,44 @@
 <template>
-<div id="notification">
-  <favourite v-if="message.type === 'favourite'" :message="message" :filter="filter"></favourite>
-  <follow v-else-if="message.type === 'follow'" :message="message"></follow>
-  <mention v-else-if="message.type === 'mention'" :message="message" :filter="filter"></mention>
-  <reblog v-else-if="message.type == 'reblog'" :message="message" :filter="filter"></reblog>
+<div class="notification">
+  <favourite v-if="message.type === 'favourite'"
+             :message="message"
+             :filter="filter"
+             :focused="focused"
+             :overlaid="overlaid"
+             @focusNext="$emit('focusNext')"
+             @focusPrev="$emit('focusPrev')"
+             @select="$emit('selectNotification')"
+             >
+  </favourite>
+  <follow v-else-if="message.type === 'follow'"
+          :message="message"
+          :focused="focused"
+          :overlaid="overlaid"
+          @focusNext="$emit('focusNext')"
+          @focusPrev="$emit('focusPrev')"
+          @select="$emit('selectNotification')"
+          >
+  </follow>
+   <mention v-else-if="message.type === 'mention'"
+            :message="message"
+            :filter="filter"
+            :focused="focused"
+            :overlaid="overlaid"
+            @focusNext="$emit('focusNext')"
+            @focusPrev="$emit('focusPrev')"
+            @select="$emit('selectNotification')"
+            >
+   </mention>
+   <reblog v-else-if="message.type == 'reblog'"
+           :message="message"
+           :filter="filter"
+           :focused="focused"
+           :overlaid="overlaid"
+           @focusNext="$emit('focusNext')"
+           @focusPrev="$emit('focusPrev')"
+           @select="$emit('selectNotification')"
+           >
+   </reblog>
 </div>
 </template>
 
@@ -23,6 +58,14 @@ export default {
     filter: {
       type: String,
       default: ''
+    },
+    focused: {
+      type: Boolean,
+      defalt: false
+    },
+    overlaid: {
+      type: Boolean,
+      default: false
     }
   },
   components: { Favourite, Follow, Mention, Reblog }

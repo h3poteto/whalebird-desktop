@@ -1,11 +1,20 @@
 <template>
-<div id="notifications">
+<div id="notifications" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="notifications" v-for="message in notifications" v-bind:key="message.id">
-      <notification :message="message" :filter="filter"></notification>
+    <div class="notifications" v-for="(message, index) in notifications" v-bind:key="message.id">
+      <notification
+        :message="message"
+        :filter="filter"
+        :focused="index === focusedIndex"
+        :overlaid="modalOpened"
+        @focusNext="focusNext"
+        @focusPrev="focusPrev"
+        @selectNotification="focusNotification(index)"
+        >
+      </notification>
     </div>
   </transition-group>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
@@ -18,13 +27,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Notification from './Cards/Notification'
 import scrollTop from '../../utils/scroll'
 
 export default {
   name: 'notifications',
   components: { Notification },
+  data () {
+    return {
+      focusedIndex: null
+    }
+  },
   computed: {
     ...mapState({
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
@@ -34,7 +48,13 @@ export default {
       heading: state => state.TimelineSpace.Contents.Notifications.heading,
       unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications,
       filter: state => state.TimelineSpace.Contents.Notifications.filter
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ]),
+    shortcutEnabled: function () {
+      return !this.focusedIndex && !this.modalOpened
+    }
   },
   mounted () {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
@@ -62,6 +82,14 @@ export default {
           .finally(() => {
             this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
           })
+      }
+    },
+    focusedIndex: function (newState, oldState) {
+      if (newState >= 0 && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
+      } else if (newState === null && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
       }
     }
   },
@@ -118,6 +146,31 @@ export default {
         document.getElementById('scrollable'),
         0
       )
+      this.focusedIndex = null
+    },
+    focusNext () {
+      if (this.focusedIndex === null) {
+        this.focusedIndex = 0
+      } else if (this.focusedIndex < this.notifications.length) {
+        this.focusedIndex++
+      }
+    },
+    focusPrev () {
+      if (this.focusedIndex === 0) {
+        this.focusedIndex = null
+      } else if (this.focusedIndex > 0) {
+        this.focusedIndex--
+      }
+    },
+    focusNotification (index) {
+      this.focusedIndex = index
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'next':
+          this.focusedIndex = 0
+          break
+      }
     }
   }
 }

@@ -2,10 +2,10 @@
 <div id="header_menu">
   <div class="channel">{{ title }}</div>
   <div class="tools">
-    <el-button type="text" class="action" @click="openNewTootModal">
+    <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
       <icon name="regular/edit"></icon>
     </el-button>
-    <el-button v-show="reloadable()" type="text" class="action" @click="reload">
+    <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
       <icon name="sync-alt"></icon>
     </el-button>
     <el-popover
@@ -17,14 +17,16 @@
       <div>
         <el-form>
           <el-form-item :label="$t('header_menu.filter.title')">
-            <el-input v-model="filter" :placeholder="$t('header_menu.filter.placeholder')"></el-input>
+            <div class="input-wrapper">
+              <input v-model="filter" :placeholder="$t('header_menu.filter.placeholder')" v-shortkey.avoid v-on:keyup.enter="applyFilter(filter)"></input>
+            </div>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="applyFilter(filter)">{{ $t('header_menu.filter.apply') }}</el-button>
           </el-form-item>
         </el-form>
       </div>
-      <el-button v-show="filterable()" slot="reference" type="text" class="action">
+      <el-button v-show="filterable()" slot="reference" type="text" class="action" :title="$t('header_menu.filter.title')">
         <icon name="sliders-h"></icon>
       </el-button>
     </el-popover>
@@ -231,6 +233,35 @@ export default {
       &:hover {
         color: #409eff;
       }
+    }
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  font-size: 14px;
+  display: inline-block;
+  width: 100%;
+
+  input {
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      border-color: #409eff;
     }
   }
 }
