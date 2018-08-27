@@ -2,7 +2,7 @@
 <div
   class="status"
   tabIndex="0"
-  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], reply: ['r'], boost: ['b'], fav: ['f'], open: ['o'], profile: ['p']} : {}"
+  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], reply: ['r'], boost: ['b'], fav: ['f'], open: ['o'], profile: ['p'], image: ['i'], cw: ['x']} : {}"
   @shortkey="handleTootControl"
   ref="status"
   @click="$emit('selectToot')"
@@ -394,7 +394,6 @@ export default {
     handleTootControl (event) {
       switch (event.srcKey) {
         case 'next':
-          console.log(this.shortcutEnabled)
           this.$emit('focusNext')
           break
         case 'prev':
@@ -414,6 +413,18 @@ export default {
           break
         case 'profile':
           this.openUser(this.originalMessage(this.message).account)
+          break
+        case 'image':
+          const images = this.mediaAttachments(this.message)
+          if (images.length === 0) {
+            return 0
+          }
+          this.openImage(images[0].url, images)
+          break
+        case 'cw':
+          console.log('cw')
+          this.showContent = !this.showContent
+          this.showAttachments = !this.showAttachments
           break
       }
     }
