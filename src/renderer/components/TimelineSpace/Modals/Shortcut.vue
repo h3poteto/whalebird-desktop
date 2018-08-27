@@ -52,6 +52,14 @@
         <td>{{ $t('modals.shortcut.p') }}</td>
       </tr>
       <tr>
+        <td><kbd>i</kbd></td>
+        <td>{{ $t('modals.shortcut.i') }}</td>
+      </tr>
+      <tr>
+        <td><kbd>x</kbd></td>
+        <td>{{ $t('modals.shortcut.x') }}</td>
+      </tr>
+      <tr>
         <td><kbd>esc</kbd></td>
         <td>{{ $t('modals.shortcut.esc') }}</td>
       </tr>

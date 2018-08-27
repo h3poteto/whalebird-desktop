@@ -34,6 +34,8 @@ Whalebird is a mastodon client for desktop application.
 <tr><td> Favourite the toot              </td><td>             <kbd>f</kbd>                   </td><td> <kbd>f</kbd>          </td></tr>
 <tr><td> Open details of the toot        </td><td>             <kbd>o</kbd>                   </td><td> <kbd>o</kbd>          </td></tr>
 <tr><td> Open account profile of the toot</td><td>             <kbd>p</kbd>                   </td><td> <kbd>p</kbd>          </td></tr>
+<tr><td> Open the images                 </td><td>             <kbd>i</kbd>                   </td><td> <kbd>i</kbd>          </td></tr>
+<tr><td> Show/hide CW and NSFW           </td><td>             <kbd>x</kbd>                   </td><td> <kbd>x</kbd>          </td></tr>
 <tr><td> Close current page              </td><td>             <kbd>esc</kbd>                 </td><td> <kbd>esc</kbd>          </td></tr>
 </tbody>
 </table>
