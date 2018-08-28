@@ -228,7 +228,7 @@
   },
   "message": {
     "account_load_error": "계정을 읽어 올 수 없습니다",
-    "account_remove_error": "계정을 제거할 수 없슶니다",
+    "account_remove_error": "계정을 제거할 수 없습니다",
     "preferences_load_error": "설정을 읽을 수 없습니다",
     "timeline_fetch_error": "타임라인을 가져올 수 없습니다",
     "notification_fetch_error": "알림을 가져올 수 없습니다",
