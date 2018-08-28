@@ -148,6 +148,23 @@
     },
     "list_membership": {
       "title": "Należy do grup"
+    },
+    "shortcut": {
+      "title": "Keyboard shortcuts",
+      "ctrl_number": "Switch accounts",
+      "ctrl_k": "Jump to other timelines",
+      "ctrl_n": "Open the new toot modal",
+      "ctrl_enter": "Post the toot",
+      "j": "Select the next toot",
+      "k": "Select the previous toot",
+      "r": "Reply to the toot",
+      "b": "Reblog the toot",
+      "f": "Favourite the toot",
+      "o": "Open details of the toot",
+      "p": "Open account profile of the toot",
+      "i": "Open the images",
+      "x": "Show/hide CW and NSFW",
+      "esc": "Close current page"
     }
   },
   "cards": {
