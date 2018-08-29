@@ -99,6 +99,16 @@
       "fav_rb_sound": "お気に入り，ブースト時:",
       "toot_sound": "トゥート時:"
     },
+    "notification": {
+      "title": "通知",
+      "notify": {
+        "title": "通知設定",
+        "reply": "返信:",
+        "reblog": "ブースト:",
+        "favourite": "お気に入り:",
+        "follow": "フォロー:"
+      }
+    },
     "account": {
       "title": "アカウント",
       "connected": "登録済みアカウント",

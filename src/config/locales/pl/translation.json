@@ -99,6 +99,16 @@
       "fav_rb_sound": "Polubienie i podbicie:",
       "toot_sound": "Wpisy:"
     },
+    "notification": {
+      "title": "Notification",
+      "notify": {
+        "title": "Notify",
+        "reply": "Reply:",
+        "reblog": "Reblog:",
+        "favourite": "Favourite:",
+        "follow": "Follow:"
+      }
+    },
     "account": {
       "title": "Konta",
       "connected": "Połączone konta",

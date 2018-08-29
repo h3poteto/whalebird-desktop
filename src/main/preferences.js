@@ -21,6 +21,14 @@ const Base = {
   },
   language: {
     language: Language.en.key
+  },
+  notification: {
+    notify: {
+      reply: true,
+      reblog: true,
+      favourite: true,
+      follow: true
+    }
   }
 }
 
