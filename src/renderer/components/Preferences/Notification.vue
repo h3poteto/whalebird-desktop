@@ -9,6 +9,7 @@
           <td class="title">{{ $t('preferences.notification.notify.reply') }}</td>
           <td class="status">
             <el-switch
+              v-model="notifyReply"
               active-color="#13ce66">
             </el-switch>
           </td>
@@ -17,6 +18,7 @@
           <td class="title">{{ $t('preferences.notification.notify.reblog') }}</td>
           <td class="status">
             <el-switch
+              v-model="notifyReblog"
               active-color="#13ce66">
             </el-switch>
           </td>
@@ -25,6 +27,7 @@
           <td class="title">{{ $t('preferences.notification.notify.favourite') }}</td>
           <td class="status">
             <el-switch
+              v-model="notifyFavourite"
               active-color="#13ce66">
             </el-switch>
           </td>
@@ -33,6 +36,7 @@
           <td class="title">{{ $t('preferences.notification.notify.follow') }}</td>
           <td class="status">
             <el-switch
+              v-model="notifyFollow"
               active-color="#13ce66">
             </el-switch>
           </td>
@@ -45,7 +49,49 @@
 
 <script>
 export default {
-  name: 'notification'
+  name: 'notification',
+  computed: {
+    notifyReply: {
+      get () {
+        return this.$store.state.Preferences.Notification.notification.notify.reply
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/Notification/updateNotify', {
+          reply: value
+        })
+      }
+    },
+    notifyReblog: {
+      get () {
+        return this.$store.state.Preferences.Notification.notification.notify.reblog
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/Notification/updateNotify', {
+          reblog: value
+        })
+      }
+    },
+    notifyFavourite: {
+      get () {
+        return this.$store.state.Preferences.Notification.notification.notify.favourite
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/Notification/updateNotify', {
+          favourite: value
+        })
+      }
+    },
+    notifyFollow: {
+      get () {
+        return this.$store.state.Preferences.Notification.notification.notify.follow
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/Notification/updateNotify', {
+          follow: value
+        })
+      }
+    }
+  }
 }
 </script>
 
