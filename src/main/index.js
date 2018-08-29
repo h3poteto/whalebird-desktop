@@ -578,6 +578,8 @@ ipcMain.on('get-preferences', (event, _) => {
     })
 })
 
+// TODO: do not use save-preferences
+// Because it update all preferences as default
 ipcMain.on('save-preferences', (event, data) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.save(data)
@@ -586,6 +588,17 @@ ipcMain.on('save-preferences', (event, data) => {
     })
     .catch((err) => {
       event.sender.send('error-save-preferences', err)
+    })
+})
+
+ipcMain.on('update-preferences', (event, data) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.update(data)
+    .then((conf) => {
+      event.sender.send('response-update-preferences', conf)
+    })
+    .catch((err) => {
+      event.sender.send('error-update-preferences', err)
     })
 })
 
