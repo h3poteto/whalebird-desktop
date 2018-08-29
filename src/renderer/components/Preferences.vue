@@ -23,11 +23,15 @@
             <icon name="cog" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.general.title') }}</span>
           </el-menu-item>
-          <el-menu-item index="2" :route="{path: '/preferences/account'}" @click="account">
+          <el-menu-item index="2" :route="{path: '/preferences/notification'}" @click="notification">
+            <icon name="bell" class="icon" scale="1.3"></icon>
+            <span>{{ $t('preferences.notification.title') }}</span>
+          </el-menu-item>
+          <el-menu-item index="3" :route="{path: '/preferences/account'}" @click="account">
             <icon name="user" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.account.title') }}</span>
           </el-menu-item>
-          <el-menu-item index="3" :route="{path: '/preferences/language'}" @click="language">
+          <el-menu-item index="4" :route="{path: '/preferences/language'}" @click="language">
             <icon name="language" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.language.title') }}</span>
           </el-menu-item>
@@ -59,6 +63,9 @@ export default {
     },
     general () {
       this.$router.push('/preferences/general')
+    },
+    notification () {
+      this.$router.push('/preferences/notification')
     },
     account () {
       this.$router.push('/preferences/account')
