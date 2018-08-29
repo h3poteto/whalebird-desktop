@@ -89,9 +89,11 @@ const TimelineSpace = {
         commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
       })
       ipcRenderer.on('notification-start-user-streaming', (event, notification) => {
-        let notify = buildNotification(notification)
-        notify.onclick = () => {
-          router.push(`/${account._id}/notifications`)
+        let notify = createNotification(notification, rootState.App.notify)
+        if (notify) {
+          notify.onclick = () => {
+            router.push(`/${account._id}/notifications`)
+          }
         }
         commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
         if (rootState.TimelineSpace.Contents.Notifications.heading && Math.random() > 0.8) {
@@ -172,25 +174,37 @@ const TimelineSpace = {
 
 export default TimelineSpace
 
-function buildNotification (notification) {
+function createNotification (notification, notifyConfig) {
   switch (notification.type) {
     case 'favourite':
-      return new Notification('Favourite', {
-        body: `${username(notification.account)} favourited your status`
-      })
+      if (notifyConfig.favourite) {
+        return new Notification('Favourite', {
+          body: `${username(notification.account)} favourited your status`
+        })
+      }
+      break
     case 'follow':
-      return new Notification('Follow', {
-        body: `${username(notification.account)} is now following you`
-      })
+      if (notifyConfig.follow) {
+        return new Notification('Follow', {
+          body: `${username(notification.account)} is now following you`
+        })
+      }
+      break
     case 'mention':
-      // Clean html tags
-      return new Notification(`${notification.status.account.display_name}`, {
-        body: `${notification.status.content.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')}`
-      })
+      if (notifyConfig.reply) {
+        // Clean html tags
+        return new Notification(`${notification.status.account.display_name}`, {
+          body: `${notification.status.content.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')}`
+        })
+      }
+      break
     case 'reblog':
-      return new Notification('Reblog', {
-        body: `${username(notification.account)} boosted your status`
-      })
+      if (notifyConfig.reblog) {
+        return new Notification('Reblog', {
+          body: `${username(notification.account)} boosted your status`
+        })
+      }
+      break
   }
 }
 

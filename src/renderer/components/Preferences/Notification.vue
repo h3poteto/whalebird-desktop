@@ -91,6 +91,15 @@ export default {
         })
       }
     }
+  },
+  created () {
+    this.$store.dispatch('Preferences/Notification/loadNotification')
+      .catch(() => {
+        this.$message({
+          message: this.$t('message.preferences_load_error'),
+          type: 'error'
+        })
+      })
   }
 }
 </script>
