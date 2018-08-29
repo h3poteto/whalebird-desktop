@@ -26,6 +26,9 @@
         <span v-if="item.image">
           <img :src="item.image" class="icon" />
         </span>
+        <span v-if="item.code">
+          {{ item.code }}
+        </span>
         {{ item.name }}
       </li>
     </ul>
@@ -35,6 +38,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import emojilib from 'emojilib'
 import suggestText from '../../../../utils/suggestText'
 
 export default {
@@ -60,7 +64,7 @@ export default {
   computed: {
     ...mapState({
       filteredAccounts: state => state.TimelineSpace.Modals.NewToot.Status.filteredAccounts,
-      emojis: state => state.TimelineSpace.emojis
+      customEmojis: state => state.TimelineSpace.emojis
     }),
     status: {
       get: function () {
@@ -131,7 +135,18 @@ export default {
         this.closeSuggest()
         return false
       }
-      const filtered = this.emojis.filter(emoji => emoji.name.includes(word))
+      // Find native emojis
+      const filteredEmojiName = emojilib.ordered.filter(emoji => `:${emoji}`.includes(word))
+      const filteredNativeEmoji = filteredEmojiName.map((name) => {
+        return {
+          name: `:${name}:`,
+          code: emojilib.lib[name].char
+        }
+      })
+      // Find custom emojis
+      const filteredCustomEmoji = this.customEmojis.filter(emoji => emoji.name.includes(word))
+      const filtered = filteredNativeEmoji.concat(filteredCustomEmoji)
+      console.log(filtered)
       if (filtered.length > 0) {
         this.openSuggest = true
         this.startIndex = start
@@ -160,8 +175,13 @@ export default {
       }
     },
     insertItem (item) {
-      const str = `${this.status.slice(0, this.startIndex - 1)}${item.name} ${this.status.slice(this.startIndex + this.matchWord.length)}`
-      this.status = str
+      if (item.code) {
+        const str = `${this.status.slice(0, this.startIndex - 1)}${item.code} ${this.status.slice(this.startIndex + this.matchWord.length)}`
+        this.status = str
+      } else {
+        const str = `${this.status.slice(0, this.startIndex - 1)}${item.name} ${this.status.slice(this.startIndex + this.matchWord.length)}`
+        this.status = str
+      }
       this.closeSuggest()
     },
     selectCurrentItem () {
