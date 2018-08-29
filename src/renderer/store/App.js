@@ -11,7 +11,13 @@ const App = {
     theme: LightTheme,
     fontSize: 14,
     displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-    tootVisibility: Visibility.Public.value
+    tootVisibility: Visibility.Public.value,
+    notify: {
+      reply: true,
+      reblog: true,
+      favourite: true,
+      follow: true
+    }
   },
   mutations: {
     updateTheme (state, themeKey) {
@@ -35,6 +41,9 @@ const App = {
     },
     updateTootVisibility (state, value) {
       state.tootVisibility = value
+    },
+    updateNotify (state, notify) {
+      state.notify = notify
     }
   },
   actions: {
@@ -59,6 +68,7 @@ const App = {
           commit('updateDisplayNameStyle', conf.general.displayNameStyle)
           commit('updateFontSize', conf.general.fontSize)
           commit('updateTootVisibility', conf.general.tootVisibility)
+          commit('updateNotify', conf.notification.notify)
           resolve(conf)
         })
       })

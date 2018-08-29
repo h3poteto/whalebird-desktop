@@ -27,6 +27,11 @@ export default new Router({
           component: require('@/components/Preferences/General').default
         },
         {
+          path: 'notification',
+          name: 'notification',
+          component: require('@/components/Preferences/Notification').default
+        },
+        {
           path: 'account',
           name: 'account',
           component: require('@/components/Preferences/Account').default
