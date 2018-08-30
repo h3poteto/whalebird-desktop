@@ -52,13 +52,13 @@ const General = {
       const config = {
         general: newGeneral
       }
-      ipcRenderer.send('save-preferences', config)
-      ipcRenderer.once('error-save-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-save-preferences')
+      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.once('error-update-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
         commit('changeLoading', false)
       })
-      ipcRenderer.once('response-save-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-save-preferences')
+      ipcRenderer.once('response-update-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
         commit('updateGeneral', conf.general)
         dispatch('App/loadPreferences', null, { root: true })
         commit('changeLoading', false)
@@ -71,12 +71,12 @@ const General = {
       const config = {
         general: newGeneral
       }
-      ipcRenderer.send('save-preferences', config)
-      ipcRenderer.once('error-save-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-save-preferences')
+      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.once('error-update-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
       })
-      ipcRenderer.once('response-save-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-save-preferences')
+      ipcRenderer.once('response-update-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
         commit('updateGeneral', conf.general)
         dispatch('App/loadPreferences', null, { root: true })
       })
@@ -88,12 +88,12 @@ const General = {
       const config = {
         general: newGeneral
       }
-      ipcRenderer.send('save-preferences', config)
-      ipcRenderer.once('error-save-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-save-preferences')
+      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.once('error-update-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
       })
-      ipcRenderer.once('response-save-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-save-preferences')
+      ipcRenderer.once('response-update-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
         commit('updateGeneral', conf.general)
       })
@@ -105,12 +105,12 @@ const General = {
       const config = {
         general: newGeneral
       }
-      ipcRenderer.send('save-preferences', config)
-      ipcRenderer.once('error-save-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-save-preferences')
+      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.once('error-update-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
       })
-      ipcRenderer.once('response-save-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-save-preferences')
+      ipcRenderer.once('response-update-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
         commit('updateGeneral', conf.general)
       })
@@ -124,13 +124,13 @@ const General = {
       const config = {
         general: newGeneral
       }
-      ipcRenderer.send('save-preferences', config)
-      ipcRenderer.once('error-save-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-save-preferences')
+      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.once('error-update-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
         commit('changeLoading', false)
       })
-      ipcRenderer.once('response-save-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-save-preferences')
+      ipcRenderer.once('response-update-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
         commit('updateGeneral', conf.general)
         commit('changeLoading', false)
       })
