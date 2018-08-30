@@ -2,10 +2,67 @@
 
 ## [Unreleased]
 ### Added
+- [#586](https://github.com/h3poteto/whalebird-desktop/pull/586) Switch notification in preferences
+- [#583](https://github.com/h3poteto/whalebird-desktop/pull/583) Suggest native emoji in New Toot modal
+- [#576](https://github.com/h3poteto/whalebird-desktop/pull/576) Add shortcut keys to read image and contents warning
+
+### Changed
+- [#585](https://github.com/h3poteto/whalebird-desktop/pull/585) Update packages for node 10.x
+- [#584](https://github.com/h3poteto/whalebird-desktop/pull/584) Update electron version to 2.0.8
+- [#580](https://github.com/h3poteto/whalebird-desktop/pull/580) Update Korean localization
+- [#573](https://github.com/h3poteto/whalebird-desktop/pull/573) Update shortcut description
+
+### Fixed
+- [#588](https://github.com/h3poteto/whalebird-desktop/pull/588) Fix closing image modal using esc
+- [#587](https://github.com/h3poteto/whalebird-desktop/pull/587) Fix closing sidebar when overlaid
+- [#575](https://github.com/h3poteto/whalebird-desktop/pull/575) New Korean localization
+
+## [2.1.2] - 2018-08-27
+### Added
+- [#562](https://github.com/h3poteto/whalebird-desktop/pull/562) Add shortcut help modal
+- [#557](https://github.com/h3poteto/whalebird-desktop/pull/557) Add shortcut keys to control toot
+- [#552](https://github.com/h3poteto/whalebird-desktop/pull/552) Set shortcut keys to move toot on timeline
+- [#547](https://github.com/h3poteto/whalebird-desktop/pull/547) Add title to display description when hover icon
+
+### Changed
+- [#571](https://github.com/h3poteto/whalebird-desktop/pull/571) Add donate link and QR code in README
+- [#565](https://github.com/h3poteto/whalebird-desktop/pull/565) Close preference page with esc
+- [#559](https://github.com/h3poteto/whalebird-desktop/pull/559) Add description of shortcut in README
+
+### Fixed
+- [#570](https://github.com/h3poteto/whalebird-desktop/pull/570) Fix reply visibility level
+- [#566](https://github.com/h3poteto/whalebird-desktop/pull/566) Fix shortcut events
+- [#560](https://github.com/h3poteto/whalebird-desktop/pull/560) Set active tab to first when close preferences
+- [#556](https://github.com/h3poteto/whalebird-desktop/pull/556) Update Korean localization
+
+
+
+## [2.1.1] - 2018-08-21
+### Added
+- [#534](https://github.com/h3poteto/whalebird-desktop/pull/534) Add Korean localization
+- [#532](https://github.com/h3poteto/whalebird-desktop/pull/532) Support clipboard picture
+- [#528](https://github.com/h3poteto/whalebird-desktop/pull/528) Add Polish translation
+
+### Fixed
+- [#546](https://github.com/h3poteto/whalebird-desktop/pull/546) Fix username to include domain when the user is another instance
+- [#545](https://github.com/h3poteto/whalebird-desktop/pull/545) Fix boost icon when the toot is direct
+- [#544](https://github.com/h3poteto/whalebird-desktop/pull/544) Fix domain validation for short domain
+- [#539](https://github.com/h3poteto/whalebird-desktop/pull/539) Focus on new toot modal after change account
+- [#538](https://github.com/h3poteto/whalebird-desktop/pull/538) Jump only modal is opened
+- [#535](https://github.com/h3poteto/whalebird-desktop/pull/535) Fix typo in README.md
+- [#529](https://github.com/h3poteto/whalebird-desktop/pull/529) Fix some minor typos
+
+
+## [2.1.0] - 2018-08-20
+### Added
 - [#519](https://github.com/h3poteto/whalebird-desktop/pull/519) Suggest custom emojis in new toot
 - [#516](https://github.com/h3poteto/whalebird-desktop/pull/516) Parse emoji and show emoji in toot
 - [#514](https://github.com/h3poteto/whalebird-desktop/pull/514) Add description how to add language in README
 - [#513](https://github.com/h3poteto/whalebird-desktop/pull/513) Add show profile menu
+
+### Fixed
+- [#524](https://github.com/h3poteto/whalebird-desktop/pull/524) Fix space in notifications
+- [#523](https://github.com/h3poteto/whalebird-desktop/pull/523) Control CW, NSFW, and emoji in notification
 
 
 ## [2.0.1] - 2018-08-18
