@@ -72,10 +72,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import moment from 'moment'
 import { shell } from 'electron'
 import { findAccount, findLink, isTag } from '../../../../utils/link'
 import emojify from '~/src/renderer/utils/emojify'
+import TimeFormat from '~/src/constants/timeFormat'
 
 export default {
   name: 'reblog',
@@ -104,6 +106,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      timeFormat: state => state.App.timeFormat
+    }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid
     }
@@ -135,7 +140,12 @@ export default {
       }
     },
     parseDatetime (datetime) {
-      return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+      switch (this.timeFormat) {
+        case TimeFormat.Absolute.value:
+          return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+        case TimeFormat.Relative.value:
+          return moment(datetime).fromNow()
+      }
     },
     tootClick (e) {
       if (isTag(e.target)) {
