@@ -30,6 +30,19 @@
             </el-select>
           </td>
         </tr>
+        <tr>
+          <td class="title">{{ $t('preferences.general.time_format.title') }}</td>
+          <td class="status">
+            <el-select v-model="timeFormat" placeholder="format">
+              <el-option
+                v-for="format in timeFormats"
+                :key="format.value"
+                :label="$t(format.name)"
+                :value="format.value">
+              </el-option>
+            </el-select>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -86,6 +99,7 @@ import { mapState } from 'vuex'
 import Visibility from '~/src/constants/visibility'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
+import TimeFormat from '~/src/constants/timeFormat'
 
 export default {
   name: 'general',
@@ -104,6 +118,10 @@ export default {
       themes: [
         Theme.Light,
         Theme.Dark
+      ],
+      timeFormats: [
+        TimeFormat.Absolute,
+        TimeFormat.Relative
       ]
     }
   },
@@ -126,6 +144,14 @@ export default {
       },
       set (value) {
         this.$store.dispatch('Preferences/General/updateDisplayNameStyle', value)
+      }
+    },
+    timeFormat: {
+      get () {
+        return this.$store.state.Preferences.General.general.timeFormat
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/General/updateTimeFormat', value)
       }
     },
     tootVisibility: {
