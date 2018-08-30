@@ -4,6 +4,7 @@ export default {
     value: 0
   },
   Relative: {
-    name: 'preferences.general.time_format.relative'
+    name: 'preferences.general.time_format.relative',
+    value: 1
   }
 }
