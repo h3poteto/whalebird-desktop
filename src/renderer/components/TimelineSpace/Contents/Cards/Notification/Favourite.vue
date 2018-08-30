@@ -108,7 +108,8 @@ export default {
   computed: {
     ...mapState({
       displayNameStyle: state => state.App.displayNameStyle,
-      timeFormat: state => state.App.timeFormat
+      timeFormat: state => state.App.timeFormat,
+      language: state => state.App.language
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid
@@ -145,6 +146,7 @@ export default {
         case TimeFormat.Absolute.value:
           return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
         case TimeFormat.Relative.value:
+          moment.locale(this.language)
           return moment(datetime).fromNow()
       }
     },
