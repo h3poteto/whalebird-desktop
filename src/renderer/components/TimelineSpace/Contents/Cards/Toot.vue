@@ -20,9 +20,9 @@
           <span class="display-name">{{ username(originalMessage(message).account) }}</span>
           <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
         </div>
-        <div class="timestamp">
-          {{ parseDatetime(originalMessage(message).created_at) }}
-        </div>
+      <div class="timestamp" v-bind:title="parseDatetime(originalMessage(message).created_at)">
+          {{ parseFuzzyDatetime(originalMessage(message).created_at) }}
+      </div>
         <div class="clearfix"></div>
       </div>
       <div class="content-wrapper">
@@ -220,6 +220,9 @@ export default {
           moment.locale(this.language)
           return moment(datetime).fromNow()
       }
+    },
+    parseFuzzyDatetime (datetime) {
+      return moment(datetime).fromNow()
     },
     tootClick (e) {
       if (isTag(e.target)) {
@@ -488,7 +491,6 @@ export default {
         text-align: right;
         width: 100%;
         color: #909399;
-        flota: right;
       }
     }
 
