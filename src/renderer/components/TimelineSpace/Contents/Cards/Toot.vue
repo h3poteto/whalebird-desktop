@@ -120,6 +120,7 @@ import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
 import { findAccount, findLink, isTag } from '../../../utils/link'
 import DisplayStyle from '~/src/constants/displayStyle'
+import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
 
 export default {
@@ -150,7 +151,9 @@ export default {
   },
   computed: {
     ...mapState({
-      displayNameStyle: state => state.App.displayNameStyle
+      displayNameStyle: state => state.App.displayNameStyle,
+      timeFormat: state => state.App.timeFormat,
+      language: state => state.App.language
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid
@@ -210,7 +213,13 @@ export default {
       }
     },
     parseDatetime (datetime) {
-      return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+      switch (this.timeFormat) {
+        case TimeFormat.Absolute.value:
+          return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+        case TimeFormat.Relative.value:
+          moment.locale(this.language)
+          return moment(datetime).fromNow()
+      }
     },
     tootClick (e) {
       if (isTag(e.target)) {
