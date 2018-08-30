@@ -1,6 +1,6 @@
 <template>
 <transition name="slide-detail">
-  <div id="side_bar" v-if="openSideBar" v-shortkey="['esc']" @shortkey="close">
+  <div id="side_bar" v-if="openSideBar" v-shortkey="shortcutEnabled ? {close: ['esc']} : {}" @shortkey="handleKey">
     <div class="header">
       <i class="el-icon-loading" v-show="loading"></i>
       <i class="el-icon-close" @click="close"></i>
@@ -32,6 +32,12 @@ export default {
     TootDetail,
     AccountProfile
   },
+  props: {
+    overlaid: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       loading: false
@@ -42,7 +48,10 @@ export default {
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       component: state => state.TimelineSpace.Contents.SideBar.component,
       backgroundColor: state => state.App.theme.background_color
-    })
+    }),
+    shortcutEnabled: function () {
+      return !this.overlaid
+    }
   },
   beforeDestroy () {
     this.close()
@@ -53,6 +62,13 @@ export default {
     },
     changeLoading (value) {
       this.loading = value
+    },
+    handleKey (event) {
+      switch (event.srcKey) {
+        case 'close':
+          this.close()
+          break
+      }
     }
   }
 }
