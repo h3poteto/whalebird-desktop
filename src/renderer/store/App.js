@@ -5,6 +5,7 @@ import Visibility from '~/src/constants/visibility'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
+import Language from '~/src/constants/language'
 
 const App = {
   namespaced: true,
@@ -19,7 +20,8 @@ const App = {
       favourite: true,
       follow: true
     },
-    timeFormat: TimeFormat.Absolute.value
+    timeFormat: TimeFormat.Absolute.value,
+    language: Language.en.key
   },
   mutations: {
     updateTheme (state, themeKey) {
@@ -49,6 +51,9 @@ const App = {
     },
     updateTimeFormat (state, format) {
       state.timeFormat = format
+    },
+    updateLanguage (state, key) {
+      state.language = key
     }
   },
   actions: {
@@ -75,6 +80,7 @@ const App = {
           commit('updateTootVisibility', conf.general.tootVisibility)
           commit('updateNotify', conf.notification.notify)
           commit('updateTimeFormat', conf.general.timeFormat)
+          commit('updateLanguage', conf.language.language)
           resolve(conf)
         })
       })
