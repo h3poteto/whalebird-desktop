@@ -87,6 +87,11 @@
         "display_name": "Display name",
         "username": "Username"
       },
+      "time_format": {
+        "title": "Time format:",
+        "absolute": "Absolute",
+        "relative": "Relative"
+      },
       "toot": "Toot",
       "visibility": {
         "title": "Default visibility:",
