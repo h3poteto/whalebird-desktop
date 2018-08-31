@@ -1,5 +1,5 @@
 # Whalebird
-[![CircleCI](https://img.shields.io/circleci/project/github/h3poteto/whalebird-desktop.svg?style=flat-square)](https://circleci.com/gh/h3poteto/whalebird-desktop)
+[![CircleCI](https://circleci.com/gh/h3poteto/whalebird-desktop.svg?style=svg)](https://circleci.com/gh/h3poteto/whalebird-desktop)
 [![GitHub release](http://img.shields.io/github/release/h3poteto/whalebird-desktop.svg?style=flat-square)](https://github.com/h3poteto/whalebird-desktop/releases)
 [![App Store](https://img.shields.io/itunes/v/1378283354.svg?style=flat-square)](https://itunes.apple.com/us/app/whalebird/id1378283354)
 
