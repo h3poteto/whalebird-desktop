@@ -1,7 +1,7 @@
 <template>
 <transition name="image-viewer">
   <div id="image" v-show="modalOpen" @click="close">
-    <div class="image-wrapper" @keyup.esc.exact="close" tabindex="-1" ref="wrapper">
+    <div class="image-wrapper" v-shortkey="modalOpen ? {close: ['esc']} : {}" @shortkey="closeHandle">
       <div class="image-header">
         <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
       </div>
@@ -38,11 +38,6 @@ export default {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/showRight']
     }
   },
-  updated () {
-    if (this.modalOpen) {
-      this.$refs.wrapper.focus()
-    }
-  },
   methods: {
     close () {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
@@ -52,6 +47,13 @@ export default {
     },
     incrementIndex () {
       if (this.showRight) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
+    },
+    closeHandle (event) {
+      switch (event.srcKey) {
+        case 'close':
+          this.close()
+          break
+      }
     }
   }
 }
