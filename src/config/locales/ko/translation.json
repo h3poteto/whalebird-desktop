@@ -17,7 +17,7 @@
     "edit": {
       "name": "수정",
       "undo": "되돌리기",
-      "redo": "재실행",
+      "redo": "다시 실행",
       "cut": "잘라내기",
       "copy": "복사",
       "paste": "붙여넣기",
@@ -87,6 +87,11 @@
         "display_name": "닉네임만 보이기",
         "username": "아이디만 보이기"
       },
+	  "time_format":{
+        "title": "시간 표시 형식:",
+        "absolute": "고정 시각 표시",
+        "relative": "상대 시간 표시"
+	  },
       "toot": "툿",
       "visibility": {
         "title": "기본 공개 설정:",
@@ -100,13 +105,13 @@
       "toot_sound": "툿:"
     },
     "notification": {
-      "title": "Notification",
+      "title": "알림",
       "notify": {
-        "title": "Notify",
-        "reply": "Reply:",
-        "reblog": "Reblog:",
-        "favourite": "Favourite:",
-        "follow": "Follow:"
+        "title": "푸쉬 알림",
+        "reply": "답장:",
+        "reblog": "부스트:",
+        "favourite": "즐겨찾기:",
+        "follow": "즐겨찾기:"
       }
     },
     "account": {
@@ -238,7 +243,7 @@
   },
   "message": {
     "account_load_error": "계정을 읽어 올 수 없습니다",
-    "account_remove_error": "계정을 제거할 수 없슶니다",
+    "account_remove_error": "계정을 제거할 수 없습니다",
     "preferences_load_error": "설정을 읽을 수 없습니다",
     "timeline_fetch_error": "타임라인을 가져올 수 없습니다",
     "notification_fetch_error": "알림을 가져올 수 없습니다",
