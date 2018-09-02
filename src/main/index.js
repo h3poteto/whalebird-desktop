@@ -578,14 +578,14 @@ ipcMain.on('get-preferences', (event, _) => {
     })
 })
 
-ipcMain.on('save-preferences', (event, data) => {
+ipcMain.on('update-preferences', (event, data) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences.save(data)
+  preferences.update(data)
     .then((conf) => {
-      event.sender.send('response-save-preferences', conf)
+      event.sender.send('response-update-preferences', conf)
     })
     .catch((err) => {
-      event.sender.send('error-save-preferences', err)
+      event.sender.send('error-update-preferences', err)
     })
 })
 

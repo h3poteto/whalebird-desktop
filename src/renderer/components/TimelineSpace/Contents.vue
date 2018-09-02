@@ -3,12 +3,14 @@
   <div id="scrollable" :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'">
     <router-view></router-view>
   </div>
-  <side-bar></side-bar>
+  <side-bar
+    :overlaid="modalOpened"
+    ></side-bar>
 </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import SideBar from './Contents/SideBar'
 
 export default {
@@ -19,7 +21,10 @@ export default {
   computed: {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar
-    })
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ])
   }
 }
 </script>

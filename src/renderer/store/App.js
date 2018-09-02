@@ -4,6 +4,8 @@ import { LightTheme, DarkTheme } from '../utils/theme'
 import Visibility from '~/src/constants/visibility'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
+import TimeFormat from '~/src/constants/timeFormat'
+import Language from '~/src/constants/language'
 
 const App = {
   namespaced: true,
@@ -11,7 +13,15 @@ const App = {
     theme: LightTheme,
     fontSize: 14,
     displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-    tootVisibility: Visibility.Public.value
+    tootVisibility: Visibility.Public.value,
+    notify: {
+      reply: true,
+      reblog: true,
+      favourite: true,
+      follow: true
+    },
+    timeFormat: TimeFormat.Absolute.value,
+    language: Language.en.key
   },
   mutations: {
     updateTheme (state, themeKey) {
@@ -35,6 +45,15 @@ const App = {
     },
     updateTootVisibility (state, value) {
       state.tootVisibility = value
+    },
+    updateNotify (state, notify) {
+      state.notify = notify
+    },
+    updateTimeFormat (state, format) {
+      state.timeFormat = format
+    },
+    updateLanguage (state, key) {
+      state.language = key
     }
   },
   actions: {
@@ -59,6 +78,9 @@ const App = {
           commit('updateDisplayNameStyle', conf.general.displayNameStyle)
           commit('updateFontSize', conf.general.fontSize)
           commit('updateTootVisibility', conf.general.tootVisibility)
+          commit('updateNotify', conf.notification.notify)
+          commit('updateTimeFormat', conf.general.timeFormat)
+          commit('updateLanguage', conf.language.language)
           resolve(conf)
         })
       })

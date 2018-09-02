@@ -99,6 +99,16 @@
       "fav_rb_sound": "즐겨찾기 및 부스트:",
       "toot_sound": "툿:"
     },
+    "notification": {
+      "title": "Notification",
+      "notify": {
+        "title": "Notify",
+        "reply": "Reply:",
+        "reblog": "Reblog:",
+        "favourite": "Favourite:",
+        "follow": "Follow:"
+      }
+    },
     "account": {
       "title": "계정",
       "connected": "연결된 계정",

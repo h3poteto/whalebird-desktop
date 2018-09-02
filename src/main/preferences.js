@@ -4,6 +4,7 @@ import Visibility from '../constants/visibility'
 import DisplayStyle from '../constants/displayStyle'
 import Theme from '../constants/theme'
 import Language from '../constants/language'
+import TimeFormat from '../constants/timeFormat'
 
 const Base = {
   general: {
@@ -14,13 +15,22 @@ const Base = {
     theme: Theme.Light.key,
     fontSize: 14,
     displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-    tootVisibility: Visibility.Public.value
+    tootVisibility: Visibility.Public.value,
+    timeFormat: TimeFormat.Absolute.value
   },
   state: {
     collapse: false
   },
   language: {
     language: Language.en.key
+  },
+  notification: {
+    notify: {
+      reply: true,
+      reblog: true,
+      favourite: true,
+      follow: true
+    }
   }
 }
 
