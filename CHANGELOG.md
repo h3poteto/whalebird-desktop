@@ -1,7 +1,8 @@
 # Change Log
 
-## [Unreleased]
+## [2.2.0] - 2018-09-01
 ### Added
+- [#590](https://github.com/h3poteto/whalebird-desktop/pull/590) Change time format and set in preferences
 - [#586](https://github.com/h3poteto/whalebird-desktop/pull/586) Switch notification in preferences
 - [#583](https://github.com/h3poteto/whalebird-desktop/pull/583) Suggest native emoji in New Toot modal
 - [#576](https://github.com/h3poteto/whalebird-desktop/pull/576) Add shortcut keys to read image and contents warning
@@ -13,6 +14,7 @@
 - [#573](https://github.com/h3poteto/whalebird-desktop/pull/573) Update shortcut description
 
 ### Fixed
+- [#589](https://github.com/h3poteto/whalebird-desktop/pull/589) Fix bug for save preference in general
 - [#588](https://github.com/h3poteto/whalebird-desktop/pull/588) Fix closing image modal using esc
 - [#587](https://github.com/h3poteto/whalebird-desktop/pull/587) Fix closing sidebar when overlaid
 - [#575](https://github.com/h3poteto/whalebird-desktop/pull/575) New Korean localization
