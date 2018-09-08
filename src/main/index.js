@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, ipcMain, shell, Menu } from 'electron'
+import { app, ipcMain, shell, Menu, Tray } from 'electron'
 import Datastore from 'nedb'
 import empty from 'is-empty'
 import log from 'electron-log'
@@ -39,6 +39,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow
+let tray = null
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -105,6 +106,32 @@ async function getLanguage () {
   } catch (err) {
     return Language.en.key
   }
+}
+
+/**
+ * Minimize to tray when click close button
+ */
+async function setMinimizeToTray () {
+  mainWindow.on('close', (event) => {
+    mainWindow.hide()
+    mainWindow.setSkipTaskbar(true)
+    event.preventDefault()
+  })
+  tray = new Tray(path.join(__dirname, '../../build/icons/256x256.png'))
+  const contextMenu = Menu.buildFromTemplate([
+    { label: i18n.t('main_menu.application.quit'), click: () => { mainWindow.destroy() } }
+  ])
+  tray.setToolTip(i18n.t('main_menu.application.name'))
+  tray.setContextMenu(contextMenu)
+  tray.on('click', () => {
+    if (mainWindow.isVisible()) {
+      mainWindow.hide()
+      mainWindow.setSkipTaskbar(true)
+    } else {
+      mainWindow.show()
+      mainWindow.setSkipTaskbar(false)
+    }
+  })
 }
 
 async function createWindow () {
@@ -175,6 +202,11 @@ async function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  // Minimize to tray for win32
+  if (process.platform === 'win32') {
+    setMinimizeToTray()
+  }
 }
 
 // Do not lower the rendering priority of Chromium when background
