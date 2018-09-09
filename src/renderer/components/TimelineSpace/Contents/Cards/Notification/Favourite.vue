@@ -2,7 +2,7 @@
 <div
   class="status"
   tabIndex="0"
-  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k']} : {}"
+  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], open: ['o'], profile: ['p']} : {}"
   @shortkey="handleStatusControl"
   ref="status"
   @click="$emit('select')"
@@ -183,6 +183,11 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
+    openDetail (message) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+    },
     mediaAttachments (message) {
       return message.media_attachments
     },
@@ -214,6 +219,12 @@ export default {
           break
         case 'prev':
           this.$emit('focusPrev')
+          break
+        case 'open':
+          this.openDetail(this.message.status)
+          break
+        case 'profile':
+          this.openUser(this.message.account)
           break
       }
     }
