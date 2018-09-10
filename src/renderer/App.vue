@@ -42,7 +42,19 @@ export default {
 </script>
 
 <style lang="scss">
-body { font-family: 'Noto Sans', sans-serif; }
+body {
+  font-family: 'Noto Sans', 'Noto Sans CJK JP', 'Takaoゴシック', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+}
+
+/*
+  These selectors are defined in user agent stylesheet. So I override.
+*/
+input,
+textarea,
+select,
+button {
+  font-family: 'Noto Sans', 'Noto Sans CJK JP', 'Takaoゴシック', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+}
 
 html, body, #app {
   --theme-background-color: #ffffff;
