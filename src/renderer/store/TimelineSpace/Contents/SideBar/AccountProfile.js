@@ -71,7 +71,7 @@ const AccountProfile = {
           throw err
         })
     },
-    unfollow ({ state, commit, rootState }, account) {
+    unfollow ({ commit, rootState }, account) {
       commit('changeLoading', true)
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
@@ -79,17 +79,48 @@ const AccountProfile = {
       )
       return client.post(`/accounts/${account.id}/unfollow`)
         .then(res => {
-          commit('changeLoading', false)
           commit('changeRelationship', res.data)
           return res.data
         })
-        .catch(err => {
+        .finally(() => {
           commit('changeLoading', false)
-          throw err
         })
     },
     close ({ commit }) {
       commit('changeAccount', null)
+    },
+    unmute ({ rootState, commit }, account) {
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post(`/accounts/${account.id}/unmute`)
+        .then(res => {
+          commit('changeRelationship', res.data)
+          return res.data
+        })
+    },
+    block ({ rootState, commit }, account) {
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post(`/accounts/${account.id}/block`)
+        .then(res => {
+          commit('changeRelationship', res.data)
+          return res.data
+        })
+    },
+    unblock ({ rootState, commit }, account) {
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post(`/accounts/${account.id}/unblock`)
+        .then(res => {
+          commit('changeRelationship', res.data)
+          return res.data
+        })
     }
   }
 }

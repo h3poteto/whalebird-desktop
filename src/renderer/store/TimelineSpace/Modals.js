@@ -3,6 +3,7 @@ import ImageViewer from './Modals/ImageViewer'
 import Jump from './Modals/Jump'
 import ListMembership from './Modals/ListMembership'
 import AddListMember from './Modals/AddListMember'
+import MuteConfirm from './Modals/MuteConfirm'
 import Shortcut from './Modals/Shortcut'
 
 const Modals = {
@@ -13,6 +14,7 @@ const Modals = {
     Jump,
     ListMembership,
     AddListMember,
+    MuteConfirm,
     Shortcut
   },
   getters: {
@@ -22,8 +24,9 @@ const Modals = {
       const jump = rootState.TimelineSpace.Modals.Jump.modalOpen
       const listMembership = rootState.TimelineSpace.Modals.ListMembership.modalOpen
       const addListMember = rootState.TimelineSpace.Modals.AddListMember.modalOpen
-      const shortcut = rootState.TimelineSpace.Modals.Jump.modalOpen
-      return imageViewer || newToot || jump || listMembership || addListMember || shortcut
+      const shortcut = rootState.TimelineSpace.Modals.Shortcut.modalOpen
+      const muteConfirm = rootState.TimelineSpace.Modals.MuteConfirm.modalOpen
+      return imageViewer || newToot || jump || listMembership || addListMember || shortcut || muteConfirm
     }
   }
 }

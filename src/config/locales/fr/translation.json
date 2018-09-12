@@ -159,6 +159,12 @@
     "list_membership": {
       "title": "Éditer la liste"
     },
+    "mute_confirm": {
+      "title": "Are you sure to mute?",
+      "body": "Hide notification from this user?",
+      "cancel": "Cancel",
+      "ok": "Mute"
+    },
     "shortcut": {
       "title": "Keyboard shortcuts",
       "ctrl_number": "Switch accounts",
@@ -203,6 +209,10 @@
       "follow_requested": "Suivre demande",
       "open_in_browser": "Ouvrir dans un navigateur",
       "manage_list_memberships": "Inscriptions aux listes",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "unblock": "Unblock",
+      "block": "Block",
       "toots": "Pouets",
       "follows": "Abonnements",
       "followers": "Abonné⋅e⋅s"
