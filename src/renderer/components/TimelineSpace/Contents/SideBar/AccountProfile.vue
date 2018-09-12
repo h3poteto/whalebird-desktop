@@ -32,7 +32,7 @@
                 <li role="button" @click="unblock(account)" v-if="blocking">
                   {{ $t('side_bar.account_profile.unblock') }}
                 </li>
-                <li role="button" @click="confirmBlock(account)" v-else>
+                <li role="button" @click="block(account)" v-else>
                   {{ $t('side_bar.account_profile.block') }}
                 </li>
               </ul>
@@ -194,7 +194,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unmute', account)
       this.$refs.popper.doClose()
     },
-    confirmBlock () {
+    block (account) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/block', account)
+      this.$refs.popper.doClose()
     },
     unblock () {
     }
