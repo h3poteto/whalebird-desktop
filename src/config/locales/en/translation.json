@@ -165,10 +165,10 @@
       "title": "List Memberships"
     },
     "mute_confirm": {
-      "title": "Are you sure to block?",
+      "title": "Are you sure to mute?",
       "body": "Hide notification from this user?",
       "cancel": "Cancel",
-      "ok": "Ok"
+      "ok": "Mute"
     },
     "shortcut": {
       "title": "Keyboard shortcuts",
