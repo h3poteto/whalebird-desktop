@@ -23,6 +23,18 @@
                 <li role="button" @click="addToList(account)">
                   {{ $t('side_bar.account_profile.manage_list_memberships') }}
                 </li>
+                <li role="button" @click="unmute(account)" v-if="muting">
+                  {{ $t('side_bar.account_profile.unmute') }}
+                </li>
+                <li role="button" @click="confirmMute(account)" v-else>
+                  {{ $t('side_bar.account_profile.mute') }}
+                </li>
+                <li role="button" @click="unblock(account)" v-if="blocking">
+                  {{ $t('side_bar.account_profile.unblock') }}
+                </li>
+                <li role="button" @click="confirmBlock(account)" v-else>
+                  {{ $t('side_bar.account_profile.block') }}
+                </li>
               </ul>
             </div>
 
@@ -104,10 +116,7 @@ export default {
   },
   computed: {
     ...mapState({
-      account: state => state.TimelineSpace.Contents.SideBar.AccountProfile.account,
       user: state => state.TimelineSpace.account,
-      relationship: state => state.TimelineSpace.Contents.SideBar.AccountProfile.relationship,
-      loading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.loading,
       theme: (state) => {
         return {
           '--theme-mask-color': state.App.theme.wrapper_mask_color,
@@ -115,6 +124,13 @@ export default {
           '--theme-primary-color': state.App.theme.primary_color
         }
       }
+    }),
+    ...mapState('TimelineSpace/Contents/SideBar/AccountProfile', {
+      account: state => state.account,
+      relationship: state => state.relationship,
+      loading: state => state.loading,
+      muting: state => state.relationship && state.relationship.muting,
+      blocking: state => state.relationship && state.relationship.blocking
     })
   },
   watch: {
@@ -168,6 +184,17 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/setAccount', account)
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', true)
       this.$refs.popper.doClose()
+    },
+    confirmMute (account) {
+      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', account)
+      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
+      this.$refs.popper.doClose()
+    },
+    unmute () {
+    },
+    confirmBlock () {
+    },
+    unblock () {
     }
   }
 }
