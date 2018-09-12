@@ -89,12 +89,23 @@ const AccountProfile = {
     close ({ commit }) {
       commit('changeAccount', null)
     },
-    async unmute ({ rootState, commit }, account) {
+    unmute ({ rootState, commit }, account) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/accounts/${account.id}/unmute`)
+        .then(res => {
+          commit('changeRelationship', res.data)
+          return res.data
+        })
+    },
+    block ({ rootState, commit }, account) {
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post(`/accounts/${account.id}/block`)
         .then(res => {
           commit('changeRelationship', res.data)
           return res.data
