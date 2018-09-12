@@ -198,7 +198,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/block', account)
       this.$refs.popper.doClose()
     },
-    unblock () {
+    unblock (account) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unblock', account)
+      this.$refs.popper.doClose()
     }
   }
 }
