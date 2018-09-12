@@ -110,6 +110,17 @@ const AccountProfile = {
           commit('changeRelationship', res.data)
           return res.data
         })
+    },
+    unblock ({ rootState, commit }, account) {
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post(`/accounts/${account.id}/unblock`)
+        .then(res => {
+          commit('changeRelationship', res.data)
+          return res.data
+        })
     }
   }
 }
