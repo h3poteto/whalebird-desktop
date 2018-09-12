@@ -190,7 +190,9 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
       this.$refs.popper.doClose()
     },
-    unmute () {
+    unmute (account) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unmute', account)
+      this.$refs.popper.doClose()
     },
     confirmBlock () {
     },
