@@ -159,6 +159,12 @@
     "list_membership": {
       "title": "リストメンバー管理"
     },
+    "mute_confirm": {
+      "title": "本当にミュートしますか？",
+      "body": "このユーザからの通知もミュートしますか？",
+      "cancel": "キャンセル",
+      "ok": "ミュートする"
+    },
     "shortcut": {
       "title": "キーボードショートカット",
       "ctrl_number": "アカウントの切り替え",
@@ -203,6 +209,10 @@
       "follow_requested": "フォロー承認待ち",
       "open_in_browser": "ブラウザで開く",
       "manage_list_memberships": "リストの管理",
+      "mute": "ミュート",
+      "unmute": "ミュートを解除",
+      "unblock": "ブロックを解除",
+      "block": "ブロック",
       "toots": "トゥート",
       "follows": "フォロー",
       "followers": "フォロワー"
