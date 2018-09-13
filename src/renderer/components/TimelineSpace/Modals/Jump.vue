@@ -31,11 +31,9 @@ import { mapState } from 'vuex'
 export default {
   name: 'jump',
   computed: {
-    ...mapState({
-      channelList: (state) => {
-        return state.TimelineSpace.Modals.Jump.defaultChannelList.concat(state.TimelineSpace.Modals.Jump.listChannelList)
-      },
-      selectedChannel: state => state.TimelineSpace.Modals.Jump.selectedChannel
+    ...mapState('TimelineSpace/Modals/Jump', {
+      channelList: state => state.defaultChannelList.concat(state.tagChannelList).concat(state.listChannelList),
+      selectedChannel: state => state.selectedChannel
     }),
     channel: {
       get () {
@@ -65,6 +63,7 @@ export default {
       if (!oldModal && newModal) {
         this.$nextTick(function () {
           this.$store.dispatch('TimelineSpace/Modals/Jump/syncListChannel')
+          this.$store.dispatch('TimelineSpace/Modals/Jump/syncTagChannel')
           this.$refs.channel.focus()
         })
       } else {
