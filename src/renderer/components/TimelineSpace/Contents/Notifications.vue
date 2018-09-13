@@ -4,15 +4,15 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="notifications" v-for="(message, index) in notifications" v-bind:key="message.id">
+    <div class="notifications" v-for="message in notifications" v-bind:key="message.id">
       <notification
         :message="message"
         :filter="filter"
-        :focused="index === focusedIndex"
+        :focused="message.id === focusedId"
         :overlaid="modalOpened"
         @focusNext="focusNext"
         @focusPrev="focusPrev"
-        @selectNotification="focusNotification(index)"
+        @selectNotification="focusNotification(message)"
         >
       </notification>
     </div>
@@ -36,7 +36,7 @@ export default {
   components: { Notification },
   data () {
     return {
-      focusedIndex: null
+      focusedId: null
     }
   },
   computed: {
@@ -53,7 +53,15 @@ export default {
       'modalOpened'
     ]),
     shortcutEnabled: function () {
-      return !this.focusedIndex && !this.modalOpened
+      if (this.modalOpened) {
+        return false
+      }
+      if (!this.focusedId) {
+        return true
+      }
+      // Sometimes notifications are deleted, so perhaps focused notification don't exist.
+      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      return currentIndex === -1
     }
   },
   mounted () {
@@ -84,7 +92,7 @@ export default {
           })
       }
     },
-    focusedIndex: function (newState, oldState) {
+    focusedId: function (newState, oldState) {
       if (newState >= 0 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
       } else if (newState === null && !this.heading) {
@@ -146,29 +154,31 @@ export default {
         document.getElementById('scrollable'),
         0
       )
-      this.focusedIndex = null
+      this.focusedId = null
     },
     focusNext () {
-      if (this.focusedIndex === null) {
-        this.focusedIndex = 0
-      } else if (this.focusedIndex < this.notifications.length) {
-        this.focusedIndex++
+      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      if (currentIndex === -1) {
+        this.focusedId = this.notifications[0].id
+      } else if (currentIndex < this.notifications.length) {
+        this.focusedId = this.notifications[currentIndex + 1].id
       }
     },
     focusPrev () {
-      if (this.focusedIndex === 0) {
-        this.focusedIndex = null
-      } else if (this.focusedIndex > 0) {
-        this.focusedIndex--
+      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      if (currentIndex === 0) {
+        this.focusedId = null
+      } else if (currentIndex > 0) {
+        this.focusedId = this.notifications[currentIndex - 1].id
       }
     },
-    focusNotification (index) {
-      this.focusedIndex = index
+    focusNotification (notification) {
+      this.focusedId = notification.id
     },
     handleKey (event) {
       switch (event.srcKey) {
         case 'next':
-          this.focusedIndex = 0
+          this.focusedId = this.notifications[0].id
           break
       }
     }
