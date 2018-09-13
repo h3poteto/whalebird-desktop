@@ -59,7 +59,7 @@ $ brew cask install whalebird
 ### Linux
 
 You can download `.deb` or `.rpm` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
-If you do not want to use package manager, please download `.tar.bz2` file and docompress it.
+If you do not want to use the package manager, please download `.tar.bz2` file and decompress it.
 
 Or please install the app from [snapcraft.io](https://snapcraft.io/whalebird).
 
@@ -100,7 +100,7 @@ $ npm run dev
 2. Next, add your language to constants like [French](https://github.com/h3poteto/whalebird-desktop/blob/master/src/constants/language.js#L10-L13).
 3. Finally, add your language at [here](https://github.com/h3poteto/whalebird-desktop/blob/master/src/renderer/components/Preferences/Language.vue#L37).
 
-If there is something unknown, please refer this pull request: https://github.com/h3poteto/whalebird-desktop/pull/502
+If there is something unknown, please refer to this pull request: https://github.com/h3poteto/whalebird-desktop/pull/502
 
 
 # License
