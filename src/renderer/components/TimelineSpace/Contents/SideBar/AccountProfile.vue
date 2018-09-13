@@ -263,21 +263,27 @@ function findLink (target) {
       }
 
       .more {
+        .popper {
+          padding: 2px 0;
+          border-color: #909399;
+        }
+
         .menu-list {
           padding: 0;
-          font-size: calc(var(--base-font-size) * 0.8);
+          font-size: calc(var(--base-font-size) * 0.9);
           list-style-type: none;
-          line-height: 20px;
+          line-height: 32px;
           text-align: left;
           color: #303133;
+          margin: 4px 0;
 
           li {
             box-sizing: border-box;
-            padding-left: 0.5em;
-            padding-bottom: 0.5em;
+            padding: 0 32px 0 16px;
 
             &:hover {
-              background-color: #f2f6fc;
+              background-color: #409eff;
+              color: #fff;
               cursor: pointer;
             }
           }
