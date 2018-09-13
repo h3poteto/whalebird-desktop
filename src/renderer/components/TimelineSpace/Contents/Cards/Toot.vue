@@ -581,22 +581,25 @@ export default {
       }
 
       .toot-menu {
+        padding: 2px 0;
+        border-color: #909399;
+
         .menu-list {
           padding: 0;
           margin: 4px 0;
-          font-size: 0.8em;
+          font-size: 0.9rem;
           list-style-type: none;
-          line-height: 20px;
+          line-height: 32px;
           text-align: left;
           color: #303133;
 
           li {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0 1.1em 0.5em;
+            padding: 0 32px 0 16px;
 
             &:hover {
-              background-color: #f2f6fc;
+              background-color: #409eff;
+              color: #fff;
               cursor: pointer;
             }
 
