@@ -660,6 +660,9 @@ ipcMain.on('change-language', (event, value) => {
 ipcMain.on('save-hashtag', (event, tag) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags.insertTag(tag)
+    .then(() => {
+      event.sender.send('response-save-hashtag')
+    })
     .catch((err) => {
       log.error(err)
     })
