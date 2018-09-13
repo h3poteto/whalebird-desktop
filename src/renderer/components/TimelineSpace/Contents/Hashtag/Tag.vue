@@ -55,7 +55,15 @@ export default {
       'modalOpened'
     ]),
     shortcutEnabled: function () {
-      return !this.focusedId && !this.modalOpened
+      if (this.modalOpened) {
+        return false
+      }
+      if (!this.focusedId) {
+        return true
+      }
+      // Sometimes toots are deleted, so perhaps focused toot don't exist.
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      return currentIndex === -1
     }
   },
   mounted () {
