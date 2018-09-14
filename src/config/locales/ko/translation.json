@@ -164,6 +164,12 @@
     "list_membership": {
       "title": "리스트 멤버"
     },
+    "mute_confirm": {
+      "title": "Are you sure to mute?",
+      "body": "Hide notification from this user?",
+      "cancel": "Cancel",
+      "ok": "Mute"
+    },
     "shortcut": {
       "title": "키보드 단축키",
       "ctrl_number": "계정 변경",
@@ -208,13 +214,19 @@
       "follow_requested": "팔로우 요청중",
       "open_in_browser": "브라우저에서 열기",
       "manage_list_memberships": "리스트 멤버 관리",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "unblock": "Unblock",
+      "block": "Block",
       "toots": "툿",
       "follows": "팔로잉",
       "followers": "팔로워"
     }
   },
   "hashtag": {
-    "tag_name": "태그 이름"
+    "tag_name": "태그 이름",
+    "delete_tag": "Delete tag",
+    "save_tag": "Save tag"
   },
   "search": {
     "search": "검색",

@@ -164,6 +164,12 @@
     "list_membership": {
       "title": "List Memberships"
     },
+    "mute_confirm": {
+      "title": "Are you sure to mute?",
+      "body": "Hide notification from this user?",
+      "cancel": "Cancel",
+      "ok": "Mute"
+    },
     "shortcut": {
       "title": "Keyboard shortcuts",
       "ctrl_number": "Switch accounts",
@@ -208,13 +214,19 @@
       "follow_requested": "Follow requested",
       "open_in_browser": "Open in Browser",
       "manage_list_memberships": "Manage List Memberships",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "unblock": "Unblock",
+      "block": "Block",
       "toots": "Toots",
       "follows": "Follows",
       "followers": "Followers"
     }
   },
   "hashtag": {
-    "tag_name": "Tag name"
+    "tag_name": "Tag name",
+    "delete_tag": "Delete tag",
+    "save_tag": "Save tag"
   },
   "search": {
     "search": "Search",
