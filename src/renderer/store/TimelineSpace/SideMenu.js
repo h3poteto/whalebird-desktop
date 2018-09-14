@@ -8,7 +8,7 @@ const SideMenu = {
     unreadNotifications: false,
     unreadLocalTimeline: false,
     lists: [],
-    overrideActivePath: null,
+    tags: [],
     collapse: false
   },
   mutations: {
@@ -24,11 +24,11 @@ const SideMenu = {
     updateLists (state, lists) {
       state.lists = lists
     },
-    updateOverrideActivePath (state, path) {
-      state.overrideActivePath = path
-    },
     changeCollapse (state, collapse) {
       state.collapse = collapse
+    },
+    updateTags (state, tags) {
+      state.tags = tags
     }
   },
   actions: {
@@ -57,6 +57,20 @@ const SideMenu = {
       ipcRenderer.send('get-collapse')
       ipcRenderer.once('response-get-collapse', (event, value) => {
         commit('changeCollapse', value)
+      })
+    },
+    listTags ({ commit }) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.once('response-list-hashtags', (event, tags) => {
+          ipcRenderer.removeAllListeners('error-list-hashtags')
+          commit('updateTags', tags)
+          resolve(tags)
+        })
+        ipcRenderer.once('error-list-hashtags', (event, err) => {
+          ipcRenderer.removeAlListeners('response-list-hashtags')
+          reject(err)
+        })
+        ipcRenderer.send('list-hashtags')
       })
     }
   }

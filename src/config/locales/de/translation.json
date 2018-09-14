@@ -219,7 +219,9 @@
     }
   },
   "hashtag": {
-    "tag_name": "Tagname"
+    "tag_name": "Tagname",
+    "delete_tag": "Delete tag",
+    "save_tag": "Save tag"
   },
   "search": {
     "search": "Suche",
