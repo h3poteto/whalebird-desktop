@@ -61,20 +61,25 @@
         <icon name="globe"></icon>
         <span>{{ $t("side_menu.public") }}</span>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/hashtag`">
-        <icon name="hashtag"></icon>
-        <span>{{ $t("side_menu.hashtag") }}</span>
-      </el-menu-item>
       <el-menu-item :index="`/${id()}/search`">
         <icon name="search"></icon>
         <span>{{ $t("side_menu.search") }}</span>
       </el-menu-item>
+      <el-menu-item :index="`/${id()}/hashtag`">
+        <icon name="hashtag"></icon>
+        <span>{{ $t("side_menu.hashtag") }}</span>
+      </el-menu-item>
+      <template v-for="tag in tags">
+        <el-menu-item :index="`/${id()}/hashtag/${tag.tagName}`" class="sub-menu" :key="tag.tagName">
+          <span>#{{ tag.tagName }}</span>
+        </el-menu-item>
+      </template>
       <el-menu-item :index="`/${id()}/lists`">
         <icon name="list-ul"></icon>
         <span>{{ $t("side_menu.lists") }}</span>
       </el-menu-item>
       <template v-for="list in lists">
-        <el-menu-item :index="`/${id()}/lists/${list.id}`" class="sub-menu" v-bind:key="list.id">
+        <el-menu-item :index="`/${id()}/lists/${list.id}`" class="sub-menu" :key="list.id">
           <span>#{{ list.title }}</span>
         </el-menu-item>
       </template>
@@ -89,27 +94,26 @@ import { shell } from 'electron'
 export default {
   name: 'side-menu',
   computed: {
+    ...mapState('TimelineSpace/SideMenu', {
+      unreadHomeTimeline: state => state.unreadHomeTimeline,
+      unreadNotifications: state => state.unreadNotifications,
+      unreadLocalTimeline: state => state.unreadLocalTimeline,
+      lists: state => state.lists,
+      tags: state => state.tags,
+      collapse: state => state.collapse
+    }),
     ...mapState({
       account: state => state.TimelineSpace.account,
-      unreadHomeTimeline: state => state.TimelineSpace.SideMenu.unreadHomeTimeline,
-      unreadNotifications: state => state.TimelineSpace.SideMenu.unreadNotifications,
-      unreadLocalTimeline: state => state.TimelineSpace.SideMenu.unreadLocalTimeline,
-      lists: state => state.TimelineSpace.SideMenu.lists,
-      themeColor: state => state.App.theme.side_menu_color,
-      overrideActivePath: state => state.TimelineSpace.SideMenu.overrideActivePath,
-      collapse: state => state.TimelineSpace.SideMenu.collapse
+      themeColor: state => state.App.theme.side_menu_color
     })
   },
   created () {
     this.$store.dispatch('TimelineSpace/SideMenu/readCollapse')
+    this.$store.dispatch('TimelineSpace/SideMenu/listTags')
   },
   methods: {
     activeRoute () {
-      if (this.overrideActivePath === null) {
-        return this.$route.path
-      } else {
-        return this.overrideActivePath
-      }
+      return this.$route.path
     },
     id () {
       return this.$route.params.id

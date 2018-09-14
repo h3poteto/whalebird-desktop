@@ -219,7 +219,9 @@
     }
   },
   "hashtag": {
-    "tag_name": "Nom du hashtag"
+    "tag_name": "Nom du hashtag",
+    "delete_tag": "Delete tag",
+    "save_tag": "Save tag"
   },
   "search": {
     "search": "Rechercher",

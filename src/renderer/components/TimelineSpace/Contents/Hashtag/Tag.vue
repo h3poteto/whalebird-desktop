@@ -106,8 +106,6 @@ export default {
   },
   methods: {
     async load (tag) {
-      this.$store.commit('TimelineSpace/SideMenu/updateOverrideActivePath', `/${this.$route.params.id}/hashtag`)
-
       await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag)
         .catch(() => {
           this.$message({
@@ -125,7 +123,6 @@ export default {
       return true
     },
     reset () {
-      this.$store.commit('TimelineSpace/SideMenu/updateOverrideActivePath', null)
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/archiveTimeline')

@@ -30,6 +30,7 @@ const List = {
         ipcRenderer.once('response-remove-hashtag', (event, _) => {
           ipcRenderer.removeAllListeners('error-remove-hashtag')
           dispatch('listTags')
+          dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
           resolve('deleted')
         })
         ipcRenderer.once('error-remove-hashtag', (event, err) => {
