@@ -219,7 +219,9 @@
     }
   },
   "hashtag": {
-    "tag_name": "タグ名"
+    "tag_name": "タグ名",
+    "delete_tag": "タグを削除",
+    "save_tag": "タグを保存"
   },
   "search": {
     "search": "検索",

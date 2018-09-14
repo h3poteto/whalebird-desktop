@@ -12,7 +12,7 @@
           <input v-model="tag" :placeholder="$t('hashtag.tag_name')" class="search-keyword" v-shortkey.avoid v-on:keyup.enter="search" autofocus></input>
         </div>
         <div class="form-item" v-show="tagPage()">
-          <el-button type="text" @click="save">
+          <el-button type="text" @click="save" :title="$t('hashtag.save_tag')">
             <icon name="thumbtack"></icon>
           </el-button>
         </div>

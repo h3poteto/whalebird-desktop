@@ -7,7 +7,7 @@
           {{ tag.tagName }}
         </td>
         <td class="action">
-          <el-button type="text" @click.stop="deleteTag(tag)">
+          <el-button type="text" @click.stop="deleteTag(tag)" :title="$t('hashtag.delete_tag')">
             <icon name="regular/trash-alt"></icon>
           </el-button>
         </td>
