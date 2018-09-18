@@ -27,7 +27,7 @@ const Home = {
       state.timeline = messages
     },
     mergeTimeline (state) {
-      state.timeline = state.unreadTimeline.concat(state.timeline)
+      state.timeline = state.unreadTimeline.slice(0, 80).concat(state.timeline)
       state.unreadTimeline = []
     },
     insertTimeline (state, messages) {
