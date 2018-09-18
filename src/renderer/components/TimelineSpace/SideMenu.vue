@@ -16,7 +16,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <span>{{ account.domain }}</span>
+        <span class="domain-name">{{ account.domain }}</span>
       </div>
       <div class="collapse">
         <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse" :title="$t('side_menu.expand')">
@@ -167,6 +167,11 @@ export default {
 
       .el-dropdown-link {
         cursor: pointer;
+      }
+
+      .domain-name {
+        word-break: break-all;
+        white-space: nowrap;
       }
     }
 

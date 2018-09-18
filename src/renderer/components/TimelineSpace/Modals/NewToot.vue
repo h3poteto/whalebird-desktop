@@ -66,7 +66,7 @@
         </el-button>
       </div>
       <span class="text-count">{{ 500 - status.length }}</span>
-      <el-button @click="close">{{ $t('modals.new_toot.cancel') }}</el-button>
+      <el-button @click="closeConfirm(close)">{{ $t('modals.new_toot.cancel') }}</el-button>
       <el-button type="primary" @click="toot" v-loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
       <div class="clearfix"></div>
     </div>

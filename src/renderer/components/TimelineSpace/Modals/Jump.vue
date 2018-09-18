@@ -10,7 +10,7 @@
           v-model="channel"
           :placeholder="$t('modals.jump.jump_to')"
           ref="channel"
-          v-shortkey="{next: ['arrowdown'], prev: ['arrowup'], select: ['enter']}"
+          v-shortkey="shortcutEnabled ? {next: ['arrowdown'], prev: ['arrowup'], select: ['enter']} : {}"
           @shortkey="handleKey"
           />
         <ul class="channel-list">
@@ -53,6 +53,9 @@ export default {
       set (value) {
         this.$store.commit('TimelineSpace/Modals/Jump/changeModal', value)
       }
+    },
+    shortcutEnabled: function () {
+      return this.jumpModal
     }
   },
   watch: {
