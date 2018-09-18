@@ -28,7 +28,7 @@ const Notifications = {
       state.notifications = notifications
     },
     mergeNotifications (state) {
-      state.notifications = state.unreadNotifications.concat(state.notifications)
+      state.notifications = state.unreadNotifications.slice(0, 80).concat(state.notifications)
       state.unreadNotifications = []
     },
     insertNotifications (state, notifications) {
