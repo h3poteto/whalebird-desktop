@@ -3,7 +3,7 @@
   <div class="channel">{{ title }}</div>
   <div class="tools">
     <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
-      <icon name="regular/edit"></icon>
+      <icon name="regular/edit" scale="1.1"></icon>
     </el-button>
     <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
       <icon name="sync-alt"></icon>
