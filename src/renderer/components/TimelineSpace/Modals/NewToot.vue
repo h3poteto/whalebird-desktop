@@ -61,8 +61,13 @@
         </el-button>
       </div>
       <div class="content-warning">
-        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning" :title="$t('modals.new_toot.add_cw')">
+        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning" :title="$t('modals.new_toot.add_cw')" :class="showContentWarning? '' : 'clickable'">
           <span class="cw-text">CW</span>
+        </el-button>
+      </div>
+      <div class="pined-hashtag">
+        <el-button size="small" type="text" @click="pinedHashtag = !pinedHashtag" :title="$t('modals.new_toot.pined_hashtag')" :class="pinedHashtag? '' : 'clickable'">
+          <icon name="hashtag"></icon>
         </el-button>
       </div>
       <span class="text-count">{{ 500 - status.length }}</span>
@@ -87,7 +92,8 @@ export default {
   data () {
     return {
       showContentWarning: false,
-      visibilityList: Visibility
+      visibilityList: Visibility,
+      pinedHashtag: false
     }
   },
   computed: {
@@ -360,6 +366,15 @@ export default {
         font-weight: 800;
         line-height: 18px;
       }
+    }
+
+    .pined-hashtag {
+      float: left;
+      margin-left: 8px;
+    }
+
+    .clickable {
+      color: #909399;
     }
 
     .text-count {
