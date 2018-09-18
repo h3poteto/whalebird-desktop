@@ -62,7 +62,7 @@
       </div>
       <div class="content-warning">
         <el-button size="small" type="text" @click="showContentWarning = !showContentWarning" :title="$t('modals.new_toot.add_cw')">
-          CW
+          <span class="cw-text">CW</span>
         </el-button>
       </div>
       <span class="text-count">{{ 500 - status.length }}</span>
@@ -356,8 +356,9 @@ export default {
       float: left;
       margin-left: 8px;
 
-      span {
+      .cw-text {
         font-weight: 800;
+        line-height: 18px;
       }
     }
 
