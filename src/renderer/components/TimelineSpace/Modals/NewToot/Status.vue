@@ -50,6 +50,10 @@ export default {
     opened: {
       type: Boolean,
       default: false
+    },
+    fixCursorPos: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -82,12 +86,18 @@ export default {
     // When change account, the new toot modal is recreated.
     // So can not catch open event in watch.
     this.$refs.status.focus()
+    if (this.fixCursorPos) {
+      this.$refs.status.setSelectionRange(0, 0)
+    }
   },
   watch: {
     opened: function (newState, oldState) {
       if (!oldState && newState) {
         this.$nextTick(function () {
           this.$refs.status.focus()
+          if (this.fixCursorPos) {
+            this.$refs.status.setSelectionRange(0, 0)
+          }
         })
       } else if (oldState && !newState) {
         this.closeSuggest()
