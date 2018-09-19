@@ -147,7 +147,8 @@
       "add_image": "Bild hinzufügen",
       "change_visibility": "Sichtbarkeit ändern",
       "add_cw": "Inhalt hinzufügen Warnung",
-      "change_sensitive": "Ändern Sie empfindlich"
+      "change_sensitive": "Ändern Sie empfindlich",
+      "pined_hashtag": "Pin the hashtag"
     },
     "jump": {
       "jump_to": "Springe zu..."

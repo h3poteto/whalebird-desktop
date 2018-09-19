@@ -147,7 +147,8 @@
       "add_image": "画像を添付",
       "change_visibility": "プライバシー設定",
       "add_cw": "閲覧注意を追加",
-      "change_sensitive": "メディアの閲覧注意設定"
+      "change_sensitive": "メディアの閲覧注意設定",
+      "pined_hashtag": "ハッシュタグを固定する"
     },
     "jump": {
       "jump_to": "移動..."
