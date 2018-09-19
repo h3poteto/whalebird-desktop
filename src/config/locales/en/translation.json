@@ -152,7 +152,8 @@
       "add_image": "Add images",
       "change_visibility": "Change visibility",
       "add_cw": "Add contents warning",
-      "change_sensitive": "Change sensitive"
+      "change_sensitive": "Change sensitive",
+      "pined_hashtag": "Pin the hashtag"
     },
     "jump": {
       "jump_to": "Jump to..."
