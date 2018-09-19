@@ -17,7 +17,9 @@ const NewToot = {
     visibility: Visibility.Public.value,
     sensitive: false,
     spoiler: '',
-    attachedMediaId: 0
+    attachedMediaId: 0,
+    pinedHashtag: false,
+    hashtags: []
   },
   mutations: {
     changeModal (state, value) {
@@ -58,6 +60,17 @@ const NewToot = {
     },
     updateMediaId (state, value) {
       state.attachedMediaId = value
+    },
+    changePinedHashtag (state, value) {
+      state.pinedHashtag = value
+    },
+    updateHashtags (state, tags) {
+      state.hashtags = tags
+    }
+  },
+  getters: {
+    hashtagInserting (state) {
+      return !state.replyToMessage && state.pinedHashtag
     }
   },
   actions: {
@@ -91,8 +104,11 @@ const NewToot = {
       })
       commit('changeVisibilityValue', value)
     },
-    openModal ({ dispatch, commit, rootState }) {
+    openModal ({ dispatch, commit, state, rootState }) {
       commit('changeModal', true)
+      if (!state.replyToMessage && state.pinedHashtag) {
+        commit('updateStatus', state.hashtags.map(t => ` #${t.name}`).join())
+      }
       commit('changeVisibilityValue', rootState.App.tootVisibility)
     },
     closeModal ({ commit }) {
@@ -134,6 +150,11 @@ const NewToot = {
     },
     resetMediaId ({ commit }) {
       commit('updateMediaId', 0)
+    },
+    updateHashtags ({ commit, state }, tags) {
+      if (state.pinedHashtag) {
+        commit('updateHashtags', tags)
+      }
     }
   }
 }
