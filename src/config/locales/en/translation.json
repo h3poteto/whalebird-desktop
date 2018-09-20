@@ -74,7 +74,10 @@
     "title": "Preferences",
     "general": {
       "title": "General",
-      "toot": "Toot",
+      "toot": {
+        "title": "Toot",
+        "description": "Customize default visibility of toot."
+      },
       "visibility": {
         "title": "Default visibility:",
         "public": "Public",
@@ -82,9 +85,12 @@
         "private": "Private",
         "direct": "Direct"
       },
-      "sounds": "Sounds",
-      "fav_rb_sound": "Favorite and Boost:",
-      "toot_sound": "Toot:"
+      "sounds": {
+        "title": "Sounds",
+        "description": "Please set feedback sounds.",
+        "fav_rb": "When you favorite or boost the toot",
+        "toot": "When you post toot"
+      }
     },
     "appearance": {
       "title": "Appearance",

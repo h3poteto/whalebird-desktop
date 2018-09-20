@@ -1,50 +1,39 @@
 <template>
 <div id="general" v-loading="loading">
   <h2>{{ $t('preferences.general.title') }}</h2>
-  <div class="toot">
-    <h3>{{ $t('preferences.general.toot') }}</h3>
-    <table>
-      <tbody>
-        <tr>
-          <td class="title">{{ $t('preferences.general.visibility.title') }}</td>
-          <td class="status">
-            <el-select v-model="tootVisibility" placeholder="visibility">
-              <el-option
-                v-for="v in visibilities"
-                :key="v.value"
-                :label="$t(v.name)"
-                :value="v.value">
-              </el-option>
-            </el-select>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="toot section">
+    <h3>{{ $t('preferences.general.toot.title') }}</h3>
+    <p class="description">{{ $t('preferences.general.toot.description') }}</p>
+    <el-select v-model="tootVisibility" placeholder="visibility">
+      <el-option
+        v-for="v in visibilities"
+        :key="v.value"
+        :label="$t(v.name)"
+        :value="v.value">
+      </el-option>
+    </el-select>
   </div>
-  <div class="sounds">
-    <h3>{{ $t('preferences.general.sounds') }}</h3>
-    <table>
-      <tbody>
-        <tr>
-          <td class="title">{{ $t('preferences.general.fav_rb_sound') }}</td>
-          <td class="status">
-            <el-switch
-              v-model="sound_fav_rb"
-              active-color="#13ce66">
-            </el-switch>
-          </td>
-        </tr>
-        <tr>
-          <td class="title">{{ $t('preferences.general.toot_sound') }}</td>
-          <td class="status">
-            <el-switch
-              v-model="sound_toot"
-              active-color="#13ce66">
-            </el-switch>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="sounds section">
+    <h3>{{ $t('preferences.general.sounds.title') }}</h3>
+    <p class="description">{{ $t('preferences.general.sounds.description') }}</p>
+    <div class="selection">
+      <span class="value">
+        <el-switch
+          v-model="sound_fav_rb"
+          active-color="#13ce66">
+        </el-switch>
+      </span>
+      <span class="title">{{ $t('preferences.general.sounds.fav_rb') }}</span>
+    </div>
+    <div class="selection">
+      <span class="value">
+        <el-switch
+          v-model="sound_toot"
+          active-color="#13ce66">
+        </el-switch>
+      </span>
+      <span class="title">{{ $t('preferences.general.sounds.toot') }}</span>
+    </div>
   </div>
 </div>
 </template>
@@ -111,34 +100,21 @@ export default {
 
 <style lang="scss" scoped>
 #general {
-  table {
-    width: 100%;
+  .description {
+    margin: 24px 0 20px;
   }
 
-  td {
-    padding: 16px 0;
+  .section {
+    margin-bottom: 48px;
   }
 
-  .title {
-    text-align: right;
-    width: 50%;
-  }
+  .selection {
+    margin: 12px 0;
 
-  .status {
-    width: 50%;
-    text-align: center;
-  }
-
-  .toot {
-    color: var(--theme-secondary-color);
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .sounds {
-    color: var(--theme-secondary-color);
-    width: 100%;
-    box-sizing: border-box;
+    .title {
+      margin-left: 12px;
+      font-weight: 800;
+    }
   }
 }
 </style>
