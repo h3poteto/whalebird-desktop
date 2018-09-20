@@ -12,11 +12,7 @@ const Base = {
       fav_rb: true,
       toot: true
     },
-    theme: Theme.Light.key,
-    fontSize: 14,
-    displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-    tootVisibility: Visibility.Public.value,
-    timeFormat: TimeFormat.Absolute.value
+    tootVisibility: Visibility.Public.value
   },
   state: {
     collapse: false
@@ -31,6 +27,12 @@ const Base = {
       favourite: true,
       follow: true
     }
+  },
+  appearance: {
+    theme: Theme.Light.key,
+    fontSize: 14,
+    displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
+    timeFormat: TimeFormat.Absolute.value
   }
 }
 

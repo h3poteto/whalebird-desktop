@@ -1,10 +1,10 @@
 export default {
   Light: {
-    name: 'preferences.general.theme.light',
+    name: 'preferences.appearance.theme.light',
     key: 'light'
   },
   Dark: {
-    name: 'preferences.general.theme.dark',
+    name: 'preferences.appearance.theme.dark',
     key: 'dark'
   }
 }
