@@ -131,7 +131,7 @@
     },
     "language": {
       "title": "Language",
-      "display_language": "language",
+      "language_description": "Choose the language you would like to use with Whalebird.",
       "notice": "Require relaunch",
       "confirm": {
         "title": "Warning",
