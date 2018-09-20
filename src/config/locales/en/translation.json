@@ -74,24 +74,6 @@
     "title": "Preferences",
     "general": {
       "title": "General",
-      "appearance": "Appearance",
-      "theme_color": "Theme color:",
-      "theme": {
-        "light": "Light",
-        "dark": "Dark"
-      },
-      "font_size": "Font size:",
-      "display_style": {
-        "title": "Display style:",
-        "display_name_and_username": "Display name and username",
-        "display_name": "Display name",
-        "username": "Username"
-      },
-      "time_format": {
-        "title": "Time format:",
-        "absolute": "Absolute",
-        "relative": "Relative"
-      },
       "toot": "Toot",
       "visibility": {
         "title": "Default visibility:",
@@ -103,6 +85,26 @@
       "sounds": "Sounds",
       "fav_rb_sound": "Favorite and Boost:",
       "toot_sound": "Toot:"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme_color": "Theme color",
+      "theme": {
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "font_size": "Font size",
+      "display_style": {
+        "title": "Display style of username",
+        "display_name_and_username": "Display name and username",
+        "display_name": "Display name",
+        "username": "Username"
+      },
+      "time_format": {
+        "title": "Time format",
+        "absolute": "Absolute",
+        "relative": "Relative"
+      }
     },
     "notification": {
       "title": "Notification",

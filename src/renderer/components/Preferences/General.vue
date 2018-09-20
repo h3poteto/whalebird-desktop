@@ -1,51 +1,6 @@
 <template>
 <div id="general" v-loading="loading">
   <h2>{{ $t('preferences.general.title') }}</h2>
-  <div class="appearance">
-    <h3>{{ $t('preferences.general.appearance') }}</h3>
-    <table class="theme">
-      <tbody>
-        <tr>
-          <td class="title">{{ $t('preferences.general.theme_color') }}</td>
-          <td class="status">
-            <el-radio v-for="t in themes" :key="t.key" v-model="theme" :label="t.key">{{ $t(t.name) }}</el-radio>
-          </td>
-        </tr>
-        <tr>
-          <td class="title">{{ $t('preferences.general.font_size') }}</td>
-          <td class="status">
-            <el-input-number :value="fontSize" :min="9" :max="18" @change="updateFontSize"></el-input-number>
-          </td>
-        </tr>
-        <tr>
-          <td class="title">{{ $t('preferences.general.display_style.title') }}</td>
-          <td class="status">
-            <el-select v-model="displayNameStyle" placeholder="style">
-              <el-option
-                v-for="style in nameStyles"
-                :key="style.value"
-                :label="$t(style.name)"
-                :value="style.value">
-              </el-option>
-            </el-select>
-          </td>
-        </tr>
-        <tr>
-          <td class="title">{{ $t('preferences.general.time_format.title') }}</td>
-          <td class="status">
-            <el-select v-model="timeFormat" placeholder="format">
-              <el-option
-                v-for="format in timeFormats"
-                :key="format.value"
-                :label="$t(format.name)"
-                :value="format.value">
-              </el-option>
-            </el-select>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
   <div class="toot">
     <h3>{{ $t('preferences.general.toot') }}</h3>
     <table>
@@ -97,9 +52,6 @@
 <script>
 import { mapState } from 'vuex'
 import Visibility from '~/src/constants/visibility'
-import DisplayStyle from '~/src/constants/displayStyle'
-import Theme from '~/src/constants/theme'
-import TimeFormat from '~/src/constants/timeFormat'
 
 export default {
   name: 'general',
@@ -109,51 +61,13 @@ export default {
         Visibility.Public,
         Visibility.Unlisted,
         Visibility.Private
-      ],
-      nameStyles: [
-        DisplayStyle.DisplayNameAndUsername,
-        DisplayStyle.DisplayName,
-        DisplayStyle.Username
-      ],
-      themes: [
-        Theme.Light,
-        Theme.Dark
-      ],
-      timeFormats: [
-        TimeFormat.Absolute,
-        TimeFormat.Relative
       ]
     }
   },
   computed: {
     ...mapState({
-      loading: state => state.Preferences.General.loading,
-      fontSize: state => state.Preferences.General.general.fontSize
+      loading: state => state.Preferences.General.loading
     }),
-    theme: {
-      get () {
-        return this.$store.state.Preferences.General.general.theme
-      },
-      set (value) {
-        this.$store.dispatch('Preferences/General/updateTheme', value)
-      }
-    },
-    displayNameStyle: {
-      get () {
-        return this.$store.state.Preferences.General.general.displayNameStyle
-      },
-      set (value) {
-        this.$store.dispatch('Preferences/General/updateDisplayNameStyle', value)
-      }
-    },
-    timeFormat: {
-      get () {
-        return this.$store.state.Preferences.General.general.timeFormat
-      },
-      set (value) {
-        this.$store.dispatch('Preferences/General/updateTimeFormat', value)
-      }
-    },
     tootVisibility: {
       get () {
         return this.$store.state.Preferences.General.general.tootVisibility
@@ -191,11 +105,6 @@ export default {
           type: 'error'
         })
       })
-  },
-  methods: {
-    updateFontSize (value) {
-      this.$store.dispatch('Preferences/General/updateFontSize', value)
-    }
   }
 }
 </script>
@@ -218,12 +127,6 @@ export default {
   .status {
     width: 50%;
     text-align: center;
-  }
-
-  .appearance {
-    color: var(--theme-secondary-color);
-    width: 100%;
-    box-sizing: border-box;
   }
 
   .toot {
