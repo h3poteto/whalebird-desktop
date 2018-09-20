@@ -76,14 +76,14 @@
       "title": "General",
       "toot": {
         "title": "Toot",
-        "description": "Customize default visibility of toot."
-      },
-      "visibility": {
-        "title": "Default visibility:",
-        "public": "Public",
-        "unlisted": "Unlisted",
-        "private": "Private",
-        "direct": "Direct"
+        "description": "Customize default visibility of toot.",
+        "visibility": {
+          "title": "Default visibility:",
+          "public": "Public",
+          "unlisted": "Unlisted",
+          "private": "Private",
+          "direct": "Direct"
+        }
       },
       "sounds": {
         "title": "Sounds",
