@@ -78,7 +78,7 @@
         "title": "Toot",
         "description": "Customize default visibility of toot.",
         "visibility": {
-          "title": "Default visibility:",
+          "title": "Default visibility",
           "public": "Public",
           "unlisted": "Unlisted",
           "private": "Private",
@@ -115,7 +115,7 @@
     "notification": {
       "title": "Notification",
       "enable": {
-        "description": "Please set notification event.",
+        "description": "Please set notification events.",
         "reply": "Notify me when I receive reply",
         "reblog": "Notify me when I receive reblog",
         "favourite": "Notify me when I receive favourite",
