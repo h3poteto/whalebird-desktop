@@ -152,7 +152,8 @@
       "add_image": "이미지 추가",
       "change_visibility": "공개 범위 변경",
       "add_cw": "경고 문구 추가",
-      "change_sensitive": "민감한 미디어 설정"
+      "change_sensitive": "민감한 미디어 설정",
+      "pined_hashtag": "Pin the hashtag"
     },
     "jump": {
       "jump_to": "이동"

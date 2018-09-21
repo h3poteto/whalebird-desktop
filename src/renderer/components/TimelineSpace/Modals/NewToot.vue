@@ -12,6 +12,7 @@
       <Status
         v-model="status"
         :opened="newTootModal"
+        :fixCursorPos="hashtagInserting"
         @paste="onPaste"
         @toot="toot"
         />
@@ -61,8 +62,13 @@
         </el-button>
       </div>
       <div class="content-warning">
-        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning" :title="$t('modals.new_toot.add_cw')">
-          CW
+        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning" :title="$t('modals.new_toot.add_cw')" :class="showContentWarning? '' : 'clickable'">
+          <span class="cw-text">CW</span>
+        </el-button>
+      </div>
+      <div class="pined-hashtag">
+        <el-button size="small" type="text" @click="pinedHashtag = !pinedHashtag" :title="$t('modals.new_toot.pined_hashtag')" :class="pinedHashtag? '' : 'clickable'">
+          <icon name="hashtag"></icon>
         </el-button>
       </div>
       <span class="text-count">{{ 500 - status.length }}</span>
@@ -74,7 +80,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
@@ -91,21 +97,21 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('TimelineSpace/Modals/NewToot', {
       replyToId: (state) => {
-        if (state.TimelineSpace.Modals.NewToot.replyToMessage !== null) {
-          return state.TimelineSpace.Modals.NewToot.replyToMessage.id
+        if (state.replyToMessage !== null) {
+          return state.replyToMessage.id
         } else {
           return null
         }
       },
-      attachedMedias: state => state.TimelineSpace.Modals.NewToot.attachedMedias,
-      attachedMediaId: state => state.TimelineSpace.Modals.NewToot.attachedMediaId,
-      blockSubmit: state => state.TimelineSpace.Modals.NewToot.blockSubmit,
-      visibility: state => state.TimelineSpace.Modals.NewToot.visibility,
-      sensitive: state => state.TimelineSpace.Modals.NewToot.sensitive,
+      attachedMedias: state => state.attachedMedias,
+      attachedMediaId: state => state.attachedMediaId,
+      blockSubmit: state => state.blockSubmit,
+      visibility: state => state.visibility,
+      sensitive: state => state.sensitive,
       visibilityIcon: (state) => {
-        switch (state.TimelineSpace.Modals.NewToot.visibility) {
+        switch (state.visibility) {
           case Visibility.Public.value:
             return 'globe'
           case Visibility.Unlisted.value:
@@ -119,6 +125,9 @@ export default {
         }
       }
     }),
+    ...mapGetters('TimelineSpace/Modals/NewToot', [
+      'hashtagInserting'
+    ]),
     newTootModal: {
       get () {
         return this.$store.state.TimelineSpace.Modals.NewToot.modalOpen
@@ -146,6 +155,14 @@ export default {
       set (value) {
         this.$store.commit('TimelineSpace/Modals/NewToot/updateSpoiler', value)
       }
+    },
+    pinedHashtag: {
+      get () {
+        return this.$store.state.TimelineSpace.Modals.NewToot.pinedHashtag
+      },
+      set (value) {
+        this.$store.commit('TimelineSpace/Modals/NewToot/changePinedHashtag', value)
+      }
     }
   },
   watch: {
@@ -161,7 +178,7 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaId')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
-    toot () {
+    async toot () {
       if (!this.newTootModal) {
         return
       }
@@ -197,13 +214,14 @@ export default {
         })
       }
 
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
+      const status = await this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
         .catch(() => {
           this.$message({
             message: this.$t('message.toot_error'),
             type: 'error'
           })
         })
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/updateHashtags', status.tags)
       this.close()
     },
     selectImage () {
@@ -356,9 +374,19 @@ export default {
       float: left;
       margin-left: 8px;
 
-      span {
+      .cw-text {
         font-weight: 800;
+        line-height: 18px;
       }
+    }
+
+    .pined-hashtag {
+      float: left;
+      margin-left: 8px;
+    }
+
+    .clickable {
+      color: #909399;
     }
 
     .text-count {

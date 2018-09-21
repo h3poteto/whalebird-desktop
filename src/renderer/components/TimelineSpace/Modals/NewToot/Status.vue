@@ -50,6 +50,10 @@ export default {
     opened: {
       type: Boolean,
       default: false
+    },
+    fixCursorPos: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -63,8 +67,11 @@ export default {
   },
   computed: {
     ...mapState({
-      filteredAccounts: state => state.TimelineSpace.Modals.NewToot.Status.filteredAccounts,
       customEmojis: state => state.TimelineSpace.emojis
+    }),
+    ...mapState('TimelineSpace/Modals/NewToot/Status', {
+      filteredAccounts: state => state.filteredAccounts,
+      filteredHashtags: state => state.filteredHashtags
     }),
     status: {
       get: function () {
@@ -79,12 +86,18 @@ export default {
     // When change account, the new toot modal is recreated.
     // So can not catch open event in watch.
     this.$refs.status.focus()
+    if (this.fixCursorPos) {
+      this.$refs.status.setSelectionRange(0, 0)
+    }
   },
   watch: {
     opened: function (newState, oldState) {
       if (!oldState && newState) {
         this.$nextTick(function () {
           this.$refs.status.focus()
+          if (this.fixCursorPos) {
+            this.$refs.status.setSelectionRange(0, 0)
+          }
         })
       } else if (oldState && !newState) {
         this.closeSuggest()
@@ -102,10 +115,16 @@ export default {
       }, 500)
     },
     async suggest (e) {
-      const ac = await this.suggestAccount(e)
-      if (!ac) {
-        this.suggestEmoji(e)
+      const emoji = this.suggestEmoji(e)
+      if (emoji) {
+        return true
       }
+      const ac = await this.suggestAccount(e)
+      if (ac) {
+        return true
+      }
+      const tag = await this.suggestHashtag(e)
+      return tag
     },
     async suggestAccount (e) {
       // e.target.sectionStart: Cursor position
@@ -121,6 +140,24 @@ export default {
         this.startIndex = start
         this.matchWord = word
         this.filteredSuggestion = this.filteredAccounts
+        return true
+      } catch (err) {
+        console.log(err)
+        return false
+      }
+    },
+    async suggestHashtag (e) {
+      const [start, word] = suggestText(e.target.value, e.target.selectionStart, '#')
+      if (!start || !word) {
+        this.closeSuggest()
+        return false
+      }
+      try {
+        await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/searchHashtag', word)
+        this.openSuggest = true
+        this.startIndex = start
+        this.matchWord = word
+        this.filteredSuggestion = this.filteredHashtags
         return true
       } catch (err) {
         console.log(err)
@@ -164,6 +201,7 @@ export default {
       this.highlightedIndex = 0
       this.filteredSuggestion = []
       this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredAccounts')
+      this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredHashtags')
     },
     suggestHighlight (index) {
       if (index < 0) {
