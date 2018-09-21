@@ -135,9 +135,6 @@ export default {
     display: flex;
     align-items: flex-start;
 
-    .left {
-    }
-
     .right {
       margin-left: 40px;
     }
