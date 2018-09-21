@@ -75,6 +75,7 @@ export default {
   .description {
     margin: 24px 0 20px;
   }
+
   .notice {
     color: #c0c4cc;
     font-size: 12px;
