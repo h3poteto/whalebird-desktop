@@ -172,9 +172,8 @@ export default {
       .timestamp {
         font-size: var(--base-font-size);
         text-align: right;
-        width: 100%;
         color: #909399;
-        flota: right;
+        float: right;
       }
     }
 
