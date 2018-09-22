@@ -103,7 +103,7 @@ export default {
         commit('updateAppearance', conf.appearance)
       })
     },
-    updateCustomThemeColor ({ state, commit }, value) {
+    updateCustomThemeColor ({ dispatch, state, commit }, value) {
       const newCustom = Object.assign({}, state.appearance.customThemeColor, value)
       const newAppearance = Object.assign({}, state.appearance, {
         customThemeColor: newCustom
@@ -111,16 +111,14 @@ export default {
       const config = {
         appearance: newAppearance
       }
-      console.log(config)
       ipcRenderer.send('update-preferences', config)
       ipcRenderer.once('error-update-preferences', (event, err) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
       })
       ipcRenderer.once('response-update-preferences', (event, conf) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        // TODO:
-        // dispatch('App/loadPreferences', null, { root: true })
         commit('updateAppearance', conf.appearance)
+        dispatch('App/loadPreferences', null, { root: true })
       })
     }
   }
