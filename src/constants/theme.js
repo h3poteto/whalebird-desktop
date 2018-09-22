@@ -6,5 +6,9 @@ export default {
   Dark: {
     name: 'preferences.appearance.theme.dark',
     key: 'dark'
+  },
+  Custom: {
+    name: 'preferences.appearance.theme.custom',
+    key: 'custom'
   }
 }

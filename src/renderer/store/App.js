@@ -24,18 +24,8 @@ const App = {
     language: Language.en.key
   },
   mutations: {
-    updateTheme (state, themeKey) {
-      switch (themeKey) {
-        case Theme.Light.key:
-          state.theme = LightTheme
-          break
-        case Theme.Dark.key:
-          state.theme = DarkTheme
-          break
-        default:
-          state.theme = LightTheme
-          break
-      }
+    updateTheme (state, themeColorList) {
+      state.theme = themeColorList
     },
     updateFontSize (state, value) {
       state.fontSize = value
@@ -65,7 +55,7 @@ const App = {
     removeShortcutsEvents () {
       ipcRenderer.removeAllListeners('open-preferences')
     },
-    loadPreferences ({ commit }) {
+    loadPreferences ({ commit, dispatch }) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-preferences')
         ipcRenderer.once('error-get-preferences', (event, err) => {
@@ -74,7 +64,7 @@ const App = {
         })
         ipcRenderer.once('response-get-preferences', (event, conf) => {
           ipcRenderer.removeAllListeners('error-get-preferences')
-          commit('updateTheme', conf.appearance.theme)
+          dispatch('updateTheme', conf.appearance)
           commit('updateDisplayNameStyle', conf.appearance.displayNameStyle)
           commit('updateFontSize', conf.appearance.fontSize)
           commit('updateTootVisibility', conf.general.tootVisibility)
@@ -84,6 +74,23 @@ const App = {
           resolve(conf)
         })
       })
+    },
+    updateTheme ({ commit }, appearance) {
+      const themeKey = appearance.theme
+      switch (themeKey) {
+        case Theme.Light.key:
+          commit('updateTheme', LightTheme)
+          break
+        case Theme.Dark.key:
+          commit('updateTheme', DarkTheme)
+          break
+        case Theme.Custom.key:
+          commit('updateTheme', appearance.customThemeColor)
+          break
+        default:
+          commit('updateTheme', LightTheme)
+          break
+      }
     }
   }
 }
