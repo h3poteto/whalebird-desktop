@@ -7,6 +7,10 @@ export default {
     name: 'preferences.appearance.theme.dark',
     key: 'dark'
   },
+  SolarizedLight: {
+    name: 'preferences.appearance.theme.solarized_light',
+    key: 'solarized_light'
+  },
   SolarizedDark: {
     name: 'preferences.appearance.theme.solarized_dark',
     key: 'solarized_dark'
