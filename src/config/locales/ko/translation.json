@@ -97,7 +97,20 @@
       "theme_color": "테마 색상",
       "theme": {
         "light": "밝은 테마",
-        "dark": "어두운 테마"
+        "dark": "어두운 테마",
+        "custom": "Custom"
+      },
+      "custom_theme": {
+        "background_color": "Base background",
+        "selected_background_color": "Focused background",
+        "global_header_color": "Account menu",
+        "side_menu_color": "Side menu",
+        "primary_color": "Primary font",
+        "regular_color": "Regular font",
+        "secondary_color": "Secondary font",
+        "border_color": "Border",
+        "header_menu_color": "Header menu",
+        "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "폰트 크기",
       "display_style": {
