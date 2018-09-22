@@ -97,7 +97,20 @@
       "theme_color": "Theme color",
       "theme": {
         "light": "Light",
-        "dark": "Dark"
+        "dark": "Dark",
+        "custom": "Custom"
+      },
+      "custom_theme": {
+        "background_color": "Base background",
+        "selected_background_color": "Focused background",
+        "global_header_color": "Account menu",
+        "side_menu_color": "Side menu",
+        "primary_color": "Primary font",
+        "regular_color": "Regular font",
+        "secondary_color": "Secondary font",
+        "border_color": "Border",
+        "header_menu_color": "Header menu",
+        "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Font size",
       "display_style": {

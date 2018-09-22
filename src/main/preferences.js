@@ -5,6 +5,7 @@ import DisplayStyle from '../constants/displayStyle'
 import Theme from '../constants/theme'
 import Language from '../constants/language'
 import TimeFormat from '../constants/timeFormat'
+import { LightTheme } from '../renderer/utils/theme'
 
 const Base = {
   general: {
@@ -32,7 +33,8 @@ const Base = {
     theme: Theme.Light.key,
     fontSize: 14,
     displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-    timeFormat: TimeFormat.Absolute.value
+    timeFormat: TimeFormat.Absolute.value,
+    customThemeColor: LightTheme
   }
 }
 
