@@ -84,6 +84,7 @@ export default {
       themes: [
         Theme.Light,
         Theme.Dark,
+        Theme.SolarizedLight,
         Theme.SolarizedDark,
         Theme.Custom
       ],

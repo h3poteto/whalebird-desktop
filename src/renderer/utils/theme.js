@@ -24,6 +24,19 @@ export const DarkTheme = {
   wrapper_mask_color: 'rgba(0, 0, 0, 0.7)'
 }
 
+export const SolarizedLightTheme = {
+  background_color: '#fdf6e3',
+  selected_background_color: '#eee8d5',
+  global_header_color: '#002b36',
+  side_menu_color: '#073642',
+  primary_color: '#657b83',
+  regular_color: '#586e75',
+  secondary_color: '#839496',
+  border_color: '#93a1a1',
+  header_menu_color: '#fdf6e3',
+  wrapper_mask_color: 'rgba(255, 255, 255, 0.7)'
+}
+
 export const SolarizedDarkTheme = {
   background_color: '#073642',
   selected_background_color: '#586e75',
