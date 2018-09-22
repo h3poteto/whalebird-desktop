@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
+import { LightTheme } from '~/src/renderer/utils/theme'
 
 export default {
   namespaced: true,
@@ -10,7 +11,8 @@ export default {
       theme: Theme.Light.key,
       fontSize: 14,
       displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-      timeFormat: TimeFormat.Absolute.value
+      timeFormat: TimeFormat.Absolute.value,
+      customThemeColor: LightTheme
     }
   },
   mutations: {
@@ -99,6 +101,24 @@ export default {
         ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
         commit('updateAppearance', conf.appearance)
+      })
+    },
+    updateCustomThemeColor ({ dispatch, state, commit }, value) {
+      const newCustom = Object.assign({}, state.appearance.customThemeColor, value)
+      const newAppearance = Object.assign({}, state.appearance, {
+        customThemeColor: newCustom
+      })
+      const config = {
+        appearance: newAppearance
+      }
+      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.once('error-update-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
+      })
+      ipcRenderer.once('response-update-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
+        commit('updateAppearance', conf.appearance)
+        dispatch('App/loadPreferences', null, { root: true })
       })
     }
   }

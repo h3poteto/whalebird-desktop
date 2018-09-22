@@ -97,7 +97,20 @@
       "theme_color": "テーマカラー",
       "theme": {
         "light": "標準",
-        "dark": "ダーク"
+        "dark": "ダーク",
+        "custom": "カスタム"
+      },
+      "custom_theme": {
+        "background_color": "背景色",
+        "selected_background_color": "フォーカス時",
+        "global_header_color": "アカウントメニュー",
+        "side_menu_color": "サイドメニュー",
+        "primary_color": "文字色1",
+        "regular_color": "文字色2",
+        "secondary_color": "文字色3",
+        "border_color": "ボーダー",
+        "header_menu_color": "ヘッダーメニュー",
+        "wrapper_mask_color": "モーダル背景"
       },
       "font_size": "フォントサイズ",
       "display_style": {
