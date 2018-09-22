@@ -84,6 +84,7 @@ export default {
       themes: [
         Theme.Light,
         Theme.Dark,
+        Theme.SolarizedDark,
         Theme.Custom
       ],
       timeFormats: [
