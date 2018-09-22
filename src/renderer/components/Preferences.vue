@@ -23,15 +23,19 @@
             <icon name="cog" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.general.title') }}</span>
           </el-menu-item>
-          <el-menu-item index="2" :route="{path: '/preferences/notification'}" @click="notification">
+          <el-menu-item index="2" :route="{path: '/preferences/appearance'}" @click="appearance">
+            <icon name="palette" class="icon" scale="1.3"></icon>
+            <span>{{ $t('preferences.appearance.title') }}</span>
+          </el-menu-item>
+          <el-menu-item index="3" :route="{path: '/preferences/notification'}" @click="notification">
             <icon name="bell" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.notification.title') }}</span>
           </el-menu-item>
-          <el-menu-item index="3" :route="{path: '/preferences/account'}" @click="account">
+          <el-menu-item index="4" :route="{path: '/preferences/account'}" @click="account">
             <icon name="user" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.account.title') }}</span>
           </el-menu-item>
-          <el-menu-item index="4" :route="{path: '/preferences/language'}" @click="language">
+          <el-menu-item index="5" :route="{path: '/preferences/language'}" @click="language">
             <icon name="language" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.language.title') }}</span>
           </el-menu-item>
@@ -72,6 +76,9 @@ export default {
     },
     language () {
       this.$router.push('/preferences/language')
+    },
+    appearance () {
+      this.$router.push('/preferences/appearance')
     }
   }
 }

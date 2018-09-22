@@ -74,39 +74,52 @@
     "title": "設定",
     "general": {
       "title": "一般",
-      "appearance": "外観",
-      "theme_color": "テーマカラー:",
+      "toot": {
+        "title": "トゥート",
+        "description": "トゥートの公開設定を変更できます",
+        "visibility": {
+          "title": "公開設定",
+          "public": "公開",
+          "unlisted": "未収載",
+          "private": "フォロワー限定",
+          "direct": "ダイレクト"
+        }
+      },
+      "sounds": {
+        "title": "効果音",
+        "description": "操作時の効果音を設定",
+        "fav_rb": "お気に入り，ブースト時",
+        "toot": "トゥート時"
+      }
+    },
+    "appearance": {
+      "title": "外観",
+      "theme_color": "テーマカラー",
       "theme": {
         "light": "標準",
         "dark": "ダーク"
       },
-      "font_size": "フォントサイズ:",
+      "font_size": "フォントサイズ",
       "display_style": {
-        "title": "ユーザ名の表示形式:",
+        "title": "ユーザ名の表示形式",
         "display_name_and_username": "表示名+ユーザー名",
         "display_name": "表示名",
         "username": "ユーザー名"
       },
-      "toot": "トゥート",
-      "visibility": {
-        "title": "公開設定:",
-        "public": "公開",
-        "unlisted": "未収載",
-        "private": "フォロワー限定",
-        "direct": "ダイレクト"
-      },
-      "sounds": "効果音",
-      "fav_rb_sound": "お気に入り，ブースト時:",
-      "toot_sound": "トゥート時:"
+      "time_format": {
+        "title": "時間の表示形式",
+        "absolute": "絶対表示",
+        "relative": "相対表示"
+      }
     },
     "notification": {
       "title": "通知",
-      "notify": {
-        "title": "通知設定",
-        "reply": "返信:",
-        "reblog": "ブースト:",
-        "favourite": "お気に入り:",
-        "follow": "フォロー:"
+      "enable": {
+        "description": "通知を受け取るかどうかを設定",
+        "reply": "返信がある時",
+        "reblog": "ブーストされた時",
+        "favourite": "お気に入りされた時",
+        "follow": "フォローされた時"
       }
     },
     "account": {
@@ -124,7 +137,7 @@
     },
     "language": {
       "title": "言語",
-      "display_language": "表示言語",
+      "language_description": "Whalebirdの表示言語を選択",
       "notice": "再起動が必要です",
       "confirm": {
         "title": "再起動します",

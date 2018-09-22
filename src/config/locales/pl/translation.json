@@ -74,39 +74,52 @@
     "title": "Preferencje",
     "general": {
       "title": "Ogólne",
-      "appearance": "Wygląd",
-      "theme_color": "Kolor motywu:",
+      "toot": {
+        "title": "Wpisy",
+        "description": "Customize default visibility of toot.",
+        "visibility": {
+          "title": "Domyślna widoczność",
+          "public": "Publiczne",
+          "unlisted": "Niewidoczne",
+          "private": "Prywatne",
+          "direct": "Bezpośrednie"
+        }
+      },
+      "sounds": {
+        "title": "Dźwięki",
+        "description": "Please set feedback sounds.",
+        "fav_rb": "Polubienie i podbicie",
+        "toot": "Wpisy"
+      }
+    },
+    "appearance": {
+      "title": "Wygląd",
+      "theme_color": "Kolor motywu",
       "theme": {
         "light": "Jasny",
         "dark": "Ciemny"
       },
-      "font_size": "Rozmiar czcionki:",
+      "font_size": "Rozmiar czcionki",
       "display_style": {
-        "title": "Styl wyświetlania:",
+        "title": "Styl wyświetlania",
         "display_name_and_username": "Nazwa wyświetlana i nazwa użytkownika",
         "display_name": "Nazwa wyświetlana",
         "username": "Nazwa użytkownika"
       },
-      "toot": "Wpisy",
-      "visibility": {
-        "title": "Domyślna widoczność:",
-        "public": "Publiczne",
-        "unlisted": "Niewidoczne",
-        "private": "Prywatne",
-        "direct": "Bezpośrednie"
-      },
-      "sounds": "Dźwięki",
-      "fav_rb_sound": "Polubienie i podbicie:",
-      "toot_sound": "Wpisy:"
+      "time_format": {
+        "title": "Time format",
+        "absolute": "Absolute",
+        "relative": "Relative"
+      }
     },
     "notification": {
       "title": "Notification",
-      "notify": {
-        "title": "Notify",
-        "reply": "Reply:",
-        "reblog": "Reblog:",
-        "favourite": "Favourite:",
-        "follow": "Follow:"
+      "enable": {
+        "description": "Please set notification events.",
+        "reply": "Notify me when I receive reply",
+        "reblog": "Notify me when I receive reblog",
+        "favourite": "Notify me when I receive favourite",
+        "follow": "Notify me when I receive follow"
       }
     },
     "account": {
@@ -124,7 +137,7 @@
     },
     "language": {
       "title": "Język",
-      "display_language": "język",
+      "language_description": "Choose the language you would like to use with Whalebird.",
       "notice": "Wymaga ponownego uruchomienia",
       "confirm": {
         "title": "Ostrzeżenie",
