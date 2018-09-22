@@ -4,7 +4,7 @@
   <div class="theme section">
     <div class="left">
       <h4>{{ $t('preferences.appearance.theme_color') }}</h4>
-      <span class="status">
+      <div class="status">
         <el-select v-model="theme" placeholder="theme">
           <el-option
             v-for="t in themes"
@@ -13,7 +13,7 @@
             :value="t.key">
           </el-option>
         </el-select>
-      </span>
+      </div>
     </div>
     <div class="right">
       <Toot
@@ -21,6 +21,9 @@
         :timeFormat="timeFormat"
         ></Toot>
     </div>
+  </div>
+  <div class="color-pallet" v-if="customizeThemeColor">
+    <color-pallet></color-pallet>
   </div>
   <div class="font section">
     <h4>{{ $t('preferences.appearance.font_size') }}</h4>
@@ -60,6 +63,7 @@
 <script>
 import { mapState } from 'vuex'
 import Toot from './Appearance/Toot'
+import ColorPallet from './Appearance/ColorPallet'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -67,7 +71,8 @@ import TimeFormat from '~/src/constants/timeFormat'
 export default {
   name: 'appearance',
   components: {
-    Toot
+    Toot,
+    ColorPallet
   },
   data () {
     return {
@@ -78,7 +83,8 @@ export default {
       ],
       themes: [
         Theme.Light,
-        Theme.Dark
+        Theme.Dark,
+        Theme.Custom
       ],
       timeFormats: [
         TimeFormat.Absolute,
@@ -113,6 +119,9 @@ export default {
       set (value) {
         this.$store.dispatch('Preferences/Appearance/updateTimeFormat', value)
       }
+    },
+    customizeThemeColor () {
+      return this.theme === Theme.Custom.key
     }
   },
   created () {
