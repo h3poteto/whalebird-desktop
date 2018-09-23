@@ -1,10 +1,10 @@
 export default {
   Absolute: {
-    name: 'preferences.general.time_format.absolute',
+    name: 'preferences.appearance.time_format.absolute',
     value: 0
   },
   Relative: {
-    name: 'preferences.general.time_format.relative',
+    name: 'preferences.appearance.time_format.relative',
     value: 1
   }
 }
