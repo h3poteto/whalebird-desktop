@@ -98,6 +98,9 @@
       "theme": {
         "light": "Clair",
         "dark": "Foncé",
+        "solarized_light": "SolarizedLight",
+        "solarized_dark": "SolarizedDark",
+        "kimbie_dark": "KimbieDark",
         "custom": "Custom"
       },
       "custom_theme": {

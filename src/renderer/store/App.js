@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 import router from '../router'
-import { LightTheme, DarkTheme } from '../utils/theme'
+import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme } from '../utils/theme'
 import Visibility from '~/src/constants/visibility'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
@@ -83,6 +83,15 @@ const App = {
           break
         case Theme.Dark.key:
           commit('updateTheme', DarkTheme)
+          break
+        case Theme.SolarizedLight.key:
+          commit('updateTheme', SolarizedLightTheme)
+          break
+        case Theme.SolarizedDark.key:
+          commit('updateTheme', SolarizedDarkTheme)
+          break
+        case Theme.KimbieDark.key:
+          commit('updateTheme', KimbieDarkTheme)
           break
         case Theme.Custom.key:
           commit('updateTheme', appearance.customThemeColor)
