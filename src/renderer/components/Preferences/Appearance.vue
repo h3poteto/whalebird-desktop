@@ -86,6 +86,7 @@ export default {
         Theme.Dark,
         Theme.SolarizedLight,
         Theme.SolarizedDark,
+        Theme.KimbieDark,
         Theme.Custom
       ],
       timeFormats: [
