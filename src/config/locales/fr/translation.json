@@ -74,39 +74,68 @@
     "title": "Préférences",
     "general": {
       "title": "Général",
-      "appearance": "Apparence",
-      "theme_color": "Couleur du thème:",
+      "toot": {
+        "title": "Pouet",
+        "description": "Customize default visibility of toot.",
+        "visibility": {
+          "title": "Visibilité par défaut",
+          "public": "Public",
+          "unlisted": "Public sans être affiché sur le fil public",
+          "private": "Abonné⋅e⋅s uniquement",
+          "direct": "Message direct"
+        }
+      },
+      "sounds": {
+        "title": "Sons",
+        "description": "Please set feedback sounds.",
+        "fav_rb": "Partages et favoris",
+        "toot": "Pouets"
+      }
+    },
+    "appearance": {
+      "title": "Apparence",
+      "theme_color": "Couleur du thème",
       "theme": {
         "light": "Clair",
-        "dark": "Foncé"
+        "dark": "Foncé",
+        "solarized_light": "SolarizedLight",
+        "solarized_dark": "SolarizedDark",
+        "kimbie_dark": "KimbieDark",
+        "custom": "Custom"
       },
-      "font_size": "Taille des caractères:",
+      "custom_theme": {
+        "background_color": "Base background",
+        "selected_background_color": "Focused background",
+        "global_header_color": "Account menu",
+        "side_menu_color": "Side menu",
+        "primary_color": "Primary font",
+        "regular_color": "Regular font",
+        "secondary_color": "Secondary font",
+        "border_color": "Border",
+        "header_menu_color": "Header menu",
+        "wrapper_mask_color": "Modal wrapper"
+      },
+      "font_size": "Taille des caractères",
       "display_style": {
-        "title": "Format d'affichage:",
+        "title": "Format d'affichage",
         "display_name_and_username": "Nom et utilisateur⋅trice",
         "display_name": "Nom",
         "username": "Utilisateur⋅trice"
       },
-      "toot": "Pouet",
-      "visibility": {
-        "title": "Visibilité par défaut:",
-        "public": "Public",
-        "unlisted": "Public sans être affiché sur le fil public",
-        "private": "Abonné⋅e⋅s uniquement",
-        "direct": "Message direct"
-      },
-      "sounds": "Sons",
-      "fav_rb_sound": "Partages et favoris:",
-      "toot_sound": "Pouets:"
+      "time_format": {
+        "title": "Time format",
+        "absolute": "Absolute",
+        "relative": "Relative"
+      }
     },
     "notification": {
       "title": "Notification",
-      "notify": {
-        "title": "Notify",
-        "reply": "Reply:",
-        "reblog": "Reblog:",
-        "favourite": "Favourite:",
-        "follow": "Follow:"
+      "enable": {
+        "description": "Please set notification events.",
+        "reply": "Notify me when I receive reply",
+        "reblog": "Notify me when I receive reblog",
+        "favourite": "Notify me when I receive favourite",
+        "follow": "Notify me when I receive follow"
       }
     },
     "account": {
@@ -124,7 +153,7 @@
     },
     "language": {
       "title": "Langue",
-      "display_language": "Langue",
+      "language_description": "Choose the language you would like to use with Whalebird.",
       "notice": "Nécessite un redémarrage",
       "confirm": {
         "title": "Avertissement",

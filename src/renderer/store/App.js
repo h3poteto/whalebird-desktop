@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 import router from '../router'
-import { LightTheme, DarkTheme } from '../utils/theme'
+import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme } from '../utils/theme'
 import Visibility from '~/src/constants/visibility'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
@@ -24,18 +24,8 @@ const App = {
     language: Language.en.key
   },
   mutations: {
-    updateTheme (state, themeKey) {
-      switch (themeKey) {
-        case Theme.Light.key:
-          state.theme = LightTheme
-          break
-        case Theme.Dark.key:
-          state.theme = DarkTheme
-          break
-        default:
-          state.theme = LightTheme
-          break
-      }
+    updateTheme (state, themeColorList) {
+      state.theme = themeColorList
     },
     updateFontSize (state, value) {
       state.fontSize = value
@@ -65,7 +55,7 @@ const App = {
     removeShortcutsEvents () {
       ipcRenderer.removeAllListeners('open-preferences')
     },
-    loadPreferences ({ commit }) {
+    loadPreferences ({ commit, dispatch }) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-preferences')
         ipcRenderer.once('error-get-preferences', (event, err) => {
@@ -74,16 +64,42 @@ const App = {
         })
         ipcRenderer.once('response-get-preferences', (event, conf) => {
           ipcRenderer.removeAllListeners('error-get-preferences')
-          commit('updateTheme', conf.general.theme)
-          commit('updateDisplayNameStyle', conf.general.displayNameStyle)
-          commit('updateFontSize', conf.general.fontSize)
+          dispatch('updateTheme', conf.appearance)
+          commit('updateDisplayNameStyle', conf.appearance.displayNameStyle)
+          commit('updateFontSize', conf.appearance.fontSize)
           commit('updateTootVisibility', conf.general.tootVisibility)
           commit('updateNotify', conf.notification.notify)
-          commit('updateTimeFormat', conf.general.timeFormat)
+          commit('updateTimeFormat', conf.appearance.timeFormat)
           commit('updateLanguage', conf.language.language)
           resolve(conf)
         })
       })
+    },
+    updateTheme ({ commit }, appearance) {
+      const themeKey = appearance.theme
+      switch (themeKey) {
+        case Theme.Light.key:
+          commit('updateTheme', LightTheme)
+          break
+        case Theme.Dark.key:
+          commit('updateTheme', DarkTheme)
+          break
+        case Theme.SolarizedLight.key:
+          commit('updateTheme', SolarizedLightTheme)
+          break
+        case Theme.SolarizedDark.key:
+          commit('updateTheme', SolarizedDarkTheme)
+          break
+        case Theme.KimbieDark.key:
+          commit('updateTheme', KimbieDarkTheme)
+          break
+        case Theme.Custom.key:
+          commit('updateTheme', appearance.customThemeColor)
+          break
+        default:
+          commit('updateTheme', LightTheme)
+          break
+      }
     }
   }
 }

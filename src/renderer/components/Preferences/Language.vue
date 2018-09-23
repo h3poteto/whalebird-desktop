@@ -2,24 +2,16 @@
 <div id="language">
   <h2>{{ $t('preferences.language.title') }}</h2>
   <div class="display-language">
-    <table class="language">
-      <tbody>
-        <tr>
-          <td class="title">{{ $t('preferences.language.display_language') }}</td>
-          <td class="status">
-            <el-select v-model="displayLanguage" placeholder="style">
-              <el-option
-                v-for="lang in languages"
-                :key="lang.key"
-                :label="lang.name"
-                :value="lang.key">
-              </el-option>
-            </el-select>
-            <p class="notice">{{ $t('preferences.language.notice') }}</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <p class="description">{{ $t('preferences.language.language_description') }}</p>
+    <el-select v-model="displayLanguage" placeholder="style">
+      <el-option
+        v-for="lang in languages"
+        :key="lang.key"
+        :label="lang.name"
+        :value="lang.key">
+      </el-option>
+    </el-select>
+    <p class="notice">{{ $t('preferences.language.notice') }}</p>
   </div>
 </div>
 </template>
@@ -80,27 +72,13 @@ export default {
 
 <style lang="scss" scoped>
 #language {
-  table {
-    width: 100%;
+  .description {
+    margin: 24px 0 20px;
   }
 
-  td {
-    padding: 16px 0;
-  }
-
-  .title {
-    text-align: right;
-    width: 50%;
-  }
-
-  .status {
-    width: 50%;
-    text-align: center;
-
-    .notice {
-      color: #c0c4cc;
-      font-size: 12px;
-    }
+  .notice {
+    color: #c0c4cc;
+    font-size: 12px;
   }
 }
 </style>

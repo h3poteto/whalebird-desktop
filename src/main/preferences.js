@@ -5,6 +5,7 @@ import DisplayStyle from '../constants/displayStyle'
 import Theme from '../constants/theme'
 import Language from '../constants/language'
 import TimeFormat from '../constants/timeFormat'
+import { LightTheme } from '../renderer/utils/theme'
 
 const Base = {
   general: {
@@ -12,11 +13,7 @@ const Base = {
       fav_rb: true,
       toot: true
     },
-    theme: Theme.Light.key,
-    fontSize: 14,
-    displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-    tootVisibility: Visibility.Public.value,
-    timeFormat: TimeFormat.Absolute.value
+    tootVisibility: Visibility.Public.value
   },
   state: {
     collapse: false
@@ -31,6 +28,13 @@ const Base = {
       favourite: true,
       follow: true
     }
+  },
+  appearance: {
+    theme: Theme.Light.key,
+    fontSize: 14,
+    displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
+    timeFormat: TimeFormat.Absolute.value,
+    customThemeColor: LightTheme
   }
 }
 

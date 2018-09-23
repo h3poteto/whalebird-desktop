@@ -74,44 +74,68 @@
     "title": "설정",
     "general": {
       "title": "일반",
-      "appearance": "외관",
-      "theme_color": "테마 색상:",
+      "toot": {
+        "title": "툿",
+        "description": "Customize default visibility of toot.",
+        "visibility": {
+          "title": "기본 공개 설정",
+          "public": "공개",
+          "unlisted": "미등록",
+          "private": "비공개",
+          "direct": "다이렉트"
+        }
+      },
+      "sounds": {
+        "title": "사운드",
+        "description": "Please set feedback sounds.",
+        "fav_rb": "When you favorite or boost the toot",
+        "toot": "When you post toot"
+      }
+    },
+    "appearance": {
+      "title": "외관",
+      "theme_color": "테마 색상",
       "theme": {
         "light": "밝은 테마",
-        "dark": "어두운 테마"
+        "dark": "어두운 테마",
+        "solarized_light": "SolarizedLight",
+        "solarized_dark": "SolarizedDark",
+        "kimbie_dark": "KimbieDark",
+        "custom": "Custom"
       },
-      "font_size": "폰트 크기:",
+      "custom_theme": {
+        "background_color": "Base background",
+        "selected_background_color": "Focused background",
+        "global_header_color": "Account menu",
+        "side_menu_color": "Side menu",
+        "primary_color": "Primary font",
+        "regular_color": "Regular font",
+        "secondary_color": "Secondary font",
+        "border_color": "Border",
+        "header_menu_color": "Header menu",
+        "wrapper_mask_color": "Modal wrapper"
+      },
+      "font_size": "폰트 크기",
       "display_style": {
-        "title": "사용자 표시 형식:",
+        "title": "사용자 표시 형식",
         "display_name_and_username": "닉네임과 아이디 모두 보이기",
         "display_name": "닉네임만 보이기",
         "username": "아이디만 보이기"
       },
-	  "time_format":{
-        "title": "시간 표시 형식:",
+      "time_format":{
+        "title": "시간 표시 형식",
         "absolute": "고정 시각 표시",
         "relative": "상대 시간 표시"
-	  },
-      "toot": "툿",
-      "visibility": {
-        "title": "기본 공개 설정:",
-        "public": "공개",
-        "unlisted": "미등록",
-        "private": "비공개",
-        "direct": "다이렉트"
-      },
-      "sounds": "사운드",
-      "fav_rb_sound": "즐겨찾기 및 부스트:",
-      "toot_sound": "툿:"
+      }
     },
     "notification": {
       "title": "알림",
-      "notify": {
-        "title": "푸쉬 알림",
-        "reply": "답장:",
-        "reblog": "부스트:",
-        "favourite": "즐겨찾기:",
-        "follow": "즐겨찾기:"
+      "enable": {
+        "description": "Please set notification events.",
+        "reply": "Notify me when I receive reply",
+        "reblog": "Notify me when I receive reblog",
+        "favourite": "Notify me when I receive favourite",
+        "follow": "Notify me when I receive follow"
       }
     },
     "account": {
@@ -129,7 +153,7 @@
     },
     "language": {
       "title": "언어",
-      "display_language": "언어",
+      "language_description": "Choose the language you would like to use with Whalebird.",
       "notice": "재실행이 필요합니다",
       "confirm": {
         "title": "알림",
