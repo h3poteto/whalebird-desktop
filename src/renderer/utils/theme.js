@@ -49,3 +49,16 @@ export const SolarizedDarkTheme = {
   header_menu_color: '#393f4f',
   wrapper_mask_color: 'rgba(0, 0, 0, 0.7)'
 }
+
+export const KimbieDarkTheme = {
+  background_color: '#221a0f',
+  selected_background_color: '#2e2920',
+  global_header_color: '#221a0f',
+  side_menu_color: '#362712',
+  primary_color: '#fbebd4',
+  regular_color: '#e4c6a5',
+  secondary_color: '#d3af86',
+  border_color: '#d6baad',
+  header_menu_color: '#a57a4c',
+  wrapper_mask_color: 'rgba(0, 0, 0, 0.7)'
+}
