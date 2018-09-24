@@ -10,6 +10,7 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import * as Splashscreen from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
+import fontManager from 'font-manager'
 
 import Authentication from './auth'
 import Account from './account'
@@ -18,6 +19,10 @@ import Preferences from './preferences'
 import Hashtags from './hashtags'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
+
+fontManager.getAvailableFonts(function (fonts) {
+  console.log(fonts)
+})
 
 /**
  * Context menu

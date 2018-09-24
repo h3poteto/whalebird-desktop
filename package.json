@@ -38,8 +38,9 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
-    "postinstall": "npm run lint:fix",
-    "mocha": "BABEL_ENV=test mocha --require babel-register --recursive ./test/mocha/**/*.js"
+    "postinstall": "npm run lint:fix && npm run electron-rebuild",
+    "mocha": "BABEL_ENV=test mocha --require babel-register --recursive ./test/mocha/**/*.js",
+    "electron-rebuild": "./node_modules/.bin/electron-rebuild"
   },
   "build": {
     "productName": "Whalebird",
@@ -104,6 +105,7 @@
     "electron-window-state": "^4.1.1",
     "element-ui": "^2.4.7",
     "emojilib": "^2.3.0",
+    "font-manager": "^0.3.0",
     "hawk": "^7.0.7",
     "hoek": "^5.0.3",
     "i18next": "^11.5.0",
@@ -153,6 +155,7 @@
     "electron-debug": "^1.4.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-packager": "^12.0.2",
+    "electron-rebuild": "^1.8.2",
     "eslint": "^5.2.0",
     "eslint-config-standard": "^12.0.0-alpha.0",
     "eslint-friendly-formatter": "^4.0.1",
