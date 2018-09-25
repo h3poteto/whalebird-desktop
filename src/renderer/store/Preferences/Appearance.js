@@ -3,6 +3,7 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
 import { LightTheme } from '~/src/renderer/utils/theme'
+import DefaultFonts from '../../utils/fonts'
 
 export default {
   namespaced: true,
@@ -13,11 +14,24 @@ export default {
       displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
       timeFormat: TimeFormat.Absolute.value,
       customThemeColor: LightTheme
+    },
+    fonts: []
+  },
+  getters: {
+    currentFont: state => {
+      const font = DefaultFonts.find(f => state.fonts.includes(f))
+      if (font) {
+        return font
+      }
+      return DefaultFonts[0]
     }
   },
   mutations: {
     updateAppearance (state, conf) {
       state.appearance = conf
+    },
+    updateFonts (state, fonts) {
+      state.fonts = fonts
     }
   },
   actions: {
@@ -32,6 +46,20 @@ export default {
           ipcRenderer.removeAllListeners('error-get-preferences')
           commit('updateAppearance', conf.appearance)
           resolve(conf)
+        })
+      })
+    },
+    loadFonts ({ commit }) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('list-fonts')
+        ipcRenderer.once('error-list-fonts', (event, err) => {
+          ipcRenderer.removeAllListeners('response-list-fonts')
+          reject(err)
+        })
+        ipcRenderer.once('response-list-fonts', (event, fonts) => {
+          ipcRenderer.removeAllListeners('error-list-fonts')
+          commit('updateFonts', fonts)
+          resolve(fonts)
         })
       })
     },
