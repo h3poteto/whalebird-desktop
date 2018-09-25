@@ -6,6 +6,7 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
 import Language from '~/src/constants/language'
+import DefaultFonts from '../utils/fonts'
 
 const App = {
   namespaced: true,
@@ -21,7 +22,8 @@ const App = {
       follow: true
     },
     timeFormat: TimeFormat.Absolute.value,
-    language: Language.en.key
+    language: Language.en.key,
+    defaultFonts: DefaultFonts
   },
   mutations: {
     updateTheme (state, themeColorList) {

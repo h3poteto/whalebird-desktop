@@ -10,19 +10,15 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import * as Splashscreen from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import fontManager from 'font-manager'
 
 import Authentication from './auth'
 import Account from './account'
 import Streaming from './streaming'
 import Preferences from './preferences'
+import Fonts from './fonts'
 import Hashtags from './hashtags'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
-
-fontManager.getAvailableFonts(function (fonts) {
-  console.log(fonts)
-})
 
 /**
  * Context menu
@@ -692,6 +688,17 @@ ipcMain.on('remove-hashtag', (event, tag) => {
     })
     .catch((err) => {
       event.sender.send('error-remove-hashtag', err)
+    })
+})
+
+// Fonts
+ipcMain.on('list-fonts', (event, _) => {
+  Fonts()
+    .then(list => {
+      event.sender.send('response-list-fonts', list)
+    })
+    .catch(err => {
+      event.sender.send('error-list-fonts', err)
     })
 })
 
