@@ -1,5 +1,56 @@
 # Change Log
 
+## [2.3.0]
+### Added
+- [#626](https://github.com/h3poteto/whalebird-desktop/pull/626) Change default fonts in preferences
+- [#624](https://github.com/h3poteto/whalebird-desktop/pull/624) Add some color themes
+- [#623](https://github.com/h3poteto/whalebird-desktop/pull/623) Allow to use customize color theme in preferences
+- [#620](https://github.com/h3poteto/whalebird-desktop/pull/620) Show toot design sample in appearance setting page
+
+### Changed
+- [#622](https://github.com/h3poteto/whalebird-desktop/pull/622) Update electron version to 2.0.10
+- [#621](https://github.com/h3poteto/whalebird-desktop/pull/621) Update deprecated packages for audit
+
+### Fixed
+- [#627](https://github.com/h3poteto/whalebird-desktop/pull/627) Update Korean localization
+
+## [2.2.2] - 2018-09-22
+### Added
+- [#617](https://github.com/h3poteto/whalebird-desktop/pull/617) Pin hashtag in new toot
+- [#614](https://github.com/h3poteto/whalebird-desktop/pull/614) Suggest hashtags in new toot
+
+### Changed
+- [#615](https://github.com/h3poteto/whalebird-desktop/pull/615) Reduce statuses when merge timeline
+
+### Fixed
+- [#616](https://github.com/h3poteto/whalebird-desktop/pull/616) Fix line height for font icons
+- [#613](https://github.com/h3poteto/whalebird-desktop/pull/613) Call close confirm when cancel new toot
+- [#612](https://github.com/h3poteto/whalebird-desktop/pull/612) Stop shortcut when jump modal is hidden
+- [#608](https://github.com/h3poteto/whalebird-desktop/pull/608) Set nowrap for domain name in side menu
+
+
+
+## [2.2.1] - 2018-09-17
+### Added
+- [#602](https://github.com/h3poteto/whalebird-desktop/pull/602) Add mute/block menu
+- [#599](https://github.com/h3poteto/whalebird-desktop/pull/599) Add shortcut events for notification
+- [#596](https://github.com/h3poteto/whalebird-desktop/pull/596) Minmize to tray for win32
+
+### Changed
+
+- [#606](https://github.com/h3poteto/whalebird-desktop/pull/606) Show tags in side menu
+- [#593](https://github.com/h3poteto/whalebird-desktop/pull/593) Update Korean localization
+
+### Fixed
+
+- [#605](https://github.com/h3poteto/whalebird-desktop/pull/605) Fix losting focused toot in timeline
+- [#604](https://github.com/h3poteto/whalebird-desktop/pull/604) Fix typo in doc
+- [#603](https://github.com/h3poteto/whalebird-desktop/pull/603) Fix popper design
+- [#600](https://github.com/h3poteto/whalebird-desktop/pull/600) Fix default fonts for japanese
+- [#591](https://github.com/h3poteto/whalebird-desktop/pull/591) Fix circleci badge
+
+
+
 ## [2.2.0] - 2018-09-01
 ### Added
 - [#590](https://github.com/h3poteto/whalebird-desktop/pull/590) Change time format and set in preferences
