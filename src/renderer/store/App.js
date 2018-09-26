@@ -6,6 +6,7 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
 import Language from '~/src/constants/language'
+import DefaultFonts from '../utils/fonts'
 
 const App = {
   namespaced: true,
@@ -21,7 +22,8 @@ const App = {
       follow: true
     },
     timeFormat: TimeFormat.Absolute.value,
-    language: Language.en.key
+    language: Language.en.key,
+    defaultFonts: DefaultFonts
   },
   mutations: {
     updateTheme (state, themeColorList) {
@@ -44,6 +46,10 @@ const App = {
     },
     updateLanguage (state, key) {
       state.language = key
+    },
+    addFont (state, font) {
+      const list = [font].concat(DefaultFonts)
+      state.defaultFonts = Array.from(new Set(list))
     }
   },
   actions: {
@@ -71,6 +77,7 @@ const App = {
           commit('updateNotify', conf.notification.notify)
           commit('updateTimeFormat', conf.appearance.timeFormat)
           commit('updateLanguage', conf.language.language)
+          commit('addFont', conf.appearance.font)
           resolve(conf)
         })
       })
