@@ -6,6 +6,7 @@ import Theme from '../constants/theme'
 import Language from '../constants/language'
 import TimeFormat from '../constants/timeFormat'
 import { LightTheme } from '../renderer/utils/theme'
+import DefaultFonts from '../renderer/utils/fonts'
 
 const Base = {
   general: {
@@ -34,7 +35,8 @@ const Base = {
     fontSize: 14,
     displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
     timeFormat: TimeFormat.Absolute.value,
-    customThemeColor: LightTheme
+    customThemeColor: LightTheme,
+    font: DefaultFonts[0]
   }
 }
 

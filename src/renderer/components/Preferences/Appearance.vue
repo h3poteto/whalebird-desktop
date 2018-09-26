@@ -102,8 +102,7 @@ export default {
       timeFormats: [
         TimeFormat.Absolute,
         TimeFormat.Relative
-      ],
-      font: ''
+      ]
     }
   },
   computed: {
@@ -137,6 +136,14 @@ export default {
     },
     customizeThemeColor () {
       return this.theme === Theme.Custom.key
+    },
+    font: {
+      get () {
+        return this.$store.state.Preferences.Appearance.appearance.font
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/Appearance/updateFont', value)
+      }
     }
   },
   created () {
