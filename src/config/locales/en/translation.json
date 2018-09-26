@@ -116,6 +116,7 @@
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Font size",
+      "font_family": "Font family",
       "display_style": {
         "title": "Display style of username",
         "display_name_and_username": "Display name and username",

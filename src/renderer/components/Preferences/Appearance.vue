@@ -26,6 +26,16 @@
     <color-pallet></color-pallet>
   </div>
   <div class="font section">
+    <h4>{{ $t('preferences.appearance.font_family') }}</h4>
+    <span class="status">
+      <el-select v-model="font" placeholder="fonts">
+        <el-option
+          v-for="f in fontList"
+          :key="f"
+          :label="f"
+          :value="f" />
+      </el-select>
+    </span>
     <h4>{{ $t('preferences.appearance.font_size') }}</h4>
     <span class="status">
       <el-input-number :value="fontSize" :min="9" :max="18" @change="updateFontSize"></el-input-number>
@@ -97,7 +107,8 @@ export default {
   },
   computed: {
     ...mapState('Preferences/Appearance', {
-      fontSize: state => state.appearance.fontSize
+      fontSize: state => state.appearance.fontSize,
+      fontList: state => state.fonts
     }),
     theme: {
       get () {
@@ -125,10 +136,19 @@ export default {
     },
     customizeThemeColor () {
       return this.theme === Theme.Custom.key
+    },
+    font: {
+      get () {
+        return this.$store.state.Preferences.Appearance.appearance.font
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/Appearance/updateFont', value)
+      }
     }
   },
   created () {
     this.$store.dispatch('Preferences/Appearance/loadAppearance')
+    this.$store.dispatch('Preferences/Appearance/loadFonts')
   },
   methods: {
     updateFontSize (value) {

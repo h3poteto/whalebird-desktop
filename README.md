@@ -87,6 +87,9 @@ We'd love you to contribute to Whalebird.
 $ git clone https://github.com/h3poteto/whalebird-desktop.git
 $ cd whalebird-desktop
 
+# Install font config
+$ sudo apt-get install libfontconfig-dev
+
 # install dependencies
 $ npm install
 

@@ -6,6 +6,11 @@ jobs:
     working_directory: /var/opt/app
     steps:
       - checkout
+      - run:
+          name: python
+          command: |
+            apt-get update
+            apt-get install -y python build-essential libfontconfig-dev
       - restore_cache:
           name: Restoring cache - node_modules
           keys:
