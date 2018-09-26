@@ -116,6 +116,7 @@
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Rozmiar czcionki",
+      "font_family": "Font family",
       "display_style": {
         "title": "Styl wyświetlania",
         "display_name_and_username": "Nazwa wyświetlana i nazwa użytkownika",

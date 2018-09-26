@@ -3,6 +3,7 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
 import { LightTheme } from '~/src/renderer/utils/theme'
+import DefaultFonts from '../../utils/fonts'
 
 export default {
   namespaced: true,
@@ -12,12 +13,17 @@ export default {
       fontSize: 14,
       displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
       timeFormat: TimeFormat.Absolute.value,
-      customThemeColor: LightTheme
-    }
+      customThemeColor: LightTheme,
+      font: DefaultFonts[0]
+    },
+    fonts: []
   },
   mutations: {
     updateAppearance (state, conf) {
       state.appearance = conf
+    },
+    updateFonts (state, fonts) {
+      state.fonts = fonts
     }
   },
   actions: {
@@ -32,6 +38,20 @@ export default {
           ipcRenderer.removeAllListeners('error-get-preferences')
           commit('updateAppearance', conf.appearance)
           resolve(conf)
+        })
+      })
+    },
+    loadFonts ({ commit }) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('list-fonts')
+        ipcRenderer.once('error-list-fonts', (event, err) => {
+          ipcRenderer.removeAllListeners('response-list-fonts')
+          reject(err)
+        })
+        ipcRenderer.once('response-list-fonts', (event, fonts) => {
+          ipcRenderer.removeAllListeners('error-list-fonts')
+          commit('updateFonts', [DefaultFonts[0]].concat(fonts))
+          resolve(fonts)
         })
       })
     },
@@ -107,6 +127,23 @@ export default {
       const newCustom = Object.assign({}, state.appearance.customThemeColor, value)
       const newAppearance = Object.assign({}, state.appearance, {
         customThemeColor: newCustom
+      })
+      const config = {
+        appearance: newAppearance
+      }
+      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.once('error-update-preferences', (event, err) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
+      })
+      ipcRenderer.once('response-update-preferences', (event, conf) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
+        commit('updateAppearance', conf.appearance)
+        dispatch('App/loadPreferences', null, { root: true })
+      })
+    },
+    updateFont ({ dispatch, state, commit }, value) {
+      const newAppearance = Object.assign({}, state.appearance, {
+        font: value
       })
       const config = {
         appearance: newAppearance
