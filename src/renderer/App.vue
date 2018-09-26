@@ -75,8 +75,8 @@ html, body, #app {
   }
 
   --specified-fonts: 'Noto Sans', 'Noto Sans CJK JP', 'Takaoゴシック', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
-  font-family: var(--specified-fonts);
 
+  font-family: var(--specified-fonts);
 
   /*
   These selectors are defined in user agent stylesheet. So I override.
