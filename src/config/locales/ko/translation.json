@@ -116,6 +116,7 @@
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "폰트 크기",
+      "font_family": "Font family",
       "display_style": {
         "title": "사용자 표시 형식",
         "display_name_and_username": "닉네임과 아이디 모두 보이기",
