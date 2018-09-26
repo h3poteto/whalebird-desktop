@@ -76,9 +76,9 @@
       "title": "일반",
       "toot": {
         "title": "툿",
-        "description": "Customize default visibility of toot.",
+        "description": "툿의 기본 공개범위를 변경합니다.",
         "visibility": {
-          "title": "기본 공개 설정",
+          "title": "기본 공개 범위 설정",
           "public": "공개",
           "unlisted": "미등록",
           "private": "비공개",
@@ -87,9 +87,9 @@
       },
       "sounds": {
         "title": "사운드",
-        "description": "Please set feedback sounds.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "description": "피드백 소리를 설정해 주세요.",
+        "fav_rb": "툿을 즐겨찾기하거나 부스트 했을 때",
+        "toot": "새 툿을 보낼 때"
       }
     },
     "appearance": {
@@ -101,21 +101,22 @@
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "사용자 설정"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
-        "wrapper_mask_color": "Modal wrapper"
+        "background_color": "기본 배경 색상",
+        "selected_background_color": "선택 배경 색상",
+        "global_header_color": "계정 메뉴 색상",
+        "side_menu_color": "사이드 바 색상",
+        "primary_color": "기본 글꼴 색상",
+        "regular_color": "레귤러 글꼴 색상",
+        "secondary_color": "보조 글꼴 색상",
+        "border_color": "경계선 색상",
+        "header_menu_color": "헤더 메뉴 색상",
+        "wrapper_mask_color": "모달 랩퍼 색상"
       },
       "font_size": "폰트 크기",
+      "font_family": "Font family",
       "display_style": {
         "title": "사용자 표시 형식",
         "display_name_and_username": "닉네임과 아이디 모두 보이기",
@@ -131,11 +132,11 @@
     "notification": {
       "title": "알림",
       "enable": {
-        "description": "Please set notification events.",
-        "reply": "Notify me when I receive reply",
-        "reblog": "Notify me when I receive reblog",
-        "favourite": "Notify me when I receive favourite",
-        "follow": "Notify me when I receive follow"
+        "description": "알림 범위를 설정해 주세요.",
+        "reply": "답장을 받았을 때 알림을 받습니다",
+        "reblog": "누군가 부스트했을 때 알림을 받습니다",
+        "favourite": "누군가 즐겨찾기 했을 때 알림을 받습니다",
+        "follow": "누군가 나를 팔로우 했을 때 알림을 받습니다"
       }
     },
     "account": {
@@ -153,7 +154,7 @@
     },
     "language": {
       "title": "언어",
-      "language_description": "Choose the language you would like to use with Whalebird.",
+      "language_description": "Whalebird에서 사용할 언어를 선택해 주세요.",
       "notice": "재실행이 필요합니다",
       "confirm": {
         "title": "알림",
@@ -177,7 +178,7 @@
       "change_visibility": "공개 범위 변경",
       "add_cw": "경고 문구 추가",
       "change_sensitive": "민감한 미디어 설정",
-      "pined_hashtag": "Pin the hashtag"
+      "pined_hashtag": "해시태그고정"
     },
     "jump": {
       "jump_to": "이동"
@@ -190,10 +191,10 @@
       "title": "리스트 멤버"
     },
     "mute_confirm": {
-      "title": "Are you sure to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "정말로 뮤트하시겠습니까?",
+      "body": "이 사용자로부터의 모든 알림이 꺼집니다.",
+      "cancel": "취소",
+      "ok": "뮤트"
     },
     "shortcut": {
       "title": "키보드 단축키",
@@ -239,10 +240,10 @@
       "follow_requested": "팔로우 요청중",
       "open_in_browser": "브라우저에서 열기",
       "manage_list_memberships": "리스트 멤버 관리",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
+      "mute": "뮤트",
+      "unmute": "뮤트 해제",
+      "unblock": "차단 해제",
+      "block": "차단",
       "toots": "툿",
       "follows": "팔로잉",
       "followers": "팔로워"
@@ -250,8 +251,8 @@
   },
   "hashtag": {
     "tag_name": "태그 이름",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+	"delete_tag": "태그 삭제",
+    "save_tag": "태그 저장"
   },
   "search": {
     "search": "검색",

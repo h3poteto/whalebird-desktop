@@ -116,6 +116,7 @@
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Taille des caractères",
+      "font_family": "Font family",
       "display_style": {
         "title": "Format d'affichage",
         "display_name_and_username": "Nom et utilisateur⋅trice",
