@@ -46,6 +46,10 @@ const App = {
     },
     updateLanguage (state, key) {
       state.language = key
+    },
+    addFont (state, font) {
+      const list = [font].concat(DefaultFonts)
+      state.defaultFonts = Array.from(new Set(list))
     }
   },
   actions: {
@@ -73,6 +77,7 @@ const App = {
           commit('updateNotify', conf.notification.notify)
           commit('updateTimeFormat', conf.appearance.timeFormat)
           commit('updateLanguage', conf.language.language)
+          commit('addFont', conf.appearance.font)
           resolve(conf)
         })
       })
