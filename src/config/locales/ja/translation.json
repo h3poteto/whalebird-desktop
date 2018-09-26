@@ -116,6 +116,7 @@
         "wrapper_mask_color": "モーダル背景"
       },
       "font_size": "フォントサイズ",
+      "font_family": "フォント",
       "display_style": {
         "title": "ユーザ名の表示形式",
         "display_name_and_username": "表示名+ユーザー名",
