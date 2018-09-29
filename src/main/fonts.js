@@ -1,14 +1,11 @@
-import fontManager from 'font-manager'
+import SystemFonts from 'system-font-families'
 
 const fonts = () => {
-  return new Promise((resolve, reject) => {
-    fontManager.getAvailableFonts((fonts) => {
-      const families = fonts.map(f => {
-        return f.family
-      })
-      resolve(Array.from(new Set(families)).sort())
+  const systemFonts = new SystemFonts()
+  return systemFonts.getFonts()
+    .then(res => {
+      return Array.from(new Set(res)).sort()
     })
-  })
 }
 
 export default fonts
