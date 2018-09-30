@@ -94,7 +94,13 @@
               <li role="button" @click="copyLink(originalMessage(message))">
                 {{ $t('cards.toot.copy_link_to_toot') }}
               </li>
-              <li role="button" class="separate" @click="reportUser(message)" v-if="!isMyMessage(message)">
+              <li role="button" class="separate" @click="confirmMute(message)">
+                {{ $t('cards.toot.mute') }}
+              </li>
+              <li role="button" @click="block(message)">
+                {{ $t('cards.toot.block') }}
+              </li>
+              <li role="button" @click="reportUser(message)" v-if="!isMyMessage(message)">
                 {{ $t('cards.toot.report') }}
               </li>
               <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage(message)">
@@ -271,6 +277,15 @@ export default {
     },
     reportUser (message) {
       this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage(message))
+      this.$refs.popper.doClose()
+    },
+    confirmMute (message) {
+      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage(message).account)
+      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
+      this.$refs.popper.doClose()
+    },
+    block (message) {
+      this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/block', this.originalMessage(message).account)
       this.$refs.popper.doClose()
     },
     changeReblog (message) {
