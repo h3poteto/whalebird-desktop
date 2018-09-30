@@ -212,6 +212,12 @@
       "i": "Open the images",
       "x": "Show/hide CW and NSFW",
       "esc": "Close current page"
+    },
+    "report": {
+      "title": "Reporting this user",
+      "comment": "Additional comments",
+      "cancel": "Cancel",
+      "ok": "Report"
     }
   },
   "cards": {
@@ -222,6 +228,9 @@
       "view_toot_detail": "View Toot Detail",
       "open_in_browser": "Open in Browser",
       "copy_link_to_toot": "Copy Link to Toot",
+      "mute": "Mute",
+      "block": "Block",
+      "report": "Report",
       "delete": "Delete",
       "via": "via {{application}}",
       "reply": "Reply",

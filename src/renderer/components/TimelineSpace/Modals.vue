@@ -7,6 +7,7 @@
     <add-list-member></add-list-member>
     <mute-confirm></mute-confirm>
     <shortcut></shortcut>
+    <report></report>
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import ListMembership from './Modals/ListMembership'
 import AddListMember from './Modals/AddListMember'
 import MuteConfirm from './Modals/MuteConfirm'
 import Shortcut from './Modals/Shortcut'
+import Report from './Modals/Report'
 
 export default {
   name: 'modals',
@@ -28,7 +30,8 @@ export default {
     ListMembership,
     AddListMember,
     MuteConfirm,
-    Shortcut
+    Shortcut,
+    Report
   }
 }
 </script>

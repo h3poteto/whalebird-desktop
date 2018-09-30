@@ -222,6 +222,9 @@
       "view_toot_detail": "툿 자세히 보기",
       "open_in_browser": "브라우저에서 열기",
       "copy_link_to_toot": "툿 링크 복사하기",
+      "mute": "뮤트",
+      "block": "차단",
+      "report": "Report",
       "delete": "삭제",
       "via": "{{application}} 에서",
       "reply": "답장하기",
@@ -251,7 +254,7 @@
   },
   "hashtag": {
     "tag_name": "태그 이름",
-	"delete_tag": "태그 삭제",
+    "delete_tag": "태그 삭제",
     "save_tag": "태그 저장"
   },
   "search": {

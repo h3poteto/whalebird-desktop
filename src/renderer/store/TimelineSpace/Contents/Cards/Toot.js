@@ -54,6 +54,13 @@ const Toot = {
         .then(() => {
           return message
         })
+    },
+    block ({ rootState, commit }, account) {
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.post(`/accounts/${account.id}/block`)
     }
   }
 }
