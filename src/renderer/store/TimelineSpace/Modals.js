@@ -5,6 +5,7 @@ import ListMembership from './Modals/ListMembership'
 import AddListMember from './Modals/AddListMember'
 import MuteConfirm from './Modals/MuteConfirm'
 import Shortcut from './Modals/Shortcut'
+import Report from './Modals/Report'
 
 const Modals = {
   namespaced: true,
@@ -15,7 +16,8 @@ const Modals = {
     ListMembership,
     AddListMember,
     MuteConfirm,
-    Shortcut
+    Shortcut,
+    Report
   },
   getters: {
     modalOpened: (state, getters, rootState) => {
@@ -26,7 +28,8 @@ const Modals = {
       const addListMember = rootState.TimelineSpace.Modals.AddListMember.modalOpen
       const shortcut = rootState.TimelineSpace.Modals.Shortcut.modalOpen
       const muteConfirm = rootState.TimelineSpace.Modals.MuteConfirm.modalOpen
-      return imageViewer || newToot || jump || listMembership || addListMember || shortcut || muteConfirm
+      const report = rootState.TimelineSpace.Modals.Report.modalOpen
+      return imageViewer || newToot || jump || listMembership || addListMember || shortcut || muteConfirm || report
     }
   }
 }
