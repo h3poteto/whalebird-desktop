@@ -94,7 +94,10 @@
               <li role="button" @click="copyLink(originalMessage(message))">
                 {{ $t('cards.toot.copy_link_to_toot') }}
               </li>
-              <li role="button" class="separate" @click="deleteToot(message)" v-show="isMyMessage(message)">
+              <li role="button" class="separate" @click="reportUser(message)" v-if="!isMyMessage(message)">
+                {{ $t('cards.toot.report') }}
+              </li>
+              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage(message)">
                 {{ $t('cards.toot.delete') }}
               </li>
             </ul>
@@ -264,6 +267,10 @@ export default {
     },
     copyLink (message) {
       clipboard.writeText(message.url, 'toot-link')
+      this.$refs.popper.doClose()
+    },
+    reportUser (message) {
+      this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage(message))
       this.$refs.popper.doClose()
     },
     changeReblog (message) {
