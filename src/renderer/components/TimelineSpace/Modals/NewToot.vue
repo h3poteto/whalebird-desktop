@@ -71,7 +71,7 @@
           <icon name="hashtag"></icon>
         </el-button>
       </div>
-      <span class="text-count">{{ 500 - status.length }}</span>
+      <span class="text-count">{{ tootMax - status.length }}</span>
       <el-button @click="closeConfirm(close)">{{ $t('modals.new_toot.cancel') }}</el-button>
       <el-button type="primary" @click="toot" v-loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
       <div class="clearfix"></div>
@@ -124,6 +124,9 @@ export default {
             return 'globe'
         }
       }
+    }),
+    ...mapState('TimelineSpace', {
+      tootMax: state => state.tootMax
     }),
     ...mapGetters('TimelineSpace/Modals/NewToot', [
       'hashtagInserting'
