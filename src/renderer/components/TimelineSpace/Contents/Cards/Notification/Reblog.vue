@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="clearfix"></div>
-    <div class="target">
+    <div class="target" v-on:dblclick="openDetail(message.status)">
       <div class="icon" @click="openUser(message.status.account)">
         <img :src="message.status.account.avatar" />
       </div>
