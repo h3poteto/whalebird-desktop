@@ -13,7 +13,7 @@ import openAboutWindow from 'about-window'
 
 import Authentication from './auth'
 import Account from './account'
-import Streaming from './streaming'
+import StreamingManager from './streaming_manager'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
@@ -396,8 +396,8 @@ ipcMain.on('start-user-streaming', (event, ac) => {
         userStreaming = null
       }
 
-      userStreaming = new Streaming(account)
-      userStreaming.startUserStreaming(
+      userStreaming = new StreamingManager(account)
+      userStreaming.startUser(
         (update) => {
           event.sender.send('update-start-user-streaming', update)
         },
@@ -438,9 +438,9 @@ ipcMain.on('start-local-streaming', (event, ac) => {
         localStreaming = null
       }
 
-      localStreaming = new Streaming(account)
+      localStreaming = new StreamingManager(account)
       localStreaming.start(
-        '/streaming/public/local',
+        'public/local',
         (update) => {
           event.sender.send('update-start-local-streaming', update)
         },
@@ -475,9 +475,9 @@ ipcMain.on('start-public-streaming', (event, ac) => {
         publicStreaming = null
       }
 
-      publicStreaming = new Streaming(account)
+      publicStreaming = new StreamingManager(account)
       publicStreaming.start(
-        '/streaming/public',
+        'public',
         (update) => {
           event.sender.send('update-start-public-streaming', update)
         },
@@ -512,9 +512,9 @@ ipcMain.on('start-list-streaming', (event, obj) => {
         listStreaming = null
       }
 
-      listStreaming = new Streaming(account)
+      listStreaming = new StreamingManager(account)
       listStreaming.start(
-        `/streaming/list?list=${obj.list_id}`,
+        `list?list=${obj.list_id}`,
         (update) => {
           event.sender.send('update-start-list-streaming', update)
         },
@@ -549,9 +549,9 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
         tagStreaming = null
       }
 
-      tagStreaming = new Streaming(account)
+      tagStreaming = new StreamingManager(account)
       tagStreaming.start(
-        `/streaming/hashtag?tag=${obj.tag}`,
+        `hashtag?tag=${obj.tag}`,
         (update) => {
           event.sender.send('update-start-tag-streaming', update)
         },
