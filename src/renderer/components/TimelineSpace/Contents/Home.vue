@@ -4,11 +4,11 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="home-timeline" v-for="message in timeline" :key="message.uri">
+    <div class="home-timeline" v-for="message in timeline" :key="message.uri + message.id">
       <toot
         :message="message"
         :filter="filter"
-        :focused="message.uri === focusedId"
+        :focused="message.uri + message.id === focusedId"
         :overlaid="modalOpened"
         v-on:update="updateToot"
         v-on:delete="deleteToot"
@@ -62,7 +62,7 @@ export default {
         return true
       }
       // Sometimes toots are deleted, so perhaps focused toot don't exist.
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       return currentIndex === -1
     }
   },
@@ -170,28 +170,28 @@ export default {
       this.focusedId = null
     },
     focusNext () {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       if (currentIndex === -1) {
-        this.focusedId = this.timeline[0].uri
+        this.focusedId = this.timeline[0].uri + this.timeline[0].id
       } else if (currentIndex < this.timeline.length) {
-        this.focusedId = this.timeline[currentIndex + 1].uri
+        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
       }
     },
     focusPrev () {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri)
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
-        this.focusedId = this.timeline[currentIndex - 1].uri
+        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
       }
     },
     focusToot (message) {
-      this.focusedId = message.uri
+      this.focusedId = message.uri + message.id
     },
     handleKey (event) {
       switch (event.srcKey) {
         case 'next':
-          this.focusedId = this.timeline[0].uri
+          this.focusedId = this.timeline[0].uri + this.timeline[0].id
           break
       }
     }
