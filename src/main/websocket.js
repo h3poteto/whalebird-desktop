@@ -1,7 +1,7 @@
 import Mastodon from 'megalodon'
 import log from 'electron-log'
 
-export default class Streaming {
+export default class WebSocket {
   constructor (account) {
     this.account = account
     this.client = new Mastodon(
@@ -12,10 +12,10 @@ export default class Streaming {
   }
 
   startUserStreaming (updateCallback, notificationCallback, errCallback) {
-    this.listener = this.client.stream('/streaming/user')
+    this.listener = this.client.socket('/streaming', 'user')
 
     this.listener.on('connect', _ => {
-      log.info('/streaming/user started')
+      log.info('/streaming/?stream=user started')
     })
 
     this.listener.on('update', (status) => {
@@ -30,18 +30,28 @@ export default class Streaming {
       errCallback(err)
     })
 
-    this.listener.on('connection-limit-exceeded', err => {
+    this.listener.on('parser-error', (err) => {
       errCallback(err)
     })
   }
 
-  start (path, updateCallback, errCallback) {
-    this.listener = this.client.stream(path)
+  /**
+   * Start new custom streaming with websocket.
+   * @param stream Path of streaming.
+   * @param updateCallback A callback function which is called update.
+   * @param errCallback A callback function which ic called error.
+   * When local timeline, the path is `public:local`.
+   * When public timeline, the path is `public`.
+   * When hashtag timeline, the path is `hashtag&tag=tag_name`.
+   * When list timeline, the path is `list&list=list_id`.
+   */
+  start (stream, updateCallback, errCallback) {
+    this.listener = this.client.socket('/streaming', stream)
     this.listener.on('connect', _ => {
-      log.info(`${path} started`)
+      log.info(`/streaming/?stream=${stream} started`)
     })
 
-    this.listener.on('update', (status) => {
+    this.listener.on('update', status => {
       updateCallback(status)
     })
 
@@ -49,7 +59,7 @@ export default class Streaming {
       errCallback(err)
     })
 
-    this.listener.on('connection-limit-exceeded', err => {
+    this.listener.on('parser-error', (err) => {
       errCallback(err)
     })
   }
