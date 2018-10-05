@@ -21,7 +21,8 @@ const TimelineSpace = {
       username: ''
     },
     loading: false,
-    emojis: []
+    emojis: [],
+    tootMax: 500
   },
   mutations: {
     updateAccount (state, account) {
@@ -37,6 +38,13 @@ const TimelineSpace = {
           image: e.url
         }
       })
+    },
+    updateTootMax (state, value) {
+      if (value) {
+        state.tootMax = value
+      } else {
+        state.tootMax = 500
+      }
     }
   },
   actions: {
@@ -167,6 +175,11 @@ const TimelineSpace = {
     async fetchEmojis ({ commit }, account) {
       const data = await Mastodon.get('/custom_emojis', {}, account.baseURL + '/api/v1')
       commit('updateEmojis', data)
+      return data
+    },
+    async fetchInstance ({ commit }, account) {
+      const data = await Mastodon.get('/instance', {}, account.baseURL + '/api/v1')
+      commit('updateTootMax', data.max_toot_chars)
       return data
     }
   }
