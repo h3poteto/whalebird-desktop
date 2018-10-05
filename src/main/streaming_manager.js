@@ -34,13 +34,13 @@ export default class StreamingManager {
       .catch(err => errCallback(err))
   }
 
-  start (path, updateCallback, errCallback) {
+  start (path, params, updateCallback, errCallback) {
     this.detectPleroma()
       .then(() => {
         if (this.mastodon) {
-          this._startStreaming(path, updateCallback, errCallback)
+          this._startStreaming(path, params, updateCallback, errCallback)
         } else {
-          this._startSocket(path, updateCallback, errCallback)
+          this._startSocket(path, params, updateCallback, errCallback)
         }
       })
       .catch(err => errCallback(err))
@@ -58,8 +58,8 @@ export default class StreamingManager {
     this.streaming.startUserStreaming(updateCallback, notificationCallback, errCallback)
   }
 
-  _startStreaming (path, updateCallback, errCallback) {
-    const target = `/streaming/${path}`
+  _startStreaming (path, params, updateCallback, errCallback) {
+    const target = `/streaming/${path}?${params}`
     this.streaming.start(
       target,
       updateCallback,
@@ -78,13 +78,13 @@ export default class StreamingManager {
     this.websocket.startUserStreaming(updateCallback, notificationCallback, errCallback)
   }
 
-  _startSocket (path, updateCallback, errCallback) {
+  _startSocket (path, params, updateCallback, errCallback) {
     let stream = path
     if (stream === 'public/local') {
       stream = 'public:local'
     }
     this.websocket.start(
-      stream,
+      `${stream}&${params}`,
       updateCallback,
       errCallback
     )

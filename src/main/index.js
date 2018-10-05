@@ -441,6 +441,7 @@ ipcMain.on('start-local-streaming', (event, ac) => {
       localStreaming = new StreamingManager(account)
       localStreaming.start(
         'public/local',
+        null,
         (update) => {
           event.sender.send('update-start-local-streaming', update)
         },
@@ -478,6 +479,7 @@ ipcMain.on('start-public-streaming', (event, ac) => {
       publicStreaming = new StreamingManager(account)
       publicStreaming.start(
         'public',
+        null,
         (update) => {
           event.sender.send('update-start-public-streaming', update)
         },
@@ -514,7 +516,8 @@ ipcMain.on('start-list-streaming', (event, obj) => {
 
       listStreaming = new StreamingManager(account)
       listStreaming.start(
-        `list?list=${obj.list_id}`,
+        'list',
+        `list=${obj.list_id}`,
         (update) => {
           event.sender.send('update-start-list-streaming', update)
         },
@@ -551,7 +554,8 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
 
       tagStreaming = new StreamingManager(account)
       tagStreaming.start(
-        `hashtag?tag=${obj.tag}`,
+        'hashtag',
+        `tag=${obj.tag}`,
         (update) => {
           event.sender.send('update-start-tag-streaming', update)
         },
