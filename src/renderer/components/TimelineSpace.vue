@@ -73,7 +73,9 @@ export default {
     window.removeEventListener('dragover', this.onDragOver)
     window.removeEventListener('drop', this.handleDrop)
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
+    this.$store.dispatch('TimelineSpace/unbindUserStreaming')
     this.$store.dispatch('TimelineSpace/stopLocalStreaming')
+    this.$store.dispatch('TimelineSpace/unbindUserStreaming')
   },
   methods: {
     async clear () {
@@ -120,6 +122,7 @@ export default {
         })
       }
       this.$store.dispatch('TimelineSpace/SideMenu/fetchLists', account)
+      this.$store.dispatch('TimelineSpace/bindUserStreaming', account)
       this.$store.dispatch('TimelineSpace/startUserStreaming', account)
         .catch(() => {
           this.$message({
@@ -127,6 +130,7 @@ export default {
             type: 'error'
           })
         })
+      this.$store.dispatch('TimelineSpace/bindLocalStreaming', account)
       this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
       this.$store.dispatch('TimelineSpace/fetchEmojis', account)
       this.$store.dispatch('TimelineSpace/fetchInstance', account)
