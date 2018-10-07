@@ -1,6 +1,29 @@
 # Change Log
 
-## [2.3.0]
+## [2.4.0]
+### Added
+- [#638](https://github.com/h3poteto/whalebird-desktop/pull/638) Connect to Pleroma with Web Socket to streaming update
+- [#631](https://github.com/h3poteto/whalebird-desktop/pull/631) Add reporting method and mute/block method on toot
+
+### Changed
+- [#642](https://github.com/h3poteto/whalebird-desktop/pull/642) Update megalodon version to 0.4.3 for reconnect
+- [#636](https://github.com/h3poteto/whalebird-desktop/pull/636) Update too max characters if the API responds toot_max_chars
+
+### Fixed
+- [#643](https://github.com/h3poteto/whalebird-desktop/pull/643) Fix bind method when reloading
+- [#641](https://github.com/h3poteto/whalebird-desktop/pull/641) Fix protocol of websocket in streaming
+- [#640](https://github.com/h3poteto/whalebird-desktop/pull/640) Fix hashtag and list streaming of Pleroma
+- [#639](https://github.com/h3poteto/whalebird-desktop/pull/639) Fix message id in timeline
+- [#637](https://github.com/h3poteto/whalebird-desktop/pull/637) Open toot detail when user click favourited or rebloged notifications
+
+
+## [2.3.1] - 2018-09-29
+### Fixed
+- [#629](https://github.com/h3poteto/whalebird-desktop/pull/629) [hotfix] Use system-font-families instead of font-manager because it is native module
+
+
+
+## [2.3.0] - 2018-09-28
 ### Added
 - [#626](https://github.com/h3poteto/whalebird-desktop/pull/626) Change default fonts in preferences
 - [#624](https://github.com/h3poteto/whalebird-desktop/pull/624) Add some color themes
