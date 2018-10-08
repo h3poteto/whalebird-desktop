@@ -87,7 +87,7 @@ const TimelineSpace = {
         })
       })
     },
-    startUserStreaming ({ state, commit, rootState }, account) {
+    bindUserStreaming ({ commit, rootState }, account) {
       ipcRenderer.on('update-start-user-streaming', (event, update) => {
         commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
         // Sometimes archive old statuses
@@ -109,7 +109,8 @@ const TimelineSpace = {
         }
         commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
       })
-
+    },
+    startUserStreaming (_, account) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-user-streaming', account)
         ipcRenderer.once('error-start-user-streaming', (event, err) => {
@@ -117,7 +118,7 @@ const TimelineSpace = {
         })
       })
     },
-    startLocalStreaming ({ state, commit, rootState }, account) {
+    bindLocalStreaming ({ commit, rootState }) {
       ipcRenderer.on('update-start-local-streaming', (event, update) => {
         commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
         if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
@@ -125,6 +126,8 @@ const TimelineSpace = {
         }
         commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
       })
+    },
+    startLocalStreaming (_, account) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-local-streaming', account)
         ipcRenderer.once('error-start-local-streaming', (event, err) => {
@@ -132,18 +135,20 @@ const TimelineSpace = {
         })
       })
     },
-    async stopUserStreaming ({ commit }) {
+    unbindUserStreaming () {
       ipcRenderer.removeAllListeners('update-start-user-streaming')
       ipcRenderer.removeAllListeners('notification-start-user-streaming')
       ipcRenderer.removeAllListeners('error-start-user-streaming')
-      ipcRenderer.send('stop-user-streaming')
-      return 'stopUserStreaming'
     },
-    async stopLocalStreaming ({ commit }) {
+    stopUserStreaming () {
+      ipcRenderer.send('stop-user-streaming')
+    },
+    unbindLocalStreaming () {
       ipcRenderer.removeAllListeners('error-start-local-streaming')
       ipcRenderer.removeAllListeners('update-start-local-streaming')
+    },
+    stopLocalStreaming () {
       ipcRenderer.send('stop-local-streaming')
-      return 'stopLocalStreaming'
     },
     watchShortcutEvents ({ commit, dispatch }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {

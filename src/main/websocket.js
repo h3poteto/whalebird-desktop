@@ -4,9 +4,10 @@ import log from 'electron-log'
 export default class WebSocket {
   constructor (account) {
     this.account = account
+    const url = account.baseURL.replace(/^https:\/\//, 'wss://')
     this.client = new Mastodon(
       account.accessToken,
-      account.baseURL + '/api/v1'
+      url + '/api/v1'
     )
     this.listener = null
   }
