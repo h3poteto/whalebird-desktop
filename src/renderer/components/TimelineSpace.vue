@@ -75,7 +75,7 @@ export default {
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
     this.$store.dispatch('TimelineSpace/unbindUserStreaming')
     this.$store.dispatch('TimelineSpace/stopLocalStreaming')
-    this.$store.dispatch('TimelineSpace/unbindUserStreaming')
+    this.$store.dispatch('TimelineSpace/unbindLocalStreaming')
   },
   methods: {
     async clear () {
