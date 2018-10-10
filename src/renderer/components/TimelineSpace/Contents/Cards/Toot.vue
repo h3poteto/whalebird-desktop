@@ -453,7 +453,6 @@ export default {
           this.openImage(images[0].url, images)
           break
         case 'cw':
-          console.log('cw')
           this.showContent = !this.showContent
           this.showAttachments = !this.showAttachments
           break
