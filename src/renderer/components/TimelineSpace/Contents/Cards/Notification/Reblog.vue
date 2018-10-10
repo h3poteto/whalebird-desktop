@@ -75,7 +75,7 @@
 import { mapState } from 'vuex'
 import moment from 'moment'
 import { shell } from 'electron'
-import { findAccount, findLink, isTag } from '../../../../utils/link'
+import { findAccount, findLink, isTag } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import TimeFormat from '~/src/constants/timeFormat'
 
