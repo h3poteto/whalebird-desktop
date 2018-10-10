@@ -127,7 +127,7 @@
 import moment from 'moment'
 import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
-import { findAccount, findLink, isTag } from '../../../utils/link'
+import { findAccount, findLink, isTag } from '~/src/renderer/utils/tootParser'
 import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
@@ -453,7 +453,6 @@ export default {
           this.openImage(images[0].url, images)
           break
         case 'cw':
-          console.log('cw')
           this.showContent = !this.showContent
           this.showAttachments = !this.showAttachments
           break

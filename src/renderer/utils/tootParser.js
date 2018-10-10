@@ -17,6 +17,11 @@ export function isTag (target) {
   if (target.getAttribute('class') && target.getAttribute('class').includes('hashtag')) {
     return true
   }
+  // In Pleroma, link does not have class.
+  // So I have to check URL.
+  if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/(tag|tags)\/.+/)) {
+    return true
+  }
   if (target.parentNode === undefined || target.parentNode === null) {
     return false
   }
@@ -30,7 +35,12 @@ export function isTag (target) {
 
 export function findAccount (target) {
   if (target.getAttribute('class') && target.getAttribute('class').includes('u-url')) {
-    return target.href
+    return parseAccount(target.href)
+  }
+  // In Pleroma, link does not have class.
+  // So I have to check URL.
+  if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/@[a-zA-Z0-9-_.]+/)) {
+    return parseAccount(target.href)
   }
   if (target.parentNode === undefined || target.parentNode === null) {
     return null
@@ -41,4 +51,11 @@ export function findAccount (target) {
     return null
   }
   return findAccount(target.parentNode)
+}
+
+export function parseAccount (accountURL) {
+  const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(@[a-zA-Z0-9-_.]+)/)
+  const domainName = res[1]
+  const accountName = res[2]
+  return `${accountName}@${domainName}`
 }
