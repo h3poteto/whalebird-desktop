@@ -30,6 +30,7 @@
     "window": {
       "name": "창",
       "close": "창 닫기",
+      "open": "Open Window",
       "minimize": "최소화",
       "jump_to": "이동"
     }
