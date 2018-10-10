@@ -167,6 +167,7 @@
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
     "inject-loader": "^3.0.0",
+    "jsdom": "^12.2.0",
     "karma": "^3.0.0",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^1.1.2",
