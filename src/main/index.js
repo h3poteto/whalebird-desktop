@@ -58,6 +58,10 @@ let accountDB = new Datastore({
   filename: accountDBPath,
   autoload: true
 })
+const accountManager = new Account(accountDB)
+accountManager.initialize()
+  .catch(err => log.error(err))
+
 const hashtagsDBPath = process.env.NODE_ENV === 'production'
   ? userData + '/db/hashtags.db'
   : 'hashtags.db'
@@ -76,9 +80,7 @@ const soundBasePath = process.env.NODE_ENV === 'development'
 
 async function listAccounts () {
   try {
-    const account = new Account(accountDB)
-    await account.cleanup()
-    const accounts = await account.listAccounts()
+    const accounts = await accountManager.listAccounts()
     return accounts
   } catch (err) {
     return []
@@ -240,7 +242,7 @@ app.on('activate', () => {
   }
 })
 
-let auth = new Authentication(new Account(accountDB))
+let auth = new Authentication(accountManager)
 
 ipcMain.on('get-auth-url', (event, domain) => {
   auth.getAuthorizationUrl(domain)
@@ -284,8 +286,7 @@ ipcMain.on('get-social-token', (event, _) => {
 
 // nedb
 ipcMain.on('list-accounts', (event, _) => {
-  const account = new Account(accountDB)
-  account.listAccounts()
+  accountManager.listAccounts()
     .catch((err) => {
       log.error(err)
       event.sender.send('error-list-accounts', err)
@@ -296,8 +297,7 @@ ipcMain.on('list-accounts', (event, _) => {
 })
 
 ipcMain.on('get-local-account', (event, id) => {
-  const account = new Account(accountDB)
-  account.getAccount(id)
+  accountManager.getAccount(id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-get-local-account', err)
@@ -308,8 +308,7 @@ ipcMain.on('get-local-account', (event, id) => {
 })
 
 ipcMain.on('update-account', (event, acct) => {
-  const account = new Account(accountDB)
-  account.refresh(acct)
+  accountManager.refresh(acct)
     .then((ac) => {
       event.sender.send('response-update-account', ac)
     })
@@ -319,8 +318,7 @@ ipcMain.on('update-account', (event, acct) => {
 })
 
 ipcMain.on('remove-account', (event, id) => {
-  const account = new Account(accountDB)
-  account.removeAccount(id)
+  accountManager.removeAccount(id)
     .then(() => {
       event.sender.send('response-remove-account')
     })
@@ -330,19 +328,18 @@ ipcMain.on('remove-account', (event, id) => {
 })
 
 ipcMain.on('forward-account', (event, acct) => {
-  const account = new Account(accountDB)
-  account.forwardAccount(acct)
+  accountManager.forwardAccount(acct)
     .then(() => {
       event.sender.send('response-forward-account')
     })
     .catch((err) => {
+      log.error(err)
       event.sender.send('error-forward-account', err)
     })
 })
 
 ipcMain.on('backward-account', (event, acct) => {
-  const account = new Account(accountDB)
-  account.backwardAccount(acct)
+  accountManager.backwardAccount(acct)
     .then(() => {
       event.sender.send('response-backward-account')
     })
@@ -352,8 +349,7 @@ ipcMain.on('backward-account', (event, acct) => {
 })
 
 ipcMain.on('refresh-accounts', (event, _) => {
-  const account = new Account(accountDB)
-  account.refreshAccounts()
+  accountManager.refreshAccounts()
     .then((accounts) => {
       event.sender.send('response-refresh-accounts', accounts)
     })
@@ -363,8 +359,7 @@ ipcMain.on('refresh-accounts', (event, _) => {
 })
 
 ipcMain.on('remove-all-accounts', (event, _) => {
-  const account = new Account(accountDB)
-  account.removeAll()
+  accountManager.removeAll()
     .then(() => {
       event.sender.send('response-remove-all-accounts')
     })
@@ -385,8 +380,7 @@ ipcMain.on('reset-badge', () => {
 let userStreaming = null
 
 ipcMain.on('start-user-streaming', (event, ac) => {
-  const account = new Account(accountDB)
-  account.getAccount(ac._id)
+  accountManager.getAccount(ac._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-user-streaming', err)
@@ -427,8 +421,7 @@ ipcMain.on('stop-user-streaming', (event, _) => {
 let localStreaming = null
 
 ipcMain.on('start-local-streaming', (event, ac) => {
-  const account = new Account(accountDB)
-  account.getAccount(ac._id)
+  accountManager.getAccount(ac._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-local-streaming', err)
@@ -465,8 +458,7 @@ ipcMain.on('stop-local-streaming', (event, _) => {
 let publicStreaming = null
 
 ipcMain.on('start-public-streaming', (event, ac) => {
-  const account = new Account(accountDB)
-  account.getAccount(ac._id)
+  accountManager.getAccount(ac._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-public-streaming', err)
@@ -503,8 +495,7 @@ ipcMain.on('stop-public-streaming', (event, _) => {
 let listStreaming = null
 
 ipcMain.on('start-list-streaming', (event, obj) => {
-  const account = new Account(accountDB)
-  account.getAccount(obj.account._id)
+  accountManager.getAccount(obj.account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-list-streaming', err)
@@ -541,8 +532,7 @@ ipcMain.on('stop-list-streaming', (event, _) => {
 let tagStreaming = null
 
 ipcMain.on('start-tag-streaming', (event, obj) => {
-  const account = new Account(accountDB)
-  account.getAccount(obj.account._id)
+  accountManager.getAccount(obj.account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-tag-streaming', err)
