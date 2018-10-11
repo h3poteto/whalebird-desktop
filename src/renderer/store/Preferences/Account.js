@@ -43,6 +43,7 @@ const Account = {
       })
     },
     forwardAccount ({ commit }, account) {
+      console.log(account)
       return new Promise((resolve, reject) => {
         ipcRenderer.send('forward-account', account)
         ipcRenderer.once('error-forward-account', (event, err) => {
@@ -56,6 +57,7 @@ const Account = {
       })
     },
     backwardAccount ({ commit }, account) {
+      console.log(account)
       return new Promise((resolve, reject) => {
         ipcRenderer.send('backward-account', account)
         ipcRenderer.once('error-backward-account', (event, err) => {

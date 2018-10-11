@@ -33,7 +33,12 @@ export default class Authentication {
     this.clientId = res.clientId
     this.clientSecret = res.clientSecret
 
-    const count = await this.db.countAuthorizedAccounts()
+    const order = await this.db.lastAccount()
+      .then(account => account.order + 1)
+      .catch((err) => {
+        console.log(err)
+        return 1
+      })
     const json = {
       baseURL: this.baseURL,
       domain: this.domain,
@@ -43,7 +48,7 @@ export default class Authentication {
       username: '',
       accountId: '',
       avatar: '',
-      order: count + 1
+      order: order
     }
     await this.db.insertAccount(json)
     return res.url
