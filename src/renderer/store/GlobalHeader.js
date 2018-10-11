@@ -4,14 +4,10 @@ import router from '../router'
 const GlobalHeader = {
   namespaced: true,
   state: {
-    defaultActive: '0',
     accounts: [],
     changing: false
   },
   mutations: {
-    changeDefaultActive (state, index) {
-      state.defaultActive = index
-    },
     updateAccounts (state, accounts) {
       state.accounts = accounts
     },
@@ -60,27 +56,12 @@ const GlobalHeader = {
         }
         // changing finish after loading
         commit('updateChanging', true)
-        commit('changeDefaultActive', account.index.toString())
         router.push(`/${account._id}/home`)
       })
-    },
-    selectAccount ({ state, commit }, account) {
-      commit('updateChanging', true)
-      const index = state.accounts.findIndex(a => a._id === account._id)
-      commit('changeDefaultActive', index.toString())
-      router.push({ path: `/${account._id}/home` })
     },
     async removeShortcutEvents () {
       ipcRenderer.removeAllListeners('change-account')
       return 'removeShortcutEvents'
-    },
-    schmearMenu ({ commit, state }, id) {
-      const index = state.accounts.findIndex((a) => {
-        return a._id === id
-      })
-      if (index !== undefined) {
-        commit('changeDefaultActive', index.toString())
-      }
     }
   }
 }
