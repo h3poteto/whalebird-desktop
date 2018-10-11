@@ -30,6 +30,7 @@
     "window": {
       "name": "Okno",
       "close": "Zamknij okno",
+      "open": "Open Window",
       "minimize": "Zminimalizuj",
       "jump_to": "Przejdź do"
     }

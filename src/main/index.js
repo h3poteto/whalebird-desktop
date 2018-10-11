@@ -227,8 +227,10 @@ app.on('window-all-closed', () => {
     menu.items[0].submenu.items[2].enabled = false
     // New Toot
     menu.items[1].submenu.items[0].enabled = false
+    // Open Window
+    menu.items[4].submenu.items[1].enabled = true
     // Jump to
-    menu.items[4].submenu.items[3].enabled = false
+    menu.items[4].submenu.items[4].enabled = false
   }
 })
 
@@ -871,6 +873,13 @@ const ApplicationMenu = (accountsChange, i18n) => {
           role: 'close'
         },
         {
+          label: i18n.t('main_menu.window.open'),
+          enabled: false,
+          click: () => {
+            reopenWindow()
+          }
+        },
+        {
           label: i18n.t('main_menu.window.minimize'),
           role: 'minimize'
         },
@@ -895,4 +904,13 @@ const ApplicationMenu = (accountsChange, i18n) => {
 
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+}
+
+async function reopenWindow () {
+  if (mainWindow === null) {
+    await createWindow()
+    return null
+  } else {
+    return null
+  }
 }
