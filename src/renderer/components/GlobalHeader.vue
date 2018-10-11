@@ -1,19 +1,19 @@
 <template>
   <div id="global_header">
     <el-menu
-      :default-active="defaultActive"
+      :default-active="activeRoute()"
       class="el-menu-vertical account-menu"
       :collapse="true"
-      :route="true"
+      :router="true"
       :background-color="themeColor"
       text-color="#909399"
       active-text-color="#ffffff">
-      <el-menu-item :index="index.toString()" v-for="(account, index) in accounts" v-bind:key="account._id" :route="{path: `/${account._id}/home`}" @click="select(account)">
+      <el-menu-item :index="`/${account._id}/home`" v-for="(account, index) in accounts" v-bind:key="account._id">
         <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
         <img v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
-      <el-menu-item index="/login" @click="login" :title="$t('global_header.add_new_account')">
+      <el-menu-item index="/login" :title="$t('global_header.add_new_account')">
         <i class="el-icon-plus"></i>
         <span slot="new">New</span>
       </el-menu-item>
@@ -31,7 +31,6 @@ export default {
   name: 'global-header',
   computed: {
     ...mapState({
-      defaultActive: state => state.GlobalHeader.defaultActive,
       accounts: state => state.GlobalHeader.accounts,
       themeColor: state => state.App.theme.global_header_color
     })
@@ -40,26 +39,20 @@ export default {
     this.initialize()
   },
   methods: {
+    activeRoute () {
+      return this.$route.path
+    },
     async initialize () {
       await this.$store.dispatch('GlobalHeader/removeShortcutEvents')
       this.$store.dispatch('GlobalHeader/watchShortcutEvents')
       try {
         const accounts = await this.$store.dispatch('GlobalHeader/listAccounts')
         if (this.$route.params.id === undefined) {
-          this.$store.dispatch('GlobalHeader/schmearMenu', accounts[0]._id)
           return this.$router.push({ path: `/${accounts[0]._id}/home` })
-        } else {
-          return this.$store.dispatch('GlobalHeader/schmearMenu', this.$route.params.id)
         }
       } catch (err) {
         return this.$router.push({ path: '/login' })
       }
-    },
-    login () {
-      return this.$router.push({ path: '/login' })
-    },
-    select (account) {
-      return this.$store.dispatch('GlobalHeader/selectAccount', account)
     }
   }
 }
