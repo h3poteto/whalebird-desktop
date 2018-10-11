@@ -30,6 +30,7 @@
     "window": {
       "name": "Fenêtre",
       "close": "Fermer la fenêtre",
+      "open": "Open Window",
       "minimize": "Minimiser",
       "jump_to": "Aller à"
     }
