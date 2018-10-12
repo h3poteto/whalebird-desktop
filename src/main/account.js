@@ -7,9 +7,9 @@ export default class Account {
   }
 
   async initialize () {
-    await this.updateUnique()
     await this.cleanup()
     await this.reorder()
+    await this.updateUnique()
   }
 
   updateUnique () {
