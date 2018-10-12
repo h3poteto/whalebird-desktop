@@ -121,8 +121,7 @@ export default {
     handleProfile (command) {
       switch (command) {
         case 'show':
-          const accountURL = `${this.account.baseURL}/@${this.account.username}`
-          this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', accountURL)
+          this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/fetchAccount', this.account.accountId)
             .then((account) => {
               this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
               this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
