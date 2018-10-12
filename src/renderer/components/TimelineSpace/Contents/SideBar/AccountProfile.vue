@@ -67,6 +67,15 @@
       <div class="note" v-html="account.note" @click.capture.prevent="noteClick"></div>
     </div>
   </div>
+  <div class="metadata">
+    <dl v-for="(data, index) in account.fields" :key="index">
+      <dt>
+        {{ data.name }}
+      </dt>
+      <dd v-html="data.value">
+      </dd>
+    </dl>
+  </div>
   <el-row class="basic-info">
     <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
       <el-button type="text" class="tab" @click="changeTab(1)">
@@ -309,6 +318,35 @@ function findLink (target) {
 
     .account {
       color: #409eff;
+    }
+  }
+
+  .metadata {
+    dl {
+      display: flex;
+      border-top: 1px solid var(--theme-border-color);
+      margin: 0;
+
+      dt {
+        background-color: var(--theme-selected-background-color);
+        flex: 0 0 auto;
+        width: 120px;
+        text-align: center;
+        padding: 16px 4px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      dd {
+        flex: 1 1 auto;
+        padding: 16px 4px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+        margin: 0;
+      }
     }
   }
 
