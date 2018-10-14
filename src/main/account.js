@@ -6,6 +6,56 @@ export default class Account {
     this.db = db
   }
 
+  async initialize () {
+    await this.cleanup()
+    await this.reorder()
+    await this.updateUnique()
+  }
+
+  updateUnique () {
+    return new Promise((resolve, reject) => {
+      // At first, remove old index.
+      this.db.removeIndex('order', (err) => {
+        if (err) reject(err)
+        // Add unique index.
+        this.db.ensureIndex({ fieldName: 'order', unique: true, sparse: true }, (err) => {
+          if (err) reject(err)
+          resolve(null)
+        })
+      })
+    })
+  }
+
+  /**
+   * Reorder accounts, because sometimes the order of accounts is duplicated.
+   */
+  async reorder () {
+    const accounts = await this.listAllAccounts()
+    await Promise.all(accounts.map(async (account, index) => {
+      const update = await this.updateAccount(account._id, Object.assign(account, { order: index + 1 }))
+      return update
+    }))
+    const ordered = await this.listAllAccounts()
+    return ordered
+  }
+
+  /**
+   * Check order of all accounts, and fix if order is negative value or over the length.
+   */
+  async cleanup () {
+    const accounts = await this.listAccounts()
+    if (accounts.length < 1) {
+      return accounts.length
+    }
+    if (accounts[0].order < 1 || accounts[accounts.length - 1].order > accounts.length) {
+      await Promise.all(accounts.map(async (element, index) => {
+        const update = await this.updateAccount(element._id, Object.assign(element, { order: index + 1 }))
+        return update
+      }))
+    }
+    return null
+  }
+
   insertAccount (obj) {
     return new Promise((resolve, reject) => {
       this.db.insert(obj, (err, doc) => {
@@ -16,6 +66,22 @@ export default class Account {
     })
   }
 
+  /**
+   * List up all accounts either authenticated or not authenticated.
+   */
+  listAllAccounts (order = 1) {
+    return new Promise((resolve, reject) => {
+      this.db.find().sort({ order: order }).exec((err, docs) => {
+        if (err) return reject(err)
+        if (empty(docs)) return reject(new EmptyRecordError('empty'))
+        resolve(docs)
+      })
+    })
+  }
+
+  /**
+   * List up authenticated accounts.
+   */
   listAccounts () {
     return new Promise((resolve, reject) => {
       this.db.find({accessToken: { $ne: '' }}).sort({ order: 1 }).exec((err, docs) => {
@@ -26,13 +92,10 @@ export default class Account {
     })
   }
 
-  countAuthorizedAccounts () {
-    return new Promise((resolve, reject) => {
-      this.db.count({accessToken: { $ne: '' }}, (err, count) => {
-        if (err) return reject(err)
-        resolve(count)
-      })
-    })
+  // Get the last account.
+  async lastAccount () {
+    const accounts = await this.listAllAccounts(-1)
+    return accounts[0]
   }
 
   getAccount (id) {
@@ -62,14 +125,12 @@ export default class Account {
     })
   }
 
-  searchAccounts (obj) {
+  searchAccounts (obj, order = 1) {
     return new Promise((resolve, reject) => {
-      this.db.find(
-        obj,
-        (err, docs) => {
-          if (err) return reject(err)
-          resolve(docs)
-        })
+      this.db.find(obj).sort({ order: order }).exec((err, docs) => {
+        if (err) return reject(err)
+        resolve(docs)
+      })
     })
   }
 
@@ -126,54 +187,81 @@ export default class Account {
   }
 
   async forwardAccount (ac) {
-    if (ac.order <= 1) {
-      return ac.order
+    // Find account which is the previous of the target account.
+    const accounts = await this.searchAccounts({ order: { $lt: ac.order } }, -1)
+      .catch((err) => {
+        console.log(err)
+        return []
+      })
+    if (accounts.length < 1) {
+      return null
     }
-    // Find account which is backwarded
-    const backwarded = await this.searchAccount(
+    const previousAccount = accounts[0]
+    const targetOrder = ac.order
+    const previousOrder = previousAccount.order
+
+    // At first, we need to update the previous account with dummy order.
+    // Because this column is uniqued, so can not update with same order.
+    await this.updateAccount(previousAccount._id, Object.assign(
+      previousAccount,
       {
-        order: ac.order - 1
+        order: -1
       }
-    )
-    await this.updateAccount(backwarded._id, Object.assign(backwarded, { order: (backwarded.order + 1) }))
-    // Forward account order
-    const updated = await this.updateAccount(ac._id, Object.assign(ac, { order: (ac.order - 1) }))
+    ))
+    // Change order of the target account.
+    const updated = await this.updateAccount(ac._id, Object.assign(
+      ac,
+      {
+        order: previousOrder
+      }
+    ))
+    // Update the previous account with right order.
+    await this.updateAccount(previousAccount._id, Object.assign(
+      previousAccount,
+      {
+        order: targetOrder
+      }
+    ))
     return updated
   }
 
   async backwardAccount (ac) {
-    const length = await this.countAuthorizedAccounts()
-    if (ac.order >= length) {
-      return ac.order
-    }
-    // Find account which is forwarded
-    const forwarded = await this.searchAccount(
-      {
-        order: ac.order + 1
-      }
-    )
-    await this.updateAccount(forwarded._id, Object.assign(forwarded, { order: (forwarded.order - 1) }))
-    // Backward account order
-    const updated = await this.updateAccount(ac._id, Object.assign(ac, { order: (ac.order + 1) }))
-    return updated
-  }
-
-  /*
-   * cleanup
-   * Check order of all accounts, and fix if order is negative value or over the length.
-   */
-  async cleanup () {
-    const accounts = await this.listAccounts()
+    // Find account which is the next of the target account.
+    const accounts = await this.searchAccounts({ order: { $gt: ac.order } }, 1)
+      .catch((err) => {
+        console.log(err)
+        return []
+      })
     if (accounts.length < 1) {
-      return accounts.length
+      return null
     }
-    if (accounts[0].order < 1 || accounts[accounts.length - 1].order > accounts.length) {
-      await Promise.all(accounts.map(async (element, index) => {
-        const update = await this.updateAccount(element._id, Object.assign(element, { order: index + 1 }))
-        return update
-      }))
-    }
-    return null
+    const nextAccount = accounts[0]
+    const targetOrder = ac.order
+    const nextOrder = nextAccount.order
+
+    // At first, we need to update the next account with dummy order.
+    // Because this colum is uniqued, so can not update with same order.
+    await this.updateAccount(nextAccount._id, Object.assign(
+      nextAccount,
+      {
+        order: -1
+      }
+    ))
+    // Change order of the target account/
+    const updated = await this.updateAccount(ac._id, Object.assign(
+      ac,
+      {
+        order: nextOrder
+      }
+    ))
+    // Update the next account with right order.
+    await this.updateAccount(nextAccount._id, Object.assign(
+      nextAccount,
+      {
+        order: targetOrder
+      }
+    ))
+    return updated
   }
 
   async refreshAccounts () {

@@ -27,6 +27,14 @@ const AccountProfile = {
     }
   },
   actions: {
+    fetchAccount ({ rootState }, accountID) {
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get(`/accounts/${accountID}`)
+        .then(res => res.data)
+    },
     searchAccount ({ commit, rootState }, accountURL) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
