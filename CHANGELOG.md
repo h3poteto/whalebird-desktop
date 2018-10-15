@@ -1,6 +1,29 @@
 # Change Log
 
-## [2.4.0]
+## [2,4,2] -2018-10-14
+### Added
+- [#656](https://github.com/h3poteto/whalebird-desktop/pull/656) Show profile's metadata in account profile
+
+### Changed
+- [#653](https://github.com/h3poteto/whalebird-desktop/pull/653) Update Korean translation
+
+### Fixed
+- [#659](https://github.com/h3poteto/whalebird-desktop/pull/659) Fix order of unique when initialize
+- [#658](https://github.com/h3poteto/whalebird-desktop/pull/658) Fix searching account when open my profile
+- [#655](https://github.com/h3poteto/whalebird-desktop/pull/655) Fix accounts order on globala header
+- [#654](https://github.com/h3poteto/whalebird-desktop/pull/654) Reoreder accounts and fix order method
+- [#652](https://github.com/h3poteto/whalebird-desktop/pull/652) Fix toot parser for Pleroma
+
+
+## [2.4.1] - 2018-10-10
+### Fixed
+- [#649](https://github.com/h3poteto/whalebird-desktop/pull/649) Add menu to reopen window after close window in macOS
+- [#645](https://github.com/h3poteto/whalebird-desktop/pull/645) Fix calling unbind local streaming in timeline space
+
+
+
+## [2.4.0] - 2018-10-09
+
 ### Added
 - [#638](https://github.com/h3poteto/whalebird-desktop/pull/638) Connect to Pleroma with Web Socket to streaming update
 - [#631](https://github.com/h3poteto/whalebird-desktop/pull/631) Add reporting method and mute/block method on toot
