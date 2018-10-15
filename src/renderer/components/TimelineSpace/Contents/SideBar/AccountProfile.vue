@@ -165,22 +165,30 @@ export default {
       }
     },
     follow (account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.follow_error'),
-            type: 'error'
-          })
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.follow_error'),
+          type: 'error'
         })
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
     },
     unfollow (account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.unfollow_error'),
-            type: 'error'
-          })
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.unfollow_error'),
+          type: 'error'
         })
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
     },
     changeTab (index) {
       this.activeTab = index

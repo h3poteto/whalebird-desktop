@@ -63,24 +63,17 @@ const AccountProfile = {
         })
     },
     follow ({ state, commit, rootState }, account) {
-      commit('changeLoading', true)
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/accounts/${account.id}/follow`)
         .then(res => {
-          commit('changeLoading', false)
           commit('changeRelationship', res.data)
           return res.data
         })
-        .catch(err => {
-          commit('changeLoading', false)
-          throw err
-        })
     },
     unfollow ({ commit, rootState }, account) {
-      commit('changeLoading', true)
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -89,9 +82,6 @@ const AccountProfile = {
         .then(res => {
           commit('changeRelationship', res.data)
           return res.data
-        })
-        .finally(() => {
-          commit('changeLoading', false)
         })
     },
     close ({ commit }) {
