@@ -16,7 +16,6 @@ const Followers = {
   },
   actions: {
     fetchFollowers ({ state, commit, rootState }, account) {
-      commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -25,9 +24,6 @@ const Followers = {
         .then(res => {
           commit('updateFollowers', res.data)
           return res.data
-        })
-        .finally(() => {
-          commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
         })
     },
     fetchRelationships ({ commit, rootState }, accounts) {

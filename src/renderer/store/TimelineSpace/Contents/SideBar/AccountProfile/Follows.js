@@ -16,14 +16,12 @@ const Follows = {
   },
   actions: {
     fetchFollows ({ state, commit, rootState }, account) {
-      commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get(`/accounts/${account.id}/following`, { limit: 80 })
         .then(res => {
-          commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
           commit('updateFollows', res.data)
           return res.data
         })
