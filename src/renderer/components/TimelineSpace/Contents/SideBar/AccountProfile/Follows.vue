@@ -52,24 +52,32 @@ export default {
       return this.relationships.find(r => r.id === id)
     },
     async followAccount (account) {
-      await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.follow_error'),
-            type: 'error'
-          })
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
+        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchRelationships', this.follows)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.follow_error'),
+          type: 'error'
         })
-      await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchRelationships', this.follows)
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
     },
     async unfollowAccount (account) {
-      await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.unfollow_error'),
-            type: 'error'
-          })
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
+        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchRelationships', this.follows)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.unfollow_error'),
+          type: 'error'
         })
-      await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchRelationships', this.follows)
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
     }
   }
 }
