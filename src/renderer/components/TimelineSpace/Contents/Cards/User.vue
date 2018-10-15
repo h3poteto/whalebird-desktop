@@ -95,6 +95,7 @@ export default {
   .name {
     display: inline-block;
     padding-left: 8px;
+    overflow: hidden;
 
     .acct {
       color: #909399;
