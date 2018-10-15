@@ -35,14 +35,18 @@ export default {
   },
   methods: {
     async load () {
-      const follows = await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchFollows', this.account)
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.follows_fetch_error'),
-            type: 'error'
-          })
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        const follows = await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchFollows', this.account)
+        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchRelationships', follows)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.follows_fetch_error'),
+          type: 'error'
         })
-      await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchRelationships', follows)
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
     },
     targetRelation (id) {
       return this.relationships.find(r => r.id === id)
