@@ -35,15 +35,17 @@ const AccountProfile = {
       return client.get(`/accounts/${accountID}`)
         .then(res => res.data)
     },
-    searchAccount ({ commit, rootState }, accountURL) {
+    searchAccount ({ commit, rootState }, parsedAccount) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
-      return client.get('/search', { q: accountURL, resolve: true })
+      return client.get('/search', { q: parsedAccount.acct, resolve: true })
         .then(res => {
           if (res.data.accounts.length <= 0) throw new AccountNotFound('not found')
-          return res.data.accounts[0]
+          const account = res.data.accounts[0]
+          if (`@${account.username}` !== parsedAccount.username) throw new AccountNotFound('not found')
+          return account
         })
     },
     changeAccount ({ commit, dispatch }, account) {

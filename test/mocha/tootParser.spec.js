@@ -50,7 +50,8 @@ describe('findAccount', () => {
     const target = doc.getElementById('user')
     it('should find', () => {
       const res = findAccount(target)
-      assert.strictEqual(res, '@h3_poteto@social.mikutter.hachune.net')
+      assert.strictEqual(res.username, '@h3_poteto')
+      assert.strictEqual(res.acct, '@h3_poteto@social.mikutter.hachune.net')
     })
   })
 })
