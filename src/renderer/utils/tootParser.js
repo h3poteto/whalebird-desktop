@@ -57,5 +57,8 @@ export function parseAccount (accountURL) {
   const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(@[a-zA-Z0-9-_.]+)/)
   const domainName = res[1]
   const accountName = res[2]
-  return `${accountName}@${domainName}`
+  return {
+    username: accountName,
+    acct: `${accountName}@${domainName}`
+  }
 }

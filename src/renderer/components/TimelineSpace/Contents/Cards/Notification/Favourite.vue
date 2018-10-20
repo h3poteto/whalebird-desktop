@@ -156,10 +156,10 @@ export default {
         this.$router.push({ path: tag })
         return tag
       }
-      const accountURL = findAccount(e.target)
-      if (accountURL !== null) {
+      const parsedAccount = findAccount(e.target)
+      if (parsedAccount !== null) {
         this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', accountURL)
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
           .then((account) => {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
@@ -171,7 +171,7 @@ export default {
             })
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
           })
-        return accountURL
+        return parsedAccount.acct
       }
       const link = findLink(e.target)
       if (link !== null) {
