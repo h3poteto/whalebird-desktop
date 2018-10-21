@@ -1,7 +1,7 @@
 <template>
-<div class="user" @click="openUser(user)">
+<div class="user" @click="openUser(user)" aria-label="user">
   <div class="icon">
-    <img :src="user.avatar" />
+    <img :src="user.avatar" :alt="`Avatar of ${user.username}`" />
   </div>
   <div class="name">
     <div class="username">

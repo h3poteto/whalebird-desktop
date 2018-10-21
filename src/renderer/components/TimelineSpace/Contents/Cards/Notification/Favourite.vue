@@ -6,6 +6,8 @@
   @shortkey="handleStatusControl"
   ref="status"
   @click="$emit('select')"
+  role="article"
+  aria-label="favourited toot"
   >
   <div v-show="filtered(message)" class="filtered">
     Filtered
@@ -19,13 +21,13 @@
         <span class="bold" @click="openUser(message.account)">{{ username(message.account) }}</span> favourited your status
       </div>
       <div class="action-icon">
-        <img :src="message.account.avatar" />
+        <img :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
       </div>
     </div>
     <div class="clearfix"></div>
     <div class="target" v-on:dblclick="openDetail(message.status)">
       <div class="icon" @click="openUser(message.status.account)">
-        <img :src="message.status.account.avatar" />
+        <img :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
       </div>
       <div class="detail">
         <div class="toot-header">
@@ -54,11 +56,11 @@
             {{ $t('cards.toot.sensitive') }}
           </el-button>
           <div v-show="isShowAttachments(message.status)">
-            <el-button v-show="sensitive(message.status) && isShowAttachments(message.status)" class="hide-sensitive" type="text" @click="showAttachments = false">
+            <el-button v-show="sensitive(message.status) && isShowAttachments(message.status)" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
               <icon name="eye" class="hide"></icon>
             </el-button>
             <div class="media" v-for="media in mediaAttachments(message.status)">
-              <img :src="media.preview_url" />
+              <img :src="media.preview_url" alt="attached media" />
             </div>
           </div>
           <div class="clearfix"></div>
