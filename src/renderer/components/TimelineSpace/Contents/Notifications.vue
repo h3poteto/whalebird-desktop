@@ -98,6 +98,7 @@ export default {
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
+        this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       }
     }
   },
@@ -118,6 +119,7 @@ export default {
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
+        this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       }
     },
     async reload () {
@@ -143,6 +145,7 @@ export default {
             })
           })
 
+        this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
         this.$store.dispatch('TimelineSpace/startUserStreaming', account)
         this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
       } finally {
