@@ -15,10 +15,16 @@
       trigger="click"
       v-model="filterVisible">
       <div>
-        <el-form>
+        <el-form role="form">
           <el-form-item :label="$t('header_menu.filter.title')">
             <div class="input-wrapper">
-              <input v-model="filter" :placeholder="$t('header_menu.filter.placeholder')" v-shortkey.avoid v-on:keyup.enter="applyFilter(filter)"></input>
+              <input
+                v-model="filter"
+                :placeholder="$t('header_menu.filter.placeholder')"
+                v-shortkey.avoid
+                aria-label="filter words"
+                tilte="filter"
+                ></input>
             </div>
           </el-form-item>
           <el-form-item>

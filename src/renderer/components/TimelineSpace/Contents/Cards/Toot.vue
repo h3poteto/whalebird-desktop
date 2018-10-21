@@ -6,13 +6,20 @@
   @shortkey="handleTootControl"
   ref="status"
   @click="$emit('selectToot')"
+  role="article"
+  aria-label="toot"
   >
   <div v-show="filtered(message)" class="filtered">
     Filtered
   </div>
   <div v-show="!filtered(message)" class="toot">
     <div class="icon">
-      <img :src="originalMessage(message).account.avatar" @click="openUser(originalMessage(message).account)"/>
+      <img
+        :src="originalMessage(message).account.avatar"
+        @click="openUser(originalMessage(message).account)"
+        role="img"
+        :alt="`Avatar of ${originalMessage(message).account.username}`"
+        />
     </div>
     <div class="detail" v-on:dblclick="openDetail(message)">
       <div class="toot-header">
@@ -46,7 +53,7 @@
             <icon name="eye" class="hide"></icon>
           </el-button>
           <div class="media" v-for="media in mediaAttachments(message)">
-            <img :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))"/>
+            <img :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))" alt="Attached media" />
           </div>
         </div>
         <div class="clearfix"></div>
@@ -54,9 +61,10 @@
       <div class="reblogger" v-show="message.reblog !== null">
         <icon name="retweet"></icon>
         <span class="reblogger-icon" @click="openUser(message.account)">
-          <img :src="message.account.avatar" />
+          <img :src="message.account.avatar"
+               :alt="`Avatar of ${message.account.username}`" />
         </span>
-        <span class="reblogger-name" @click="openUser(message.account)">
+        <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${username(message.account)}`">
           {{ username(message.account) }}
         </span>
       </div>
@@ -236,10 +244,10 @@ export default {
         this.$router.push({ path: tag })
         return tag
       }
-      const accountURL = findAccount(e.target)
-      if (accountURL !== null) {
+      const parsedAccount = findAccount(e.target)
+      if (parsedAccount !== null) {
         this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', accountURL)
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
           .then((account) => {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
@@ -251,7 +259,7 @@ export default {
             })
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
           })
-        return accountURL
+        return parsedAccount.acct
       }
       const link = findLink(e.target)
       if (link !== null) {
