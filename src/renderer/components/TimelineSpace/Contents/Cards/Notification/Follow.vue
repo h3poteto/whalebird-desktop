@@ -6,6 +6,8 @@
   @shortkey="handleStatusControl"
   ref="status"
   @click="$emit('select')"
+  role="article"
+  aria-label="follow event"
   >
   <div class="action">
     <div class="action-mark">
