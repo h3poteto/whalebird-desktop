@@ -1,7 +1,7 @@
 <template>
-<div class="user" @click="openUser(user)">
+<div class="user" @click="openUser(user)" aria-label="user">
   <div class="icon">
-    <img :src="user.avatar" />
+    <img :src="user.avatar" :alt="`Avatar of ${user.username}`" />
   </div>
   <div class="name">
     <div class="username">
@@ -14,6 +14,17 @@
   <div class="tool" v-if="remove">
     <el-button type="text" @click.stop.prevent="removeAccount(user)">
       <icon name="times"></icon>
+    </el-button>
+  </div>
+  <div class="tool" v-if="relationship">
+    <el-button v-if="relationship.following" class="unfollow" type="text" @click.stop.prevent="unfollowAccount(user)" :title="$t('side_bar.account_profile.unfollow')">
+      <icon name="user-times"></icon>
+    </el-button>
+    <el-button v-else-if="relationship.requested" class="requested" type="text" :title="$t('side_bar.account_profile.follow_requested')">
+      <icon name="hourglass"></icon>
+    </el-button>
+    <el-button v-else-if="!relationship.following" class="follow" type="text" @click.stop.prevent="followAccount(user)" :title="$t('side_bar.account_profile.follow')">
+      <icon name="user-plus"></icon>
     </el-button>
   </div>
   </div>
@@ -31,6 +42,10 @@ export default {
     remove: {
       type: Boolean,
       default: false
+    },
+    relationship: {
+      type: Object,
+      default: null
     }
   },
   methods: {
@@ -48,6 +63,12 @@ export default {
     },
     removeAccount (account) {
       this.$emit('removeAccount', account)
+    },
+    unfollowAccount (account) {
+      this.$emit('unfollowAccount', account)
+    },
+    followAccount (account) {
+      this.$emit('followAccount', account)
     }
   }
 }
@@ -74,6 +95,7 @@ export default {
   .name {
     display: inline-block;
     padding-left: 8px;
+    overflow: hidden;
 
     .acct {
       color: #909399;
@@ -87,6 +109,18 @@ export default {
 
   .tool {
     margin-left: auto;
+
+    .follow {
+      color: var(--theme-primary-color);
+    }
+
+    .unfollow {
+      color: #409eff;
+    }
+
+    .requested {
+      color: var(--theme-primary-color);
+    }
   }
 }
 </style>

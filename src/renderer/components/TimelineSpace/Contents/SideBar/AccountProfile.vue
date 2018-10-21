@@ -3,7 +3,9 @@
      v-loading="loading"
      :element-loading-text="$t('message.loading')"
      element-loading-spinner="el-icon-loading"
-     element-loading-background="rgba(0, 0, 0, 0.8)">
+     element-loading-background="rgba(0, 0, 0, 0.8)"
+     role="article"
+     aria-label="account profile">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
       <div class="follow-follower" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
@@ -44,7 +46,7 @@
           </popper>
         </div>
         <div class="icon">
-          <img :src="account.avatar" />
+          <img :src="account.avatar" :alt="`Avatar of ${account.username}`" />
         </div>
         <div class="follow-status" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
           <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
@@ -165,22 +167,30 @@ export default {
       }
     },
     follow (account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.follow_error'),
-            type: 'error'
-          })
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.follow_error'),
+          type: 'error'
         })
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
     },
     unfollow (account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.unfollow_error'),
-            type: 'error'
-          })
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.unfollow_error'),
+          type: 'error'
         })
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
     },
     changeTab (index) {
       this.activeTab = index
