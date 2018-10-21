@@ -7,13 +7,14 @@
       :router="true"
       :background-color="themeColor"
       text-color="#909399"
-      active-text-color="#ffffff">
-      <el-menu-item :index="`/${account._id}/home`" v-for="(account, index) in accounts" v-bind:key="account._id">
+      active-text-color="#ffffff"
+      role="menubar">
+      <el-menu-item :index="`/${account._id}/home`" v-for="(account, index) in accounts" v-bind:key="account._id" role="menuitem">
         <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
         <img v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
-      <el-menu-item index="/login" :title="$t('global_header.add_new_account')">
+      <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem">
         <i class="el-icon-plus"></i>
         <span slot="new">New</span>
       </el-menu-item>
