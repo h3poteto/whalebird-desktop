@@ -36,52 +36,54 @@
       :router="true"
       :class="collapse ? 'el-menu-vertical timeline-menu narrow-menu':'el-menu-vertical timeline-menu'"
       role="menu">
-      <el-menu-item :index="`/${id()}/home`" role="menuitem">
+      <el-menu-item :index="`/${id()}/home`" role="menuitem" :title="$t('side_menu.home')">
         <icon name="home"></icon>
         <span>{{ $t("side_menu.home") }}</span>
         <el-badge is-dot :hidden="!unreadHomeTimeline">
         </el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/notifications`" role="menuitem">
+      <el-menu-item :index="`/${id()}/notifications`" role="menuitem" :title="$t('side_menu.notification')">
         <icon name="bell"></icon>
         <span>{{ $t("side_menu.notification") }}</span>
         <el-badge is-dot :hidden="!unreadNotifications">
         </el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/favourites`" role="menuitem">
+      <el-menu-item :index="`/${id()}/favourites`" role="menuitem" :title="$t('side_menu.favourite')">
         <icon name="star"></icon>
         <span>{{ $t("side_menu.favourite") }}</span>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/local`" role="menuitem">
+      <el-menu-item :index="`/${id()}/local`" role="menuitem" :title="$t('side_menu.local')">
         <icon name="users"></icon>
         <span>{{ $t("side_menu.local") }}</span>
         <el-badge is-dot :hidden="!unreadLocalTimeline">
         </el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/public`" role="menuitem">
+      <el-menu-item :index="`/${id()}/public`" role="menuitem" :title="$t('side_menu.public')">
         <icon name="globe"></icon>
         <span>{{ $t("side_menu.public") }}</span>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/search`" role="menuitem">
+      <el-menu-item :index="`/${id()}/search`" role="menuitem" :title="$t('side_menu.search')">
         <icon name="search"></icon>
         <span>{{ $t("side_menu.search") }}</span>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/hashtag`" role="menuitem">
+      <el-menu-item :index="`/${id()}/hashtag`" role="menuitem" :title="$t('side_menu.hashtag')">
         <icon name="hashtag"></icon>
         <span>{{ $t("side_menu.hashtag") }}</span>
       </el-menu-item>
       <template v-for="tag in tags">
-        <el-menu-item :index="`/${id()}/hashtag/${tag.tagName}`" class="sub-menu" :key="tag.tagName" role="menuitem">
-          <span>#{{ tag.tagName }}</span>
+        <el-menu-item :index="`/${id()}/hashtag/${tag.tagName}`" :class="collapse ? '' : 'sub-menu'" :key="tag.tagName" role="menuitem" :title="tag.tagName">
+          <icon name="hashtag" scale="0.8"></icon>
+          <span>{{ tag.tagName }}</span>
         </el-menu-item>
       </template>
-      <el-menu-item :index="`/${id()}/lists`" role="menuitem">
+      <el-menu-item :index="`/${id()}/lists`" role="menuitem" :title="$t('side_menu.lists')">
         <icon name="list-ul"></icon>
         <span>{{ $t("side_menu.lists") }}</span>
       </el-menu-item>
       <template v-for="list in lists">
-        <el-menu-item :index="`/${id()}/lists/${list.id}`" class="sub-menu" :key="list.id" role="menuitem">
-          <span>#{{ list.title }}</span>
+        <el-menu-item :index="`/${id()}/lists/${list.id}`" :class="collapse ? '' : 'sub-menu'" :key="list.id" role="menuitem" :title="list.title">
+          <icon name="list-ul" scale="0.8"></icon>
+          <span>{{ list.title }}</span>
         </el-menu-item>
       </template>
     </el-menu>
