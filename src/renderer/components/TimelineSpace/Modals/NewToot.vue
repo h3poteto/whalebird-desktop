@@ -5,7 +5,7 @@
     :before-close="closeConfirm"
     width="400px"
     class="new-toot-modal">
-    <el-form v-on:submit.prevent="toot">
+    <el-form v-on:submit.prevent="toot" role="form">
       <div class="spoiler" v-show="showContentWarning">
         <el-input :placeholder="$t('modals.new_toot.cw')" v-model="spoiler"></el-input>
       </div>
