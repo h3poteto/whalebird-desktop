@@ -203,6 +203,7 @@ export default {
       .release-collapse {
         color: #dcdfe6;
         padding: 0;
+        margin-left: -10px;
 
         &:hover {
           color: #409eff;
@@ -243,8 +244,18 @@ export default {
     }
   }
 
-  .narrow-menu {
-    width: 76px;
+  .narrow-menu /deep/ {
+    width: 64px;
+
+    .el-menu-item {
+      margin-left: 4px;
+    }
+
+    .el-badge {
+      vertical-align: top;
+      line-height: 32px;
+      margin-left: -8px;
+    }
   }
 }
 </style>
