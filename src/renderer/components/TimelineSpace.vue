@@ -197,14 +197,13 @@ export default {
     width: calc(100% - 245px);
     position: fixed;
     top: 0;
-    left: 245px;
     height: 48px;
     border-bottom: solid 1px var(--theme-border-color);
   }
 }
 
 .page-narrow {
-  margin-left: 76px;
+  margin-left: 64px;
   height: 100%;
   box-sizing: border-box;
 
@@ -212,7 +211,6 @@ export default {
     width: calc(100% - 141px);
     position: fixed;
     top: 0;
-    left: 141px;
     height: 48px;
     border-bottom: solid 1px var(--theme-border-color);
   }
