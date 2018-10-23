@@ -87,6 +87,12 @@
         </el-menu-item>
       </template>
     </el-menu>
+    <el-button v-if="hideGlobalHeader" class="global-header-control" type="text" @click="changeGlobalHeader(false)">
+      <icon name="caret-square-right"></icon>
+    </el-button>
+    <el-button v-else class="global-header-control" type="text" @click="changeGlobalHeader(true)">
+      <icon name="caret-square-left"></icon>
+    </el-button>
   </div>
 </template>
 
@@ -103,7 +109,8 @@ export default {
       unreadLocalTimeline: state => state.unreadLocalTimeline,
       lists: state => state.lists,
       tags: state => state.tags,
-      collapse: state => state.collapse
+      collapse: state => state.collapse,
+      hideGlobalHeader: state => state.hideGlobalHeader
     }),
     ...mapState({
       account: state => state.TimelineSpace.account,
@@ -142,6 +149,9 @@ export default {
     },
     releaseCollapse () {
       this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', false)
+    },
+    changeGlobalHeader (value) {
+      this.$store.dispatch('TimelineSpace/SideMenu/changeGlobalHeader', value)
     }
   }
 }
@@ -153,7 +163,6 @@ export default {
     background-color: var(--theme-side-menu-color);
     position: fixed;
     top: 0;
-    left: 65px;
     width: 180px;
     height: 70px;
     font-size: 16px;
@@ -215,7 +224,6 @@ export default {
   .timeline-menu /deep/ {
     position: fixed;
     top: 70px;
-    left: 65px;
     height: calc(100% - 70px);
     width: 180px;
     border: none;
@@ -256,6 +264,12 @@ export default {
       line-height: 32px;
       margin-left: -8px;
     }
+  }
+
+  .global-header-control {
+    position: fixed;
+    bottom: 0;
+    color: #dcdfe6;
   }
 }
 </style>
