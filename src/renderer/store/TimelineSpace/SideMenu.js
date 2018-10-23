@@ -9,8 +9,7 @@ const SideMenu = {
     unreadLocalTimeline: false,
     lists: [],
     tags: [],
-    collapse: false,
-    hideGlobalHeader: false
+    collapse: false
   },
   mutations: {
     changeUnreadHomeTimeline (state, value) {
@@ -30,9 +29,6 @@ const SideMenu = {
     },
     updateTags (state, tags) {
       state.tags = tags
-    },
-    changeGlobalHeader (state, hide) {
-      state.hideGlobalHeader = hide
     }
   },
   actions: {
@@ -56,13 +52,6 @@ const SideMenu = {
     changeCollapse ({ commit }, value) {
       commit('changeCollapse', value)
       ipcRenderer.send('change-collapse', value)
-    },
-    changeGlobalHeader ({ commit, dispatch }, value) {
-      commit('changeGlobalHeader', value)
-      ipcRenderer.send('change-global-header', value)
-      ipcRenderer.once('response-change-global-header', (event, _) => {
-        dispatch('GlobalHeader/reloadHide', {}, { root: true })
-      })
     },
     readCollapse ({ commit }) {
       ipcRenderer.send('get-collapse')
