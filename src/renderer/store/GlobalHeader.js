@@ -67,10 +67,16 @@ const GlobalHeader = {
       ipcRenderer.removeAllListeners('change-account')
       return 'removeShortcutEvents'
     },
-    reloadHide ({ commit }) {
+    loadHide ({ commit }) {
       ipcRenderer.send('get-global-header')
       ipcRenderer.once('response-get-global-header', (event, value) => {
         commit('changeHide', value)
+      })
+    },
+    switchHide ({ dispatch }, value) {
+      ipcRenderer.send('change-global-header', value)
+      ipcRenderer.once('response-change-global-header', (event, _) => {
+        dispatch('loadHide')
       })
     }
   }

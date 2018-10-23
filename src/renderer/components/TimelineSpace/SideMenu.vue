@@ -109,12 +109,12 @@ export default {
       unreadLocalTimeline: state => state.unreadLocalTimeline,
       lists: state => state.lists,
       tags: state => state.tags,
-      collapse: state => state.collapse,
-      hideGlobalHeader: state => state.hideGlobalHeader
+      collapse: state => state.collapse
     }),
     ...mapState({
       account: state => state.TimelineSpace.account,
-      themeColor: state => state.App.theme.side_menu_color
+      themeColor: state => state.App.theme.side_menu_color,
+      hideGlobalHeader: state => state.GlobalHeader.hide
     })
   },
   created () {
@@ -151,7 +151,7 @@ export default {
       this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', false)
     },
     changeGlobalHeader (value) {
-      this.$store.dispatch('TimelineSpace/SideMenu/changeGlobalHeader', value)
+      this.$store.dispatch('GlobalHeader/switchHide', value)
     }
   }
 }
@@ -270,6 +270,8 @@ export default {
     position: fixed;
     bottom: 0;
     color: #dcdfe6;
+    margin: 0;
+    padding: 0;
   }
 }
 </style>
