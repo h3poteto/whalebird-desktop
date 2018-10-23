@@ -642,6 +642,30 @@ ipcMain.on('get-collapse', (event, _) => {
     })
 })
 
+ipcMain.on('change-global-header', (event, value) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.update(
+    {
+      state: {
+        hideGlobalHeader: value
+      }
+    })
+    .then((conf) => {
+      event.sender.send('response-change-global-header', conf)
+    })
+    .catch(err => {
+      log.error(err)
+    })
+})
+
+ipcMain.on('get-global-header', (event, _) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.load()
+    .then((conf) => {
+      event.sender.send('response-get-global-header', conf.state.hideGlobalHeader)
+    })
+})
+
 ipcMain.on('change-language', (event, value) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(

@@ -17,7 +17,8 @@ const Base = {
     tootVisibility: Visibility.Public.value
   },
   state: {
-    collapse: false
+    collapse: false,
+    hideGlobalHeader: false
   },
   language: {
     language: Language.en.key
