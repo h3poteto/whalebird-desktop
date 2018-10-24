@@ -1,6 +1,7 @@
 <template>
   <div id="global_header">
     <el-menu
+      v-if="!hide"
       :default-active="activeRoute()"
       class="el-menu-vertical account-menu"
       :collapse="true"
@@ -19,10 +20,11 @@
         <span slot="new">New</span>
       </el-menu-item>
     </el-menu>
-    <div class="space">
+    <div :class="hide ? 'space no-global-header':'space with-global-header' ">
       <router-view :key="$route.params.id"></router-view>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -31,8 +33,11 @@ import { mapState } from 'vuex'
 export default {
   name: 'global-header',
   computed: {
+    ...mapState('GlobalHeader', {
+      accounts: state => state.accounts,
+      hide: state => state.hide
+    }),
     ...mapState({
-      accounts: state => state.GlobalHeader.accounts,
       themeColor: state => state.App.theme.global_header_color
     })
   },
@@ -45,6 +50,7 @@ export default {
     },
     async initialize () {
       await this.$store.dispatch('GlobalHeader/removeShortcutEvents')
+      this.$store.dispatch('GlobalHeader/loadHide')
       this.$store.dispatch('GlobalHeader/watchShortcutEvents')
       try {
         const accounts = await this.$store.dispatch('GlobalHeader/listAccounts')
@@ -90,8 +96,15 @@ export default {
   }
 
   .space {
-    margin-left: 65px;
     height: 100%;
+  }
+
+  .no-global-header {
+    margin-left: 0;
+  }
+
+  .with-global-header {
+    margin-left: 65px;
   }
 }
 </style>
