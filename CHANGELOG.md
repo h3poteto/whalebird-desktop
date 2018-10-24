@@ -1,6 +1,21 @@
 # Change Log
 
-## [2,4,2] -2018-10-14
+## [2.4.3]
+### Added
+- [#675](https://github.com/h3poteto/whalebird-desktop/pull/675) Add option to hide/show global hea
+- [#661](https://github.com/h3poteto/whalebird-desktop/pull/661) Show follow/unfollow button in follow/followers tab in profile
+
+### Changed
+- [#669](https://github.com/h3poteto/whalebird-desktop/pull/669) Save refresh token if it exists
+
+### Fixed
+- [#676](https://github.com/h3poteto/whalebird-desktop/pull/676) Load hide/show status when reopen app
+- [#674](https://github.com/h3poteto/whalebird-desktop/pull/674) Fix side menu design for narrow style
+- [#672](https://github.com/h3poteto/whalebird-desktop/pull/672) Clear notification badge on app icon when reload or scroll
+- [#671](https://github.com/h3poteto/whalebird-desktop/pull/671) Add role and alt tag for accessibility
+- [#670](https://github.com/h3poteto/whalebird-desktop/pull/670) Block to open account profile when the account is not found
+
+## [2.4.2] -2018-10-14
 ### Added
 - [#656](https://github.com/h3poteto/whalebird-desktop/pull/656) Show profile's metadata in account profile
 
