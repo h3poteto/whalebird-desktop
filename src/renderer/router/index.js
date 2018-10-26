@@ -54,6 +54,10 @@ export default new Router({
       component: require('@/components/GlobalHeader').default,
       children: [
         {
+          path: ':id/settings',
+          component: require('@/components/Settings').default
+        },
+        {
           path: ':id/',
           name: 'timeline-space',
           component: require('@/components/TimelineSpace').default,
