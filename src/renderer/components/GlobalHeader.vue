@@ -74,6 +74,7 @@ export default {
     left: 0;
     width: 65px;
     padding-top: 24px;
+    border: 0;
 
     .el-tooltip {
       outline: 0;
