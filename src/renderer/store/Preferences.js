@@ -13,14 +13,8 @@ const Preferences = {
     Notification,
     Appearance
   },
-  state: {
-    defaultActive: '1'
-  },
-  mutations: {
-    changeActive (state, value) {
-      state.defaultActive = value
-    }
-  }
+  state: {},
+  mutations: {}
 }
 
 export default Preferences
