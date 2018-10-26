@@ -34,20 +34,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import Visibility from '~/src/constants/visibility'
 
 export default {
   name: 'Settings',
-  data () {
-    return {
-      visibilities: [
-        Visibility.Public,
-        Visibility.Unlisted,
-        Visibility.Private
-      ],
-      tootVisibility: Visibility.Public
-    }
-  },
   computed: {
     ...mapState({
       primaryColor: state => state.App.theme.primary_color,

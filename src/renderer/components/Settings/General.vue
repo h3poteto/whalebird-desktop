@@ -26,9 +26,21 @@ export default {
         Visibility.Public,
         Visibility.Unlisted,
         Visibility.Private
-      ],
-      tootVisibility: Visibility.Public.value
+      ]
     }
+  },
+  computed: {
+    tootVisibility: {
+      get () {
+        return this.$store.state.Settings.General.visibility
+      },
+      set (value) {
+        this.$store.dispatch('Settings/General/setVisibility', value)
+      }
+    }
+  },
+  created () {
+    this.$store.dispatch('Settings/General/fetchVisibility')
   }
 }
 </script>
