@@ -77,7 +77,6 @@ export default {
     })
   },
   created () {
-    this.$store.commit('Preferences/changeActive', '2')
     this.loadAccounts()
   },
   methods: {

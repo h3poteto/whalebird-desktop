@@ -3,7 +3,7 @@
     <el-menu
       v-if="!hide"
       :default-active="activeRoute()"
-      class="el-menu-vertical account-menu"
+       class="el-menu-vertical account-menu"
       :collapse="true"
       :router="true"
       :background-color="themeColor"
