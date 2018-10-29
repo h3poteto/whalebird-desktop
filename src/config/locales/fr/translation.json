@@ -78,13 +78,15 @@
       "title": "Général",
       "toot": {
         "title": "Pouet",
-        "description": "Customize default visibility of toot.",
         "visibility": {
-          "title": "Visibilité par défaut",
+          "description": "Customize default visibility of toot.",
           "public": "Public",
           "unlisted": "Public sans être affiché sur le fil public",
           "private": "Abonné⋅e⋅s uniquement",
           "direct": "Message direct"
+        },
+        "sensitive": {
+          "description": "Mark medias as sensitive by default"
         }
       }
     }
