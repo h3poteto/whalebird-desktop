@@ -184,12 +184,13 @@ export default {
       // Find custom emojis
       const filteredCustomEmoji = this.customEmojis.filter(emoji => emoji.name.includes(word))
       const filtered = filteredNativeEmoji.concat(filteredCustomEmoji)
-      console.log(filtered)
       if (filtered.length > 0) {
         this.openSuggest = true
         this.startIndex = start
         this.matchWord = word
-        this.filteredSuggestion = filtered
+        this.filteredSuggestion = filtered.filter((e, i, array) => {
+          return (array.findIndex(ar => e.code === ar.code) === i)
+        })
       } else {
         this.openSuggest = false
       }
