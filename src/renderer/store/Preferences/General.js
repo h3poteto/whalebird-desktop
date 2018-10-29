@@ -1,5 +1,4 @@
 import { ipcRenderer } from 'electron'
-import Visibility from '~/src/constants/visibility'
 
 const General = {
   namespaced: true,
@@ -8,8 +7,7 @@ const General = {
       sound: {
         fav_rb: true,
         toot: true
-      },
-      tootVisibility: Visibility.Public.value
+      }
     },
     loading: false
   },
@@ -37,23 +35,6 @@ const General = {
           commit('changeLoading', false)
           resolve(conf)
         })
-      })
-    },
-    updateTootVisibility ({ dispatch, commit, state }, value) {
-      const newGeneral = Object.assign({}, state.general, {
-        tootVisibility: value
-      })
-      const config = {
-        general: newGeneral
-      }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-      })
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        dispatch('App/loadPreferences', null, { root: true })
-        commit('updateGeneral', conf.general)
       })
     },
     updateSound ({ commit, state }, sound) {
