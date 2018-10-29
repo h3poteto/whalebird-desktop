@@ -13,6 +13,7 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="show">{{ $t("side_menu.show_profile") }}</el-dropdown-item>
               <el-dropdown-item command="edit">{{ $t("side_menu.edit_profile") }}</el-dropdown-item>
+              <el-dropdown-item command="settings">{{ $t("side_menu.settings") }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -142,6 +143,10 @@ export default {
         case 'edit':
           shell.openExternal(this.account.baseURL + '/settings/profile')
           break
+        case 'settings':
+          const url = `/${this.id()}/settings`
+          this.$router.push(url)
+          break
       }
     },
     doCollapse () {
@@ -178,6 +183,11 @@ export default {
 
       .el-dropdown-link {
         cursor: pointer;
+        color: #dcdfe6;
+
+        &:hover {
+          color: #409eff;
+        }
       }
 
       .domain-name {

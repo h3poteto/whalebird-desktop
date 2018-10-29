@@ -42,6 +42,7 @@
     "profile": "Profile",
     "show_profile": "Show profile",
     "edit_profile": "Edit profile",
+    "settings": "Settings",
     "collapse": "Collapse",
     "expand": "Expand",
     "home": "Home",
@@ -71,8 +72,8 @@
     "new_toot": "Toot",
     "reload": "Reload"
   },
-  "preferences": {
-    "title": "Preferences",
+  "settings": {
+    "title": "Settings",
     "general": {
       "title": "General",
       "toot": {
@@ -85,7 +86,13 @@
           "private": "Private",
           "direct": "Direct"
         }
-      },
+      }
+    }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "general": {
+      "title": "General",
       "sounds": {
         "title": "Sounds",
         "description": "Please set feedback sounds.",
