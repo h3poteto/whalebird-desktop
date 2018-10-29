@@ -42,6 +42,7 @@
     "profile": "프로필",
     "show_profile": "프로필 보기",
     "edit_profile": "프로필 수정",
+    "settings": "Settings",
     "collapse": "접기",
     "expand": "펼치기",
     "home": "홈",
@@ -71,8 +72,8 @@
     "new_toot": "툿",
     "reload": "새로고침"
   },
-  "preferences": {
-    "title": "설정",
+  "settings": {
+    "title": "Settings",
     "general": {
       "title": "일반",
       "toot": {
@@ -85,7 +86,13 @@
           "private": "비공개",
           "direct": "다이렉트"
         }
-      },
+      }
+    }
+  },
+  "preferences": {
+    "title": "설정",
+    "general": {
+      "title": "일반",
       "sounds": {
         "title": "사운드",
         "description": "피드백 소리를 설정해 주세요.",
