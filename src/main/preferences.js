@@ -1,6 +1,5 @@
 import storage from 'electron-json-storage'
 import objectAssignDeep from 'object-assign-deep'
-import Visibility from '../constants/visibility'
 import DisplayStyle from '../constants/displayStyle'
 import Theme from '../constants/theme'
 import Language from '../constants/language'
@@ -13,8 +12,7 @@ const Base = {
     sound: {
       fav_rb: true,
       toot: true
-    },
-    tootVisibility: Visibility.Public.value
+    }
   },
   state: {
     collapse: false,
