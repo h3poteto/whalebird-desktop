@@ -42,6 +42,7 @@
     "profile": "Profil",
     "show_profile": "Pokaż profil",
     "edit_profile": "Edytuj profil",
+    "settings": "Settings",
     "collapse": "Zawalić się",
     "expand": "Rozszerzać",
     "home": "Strona główna",
@@ -71,21 +72,29 @@
     "new_toot": "Wpisy",
     "reload": "Przeładować"
   },
-  "preferences": {
-    "title": "Preferencje",
+  "settings": {
+    "title": "Settings",
     "general": {
       "title": "Ogólne",
       "toot": {
         "title": "Wpisy",
-        "description": "Customize default visibility of toot.",
         "visibility": {
-          "title": "Domyślna widoczność",
+          "description": "Customize default visibility of toot.",
           "public": "Publiczne",
           "unlisted": "Niewidoczne",
           "private": "Prywatne",
           "direct": "Bezpośrednie"
+        },
+        "sensitive": {
+          "description": "Mark medias as sensitive by default"
         }
-      },
+      }
+    }
+  },
+  "preferences": {
+    "title": "Preferencje",
+    "general": {
+      "title": "Ogólne",
       "sounds": {
         "title": "Dźwięki",
         "description": "Please set feedback sounds.",

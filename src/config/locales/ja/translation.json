@@ -42,6 +42,7 @@
     "profile": "プロフィール",
     "show_profile": "プロフィール確認",
     "edit_profile": "プロフィール編集",
+    "settings": "設定",
     "collapse": "縮小",
     "expand": "拡大",
     "home": "ホーム",
@@ -71,21 +72,28 @@
     "new_toot": "トゥート",
     "reload": "再読み込み"
   },
-  "preferences": {
+  "settings": {
     "title": "設定",
     "general": {
-      "title": "一般",
       "toot": {
         "title": "トゥート",
-        "description": "トゥートの公開設定を変更できます",
         "visibility": {
-          "title": "公開設定",
+          "description": "トゥートの公開設定を変更する",
           "public": "公開",
           "unlisted": "未収載",
           "private": "フォロワー限定",
           "direct": "ダイレクト"
+        },
+        "sensitive": {
+          "description": "メディアを常に閲覧注意として投稿する"
         }
-      },
+      }
+    }
+  },
+  "preferences": {
+    "title": "設定",
+    "general": {
+      "title": "一般",
       "sounds": {
         "title": "効果音",
         "description": "操作時の効果音を設定",

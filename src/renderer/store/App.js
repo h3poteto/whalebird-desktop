@@ -1,7 +1,6 @@
 import { ipcRenderer } from 'electron'
 import router from '../router'
 import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme } from '../utils/theme'
-import Visibility from '~/src/constants/visibility'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -14,7 +13,6 @@ const App = {
     theme: LightTheme,
     fontSize: 14,
     displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-    tootVisibility: Visibility.Public.value,
     notify: {
       reply: true,
       reblog: true,
@@ -34,9 +32,6 @@ const App = {
     },
     updateDisplayNameStyle (state, value) {
       state.displayNameStyle = value
-    },
-    updateTootVisibility (state, value) {
-      state.tootVisibility = value
     },
     updateNotify (state, notify) {
       state.notify = notify
@@ -73,7 +68,6 @@ const App = {
           dispatch('updateTheme', conf.appearance)
           commit('updateDisplayNameStyle', conf.appearance.displayNameStyle)
           commit('updateFontSize', conf.appearance.fontSize)
-          commit('updateTootVisibility', conf.general.tootVisibility)
           commit('updateNotify', conf.notification.notify)
           commit('updateTimeFormat', conf.appearance.timeFormat)
           commit('updateLanguage', conf.language.language)
