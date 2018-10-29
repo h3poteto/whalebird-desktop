@@ -239,12 +239,12 @@ export default {
       }
     },
     tootClick (e) {
-      if (isTag(e.target)) {
+      if (isTag(e.target, 'toot')) {
         const tag = `/${this.$route.params.id}/hashtag/${e.target.innerText}`
         this.$router.push({ path: tag })
         return tag
       }
-      const parsedAccount = findAccount(e.target)
+      const parsedAccount = findAccount(e.target, 'toot')
       if (parsedAccount !== null) {
         this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
         this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
@@ -261,7 +261,7 @@ export default {
           })
         return parsedAccount.acct
       }
-      const link = findLink(e.target)
+      const link = findLink(e.target, 'toot')
       if (link !== null) {
         return shell.openExternal(link)
       }
