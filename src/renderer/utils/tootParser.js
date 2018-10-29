@@ -1,19 +1,17 @@
-export function findLink (target) {
+export function findLink (target, parentClass = 'toot') {
   if (target.localName === 'a') {
     return target.href
   }
   if (target.parentNode === undefined || target.parentNode === null) {
     return null
   }
-  if ((target.parentNode.getAttribute('class') === 'toot') ||
-      (target.parentNode.getAttribute('class') === 'favourite') ||
-      (target.parentNode.getAttribute('class') === 'reblog')) {
+  if (target.parentNode.getAttribute('class') === parentClass) {
     return null
   }
-  return findLink(target.parentNode)
+  return findLink(target.parentNode, parentClass)
 }
 
-export function isTag (target) {
+export function isTag (target, parentClass = 'toot') {
   if (target.getAttribute('class') && target.getAttribute('class').includes('hashtag')) {
     return true
   }
@@ -25,15 +23,13 @@ export function isTag (target) {
   if (target.parentNode === undefined || target.parentNode === null) {
     return false
   }
-  if ((target.parentNode.getAttribute('class') === 'toot') ||
-      (target.parentNode.getAttribute('class') === 'favourite') ||
-      (target.parentNode.getAttribute('class') === 'reblog')) {
+  if (target.parentNode.getAttribute('class') === parentClass) {
     return false
   }
-  return isTag(target.parentNode)
+  return isTag(target.parentNode, parentClass)
 }
 
-export function findAccount (target) {
+export function findAccount (target, parentClass = 'toot') {
   if (target.getAttribute('class') && target.getAttribute('class').includes('u-url')) {
     return parseAccount(target.href)
   }
@@ -45,12 +41,10 @@ export function findAccount (target) {
   if (target.parentNode === undefined || target.parentNode === null) {
     return null
   }
-  if ((target.parentNode.getAttribute('class') === 'toot') ||
-      (target.parentNode.getAttribute('class') === 'favourite') ||
-      (target.parentNode.getAttribute('class') === 'reblog')) {
+  if (target.parentNode.getAttribute('class') === parentClass) {
     return null
   }
-  return findAccount(target.parentNode)
+  return findAccount(target.parentNode, parentClass)
 }
 
 export function parseAccount (accountURL) {
