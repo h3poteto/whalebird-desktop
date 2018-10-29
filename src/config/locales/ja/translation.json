@@ -77,13 +77,15 @@
     "general": {
       "toot": {
         "title": "トゥート",
-        "description": "トゥートの公開設定を変更できます",
         "visibility": {
-          "title": "公開設定",
+          "description": "トゥートの公開設定を変更する",
           "public": "公開",
           "unlisted": "未収載",
           "private": "フォロワー限定",
           "direct": "ダイレクト"
+        },
+        "sensitive": {
+          "description": "メディアを常に閲覧注意として投稿する"
         }
       }
     }
