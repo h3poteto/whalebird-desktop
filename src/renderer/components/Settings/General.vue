@@ -2,7 +2,7 @@
 <div id="general">
   <div class="toot section">
     <h3>{{ $t('settings.general.toot.title') }}</h3>
-    <p class="description">{{ $t('settings.general.toot.description') }}</p>
+    <p class="description">{{ $t('settings.general.toot.visibility.description') }}</p>
     <el-select v-model="tootVisibility" placeholder="visibility">
       <el-option
         v-for="v in visibilities"
@@ -11,6 +11,9 @@
         :value="v.value">
       </el-option>
     </el-select>
+    <p class="description">{{ $t('settings.general.toot.sensitive.description') }}</p>
+    <el-switch v-model="tootSensitive">
+    </el-switch>
   </div>
 </div>
 </template>
@@ -37,10 +40,18 @@ export default {
       set (value) {
         this.$store.dispatch('Settings/General/setVisibility', value)
       }
+    },
+    tootSensitive: {
+      get () {
+        return this.$store.state.Settings.General.sensitive
+      },
+      set (value) {
+        this.$store.dispatch('Settings/General/setSensitive', value)
+      }
     }
   },
   created () {
-    this.$store.dispatch('Settings/General/fetchVisibility')
+    this.$store.dispatch('Settings/General/fetchSettings')
   }
 }
 </script>
@@ -48,7 +59,7 @@ export default {
 <style lang="scss" scoped>
 #general {
   .description {
-    margin: 24px 0 20px;
+    margin: 32px 0 20px;
   }
 
   .section {
