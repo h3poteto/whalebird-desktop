@@ -21,7 +21,7 @@
   </transition-group>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
   </div>
-  <div class="upper" v-show="!heading">
+  <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
     <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle>
     </el-button>
   </div>
@@ -43,6 +43,7 @@ export default {
   },
   computed: {
     ...mapState({
+      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
       timeline: state => state.TimelineSpace.Contents.Home.timeline,
@@ -227,6 +228,14 @@ export default {
     position: fixed;
     bottom: 20px;
     right: 20px;
+    transition: all 0.5s;
+  }
+
+  .upper-with-side-bar {
+    position: fixed;
+    bottom: 20px;
+    right: -webkit-calc(20px + 320px);
+    transition: all 0.5s;
   }
 }
 </style>
