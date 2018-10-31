@@ -7,7 +7,7 @@
       </div>
       <div class="image-content">
         <span class="button-area"><el-button type="text" v-show="showLeft" v-shortkey="['arrowleft']" @shortkey.native="decrementIndex()"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
-        <Media :src="imageURL"></Media>
+        <Media :src="imageURL" :type="imageType"></Media>
         <span class="button-area"><el-button type="text" v-show="showRight" v-shortkey="['arrowright']" @shortkey.native="incrementIndex()"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
       </div>
     </div>
@@ -30,6 +30,9 @@ export default {
     }),
     imageURL () {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
+    },
+    imageType () {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageType']
     },
     showLeft () {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/showLeft']
