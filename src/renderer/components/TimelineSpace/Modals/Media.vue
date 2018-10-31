@@ -1,5 +1,6 @@
 <template>
   <video :src="src" v-if="isMovieFile()" controls></video>
+  <video :src="src" v-else-if="isGIF()" autoplay loop></video>
   <img :src="src" v-else>
 </template>
 
@@ -9,14 +10,18 @@ export default {
     src: {
       type: String,
       default: ''
+    },
+    type: {
+      type: String,
+      default: ''
     }
   },
   methods: {
-    file_ext () {
-      return this.src.split('.').pop().toLowerCase()
-    },
     isMovieFile () {
-      return ['mp4'].indexOf(this.file_ext()) >= 0
+      return ['video'].includes(this.type)
+    },
+    isGIF () {
+      return ['gifv'].includes(this.type)
     }
   }
 }
