@@ -109,7 +109,7 @@ const NewToot = {
       if (!state.replyToMessage && state.pinedHashtag) {
         commit('updateStatus', state.hashtags.map(t => ` #${t.name}`).join())
       }
-      commit('changeVisibilityValue', rootState.App.tootVisibility)
+      dispatch('fetchVisibility')
     },
     closeModal ({ commit }) {
       commit('changeModal', false)
@@ -155,6 +155,20 @@ const NewToot = {
       if (state.pinedHashtag) {
         commit('updateHashtags', tags)
       }
+    },
+    fetchVisibility ({ commit, rootState }) {
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return client.get('/accounts/verify_credentials')
+        .then(res => {
+          const visibility = Object.values(Visibility).find((v) => {
+            return v.key === res.data.source.privacy
+          })
+          commit('changeVisibilityValue', visibility.value)
+          return res.data
+        })
     }
   }
 }

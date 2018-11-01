@@ -3,7 +3,7 @@
     <el-menu
       v-if="!hide"
       :default-active="activeRoute()"
-      class="el-menu-vertical account-menu"
+       class="el-menu-vertical account-menu"
       :collapse="true"
       :router="true"
       :background-color="themeColor"
@@ -74,6 +74,7 @@ export default {
     left: 0;
     width: 65px;
     padding-top: 24px;
+    border: 0;
 
     .el-tooltip {
       outline: 0;

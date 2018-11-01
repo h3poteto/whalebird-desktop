@@ -74,7 +74,7 @@
       <dt>
         {{ data.name }}
       </dt>
-      <dd v-html="data.value">
+      <dd v-html="data.value" @click.capture.prevent="metadataClick">
       </dd>
     </dl>
   </div>
@@ -109,6 +109,7 @@
 <script>
 import { mapState } from 'vuex'
 import { shell } from 'electron'
+import { findLink } from '~/src/renderer/utils/tootParser'
 import Timeline from './AccountProfile/Timeline'
 import Follows from './AccountProfile/Follows'
 import Followers from './AccountProfile/Followers'
@@ -161,7 +162,7 @@ export default {
       }
     },
     noteClick (e) {
-      const link = findLink(e.target)
+      const link = findLink(e.target, 'note')
       if (link !== null) {
         shell.openExternal(link)
       }
@@ -220,21 +221,14 @@ export default {
     unblock (account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unblock', account)
       this.$refs.popper.doClose()
+    },
+    metadataClick (e) {
+      const link = findLink(e.target, 'metadata')
+      if (link !== null) {
+        return shell.openExternal(link)
+      }
     }
   }
-}
-
-function findLink (target) {
-  if (target.localName === 'a') {
-    return target.href
-  }
-  if (target.parentNode === undefined || target.parentNode === null) {
-    return null
-  }
-  if (target.parentNode.getAttribute('class') === 'note') {
-    return null
-  }
-  return findLink(target.parentNode)
 }
 </script>
 
