@@ -96,6 +96,9 @@ export default {
         case 'lists':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.lists'))
           break
+        case 'direct-messages':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Direct Messages')
+          break
         case 'edit-list':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.members'))
           break
@@ -120,6 +123,7 @@ export default {
         case 'public':
         case 'tag':
         case 'list':
+        case 'direct-messages':
           this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
           break
         default:
@@ -135,6 +139,7 @@ export default {
         case 'public':
         case 'tag':
         case 'list':
+        case 'direct-messages':
           return true
         default:
           return false
@@ -163,6 +168,9 @@ export default {
         case 'list':
           this.filter = this.$store.state.TimelineSpace.Contents.Lists.Show.filter
           break
+        case 'direct-messages':
+          this.filter = this.$store.state.TimelineSpace.Contents.DirectMessages.filter
+          break
         default:
           console.log('Not implemented')
       }
@@ -190,6 +198,9 @@ export default {
         case 'list':
           this.$store.commit('TimelineSpace/Contents/Lists/Show/changeFilter', filter)
           break
+        case 'direct-messages':
+          this.$store.commit('TimelineSpace/Contents/DirectMessages/changeFilter', filter)
+          break
         default:
           console.log('Not implemented')
       }
@@ -204,6 +215,7 @@ export default {
         case 'public':
         case 'tag':
         case 'list':
+        case 'direct-messages':
           return true
         default:
           return false
