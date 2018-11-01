@@ -52,8 +52,10 @@
           <el-button v-show="sensitive(message) && isShowAttachments(message)" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
             <icon name="eye" class="hide"></icon>
           </el-button>
-          <div class="media" v-for="media in mediaAttachments(message)">
-            <img :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))" alt="Attached media" />
+          <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message)">
+            <img :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))"/>
+            <span class="media-label" v-if="media.type == 'gifv'">GIF</span>
+            <span class="media-label" v-else-if="media.type == 'video'">VIDEO</span>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -355,7 +357,7 @@ export default {
         'TimelineSpace/Modals/ImageViewer/openModal',
         {
           currentIndex: currentIndex,
-          mediaList: mediaList
+          mediaList: rawMediaList
         })
     },
     openUser (account) {
@@ -563,6 +565,16 @@ export default {
           max-width: 200px;
           max-height: 200px;
           border-radius: 8px;
+        }
+
+        .media-label {
+          position: absolute;
+          bottom: 8px;
+          left: 8px;
+          color: #fff;
+          background: rgba(0, 0, 0, 0.5);
+          font-size: 0.8rem;
+          border-radius: 2px;
         }
       }
     }
