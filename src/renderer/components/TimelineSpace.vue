@@ -82,6 +82,7 @@ export default {
       await this.$store.dispatch('TimelineSpace/clearAccount')
       await this.$store.commit('TimelineSpace/Contents/Home/clearTimeline')
       await this.$store.commit('TimelineSpace/Contents/Local/clearTimeline')
+      await this.$store.commit('TimelineSpace/Contents/DirectMessages/clearTimeline')
       await this.$store.commit('TimelineSpace/Contents/Notifications/clearNotifications')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
       await this.$store.dispatch('TimelineSpace/clearUnread')
@@ -115,6 +116,7 @@ export default {
       }
       try {
         await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
+        await this.$store.dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', account)
       } catch (err) {
         this.$message({
           message: this.$t('message.timeline_fetch_error'),

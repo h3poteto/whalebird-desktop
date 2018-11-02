@@ -207,7 +207,7 @@ export default {
     right: 24px;
     top: 48px;
     background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
+    color: #fff;
     padding: 4px 8px;
     border-radius: 0 0 2px 2px;
 
