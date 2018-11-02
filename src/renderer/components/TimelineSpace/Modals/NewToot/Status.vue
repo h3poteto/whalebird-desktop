@@ -34,14 +34,17 @@
       </li>
     </ul>
   </el-popover>
-  <el-button type="text" class="emoji-selector" @click="toggleEmojiPicker" v-click-outside="hideEmojiPicker">
-    <icon name="regular/smile" scale="1.2"></icon>
-  </el-button>
-  <div v-show="openEmojiPicker" class="emoji-picker">
-    <picker
-      set="emojione"
-      :autoFocus="true"
-      />
+  <div  v-click-outside="hideEmojiPicker">
+    <el-button type="text" class="emoji-selector" @click="toggleEmojiPicker">
+      <icon name="regular/smile" scale="1.2"></icon>
+    </el-button>
+    <div v-show="openEmojiPicker" class="emoji-picker">
+      <picker
+        set="emojione"
+        :autoFocus="true"
+        @select="selectEmoji"
+        />
+    </div>
   </div>
 </div>
 </template>
@@ -284,6 +287,11 @@ export default {
     },
     hideEmojiPicker () {
       this.openEmojiPicker = false
+    },
+    selectEmoji (emoji) {
+      const current = this.$refs.status.selectionStart
+      this.status = `${this.status.slice(0, current)}${emoji.native} ${this.status.slice(current)}`
+      this.hideEmojiPicker()
     }
   }
 }
