@@ -34,16 +34,33 @@
       </li>
     </ul>
   </el-popover>
+  <el-button type="text" class="emoji-selector" @click="toggleEmojiPicker" v-click-outside="hideEmojiPicker">
+    <icon name="regular/smile" scale="1.2"></icon>
+  </el-button>
+  <div v-show="openEmojiPicker" class="emoji-picker">
+    <picker
+      set="emojione"
+      :autoFocus="true"
+      />
+  </div>
 </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import emojilib from 'emojilib'
+import { Picker } from 'emoji-mart-vue'
+import ClickOutside from 'vue-click-outside'
 import suggestText from '../../../../utils/suggestText'
 
 export default {
   name: 'status',
+  directives: {
+    ClickOutside
+  },
+  components: {
+    Picker
+  },
   props: {
     value: {
       type: String
@@ -63,7 +80,8 @@ export default {
       highlightedIndex: 0,
       startIndex: null,
       matchWord: null,
-      filteredSuggestion: []
+      filteredSuggestion: [],
+      openEmojiPicker: false
     }
   },
   computed: {
@@ -102,6 +120,7 @@ export default {
         })
       } else if (oldState && !newState) {
         this.closeSuggest()
+        this.openEmojiPicker = false
       }
     }
   },
@@ -259,6 +278,12 @@ export default {
         default:
           return true
       }
+    },
+    toggleEmojiPicker () {
+      this.openEmojiPicker = !this.openEmojiPicker
+    },
+    hideEmojiPicker () {
+      this.openEmojiPicker = false
     }
   }
 }
@@ -266,9 +291,11 @@ export default {
 
 <style lang="scss" scoped>
 .status {
+  position: relative;
+
   textarea {
     display: block;
-    padding: 5px 15px;
+    padding: 4px 32px 4px 16px;
     line-height: 1.5;
     box-sizing: border-box;
     width: 100%;
@@ -320,6 +347,19 @@ export default {
     .highlighted {
       background-color: #f5f7fa;
     }
+  }
+
+  .emoji-selector {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    padding: 0;
+  }
+
+  .emoji-picker {
+    position: absolute;
+    top: 32px;
+    left: 240px;
   }
 }
 </style>
