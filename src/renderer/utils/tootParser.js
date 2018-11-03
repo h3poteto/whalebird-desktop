@@ -11,22 +11,27 @@ export function findLink (target, parentClass = 'toot') {
   return findLink(target.parentNode, parentClass)
 }
 
-export function isTag (target, parentClass = 'toot') {
+export function findTag (target, parentClass = 'toot') {
   if (target.getAttribute('class') && target.getAttribute('class').includes('hashtag')) {
-    return true
+    return parseTag(target.href)
   }
   // In Pleroma, link does not have class.
   // So I have to check URL.
   if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/(tag|tags)\/.+/)) {
-    return true
+    return parseTag(target.href)
   }
   if (target.parentNode === undefined || target.parentNode === null) {
-    return false
+    return null
   }
   if (target.parentNode.getAttribute('class') === parentClass) {
-    return false
+    return null
   }
-  return isTag(target.parentNode, parentClass)
+  return findTag(target.parentNode, parentClass)
+}
+
+export function parseTag (tagURL) {
+  const res = tagURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(tag|tags)\/(.+)/)
+  return res[3]
 }
 
 export function findAccount (target, parentClass = 'toot') {
