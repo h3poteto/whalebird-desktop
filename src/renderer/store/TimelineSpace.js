@@ -135,6 +135,23 @@ const TimelineSpace = {
         })
       })
     },
+    bindDirectMessagesStreaming ({ commit, rootState }) {
+      ipcRenderer.on('update-start-directmessages-streaming', (event, update) => {
+        commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
+        if (rootState.TimelineSpace.Contents.DirectMessages.heading && Math.random() > 0.8) {
+          commit('TimelineSpace/Contents/DirectMessages/archiveTimeline', {}, { root: true })
+        }
+        commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', true, { root: true })
+      })
+    },
+    startDirectMessagesStreaming (_, account) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('start-directmessages-streaming', account)
+        ipcRenderer.once('error-start-directmessages-streaming', (event, err) => {
+          reject(err)
+        })
+      })
+    },
     unbindUserStreaming () {
       ipcRenderer.removeAllListeners('update-start-user-streaming')
       ipcRenderer.removeAllListeners('notification-start-user-streaming')
@@ -149,6 +166,13 @@ const TimelineSpace = {
     },
     stopLocalStreaming () {
       ipcRenderer.send('stop-local-streaming')
+    },
+    unbindDirectMessagesStreaming () {
+      ipcRenderer.removeAllListeners('error-start-directmessages-streaming')
+      ipcRenderer.removeAllListeners('update-start-directmessages-streaming')
+    },
+    stopDirectMessagesStreaming () {
+      ipcRenderer.send('stop-drectmessages-streaming')
     },
     watchShortcutEvents ({ commit, dispatch }) {
       ipcRenderer.on('CmdOrCtrl+N', () => {
