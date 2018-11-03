@@ -116,6 +116,11 @@ export default new Router({
               component: require('@/components/TimelineSpace/Contents/Search').default
             },
             {
+              path: 'direct-messages',
+              name: 'direct-messages',
+              component: require('@/components/TimelineSpace/Contents/DirectMessages').default
+            },
+            {
               path: 'lists',
               name: 'lists',
               component: require('@/components/TimelineSpace/Contents/Lists/Index').default
