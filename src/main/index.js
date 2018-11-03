@@ -421,40 +421,40 @@ ipcMain.on('stop-user-streaming', (event, _) => {
   }
 })
 
-let directMessageStreaming = null
+let directMessagesStreaming = null
 
-ipcMain.on('start-directmessage-streaming', (event, ac) => {
+ipcMain.on('start-directmessages-streaming', (event, ac) => {
   accountManager.getAccount(ac._id)
     .catch((err) => {
       log.error(err)
-      event.sender.send('error-start-directmessage-streaming', err)
+      event.sender.send('error-start-directmessages-streaming', err)
     })
     .then((account) => {
-      // Stop old directmessage streaming
-      if (directMessageStreaming !== null) {
-        directMessageStreaming.stop()
-        directMessageStreaming = null
+      // Stop old directmessages streaming
+      if (directMessagesStreaming !== null) {
+        directMessagesStreaming.stop()
+        directMessagesStreaming = null
       }
 
-      directMessageStreaming = new StreamingManager(account)
-      directMessageStreaming.start(
+      directMessagesStreaming = new StreamingManager(account)
+      directMessagesStreaming.start(
         'direct',
         null,
         (update) => {
-          event.sender.send('update-start-directmessage-streaming', update)
+          event.sender.send('update-start-directmessages-streaming', update)
         },
         (err) => {
           log.error(err)
-          event.sender.send('error-start-directmessage-streaming', err)
+          event.sender.send('error-start-directmessages-streaming', err)
         }
       )
     })
 })
 
-ipcMain.on('stop-directmessage-streaming', (event, _) => {
-  if (directMessageStreaming !== null) {
-    directMessageStreaming.stop()
-    directMessageStreaming = null
+ipcMain.on('stop-directmessages-streaming', (event, _) => {
+  if (directMessagesStreaming !== null) {
+    directMessagesStreaming.stop()
+    directMessagesStreaming = null
   }
 })
 
