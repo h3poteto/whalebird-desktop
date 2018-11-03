@@ -8,6 +8,7 @@ import Search from './Contents/Search'
 import Lists from './Contents/Lists'
 import Cards from './Contents/Cards'
 import Hashtag from './Contents/Hashtag'
+import DirectMessages from './Contents/DirectMessages'
 
 const Contents = {
   namespaced: true,
@@ -17,6 +18,7 @@ const Contents = {
     Notifications,
     Favourites,
     Local,
+    DirectMessages,
     Public,
     Search,
     Lists,

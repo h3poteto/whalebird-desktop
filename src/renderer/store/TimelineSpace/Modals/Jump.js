@@ -34,6 +34,10 @@ const Jump = {
       {
         name: i18n.t('side_menu.search'),
         path: 'search'
+      },
+      {
+        name: i18n.t('side_menu.direct'),
+        path: 'direct-messages'
       }
     ],
     listChannelList: [],
