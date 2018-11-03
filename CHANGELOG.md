@@ -1,6 +1,20 @@
 # Change Log
 
-## [2.4.3]
+## [2.4.4] - 2018-11-01
+### Added
+- [#682](https://github.com/h3poteto/whalebird-desktop/pull/682) Add sensitive settings and sync to each instance
+
+### Changed
+- [#678](https://github.com/h3poteto/whalebird-desktop/pull/678) Move visibility settings to sync instance settings
+
+### Fixed
+- [#684](https://github.com/h3poteto/whalebird-desktop/pull/684) Open the links in meta fields in the default browser
+- [#683](https://github.com/h3poteto/whalebird-desktop/pull/683) Remove duplicated emojis when suggest
+- [#679](https://github.com/h3poteto/whalebird-desktop/pull/679) Remove unnecesary state to fix preference's menu
+
+
+
+## [2.4.3] - 2018-10-26
 ### Added
 - [#675](https://github.com/h3poteto/whalebird-desktop/pull/675) Add option to hide/show global hea
 - [#661](https://github.com/h3poteto/whalebird-desktop/pull/661) Show follow/unfollow button in follow/followers tab in profile
