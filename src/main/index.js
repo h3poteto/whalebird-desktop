@@ -421,6 +421,43 @@ ipcMain.on('stop-user-streaming', (event, _) => {
   }
 })
 
+let directMessageStreaming = null
+
+ipcMain.on('start-directmessage-streaming', (event, ac) => {
+  accountManager.getAccount(ac._id)
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-directmessage-streaming', err)
+    })
+    .then((account) => {
+      // Stop old directmessage streaming
+      if (directMessageStreaming !== null) {
+        directMessageStreaming.stop()
+        directMessageStreaming = null
+      }
+
+      directMessageStreaming = new StreamingManager(account)
+      directMessageStreaming.start(
+        'direct',
+        null,
+        (update) => {
+          event.sender.send('update-start-directmessage-streaming', update)
+        },
+        (err) => {
+          log.error(err)
+          event.sender.send('error-start-directmessage-streaming', err)
+        }
+      )
+    })
+})
+
+ipcMain.on('stop-directmessage-streaming', (event, _) => {
+  if (directMessageStreaming !== null) {
+    directMessageStreaming.stop()
+    directMessageStreaming = null
+  }
+})
+
 let localStreaming = null
 
 ipcMain.on('start-local-streaming', (event, ac) => {
