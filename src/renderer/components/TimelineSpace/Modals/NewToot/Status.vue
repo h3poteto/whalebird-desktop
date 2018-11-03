@@ -42,6 +42,7 @@
       <picker
         set="emojione"
         :autoFocus="true"
+        :custom="pickerEmojis"
         @select="selectEmoji"
         />
     </div>
@@ -50,7 +51,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import emojilib from 'emojilib'
 import { Picker } from 'emoji-mart-vue'
 import ClickOutside from 'vue-click-outside'
@@ -95,6 +96,9 @@ export default {
       filteredAccounts: state => state.filteredAccounts,
       filteredHashtags: state => state.filteredHashtags
     }),
+    ...mapGetters('TimelineSpace/Modals/NewToot/Status', [
+      'pickerEmojis'
+    ]),
     status: {
       get: function () {
         return this.value
@@ -211,7 +215,7 @@ export default {
         this.startIndex = start
         this.matchWord = word
         this.filteredSuggestion = filtered.filter((e, i, array) => {
-          return (array.findIndex(ar => e.code === ar.code) === i)
+          return (array.findIndex(ar => e.name === ar.name) === i)
         })
       } else {
         this.openSuggest = false
@@ -290,7 +294,12 @@ export default {
     },
     selectEmoji (emoji) {
       const current = this.$refs.status.selectionStart
-      this.status = `${this.status.slice(0, current)}${emoji.native} ${this.status.slice(current)}`
+      if (emoji.native) {
+        this.status = `${this.status.slice(0, current)}${emoji.native} ${this.status.slice(current)}`
+      } else {
+        // Custom emoji don't have natvie code
+        this.status = `${this.status.slice(0, current)}${emoji.name} ${this.status.slice(current)}`
+      }
       this.hideEmojiPicker()
     }
   }
