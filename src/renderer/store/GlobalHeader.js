@@ -50,12 +50,16 @@ const GlobalHeader = {
         })
       })
     },
-    watchShortcutEvents ({ state, commit, rootState }) {
+    watchShortcutEvents ({ state, commit, rootState, rootGetters }) {
       ipcRenderer.on('change-account', (event, account) => {
         if (state.changing) {
           return null
         }
         if (rootState.route.params.id === account._id) {
+          return null
+        }
+        // When the modal window is active, don't change account
+        if (rootGetters['TimelineSpace/Modals/modalOpened']) {
           return null
         }
         // changing finish after loading
