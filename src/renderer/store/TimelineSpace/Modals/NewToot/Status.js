@@ -51,6 +51,22 @@ const Status = {
       if (res.data.hashtags.length === 0) throw new Error('Empty')
       return res.data.hashtags
     }
+  },
+  getters: {
+    pickerEmojis: (state, getters, rootState) => {
+      return rootState.TimelineSpace.emojis.filter((e, i, array) => {
+        return (array.findIndex(ar => e.name === ar.name) === i)
+      }).map(e => {
+        return {
+          name: e.name,
+          short_names: [e.name],
+          text: e.name,
+          emoticons: [],
+          keywords: [e.name],
+          imageUrl: e.image
+        }
+      })
+    }
   }
 }
 
