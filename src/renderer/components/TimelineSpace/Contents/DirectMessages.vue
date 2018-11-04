@@ -1,23 +1,23 @@
 <template>
-<div id="home" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
+<div id="directmessages" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="home-timeline" v-for="message in timeline" :key="message.uri + message.id">
-      <toot
-        :message="message"
-        :filter="filter"
-        :focused="message.uri + message.id === focusedId"
-        :overlaid="modalOpened"
-        v-on:update="updateToot"
-        v-on:delete="deleteToot"
-        @focusNext="focusNext"
-        @focusPrev="focusPrev"
-        @selectToot="focusToot(message)"
-        >
-      </toot>
-    </div>
+    <toot
+      :message="message"
+      :filter="filter"
+      :focused="message.uri + message.id === focusedId"
+      :overlaid="modalOpened"
+      v-on:update="updateToot"
+      v-on:delete="deleteToot"
+      @focusNext="focusNext"
+      @focusPrev="focusPrev"
+      @selectToot="focusToot(message)"
+      v-for="message in timeline"
+      :key="message.uri + message.id"
+      >
+    </toot>
   </transition-group>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
   </div>
@@ -35,7 +35,7 @@ import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 
 export default {
-  name: 'home',
+  name: 'directmessages',
   components: { Toot },
   mixins: [reloadable],
   data () {
@@ -48,11 +48,11 @@ export default {
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      timeline: state => state.TimelineSpace.Contents.Home.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Home.heading,
-      unread: state => state.TimelineSpace.Contents.Home.unreadTimeline,
-      filter: state => state.TimelineSpace.Contents.Home.filter
+      timeline: state => state.TimelineSpace.Contents.DirectMessages.timeline,
+      lazyLoading: state => state.TimelineSpace.Contents.DirectMessages.lazyLoading,
+      heading: state => state.TimelineSpace.Contents.DirectMessages.heading,
+      unread: state => state.TimelineSpace.Contents.DirectMessages.unreadTimeline,
+      filter: state => state.TimelineSpace.Contents.DirectMessages.filter
     }),
     ...mapGetters('TimelineSpace/Modals', [
       'modalOpened'
@@ -70,18 +70,18 @@ export default {
     }
   },
   mounted () {
-    this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', false)
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
   },
   beforeUpdate () {
-    if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline && this.heading) {
-      this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
+    if (this.$store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline && this.heading) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', false)
     }
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
-    this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
-    this.$store.commit('TimelineSpace/Contents/Home/archiveTimeline')
+    this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/DirectMessages/mergeTimeline')
+    this.$store.commit('TimelineSpace/Contents/DirectMessages/archiveTimeline')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
@@ -98,18 +98,18 @@ export default {
     },
     focusedId: function (newState, oldState) {
       if (newState && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', false)
       } else if (newState === null && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/mergeTimeline')
       }
     }
   },
   methods: {
     onScroll (event) {
       // for lazyLoading
-      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('home').clientHeight - 10) && !this.lazyloading) {
-        this.$store.dispatch('TimelineSpace/Contents/Home/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
+      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('directmessages').clientHeight - 10) && !this.lazyloading) {
+        this.$store.dispatch('TimelineSpace/Contents/DirectMessages/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
           .catch(() => {
             this.$message({
               message: this.$t('message.timeline_fetch_error'),
@@ -119,17 +119,17 @@ export default {
       }
       // for unread control
       if ((event.target.scrollTop > 10) && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', false)
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/mergeTimeline')
       }
     },
     updateToot (message) {
-      this.$store.commit('TimelineSpace/Contents/Home/updateToot', message)
+      this.$store.commit('TimelineSpace/Contents/DirectMessages/updateToot', message)
     },
     deleteToot (message) {
-      this.$store.commit('TimelineSpace/Contents/Home/deleteToot', message)
+      this.$store.commit('TimelineSpace/Contents/DirectMessages/deleteToot', message)
     },
     async reload () {
       this.$store.commit('TimelineSpace/changeLoading', true)
@@ -177,13 +177,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#home {
+#directmessages {
   .unread {
     position: fixed;
     right: 24px;
     top: 48px;
     background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
+    color: #fff;
     padding: 4px 8px;
     border-radius: 0 0 2px 2px;
 

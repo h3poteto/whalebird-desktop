@@ -74,6 +74,8 @@ export default {
     window.removeEventListener('drop', this.handleDrop)
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
     this.$store.dispatch('TimelineSpace/unbindUserStreaming')
+    this.$store.dispatch('TimelineSpace/stopDirectMessagesStreaming')
+    this.$store.dispatch('TimelineSpace/unbindDirectMessagesStreaming')
     this.$store.dispatch('TimelineSpace/stopLocalStreaming')
     this.$store.dispatch('TimelineSpace/unbindLocalStreaming')
   },
@@ -82,6 +84,7 @@ export default {
       await this.$store.dispatch('TimelineSpace/clearAccount')
       await this.$store.commit('TimelineSpace/Contents/Home/clearTimeline')
       await this.$store.commit('TimelineSpace/Contents/Local/clearTimeline')
+      await this.$store.commit('TimelineSpace/Contents/DirectMessages/clearTimeline')
       await this.$store.commit('TimelineSpace/Contents/Notifications/clearNotifications')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
       await this.$store.dispatch('TimelineSpace/clearUnread')
@@ -115,6 +118,7 @@ export default {
       }
       try {
         await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
+        await this.$store.dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', account)
       } catch (err) {
         this.$message({
           message: this.$t('message.timeline_fetch_error'),
@@ -132,6 +136,8 @@ export default {
         })
       this.$store.dispatch('TimelineSpace/bindLocalStreaming', account)
       this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+      this.$store.dispatch('TimelineSpace/bindDirectMessagesStreaming', account)
+      this.$store.dispatch('TimelineSpace/startDirectMessagesStreaming', account)
       this.$store.dispatch('TimelineSpace/fetchEmojis', account)
       this.$store.dispatch('TimelineSpace/fetchInstance', account)
     },

@@ -77,7 +77,7 @@
 import { mapState } from 'vuex'
 import moment from 'moment'
 import { shell } from 'electron'
-import { findAccount, findLink, isTag } from '~/src/renderer/utils/tootParser'
+import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import TimeFormat from '~/src/constants/timeFormat'
 
@@ -152,8 +152,9 @@ export default {
       }
     },
     tootClick (e) {
-      if (isTag(e.target, 'reblog')) {
-        const tag = `/${this.$route.params.id}/hashtag/${e.target.innerText}`
+      const parsedTag = findTag(e.target, 'reblog')
+      if (parsedTag !== null) {
+        const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
         this.$router.push({ path: tag })
         return tag
       }
