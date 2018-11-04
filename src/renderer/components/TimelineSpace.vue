@@ -74,6 +74,8 @@ export default {
     window.removeEventListener('drop', this.handleDrop)
     this.$store.dispatch('TimelineSpace/stopUserStreaming')
     this.$store.dispatch('TimelineSpace/unbindUserStreaming')
+    this.$store.dispatch('TimelineSpace/stopDirectMessagesStreaming')
+    this.$store.dispatch('TimelineSpace/unbindDirectMessagesStreaming')
     this.$store.dispatch('TimelineSpace/stopLocalStreaming')
     this.$store.dispatch('TimelineSpace/unbindLocalStreaming')
   },
@@ -134,6 +136,8 @@ export default {
         })
       this.$store.dispatch('TimelineSpace/bindLocalStreaming', account)
       this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+      this.$store.dispatch('TimelineSpace/bindDirectMessagesStreaming', account)
+      this.$store.dispatch('TimelineSpace/startDirectMessagesStreaming', account)
       this.$store.dispatch('TimelineSpace/fetchEmojis', account)
       this.$store.dispatch('TimelineSpace/fetchInstance', account)
     },
