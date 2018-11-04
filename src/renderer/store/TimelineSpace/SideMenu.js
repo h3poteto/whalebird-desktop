@@ -7,6 +7,7 @@ const SideMenu = {
     unreadHomeTimeline: false,
     unreadNotifications: false,
     unreadLocalTimeline: false,
+    unreadDirectMessagesTimeline: false,
     lists: [],
     tags: [],
     collapse: false
@@ -20,6 +21,9 @@ const SideMenu = {
     },
     changeUnreadLocalTimeline (state, value) {
       state.unreadLocalTimeline = value
+    },
+    changeUnreadDirectMessagesTimeline (state, value) {
+      state.unreadDirectMessagesTimeline = value
     },
     updateLists (state, lists) {
       state.lists = lists
@@ -48,6 +52,7 @@ const SideMenu = {
       commit('changeUnreadHomeTimeline', false)
       commit('changeUnreadNotifications', false)
       commit('changeUnreadLocalTimeline', false)
+      commit('changeUnreadDirectMessagesTimeline', false)
     },
     changeCollapse ({ commit }, value) {
       commit('changeCollapse', value)
