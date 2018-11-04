@@ -32,10 +32,12 @@
 import { mapState, mapGetters } from 'vuex'
 import Toot from './Cards/Toot'
 import scrollTop from '../../utils/scroll'
+import reloadable from '~/src/renderer/components/mixins/reloadable'
 
 export default {
   name: 'directmessages',
   components: { Toot },
+  mixins: [reloadable],
   data () {
     return {
       focusedId: null
@@ -132,33 +134,7 @@ export default {
     async reload () {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
-        const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch((err) => {
-          this.$message({
-            message: this.$t('message.account_load_error'),
-            type: 'error'
-          })
-          throw err
-        })
-        await this.$store.dispatch('TimelineSpace/stopUserStreaming')
-        await this.$store.dispatch('TimelineSpace/stopLocalStreaming')
-
-        await this.$store.dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', account)
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.timeline_fetch_error'),
-              type: 'error'
-            })
-          })
-        await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
-
-        this.$store.dispatch('TimelineSpace/startUserStreaming', account)
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.start_streaming_error'),
-              type: 'error'
-            })
-          })
-        this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
+        await this.reloadable()
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
