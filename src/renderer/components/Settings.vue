@@ -23,6 +23,10 @@
           <icon name="cog" class="icon" scale="1.3"></icon>
           <span>{{ $t('settings.general.title') }}</span>
         </el-menu-item>
+        <el-menu-item :index="`/${id()}/settings/timeline`">
+          <icon name="align-left" class="icon" scale="1.3"></icon>
+          <span>{{ $t('settings.timeline.title') }}</span>
+        </el-menu-item>
       </el-menu>
     </el-aside>
     <el-main>

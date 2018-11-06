@@ -60,6 +60,10 @@ export default new Router({
             {
               path: 'general',
               component: require('@/components/Settings/General').default
+            },
+            {
+              path: 'timeline',
+              component: require('@/components/Settings/Timeline').default
             }
           ]
         },
