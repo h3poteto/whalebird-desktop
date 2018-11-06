@@ -90,6 +90,18 @@
           "description": "Mark medias as sensitive by default"
         }
       }
+    },
+    "timeline": {
+      "title": "Timeline",
+      "unread_notification": {
+        "title": "Unread Notification",
+        "description": "Customize unread notifications for each timelines.",
+        "home": "Home Timeline",
+        "direct": "Direct Messages",
+        "favourite": "Favourite",
+        "local": "Local Timeline",
+        "public": "Public Timeline"
+      }
     }
   },
   "preferences": {
