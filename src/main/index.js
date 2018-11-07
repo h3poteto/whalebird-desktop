@@ -17,6 +17,7 @@ import StreamingManager from './streaming_manager'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
+import UnreadNotification from './unread_notification'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
 
@@ -69,6 +70,13 @@ let hashtagsDB = new Datastore({
   filename: hashtagsDBPath,
   autoload: true
 })
+
+const unreadNotificationDBPath = process.env.NODE_ENV === 'production'
+  ? userData + '/db/unread_notification.db'
+  : 'unread_notification.db'
+const unreadNotification = new UnreadNotification(unreadNotificationDBPath)
+unreadNotification.initialize()
+  .catch(err => log.error(err))
 
 const preferencesDBPath = process.env.NODE_ENV === 'production'
   ? userData + './db/preferences.json'
@@ -759,6 +767,31 @@ ipcMain.on('list-fonts', (event, _) => {
     })
     .catch(err => {
       event.sender.send('error-list-fonts', err)
+    })
+})
+
+// Unread notifications
+ipcMain.on('get-unread-notification', (event, accountID) => {
+  unreadNotification.findOne({
+    accountID: accountID
+  })
+    .then(doc => {
+      event.sender.send('response-get-unread-notification', doc)
+    })
+    .catch(err => {
+      event.sender.send('error-get-unread-notification', err)
+    })
+})
+
+ipcMain.on('update-unread-notification', (event, obj) => {
+  const { accountID } = obj
+  unreadNotification.insertOrUpdate(accountID, obj)
+    .then(_ => {
+      event.sender.send('response-update-unread-notification', true)
+    })
+    .catch(err => {
+      console.error(err)
+      event.sender.send('error-update-unread-notification', err)
     })
 })
 

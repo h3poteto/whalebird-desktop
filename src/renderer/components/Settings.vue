@@ -48,6 +48,7 @@ export default {
     })
   },
   created () {
+    this.$store.commit('Settings/changeAccountID', this.id())
     this.$router.push(`/${this.id()}/settings/general`)
   },
   methods: {

@@ -6,5 +6,13 @@ export default {
   modules: {
     General,
     Timeline
+  },
+  state: {
+    accountID: null
+  },
+  mutations: {
+    changeAccountID (state, id) {
+      state.accountID = id
+    }
   }
 }

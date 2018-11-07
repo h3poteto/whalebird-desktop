@@ -1,30 +1,52 @@
+import { ipcRenderer } from 'electron'
+
 export default {
   namespaced: true,
   state: {
     unread_notification: {
-      home: false,
+      home: true,
       direct: false,
       favourite: false,
-      local: false,
+      local: true,
       public: false
     }
   },
   mutations: {
-    changeHome (state, value) {
-      state.unread_notification.home = value
-    },
-    changeDirect (state, value) {
-      state.unread_notification.direct = value
-    },
-    changeFavourite (state, value) {
-      state.unread_notification.favourite = value
-    },
-    changeLocal (state, value) {
-      state.unread_notification.local = value
-    },
-    changePublic (state, value) {
-      state.unread_notification.public = value
+    updateUnreadNotification (state, settings) {
+      state.unread_notification = settings
     }
   },
-  actions: {}
+  actions: {
+    loadUnreadNotification ({ commit, rootState }) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.once('response-get-unread-notification', (event, settings) => {
+          ipcRenderer.removeAllListeners('error-get-unread-notification')
+          commit('updateUnreadNotification', settings)
+          resolve(settings)
+        })
+        ipcRenderer.once('error-get-unread-notification', (event, err) => {
+          ipcRenderer.removeAllListeners('response-get-unread-notification')
+          resolve(null)
+        })
+        ipcRenderer.send('get-unread-notification', rootState.Settings.accountID)
+      })
+    },
+    changeUnreadNotification ({ dispatch, state, rootState }, timeline) {
+      const settings = Object.assign({}, state.unread_notification, timeline, {
+        accountID: rootState.Settings.accountID
+      })
+      return new Promise((resolve, reject) => {
+        ipcRenderer.once('response-update-unread-notification', (event, _) => {
+          ipcRenderer.removeAllListeners('error-update-unread-notification')
+          dispatch('loadUnreadNotification')
+          resolve(settings)
+        })
+        ipcRenderer.once('error-update-unread-notification', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-unread-notification')
+          reject(err)
+        })
+        ipcRenderer.send('update-unread-notification', settings)
+      })
+    }
+  }
 }
