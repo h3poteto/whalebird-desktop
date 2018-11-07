@@ -72,20 +72,12 @@ export default {
     window.removeEventListener('dragleave', this.onDragLeave)
     window.removeEventListener('dragover', this.onDragOver)
     window.removeEventListener('drop', this.handleDrop)
-    this.$store.dispatch('TimelineSpace/stopUserStreaming')
-    this.$store.dispatch('TimelineSpace/unbindUserStreaming')
-    this.$store.dispatch('TimelineSpace/stopDirectMessagesStreaming')
-    this.$store.dispatch('TimelineSpace/unbindDirectMessagesStreaming')
-    this.$store.dispatch('TimelineSpace/stopLocalStreaming')
-    this.$store.dispatch('TimelineSpace/unbindLocalStreaming')
+    this.$store.dispatch('TimelineSpace/stopStreamings')
   },
   methods: {
     async clear () {
       await this.$store.dispatch('TimelineSpace/clearAccount')
-      await this.$store.commit('TimelineSpace/Contents/Home/clearTimeline')
-      await this.$store.commit('TimelineSpace/Contents/Local/clearTimeline')
-      await this.$store.commit('TimelineSpace/Contents/DirectMessages/clearTimeline')
-      await this.$store.commit('TimelineSpace/Contents/Notifications/clearNotifications')
+      this.$store.dispatch('TimelineSpace/clearContentsTimelines')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
       await this.$store.dispatch('TimelineSpace/clearUnread')
       return 'clear'
@@ -100,44 +92,23 @@ export default {
           type: 'error'
         })
       })
-      try {
-        await this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimeline', account)
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.timeline_fetch_error'),
-          type: 'error'
-        })
-      }
-      try {
-        await this.$store.dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', account)
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.notification_fetch_error'),
-          type: 'error'
-        })
-      }
-      try {
-        await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', account)
-        await this.$store.dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', account)
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.timeline_fetch_error'),
-          type: 'error'
-        })
-      }
       this.$store.dispatch('TimelineSpace/SideMenu/fetchLists', account)
-      this.$store.dispatch('TimelineSpace/bindUserStreaming', account)
-      this.$store.dispatch('TimelineSpace/startUserStreaming', account)
-        .catch(() => {
+      await this.$store.dispatch('TimelineSpace/loadUnreadNotification', this.$route.params.id)
+
+      // Load timelines
+      await this.$store.dispatch('TimelineSpace/fetchContentsTimelines', account)
+        .catch(_ => {
           this.$message({
-            message: this.$t('message.start_streaming_error'),
+            message: this.$t('message.timeline_fetch_error'),
             type: 'error'
           })
         })
-      this.$store.dispatch('TimelineSpace/bindLocalStreaming', account)
-      this.$store.dispatch('TimelineSpace/startLocalStreaming', account)
-      this.$store.dispatch('TimelineSpace/bindDirectMessagesStreaming', account)
-      this.$store.dispatch('TimelineSpace/startDirectMessagesStreaming', account)
+
+      // Bind streamings
+      await this.$store.dispatch('TimelineSpace/bindStreamings', account)
+      // Start streamings
+      this.$store.dispatch('TimelineSpace/startStreamings', account)
+
       this.$store.dispatch('TimelineSpace/fetchEmojis', account)
       this.$store.dispatch('TimelineSpace/fetchInstance', account)
     },

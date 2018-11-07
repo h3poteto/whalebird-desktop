@@ -7,14 +7,6 @@
       <tbody>
         <tr>
           <td class="title">
-            {{ $t('settings.timeline.unread_notification.home') }}
-          </td>
-          <td class="status">
-            <el-switch v-model="home" />
-          </td>
-        </tr>
-        <tr>
-          <td class="title">
             {{ $t('settings.timeline.unread_notification.direct') }}
           </td>
           <td class="status">
@@ -55,19 +47,9 @@
 export default {
   name: 'Timeline',
   computed: {
-    home: {
-      get () {
-        return this.$store.state.Settings.Timeline.unread_notification.home
-      },
-      set (value) {
-        this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
-          home: value
-        })
-      }
-    },
     direct: {
       get () {
-        return this.$store.state.Settings.Timeline.unread_notification.direct
+        return this.$store.state.Settings.Timeline.unreadNotification.direct
       },
       set (value) {
         this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
@@ -77,7 +59,7 @@ export default {
     },
     favourite: {
       get () {
-        return this.$store.state.Settings.Timeline.unread_notification.favourite
+        return this.$store.state.Settings.Timeline.unreadNotification.favourite
       },
       set (value) {
         this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
@@ -87,7 +69,7 @@ export default {
     },
     local: {
       get () {
-        return this.$store.state.Settings.Timeline.unread_notification.local
+        return this.$store.state.Settings.Timeline.unreadNotification.local
       },
       set (value) {
         this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
@@ -97,7 +79,7 @@ export default {
     },
     public: {
       get () {
-        return this.$store.state.Settings.Timeline.unread_notification.public
+        return this.$store.state.Settings.Timeline.unreadNotification.public
       },
       set (value) {
         this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {

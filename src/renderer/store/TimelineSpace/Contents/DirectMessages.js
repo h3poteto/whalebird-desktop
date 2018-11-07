@@ -71,7 +71,7 @@ const DirectMessages = {
     }
   },
   actions: {
-    fetchTimeline ({ state, commit, rootState }, account) {
+    fetchTimeline ({ state, commit, rootState }) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

@@ -44,15 +44,18 @@ export default {
     }
   },
   computed: {
+    ...mapState('TimelineSpace/Contents/Local', {
+      timeline: state => state.timeline,
+      lazyLoading: state => state.lazyLoading,
+      heading: state => state.heading,
+      unread: state => state.unreadTimeline,
+      filter: state => state.filter
+    }),
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      timeline: state => state.TimelineSpace.Contents.Local.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.Local.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Local.heading,
-      unread: state => state.TimelineSpace.Contents.Local.unreadTimeline,
-      filter: state => state.TimelineSpace.Contents.Local.filter
+      unreadNotification: state => state.TimelineSpace.unreadNotification
     }),
     ...mapGetters('TimelineSpace/Modals', [
       'modalOpened'
@@ -69,13 +72,27 @@ export default {
       return currentIndex === -1
     }
   },
-  mounted () {
+  async mounted () {
+    this.$store.commit('TimelineSpace/changeLoading', true)
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    if (!this.unreadNotification.local) {
+      await this.initialize()
+        .catch(_ => {
+          this.$store.commit('TimelineSpace/changeLoading', false)
+        })
+    }
+    this.$store.commit('TimelineSpace/changeLoading', false)
   },
   beforeUpdate () {
     if (this.$store.state.TimelineSpace.SideMenu.unreadLocalTimeline && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
+    }
+  },
+  beforeDestroy () {
+    if (!this.unreadNotification.local) {
+      this.$store.dispatch('TimelineSpace/stopLocalStreaming')
+      this.$store.dispatch('TimelineSpace/unbindLocalStreaming')
     }
   },
   destroyed () {
@@ -106,6 +123,17 @@ export default {
     }
   },
   methods: {
+    async initialize () {
+      await this.$store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline')
+        .catch(_ => {
+          this.$message({
+            message: this.$t('message.timeline_fetch_error'),
+            type: 'error'
+          })
+        })
+      await this.$store.dispatch('TimelineSpace/bindLocalStreaming')
+      this.$store.dispatch('TimelineSpace/startLocalStreaming')
+    },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/Local/updateToot', message)
     },
