@@ -171,13 +171,18 @@ const TimelineSpace = {
       if (state.unreadNotification.local) {
         await dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', {}, { root: true })
       }
-      // TODO: public, favourite
+      if (state.unreadNotification.public) {
+        await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
+      }
+      // TODO: favourite
     },
     clearContentsTimelines ({ commit }) {
       commit('TimelineSpace/Contents/Home/clearTimeline', {}, { root: true })
       commit('TimelineSpace/Contents/Local/clearTimeline', {}, { root: true })
       commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
       commit('TimelineSpace/Contents/Notifications/clearNotifications', {}, { root: true })
+      commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
+      // TODO: favourite
     },
     bindStreamings ({ dispatch, state }, account) {
       dispatch('bindUserStreaming', account)
@@ -187,7 +192,10 @@ const TimelineSpace = {
       if (state.unreadNotification.local) {
         dispatch('bindLocalStreaming')
       }
-      // TODO: public, favourite
+      if (state.unreadNotification.public) {
+        dispatch('bindPublicStreaming')
+      }
+      // TODO: favourite
     },
     startStreamings ({ dispatch, state }, account) {
       dispatch('startUserStreaming', account)
@@ -197,15 +205,20 @@ const TimelineSpace = {
       if (state.unreadNotification.local) {
         dispatch('startLocalStreaming')
       }
-      // TODO: public ,favourite
+      if (state.unreadNotification.public) {
+        dispatch('startPublicStreaming')
+      }
+      // TODO: favourite
     },
     stopStreamings ({ dispatch }, account) {
       dispatch('stopUserStreaming')
       dispatch('stopDirectMessagesStreaming')
       dispatch('stopLocalStreaming')
+      dispatch('stopPublicStreaming')
       dispatch('unbindUserStreaming')
       dispatch('unbindDirectMessagesStreaming')
       dispatch('unbindLocalStreaming')
+      dispatch('unbindPublicStreaming')
     },
     // ------------------------------------------------
     // Each streaming methods
@@ -258,6 +271,23 @@ const TimelineSpace = {
         })
       })
     },
+    bindPublicStreaming ({ commit, rootState }) {
+      ipcRenderer.on('update-start-public-streaming', (event, update) => {
+        commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })
+        if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
+          commit('TimelineSpace/Contents/Public/archiveTimeline')
+        }
+      })
+      commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
+    },
+    startPublicStreaming ({ state }) {
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('start-public-streaming', state.account)
+        ipcRenderer.once('error-start-public-streaming', (event, err) => {
+          reject(err)
+        })
+      })
+    },
     bindDirectMessagesStreaming ({ commit, rootState }) {
       ipcRenderer.on('update-start-directmessages-streaming', (event, update) => {
         commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
@@ -289,6 +319,13 @@ const TimelineSpace = {
     },
     stopLocalStreaming () {
       ipcRenderer.send('stop-local-streaming')
+    },
+    unbindPublicStreaming () {
+      ipcRenderer.removeAllListeners('error-start-public-streaming')
+      ipcRenderer.removeAllListeners('update-start-public-streaming')
+    },
+    stopPublicStreaming () {
+      ipcRenderer.send('stop-public-streaming')
     },
     unbindDirectMessagesStreaming () {
       ipcRenderer.removeAllListeners('error-start-directmessages-streaming')

@@ -78,7 +78,7 @@ export default {
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
     if (!this.unreadNotification.local) {
       await this.initialize()
-        .catch(_ => {
+        .finally(_ => {
           this.$store.commit('TimelineSpace/changeLoading', false)
         })
     }
