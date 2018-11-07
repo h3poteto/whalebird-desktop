@@ -60,7 +60,9 @@ export default {
         return this.$store.state.Settings.Timeline.unread_notification.home
       },
       set (value) {
-        this.$store.commit('Settings/Timeline/changeHome', value)
+        this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
+          home: value
+        })
       }
     },
     direct: {
@@ -68,7 +70,9 @@ export default {
         return this.$store.state.Settings.Timeline.unread_notification.direct
       },
       set (value) {
-        this.$store.commit('Settings/Timeline/changeDirect', value)
+        this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
+          direct: value
+        })
       }
     },
     favourite: {
@@ -76,7 +80,9 @@ export default {
         return this.$store.state.Settings.Timeline.unread_notification.favourite
       },
       set (value) {
-        this.$store.commit('Settings/Timeline/changeFavourite', value)
+        this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
+          favourite: value
+        })
       }
     },
     local: {
@@ -84,7 +90,9 @@ export default {
         return this.$store.state.Settings.Timeline.unread_notification.local
       },
       set (value) {
-        this.$store.commit('Settings/Timeline/changeLocal', value)
+        this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
+          local: value
+        })
       }
     },
     public: {
@@ -92,9 +100,14 @@ export default {
         return this.$store.state.Settings.Timeline.unread_notification.public
       },
       set (value) {
-        this.$store.commit('Settings/Timeline/changePublic', value)
+        this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
+          public: value
+        })
       }
     }
+  },
+  async created () {
+    await this.$store.dispatch('Settings/Timeline/loadUnreadNotification')
   }
 }
 </script>
