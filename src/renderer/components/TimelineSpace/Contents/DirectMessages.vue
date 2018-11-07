@@ -44,15 +44,18 @@ export default {
     }
   },
   computed: {
+    ...mapState('TimelineSpace/Contents/DirectMessages', {
+      timeline: state => state.timeline,
+      lazyLoading: state => state.lazyLoading,
+      heading: state => state.heading,
+      unread: state => state.unreadTimeline,
+      filter: state => state.filter
+    }),
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      timeline: state => state.TimelineSpace.Contents.DirectMessages.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.DirectMessages.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.DirectMessages.heading,
-      unread: state => state.TimelineSpace.Contents.DirectMessages.unreadTimeline,
-      filter: state => state.TimelineSpace.Contents.DirectMessages.filter
+      unreadNotification: state => state.TimelineSpace.unreadNotification
     }),
     ...mapGetters('TimelineSpace/Modals', [
       'modalOpened'
@@ -69,13 +72,27 @@ export default {
       return currentIndex === -1
     }
   },
-  mounted () {
+  async mounted () {
+    this.$store.commit('TimelineSpace/changeLoading', true)
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', false)
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    if (!this.unreadNotification.direct) {
+      await this.initialize()
+        .catch(_ => {
+          this.$store.commit('TimelineSpace/changeLoading', false)
+        })
+    }
+    this.$store.commit('TimelineSpace/changeLoading', false)
   },
   beforeUpdate () {
     if (this.$store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', false)
+    }
+  },
+  beforeDestroy () {
+    if (!this.unreadNotification.direct) {
+      this.$store.dispatch('TimelineSpace/stopDirectMessagesStreaming')
+      this.$store.dispatch('TimelineSpace/unbindDirectMessagesStreaming')
     }
   },
   destroyed () {
@@ -106,6 +123,17 @@ export default {
     }
   },
   methods: {
+    async initialize () {
+      await this.$store.dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline')
+        .catch(_ => {
+          this.$message({
+            message: this.$t('message.timeline_fetch_error'),
+            type: 'error'
+          })
+        })
+      await this.$store.dispatch('TimelineSpace/bindDirectMessagesStreaming')
+      this.$store.dispatch('TimelineSpace/startDirectMessagesStreaming')
+    },
     onScroll (event) {
       // for lazyLoading
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('directmessages').clientHeight - 10) && !this.lazyloading) {

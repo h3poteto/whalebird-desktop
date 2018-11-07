@@ -3,8 +3,7 @@ import { ipcRenderer } from 'electron'
 export default {
   namespaced: true,
   state: {
-    unread_notification: {
-      home: true,
+    unreadNotification: {
       direct: false,
       favourite: false,
       local: true,
@@ -13,7 +12,7 @@ export default {
   },
   mutations: {
     updateUnreadNotification (state, settings) {
-      state.unread_notification = settings
+      state.unreadNotification = settings
     }
   },
   actions: {
@@ -32,7 +31,7 @@ export default {
       })
     },
     changeUnreadNotification ({ dispatch, state, rootState }, timeline) {
-      const settings = Object.assign({}, state.unread_notification, timeline, {
+      const settings = Object.assign({}, state.unreadNotification, timeline, {
         accountID: rootState.Settings.accountID
       })
       return new Promise((resolve, reject) => {
