@@ -44,15 +44,18 @@ export default {
     }
   },
   computed: {
+    ...mapState('TimelineSpace/Contents/Public', {
+      timeline: state => state.timeline,
+      lazyLoading: state => state.lazyLoading,
+      heading: state => state.heading,
+      unread: state => state.unreadTimeline,
+      filter: state => state.filter
+    }),
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      timeline: state => state.TimelineSpace.Contents.Public.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.Public.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Public.heading,
-      unread: state => state.TimelineSpace.Contents.Public.unreadTimeline,
-      filter: state => state.TimelineSpace.Contents.Public.filter
+      unreadNotification: state => state.TimelineSpace.unreadNotification
     }),
     ...mapGetters('TimelineSpace/Modals', [
       'modalOpened'
@@ -69,16 +72,28 @@ export default {
       return currentIndex === -1
     }
   },
-  created () {
+  async mounted () {
     this.$store.commit('TimelineSpace/changeLoading', true)
-    this.initialize()
-      .finally(() => {
-        this.$store.commit('TimelineSpace/changeLoading', false)
-      })
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', false)
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    if (!this.unreadNotification.public) {
+      await this.initialize()
+        .finally(_ => {
+          this.$store.commit('TimelineSpace/changeLoading', false)
+        })
+    }
+    this.$store.commit('TimelineSpace/changeLoading', false)
+  },
+  beforeUpdate () {
+    if (this.$store.state.TimelineSpace.SideMenu.unreadPublicTimeline && this.heading) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', false)
+    }
   },
   beforeDestroy () {
-    this.$store.dispatch('TimelineSpace/Contents/Public/stopPublicStreaming')
+    if (!this.unreadNotification.public) {
+      this.$store.dispatch('TimelineSpace/stopPublicStreaming')
+      this.$store.dispatch('TimelineSpace/unbindPublicStreaming')
+    }
   },
   destroyed () {
     this.$store.commit('TimelineSpace/Contents/Public/changeHeading', true)
@@ -110,21 +125,15 @@ export default {
   },
   methods: {
     async initialize () {
-      try {
-        await this.$store.dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline')
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.timeline_fetch_error'),
-          type: 'error'
-        })
-      }
-      this.$store.dispatch('TimelineSpace/Contents/Public/startPublicStreaming')
-        .catch(() => {
+      await this.$store.dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline')
+        .catch(_ => {
           this.$message({
-            message: this.$t('message.start_streaming_error'),
+            message: this.$t('message.timeline_fetch_error'),
             type: 'error'
           })
         })
+      await this.$store.dispatch('TimelineSpace/bindPublicStreaming')
+      this.$store.dispatch('TimelineSpace/startPublicStreaming')
     },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/Public/updateToot', message)

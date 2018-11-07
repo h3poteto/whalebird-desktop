@@ -8,6 +8,7 @@ const SideMenu = {
     unreadNotifications: false,
     unreadLocalTimeline: false,
     unreadDirectMessagesTimeline: false,
+    unreadPublicTimeline: false,
     lists: [],
     tags: [],
     collapse: false
@@ -24,6 +25,9 @@ const SideMenu = {
     },
     changeUnreadDirectMessagesTimeline (state, value) {
       state.unreadDirectMessagesTimeline = value
+    },
+    changeUnreadPublicTimeline (state, value) {
+      state.unreadPublicTimeline = value
     },
     updateLists (state, lists) {
       state.lists = lists

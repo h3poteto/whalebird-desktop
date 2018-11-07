@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import Mastodon from 'megalodon'
 
 const Public = {
@@ -80,25 +79,6 @@ const Public = {
         .then(res => {
           commit('updateTimeline', res.data)
         })
-    },
-    startPublicStreaming ({ state, commit, rootState }) {
-      ipcRenderer.on('update-start-public-streaming', (event, update) => {
-        commit('appendTimeline', update)
-        if (state.heading && Math.random() > 0.8) {
-          commit('archiveTimeline')
-        }
-      })
-      return new Promise((resolve, reject) => {
-        ipcRenderer.send('start-public-streaming', rootState.TimelineSpace.account)
-        ipcRenderer.once('error-start-public-streaming', (event, err) => {
-          reject(err)
-        })
-      })
-    },
-    stopPublicStreaming ({ commit }) {
-      ipcRenderer.removeAllListeners('error-start-public-streaming')
-      ipcRenderer.removeAllListeners('update-start-public-streaming')
-      ipcRenderer.send('stop-public-streaming')
     },
     lazyFetchTimeline ({ state, commit, rootState }, last) {
       if (last === undefined || last === null) {
