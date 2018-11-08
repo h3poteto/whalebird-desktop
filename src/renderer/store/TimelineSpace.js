@@ -5,6 +5,7 @@ import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Modals from './TimelineSpace/Modals'
 import Contents from './TimelineSpace/Contents'
 import router from '../router'
+import unreadSettings from '~/src/constants/unreadNotification'
 
 const TimelineSpace = {
   namespaced: true,
@@ -24,9 +25,9 @@ const TimelineSpace = {
     emojis: [],
     tootMax: 500,
     unreadNotification: {
-      direct: false,
-      local: true,
-      public: false
+      direct: unreadSettings.Direct.default,
+      local: unreadSettings.Local.default,
+      public: unreadSettings.Public.default
     }
   },
   mutations: {
@@ -156,6 +157,11 @@ const TimelineSpace = {
         })
         ipcRenderer.once('error-get-unread-notification', (event, err) => {
           ipcRenderer.removeAllListeners('response-get-unread-notification')
+          commit('updateUnreadNotification', {
+            direct: unreadSettings.Direct.default,
+            local: unreadSettings.Local.default,
+            public: unreadSettings.Public.default
+          })
           resolve(null)
         })
         ipcRenderer.send('get-unread-notification', accountID)
@@ -270,7 +276,7 @@ const TimelineSpace = {
       ipcRenderer.on('update-start-public-streaming', (event, update) => {
         commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })
         if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
-          commit('TimelineSpace/Contents/Public/archiveTimeline')
+          commit('TimelineSpace/Contents/Public/archiveTimeline', {}, { root: true })
         }
       })
       commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })

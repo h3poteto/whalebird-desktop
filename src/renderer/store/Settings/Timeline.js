@@ -1,12 +1,13 @@
 import { ipcRenderer } from 'electron'
+import unreadSettings from '~/src/constants/unreadNotification'
 
 export default {
   namespaced: true,
   state: {
     unreadNotification: {
-      direct: false,
-      local: true,
-      public: false
+      direct: unreadSettings.Direct.default,
+      local: unreadSettings.Local.default,
+      public: unreadSettings.Public.default
     }
   },
   mutations: {
@@ -24,6 +25,11 @@ export default {
         })
         ipcRenderer.once('error-get-unread-notification', (event, err) => {
           ipcRenderer.removeAllListeners('response-get-unread-notification')
+          commit('updateUnreadNotification', {
+            direct: unreadSettings.Direct.default,
+            local: unreadSettings.Local.default,
+            public: unreadSettings.Public.default
+          })
           resolve(null)
         })
         ipcRenderer.send('get-unread-notification', rootState.Settings.accountID)

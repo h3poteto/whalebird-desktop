@@ -99,7 +99,9 @@ export default {
     this.$store.commit('TimelineSpace/Contents/Public/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Public/mergeTimeline')
     this.$store.commit('TimelineSpace/Contents/Public/archiveTimeline')
-    this.$store.commit('TimelineSpace/Contents/Public/clearTimeline')
+    if (!this.unreadNotification.public) {
+      this.$store.commit('TimelineSpace/Contents/Public/clearTimeline')
+    }
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
@@ -163,21 +165,6 @@ export default {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
         await this.reloadable()
-        await this.$store.dispatch('TimelineSpace/Contents/Public/stopPublicStreaming')
-        await this.$store.dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline')
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.timeline_fetch_error'),
-              type: 'error'
-            })
-          })
-        this.$store.dispatch('TimelineSpace/Contents/Public/startPublicStreaming')
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.start_streaming_error'),
-              type: 'error'
-            })
-          })
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }

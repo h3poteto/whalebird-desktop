@@ -99,6 +99,9 @@ export default {
     this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Local/mergeTimeline')
     this.$store.commit('TimelineSpace/Contents/Local/archiveTimeline')
+    if (!this.unreadNotification.local) {
+      this.$store.commit('TimelineSpace/Contents/Local/clearTimeline')
+    }
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
