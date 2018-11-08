@@ -15,14 +15,6 @@
         </tr>
         <tr>
           <td class="title">
-            {{ $t('settings.timeline.unread_notification.favourite') }}
-          </td>
-          <td class="status">
-            <el-switch v-model="favourite" />
-          </td>
-        </tr>
-        <tr>
-          <td class="title">
             {{ $t('settings.timeline.unread_notification.local') }}
           </td>
           <td class="status">
@@ -54,16 +46,6 @@ export default {
       set (value) {
         this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
           direct: value
-        })
-      }
-    },
-    favourite: {
-      get () {
-        return this.$store.state.Settings.Timeline.unreadNotification.favourite
-      },
-      set (value) {
-        this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
-          favourite: value
         })
       }
     },

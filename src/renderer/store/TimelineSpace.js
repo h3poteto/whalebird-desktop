@@ -25,7 +25,6 @@ const TimelineSpace = {
     tootMax: 500,
     unreadNotification: {
       direct: false,
-      favourite: false,
       local: true,
       public: false
     }
@@ -174,7 +173,6 @@ const TimelineSpace = {
       if (state.unreadNotification.public) {
         await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
       }
-      // TODO: favourite
     },
     clearContentsTimelines ({ commit }) {
       commit('TimelineSpace/Contents/Home/clearTimeline', {}, { root: true })
@@ -182,7 +180,6 @@ const TimelineSpace = {
       commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
       commit('TimelineSpace/Contents/Notifications/clearNotifications', {}, { root: true })
       commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
-      // TODO: favourite
     },
     bindStreamings ({ dispatch, state }, account) {
       dispatch('bindUserStreaming', account)
@@ -195,7 +192,6 @@ const TimelineSpace = {
       if (state.unreadNotification.public) {
         dispatch('bindPublicStreaming')
       }
-      // TODO: favourite
     },
     startStreamings ({ dispatch, state }, account) {
       dispatch('startUserStreaming', account)
@@ -208,7 +204,6 @@ const TimelineSpace = {
       if (state.unreadNotification.public) {
         dispatch('startPublicStreaming')
       }
-      // TODO: favourite
     },
     stopStreamings ({ dispatch }, account) {
       dispatch('stopUserStreaming')
