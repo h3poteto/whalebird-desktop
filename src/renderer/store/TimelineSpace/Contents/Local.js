@@ -70,10 +70,10 @@ const Local = {
     }
   },
   actions: {
-    fetchLocalTimeline ({ commit }, account) {
+    fetchLocalTimeline ({ commit, rootState }) {
       const client = new Mastodon(
-        account.accessToken,
-        account.baseURL + '/api/v1'
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/timelines/public', { limit: 40, local: true })
         .then(res => {

@@ -68,6 +68,8 @@
       <el-menu-item :index="`/${id()}/public`" role="menuitem" :title="$t('side_menu.public')">
         <icon name="globe"></icon>
         <span>{{ $t("side_menu.public") }}</span>
+        <el-badge is-dot :hidden="!unreadPublicTimeline">
+        </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/search`" role="menuitem" :title="$t('side_menu.search')">
         <icon name="search"></icon>
@@ -115,6 +117,7 @@ export default {
       unreadNotifications: state => state.unreadNotifications,
       unreadLocalTimeline: state => state.unreadLocalTimeline,
       unreadDirectMessagesTimeline: state => state.unreadDirectMessagesTimeline,
+      unreadPublicTimeline: state => state.unreadPublicTimeline,
       lists: state => state.lists,
       tags: state => state.tags,
       collapse: state => state.collapse
