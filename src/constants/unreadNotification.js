@@ -6,6 +6,6 @@ export default {
     default: true
   },
   Public: {
-    default: true
+    default: false
   }
 }

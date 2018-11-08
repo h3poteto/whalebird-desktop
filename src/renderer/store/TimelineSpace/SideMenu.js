@@ -57,6 +57,7 @@ const SideMenu = {
       commit('changeUnreadNotifications', false)
       commit('changeUnreadLocalTimeline', false)
       commit('changeUnreadDirectMessagesTimeline', false)
+      commit('changeUnreadPublicTimeline', false)
     },
     changeCollapse ({ commit }, value) {
       commit('changeCollapse', value)
