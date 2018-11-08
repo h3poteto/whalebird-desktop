@@ -128,15 +128,7 @@ export default {
     async reload () {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
-        const account = await this.reloadable()
-        await this.$store.dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', account)
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.notification_fetch_error'),
-              type: 'error'
-            })
-          })
-
+        await this.reloadable()
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)

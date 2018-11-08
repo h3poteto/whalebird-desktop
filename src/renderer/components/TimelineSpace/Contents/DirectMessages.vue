@@ -99,6 +99,9 @@ export default {
     this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/DirectMessages/mergeTimeline')
     this.$store.commit('TimelineSpace/Contents/DirectMessages/archiveTimeline')
+    if (!this.unreadNotification.direct) {
+      this.$store.commit('TimelineSpace/Contents/DirectMessages/clearTimeline')
+    }
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
