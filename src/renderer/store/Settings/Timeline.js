@@ -5,7 +5,6 @@ export default {
   state: {
     unreadNotification: {
       direct: false,
-      favourite: false,
       local: true,
       public: false
     }
