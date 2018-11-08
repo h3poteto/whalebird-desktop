@@ -779,6 +779,7 @@ ipcMain.on('get-unread-notification', (event, accountID) => {
       event.sender.send('response-get-unread-notification', doc)
     })
     .catch(err => {
+      console.warn(err)
       event.sender.send('error-get-unread-notification', err)
     })
 })
