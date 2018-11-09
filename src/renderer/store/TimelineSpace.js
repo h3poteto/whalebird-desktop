@@ -278,8 +278,8 @@ const TimelineSpace = {
         if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
           commit('TimelineSpace/Contents/Public/archiveTimeline', {}, { root: true })
         }
+        commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
       })
-      commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
     },
     startPublicStreaming ({ state }) {
       return new Promise((resolve, reject) => {
