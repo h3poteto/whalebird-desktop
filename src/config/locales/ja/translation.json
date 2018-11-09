@@ -47,6 +47,7 @@
     "expand": "拡大",
     "home": "ホーム",
     "notification": "通知",
+    "direct": "ダイレクトメッセージ",
     "favourite": "お気に入り",
     "local": "ローカル",
     "public": "連合",
@@ -75,6 +76,7 @@
   "settings": {
     "title": "設定",
     "general": {
+      "title": "一般",
       "toot": {
         "title": "トゥート",
         "visibility": {
@@ -87,6 +89,16 @@
         "sensitive": {
           "description": "メディアを常に閲覧注意として投稿する"
         }
+      }
+    },
+    "timeline": {
+      "title": "タイムライン",
+      "unread_notification": {
+        "title": "未読管理",
+        "description": "未読管理をするタイムラインを設定",
+        "direct": "ダイレクトメッセージ",
+        "local": "ローカル",
+        "public": "連合"
       }
     }
   },
