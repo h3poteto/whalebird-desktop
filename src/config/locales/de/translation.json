@@ -73,6 +73,7 @@
     "reload": "Neu laden"
   },
   "settings": {
+    "title": "Settings",
     "general": {
       "title": "Settings",
       "toot": {

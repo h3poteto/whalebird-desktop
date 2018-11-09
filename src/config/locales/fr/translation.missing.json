@@ -1,5 +1,17 @@
 {
   "side_menu": {
     "direct": "Direct messages"
+  },
+  "settings": {
+    "timeline": {
+      "title": "Timeline",
+      "unread_notification": {
+        "title": "Unread Notification",
+        "description": "Customize unread notifications for each timelines.",
+        "direct": "Direct Messages",
+        "local": "Local Timeline",
+        "public": "Public Timeline"
+      }
+    }
   }
 }
