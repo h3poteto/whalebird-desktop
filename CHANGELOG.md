@@ -1,5 +1,22 @@
 # Change Log
 
+## [2.5.0]
+### Added
+- [#694](https://github.com/h3poteto/whalebird-desktop/pull/694) Allow customize unread notification of timelines
+- [#689](https://github.com/h3poteto/whalebird-desktop/pull/689) Add emoji picker in new toot modal
+- [#688](https://github.com/h3poteto/whalebird-desktop/pull/688) Enable Direct Messages timeline
+
+### Changed
+- [#693](https://github.com/h3poteto/whalebird-desktop/pull/693) Add streaming update for direct message
+- [#686](https://github.com/h3poteto/whalebird-desktop/pull/686) Enable playback of animated media
+
+### Fixed
+- [#697](https://github.com/h3poteto/whalebird-desktop/pull/697) Fix unread mark on side menu when public timeline is updated
+- [#692](https://github.com/h3poteto/whalebird-desktop/pull/692) Block changing account when the modal is active
+- [#690](https://github.com/h3poteto/whalebird-desktop/pull/690) Fix tag parser in tootParser for Pleroma's tag
+- [#687](https://github.com/h3poteto/whalebird-desktop/pull/687) Do not position the :arrow_up: button behind the sidebar
+
+
 ## [2.4.4] - 2018-11-01
 ### Added
 - [#682](https://github.com/h3poteto/whalebird-desktop/pull/682) Add sensitive settings and sync to each instance
