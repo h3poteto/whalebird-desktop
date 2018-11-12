@@ -132,35 +132,38 @@ export default {
     }
   },
   methods: {
-    startSuggest (e) {
+    async startSuggest (e) {
       const currentValue = e.target.value
       // Start suggest after user stop writing
-      setTimeout(() => {
+      setTimeout(async () => {
         if (currentValue === this.status) {
-          this.suggest(e)
+          await this.suggest(e)
         }
-      }, 500)
+      }, 700)
     },
     async suggest (e) {
-      const emoji = this.suggestEmoji(e)
-      if (emoji) {
-        return true
-      }
-      const ac = await this.suggestAccount(e)
-      if (ac) {
-        return true
-      }
-      const tag = await this.suggestHashtag(e)
-      return tag
-    },
-    async suggestAccount (e) {
       // e.target.sectionStart: Cursor position
       // e.target.value: current value of the textarea
-      const [start, word] = suggestText(e.target.value, e.target.selectionStart, '@')
+      const [start, word] = suggestText(e.target.value, e.target.selectionStart)
       if (!start || !word) {
         this.closeSuggest()
         return false
       }
+      switch (word.charAt(0)) {
+        case ':':
+          await this.suggestEmoji(start, word)
+          return true
+        case '@':
+          await this.suggestAccount(start, word)
+          return true
+        case '#':
+          await this.suggestHashtag(start, word)
+          return true
+        default:
+          return false
+      }
+    },
+    async suggestAccount (start, word) {
       try {
         await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/searchAccount', word)
         this.openSuggest = true
@@ -173,12 +176,7 @@ export default {
         return false
       }
     },
-    async suggestHashtag (e) {
-      const [start, word] = suggestText(e.target.value, e.target.selectionStart, '#')
-      if (!start || !word) {
-        this.closeSuggest()
-        return false
-      }
+    async suggestHashtag (start, word) {
       try {
         await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/searchHashtag', word)
         this.openSuggest = true
@@ -191,14 +189,7 @@ export default {
         return false
       }
     },
-    suggestEmoji (e) {
-      // e.target.sectionStart: Cursor position
-      // e.target.value: current value of the textarea
-      const [start, word] = suggestText(e.target.value, e.target.selectionStart, ':')
-      if (!start || !word) {
-        this.closeSuggest()
-        return false
-      }
+    suggestEmoji (start, word) {
       // Find native emojis
       const filteredEmojiName = emojilib.ordered.filter(emoji => `:${emoji}`.includes(word))
       const filteredNativeEmoji = filteredEmojiName.map((name) => {
@@ -218,18 +209,20 @@ export default {
           return (array.findIndex(ar => e.name === ar.name) === i)
         })
       } else {
-        this.openSuggest = false
+        this.closeSuggest()
       }
       return true
     },
     closeSuggest () {
-      this.openSuggest = false
-      this.startIndex = null
-      this.matchWord = null
-      this.highlightedIndex = 0
-      this.filteredSuggestion = []
-      this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredAccounts')
-      this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredHashtags')
+      if (this.openSuggest) {
+        this.openSuggest = false
+        this.startIndex = null
+        this.matchWord = null
+        this.highlightedIndex = 0
+        this.filteredSuggestion = []
+        this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredAccounts')
+        this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredHashtags')
+      }
     },
     suggestHighlight (index) {
       if (index < 0) {

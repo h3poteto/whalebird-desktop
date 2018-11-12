@@ -1,5 +1,5 @@
 // https://github.com/tootsuite/mastodon/blob/master/app/javascript/mastodon/components/autosuggest_textarea.js
-const textAtCursorMatch = (str, cursorPosition, separator = '@') => {
+const textAtCursorMatch = (str, cursorPosition, separators = ['@', '#', ':']) => {
   let word
 
   let left = str.slice(0, cursorPosition).search(/\S+$/)
@@ -11,7 +11,7 @@ const textAtCursorMatch = (str, cursorPosition, separator = '@') => {
     word = str.slice(left, right + cursorPosition)
   }
 
-  if (!word || word.trim().length < 3 || [separator].indexOf(word[0]) === -1) {
+  if (!word || word.trim().length < 3 || separators.indexOf(word[0]) === -1) {
     return [null, null]
   }
 
