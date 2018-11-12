@@ -10,13 +10,12 @@ const NewToot = {
   },
   state: {
     modalOpen: false,
-    status: '',
+    initialStatus: '',
     replyToMessage: null,
     blockSubmit: false,
     attachedMedias: [],
     visibility: Visibility.Public.value,
     sensitive: false,
-    spoiler: '',
     attachedMediaId: 0,
     pinedHashtag: false,
     hashtags: []
@@ -28,8 +27,8 @@ const NewToot = {
     setReplyTo (state, message) {
       state.replyToMessage = message
     },
-    updateStatus (state, status) {
-      state.status = status
+    updateInitialStatus (state, status) {
+      state.initialStatus = status
     },
     changeBlockSubmit (state, value) {
       state.blockSubmit = value
@@ -54,9 +53,6 @@ const NewToot = {
     },
     changeSensitive (state, value) {
       state.sensitive = value
-    },
-    updateSpoiler (state, value) {
-      state.spoiler = value
     },
     updateMediaId (state, value) {
       state.attachedMediaId = value
@@ -93,8 +89,8 @@ const NewToot = {
       const mentionAccounts = [message.account.acct].concat(message.mentions.map(a => a.acct))
         .filter((a, i, self) => self.indexOf(a) === i)
         .filter((a) => a !== rootState.TimelineSpace.account.username)
+      commit('updateInitialStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
       commit('changeModal', true)
-      commit('updateStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
       let value = Visibility.Public.value
       Object.keys(Visibility).map((key, index) => {
         const target = Visibility[key]
@@ -105,20 +101,19 @@ const NewToot = {
       commit('changeVisibilityValue', value)
     },
     openModal ({ dispatch, commit, state, rootState }) {
-      commit('changeModal', true)
       if (!state.replyToMessage && state.pinedHashtag) {
-        commit('updateStatus', state.hashtags.map(t => ` #${t.name}`).join())
+        commit('updateInitialStatus', state.hashtags.map(t => ` #${t.name}`).join())
       }
+      commit('changeModal', true)
       dispatch('fetchVisibility')
     },
     closeModal ({ commit }) {
       commit('changeModal', false)
-      commit('updateStatus', '')
+      commit('updateInitialStatus', '')
       commit('setReplyTo', null)
       commit('changeBlockSubmit', false)
       commit('clearAttachedMedias')
       commit('changeSensitive', false)
-      commit('updateSpoiler', '')
       commit('changeVisibilityValue', Visibility.Public.value)
     },
     uploadImage ({ state, commit, rootState }, image) {
