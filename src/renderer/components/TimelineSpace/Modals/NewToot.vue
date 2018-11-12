@@ -92,6 +92,8 @@ export default {
   },
   data () {
     return {
+      status: '',
+      spoiler: '',
       showContentWarning: false,
       visibilityList: Visibility
     }
@@ -110,6 +112,7 @@ export default {
       blockSubmit: state => state.blockSubmit,
       visibility: state => state.visibility,
       sensitive: state => state.sensitive,
+      initialStatus: state => state.initialStatus,
       visibilityIcon: (state) => {
         switch (state.visibility) {
           case Visibility.Public.value:
@@ -143,22 +146,6 @@ export default {
         }
       }
     },
-    status: {
-      get () {
-        return this.$store.state.TimelineSpace.Modals.NewToot.status
-      },
-      set (value) {
-        this.$store.commit('TimelineSpace/Modals/NewToot/updateStatus', value)
-      }
-    },
-    spoiler: {
-      get () {
-        return this.$store.state.TimelineSpace.Modals.NewToot.spoiler
-      },
-      set (value) {
-        this.$store.commit('TimelineSpace/Modals/NewToot/updateSpoiler', value)
-      }
-    },
     pinedHashtag: {
       get () {
         return this.$store.state.TimelineSpace.Modals.NewToot.pinedHashtag
@@ -172,6 +159,8 @@ export default {
     newTootModal: function (newState, oldState) {
       if (!oldState && newState) {
         this.showContentWarning = false
+        this.spoiler = ''
+        this.status = this.initialStatus
       }
     }
   },
