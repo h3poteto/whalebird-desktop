@@ -42,9 +42,9 @@ const AccountProfile = {
       )
       return client.get('/search', { q: parsedAccount.acct, resolve: true })
         .then(res => {
-          if (res.data.accounts.length <= 0) throw new AccountNotFound('not found')
-          const account = res.data.accounts[0]
-          if (`@${account.username}` !== parsedAccount.username) throw new AccountNotFound('not found')
+          if (res.data.accounts.length <= 0) throw new AccountNotFound('empty result')
+          const account = res.data.accounts.find(a => `@${a.username}` === parsedAccount.username)
+          if (!account) throw new AccountNotFound('not found')
           return account
         })
     },
