@@ -56,18 +56,35 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
 })
 
 describe('findAccount', () => {
-  context('Pleroma', () => {
-    const doc = (new JSDOM(`<html><head></head><body>
+  context('in Pleroma', () => {
+    context('from Mastodon', () => {
+      const doc = (new JSDOM(`<html><head></head><body>
 <div class="toot">
 <p><span><a href="https://social.mikutter.hachune.net/@h3_poteto">@<span id="user">h3_poteto</span></a></span> hogehoge</p>
 </div>
 </body>
 </html>`)).window.document
-    const target = doc.getElementById('user')
-    it('should find', () => {
-      const res = findAccount(target)
-      assert.strictEqual(res.username, '@h3_poteto')
-      assert.strictEqual(res.acct, '@h3_poteto@social.mikutter.hachune.net')
+      const target = doc.getElementById('user')
+      it('should find', () => {
+        const res = findAccount(target)
+        assert.strictEqual(res.username, '@h3_poteto')
+        assert.strictEqual(res.acct, '@h3_poteto@social.mikutter.hachune.net')
+      })
+    })
+
+    context('from Pleroma', () => {
+      const doc = (new JSDOM(`<html><head></head><body>
+<div class="toot">
+<p><span><a href="https://pleroma.io/users/h3poteto">@<span id="user">h3_poteto</span></a></span> hogehoge</p>
+</div>
+</body>
+</html>`)).window.document
+      const target = doc.getElementById('user')
+      it('should find', () => {
+        const res = findAccount(target)
+        assert.strictEqual(res.username, '@h3poteto')
+        assert.strictEqual(res.acct, '@h3poteto@pleroma.io')
+      })
     })
   })
 })

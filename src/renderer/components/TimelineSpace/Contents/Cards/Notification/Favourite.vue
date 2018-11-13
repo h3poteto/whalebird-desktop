@@ -153,7 +153,7 @@ export default {
       }
     },
     tootClick (e) {
-      const parsedTag = findTag(e.target, 'favourit')
+      const parsedTag = findTag(e.target, 'favourite')
       if (parsedTag !== null) {
         const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
         this.$router.push({ path: tag })
@@ -167,15 +167,16 @@ export default {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
           })
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.find_account_error'),
-              type: 'error'
-            })
+          .catch((err) => {
+            console.error(err)
+            this.openLink(e)
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
           })
         return parsedAccount.acct
       }
+      this.openLink(e)
+    },
+    openLink (e) {
       const link = findLink(e.target, 'favourite')
       if (link !== null) {
         return shell.openExternal(link)
