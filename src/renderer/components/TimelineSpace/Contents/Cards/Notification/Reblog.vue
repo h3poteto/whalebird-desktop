@@ -18,7 +18,7 @@
         <icon name="retweet" scala="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold" @click="openUser(message.account)">{{ username(message.account) }}</span> boosted your status
+        <span class="bold" @click="openUser(message.account)" v-html="username(message.account)"></span> boosted your status
       </div>
       <div class="action-icon">
         <img :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
@@ -32,7 +32,7 @@
       <div class="detail">
         <div class="toot-header">
           <div class="user">
-            {{ username(message.status.account) }}
+            <span class="display-name" v-html="username(message.status.account)"></span>
           </div>
           <div class="timestamp">
             {{ parseDatetime(message.status.created_at) }}
@@ -137,7 +137,7 @@ export default {
   methods: {
     username (account) {
       if (account.display_name !== '') {
-        return account.display_name
+        return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
@@ -258,8 +258,13 @@ export default {
       float: left;
       max-width: 80%;
 
-      .bold {
+      .bold /deep/ {
         cursor: pointer;
+
+        .emojione {
+          max-width: 14px;
+          max-height: 14px;
+        }
       }
     }
 
@@ -298,6 +303,13 @@ export default {
         .user {
           float: left;
           font-size: var(--base-font-size);
+
+          .display-name /deep/ {
+            .emojione {
+              max-width: 14px;
+              max-height: 14px;
+            }
+          }
         }
 
         .timestamp {
