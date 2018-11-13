@@ -24,7 +24,7 @@
     <div class="detail" v-on:dblclick="openDetail(message)">
       <div class="toot-header">
         <div class="user" @click="openUser(originalMessage(message).account)">
-          <span class="display-name">{{ username(originalMessage(message).account) }}</span>
+          <span class="display-name" v-html="username(originalMessage(message).account)"></span>
           <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
         </div>
         <div class="timestamp">
@@ -66,8 +66,7 @@
           <img :src="message.account.avatar"
                :alt="`Avatar of ${message.account.username}`" />
         </span>
-        <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${username(message.account)}`">
-          {{ username(message.account) }}
+        <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${message.account.username}`" v-html="username(message.account)">
         </span>
       </div>
       <div class="tool-box">
@@ -208,13 +207,13 @@ export default {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
           if (account.display_name !== '') {
-            return account.display_name
+            return emojify(account.display_name, account.emojis)
           } else {
             return account.acct
           }
         case DisplayStyle.DisplayName.value:
           if (account.display_name !== '') {
-            return account.display_name
+            return emojify(account.display_name, account.emojis)
           } else {
             return account.acct
           }
@@ -505,9 +504,14 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
 
-        .display-name {
+        .display-name /deep/ {
           font-weight: 800;
           color: var(--theme-primary-color);
+
+          .emojione {
+            max-width: 14px;
+            max-height: 14px;
+          }
         }
 
         .acct {
@@ -593,9 +597,14 @@ export default {
         }
       }
 
-      .reblogger-name {
+      .reblogger-name /deep/ {
         font-size: calc(var(--base-font-size) * 0.86);
         cursor: pointer;
+
+        .emojione {
+          max-width: 10px;
+          max-height: 10px;
+        }
       }
     }
 
