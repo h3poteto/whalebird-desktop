@@ -167,14 +167,14 @@ export default {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
           })
           .catch(() => {
-            this.$message({
-              message: this.$t('message.find_account_error'),
-              type: 'error'
-            })
+            this.openLink(e)
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
           })
         return parsedAccount
       }
+      this.openLink(e)
+    },
+    openLink (e) {
       const link = findLink(e.target, 'reblog')
       if (link !== null) {
         return shell.openExternal(link)
