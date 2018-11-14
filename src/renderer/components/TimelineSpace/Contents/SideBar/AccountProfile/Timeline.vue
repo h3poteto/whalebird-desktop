@@ -10,7 +10,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Toot from '../../Cards/Toot'
+import Toot from '~/src/renderer/components/molecules/Toot'
 
 export default {
   name: 'timeline',
