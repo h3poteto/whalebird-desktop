@@ -17,7 +17,7 @@
       <span class="bold" @click="openUser(message.account)">{{ username(message.account) }}</span> is now following you
     </div>
     <div class="action-icon">
-      <img :src="message.account.avatar" />
+      <FailoverImg :src="message.account.avatar" />
     </div>
   </div>
   <div class="clearfix"></div>
@@ -26,8 +26,13 @@
 </template>
 
 <script>
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+
 export default {
   name: 'follow',
+  componengs: {
+    FailoverImg
+  },
   props: {
     message: {
       type: Object,

@@ -14,10 +14,9 @@
   </div>
   <div v-show="!filtered(message)" class="toot">
     <div class="icon">
-      <img
+      <FailoverImg
         :src="originalMessage(message).account.avatar"
         @click="openUser(originalMessage(message).account)"
-        role="img"
         :alt="`Avatar of ${originalMessage(message).account.username}`"
         />
     </div>
@@ -53,7 +52,7 @@
             <icon name="eye" class="hide"></icon>
           </el-button>
           <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message)">
-            <img :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))"/>
+            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))"/>
             <span class="media-label" v-if="media.type == 'gifv'">GIF</span>
             <span class="media-label" v-else-if="media.type == 'video'">VIDEO</span>
           </div>
@@ -63,8 +62,9 @@
       <div class="reblogger" v-show="message.reblog !== null">
         <icon name="retweet"></icon>
         <span class="reblogger-icon" @click="openUser(message.account)">
-          <img :src="message.account.avatar"
-               :alt="`Avatar of ${message.account.username}`" />
+          <FailoverImg
+            :src="message.account.avatar"
+            :alt="`Avatar of ${message.account.username}`" />
         </span>
         <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${message.account.username}`" v-html="username(message.account)">
         </span>
@@ -140,9 +140,13 @@ import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 
 export default {
   name: 'toot',
+  components: {
+    FailoverImg
+  },
   data () {
     return {
       showContent: false,
