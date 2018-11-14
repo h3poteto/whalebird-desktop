@@ -1,7 +1,7 @@
 <template>
 <div class="user" @click="openUser(user)" aria-label="user">
   <div class="icon">
-    <img :src="user.avatar" :alt="`Avatar of ${user.username}`" />
+    <FailoverImg :src="user.avatar" :alt="`Avatar of ${user.username}`" />
   </div>
   <div class="name">
     <div class="username">
@@ -32,8 +32,13 @@
 </template>
 
 <script>
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+
 export default {
   name: 'user',
+  components: {
+    FailoverImg
+  },
   props: {
     user: {
       type: Object,

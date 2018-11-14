@@ -46,7 +46,7 @@
           </popper>
         </div>
         <div class="icon">
-          <img :src="account.avatar" :alt="`Avatar of ${account.username}`" />
+          <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
         </div>
         <div class="follow-status" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
           <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
@@ -113,13 +113,15 @@ import { findLink } from '~/src/renderer/utils/tootParser'
 import Timeline from './AccountProfile/Timeline'
 import Follows from './AccountProfile/Follows'
 import Followers from './AccountProfile/Followers'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 
 export default {
   name: 'account-profile',
   components: {
     Timeline,
     Follows,
-    Followers
+    Followers,
+    FailoverImg
   },
   data () {
     return {
