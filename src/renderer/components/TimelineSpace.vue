@@ -185,11 +185,17 @@ export default {
   box-sizing: border-box;
 
   .header {
-    width: calc(100% - 141px);
+    width: calc(100% - 64px);
     position: fixed;
     top: 0;
     height: 48px;
     border-bottom: solid 1px var(--theme-border-color);
+  }
+}
+
+.with-global-header {
+  .page-narrow .header{
+    width: calc(100% - 65px - 64px);
   }
 }
 
