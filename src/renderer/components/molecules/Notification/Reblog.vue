@@ -298,7 +298,7 @@ export default {
     }
 
     .detail {
-      margin: 8px 8px 0 42px;;
+      margin: 8px 8px 0 42px;
       color: #909399;
 
       .toot-header {

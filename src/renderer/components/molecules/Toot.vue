@@ -570,6 +570,7 @@ export default {
       .media {
         float: left;
         margin-right: 8px;
+
         img {
           cursor: zoom-in;
           max-width: 200px;
