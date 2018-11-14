@@ -21,13 +21,13 @@
         <span class="bold" @click="openUser(message.account)" v-html="username(message.account)"></span> favourited your status
       </div>
       <div class="action-icon">
-        <img :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
+        <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
       </div>
     </div>
     <div class="clearfix"></div>
     <div class="target" v-on:dblclick="openDetail(message.status)">
       <div class="icon" @click="openUser(message.status.account)">
-        <img :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
+        <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
       </div>
       <div class="detail">
         <div class="toot-header">
@@ -60,7 +60,7 @@
               <icon name="eye" class="hide"></icon>
             </el-button>
             <div class="media" v-for="media in mediaAttachments(message.status)">
-              <img :src="media.preview_url" alt="attached media" />
+              <FailoverImg :src="media.preview_url" alt="attached media" />
             </div>
           </div>
           <div class="clearfix"></div>
@@ -80,9 +80,13 @@ import { shell } from 'electron'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import TimeFormat from '~/src/constants/timeFormat'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 
 export default {
   name: 'favourite',
+  components: {
+    FailoverImg
+  },
   props: {
     message: {
       type: Object,
