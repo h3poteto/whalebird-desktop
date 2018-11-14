@@ -28,7 +28,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import Notification from './Cards/Notification'
+import Notification from '~/src/renderer/components/molecules/Notification'
 import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 
