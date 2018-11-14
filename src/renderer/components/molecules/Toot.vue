@@ -300,12 +300,12 @@ export default {
       this.$refs.popper.doClose()
     },
     block (message) {
-      this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/block', this.originalMessage(message).account)
+      this.$store.dispatch('molecules/Toot/block', this.originalMessage(message).account)
       this.$refs.popper.doClose()
     },
     changeReblog (message) {
       if (message.reblogged) {
-        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/unreblog', message)
+        this.$store.dispatch('molecules/Toot/unreblog', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -316,7 +316,7 @@ export default {
             })
           })
       } else {
-        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/reblog', message)
+        this.$store.dispatch('molecules/Toot/reblog', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -330,7 +330,7 @@ export default {
     },
     changeFavourite (message) {
       if (message.favourited) {
-        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/removeFavourite', message)
+        this.$store.dispatch('molecules/Toot/removeFavourite', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -341,7 +341,7 @@ export default {
             })
           })
       } else {
-        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/addFavourite', message)
+        this.$store.dispatch('molecules/Toot/addFavourite', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -389,7 +389,7 @@ export default {
       return this.$store.state.TimelineSpace.account.accountId === this.originalMessage(message).account.id
     },
     deleteToot (message) {
-      this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/deleteToot', message)
+      this.$store.dispatch('molecules/Toot/deleteToot', message)
         .then((message) => {
           this.$emit('delete', message)
         })
@@ -570,6 +570,7 @@ export default {
       .media {
         float: left;
         margin-right: 8px;
+
         img {
           cursor: zoom-in;
           max-width: 200px;
