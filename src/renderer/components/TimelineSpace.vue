@@ -194,7 +194,7 @@ export default {
 }
 
 .with-global-header {
-  .page-narrow .header{
+  .page-narrow .header {
     width: calc(100% - 65px - 64px);
   }
 }
