@@ -10,8 +10,8 @@
     <div class="header">
       <div class="follow-follower" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
         <div class="follower-status">
-          <span class="status" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</span>
-          <span class="status" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</span>
+          <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
+          <el-tag class="status" size="medium" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
         </div>
       </div>
       <div class="user-info">
@@ -254,9 +254,9 @@ export default {
 
       .follower-status {
         .status {
-          border-radius: 4px;
+          color: #fff;
           background-color: rgba(0, 0, 0, 0.3);
-          padding: 4px 8px;
+          font-size: 1rem;
         }
       }
     }
