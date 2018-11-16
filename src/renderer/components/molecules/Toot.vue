@@ -34,10 +34,10 @@
       <div class="content-wrapper">
         <div class="spoiler" v-show="spoilered(message)">
           <span v-html="spoilerText(message)"></span>
-          <el-button v-show="!isShowContent(message)" type="text" @click="showContent = true">
+          <el-button v-if="!isShowContent(message)" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
             {{ $t('cards.toot.show_more') }}
           </el-button>
-          <el-button v-show="isShowContent(message)" type="text" @click="showContent = false">
+          <el-button v-else type="primary" size="medium" class="spoil-button" @click="showContent = false">
             {{ $t('cards.toot.hide')}}
           </el-button>
         </div>
@@ -53,8 +53,8 @@
           </el-button>
           <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message)">
             <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))"/>
-            <span class="media-label" v-if="media.type == 'gifv'">GIF</span>
-            <span class="media-label" v-else-if="media.type == 'video'">VIDEO</span>
+            <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
+            <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -482,6 +482,14 @@ export default {
 .toot {
   padding: 8px 0 0 16px;
 
+  .fa-icon {
+    font-size: 0.9em;
+    width: auto;
+    height: 1em;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
   .icon {
     float: left;
 
@@ -547,8 +555,19 @@ export default {
       }
     }
 
+    .spoiler {
+      margin: 8px 0;
+
+      .spoil-button {
+        background-color: var(--theme-selected-background-color);
+        border-color: var(--theme-border-color);
+        padding: 2px 4px;
+      }
+    }
+
     .attachments {
       position: relative;
+      margin: 4px 0 8px;
 
       .show-sensitive {
         padding: 20px 32px;
@@ -570,22 +589,25 @@ export default {
       .media {
         float: left;
         margin-right: 8px;
+        width: 200px;
+        height: 200px;
 
         img {
           cursor: zoom-in;
+          object-fit: cover;
           max-width: 200px;
           max-height: 200px;
+          width: 100%;
+          height: 100%;
           border-radius: 8px;
         }
 
         .media-label {
           position: absolute;
-          bottom: 8px;
-          left: 8px;
+          bottom: 6px;
+          left: 4px;
           color: #fff;
-          background: rgba(0, 0, 0, 0.5);
-          font-size: 0.8rem;
-          border-radius: 2px;
+          background-color: rgba(0, 0, 0, 0.3);
         }
       }
     }
@@ -615,6 +637,10 @@ export default {
 
     .tool-box {
       float: left;
+
+      .fa-icon {
+        vertical-align: bottom;
+      }
 
       button {
         margin: 0 8px;
