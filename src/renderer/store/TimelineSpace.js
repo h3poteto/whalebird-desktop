@@ -211,11 +211,13 @@ const TimelineSpace = {
         dispatch('startPublicStreaming')
       }
     },
-    stopStreamings ({ dispatch }, account) {
+    stopStreamings ({ dispatch }) {
       dispatch('stopUserStreaming')
       dispatch('stopDirectMessagesStreaming')
       dispatch('stopLocalStreaming')
       dispatch('stopPublicStreaming')
+    },
+    unbindStreamings ({ dispatch }) {
       dispatch('unbindUserStreaming')
       dispatch('unbindDirectMessagesStreaming')
       dispatch('unbindLocalStreaming')
