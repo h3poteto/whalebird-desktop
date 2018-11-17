@@ -2,6 +2,9 @@
   "side_menu": {
     "direct": "Direct messages"
   },
+  "header_menu": {
+    "settings": "Settings"
+  },
   "settings": {
     "timeline": {
       "title": "Timeline",
