@@ -52,7 +52,7 @@
             <icon name="eye" class="hide"></icon>
           </el-button>
           <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message)">
-            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))"/>
+            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))" :title="media.description" />
             <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
             <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
           </div>
@@ -589,6 +589,7 @@ export default {
       .media {
         float: left;
         margin-right: 8px;
+        margin-bottom: 4px;
         width: 200px;
         height: 200px;
 
