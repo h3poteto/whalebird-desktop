@@ -73,6 +73,7 @@ export default {
     window.removeEventListener('dragover', this.onDragOver)
     window.removeEventListener('drop', this.handleDrop)
     this.$store.dispatch('TimelineSpace/stopStreamings')
+    this.$store.dispatch('TimelineSpace/unbindStreamings')
   },
   methods: {
     async clear () {

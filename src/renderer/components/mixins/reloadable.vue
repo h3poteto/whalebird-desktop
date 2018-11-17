@@ -10,7 +10,7 @@ export default {
         })
         throw err
       })
-      await this.$store.dispatch('TimelineSpace/stopStreamings', account)
+      await this.$store.dispatch('TimelineSpace/stopStreamings')
       await this.$store.dispatch('TimelineSpace/fetchContentsTimelines', account)
       await this.$store.dispatch('TimelineSpace/startStreamings', account)
       return account
