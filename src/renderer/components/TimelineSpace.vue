@@ -50,9 +50,9 @@ export default {
       return !this.modalOpened
     }
   },
-  created () {
+  async created () {
     this.$store.commit('TimelineSpace/changeLoading', true)
-    this.initialize()
+    await this.initialize()
       .finally(() => {
         this.$store.commit('TimelineSpace/changeLoading', false)
         this.$store.commit('GlobalHeader/updateChanging', false)
