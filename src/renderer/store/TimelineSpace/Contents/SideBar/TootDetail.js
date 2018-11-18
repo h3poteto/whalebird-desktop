@@ -89,6 +89,8 @@ const TootDetail = {
   },
   actions: {
     changeToot ({ commit, dispatch }, message) {
+      commit('updateAncestors', [])
+      commit('updateDescendants', [])
       commit('changeToot', message)
     },
     fetchToot ({ state, commit, rootState }, message) {

@@ -80,6 +80,9 @@ const Timeline = {
           commit('changeLazyLoading', false)
           throw err
         })
+    },
+    clearTimeline ({ state, commit, rootState }) {
+      commit('updateTimeline', [])
     }
   }
 }
