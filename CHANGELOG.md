@@ -1,6 +1,23 @@
 # Change Log
 
-## [2.5.0]
+## [2.5.1] - 2018-11-16
+### Added
+- [#705](https://github.com/h3poteto/whalebird-desktop/pull/705) Render emojis in username
+
+### Changed
+- [#706](https://github.com/h3poteto/whalebird-desktop/pull/706) Show substitute image when can not load the image
+- [#704](https://github.com/h3poteto/whalebird-desktop/pull/704) Don't load emoji picker as default for performance
+- [#701](https://github.com/h3poteto/whalebird-desktop/pull/701) Upgrade Webpack version to 4.x
+- [#700](https://github.com/h3poteto/whalebird-desktop/pull/700) Upgrade electron version to 3.0.8
+
+### Fixed
+- [#707](https://github.com/h3poteto/whalebird-desktop/pull/707) refactor: Cage Cards components in molecules according to atomic design
+- [#703](https://github.com/h3poteto/whalebird-desktop/pull/703) Fix toot parser for account, tag and link
+- [#699](https://github.com/h3poteto/whalebird-desktop/pull/699) Improve performance issue when users type new status
+
+
+
+## [2.5.0] - 2018-11-11
 ### Added
 - [#694](https://github.com/h3poteto/whalebird-desktop/pull/694) Allow customize unread notification of timelines
 - [#689](https://github.com/h3poteto/whalebird-desktop/pull/689) Add emoji picker in new toot modal
