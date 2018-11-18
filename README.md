@@ -110,6 +110,9 @@ If there is something unknown, please refer to this pull request: https://github
 The software is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 # Donate
+
+[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=15085320)
+
 I prepared Bitcoin Address.
 
 ![Bitcoin](qr.png)
