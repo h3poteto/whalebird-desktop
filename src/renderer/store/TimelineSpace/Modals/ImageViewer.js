@@ -3,7 +3,8 @@ const ImageViewer = {
   state: {
     modalOpen: false,
     currentIndex: -1,
-    mediaList: []
+    mediaList: [],
+    loading: false
   },
   mutations: {
     changeModal (state, value) {
@@ -20,6 +21,9 @@ const ImageViewer = {
     },
     decrementIndex (state) {
       state.currentIndex--
+    },
+    loading (state, value) {
+      state.loading = value
     }
   },
   actions: {
@@ -27,17 +31,24 @@ const ImageViewer = {
       commit('changeModal', true)
       commit('changeCurrentIndex', currentIndex)
       commit('changeMedliaList', mediaList)
+      commit('loading', true)
     },
     closeModal ({ commit }) {
       commit('changeModal', false)
       commit('changeCurrentIndex', -1)
       commit('changeMedliaList', [])
+      commit('loading', false)
     },
     incrementIndex ({ commit }) {
       commit('incrementIndex')
+      commit('loading', true)
     },
     decrementIndex ({ commit }) {
       commit('decrementIndex')
+      commit('loading', true)
+    },
+    async loaded ({ commit }) {
+      commit('loading', false)
     }
   },
   getters: {
