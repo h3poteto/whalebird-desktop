@@ -60,8 +60,7 @@
           </div>
         </div>
       </div>
-      <div class="username">
-        {{ username(account) }}
+      <div class="username" v-html="username(account)">
       </div>
       <div class="account">
         @{{ account.acct }}
@@ -110,6 +109,7 @@
 import { mapState } from 'vuex'
 import { shell } from 'electron'
 import { findLink } from '~/src/renderer/utils/tootParser'
+import emojify from '~/src/renderer/utils/emojify'
 import Timeline from './AccountProfile/Timeline'
 import Follows from './AccountProfile/Follows'
 import Followers from './AccountProfile/Followers'
@@ -158,7 +158,7 @@ export default {
   methods: {
     username (account) {
       if (account.display_name !== '') {
-        return account.display_name
+        return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
@@ -315,11 +315,16 @@ export default {
       }
     }
 
-    .username {
+    .username /deep/ {
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: calc(var(--base-font-size) * 1.71);
       margin: 0 auto 12px auto;
+
+      .emojione {
+        max-width: 1em;
+        max-height: 1em;
+      }
     }
 
     .account {
