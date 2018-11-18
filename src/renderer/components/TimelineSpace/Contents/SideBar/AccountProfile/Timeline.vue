@@ -10,7 +10,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Toot from '../../Cards/Toot'
+import Toot from '~/src/renderer/components/molecules/Toot'
 
 export default {
   name: 'timeline',
@@ -36,6 +36,7 @@ export default {
   },
   watch: {
     account: function (newAccount, oldAccount) {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/clearTimeline')
       this.load()
     }
   },

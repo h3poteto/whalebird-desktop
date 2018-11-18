@@ -9,6 +9,7 @@ import Authorize from './Authorize'
 import TimelineSpace from './TimelineSpace'
 import Preferences from './Preferences'
 import Settings from './Settings'
+import molecules from './molecules'
 
 Vue.use(Vuex)
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     Authorize,
     TimelineSpace,
     Preferences,
-    Settings
+    Settings,
+    molecules
   }
 })

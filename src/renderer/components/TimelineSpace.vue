@@ -50,9 +50,9 @@ export default {
       return !this.modalOpened
     }
   },
-  created () {
+  async created () {
     this.$store.commit('TimelineSpace/changeLoading', true)
-    this.initialize()
+    await this.initialize()
       .finally(() => {
         this.$store.commit('TimelineSpace/changeLoading', false)
         this.$store.commit('GlobalHeader/updateChanging', false)
@@ -73,6 +73,7 @@ export default {
     window.removeEventListener('dragover', this.onDragOver)
     window.removeEventListener('drop', this.handleDrop)
     this.$store.dispatch('TimelineSpace/stopStreamings')
+    this.$store.dispatch('TimelineSpace/unbindStreamings')
   },
   methods: {
     async clear () {
@@ -185,11 +186,17 @@ export default {
   box-sizing: border-box;
 
   .header {
-    width: calc(100% - 141px);
+    width: calc(100% - 64px);
     position: fixed;
     top: 0;
     height: 48px;
     border-bottom: solid 1px var(--theme-border-color);
+  }
+}
+
+.with-global-header {
+  .page-narrow .header {
+    width: calc(100% - 65px - 64px);
   }
 }
 

@@ -36,12 +36,16 @@ export function parseTag (tagURL) {
 
 export function findAccount (target, parentClass = 'toot') {
   if (target.getAttribute('class') && target.getAttribute('class').includes('u-url')) {
-    return parseAccount(target.href)
+    return parseMastodonAccount(target.href)
   }
   // In Pleroma, link does not have class.
-  // So I have to check URL.
+  // So we have to check URL.
   if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/@[a-zA-Z0-9-_.]+/)) {
-    return parseAccount(target.href)
+    return parseMastodonAccount(target.href)
+  }
+  // Toot URL of Pleroma does not contain @.
+  if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/users\/[a-zA-Z0-9-_.]+/)) {
+    return parsePleromaAccount(target.href)
   }
   if (target.parentNode === undefined || target.parentNode === null) {
     return null
@@ -52,12 +56,22 @@ export function findAccount (target, parentClass = 'toot') {
   return findAccount(target.parentNode, parentClass)
 }
 
-export function parseAccount (accountURL) {
+export function parseMastodonAccount (accountURL) {
   const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(@[a-zA-Z0-9-_.]+)/)
   const domainName = res[1]
   const accountName = res[2]
   return {
     username: accountName,
     acct: `${accountName}@${domainName}`
+  }
+}
+
+export function parsePleromaAccount (accountURL) {
+  const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/users\/([a-zA-Z0-9-_.]+)/)
+  const domainName = res[1]
+  const accountName = res[2]
+  return {
+    username: `@${accountName}`,
+    acct: `@${accountName}@${domainName}`
   }
 }

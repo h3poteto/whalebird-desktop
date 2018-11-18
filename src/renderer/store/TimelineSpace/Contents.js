@@ -6,7 +6,6 @@ import Local from './Contents/Local'
 import Public from './Contents/Public'
 import Search from './Contents/Search'
 import Lists from './Contents/Lists'
-import Cards from './Contents/Cards'
 import Hashtag from './Contents/Hashtag'
 import DirectMessages from './Contents/DirectMessages'
 
@@ -22,7 +21,6 @@ const Contents = {
     Public,
     Search,
     Lists,
-    Cards,
     Hashtag
   }
 }

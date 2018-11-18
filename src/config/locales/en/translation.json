@@ -71,7 +71,8 @@
       "apply": "Apply"
     },
     "new_toot": "Toot",
-    "reload": "Reload"
+    "reload": "Reload",
+    "settings": "Settings"
   },
   "settings": {
     "title": "Settings",

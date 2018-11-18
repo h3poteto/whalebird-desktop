@@ -36,6 +36,9 @@
         <icon name="sliders-h"></icon>
       </el-button>
     </el-popover>
+    <el-button type="text" class="action" @click="settings" :title="$t('header_menu.settings')">
+      <icon name="cog" scale="1.1"></icon>
+    </el-button>
   </div>
 </div>
 </template>
@@ -67,6 +70,9 @@ export default {
     }
   },
   methods: {
+    id () {
+      return this.$route.params.id
+    },
     channelName () {
       switch (this.$route.name) {
         case 'home':
@@ -220,6 +226,10 @@ export default {
         default:
           return false
       }
+    },
+    settings () {
+      const url = `/${this.id()}/settings`
+      this.$router.push(url)
     }
   }
 }
