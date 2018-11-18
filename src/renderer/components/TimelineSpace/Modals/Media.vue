@@ -48,10 +48,13 @@ export default {
   max-width: 80%;
   min-width: 10%;
   height: 80%;
+  display: inline-flex;
 
   img,
   video {
     max-height: 100%;
+    max-width: 100%;
+    align-self: center;
   }
 }
 </style>
