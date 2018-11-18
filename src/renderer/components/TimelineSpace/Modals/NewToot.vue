@@ -72,8 +72,8 @@
         </el-button>
       </div>
       <span class="text-count">{{ tootMax - status.length }}</span>
-      <el-button @click="closeConfirm(close)">{{ $t('modals.new_toot.cancel') }}</el-button>
-      <el-button type="primary" @click="toot" v-loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
+      <el-button class="toot-action" size="small" @click="closeConfirm(close)">{{ $t('modals.new_toot.cancel') }}</el-button>
+      <el-button class="toot-action" size="small" type="primary" @click="toot" v-loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
       <div class="clearfix"></div>
     </div>
   </el-dialog>
@@ -113,6 +113,7 @@ export default {
       visibility: state => state.visibility,
       sensitive: state => state.sensitive,
       initialStatus: state => state.initialStatus,
+      initialSpoiler: state => state.initialSpoiler,
       visibilityIcon: (state) => {
         switch (state.visibility) {
           case Visibility.Public.value:
@@ -158,9 +159,9 @@ export default {
   watch: {
     newTootModal: function (newState, oldState) {
       if (!oldState && newState) {
-        this.showContentWarning = false
-        this.spoiler = ''
+        this.showContentWarning = this.initialSpoiler
         this.status = this.initialStatus
+        this.spoiler = this.initialSpoiler
       }
     }
   },
@@ -382,8 +383,14 @@ export default {
     }
 
     .text-count {
-      padding-right: 24px;
+      padding-right: 10px;
       color: #909399;
+    }
+
+    .toot-action {
+      font-size: var(--base-font-size);
+      margin-top: 2px;
+      margin-bottom: 2px;
     }
   }
 }

@@ -9,6 +9,8 @@
     v-on:input="startSuggest"
     :placeholder="$t('modals.new_toot.status')"
     role="textbox"
+    contenteditable="true"
+    aria-multiline="true"
     autofocus>
   </textarea>
   <el-popover
