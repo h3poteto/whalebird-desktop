@@ -113,7 +113,9 @@ The software is available as open source under the terms of the [MIT License](ht
 
 [![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=15085320)
 
-I prepared Bitcoin Address.
+[![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/h3poteto/donate)
+
+Or I prepared Bitcoin Address.
 
 ![Bitcoin](qr.png)
 
