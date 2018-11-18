@@ -71,9 +71,6 @@ const ImageViewer = {
       const notLast = (state.currentIndex < (state.mediaList.length - 1))
       const isManyItem = (state.mediaList.length > 1)
       return (notLast && isManyItem)
-    },
-    loading (state) {
-      return state.loading
     }
   }
 }
