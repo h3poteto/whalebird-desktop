@@ -14,17 +14,16 @@
   </div>
   <div v-show="!filtered(message)" class="toot">
     <div class="icon">
-      <img
+      <FailoverImg
         :src="originalMessage(message).account.avatar"
         @click="openUser(originalMessage(message).account)"
-        role="img"
         :alt="`Avatar of ${originalMessage(message).account.username}`"
         />
     </div>
     <div class="detail" v-on:dblclick="openDetail(message)">
       <div class="toot-header">
         <div class="user" @click="openUser(originalMessage(message).account)">
-          <span class="display-name">{{ username(originalMessage(message).account) }}</span>
+          <span class="display-name" v-html="username(originalMessage(message).account)"></span>
           <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
         </div>
         <div class="timestamp">
@@ -35,10 +34,10 @@
       <div class="content-wrapper">
         <div class="spoiler" v-show="spoilered(message)">
           <span v-html="spoilerText(message)"></span>
-          <el-button v-show="!isShowContent(message)" type="text" @click="showContent = true">
+          <el-button v-if="!isShowContent(message)" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
             {{ $t('cards.toot.show_more') }}
           </el-button>
-          <el-button v-show="isShowContent(message)" type="text" @click="showContent = false">
+          <el-button v-else type="primary" size="medium" class="spoil-button" @click="showContent = false">
             {{ $t('cards.toot.hide')}}
           </el-button>
         </div>
@@ -53,9 +52,9 @@
             <icon name="eye" class="hide"></icon>
           </el-button>
           <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message)">
-            <img :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))"/>
-            <span class="media-label" v-if="media.type == 'gifv'">GIF</span>
-            <span class="media-label" v-else-if="media.type == 'video'">VIDEO</span>
+            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))" :title="media.description" />
+            <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
+            <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -63,11 +62,11 @@
       <div class="reblogger" v-show="message.reblog !== null">
         <icon name="retweet"></icon>
         <span class="reblogger-icon" @click="openUser(message.account)">
-          <img :src="message.account.avatar"
-               :alt="`Avatar of ${message.account.username}`" />
+          <FailoverImg
+            :src="message.account.avatar"
+            :alt="`Avatar of ${message.account.username}`" />
         </span>
-        <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${username(message.account)}`">
-          {{ username(message.account) }}
+        <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${message.account.username}`" v-html="username(message.account)">
         </span>
       </div>
       <div class="tool-box">
@@ -141,9 +140,13 @@ import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 
 export default {
   name: 'toot',
+  components: {
+    FailoverImg
+  },
   data () {
     return {
       showContent: false,
@@ -208,13 +211,13 @@ export default {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
           if (account.display_name !== '') {
-            return account.display_name
+            return emojify(account.display_name, account.emojis)
           } else {
             return account.acct
           }
         case DisplayStyle.DisplayName.value:
           if (account.display_name !== '') {
-            return account.display_name
+            return emojify(account.display_name, account.emojis)
           } else {
             return account.acct
           }
@@ -244,7 +247,6 @@ export default {
       const parsedTag = findTag(e.target, 'toot')
       if (parsedTag !== null) {
         const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
-        console.log(tag)
         this.$router.push({ path: tag })
         return tag
       }
@@ -256,15 +258,16 @@ export default {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
           })
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.find_account_error'),
-              type: 'error'
-            })
+          .catch((err) => {
+            console.error(err)
+            this.openLink(e)
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
           })
         return parsedAccount.acct
       }
+      this.openLink(e)
+    },
+    openLink (e) {
       const link = findLink(e.target, 'toot')
       if (link !== null) {
         return shell.openExternal(link)
@@ -297,12 +300,12 @@ export default {
       this.$refs.popper.doClose()
     },
     block (message) {
-      this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/block', this.originalMessage(message).account)
+      this.$store.dispatch('molecules/Toot/block', this.originalMessage(message).account)
       this.$refs.popper.doClose()
     },
     changeReblog (message) {
       if (message.reblogged) {
-        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/unreblog', message)
+        this.$store.dispatch('molecules/Toot/unreblog', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -313,7 +316,7 @@ export default {
             })
           })
       } else {
-        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/reblog', message)
+        this.$store.dispatch('molecules/Toot/reblog', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -327,7 +330,7 @@ export default {
     },
     changeFavourite (message) {
       if (message.favourited) {
-        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/removeFavourite', message)
+        this.$store.dispatch('molecules/Toot/removeFavourite', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -338,7 +341,7 @@ export default {
             })
           })
       } else {
-        this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/addFavourite', message)
+        this.$store.dispatch('molecules/Toot/addFavourite', message)
           .then((data) => {
             this.$emit('update', data)
           })
@@ -386,7 +389,7 @@ export default {
       return this.$store.state.TimelineSpace.account.accountId === this.originalMessage(message).account.id
     },
     deleteToot (message) {
-      this.$store.dispatch('TimelineSpace/Contents/Cards/Toot/deleteToot', message)
+      this.$store.dispatch('molecules/Toot/deleteToot', message)
         .then((message) => {
           this.$emit('delete', message)
         })
@@ -479,6 +482,14 @@ export default {
 .toot {
   padding: 8px 0 0 16px;
 
+  .fa-icon {
+    font-size: 0.9em;
+    width: auto;
+    height: 1em;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
   .icon {
     float: left;
 
@@ -505,9 +516,14 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
 
-        .display-name {
+        .display-name /deep/ {
           font-weight: 800;
           color: var(--theme-primary-color);
+
+          .emojione {
+            max-width: 14px;
+            max-height: 14px;
+          }
         }
 
         .acct {
@@ -539,8 +555,19 @@ export default {
       }
     }
 
+    .spoiler {
+      margin: 8px 0;
+
+      .spoil-button {
+        background-color: var(--theme-selected-background-color);
+        border-color: var(--theme-border-color);
+        padding: 2px 4px;
+      }
+    }
+
     .attachments {
       position: relative;
+      margin: 4px 0 8px;
 
       .show-sensitive {
         padding: 20px 32px;
@@ -562,21 +589,26 @@ export default {
       .media {
         float: left;
         margin-right: 8px;
+        margin-bottom: 4px;
+        width: 200px;
+        height: 200px;
+
         img {
           cursor: zoom-in;
+          object-fit: cover;
           max-width: 200px;
           max-height: 200px;
+          width: 100%;
+          height: 100%;
           border-radius: 8px;
         }
 
         .media-label {
           position: absolute;
-          bottom: 8px;
-          left: 8px;
+          bottom: 6px;
+          left: 4px;
           color: #fff;
-          background: rgba(0, 0, 0, 0.5);
-          font-size: 0.8rem;
-          border-radius: 2px;
+          background-color: rgba(0, 0, 0, 0.3);
         }
       }
     }
@@ -593,14 +625,23 @@ export default {
         }
       }
 
-      .reblogger-name {
+      .reblogger-name /deep/ {
         font-size: calc(var(--base-font-size) * 0.86);
         cursor: pointer;
+
+        .emojione {
+          max-width: 10px;
+          max-height: 10px;
+        }
       }
     }
 
     .tool-box {
       float: left;
+
+      .fa-icon {
+        vertical-align: bottom;
+      }
 
       button {
         margin: 0 8px;

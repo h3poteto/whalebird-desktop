@@ -8,7 +8,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import User from '../Cards/User'
+import User from '~/src/renderer/components/molecules/User'
 
 export default {
   name: 'search-account',

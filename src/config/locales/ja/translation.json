@@ -71,7 +71,8 @@
       "apply": "適用"
     },
     "new_toot": "トゥート",
-    "reload": "再読み込み"
+    "reload": "再読み込み",
+    "settings": "設定"
   },
   "settings": {
     "title": "設定",

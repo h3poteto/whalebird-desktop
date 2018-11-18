@@ -42,10 +42,12 @@ const AccountProfile = {
       )
       return client.get('/search', { q: parsedAccount.acct, resolve: true })
         .then(res => {
-          if (res.data.accounts.length <= 0) throw new AccountNotFound('not found')
-          const account = res.data.accounts[0]
-          if (`@${account.username}` !== parsedAccount.username) throw new AccountNotFound('not found')
-          return account
+          if (res.data.accounts.length <= 0) throw new AccountNotFound('empty result')
+          const account = res.data.accounts.find(a => `@${a.acct}` === parsedAccount.acct)
+          if (account) return account
+          const user = res.data.accounts.find(a => `@${a.username}@${rootState.TimelineSpace.account.domain}` === parsedAccount.acct)
+          if (!user) throw new AccountNotFound('not found')
+          return user
         })
     },
     changeAccount ({ commit, dispatch }, account) {

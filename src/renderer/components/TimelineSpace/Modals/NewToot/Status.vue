@@ -9,6 +9,8 @@
     v-on:input="startSuggest"
     :placeholder="$t('modals.new_toot.status')"
     role="textbox"
+    contenteditable="true"
+    aria-multiline="true"
     autofocus>
   </textarea>
   <el-popover
@@ -38,7 +40,7 @@
     <el-button type="text" class="emoji-selector" @click="toggleEmojiPicker">
       <icon name="regular/smile" scale="1.2"></icon>
     </el-button>
-    <div v-show="openEmojiPicker" class="emoji-picker">
+    <div v-if="openEmojiPicker" class="emoji-picker">
       <picker
         set="emojione"
         :autoFocus="true"
@@ -127,7 +129,7 @@ export default {
         })
       } else if (oldState && !newState) {
         this.closeSuggest()
-        this.openEmojiPicker = false
+        this.hideEmojiPicker()
       }
     }
   },

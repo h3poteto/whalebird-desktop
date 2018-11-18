@@ -10,8 +10,8 @@
     <div class="header">
       <div class="follow-follower" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
         <div class="follower-status">
-          <span class="status" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</span>
-          <span class="status" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</span>
+          <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
+          <el-tag class="status" size="medium" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
         </div>
       </div>
       <div class="user-info">
@@ -46,7 +46,7 @@
           </popper>
         </div>
         <div class="icon">
-          <img :src="account.avatar" :alt="`Avatar of ${account.username}`" />
+          <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
         </div>
         <div class="follow-status" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
           <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
@@ -60,8 +60,7 @@
           </div>
         </div>
       </div>
-      <div class="username">
-        {{ username(account) }}
+      <div class="username" v-html="username(account)">
       </div>
       <div class="account">
         @{{ account.acct }}
@@ -110,16 +109,19 @@
 import { mapState } from 'vuex'
 import { shell } from 'electron'
 import { findLink } from '~/src/renderer/utils/tootParser'
+import emojify from '~/src/renderer/utils/emojify'
 import Timeline from './AccountProfile/Timeline'
 import Follows from './AccountProfile/Follows'
 import Followers from './AccountProfile/Followers'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 
 export default {
   name: 'account-profile',
   components: {
     Timeline,
     Follows,
-    Followers
+    Followers,
+    FailoverImg
   },
   data () {
     return {
@@ -156,7 +158,7 @@ export default {
   methods: {
     username (account) {
       if (account.display_name !== '') {
-        return account.display_name
+        return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
@@ -252,9 +254,9 @@ export default {
 
       .follower-status {
         .status {
-          border-radius: 4px;
+          color: #fff;
           background-color: rgba(0, 0, 0, 0.3);
-          padding: 4px 8px;
+          font-size: 1rem;
         }
       }
     }
@@ -313,11 +315,16 @@ export default {
       }
     }
 
-    .username {
+    .username /deep/ {
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: calc(var(--base-font-size) * 1.71);
       margin: 0 auto 12px auto;
+
+      .emojione {
+        max-width: 1em;
+        max-height: 1em;
+      }
     }
 
     .account {

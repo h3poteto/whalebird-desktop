@@ -18,21 +18,21 @@
         <icon name="star" scale="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold" @click="openUser(message.account)">{{ username(message.account) }}</span> favourited your status
+        <span class="bold" @click="openUser(message.account)" v-html="username(message.account)"></span> favourited your status
       </div>
       <div class="action-icon">
-        <img :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
+        <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
       </div>
     </div>
     <div class="clearfix"></div>
     <div class="target" v-on:dblclick="openDetail(message.status)">
       <div class="icon" @click="openUser(message.status.account)">
-        <img :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
+        <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
       </div>
       <div class="detail">
         <div class="toot-header">
           <div class="user" @click="openUser(message.status.account)">
-            {{ username(message.status.account) }}
+            <span class="display-name" v-html="username(message.status.account)"></span>
           </div>
           <div class="timestamp">
             {{ parseDatetime(message.status.created_at) }}
@@ -42,10 +42,10 @@
         <div class="content-wrapper">
           <div class="spoiler" v-show="spoilered(message.status)">
             <span v-html="spoilerText(message.status)"></span>
-            <el-button v-show="!isShowContent(message.status)" type="text" @click="showContent = true">
+            <el-button v-if="!isShowContent(message.status)" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
               {{ $t('cards.toot.show_more') }}
             </el-button>
-            <el-button v-show="isShowContent(message.status)" type="text" @click="showContent = false">
+            <el-button v-else plain type="primary" size="medium" class="spoil-button" @click="showContent = false">
               {{ $t('cards.toot.hide')}}
             </el-button>
           </div>
@@ -60,7 +60,9 @@
               <icon name="eye" class="hide"></icon>
             </el-button>
             <div class="media" v-for="media in mediaAttachments(message.status)">
-              <img :src="media.preview_url" alt="attached media" />
+              <FailoverImg :src="media.preview_url" alt="attached media" />
+              <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
+              <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
             </div>
           </div>
           <div class="clearfix"></div>
@@ -80,9 +82,13 @@ import { shell } from 'electron'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import TimeFormat from '~/src/constants/timeFormat'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 
 export default {
   name: 'favourite',
+  components: {
+    FailoverImg
+  },
   props: {
     message: {
       type: Object,
@@ -138,7 +144,7 @@ export default {
   methods: {
     username (account) {
       if (account.display_name !== '') {
-        return account.display_name
+        return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
@@ -153,7 +159,7 @@ export default {
       }
     },
     tootClick (e) {
-      const parsedTag = findTag(e.target, 'favourit')
+      const parsedTag = findTag(e.target, 'favourite')
       if (parsedTag !== null) {
         const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
         this.$router.push({ path: tag })
@@ -167,15 +173,16 @@ export default {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
           })
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.find_account_error'),
-              type: 'error'
-            })
+          .catch((err) => {
+            console.error(err)
+            this.openLink(e)
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
           })
         return parsedAccount.acct
       }
+      this.openLink(e)
+    },
+    openLink (e) {
       const link = findLink(e.target, 'favourite')
       if (link !== null) {
         return shell.openExternal(link)
@@ -243,6 +250,14 @@ export default {
 .favourite {
   padding: 8px 0 0 16px;
 
+  .fa-icon {
+    font-size: 0.9em;
+    width: auto;
+    height: 1em;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
   .action {
     margin-right: 8px;
 
@@ -259,8 +274,13 @@ export default {
       float: left;
       max-width: 80%;
 
-      .bold {
+      .bold /deep/ {
         cursor: pointer;
+
+        .emojione {
+          max-width: 14px;
+          max-height: 14px;
+        }
       }
     }
 
@@ -300,6 +320,13 @@ export default {
           float: left;
           font-size: var(--base-font-size);
           cursor: pointer;
+
+          .display-name /deep/ {
+            .emojione {
+              max-width: 14px;
+              max-height: 14px;
+            }
+          }
         }
 
         .timestamp {
@@ -324,8 +351,19 @@ export default {
         }
       }
 
+      .spoiler {
+        margin: 8px 0;
+
+        .spoil-button {
+          background-color: var(--theme-selected-background-color);
+          border-color: var(--theme-border-color);
+          padding: 2px 4px;
+        }
+      }
+
       .attachments {
         position: relative;
+        margin: 4px 0 8px;
 
         .show-sensitive {
           padding: 20px 32px;
@@ -347,11 +385,25 @@ export default {
         .media {
           float: left;
           margin-right: 8px;
+          width: 200px;
+          height: 200px;
 
           img {
+            cursor: zoom-in;
+            object-fit: cover;
             max-width: 200px;
             max-height: 200px;
+            width: 100%;
+            height: 100%;
             border-radius: 8px;
+          }
+
+          .media-label {
+            position: absolute;
+            bottom: 6px;
+            left: 4px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
           }
         }
       }
