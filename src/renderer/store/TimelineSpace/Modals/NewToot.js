@@ -11,6 +11,7 @@ const NewToot = {
   state: {
     modalOpen: false,
     initialStatus: '',
+    initialSpoiler: '',
     replyToMessage: null,
     blockSubmit: false,
     attachedMedias: [],
@@ -29,6 +30,9 @@ const NewToot = {
     },
     updateInitialStatus (state, status) {
       state.initialStatus = status
+    },
+    updateInitialSpoiler (state, cw) {
+      state.initialSpoiler = cw
     },
     changeBlockSubmit (state, value) {
       state.blockSubmit = value
@@ -90,6 +94,7 @@ const NewToot = {
         .filter((a, i, self) => self.indexOf(a) === i)
         .filter((a) => a !== rootState.TimelineSpace.account.username)
       commit('updateInitialStatus', `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
+      commit('updateInitialSpoiler', message.spoiler_text)
       commit('changeModal', true)
       let value = Visibility.Public.value
       Object.keys(Visibility).map((key, index) => {
@@ -110,6 +115,7 @@ const NewToot = {
     closeModal ({ commit }) {
       commit('changeModal', false)
       commit('updateInitialStatus', '')
+      commit('updateInitialSpoiler', '')
       commit('setReplyTo', null)
       commit('changeBlockSubmit', false)
       commit('clearAttachedMedias')
