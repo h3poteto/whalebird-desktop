@@ -20,7 +20,8 @@
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
-        <el-button size="small" type="text" @click="removeAttachment(media)" class="remove-image"><icon name="times-circle"></icon></el-button>
+        <el-button type="text" @click="removeAttachment(media)" class="remove-image"><icon name="times-circle"></icon></el-button>
+        <textarea rows="2" maxlength="420" class="image-description" :placeholder="$t('modals.new_toot.description')" v-model="mediaDescriptions[media.id]" ></textarea>
       </div>
     </div>
     <div slot="footer" class="dialog-footer">
@@ -93,6 +94,7 @@ export default {
   data () {
     return {
       status: '',
+      mediaDescriptions: {},
       spoiler: '',
       showContentWarning: false,
       visibilityList: Visibility
@@ -207,8 +209,12 @@ export default {
         })
       }
 
-      const status = await this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
-        .catch(() => {
+      const status = await this.$store.dispatch('TimelineSpace/Modals/NewToot/updateMedia', this.mediaDescriptions)
+        .then(() => {
+          return this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
+        })
+        .catch((e) => {
+          console.error(e)
           this.$message({
             message: this.$t('message.toot_error'),
             type: 'error'
@@ -262,6 +268,7 @@ export default {
     },
     removeAttachment (media) {
       this.$store.commit('TimelineSpace/Modals/NewToot/removeMedia', media)
+      delete this.mediaDescriptions[media.id]
     },
     changeVisibility (level) {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibilityValue', level)
@@ -319,23 +326,60 @@ export default {
 
     .preview {
       box-sizing: border-box;
-      padding: 0 12px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
 
       .image-wrapper {
         position: relative;
-        display: inline-block;
+        flex: 1 1 0;
+        min-width: 40%;
+        height: 150px;
+        margin: 4px;
 
         .preview-image {
-          width: 60px;
-          margin-right: 8px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border: 0;
+          border-radius: 8px;
+        }
+
+        .image-description {
+          position: absolute;
+          left: 0px;
+          bottom: 0px;
+          width: 100%;
+          box-sizing: border-box;
+          border: 0;
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0.35) 80%, transparent);
+          font-size: var(--font-base-size);
+          color: #fff;
+          opacity: 1;
+          resize: none;
+
+          &::placeholder {
+            color: #c0c4cc;
+          }
         }
 
         .remove-image {
           position: absolute;
-          top: 0;
-          left: 0;
+          top: 2px;
+          left: 2px;
           padding: 0;
           cursor: pointer;
+          font-size: 1.5rem;
+
+          .fa-icon {
+            font-size: 0.9em;
+            width: auto;
+            height: 1em;
+            max-width: 100%;
+            max-height: 100%;
+          }
         }
       }
     }

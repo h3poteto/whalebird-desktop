@@ -74,7 +74,24 @@ const NewToot = {
     }
   },
   actions: {
-    postToot ({ state, commit, rootState }, form) {
+    async updateMedia ({state, commit, rootState}, media) {
+      if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
+        throw new AuthenticationError()
+      }
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
+      )
+      return Promise.all(
+        Object.keys(media).map(async (id, index) => {
+          return client.put(`/media/${id}`, { description: media[id] })
+        }
+        )).catch(err => {
+        console.error(err)
+        throw err
+      })
+    },
+    async postToot ({ state, commit, rootState }, form) {
       if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
         throw new AuthenticationError()
       }
