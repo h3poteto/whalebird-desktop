@@ -347,8 +347,8 @@ export default {
 
         .image-description {
           position: absolute;
-          left: 0px;
-          bottom: 0px;
+          left: 0;
+          bottom: 0;
           width: 100%;
           box-sizing: border-box;
           border: 0;
