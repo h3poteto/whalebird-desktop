@@ -74,7 +74,7 @@ html, body, #app {
     background-color: #d9e1e8;
   }
 
-  --specified-fonts: 'Noto Sans', 'Noto Sans CJK JP', 'Takaoゴシック', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+  --specified-fonts: 'Noto Sans', 'Noto Sans CJK JP', 'Takaoゴシック', 'ヒラギノ角ゴ ProN W3', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
   font-family: var(--specified-fonts);
 
