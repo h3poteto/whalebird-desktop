@@ -316,7 +316,6 @@ export default {
 
       input {
         border-radius: 0;
-        font-family: 'Lato', sans-serif;
 
         &::placeholder {
           color: #c0c4cc;
