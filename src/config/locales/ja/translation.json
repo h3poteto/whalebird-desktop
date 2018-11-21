@@ -201,7 +201,7 @@
       "add_cw": "閲覧注意を追加",
       "change_sensitive": "メディアの閲覧注意設定",
       "pined_hashtag": "ハッシュタグを固定する",
-      "description": "視覚障害者のための説明",
+      "description": "メディアの説明を追加"
     },
     "jump": {
       "jump_to": "移動..."
