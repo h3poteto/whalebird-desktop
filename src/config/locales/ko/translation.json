@@ -188,7 +188,8 @@
       "change_visibility": "공개 범위 변경",
       "add_cw": "경고 문구 추가",
       "change_sensitive": "민감한 미디어 설정",
-      "pined_hashtag": "해시태그고정"
+      "pined_hashtag": "해시태그고정",
+      "description": "시각장애인을 위한 설명",
     },
     "jump": {
       "jump_to": "이동"

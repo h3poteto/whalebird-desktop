@@ -200,7 +200,8 @@
       "change_visibility": "Change visibility",
       "add_cw": "Add contents warning",
       "change_sensitive": "Change sensitive",
-      "pined_hashtag": "Pin the hashtag"
+      "pined_hashtag": "Pin the hashtag",
+      "description": "Describe for the visually impaired",
     },
     "jump": {
       "jump_to": "Jump to..."
