@@ -30,7 +30,7 @@ import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 
 export default {
   name: 'follow',
-  componengs: {
+  components: {
     FailoverImg
   },
   props: {
