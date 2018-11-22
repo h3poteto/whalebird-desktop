@@ -1,5 +1,5 @@
 <template>
-<div class="tag">
+<div class="tag" @click="openTag(tag)">
   <div class="icon">
     <icon name="hashtag"></icon>
   </div>
@@ -16,6 +16,14 @@ export default {
     tag: {
       type: Object,
       default: null
+    }
+  },
+  methods: {
+    openTag (tag) {
+      this.$router.push(`/${this.id()}/hashtag/${tag.name}`)
+    },
+    id () {
+      return this.$route.params.id
     }
   }
 }
