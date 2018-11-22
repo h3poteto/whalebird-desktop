@@ -241,7 +241,8 @@
       "reply": "Antworten",
       "reblog": "Reblog",
       "fav": "Favorit",
-      "detail": "Toot details"
+      "detail": "Toot details",
+      "pinned": "Angehefteter Beitrag"
     }
   },
   "side_bar": {

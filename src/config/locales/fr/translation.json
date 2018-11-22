@@ -241,7 +241,8 @@
       "reply": "Répondre",
       "reblog": "Du partage du pouet",
       "fav": "Préféré",
-      "detail": "Détails"
+      "detail": "Détails",
+      "pinned": "Pouet épinglé"
     }
   },
   "side_bar": {
