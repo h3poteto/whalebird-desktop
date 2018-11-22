@@ -1,5 +1,8 @@
 <template>
 <div id="account_timeline">
+  <template v-for="message in pinnedToots">
+    <toot :message="message" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot" :pinned="true"></toot>
+  </template>
   <template v-for="message in timeline">
     <toot :message="message" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
   </template>
@@ -19,6 +22,7 @@ export default {
   computed: {
     ...mapState({
       timeline: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.timeline,
+      pinnedToots: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.pinnedToots,
       lazyLoading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.lazyLoading,
       backgroundColor: state => state.App.theme.background_color
     })
