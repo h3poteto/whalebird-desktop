@@ -1,8 +1,9 @@
 import Account from './Search/Account'
+import Tag from './Search/Tag'
 
 const Search = {
   namespaced: true,
-  modules: { Account },
+  modules: { Account, Tag },
   state: {
     loading: false
   },

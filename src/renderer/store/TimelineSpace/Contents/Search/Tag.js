@@ -1,6 +1,6 @@
 import Mastodon from 'megalodon'
 
-const Account = {
+export default {
   namespaced: true,
   state: {
     results: []
@@ -15,11 +15,11 @@ const Account = {
       commit('TimelineSpace/Contents/Search/changeLoading', true, { root: true })
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
-        rootState.TimelineSpace.account.baseURL + '/api/v1'
+        rootState.TimelineSpace.account.baseURL + '/api/v2'
       )
       return client.get('/search', { q: query, resolve: true })
         .then(res => {
-          commit('updateResults', res.data.accounts)
+          commit('updateResults', res.data.hashtags)
           return res.data
         })
         .finally(() => {
@@ -28,5 +28,3 @@ const Account = {
     }
   }
 }
-
-export default Account
