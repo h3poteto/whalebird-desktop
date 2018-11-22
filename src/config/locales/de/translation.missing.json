@@ -16,5 +16,8 @@
         "public": "Public Timeline"
       }
     }
+  },
+  "search": {
+    "tag": "Hashtag"
   }
 }
