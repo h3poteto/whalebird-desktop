@@ -4,6 +4,8 @@
   :title="title"
   :alt="alt"
   v-on:error="failover"
+  v-on:load="loading = false"
+  :class="loading ? 'loading' : ''"
   @click="$emit('click')" />
 </template>
 
@@ -46,11 +48,14 @@ export default {
 
 <style lang="scss" scoped>
 img {
-  min-width: 20px;
-  min-height: 20px;
-  background-image: url("../../assets/images/loading-spinner.svg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  min-width: 1em;
+  min-height: 1em;
+
+  &.loading {
+    background-image: url("../../images/loading-spinner.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 }
 </style>
