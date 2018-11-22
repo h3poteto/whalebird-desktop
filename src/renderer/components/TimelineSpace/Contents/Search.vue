@@ -15,7 +15,8 @@
       </el-form>
     </div>
     <div class="search-result">
-      <search-account></search-account>
+      <search-account v-if="target==='account'"></search-account>
+      <search-tag v-else-if="target==='tag'"></search-tag>
     </div>
   </div>
 </template>
@@ -23,10 +24,11 @@
 <script>
 import { mapState } from 'vuex'
 import SearchAccount from './Search/Account'
+import SearchTag from './Search/Tag'
 
 export default {
   name: 'search',
-  components: { SearchAccount },
+  components: { SearchAccount, SearchTag },
   data () {
     return {
       target: 'account',
@@ -44,6 +46,10 @@ export default {
           {
             target: 'account',
             label: this.$t('search.account')
+          },
+          {
+            target: 'tag',
+            label: this.$t('search.tag')
           }
         ]
       }
@@ -54,6 +60,15 @@ export default {
       switch (this.target) {
         case 'account':
           this.$store.dispatch('TimelineSpace/Contents/Search/Account/search', this.query)
+            .catch(() => {
+              this.$message({
+                message: this.$t('message.search_error'),
+                type: 'error'
+              })
+            })
+          break
+        case 'tag':
+          this.$store.dispatch('TimelineSpace/Contents/Search/Tag/search', `#${this.query}`)
             .catch(() => {
               this.$message({
                 message: this.$t('message.search_error'),
