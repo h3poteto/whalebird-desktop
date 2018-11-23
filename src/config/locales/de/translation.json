@@ -67,6 +67,8 @@
     "filter": {
       "title": "Filter",
       "placeholder": "Mit regulären Ausdrücken filtern",
+      "show_reblogs": "Geteilte Beiträge anzeigen",
+      "show_replies": "Antworten anzeigen",
       "apply": "Übernehmen"
     },
     "new_toot": "Toot",

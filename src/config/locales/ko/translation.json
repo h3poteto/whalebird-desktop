@@ -67,6 +67,8 @@
     "filter": {
       "title": "필터",
       "placeholder": "정규식으로 필터링",
+      "show_reblogs": "부스트 표시",
+      "show_replies": "답글 표시",
       "apply": "적용"
     },
     "new_toot": "툿",
