@@ -52,7 +52,7 @@ img {
   min-height: 1em;
 
   &.loading {
-    background-image: url("../../images/loading-spinner.svg");
+    background-image: url("../../assets/images/loading-spinner.svg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
