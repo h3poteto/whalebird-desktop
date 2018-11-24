@@ -21,7 +21,14 @@
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
         <el-button type="text" @click="removeAttachment(media)" class="remove-image"><icon name="times-circle"></icon></el-button>
-        <textarea rows="2" maxlength="420" class="image-description" :placeholder="$t('modals.new_toot.description')" v-model="mediaDescriptions[media.id]" ></textarea>
+        <textarea
+          maxlength="420"
+          class="image-description"
+          :placeholder="$t('modals.new_toot.description')"
+          role="textbox"
+          contenteditable="true"
+          aria-multiline="true">
+        </textarea>
       </div>
     </div>
     <div slot="footer" class="dialog-footer">
@@ -358,6 +365,7 @@ export default {
           color: #fff;
           opacity: 1;
           resize: none;
+          overflow: scroll;
 
           &::placeholder {
             color: #c0c4cc;
