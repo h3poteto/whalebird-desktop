@@ -4,9 +4,7 @@
     <FailoverImg :src="user.avatar" :alt="`Avatar of ${user.username}`" />
   </div>
   <div class="name">
-    <div class="username">
-      {{ username(user) }}
-    </div>
+    <div class="username" v-html="username(user)"></div>
     <div class="acct">
       @{{ user.acct }}
     </div>
@@ -33,6 +31,7 @@
 
 <script>
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+import emojify from '~/src/renderer/utils/emojify'
 
 export default {
   name: 'user',
@@ -56,7 +55,7 @@ export default {
   methods: {
     username (account) {
       if (account.display_name !== '') {
-        return account.display_name
+        return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
@@ -101,6 +100,13 @@ export default {
     display: inline-block;
     padding-left: 8px;
     overflow: hidden;
+
+    .username /deep/ {
+      .emojione {
+        max-width: 1em;
+        max-height: 1em;
+      }
+    }
 
     .acct {
       color: #909399;

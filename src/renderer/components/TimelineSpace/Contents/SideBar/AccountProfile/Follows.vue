@@ -2,6 +2,7 @@
 <div id="follows">
   <template v-for="follow in follows">
     <user :user="follow"
+          v-bind:key="follow.id"
           :relationship="targetRelation(follow.id)"
           @followAccount="followAccount"
           @unfollowAccount="unfollowAccount"

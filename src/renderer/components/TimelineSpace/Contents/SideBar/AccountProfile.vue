@@ -65,7 +65,7 @@
       <div class="account">
         @{{ account.acct }}
       </div>
-      <div class="note" v-html="account.note" @click.capture.prevent="noteClick"></div>
+      <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
     </div>
   </div>
   <div class="metadata">
@@ -162,6 +162,9 @@ export default {
       } else {
         return account.username
       }
+    },
+    note (account) {
+      return emojify(account.note, account.emojis)
     },
     noteClick (e) {
       const link = findLink(e.target, 'note')
@@ -329,6 +332,13 @@ export default {
 
     .account {
       color: #409eff;
+    }
+
+    .note {
+      & /deep/ .emojione {
+        max-width: 1.2em;
+        height: 1.2em;
+      }
     }
   }
 
