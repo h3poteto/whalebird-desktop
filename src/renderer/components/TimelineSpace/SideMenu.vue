@@ -205,7 +205,7 @@ export default {
     }
 
     .profile-wide {
-      color: #ffffff;
+      color: #fff;
       font-weight: bold;
       padding: 20px 8px 18px 20px;
       box-sizing: border-box;
@@ -225,7 +225,7 @@ export default {
       .avatar {
         display: inline;
 
-        img{
+        img {
           width: 36px;
           height: 36px;
           border-radius: 50%;
