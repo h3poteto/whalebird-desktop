@@ -45,7 +45,7 @@ export default {
 
   .timeline-wrapper-with-side-bar {
     height: 100%;
-    width: -webkit-calc(100% - 320px);
+    width: calc(100% - 360px);
     overflow: auto;
     transition: all 0.5s;
     scroll-behavior: auto;
