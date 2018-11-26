@@ -31,6 +31,7 @@ export default {
     this.load()
   },
   mounted () {
+    this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/clearTimeline')
     document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
   },
   destroyed () {
