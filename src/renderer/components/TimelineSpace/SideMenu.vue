@@ -1,11 +1,15 @@
 <template>
   <div id="side_menu">
     <div :class="collapse ? 'profile-wrapper narrow-menu':'profile-wrapper'" style="-webkit-app-region: drag;">
-      <div class="profile-narrow" v-if="collapse">
-        <img :src="account.avatar" class="avatar" />
-      </div>
-      <div class="profile-wide" v-else>
-        <div>@{{ account.username }}
+      <div :class="collapse ? 'profile-narrow' : 'profile-wide'">
+        <div class="account">
+          <div class="avatar" v-if="collapse">
+            <img :src="account.avatar" />
+          </div>
+          <div v-else>
+            @{{ account.username }}
+            <span class="domain-name">{{ account.domain }}</span>
+          </div>
           <el-dropdown trigger="click" @command="handleProfile" :title="$t('side_menu.profile')">
             <span class="el-dropdown-link">
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -17,8 +21,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <span class="domain-name">{{ account.domain }}</span>
-      </div>
+      </div> 
       <div class="collapse">
         <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse" :title="$t('side_menu.expand')">
           <i class="el-icon-arrow-right"></i>
@@ -179,17 +182,17 @@ export default {
     position: fixed;
     top: 0;
     width: 180px;
-    height: 70px;
+    height: 82px;
     font-size: 16px;
     display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-end;
 
-    .profile-wide {
-      color: #ffffff;
-      font-weight: bold;
-      padding: 20px 8px 10px 20px;
-      box-sizing: border-box;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .account {
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       .el-dropdown-link {
         cursor: pointer;
@@ -199,6 +202,15 @@ export default {
           color: #409eff;
         }
       }
+    }
+
+    .profile-wide {
+      color: #fff;
+      font-weight: bold;
+      padding: 20px 8px 18px 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       .domain-name {
         word-break: break-all;
@@ -207,18 +219,26 @@ export default {
     }
 
     .profile-narrow {
-      float: left;
+      padding-top: 20px;
+      padding-bottom: 2px;
 
       .avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        margin: 18px 12px;
+        display: inline;
+
+        img {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+        }
+      }
+
+      .account {
+        flex-direction: column;
       }
     }
 
     .collapse {
-      margin-top: 24px;
+      display: flex;
 
       .do-collapse {
         color: #dcdfe6;
@@ -232,7 +252,6 @@ export default {
       .release-collapse {
         color: #dcdfe6;
         padding: 0;
-        margin-left: -10px;
 
         &:hover {
           color: #409eff;
@@ -243,8 +262,8 @@ export default {
 
   .timeline-menu /deep/ {
     position: fixed;
-    top: 70px;
-    height: calc(100% - 70px);
+    top: 82px;
+    height: calc(100% - 82px);
     width: 180px;
     border: none;
     overflow-y: auto;
