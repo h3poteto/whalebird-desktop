@@ -259,7 +259,8 @@
       "reply": "Reply",
       "reblog": "Reblog",
       "fav": "Favourite",
-      "detail": "Toot details"
+      "detail": "Toot details",
+      "pinned": "Pinned toot"
     }
   },
   "side_bar": {

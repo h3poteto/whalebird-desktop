@@ -253,7 +253,8 @@
       "reply": "返信",
       "reblog": "ブースト",
       "fav": "お気に入り",
-      "detail": "詳細"
+      "detail": "詳細",
+      "pinned": "固定されたトゥート"
     }
   },
   "side_bar": {
