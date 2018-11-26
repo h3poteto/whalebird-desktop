@@ -192,6 +192,6 @@ export default {
 .upper-with-side-bar {
   position: fixed;
   bottom: 20px;
-  right: -webkit-calc(20px + 320px);
+  right: calc(20px + 360px);
 }
 </style>
