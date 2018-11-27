@@ -140,6 +140,7 @@ export default {
       height: 36px;
       border-radius: 4px;
       cursor: pointer;
+      display: block;
     }
   }
 
