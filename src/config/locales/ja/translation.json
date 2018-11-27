@@ -68,6 +68,8 @@
     "filter": {
       "title": "フィルター",
       "placeholder": "正規表現でフィルター",
+      "show_reblogs": "ブースト表示",
+      "show_replies": "返信表示",
       "apply": "適用"
     },
     "new_toot": "トゥート",

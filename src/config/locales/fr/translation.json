@@ -67,6 +67,8 @@
     "filter": {
       "title": "Filtrer",
       "placeholder": "Filtrer par une expression régulière",
+      "show_reblogs": "Afficher les partages",
+      "show_replies": "Afficher les réponses",
       "apply": "Appliquer"
     },
     "new_toot": "Pouet",

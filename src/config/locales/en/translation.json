@@ -68,6 +68,9 @@
     "filter": {
       "title": "Filter",
       "placeholder": "Filter out by regular expressions",
+      "show_dms": "Show direct messages",
+      "show_reblogs": "Show reblogs",
+      "show_replies": "Show replies",
       "apply": "Apply"
     },
     "new_toot": "Toot",

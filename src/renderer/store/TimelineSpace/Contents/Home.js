@@ -7,7 +7,9 @@ const Home = {
     heading: true,
     timeline: [],
     unreadTimeline: [],
-    filter: ''
+    filter: '',
+    showReblogs: true,
+    showReplies: true
   },
   mutations: {
     changeLazyLoading (state, value) {
@@ -68,6 +70,12 @@ const Home = {
     },
     changeFilter (state, filter) {
       state.filter = filter
+    },
+    showReblogs (state, visible) {
+      state.showReblogs = visible
+    },
+    showReplies (state, visible) {
+      state.showReplies = visible
     }
   },
   actions: {

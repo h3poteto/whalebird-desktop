@@ -4,7 +4,7 @@
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="home-timeline" v-for="message in timeline" :key="message.uri + message.id">
+    <div class="home-timeline" v-for="message in filteredTimeline" :key="message.uri + message.id">
       <toot
         :message="message"
         :filter="filter"
@@ -52,7 +52,9 @@ export default {
       lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
       heading: state => state.TimelineSpace.Contents.Home.heading,
       unread: state => state.TimelineSpace.Contents.Home.unreadTimeline,
-      filter: state => state.TimelineSpace.Contents.Home.filter
+      filter: state => state.TimelineSpace.Contents.Home.filter,
+      showReblogs: state => state.TimelineSpace.Contents.Home.showReblogs,
+      showReplies: state => state.TimelineSpace.Contents.Home.showReplies
     }),
     ...mapGetters('TimelineSpace/Modals', [
       'modalOpened'
@@ -67,6 +69,17 @@ export default {
       // Sometimes toots are deleted, so perhaps focused toot don't exist.
       const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       return currentIndex === -1
+    },
+    filteredTimeline () {
+      return this.timeline.filter((toot) => {
+        if (toot.in_reply_to_id) {
+          return this.showReplies
+        } else if (toot.reblog) {
+          return this.showReblogs
+        } else {
+          return true
+        }
+      })
     }
   },
   mounted () {
