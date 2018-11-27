@@ -79,7 +79,7 @@ export default {
   position: fixed;
   top: 48px;
   right: 0;
-  width: 320px;
+  width: 360px;
   height: calc(100% - 48px);
   border-left: solid 1px var(--theme-border-color);
 
@@ -111,7 +111,7 @@ export default {
   transition: all 0.5s;
 }
 .slide-detail-enter, .slide-detail-leave-to {
-  margin-right: -320px;
+  margin-right: -360px;
   opacity: 0;
 }
 </style>

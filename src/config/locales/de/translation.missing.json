@@ -16,5 +16,13 @@
         "public": "Public Timeline"
       }
     }
+  },
+  "search": {
+    "tag": "Hashtag"
+  },
+  "modals": {
+    "shortcut": {
+      "?": "Show this help"
+    }
   }
 }

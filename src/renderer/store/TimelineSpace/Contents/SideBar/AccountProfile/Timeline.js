@@ -4,6 +4,7 @@ const Timeline = {
   namespaced: true,
   state: {
     timeline: [],
+    pinnedToots: [],
     lazyLoading: false
   },
   mutations: {
@@ -12,6 +13,9 @@ const Timeline = {
     },
     insertTimeline (state, messages) {
       state.timeline = state.timeline.concat(messages)
+    },
+    updatePinnedToots (state, messages) {
+      state.pinnedToots = messages
     },
     changeLazyLoading (state, value) {
       state.lazyLoading = value
@@ -50,7 +54,13 @@ const Timeline = {
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
-      return client.get(`/accounts/${account.id}/statuses`, { limit: 40 })
+      return client.get(`/accounts/${account.id}/statuses`, { limit: 10, pinned: true })
+        .then(res => {
+          commit('updatePinnedToots', res.data)
+        })
+        .then(() => {
+          return client.get(`/accounts/${account.id}/statuses`, { limit: 40 })
+        })
         .then(res => {
           commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
           commit('updateTimeline', res.data)
