@@ -5,7 +5,7 @@
   :element-loading-text="$t('message.loading')"
   element-loading-spinner="el-icon-loading"
   element-loading-background="rgba(0, 0, 0, 0.8)"
-  v-shortkey="shortcutEnabled ? {help: ['h']} : {}"
+  v-shortkey="shortcutEnabled ? {help: ['shift', '?']} : {}"
   @shortkey="handleKey"
   >
   <side-menu></side-menu>

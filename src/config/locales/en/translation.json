@@ -234,6 +234,7 @@
       "p": "Open account profile of the toot",
       "i": "Open the images",
       "x": "Show/hide CW and NSFW",
+      "?": "Show this help",
       "esc": "Close current page"
     },
     "report": {

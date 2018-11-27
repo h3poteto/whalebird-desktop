@@ -60,6 +60,10 @@
         <td>{{ $t('modals.shortcut.x') }}</td>
       </tr>
       <tr>
+        <td><kbd>?</kbd></td>
+        <td>{{ $t('modals.shortcut.?') }}</td>
+      </tr>
+      <tr>
         <td><kbd>esc</kbd></td>
         <td>{{ $t('modals.shortcut.esc') }}</td>
       </tr>
