@@ -82,17 +82,28 @@ export default {
 .user {
   display: flex;
   box-sizing: border-box;
-  padding: 4px 12px 8px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--theme-border-color);
   cursor: pointer;
+  align-items: center;
+
+  .fa-icon {
+    font-size: 0.9em;
+    width: auto;
+    height: 1em;
+    max-width: 100%;
+    max-height: 100%;
+  }
 
   .icon {
-    display: inline-block;
+    float: left;
 
     img {
       width: 36px;
       height: 36px;
       border-radius: 4px;
+      cursor: pointer;
+      display: block;
     }
   }
 
@@ -123,14 +134,20 @@ export default {
 
     .follow {
       color: var(--theme-primary-color);
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
 
     .unfollow {
       color: #409eff;
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
 
     .requested {
       color: var(--theme-primary-color);
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
   }
 }
