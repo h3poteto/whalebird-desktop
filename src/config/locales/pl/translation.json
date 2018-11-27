@@ -67,6 +67,8 @@
     "filter": {
       "title": "Filtruj",
       "placeholder": "Filtruj z użyciem wyrażeń regularnych",
+      "show_reblogs": "Pokazuj podbicia",
+      "show_replies": "Pokazuj odpowiedzi",
       "apply": "Zastosuj"
     },
     "new_toot": "Wpisy",

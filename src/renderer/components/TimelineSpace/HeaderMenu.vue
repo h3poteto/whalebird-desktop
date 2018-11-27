@@ -27,6 +27,12 @@
                 ></input>
             </div>
           </el-form-item>
+          <el-form-item :label="$t('header_menu.filter.show_reblogs')" v-if="extrasFilterable()">
+            <el-checkbox v-model="showReblogs"></el-checkbox>
+          </el-form-item>
+          <el-form-item :label="$t('header_menu.filter.show_replies')" v-if="extrasFilterable()">
+            <el-checkbox v-model="showReplies"></el-checkbox>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="applyFilter(filter)">{{ $t('header_menu.filter.apply') }}</el-button>
           </el-form-item>
@@ -51,7 +57,9 @@ export default {
   data () {
     return {
       filter: '',
-      filterVisible: false
+      filterVisible: false,
+      showReblogs: true,
+      showReplies: true
     }
   },
   computed: {
@@ -155,6 +163,8 @@ export default {
       switch (this.$route.name) {
         case 'home':
           this.filter = this.$store.state.TimelineSpace.Contents.Home.filter
+          this.showReblogs = this.$store.state.TimelineSpace.Contents.Home.showReblogs
+          this.showReplies = this.$store.state.TimelineSpace.Contents.Home.showReplies
           break
         case 'notifications':
           this.filter = this.$store.state.TimelineSpace.Contents.Notifications.filter
@@ -185,6 +195,8 @@ export default {
       switch (this.$route.name) {
         case 'home':
           this.$store.commit('TimelineSpace/Contents/Home/changeFilter', filter)
+          this.$store.commit('TimelineSpace/Contents/Home/showReblogs', this.showReblogs)
+          this.$store.commit('TimelineSpace/Contents/Home/showReplies', this.showReplies)
           break
         case 'notifications':
           this.$store.commit('TimelineSpace/Contents/Notifications/changeFilter', filter)
@@ -222,6 +234,14 @@ export default {
         case 'tag':
         case 'list':
         case 'direct-messages':
+          return true
+        default:
+          return false
+      }
+    },
+    extrasFilterable () {
+      switch (this.$route.name) {
+        case 'home':
           return true
         default:
           return false
