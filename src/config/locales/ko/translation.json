@@ -67,6 +67,8 @@
     "filter": {
       "title": "필터",
       "placeholder": "정규식으로 필터링",
+      "show_reblogs": "부스트 표시",
+      "show_replies": "답글 표시",
       "apply": "적용"
     },
     "new_toot": "툿",
@@ -189,7 +191,8 @@
       "add_cw": "경고 문구 추가",
       "change_sensitive": "민감한 미디어 설정",
       "pined_hashtag": "해시태그고정",
-      "description": "시각장애인을 위한 설명"
+      "description": "시각장애인을 위한 설명",
+      "pinned": "고정 된 툿"
     },
     "jump": {
       "jump_to": "이동"

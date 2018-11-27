@@ -67,6 +67,8 @@
     "filter": {
       "title": "Filtruj",
       "placeholder": "Filtruj z użyciem wyrażeń regularnych",
+      "show_reblogs": "Pokazuj podbicia",
+      "show_replies": "Pokazuj odpowiedzi",
       "apply": "Zastosuj"
     },
     "new_toot": "Wpisy",
@@ -189,7 +191,8 @@
       "add_cw": "Dodaj ostrzeżenie zawartości",
       "change_sensitive": "Zmień wrażliwy",
       "pined_hashtag": "Pin the hashtag",
-      "description": "Wprowadź opis dla niewidomych i niedowidzących"
+      "description": "Wprowadź opis dla niewidomych i niedowidzących",
+      "pinned": "Przypięty wpis"
     },
     "jump": {
       "jump_to": "Przejdź do…"

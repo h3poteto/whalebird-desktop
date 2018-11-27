@@ -91,6 +91,9 @@
         <span class="count">
           {{ favouritesCount(message) }}
         </span>
+        <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" v-show="pinned">
+          <icon name="thumbtack" scale="0.9"></icon>
+        </el-button>
         <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
           <div class="popper toot-menu">
             <ul class="menu-list">
@@ -167,6 +170,10 @@ export default {
       default: false
     },
     overlaid: {
+      type: Boolean,
+      default: false
+    },
+    pinned: {
       type: Boolean,
       default: false
     }
@@ -661,6 +668,10 @@ export default {
         font-size: 0.8em;
         color: #909399;
         margin: 0 0 4px -8px;
+      }
+
+      .pinned {
+        color: gold;
       }
 
       .toot-menu {

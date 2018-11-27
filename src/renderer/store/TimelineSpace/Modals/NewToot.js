@@ -74,7 +74,7 @@ const NewToot = {
     }
   },
   actions: {
-    async updateMedia ({state, commit, rootState}, media) {
+    async updateMedia ({ state, commit, rootState }, media) {
       if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
         throw new AuthenticationError()
       }

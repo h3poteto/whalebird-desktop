@@ -68,6 +68,9 @@
     "filter": {
       "title": "Filter",
       "placeholder": "Filter out by regular expressions",
+      "show_dms": "Show direct messages",
+      "show_reblogs": "Show reblogs",
+      "show_replies": "Show replies",
       "apply": "Apply"
     },
     "new_toot": "Toot",
@@ -234,6 +237,7 @@
       "p": "Open account profile of the toot",
       "i": "Open the images",
       "x": "Show/hide CW and NSFW",
+      "?": "Show this help",
       "esc": "Close current page"
     },
     "report": {
@@ -259,7 +263,8 @@
       "reply": "Reply",
       "reblog": "Reblog",
       "fav": "Favourite",
-      "detail": "Toot details"
+      "detail": "Toot details",
+      "pinned": "Pinned toot"
     }
   },
   "side_bar": {
@@ -289,6 +294,7 @@
   "search": {
     "search": "Search",
     "account": "Account",
+    "tag": "Hashtag",
     "keyword": "keyword"
   },
   "lists": {
