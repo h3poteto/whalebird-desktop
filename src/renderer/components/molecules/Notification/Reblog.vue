@@ -2,7 +2,7 @@
 <div
   class="status"
   tabIndex="0"
-  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], open: ['o'], profile: ['p']} : {}"
+  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], right: ['l'], left: ['h'], open: ['o'], profile: ['p']} : {}"
   @shortkey="handleStatusControl"
   ref="status"
   @click="$emit('select')"
@@ -227,6 +227,12 @@ export default {
           break
         case 'prev':
           this.$emit('focusPrev')
+          break
+        case 'right':
+          this.$emit('focusRight')
+          break
+        case 'left':
+          this.$emit('focusLeft')
           break
         case 'open':
           this.openDetail(this.message.status)

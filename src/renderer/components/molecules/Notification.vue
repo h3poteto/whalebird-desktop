@@ -7,6 +7,7 @@
              :overlaid="overlaid"
              @focusNext="$emit('focusNext')"
              @focusPrev="$emit('focusPrev')"
+             @focusRight="$emit('focusRight')"
              @select="$emit('selectNotification')"
              >
   </favourite>
@@ -26,6 +27,7 @@
             :overlaid="overlaid"
             @focusNext="$emit('focusNext')"
             @focusPrev="$emit('focusPrev')"
+            @focusRight="$emit('focusRight')"
             @select="$emit('selectNotification')"
             >
    </mention>
@@ -36,6 +38,7 @@
            :overlaid="overlaid"
            @focusNext="$emit('focusNext')"
            @focusPrev="$emit('focusPrev')"
+           @focusRight="$emit('focusRight')"
            @select="$emit('selectNotification')"
            >
    </reblog>
