@@ -6,7 +6,7 @@ const Toot = {
   state: {},
   mutations: {},
   actions: {
-    reblog ({ state, commit, rootState }, message) {
+    async reblog ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -20,14 +20,17 @@ const Toot = {
           return res.data.reblog
         })
     },
-    unreblog ({ state, commit, rootState }, message) {
+    async unreblog ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/statuses/${message.id}/unreblog`)
+        .then(res => {
+          return res.data
+        })
     },
-    addFavourite ({ state, commit, rootState }, message) {
+    async addFavourite ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -38,14 +41,17 @@ const Toot = {
           return res.data
         })
     },
-    removeFavourite ({ state, commit, rootState }, message) {
+    async removeFavourite ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/statuses/${message.id}/unfavourite`)
+        .then(res => {
+          return res.data
+        })
     },
-    deleteToot ({ state, commit, rootState }, message) {
+    async deleteToot ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -55,7 +61,7 @@ const Toot = {
           return message
         })
     },
-    block ({ rootState, commit }, account) {
+    async block ({ rootState, commit }, account) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
