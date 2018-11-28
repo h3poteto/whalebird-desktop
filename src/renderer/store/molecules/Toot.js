@@ -6,7 +6,7 @@ const Toot = {
   state: {},
   mutations: {},
   actions: {
-    async reblog ({ state, commit, rootState }, message) {
+    reblog ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -20,7 +20,7 @@ const Toot = {
           return res.data.reblog
         })
     },
-    async unreblog ({ state, commit, rootState }, message) {
+    unreblog ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -30,7 +30,7 @@ const Toot = {
           return res.data
         })
     },
-    async addFavourite ({ state, commit, rootState }, message) {
+    addFavourite ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -41,7 +41,7 @@ const Toot = {
           return res.data
         })
     },
-    async removeFavourite ({ state, commit, rootState }, message) {
+    removeFavourite ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -51,7 +51,7 @@ const Toot = {
           return res.data
         })
     },
-    async deleteToot ({ state, commit, rootState }, message) {
+    deleteToot ({ state, commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -61,7 +61,7 @@ const Toot = {
           return message
         })
     },
-    async block ({ rootState, commit }, account) {
+    block ({ rootState, commit }, account) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
