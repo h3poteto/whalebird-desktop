@@ -14,6 +14,7 @@
         v-on:delete="deleteToot"
         @focusNext="focusNext"
         @focusPrev="focusPrev"
+        @focusRight="focusSidebar"
         @selectToot="focusToot(message)"
         >
       </toot>
@@ -32,6 +33,7 @@ import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/molecules/Toot'
 import scrollTop from '../../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
+import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'list',
@@ -76,6 +78,16 @@ export default {
         this.$store.commit('TimelineSpace/changeLoading', false)
       })
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+  },
+  mounted () {
+    Event.$on('focus-timeline', () => {
+      // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
+      const previousFocusedId = this.focusedId
+      this.focusedId = 0
+      this.$nextTick(function () {
+        this.focusedId = previousFocusedId
+      })
+    })
   },
   watch: {
     list_id: function () {
@@ -204,6 +216,9 @@ export default {
     },
     focusToot (message) {
       this.focusedId = message.uri + message.id
+    },
+    focusSidebar () {
+      Event.$emit('focus-sidebar')
     },
     handleKey (event) {
       switch (event.srcKey) {

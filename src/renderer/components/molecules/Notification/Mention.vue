@@ -8,6 +8,7 @@
       v-on:update="updateToot"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
+      @focusRight="$emit('focusRight')"
       @selectToot="$emit('select')"
       >
     </toot>
