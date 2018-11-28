@@ -42,8 +42,7 @@ export default {
   mixins: [reloadable],
   data () {
     return {
-      focusedId: null,
-      backupFocusedId: null
+      focusedId: null
     }
   },
   computed: {
