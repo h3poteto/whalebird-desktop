@@ -12,6 +12,7 @@
         :overlaid="modalOpened"
         @focusNext="focusNext"
         @focusPrev="focusPrev"
+        @focusRight="focusSidebar"
         @selectNotification="focusNotification(message)"
         >
       </notification>
@@ -31,6 +32,7 @@ import { mapState, mapGetters } from 'vuex'
 import Notification from '~/src/renderer/components/molecules/Notification'
 import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
+import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'notifications',
@@ -71,11 +73,23 @@ export default {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
     this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+
+    Event.$on('focus-timeline', () => {
+      // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
+      const previousFocusedId = this.focusedId
+      this.focusedId = 0
+      this.$nextTick(function () {
+        this.focusedId = previousFocusedId
+      })
+    })
   },
   beforeUpdate () {
     if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
     }
+  },
+  beforeDestroy () {
+    Event.$off('focus-timeline')
   },
   destroyed () {
     this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
@@ -159,6 +173,9 @@ export default {
     },
     focusNotification (notification) {
       this.focusedId = notification.id
+    },
+    focusSidebar () {
+      Event.$emit('focus-sidebar')
     },
     handleKey (event) {
       switch (event.srcKey) {
