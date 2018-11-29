@@ -71,6 +71,8 @@ export default {
   },
   created () {
     this.load()
+  },
+  mounted () {
     Event.$on('focus-sidebar', () => {
       this.focusedId = 0
       this.$nextTick(function () {
@@ -84,6 +86,7 @@ export default {
     }
   },
   beforeDestroy () {
+    Event.$emit('focus-timeline')
     Event.$off('focus-sidebar')
   },
   methods: {
