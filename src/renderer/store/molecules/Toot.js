@@ -26,6 +26,9 @@ const Toot = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/statuses/${message.id}/unreblog`)
+        .then(res => {
+          return res.data
+        })
     },
     addFavourite ({ state, commit, rootState }, message) {
       const client = new Mastodon(
@@ -44,6 +47,9 @@ const Toot = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.post(`/statuses/${message.id}/unfavourite`)
+        .then(res => {
+          return res.data
+        })
     },
     deleteToot ({ state, commit, rootState }, message) {
       const client = new Mastodon(
