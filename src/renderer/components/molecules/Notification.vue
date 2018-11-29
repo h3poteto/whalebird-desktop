@@ -17,6 +17,7 @@
           :overlaid="overlaid"
           @focusNext="$emit('focusNext')"
           @focusPrev="$emit('focusPrev')"
+          @focusRight="$emit('focusRight')"
           @select="$emit('selectNotification')"
           >
   </follow>
