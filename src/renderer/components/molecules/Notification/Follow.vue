@@ -2,7 +2,7 @@
 <div
   class="follow"
   tabIndex="0"
-  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], profile: ['p']} : {}"
+  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], right: ['l'], profile: ['p']} : {}"
   @shortkey="handleStatusControl"
   ref="status"
   @click="$emit('select')"
@@ -90,6 +90,9 @@ export default {
           break
         case 'prev':
           this.$emit('focusPrev')
+          break
+        case 'right':
+          this.$emit('focusRight')
           break
         case 'profile':
           this.openUser(this.message.account)

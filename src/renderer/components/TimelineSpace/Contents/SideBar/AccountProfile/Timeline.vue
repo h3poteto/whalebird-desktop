@@ -1,10 +1,35 @@
 <template>
 <div id="account_timeline">
   <template v-for="message in pinnedToots">
-    <toot :message="message" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot" :pinned="true"></toot>
+    <toot
+      :message="message"
+      :key="message.id"
+      :focused="message.uri + message.id === focusedId"
+      :pinned="true"
+      :overlaid="modalOpened"
+      v-on:update="updateToot"
+      v-on:delete="deleteToot"
+      @focusNext="focusNext"
+      @focusPrev="focusPrev"
+      @focusLeft="focusTimeline"
+      @selectToot="focusToot(message)"
+      >
+    </toot>
   </template>
   <template v-for="message in timeline">
-    <toot :message="message" :key="message.id" v-on:update="updateToot" v-on:delete="deleteToot"></toot>
+    <toot
+      :message="message"
+      :key="message.id"
+      :focused="message.uri + message.id === focusedId"
+      :overlaid="modalOpened"
+      v-on:update="updateToot"
+      v-on:delete="deleteToot"
+      @focusNext="focusNext"
+      @focusPrev="focusPrev"
+      @focusLeft="focusTimeline"
+      @selectToot="focusToot(message)"
+      >
+    </toot>
   </template>
   <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
   </div>
@@ -12,20 +37,31 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/molecules/Toot'
+import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'timeline',
   props: [ 'account' ],
   components: { Toot },
+  data () {
+    return {
+      focusedId: null
+    }
+  },
   computed: {
-    ...mapState({
-      timeline: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.timeline,
-      pinnedToots: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.pinnedToots,
-      lazyLoading: state => state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.lazyLoading,
-      backgroundColor: state => state.App.theme.background_color
-    })
+    ...mapState('TimelineSpace/Contents/SideBar/AccountProfile/Timeline', {
+      timeline: state => state.timeline,
+      pinnedToots: state => state.pinnedToots,
+      lazyLoading: state => state.lazyLoading
+    }),
+    ...mapState('App', {
+      backgroundColor: state => state.theme.background_color
+    }),
+    ...mapGetters('TimelineSpace/Modals', [
+      'modalOpened'
+    ])
   },
   created () {
     this.load()
@@ -33,6 +69,16 @@ export default {
   mounted () {
     this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/clearTimeline')
     document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
+    Event.$on('focus-sidebar', () => {
+      this.focusedId = 0
+      this.$nextTick(function () {
+        this.focusedId = this.timeline[0].uri + this.timeline[0].id
+      })
+    })
+  },
+  beforeDestroy () {
+    Event.$emit('focus-timeline')
+    Event.$off('focus-sidebar')
   },
   destroyed () {
     if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
@@ -77,6 +123,27 @@ export default {
     },
     deleteToot (message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/deleteToot', message)
+    },
+    focusNext () {
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
+      if (currentIndex === -1) {
+        this.focusedId = this.timeline[0].uri + this.timeline[0].id
+      } else if (currentIndex < this.timeline.length - 1) {
+        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
+      }
+    },
+    focusPrev () {
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
+      if (currentIndex > 0) {
+        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
+      }
+    },
+    focusToot (message) {
+      this.focusedId = message.uri + message.id
+    },
+    focusTimeline () {
+      this.focusedId = 0
+      Event.$emit('focus-timeline')
     }
   }
 }
