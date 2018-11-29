@@ -7,7 +7,9 @@
     class="new-toot-modal">
     <el-form v-on:submit.prevent="toot" role="form">
       <div class="spoiler" v-show="showContentWarning">
-        <el-input :placeholder="$t('modals.new_toot.cw')" v-model="spoiler"></el-input>
+        <div class="el-input">
+          <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" v-shortkey.avoid />
+        </div>
       </div>
       <Status
         v-model="status"
