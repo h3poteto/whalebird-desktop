@@ -27,7 +27,9 @@
           <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
         </div>
         <div class="timestamp">
-          {{ parseDatetime(originalMessage(message).created_at) }}
+          <time :datetime="originalMessage(message).created_at" :title="readableTimestamp">
+            {{ timestamp }}
+          </time>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -144,6 +146,7 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+import { setInterval, clearInterval } from 'timers'
 
 export default {
   name: 'toot',
@@ -153,7 +156,8 @@ export default {
   data () {
     return {
       showContent: false,
-      showAttachments: false
+      showAttachments: false,
+      now: Date.now()
     }
   },
   props: {
@@ -186,12 +190,25 @@ export default {
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid
+    },
+    timestamp: function () {
+      return this.parseDatetime(this.originalMessage(this.message).created_at, this.now)
+    },
+    readableTimestamp: function () {
+      moment.locale(this.language)
+      return moment(this.originalMessage(this.message).created_at).format('LLLL')
     }
   },
   mounted () {
     if (this.focused) {
       this.$refs.status.focus()
     }
+    this.updateInterval = setInterval(() => {
+      this.$data.now = Date.now()
+    }, 60000)
+  },
+  beforeDestroy () {
+    clearInterval(this.updateInterval)
   },
   watch: {
     focused: function (newState, oldState) {
@@ -241,13 +258,13 @@ export default {
           return ''
       }
     },
-    parseDatetime (datetime) {
+    parseDatetime (datetime, epoch) {
       switch (this.timeFormat) {
         case TimeFormat.Absolute.value:
           return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
         case TimeFormat.Relative.value:
           moment.locale(this.language)
-          return moment(datetime).fromNow()
+          return moment(datetime).from(epoch)
       }
     },
     tootClick (e) {
