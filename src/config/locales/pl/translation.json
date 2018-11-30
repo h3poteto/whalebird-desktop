@@ -274,7 +274,8 @@
   "search": {
     "search": "Szukaj",
     "account": "Konta",
-    "keyword": "Słowo kluczowe"
+    "keyword": "Słowo kluczowe",
+    "toot": "Wpisy"
   },
   "lists": {
     "index": {

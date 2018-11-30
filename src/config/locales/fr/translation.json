@@ -274,7 +274,8 @@
   "search": {
     "search": "Rechercher",
     "account": "Compte",
-    "keyword": "mot clé"
+    "keyword": "mot clé",
+    "toot": "Pouets"
   },
   "lists": {
     "index": {
