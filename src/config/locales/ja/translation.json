@@ -288,7 +288,8 @@
     "search": "検索",
     "account": "アカウント",
     "tag": "ハッシュタグ",
-    "keyword": "キーワード"
+    "keyword": "キーワード",
+    "toot": "トゥート時"
   },
   "lists": {
     "index": {

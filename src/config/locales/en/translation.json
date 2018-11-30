@@ -295,7 +295,8 @@
     "search": "Search",
     "account": "Account",
     "tag": "Hashtag",
-    "keyword": "keyword"
+    "keyword": "keyword",
+    "toot": "Toot"
   },
   "lists": {
     "index": {
