@@ -188,7 +188,7 @@ export default {
       }
       if (this.status.length <= 0 || this.status.length >= 500) {
         return this.$message({
-          message: this.$t('validation.new_toot.toot_length', {min: 1, max: 500}),
+          message: this.$t('validation.new_toot.toot_length', { min: 1, max: 500 }),
           type: 'error'
         })
       }
@@ -209,7 +209,7 @@ export default {
       if (this.attachedMedias.length > 0) {
         if (this.attachedMedias.length > 4) {
           return this.$message({
-            message: this.$t('validation.new_toot.attach_length', {max: 4}),
+            message: this.$t('validation.new_toot.attach_length', { max: 4 }),
             type: 'error'
           })
         }
