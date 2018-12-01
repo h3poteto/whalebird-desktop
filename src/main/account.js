@@ -84,7 +84,7 @@ export default class Account {
    */
   listAccounts () {
     return new Promise((resolve, reject) => {
-      this.db.find({accessToken: { $ne: '' }}).sort({ order: 1 }).exec((err, docs) => {
+      this.db.find({ accessToken: { $ne: '' } }).sort({ order: 1 }).exec((err, docs) => {
         if (err) return reject(err)
         if (empty(docs)) return reject(new EmptyRecordError('empty'))
         resolve(docs)
