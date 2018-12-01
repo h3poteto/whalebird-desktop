@@ -274,7 +274,8 @@
   "search": {
     "search": "검색",
     "account": "계정",
-    "keyword": "키워드"
+    "keyword": "키워드",
+    "toot": "툿"
   },
   "lists": {
     "index": {

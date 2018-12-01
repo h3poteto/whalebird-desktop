@@ -274,7 +274,8 @@
   "search": {
     "search": "Suche",
     "account": "Konto",
-    "keyword": "stichwort"
+    "keyword": "stichwort",
+    "toot": "Toot"
   },
   "lists": {
     "index": {
