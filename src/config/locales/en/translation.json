@@ -230,6 +230,8 @@
       "ctrl_enter": "Post the toot",
       "j": "Select the next toot",
       "k": "Select the previous toot",
+      "h": "Switch the focus to left column",
+      "l": "Switch the focus to right column",
       "r": "Reply to the toot",
       "b": "Reblog the toot",
       "f": "Favourite the toot",
