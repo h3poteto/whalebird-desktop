@@ -22,6 +22,8 @@
   },
   "modals": {
     "shortcut": {
+      "h": "Switch the focus to left column",
+      "l": "Switch the focus to right column",
       "?": "Show this help"
     }
   }
