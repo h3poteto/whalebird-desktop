@@ -1,7 +1,7 @@
 export default class Hashtags {
   constructor (db) {
     this.db = db
-    this.db.ensureIndex({fieldName: 'tagName', unique: true}, (_) => {})
+    this.db.ensureIndex({ fieldName: 'tagName', unique: true }, (_) => {})
   }
 
   listTags () {
@@ -15,7 +15,7 @@ export default class Hashtags {
 
   insertTag (tag) {
     return new Promise((resolve, reject) => {
-      this.db.insert({tagName: tag}, (err, doc) => {
+      this.db.insert({ tagName: tag }, (err, doc) => {
         if (err) return reject(err)
         resolve(doc)
       })

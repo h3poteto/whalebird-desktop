@@ -92,13 +92,13 @@ export default {
           this.$store.dispatch('Login/confirmInstance', this.form.domainName)
             .then(() => {
               this.$message({
-                message: this.$t('message.domain_confirmed', {domain: this.form.domainName}),
+                message: this.$t('message.domain_confirmed', { domain: this.form.domainName }),
                 type: 'success'
               })
             })
             .catch(() => {
               this.$message({
-                message: this.$t('message.domain_doesnt_exist', {domain: this.form.domainName}),
+                message: this.$t('message.domain_doesnt_exist', { domain: this.form.domainName }),
                 type: 'error'
               })
             })
