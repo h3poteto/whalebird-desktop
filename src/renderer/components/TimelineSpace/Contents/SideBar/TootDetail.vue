@@ -90,8 +90,15 @@ export default {
     Event.$off('focus-sidebar')
   },
   methods: {
+    originalMessage (message) {
+      if (message.reblog !== null) {
+        return message.reblog
+      } else {
+        return message
+      }
+    },
     load () {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/fetchToot', this.message)
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/fetchToot', this.originalMessage(this.message))
         .then(() => {
           const toot = this.$refs.original
           toot.scrollIntoView()
