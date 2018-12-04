@@ -1,3 +1,4 @@
+import sanitizeHtml from 'sanitize-html'
 import { ipcRenderer } from 'electron'
 import Mastodon from 'megalodon'
 import SideMenu from './TimelineSpace/SideMenu'
@@ -362,7 +363,10 @@ function createNotification (notification, notifyConfig) {
       if (notifyConfig.reply) {
         // Clean html tags
         return new Notification(`${notification.status.account.display_name}`, {
-          body: `${notification.status.content.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')}`
+          body: sanitizeHtml(notification.status.content, {
+            allowedTags: [],
+            allowedAttributes: []
+          })
         })
       }
       break
