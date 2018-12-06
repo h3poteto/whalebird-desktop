@@ -1,5 +1,80 @@
 # Change Log
 
+## [2.6.0] - 2018-12-04
+### Added
+
+- [#759](https://github.com/h3poteto/whalebird-desktop/pull/759) Enable searching toots by link
+- [#756](https://github.com/h3poteto/whalebird-desktop/pull/756) Switch focus between Timelines and Account Profile using shortcut keys
+- [#755](https://github.com/h3poteto/whalebird-desktop/pull/755) Switch focus between Timeline and Toot Detail using shortcut keys
+
+### Changed
+
+- [#751](https://github.com/h3poteto/whalebird-desktop/pull/751) Change help command of shortcut
+- [#748](https://github.com/h3poteto/whalebird-desktop/pull/748) Enable account dropdown in narrow sidebar menu
+- [#747](https://github.com/h3poteto/whalebird-desktop/pull/747) Increase sidebar to 360px
+
+### Fixed
+
+- [#764](https://github.com/h3poteto/whalebird-desktop/pull/764) Update shortcut help for switching focus
+- [#761](https://github.com/h3poteto/whalebird-desktop/pull/761) Stylelint fixes
+- [#757](https://github.com/h3poteto/whalebird-desktop/pull/757) Fix moving cursor in CW input
+- [#754](https://github.com/h3poteto/whalebird-desktop/pull/754) Fix undoing retoots/favourites
+- [#753](https://github.com/h3poteto/whalebird-desktop/pull/753) Keep timestamp up-to-date and accessible
+- [#752](https://github.com/h3poteto/whalebird-desktop/pull/752) Fix user layout in Follow(ers) tab
+- [#746](https://github.com/h3poteto/whalebird-desktop/pull/746) Fix editing media description
+- [#745](https://github.com/h3poteto/whalebird-desktop/pull/745) Clear sidebar timeline also when component changed
+- [#744](https://github.com/h3poteto/whalebird-desktop/pull/744) Emojify account profile
+
+
+
+## [2.5.3] - 2018-11-26
+### Added
+
+- [#740](https://github.com/h3poteto/whalebird-desktop/pull/740) Add tag as search target and show results of search tags
+- [#733](https://github.com/h3poteto/whalebird-desktop/pull/733) Enable adding a media description
+
+### Changed
+
+- [#739](https://github.com/h3poteto/whalebird-desktop/pull/739) Update more packages
+- [#736](https://github.com/h3poteto/whalebird-desktop/pull/736) Update Noto Sans
+- [#730](https://github.com/h3poteto/whalebird-desktop/pull/730) Update more node.js packages
+- [#729](https://github.com/h3poteto/whalebird-desktop/pull/729) Upgrade megalodon version to 0.4.5
+
+### Fixed
+
+- [#743](https://github.com/h3poteto/whalebird-desktop/pull/743) Change header width when open global header and side menu
+- [#738](https://github.com/h3poteto/whalebird-desktop/pull/738) Remove spinner after image has been loaded
+- [#737](https://github.com/h3poteto/whalebird-desktop/pull/737) Fix header length when not using narrow menu
+- [#735](https://github.com/h3poteto/whalebird-desktop/pull/735) Fix json style in locales
+- [#732](https://github.com/h3poteto/whalebird-desktop/pull/732) Fix Whalebird font stack
+- [#731](https://github.com/h3poteto/whalebird-desktop/pull/731) Fix typo in Follow component
+
+
+## [2.5.2] - 2018-11-19
+### Added
+- [#728](https://github.com/h3poteto/whalebird-desktop/pull/728) Add donate buttons for Patreon and Liberapay
+- [#722](https://github.com/h3poteto/whalebird-desktop/pull/722) Enable a vue-loading overlay for the media viewer
+- [#721](https://github.com/h3poteto/whalebird-desktop/pull/721) Show loading spinner when loading images
+- [#719](https://github.com/h3poteto/whalebird-desktop/pull/719) Add settings button on header menu
+
+### Changed
+- [#723](https://github.com/h3poteto/whalebird-desktop/pull/723) Update toot modal to copy CWs
+- [#716](https://github.com/h3poteto/whalebird-desktop/pull/716) Update Toot layout
+- [#715](https://github.com/h3poteto/whalebird-desktop/pull/715) Update vue and most related dependencies
+- [#712](https://github.com/h3poteto/whalebird-desktop/pull/712) Update most related dependencies
+- [#711](https://github.com/h3poteto/whalebird-desktop/pull/711) Update i18next and @panter/vue-i18next
+
+### Fixed
+- [#726](https://github.com/h3poteto/whalebird-desktop/pull/726) Always clear timeline between switches/refreshes
+- [#725](https://github.com/h3poteto/whalebird-desktop/pull/725) Fix failover image refresh
+- [#724](https://github.com/h3poteto/whalebird-desktop/pull/724) Fix username emojification in sidebar
+- [#720](https://github.com/h3poteto/whalebird-desktop/pull/720) fix: Stop unbind events when reload, and call unbind when destroy
+- [#718](https://github.com/h3poteto/whalebird-desktop/pull/718) Check acct when parse account
+- [#717](https://github.com/h3poteto/whalebird-desktop/pull/717) fix: Await initialize when TimelineSpace is created
+- [#709](https://github.com/h3poteto/whalebird-desktop/pull/709) Fix timeline header width when account sidebar is collapsed
+
+
+
 ## [2.5.1] - 2018-11-16
 ### Added
 - [#705](https://github.com/h3poteto/whalebird-desktop/pull/705) Render emojis in username
