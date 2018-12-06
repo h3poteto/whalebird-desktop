@@ -12,7 +12,12 @@
       role="menubar">
       <el-menu-item :index="`/${account._id}/home`" v-for="(account, index) in accounts" v-bind:key="account._id" role="menuitem">
         <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
-        <img v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
+        <FailoverImg v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
+        <FailoverImg
+          :src="`${account.baseURL}/favicon.ico`"
+          :failoverSrc="`${account.baseURL}/favicon.png`"
+          class="instance-icon"
+        />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
       <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem">
@@ -29,9 +34,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 
 export default {
   name: 'global-header',
+  components: {
+    FailoverImg
+  },
   computed: {
     ...mapState('GlobalHeader', {
       accounts: state => state.accounts,
@@ -89,8 +98,20 @@ export default {
       mix-blend-mode: overlay;
     }
 
+    .instance-icon {
+      width: 18px;
+      height: 18px;
+      mix-blend-mode: overlay;
+      vertical-align: bottom;
+      margin-left: -18px;
+    }
+
     .is-active {
       .avatar {
+        mix-blend-mode: normal;
+      }
+
+      .instance-icon {
         mix-blend-mode: normal;
       }
     }
