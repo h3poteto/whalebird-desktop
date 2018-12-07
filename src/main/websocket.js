@@ -67,12 +67,15 @@ export default class WebSocket {
 
   stop () {
     if (this.listener) {
-      this.listener.stop()
       this.listener.removeAllListeners('connect')
       this.listener.removeAllListeners('update')
       this.listener.removeAllListeners('notification')
       this.listener.removeAllListeners('error')
       this.listener.removeAllListeners('parser-error')
+      this.listener.on('error', (e) => {
+        log.error(e)
+      })
+      this.listener.stop()
       log.info('streaming stopped')
     }
   }
