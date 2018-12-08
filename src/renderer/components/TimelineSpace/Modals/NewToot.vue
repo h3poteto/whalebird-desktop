@@ -27,6 +27,7 @@
           maxlength="420"
           class="image-description"
           :placeholder="$t('modals.new_toot.description')"
+          v-model="mediaDescriptions[media.id]"
           role="textbox"
           contenteditable="true"
           aria-multiline="true">
@@ -67,8 +68,8 @@
       </div>
       <div class="sensitive" v-show="attachedMedias.length > 0">
         <el-button size="small" type="text" @click="changeSensitive" :title="$t('modals.new_toot.change_sensitive')">
-          <icon name="eye-slash" v-show="sensitive"></icon>
-          <icon name="eye" v-show="!sensitive"></icon>
+          <icon name="eye-slash" v-show="!sensitive"></icon>
+          <icon name="eye" v-show="sensitive"></icon>
         </el-button>
       </div>
       <div class="content-warning">
