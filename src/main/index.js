@@ -447,7 +447,7 @@ ipcMain.on('start-directmessages-streaming', (event, ac) => {
       directMessagesStreaming = new StreamingManager(account)
       directMessagesStreaming.start(
         'direct',
-        null,
+        '',
         (update) => {
           event.sender.send('update-start-directmessages-streaming', update)
         },
@@ -484,7 +484,7 @@ ipcMain.on('start-local-streaming', (event, ac) => {
       localStreaming = new StreamingManager(account)
       localStreaming.start(
         'public/local',
-        null,
+        '',
         (update) => {
           event.sender.send('update-start-local-streaming', update)
         },
@@ -521,7 +521,7 @@ ipcMain.on('start-public-streaming', (event, ac) => {
       publicStreaming = new StreamingManager(account)
       publicStreaming.start(
         'public',
-        null,
+        '',
         (update) => {
           event.sender.send('update-start-public-streaming', update)
         },
