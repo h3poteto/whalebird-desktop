@@ -111,7 +111,7 @@
     "i18next-sync-fs-backend": "^1.1.0",
     "is-empty": "^1.2.0",
     "lodash": "^4.17.11",
-    "megalodon": "0.4.5",
+    "megalodon": "0.4.6",
     "moment": "^2.21.0",
     "mousetrap": "^1.6.2",
     "nedb": "^1.8.0",
