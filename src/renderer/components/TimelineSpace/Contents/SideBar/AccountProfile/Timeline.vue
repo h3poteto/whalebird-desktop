@@ -7,7 +7,7 @@
       :focused="message.uri + message.id === focusedId"
       :pinned="true"
       :overlaid="modalOpened"
-      v-on:update="updateToot"
+      v-on:update="updatePinnedToot"
       v-on:delete="deleteToot"
       @focusNext="focusNext"
       @focusPrev="focusPrev"
@@ -117,6 +117,9 @@ export default {
             })
           })
       }
+    },
+    updatePinnedToot (message) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/updatePinnedToot', message)
     },
     updateToot (message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/updateToot', message)
