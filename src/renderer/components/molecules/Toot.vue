@@ -23,7 +23,7 @@
     <div class="detail" v-on:dblclick="openDetail(message)">
       <div class="toot-header">
         <div class="user" @click="openUser(originalMessage(message).account)">
-          <span class="display-name" v-html="username(originalMessage(message).account)"></span>
+          <span class="display-name" @click="openUser(message.account)"><bdi v-html="username(originalMessage(message).account)"></bdi></span>
           <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
         </div>
         <div class="timestamp">
@@ -68,7 +68,8 @@
             :src="message.account.avatar"
             :alt="`Avatar of ${message.account.username}`" />
         </span>
-        <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${message.account.username}`" v-html="username(message.account)">
+        <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${message.account.username}`" :aria-label="`Reblogged by ${message.account.username}`">
+          <bdi v-html="username(message.account)"></bdi>
         </span>
       </div>
       <div class="tool-box">

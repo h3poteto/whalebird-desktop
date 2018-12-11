@@ -18,7 +18,7 @@
         <icon name="retweet" scala="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold" @click="openUser(message.account)" v-html="username(message.account)"></span> boosted your status
+        <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> boosted your status
       </div>
       <div class="action-icon">
         <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />

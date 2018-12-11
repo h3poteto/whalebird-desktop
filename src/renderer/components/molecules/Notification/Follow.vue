@@ -14,7 +14,7 @@
       <icon name="user-plus" scale="0.7"></icon>
     </div>
     <div class="action-detail">
-      <span class="bold" @click="openUser(message.account)">{{ username(message.account) }}</span> is now following you
+      <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> is now following you
     </div>
     <div class="action-icon">
       <FailoverImg :src="message.account.avatar" />
