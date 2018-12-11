@@ -40,12 +40,16 @@ const AccountProfile = {
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
-      return client.get('/search', { q: parsedAccount.acct, resolve: true })
+      return client.get('/search', { q: parsedAccount.url, resolve: true })
         .then(res => {
           if (res.data.accounts.length <= 0) throw new AccountNotFound('empty result')
           const account = res.data.accounts.find(a => `@${a.acct}` === parsedAccount.acct)
           if (account) return account
-          const user = res.data.accounts.find(a => `@${a.username}@${rootState.TimelineSpace.account.domain}` === parsedAccount.acct)
+          const pleromaUser = res.data.accounts.find(a => a.acct === parsedAccount.acct)
+          if (pleromaUser) return pleromaUser
+          const localUser = res.data.accounts.find(a => `@${a.username}@${rootState.TimelineSpace.account.domain}` === parsedAccount.acct)
+          if (localUser) return localUser
+          const user = res.data.accounts.find(a => a.url === parsedAccount.url)
           if (!user) throw new AccountNotFound('not found')
           return user
         })
