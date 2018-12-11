@@ -32,7 +32,9 @@
       <div class="detail">
         <div class="toot-header">
           <div class="user">
-            <span class="display-name" v-html="username(message.status.account)"></span>
+            <span class="display-name">
+              <bdi v-html="username(message.status.account)"></bdi>
+            </span>
           </div>
           <div class="timestamp">
             {{ parseDatetime(message.status.created_at) }}
