@@ -131,6 +131,14 @@ export default {
 
 <style lang="scss" scoped>
 #account {
+  .section /deep/ {
+    margin-bottom: 40px;
+
+    .el-form-item__label {
+      color: var(--theme-primary-color);
+    }
+  }
+
   .connected-account {
     .el-table /deep/ {
       tr,
@@ -153,14 +161,6 @@ export default {
 
     .action {
       font-size: var(--base-font-size);
-    }
-  }
-
-  .section /deep/ {
-    margin-bottom: 40px;
-
-    .el-form-item__label {
-      color: var(--theme-primary-color);
     }
   }
 }
