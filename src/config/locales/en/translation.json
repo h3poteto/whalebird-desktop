@@ -73,6 +73,7 @@
       "show_replies": "Show replies",
       "apply": "Apply"
     },
+    "switch_streaming": "Use websocket for streaming",
     "new_toot": "Toot",
     "reload": "Reload",
     "settings": "Settings"
