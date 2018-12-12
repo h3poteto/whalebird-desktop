@@ -76,8 +76,8 @@ export function parsePleromaAccount (accountURL) {
   const domainName = res[1]
   const accountName = res[2]
   return {
-    username: accountName,
-    acct: `${accountName}@${domainName}`,
+    username: `@${accountName}`,
+    acct: `@${accountName}@${domainName}`,
     url: accountURL
   }
 }
