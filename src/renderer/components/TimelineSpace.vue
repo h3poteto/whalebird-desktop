@@ -51,6 +51,7 @@ export default {
     }
   },
   async created () {
+    this.$store.dispatch('TimelineSpace/Contents/SideBar/close')
     this.$store.commit('TimelineSpace/changeLoading', true)
     await this.initialize()
       .finally(() => {
