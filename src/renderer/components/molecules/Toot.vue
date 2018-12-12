@@ -73,7 +73,7 @@
         </span>
       </div>
       <div class="tool-box">
-        <el-button type="text" @click="openReply(message)" class="reply" :title="$t('cards.toot.reply')">
+        <el-button type="text" @click="openReply(message)" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
           <icon name="reply" scale="0.9"></icon>
         </el-button>
         <el-button v-show="locked(message)" type="text" class="locked">
@@ -88,13 +88,13 @@
         <span class="count">
           {{ reblogsCount(message) }}
         </span>
-        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited animated bounceIn' : 'favourite'" :title="$t('cards.toot.fav')">
+        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited animated bounceIn' : 'favourite'" :title="$t('cards.toot.fav')" :aria-label="$t('cards.toot.fav')">
           <icon name="star" scale="0.9"></icon>
         </el-button>
         <span class="count">
           {{ favouritesCount(message) }}
         </span>
-        <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" v-show="pinned">
+        <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
           <icon name="thumbtack" scale="0.9"></icon>
         </el-button>
         <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
