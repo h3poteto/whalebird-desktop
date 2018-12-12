@@ -4,7 +4,9 @@
     <FailoverImg :src="user.avatar" :alt="`Avatar of ${user.username}`" />
   </div>
   <div class="name">
-    <div class="username" v-html="username(user)"></div>
+    <div class="username">
+      <bdi v-html="username(user)"></bdi>
+    </div>
     <div class="acct">
       @{{ user.acct }}
     </div>
