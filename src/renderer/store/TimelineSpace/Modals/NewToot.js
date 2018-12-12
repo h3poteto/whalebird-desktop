@@ -95,6 +95,10 @@ const NewToot = {
       if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
         throw new AuthenticationError()
       }
+      if (state.blockSubmit) {
+        return
+      }
+      commit('changeBlockSubmit', true)
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -102,7 +106,12 @@ const NewToot = {
       return client.post('/statuses', form)
         .then(res => {
           ipcRenderer.send('toot-action-sound')
+          commit('changeBlockSubmit', false)
           return res.data
+        })
+        .catch(e => {
+          commit('changeBlockSubmit', false)
+          throw e
         })
     },
     openReply ({ dispatch, commit, rootState }, message) {
