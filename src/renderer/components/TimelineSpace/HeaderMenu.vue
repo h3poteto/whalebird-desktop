@@ -1,6 +1,8 @@
 <template>
-<div id="header_menu">
-  <div class="channel">{{ title }}</div>
+<nav id="header_menu" :aria-label="title">
+  <div class="channel">
+    <h1>{{ title }}</h1>
+  </div>
   <div class="tools">
     <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
       <icon name="regular/edit" scale="1.1"></icon>
@@ -15,23 +17,25 @@
       trigger="click"
       v-model="filterVisible">
       <div>
-        <el-form role="form">
-          <el-form-item :label="$t('header_menu.filter.title')">
-            <div class="input-wrapper">
+        <el-form role="form" label-position="left" label-width="125px" size="medium">
+          <el-form-item for="filter" :label="$t('header_menu.filter.title')">
+            <div class="el-input">
               <input
+                id="filter"
+                class="el-input__inner"
                 v-model="filter"
                 :placeholder="$t('header_menu.filter.placeholder')"
                 v-shortkey.avoid
-                aria-label="filter words"
-                tilte="filter"
-                ></input>
+                :aria-label="$t('header_menu.filter.placeholder')"
+                :title="$t('header_menu.filter.placeholder')"
+                >
             </div>
           </el-form-item>
-          <el-form-item :label="$t('header_menu.filter.show_reblogs')" v-if="extrasFilterable()">
-            <el-checkbox v-model="showReblogs"></el-checkbox>
+          <el-form-item for="show-reblogs" :label="$t('header_menu.filter.show_reblogs')" v-if="extrasFilterable()">
+            <el-checkbox id="show-reblogs" v-model="showReblogs"></el-checkbox>
           </el-form-item>
-          <el-form-item :label="$t('header_menu.filter.show_replies')" v-if="extrasFilterable()">
-            <el-checkbox v-model="showReplies"></el-checkbox>
+          <el-form-item for="show-replies" :label="$t('header_menu.filter.show_replies')" v-if="extrasFilterable()">
+            <el-checkbox id="show-replies" v-model="showReplies"></el-checkbox>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="applyFilter(filter)">{{ $t('header_menu.filter.apply') }}</el-button>
@@ -46,7 +50,7 @@
       <icon name="cog" scale="1.1"></icon>
     </el-button>
   </div>
-</div>
+</nav>
 </template>
 
 <script>
@@ -258,16 +262,19 @@ export default {
 <style lang="scss" scoped>
 #header_menu {
   background-color: var(--theme-background-color);
-  padding: 12px 24px;
+  padding: 10px 20px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  align-items: stretch;
+  align-items: center;
+  user-select: none;
 
   .channel {
-    font-weight: bold;
-    font-size: 18px;
     margin-right: auto;
+
+    h1 {
+      margin: 0;
+    }
   }
 
   .tools {
@@ -289,7 +296,7 @@ export default {
   position: relative;
   font-size: 14px;
   display: inline-block;
-  width: 100%;
+  max-width: 100%;
 
   input {
     background-color: #fff;
