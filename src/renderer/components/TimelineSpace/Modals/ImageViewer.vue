@@ -1,6 +1,6 @@
 <template>
 <transition name="image-viewer">
-  <div id="image" v-show="modalOpen" @click="close">
+  <div id="image" v-show="modalOpen" @click="close" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
     <div class="image-wrapper" v-shortkey="modalOpen ? {close: ['esc']} : {}" @shortkey="closeHandle">
       <div class="image-header">
         <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
