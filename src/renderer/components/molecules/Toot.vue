@@ -13,7 +13,7 @@
     Filtered
   </div>
   <div v-show="!filtered(message)" class="toot">
-    <div class="icon">
+    <div class="icon" role="presentation">
       <FailoverImg
         :src="originalMessage(message).account.avatar"
         @click="openUser(originalMessage(message).account)"
@@ -63,7 +63,7 @@
       </div>
       <div class="reblogger" v-show="message.reblog !== null">
         <icon name="retweet"></icon>
-        <span class="reblogger-icon" @click="openUser(message.account)">
+        <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
           <FailoverImg
             :src="message.account.avatar"
             :alt="`Avatar of ${message.account.username}`" />

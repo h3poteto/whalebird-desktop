@@ -5,7 +5,7 @@
       <div class="image-header">
         <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
       </div>
-      <div class="image-content">
+      <div class="image-content" role="presentation">
         <span class="button-area"><el-button type="text" v-show="showLeft" v-shortkey="['arrowleft']" @shortkey.native="decrementIndex()"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
         <Media :src="imageURL" :type="imageType"></Media>
         <span class="button-area"><el-button type="text" v-show="showRight" v-shortkey="['arrowright']" @shortkey.native="incrementIndex()"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
