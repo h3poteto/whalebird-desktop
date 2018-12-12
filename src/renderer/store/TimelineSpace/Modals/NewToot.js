@@ -106,12 +106,10 @@ const NewToot = {
       return client.post('/statuses', form)
         .then(res => {
           ipcRenderer.send('toot-action-sound')
-          commit('changeBlockSubmit', false)
           return res.data
         })
-        .catch(e => {
+        .finally(() => {
           commit('changeBlockSubmit', false)
-          throw e
         })
     },
     openReply ({ dispatch, commit, rootState }, message) {
