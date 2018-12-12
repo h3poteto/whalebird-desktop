@@ -1,37 +1,20 @@
 <template>
 <div id="timeline">
-  <div class="unread-notification section">
+  <h2>{{ $t('settings.timeline.title') }}</h2>
+  <el-form class="unread-notification section" size="medium" label-position="right" label-width="250px">
     <h3>{{ $t('settings.timeline.unread_notification.title') }}</h3>
     <p class="description">{{ $t('settings.timeline.unread_notification.description') }}</p>
-    <table class="table">
-      <tbody>
-        <tr>
-          <td class="title">
-            {{ $t('settings.timeline.unread_notification.direct') }}
-          </td>
-          <td class="status">
-            <el-switch v-model="direct" />
-          </td>
-        </tr>
-        <tr>
-          <td class="title">
-            {{ $t('settings.timeline.unread_notification.local') }}
-          </td>
-          <td class="status">
-            <el-switch v-model="local" />
-          </td>
-        </tr>
-        <tr>
-          <td class="title">
-            {{ $t('settings.timeline.unread_notification.public') }}
-          </td>
-          <td class="status">
-            <el-switch v-model="public" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
+    <el-form-item for="direct" :label="$t('settings.timeline.unread_notification.direct')">
+      <el-switch v-model="direct" id="direct" />
+    </el-form-item>
+    <el-form-item for="local" :label="$t('settings.timeline.unread_notification.local')">
+      <el-switch v-model="local" id="local" />
+    </el-form-item>
+    <el-form-item for="public" :label="$t('settings.timeline.unread_notification.public')">
+      <el-switch v-model="public" id="public" />
+    </el-form-item>
+  </el-form>
 </div>
 </template>
 
@@ -82,23 +65,11 @@ export default {
     margin: 32px 0 20px;
   }
 
-  .section {
+  .section /deep/ {
     margin-bottom: 40px;
-  }
 
-  .table {
-    tr {
-      height: 3rem;
-    }
-
-    .title {
-      width: 200px;
-      text-align: right;
-    }
-
-    .status {
-      width: 200px;
-      text-align: center;
+    .el-form-item__label {
+      color: var(--theme-primary-color);
     }
   }
 }
