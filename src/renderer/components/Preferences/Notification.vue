@@ -1,45 +1,36 @@
 <template>
 <div id="notification">
   <h2>{{ $t('preferences.notification.title') }}</h2>
-  <div class="enable">
+  <el-form class="section" label-position="right" label-width="250px" size="small">
     <p class="description">{{ $t('preferences.notification.enable.description') }}</p>
-    <div class="selection">
-      <span class="value">
-        <el-switch
-          v-model="notifyReply"
-          active-color="#13ce66">
-        </el-switch>
-      </span>
-      <span class="title">{{ $t('preferences.notification.enable.reply') }}</span>
-    </div>
-    <div class="selection">
-      <span class="value">
-        <el-switch
-          v-model="notifyReblog"
-          active-color="#13ce66">
-        </el-switch>
-      </span>
-      <span class="title">{{ $t('preferences.notification.enable.reblog') }}</span>
-    </div>
-    <div class="selection">
-      <span class="value">
-        <el-switch
-          v-model="notifyFavourite"
-          active-color="#13ce66">
-        </el-switch>
-      </span>
-      <span class="title">{{ $t('preferences.notification.enable.favourite') }}</span>
-    </div>
-    <div class="selection">
-      <span class="value">
-        <el-switch
-          v-model="notifyFollow"
-          active-color="#13ce66">
-        </el-switch>
-      </span>
-      <span class="title">{{ $t('preferences.notification.enable.follow') }}</span>
-    </div>
-  </div>
+    <el-form-item for="notifyReply" :label="$t('preferences.notification.enable.reply')">
+      <el-switch
+        id="notifyReply"
+        v-model="notifyReply"
+        active-color="#13ce66">
+      </el-switch>
+    </el-form-item>
+    <el-form-item for="notifyReblog" :label="$t('preferences.notification.enable.reblog')">
+      <el-switch
+        id="notifyReblog"
+        v-model="notifyReblog"
+        active-color="#13ce66">
+      </el-switch>
+    </el-form-item>
+    <el-form-item for="notifyFavourite" :label="$t('preferences.notification.enable.favourite')">
+      <el-switch
+        id="notifyFavourite"
+        v-model="notifyFavourite"
+        active-color="#13ce66">
+      </el-switch>
+    </el-form-item>
+    <el-form-item for="notifyFollow" :label="$t('preferences.notification.enable.follow')">
+      <el-switch
+        v-model="notifyFollow"
+        active-color="#13ce66">
+      </el-switch>
+    </el-form-item>
+  </el-form>
 </div>
 </template>
 
@@ -106,12 +97,11 @@ export default {
     margin: 24px 0 20px;
   }
 
-  .selection {
-    margin: 12px 0;
+  .section /deep/ {
+    margin-bottom: 40px;
 
-    .title {
-      margin-left: 12px;
-      font-weight: 800;
+    .el-form-item__label {
+      color: var(--theme-primary-color);
     }
   }
 }

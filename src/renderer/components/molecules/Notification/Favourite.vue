@@ -20,14 +20,14 @@
       <div class="action-detail">
         <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> favourited your status
       </div>
-      <div class="action-icon">
+      <div class="action-icon" role="presentation">
         <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
       </div>
     </div>
     <div class="clearfix"></div>
     <div class="target" v-on:dblclick="openDetail(message.status)">
       <div class="icon" @click="openUser(message.status.account)">
-        <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
+        <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" role="presentation" />
       </div>
       <div class="detail">
         <div class="toot-header">
@@ -59,8 +59,8 @@
             <el-button v-show="sensitive(message.status) && isShowAttachments(message.status)" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
               <icon name="eye" class="hide"></icon>
             </el-button>
-            <div class="media" v-for="media in mediaAttachments(message.status)">
-              <FailoverImg :src="media.preview_url" alt="attached media" />
+            <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message.status)">
+              <FailoverImg :src="media.preview_url" :title="media.description" />
               <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
               <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
             </div>

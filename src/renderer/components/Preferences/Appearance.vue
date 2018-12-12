@@ -1,11 +1,10 @@
 <template>
 <div id="appearance">
   <h2>{{ $t('preferences.appearance.title') }}</h2>
-  <div class="theme section">
+  <el-form class="theme section" size="small" label-position="top">
     <div class="left">
-      <h4>{{ $t('preferences.appearance.theme_color') }}</h4>
-      <div class="status">
-        <el-select v-model="theme" placeholder="theme">
+      <el-form-item for="theme" :label="$t('preferences.appearance.theme_color')">
+        <el-select id="theme" v-model="theme" placeholder="theme">
           <el-option
             v-for="t in themes"
             :key="t.key"
@@ -13,7 +12,7 @@
             :value="t.key">
           </el-option>
         </el-select>
-      </div>
+      </el-form-item>
     </div>
     <div class="right">
       <Toot
@@ -21,30 +20,27 @@
         :timeFormat="timeFormat"
         ></Toot>
     </div>
-  </div>
-  <div class="color-pallet" v-if="customizeThemeColor">
+  </el-form>
+  <div class="color-pallet section" v-if="customizeThemeColor">
     <color-pallet></color-pallet>
   </div>
-  <div class="font section">
-    <h4>{{ $t('preferences.appearance.font_family') }}</h4>
-    <span class="status">
-      <el-select v-model="font" placeholder="fonts">
+  <el-form class="font section" size="small" label-position="top">
+    <el-form-item for="font-family" :label="$t('preferences.appearance.font_family')">
+      <el-select id="font-family" v-model="font" placeholder="fonts">
         <el-option
           v-for="f in fontList"
           :key="f"
           :label="f"
           :value="f" />
       </el-select>
-    </span>
-    <h4>{{ $t('preferences.appearance.font_size') }}</h4>
-    <span class="status">
-      <el-input-number :value="fontSize" :min="9" :max="18" @change="updateFontSize"></el-input-number>
-    </span>
-  </div>
-  <div class="display-style section">
-    <h4>{{ $t('preferences.appearance.display_style.title') }}</h4>
-    <span class="status">
-      <el-select v-model="displayNameStyle" placeholder="style">
+    </el-form-item>
+    <el-form-item for="font-size" :label="$t('preferences.appearance.font_size')">
+      <el-input-number id="font-size" :value="fontSize" :min="9" :max="18" @change="updateFontSize"></el-input-number>
+    </el-form-item>
+  </el-form>
+  <el-form class="display-style section" size="small" label-position="top">
+    <el-form-item for="display-style" :label="$t('preferences.appearance.display_style.title')">
+      <el-select id="display-style" v-model="displayNameStyle" placeholder="style">
         <el-option
           v-for="style in nameStyles"
           :key="style.value"
@@ -52,12 +48,11 @@
           :value="style.value">
         </el-option>
       </el-select>
-    </span>
-  </div>
-  <div class="time-format section">
-    <h4>{{ $t('preferences.appearance.time_format.title') }}</h4>
-    <span class="status">
-      <el-select v-model="timeFormat" placeholder="format">
+    </el-form-item>
+  </el-form>
+  <el-form class="time-format section" size="small" label-position="top">
+    <el-form-item for="time-format" :label="$t('preferences.appearance.time_format.title')">
+      <el-select id="time-format" v-model="timeFormat" placeholder="format">
         <el-option
           v-for="format in timeFormats"
           :key="format.value"
@@ -65,8 +60,8 @@
           :value="format.value">
         </el-option>
       </el-select>
-    </span>
-  </div>
+    </el-form-item>
+  </el-form>
 </div>
 </template>
 
@@ -160,20 +155,24 @@ export default {
 
 <style lang="scss" scoped>
 #appearance {
-  color: var(--theme-secondary-color);
   box-sizing: border-box;
 
   .theme {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
 
     .right {
       margin-left: 40px;
     }
   }
 
-  .section {
-    margin-bottom: 48px;
+  .section /deep/ {
+    margin-bottom: 40px;
+
+    .el-form-item__label {
+      color: var(--theme-primary-color);
+    }
   }
 }
 </style>

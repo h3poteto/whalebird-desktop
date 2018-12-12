@@ -45,7 +45,7 @@
             </el-button>
           </popper>
         </div>
-        <div class="icon">
+        <div class="icon" role="presentation">
           <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
         </div>
         <div class="follow-status" v-if="relationship !== null && relationship !== '' && account.username!==user.username">

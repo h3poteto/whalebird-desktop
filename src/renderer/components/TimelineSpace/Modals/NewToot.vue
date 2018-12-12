@@ -67,24 +67,24 @@
         </el-dropdown>
       </div>
       <div class="sensitive" v-show="attachedMedias.length > 0">
-        <el-button size="small" type="text" @click="changeSensitive" :title="$t('modals.new_toot.change_sensitive')">
+        <el-button size="small" type="text" @click="changeSensitive" :title="$t('modals.new_toot.change_sensitive')" :aria-pressed="sensitive">
           <icon name="eye-slash" v-show="!sensitive"></icon>
           <icon name="eye" v-show="sensitive"></icon>
         </el-button>
       </div>
       <div class="content-warning">
-        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning" :title="$t('modals.new_toot.add_cw')" :class="showContentWarning? '' : 'clickable'">
+        <el-button size="small" type="text" @click="showContentWarning = !showContentWarning" :title="$t('modals.new_toot.add_cw')" :class="showContentWarning? '' : 'clickable'" :aria-pressed="showContentWarning">
           <span class="cw-text">CW</span>
         </el-button>
       </div>
       <div class="pined-hashtag">
-        <el-button size="small" type="text" @click="pinedHashtag = !pinedHashtag" :title="$t('modals.new_toot.pined_hashtag')" :class="pinedHashtag? '' : 'clickable'">
+        <el-button size="small" type="text" @click="pinedHashtag = !pinedHashtag" :title="$t('modals.new_toot.pined_hashtag')" :class="pinedHashtag? '' : 'clickable'" :aria-pressed="pinedHashtag">
           <icon name="hashtag"></icon>
         </el-button>
       </div>
       <span class="text-count">{{ tootMax - status.length }}</span>
       <el-button class="toot-action" size="small" @click="closeConfirm(close)">{{ $t('modals.new_toot.cancel') }}</el-button>
-      <el-button class="toot-action" size="small" type="primary" @click="toot" v-loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
+      <el-button class="toot-action" size="small" type="primary" @click="toot" :loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
       <div class="clearfix"></div>
     </div>
   </el-dialog>

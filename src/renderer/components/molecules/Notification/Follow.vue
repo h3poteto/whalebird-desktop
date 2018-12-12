@@ -16,7 +16,7 @@
     <div class="action-detail">
       <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> is now following you
     </div>
-    <div class="action-icon">
+    <div class="action-icon" role="presentation">
       <FailoverImg :src="message.account.avatar" />
     </div>
   </div>
