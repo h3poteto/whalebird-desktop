@@ -1,18 +1,19 @@
 <template>
 <div id="language">
   <h2>{{ $t('preferences.language.title') }}</h2>
-  <div class="display-language">
-    <p class="description">{{ $t('preferences.language.language_description') }}</p>
-    <el-select v-model="displayLanguage" placeholder="style">
-      <el-option
-        v-for="lang in languages"
-        :key="lang.key"
-        :label="lang.name"
-        :value="lang.key">
-      </el-option>
-    </el-select>
-    <p class="notice">{{ $t('preferences.language.notice') }}</p>
-  </div>
+  <el-form class="display-language section" label-position="top" size="small">
+    <el-form-item for="language" :label="$t('preferences.language.language_description')">
+      <el-select id="language" v-model="displayLanguage" placeholder="style">
+        <el-option
+          v-for="lang in languages"
+          :key="lang.key"
+          :label="lang.name"
+          :value="lang.key">
+        </el-option>
+      </el-select>
+      <p class="notice">{{ $t('preferences.language.notice') }}</p>
+    </el-form-item>
+  </el-form>
 </div>
 </template>
 
@@ -72,8 +73,12 @@ export default {
 
 <style lang="scss" scoped>
 #language {
-  .description {
-    margin: 24px 0 20px;
+  .section /deep/ {
+    margin-bottom: 40px;
+
+    .el-form-item__label {
+      color: var(--theme-primary-color);
+    }
   }
 
   .notice {
