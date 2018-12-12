@@ -1,9 +1,9 @@
 <template>
 <div id="account">
   <h2>{{ $t('preferences.account.title') }}</h2>
-  <div class="connected-account">
+  <el-form class="connected-account section" size="small">
     <h3>{{ $t('preferences.account.connected') }}</h3>
-    <template>
+    <el-form-item>
       <el-table
         :data="accounts"
         tooltip-effect="dark"
@@ -23,7 +23,8 @@
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="removeAccount(scope.$index, accounts)"
-              type="text">
+              type="text"
+              class="action">
               <i class="el-icon-close"></i> {{ $t('preferences.account.remove_association') }}
             </el-button>
           </template>
@@ -32,30 +33,30 @@
           :label="$t('preferences.account.order')"
           width="60">
           <template slot-scope="scope">
-            <div>
-              <el-button class="arrow-up" type="text" icon="el-icon-arrow-up" @click.native.prevent="forward(scope.$index, accounts)"></el-button>
+            <div class="allow-up">
+              <el-button class="arrow-up action" type="text" icon="el-icon-arrow-up" @click.native.prevent="forward(scope.$index, accounts)"></el-button>
             </div>
-            <div>
-              <el-button class="arrow-down" type="text" icon="el-icon-arrow-down" @click.native.prevent="backward(scope.$index, accounts)"></el-button>
+            <div class="allow-down">
+              <el-button class="arrow-down action" type="text" icon="el-icon-arrow-down" @click.native.prevent="backward(scope.$index, accounts)"></el-button>
             </div>
           </template>
         </el-table-column>
       </el-table>
-    </template>
-  </div>
-  <div class="reset">
-    <el-popover
-      placement="top"
-      width="160"
-      v-model="deletePopoverVisible">
-      <p>{{ $t('preferences.account.confirm_message') }}</p>
-      <div style="text-align: right; margin: 0">
-        <el-button size="mini" type="text" @click="deletePopoverVisible = false">{{ $t('preferences.account.cancel') }}</el-button>
-        <el-button type="danger" size="mini" @click="removeAllAssociations">{{ $t('preferences.account.confirm') }}</el-button>
-      </div>
-      <el-button slot="reference" type="danger">{{ $t('preferences.account.remove_all_associations') }}</el-button>
-    </el-popover>
-  </div>
+    </el-form-item>
+    <el-form-item>
+      <el-popover
+        placement="top"
+        width="160"
+        v-model="deletePopoverVisible">
+        <p>{{ $t('preferences.account.confirm_message') }}</p>
+        <div style="text-align: right; margin: 0">
+          <el-button size="mini" type="text" @click="deletePopoverVisible = false">{{ $t('preferences.account.cancel') }}</el-button>
+          <el-button type="danger" size="mini" @click="removeAllAssociations">{{ $t('preferences.account.confirm') }}</el-button>
+        </div>
+        <el-button slot="reference" type="danger">{{ $t('preferences.account.remove_all_associations') }}</el-button>
+      </el-popover>
+    </el-form-item>
+  </el-form>
 </div>
 </template>
 
@@ -130,32 +131,38 @@ export default {
 
 <style lang="scss" scoped>
 #account {
-  .el-table /deep/ {
-    tr,
-    th,
-    td {
-      background-color: var(--theme-background-color);
-      color: var(--theme-secondary-color);
-      border-bottom: 1px solid var(--theme-border-color);
+  .section /deep/ {
+    margin-bottom: 40px;
+
+    .el-form-item__label {
+      color: var(--theme-primary-color);
+    }
+  }
+
+  .connected-account {
+    .el-table /deep/ {
+      tr,
+      th,
+      td {
+        background-color: var(--theme-background-color);
+        color: var(--theme-primary-color);
+        border-bottom: 1px solid var(--theme-border-color);
+      }
     }
 
-  }
+    .el-table::before {
+      background-color: var(--theme-border-color);
+    }
 
-  .el-table::before {
-    background-color: var(--theme-border-color);
-  }
+    .allow-up,
+    .allow-down {
+      display: inline-block;
+    }
 
-  .reset {
-    margin: 24px 12px;
-    text-align: right;
+    .action {
+      font-size: var(--base-font-size);
+    }
   }
 }
 
-.allow-up {
-  padding: 0;
-}
-
-.allow-down {
-  padding: 0;
-}
 </style>

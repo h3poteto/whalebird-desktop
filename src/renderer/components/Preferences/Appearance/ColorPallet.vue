@@ -1,36 +1,46 @@
 <template>
-<div class="pallet">
+<el-form class="pallet" label-position="top" size="small">
   <div class="item">
-    <div class="title">{{ $t('preferences.appearance.custom_theme.background_color') }}</div>
-    <el-color-picker v-model="background"></el-color-picker>
-    <div class="title">{{ $t('preferences.appearance.custom_theme.selected_background_color') }}</div>
-    <el-color-picker v-model="selectedBackground"></el-color-picker>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.background_color') ">
+      <el-color-picker v-model="background"></el-color-picker>
+    </el-form-item>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.selected_background_color')">
+      <el-color-picker v-model="selectedBackground"></el-color-picker>
+    </el-form-item>
   </div>
   <div class="item">
-    <div class="title">{{ $t('preferences.appearance.custom_theme.global_header_color') }}</div>
-    <el-color-picker v-model="globalHeader"></el-color-picker>
-    <div class="title">{{ $t('preferences.appearance.custom_theme.side_menu_color') }}</div>
-    <el-color-picker v-model="sideMenu"></el-color-picker>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.global_header_color')">
+      <el-color-picker v-model="globalHeader"></el-color-picker>
+    </el-form-item>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.side_menu_color')">
+      <el-color-picker v-model="sideMenu"></el-color-picker>
+    </el-form-item>
   </div>
   <div class="item">
-    <div class="title">{{ $t('preferences.appearance.custom_theme.primary_color') }}</div>
-    <el-color-picker v-model="primary"></el-color-picker>
-    <div class="title">{{ $t('preferences.appearance.custom_theme.regular_color') }}</div>
-    <el-color-picker v-model="regular"></el-color-picker>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.primary_color')">
+      <el-color-picker v-model="primary"></el-color-picker>
+    </el-form-item>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.regular_color')">
+      <el-color-picker v-model="regular"></el-color-picker>
+    </el-form-item>
   </div>
   <div class="item">
-    <div class="title">{{ $t('preferences.appearance.custom_theme.secondary_color') }}</div>
-    <el-color-picker v-model="secondary"></el-color-picker>
-    <div class="title">{{ $t('preferences.appearance.custom_theme.border_color') }}</div>
-    <el-color-picker v-model="border"></el-color-picker>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.secondary_color')">
+      <el-color-picker v-model="secondary"></el-color-picker>
+    </el-form-item>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.border_color')">
+      <el-color-picker v-model="border"></el-color-picker>
+    </el-form-item>
   </div>
   <div class="item">
-    <div class="title">{{ $t('preferences.appearance.custom_theme.header_menu_color') }}</div>
-    <el-color-picker v-model="headerMenu"></el-color-picker>
-    <div class="title">{{ $t('preferences.appearance.custom_theme.wrapper_mask_color') }}</div>
-    <el-color-picker v-model="wrapperMask" :show-alpha="true"></el-color-picker>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.header_menu_color')">
+      <el-color-picker v-model="headerMenu"></el-color-picker>
+    </el-form-item>
+    <el-form-item :label="$t('preferences.appearance.custom_theme.wrapper_mask_color')">
+      <el-color-picker v-model="wrapperMask" :show-alpha="true"></el-color-picker>
+    </el-form-item>
   </div>
-</div>
+</el-form>
 </template>
 
 <script>
@@ -150,8 +160,14 @@ export default {
     text-align: center;
     margin: 0 12px;
 
-    .title {
-      margin: 8px 0;
+    .el-form-item {
+      margin-bottom: 0;
+    }
+
+    .el-form-item__label {
+      color: var(--theme-primary-color);
+      text-align: center;
+      line-height: unset;
     }
   }
 }

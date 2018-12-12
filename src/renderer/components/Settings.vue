@@ -3,10 +3,10 @@
   <el-header class="header">
     <el-row>
       <el-col :span="23">
-        <h3>{{ $t('settings.title') }}</h3>
+        <h1>{{ $t('settings.title') }}</h1>
       </el-col>
       <el-col :span="1">
-        <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
+        <el-button type="text" icon="el-icon-close" @click="close" class="close-button" role="button"></el-button>
       </el-col>
     </el-row>
   </el-header>
@@ -72,10 +72,11 @@ export default {
   .header {
     text-align: center;
     border-bottom: 1px solid var(--theme-border-color);
+    user-select: none;
   }
 
   .close-button {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .menu {
@@ -83,30 +84,15 @@ export default {
     padding-left: 24px;
 
     .el-menu {
-      background-color: var(--theme-background-color);
       border-right: solid 1px var(--theme-border-color);
     }
 
     .setting-menu /deep/ {
       height: 100%;
+      user-select: none;
 
       .icon {
         margin-right: 9px;
-      }
-
-      .el-menu-item {
-        transition: none;
-        -webkit-transition: none;
-
-        .icon {
-          color: var(--theme-secondary-color);
-        }
-      }
-
-      .is-active {
-        .icon {
-          color: #409eff;
-        }
       }
     }
   }
