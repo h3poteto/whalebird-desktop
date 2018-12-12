@@ -20,13 +20,13 @@
       <div class="action-detail">
         <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> boosted your status
       </div>
-      <div class="action-icon">
+      <div class="action-icon" role="presentation">
         <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
       </div>
     </div>
     <div class="clearfix"></div>
     <div class="target" v-on:dblclick="openDetail(message.status)">
-      <div class="icon" @click="openUser(message.status.account)">
+      <div class="icon" @click="openUser(message.status.account)" role="presentation">
         <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
       </div>
       <div class="detail">

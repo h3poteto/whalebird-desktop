@@ -20,14 +20,14 @@
       <div class="action-detail">
         <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> favourited your status
       </div>
-      <div class="action-icon">
+      <div class="action-icon" role="presentation">
         <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
       </div>
     </div>
     <div class="clearfix"></div>
     <div class="target" v-on:dblclick="openDetail(message.status)">
       <div class="icon" @click="openUser(message.status.account)">
-        <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
+        <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" role="presentation" />
       </div>
       <div class="detail">
         <div class="toot-header">

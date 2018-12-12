@@ -1,6 +1,6 @@
 <template>
 <div class="user" @click="openUser(user)" aria-label="user">
-  <div class="icon">
+  <div class="icon" role="presentation">
     <FailoverImg :src="user.avatar" :alt="`Avatar of ${user.username}`" />
   </div>
   <div class="name">
