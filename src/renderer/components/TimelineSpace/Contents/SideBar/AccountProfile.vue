@@ -60,7 +60,8 @@
           </div>
         </div>
       </div>
-      <div class="username" v-html="username(account)">
+      <div class="username">
+        <bdi v-html="username(account)"></bdi>
       </div>
       <div class="account">
         @{{ account.acct }}
