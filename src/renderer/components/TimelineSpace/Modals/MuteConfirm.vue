@@ -5,12 +5,11 @@
   width="400px"
   custom-class="mute-confirm"
   >
-  <div class="description">
-    <span class="label">
-      {{ $t('modals.mute_confirm.body') }}
-    </span>
-    <el-switch v-model="notify"></el-switch>
-  </div>
+  <el-form class="description">
+    <el-form-item for="notify" :label="$t('modals.mute_confirm.body')">
+      <el-switch id="notify" v-model="notify"></el-switch>
+    </el-form-item>
+  </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="closeModal">{{ $t('modals.mute_confirm.cancel') }}</el-button>
     <el-button type="primary" @click="submit">{{ $t('modals.mute_confirm.ok') }}</el-button>
@@ -56,11 +55,5 @@ export default {
 <style lang="scss" scoped>
 .description {
   text-align: center;
-
-  .label {
-    font-size: 14px;
-    color: #606266;
-    padding: 0 32px 0 0;
-  }
 }
 </style>
