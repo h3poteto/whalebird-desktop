@@ -36,7 +36,11 @@ export function parseTag (tagURL) {
 
 export function findAccount (target, parentClass = 'toot') {
   if (target.getAttribute('class') && target.getAttribute('class').includes('u-url')) {
-    return parseMastodonAccount(target.href)
+    if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/users\/[a-zA-Z0-9-_.]+/)) {
+      return parsePleromaAccount(target.href)
+    } else {
+      return parseMastodonAccount(target.href)
+    }
   }
   // In Pleroma, link does not have class.
   // So we have to check URL.
@@ -62,7 +66,8 @@ export function parseMastodonAccount (accountURL) {
   const accountName = res[2]
   return {
     username: accountName,
-    acct: `${accountName}@${domainName}`
+    acct: `${accountName}@${domainName}`,
+    url: accountURL
   }
 }
 
@@ -72,6 +77,7 @@ export function parsePleromaAccount (accountURL) {
   const accountName = res[2]
   return {
     username: `@${accountName}`,
-    acct: `@${accountName}@${domainName}`
+    acct: `@${accountName}@${domainName}`,
+    url: accountURL
   }
 }
