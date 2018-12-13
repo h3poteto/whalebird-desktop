@@ -91,7 +91,7 @@
           "direct": "Direct"
         },
         "sensitive": {
-          "description": "Mark medias as sensitive by default"
+          "description": "Mark media as sensitive by default"
         }
       }
     },
@@ -99,7 +99,7 @@
       "title": "Timeline",
       "unread_notification": {
         "title": "Unread Notification",
-        "description": "Customize unread notifications for each timelines.",
+        "description": "Customize unread notifications for each timeline.",
         "direct": "Direct Messages",
         "local": "Local Timeline",
         "public": "Public Timeline"
@@ -158,10 +158,10 @@
       "title": "Notification",
       "enable": {
         "description": "Please set notification events.",
-        "reply": "Notify me when I receive reply",
-        "reblog": "Notify me when I receive reblog",
-        "favourite": "Notify me when I receive favourite",
-        "follow": "Notify me when I receive follow"
+        "reply": "Notify me when I receive a reply",
+        "reblog": "Notify me when I receive a reblog",
+        "favourite": "Notify me when I receive a favourite",
+        "follow": "Notify me when I receive a follow"
       }
     },
     "account": {
@@ -180,7 +180,7 @@
     "language": {
       "title": "Language",
       "language_description": "Choose the language you would like to use with Whalebird.",
-      "notice": "Require relaunch",
+      "notice": "Requires relaunch",
       "confirm": {
         "title": "Warning",
         "message": "You have to restart this application. Continue?",
@@ -196,12 +196,12 @@
       "status": "What is on your mind?",
       "cancel": "Cancel",
       "toot": "Toot",
-      "close_confirm": "Are you sure to close new toot?",
+      "close_confirm": "Are you sure you want to cancel the new toot?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Cancel",
       "add_image": "Add images",
       "change_visibility": "Change visibility",
-      "add_cw": "Add contents warning",
+      "add_cw": "Add content warning",
       "change_sensitive": "Change sensitive",
       "pined_hashtag": "Pin the hashtag",
       "description": "Describe for the visually impaired"
@@ -217,7 +217,7 @@
       "title": "List Memberships"
     },
     "mute_confirm": {
-      "title": "Are you sure to mute?",
+      "title": "Are you sure you want to mute?",
       "body": "Hide notification from this user?",
       "cancel": "Cancel",
       "ok": "Mute"
@@ -230,8 +230,8 @@
       "ctrl_enter": "Post the toot",
       "j": "Select the next toot",
       "k": "Select the previous toot",
-      "h": "Switch the focus to left column",
-      "l": "Switch the focus to right column",
+      "h": "Switch focus to the left column",
+      "l": "Switch focus to the right column",
       "r": "Reply to the toot",
       "b": "Reblog the toot",
       "f": "Favourite the toot",
@@ -312,9 +312,9 @@
     "login": "Login"
   },
   "authorize": {
-    "manually_1": "Now authorization page is opened in your browser.",
-    "manually_2": "If it is not opened, please open the following URL manually.",
-    "code_label": "Please paste authorization code from your browser:",
+    "manually_1": "An authorization page has opened in your browser.",
+    "manually_2": "If it has not opened, please go to the following URL manually.",
+    "code_label": "Please paste the authorization code from your browser:",
     "submit": "Submit"
   },
   "receive_drop": {
@@ -357,8 +357,8 @@
   },
   "validation": {
     "login": {
-      "require_domain_name": "Domain name is required",
-      "domain_format": "Please write only domain name"
+      "require_domain_name": "A domain name is required",
+      "domain_format": "Please only enter the domain name"
     },
     "new_toot": {
       "toot_length": "Toot length should be {{min}} to {{max}}",
