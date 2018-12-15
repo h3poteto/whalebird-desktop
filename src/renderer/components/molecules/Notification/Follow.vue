@@ -124,15 +124,20 @@ export default {
 
     .action-detail {
       margin-left: 10px;
-      font-size: 14px;
+      font-size: var(--base-font-size);
       float: left;
       max-width: 80%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      .bold {
+      .bold /deep/ {
         cursor: pointer;
+
+        .emojione {
+          max-width: 14px;
+          max-height: 14px;
+        }
       }
     }
 
