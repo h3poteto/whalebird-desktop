@@ -27,6 +27,7 @@
 
 <script>
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+import emojify from '~/src/renderer/utils/emojify'
 
 export default {
   name: 'follow',
@@ -73,7 +74,7 @@ export default {
   methods: {
     username (account) {
       if (account.display_name !== '') {
-        return account.display_name
+        return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
