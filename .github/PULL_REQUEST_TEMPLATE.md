@@ -1,9 +1,3 @@
----
-name: Pull Reqeust
-about: A Pull Request template
-
----
-
 ## Description
 <!-- Please write description. For example, why you change this? -->
 
