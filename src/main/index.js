@@ -585,22 +585,23 @@ ipcMain.on('stop-list-streaming', (event, _) => {
 let tagStreaming = null
 
 ipcMain.on('start-tag-streaming', (event, obj) => {
-  accountManager.getAccount(obj.account._id)
+  const { tag, account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-tag-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old tag streaming
       if (tagStreaming !== null) {
         tagStreaming.stop()
         tagStreaming = null
       }
 
-      tagStreaming = new StreamingManager(account)
+      tagStreaming = new StreamingManager(acct, useWebsocket)
       tagStreaming.start(
         'hashtag',
-        `tag=${obj.tag}`,
+        `tag=${tag}`,
         (update) => {
           event.sender.send('update-start-tag-streaming', update)
         },
