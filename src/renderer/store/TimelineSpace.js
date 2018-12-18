@@ -276,7 +276,10 @@ const TimelineSpace = {
     },
     startLocalStreaming ({ state }) {
       return new Promise((resolve, reject) => {
-        ipcRenderer.send('start-local-streaming', state.account)
+        ipcRenderer.send('start-local-streaming', {
+          account: state.account,
+          useWebsocket: state.useWebsocket
+        })
         ipcRenderer.once('error-start-local-streaming', (event, err) => {
           reject(err)
         })
