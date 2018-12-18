@@ -390,20 +390,21 @@ ipcMain.on('reset-badge', () => {
 // streaming
 let userStreaming = null
 
-ipcMain.on('start-user-streaming', (event, ac) => {
-  accountManager.getAccount(ac._id)
+ipcMain.on('start-user-streaming', (event, obj) => {
+  const { account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-user-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old user streaming
       if (userStreaming !== null) {
         userStreaming.stop()
         userStreaming = null
       }
 
-      userStreaming = new StreamingManager(account)
+      userStreaming = new StreamingManager(acct, useWebsocket)
       userStreaming.startUser(
         (update) => {
           event.sender.send('update-start-user-streaming', update)

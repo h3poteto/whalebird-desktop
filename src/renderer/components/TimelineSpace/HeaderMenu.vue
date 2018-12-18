@@ -66,13 +66,15 @@ export default {
       filter: '',
       filterVisible: false,
       showReblogs: true,
-      showReplies: true,
-      useWebsocket: false
+      showReplies: true
     }
   },
   computed: {
-    ...mapState({
-      title: state => state.TimelineSpace.HeaderMenu.title
+    ...mapState('TimelineSpace/HeaderMenu', {
+      title: state => state.title
+    }),
+    ...mapState('TimelineSpace', {
+      useWebsocket: state => state.useWebsocket
     })
   },
   created () {
@@ -134,7 +136,9 @@ export default {
       }
     },
     switchStreaming () {
-      this.useWebsocket = !this.useWebsocket
+      this.$store.dispatch('TimelineSpace/stopStreamings')
+      this.$store.commit('TimelineSpace/changeUseWebsocket', !this.useWebsocket)
+      this.$store.dispatch('TimelineSpace/startStreamings')
     },
     openNewTootModal () {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')

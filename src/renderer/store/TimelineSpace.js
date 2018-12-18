@@ -29,7 +29,8 @@ const TimelineSpace = {
       direct: unreadSettings.Direct.default,
       local: unreadSettings.Local.default,
       public: unreadSettings.Public.default
-    }
+    },
+    useWebsocket: false
   },
   mutations: {
     updateAccount (state, account) {
@@ -55,6 +56,9 @@ const TimelineSpace = {
     },
     updateUnreadNotification (state, settings) {
       state.unreadNotification = settings
+    },
+    changeUseWebsocket (state, use) {
+      state.useWebsocket = use
     }
   },
   actions: {
@@ -200,8 +204,8 @@ const TimelineSpace = {
         dispatch('bindPublicStreaming')
       }
     },
-    startStreamings ({ dispatch, state }, account) {
-      dispatch('startUserStreaming', account)
+    startStreamings ({ dispatch, state }) {
+      dispatch('startUserStreaming')
       if (state.unreadNotification.direct) {
         dispatch('startDirectMessagesStreaming')
       }
@@ -250,9 +254,12 @@ const TimelineSpace = {
         commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
       })
     },
-    startUserStreaming (_, account) {
+    startUserStreaming ({ state }) {
       return new Promise((resolve, reject) => {
-        ipcRenderer.send('start-user-streaming', account)
+        ipcRenderer.send('start-user-streaming', {
+          account: state.account,
+          useWebsocket: state.useWebsocket
+        })
         ipcRenderer.once('error-start-user-streaming', (event, err) => {
           reject(err)
         })
