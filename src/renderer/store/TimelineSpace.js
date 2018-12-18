@@ -296,7 +296,10 @@ const TimelineSpace = {
     },
     startPublicStreaming ({ state }) {
       return new Promise((resolve, reject) => {
-        ipcRenderer.send('start-public-streaming', state.account)
+        ipcRenderer.send('start-public-streaming', {
+          account: state.account,
+          useWebsocket: state.useWebsocket
+        })
         ipcRenderer.once('error-start-public-streaming', (event, err) => {
           reject(err)
         })

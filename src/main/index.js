@@ -507,20 +507,21 @@ ipcMain.on('stop-local-streaming', (event, _) => {
 
 let publicStreaming = null
 
-ipcMain.on('start-public-streaming', (event, ac) => {
-  accountManager.getAccount(ac._id)
+ipcMain.on('start-public-streaming', (event, obj) => {
+  const { account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-public-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old public streaming
       if (publicStreaming !== null) {
         publicStreaming.stop()
         publicStreaming = null
       }
 
-      publicStreaming = new StreamingManager(account)
+      publicStreaming = new StreamingManager(acct, useWebsocket)
       publicStreaming.start(
         'public',
         '',
