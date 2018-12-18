@@ -316,7 +316,10 @@ const TimelineSpace = {
     },
     startDirectMessagesStreaming ({ state }) {
       return new Promise((resolve, reject) => {
-        ipcRenderer.send('start-directmessages-streaming', state.account)
+        ipcRenderer.send('start-directmessages-streaming', {
+          account: state.account,
+          useWebsocket: state.useWebsocket
+        })
         ipcRenderer.once('error-start-directmessages-streaming', (event, err) => {
           reject(err)
         })
