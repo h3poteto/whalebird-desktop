@@ -91,8 +91,9 @@ const Show = {
       })
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-list-streaming', {
-          list_id: listID,
-          account: rootState.TimelineSpace.account
+          listID: listID,
+          account: rootState.TimelineSpace.account,
+          useWebsocket: rootState.TimelineSpace.useWebsocket
         })
         ipcRenderer.once('error-start-list-streaming', (event, err) => {
           reject(err)

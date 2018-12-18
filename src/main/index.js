@@ -547,22 +547,23 @@ ipcMain.on('stop-public-streaming', (event, _) => {
 let listStreaming = null
 
 ipcMain.on('start-list-streaming', (event, obj) => {
-  accountManager.getAccount(obj.account._id)
+  const { listID, account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-list-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old list streaming
       if (listStreaming !== null) {
         listStreaming.stop()
         listStreaming = null
       }
 
-      listStreaming = new StreamingManager(account)
+      listStreaming = new StreamingManager(acct, useWebsocket)
       listStreaming.start(
         'list',
-        `list=${obj.list_id}`,
+        `list=${listID}`,
         (update) => {
           event.sender.send('update-start-list-streaming', update)
         },
