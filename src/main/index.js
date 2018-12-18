@@ -432,20 +432,21 @@ ipcMain.on('stop-user-streaming', (event, _) => {
 
 let directMessagesStreaming = null
 
-ipcMain.on('start-directmessages-streaming', (event, ac) => {
-  accountManager.getAccount(ac._id)
+ipcMain.on('start-directmessages-streaming', (event, obj) => {
+  const { account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-directmessages-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old directmessages streaming
       if (directMessagesStreaming !== null) {
         directMessagesStreaming.stop()
         directMessagesStreaming = null
       }
 
-      directMessagesStreaming = new StreamingManager(account)
+      directMessagesStreaming = new StreamingManager(acct, useWebsocket)
       directMessagesStreaming.start(
         'direct',
         '',
