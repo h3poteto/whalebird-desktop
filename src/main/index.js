@@ -469,20 +469,21 @@ ipcMain.on('stop-directmessages-streaming', (event, _) => {
 
 let localStreaming = null
 
-ipcMain.on('start-local-streaming', (event, ac) => {
-  accountManager.getAccount(ac._id)
+ipcMain.on('start-local-streaming', (event, obj) => {
+  const { account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-local-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old local streaming
       if (localStreaming !== null) {
         localStreaming.stop()
         localStreaming = null
       }
 
-      localStreaming = new StreamingManager(account)
+      localStreaming = new StreamingManager(acct, useWebsocket)
       localStreaming.start(
         'public/local',
         '',
