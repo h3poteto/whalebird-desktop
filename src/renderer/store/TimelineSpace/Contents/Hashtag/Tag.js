@@ -91,7 +91,8 @@ const Tag = {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('start-tag-streaming', {
           tag: encodeURIComponent(tag),
-          account: rootState.TimelineSpace.account
+          account: rootState.TimelineSpace.account,
+          useWebsocket: rootState.TimelineSpace.useWebsocket
         })
         ipcRenderer.once('error-start-tag-streaming', (event, err) => {
           reject(err)
