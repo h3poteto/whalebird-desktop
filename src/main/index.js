@@ -390,20 +390,21 @@ ipcMain.on('reset-badge', () => {
 // streaming
 let userStreaming = null
 
-ipcMain.on('start-user-streaming', (event, ac) => {
-  accountManager.getAccount(ac._id)
+ipcMain.on('start-user-streaming', (event, obj) => {
+  const { account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-user-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old user streaming
       if (userStreaming !== null) {
         userStreaming.stop()
         userStreaming = null
       }
 
-      userStreaming = new StreamingManager(account)
+      userStreaming = new StreamingManager(acct, useWebsocket)
       userStreaming.startUser(
         (update) => {
           event.sender.send('update-start-user-streaming', update)
@@ -431,20 +432,21 @@ ipcMain.on('stop-user-streaming', (event, _) => {
 
 let directMessagesStreaming = null
 
-ipcMain.on('start-directmessages-streaming', (event, ac) => {
-  accountManager.getAccount(ac._id)
+ipcMain.on('start-directmessages-streaming', (event, obj) => {
+  const { account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-directmessages-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old directmessages streaming
       if (directMessagesStreaming !== null) {
         directMessagesStreaming.stop()
         directMessagesStreaming = null
       }
 
-      directMessagesStreaming = new StreamingManager(account)
+      directMessagesStreaming = new StreamingManager(acct, useWebsocket)
       directMessagesStreaming.start(
         'direct',
         '',
@@ -468,20 +470,21 @@ ipcMain.on('stop-directmessages-streaming', (event, _) => {
 
 let localStreaming = null
 
-ipcMain.on('start-local-streaming', (event, ac) => {
-  accountManager.getAccount(ac._id)
+ipcMain.on('start-local-streaming', (event, obj) => {
+  const { account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-local-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old local streaming
       if (localStreaming !== null) {
         localStreaming.stop()
         localStreaming = null
       }
 
-      localStreaming = new StreamingManager(account)
+      localStreaming = new StreamingManager(acct, useWebsocket)
       localStreaming.start(
         'public/local',
         '',
@@ -505,20 +508,21 @@ ipcMain.on('stop-local-streaming', (event, _) => {
 
 let publicStreaming = null
 
-ipcMain.on('start-public-streaming', (event, ac) => {
-  accountManager.getAccount(ac._id)
+ipcMain.on('start-public-streaming', (event, obj) => {
+  const { account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-public-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old public streaming
       if (publicStreaming !== null) {
         publicStreaming.stop()
         publicStreaming = null
       }
 
-      publicStreaming = new StreamingManager(account)
+      publicStreaming = new StreamingManager(acct, useWebsocket)
       publicStreaming.start(
         'public',
         '',
@@ -543,22 +547,23 @@ ipcMain.on('stop-public-streaming', (event, _) => {
 let listStreaming = null
 
 ipcMain.on('start-list-streaming', (event, obj) => {
-  accountManager.getAccount(obj.account._id)
+  const { listID, account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-list-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old list streaming
       if (listStreaming !== null) {
         listStreaming.stop()
         listStreaming = null
       }
 
-      listStreaming = new StreamingManager(account)
+      listStreaming = new StreamingManager(acct, useWebsocket)
       listStreaming.start(
         'list',
-        `list=${obj.list_id}`,
+        `list=${listID}`,
         (update) => {
           event.sender.send('update-start-list-streaming', update)
         },
@@ -580,22 +585,23 @@ ipcMain.on('stop-list-streaming', (event, _) => {
 let tagStreaming = null
 
 ipcMain.on('start-tag-streaming', (event, obj) => {
-  accountManager.getAccount(obj.account._id)
+  const { tag, account, useWebsocket } = obj
+  accountManager.getAccount(account._id)
     .catch((err) => {
       log.error(err)
       event.sender.send('error-start-tag-streaming', err)
     })
-    .then((account) => {
+    .then((acct) => {
       // Stop old tag streaming
       if (tagStreaming !== null) {
         tagStreaming.stop()
         tagStreaming = null
       }
 
-      tagStreaming = new StreamingManager(account)
+      tagStreaming = new StreamingManager(acct, useWebsocket)
       tagStreaming.start(
         'hashtag',
-        `tag=${obj.tag}`,
+        `tag=${tag}`,
         (update) => {
           event.sender.send('update-start-tag-streaming', update)
         },

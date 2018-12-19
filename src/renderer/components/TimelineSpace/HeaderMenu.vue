@@ -4,6 +4,9 @@
     <h1>{{ title }}</h1>
   </div>
   <div class="tools">
+    <el-button type="text" class="action" @click="switchStreaming" :title="$t('header_menu.switch_streaming')">
+      <svg :class="useWebsocket ? 'websocket' : 'not-websocket'" width="25" height="18" viewBox="0 0 256 193" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><path d="M192.44 144.645h31.78V68.339l-35.805-35.804-22.472 22.472 26.497 26.497v63.14zm31.864 15.931H113.452L86.954 134.08l11.237-11.236 21.885 21.885h45.028l-44.357-44.441 11.32-11.32 44.357 44.358V88.296l-21.801-21.801 11.152-11.153L110.685 0H0l31.696 31.696v.084H97.436l23.227 23.227-33.96 33.96L63.476 65.74V47.712h-31.78v31.193l55.007 55.007L64.314 156.3l35.805 35.805H256l-31.696-31.529z" /></svg>
+    </el-button>
     <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
       <icon name="regular/edit" scale="1.1"></icon>
     </el-button>
@@ -67,8 +70,11 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      title: state => state.TimelineSpace.HeaderMenu.title
+    ...mapState('TimelineSpace/HeaderMenu', {
+      title: state => state.title
+    }),
+    ...mapState('TimelineSpace', {
+      useWebsocket: state => state.useWebsocket
     })
   },
   created () {
@@ -128,6 +134,11 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.home'))
           break
       }
+    },
+    switchStreaming () {
+      this.$store.dispatch('TimelineSpace/stopStreamings')
+      this.$store.commit('TimelineSpace/changeUseWebsocket', !this.useWebsocket)
+      this.$store.dispatch('TimelineSpace/startStreamings')
     },
     openNewTootModal () {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
@@ -287,6 +298,18 @@ export default {
 
       &:hover {
         color: #409eff;
+      }
+
+      .not-websocket {
+        fill: var(--theme-secondary-color);
+
+        &:hover {
+          fill: #409eff;
+        }
+      }
+
+      .websocket {
+        fill: #409eff;
       }
     }
   }
