@@ -4,11 +4,11 @@ import WebSocket from './websocket'
 import log from 'electron-log'
 
 export default class StreamingManager {
-  constructor (account) {
+  constructor (account, useWebsocket = false) {
     this.account = account
     this.streaming = new Streaming(account)
     this.websocket = new WebSocket(account)
-    this.mastodon = true
+    this.useWebsocket = useWebsocket
   }
 
   /**
@@ -17,18 +17,19 @@ export default class StreamingManager {
   async detectPleroma () {
     const data = await Mastodon.get('/instance', {}, this.account.baseURL + '/api/v1')
     if (data.version.includes('Pleroma')) {
-      this.mastodon = false
       log.info('detect Pleroma')
+      return true
     }
+    return false
   }
 
   startUser (updateCallback, notificationCallback, errCallback) {
     this.detectPleroma()
-      .then(() => {
-        if (this.mastodon) {
-          this._startUserStreaming(updateCallback, notificationCallback, errCallback)
-        } else {
+      .then((isPleroma) => {
+        if (isPleroma || this.useWebsocket) {
           this._startUserSocket(updateCallback, notificationCallback, errCallback)
+        } else {
+          this._startUserStreaming(updateCallback, notificationCallback, errCallback)
         }
       })
       .catch(err => errCallback(err))
@@ -36,11 +37,11 @@ export default class StreamingManager {
 
   start (path, params, updateCallback, errCallback) {
     this.detectPleroma()
-      .then(() => {
-        if (this.mastodon) {
-          this._startStreaming(path, params, updateCallback, errCallback)
-        } else {
+      .then((isPleroma) => {
+        if (isPleroma || this.useWebsocket) {
           this._startSocket(path, params, updateCallback, errCallback)
+        } else {
+          this._startStreaming(path, params, updateCallback, errCallback)
         }
       })
       .catch(err => errCallback(err))
