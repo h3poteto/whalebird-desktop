@@ -64,6 +64,9 @@ export default class Streaming {
       this.listener.on('error', (e) => {
         log.error(e)
       })
+      this.listener.on('parser-error', (e) => {
+        log.error(e)
+      })
       this.listener.stop()
       log.info('streaming stopped')
     }
