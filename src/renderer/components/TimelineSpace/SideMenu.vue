@@ -21,13 +21,13 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-      </div> 
+      </div>
       <div class="collapse">
         <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse" :title="$t('side_menu.expand')">
-          <i class="el-icon-arrow-right"></i>
+          <icon name="angle-double-right"></icon>
         </el-button>
         <el-button type="text" class="do-collapse" @click="doCollapse" v-else :title="$t('side_menu.collapse')">
-          <i class="el-icon-arrow-left"></i>
+          <icon name="angle-double-left"></icon>
         </el-button>
       </div>
     </div>
@@ -100,10 +100,10 @@
       </template>
     </el-menu>
     <el-button v-if="hideGlobalHeader" class="global-header-control" type="text" @click="changeGlobalHeader(false)">
-      <icon name="caret-square-right"></icon>
+      <icon name="angle-double-right"></icon>
     </el-button>
     <el-button v-else class="global-header-control" type="text" @click="changeGlobalHeader(true)">
-      <icon name="caret-square-left"></icon>
+      <icon name="angle-double-left"></icon>
     </el-button>
   </div>
 </template>
@@ -187,6 +187,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-content: center;
+    align-items: flex-start;
     justify-content: flex-end;
 
     .account {
@@ -243,6 +244,7 @@ export default {
       .do-collapse {
         color: #dcdfe6;
         padding: 0;
+        margin-top: 8px;
 
         &:hover {
           color: #409eff;
@@ -252,6 +254,7 @@ export default {
       .release-collapse {
         color: #dcdfe6;
         padding: 0;
+        margin-top: 8px;
 
         &:hover {
           color: #409eff;
@@ -310,7 +313,9 @@ export default {
     bottom: 0;
     color: #dcdfe6;
     margin: 0;
-    padding: 0;
+    padding: 4px 0 0 0;
+    border-radius: 0 4px 4px 0;
+    background-color: var(--theme-global-header-color);
   }
 }
 </style>
