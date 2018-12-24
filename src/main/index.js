@@ -417,7 +417,12 @@ ipcMain.on('start-user-streaming', (event, obj) => {
         },
         (err) => {
           log.error(err)
-          event.sender.send('error-start-user-streaming', err)
+          // In macOS, sometimes window is closed (not quit).
+          // When window is closed, we can not send event to webContents; because it is destroyed.
+          // So we have to guard it.
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('error-start-user-streaming', err)
+          }
         }
       )
     })
@@ -455,7 +460,9 @@ ipcMain.on('start-directmessages-streaming', (event, obj) => {
         },
         (err) => {
           log.error(err)
-          event.sender.send('error-start-directmessages-streaming', err)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('error-start-directmessages-streaming', err)
+          }
         }
       )
     })
@@ -493,7 +500,9 @@ ipcMain.on('start-local-streaming', (event, obj) => {
         },
         (err) => {
           log.error(err)
-          event.sender.send('error-start-local-streaming', err)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('error-start-local-streaming', err)
+          }
         }
       )
     })
@@ -531,7 +540,9 @@ ipcMain.on('start-public-streaming', (event, obj) => {
         },
         (err) => {
           log.error(err)
-          event.sender.send('error-start-public-streaming', err)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('error-start-public-streaming', err)
+          }
         }
       )
     })
@@ -569,7 +580,9 @@ ipcMain.on('start-list-streaming', (event, obj) => {
         },
         (err) => {
           log.error(err)
-          event.sender.send('error-start-list-streaming', err)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('error-start-list-streaming', err)
+          }
         }
       )
     })
@@ -607,7 +620,9 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
         },
         (err) => {
           log.error(err)
-          event.sender.send('error-start-tag-streaming', err)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('error-start-tag-streaming', err)
+          }
         }
       )
     })
