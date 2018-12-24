@@ -30,7 +30,8 @@ const TimelineSpace = {
       local: unreadSettings.Local.default,
       public: unreadSettings.Public.default
     },
-    useWebsocket: false
+    useWebsocket: false,
+    pleroma: false
   },
   mutations: {
     updateAccount (state, account) {
@@ -56,6 +57,9 @@ const TimelineSpace = {
     },
     updateUnreadNotification (state, settings) {
       state.unreadNotification = settings
+    },
+    changePleroma (state, pleroma) {
+      state.pleroma = pleroma
     },
     changeUseWebsocket (state, use) {
       state.useWebsocket = use
@@ -114,6 +118,16 @@ const TimelineSpace = {
         }
       )
       return 'clearAccount'
+    },
+    async detectPleroma ({ commit, state }) {
+      const data = await Mastodon.get('/instance', {}, state.account.baseURL + '/api/v1')
+      if (data.version.includes('Pleroma')) {
+        commit('changePleroma', true)
+        commit('changeUseWebsocket', true)
+      } else {
+        commit('changePleroma', false)
+        commit('changeUseWebsocket', false)
+      }
     },
     // -----------------------------------------------
     // Shortcuts
