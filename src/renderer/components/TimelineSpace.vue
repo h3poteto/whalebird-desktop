@@ -106,6 +106,7 @@ export default {
           })
         })
 
+      await this.$store.dispatch('TimelineSpace/detectPleroma')
       // Bind streamings
       await this.$store.dispatch('TimelineSpace/bindStreamings', account)
       // Start streamings
