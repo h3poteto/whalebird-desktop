@@ -352,7 +352,7 @@ const TimelineSpace = {
       ipcRenderer.removeAllListeners('update-start-directmessages-streaming')
     },
     stopDirectMessagesStreaming () {
-      ipcRenderer.send('stop-drectmessages-streaming')
+      ipcRenderer.send('stop-directmessages-streaming')
     }
   }
 }
