@@ -28,6 +28,8 @@
           class="image-description"
           :placeholder="$t('modals.new_toot.description')"
           v-model="mediaDescriptions[media.id]"
+          v-shortkey="{left: ['arrowleft'], right: ['arrowright']}"
+          @shortkey="handleDescriptionKey"
           role="textbox"
           contenteditable="true"
           aria-multiline="true">
@@ -300,6 +302,19 @@ export default {
             done()
           })
           .catch(_ => {})
+      }
+    },
+    handleDescriptionKey (event) {
+      const current = event.target.selectionStart
+      switch (event.srcKey) {
+        case 'left':
+          event.target.setSelectionRange(current - 1, current - 1)
+          break
+        case 'right':
+          event.target.setSelectionRange(current + 1, current + 1)
+          break
+        default:
+          return true
       }
     }
   }
