@@ -3,7 +3,7 @@ import { JSDOM } from 'jsdom'
 import { findLink, findTag, findAccount } from '../../src/renderer/utils/tootParser'
 
 describe('findLink', () => {
-  context('Pleroma', () => {
+  describe('Pleroma', () => {
     const doc = (new JSDOM(`<html><head></head><body>
 <div class="toot">
 <p>
@@ -22,7 +22,7 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
 })
 
 describe('findTag', () => {
-  context('Pleroma', () => {
+  describe('Pleroma', () => {
     const doc = (new JSDOM(`<html><head></head><body>
 <div class="toot">
 <p>
@@ -38,7 +38,7 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
     })
   })
 
-  context('Mastodon', () => {
+  describe('Mastodon', () => {
     const doc = (new JSDOM(`<html><head></head><body>
 <div class="toot">
 <p>
@@ -56,8 +56,8 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
 })
 
 describe('findAccount', () => {
-  context('in Pleroma', () => {
-    context('from Mastodon', () => {
+  describe('in Pleroma', () => {
+    describe('from Mastodon', () => {
       const doc = (new JSDOM(`<html><head></head><body>
 <div class="toot">
 <p><span><a href="https://social.mikutter.hachune.net/@h3_poteto">@<span id="user">h3_poteto</span></a></span> hogehoge</p>
@@ -72,7 +72,7 @@ describe('findAccount', () => {
       })
     })
 
-    context('from Pleroma', () => {
+    describe('from Pleroma', () => {
       const doc = (new JSDOM(`<html><head></head><body>
 <div class="toot">
 <p><span><a href="https://pleroma.io/users/h3poteto">@<span id="user">h3_poteto</span></a></span> hogehoge</p>

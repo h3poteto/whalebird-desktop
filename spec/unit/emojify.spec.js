@@ -16,7 +16,7 @@ describe('emojify', () => {
       url: 'https://example.com/slack'
     }
   ]
-  context('Does not contain shortcode', () => {
+  describe('Does not contain shortcode', () => {
     const str = 'I have a pen.'
     it('should not change', () => {
       const result = emojify(str, emoji)
@@ -26,7 +26,7 @@ describe('emojify', () => {
       )
     })
   })
-  context('Contain a shortcode', () => {
+  describe('Contain a shortcode', () => {
     const str = 'I like :python:'
     it('should replace', () => {
       const result = emojify(str, emoji)
@@ -36,7 +36,7 @@ describe('emojify', () => {
       )
     })
   })
-  context('Contain some shortcodes', () => {
+  describe('Contain some shortcodes', () => {
     const str = 'I like :python: , :nodejs: and :slack:'
     it('should replace', () => {
       const result = emojify(str, emoji)
@@ -46,7 +46,7 @@ describe('emojify', () => {
       )
     })
   })
-  context('Contain same shortcodes', () => {
+  describe('Contain same shortcodes', () => {
     const str = 'I like :python: , I love :python:'
     it('should replace', () => {
       const result = emojify(str, emoji)
