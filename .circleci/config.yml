@@ -24,5 +24,5 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: mocha
-          command: npm run mocha
+          name: spec
+          command: npm run spec:unit
