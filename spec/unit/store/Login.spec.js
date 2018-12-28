@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Login from '@/store/Login'
-import { ipcRenderer } from '~/spec/mock/electron'
+import { ipcMain } from '~/spec/mock/electron'
 
 jest.mock('axios')
 
@@ -29,28 +29,53 @@ describe('Login', () => {
   })
 
   describe('actions', () => {
-    describe('fetchLogin', async () => {
-      const commitMock = jest.fn()
-      await Login.actions.fetchLogin({ commit: commitMock }, 'pleroma.io')
-      expect(ipcRenderer.send).toHaveBeenCalledWith('get-auth-url', 'pleroma.io')
+    describe('fetchLogin', () => {
+      describe('error', () => {
+        it('should return error', async () => {
+          ipcMain.once('get-auth-url', (event, instance) => {
+            event.sender.send('error-get-auth-url', new AuthError())
+          })
+          const commitMock = jest.fn()
+          await Login.actions.fetchLogin({ commit: commitMock }, 'pleroma.io')
+            .catch((err) => {
+              expect(err instanceof AuthError).toEqual(true)
+            })
+        })
+      })
+      describe('success', () => {
+        it('should return url', async () => {
+          ipcMain.once('get-auth-url', (event, instance) => {
+            event.sender.send('response-get-auth-url', 'http://example.com/auth')
+          })
+          const commitMock = jest.fn()
+          const url = await Login.actions.fetchLogin({ commit: commitMock }, 'pleroma.io')
+          expect(url).toEqual('http://example.com/auth')
+        })
+      })
     })
     describe('pageBack', () => {
-      const commitMock = jest.fn()
-      Login.actions.pageBack({ commit: commitMock })
-      expect(commitMock).toHaveBeenCalledWith('changeInstance', null)
+      it('should reset instance', () => {
+        const commitMock = jest.fn()
+        Login.actions.pageBack({ commit: commitMock })
+        expect(commitMock).toHaveBeenCalledWith('changeInstance', null)
+      })
     })
-    describe('confirmInstance', async () => {
-      const resp = {
-        data: 'test'
-      }
-      // Provide Promise.resolve for finally keywrod.
-      // https://github.com/facebook/jest/issues/6552
-      axios.get.mockReturnValue(Promise.resolve(resp))
-      const commitMock = jest.fn()
-      const data = await Login.actions.confirmInstance({ commit: commitMock }, 'pleroma.io')
-      expect(data).toEqual('test')
-      // ref: https://eddyerburgh.me/how-to-unit-test-a-vuex-store
-      expect(commitMock).toHaveBeenCalledWith('changeInstance', 'pleroma.io')
+    describe('confirmInstance', () => {
+      it('should change instance', async () => {
+        const resp = {
+          data: 'test'
+        }
+        // Provide Promise.resolve for finally keywrod.
+        // https://github.com/facebook/jest/issues/6552
+        axios.get.mockReturnValue(Promise.resolve(resp))
+        const commitMock = jest.fn()
+        const data = await Login.actions.confirmInstance({ commit: commitMock }, 'pleroma.io')
+        expect(data).toEqual('test')
+        // ref: https://eddyerburgh.me/how-to-unit-test-a-vuex-store
+        expect(commitMock).toHaveBeenCalledWith('changeInstance', 'pleroma.io')
+      })
     })
   })
 })
+
+class AuthError extends Error {}
