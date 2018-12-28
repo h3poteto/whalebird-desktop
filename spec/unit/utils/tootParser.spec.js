@@ -1,4 +1,3 @@
-import assert from 'assert'
 import { JSDOM } from 'jsdom'
 import { findLink, findTag, findAccount } from '@/utils/tootParser'
 
@@ -16,7 +15,7 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
     const target = doc.getElementById('link')
     it('should find', () => {
       const res = findLink(target)
-      assert.strictEqual(res, 'https://github.com/h3poteto/whalebird-desktop/releases/tag/2.4.1')
+      expect(res).toEqual('https://github.com/h3poteto/whalebird-desktop/releases/tag/2.4.1')
     })
   })
 })
@@ -34,7 +33,7 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
     const target = doc.getElementById('tag')
     it('should find', () => {
       const res = findTag(target)
-      assert.strictEqual(res, 'whalebird')
+      expect(res).toEqual('whalebird')
     })
   })
 
@@ -50,7 +49,7 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
     const target = doc.getElementById('tag')
     it('should find', () => {
       const res = findTag(target)
-      assert.strictEqual(res, 'whalebird')
+      expect(res).toEqual('whalebird')
     })
   })
 })
@@ -67,8 +66,8 @@ describe('findAccount', () => {
       const target = doc.getElementById('user')
       it('should find', () => {
         const res = findAccount(target)
-        assert.strictEqual(res.username, '@h3_poteto')
-        assert.strictEqual(res.acct, '@h3_poteto@social.mikutter.hachune.net')
+        expect(res.username).toEqual('@h3_poteto')
+        expect(res.acct).toEqual('@h3_poteto@social.mikutter.hachune.net')
       })
     })
 
@@ -82,8 +81,8 @@ describe('findAccount', () => {
       const target = doc.getElementById('user')
       it('should find', () => {
         const res = findAccount(target)
-        assert.strictEqual(res.username, '@h3poteto')
-        assert.strictEqual(res.acct, '@h3poteto@pleroma.io')
+        expect(res.username).toEqual('@h3poteto')
+        expect(res.acct).toEqual('@h3poteto@pleroma.io')
       })
     })
   })

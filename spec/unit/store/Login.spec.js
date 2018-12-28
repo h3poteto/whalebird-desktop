@@ -29,17 +29,9 @@ describe('Login', () => {
   })
 
   describe('actions', () => {
-    let state
-    beforeEach(() => {
-      state = {
-        instances: [],
-        selectedInstance: null,
-        searching: false
-      }
-    })
     describe('fetchLogin', async () => {
       const commitMock = jest.fn()
-      const url = await Login.actions.fetchLogin({ commit: commitMock }, 'pleroma.io')
+      await Login.actions.fetchLogin({ commit: commitMock }, 'pleroma.io')
       expect(ipcRenderer.send).toHaveBeenCalledWith('get-auth-url', 'pleroma.io')
     })
     describe('pageBack', () => {
