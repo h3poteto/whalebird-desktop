@@ -4,6 +4,7 @@ linter:
     dir:
       - src
       - test
+      - spec
     options:
       config: '.eslintrc.js'
       ext: '.js,.vue'

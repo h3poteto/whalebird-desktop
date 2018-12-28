@@ -1,5 +1,5 @@
 import assert from 'assert'
-import emojify from '../../src/renderer/utils/emojify'
+import emojify from '@/utils/emojify'
 
 describe('emojify', () => {
   const emoji = [
