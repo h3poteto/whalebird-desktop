@@ -17,7 +17,7 @@ const Login = {
     }
   },
   actions: {
-    fetchLogin ({ commit }, instance) {
+    fetchLogin (_, instance) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-auth-url', instance)
         ipcRenderer.once('error-get-auth-url', (event, err) => {
