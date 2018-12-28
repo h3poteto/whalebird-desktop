@@ -1,5 +1,5 @@
 import assert from 'assert'
-import suggestText from '../../src/renderer/utils/suggestText'
+import suggestText from '@/utils/suggestText'
 
 describe('account', () => {
   describe('Only account name', () => {

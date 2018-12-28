@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { JSDOM } from 'jsdom'
-import { findLink, findTag, findAccount } from '../../src/renderer/utils/tootParser'
+import { findLink, findTag, findAccount } from '@/utils/tootParser'
 
 describe('findLink', () => {
   describe('Pleroma', () => {

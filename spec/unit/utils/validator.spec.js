@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { domainFormat } from '../../src/renderer/utils/validator'
+import { domainFormat } from '@/utils/validator'
 
 describe('validator', () => {
   describe('domainFormat', () => {
