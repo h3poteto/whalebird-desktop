@@ -62,14 +62,18 @@ export default {
       const config = {
         appearance: newAppearance
       }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-      })
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        commit('updateAppearance', conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('update-preferences', config)
+        ipcRenderer.once('error-update-preferences', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-preferences', err)
+          reject(err)
+        })
+        ipcRenderer.once('response-update-preferences', (event, conf) => {
+          ipcRenderer.removeAllListeners('error-update-preferences')
+          commit('updateAppearance', conf.appearance)
+          dispatch('App/loadPreferences', null, { root: true })
+          resolve(conf.appearance)
+        })
       })
     },
     updateFontSize ({ dispatch, commit, state }, fontSize) {
