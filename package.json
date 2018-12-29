@@ -39,7 +39,7 @@
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix",
-    "spec:unit": "NODE_ENV=test jest -u ./spec/unit/*/**.spec.js"
+    "spec:unit": "NODE_ENV=test jest -u"
   },
   "build": {
     "productName": "Whalebird",
@@ -95,7 +95,8 @@
       "^@/(.+)": "<rootDir>/src/renderer/$1",
       "^~/(.+)": "<rootDir>/$1",
       "electron": "<rootDir>/spec/mock/electron.js"
-    }
+    },
+    "testMatch": [ "**/spec/**/*.spec.js?(x)" ]
   },
   "dependencies": {
     "@panter/vue-i18next": "^0.13.0",
