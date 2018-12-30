@@ -39,7 +39,7 @@
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix",
-    "spec:unit": "NODE_ENV=test jest -u"
+    "spec": "NODE_ENV=test jest -u"
   },
   "build": {
     "productName": "Whalebird",
