@@ -40,10 +40,13 @@ export default {
       const config = {
         notification: newNotification
       }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        commit('updateNotification', conf.notification)
-        dispatch('App/loadPreferences', null, { root: true })
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('update-preferences', config)
+        ipcRenderer.once('response-update-preferences', (event, conf) => {
+          commit('updateNotification', conf.notification)
+          dispatch('App/loadPreferences', null, { root: true })
+          resolve(conf.notification)
+        })
       })
     }
   }

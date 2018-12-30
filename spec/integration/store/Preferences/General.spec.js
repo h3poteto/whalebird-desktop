@@ -41,7 +41,7 @@ describe('Preferences/General', () => {
           general: {
             sound: {
               fav_rb: false,
-              toot: false,
+              toot: false
             }
           }
         })

@@ -25,4 +25,4 @@ jobs:
             - node_modules
       - run:
           name: spec
-          command: npm run spec:unit
+          command: npm run spec
