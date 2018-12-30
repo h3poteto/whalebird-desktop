@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import router from '../router'
+import router from '@/router'
 
 const GlobalHeader = {
   namespaced: true,
@@ -69,18 +69,24 @@ const GlobalHeader = {
     },
     async removeShortcutEvents () {
       ipcRenderer.removeAllListeners('change-account')
-      return 'removeShortcutEvents'
+      return true
     },
     loadHide ({ commit }) {
-      ipcRenderer.send('get-global-header')
-      ipcRenderer.once('response-get-global-header', (event, value) => {
-        commit('changeHide', value)
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('get-global-header')
+        ipcRenderer.once('response-get-global-header', (event, value) => {
+          commit('changeHide', value)
+          resolve(value)
+        })
       })
     },
     switchHide ({ dispatch }, value) {
-      ipcRenderer.send('change-global-header', value)
-      ipcRenderer.once('response-change-global-header', (event, _) => {
-        dispatch('loadHide')
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('change-global-header', value)
+        ipcRenderer.once('response-change-global-header', (event, _) => {
+          dispatch('loadHide')
+          resolve(true)
+        })
       })
     }
   }
