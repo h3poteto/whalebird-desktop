@@ -146,8 +146,8 @@ export default {
     this.$store.dispatch('Preferences/Appearance/loadFonts')
   },
   methods: {
-    updateFontSize (value) {
-      this.$store.dispatch('Preferences/Appearance/updateFontSize', value)
+    async updateFontSize (value) {
+      await this.$store.dispatch('Preferences/Appearance/updateFontSize', value)
     }
   }
 }
