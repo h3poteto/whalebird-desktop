@@ -46,15 +46,19 @@ const General = {
       const config = {
         general: newGeneral
       }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-        commit('changeLoading', false)
-      })
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        commit('updateGeneral', conf.general)
-        commit('changeLoading', false)
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('update-preferences', config)
+        ipcRenderer.once('error-update-preferences', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-preferences')
+          commit('changeLoading', false)
+          reject(err)
+        })
+        ipcRenderer.once('response-update-preferences', (event, conf) => {
+          ipcRenderer.removeAllListeners('error-update-preferences')
+          commit('updateGeneral', conf.general)
+          commit('changeLoading', false)
+          resolve(conf)
+        })
       })
     }
   }
