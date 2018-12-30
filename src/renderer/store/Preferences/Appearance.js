@@ -83,14 +83,18 @@ export default {
       const config = {
         appearance: newAppearance
       }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-      })
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        commit('updateAppearance', conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('update-preferences', config)
+        ipcRenderer.once('error-update-preferences', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-preferences')
+          reject(err)
+        })
+        ipcRenderer.once('response-update-preferences', (event, conf) => {
+          ipcRenderer.removeAllListeners('error-update-preferences')
+          commit('updateAppearance', conf.appearance)
+          dispatch('App/loadPreferences', null, { root: true })
+          resolve(conf.appearance)
+        })
       })
     },
     updateDisplayNameStyle ({ dispatch, commit, state }, value) {
@@ -100,14 +104,18 @@ export default {
       const config = {
         appearance: newAppearance
       }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-      })
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        dispatch('App/loadPreferences', null, { root: true })
-        commit('updateAppearance', conf.appearance)
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('update-preferences', config)
+        ipcRenderer.once('error-update-preferences', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-preferences')
+          reject(err)
+        })
+        ipcRenderer.once('response-update-preferences', (event, conf) => {
+          ipcRenderer.removeAllListeners('error-update-preferences')
+          dispatch('App/loadPreferences', null, { root: true })
+          commit('updateAppearance', conf.appearance)
+          resolve(conf.appearance)
+        })
       })
     },
     updateTimeFormat ({ dispatch, commit, state }, value) {
@@ -117,14 +125,18 @@ export default {
       const config = {
         appearance: newAppearance
       }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-      })
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        dispatch('App/loadPreferences', null, { root: true })
-        commit('updateAppearance', conf.appearance)
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('update-preferences', config)
+        ipcRenderer.once('error-update-preferences', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-preferences')
+          reject(err)
+        })
+        ipcRenderer.once('response-update-preferences', (event, conf) => {
+          ipcRenderer.removeAllListeners('error-update-preferences')
+          dispatch('App/loadPreferences', null, { root: true })
+          commit('updateAppearance', conf.appearance)
+          resolve(conf.appearance)
+        })
       })
     },
     updateCustomThemeColor ({ dispatch, state, commit }, value) {
@@ -135,14 +147,18 @@ export default {
       const config = {
         appearance: newAppearance
       }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-      })
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        commit('updateAppearance', conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('update-preferences', config)
+        ipcRenderer.once('error-update-preferences', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-preferences')
+          reject(err)
+        })
+        ipcRenderer.once('response-update-preferences', (event, conf) => {
+          ipcRenderer.removeAllListeners('error-update-preferences')
+          commit('updateAppearance', conf.appearance)
+          dispatch('App/loadPreferences', null, { root: true })
+          resolve(conf.appearance)
+        })
       })
     },
     updateFont ({ dispatch, state, commit }, value) {
@@ -152,14 +168,18 @@ export default {
       const config = {
         appearance: newAppearance
       }
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (event, err) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-      })
-      ipcRenderer.once('response-update-preferences', (event, conf) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        commit('updateAppearance', conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('update-preferences', config)
+        ipcRenderer.once('error-update-preferences', (event, err) => {
+          ipcRenderer.removeAllListeners('response-update-preferences')
+          reject(err)
+        })
+        ipcRenderer.once('response-update-preferences', (event, conf) => {
+          ipcRenderer.removeAllListeners('error-update-preferences')
+          commit('updateAppearance', conf.appearance)
+          dispatch('App/loadPreferences', null, { root: true })
+          resolve(conf.appearance)
+        })
       })
     }
   }
