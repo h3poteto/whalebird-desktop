@@ -87,46 +87,7 @@ describe('Preferences/Appearance', () => {
       })
     })
   })
-  describe('updateTheme', () => {
-    it('error', async () => {
-      ipcMain.once('update-preferences', (event, _) => {
-        event.sender.send('error-update-preferences', new UpdateThemeError())
-      })
-      const dispatchMock = jest.fn()
-      const commitMock = jest.fn()
-      await Appearance.actions.updateTheme({ dispatch: dispatchMock, commit: commitMock, state: state }, Theme.Dark.key)
-        .catch((err) => {
-          expect(err instanceof UpdateThemeError).toEqual(true)
-        })
-    })
-    it('success', async () => {
-      ipcMain.once('update-preferences', (event, config) => {
-        event.sender.send('response-update-preferences', config)
-      })
-      const dispatchMock = jest.fn()
-      const commitMock = jest.fn()
-      const appearance = await Appearance.actions.updateTheme({ dispatch: dispatchMock, commit: commitMock, state: state }, Theme.Dark.key)
-      expect(appearance).toEqual({
-        theme: Theme.Dark.key,
-        fontSize: 14,
-        displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-        timeFormat: TimeFormat.Absolute.value,
-        customThemeColor: LightTheme,
-        font: DefaultFonts[0]
-      })
-      expect(commitMock).toHaveBeenCalledWith('updateAppearance', {
-        theme: Theme.Dark.key,
-        fontSize: 14,
-        displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-        timeFormat: TimeFormat.Absolute.value,
-        customThemeColor: LightTheme,
-        font: DefaultFonts[0]
-      })
-      expect(dispatchMock).toHaveBeenCalledWith('App/loadPreferences', null, { root: true })
-    })
-  })
 })
 
 class LoadAppearanceError extends Error {}
 class ListFontsError extends Error {}
-class UpdateThemeError extends Error {}
