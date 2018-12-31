@@ -59,7 +59,7 @@ export default {
     },
     async initialize () {
       await this.$store.dispatch('GlobalHeader/removeShortcutEvents')
-      this.$store.dispatch('GlobalHeader/loadHide')
+      await this.$store.dispatch('GlobalHeader/loadHide')
       this.$store.dispatch('GlobalHeader/watchShortcutEvents')
       try {
         const accounts = await this.$store.dispatch('GlobalHeader/listAccounts')
