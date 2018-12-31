@@ -92,6 +92,7 @@
   },
   "jest": {
     "moduleNameMapper": {
+      "@/router": "<rootDir>/spec/mock/router.js",
       "^@/(.+)": "<rootDir>/src/renderer/$1",
       "^~/(.+)": "<rootDir>/$1",
       "electron": "<rootDir>/spec/mock/electron.js"
