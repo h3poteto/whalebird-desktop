@@ -64,9 +64,12 @@ const SideMenu = {
       ipcRenderer.send('change-collapse', value)
     },
     readCollapse ({ commit }) {
-      ipcRenderer.send('get-collapse')
-      ipcRenderer.once('response-get-collapse', (event, value) => {
-        commit('changeCollapse', value)
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('get-collapse')
+        ipcRenderer.once('response-get-collapse', (event, value) => {
+          commit('changeCollapse', value)
+          resolve(value)
+        })
       })
     },
     listTags ({ commit }) {
