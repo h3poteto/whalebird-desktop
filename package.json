@@ -44,6 +44,7 @@
   "build": {
     "productName": "Whalebird",
     "appId": "org.whalebird.desktop",
+    "artifactName": "${productName}-${version}-${os}.${ext}",
     "directories": {
       "output": "build"
     },
@@ -85,7 +86,8 @@
       "target": [
         "deb",
         "rpm",
-        "snap"
+        "snap",
+        "tar.bz2"
       ],
       "category": "Network"
     }
