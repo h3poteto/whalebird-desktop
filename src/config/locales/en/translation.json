@@ -1,18 +1,18 @@
 {
   "main_menu": {
     "application": {
-      "name": "Whalebird",
-      "about": "About Whalebird",
+      "name": "Roma",
+      "about": "About Roma",
       "preferences": "Preferences...",
       "services": "Services",
-      "hide": "Hide Whalebird",
+      "hide": "Hide Roma",
       "hide_others": "Hide Others",
       "show_all": "Show All",
       "quit": "Quit"
     },
     "toot": {
-      "name": "Toot",
-      "new": "New Toot"
+      "name": "Status",
+      "new": "New Status"
     },
     "edit": {
       "name": "Edit",
@@ -74,7 +74,7 @@
       "apply": "Apply"
     },
     "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it.",
-    "new_toot": "Toot",
+    "new_toot": "Post",
     "reload": "Reload",
     "settings": "Settings"
   },
@@ -83,9 +83,9 @@
     "general": {
       "title": "General",
       "toot": {
-        "title": "Toot",
+        "title": "Status",
         "visibility": {
-          "description": "Customize default visibility of toot.",
+          "description": "Customize default visibility of status.",
           "public": "Public",
           "unlisted": "Unlisted",
           "private": "Private",
@@ -114,8 +114,8 @@
       "sounds": {
         "title": "Sounds",
         "description": "Please set feedback sounds.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "fav_rb": "When you favorite or repost the status",
+        "toot": "When you post status"
       }
     },
     "appearance": {
@@ -180,7 +180,7 @@
     },
     "language": {
       "title": "Language",
-      "language_description": "Choose the language you would like to use with Whalebird.",
+      "language_description": "Choose the language you would like to use with Roma.",
       "notice": "Requires relaunch",
       "confirm": {
         "title": "Warning",
@@ -192,12 +192,12 @@
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
+      "title": "New Status",
       "cw": "Write your warning here",
       "status": "What is on your mind?",
       "cancel": "Cancel",
-      "toot": "Toot",
-      "close_confirm": "Are you sure you want to cancel the new toot?",
+      "toot": "Post",
+      "close_confirm": "Are you sure you want to cancel the new post?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Cancel",
       "add_image": "Add images",
@@ -227,17 +227,17 @@
       "title": "Keyboard shortcuts",
       "ctrl_number": "Switch accounts",
       "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
+      "ctrl_n": "Open the new post modal",
+      "ctrl_enter": "Post the status",
+      "j": "Select the next status",
+      "k": "Select the previous status",
       "h": "Switch focus to the left column",
       "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
+      "r": "Reply to the status",
+      "b": "Reblog the status",
+      "f": "Favourite the status",
+      "o": "Open details of the status",
+      "p": "Open account profile of the status",
       "i": "Open the images",
       "x": "Show/hide CW and NSFW",
       "?": "Show this help",
@@ -255,9 +255,9 @@
       "show_more": "Show more",
       "hide": "Hide",
       "sensitive": "Show sensitive content",
-      "view_toot_detail": "View Toot Detail",
+      "view_toot_detail": "View Status Detail",
       "open_in_browser": "Open in Browser",
-      "copy_link_to_toot": "Copy Link to Toot",
+      "copy_link_to_toot": "Copy Link to Status",
       "mute": "Mute",
       "block": "Block",
       "report": "Report",
@@ -266,7 +266,7 @@
       "reply": "Reply",
       "reblog": "Reblog",
       "fav": "Favourite",
-      "detail": "Toot details",
+      "detail": "Status details",
       "pinned": "Pinned toot"
     }
   },
@@ -284,7 +284,7 @@
       "unmute": "Unmute",
       "unblock": "Unblock",
       "block": "Block",
-      "toots": "Toots",
+      "toots": "Posts",
       "follows": "Follows",
       "followers": "Followers"
     }
@@ -299,7 +299,7 @@
     "account": "Account",
     "tag": "Hashtag",
     "keyword": "keyword",
-    "toot": "Toot"
+    "toot": "Status"
   },
   "lists": {
     "index": {
@@ -308,7 +308,7 @@
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon instance. Please enter an instance domain name.",
+    "domain_name_label": "First, let's log in to a Plermoa / Mastodon instance. Please enter an instance domain name.",
     "search": "Search",
     "login": "Login"
   },
@@ -362,7 +362,7 @@
       "domain_format": "Please only enter the domain name"
     },
     "new_toot": {
-      "toot_length": "Toot length should be {{min}} to {{max}}",
+      "toot_length": "Status length should be {{min}} to {{max}}",
       "attach_length": "You can only attach up to {{max}} images",
       "attach_image": "You can only attach images or videos"
     }

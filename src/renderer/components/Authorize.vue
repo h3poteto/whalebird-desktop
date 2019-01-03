@@ -25,7 +25,7 @@
         </el-form-item>
         <el-form-item class="submit">
           <el-button
-            type="primary"
+            type="secondary"
             @click="authorizeSubmit"
             v-loading="submitting"
             element-loading-background="rgba(0, 0, 0, 0.8)">
@@ -91,7 +91,7 @@ export default {
 
 <style lang="scss" scoped>
 #authorize /deep/ {
-  background-color: #292f3f;
+  background-color: #92c44e;
   color: #ffffff;
   text-align: center;
   min-height: 100%;
@@ -109,7 +109,8 @@ export default {
     max-width: 80%;
 
     .url {
-      color: #909399;
+      font-weight:bold;
+      color: #696969;
       word-wrap: break-word;
     }
   }

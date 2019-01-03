@@ -1,5 +1,7 @@
 <template>
   <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm('loginForm')" class="login-form" :rules="rules" :model="form">
+    <h1>Roma</h1>
+    <img src="../../assets/images/logo-roma.png" width="75" />
     <el-form-item :label="$t('login.domain_name_label')" prop="domainName">
       <el-input v-model="form.domainName" placeholder="mastodon.social" v-shortkey="['enter']" @shortkey.native="handleKey"></el-input>
     </el-form-item>
@@ -8,7 +10,7 @@
       <el-input></el-input>
     </el-form-item>
     <el-button
-      type="primary"
+      type="secondary"
       @click="confirm('loginForm')"
       v-if="selectedInstance === null"
       v-loading="searching"
@@ -17,7 +19,7 @@
     </el-button>
     <el-form-item class="submit">
       <el-button
-        type="primary"
+        type="secondary"
         class="login"
         @click="login"
         v-if="selectedInstance !== null">

@@ -9,6 +9,7 @@
     </el-row>
   </el-header>
   <el-container>
+
     <div v-shortkey="['esc']" @shortkey="close"></div>
     <login-form></login-form>
   </el-container>
@@ -38,7 +39,7 @@ export default {
 
 <style lang="scss" scoped>
 #login {
-  background-color: #292f3f;
+  background-color: #92c44e;
   color: #ffffff;
   text-align: center;
   min-height: 100%;
@@ -48,6 +49,7 @@ export default {
 
     .close-button {
       font-size: 24px;
+      color: white;
     }
   }
 }

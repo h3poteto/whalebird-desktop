@@ -44,13 +44,13 @@ export default {
 
 <style lang="scss">
 html, body, #app {
-  --theme-background-color: #ffffff;
-  --theme-selected-background-color: #f2f6fc;
-  --theme-global-header-color: #4a5664;
-  --theme-side-menu-color: #373d48;
-  --theme-primary-color: #303133;
-  --theme-regular-color: #606266;
-  --theme-secondary-color: #909399;
+  --theme-background-color: purple;
+  --theme-selected-background-color: orange;
+  --theme-global-header-color: green;
+  --theme-side-menu-color: yellow;
+  --theme-primary-color: brown;
+  --theme-regular-color: blue;
+  --theme-secondary-color: white;
   --theme-border-color: #ebeef5;
   --theme-header-menu-color: #ffffff;
   --theme-wrapper-mask-color: rgba(255, 255, 255, 0.7);
