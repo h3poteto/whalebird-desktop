@@ -42,7 +42,7 @@
     "profile": "프로필",
     "show_profile": "프로필 보기",
     "edit_profile": "프로필 수정",
-    "settings": "Settings",
+    "settings": "설정",
     "collapse": "접기",
     "expand": "펼치기",
     "home": "홈",
@@ -75,7 +75,7 @@
     "reload": "새로고침"
   },
   "settings": {
-    "title": "Settings",
+    "title": "설정",
     "general": {
       "title": "일반",
       "toot": {
@@ -88,7 +88,7 @@
           "direct": "다이렉트"
         },
         "sensitive": {
-          "description": "Mark medias as sensitive by default"
+          "description": "자동으로 모든 미디어를 민감한 미디어로 분류"
         }
       }
     }
@@ -127,8 +127,8 @@
         "header_menu_color": "헤더 메뉴 색상",
         "wrapper_mask_color": "모달 랩퍼 색상"
       },
-      "font_size": "폰트 크기",
-      "font_family": "Font family",
+      "font_size": "글꼴 크기",
+      "font_family": "글꼴 패밀리",
       "display_style": {
         "title": "사용자 표시 형식",
         "display_name_and_username": "닉네임과 아이디 모두 보이기",
@@ -238,7 +238,7 @@
       "copy_link_to_toot": "툿 링크 복사하기",
       "mute": "뮤트",
       "block": "차단",
-      "report": "Report",
+      "report": "신고",
       "delete": "삭제",
       "via": "{{application}} 에서",
       "reply": "답장하기",
