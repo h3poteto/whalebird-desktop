@@ -1,31 +1,31 @@
 {
   "side_menu": {
-    "direct": "Direct messages"
+    "direct": "메세지"
   },
   "header_menu": {
-    "settings": "Settings",
-    "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it."
+    "settings": "설정",
+    "switch_streaming": "스트리밍 웹소켓을 사용하도록 설정합니다. 타임라인이 자동으로 갱신되지 않는다면 이 항목을 사용함으로 설정하십시오."
   },
   "settings": {
     "timeline": {
-      "title": "Timeline",
+      "title": "타임라인",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timelines.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "title": "읽지 않은 알림",
+        "description": "각 타임라인마다 새 알림 표시 여부를 설정합니다.",
+        "direct": "메세지",
+        "local": "로컬",
+        "public": "퍼블릭"
       }
     }
   },
   "search": {
-    "tag": "Hashtag"
+    "tag": "해시태그"
   },
   "modals": {
     "shortcut": {
-      "h": "Switch the focus to left column",
-      "l": "Switch the focus to right column",
-      "?": "Show this help"
+      "h": "왼쪽 칼럼으로 포커스 이동",
+      "l": "오른쪽 칼럼으로 포커스 이동",
+      "?": "이 도움말 보이기"
     }
   }
 }
