@@ -42,7 +42,7 @@
     "profile": "프로필",
     "show_profile": "프로필 보기",
     "edit_profile": "프로필 수정",
-    "settings": "Settings",
+    "settings": "설정",
     "collapse": "접기",
     "expand": "펼치기",
     "home": "홈",
@@ -75,7 +75,7 @@
     "reload": "새로고침"
   },
   "settings": {
-    "title": "Settings",
+    "title": "설정",
     "general": {
       "title": "일반",
       "toot": {
@@ -88,7 +88,7 @@
           "direct": "다이렉트"
         },
         "sensitive": {
-          "description": "Mark medias as sensitive by default"
+          "description": "자동으로 모든 미디어를 민감한 미디어로 분류"
         }
       }
     }
@@ -127,8 +127,8 @@
         "header_menu_color": "헤더 메뉴 색상",
         "wrapper_mask_color": "모달 랩퍼 색상"
       },
-      "font_size": "폰트 크기",
-      "font_family": "Font family",
+      "font_size": "글꼴 크기",
+      "font_family": "글꼴 패밀리",
       "display_style": {
         "title": "사용자 표시 형식",
         "display_name_and_username": "닉네임과 아이디 모두 보이기",
@@ -238,7 +238,7 @@
       "copy_link_to_toot": "툿 링크 복사하기",
       "mute": "뮤트",
       "block": "차단",
-      "report": "Report",
+      "report": "신고",
       "delete": "삭제",
       "via": "{{application}} 에서",
       "reply": "답장하기",
@@ -342,5 +342,36 @@
       "attach_length": "사진은 최대 {{max}} 장 까지 첨부할 수 있습니다",
       "attach_image": "이미지나 비디오만 첨부할 수 있습니다"
     }
+  },
+ {
+  "side_menu": {
+    "direct": "메세지"
+  },
+  "header_menu": {
+    "settings": "설정",
+    "switch_streaming": "스트리밍 웹소켓을 사용하도록 설정합니다. 타임라인이 자동으로 갱신되지 않는다면 이 항목을 사용함으로 설정하십시오."
+  },
+  "settings": {
+    "timeline": {
+      "title": "타임라인",
+      "unread_notification": {
+        "title": "읽지 않은 알림",
+        "description": "각 타임라인마다 새 알림 표시 여부를 설정합니다.",
+        "direct": "메세지",
+        "local": "로컬",
+        "public": "퍼블릭"
+      }
+    }
+  },
+  "search": {
+    "tag": "해시태그"
+  },
+  "modals": {
+    "shortcut": {
+      "h": "왼쪽 칼럼으로 포커스 이동",
+      "l": "오른쪽 칼럼으로 포커스 이동",
+      "?": "이 도움말 보이기"
+    }
   }
+}
 }
