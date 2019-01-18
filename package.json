@@ -1,8 +1,8 @@
 {
   "name": "Roma",
-  "version": "2.6.1",
+  "version": "1.0.0",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
-  "description": "An Electron based Mastodon client for Windows, Mac and Linux",
+  "description": "An Electron based Pleroma and Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
   "keywords": [
     "mastodon",
@@ -15,8 +15,8 @@
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
   },
   "config": {
-    "buildVersion": "63",
-    "appVersion": "2.6.1"
+    "buildVersion": "1",
+    "appVersion": "1.0.0"
   },
   "main": "./dist/electron/main.js",
   "scripts": {
@@ -42,8 +42,8 @@
     "spec:unit": "BABEL_ENV=test jest -u ./spec/unit/*.spec.js"
   },
   "build": {
-    "productName": "Whalebird",
-    "appId": "org.whalebird.desktop",
+    "productName": "Roma",
+    "appId": "com.vm.Roma-Desktop",
     "directories": {
       "output": "build"
     },
