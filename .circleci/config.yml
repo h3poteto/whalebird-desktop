@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:10.13.0-slim
+    working_directory: /var/opt/app
+    steps:
+      - checkout
+      - run:
+          name: git
+          command: |
+            apt-get update
+            apt-get install -y git
+      - restore_cache:
+          name: Restoring cache - node_modules
+          keys:
+            - node_modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install packages
+          command: npm install
+      - save_cache:
+          name: Saving cache - node_modules
+          key: node_modules-{{ arch }}-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: spec
+          command: npm run spec:unit

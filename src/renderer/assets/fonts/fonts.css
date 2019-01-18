@@ -1,0 +1,11 @@
+/* === Noto Sans - regular */
+@font-face {
+	font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url("./NotoSans-Regular.ttf");
+	src: local("Noto Sans Regular"),
+		local("NotoSans-Regular"),
+		url("./NotoSans-Regular.ttf") format("truetype");
+}
+

@@ -1,0 +1,346 @@
+{
+  "main_menu": {
+    "application": {
+      "name": "Roma",
+      "about": "À propos de Whalebird",
+      "preferences": "Préférences...",
+      "services": "Services",
+      "hide": "Cacher Whalebird",
+      "hide_others": "Cacher les autres",
+      "show_all": "Tout afficher",
+      "quit": "Quitter"
+    },
+    "toot": {
+      "name": "Pouet",
+      "new": "Nouveau"
+    },
+    "edit": {
+      "name": "Modifier",
+      "undo": "Défaire",
+      "redo": "Refaire",
+      "cut": "Couper",
+      "copy": "Copier",
+      "paste": "Coller",
+      "select_all": "Tout sélectionner"
+    },
+    "view": {
+      "name": "Afficher",
+      "toggle_full_screen": "Basculer en mode plein écran"
+    },
+    "window": {
+      "name": "Fenêtre",
+      "close": "Fermer la fenêtre",
+      "open": "Open Window",
+      "minimize": "Minimiser",
+      "jump_to": "Aller à"
+    }
+  },
+  "global_header": {
+    "add_new_account": "Ajouter un nouveau compte"
+  },
+  "side_menu": {
+    "profile": "Profil",
+    "show_profile": "Voir le profil",
+    "edit_profile": "Éditer mon profil",
+    "settings": "Settings",
+    "collapse": "Effondrer",
+    "expand": "Développer",
+    "home": "Accueil",
+    "notification": "Notifications",
+    "favourite": "Favoris",
+    "local": "Fil public local",
+    "public": "Fil public global",
+    "hashtag": "Hashtag",
+    "search": "Rechercher",
+    "lists": "Listes"
+  },
+  "header_menu": {
+    "home": "Accueil",
+    "notification": "Notifications",
+    "favourite": "Favoris",
+    "local": "Fil public local",
+    "public": "Fil public global",
+    "hashtag": "Hashtag",
+    "search": "Rechercher",
+    "lists": "Listes",
+    "members": "Membres",
+    "filter": {
+      "title": "Filtrer",
+      "placeholder": "Filtrer par une expression régulière",
+      "show_reblogs": "Afficher les partages",
+      "show_replies": "Afficher les réponses",
+      "apply": "Appliquer"
+    },
+    "new_toot": "Pouet",
+    "reload": "Recharger"
+  },
+  "settings": {
+    "title": "Settings",
+    "general": {
+      "title": "Général",
+      "toot": {
+        "title": "Pouet",
+        "visibility": {
+          "description": "Customize default visibility of toot.",
+          "public": "Public",
+          "unlisted": "Public sans être affiché sur le fil public",
+          "private": "Abonné⋅e⋅s uniquement",
+          "direct": "Message direct"
+        },
+        "sensitive": {
+          "description": "Mark medias as sensitive by default"
+        }
+      }
+    }
+  },
+  "preferences": {
+    "title": "Préférences",
+    "general": {
+      "title": "Général",
+      "sounds": {
+        "title": "Sons",
+        "description": "Please set feedback sounds.",
+        "fav_rb": "Partages et favoris",
+        "toot": "Pouets"
+      }
+    },
+    "appearance": {
+      "title": "Apparence",
+      "theme_color": "Couleur du thème",
+      "theme": {
+        "light": "Clair",
+        "dark": "Foncé",
+        "solarized_light": "SolarizedLight",
+        "solarized_dark": "SolarizedDark",
+        "kimbie_dark": "KimbieDark",
+        "custom": "Custom"
+      },
+      "custom_theme": {
+        "background_color": "Base background",
+        "selected_background_color": "Focused background",
+        "global_header_color": "Account menu",
+        "side_menu_color": "Side menu",
+        "primary_color": "Primary font",
+        "regular_color": "Regular font",
+        "secondary_color": "Secondary font",
+        "border_color": "Border",
+        "header_menu_color": "Header menu",
+        "wrapper_mask_color": "Modal wrapper"
+      },
+      "font_size": "Taille des caractères",
+      "font_family": "Font family",
+      "display_style": {
+        "title": "Format d'affichage",
+        "display_name_and_username": "Nom et utilisateur⋅trice",
+        "display_name": "Nom",
+        "username": "Utilisateur⋅trice"
+      },
+      "time_format": {
+        "title": "Time format",
+        "absolute": "Absolute",
+        "relative": "Relative"
+      }
+    },
+    "notification": {
+      "title": "Notification",
+      "enable": {
+        "description": "Please set notification events.",
+        "reply": "Notify me when I receive reply",
+        "reblog": "Notify me when I receive reblog",
+        "favourite": "Notify me when I receive favourite",
+        "follow": "Notify me when I receive follow"
+      }
+    },
+    "account": {
+      "title": "Compte",
+      "connected": "Compte connecté",
+      "username": "Utilisateur⋅trice",
+      "domain": "Domaine",
+      "association": "Association",
+      "order": "Ordre",
+      "remove_association": "Supprimer l'assocication",
+      "remove_all_associations": "Supprimer toutes les associations",
+      "confirm": "Confirmer",
+      "cancel": "Annuler",
+      "confirm_message": "Êtes-vous certain de vouloir supprimer toutes les associations ?"
+    },
+    "language": {
+      "title": "Langue",
+      "language_description": "Choose the language you would like to use with Whalebird.",
+      "notice": "Nécessite un redémarrage",
+      "confirm": {
+        "title": "Avertissement",
+        "message": "Vous devez redémarrer l'application pour appliquer les modifications, continuer ?",
+        "ok": "Redémarrer",
+        "cancel": "Annuler"
+      }
+    }
+  },
+  "modals": {
+    "new_toot": {
+      "title": "Nouveau pouet",
+      "cw": "Écrivez votre avertissement ici",
+      "status": "Qu'avez-vous en tête ?",
+      "cancel": "Annuler",
+      "toot": "Pouet!",
+      "close_confirm": "Êtes-vous certain de vouloir fermer ce nouveau pouet ?",
+      "close_confirm_ok": "Oui",
+      "close_confirm_cancel": "Annuler",
+      "add_image": "Ajouter une image",
+      "change_visibility": "Changer la visibilité",
+      "add_cw": "Ajouter un avertissement de contenu",
+      "change_sensitive": "Changer sensible",
+      "pined_hashtag": "Pin the hashtag",
+      "description": "Décrire pour les malvoyant·e·s"
+    },
+    "jump": {
+      "jump_to": "Aller à..."
+    },
+    "add_list_member": {
+      "title": "Ajouter un membre à la liste",
+      "account_name": "Nom du compte"
+    },
+    "list_membership": {
+      "title": "Éditer la liste"
+    },
+    "mute_confirm": {
+      "title": "Are you sure to mute?",
+      "body": "Hide notification from this user?",
+      "cancel": "Cancel",
+      "ok": "Mute"
+    },
+    "shortcut": {
+      "title": "Keyboard shortcuts",
+      "ctrl_number": "Switch accounts",
+      "ctrl_k": "Jump to other timelines",
+      "ctrl_n": "Open the new toot modal",
+      "ctrl_enter": "Post the toot",
+      "j": "Select the next toot",
+      "k": "Select the previous toot",
+      "r": "Reply to the toot",
+      "b": "Reblog the toot",
+      "f": "Favourite the toot",
+      "o": "Open details of the toot",
+      "p": "Open account profile of the toot",
+      "i": "Open the images",
+      "x": "Show/hide CW and NSFW",
+      "esc": "Close current page"
+    }
+  },
+  "cards": {
+    "toot": {
+      "show_more": "Voir plus",
+      "hide": "Cacher",
+      "sensitive": "Afficher le contenu sensible",
+      "view_toot_detail": "Voir les détails du pouet",
+      "open_in_browser": "Ouvrir dans un navigateur",
+      "copy_link_to_toot": "Copier le lien du pouet",
+      "mute": "Mute",
+      "block": "Block",
+      "report": "Report",
+      "delete": "Effacer",
+      "via": "par {{application}}",
+      "reply": "Répondre",
+      "reblog": "Du partage du pouet",
+      "fav": "Préféré",
+      "detail": "Détails",
+      "pinned": "Pouet épinglé"
+    }
+  },
+  "side_bar": {
+    "account_profile": {
+      "follows_you": "Abonné⋅e",
+      "doesnt_follow_you": "Pas abonné⋅e",
+      "detail": "Détail",
+      "follow": "Suivre",
+      "unfollow": "Ne pas suivre",
+      "follow_requested": "Suivre demande",
+      "open_in_browser": "Ouvrir dans un navigateur",
+      "manage_list_memberships": "Inscriptions aux listes",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "unblock": "Unblock",
+      "block": "Block",
+      "toots": "Pouets",
+      "follows": "Abonnements",
+      "followers": "Abonné⋅e⋅s"
+    }
+  },
+  "hashtag": {
+    "tag_name": "Nom du hashtag",
+    "delete_tag": "Delete tag",
+    "save_tag": "Save tag"
+  },
+  "search": {
+    "search": "Rechercher",
+    "account": "Compte",
+    "keyword": "mot clé",
+    "toot": "Pouets"
+  },
+  "lists": {
+    "index": {
+      "new_list": "Nouvelle liste",
+      "edit": "Éditer"
+    }
+  },
+  "login": {
+    "domain_name_label": "Tout d'abord, connectons-nous à votre instance Mastodon.  Entez votre nom de domaine:",
+    "search": "Rechercher",
+    "login": "Connexion"
+  },
+  "authorize": {
+    "manually_1": "La page d'autorisation est à présent affichée dans votre navigateur.",
+    "manually_2": "Si ce n'était pas le case, veuillez ouvrir le lien suivant manuellement.",
+    "code_label": "Recopier le code d'autorisation depuis votre navigateur:",
+    "submit": "Envoyer"
+  },
+  "receive_drop": {
+    "drop_message": "Déposer pour téléverser sur Mastodon"
+  },
+  "message": {
+    "account_load_error": "Erreur au chargement des comptes",
+    "account_remove_error": "Erreur à la suppression du compte",
+    "preferences_load_error": "Erreur au chargement des préférences",
+    "timeline_fetch_error": "Erreur au chargement du fil public",
+    "notification_fetch_error": "Erreur au chargement des notifications",
+    "favourite_fetch_error": "Erreur au chargement des favoris",
+    "start_streaming_error": "Erreur au démarrage du flux",
+    "attach_error": "Impossible de joindre le fichier",
+    "authorize_duplicate_error": "Vous êtes déjà connecté avec le même compte sur le même domaine.",
+    "authorize_error": "Erreur à l'autoristation",
+    "followers_fetch_error": "Erreur à la récupération des abonné⋅e⋅s",
+    "follows_fetch_error": "Erreur à la récupération des abonnements",
+    "toot_fetch_error": "Erreur à la récupération des détails d'un pouet",
+    "follow_error": "Impossible de s'abonner à l'utilisateur⋅trice",
+    "unfollow_error": "Impossible de supprimer l'abonnement à l'utilisateur⋅trice",
+    "lists_fetch_error": "Erreur à la récupération des listes",
+    "list_create_error": "Erreur à la création de la liste",
+    "members_fetch_error": "Erreur à la récupération des membres de la liste",
+    "remove_user_error": "Erreur à la suppression d'un utilisateur⋅trice",
+    "find_account_error": "Compte non trouvé",
+    "reblog_error": "Erreur lors du partage du pouet",
+    "unreblog_error": "Erreur lors de la suppression du partage du pouet",
+    "favourite_error": "Erreur à la création d'un favori",
+    "unfavourite_error": "Erreur à la suprression d'un favori",
+    "delete_error": "Erreur lors de la suppression d'un pouet",
+    "search_error": "Erreur lors de la recherche",
+    "toot_error": "Erreur à l'envoie du pouet",
+    "update_list_memberships_error": "Erreur lors de la mise à jour de la liste",
+    "add_user_error": "Erreur lors de l'ajout d'un utilisateur⋅trice",
+    "authorize_url_error": "Erreur à la récupération de l'URL d'autorisation",
+    "domain_confirmed": "{{domain}} est confirmé, veuillez à présent vous connecter",
+    "domain_doesnt_exist": "{{domain}} n'existe pas",
+    "loading": "Chargement..."
+  },
+  "validation": {
+    "login": {
+      "require_domain_name": "Un nom de domaine est requis",
+      "domain_format": "Veuillez uniquement indiquer le nom de domaine"
+    },
+    "new_toot": {
+      "toot_length": "Le nombre de caractères d'un pouet doit être compris entre {{min}} et {{max}}",
+      "attach_length": "Nous ne pouvez joindre qu'un maximum de {{max}} images à votre pouet",
+      "attach_image": "Vous ne pouvez attacher que des images ou des vidéos"
+    }
+  }
+}

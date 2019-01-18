@@ -1,0 +1,370 @@
+{
+  "main_menu": {
+    "application": {
+      "name": "Roma",
+      "about": "About Roma",
+      "preferences": "Preferences...",
+      "services": "Services",
+      "hide": "Hide Roma",
+      "hide_others": "Hide Others",
+      "show_all": "Show All",
+      "quit": "Quit"
+    },
+    "toot": {
+      "name": "Status",
+      "new": "New Status"
+    },
+    "edit": {
+      "name": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "select_all": "Select All"
+    },
+    "view": {
+      "name": "View",
+      "toggle_full_screen": "Toggle Full Screen"
+    },
+    "window": {
+      "name": "Window",
+      "close": "Close Window",
+      "open": "Open Window",
+      "minimize": "Minimize",
+      "jump_to": "Jump to"
+    }
+  },
+  "global_header": {
+    "add_new_account": "Add new account"
+  },
+  "side_menu": {
+    "profile": "Profile",
+    "show_profile": "Show profile",
+    "edit_profile": "Edit profile",
+    "settings": "Settings",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "home": "Home",
+    "notification": "Notification",
+    "direct": "Direct messages",
+    "favourite": "Favourite",
+    "local": "Local timeline",
+    "public": "Public timeline",
+    "hashtag": "Hashtag",
+    "search": "Search",
+    "lists": "Lists"
+  },
+  "header_menu": {
+    "home": "Home",
+    "notification": "Notification",
+    "favourite": "Favourite",
+    "local": "Local timeline",
+    "public": "Public timeline",
+    "hashtag": "Hashtag",
+    "search": "Search",
+    "lists": "Lists",
+    "members": "Members",
+    "filter": {
+      "title": "Filter",
+      "placeholder": "Filter out by regular expressions",
+      "show_dms": "Show direct messages",
+      "show_reblogs": "Show reblogs",
+      "show_replies": "Show replies",
+      "apply": "Apply"
+    },
+    "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it.",
+    "new_toot": "Post",
+    "reload": "Reload",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "general": {
+      "title": "General",
+      "toot": {
+        "title": "Status",
+        "visibility": {
+          "description": "Customize default visibility of status.",
+          "public": "Public",
+          "unlisted": "Unlisted",
+          "private": "Private",
+          "direct": "Direct"
+        },
+        "sensitive": {
+          "description": "Mark media as sensitive by default"
+        }
+      }
+    },
+    "timeline": {
+      "title": "Timeline",
+      "unread_notification": {
+        "title": "Unread Notification",
+        "description": "Customize unread notifications for each timeline.",
+        "direct": "Direct Messages",
+        "local": "Local Timeline",
+        "public": "Public Timeline"
+      }
+    }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "general": {
+      "title": "General",
+      "sounds": {
+        "title": "Sounds",
+        "description": "Please set feedback sounds.",
+        "fav_rb": "When you favorite or repost the status",
+        "toot": "When you post status"
+      }
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme_color": "Theme color",
+      "theme": {
+        "light": "Light",
+        "dark": "Dark",
+        "solarized_light": "SolarizedLight",
+        "solarized_dark": "SolarizedDark",
+        "kimbie_dark": "KimbieDark",
+        "custom": "Custom"
+      },
+      "custom_theme": {
+        "background_color": "Base background",
+        "selected_background_color": "Focused background",
+        "global_header_color": "Account menu",
+        "side_menu_color": "Side menu",
+        "primary_color": "Primary font",
+        "regular_color": "Regular font",
+        "secondary_color": "Secondary font",
+        "border_color": "Border",
+        "header_menu_color": "Header menu",
+        "wrapper_mask_color": "Modal wrapper"
+      },
+      "font_size": "Font size",
+      "font_family": "Font family",
+      "display_style": {
+        "title": "Display style of username",
+        "display_name_and_username": "Display name and username",
+        "display_name": "Display name",
+        "username": "Username"
+      },
+      "time_format": {
+        "title": "Time format",
+        "absolute": "Absolute",
+        "relative": "Relative"
+      }
+    },
+    "notification": {
+      "title": "Notification",
+      "enable": {
+        "description": "Please set notification events.",
+        "reply": "Notify me when I receive a reply",
+        "reblog": "Notify me when I receive a reblog",
+        "favourite": "Notify me when I receive a favourite",
+        "follow": "Notify me when I receive a follow"
+      }
+    },
+    "account": {
+      "title": "Account",
+      "connected": "Connected Account",
+      "username": "Username",
+      "domain": "Domain",
+      "association": "Association",
+      "order": "Order",
+      "remove_association": "Remove assocication",
+      "remove_all_associations": "Remove all associations",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "confirm_message": "Are you sure to remove all associations?"
+    },
+    "language": {
+      "title": "Language",
+      "language_description": "Choose the language you would like to use with Roma.",
+      "notice": "Requires relaunch",
+      "confirm": {
+        "title": "Warning",
+        "message": "You have to restart this application. Continue?",
+        "ok": "Restart Now",
+        "cancel": "Cancel"
+      }
+    }
+  },
+  "modals": {
+    "new_toot": {
+      "title": "New Status",
+      "cw": "Write your warning here",
+      "status": "What is on your mind?",
+      "cancel": "Cancel",
+      "toot": "Post",
+      "close_confirm": "Are you sure you want to cancel the new post?",
+      "close_confirm_ok": "OK",
+      "close_confirm_cancel": "Cancel",
+      "add_image": "Add images",
+      "change_visibility": "Change visibility",
+      "add_cw": "Add content warning",
+      "change_sensitive": "Change sensitive",
+      "pined_hashtag": "Pin the hashtag",
+      "description": "Describe for the visually impaired"
+    },
+    "jump": {
+      "jump_to": "Jump to..."
+    },
+    "add_list_member": {
+      "title": "Add Member to List",
+      "account_name": "Account name"
+    },
+    "list_membership": {
+      "title": "List Memberships"
+    },
+    "mute_confirm": {
+      "title": "Are you sure you want to mute?",
+      "body": "Hide notification from this user?",
+      "cancel": "Cancel",
+      "ok": "Mute"
+    },
+    "shortcut": {
+      "title": "Keyboard shortcuts",
+      "ctrl_number": "Switch accounts",
+      "ctrl_k": "Jump to other timelines",
+      "ctrl_n": "Open the new post modal",
+      "ctrl_enter": "Post the status",
+      "j": "Select the next status",
+      "k": "Select the previous status",
+      "h": "Switch focus to the left column",
+      "l": "Switch focus to the right column",
+      "r": "Reply to the status",
+      "b": "Reblog the status",
+      "f": "Favourite the status",
+      "o": "Open details of the status",
+      "p": "Open account profile of the status",
+      "i": "Open the images",
+      "x": "Show/hide CW and NSFW",
+      "?": "Show this help",
+      "esc": "Close current page"
+    },
+    "report": {
+      "title": "Reporting this user",
+      "comment": "Additional comments",
+      "cancel": "Cancel",
+      "ok": "Report"
+    }
+  },
+  "cards": {
+    "toot": {
+      "show_more": "Show more",
+      "hide": "Hide",
+      "sensitive": "Show sensitive content",
+      "view_toot_detail": "View Status Detail",
+      "open_in_browser": "Open in Browser",
+      "copy_link_to_toot": "Copy Link to Status",
+      "mute": "Mute",
+      "block": "Block",
+      "report": "Report",
+      "delete": "Delete",
+      "via": "via {{application}}",
+      "reply": "Reply",
+      "reblog": "Reblog",
+      "fav": "Favourite",
+      "detail": "Status details",
+      "pinned": "Pinned toot"
+    }
+  },
+  "side_bar": {
+    "account_profile": {
+      "follows_you": "Follows you",
+      "doesnt_follow_you": "Doesn't follow you",
+      "detail": "Detail",
+      "follow": "Follow",
+      "unfollow": "Unfollow",
+      "follow_requested": "Follow requested",
+      "open_in_browser": "Open in Browser",
+      "manage_list_memberships": "Manage List Memberships",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "unblock": "Unblock",
+      "block": "Block",
+      "toots": "Posts",
+      "follows": "Follows",
+      "followers": "Followers"
+    }
+  },
+  "hashtag": {
+    "tag_name": "Tag name",
+    "delete_tag": "Delete tag",
+    "save_tag": "Save tag"
+  },
+  "search": {
+    "search": "Search",
+    "account": "Account",
+    "tag": "Hashtag",
+    "keyword": "keyword",
+    "toot": "Status"
+  },
+  "lists": {
+    "index": {
+      "new_list": "New List",
+      "edit": "Edit"
+    }
+  },
+  "login": {
+    "domain_name_label": "First, let's log in to a Plermoa / Mastodon instance. Please enter an instance domain name.",
+    "search": "Search",
+    "login": "Login"
+  },
+  "authorize": {
+    "manually_1": "An authorization page has opened in your browser.",
+    "manually_2": "If it has not opened, please go to the following URL manually.",
+    "code_label": "Please paste the authorization code from your browser:",
+    "submit": "Submit"
+  },
+  "receive_drop": {
+    "drop_message": "Drop to Upload to Mastodon"
+  },
+  "message": {
+    "account_load_error": "Failed to load accounts",
+    "account_remove_error": "Failed to remove the account",
+    "preferences_load_error": "Failed to load preferences",
+    "timeline_fetch_error": "Failed to fetch timeline",
+    "notification_fetch_error": "Failed to fetch notification",
+    "favourite_fetch_error": "Failed to fetch favorite",
+    "start_streaming_error": "Failed to start streaming",
+    "attach_error": "Could not attach the file",
+    "authorize_duplicate_error": "Can not login the same account of the same domain",
+    "authorize_error": "Failed to authorize",
+    "followers_fetch_error": "Failed to fetch followers",
+    "follows_fetch_error": "Failed to fetch follows",
+    "toot_fetch_error": "Failed to fetch the toot detail",
+    "follow_error": "Failed to follow the user",
+    "unfollow_error": "Failed to unfollow the user",
+    "lists_fetch_error": "Failed to fetch lists",
+    "list_create_error": "Failed to create a list",
+    "members_fetch_error": "Failed to fetch members",
+    "remove_user_error": "Failed to remove the user",
+    "find_account_error": "Account not found",
+    "reblog_error": "Failed to reblog",
+    "unreblog_error": "Failed to unreblog",
+    "favourite_error": "Failed to favourite",
+    "unfavourite_error": "Failed to unfavourite",
+    "delete_error": "Failed to delete the toot",
+    "search_error": "Failed to search",
+    "toot_error": "Failed to toot",
+    "update_list_memberships_error": "Failed to update the list memberships",
+    "add_user_error": "Failed to add user",
+    "authorize_url_error": "Failed to get authorize url",
+    "domain_confirmed": "{{domain}} is confirmed, please login",
+    "domain_doesnt_exist": "{{domain}} does not exist",
+    "loading": "Loading..."
+  },
+  "validation": {
+    "login": {
+      "require_domain_name": "A domain name is required",
+      "domain_format": "Please only enter the domain name"
+    },
+    "new_toot": {
+      "toot_length": "Status length should be {{min}} to {{max}}",
+      "attach_length": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos"
+    }
+  }
+}
