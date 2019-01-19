@@ -79,7 +79,7 @@ const Home = {
     }
   },
   actions: {
-    fetchTimeline ({ state, commit, rootState }, account) {
+    fetchTimeline ({ state, commit, rootState }) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -104,13 +104,11 @@ const Home = {
       )
       return client.get('/timelines/home', { max_id: last.id, limit: 40 })
         .then(res => {
-          commit('changeLazyLoading', false)
           commit('insertTimeline', res.data)
           return res.data
         })
-        .catch(err => {
+        .finally(() => {
           commit('changeLazyLoading', false)
-          throw err
         })
     }
   }
