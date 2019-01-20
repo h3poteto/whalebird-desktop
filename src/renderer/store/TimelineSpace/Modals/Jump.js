@@ -1,4 +1,4 @@
-import router from '../../../router'
+import router from '@/router'
 import i18n from '~/src/config/i18n'
 
 const Jump = {

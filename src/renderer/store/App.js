@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import router from '../router'
+import router from '@/router'
 import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme } from '../utils/theme'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
