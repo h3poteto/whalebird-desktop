@@ -5,7 +5,7 @@ import SideMenu from './TimelineSpace/SideMenu'
 import HeaderMenu from './TimelineSpace/HeaderMenu'
 import Modals from './TimelineSpace/Modals'
 import Contents from './TimelineSpace/Contents'
-import router from '../router'
+import router from '@/router'
 import unreadSettings from '~/src/constants/unreadNotification'
 
 const TimelineSpace = {
