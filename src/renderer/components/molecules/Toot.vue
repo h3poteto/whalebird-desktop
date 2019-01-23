@@ -156,8 +156,8 @@ export default {
   },
   data () {
     return {
-      showContent: false,
-      showAttachments: false,
+      showContent: this.$store.state.App.ignoreCW,
+      showAttachments: this.$store.state.App.ignoreNFSW,
       now: Date.now()
     }
   },
@@ -184,10 +184,10 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      displayNameStyle: state => state.App.displayNameStyle,
-      timeFormat: state => state.App.timeFormat,
-      language: state => state.App.language
+    ...mapState('App', {
+      displayNameStyle: state => state.displayNameStyle,
+      timeFormat: state => state.timeFormat,
+      language: state => state.language
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid

@@ -12,6 +12,10 @@ const Base = {
     sound: {
       fav_rb: true,
       toot: true
+    },
+    timeline: {
+      cw: false,
+      nfsw: false
     }
   },
   state: {
