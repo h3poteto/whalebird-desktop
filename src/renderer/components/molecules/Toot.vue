@@ -46,11 +46,11 @@
         <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
       </div>
       <div class="attachments">
-        <el-button v-show="sensitive() && !isShowAttachments()" class="show-sensitive" type="info" @click="showAttachments = true">
+        <el-button v-show="sensitive && !isShowAttachments()" class="show-sensitive" type="info" @click="showAttachments = true">
           {{ $t('cards.toot.sensitive') }}
         </el-button>
         <div v-show="isShowAttachments()">
-          <el-button v-show="sensitive() && isShowAttachments()" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
+          <el-button v-show="sensitive && isShowAttachments()" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
             <icon name="eye" class="hide"></icon>
           </el-button>
           <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
@@ -237,6 +237,9 @@ export default {
     },
     isShowContent: function () {
       return !this.spoilered || this.showContent
+    },
+    sensitive: function () {
+      return this.originalMessage.sensitive && this.mediaAttachments.length > 0
     }
   },
   mounted () {
@@ -439,11 +442,8 @@ export default {
           })
         })
     },
-    sensitive () {
-      return this.originalMessage.sensitive && this.mediaAttachments.length > 0
-    },
     isShowAttachments () {
-      return !this.sensitive() || this.showAttachments
+      return !this.sensitive || this.showAttachments
     },
     filtered () {
       return this.filter.length > 0 && this.originalMessage.content.search(this.filter) >= 0
