@@ -86,7 +86,7 @@
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
         <span class="count">
-          {{ reblogsCount() }}
+          {{ reblogsCount }}
         </span>
         <el-button type="text" @click="changeFavourite(originalMessage)" :class="originalMessage.favourited ? 'favourited animated bounceIn' : 'favourite'" :title="$t('cards.toot.fav')" :aria-label="$t('cards.toot.fav')">
           <icon name="star" scale="0.9"></icon>
@@ -208,6 +208,12 @@ export default {
     },
     mediaAttachments: function () {
       return this.originalMessage.media_attachments
+    },
+    reblogsCount: function () {
+      if (this.originalMessage.reblogs_count > 0) {
+        return this.originalMessage.reblogs_count
+      }
+      return ''
     }
   },
   mounted () {
@@ -397,12 +403,6 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    reblogsCount () {
-      if (this.originalMessage.reblogs_count > 0) {
-        return this.originalMessage.reblogs_count
-      }
-      return ''
     },
     favouritesCount () {
       if (this.originalMessage.favourites_count > 0) {
