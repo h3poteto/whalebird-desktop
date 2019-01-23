@@ -92,7 +92,7 @@
           <icon name="star" scale="0.9"></icon>
         </el-button>
         <span class="count">
-          {{ favouritesCount() }}
+          {{ favouritesCount }}
         </span>
         <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
           <icon name="thumbtack" scale="0.9"></icon>
@@ -212,6 +212,12 @@ export default {
     reblogsCount: function () {
       if (this.originalMessage.reblogs_count > 0) {
         return this.originalMessage.reblogs_count
+      }
+      return ''
+    },
+    favouritesCount: function () {
+      if (this.originalMessage.favourites_count > 0) {
+        return this.originalMessage.favourites_count
       }
       return ''
     }
@@ -403,12 +409,6 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    favouritesCount () {
-      if (this.originalMessage.favourites_count > 0) {
-        return this.originalMessage.favourites_count
-      }
-      return ''
     },
     isMyMessage () {
       return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
