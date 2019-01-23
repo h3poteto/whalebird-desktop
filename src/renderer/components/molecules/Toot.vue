@@ -36,14 +36,14 @@
       <div class="content-wrapper">
         <div class="spoiler" v-show="spoilered">
           <span v-html="spoilerText()"></span>
-          <el-button v-if="!isShowContent()" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
+          <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
             {{ $t('cards.toot.show_more') }}
           </el-button>
           <el-button v-else type="primary" size="medium" class="spoil-button" @click="showContent = false">
             {{ $t('cards.toot.hide')}}
           </el-button>
         </div>
-        <div class="content" v-show="isShowContent()" v-html="status()" @click.capture.prevent="tootClick"></div>
+        <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
       </div>
       <div class="attachments">
         <el-button v-show="sensitive() && !isShowAttachments()" class="show-sensitive" type="info" @click="showAttachments = true">
@@ -234,6 +234,9 @@ export default {
     },
     spoilered: function () {
       return this.originalMessage.spoiler_text.length > 0
+    },
+    isShowContent: function () {
+      return !this.spoilered || this.showContent
     }
   },
   mounted () {
@@ -435,9 +438,6 @@ export default {
             type: 'error'
           })
         })
-    },
-    isShowContent () {
-      return !this.spoilered || this.showContent
     },
     sensitive () {
       return this.originalMessage.sensitive && this.mediaAttachments.length > 0
