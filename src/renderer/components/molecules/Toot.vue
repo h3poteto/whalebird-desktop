@@ -128,8 +128,8 @@
           </el-button>
         </popper>
       </div>
-      <div class="application" v-show="application() !== null">
-        {{ $t('cards.toot.via', { application: application() }) }}
+      <div class="application" v-show="application !== null">
+        {{ $t('cards.toot.via', { application: application }) }}
       </div>
     </div>
     <div class="clearfix"></div>
@@ -223,6 +223,14 @@ export default {
     },
     isMyMessage: function () {
       return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
+    },
+    application: function () {
+      let msg = this.originalMessage
+      if (msg.application !== undefined &&
+          msg.application !== null) {
+        return msg.application.name
+      }
+      return null
     }
   },
   mounted () {
@@ -424,14 +432,6 @@ export default {
             type: 'error'
           })
         })
-    },
-    application () {
-      let msg = this.originalMessage
-      if (msg.application !== undefined &&
-          msg.application !== null) {
-        return msg.application.name
-      }
-      return null
     },
     spoilered () {
       return this.originalMessage.spoiler_text.length > 0
