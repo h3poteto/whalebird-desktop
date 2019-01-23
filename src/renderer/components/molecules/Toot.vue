@@ -53,8 +53,8 @@
           <el-button v-show="sensitive() && isShowAttachments()" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
             <icon name="eye" class="hide"></icon>
           </el-button>
-          <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments()">
-            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments())" :title="media.description" />
+          <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
+            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments)" :title="media.description" />
             <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
             <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
           </div>
@@ -205,6 +205,9 @@ export default {
       } else {
         return this.message
       }
+    },
+    mediaAttachments: function () {
+      return this.originalMessage.media_attachments
     }
   },
   mounted () {
@@ -395,9 +398,6 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    mediaAttachments () {
-      return this.originalMessage.media_attachments
-    },
     reblogsCount () {
       if (this.originalMessage.reblogs_count > 0) {
         return this.originalMessage.reblogs_count
@@ -440,7 +440,7 @@ export default {
       return !this.spoilered() || this.showContent
     },
     sensitive () {
-      return this.originalMessage.sensitive && this.mediaAttachments().length > 0
+      return this.originalMessage.sensitive && this.mediaAttachments.length > 0
     },
     isShowAttachments () {
       return !this.sensitive() || this.showAttachments
@@ -492,7 +492,7 @@ export default {
           this.openUser(this.originalMessage.account)
           break
         case 'image':
-          const images = this.mediaAttachments()
+          const images = this.mediaAttachments
           if (images.length === 0) {
             return 0
           }
