@@ -116,6 +116,12 @@
         "description": "Please set feedback sounds.",
         "fav_rb": "When you favorite or boost the toot",
         "toot": "When you post toot"
+      },
+      "timeline": {
+        "title": "Timeline",
+        "description": "Customize view in your timelines.",
+        "cw": "Always ignore contents warnings",
+        "nfsw": "Always ignore NFSW of medias"
       }
     },
     "appearance": {

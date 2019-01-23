@@ -1,11 +1,11 @@
 import { ipcRenderer } from 'electron'
 import router from '@/router'
-import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme } from '../utils/theme'
+import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme } from '@/utils/theme'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
 import Language from '~/src/constants/language'
-import DefaultFonts from '../utils/fonts'
+import DefaultFonts from '@/utils/fonts'
 
 const App = {
   namespaced: true,
@@ -21,7 +21,9 @@ const App = {
     },
     timeFormat: TimeFormat.Absolute.value,
     language: Language.en.key,
-    defaultFonts: DefaultFonts
+    defaultFonts: DefaultFonts,
+    ignoreCW: false,
+    ignoreNFSW: false
   },
   mutations: {
     updateTheme (state, themeColorList) {
@@ -45,6 +47,12 @@ const App = {
     addFont (state, font) {
       const list = [font].concat(DefaultFonts)
       state.defaultFonts = Array.from(new Set(list))
+    },
+    updateIgnoreCW (state, cw) {
+      state.ignoreCW = cw
+    },
+    updateIgnoreNFSW (state, nfsw) {
+      state.ignoreNFSW = nfsw
     }
   },
   actions: {
@@ -72,6 +80,8 @@ const App = {
           commit('updateTimeFormat', conf.appearance.timeFormat)
           commit('updateLanguage', conf.language.language)
           commit('addFont', conf.appearance.font)
+          commit('updateIgnoreCW', conf.general.timeline.cw)
+          commit('updateIgnoreNFSW', conf.general.timeline.nfsw)
           resolve(conf)
         })
       })

@@ -3,21 +3,28 @@ import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import General from '@/store/Preferences/General'
 
-const state = {
-  general: {
-    sound: {
-      fav_rb: true,
-      toot: true
-    }
-  },
-  loading: false
+const state = () => {
+  return {
+    general: {
+      sound: {
+        fav_rb: true,
+        toot: true
+      },
+      timeline: {
+        cw: false,
+        nfsw: false
+      }
+    },
+    loading: false
+  }
 }
-
-const Preferences = {
-  namespaced: true,
-  state: state,
-  actions: General.actions,
-  mutations: General.mutations
+const initStore = () => {
+  return {
+    namespaced: true,
+    state: state(),
+    actions: General.actions,
+    mutations: General.mutations
+  }
 }
 
 describe('Preferences/General', () => {
@@ -29,7 +36,7 @@ describe('Preferences/General', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Preferences
+        Preferences: initStore()
       }
     })
   })
@@ -68,6 +75,23 @@ describe('Preferences/General', () => {
       })
       expect(store.state.Preferences.general.sound.fav_rb).toEqual(false)
       expect(store.state.Preferences.general.sound.toot).toEqual(false)
+      expect(store.state.Preferences.loading).toEqual(false)
+    })
+  })
+
+  describe('updateTimeline', () => {
+    beforeEach(() => {
+      ipcMain.once('update-preferences', (event, config) => {
+        event.sender.send('response-update-preferences', config)
+      })
+    })
+    it('should be updated', async () => {
+      await store.dispatch('Preferences/updateTimeline', {
+        cw: true,
+        nfsw: true
+      })
+      expect(store.state.Preferences.general.timeline.cw).toEqual(true)
+      expect(store.state.Preferences.general.timeline.nfsw).toEqual(true)
       expect(store.state.Preferences.loading).toEqual(false)
     })
   })
