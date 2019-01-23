@@ -34,7 +34,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="content-wrapper">
-        <div class="spoiler" v-show="spoilered()">
+        <div class="spoiler" v-show="spoilered">
           <span v-html="spoilerText()"></span>
           <el-button v-if="!isShowContent()" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
             {{ $t('cards.toot.show_more') }}
@@ -231,6 +231,9 @@ export default {
         return msg.application.name
       }
       return null
+    },
+    spoilered: function () {
+      return this.originalMessage.spoiler_text.length > 0
     }
   },
   mounted () {
@@ -433,11 +436,8 @@ export default {
           })
         })
     },
-    spoilered () {
-      return this.originalMessage.spoiler_text.length > 0
-    },
     isShowContent () {
-      return !this.spoilered() || this.showContent
+      return !this.spoilered || this.showContent
     },
     sensitive () {
       return this.originalMessage.sensitive && this.mediaAttachments.length > 0
