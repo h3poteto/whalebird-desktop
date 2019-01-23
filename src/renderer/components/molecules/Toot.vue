@@ -9,52 +9,52 @@
   role="article"
   aria-label="toot"
   >
-  <div v-show="filtered(message)" class="filtered">
+  <div v-show="filtered" class="filtered">
     Filtered
   </div>
-  <div v-show="!filtered(message)" class="toot">
+  <div v-show="!filtered" class="toot">
     <div class="icon" role="presentation">
       <FailoverImg
-        :src="originalMessage(message).account.avatar"
-        @click="openUser(originalMessage(message).account)"
-        :alt="`Avatar of ${originalMessage(message).account.username}`"
+        :src="originalMessage.account.avatar"
+        @click="openUser(originalMessage.account)"
+        :alt="`Avatar of ${originalMessage.account.username}`"
         />
     </div>
     <div class="detail" v-on:dblclick="openDetail(message)">
       <div class="toot-header">
-        <div class="user" @click="openUser(originalMessage(message).account)">
-          <span class="display-name" @click="openUser(message.account)"><bdi v-html="username(originalMessage(message).account)"></bdi></span>
-          <span class="acct">{{ accountName(originalMessage(message).account) }}</span>
+        <div class="user" @click="openUser(originalMessage.account)">
+          <span class="display-name" @click="openUser(message.account)"><bdi v-html="username(originalMessage.account)"></bdi></span>
+          <span class="acct">{{ accountName(originalMessage.account) }}</span>
         </div>
         <div class="timestamp">
-          <time :datetime="originalMessage(message).created_at" :title="readableTimestamp">
+          <time :datetime="originalMessage.created_at" :title="readableTimestamp">
             {{ timestamp }}
           </time>
         </div>
         <div class="clearfix"></div>
       </div>
       <div class="content-wrapper">
-        <div class="spoiler" v-show="spoilered(message)">
-          <span v-html="spoilerText(message)"></span>
-          <el-button v-if="!isShowContent(message)" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
+        <div class="spoiler" v-show="spoilered">
+          <span v-html="spoilerText()"></span>
+          <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
             {{ $t('cards.toot.show_more') }}
           </el-button>
           <el-button v-else type="primary" size="medium" class="spoil-button" @click="showContent = false">
             {{ $t('cards.toot.hide')}}
           </el-button>
         </div>
-        <div class="content" v-show="isShowContent(message)" v-html="status(message)" @click.capture.prevent="tootClick"></div>
+        <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
       </div>
       <div class="attachments">
-        <el-button v-show="sensitive(message) && !isShowAttachments(message)" class="show-sensitive" type="info" @click="showAttachments = true">
+        <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
           {{ $t('cards.toot.sensitive') }}
         </el-button>
-        <div v-show="isShowAttachments(message)">
-          <el-button v-show="sensitive(message) && isShowAttachments(message)" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
+        <div v-show="isShowAttachments">
+          <el-button v-show="sensitive && isShowAttachments" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
             <icon name="eye" class="hide"></icon>
           </el-button>
-          <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message)">
-            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments(message))" :title="media.description" />
+          <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
+            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments)" :title="media.description" />
             <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
             <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
           </div>
@@ -73,26 +73,26 @@
         </span>
       </div>
       <div class="tool-box">
-        <el-button type="text" @click="openReply(message)" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
+        <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
           <icon name="reply" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="locked(message)" type="text" class="locked">
+        <el-button v-show="locked" type="text" class="locked">
           <icon name="lock" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="directed(message)" type="text" class="directed">
+        <el-button v-show="directed" type="text" class="directed">
           <icon name="envelope" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="!locked(message)&&!directed(message)" type="text" @click="changeReblog(originalMessage(message))" :class="originalMessage(message).reblogged ? 'reblogged' : 'reblog'" :title="$t('cards.toot.reblog')">
+        <el-button v-show="!locked&&!directed" type="text" @click="changeReblog(originalMessage)" :class="originalMessage.reblogged ? 'reblogged' : 'reblog'" :title="$t('cards.toot.reblog')">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
         <span class="count">
-          {{ reblogsCount(message) }}
+          {{ reblogsCount }}
         </span>
-        <el-button type="text" @click="changeFavourite(originalMessage(message))" :class="originalMessage(message).favourited ? 'favourited animated bounceIn' : 'favourite'" :title="$t('cards.toot.fav')" :aria-label="$t('cards.toot.fav')">
+        <el-button type="text" @click="changeFavourite(originalMessage)" :class="originalMessage.favourited ? 'favourited animated bounceIn' : 'favourite'" :title="$t('cards.toot.fav')" :aria-label="$t('cards.toot.fav')">
           <icon name="star" scale="0.9"></icon>
         </el-button>
         <span class="count">
-          {{ favouritesCount(message) }}
+          {{ favouritesCount }}
         </span>
         <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
           <icon name="thumbtack" scale="0.9"></icon>
@@ -103,22 +103,22 @@
               <li role="button" @click="openDetail(message)">
                 {{ $t('cards.toot.view_toot_detail') }}
               </li>
-              <li role="button" @click="openBrowser(originalMessage(message))">
+              <li role="button" @click="openBrowser(originalMessage)">
                 {{ $t('cards.toot.open_in_browser') }}
               </li>
-              <li role="button" @click="copyLink(originalMessage(message))">
+              <li role="button" @click="copyLink(originalMessage)">
                 {{ $t('cards.toot.copy_link_to_toot') }}
               </li>
-              <li role="button" class="separate" @click="confirmMute(message)">
+              <li role="button" class="separate" @click="confirmMute()">
                 {{ $t('cards.toot.mute') }}
               </li>
-              <li role="button" @click="block(message)">
+              <li role="button" @click="block()">
                 {{ $t('cards.toot.block') }}
               </li>
-              <li role="button" @click="reportUser(message)" v-if="!isMyMessage(message)">
+              <li role="button" @click="reportUser()" v-if="!isMyMessage">
                 {{ $t('cards.toot.report') }}
               </li>
-              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage(message)">
+              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
                 {{ $t('cards.toot.delete') }}
               </li>
             </ul>
@@ -128,8 +128,8 @@
           </el-button>
         </popper>
       </div>
-      <div class="application" v-show="application(message) !== null">
-        {{ $t('cards.toot.via', { application: application(message) }) }}
+      <div class="application" v-show="application !== null">
+        {{ $t('cards.toot.via', { application: application }) }}
       </div>
     </div>
     <div class="clearfix"></div>
@@ -193,11 +193,65 @@ export default {
       return this.focused && !this.overlaid
     },
     timestamp: function () {
-      return this.parseDatetime(this.originalMessage(this.message).created_at, this.now)
+      return this.parseDatetime(this.originalMessage.created_at, this.now)
     },
     readableTimestamp: function () {
       moment.locale(this.language)
-      return moment(this.originalMessage(this.message).created_at).format('LLLL')
+      return moment(this.originalMessage.created_at).format('LLLL')
+    },
+    originalMessage: function () {
+      if (this.message.reblog !== null) {
+        return this.message.reblog
+      } else {
+        return this.message
+      }
+    },
+    mediaAttachments: function () {
+      return this.originalMessage.media_attachments
+    },
+    reblogsCount: function () {
+      if (this.originalMessage.reblogs_count > 0) {
+        return this.originalMessage.reblogs_count
+      }
+      return ''
+    },
+    favouritesCount: function () {
+      if (this.originalMessage.favourites_count > 0) {
+        return this.originalMessage.favourites_count
+      }
+      return ''
+    },
+    isMyMessage: function () {
+      return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
+    },
+    application: function () {
+      let msg = this.originalMessage
+      if (msg.application !== undefined &&
+          msg.application !== null) {
+        return msg.application.name
+      }
+      return null
+    },
+    spoilered: function () {
+      return this.originalMessage.spoiler_text.length > 0
+    },
+    isShowContent: function () {
+      return !this.spoilered || this.showContent
+    },
+    sensitive: function () {
+      return this.originalMessage.sensitive && this.mediaAttachments.length > 0
+    },
+    isShowAttachments: function () {
+      return !this.sensitive || this.showAttachments
+    },
+    filtered: function () {
+      return this.filter.length > 0 && this.originalMessage.content.search(this.filter) >= 0
+    },
+    locked: function () {
+      return this.message.visibility === 'private'
+    },
+    directed: function () {
+      return this.message.visibility === 'direct'
     }
   },
   mounted () {
@@ -225,13 +279,6 @@ export default {
     }
   },
   methods: {
-    originalMessage (message) {
-      if (message.reblog !== null) {
-        return message.reblog
-      } else {
-        return message
-      }
-    },
     username (account) {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
@@ -298,8 +345,8 @@ export default {
         return shell.openExternal(link)
       }
     },
-    openReply (message) {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', this.originalMessage(message))
+    openReply () {
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', this.originalMessage)
     },
     openDetail (message) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
@@ -315,17 +362,17 @@ export default {
       clipboard.writeText(message.url, 'toot-link')
       this.$refs.popper.doClose()
     },
-    reportUser (message) {
-      this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage(message))
+    reportUser () {
+      this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage)
       this.$refs.popper.doClose()
     },
-    confirmMute (message) {
-      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage(message).account)
+    confirmMute () {
+      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage.account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
       this.$refs.popper.doClose()
     },
-    block (message) {
-      this.$store.dispatch('molecules/Toot/block', this.originalMessage(message).account)
+    block () {
+      this.$store.dispatch('molecules/Toot/block', this.originalMessage.account)
       this.$refs.popper.doClose()
     },
     changeReblog (message) {
@@ -395,24 +442,6 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    mediaAttachments (message) {
-      return this.originalMessage(message).media_attachments
-    },
-    reblogsCount (message) {
-      if (this.originalMessage(message).reblogs_count > 0) {
-        return this.originalMessage(message).reblogs_count
-      }
-      return ''
-    },
-    favouritesCount (message) {
-      if (this.originalMessage(message).favourites_count > 0) {
-        return this.originalMessage(message).favourites_count
-      }
-      return ''
-    },
-    isMyMessage (message) {
-      return this.$store.state.TimelineSpace.account.accountId === this.originalMessage(message).account.id
-    },
     deleteToot (message) {
       this.$store.dispatch('molecules/Toot/deleteToot', message)
         .then((message) => {
@@ -425,41 +454,12 @@ export default {
           })
         })
     },
-    application (message) {
-      let msg = this.originalMessage(message)
-      if (msg.application !== undefined &&
-          msg.application !== null) {
-        return msg.application.name
-      }
-      return null
-    },
-    spoilered (message) {
-      return this.originalMessage(message).spoiler_text.length > 0
-    },
-    isShowContent (message) {
-      return !this.spoilered(message) || this.showContent
-    },
-    sensitive (message) {
-      return this.originalMessage(message).sensitive && this.mediaAttachments(message).length > 0
-    },
-    isShowAttachments (message) {
-      return !this.sensitive(message) || this.showAttachments
-    },
-    filtered (message) {
-      return this.filter.length > 0 && this.originalMessage(message).content.search(this.filter) >= 0
-    },
-    locked (message) {
-      return message.visibility === 'private'
-    },
-    directed (message) {
-      return message.visibility === 'direct'
-    },
-    status (message) {
-      const original = this.originalMessage(message)
+    status () {
+      const original = this.originalMessage
       return emojify(original.content, original.emojis)
     },
-    spoilerText (message) {
-      const original = this.originalMessage(message)
+    spoilerText () {
+      const original = this.originalMessage
       return emojify(original.spoiler_text, original.emojis)
     },
     handleTootControl (event) {
@@ -477,7 +477,7 @@ export default {
           this.$emit('focusLeft')
           break
         case 'reply':
-          this.openReply(this.message)
+          this.openReply()
           break
         case 'boost':
           this.changeReblog(this.message)
@@ -489,10 +489,10 @@ export default {
           this.openDetail(this.message)
           break
         case 'profile':
-          this.openUser(this.originalMessage(this.message).account)
+          this.openUser(this.originalMessage.account)
           break
         case 'image':
-          const images = this.mediaAttachments(this.message)
+          const images = this.mediaAttachments
           if (images.length === 0) {
             return 0
           }
