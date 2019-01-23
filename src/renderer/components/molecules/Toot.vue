@@ -115,10 +115,10 @@
               <li role="button" @click="block()">
                 {{ $t('cards.toot.block') }}
               </li>
-              <li role="button" @click="reportUser()" v-if="!isMyMessage()">
+              <li role="button" @click="reportUser()" v-if="!isMyMessage">
                 {{ $t('cards.toot.report') }}
               </li>
-              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage()">
+              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
                 {{ $t('cards.toot.delete') }}
               </li>
             </ul>
@@ -220,6 +220,9 @@ export default {
         return this.originalMessage.favourites_count
       }
       return ''
+    },
+    isMyMessage: function () {
+      return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
     }
   },
   mounted () {
@@ -409,9 +412,6 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    isMyMessage () {
-      return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
     },
     deleteToot (message) {
       this.$store.dispatch('molecules/Toot/deleteToot', message)
