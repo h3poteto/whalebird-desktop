@@ -9,10 +9,10 @@
   role="article"
   aria-label="toot"
   >
-  <div v-show="filtered()" class="filtered">
+  <div v-show="filtered" class="filtered">
     Filtered
   </div>
-  <div v-show="!filtered()" class="toot">
+  <div v-show="!filtered" class="toot">
     <div class="icon" role="presentation">
       <FailoverImg
         :src="originalMessage.account.avatar"
@@ -243,6 +243,9 @@ export default {
     },
     isShowAttachments: function () {
       return !this.sensitive || this.showAttachments
+    },
+    filtered: function () {
+      return this.filter.length > 0 && this.originalMessage.content.search(this.filter) >= 0
     }
   },
   mounted () {
@@ -444,9 +447,6 @@ export default {
             type: 'error'
           })
         })
-    },
-    filtered () {
-      return this.filter.length > 0 && this.originalMessage.content.search(this.filter) >= 0
     },
     locked (message) {
       return message.visibility === 'private'
