@@ -76,13 +76,13 @@
         <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
           <icon name="reply" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="locked(message)" type="text" class="locked">
+        <el-button v-show="locked" type="text" class="locked">
           <icon name="lock" scale="0.9"></icon>
         </el-button>
         <el-button v-show="directed(message)" type="text" class="directed">
           <icon name="envelope" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="!locked(message)&&!directed(message)" type="text" @click="changeReblog(originalMessage)" :class="originalMessage.reblogged ? 'reblogged' : 'reblog'" :title="$t('cards.toot.reblog')">
+        <el-button v-show="!locked&&!directed(message)" type="text" @click="changeReblog(originalMessage)" :class="originalMessage.reblogged ? 'reblogged' : 'reblog'" :title="$t('cards.toot.reblog')">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
         <span class="count">
@@ -246,6 +246,9 @@ export default {
     },
     filtered: function () {
       return this.filter.length > 0 && this.originalMessage.content.search(this.filter) >= 0
+    },
+    locked: function () {
+      return this.message.visibility === 'private'
     }
   },
   mounted () {
@@ -447,9 +450,6 @@ export default {
             type: 'error'
           })
         })
-    },
-    locked (message) {
-      return message.visibility === 'private'
     },
     directed (message) {
       return message.visibility === 'direct'
