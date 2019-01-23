@@ -79,10 +79,10 @@
         <el-button v-show="locked" type="text" class="locked">
           <icon name="lock" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="directed(message)" type="text" class="directed">
+        <el-button v-show="directed" type="text" class="directed">
           <icon name="envelope" scale="0.9"></icon>
         </el-button>
-        <el-button v-show="!locked&&!directed(message)" type="text" @click="changeReblog(originalMessage)" :class="originalMessage.reblogged ? 'reblogged' : 'reblog'" :title="$t('cards.toot.reblog')">
+        <el-button v-show="!locked&&!directed" type="text" @click="changeReblog(originalMessage)" :class="originalMessage.reblogged ? 'reblogged' : 'reblog'" :title="$t('cards.toot.reblog')">
           <icon name="retweet" scale="0.9"></icon>
         </el-button>
         <span class="count">
@@ -249,6 +249,9 @@ export default {
     },
     locked: function () {
       return this.message.visibility === 'private'
+    },
+    directed: function () {
+      return this.message.visibility === 'direct'
     }
   },
   mounted () {
@@ -450,9 +453,6 @@ export default {
             type: 'error'
           })
         })
-    },
-    directed (message) {
-      return message.visibility === 'direct'
     },
     status () {
       const original = this.originalMessage
