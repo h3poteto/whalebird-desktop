@@ -1,9 +1,9 @@
 #!/bin/zsh -f
-
+set -x
 # Name of your app.
 APP="Roma"
 # The path of your app to sign.
-APP_PATH="./packages/Whalebird-mas-x64/Roma.app"
+APP_PATH="./packages/Roma-mas-x64/Roma.app"
 # The path to the location you want to put the signed package.
 RESULT_PATH="./packages/$APP.pkg"
 # The name of certificates you requested.
