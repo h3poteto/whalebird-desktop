@@ -8,7 +8,7 @@ APP_PATH="./packages/Whalebird-mas-x64/Roma.app"
 RESULT_PATH="./packages/$APP.pkg"
 # The name of certificates you requested.
 APP_KEY="3rd Party Mac Developer Application: VM DIGITAL LLC (5877VK992M)"
-INSTALLER_KEY="3rd Party Mac Developer Installer: VM DIGITAL LLC (5877VK992M"
+INSTALLER_KEY="3rd Party Mac Developer Installer: VM DIGITAL LLC (5877VK992M)"
 # The path of your plist files.
 CHILD_PLIST="./plist/child.plist"
 PARENT_PLIST="./plist/parent.plist"
