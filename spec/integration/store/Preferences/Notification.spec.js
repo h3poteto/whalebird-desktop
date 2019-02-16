@@ -3,22 +3,26 @@ import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import Notification from '@/store/Preferences/Notification'
 
-const state = {
-  notification: {
-    notify: {
-      reply: true,
-      reblog: true,
-      favourite: true,
-      follow: true
+const state = () => {
+  return {
+    notification: {
+      notify: {
+        reply: true,
+        reblog: true,
+        favourite: true,
+        follow: true
+      }
     }
   }
 }
 
-const initState = {
-  namespaced: true,
-  state: state,
-  actions: Notification.actions,
-  mutations: Notification.mutations
+const initStore = () => {
+  return {
+    namespaced: true,
+    state: state(),
+    actions: Notification.actions,
+    mutations: Notification.mutations
+  }
 }
 
 const App = {
@@ -37,7 +41,7 @@ describe('Preferences/Notification', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Notification: initState,
+        Notification: initStore(),
         App: App
       }
     })

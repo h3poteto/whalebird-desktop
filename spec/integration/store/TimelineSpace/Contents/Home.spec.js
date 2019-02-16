@@ -6,21 +6,25 @@ import Home from '~/src/renderer/store/TimelineSpace/Contents/Home'
 jest.genMockFromModule('megalodon')
 jest.mock('megalodon')
 
-const state = {
-  lazyLoading: false,
-  heading: true,
-  timeline: [],
-  unreadTimeline: [],
-  filter: '',
-  showReblogs: true,
-  showReplies: true
+const state = () => {
+  return {
+    lazyLoading: false,
+    heading: true,
+    timeline: [],
+    unreadTimeline: [],
+    filter: '',
+    showReblogs: true,
+    showReplies: true
+  }
 }
 
-const initState = {
-  namespaced: true,
-  state: state,
-  actions: Home.actions,
-  mutations: Home.mutations
+const initStore = () => {
+  return {
+    namespaced: true,
+    state: state(),
+    actions: Home.actions,
+    mutations: Home.mutations
+  }
 }
 
 const timelineState = {
@@ -42,7 +46,7 @@ describe('Home', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Home: initState,
+        Home: initStore(),
         TimelineSpace: timelineState
       }
     })
@@ -102,8 +106,6 @@ describe('Home', () => {
         await store.dispatch('Home/lazyFetchTimeline', { id: 20 })
         expect(store.state.Home.lazyLoading).toEqual(false)
         expect(store.state.Home.timeline).toEqual([
-          { id: 1 },
-          { id: 2 },
           { id: 19 },
           { id: 18 }
         ])

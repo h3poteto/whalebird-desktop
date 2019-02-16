@@ -4,17 +4,21 @@ import { ipcMain } from '~/spec/mock/electron'
 import Language from '@/store/Preferences/Language'
 import DefaultLanguage from '~/src/constants/language'
 
-const state = {
-  language: {
-    language: DefaultLanguage.en.key
+const state = () => {
+  return {
+    language: {
+      language: DefaultLanguage.en.key
+    }
   }
 }
 
-const initState = {
-  namespaced: true,
-  state: state,
-  actions: Language.actions,
-  mutations: Language.mutations
+const initStore = () => {
+  return {
+    namespaced: true,
+    state: state,
+    actions: Language.actions,
+    mutations: Language.mutations
+  }
 }
 
 describe('Preferences/Language', () => {
@@ -26,7 +30,7 @@ describe('Preferences/Language', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Language: initState
+        Language: initStore()
       }
     })
   })
