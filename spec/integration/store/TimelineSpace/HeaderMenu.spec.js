@@ -6,16 +6,20 @@ import HeaderMenu from '~/src/renderer/store/TimelineSpace/HeaderMenu'
 jest.genMockFromModule('megalodon')
 jest.mock('megalodon')
 
-const state = {
-  title: 'Home',
-  reload: false
+const state = () => {
+  return {
+    title: 'Home',
+    reload: false
+  }
 }
 
-const initState = {
-  namespaced: true,
-  state: state,
-  actions: HeaderMenu.actions,
-  mutations: HeaderMenu.mutations
+const initStore = () => {
+  return {
+    namespaced: true,
+    state: state(),
+    actions: HeaderMenu.actions,
+    mutations: HeaderMenu.mutations
+  }
 }
 
 const timelineState = {
@@ -37,7 +41,7 @@ describe('HeaderMenu', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        HeaderMenu: initState,
+        HeaderMenu: initStore(),
         TimelineSpace: timelineState
       }
     })
