@@ -7,22 +7,26 @@ import SideMenu from '~/src/renderer/store/TimelineSpace/SideMenu'
 jest.genMockFromModule('megalodon')
 jest.mock('megalodon')
 
-const state = {
-  unreadHomeTimeline: false,
-  unreadNotifications: false,
-  unreadLocalTimeline: false,
-  unreadDirectMessagesTimeline: false,
-  unreadPublicTimeline: false,
-  lists: [],
-  tags: [],
-  collapse: false
+const state = () => {
+  return {
+    unreadHomeTimeline: false,
+    unreadNotifications: false,
+    unreadLocalTimeline: false,
+    unreadDirectMessagesTimeline: false,
+    unreadPublicTimeline: false,
+    lists: [],
+    tags: [],
+    collapse: false
+  }
 }
 
-const initState = {
-  namespaced: true,
-  state: state,
-  actions: SideMenu.actions,
-  mutations: SideMenu.mutations
+const initStore = () => {
+  return {
+    namespaced: true,
+    state: state(),
+    actions: SideMenu.actions,
+    mutations: SideMenu.mutations
+  }
 }
 
 describe('SideMenu', () => {
@@ -34,7 +38,7 @@ describe('SideMenu', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        SideMenu: initState
+        SideMenu: initStore()
       }
     })
     Mastodon.mockClear()
