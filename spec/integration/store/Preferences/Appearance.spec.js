@@ -8,23 +8,27 @@ import DefaultFonts from '@/utils/fonts'
 import Appearance from '@/store/Preferences/Appearance'
 import { ipcMain } from '~/spec/mock/electron'
 
-const state = {
-  appearance: {
-    theme: Theme.Light.key,
-    fontSize: 14,
-    displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
-    timeFormat: TimeFormat.Absolute.value,
-    customThemeColor: LightTheme,
-    font: DefaultFonts[0]
-  },
-  fonts: []
+const state = () => {
+  return {
+    appearance: {
+      theme: Theme.Light.key,
+      fontSize: 14,
+      displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
+      timeFormat: TimeFormat.Absolute.value,
+      customThemeColor: LightTheme,
+      font: DefaultFonts[0]
+    },
+    fonts: []
+  }
 }
 
-const Preferences = {
-  namespaced: true,
-  state: state,
-  actions: Appearance.actions,
-  mutations: Appearance.mutations
+const initStore = () => {
+  return {
+    namespaced: true,
+    state: state(),
+    actions: Appearance.actions,
+    mutations: Appearance.mutations
+  }
 }
 
 const App = {
@@ -43,8 +47,8 @@ describe('Preferences/Appearance', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Preferences,
-        App
+        Preferences: initStore(),
+        App: App
       }
     })
     ipcMain.once('update-preferences', (event, config) => {

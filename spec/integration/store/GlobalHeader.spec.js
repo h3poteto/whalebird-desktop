@@ -3,17 +3,21 @@ import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import GlobalHeader from '~/src/renderer/store/GlobalHeader'
 
-const state = {
-  accounts: [],
-  changing: false,
-  hide: false
+const state = () => {
+  return {
+    accounts: [],
+    changing: false,
+    hide: false
+  }
 }
 
-const initState = {
-  namespaced: true,
-  state: state,
-  actions: GlobalHeader.actions,
-  mutations: GlobalHeader.mutations
+const initStore = () => {
+  return {
+    namespaced: true,
+    state: state(),
+    actions: GlobalHeader.actions,
+    mutations: GlobalHeader.mutations
+  }
 }
 
 const routerState = {
@@ -34,7 +38,7 @@ describe('GlobalHeader', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        GlobalHeader: initState,
+        GlobalHeader: initStore(),
         route: routerState
       }
     })
@@ -90,8 +94,8 @@ describe('GlobalHeader', () => {
       })
     })
     it('should be switched', async () => {
-      await store.dispatch('GlobalHeader/switchHide', true)
-      expect(store.state.GlobalHeader.hide).toEqual(true)
+      const hide = await store.dispatch('GlobalHeader/switchHide', true)
+      expect(hide).toEqual(true)
     })
   })
 })
