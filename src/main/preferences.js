@@ -15,7 +15,8 @@ const Base = {
     },
     timeline: {
       cw: false,
-      nfsw: false
+      nfsw: false,
+      hideAllAttachments: false
     }
   },
   state: {
