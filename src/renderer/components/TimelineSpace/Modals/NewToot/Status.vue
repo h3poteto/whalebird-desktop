@@ -36,7 +36,7 @@
       </li>
     </ul>
   </el-popover>
-  <div  v-click-outside="hideEmojiPicker">
+  <div v-click-outside="hideEmojiPicker">
     <el-button type="text" class="emoji-selector" @click="toggleEmojiPicker">
       <icon name="regular/smile" scale="1.2"></icon>
     </el-button>
@@ -304,6 +304,7 @@ export default {
 <style lang="scss" scoped>
 .status {
   position: relative;
+  z-index: 1;
 
   textarea {
     display: block;
