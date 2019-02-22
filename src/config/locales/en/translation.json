@@ -121,7 +121,8 @@
         "title": "Timeline",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
-        "nfsw": "Always ignore NFSW of medias"
+        "nfsw": "Always ignore NFSW of medias",
+        "hideAllAttachments": "Hide all medias"
       }
     },
     "appearance": {

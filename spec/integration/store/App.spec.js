@@ -24,7 +24,8 @@ const state = () => {
     language: Language.en.key,
     defaultFonts: DefaultFonts,
     ignoreCW: false,
-    ignoreNFSW: false
+    ignoreNFSW: false,
+    hideAllAttachments: false
   }
 }
 

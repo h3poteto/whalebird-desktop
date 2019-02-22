@@ -23,7 +23,8 @@ const App = {
     language: Language.en.key,
     defaultFonts: DefaultFonts,
     ignoreCW: false,
-    ignoreNFSW: false
+    ignoreNFSW: false,
+    hideAllAttachments: false
   },
   mutations: {
     updateTheme (state, themeColorList) {
@@ -53,6 +54,9 @@ const App = {
     },
     updateIgnoreNFSW (state, nfsw) {
       state.ignoreNFSW = nfsw
+    },
+    updateHideAllAttachments (state, hideAllAttachments) {
+      state.hideAllAttachments = hideAllAttachments
     }
   },
   actions: {
@@ -82,6 +86,7 @@ const App = {
           commit('addFont', conf.appearance.font)
           commit('updateIgnoreCW', conf.general.timeline.cw)
           commit('updateIgnoreNFSW', conf.general.timeline.nfsw)
+          commit('updateHideAllAttachments', conf.general.timeline.hideAllAttachments)
           resolve(conf)
         })
       })
