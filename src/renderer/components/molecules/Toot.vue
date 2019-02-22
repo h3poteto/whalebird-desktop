@@ -158,6 +158,7 @@ export default {
     return {
       showContent: this.$store.state.App.ignoreCW,
       showAttachments: this.$store.state.App.ignoreNFSW,
+      hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now()
     }
   },
@@ -239,7 +240,7 @@ export default {
       return !this.spoilered || this.showContent
     },
     sensitive: function () {
-      return this.originalMessage.sensitive && this.mediaAttachments.length > 0
+      return (this.hideAllAttachments || this.originalMessage.sensitive) && this.mediaAttachments.length > 0
     },
     isShowAttachments: function () {
       return !this.sensitive || this.showAttachments

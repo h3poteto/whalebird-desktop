@@ -10,7 +10,8 @@ const General = {
       },
       timeline: {
         cw: false,
-        nfsw: false
+        nfsw: false,
+        hideAllAttachments: false
       }
     },
     loading: false

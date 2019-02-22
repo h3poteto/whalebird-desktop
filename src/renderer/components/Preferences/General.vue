@@ -36,6 +36,13 @@
         active-color="#13ce66">
       </el-switch>
     </el-form-item>
+    <el-form-item for="hideAllAttachments" :label="$t('preferences.general.timeline.hideAllAttachments')">
+      <el-switch
+        id="hideAllAttachments"
+        v-model="timeline_hide_attachments"
+        active-color="#13ce66">
+      </el-switch>
+    </el-form-item>
   </el-form>
 </div>
 </template>
@@ -86,6 +93,16 @@ export default {
       set (value) {
         this.$store.dispatch('Preferences/General/updateTimeline', {
           nfsw: value
+        })
+      }
+    },
+    timeline_hide_attachments: {
+      get () {
+        return this.$store.state.Preferences.General.general.timeline.hideAllAttachments
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/General/updateTimeline', {
+          hideAllAttachments: value
         })
       }
     }
