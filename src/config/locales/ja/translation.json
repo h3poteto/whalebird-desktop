@@ -115,6 +115,13 @@
         "description": "操作時の効果音を設定",
         "fav_rb": "お気に入り，ブースト時",
         "toot": "トゥート時"
+      },
+      "timeline": {
+        "title": "タイムライン",
+        "description": "タイムラインをカスタマイズ",
+        "cw": "常にCWを表示する",
+        "nfsw": "常にNFSWを表示する",
+        "hideAllAttachments": "すべてのメディアを非表示にする"
       }
     },
     "appearance": {
