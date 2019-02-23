@@ -66,7 +66,7 @@ const General = {
         })
       })
     },
-    updateTimeline ({ commit, state }, timeline) {
+    updateTimeline ({ commit, state, dispatch }, timeline) {
       commit('changeLoading', true)
       const newTimeline = Object.assign({}, state.general.timeline, timeline)
       const newGeneral = Object.assign({}, state.general, {
@@ -85,6 +85,7 @@ const General = {
           ipcRenderer.removeAllListeners('error-update-preferences')
           commit('updateGeneral', conf.general)
           commit('changeLoading', false)
+          dispatch('App/loadPreferences', null, { root: true })
           resolve(conf)
         })
         ipcRenderer.send('update-preferences', config)
