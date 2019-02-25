@@ -1,20 +1,20 @@
 {
   "side_menu": {
-    "direct": "Direct messages"
+    "direct": "Messages Privés"
   },
   "header_menu": {
-    "settings": "Settings",
-    "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it."
+    "settings": "Paramètres",
+    "switch_streaming": "Utiliser websocket pour le streaming. Option à essayer si le fil d'actualité ne se recharge pas"
   },
   "settings": {
     "timeline": {
-      "title": "Timeline",
+      "title": "Fil d'actualité",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timelines.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "title": "Notifications non lues",
+        "description": "Personnalisez les notifications non lues pour chaque fil d'actualité.",
+        "direct": "Messages Privés",
+        "local": "Fil public local",
+        "public": "Fil public global"
       }
     }
   },
@@ -23,19 +23,19 @@
   },
   "modals": {
     "shortcut": {
-      "h": "Switch the focus to left column",
-      "l": "Switch the focus to right column",
-      "?": "Show this help"
+      "h": "Changer le focus sur la colonne de gauche",
+      "l": "Changer le focus sur la colonne de droite",
+      "?": "Montrer ce panneau d'aide"
     }
   },
   "preferences": {
     "general": {
       "timeline": {
-        "title": "Timeline",
-        "description": "Customize view in your timelines.",
-        "cw": "Always ignore contents warnings",
-        "nfsw": "Always ignore NFSW of medias",
-        "hideAllAttachments": "Hide all medias"
+        "title": "Fil d'actualité",
+        "description": "Customisez l'apparence du fil d'actualité",
+        "cw": "Toujours ignorer les avertissements relatifs au contenu",
+        "nfsw": "Toujours ignorer le contenu NSFW",
+        "hideAllAttachments": "Cacher tous les médias"
       }
     }
   }
