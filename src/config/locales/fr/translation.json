@@ -47,6 +47,7 @@
     "expand": "Développer",
     "home": "Accueil",
     "notification": "Notifications",
+    "direct": "Messages Privés",
     "favourite": "Favoris",
     "local": "Fil public local",
     "public": "Fil public global",
@@ -72,7 +73,9 @@
       "apply": "Appliquer"
     },
     "new_toot": "Pouet",
-    "reload": "Recharger"
+    "reload": "Recharger",
+    "settings": "Paramètres",
+    "switch_streaming": "Utiliser websocket pour le streaming. Option à essayer si le fil d'actualité ne se recharge pas"
   },
   "settings": {
     "title": "Settings",
@@ -91,6 +94,16 @@
           "description": "Marquez vos médias comme sensibles par défaut"
         }
       }
+    },
+    "timeline": {
+      "title": "Fil d'actualité",
+      "unread_notification": {
+        "title": "Notifications non lues",
+        "description": "Personnalisez les notifications non lues pour chaque fil d'actualité.",
+        "direct": "Messages Privés",
+        "local": "Fil public local",
+        "public": "Fil public global"
+      }
     }
   },
   "preferences": {
@@ -102,6 +115,13 @@
         "description": "Sons de notification :",
         "fav_rb": "Partages et favoris",
         "toot": "Pouets"
+      },
+      "timeline": {
+        "title": "Fil d'actualité",
+        "description": "Customisez l'apparence du fil d'actualité",
+        "cw": "Toujours ignorer les avertissements relatifs au contenu",
+        "nfsw": "Toujours ignorer le contenu NSFW",
+        "hideAllAttachments": "Cacher tous les médias"
       }
     },
     "appearance": {
@@ -217,6 +237,8 @@
       "ctrl_enter": "Poster le pouet",
       "j": "Sélectionner le pouet suivant",
       "k": "Sélectionner le pouet précédent",
+      "h": "Changer le focus sur la colonne de gauche",
+      "l": "Changer le focus sur la colonne de droite",
       "r": "Répondre au pouet",
       "b": "Rebloguer le pouet",
       "f": "Favoriser le pouet",
@@ -224,7 +246,9 @@
       "p": "Ouvrir le profil correspondant au pouet",
       "i": "Ouvrir les images",
       "x": "Montrer/Cacher Avertissement de contenu sensible et contenu NSFW",
+      "?": "Montrer ce panneau d'aide",
       "esc": "Fermer la page"
+
     }
   },
   "cards": {
@@ -275,7 +299,8 @@
     "search": "Rechercher",
     "account": "Compte",
     "keyword": "Mot clé",
-    "toot": "Pouets"
+    "toot": "Pouets",
+    "tag": "Hashtag"
   },
   "lists": {
     "index": {
