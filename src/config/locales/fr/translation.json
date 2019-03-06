@@ -30,7 +30,7 @@
     "window": {
       "name": "Fenêtre",
       "close": "Fermer la fenêtre",
-      "open": "Open Window",
+      "open": "Ouvrir la fenêtre",
       "minimize": "Minimiser",
       "jump_to": "Aller à"
     }
@@ -81,14 +81,14 @@
       "toot": {
         "title": "Pouet",
         "visibility": {
-          "description": "Customize default visibility of toot.",
+          "description": "Customisez l'apparence par défaut du pouet.",
           "public": "Public",
           "unlisted": "Public sans être affiché sur le fil public",
           "private": "Abonné⋅e⋅s uniquement",
           "direct": "Message direct"
         },
         "sensitive": {
-          "description": "Mark medias as sensitive by default"
+          "description": "Marquez vos médias comme sensibles par défaut"
         }
       }
     }
@@ -99,7 +99,7 @@
       "title": "Général",
       "sounds": {
         "title": "Sons",
-        "description": "Please set feedback sounds.",
+        "description": "Sons de notification :",
         "fav_rb": "Partages et favoris",
         "toot": "Pouets"
       }
@@ -116,16 +116,16 @@
         "custom": "Custom"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
-        "wrapper_mask_color": "Modal wrapper"
+        "background_color": "Arrière plan de base",
+        "selected_background_color": "Arrière plan en focus",
+        "global_header_color": "Menu Compte",
+        "side_menu_color": "Menu latéral",
+        "primary_color": "Couleur du texte primaire",
+        "regular_color": "Couleur du texte normal",
+        "secondary_color": "Couleur du texte secondaire",
+        "border_color": "Bordures",
+        "header_menu_color": "Menu en tête",
+        "wrapper_mask_color": "Masque modal"
       },
       "font_size": "Taille des caractères",
       "font_family": "Font family",
@@ -136,19 +136,19 @@
         "username": "Utilisateur⋅trice"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "title": "Format de dates",
+        "absolute": "Absolu",
+        "relative": "Relatif"
       }
     },
     "notification": {
       "title": "Notification",
       "enable": {
-        "description": "Please set notification events.",
-        "reply": "Notify me when I receive reply",
-        "reblog": "Notify me when I receive reblog",
-        "favourite": "Notify me when I receive favourite",
-        "follow": "Notify me when I receive follow"
+        "description": "Paramètres de notification",
+        "reply": "Notifiez-moi quand je reçois une réponse",
+        "reblog": "Notifiez-moi quand je reçois un reblog",
+        "favourite": "Notifiez-moi quand je reçois un favoris",
+        "follow": "Notifiez-moi quand je reçois un follow"
       }
     },
     "account": {
@@ -166,7 +166,7 @@
     },
     "language": {
       "title": "Langue",
-      "language_description": "Choose the language you would like to use with Whalebird.",
+      "language_description": "Choisissez le language que vous souhaitez utiliser avec Whalebird.",
       "notice": "Nécessite un redémarrage",
       "confirm": {
         "title": "Avertissement",
@@ -190,7 +190,7 @@
       "change_visibility": "Changer la visibilité",
       "add_cw": "Ajouter un avertissement de contenu",
       "change_sensitive": "Changer sensible",
-      "pined_hashtag": "Pin the hashtag",
+      "pined_hashtag": "Accrochez le hashtag",
       "description": "Décrire pour les malvoyant·e·s"
     },
     "jump": {
@@ -204,27 +204,27 @@
       "title": "Éditer la liste"
     },
     "mute_confirm": {
-      "title": "Are you sure to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "Vous êtes sur de bien vouloir muter cet utilisateur ?",
+      "body": "Cacher les notifications de cet utilisateur?",
+      "cancel": "Annuler",
+      "ok": "Muter"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
-      "esc": "Close current page"
+      "title": "Raccourcis clavier",
+      "ctrl_number": "Changer de compte",
+      "ctrl_k": "Aller à une autre timeline",
+      "ctrl_n": "Nouveau pouet",
+      "ctrl_enter": "Poster le pouet",
+      "j": "Sélectionner le pouet suivant",
+      "k": "Sélectionner le pouet précédent",
+      "r": "Répondre au pouet",
+      "b": "Rebloguer le pouet",
+      "f": "Favoriser le pouet",
+      "o": "Ouvrir les détails du pouet",
+      "p": "Ouvrir le profil correspondant au pouet",
+      "i": "Ouvrir les images",
+      "x": "Montrer/Cacher Avertissement de contenu sensible et contenu NSFW",
+      "esc": "Fermer la page"
     }
   },
   "cards": {
@@ -235,13 +235,13 @@
       "view_toot_detail": "Voir les détails du pouet",
       "open_in_browser": "Ouvrir dans un navigateur",
       "copy_link_to_toot": "Copier le lien du pouet",
-      "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
+      "mute": "Muter",
+      "block": "Bloquer",
+      "report": "Reporter",
       "delete": "Effacer",
       "via": "par {{application}}",
       "reply": "Répondre",
-      "reblog": "Du partage du pouet",
+      "reblog": "Repouet",
       "fav": "Préféré",
       "detail": "Détails",
       "pinned": "Pouet épinglé"
@@ -257,10 +257,10 @@
       "follow_requested": "Suivre demande",
       "open_in_browser": "Ouvrir dans un navigateur",
       "manage_list_memberships": "Inscriptions aux listes",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
+      "mute": "Muter",
+      "unmute": "Dé-muter",
+      "unblock": "Dé-Bloquer",
+      "block": "Bloquer",
       "toots": "Pouets",
       "follows": "Abonnements",
       "followers": "Abonné⋅e⋅s"
@@ -268,13 +268,13 @@
   },
   "hashtag": {
     "tag_name": "Nom du hashtag",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "delete_tag": "Supprimer tag",
+    "save_tag": "Sauver tag"
   },
   "search": {
     "search": "Rechercher",
     "account": "Compte",
-    "keyword": "mot clé",
+    "keyword": "Mot clé",
     "toot": "Pouets"
   },
   "lists": {
@@ -284,13 +284,13 @@
     }
   },
   "login": {
-    "domain_name_label": "Tout d'abord, connectons-nous à votre instance Mastodon.  Entez votre nom de domaine:",
+    "domain_name_label": "Tout d'abord, connectons-nous à votre instance Mastodon.  Entez votre nom de domaine :",
     "search": "Rechercher",
     "login": "Connexion"
   },
   "authorize": {
     "manually_1": "La page d'autorisation est à présent affichée dans votre navigateur.",
-    "manually_2": "Si ce n'était pas le case, veuillez ouvrir le lien suivant manuellement.",
+    "manually_2": "Si ce n'était pas le cas, veuillez ouvrir le lien suivant manuellement.",
     "code_label": "Recopier le code d'autorisation depuis votre navigateur:",
     "submit": "Envoyer"
   },
