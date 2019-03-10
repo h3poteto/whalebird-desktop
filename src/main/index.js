@@ -178,6 +178,11 @@ async function createWindow () {
   }
 
   /**
+   * Enable accessibility
+   */
+  app.setAccessibilitySupportEnabled(true)
+
+  /**
    * Initial window options
    */
   let mainWindowState = windowStateKeeper({
@@ -222,9 +227,6 @@ async function createWindow () {
 
 // Do not lower the rendering priority of Chromium when background
 app.commandLine.appendSwitch('disable-renderer-backgrounding')
-
-// Enable accessibility
-app.setAccessibilitySupportEnabled(true)
 
 app.on('ready', createWindow)
 
