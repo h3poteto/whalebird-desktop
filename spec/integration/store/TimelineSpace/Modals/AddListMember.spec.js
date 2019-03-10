@@ -71,7 +71,7 @@ describe('AddListMember', () => {
       }
 
       Mastodon.mockImplementation(() => mockClient)
-      const accounts = await store.dispatch('AddListMember/search', 'akira')
+      await store.dispatch('AddListMember/search', 'akira')
       expect(store.state.AddListMember.accounts).toEqual([
         { id: 1, name: 'h3poteto' },
         { id: 2, name: 'akito19' }

@@ -28,6 +28,15 @@ const initStore = () => {
   }
 }
 
+const app = {
+  namespaced: true,
+  actions: {
+    loadPreferences (_) {
+      return true
+    }
+  }
+}
+
 describe('Preferences/General', () => {
   let store
   let localVue
@@ -37,7 +46,8 @@ describe('Preferences/General', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Preferences: initStore()
+        Preferences: initStore(),
+        App: app
       }
     })
   })
