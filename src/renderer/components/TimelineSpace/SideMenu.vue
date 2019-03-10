@@ -168,8 +168,8 @@ export default {
     releaseCollapse () {
       this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', false)
     },
-    changeGlobalHeader (value) {
-      this.$store.dispatch('GlobalHeader/switchHide', value)
+    async changeGlobalHeader (value) {
+      await this.$store.dispatch('GlobalHeader/switchHide', value)
     }
   }
 }

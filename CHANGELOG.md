@@ -1,4 +1,27 @@
 # Change Log
+## [2.6.1] - 2018-12-14
+
+### Added
+- [#773](https://github.com/h3poteto/whalebird-desktop/pull/773) Add instance icon in account header
+
+### Changed
+
+- [#785](https://github.com/h3poteto/whalebird-desktop/pull/785) Make UI a bit more accessible
+- [#779](https://github.com/h3poteto/whalebird-desktop/pull/779) Bump megalodon to version 0.4.6
+- [#771](https://github.com/h3poteto/whalebird-desktop/pull/771) Update more packages
+- [#770](https://github.com/h3poteto/whalebird-desktop/pull/770) Upgrade Electron version to 3.0.10
+
+### Fixed
+
+- [#783](https://github.com/h3poteto/whalebird-desktop/pull/783) Close sidebar before changing account
+- [#782](https://github.com/h3poteto/whalebird-desktop/pull/782) Add Pinned toot update handler
+- [#781](https://github.com/h3poteto/whalebird-desktop/pull/781) Fix RTL content leaking direction
+- [#777](https://github.com/h3poteto/whalebird-desktop/pull/777) Fix media description again
+- [#776](https://github.com/h3poteto/whalebird-desktop/pull/776) Keep an error listener after stopping socket
+- [#774](https://github.com/h3poteto/whalebird-desktop/pull/774) Update README for node version
+- [#766](https://github.com/h3poteto/whalebird-desktop/pull/766) Fix retrieving a retoot's toot tree
+
+
 
 ## [2.6.0] - 2018-12-04
 ### Added

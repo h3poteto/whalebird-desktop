@@ -32,9 +32,12 @@ export default {
       })
     },
     changeLanguage ({ commit }, key) {
-      ipcRenderer.send('change-language', key)
-      ipcRenderer.once('response-change-language', (event, value) => {
-        commit('changeLanguage', value)
+      return new Promise((resolve, reject) => {
+        ipcRenderer.send('change-language', key)
+        ipcRenderer.once('response-change-language', (event, value) => {
+          commit('changeLanguage', value)
+          resolve(value)
+        })
       })
     },
     relaunch () {

@@ -19,6 +19,31 @@
       </el-switch>
     </el-form-item>
   </el-form>
+  <el-form class="timeline section" label-potision="right" label-width="250px" size="samll">
+    <h3>{{ $t('preferences.general.timeline.title') }}</h3>
+    <p class="description">{{ $t('preferences.general.timeline.description') }}</p>
+    <el-form-item for="cw" :label="$t('preferences.general.timeline.cw')">
+      <el-switch
+        id="cw"
+        v-model="timeline_cw"
+        active-color="#13ce66">
+      </el-switch>
+    </el-form-item>
+    <el-form-item for="nfsw" :label="$t('preferences.general.timeline.nfsw')">
+      <el-switch
+        id="nfsw"
+        v-model="timeline_nfsw"
+        active-color="#13ce66">
+      </el-switch>
+    </el-form-item>
+    <el-form-item for="hideAllAttachments" :label="$t('preferences.general.timeline.hideAllAttachments')">
+      <el-switch
+        id="hideAllAttachments"
+        v-model="timeline_hide_attachments"
+        active-color="#13ce66">
+      </el-switch>
+    </el-form-item>
+  </el-form>
 </div>
 </template>
 
@@ -48,6 +73,36 @@ export default {
       set (value) {
         this.$store.dispatch('Preferences/General/updateSound', {
           toot: value
+        })
+      }
+    },
+    timeline_cw: {
+      get () {
+        return this.$store.state.Preferences.General.general.timeline.cw
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/General/updateTimeline', {
+          cw: value
+        })
+      }
+    },
+    timeline_nfsw: {
+      get () {
+        return this.$store.state.Preferences.General.general.timeline.nfsw
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/General/updateTimeline', {
+          nfsw: value
+        })
+      }
+    },
+    timeline_hide_attachments: {
+      get () {
+        return this.$store.state.Preferences.General.general.timeline.hideAllAttachments
+      },
+      set (value) {
+        this.$store.dispatch('Preferences/General/updateTimeline', {
+          hideAllAttachments: value
         })
       }
     }
