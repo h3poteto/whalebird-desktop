@@ -9,5 +9,6 @@ npm-debug.log
 npm-debug.log.*
 thumbs.db
 packages/*
+release/*
 !.gitkeep
 *.db
