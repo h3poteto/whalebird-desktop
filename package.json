@@ -30,7 +30,7 @@
     "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Roma' --platform=mas --arch=x64 --electron-version=3.0.10 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/test' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/roma.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=com.vm.Roma-Desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
     "dev": "node .electron-vue/dev-runner.js",
     "e2e": "npm run pack && mocha test/e2e",
-    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src test",
+    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src spec",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src test",
     "stylelint": "stylelint '**/*.vue' --syntax scss",
     "pack": "npm run pack:main && npm run pack:renderer",
@@ -39,7 +39,7 @@
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix",
-    "spec:unit": "BABEL_ENV=test jest -u ./spec/unit/*.spec.js"
+    "spec": "NODE_ENV=test jest -u"
   },
   "build": {
     "productName": "Roma",
@@ -80,15 +80,31 @@
       "icon": "build/icons/icon.ico",
       "target": "nsis"
     },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
     "linux": {
       "icon": "build/icons",
       "target": [
         "deb",
         "rpm",
-        "snap"
+        "snap",
+        "tar.bz2"
       ],
       "category": "Network"
     }
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "@/router": "<rootDir>/spec/mock/router.js",
+      "^@/(.+)": "<rootDir>/src/renderer/$1",
+      "^~/(.+)": "<rootDir>/$1",
+      "electron": "<rootDir>/spec/mock/electron.js"
+    },
+    "testMatch": [
+      "**/spec/**/*.spec.js?(x)"
+    ]
   },
   "dependencies": {
     "@panter/vue-i18next": "^0.13.0",
@@ -111,7 +127,7 @@
     "i18next-sync-fs-backend": "^1.1.0",
     "is-empty": "^1.2.0",
     "lodash": "^4.17.11",
-    "megalodon": "0.4.6",
+    "megalodon": "0.5.0",
     "moment": "^2.21.0",
     "mousetrap": "^1.6.2",
     "nedb": "^1.8.0",
@@ -135,9 +151,11 @@
   },
   "devDependencies": {
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.2.0",
+    "@vue/test-utils": "^1.0.0-beta.28",
     "ajv": "^6.6.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.4",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-plugin-istanbul": "^5.1.0",
@@ -157,6 +175,7 @@
     "electron-builder": "^20.38.2",
     "electron-debug": "^2.0.0",
     "electron-devtools-installer": "^2.2.4",
+    "electron-ipc-mock": "0.0.3",
     "electron-packager": "^12.2.0",
     "electron-updater": "^4.0.6",
     "eslint": "^5.9.0",
@@ -185,6 +204,7 @@
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
     "node-sass": "^4.10.0",
+    "regenerator-runtime": "^0.13.1",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.23.1",
     "stylelint": "^9.9.0",

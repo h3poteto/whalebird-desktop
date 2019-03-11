@@ -1,31 +1,13 @@
 {
-  "side_menu": {
-    "direct": "Direct messages"
-  },
-  "header_menu": {
-    "settings": "Settings",
-    "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it."
-  },
-  "settings": {
-    "timeline": {
-      "title": "Timeline",
-      "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timelines.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+  "preferences": {
+    "general": {
+      "timeline": {
+        "title": "Timeline",
+        "description": "Customize view in your timelines.",
+        "cw": "Always ignore contents warnings",
+        "nfsw": "Always ignore NFSW of medias",
+        "hideAllAttachments": "Hide all medias"
       }
-    }
-  },
-  "search": {
-    "tag": "Hashtag"
-  },
-  "modals": {
-    "shortcut": {
-      "h": "Switch the focus to left column",
-      "l": "Switch the focus to right column",
-      "?": "Show this help"
     }
   }
 }
