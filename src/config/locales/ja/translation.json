@@ -11,8 +11,8 @@
       "quit": "終了"
     },
     "toot": {
-      "name": "トゥート",
-      "new": "トゥート"
+      "name": "投稿",
+      "new": "新規投稿"
     },
     "edit": {
       "name": "編集",
@@ -73,7 +73,7 @@
       "apply": "適用"
     },
     "switch_streaming": "Websocketによるストリーミングを行う．もしタイムラインが自動で更新されない場合にはお試しください",
-    "new_toot": "トゥート",
+    "new_toot": "投稿",
     "reload": "再読み込み",
     "settings": "設定"
   },
@@ -82,9 +82,9 @@
     "general": {
       "title": "一般",
       "toot": {
-        "title": "トゥート",
+        "title": "投稿",
         "visibility": {
-          "description": "トゥートの公開設定を変更する",
+          "description": "ステータスの公開設定を変更する",
           "public": "公開",
           "unlisted": "未収載",
           "private": "フォロワー限定",
@@ -114,7 +114,7 @@
         "title": "効果音",
         "description": "操作時の効果音を設定",
         "fav_rb": "お気に入り，ブースト時",
-        "toot": "トゥート時"
+        "toot": "投稿時"
       },
       "timeline": {
         "title": "タイムライン",
@@ -198,11 +198,11 @@
   },
   "modals": {
     "new_toot": {
-      "title": "トゥート",
+      "title": "新規投稿",
       "cw": "ここに警告を書いてください",
       "status": "今なにしてる?",
       "cancel": "キャンセル",
-      "toot": "トゥート！",
+      "toot": "送信",
       "close_confirm": "本当に閉じますか？",
       "close_confirm_ok": "閉じる",
       "close_confirm_cancel": "キャンセル",
@@ -233,16 +233,16 @@
       "title": "キーボードショートカット",
       "ctrl_number": "アカウントの切り替え",
       "ctrl_k": "タイムラインの移動",
-      "ctrl_n": "トゥートモーダルの表示",
-      "ctrl_enter": "トゥート送信",
-      "j": "次のトゥートを選択",
-      "k": "前のトゥートを選択",
+      "ctrl_n": "新規投稿モーダルの表示",
+      "ctrl_enter": "送信",
+      "j": "次のステータスを選択",
+      "k": "前のステータスを選択",
       "h": "右のカラムを選択",
       "l": "左のカラムを選択",
       "r": "リプライ",
       "b": "ブースト",
       "f": "お気に入り",
-      "o": "トゥート詳細を開く",
+      "o": "ステータス詳細を開く",
       "p": "発言主のプロフィールを開く",
       "i": "画像を表示",
       "x": "CWとNSFWの表示切り替え",
@@ -267,7 +267,7 @@
       "reblog": "ブースト",
       "fav": "お気に入り",
       "detail": "詳細",
-      "pinned": "固定されたトゥート"
+      "pinned": "固定されたステータス"
     }
   },
   "side_bar": {
@@ -284,7 +284,7 @@
       "unmute": "ミュートを解除",
       "unblock": "ブロックを解除",
       "block": "ブロック",
-      "toots": "トゥート",
+      "toots": "ステータス",
       "follows": "フォロー",
       "followers": "フォロワー"
     }
@@ -299,7 +299,7 @@
     "account": "アカウント",
     "tag": "ハッシュタグ",
     "keyword": "キーワード",
-    "toot": "トゥート"
+    "toot": "ステータス"
   },
   "lists": {
     "index": {
@@ -334,7 +334,7 @@
     "authorize_error": "認証に失敗しました",
     "followers_fetch_error": "フォロワーの取得に失敗しました",
     "follows_fetch_error": "フォローの取得に失敗しました",
-    "toot_fetch_error": "トゥート詳細の読み込みに失敗しました",
+    "toot_fetch_error": "ステータス詳細の読み込みに失敗しました",
     "follow_error": "フォローに失敗しました",
     "unfollow_error": "フォロー解除に失敗しました",
     "lists_fetch_error": "リストの読み込みに失敗しました",
@@ -346,9 +346,9 @@
     "unreblog_error": "ブースト解除に失敗しました",
     "favourite_error": "お気に入りできませんでした",
     "unfavourite_error": "お気に入り解除に失敗しました",
-    "delete_error": "トゥート削除に失敗しました",
+    "delete_error": "ステータス削除に失敗しました",
     "search_error": "検索に失敗しました",
-    "toot_error": "トゥートに失敗しました",
+    "toot_error": "投稿に失敗しました",
     "update_list_memberships_error": "リストメンバーの更新に失敗しました",
     "add_user_error": "メンバー追加に失敗しました",
     "authorize_url_error": "認証用URLの取得に失敗しました",
@@ -362,7 +362,7 @@
       "domain_format": "ドメイン名のみを入力してください"
     },
     "new_toot": {
-      "toot_length": "トゥートの長さは {{min}} から {{max}}文字である必要があります",
+      "toot_length": "ステータスの長さは {{min}} から {{max}}文字である必要があります",
       "attach_length": "添付ファイルは {{max}} つまでです",
       "attach_image": "画像かビデオしか添付できません"
     }
