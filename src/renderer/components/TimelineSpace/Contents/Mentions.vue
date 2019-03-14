@@ -197,4 +197,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#mentions {
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 48px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .loading-card {
+    height: 60px;
+  }
+
+  .loading-card:empty {
+    height: 0;
+  }
+
+  .upper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .upper-with-side-bar {
+    position: fixed;
+    bottom: 20px;
+    right: calc(20px + 360px);
+  }
+}
 </style>
+<style src="@/assets/timeline-transition.scss"></style>
