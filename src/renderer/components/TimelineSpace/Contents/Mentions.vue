@@ -55,7 +55,6 @@ export default {
       openSideBar: state => state.openSideBar
     }),
     ...mapState('TimelineSpace/Contents/Mentions', {
-      mentions: state => state.mentions,
       lazyLoading: state => state.lazyLoading,
       heading: state => state.heading,
       unread: state => state.unreadMentions,
@@ -63,6 +62,9 @@ export default {
     }),
     ...mapGetters('TimelineSpace/Modals', [
       'modalOpened'
+    ]),
+    ...mapGetters('TimelineSpace/Contents/Mentions', [
+      'mentions'
     ]),
     shortcutEnabled: function () {
       if (this.modalOpened) {
