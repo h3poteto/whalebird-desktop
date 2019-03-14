@@ -6,6 +6,7 @@
       :focused="focused"
       :overlaid="overlaid"
       v-on:update="updateToot"
+      v-on:delete="deleteToot"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
@@ -41,7 +42,10 @@ export default {
   components: { Toot },
   methods: {
     updateToot (message) {
-      this.$store.commit('TimelineSpace/Contents/Notifications/updateToot', message)
+      return this.$emit('update', message)
+    },
+    deleteToot (message) {
+      return this.$emit('delete', message)
     }
   }
 }

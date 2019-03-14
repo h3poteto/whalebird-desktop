@@ -10,6 +10,7 @@
         :filter="filter"
         :focused="message.id === focusedId"
         :overlaid="modalOpened"
+        v-on:update="updateToot"
         @focusNext="focusNext"
         @focusPrev="focusPrev"
         @focusRight="focusSidebar"
@@ -147,6 +148,9 @@ export default {
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
+    },
+    updateToot (message) {
+      this.$store.commit('TimelineSpace/Contents/Notifications/updateToot', message)
     },
     upper () {
       scrollTop(
