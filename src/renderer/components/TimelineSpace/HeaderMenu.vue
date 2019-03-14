@@ -168,7 +168,7 @@ export default {
       switch (this.$route.name) {
         case 'home':
         case 'notifications':
-        case 'mentiont':
+        case 'mentions':
         case 'favourites':
         case 'local':
         case 'public':
