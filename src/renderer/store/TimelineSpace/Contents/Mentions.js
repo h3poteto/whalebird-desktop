@@ -90,6 +90,11 @@ const Mentions = {
           commit('changeLazyLoading', false)
         })
     }
+  },
+  getters: {
+    mentions (state) {
+      return state.mentions.filter(mention => mention.type === 'mention')
+    }
   }
 }
 
