@@ -103,6 +103,9 @@ export default {
         case 'favourites':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.favourite'))
           break
+        case 'mentions':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.mention'))
+          break
         case 'local':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.local'))
           break
@@ -148,6 +151,7 @@ export default {
       switch (this.$route.name) {
         case 'home':
         case 'notifications':
+        case 'mentions':
         case 'favourites':
         case 'local':
         case 'public':
@@ -164,6 +168,7 @@ export default {
       switch (this.$route.name) {
         case 'home':
         case 'notifications':
+        case 'mentiont':
         case 'favourites':
         case 'local':
         case 'public':
@@ -184,6 +189,9 @@ export default {
           break
         case 'notifications':
           this.filter = this.$store.state.TimelineSpace.Contents.Notifications.filter
+          break
+        case 'mentions':
+          this.filter = this.$store.state.TimelineSpace.Contents.Mentions.filter
           break
         case 'favourites':
           this.filter = this.$store.state.TimelineSpace.Contents.Favourites.filter
@@ -217,6 +225,9 @@ export default {
         case 'notifications':
           this.$store.commit('TimelineSpace/Contents/Notifications/changeFilter', filter)
           break
+        case 'mentions':
+          this.$store.commit('TimelineSpace/Contents/Mentions/changeFilter', filter)
+          break
         case 'favourites':
           this.$store.commit('TimelineSpace/Contents/Favourites/changeFilter', filter)
           break
@@ -244,6 +255,7 @@ export default {
       switch (this.$route.name) {
         case 'home':
         case 'notifications':
+        case 'mentions':
         case 'favourites':
         case 'local':
         case 'public':
