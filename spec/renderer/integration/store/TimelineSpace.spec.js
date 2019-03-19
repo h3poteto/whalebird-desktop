@@ -63,6 +63,13 @@ const PublicStore = {
   }
 }
 
+const MentionStore = {
+  namespaced: true,
+  actions: {
+    fetchMentions: jest.fn()
+  }
+}
+
 const contentsStore = {
   namespaced: true,
   modules: {
@@ -70,7 +77,8 @@ const contentsStore = {
     Notifications: notificationStore,
     DirectMessages: DMStore,
     Local: LocalStore,
-    Public: PublicStore
+    Public: PublicStore,
+    Mentions: MentionStore
   }
 }
 
