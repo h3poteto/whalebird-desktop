@@ -21,7 +21,8 @@ const initStore =() => {
     namespaced: true,
     state: state(),
     actions: Mentions.actions,
-    mutations: Mentions.mutations
+    mutations: Mentions.mutations,
+    getters: Mentions.getters
   }
 }
 const timelineState = {
@@ -147,6 +148,31 @@ describe('Mentions', () => {
         ])
         expect(store.state.Mentions.lazyLoading).toEqual(false)
       })
+    })
+  })
+
+  describe('mentions', () => {
+    beforeAll(() => {
+      state = () => {
+        return {
+          lazyLoading: false,
+          heading: true,
+          mentions: [
+            { id: 1, type: 'mention' },
+            { id: 2, type: 'favourite' },
+            { id: 3, type: 'reblog' },
+            { id: 4, type: 'follow' }
+          ],
+          unreadMentions: [],
+          filter: ''
+        }
+      }
+    })
+    it('should return only mentions', () => {
+      const mentions = store.getters['Mentions/mentions']
+      expect(mentions).toEqual([
+        { id: 1, type: 'mention' }
+      ])
     })
   })
 })
