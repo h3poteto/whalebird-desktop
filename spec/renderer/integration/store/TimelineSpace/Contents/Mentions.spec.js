@@ -16,7 +16,7 @@ let state = () => {
   }
 }
 
-const initStore =() => {
+const initStore = () => {
   return {
     namespaced: true,
     state: state(),
@@ -69,7 +69,7 @@ describe('Mentions', () => {
       }
 
       Mastodon.mockImplementation(() => mockClient)
-      const mentions = await store.dispatch('Mentions/fetchMentions')
+      await store.dispatch('Mentions/fetchMentions')
       expect(store.state.Mentions.mentions).toEqual([
         { id: 1, type: 'mention' },
         { id: 2, type: 'favourite' },
@@ -80,7 +80,7 @@ describe('Mentions', () => {
   })
 
   describe('lazyFetchMentions', () => {
-    describe('last is null', ()  => {
+    describe('last is null', () => {
       it('should not be updated', async () => {
         const result = await store.dispatch('Mentions/lazyFetchMentions', null)
         expect(result).toEqual(null)
@@ -137,7 +137,7 @@ describe('Mentions', () => {
         }
 
         Mastodon.mockImplementation(() => mockClient)
-        const mentions = await store.dispatch('Mentions/lazyFetchMentions', { id: 1 })
+        await store.dispatch('Mentions/lazyFetchMentions', { id: 1 })
         expect(store.state.Mentions.mentions).toEqual([
           { id: 1, type: 'mention' },
           { id: 2, type: 'favourite' },
