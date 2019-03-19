@@ -413,6 +413,11 @@ ipcMain.on('start-user-streaming', (event, obj) => {
         },
         (notification) => {
           event.sender.send('notification-start-user-streaming', notification)
+          // Does not exist a endpoint for only mention. And mention is a part of notification.
+          // So we have to get mention from notification.
+          if (notification.type === 'mention') {
+            event.sender.send('mention-start-user-streaming', notification)
+          }
           if (process.platform === 'darwin') {
             app.dock.setBadge('•')
           }
