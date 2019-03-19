@@ -41,7 +41,6 @@ const Mentions = {
       state.unreadMentions = []
     },
     updateToot (state, message) {
-      console.log(message)
       state.mentions = state.mentions.map((mention) => {
         if (mention.type === 'mention' && mention.status.id === message.id) {
           const status = {
