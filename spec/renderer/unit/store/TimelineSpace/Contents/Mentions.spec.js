@@ -76,7 +76,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
         }
       })
       it('should be inserted', () => {
-        Mentions.mutations.insertMentions(state, [ -1, -2, -3, -4])
+        Mentions.mutations.insertMentions(state, [-1, -2, -3, -4])
         expect(state.mentions).toEqual([5, 4, 3, 2, 1, -1, -2, -3, -4])
       })
     })
