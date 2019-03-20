@@ -189,9 +189,9 @@ export default {
       if (!this.newTootModal) {
         return
       }
-      if (this.status.length <= 0 || this.status.length >= 500) {
+      if (this.status.length < 1 || this.status.length > this.tootMax) {
         return this.$message({
-          message: this.$t('validation.new_toot.toot_length', { min: 1, max: 500 }),
+          message: this.$t('validation.new_toot.toot_length', { min: 1, max: this.tootMax }),
           type: 'error'
         })
       }
