@@ -6,6 +6,7 @@ const SideMenu = {
   state: {
     unreadHomeTimeline: false,
     unreadNotifications: false,
+    unreadMentions: false,
     unreadLocalTimeline: false,
     unreadDirectMessagesTimeline: false,
     unreadPublicTimeline: false,
@@ -19,6 +20,9 @@ const SideMenu = {
     },
     changeUnreadNotifications (state, value) {
       state.unreadNotifications = value
+    },
+    changeUnreadMentions (state, value) {
+      state.unreadMentions = value
     },
     changeUnreadLocalTimeline (state, value) {
       state.unreadLocalTimeline = value
@@ -55,6 +59,7 @@ const SideMenu = {
     clearUnread ({ commit }) {
       commit('changeUnreadHomeTimeline', false)
       commit('changeUnreadNotifications', false)
+      commit('changeUnreadMentions', false)
       commit('changeUnreadLocalTimeline', false)
       commit('changeUnreadDirectMessagesTimeline', false)
       commit('changeUnreadPublicTimeline', false)

@@ -83,6 +83,11 @@ export default new Router({
               component: require('@/components/TimelineSpace/Contents/Notifications').default
             },
             {
+              path: 'mentions',
+              name: 'mentions',
+              component: require('@/components/TimelineSpace/Contents/Mentions').default
+            },
+            {
               path: 'favourites',
               name: 'favourites',
               component: require('@/components/TimelineSpace/Contents/Favourites').default

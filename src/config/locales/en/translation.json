@@ -47,6 +47,7 @@
     "expand": "Expand",
     "home": "Home",
     "notification": "Notification",
+    "mention": "Mention",
     "direct": "Direct messages",
     "favourite": "Favourite",
     "local": "Local timeline",
@@ -58,6 +59,7 @@
   "header_menu": {
     "home": "Home",
     "notification": "Notification",
+    "mention": "Mention",
     "favourite": "Favourite",
     "local": "Local timeline",
     "public": "Public timeline",

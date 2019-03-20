@@ -178,6 +178,11 @@ async function createWindow () {
   }
 
   /**
+   * Enable accessibility
+   */
+  app.setAccessibilitySupportEnabled(true)
+
+  /**
    * Initial window options
    */
   let mainWindowState = windowStateKeeper({
@@ -222,9 +227,6 @@ async function createWindow () {
 
 // Do not lower the rendering priority of Chromium when background
 app.commandLine.appendSwitch('disable-renderer-backgrounding')
-
-// Enable accessibility
-app.setAccessibilitySupportEnabled(true)
 
 app.on('ready', createWindow)
 
@@ -411,6 +413,11 @@ ipcMain.on('start-user-streaming', (event, obj) => {
         },
         (notification) => {
           event.sender.send('notification-start-user-streaming', notification)
+          // Does not exist a endpoint for only mention. And mention is a part of notification.
+          // So we have to get mention from notification.
+          if (notification.type === 'mention') {
+            event.sender.send('mention-start-user-streaming', notification)
+          }
           if (process.platform === 'darwin') {
             app.dock.setBadge('•')
           }

@@ -52,15 +52,21 @@
         <el-badge is-dot :hidden="!unreadNotifications">
         </el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/favourites`" role="menuitem" :title="$t('side_menu.favourite')">
-        <icon name="star"></icon>
-        <span>{{ $t("side_menu.favourite") }}</span>
+      <el-menu-item :index="`/${id()}/mentions`" role="menuitem" :title="$t('side_menu.mention')">
+        <icon name="at"></icon>
+        <span>{{ $t("side_menu.mention") }}</span>
+        <el-badge is-dot :hidden="!unreadMentions">
+        </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/direct-messages`" role="menuitem">
         <icon name="envelope"></icon>
         <span>{{ $t("side_menu.direct") }}</span>
         <el-badge is-dot :hidden="!unreadDirectMessagesTimeline">
         </el-badge>
+      </el-menu-item>
+      <el-menu-item :index="`/${id()}/favourites`" role="menuitem" :title="$t('side_menu.favourite')">
+        <icon name="star"></icon>
+        <span>{{ $t("side_menu.favourite") }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/local`" role="menuitem" :title="$t('side_menu.local')">
         <icon name="users"></icon>
@@ -118,6 +124,7 @@ export default {
     ...mapState('TimelineSpace/SideMenu', {
       unreadHomeTimeline: state => state.unreadHomeTimeline,
       unreadNotifications: state => state.unreadNotifications,
+      unreadMentions: state => state.unreadMentions,
       unreadLocalTimeline: state => state.unreadLocalTimeline,
       unreadDirectMessagesTimeline: state => state.unreadDirectMessagesTimeline,
       unreadPublicTimeline: state => state.unreadPublicTimeline,
