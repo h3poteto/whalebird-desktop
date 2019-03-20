@@ -1,10 +1,10 @@
 <template>
-<div id="notifications" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
+<div id="mentions" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
   <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
   <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
   </div>
   <transition-group name="timeline" tag="div">
-    <div class="notifications" v-for="message in notifications" v-bind:key="message.id">
+    <div class="mentions" v-for="message in mentions" :key="message.id">
       <notification
         :message="message"
         :filter="filter"
@@ -36,7 +36,7 @@ import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
 export default {
-  name: 'notifications',
+  name: 'mentions',
   components: { Notification },
   mixins: [reloadable],
   data () {
@@ -45,18 +45,26 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      backgroundColor: state => state.App.theme.background_color,
-      notifications: state => state.TimelineSpace.Contents.Notifications.notifications,
-      lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Notifications.heading,
-      unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications,
-      filter: state => state.TimelineSpace.Contents.Notifications.filter
+    ...mapState('App', {
+      backgroundColor: state => state.theme.background_color
+    }),
+    ...mapState('TimelineSpace/HeaderMenu', {
+      startReload: state => state.reload
+    }),
+    ...mapState('TimelineSpace/Contents/SideBar', {
+      openSideBar: state => state.openSideBar
+    }),
+    ...mapState('TimelineSpace/Contents/Mentions', {
+      lazyLoading: state => state.lazyLoading,
+      heading: state => state.heading,
+      unread: state => state.unreadMentions,
+      filter: state => state.filter
     }),
     ...mapGetters('TimelineSpace/Modals', [
       'modalOpened'
+    ]),
+    ...mapGetters('TimelineSpace/Contents/Mentions', [
+      'mentions'
     ]),
     shortcutEnabled: function () {
       if (this.modalOpened) {
@@ -65,16 +73,14 @@ export default {
       if (!this.focusedId) {
         return true
       }
-      // Sometimes notifications are deleted, so perhaps focused notification don't exist.
-      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      // Sometimes toots are deleted, so perhaps focused toot don't exist.
+      const currentIndex = this.mentions.findIndex(toot => this.focusedId === toot.id)
       return currentIndex === -1
     }
   },
   mounted () {
-    this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
-    this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
-
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
@@ -85,17 +91,17 @@ export default {
     })
   },
   beforeUpdate () {
-    if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications) {
-      this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
+    if (this.$store.state.TimelineSpace.SideMenu.unreadMentions && this.heading) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
     }
   },
   beforeDestroy () {
     Event.$off('focus-timeline')
   },
   destroyed () {
-    this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
-    this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
-    this.$store.commit('TimelineSpace/Contents/Notifications/archiveNotifications')
+    this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
+    this.$store.commit('TimelineSpace/Contents/Mentions/archiveMentions')
     if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
       document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
       document.getElementById('scrollable').scrollTop = 0
@@ -111,46 +117,44 @@ export default {
       }
     },
     focusedId: function (newState, oldState) {
-      if (newState >= 0 && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
+      if (newState && this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
       } else if (newState === null && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
-        this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
+        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
       }
     }
   },
   methods: {
     onScroll (event) {
-      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('notifications').clientHeight - 10) && !this.lazyloading) {
-        this.$store.dispatch('TimelineSpace/Contents/Notifications/lazyFetchNotifications', this.notifications[this.notifications.length - 1])
+      // for lazyLoading
+      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('mentions').clientHeight - 10) && !this.lazyloading) {
+        this.$store.dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', this.mentions[this.mentions.length - 1])
           .catch(() => {
             this.$message({
-              message: this.$t('message.notification_fetch_error'),
+              message: this.$t('message.timeline_fetch_error'),
               type: 'error'
             })
           })
       }
       // for unread control
       if ((event.target.scrollTop > 10) && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
+        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
       } else if ((event.target.scrollTop <= 10) && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
-        this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
+        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
+        this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
       }
     },
     async reload () {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
         await this.reloadable()
-        this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
     },
     updateToot (message) {
-      this.$store.commit('TimelineSpace/Contents/Notifications/updateToot', message)
+      this.$store.commit('TimelineSpace/Contents/Mentions/updateToot', message)
     },
     upper () {
       scrollTop(
@@ -160,23 +164,23 @@ export default {
       this.focusedId = null
     },
     focusNext () {
-      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      const currentIndex = this.mentions.findIndex(toot => this.focusedId === toot.id)
       if (currentIndex === -1) {
-        this.focusedId = this.notifications[0].id
-      } else if (currentIndex < this.notifications.length) {
-        this.focusedId = this.notifications[currentIndex + 1].id
+        this.focusedId = this.mentions[0].id
+      } else if (currentIndex < this.mentions.length) {
+        this.focusedId = this.mentions[currentIndex + 1].id
       }
     },
     focusPrev () {
-      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      const currentIndex = this.mentions.findIndex(toot => this.focusedId === toot.id)
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
-        this.focusedId = this.notifications[currentIndex - 1].id
+        this.focusedId = this.mentions[currentIndex - 1].id
       }
     },
-    focusNotification (notification) {
-      this.focusedId = notification.id
+    focusNotification (message) {
+      this.focusedId = message.id
     },
     focusSidebar () {
       Event.$emit('focus-sidebar')
@@ -184,7 +188,7 @@ export default {
     handleKey (event) {
       switch (event.srcKey) {
         case 'next':
-          this.focusedId = this.notifications[0].id
+          this.focusedId = this.mentions[0].id
           break
       }
     }
@@ -193,13 +197,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#notifications {
+#mentions {
   .unread {
     position: fixed;
     right: 24px;
     top: 48px;
     background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
+    color: #fff;
     padding: 4px 8px;
     border-radius: 0 0 2px 2px;
 

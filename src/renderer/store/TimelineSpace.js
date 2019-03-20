@@ -189,6 +189,7 @@ const TimelineSpace = {
     async fetchContentsTimelines ({ dispatch, state }, account) {
       await dispatch('TimelineSpace/Contents/Home/fetchTimeline', account, { root: true })
       await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', account, { root: true })
+      await dispatch('TimelineSpace/Contents/Mentions/fetchMentions', {}, { root: true })
       if (state.unreadNotification.direct) {
         await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
       }
@@ -205,6 +206,7 @@ const TimelineSpace = {
       commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
       commit('TimelineSpace/Contents/Notifications/clearNotifications', {}, { root: true })
       commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
+      commit('TimelineSpace/Contents/Mentions/clearMentions', {}, { root: true })
     },
     bindStreamings ({ dispatch, state }, account) {
       dispatch('bindUserStreaming', account)
@@ -266,6 +268,13 @@ const TimelineSpace = {
           commit('TimelineSpace/Contents/Notifications/archiveNotifications', null, { root: true })
         }
         commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
+      })
+      ipcRenderer.on('mention-start-user-streaming', (event, mention) => {
+        commit('TimelineSpace/Contents/Mentions/appendMentions', mention, { root: true })
+        if (rootState.TimelineSpace.Contents.Mentions.heading && Math.random() > 0.8) {
+          commit('TimelineSpace/Contents/Mentions/archiveMentions', null, { root: true })
+        }
+        commit('TimelineSpace/SideMenu/changeUnreadMentions', true, { root: true })
       })
     },
     startUserStreaming ({ state }) {
