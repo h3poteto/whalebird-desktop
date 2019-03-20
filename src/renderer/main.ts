@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en'
@@ -17,6 +16,15 @@ import router from './router'
 import store from './store'
 import i18next from '~/src/config/i18n'
 
+declare function require(x: string): any
+
+declare var process: {
+  env: {
+    NODE_ENV: string,
+    IS_WEB: boolean
+  }
+}
+
 Vue.use(ElementUI, { locale })
 Vue.use(shortkey)
 Vue.use(VueI18Next)
@@ -26,7 +34,6 @@ Vue.component('popper', Popper)
 sync(store, router)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 const i18n = new VueI18Next(i18next)

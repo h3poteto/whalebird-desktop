@@ -152,6 +152,7 @@
   },
   "devDependencies": {
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.2.0",
+    "@types/node": "^11.11.4",
     "@vue/test-utils": "^1.0.0-beta.28",
     "ajv": "^6.6.1",
     "babel-core": "^6.26.3",

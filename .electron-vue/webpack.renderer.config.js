@@ -65,13 +65,13 @@ let rendererConfig = {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
-        options: {
-          appendTsSuffixTo: [/\.vue$/]
-        },
-        include: [
-          path.resolve('../node_modules/vue-awesome')
-        ]
+        // include: path.join(__dirname , '../node_modules/vue-awesome'),
+        use: {
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/]
+          }
+        }
       },
       {
         test: /\.js$/,
@@ -89,6 +89,8 @@ let rendererConfig = {
           options: {
             extractCSS: process.env.NODE_ENV === 'production',
             loaders: {
+              js: 'ts-loader',
+              ts: 'ts-loader',
               sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
               scss: 'vue-style-loader!css-loader!sass-loader',
               less: 'vue-style-loader!css-loader!less-loader'
