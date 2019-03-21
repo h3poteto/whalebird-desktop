@@ -36,7 +36,7 @@ sync(store, router)
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 
-const i18n = new VueI18Next(i18next)
+const i18n: VueI18Next = new VueI18Next(i18next)
 
 /* eslint-disable no-new */
 new Vue({

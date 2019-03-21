@@ -65,7 +65,6 @@ let rendererConfig = {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        // include: path.join(__dirname , '../node_modules/vue-awesome'),
         use: {
           loader: 'ts-loader',
           options: {
@@ -157,11 +156,12 @@ let rendererConfig = {
   },
   resolve: {
     alias: {
+      // Same as tsconfig.json
       '@': path.join(__dirname, '../src/renderer'),
       '~': path.join(__dirname, '../'),
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.js', '.vue', '.json', '.css', '.node', '.ts']
+    extensions: ['.ts', '.js', '.vue', '.json', '.css', '.node']
   },
   target: 'electron-renderer'
 }
