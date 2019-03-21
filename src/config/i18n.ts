@@ -1,8 +1,9 @@
-import path from 'path'
-import i18next from 'i18next'
-import Backend from 'i18next-sync-fs-backend'
+import * as path from 'path'
+import * as i18next from 'i18next'
+import * as Backend from 'i18next-sync-fs-backend'
+import { InitOptions } from 'i18next'
 
-const options = {
+const options: InitOptions = {
   initImmediate: false,
   lng: 'en',
   backend: {
