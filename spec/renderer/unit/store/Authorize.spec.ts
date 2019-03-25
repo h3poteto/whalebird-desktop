@@ -1,11 +1,12 @@
 import Authorize from '@/store/Authorize'
 import { ipcMain } from '~/spec/mock/electron'
 
-describe('Authorize', () => {
+describe.skip('Authorize', () => {
+  // TODO: integration
   describe('actions', () => {
     describe('error', () => {
       it('should return error', async () => {
-        ipcMain.once('get-access-token', (event, code) => {
+        ipcMain.once('get-access-token', (event, _) => {
           event.sender.send('error-get-access-token', new AccessTokenError())
         })
         const commitMock = jest.fn()
@@ -17,7 +18,7 @@ describe('Authorize', () => {
     })
     describe('success', () => {
       it('should return id', async () => {
-        ipcMain.once('get-access-token', (event, code) => {
+        ipcMain.once('get-access-token', (event, _) => {
           event.sender.send('response-get-access-token', 'abcd')
         })
         const commitMock = jest.fn()
@@ -28,4 +29,4 @@ describe('Authorize', () => {
   })
 })
 
-class AccessTokenError extends Error {}
+class AccessTokenError extends Error { }

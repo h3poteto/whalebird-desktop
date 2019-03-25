@@ -89,5 +89,5 @@ describe('Preferences/Appearance', () => {
   })
 })
 
-class LoadAppearanceError extends Error {}
-class ListFontsError extends Error {}
+class LoadAppearanceError extends Error { }
+class ListFontsError extends Error { }
