@@ -129,8 +129,8 @@ describe('Preferences/Account', () => {
   })
 })
 
-class LoadAccountsError extends Error {}
-class RemoveAccountError extends Error {}
-class ForwardAccountError extends Error {}
-class BackwardAccountError extends Error {}
-class RemoveAllAccountsError extends Error {}
+class LoadAccountsError extends Error { }
+class RemoveAccountError extends Error { }
+class ForwardAccountError extends Error { }
+class BackwardAccountError extends Error { }
+class RemoveAllAccountsError extends Error { }
