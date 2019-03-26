@@ -1,15 +1,10 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
-import axios, { AxiosStatic } from 'axios'
+import axios from 'axios'
 import Login from '@/store/Login'
 
 jest.mock('axios')
-interface AxiosMock extends AxiosStatic {
-  mockResolvedValue: Function
-  mockRejectedValue: Function
-  mockImplementation: Function
-}
 
 const state = () => {
   return {
@@ -72,18 +67,18 @@ describe('Login', () => {
     })
   })
 
-  // TODO: Could not mock axios for finally
-  describe.skip('confirmInstance', () => {
+  describe('confirmInstance', () => {
     it('should change instance', async () => {
       // Provide Promise.resolve for finally keywrod.
       // https://github.com/facebook/jest/issues/6552
-      const mockedAxios = axios as AxiosMock
+      // https://github.com/kulshekhar/ts-jest/issues/828
+      const mockedAxios = axios as any
       const res: Promise<object> = new Promise<object>((resolve, _) => {
         resolve({
           data: 'test'
         })
       })
-      mockedAxios.mockImplementation(() => res)
+      mockedAxios.get.mockImplementation(() => res)
       const data = await store.dispatch('Login/confirmInstance', 'pleroma.io')
       expect(data).toEqual('test')
       expect(store.state.Login.selectedInstance).toEqual('pleroma.io')

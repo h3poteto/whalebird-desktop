@@ -5,7 +5,6 @@ import { ipcMain } from '~/spec/mock/electron'
 import TimelineSpace from '~/src/renderer/store/TimelineSpace'
 import unreadSettings from '~/src/constants/unreadNotification'
 
-jest.genMockFromModule('megalodon')
 jest.mock('megalodon')
 
 const state = () => {
@@ -144,10 +143,12 @@ describe('TimelineSpace', () => {
   describe('detectPleroma', () => {
     describe('API is pleroma', () => {
       it('should be detected', async () => {
-        const mockResponse = {
+        // const mockResponse = {
+        //   version: 'Pleroma v0.9.9'
+        // }
+        (Mastodon.get as any).mockResolvedValue({
           version: 'Pleroma v0.9.9'
-        }
-        Mastodon.get.mockResolvedValue(mockResponse)
+        })
         await store.dispatch('TimelineSpace/detectPleroma')
         expect(store.state.TimelineSpace.pleroma).toEqual(true)
         expect(store.state.TimelineSpace.useWebsocket).toEqual(true)
@@ -155,10 +156,9 @@ describe('TimelineSpace', () => {
     })
     describe('API is not pleroma', () => {
       it('should be detected', async () => {
-        const mockResponse = {
+        (Mastodon.get as any).mockResolvedValue({
           version: '2.7.0'
-        }
-        Mastodon.get.mockResolvedValue(mockResponse)
+        })
         await store.dispatch('TimelineSpace/detectPleroma')
         expect(store.state.TimelineSpace.pleroma).toEqual(false)
         expect(store.state.TimelineSpace.useWebsocket).toEqual(false)
@@ -168,7 +168,7 @@ describe('TimelineSpace', () => {
 
   describe('fetchEmojis', () => {
     it('should be updated', async () => {
-      const mockResponse = [
+      (Mastodon.get as any).mockResolvedValue([
         {
           shortcode: 'emacs',
           url: 'http://example.com/emacs'
@@ -177,8 +177,7 @@ describe('TimelineSpace', () => {
           shortcode: 'ruby',
           url: 'http://example.com/ruby'
         }
-      ]
-      Mastodon.get.mockResolvedValue(mockResponse)
+      ])
       await store.dispatch('TimelineSpace/fetchEmojis', {})
       expect(store.state.TimelineSpace.emojis).toEqual([
         {
@@ -195,10 +194,9 @@ describe('TimelineSpace', () => {
 
   describe('fetchInstance', () => {
     it('should be updated', async () => {
-      const mockResponse = {
+      (Mastodon.get as any).mockResolvedValue({
         max_toot_chars: 5000
-      }
-      Mastodon.get.mockResolvedValue(mockResponse)
+      })
       await store.dispatch('TimelineSpace/fetchInstance', {})
       expect(store.state.TimelineSpace.tootMax).toEqual(5000)
     })
