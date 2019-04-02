@@ -39,7 +39,7 @@
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix",
-    "spec": "NODE_ENV=test jest -u"
+    "spec": "NODE_ENV=test jest -u --maxWorkers=3"
   },
   "build": {
     "productName": "Whalebird",
@@ -115,7 +115,9 @@
       "^.+\\.(js|jsx)$": "babel-jest",
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
-    "setupFiles": ["core-js"],
+    "setupFiles": [
+      "core-js"
+    ],
     "globals": {
       "ts-jest": {
         "tsConfig": "tsconfig.json"
@@ -172,6 +174,7 @@
     "@types/i18next": "^12.1.0",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.11.4",
+    "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@vue/test-utils": "^1.0.0-beta.28",
     "ajv": "^6.6.1",
     "babel-core": "^6.26.3",
