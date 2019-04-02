@@ -7,7 +7,7 @@ linter:
       - spec
     options:
       config: '.eslintrc.js'
-      ext: '.js,.vue'
+      ext: '.js,.vue,.ts'
       ignore-path: .eslintignore
 
   stylelint:
