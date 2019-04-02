@@ -1,10 +1,33 @@
-import Mastodon from 'megalodon'
+import { Response, Account } from 'megalodon'
+import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import AddListMember from '~/src/renderer/store/TimelineSpace/Modals/AddListMember'
 
-jest.genMockFromModule('megalodon')
 jest.mock('megalodon')
+
+const account: Account = {
+  id: 1,
+  username: "h3poteto",
+  acct: "h3poteto@pleroma.io",
+  display_name: "h3poteto",
+  locked: false,
+  created_at: "2019-03-26T21:30:32",
+  followers_count: 10,
+  following_count: 10,
+  statuses_count: 100,
+  note: "engineer",
+  url: "https://pleroma.io",
+  avatar: "",
+  avatar_static: "",
+  header: "",
+  header_static: "",
+  emojis: [],
+  moved: null,
+  fields: null,
+  bot: false,
+}
+
 
 const state = () => {
   return {
@@ -45,7 +68,7 @@ describe('AddListMember', () => {
         TimelineSpace: timelineState
       }
     })
-    Mastodon.mockClear()
+    mockedMegalodon.mockClear()
   })
 
   describe('changeModal', () => {
@@ -59,22 +82,24 @@ describe('AddListMember', () => {
     it('should be searched', async () => {
       const mockClient = {
         get: () => {
-          return new Promise((resolve, reject) => {
-            resolve({
+          return new Promise<Response<Account[]>>((resolve, _) => {
+            const res: Response<Account[]> = {
               data: [
-                { id: 1, name: 'h3poteto' },
-                { id: 2, name: 'akito19' }
-              ]
-            })
+                account
+              ],
+              status: 200,
+              statusText: 'OK',
+              headers: {}
+            }
+            resolve(res)
           })
         }
       }
 
-      Mastodon.mockImplementation(() => mockClient)
+      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('AddListMember/search', 'akira')
       expect(store.state.AddListMember.accounts).toEqual([
-        { id: 1, name: 'h3poteto' },
-        { id: 2, name: 'akito19' }
+        account
       ])
     })
   })
@@ -83,17 +108,21 @@ describe('AddListMember', () => {
     it('should be added a member to the list', async () => {
       const mockClient = {
         post: () => {
-          return new Promise((resolve, reject) => {
-            resolve({
-              data: true
-            })
+          return new Promise<Response>((resolve, _) => {
+            const res: Response = {
+              data: {},
+              status: 200,
+              statusText: 'OK',
+              headers: {}
+            }
+            resolve(res)
           })
         }
       }
 
-      Mastodon.mockImplementation(() => mockClient)
+      mockedMegalodon.mockImplementation(() => mockClient)
       const result = await store.dispatch('AddListMember/add', 'akira')
-      expect(result.data).toEqual(true)
+      expect(result.data).toEqual({})
     })
   })
 })
