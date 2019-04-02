@@ -1,10 +1,15 @@
-import Mastodon from 'megalodon'
+import { Response, List } from 'megalodon'
+import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import HeaderMenu from '~/src/renderer/store/TimelineSpace/HeaderMenu'
 
-jest.genMockFromModule('megalodon')
 jest.mock('megalodon')
+
+const list: List = {
+  id: 1,
+  title: "example"
+}
 
 const state = () => {
   return {
@@ -45,29 +50,29 @@ describe('HeaderMenu', () => {
         TimelineSpace: timelineState
       }
     })
-    Mastodon.mockClear()
+    mockedMegalodon.mockClear()
   })
 
   describe('fetchLists', () => {
     it('should be updated', async () => {
       const mockClient = {
-        get: () => {
-          return new Promise((resolve, reject) => {
-            resolve({
-              data: {
-                title: 'list1'
-              }
-            })
+        get: (_path: string, _params: object) => {
+          return new Promise<Response<List>>((resolve, _) => {
+            const res: Response<List> = {
+              data: list,
+              status: 200,
+              statusText: "OK",
+              headers: {}
+            }
+            resolve(res)
           })
         }
       }
 
-      Mastodon.mockImplementation(() => mockClient)
-      const list = await store.dispatch('HeaderMenu/fetchList', 1)
-      expect(list).toEqual({
-        title: 'list1'
-      })
-      expect(store.state.HeaderMenu.title).toEqual('#list1')
+      mockedMegalodon.mockImplementation(() => mockClient)
+      const l = await store.dispatch('HeaderMenu/fetchList', list.id)
+      expect(l).toEqual(list)
+      expect(store.state.HeaderMenu.title).toEqual(`#${list.title}`)
     })
   })
 })

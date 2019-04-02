@@ -139,8 +139,8 @@ describe('Home', () => {
     it('should be updated', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
-          return new Promise<Response<[Status]>>((resolve, _) => {
-            const res: Response<[Status]> = {
+          return new Promise<Response<Status[]>>((resolve, _) => {
+            const res: Response<Status[]> = {
               data: [
                 status1
               ],
