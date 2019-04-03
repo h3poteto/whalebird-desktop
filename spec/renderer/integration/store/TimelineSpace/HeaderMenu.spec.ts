@@ -8,7 +8,7 @@ jest.mock('megalodon')
 
 const list: List = {
   id: 1,
-  title: "example"
+  title: 'example'
 }
 
 const state = () => {
@@ -57,11 +57,11 @@ describe('HeaderMenu', () => {
     it('should be updated', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
-          return new Promise<Response<List>>((resolve, _) => {
+          return new Promise<Response<List>>(resolve => {
             const res: Response<List> = {
               data: list,
               status: 200,
-              statusText: "OK",
+              statusText: 'OK',
               headers: {}
             }
             resolve(res)

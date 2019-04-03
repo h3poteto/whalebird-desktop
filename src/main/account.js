@@ -142,7 +142,7 @@ export default class Account {
         },
         { $set: Object.assign(obj, { _id: id }) },
         { multi: true },
-        (err, numReplaced) => {
+        (err, _numReplaced) => {
           if (err) return reject(err)
           this.db.findOne(
             {

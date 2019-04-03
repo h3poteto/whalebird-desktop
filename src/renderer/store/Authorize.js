@@ -5,7 +5,7 @@ const Authorize = {
   state: {},
   mutations: {},
   actions: {
-    submit ({ commit }, code) {
+    submit (_, code) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('get-access-token', code)
         ipcRenderer.once('response-get-access-token', (event, id) => {

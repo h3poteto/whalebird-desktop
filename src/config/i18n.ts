@@ -1,7 +1,6 @@
 import * as path from 'path'
-import i18next from 'i18next'
+import i18next, { InitOptions } from 'i18next'
 import Backend from 'i18next-sync-fs-backend'
-import { InitOptions } from 'i18next'
 
 const options: InitOptions = {
   initImmediate: false,

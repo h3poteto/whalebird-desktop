@@ -59,7 +59,7 @@ export default {
     }
   },
   watch: {
-    channel: function (newChannel, oldChannel) {
+    channel: function (_newChannel, _oldChannel) {
       this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', this.filterChannelForm()[0])
     },
     jumpModal: function (newModal, oldModal) {

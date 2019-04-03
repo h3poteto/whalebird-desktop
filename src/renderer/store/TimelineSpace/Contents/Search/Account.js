@@ -11,7 +11,7 @@ const Account = {
     }
   },
   actions: {
-    search ({ state, commit, rootState }, query) {
+    search ({ commit, rootState }, query) {
       commit('TimelineSpace/Contents/Search/changeLoading', true, { root: true })
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,

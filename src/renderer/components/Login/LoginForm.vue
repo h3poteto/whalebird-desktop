@@ -111,7 +111,7 @@ export default {
         }
       })
     },
-    handleKey (event) {
+    handleKey (_event) {
       if (!this.selectedInstance) {
         this.confirm('loginForm')
       } else {

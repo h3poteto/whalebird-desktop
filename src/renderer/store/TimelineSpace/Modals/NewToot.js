@@ -74,7 +74,7 @@ const NewToot = {
     }
   },
   actions: {
-    async updateMedia ({ state, commit, rootState }, media) {
+    async updateMedia ({ rootState }, media) {
       if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
         throw new AuthenticationError()
       }
@@ -83,7 +83,7 @@ const NewToot = {
         rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return Promise.all(
-        Object.keys(media).map(async (id, index) => {
+        Object.keys(media).map(async id => {
           return client.put(`/media/${id}`, { description: media[id] })
         }
         )).catch(err => {
@@ -112,7 +112,7 @@ const NewToot = {
           commit('changeBlockSubmit', false)
         })
     },
-    openReply ({ dispatch, commit, rootState }, message) {
+    openReply ({ commit, rootState }, message) {
       commit('setReplyTo', message)
       const mentionAccounts = [message.account.acct].concat(message.mentions.map(a => a.acct))
         .filter((a, i, self) => self.indexOf(a) === i)
@@ -121,7 +121,7 @@ const NewToot = {
       commit('updateInitialSpoiler', message.spoiler_text)
       commit('changeModal', true)
       let value = Visibility.Public.value
-      Object.keys(Visibility).map((key, index) => {
+      Object.keys(Visibility).map(key => {
         const target = Visibility[key]
         if (target.key === message.visibility) {
           value = target.value
@@ -129,7 +129,7 @@ const NewToot = {
       })
       commit('changeVisibilityValue', value)
     },
-    openModal ({ dispatch, commit, state, rootState }) {
+    openModal ({ dispatch, commit, state }) {
       if (!state.replyToMessage && state.pinedHashtag) {
         commit('updateInitialStatus', state.hashtags.map(t => ` #${t.name}`).join())
       }
@@ -146,7 +146,7 @@ const NewToot = {
       commit('changeSensitive', false)
       commit('changeVisibilityValue', Visibility.Public.value)
     },
-    uploadImage ({ state, commit, rootState }, image) {
+    uploadImage ({ commit, rootState }, image) {
       commit('changeBlockSubmit', true)
       if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
         throw new AuthenticationError()
