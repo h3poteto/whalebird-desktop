@@ -40,7 +40,7 @@ describe('Login', () => {
   describe('fetchLogin', () => {
     describe('error', () => {
       it('should return error', async () => {
-        ipcMain.once('get-auth-url', (event, _) => {
+        ipcMain.once('get-auth-url', event => {
           event.sender.send('error-get-auth-url', new Error())
         })
         await store.dispatch('Login/fetchLogin', 'pleroma.io')
@@ -51,7 +51,7 @@ describe('Login', () => {
     })
     describe('success', () => {
       it('should return url', async () => {
-        ipcMain.once('get-auth-url', (event, _) => {
+        ipcMain.once('get-auth-url', event => {
           event.sender.send('response-get-auth-url', 'http://example.com/auth')
         })
         const url = await store.dispatch('Login/fetchLogin', 'pleroma.io')
@@ -73,7 +73,7 @@ describe('Login', () => {
       // https://github.com/facebook/jest/issues/6552
       // https://github.com/kulshekhar/ts-jest/issues/828
       const mockedAxios = axios as any
-      const res: Promise<object> = new Promise<object>((resolve, _) => {
+      const res: Promise<object> = new Promise<object>(resolve => {
         resolve({
           data: 'test'
         })
@@ -85,4 +85,3 @@ describe('Login', () => {
     })
   })
 })
-

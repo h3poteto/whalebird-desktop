@@ -8,26 +8,25 @@ jest.mock('megalodon')
 
 const account: Account = {
   id: 1,
-  username: "h3poteto",
-  acct: "h3poteto@pleroma.io",
-  display_name: "h3poteto",
+  username: 'h3poteto',
+  acct: 'h3poteto@pleroma.io',
+  display_name: 'h3poteto',
   locked: false,
-  created_at: "2019-03-26T21:30:32",
+  created_at: '2019-03-26T21:30:32',
   followers_count: 10,
   following_count: 10,
   statuses_count: 100,
-  note: "engineer",
-  url: "https://pleroma.io",
-  avatar: "",
-  avatar_static: "",
-  header: "",
-  header_static: "",
+  note: 'engineer',
+  url: 'https://pleroma.io',
+  avatar: '',
+  avatar_static: '',
+  header: '',
+  header_static: '',
   emojis: [],
   moved: null,
   fields: null,
-  bot: false,
+  bot: false
 }
-
 
 const state = () => {
   return {
@@ -82,7 +81,7 @@ describe('AddListMember', () => {
     it('should be searched', async () => {
       const mockClient = {
         get: () => {
-          return new Promise<Response<Account[]>>((resolve, _) => {
+          return new Promise<Response<Account[]>>(resolve => {
             const res: Response<Account[]> = {
               data: [
                 account
@@ -108,7 +107,7 @@ describe('AddListMember', () => {
     it('should be added a member to the list', async () => {
       const mockClient = {
         post: () => {
-          return new Promise<Response>((resolve, _) => {
+          return new Promise<Response>(resolve => {
             const res: Response = {
               data: {},
               status: 200,

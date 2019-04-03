@@ -10,7 +10,7 @@ const Hashtag = {
   },
   actions: {
     saveTag ({ dispatch }, tag) {
-      ipcRenderer.once('response-save-hashtag', (event, _) => {
+      ipcRenderer.once('response-save-hashtag', () => {
         dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
       })
       ipcRenderer.send('save-hashtag', tag)

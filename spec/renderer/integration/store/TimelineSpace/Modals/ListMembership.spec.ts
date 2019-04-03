@@ -62,7 +62,7 @@ describe('ListMembership', () => {
     it('should be changed', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
-          return new Promise<Response<List[]>>((resolve, _) => {
+          return new Promise<Response<List[]>>(resolve => {
             const res: Response<List[]> = {
               data: [
                 list1,
@@ -88,7 +88,7 @@ describe('ListMembership', () => {
     it('should be changed', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
-          return new Promise<Response<List[]>>((resolve, _) => {
+          return new Promise<Response<List[]>>(resolve => {
             const res: Response<List[]> = {
               data: [
                 list1,
@@ -129,7 +129,7 @@ describe('ListMembership', () => {
     it('should be changed', async () => {
       const mockClient = {
         del: (_path: string, _params: object) => {
-          return new Promise<Response>((resolve, _) => {
+          return new Promise<Response>(resolve => {
             const res: Response = {
               data: {},
               status: 200,
@@ -140,7 +140,7 @@ describe('ListMembership', () => {
           })
         },
         post: (_path: string, _params: object) => {
-          return new Promise<Response>((resolve, _) => {
+          return new Promise<Response>(resolve => {
             const res: Response = {
               data: {},
               status: 200,

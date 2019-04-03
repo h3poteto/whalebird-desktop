@@ -9,12 +9,12 @@ jest.mock('megalodon')
 
 const list1: List = {
   id: 1,
-  title: "example1"
+  title: 'example1'
 }
 
 const list2: List = {
   id: 2,
-  title: "example2"
+  title: 'example2'
 }
 
 const state = () => {
@@ -58,7 +58,7 @@ describe('SideMenu', () => {
     it('should be updated', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
-          return new Promise<Response<List[]>>((resolve, _) => {
+          return new Promise<Response<List[]>>(resolve => {
             const res: Response<List[]> = {
               data: [
                 list1,

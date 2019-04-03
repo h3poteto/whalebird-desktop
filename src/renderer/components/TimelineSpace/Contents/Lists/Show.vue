@@ -105,7 +105,7 @@ export default {
           })
       }
     },
-    focusedId: function (newState, oldState) {
+    focusedId: function (newState, _oldState) {
       if (newState && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', false)
       } else if (newState === null && !this.heading) {

@@ -64,7 +64,7 @@ const Timeline = {
     }
   },
   actions: {
-    fetchTimeline ({ state, commit, rootState }, account) {
+    fetchTimeline ({ commit, rootState }, account) {
       commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
@@ -107,7 +107,7 @@ const Timeline = {
           throw err
         })
     },
-    clearTimeline ({ state, commit, rootState }) {
+    clearTimeline ({ commit }) {
       commit('updateTimeline', [])
     }
   }

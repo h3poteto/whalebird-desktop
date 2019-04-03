@@ -88,12 +88,12 @@ const TootDetail = {
     }
   },
   actions: {
-    changeToot ({ commit, dispatch }, message) {
+    changeToot ({ commit }, message) {
       commit('updateAncestors', [])
       commit('updateDescendants', [])
       commit('changeToot', message)
     },
-    fetchToot ({ state, commit, rootState }, message) {
+    fetchToot ({ commit, rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

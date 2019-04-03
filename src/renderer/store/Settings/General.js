@@ -16,7 +16,7 @@ export default {
     }
   },
   actions: {
-    fetchSettings ({ state, commit, rootState }) {
+    fetchSettings ({ commit, rootState }) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -31,7 +31,7 @@ export default {
           return res.data
         })
     },
-    setVisibility ({ state, commit, rootState }, value) {
+    setVisibility ({ commit, rootState }, value) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -49,7 +49,7 @@ export default {
           return res.data
         })
     },
-    setSensitive ({ state, commit, rootState }, value) {
+    setSensitive ({ commit, rootState }, value) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

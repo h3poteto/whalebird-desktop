@@ -435,7 +435,7 @@ ipcMain.on('start-user-streaming', (event, obj) => {
     })
 })
 
-ipcMain.on('stop-user-streaming', (event, _) => {
+ipcMain.on('stop-user-streaming', (_event, _) => {
   if (userStreaming !== null) {
     userStreaming.stop()
     userStreaming = null
@@ -475,7 +475,7 @@ ipcMain.on('start-directmessages-streaming', (event, obj) => {
     })
 })
 
-ipcMain.on('stop-directmessages-streaming', (event, _) => {
+ipcMain.on('stop-directmessages-streaming', (_event, _) => {
   if (directMessagesStreaming !== null) {
     directMessagesStreaming.stop()
     directMessagesStreaming = null
@@ -515,7 +515,7 @@ ipcMain.on('start-local-streaming', (event, obj) => {
     })
 })
 
-ipcMain.on('stop-local-streaming', (event, _) => {
+ipcMain.on('stop-local-streaming', (_event, _) => {
   if (localStreaming !== null) {
     localStreaming.stop()
     localStreaming = null
@@ -555,7 +555,7 @@ ipcMain.on('start-public-streaming', (event, obj) => {
     })
 })
 
-ipcMain.on('stop-public-streaming', (event, _) => {
+ipcMain.on('stop-public-streaming', (_event, _) => {
   if (publicStreaming !== null) {
     publicStreaming.stop()
     publicStreaming = null
@@ -595,7 +595,7 @@ ipcMain.on('start-list-streaming', (event, obj) => {
     })
 })
 
-ipcMain.on('stop-list-streaming', (event, _) => {
+ipcMain.on('stop-list-streaming', (_event, _) => {
   if (listStreaming !== null) {
     listStreaming.stop()
     listStreaming = null
@@ -635,7 +635,7 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
     })
 })
 
-ipcMain.on('stop-tag-streaming', (event, _) => {
+ipcMain.on('stop-tag-streaming', (_event, _) => {
   if (tagStreaming !== null) {
     tagStreaming.stop()
     tagStreaming = null
@@ -643,7 +643,7 @@ ipcMain.on('stop-tag-streaming', (event, _) => {
 })
 
 // sounds
-ipcMain.on('fav-rt-action-sound', (event, _) => {
+ipcMain.on('fav-rt-action-sound', (_event, _) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -657,7 +657,7 @@ ipcMain.on('fav-rt-action-sound', (event, _) => {
     .catch(err => log.error(err))
 })
 
-ipcMain.on('toot-action-sound', (event, _) => {
+ipcMain.on('toot-action-sound', (_event, _) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -825,7 +825,7 @@ ipcMain.on('update-unread-notification', (event, obj) => {
 })
 
 // Application control
-ipcMain.on('relaunch', (event, _) => {
+ipcMain.on('relaunch', (_event, _) => {
   app.relaunch()
   app.exit()
 })

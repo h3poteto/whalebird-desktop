@@ -8,36 +8,36 @@ jest.mock('megalodon')
 
 const account: Account = {
   id: 1,
-  username: "h3poteto",
-  acct: "h3poteto@pleroma.io",
-  display_name: "h3poteto",
+  username: 'h3poteto',
+  acct: 'h3poteto@pleroma.io',
+  display_name: 'h3poteto',
   locked: false,
-  created_at: "2019-03-26T21:30:32",
+  created_at: '2019-03-26T21:30:32',
   followers_count: 10,
   following_count: 10,
   statuses_count: 100,
-  note: "engineer",
-  url: "https://pleroma.io",
-  avatar: "",
-  avatar_static: "",
-  header: "",
-  header_static: "",
+  note: 'engineer',
+  url: 'https://pleroma.io',
+  avatar: '',
+  avatar_static: '',
+  header: '',
+  header_static: '',
   emojis: [],
   moved: null,
   fields: null,
-  bot: false,
+  bot: false
 }
 
 const status: Status = {
   id: 1,
-  uri: "http://example.com",
-  url: "http://example.com",
+  uri: 'http://example.com',
+  url: 'http://example.com',
   account: account,
   in_reply_to_id: null,
   in_reply_to_account_id: null,
   reblog: null,
-  content: "hoge",
-  created_at: "2019-03-26T21:40:32",
+  content: 'hoge',
+  created_at: '2019-03-26T21:40:32',
   emojis: [],
   replies_count: 0,
   reblogs_count: 0,
@@ -46,14 +46,14 @@ const status: Status = {
   favourited: null,
   muted: null,
   sensitive: false,
-  spoiler_text: "",
+  spoiler_text: '',
   visibility: 'public',
   media_attachments: [],
   mentions: [],
   tags: [],
   card: null,
   application: {
-    name: "Web"
+    name: 'Web'
   } as Application,
   language: null,
   pinned: null
@@ -140,7 +140,7 @@ describe('Mentions', () => {
     it('should be updated', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
-          return new Promise<Response<Notification[]>>((resolve, _) => {
+          return new Promise<Response<Notification[]>>(resolve => {
             const res: Response<Notification[]> = {
               data: [
                 mention,
@@ -212,7 +212,7 @@ describe('Mentions', () => {
       it('should be updated', async () => {
         const mockClient = {
           get: (_path: string, _params: object) => {
-            return new Promise<Response<Notification[]>>((resolve, _) => {
+            return new Promise<Response<Notification[]>>(resolve => {
               const res: Response<Notification[]> = {
                 data: [
                   favourite,

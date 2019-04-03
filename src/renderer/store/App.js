@@ -61,7 +61,7 @@ const App = {
   },
   actions: {
     watchShortcutsEvents () {
-      ipcRenderer.on('open-preferences', (event) => {
+      ipcRenderer.on('open-preferences', () => {
         router.push('/preferences/general')
       })
     },
