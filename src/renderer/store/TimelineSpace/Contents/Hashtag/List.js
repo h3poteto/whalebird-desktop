@@ -27,7 +27,7 @@ const List = {
     },
     removeTag ({ dispatch }, tag) {
       return new Promise((resolve, reject) => {
-        ipcRenderer.once('response-remove-hashtag', (event, _) => {
+        ipcRenderer.once('response-remove-hashtag', () => {
           ipcRenderer.removeAllListeners('error-remove-hashtag')
           dispatch('listTags')
           dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })

@@ -57,7 +57,7 @@ const Mentions = {
     }
   },
   actions: {
-    fetchMentions ({ state, commit, rootState }) {
+    fetchMentions ({ commit, rootState }) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

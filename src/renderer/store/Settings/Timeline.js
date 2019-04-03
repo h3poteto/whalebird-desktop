@@ -17,13 +17,13 @@ export default {
   },
   actions: {
     loadUnreadNotification ({ commit, rootState }) {
-      return new Promise((resolve, reject) => {
-        ipcRenderer.once('response-get-unread-notification', (event, settings) => {
+      return new Promise(resolve => {
+        ipcRenderer.once('response-get-unread-notification', (_, settings) => {
           ipcRenderer.removeAllListeners('error-get-unread-notification')
           commit('updateUnreadNotification', settings)
           resolve(settings)
         })
-        ipcRenderer.once('error-get-unread-notification', (event, err) => {
+        ipcRenderer.once('error-get-unread-notification', () => {
           ipcRenderer.removeAllListeners('response-get-unread-notification')
           commit('updateUnreadNotification', {
             direct: unreadSettings.Direct.default,
@@ -40,12 +40,12 @@ export default {
         accountID: rootState.Settings.accountID
       })
       return new Promise((resolve, reject) => {
-        ipcRenderer.once('response-update-unread-notification', (event, _) => {
+        ipcRenderer.once('response-update-unread-notification', () => {
           ipcRenderer.removeAllListeners('error-update-unread-notification')
           dispatch('loadUnreadNotification')
           resolve(settings)
         })
-        ipcRenderer.once('error-update-unread-notification', (event, err) => {
+        ipcRenderer.once('error-update-unread-notification', (_, err) => {
           ipcRenderer.removeAllListeners('response-update-unread-notification')
           reject(err)
         })

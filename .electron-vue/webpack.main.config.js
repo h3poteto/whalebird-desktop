@@ -30,6 +30,11 @@ let mainConfig = {
         }
       },
       {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader'
+      },
+      {
         test: /\.js$/,
         use: 'babel-loader',
         exclude: /node_modules/
@@ -60,7 +65,7 @@ let mainConfig = {
     ])
   ],
   resolve: {
-    extensions: ['.js', '.json', '.node']
+    extensions: ['.js', '.json', '.node', '.ts']
   },
   target: 'electron-main'
 }

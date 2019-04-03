@@ -83,11 +83,11 @@ const Jump = {
       commit('changeModal', false)
       router.push({ path: `/${rootState.TimelineSpace.account._id}/${state.selectedChannel.path}` })
     },
-    jump ({ state, commit, rootState }, channel) {
+    jump ({ commit, rootState }, channel) {
       commit('changeModal', false)
       router.push({ path: `/${rootState.TimelineSpace.account._id}/${channel.path}` })
     },
-    syncListChannel ({ state, commit, rootState }) {
+    syncListChannel ({ commit, rootState }) {
       commit('updateListChannel', rootState.TimelineSpace.SideMenu.lists)
     },
     syncTagChannel ({ commit, rootState }) {

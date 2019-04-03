@@ -99,8 +99,8 @@ const Tag = {
         })
       })
     },
-    stopStreaming ({ commit }) {
-      return new Promise((resolve, reject) => {
+    stopStreaming () {
+      return new Promise(resolve => {
         ipcRenderer.removeAllListeners('error-start-tag-streaming')
         ipcRenderer.removeAllListeners('update-start-tag-streaming')
         ipcRenderer.send('stop-tag-streaming')

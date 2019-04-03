@@ -23,14 +23,14 @@ const Public = {
     updateTimeline (state, messages) {
       state.timeline = messages
     },
-    mergeTimeline (state, messages) {
+    mergeTimeline (state) {
       state.timeline = state.unreadTimeline.slice(0, 80).concat(state.timeline)
       state.unreadTimeline = []
     },
     insertTimeline (state, messages) {
       state.timeline = state.timeline.concat(messages)
     },
-    archiveTimeline (state, messages) {
+    archiveTimeline (state) {
       state.timeline = state.timeline.slice(0, 40)
     },
     clearTimeline (state) {
@@ -70,7 +70,7 @@ const Public = {
     }
   },
   actions: {
-    fetchPublicTimeline ({ state, commit, rootState }) {
+    fetchPublicTimeline ({ commit, rootState }) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

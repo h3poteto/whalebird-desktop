@@ -95,7 +95,7 @@ const TimelineSpace = {
         })
       })
     },
-    fetchAccount ({ commit }, account) {
+    fetchAccount (_, account) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('update-account', account)
         ipcRenderer.once('error-update-account', (event, err) => {
@@ -167,14 +167,14 @@ const TimelineSpace = {
       commit('updateTootMax', data.max_toot_chars)
       return data
     },
-    loadUnreadNotification ({ commit, rootState }, accountID) {
-      return new Promise((resolve, reject) => {
+    loadUnreadNotification ({ commit }, accountID) {
+      return new Promise(resolve => {
         ipcRenderer.once('response-get-unread-notification', (event, settings) => {
           ipcRenderer.removeAllListeners('error-get-unread-notification')
           commit('updateUnreadNotification', settings)
           resolve(settings)
         })
-        ipcRenderer.once('error-get-unread-notification', (event, err) => {
+        ipcRenderer.once('error-get-unread-notification', () => {
           ipcRenderer.removeAllListeners('response-get-unread-notification')
           commit('updateUnreadNotification', {
             direct: unreadSettings.Direct.default,

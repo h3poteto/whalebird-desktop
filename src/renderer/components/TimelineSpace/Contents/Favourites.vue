@@ -103,7 +103,7 @@ export default {
           })
       }
     },
-    focusedId: function (newState, oldState) {
+    focusedId: function (newState, _oldState) {
       if (newState && this.heading) {
         this.heading = false
       } else if (newState === null && !this.heading) {

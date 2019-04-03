@@ -35,7 +35,7 @@ const AccountProfile = {
       return client.get(`/accounts/${accountID}`)
         .then(res => res.data)
     },
-    searchAccount ({ commit, rootState }, parsedAccount) {
+    searchAccount ({ rootState }, parsedAccount) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -58,7 +58,7 @@ const AccountProfile = {
       dispatch('fetchRelationship', account)
       commit('changeAccount', account)
     },
-    fetchRelationship ({ state, commit, rootState }, account) {
+    fetchRelationship ({ commit, rootState }, account) {
       commit('changeRelationship', null)
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
@@ -70,7 +70,7 @@ const AccountProfile = {
           return res.data
         })
     },
-    follow ({ state, commit, rootState }, account) {
+    follow ({ commit, rootState }, account) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

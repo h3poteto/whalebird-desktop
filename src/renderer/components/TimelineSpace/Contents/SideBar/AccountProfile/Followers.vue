@@ -29,7 +29,7 @@ export default {
     this.load()
   },
   watch: {
-    account: function (newAccount, oldAccount) {
+    account: function (_newAccount, _oldAccount) {
       this.load()
     }
   },

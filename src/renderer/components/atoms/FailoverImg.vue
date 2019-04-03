@@ -37,7 +37,7 @@ export default {
     }
   },
   watch: {
-    src: function (newSrc, oldSrc) {
+    src: function (newSrc, _oldSrc) {
       this.originalSrc = newSrc
     }
   },

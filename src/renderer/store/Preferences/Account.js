@@ -29,34 +29,34 @@ const Account = {
         })
       })
     },
-    removeAccount ({ commit }, account) {
+    removeAccount (_, account) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('remove-account', account._id)
-        ipcRenderer.once('error-remove-account', (event, err) => {
+        ipcRenderer.once('error-remove-account', (_, err) => {
           ipcRenderer.removeAllListeners('response-remove-account')
           reject(err)
         })
-        ipcRenderer.once('response-remove-account', (event) => {
+        ipcRenderer.once('response-remove-account', () => {
           ipcRenderer.removeAllListeners('error-remove-account')
           resolve()
         })
       })
     },
-    forwardAccount ({ commit }, account) {
+    forwardAccount (_, account) {
       console.log(account)
       return new Promise((resolve, reject) => {
         ipcRenderer.send('forward-account', account)
-        ipcRenderer.once('error-forward-account', (event, err) => {
+        ipcRenderer.once('error-forward-account', (_, err) => {
           ipcRenderer.removeAllListeners('response-forward-account')
           reject(err)
         })
-        ipcRenderer.once('response-forward-account', (event) => {
+        ipcRenderer.once('response-forward-account', () => {
           ipcRenderer.removeAllListeners('error-forward-account')
           resolve()
         })
       })
     },
-    backwardAccount ({ commit }, account) {
+    backwardAccount (_, account) {
       console.log(account)
       return new Promise((resolve, reject) => {
         ipcRenderer.send('backward-account', account)
@@ -64,7 +64,7 @@ const Account = {
           ipcRenderer.removeAllListeners('response-forward-account')
           reject(err)
         })
-        ipcRenderer.once('response-backward-account', (event) => {
+        ipcRenderer.once('response-backward-account', () => {
           ipcRenderer.removeAllListeners('error-backward-account')
           resolve()
         })
@@ -73,11 +73,11 @@ const Account = {
     removeAllAccounts () {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('remove-all-accounts')
-        ipcRenderer.once('error-remove-all-accounts', (event, err) => {
+        ipcRenderer.once('error-remove-all-accounts', (_, err) => {
           ipcRenderer.removeAllListeners('response-remove-all-accounts')
           reject(err)
         })
-        ipcRenderer.once('response-remove-all-accounts', (event) => {
+        ipcRenderer.once('response-remove-all-accounts', () => {
           ipcRenderer.removeAllListeners('error-remove-all-accounts')
           resolve()
         })
