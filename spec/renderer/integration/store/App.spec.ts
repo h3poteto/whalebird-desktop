@@ -55,7 +55,7 @@ describe('App', () => {
   describe('loadPreferences', () => {
     describe('error', () => {
       it('should not change', async () => {
-        ipcMain.once('get-preferences', (event, _) => {
+        ipcMain.once('get-preferences', (event: any, _) => {
           event.sender.send('error-get-preferences', new Error())
         })
         await store.dispatch('App/loadPreferences')
@@ -67,7 +67,7 @@ describe('App', () => {
     })
     describe('success', () => {
       it('should be changed', async () => {
-        ipcMain.once('get-preferences', (event, _) => {
+        ipcMain.once('get-preferences', (event: any, _) => {
           event.sender.send('response-get-preferences', {
             general: {
               timeline: {

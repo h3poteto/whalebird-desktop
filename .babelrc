@@ -3,16 +3,16 @@
   "env": {
     "test": {
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
           "targets": { "node": 9 }
         }],
-        "stage-0"
+        "@babel/preset-typescript"
       ],
       "plugins": ["istanbul"]
     },
     "main": {
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
           "targets": { "node": 9 }
         }],
         "stage-0"
@@ -20,20 +20,20 @@
     },
     "renderer": {
       "presets": [
-        ["env", {
-          "modules": false
+        ["@babel/preset-env", {
+          "modules": false,
+          "targets": { "node": "current" }
         }],
-        "stage-0"
+        "@babel/preset-typescript"
       ]
     },
     "web": {
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
           "modules": false
         }],
         "stage-0"
       ]
     }
-  },
-  "plugins": ["transform-runtime"]
+  }
 }

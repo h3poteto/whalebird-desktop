@@ -6,7 +6,7 @@ const Toot = {
   state: {},
   mutations: {},
   actions: {
-    reblog ({ state, commit, rootState }, message) {
+    reblog ({ rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -20,7 +20,7 @@ const Toot = {
           return res.data.reblog
         })
     },
-    unreblog ({ state, commit, rootState }, message) {
+    unreblog ({ rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -30,7 +30,7 @@ const Toot = {
           return res.data
         })
     },
-    addFavourite ({ state, commit, rootState }, message) {
+    addFavourite ({ rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -41,7 +41,7 @@ const Toot = {
           return res.data
         })
     },
-    removeFavourite ({ state, commit, rootState }, message) {
+    removeFavourite ({ rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -51,7 +51,7 @@ const Toot = {
           return res.data
         })
     },
-    deleteToot ({ state, commit, rootState }, message) {
+    deleteToot ({ rootState }, message) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -61,7 +61,7 @@ const Toot = {
           return message
         })
     },
-    block ({ rootState, commit }, account) {
+    block ({ rootState }, account) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

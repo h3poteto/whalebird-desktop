@@ -71,7 +71,7 @@ const Show = {
     }
   },
   actions: {
-    fetchTimeline ({ state, commit, rootState }, listID) {
+    fetchTimeline ({ commit, rootState }, listID) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'
@@ -100,8 +100,8 @@ const Show = {
         })
       })
     },
-    stopStreaming ({ commit }) {
-      return new Promise((resolve, reject) => {
+    stopStreaming () {
+      return new Promise(resolve => {
         ipcRenderer.removeAllListeners('error-start-list-streaming')
         ipcRenderer.removeAllListeners('update-start-list-streaming')
         ipcRenderer.send('stop-list-streaming')

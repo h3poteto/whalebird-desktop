@@ -15,7 +15,7 @@ const HeaderMenu = {
     }
   },
   actions: {
-    fetchList ({ state, commit, rootState }, listID) {
+    fetchList ({ commit, rootState }, listID) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

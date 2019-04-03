@@ -37,7 +37,7 @@ describe('Preferences/Language', () => {
 
   describe('loadLanguage', () => {
     beforeEach(() => {
-      ipcMain.once('get-preferences', (event, _) => {
+      ipcMain.once('get-preferences', (event: any, _) => {
         event.sender.send('response-get-preferences', {
           language: {
             language: DefaultLanguage.ja.key
@@ -53,7 +53,7 @@ describe('Preferences/Language', () => {
 
   describe('changeLanguage', () => {
     beforeEach(() => {
-      ipcMain.once('change-language', (event, key) => {
+      ipcMain.once('change-language', (event: any, key: string) => {
         event.sender.send('response-change-language', key)
       })
     })

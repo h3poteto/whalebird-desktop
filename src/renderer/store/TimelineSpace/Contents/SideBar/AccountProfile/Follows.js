@@ -15,7 +15,7 @@ const Follows = {
     }
   },
   actions: {
-    fetchFollows ({ state, commit, rootState }, account) {
+    fetchFollows ({ commit, rootState }, account) {
       const client = new Mastodon(
         rootState.TimelineSpace.account.accessToken,
         rootState.TimelineSpace.account.baseURL + '/api/v1'

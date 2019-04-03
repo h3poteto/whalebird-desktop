@@ -36,7 +36,7 @@ const GlobalHeader = {
       })
     },
     // Fetch account informations and save current state when GlobalHeader is displayed
-    refreshAccounts ({ commit, state }) {
+    refreshAccounts ({ commit }) {
       return new Promise((resolve, reject) => {
         ipcRenderer.send('refresh-accounts')
         ipcRenderer.once('error-refresh-accounts', (event, err) => {
@@ -72,7 +72,7 @@ const GlobalHeader = {
       return true
     },
     loadHide ({ commit }) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         ipcRenderer.send('get-global-header')
         ipcRenderer.once('response-get-global-header', (event, value) => {
           commit('changeHide', value)
@@ -81,9 +81,9 @@ const GlobalHeader = {
       })
     },
     switchHide ({ dispatch }, value) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         ipcRenderer.send('change-global-header', value)
-        ipcRenderer.once('response-change-global-header', (event, _) => {
+        ipcRenderer.once('response-change-global-header', () => {
           dispatch('loadHide')
           resolve(true)
         })

@@ -49,7 +49,7 @@ describe('Preferences/Notification', () => {
 
   describe('loadNotification', () => {
     beforeEach(() => {
-      ipcMain.once('get-preferences', (event, _) => {
+      ipcMain.once('get-preferences', (event: any, _) => {
         event.sender.send('response-get-preferences', {
           notification: {
             notify: {
@@ -77,7 +77,7 @@ describe('Preferences/Notification', () => {
 
   describe('updateNotify', () => {
     beforeEach(() => {
-      ipcMain.once('update-preferences', (event, conf) => {
+      ipcMain.once('update-preferences', (event: any, conf: object) => {
         event.sender.send('response-update-preferences', conf)
       })
     })
