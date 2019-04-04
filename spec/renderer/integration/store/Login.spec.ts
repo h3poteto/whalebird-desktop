@@ -2,13 +2,12 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import axios from 'axios'
-import Login from '@/store/Login'
+import Login, { LoginState } from '@/store/Login'
 
 jest.mock('axios')
 
-const state = () => {
+const state = (): LoginState => {
   return {
-    instances: [],
     selectedInstance: null,
     searching: false
   }
@@ -79,8 +78,8 @@ describe('Login', () => {
         })
       })
       mockedAxios.get.mockImplementation(() => res)
-      const data = await store.dispatch('Login/confirmInstance', 'pleroma.io')
-      expect(data).toEqual('test')
+      const result = await store.dispatch('Login/confirmInstance', 'pleroma.io')
+      expect(result).toEqual(true)
       expect(store.state.Login.selectedInstance).toEqual('pleroma.io')
     })
   })
