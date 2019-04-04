@@ -1,9 +1,9 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
-import GlobalHeader from '~/src/renderer/store/GlobalHeader'
+import GlobalHeader, { GlobalHeaderState } from '~/src/renderer/store/GlobalHeader'
 
-const state = () => {
+const state = (): GlobalHeaderState => {
   return {
     accounts: [],
     changing: false,
