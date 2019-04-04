@@ -106,7 +106,7 @@ const actions: ActionTree<AppState, any> = {
   loadPreferences: ({ commit, dispatch }) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('get-preferences')
-      ipcRenderer.once('error-get-preferences', (_, err) => {
+      ipcRenderer.once('error-get-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
