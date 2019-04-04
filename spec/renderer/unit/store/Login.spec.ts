@@ -1,24 +1,23 @@
-import Login from '@/store/Login'
+import Login, { LoginState, MUTATION_TYPES } from '@/store/Login'
 
 describe('Login', () => {
   describe('mutations', () => {
-    let state: any
+    let state: LoginState
     beforeEach(() => {
       state = {
-        instances: [],
         selectedInstance: null,
         searching: false
       }
     })
     describe('changeInstance', () => {
       it('should be changed', () => {
-        Login.mutations.changeInstance(state, 'pleroma.io')
+        Login.mutations![MUTATION_TYPES.CHANGE_INSTANCE](state, 'pleroma.io')
         expect(state.selectedInstance).toEqual('pleroma.io')
       })
     })
     describe('changeSearching', () => {
       it('should be changed', () => {
-        Login.mutations.changeSearching(state, true)
+        Login.mutations![MUTATION_TYPES.CHANGE_SEARCHING](state, true)
         expect(state.searching).toEqual(true)
       })
     })
