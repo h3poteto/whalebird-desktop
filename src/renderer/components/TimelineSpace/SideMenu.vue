@@ -6,7 +6,7 @@
           <div class="avatar" v-if="collapse">
             <img :src="account.avatar" />
           </div>
-          <div v-else>
+          <div class="acct" v-else>
             @{{ account.username }}
             <span class="domain-name">{{ account.domain }}</span>
           </div>
@@ -201,6 +201,12 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+
+      .acct {
+        max-width: 117px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
       .el-dropdown-link {
         cursor: pointer;
