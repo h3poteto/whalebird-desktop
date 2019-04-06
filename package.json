@@ -1,7 +1,7 @@
 {
   "name": "Roma",
   "version": "1.1.0",
-  "author": "Pleroma Foundation pleromafoundationllc@gmail.com>",
+  "author": "Pleroma Foundation <pleromafoundationllc@gmail.com>",
   "description": "An Electron based Pleroma and Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
   "keywords": [
@@ -44,6 +44,7 @@
   "build": {
     "productName": "Roma",
     "appId": "com.vm.Roma-Desktop",
+    "artifactName": "${productName}-${version}-${os}.${ext}",
     "directories": {
       "output": "build"
     },
