@@ -3,10 +3,10 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 import { LightTheme } from '~/src/renderer/utils/theme'
 import DefaultFonts from '@/utils/fonts'
-import Appearance from '@/store/Preferences/Appearance'
+import Appearance, { AppearanceState, MUTATION_TYPES } from '@/store/Preferences/Appearance'
 
 describe('Preferences/Appearance', () => {
-  let state
+  let state: AppearanceState
   beforeEach(() => {
     state = {
       appearance: {
@@ -23,7 +23,7 @@ describe('Preferences/Appearance', () => {
   describe('mutations', () => {
     describe('updateAppearance', () => {
       it('should be changed', () => {
-        Appearance.mutations.updateAppearance(state, {
+        Appearance.mutations![MUTATION_TYPES.UPDATE_APPEARANCE](state, {
           theme: Theme.Dark.key
         })
         expect(state.appearance.theme).toEqual(Theme.Dark.key)
@@ -31,7 +31,7 @@ describe('Preferences/Appearance', () => {
     })
     describe('updateFonts', () => {
       it('should be changed', () => {
-        Appearance.mutations.updateFonts(state, ['font'])
+        Appearance.mutations![MUTATION_TYPES.UPDATE_FONTS](state, ['font'])
         expect(state.fonts).toEqual(['font'])
       })
     })

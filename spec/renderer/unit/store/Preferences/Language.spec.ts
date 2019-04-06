@@ -1,8 +1,8 @@
-import Language from '@/store/Preferences/Language'
+import Language, { LanguageState, MUTATION_TYPES } from '@/store/Preferences/Language'
 import DefaultLanguage from '~/src/constants/language'
 
 describe('Preferences/Language', () => {
-  let state
+  let state: LanguageState
   beforeEach(() => {
     state = {
       language: {
@@ -13,7 +13,7 @@ describe('Preferences/Language', () => {
   describe('mutations', () => {
     describe('updateLanguage', () => {
       it('should be updated', () => {
-        Language.mutations.updateLanguage(state, {
+        Language.mutations![MUTATION_TYPES.UPDATE_LANGUAGE](state, {
           language: DefaultLanguage.ja.key
         })
         expect(state.language.language).toEqual(DefaultLanguage.ja.key)
@@ -21,7 +21,7 @@ describe('Preferences/Language', () => {
     })
     describe('changeLanguage', () => {
       it('should be changed', () => {
-        Language.mutations.changeLanguage(state, DefaultLanguage.ja.key)
+        Language.mutations![MUTATION_TYPES.CHANGE_LANGUAGE](state, DefaultLanguage.ja.key)
         expect(state.language.language).toEqual(DefaultLanguage.ja.key)
       })
     })

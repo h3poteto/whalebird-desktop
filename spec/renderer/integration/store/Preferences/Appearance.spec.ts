@@ -5,10 +5,10 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 import { LightTheme, DarkTheme } from '~/src/renderer/utils/theme'
 import DefaultFonts from '@/utils/fonts'
-import Appearance from '@/store/Preferences/Appearance'
+import Appearance, { AppearanceState } from '@/store/Preferences/Appearance'
 import { ipcMain } from '~/spec/mock/electron'
 
-const state = () => {
+const state = (): AppearanceState => {
   return {
     appearance: {
       theme: Theme.Light.key,
@@ -51,14 +51,14 @@ describe('Preferences/Appearance', () => {
         App: App
       }
     })
-    ipcMain.once('update-preferences', (event, config) => {
+    ipcMain.once('update-preferences', (event: any, config: any) => {
       event.sender.send('response-update-preferences', config)
     })
   })
 
   describe('load', () => {
     it('loadAppearance', async () => {
-      ipcMain.once('get-preferences', (event, _) => {
+      ipcMain.once('get-preferences', (event: any, _) => {
         event.sender.send('response-get-preferences', {
           appearance: {
             theme: Theme.Dark.key,
