@@ -1,9 +1,9 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
-import Notification from '@/store/Preferences/Notification'
+import Notification, { NotificationState } from '@/store/Preferences/Notification'
 
-const state = () => {
+const state = (): NotificationState => {
   return {
     notification: {
       notify: {

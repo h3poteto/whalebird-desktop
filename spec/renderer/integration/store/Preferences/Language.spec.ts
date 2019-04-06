@@ -1,10 +1,10 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
-import Language from '@/store/Preferences/Language'
+import Language, { LanguageState } from '@/store/Preferences/Language'
 import DefaultLanguage from '~/src/constants/language'
 
-const state = () => {
+const state = (): LanguageState => {
   return {
     language: {
       language: DefaultLanguage.en.key
