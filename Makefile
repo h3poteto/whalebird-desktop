@@ -9,17 +9,17 @@ install: package.json
 
 mac:
 	npm run build:mac
-	mv build/Whalebird-${VERSION}-mac.dmg build/Whalebird-${VERSION}-darwin-x64.dmg
+	mv build/Roma-${VERSION}-mac.dmg build/Roma-${VERSION}-darwin-x64.dmg
 
 linux:
 	npm run build:linux
-	mv build/Whalebird-${VERSION}-linux.deb build/Whalebird-${VERSION}-linux-x64.deb
-	mv build/Whalebird-${VERSION}-linux.rpm build/Whalebird-${VERSION}-linux-x64.rpm
-	mv build/Whalebird-${VERSION}-linux.tar.bz2 build/Whalebird-${VERSION}-linux-x64.tar.bz2
+	mv build/Roma-${VERSION}-linux.deb build/Roma-${VERSION}-linux-x64.deb
+	mv build/Roma-${VERSION}-linux.rpm build/Roma-${VERSION}-linux-x64.rpm
+	mv build/Roma-${VERSION}-linux.tar.bz2 build/Roma-${VERSION}-linux-x64.tar.bz2
 
 windows:
 	npm run build:windows
-	mv build/Whalebird-${VERSION}-win.exe build/Whalebird-${VERSION}-windows-x64.exe
+	mv build/Roma-${VERSION}-win.exe build/Roma-${VERSION}-windows-x64.exe
 
 clean:
 	npm run build:clean
