@@ -1,7 +1,7 @@
-import Notification from '@/store/Preferences/Notification'
+import Notification, { NotificationState, MUTATION_TYPES } from '@/store/Preferences/Notification'
 
 describe('Preferences/Notification', () => {
-  let state
+  let state: NotificationState
   beforeEach(() => {
     state = {
       notification: {
@@ -16,7 +16,7 @@ describe('Preferences/Notification', () => {
   })
   describe('mutations', () => {
     it('updateNotification', () => {
-      Notification.mutations.updateNotification(state, {
+      Notification.mutations![MUTATION_TYPES.UPDATE_NOTIFICATION](state, {
         notify: {
           reply: false,
           reblog: false,
