@@ -1,9 +1,9 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
-import General from '@/store/Preferences/General'
+import General, { GeneralState } from '@/store/Preferences/General'
 
-const state = () => {
+const state = (): GeneralState => {
   return {
     general: {
       sound: {

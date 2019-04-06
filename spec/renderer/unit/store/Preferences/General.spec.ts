@@ -1,13 +1,18 @@
-import General from '@/store/Preferences/General'
+import General, { GeneralState, MUTATION_TYPES } from '@/store/Preferences/General'
 
 describe('Preferences/General', () => {
-  let state
+  let state: GeneralState
   beforeEach(() => {
     state = {
       general: {
         sound: {
           fav_rb: true,
           toot: true
+        },
+        timeline: {
+          cw: false,
+          nfsw: false,
+          hideAllAttachments: false
         }
       },
       loading: false
@@ -16,7 +21,7 @@ describe('Preferences/General', () => {
 
   describe('mutations', () => {
     it('updateGeneral', () => {
-      General.mutations.updateGeneral(state, {
+      General.mutations![MUTATION_TYPES.UPDATE_GENERAL](state, {
         sound: {
           fav_rb: false,
           toot: false
