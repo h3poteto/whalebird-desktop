@@ -1,16 +1,13 @@
-import TimelineSpace from '~/src/renderer/store/TimelineSpace'
+import TimelineSpace, { TimelineSpaceState, blankAccount, MUTATION_TYPES } from '~/src/renderer/store/TimelineSpace'
+import { Emoji } from 'megalodon'
 import unreadSettings from '~/src/constants/unreadNotification'
 
 describe('TimelineSpace', () => {
   describe('mutations', () => {
-    let state
+    let state: TimelineSpaceState
     beforeEach(() => {
       state = {
-        account: {
-          domain: '',
-          _id: '',
-          username: ''
-        },
+        account: blankAccount,
         loading: false,
         emojis: [],
         tootMax: 500,
@@ -26,39 +23,41 @@ describe('TimelineSpace', () => {
 
     describe('updateEmojis', () => {
       it('should be updated', () => {
-        TimelineSpace.mutations.updateEmojis(state, [
-          {
-            shortcode: 'emacs',
-            url: 'http://example.com/emacs'
-          },
-          {
-            shortcode: 'ruby',
-            url: 'http://example.com/ruby'
-          }
-        ])
+        const emacsEmoji: Emoji = {
+          shortcode: 'emacs',
+          url: 'http://example.com/emacs',
+          static_url: 'http://example.com/emacs',
+          visible_in_picker: true
+        }
+        const rubyEmoji: Emoji = {
+          shortcode: 'ruby',
+          url: 'http://example.com/ruby',
+          static_url: 'http://example.com/ruby',
+          visible_in_picker: true
+        }
+        TimelineSpace.mutations![MUTATION_TYPES.UPDATE_EMOJIS](state, [emacsEmoji, rubyEmoji])
         expect(state.emojis).toEqual([
           {
-            name: ':emacs:',
-            image: 'http://example.com/emacs'
+            image: 'http://example.com/emacs',
+            name: ':emacs:'
           },
           {
-            name: ':ruby:',
-            image: 'http://example.com/ruby'
-          }
-        ])
+            image: 'http://example.com/ruby',
+            name: ':ruby:'
+          }])
       })
     })
 
     describe('updateTootMax', () => {
       describe('value is null', () => {
         it('should be updated with 500', () => {
-          TimelineSpace.mutations.updateTootMax(state, null)
+          TimelineSpace.mutations![MUTATION_TYPES.UPDATE_TOOT_MAX](state, null)
           expect(state.tootMax).toEqual(500)
         })
       })
       describe('value is not null', () => {
         it('should be updated', () => {
-          TimelineSpace.mutations.updateTootMax(state, 1200)
+          TimelineSpace.mutations![MUTATION_TYPES.UPDATE_TOOT_MAX](state, 1200)
           expect(state.tootMax).toEqual(1200)
         })
       })
