@@ -32,7 +32,7 @@ let rendererConfig = {
   module: {
     rules: [
       {
-        test: /\.(js|vue)$/,
+        test: /\.(js|vue|ts)$/,
         enforce: 'pre',
         exclude: /node_modules/,
         use: {

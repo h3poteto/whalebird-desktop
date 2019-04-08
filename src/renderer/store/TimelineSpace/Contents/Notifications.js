@@ -59,10 +59,10 @@ const Notifications = {
     }
   },
   actions: {
-    fetchNotifications ({ commit }, account) {
+    fetchNotifications ({ commit, rootState }) {
       const client = new Mastodon(
-        account.accessToken,
-        account.baseURL + '/api/v1'
+        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.account.baseURL + '/api/v1'
       )
       return client.get('/notifications', { limit: 30 })
         .then(res => {
