@@ -1,8 +1,8 @@
-import HeaderMenu from '@/store/TimelineSpace/HeaderMenu'
+import HeaderMenu, { HeaderMenuState, MUTATION_TYPES } from '@/store/TimelineSpace/HeaderMenu'
 
 describe('TimelineSpace/HeaderMenu', () => {
   describe('mutations', () => {
-    let state
+    let state: HeaderMenuState
     beforeEach(() => {
       state = {
         title: 'Home',
@@ -11,7 +11,7 @@ describe('TimelineSpace/HeaderMenu', () => {
     })
     describe('changeReload', () => {
       it('should be changed', () => {
-        HeaderMenu.mutations.changeReload(state, true)
+        HeaderMenu.mutations![MUTATION_TYPES.CHANGE_RELOAD](state, true)
         expect(state.reload).toEqual(true)
       })
     })
