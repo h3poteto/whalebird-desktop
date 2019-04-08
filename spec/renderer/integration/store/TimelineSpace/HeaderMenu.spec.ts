@@ -2,7 +2,7 @@ import { Response, List } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import HeaderMenu from '~/src/renderer/store/TimelineSpace/HeaderMenu'
+import HeaderMenu, { HeaderMenuState } from '~/src/renderer/store/TimelineSpace/HeaderMenu'
 
 jest.mock('megalodon')
 
@@ -11,7 +11,7 @@ const list: List = {
   title: 'example'
 }
 
-const state = () => {
+const state = (): HeaderMenuState => {
   return {
     title: 'Home',
     reload: false

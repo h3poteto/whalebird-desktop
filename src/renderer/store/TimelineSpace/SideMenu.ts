@@ -16,7 +16,7 @@ export interface SideMenuState {
   collapse: boolean
 }
 
-const state: SideMenuState = {
+const state = (): SideMenuState => ({
   unreadHomeTimeline: false,
   unreadNotifications: false,
   unreadMentions: false,
@@ -26,7 +26,7 @@ const state: SideMenuState = {
   lists: [],
   tags: [],
   collapse: false
-}
+})
 
 export const MUTATION_TYPES = {
   CHANGE_UNREAD_HOME_TIMELINE: 'changeUnreadHomeTimeline',
