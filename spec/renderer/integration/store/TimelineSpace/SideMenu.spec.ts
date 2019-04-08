@@ -3,7 +3,8 @@ import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
-import SideMenu from '~/src/renderer/store/TimelineSpace/SideMenu'
+import SideMenu, { SideMenuState } from '~/src/renderer/store/TimelineSpace/SideMenu'
+import Hashtag from '~/src/types/hashtag'
 
 jest.mock('megalodon')
 
@@ -17,10 +18,11 @@ const list2: List = {
   title: 'example2'
 }
 
-const state = () => {
+const state = (): SideMenuState => {
   return {
     unreadHomeTimeline: false,
     unreadNotifications: false,
+    unreadMentions: false,
     unreadLocalTimeline: false,
     unreadDirectMessagesTimeline: false,
     unreadPublicTimeline: false,
@@ -114,11 +116,17 @@ describe('SideMenu', () => {
 
   describe('listTags', () => {
     it('should be listed', async () => {
+      const tag1: Hashtag = {
+        tagName: 'tag1'
+      }
+      const tag2: Hashtag = {
+        tagName: 'tag2'
+      }
       ipcMain.once('list-hashtags', (event: any, _) => {
-        event.sender.send('response-list-hashtags', ['tag1', 'tag2'])
+        event.sender.send('response-list-hashtags', [tag1, tag2])
       })
       await store.dispatch('SideMenu/listTags')
-      expect(store.state.SideMenu.tags).toEqual(['tag1', 'tag2'])
+      expect(store.state.SideMenu.tags).toEqual([tag1, tag2])
     })
   })
 })
