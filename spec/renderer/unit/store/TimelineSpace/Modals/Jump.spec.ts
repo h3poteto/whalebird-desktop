@@ -1,9 +1,11 @@
 import i18n from '~/src/config/i18n'
-import Jump from '@/store/TimelineSpace/Modals/Jump'
+import Jump, { JumpState, MUTATION_TYPES, Channel } from '@/store/TimelineSpace/Modals/Jump'
+import Hashtag from '~/src/types/hashtag'
+import { List } from 'megalodon'
 
 describe('TimelineSpace/Modals/Jump', () => {
   describe('mutations', () => {
-    let state
+    let state: JumpState
     beforeEach(() => {
       state = {
         modalOpen: true,
@@ -53,59 +55,55 @@ describe('TimelineSpace/Modals/Jump', () => {
 
     describe('updateListChannel', () => {
       it('should be updated', () => {
-        const channelList = [
-          {
-            id: '0',
+        const admin: List = {
+            id: 0,
             title: 'admin'
-          },
-          {
-            id: '1',
+        }
+        const engineer: List = {
+            id: 1,
             title: 'engineer'
-          },
-          {
-            id: '2',
+        }
+        const designer: List = {
+            id: 2,
             title: 'designer'
-          }
-        ]
-        Jump.mutations.updateListChannel(state, channelList)
-        expect(state.listChannelList).toEqual([
-          {
-            path: 'lists/0',
-            name: '#admin'
-          },
-          {
-            path: 'lists/1',
-            name: '#engineer'
-          },
-          {
-            path: 'lists/2',
-            name: '#designer'
-          }
-        ])
+        }
+        const channelList = [admin, engineer, designer]
+        Jump.mutations![MUTATION_TYPES.UPDATE_LIST_CHANNEL](state, channelList)
+        const adminChannel: Channel = {
+          path: 'lists/0',
+          name: '#admin'
+        }
+        const engineerChannel: Channel = {
+          path: 'lists/1',
+          name: '#engineer'
+        }
+        const designerChannel: Channel = {
+          path: 'lists/2',
+          name: '#designer'
+        }
+        expect(state.listChannelList).toEqual([adminChannel, engineerChannel, designerChannel])
       })
     })
 
     describe('updateTagChannel', () => {
       it('should be updated', () => {
-        const channelList = [
-          {
-            tagName: 'whalebird'
-          },
-          {
-            tagName: 'tqrk'
-          }
-        ]
-        Jump.mutations.updateTagChannel(state, channelList)
-        expect(state.tagChannelList).toEqual([
-          {
-            name: '#whalebird',
-            path: 'hashtag/whalebird'
-          },
-          {
-            name: '#tqrk',
-            path: 'hashtag/tqrk'
-          }
-        ])
+        const whalebird: Hashtag = {
+          tagName: 'whalebird'
+        }
+        const tqrk: Hashtag = {
+          tagName: 'tqrk'
+        }
+        const channelList = [whalebird, tqrk]
+        Jump.mutations![MUTATION_TYPES.UPDATE_TAG_CHANNEL](state, channelList)
+        const whalebirdChannel: Channel = {
+          name: '#whalebird',
+          path: 'hashtag/whalebird'
+        }
+        const tqrkChannel: Channel = {
+          name: '#tqrk',
+          path: 'hashtag/tqrk'
+        }
+        expect(state.tagChannelList).toEqual([whalebirdChannel, tqrkChannel])
       })
     })
   })

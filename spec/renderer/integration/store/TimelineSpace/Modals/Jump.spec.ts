@@ -2,9 +2,9 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import i18n from '~/src/config/i18n'
 import router from '@/router'
-import Jump from '~/src/renderer/store/TimelineSpace/Modals/Jump'
+import Jump, { JumpState, Channel } from '~/src/renderer/store/TimelineSpace/Modals/Jump'
 
-const state = () => {
+const state = (): JumpState => {
   return {
     modalOpen: true,
     channel: '',
@@ -93,10 +93,11 @@ describe('Jump', () => {
 
   describe('jump', () => {
     it('should be changed', () => {
-      store.dispatch('Jump/jump', {
+      const channel: Channel = {
         name: 'public',
         path: 'public'
-      })
+      }
+      store.dispatch('Jump/jump', channel)
       expect(store.state.Jump.modalOpen).toEqual(false)
       expect(router.push).toHaveBeenCalledWith({ path: '/0/public' })
     })
