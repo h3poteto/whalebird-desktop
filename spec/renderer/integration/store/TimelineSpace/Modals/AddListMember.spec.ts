@@ -2,7 +2,7 @@ import { Response, Account } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import AddListMember from '~/src/renderer/store/TimelineSpace/Modals/AddListMember'
+import AddListMember, { AddListMemberState } from '@/store/TimelineSpace/Modals/AddListMember'
 
 jest.mock('megalodon')
 
@@ -28,7 +28,7 @@ const account: Account = {
   bot: false
 }
 
-const state = () => {
+const state = (): AddListMemberState => {
   return {
     modalOpen: false,
     accounts: [],
@@ -121,7 +121,7 @@ describe('AddListMember', () => {
 
       mockedMegalodon.mockImplementation(() => mockClient)
       const result = await store.dispatch('AddListMember/add', 'akira')
-      expect(result.data).toEqual({})
+      expect(result).toEqual({})
     })
   })
 })

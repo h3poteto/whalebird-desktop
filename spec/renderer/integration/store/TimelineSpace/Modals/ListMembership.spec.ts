@@ -1,10 +1,32 @@
-import { Response, List } from 'megalodon'
+import { Response, List, Account } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import ListMembership from '~/src/renderer/store/TimelineSpace/Modals/ListMembership'
+import ListMembership, { ListMembershipState } from '@/store/TimelineSpace/Modals/ListMembership'
 
 jest.mock('megalodon')
+
+const account: Account = {
+  id: 1,
+  username: 'h3poteto',
+  acct: 'h3poteto@pleroma.io',
+  display_name: 'h3poteto',
+  locked: false,
+  created_at: '2019-03-26T21:30:32',
+  followers_count: 10,
+  following_count: 10,
+  statuses_count: 100,
+  note: 'engineer',
+  url: 'https://pleroma.io',
+  avatar: '',
+  avatar_static: '',
+  header: '',
+  header_static: '',
+  emojis: [],
+  moved: null,
+  fields: null,
+  bot: false
+}
 
 const list1: List = {
   id: 1,
@@ -16,7 +38,7 @@ const list2: List = {
   title: 'list2'
 }
 
-let state: any = () => {
+let state = (): ListMembershipState => {
   return {
     modalOpen: false,
     account: null,
@@ -116,9 +138,7 @@ describe('ListMembership', () => {
       state = () => {
         return {
           modalOpen: false,
-          account: {
-            id: 65
-          },
+          account: account,
           lists: [],
           belongToLists: [
             list2
