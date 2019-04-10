@@ -111,10 +111,11 @@ const actions: ActionTree<NewTootState, RootState> = {
       rootState.TimelineSpace.account.accessToken,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
-    return Promise.all(
-      Object.keys(media).map(async id => {
-        return client.put<Attachment>(`/media/${id}`, { description: media[id] })
-      })).catch(err => {
+    const attachments = Object.keys(media).map(async id => {
+      return client.put<Attachment>(`/media/${id}`, { description: media[id] })
+    })
+    return Promise.all(attachments)
+      .catch(err => {
         console.error(err)
         throw err
       })
