@@ -1,9 +1,9 @@
 import NewToot from './Modals/NewToot'
 import ImageViewer, { ImageViewerState } from './Modals/ImageViewer'
 import Jump, { JumpState } from './Modals/Jump'
-import ListMembership from './Modals/ListMembership'
+import ListMembership, { ListMembershipState } from './Modals/ListMembership'
 import AddListMember, { AddListMemberState } from './Modals/AddListMember'
-import MuteConfirm from './Modals/MuteConfirm'
+import MuteConfirm, { MuteConfirmState } from './Modals/MuteConfirm'
 import Shortcut from './Modals/Shortcut'
 import Report from './Modals/Report'
 import { Module, GetterTree } from 'vuex'
@@ -14,7 +14,9 @@ export interface ModalsState {}
 export interface ModalsModuleState extends ModalsState {
   Jump: JumpState,
   AddListMember: AddListMemberState,
-  ImageViewer: ImageViewerState
+  ImageViewer: ImageViewerState,
+  ListMembership: ListMembershipState,
+  MuteConfirm: MuteConfirmState
 }
 
 const state = (): ModalsState => ({})
