@@ -1,6 +1,6 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { Attachment } from 'megalodon'
-import { RootState } from '@/store';
+import { RootState } from '@/store'
 
 export interface ImageViewerState {
   modalOpen: boolean,
