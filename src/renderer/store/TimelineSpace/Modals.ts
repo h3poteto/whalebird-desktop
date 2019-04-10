@@ -1,4 +1,4 @@
-import NewToot from './Modals/NewToot'
+import NewToot, { NewTootModuleState } from './Modals/NewToot'
 import ImageViewer, { ImageViewerState } from './Modals/ImageViewer'
 import Jump, { JumpState } from './Modals/Jump'
 import ListMembership, { ListMembershipState } from './Modals/ListMembership'
@@ -16,7 +16,8 @@ export interface ModalsModuleState extends ModalsState {
   AddListMember: AddListMemberState,
   ImageViewer: ImageViewerState,
   ListMembership: ListMembershipState,
-  MuteConfirm: MuteConfirmState
+  MuteConfirm: MuteConfirmState,
+  NewToot: NewTootModuleState
 }
 
 const state = (): ModalsState => ({})
