@@ -1,8 +1,8 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import ImageViewer from '~/src/renderer/store/TimelineSpace/Modals/ImageViewer'
+import ImageViewer, { ImageViewerState } from '~/src/renderer/store/TimelineSpace/Modals/ImageViewer'
 
-const state = () => {
+const state = (): ImageViewerState => {
   return {
     modalOpen: false,
     currentIndex: -1,
