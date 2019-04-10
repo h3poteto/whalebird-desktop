@@ -19,7 +19,6 @@ export interface ModalsModuleState extends ModalsState {
 
 const state = (): ModalsState => ({})
 
-
 const getters: GetterTree<ModalsState, RootState> = {
   modalOpened: (_state, _getters, rootState) => {
     const imageViewer = rootState.TimelineSpace.Modals.ImageViewer.modalOpen
