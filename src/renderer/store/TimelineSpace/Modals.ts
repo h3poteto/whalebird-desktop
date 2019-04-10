@@ -4,7 +4,7 @@ import Jump, { JumpState } from './Modals/Jump'
 import ListMembership, { ListMembershipState } from './Modals/ListMembership'
 import AddListMember, { AddListMemberState } from './Modals/AddListMember'
 import MuteConfirm, { MuteConfirmState } from './Modals/MuteConfirm'
-import Shortcut from './Modals/Shortcut'
+import Shortcut, { ShortcutState } from './Modals/Shortcut'
 import Report, { ReportState } from './Modals/Report'
 import { Module, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
@@ -18,7 +18,8 @@ export interface ModalsModuleState extends ModalsState {
   ListMembership: ListMembershipState,
   MuteConfirm: MuteConfirmState,
   NewToot: NewTootModuleState,
-  Report: ReportState
+  Report: ReportState,
+  Shortcut: ShortcutState
 }
 
 const state = (): ModalsState => ({})
