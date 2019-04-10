@@ -5,7 +5,7 @@ import ListMembership, { ListMembershipState } from './Modals/ListMembership'
 import AddListMember, { AddListMemberState } from './Modals/AddListMember'
 import MuteConfirm, { MuteConfirmState } from './Modals/MuteConfirm'
 import Shortcut from './Modals/Shortcut'
-import Report from './Modals/Report'
+import Report, { ReportState } from './Modals/Report'
 import { Module, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
 
@@ -17,7 +17,8 @@ export interface ModalsModuleState extends ModalsState {
   ImageViewer: ImageViewerState,
   ListMembership: ListMembershipState,
   MuteConfirm: MuteConfirmState,
-  NewToot: NewTootModuleState
+  NewToot: NewTootModuleState,
+  Report: ReportState
 }
 
 const state = (): ModalsState => ({})
