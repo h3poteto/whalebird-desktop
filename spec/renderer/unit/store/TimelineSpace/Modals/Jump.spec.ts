@@ -56,16 +56,16 @@ describe('TimelineSpace/Modals/Jump', () => {
     describe('updateListChannel', () => {
       it('should be updated', () => {
         const admin: List = {
-            id: 0,
-            title: 'admin'
+          id: 0,
+          title: 'admin'
         }
         const engineer: List = {
-            id: 1,
-            title: 'engineer'
+          id: 1,
+          title: 'engineer'
         }
         const designer: List = {
-            id: 2,
-            title: 'designer'
+          id: 2,
+          title: 'designer'
         }
         const channelList = [admin, engineer, designer]
         Jump.mutations![MUTATION_TYPES.UPDATE_LIST_CHANNEL](state, channelList)

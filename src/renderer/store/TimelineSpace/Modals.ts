@@ -1,19 +1,25 @@
 import NewToot from './Modals/NewToot'
 import ImageViewer from './Modals/ImageViewer'
-import Jump from './Modals/Jump'
+import Jump, { JumpState } from './Modals/Jump'
 import ListMembership from './Modals/ListMembership'
-import AddListMember from './Modals/AddListMember'
+import AddListMember, { AddListMemberState } from './Modals/AddListMember'
 import MuteConfirm from './Modals/MuteConfirm'
 import Shortcut from './Modals/Shortcut'
 import Report from './Modals/Report'
 import { Module, GetterTree } from 'vuex'
+import { RootState } from '@/store/index'
 
 export interface ModalsState {}
 
+export interface ModalsModuleState extends ModalsState {
+  Jump: JumpState,
+  AddListMember: AddListMemberState
+}
+
 const state = (): ModalsState => ({})
 
-// TODO: use type of rootState
-const getters: GetterTree<ModalsState, any> = {
+
+const getters: GetterTree<ModalsState, RootState> = {
   modalOpened: (_state, _getters, rootState) => {
     const imageViewer = rootState.TimelineSpace.Modals.ImageViewer.modalOpen
     const newToot = rootState.TimelineSpace.Modals.NewToot.modalOpen
@@ -27,7 +33,7 @@ const getters: GetterTree<ModalsState, any> = {
   }
 }
 
-const Modals: Module<ModalsState, any> = {
+const Modals: Module<ModalsState, RootState> = {
   namespaced: true,
   modules: {
     ImageViewer,
