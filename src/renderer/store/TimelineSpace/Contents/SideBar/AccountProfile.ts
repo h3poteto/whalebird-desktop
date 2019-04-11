@@ -1,7 +1,7 @@
 import Mastodon, { Account, Relationship, Response, Results } from 'megalodon'
 import Timeline from './AccountProfile/Timeline'
 import Follows from './AccountProfile/Follows'
-import Followers from './AccountProfile/Followers'
+import Followers, { FollowersState } from './AccountProfile/Followers'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -11,7 +11,9 @@ export interface AccountProfileState {
   loading: boolean
 }
 
-export interface AccountProfileModuleState extends AccountProfileState {}
+export interface AccountProfileModuleState extends AccountProfileState {
+  Followers: FollowersState
+}
 
 const state = (): AccountProfileState => ({
   account: null,
