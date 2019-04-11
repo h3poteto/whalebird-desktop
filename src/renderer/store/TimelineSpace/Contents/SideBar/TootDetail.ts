@@ -124,7 +124,7 @@ const actions: ActionTree<TootDetailState, RootState> = {
       rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
-    const res: Response<Context> = await  client.get<Context>(`/statuses/${message.id}/context`, { limit: 40 })
+    const res: Response<Context> = await client.get<Context>(`/statuses/${message.id}/context`, { limit: 40 })
 
     commit(MUTATION_TYPES.UPDATE_ANCESTORS, res.data.ancestors)
     commit(MUTATION_TYPES.UPDATE_DESCENDANTS, res.data.descendants)
