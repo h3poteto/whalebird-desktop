@@ -1,9 +1,9 @@
 import sanitizeHtml from 'sanitize-html'
 import { ipcRenderer } from 'electron'
 import Mastodon, { Account, Emoji, Instance, Status, Notification as NotificationType } from 'megalodon'
-import SideMenu from './TimelineSpace/SideMenu'
-import HeaderMenu from './TimelineSpace/HeaderMenu'
-import Modals from './TimelineSpace/Modals'
+import SideMenu, { SideMenuState } from './TimelineSpace/SideMenu'
+import HeaderMenu, { HeaderMenuState } from './TimelineSpace/HeaderMenu'
+import Modals, { ModalsModuleState } from './TimelineSpace/Modals'
 import Contents from './TimelineSpace/Contents'
 import router from '@/router'
 import unreadSettings from '~/src/constants/unreadNotification'
@@ -414,6 +414,13 @@ const actions: ActionTree<TimelineSpaceState, any> = {
   stopDirectMessagesStreaming: () => {
     ipcRenderer.send('stop-directmessages-streaming')
   }
+}
+
+export interface TimelineSpaceModuleState extends TimelineSpaceState {
+  SideMenu: SideMenuState,
+  HeaderMenu: HeaderMenuState,
+  Modals: ModalsModuleState
+  // TODO: Contents: ContentsState
 }
 
 const TimelineSpace: Module<TimelineSpaceState, any> = {
