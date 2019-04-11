@@ -1,5 +1,5 @@
 import AccountProfile from './SideBar/AccountProfile'
-import TootDetail from './SideBar/TootDetail'
+import TootDetail, { TootDetailState } from './SideBar/TootDetail'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -12,6 +12,7 @@ export interface SideBarState {
 }
 
 export interface SideBarModuleState extends SideBarState {
+  TootDetail: TootDetailState
 }
 
 const state = (): SideBarState => ({
