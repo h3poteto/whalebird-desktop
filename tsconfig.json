@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "es5",
     "module": "es2015",
-    "lib": ["es6"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es6"
+    ],
     "sourceMap": true,
     "downlevelIteration": true,
     "strict": true,
