@@ -117,7 +117,7 @@ const actions: ActionTree<TootDetailState, RootState> = {
   changeToot: ({ commit }, message: Status) => {
     commit(MUTATION_TYPES.UPDATE_ANCESTORS, [])
     commit(MUTATION_TYPES.UPDATE_DESCENDANTS, [])
-    commit(MUTATION_TYPES.UPDATE_TOOT, message)
+    commit(MUTATION_TYPES.CHANGE_TOOT, message)
   },
   fetchToot: async ({ commit, rootState }, message: Status) => {
     const client = new Mastodon(
