@@ -4,7 +4,7 @@ import Mastodon, { Account, Emoji, Instance, Status, Notification as Notificatio
 import SideMenu, { SideMenuState } from './TimelineSpace/SideMenu'
 import HeaderMenu, { HeaderMenuState } from './TimelineSpace/HeaderMenu'
 import Modals, { ModalsModuleState } from './TimelineSpace/Modals'
-import Contents from './TimelineSpace/Contents'
+import Contents, { ContentsModuleState } from './TimelineSpace/Contents'
 import router from '@/router'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
@@ -419,8 +419,8 @@ const actions: ActionTree<TimelineSpaceState, any> = {
 export interface TimelineSpaceModuleState extends TimelineSpaceState {
   SideMenu: SideMenuState,
   HeaderMenu: HeaderMenuState,
-  Modals: ModalsModuleState
-  // TODO: Contents: ContentsState
+  Modals: ModalsModuleState,
+  Contents: ContentsModuleState
 }
 
 const TimelineSpace: Module<TimelineSpaceState, any> = {

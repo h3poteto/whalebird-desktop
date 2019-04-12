@@ -1,4 +1,4 @@
-import SideBar from './Contents/SideBar'
+import SideBar, { SideBarModuleState } from './Contents/SideBar'
 import Home from './Contents/Home'
 import Notifications from './Contents/Notifications'
 import Favourites from './Contents/Favourites'
@@ -9,9 +9,20 @@ import Lists from './Contents/Lists'
 import Hashtag from './Contents/Hashtag'
 import DirectMessages from './Contents/DirectMessages'
 import Mentions from './Contents/Mentions'
+import { Module } from 'vuex'
+import { RootState } from '@/store'
 
-const Contents = {
+export interface ContentsState {}
+
+export interface ContentsModuleState extends ContentsState {
+  SideBar: SideBarModuleState
+}
+
+const state = (): ContentsState => ({})
+
+const Contents: Module<ContentsState, RootState> = {
   namespaced: true,
+  state: state,
   modules: {
     SideBar,
     Home,
