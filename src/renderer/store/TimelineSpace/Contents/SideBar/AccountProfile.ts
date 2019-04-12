@@ -1,5 +1,5 @@
 import Mastodon, { Account, Relationship, Response, Results } from 'megalodon'
-import Timeline from './AccountProfile/Timeline'
+import Timeline, { TimelineState } from './AccountProfile/Timeline'
 import Follows, { FollowsState } from './AccountProfile/Follows'
 import Followers, { FollowersState } from './AccountProfile/Followers'
 import { Module, MutationTree, ActionTree } from 'vuex'
@@ -13,7 +13,8 @@ export interface AccountProfileState {
 
 export interface AccountProfileModuleState extends AccountProfileState {
   Followers: FollowersState,
-  Follows: FollowsState
+  Follows: FollowsState,
+  Timeline: TimelineState
 }
 
 const state = (): AccountProfileState => ({
