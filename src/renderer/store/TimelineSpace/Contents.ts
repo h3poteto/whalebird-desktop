@@ -1,5 +1,5 @@
 import SideBar, { SideBarModuleState } from './Contents/SideBar'
-import Home from './Contents/Home'
+import Home, { HomeState } from './Contents/Home'
 import Notifications from './Contents/Notifications'
 import Favourites from './Contents/Favourites'
 import Local from './Contents/Local'
@@ -15,7 +15,8 @@ import { RootState } from '@/store'
 export interface ContentsState {}
 
 export interface ContentsModuleState extends ContentsState {
-  SideBar: SideBarModuleState
+  SideBar: SideBarModuleState,
+  Home: HomeState
 }
 
 const state = (): ContentsState => ({})
