@@ -2,7 +2,7 @@ import { Response, Status, Account, Application } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import Home from '~/src/renderer/store/TimelineSpace/Contents/Home'
+import Home, { HomeState } from '@/store/TimelineSpace/Contents/Home'
 
 jest.mock('megalodon')
 
@@ -88,7 +88,7 @@ const status2: Status = {
   pinned: null
 }
 
-let state: any = () => {
+let state = (): HomeState => {
   return {
     lazyLoading: false,
     heading: true,
@@ -165,12 +165,6 @@ describe('Home', () => {
   })
 
   describe('lazyFetchTimeline', () => {
-    describe('last is null', () => {
-      it('should not be updated', async () => {
-        const result = await store.dispatch('Home/lazyFetchTimeline', null)
-        expect(result).toEqual(null)
-      })
-    })
     describe('success', () => {
       beforeAll(() => {
         state = () => {

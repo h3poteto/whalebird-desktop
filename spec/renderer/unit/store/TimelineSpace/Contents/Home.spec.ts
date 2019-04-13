@@ -1,8 +1,91 @@
-import Home from '@/store/TimelineSpace/Contents/Home'
+import { Account, Status, Application } from 'megalodon'
+import Home, { HomeState, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Home'
+
+const account: Account = {
+  id: 1,
+  username: 'h3poteto',
+  acct: 'h3poteto@pleroma.io',
+  display_name: 'h3poteto',
+  locked: false,
+  created_at: '2019-03-26T21:30:32',
+  followers_count: 10,
+  following_count: 10,
+  statuses_count: 100,
+  note: 'engineer',
+  url: 'https://pleroma.io',
+  avatar: '',
+  avatar_static: '',
+  header: '',
+  header_static: '',
+  emojis: [],
+  moved: null,
+  fields: null,
+  bot: false
+}
+const status1: Status = {
+  id: 1,
+  uri: 'http://example.com',
+  url: 'http://example.com',
+  account: account,
+  in_reply_to_id: null,
+  in_reply_to_account_id: null,
+  reblog: null,
+  content: 'hoge',
+  created_at: '2019-03-26T21:40:32',
+  emojis: [],
+  replies_count: 0,
+  reblogs_count: 0,
+  favourites_count: 0,
+  reblogged: null,
+  favourited: null,
+  muted: null,
+  sensitive: false,
+  spoiler_text: '',
+  visibility: 'public',
+  media_attachments: [],
+  mentions: [],
+  tags: [],
+  card: null,
+  application: {
+    name: 'Web'
+  } as Application,
+  language: null,
+  pinned: null
+}
+const status2: Status = {
+  id: 2,
+  uri: 'http://example.com',
+  url: 'http://example.com',
+  account: account,
+  in_reply_to_id: null,
+  in_reply_to_account_id: null,
+  reblog: null,
+  content: 'fuga',
+  created_at: '2019-03-26T21:40:32',
+  emojis: [],
+  replies_count: 0,
+  reblogs_count: 0,
+  favourites_count: 0,
+  reblogged: null,
+  favourited: null,
+  muted: null,
+  sensitive: false,
+  spoiler_text: '',
+  visibility: 'public',
+  media_attachments: [],
+  mentions: [],
+  tags: [],
+  card: null,
+  application: {
+    name: 'Web'
+  } as Application,
+  language: null,
+  pinned: null
+}
 
 describe('TimelineSpace/Contents/Home', () => {
   describe('mutations', () => {
-    let state
+    let state: HomeState
     beforeEach(() => {
       state = {
         lazyLoading: false,
@@ -17,14 +100,14 @@ describe('TimelineSpace/Contents/Home', () => {
 
     describe('changeLazyLoading', () => {
       it('should be change', () => {
-        Home.mutations.changeLazyLoading(state, true)
+        Home.mutations![MUTATION_TYPES.CHANGE_LAZY_LOADING](state, true)
         expect(state.lazyLoading).toEqual(true)
       })
     })
 
     describe('changeHeading', () => {
       it('should be change', () => {
-        Home.mutations.changeHeading(state, false)
+        Home.mutations![MUTATION_TYPES.CHANGE_HEADING](state, false)
         expect(state.heading).toEqual(false)
       })
     })
@@ -35,7 +118,7 @@ describe('TimelineSpace/Contents/Home', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [5, 4, 3, 2, 1, 0],
+            timeline: [status1],
             unreadTimeline: [],
             filter: '',
             showReblogs: true,
@@ -43,8 +126,8 @@ describe('TimelineSpace/Contents/Home', () => {
           }
         })
         it('should update timeline', () => {
-          Home.mutations.appendTimeline(state, 6)
-          expect(state.timeline).toEqual([6, 5, 4, 3, 2, 1, 0])
+          Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+          expect(state.timeline).toEqual([status2, status1])
           expect(state.unreadTimeline).toEqual([])
         })
       })
@@ -54,7 +137,7 @@ describe('TimelineSpace/Contents/Home', () => {
           state = {
             lazyLoading: false,
             heading: false,
-            timeline: [5, 4, 3, 2, 1, 0],
+            timeline: [status1],
             unreadTimeline: [],
             filter: '',
             showReblogs: true,
@@ -62,9 +145,9 @@ describe('TimelineSpace/Contents/Home', () => {
           }
         })
         it('should update unreadTimeline', () => {
-          Home.mutations.appendTimeline(state, 6)
-          expect(state.timeline).toEqual([5, 4, 3, 2, 1, 0])
-          expect(state.unreadTimeline).toEqual([6])
+          Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+          expect(state.timeline).toEqual([status1])
+          expect(state.unreadTimeline).toEqual([status2])
         })
       })
     })
@@ -74,16 +157,16 @@ describe('TimelineSpace/Contents/Home', () => {
         state = {
           lazyLoading: false,
           heading: true,
-          timeline: [5, 4, 3, 2, 1, 0],
-          unreadTimeline: [8, 7, 6],
+          timeline: [status1],
+          unreadTimeline: [status2],
           filter: '',
           showReblogs: true,
           showReplies: true
         }
       })
       it('should be merged', () => {
-        Home.mutations.mergeTimeline(state)
-        expect(state.timeline).toEqual([8, 7, 6, 5, 4, 3, 2, 1, 0])
+        Home.mutations![MUTATION_TYPES.MERGE_TIMELINE](state, null)
+        expect(state.timeline).toEqual([status2, status1])
         expect(state.unreadTimeline).toEqual([])
       })
     })
@@ -93,7 +176,7 @@ describe('TimelineSpace/Contents/Home', () => {
         state = {
           lazyLoading: false,
           heading: true,
-          timeline: [5, 4, 3, 2, 1, 0],
+          timeline: [status1],
           unreadTimeline: [],
           filter: '',
           showReblogs: true,
@@ -101,8 +184,8 @@ describe('TimelineSpace/Contents/Home', () => {
         }
       })
       it('should be inserted', () => {
-        Home.mutations.insertTimeline(state, [-1, -2, -3, -4])
-        expect(state.timeline).toEqual([5, 4, 3, 2, 1, 0, -1, -2, -3, -4])
+        Home.mutations![MUTATION_TYPES.INSERT_TIMELINE](state, [status2])
+        expect(state.timeline).toEqual([status1, status2])
       })
     })
 
@@ -112,78 +195,60 @@ describe('TimelineSpace/Contents/Home', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [
-              {
-                id: 3,
-                reblog: null,
-                text: '3rd'
-              },
-              {
-                id: 2,
-                reblog: null,
-                text: '2nd'
-              },
-              {
-                id: 1,
-                reblog: null,
-                text: '1st'
-              },
-              {
-                id: 0,
-                reblog: null,
-                text: 'zero'
-              }
-            ],
+            timeline: [status1, status2],
             unreadTimeline: [],
             filter: '',
             showReblogs: true,
             showReplies: true
           }
         })
+        const favouritedStatus: Status = Object.assign(status1, {
+          favourited: true
+        })
         it('should be updated', () => {
-          Home.mutations.updateToot(state, {
-            id: 2,
-            reblog: null,
-            text: 'second'
-          })
-          expect(state.timeline[1]).toEqual({
-            id: 2,
-            reblog: null,
-            text: 'second'
-          })
+          Home.mutations![MUTATION_TYPES.UPDATE_TOOT](state, favouritedStatus)
+          expect(state.timeline).toEqual([favouritedStatus, status2])
         })
       })
       describe('message is reblogged', () => {
+        const rebloggedStatus: Status = {
+          id: 3,
+          uri: 'http://example.com',
+          url: 'http://example.com',
+          account: account,
+          in_reply_to_id: null,
+          in_reply_to_account_id: null,
+          reblog: status1,
+          content: '',
+          created_at: '2019-03-31T21:40:32',
+          emojis: [],
+          replies_count: 0,
+          reblogs_count: 0,
+          favourites_count: 0,
+          reblogged: null,
+          favourited: null,
+          muted: null,
+          sensitive: false,
+          spoiler_text: '',
+          visibility: 'public',
+          media_attachments: [],
+          mentions: [],
+          tags: [],
+          card: null,
+          application: {
+            name: 'Web'
+          } as Application,
+          language: null,
+          pinned: null
+        }
+        const favouritedStatus: Status = Object.assign(status1, {
+          favourited: true
+        })
         beforeEach(() => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [
-              {
-                id: 3,
-                reblog: null,
-                text: '3rd'
-              },
-              {
-                id: 2,
-                reblog: null,
-                text: '2nd'
-              },
-              {
-                id: 1,
-                reblog: {
-                  id: -1,
-                  reblog: null,
-                  text: 'reblogged message'
-                },
-                text: null
-              },
-              {
-                id: 0,
-                reblog: null,
-                text: 'zero'
-              }
-            ],
+            timeline: [rebloggedStatus, status2],
             unreadTimeline: [],
             filter: '',
             showReblogs: true,
@@ -191,20 +256,9 @@ describe('TimelineSpace/Contents/Home', () => {
           }
         })
         it('should be updated', () => {
-          Home.mutations.updateToot(state, {
-            id: -1,
-            reblog: null,
-            text: 'negative id'
-          })
-          expect(state.timeline[2]).toEqual({
-            id: 1,
-            reblog: {
-              id: -1,
-              reblog: null,
-              text: 'negative id'
-            },
-            text: null
-          })
+          Home.mutations![MUTATION_TYPES.UPDATE_TOOT](state, favouritedStatus)
+          expect(state.timeline[0].reblog).not.toBeNull()
+          expect(state.timeline[0].reblog!.favourited).toEqual(true)
         })
       })
     })
@@ -215,28 +269,7 @@ describe('TimelineSpace/Contents/Home', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [
-              {
-                id: 3,
-                reblog: null,
-                text: '3rd'
-              },
-              {
-                id: 2,
-                reblog: null,
-                text: '2nd'
-              },
-              {
-                id: 1,
-                reblog: null,
-                text: 'first'
-              },
-              {
-                id: 0,
-                reblog: null,
-                text: 'zero'
-              }
-            ],
+            timeline: [status1, status2],
             unreadTimeline: [],
             filter: '',
             showReblogs: true,
@@ -244,62 +277,47 @@ describe('TimelineSpace/Contents/Home', () => {
           }
         })
         it('should be deleted', () => {
-          Home.mutations.deleteToot(state, {
-            id: 0,
-            reblog: null,
-            text: 'zero'
-          })
-          expect(state.timeline).toEqual([
-            {
-              id: 3,
-              reblog: null,
-              text: '3rd'
-            },
-            {
-              id: 2,
-              reblog: null,
-              text: '2nd'
-            },
-            {
-              id: 1,
-              reblog: null,
-              text: 'first'
-            }
-          ])
+          Home.mutations![MUTATION_TYPES.DELETE_TOOT](state, status1)
+          expect(state.timeline).toEqual([status2])
         })
       })
 
       describe('message is reblogged', () => {
         beforeEach(() => {
+          const rebloggedStatus: Status = {
+            id: 3,
+            uri: 'http://example.com',
+            url: 'http://example.com',
+            account: account,
+            in_reply_to_id: null,
+            in_reply_to_account_id: null,
+            reblog: status1,
+            content: '',
+            created_at: '2019-03-31T21:40:32',
+            emojis: [],
+            replies_count: 0,
+            reblogs_count: 0,
+            favourites_count: 0,
+            reblogged: null,
+            favourited: null,
+            muted: null,
+            sensitive: false,
+            spoiler_text: '',
+            visibility: 'public',
+            media_attachments: [],
+            mentions: [],
+            tags: [],
+            card: null,
+            application: {
+              name: 'Web'
+            } as Application,
+            language: null,
+            pinned: null
+          }
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [
-              {
-                id: 3,
-                reblog: null,
-                text: '3rd'
-              },
-              {
-                id: 2,
-                reblog: null,
-                text: '2nd'
-              },
-              {
-                id: 1,
-                reblog: {
-                  id: -1,
-                  reblog: null,
-                  text: 'reblogged toot'
-                },
-                text: 'first'
-              },
-              {
-                id: 0,
-                reblog: null,
-                text: 'zero'
-              }
-            ],
+            timeline: [rebloggedStatus, status2],
             unreadTimeline: [],
             filter: '',
             showReblogs: true,
@@ -307,28 +325,8 @@ describe('TimelineSpace/Contents/Home', () => {
           }
         })
         it('should be deleted', () => {
-          Home.mutations.deleteToot(state, {
-            id: -1,
-            reblog: null,
-            text: 'reblogged toot'
-          })
-          expect(state.timeline).toEqual([
-            {
-              id: 3,
-              reblog: null,
-              text: '3rd'
-            },
-            {
-              id: 2,
-              reblog: null,
-              text: '2nd'
-            },
-            {
-              id: 0,
-              reblog: null,
-              text: 'zero'
-            }
-          ])
+          Home.mutations![MUTATION_TYPES.DELETE_TOOT](state, status1)
+          expect(state.timeline).toEqual([status2])
         })
       })
     })
