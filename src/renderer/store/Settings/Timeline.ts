@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 interface UnreadNotification {
   direct: boolean,
@@ -30,8 +31,7 @@ const mutations: MutationTree<TimelineState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<TimelineState, any> = {
+const actions: ActionTree<TimelineState, RootState> = {
   loadUnreadNotification: ({ commit, rootState }): Promise<boolean> => {
     return new Promise(resolve => {
       ipcRenderer.once('response-get-unread-notification', (_, settings: UnreadNotification) => {
@@ -71,8 +71,7 @@ const actions: ActionTree<TimelineState, any> = {
   }
 }
 
-// Todo: use type of rootState
-const Timeline: Module<TimelineState, any> = {
+const Timeline: Module<TimelineState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,

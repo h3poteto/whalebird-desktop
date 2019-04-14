@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import axios from 'axios'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 export interface LoginState {
   selectedInstance: string | null,
@@ -26,8 +27,7 @@ const mutations: MutationTree<LoginState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<LoginState, any> = {
+const actions: ActionTree<LoginState, RootState> = {
   fetchLogin: (_, instance: string) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('get-auth-url', instance)
@@ -55,8 +55,7 @@ const actions: ActionTree<LoginState, any> = {
   }
 }
 
-// TODO: use type of rootState
-const Login: Module<LoginState, any> = {
+const Login: Module<LoginState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,

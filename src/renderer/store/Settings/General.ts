@@ -2,6 +2,7 @@ import Mastodon, { Account } from 'megalodon'
 import Visibilities from '~/src/constants/visibility'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import Visibility from '~/src/types/visibility'
+import { RootState } from '@/store'
 
 export interface GeneralState {
   visibility: number,
@@ -27,11 +28,10 @@ const mutations: MutationTree<GeneralState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<GeneralState, any> = {
+const actions: ActionTree<GeneralState, RootState> = {
   fetchSettings: async ({ commit, rootState }): Promise<Account> => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res = await client.get<Account>('/accounts/verify_credentials')
@@ -44,7 +44,7 @@ const actions: ActionTree<GeneralState, any> = {
   },
   setVisibility: async ({ commit, rootState }, value: number) => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const visibility = Object.values(Visibilities as Array<Visibility>).find((v) => {
@@ -60,7 +60,7 @@ const actions: ActionTree<GeneralState, any> = {
   },
   setSensitive: async ({ commit, rootState }, value: boolean) => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res = await client.patch<Account>('/accounts/update_credentials', {
@@ -73,8 +73,7 @@ const actions: ActionTree<GeneralState, any> = {
   }
 }
 
-// TODO: use type of rootState
-const General: Module<GeneralState, any> = {
+const General: Module<GeneralState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,

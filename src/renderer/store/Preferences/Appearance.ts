@@ -5,6 +5,7 @@ import TimeFormat from '~/src/constants/timeFormat'
 import { LightTheme } from '@/utils/theme'
 import DefaultFonts from '@/utils/fonts'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 interface ColorThemeSet {
   background_color: string,
@@ -59,8 +60,7 @@ const mutations: MutationTree<AppearanceState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<AppearanceState, any> = {
+const actions: ActionTree<AppearanceState, RootState> = {
   loadAppearance: ({ commit }) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('get-preferences')
@@ -218,8 +218,7 @@ const actions: ActionTree<AppearanceState, any> = {
   }
 }
 
-// TODO: use type of rootState
-const Appearance: Module<AppearanceState, any> = {
+const Appearance: Module<AppearanceState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,

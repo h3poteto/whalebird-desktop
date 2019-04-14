@@ -3,6 +3,7 @@ import i18n from '~/src/config/i18n'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { List } from 'megalodon'
 import Hashtag from '~/src/types/hashtag'
+import { RootState } from '@/store'
 
 export interface Channel {
   name: string,
@@ -105,8 +106,7 @@ const mutations: MutationTree<JumpState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<JumpState, any> = {
+const actions: ActionTree<JumpState, RootState> = {
   jumpCurrentSelected: ({ state, commit, rootState }) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, false)
     router.push({ path: `/${rootState.TimelineSpace.account._id}/${state.selectedChannel.path}` })
@@ -123,7 +123,7 @@ const actions: ActionTree<JumpState, any> = {
   }
 }
 
-const Jump: Module<JumpState, any> = {
+const Jump: Module<JumpState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,

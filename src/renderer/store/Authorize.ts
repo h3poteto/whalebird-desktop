@@ -1,12 +1,12 @@
 import { ipcRenderer } from 'electron'
 import { Module, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 export interface AuthorizeState {}
 
 const state = (): AuthorizeState => ({})
 
-// TODO: use type of rootState
-const actions: ActionTree<AuthorizeState, any> = {
+const actions: ActionTree<AuthorizeState, RootState> = {
   submit: (_, code: string) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('get-access-token', code)
@@ -22,8 +22,7 @@ const actions: ActionTree<AuthorizeState, any> = {
   }
 }
 
-// TODO: use type of rootState
-const Authorize: Module<AuthorizeState, any> = {
+const Authorize: Module<AuthorizeState, RootState> = {
   namespaced: true,
   state: state,
   mutations: {},

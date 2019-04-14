@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron'
 import router from '@/router'
 import Account from '~/src/types/account'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 export interface GlobalHeaderState {
   accounts: Array<Account>,
@@ -33,8 +34,7 @@ const mutations: MutationTree<GlobalHeaderState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<GlobalHeaderState, any> = {
+const actions: ActionTree<GlobalHeaderState, RootState> = {
   listAccounts: ({ dispatch, commit }): Promise<Array<Account>> => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('list-accounts', 'list')
@@ -107,8 +107,7 @@ const actions: ActionTree<GlobalHeaderState, any> = {
   }
 }
 
-// TODO: use type of rootState
-const GlobalHeader: Module<GlobalHeaderState, any> = {
+const GlobalHeader: Module<GlobalHeaderState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
