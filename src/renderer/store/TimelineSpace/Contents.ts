@@ -6,7 +6,7 @@ import Local, { LocalState } from './Contents/Local'
 import Public, { PublicState } from './Contents/Public'
 import Search, { SearchModuleState } from './Contents/Search'
 import Lists from './Contents/Lists'
-import Hashtag from './Contents/Hashtag'
+import Hashtag, { HashtagModuleState } from './Contents/Hashtag'
 import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
 import Mentions, { MentionsState } from './Contents/Mentions'
 import { Module } from 'vuex'
@@ -23,6 +23,7 @@ export interface ContentsModuleState extends ContentsState {
   Local: LocalState,
   Public: PublicState,
   Search: SearchModuleState,
+  Hashtag: HashtagModuleState
 }
 
 const state = (): ContentsState => ({})
