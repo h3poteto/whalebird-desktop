@@ -157,7 +157,7 @@ export default {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementsByName('list')[0].clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Lists/Show/lazyFetchTimeline', {
           list_id: this.list_id,
-          last: this.timeline[this.timeline.length - 1]
+          status: this.timeline[this.timeline.length - 1]
         })
       }
       // for unread control

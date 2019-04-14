@@ -1,5 +1,5 @@
 import Index, { IndexState } from './Lists/Index'
-import Show from './Lists/Show'
+import Show, { ShowState } from './Lists/Show'
 import Edit from './Lists/Edit'
 import { Module } from 'vuex'
 import { RootState } from '@/store'
@@ -7,7 +7,8 @@ import { RootState } from '@/store'
 export interface ListsState {}
 
 export interface ListsModuleState extends ListsState {
-  Index: IndexState
+  Index: IndexState,
+  Show: ShowState
 }
 
 const state = (): ListsState => ({})
