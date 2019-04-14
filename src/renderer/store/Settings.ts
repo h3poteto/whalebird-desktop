@@ -1,6 +1,7 @@
 import General, { GeneralState } from './Settings/General'
 import Timeline, { TimelineState } from './Settings/Timeline'
 import { Module, MutationTree } from 'vuex'
+import { RootState } from '@/store'
 
 export interface SettingsState {
   accountID: number | null
@@ -25,8 +26,7 @@ export interface SettingsModuleState extends SettingsState {
   Timeline: TimelineState,
 }
 
-// TODO: use type of rootState
-const Settings: Module<SettingsState, any> = {
+const Settings: Module<SettingsState, RootState> = {
   namespaced: true,
   modules: {
     General,

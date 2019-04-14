@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 interface Notify {
   reply: boolean,
@@ -37,8 +38,7 @@ const mutations: MutationTree<NotificationState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<NotificationState, any> = {
+const actions: ActionTree<NotificationState, RootState> = {
   loadNotification: ({ commit }) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('get-preferences')
@@ -72,10 +72,9 @@ const actions: ActionTree<NotificationState, any> = {
   }
 }
 
-// TODO: use type of rootState
 export default {
   namespaced: true,
   state: state,
   mutations: mutations,
   actions: actions
-} as Module<NotificationState, any>
+} as Module<NotificationState, RootState>

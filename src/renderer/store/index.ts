@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
+import { Route } from 'vue-router'
 
 import App, { AppState } from './App'
 import GlobalHeader, { GlobalHeaderState } from './GlobalHeader'
@@ -21,7 +22,8 @@ export interface RootState {
   TimelineSpace: TimelineSpaceModuleState,
   Preferences: PreferencesModuleState,
   Settings: SettingsModuleState,
-  molecules: MoleculesModuleState
+  molecules: MoleculesModuleState,
+  route: Route
 }
 
 export default new Vuex.Store({

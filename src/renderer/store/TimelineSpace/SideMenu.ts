@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import Hashtag from '~/src/types/hashtag'
 import Account from '~/src/types/account'
+import { RootState } from '@/store'
 
 export interface SideMenuState {
   unreadHomeTimeline: boolean,
@@ -70,8 +71,7 @@ const mutations: MutationTree<SideMenuState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<SideMenuState, any> = {
+const actions: ActionTree<SideMenuState, RootState> = {
   fetchLists: async ({ commit, rootState }, account: Account | null = null): Promise<Array<List>> => {
     if (account === null) account = rootState.TimelineSpace.account
     const client = new Mastodon(
@@ -119,7 +119,7 @@ const actions: ActionTree<SideMenuState, any> = {
   }
 }
 
-const SideMenu: Module<SideMenuState, any> = {
+const SideMenu: Module<SideMenuState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,

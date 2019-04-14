@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import Language from '~/src/constants/language'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 interface LanguageSet {
   language: string
@@ -30,8 +31,7 @@ const mutations: MutationTree<LanguageState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<LanguageState, any> = {
+const actions: ActionTree<LanguageState, RootState> = {
   loadLanguage: ({ commit }) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('get-preferences')
@@ -60,10 +60,9 @@ const actions: ActionTree<LanguageState, any> = {
   }
 }
 
-// TODO: use type of rootState
 export default {
   namespaced: true,
   state: state,
   mutations: mutations,
   actions: actions
-} as Module<LanguageState, any>
+} as Module<LanguageState, RootState>

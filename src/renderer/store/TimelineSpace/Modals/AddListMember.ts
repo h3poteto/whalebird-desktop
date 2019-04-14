@@ -1,5 +1,6 @@
 import Mastodon, { Account, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 export interface AddListMemberState {
   modalOpen: boolean,
@@ -31,14 +32,13 @@ const mutations: MutationTree<AddListMemberState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<AddListMemberState, any> = {
+const actions: ActionTree<AddListMemberState, RootState> = {
   changeModal: ({ commit }, value: boolean) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, value)
   },
   search: async ({ commit, rootState }, name: string): Promise<Array<Account>> => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', {
@@ -50,7 +50,7 @@ const actions: ActionTree<AddListMemberState, any> = {
   },
   add: async ({ state, rootState }, account: Account): Promise<{}> => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res: Response<{}> = await client.post<{}>(`/lists/${state.targetListId}/accounts`, {
@@ -60,7 +60,7 @@ const actions: ActionTree<AddListMemberState, any> = {
   }
 }
 
-const AddListMember: Module<AddListMemberState, any> = {
+const AddListMember: Module<AddListMemberState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
