@@ -1,7 +1,7 @@
 import SideBar, { SideBarModuleState } from './Contents/SideBar'
 import Home, { HomeState } from './Contents/Home'
 import Notifications, { NotificationsState } from './Contents/Notifications'
-import Favourites from './Contents/Favourites'
+import Favourites, { FavouritesState } from './Contents/Favourites'
 import Local, { LocalState } from './Contents/Local'
 import Public, { PublicState } from './Contents/Public'
 import Search, { SearchModuleState } from './Contents/Search'
@@ -20,6 +20,7 @@ export interface ContentsModuleState extends ContentsState {
   Notifications: NotificationsState,
   Mentions: MentionsState,
   DirectMessages: DirectMessagesState,
+  Favourites: FavouritesState,
   Local: LocalState,
   Public: PublicState,
   Search: SearchModuleState,
