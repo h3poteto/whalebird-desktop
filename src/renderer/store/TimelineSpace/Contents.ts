@@ -8,7 +8,7 @@ import Search from './Contents/Search'
 import Lists from './Contents/Lists'
 import Hashtag from './Contents/Hashtag'
 import DirectMessages from './Contents/DirectMessages'
-import Mentions from './Contents/Mentions'
+import Mentions, { MentionsState } from './Contents/Mentions'
 import { Module } from 'vuex'
 import { RootState } from '@/store'
 
@@ -18,6 +18,7 @@ export interface ContentsModuleState extends ContentsState {
   SideBar: SideBarModuleState,
   Home: HomeState,
   Notifications: NotificationsState,
+  Mentions: MentionsState,
   Local: LocalState,
   Public: PublicState
 }
