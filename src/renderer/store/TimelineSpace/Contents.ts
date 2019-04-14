@@ -3,7 +3,7 @@ import Home, { HomeState } from './Contents/Home'
 import Notifications from './Contents/Notifications'
 import Favourites from './Contents/Favourites'
 import Local, { LocalState } from './Contents/Local'
-import Public from './Contents/Public'
+import Public, { PublicState } from './Contents/Public'
 import Search from './Contents/Search'
 import Lists from './Contents/Lists'
 import Hashtag from './Contents/Hashtag'
@@ -17,7 +17,8 @@ export interface ContentsState {}
 export interface ContentsModuleState extends ContentsState {
   SideBar: SideBarModuleState,
   Home: HomeState,
-  Local: LocalState
+  Local: LocalState,
+  Public: PublicState
 }
 
 const state = (): ContentsState => ({})

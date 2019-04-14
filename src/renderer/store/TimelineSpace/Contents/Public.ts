@@ -2,7 +2,7 @@ import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface LocalState {
+export interface PublicState {
   timeline: Array<Status>,
   unreadTimeline: Array<Status>,
   lazyLoading: boolean,
@@ -10,7 +10,7 @@ export interface LocalState {
   filter: string
 }
 
-const state = (): LocalState => ({
+const state = (): PublicState => ({
   timeline: [],
   unreadTimeline: [],
   lazyLoading: false,
@@ -24,15 +24,15 @@ export const MUTATION_TYPES = {
   UPDATE_TIMELINE: 'updateTimeline',
   MERGE_TIMELINE: 'mergeTimeline',
   INSERT_TIMELINE: 'insertTimeline',
-  ARCHIVE_TIMELINE: 'archiveTimeline',
-  CLEAR_TIMELINE: 'clearTimeline',
+  ARCHIVE_TIMELINE: 'archiveTimeine',
+  CLEAR_TIMELINE: 'clearTimeine',
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
   CHANGE_LAZY_LOADING: 'changeLazyLoading',
   CHANGE_FILTER: 'changeFilter'
 }
 
-const mutations: MutationTree<LocalState> = {
+const mutations: MutationTree<PublicState> = {
   [MUTATION_TYPES.CHANGE_HEADING]: (state, value: boolean) => {
     state.heading = value
   },
@@ -93,17 +93,16 @@ const mutations: MutationTree<LocalState> = {
   }
 }
 
-const actions: ActionTree<LocalState, RootState> = {
-  fetchLocalTimeline: async ({ commit, rootState }) => {
+const actions: ActionTree<PublicState, RootState> = {
+  fetchPublicTimeline: async ({ commit, rootState }) => {
     const client = new Mastodon(
       rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
-    const res: Response<Array<Status>> = await client.get<Array<Status>>('/timelines/public', { limit: 40, local: true })
+    const res: Response<Array<Status>> = await client.get<Array<Status>>('/timelines/public', { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
-    return res.data
   },
-  lazyFetchTimeline: async ({ state, commit, rootState }, lastStatus: Status): Promise<Array<Status> | null> => {
+  lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Status): Promise<Array<Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
@@ -112,7 +111,7 @@ const actions: ActionTree<LocalState, RootState> = {
       rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
-    return client.get<Array<Status>>('/timelines/public', { max_id: lastStatus.id, limit: 40, local: true })
+    return client.get<Array<Status>>('/timelines/public', { max_id: lastStatus.id, limit: 40 })
       .then(res => {
         commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
         return res.data
@@ -123,11 +122,11 @@ const actions: ActionTree<LocalState, RootState> = {
   }
 }
 
-const Local: Module<LocalState, RootState> = {
+const Public: Module<PublicState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
   actions: actions
 }
 
-export default Local
+export default Public
