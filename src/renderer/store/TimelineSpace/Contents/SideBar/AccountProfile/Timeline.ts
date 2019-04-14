@@ -1,7 +1,7 @@
 import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import { LoadPositionWithAccount } from '~src/types/load_position'
+import { LoadPositionWithAccount } from '@/types/loadPosition'
 
 export interface TimelineState {
   timeline: Array<Status>,
