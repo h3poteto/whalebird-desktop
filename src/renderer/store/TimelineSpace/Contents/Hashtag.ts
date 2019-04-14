@@ -1,12 +1,14 @@
 import { ipcRenderer } from 'electron'
-import List from './Hashtag/List'
-import Tag from './Hashtag/Tag'
+import List, { ListState } from './Hashtag/List'
+import Tag, { TagState } from './Hashtag/Tag'
 import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export interface HashtagState {}
 
 export interface HashtagModuleState extends HashtagState {
+  List: ListState,
+  Tag: TagState
 }
 
 const state = (): HashtagState => ({})
