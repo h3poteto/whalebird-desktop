@@ -24,7 +24,7 @@ export const MUTATION_TYPES = {
   UPDATE_TIMELINE: 'updateTimeline',
   MERGE_TIMELINE: 'mergeTimeline',
   INSERT_TIMELINE: 'insertTimeline',
-  ARCHIVE_TIMELINE: 'archiveTimeine',
+  ARCHIVE_TIMELINE: 'archiveTimeline',
   CLEAR_TIMELINE: 'clearTimeline',
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
