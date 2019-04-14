@@ -157,7 +157,7 @@ export default {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementsByName('tag')[0].clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/lazyFetchTimeline', {
           tag: this.tag,
-          last: this.timeline[this.timeline.length - 1]
+          status: this.timeline[this.timeline.length - 1]
         })
       }
       // for unread control
