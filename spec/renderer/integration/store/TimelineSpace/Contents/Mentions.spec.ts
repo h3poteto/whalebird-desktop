@@ -169,13 +169,6 @@ describe('Mentions', () => {
   })
 
   describe('lazyFetchMentions', () => {
-    describe('last is null', () => {
-      it('should not be updated', async () => {
-        const result = await store.dispatch('Mentions/lazyFetchMentions', null)
-        expect(result).toEqual(null)
-      })
-    })
-
     describe('loading', () => {
       beforeAll(() => {
         state = () => {

@@ -1,6 +1,7 @@
 import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
+import { LoadPosition } from '~src/types/load_position'
 
 export interface TimelineState {
   timeline: Array<Status>,
@@ -95,11 +96,7 @@ const actions: ActionTree<TimelineState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
   },
-  lazyFetchTimeline: async ({ state, commit, rootState }, info: any): Promise<null> => {
-    const last = info.last
-    if (last === undefined || last === null) {
-      return Promise.resolve(null)
-    }
+  lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPosition): Promise<null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
@@ -109,7 +106,7 @@ const actions: ActionTree<TimelineState, RootState> = {
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     try {
-      const res: Response<Array<Status>> = await client.get<Array<Status>>(`/accounts/${info.account.id}/statuses`, { max_id: last.id, limit: 40 })
+      const res: Response<Array<Status>> = await client.get<Array<Status>>(`/accounts/${loadPosition.account.id}/statuses`, { max_id: loadPosition.status.id, limit: 40 })
       commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
     } finally {
       commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
