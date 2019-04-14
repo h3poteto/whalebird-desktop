@@ -2,7 +2,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import Account, { AccountState } from '@/store/Preferences/Account'
-import LocalAccount from '~/src/types/LocalAccount'
+import LocalAccount from '~/src/types/localAccount'
 
 const account: LocalAccount = {
   _id: 'sample',
