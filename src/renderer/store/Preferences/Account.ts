@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import Account from '~/src/types/account'
+import { RootState } from '@/store'
 
 export interface AccountState {
   accounts: Array<Account>,
@@ -26,8 +27,7 @@ const mutations: MutationTree<AccountState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<AccountState, any> = {
+const actions: ActionTree<AccountState, RootState> = {
   loadAccounts: ({ commit }): Promise<Array<Account>> => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('list-accounts', 'list')
@@ -96,8 +96,7 @@ const actions: ActionTree<AccountState, any> = {
   }
 }
 
-// TODO: use type of rootState
-const account: Module<AccountState, any> = {
+const account: Module<AccountState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,

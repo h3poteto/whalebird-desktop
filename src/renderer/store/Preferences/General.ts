@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 interface Sound {
   fav_rb: boolean,
@@ -50,8 +51,7 @@ const mutations: MutationTree<GeneralState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<GeneralState, any> = {
+const actions: ActionTree<GeneralState, RootState> = {
   loadGeneral: ({ commit }) => {
     return new Promise((resolve, reject) => {
       commit(MUTATION_TYPES.CHANGE_LOADING, true)
@@ -119,7 +119,7 @@ const actions: ActionTree<GeneralState, any> = {
     })
   }
 }
-const General: Module<GeneralState, any> = {
+const General: Module<GeneralState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,

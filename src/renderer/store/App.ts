@@ -7,6 +7,7 @@ import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
 import Language from '~/src/constants/language'
 import DefaultFonts from '@/utils/fonts'
+import { RootState } from '@/store'
 
 export interface Notify {
   reply: boolean,
@@ -93,8 +94,7 @@ const mutations: MutationTree<AppState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<AppState, any> = {
+const actions: ActionTree<AppState, RootState> = {
   watchShortcutsEvents: () => {
     ipcRenderer.on('open-preferences', () => {
       router.push('/preferences/general')
@@ -154,8 +154,7 @@ const actions: ActionTree<AppState, any> = {
   }
 }
 
-// TODO: use type of rootState
-const App: Module<AppState, any> = {
+const App: Module<AppState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
