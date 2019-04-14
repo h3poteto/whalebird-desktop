@@ -11,3 +11,7 @@ export interface LoadPositionWithAccount extends LoadPosition {
 export interface LoadPositionWithList extends LoadPosition {
   list_id: number
 }
+
+export interface LoadPositionWithTag extends LoadPosition {
+  tag: string
+}
