@@ -1,21 +1,27 @@
 import SideBar, { SideBarModuleState } from './Contents/SideBar'
-import Home from './Contents/Home'
-import Notifications from './Contents/Notifications'
+import Home, { HomeState } from './Contents/Home'
+import Notifications, { NotificationsState } from './Contents/Notifications'
 import Favourites from './Contents/Favourites'
-import Local from './Contents/Local'
-import Public from './Contents/Public'
+import Local, { LocalState } from './Contents/Local'
+import Public, { PublicState } from './Contents/Public'
 import Search from './Contents/Search'
 import Lists from './Contents/Lists'
 import Hashtag from './Contents/Hashtag'
-import DirectMessages from './Contents/DirectMessages'
-import Mentions from './Contents/Mentions'
+import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
+import Mentions, { MentionsState } from './Contents/Mentions'
 import { Module } from 'vuex'
 import { RootState } from '@/store'
 
 export interface ContentsState {}
 
 export interface ContentsModuleState extends ContentsState {
-  SideBar: SideBarModuleState
+  SideBar: SideBarModuleState,
+  Home: HomeState,
+  Notifications: NotificationsState,
+  Mentions: MentionsState,
+  DirectMessages: DirectMessagesState,
+  Local: LocalState,
+  Public: PublicState
 }
 
 const state = (): ContentsState => ({})
