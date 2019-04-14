@@ -10,6 +10,7 @@ import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import AccountType from '~/src/types/account'
 import { Notify } from './App'
+import { RootState } from '@/store'
 
 declare var Notification: any
 
@@ -105,7 +106,7 @@ const mutations: MutationTree<TimelineSpaceState> = {
   }
 }
 
-const actions: ActionTree<TimelineSpaceState, any> = {
+const actions: ActionTree<TimelineSpaceState, RootState> = {
   // -------------------------------------------------
   // Accounts
   // -------------------------------------------------
@@ -423,7 +424,7 @@ export interface TimelineSpaceModuleState extends TimelineSpaceState {
   Contents: ContentsModuleState
 }
 
-const TimelineSpace: Module<TimelineSpaceState, any> = {
+const TimelineSpace: Module<TimelineSpaceState, RootState> = {
   namespaced: true,
   modules: {
     SideMenu,

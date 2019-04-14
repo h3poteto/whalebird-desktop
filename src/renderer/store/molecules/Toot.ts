@@ -1,15 +1,16 @@
 import Mastodon, { Response, Status, Account } from 'megalodon'
 import { ipcRenderer } from 'electron'
 import { Module, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 export interface TootState {}
 
 const state = (): TootState => ({})
 
-const actions: ActionTree<TootState, any> = {
+const actions: ActionTree<TootState, RootState> = {
   reblog: async ({ rootState }, message: Status) => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/reblog`)
@@ -21,7 +22,7 @@ const actions: ActionTree<TootState, any> = {
   },
   unreblog: async ({ rootState }, message: Status) => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/unreblog`)
@@ -29,7 +30,7 @@ const actions: ActionTree<TootState, any> = {
   },
   addFavourite: async ({ rootState }, message: Status) => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/favourite`)
@@ -38,7 +39,7 @@ const actions: ActionTree<TootState, any> = {
   },
   removeFavourite: async ({ rootState }, message: Status) => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/unfavourite`)
@@ -46,7 +47,7 @@ const actions: ActionTree<TootState, any> = {
   },
   deleteToot: async ({ rootState }, message: Status) => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     await client.del(`/statuses/${message.id}`)
@@ -54,14 +55,14 @@ const actions: ActionTree<TootState, any> = {
   },
   block: async ({ rootState }, account: Account) => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     return client.post(`/accounts/${account.id}/block`)
   }
 }
 
-const Toot: Module<TootState, any> = {
+const Toot: Module<TootState, RootState> = {
   namespaced: true,
   state: state,
   actions: actions

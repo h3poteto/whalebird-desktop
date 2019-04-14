@@ -1,5 +1,6 @@
 import Mastodon, { List, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { RootState } from '@/store'
 
 export interface HeaderMenuState {
   title: string,
@@ -25,11 +26,10 @@ const mutations: MutationTree<HeaderMenuState> = {
   }
 }
 
-// TODO: use type of rootState
-const actions: ActionTree<HeaderMenuState, any> = {
+const actions: ActionTree<HeaderMenuState, RootState> = {
   fetchList: async ({ commit, rootState }, listID: number): Promise<List> => {
     const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res: Response<List> = await client.get<List>(`/lists/${listID}`)
@@ -38,7 +38,7 @@ const actions: ActionTree<HeaderMenuState, any> = {
   }
 }
 
-const HeaderMenu: Module<HeaderMenuState, any> = {
+const HeaderMenu: Module<HeaderMenuState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
