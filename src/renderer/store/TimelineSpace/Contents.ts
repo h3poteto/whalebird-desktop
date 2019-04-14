@@ -4,7 +4,7 @@ import Notifications, { NotificationsState } from './Contents/Notifications'
 import Favourites from './Contents/Favourites'
 import Local, { LocalState } from './Contents/Local'
 import Public, { PublicState } from './Contents/Public'
-import Search from './Contents/Search'
+import Search, { SearchModuleState } from './Contents/Search'
 import Lists from './Contents/Lists'
 import Hashtag from './Contents/Hashtag'
 import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
@@ -21,7 +21,8 @@ export interface ContentsModuleState extends ContentsState {
   Mentions: MentionsState,
   DirectMessages: DirectMessagesState,
   Local: LocalState,
-  Public: PublicState
+  Public: PublicState,
+  Search: SearchModuleState,
 }
 
 const state = (): ContentsState => ({})
