@@ -1,4 +1,4 @@
-import Account from './Search/Account'
+import Account, { AccountState } from './Search/Account'
 import Tag from './Search/Tag'
 import Toots from './Search/Toots'
 import { Module, MutationTree } from 'vuex'
@@ -9,6 +9,7 @@ export interface SearchState {
 }
 
 export interface SearchModuleState extends SearchState {
+  Account: AccountState
 }
 
 const state = (): SearchState => ({
