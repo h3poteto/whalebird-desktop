@@ -1,7 +1,7 @@
 import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import { LoadPosition } from '~src/types/load_position'
+import { LoadPositionWithAccount } from '~src/types/load_position'
 
 export interface TimelineState {
   timeline: Array<Status>,
@@ -96,7 +96,7 @@ const actions: ActionTree<TimelineState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
   },
-  lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPosition): Promise<null> => {
+  lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPositionWithAccount): Promise<null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
