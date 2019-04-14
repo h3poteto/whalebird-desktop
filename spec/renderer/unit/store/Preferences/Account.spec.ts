@@ -1,7 +1,7 @@
 import Account, { AccountState, MUTATION_TYPES } from '@/store/Preferences/Account'
-import AccountType from '~/src/types/account'
+import LocalAccount from '~/src/types/localAccount'
 
-const account: AccountType = {
+const account: LocalAccount = {
   _id: 'sample',
   baseURL: 'http://example.com',
   domain: 'example.com',

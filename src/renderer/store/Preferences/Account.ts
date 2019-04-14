@@ -1,10 +1,10 @@
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import Account from '~/src/types/account'
+import LocalAccount from '~/src/types/localAccount'
 import { RootState } from '@/store'
 
 export interface AccountState {
-  accounts: Array<Account>,
+  accounts: Array<LocalAccount>,
   accountLoading: boolean
 }
 
@@ -19,7 +19,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<AccountState> = {
-  [MUTATION_TYPES.UPDATE_ACCOUNTS]: (state, accounts: Array<Account>) => {
+  [MUTATION_TYPES.UPDATE_ACCOUNTS]: (state, accounts: Array<LocalAccount>) => {
     state.accounts = accounts
   },
   [MUTATION_TYPES.UPDATE_ACCOUNT_LOADING]: (state, value: boolean) => {
@@ -28,21 +28,21 @@ const mutations: MutationTree<AccountState> = {
 }
 
 const actions: ActionTree<AccountState, RootState> = {
-  loadAccounts: ({ commit }): Promise<Array<Account>> => {
+  loadAccounts: ({ commit }): Promise<Array<LocalAccount>> => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('list-accounts', 'list')
       ipcRenderer.once('error-list-accounts', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-list-accounts')
         reject(err)
       })
-      ipcRenderer.once('response-list-accounts', (_, accounts: Array<Account>) => {
+      ipcRenderer.once('response-list-accounts', (_, accounts: Array<LocalAccount>) => {
         ipcRenderer.removeAllListeners('error-list-accounts')
         commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
         resolve(accounts)
       })
     })
   },
-  removeAccount: (_, account: Account) => {
+  removeAccount: (_, account: LocalAccount) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('remove-account', account._id)
       ipcRenderer.once('error-remove-account', (_, err: Error) => {
@@ -55,7 +55,7 @@ const actions: ActionTree<AccountState, RootState> = {
       })
     })
   },
-  forwardAccount: (_, account: Account) => {
+  forwardAccount: (_, account: LocalAccount) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('forward-account', account)
       ipcRenderer.once('error-forward-account', (_, err: Error) => {
@@ -68,7 +68,7 @@ const actions: ActionTree<AccountState, RootState> = {
       })
     })
   },
-  backwardAccount: (_, account: Account) => {
+  backwardAccount: (_, account: LocalAccount) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('backward-account', account)
       ipcRenderer.once('error-backward-account', (_, err: Error) => {

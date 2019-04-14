@@ -2,9 +2,9 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import Account, { AccountState } from '@/store/Preferences/Account'
-import AccountType from '~/src/types/account'
+import LocalAccount from '~/src/types/LocalAccount'
 
-const account: AccountType = {
+const account: LocalAccount = {
   _id: 'sample',
   baseURL: 'http://example.com',
   domain: 'example.com',

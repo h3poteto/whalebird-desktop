@@ -2,7 +2,7 @@ import Mastodon, { List, Response } from 'megalodon'
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import Hashtag from '~/src/types/hashtag'
-import Account from '~/src/types/account'
+import LocalAccount from '~/src/types/localAccount'
 import { RootState } from '@/store'
 
 export interface SideMenuState {
@@ -72,7 +72,7 @@ const mutations: MutationTree<SideMenuState> = {
 }
 
 const actions: ActionTree<SideMenuState, RootState> = {
-  fetchLists: async ({ commit, rootState }, account: Account | null = null): Promise<Array<List>> => {
+  fetchLists: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<List>> => {
     if (account === null) account = rootState.TimelineSpace.account
     const client = new Mastodon(
       account!.accessToken!,
