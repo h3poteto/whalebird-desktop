@@ -4,7 +4,6 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { UnreadNotification } from '~/src/types/unreadNotification'
 
-
 export interface TimelineState {
   unreadNotification: UnreadNotification
 }
