@@ -1,7 +1,6 @@
 import Mastodon, { Account } from 'megalodon'
-import Visibilities from '~/src/constants/visibility'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import Visibility from '~/src/types/visibility'
+import Visibility, { VisibilityType } from '~/src/constants/visibility'
 import { RootState } from '@/store'
 
 export interface GeneralState {
@@ -10,7 +9,7 @@ export interface GeneralState {
 }
 
 const state = (): GeneralState => ({
-  visibility: Visibilities.Public.value,
+  visibility: Visibility.Public.value,
   sensitive: false
 })
 
@@ -35,7 +34,7 @@ const actions: ActionTree<GeneralState, RootState> = {
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res = await client.get<Account>('/accounts/verify_credentials')
-    const visibility: Visibility | undefined = Object.values(Visibilities as Array<Visibility>).find((v) => {
+    const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find((v) => {
       return v.key === res.data.source!.privacy
     })
     commit(MUTATION_TYPES.CHANGE_VISIBILITY, visibility!.value)
@@ -47,7 +46,7 @@ const actions: ActionTree<GeneralState, RootState> = {
       rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
-    const visibility = Object.values(Visibilities as Array<Visibility>).find((v) => {
+    const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find((v) => {
       return v.value === value
     })
     const res = await client.patch<Account>('/accounts/update_credentials', {
