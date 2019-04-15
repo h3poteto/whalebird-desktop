@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 import { MutationTree, ActionTree, Module } from 'vuex'
 import router from '@/router'
-import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme } from '@/utils/theme'
+import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme, ThemeType } from '@/utils/theme'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -17,7 +17,7 @@ export interface Notify {
 }
 
 export interface AppState {
-  theme: any, // TODO: type
+  theme: ThemeType,
   fontSize: number,
   displayNameStyle: number,
   notify: Notify,
@@ -127,7 +127,7 @@ const actions: ActionTree<AppState, RootState> = {
     })
   },
   updateTheme: ({ commit }, appearance: any) => {
-    const themeKey = appearance.theme
+    const themeKey: string = appearance.theme
     switch (themeKey) {
       case Theme.Light.key:
         commit(MUTATION_TYPES.UPDATE_THEME, LightTheme)
