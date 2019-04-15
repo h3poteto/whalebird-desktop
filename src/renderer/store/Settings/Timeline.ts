@@ -2,12 +2,7 @@ import { ipcRenderer } from 'electron'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-
-interface UnreadNotification {
-  direct: boolean,
-  local: boolean,
-  public: boolean
-}
+import { UnreadNotification } from '~/src/types/unreadNotification'
 
 export interface TimelineState {
   unreadNotification: UnreadNotification

@@ -8,9 +8,10 @@ import Contents, { ContentsModuleState } from './TimelineSpace/Contents'
 import router from '@/router'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import AccountType from '~/src/types/account'
-import { Notify } from './App'
+import LocalAccount from '~/src/types/localAccount'
+import { Notify } from '~/src/types/notify'
 import { RootState } from '@/store'
+import { UnreadNotification } from '~/src/types/unreadNotification'
 
 declare var Notification: any
 
@@ -19,14 +20,8 @@ interface MyEmoji {
   image: string
 }
 
-interface UnreadNotification {
-  direct: boolean,
-  local: boolean,
-  public: boolean
-}
-
 export interface TimelineSpaceState {
-  account: AccountType,
+  account: LocalAccount,
   loading: boolean,
   emojis: Array<MyEmoji>,
   tootMax: number,
@@ -35,7 +30,7 @@ export interface TimelineSpaceState {
   pleroma: boolean
 }
 
-export const blankAccount: AccountType = {
+export const blankAccount: LocalAccount = {
   _id: '',
   baseURL: '',
   domain: '',
@@ -74,7 +69,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<TimelineSpaceState> = {
-  [MUTATION_TYPES.UPDATE_ACCOUNT]: (state, account: AccountType) => {
+  [MUTATION_TYPES.UPDATE_ACCOUNT]: (state, account: LocalAccount) => {
     state.account = account
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
@@ -110,19 +105,19 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // -------------------------------------------------
   // Accounts
   // -------------------------------------------------
-  localAccount: ({ dispatch, commit }, id: string): Promise<AccountType> => {
+  localAccount: ({ dispatch, commit }, id: string): Promise<LocalAccount> => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('get-local-account', id)
       ipcRenderer.once('error-get-local-account', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-get-local-account')
         reject(err)
       })
-      ipcRenderer.once('response-get-local-account', (_, account: AccountType) => {
+      ipcRenderer.once('response-get-local-account', (_, account: LocalAccount) => {
         ipcRenderer.removeAllListeners('error-get-local-account')
 
         if (account.username === undefined || account.username === null || account.username === '') {
           dispatch('fetchAccount', account)
-            .then((acct: AccountType) => {
+            .then((acct: LocalAccount) => {
               commit(MUTATION_TYPES.UPDATE_ACCOUNT, acct)
               resolve(acct)
             })
@@ -136,14 +131,14 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       })
     })
   },
-  fetchAccount: (_, account: AccountType): Promise<AccountType> => {
+  fetchAccount: (_, account: LocalAccount): Promise<LocalAccount> => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('update-account', account)
       ipcRenderer.once('error-update-account', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-account')
         reject(err)
       })
-      ipcRenderer.once('response-update-account', (_, account: AccountType) => {
+      ipcRenderer.once('response-update-account', (_, account: LocalAccount) => {
         ipcRenderer.removeAllListeners('error-update-account')
         resolve(account)
       })
@@ -188,7 +183,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchEmojis
    */
-  fetchEmojis: async ({ commit }, account: AccountType): Promise<Array<Emoji>> => {
+  fetchEmojis: async ({ commit }, account: LocalAccount): Promise<Array<Emoji>> => {
     const res = await Mastodon.get<Array<Emoji>>('/custom_emojis', {}, account.baseURL + '/api/v1')
     commit(MUTATION_TYPES.UPDATE_EMOJIS, res.data)
     return res.data
@@ -196,7 +191,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchInstance
    */
-  fetchInstance: async ({ commit }, account: AccountType) => {
+  fetchInstance: async ({ commit }, account: LocalAccount) => {
     const res = await Mastodon.get<Instance>('/instance', {}, account.baseURL + '/api/v1')
     commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
     return true
@@ -242,7 +237,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Mentions/clearMentions', {}, { root: true })
   },
-  bindStreamings: ({ dispatch, state }, account: AccountType) => {
+  bindStreamings: ({ dispatch, state }, account: LocalAccount) => {
     dispatch('bindUserStreaming', account)
     if (state.unreadNotification.direct) {
       dispatch('bindDirectMessagesStreaming')
@@ -281,7 +276,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // ------------------------------------------------
   // Each streaming methods
   // ------------------------------------------------
-  bindUserStreaming: ({ commit, rootState }, account: AccountType) => {
+  bindUserStreaming: ({ commit, rootState }, account: LocalAccount) => {
     ipcRenderer.on('update-start-user-streaming', (_, update: Status) => {
       commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
       // Sometimes archive old statuses

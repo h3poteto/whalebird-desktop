@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron'
 import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import { LoadPositionWithTag } from '~src/types/load_position'
+import { LoadPositionWithTag } from '@/types/loadPosition'
 
 export interface TagState {
   timeline: Array<Status>,

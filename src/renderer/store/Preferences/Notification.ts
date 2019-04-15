@@ -1,13 +1,7 @@
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-
-interface Notify {
-  reply: boolean,
-  reblog: boolean,
-  favourite: boolean,
-  follow: boolean
-}
+import { Notify } from '~/src/types/notify'
 
 interface Notification {
   notify: Notify

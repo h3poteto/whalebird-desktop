@@ -1,11 +1,11 @@
 import { ipcRenderer } from 'electron'
 import router from '@/router'
-import Account from '~/src/types/account'
+import LocalAccount from '~/src/types/localAccount'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export interface GlobalHeaderState {
-  accounts: Array<Account>,
+  accounts: Array<LocalAccount>,
   changing: boolean,
   hide: boolean
 }
@@ -23,7 +23,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<GlobalHeaderState> = {
-  [MUTATION_TYPES.UPDATE_ACCOUNTS]: (state: GlobalHeaderState, accounts: Array<Account>) => {
+  [MUTATION_TYPES.UPDATE_ACCOUNTS]: (state: GlobalHeaderState, accounts: Array<LocalAccount>) => {
     state.accounts = accounts
   },
   [MUTATION_TYPES.UPDATE_CHANGING]: (state: GlobalHeaderState, value: boolean) => {
@@ -35,14 +35,14 @@ const mutations: MutationTree<GlobalHeaderState> = {
 }
 
 const actions: ActionTree<GlobalHeaderState, RootState> = {
-  listAccounts: ({ dispatch, commit }): Promise<Array<Account>> => {
+  listAccounts: ({ dispatch, commit }): Promise<Array<LocalAccount>> => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('list-accounts', 'list')
       ipcRenderer.once('error-list-accounts', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-list-accounts')
         reject(err)
       })
-      ipcRenderer.once('response-list-accounts', (_, accounts: Array<Account>) => {
+      ipcRenderer.once('response-list-accounts', (_, accounts: Array<LocalAccount>) => {
         ipcRenderer.removeAllListeners('error-list-accounts')
         commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
         dispatch('refreshAccounts')
@@ -51,14 +51,14 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     })
   },
   // Fetch account informations and save current state when GlobalHeader is displayed
-  refreshAccounts: ({ commit }): Promise<Array<Account>> => {
+  refreshAccounts: ({ commit }): Promise<Array<LocalAccount>> => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('refresh-accounts')
       ipcRenderer.once('error-refresh-accounts', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-refresh-accounts')
         reject(err)
       })
-      ipcRenderer.once('response-refresh-accounts', (_, accounts: Array<Account>) => {
+      ipcRenderer.once('response-refresh-accounts', (_, accounts: Array<LocalAccount>) => {
         ipcRenderer.removeAllListeners('error-refresh-accounts')
         commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
         resolve(accounts)
@@ -66,7 +66,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     })
   },
   watchShortcutEvents: ({ state, commit, rootState, rootGetters }) => {
-    ipcRenderer.on('change-account', (_, account: Account) => {
+    ipcRenderer.on('change-account', (_, account: LocalAccount) => {
       if (state.changing) {
         return null
       }
