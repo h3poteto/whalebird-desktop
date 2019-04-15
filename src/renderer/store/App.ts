@@ -8,13 +8,7 @@ import TimeFormat from '~/src/constants/timeFormat'
 import Language from '~/src/constants/language'
 import DefaultFonts from '@/utils/fonts'
 import { RootState } from '@/store'
-
-export interface Notify {
-  reply: boolean,
-  reblog: boolean,
-  favourite: boolean,
-  follow: boolean
-}
+import { Notify } from '~/src/types/notify'
 
 export interface AppState {
   theme: ThemeType,

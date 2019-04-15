@@ -9,7 +9,7 @@ import router from '@/router'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import LocalAccount from '~/src/types/localAccount'
-import { Notify } from './App'
+import { Notify } from '~/src/types/notify'
 import { RootState } from '@/store'
 import { UnreadNotification } from '~/src/types/unreadNotification'
 

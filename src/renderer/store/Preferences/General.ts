@@ -1,17 +1,8 @@
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-
-interface Sound {
-  fav_rb: boolean,
-  toot: boolean
-}
-
-interface Timeline {
-  cw: boolean,
-  nfsw: boolean,
-  hideAllAttachments: boolean
-}
+import { Sound } from '~/src/types/sound'
+import { Timeline } from '~/src/types/timeline'
 
 interface GeneralSet {
   sound: Sound,
