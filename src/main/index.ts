@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, ipcMain, shell, Menu, Tray } from 'electron'
+import { app, ipcMain, shell, Menu, Tray, BrowserWindow, BrowserWindowConstructorOptions, MenuItemConstructorOptions } from 'electron'
 import Datastore from 'nedb'
 import empty from 'is-empty'
 import log from 'electron-log'
@@ -8,7 +8,7 @@ import windowStateKeeper from 'electron-window-state'
 import simplayer from 'simplayer'
 import path from 'path'
 import ContextMenu from 'electron-context-menu'
-import * as Splashscreen from '@trodi/electron-splashscreen'
+import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
 
 import Authentication from './auth'
@@ -32,6 +32,10 @@ ContextMenu()
 log.transports.console.level = 'debug'
 log.transports.file.level = 'info'
 
+declare namespace global {
+  let __static: string
+}
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -40,8 +44,8 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let mainWindow
-let tray = null
+let mainWindow: BrowserWindow | null
+let tray: Tray
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -61,7 +65,7 @@ let accountDB = new Datastore({
 })
 const accountManager = new Account(accountDB)
 accountManager.initialize()
-  .catch(err => log.error(err))
+  .catch((err: Error) => log.error(err))
 
 const hashtagsDBPath = process.env.NODE_ENV === 'production'
   ? userData + '/db/hashtags.db'
@@ -76,7 +80,7 @@ const unreadNotificationDBPath = process.env.NODE_ENV === 'production'
   : 'unread_notification.db'
 const unreadNotification = new UnreadNotification(unreadNotificationDBPath)
 unreadNotification.initialize()
-  .catch(err => log.error(err))
+  .catch((err: Error) => log.error(err))
 
 const preferencesDBPath = process.env.NODE_ENV === 'production'
   ? userData + './db/preferences.json'
@@ -84,7 +88,7 @@ const preferencesDBPath = process.env.NODE_ENV === 'production'
 
 const soundBasePath = process.env.NODE_ENV === 'development'
   ? path.join(__dirname, '../../build/sounds/')
-  : path.join(process.resourcesPath, 'build/sounds/')
+  : path.join(process.resourcesPath!, 'build/sounds/')
 
 async function listAccounts () {
   try {
@@ -101,8 +105,8 @@ async function changeAccount (account, index) {
   if (mainWindow === null) {
     await createWindow()
     // We have to wait the web contents is loaded.
-    mainWindow.webContents.on('did-finish-load', () => {
-      mainWindow.webContents.send('change-account', Object.assign(account, { index: index }))
+    mainWindow!.webContents.on('did-finish-load', () => {
+      mainWindow!.webContents.send('change-account', Object.assign(account, { index: index }))
     })
   } else {
     mainWindow.webContents.send('change-account', Object.assign(account, { index: index }))
@@ -123,24 +127,24 @@ async function getLanguage () {
  * Minimize to tray when click close button
  */
 async function setMinimizeToTray () {
-  mainWindow.on('close', (event) => {
-    mainWindow.hide()
-    mainWindow.setSkipTaskbar(true)
+  mainWindow!.on('close', (event) => {
+    mainWindow!.hide()
+    mainWindow!.setSkipTaskbar(true)
     event.preventDefault()
   })
   tray = new Tray(path.join(__dirname, '../../build/icons/256x256.png'))
   const contextMenu = Menu.buildFromTemplate([
-    { label: i18n.t('main_menu.application.quit'), click: () => { mainWindow.destroy() } }
+    { label: i18n.t('main_menu.application.quit'), click: () => { mainWindow!.destroy() } }
   ])
   tray.setToolTip(i18n.t('main_menu.application.name'))
   tray.setContextMenu(contextMenu)
   tray.on('click', () => {
-    if (mainWindow.isVisible()) {
-      mainWindow.hide()
-      mainWindow.setSkipTaskbar(true)
+    if (mainWindow!.isVisible()) {
+      mainWindow!.hide()
+      mainWindow!.setSkipTaskbar(true)
     } else {
-      mainWindow.show()
-      mainWindow.setSkipTaskbar(false)
+      mainWindow!.show()
+      mainWindow!.setSkipTaskbar(false)
     }
   })
 }
@@ -187,10 +191,10 @@ async function createWindow () {
    */
   let mainWindowState = windowStateKeeper({
     defaultWidth: 1000,
-    height: 563
+    defaultHeight: 563
   })
   //  mainWindow = new BrowserWindow({
-  const mainOpts = {
+  const mainOpts: BrowserWindowConstructorOptions = {
     titleBarStyle: 'hidden',
     x: mainWindowState.x,
     y: mainWindowState.y,
@@ -199,7 +203,7 @@ async function createWindow () {
     useContentSize: true,
     icon: path.resolve(__dirname, '../../build/icons/256x256.png')
   }
-  const config = {
+  const config: Config = {
     windowOpts: mainOpts,
     templateUrl: splashURL,
     splashScreenOpts: {
@@ -207,7 +211,7 @@ async function createWindow () {
       height: 325
     }
   }
-  mainWindow = Splashscreen.initSplashScreen(config)
+  mainWindow = initSplashScreen(config)
 
   mainWindowState.manage(mainWindow)
 
@@ -238,14 +242,16 @@ app.on('window-all-closed', () => {
   } else {
     // In MacOS, we should change disable some menu items.
     const menu = Menu.getApplicationMenu()
-    // Preferences
-    menu.items[0].submenu.items[2].enabled = false
-    // New Toot
-    menu.items[1].submenu.items[0].enabled = false
-    // Open Window
-    menu.items[4].submenu.items[1].enabled = true
-    // Jump to
-    menu.items[4].submenu.items[4].enabled = false
+    if (menu !== null) {
+      // Preferences
+      ((menu.items[0] as MenuItemConstructorOptions).submenu as Menu).items[2].enabled = false as boolean
+      // New Toot
+      ((menu.items[1] as MenuItemConstructorOptions).submenu as Menu).items[0].enabled = false as boolean
+      // Open Window
+      ((menu.items[4] as MenuItemConstructorOptions).submenu as Menu).items[1].enabled = true as boolean
+      // Jump to
+      ((menu.items[4] as MenuItemConstructorOptions).submenu as Menu).items[4].enabled = false as boolean
+    }
   }
 })
 
@@ -390,7 +396,8 @@ ipcMain.on('reset-badge', () => {
 })
 
 // streaming
-let userStreaming = null
+// TODO: use type
+let userStreaming: any = null
 
 ipcMain.on('start-user-streaming', (event, obj) => {
   const { account, useWebsocket } = obj
@@ -442,7 +449,8 @@ ipcMain.on('stop-user-streaming', (_event, _) => {
   }
 })
 
-let directMessagesStreaming = null
+// TODO: use type
+let directMessagesStreaming: any = null
 
 ipcMain.on('start-directmessages-streaming', (event, obj) => {
   const { account, useWebsocket } = obj
@@ -482,7 +490,8 @@ ipcMain.on('stop-directmessages-streaming', (_event, _) => {
   }
 })
 
-let localStreaming = null
+// TODO: use type
+let localStreaming: any = null
 
 ipcMain.on('start-local-streaming', (event, obj) => {
   const { account, useWebsocket } = obj
@@ -522,7 +531,8 @@ ipcMain.on('stop-local-streaming', (_event, _) => {
   }
 })
 
-let publicStreaming = null
+// TODO: use type
+let publicStreaming: any = null
 
 ipcMain.on('start-public-streaming', (event, obj) => {
   const { account, useWebsocket } = obj
@@ -562,7 +572,8 @@ ipcMain.on('stop-public-streaming', (_event, _) => {
   }
 })
 
-let listStreaming = null
+// TODO: use type
+let listStreaming: any = null
 
 ipcMain.on('start-list-streaming', (event, obj) => {
   const { listID, account, useWebsocket } = obj
@@ -602,7 +613,8 @@ ipcMain.on('stop-list-streaming', (_event, _) => {
   }
 })
 
-let tagStreaming = null
+// TODO: use type
+let tagStreaming: any = null
 
 ipcMain.on('start-tag-streaming', (event, obj) => {
   const { tag, account, useWebsocket } = obj
@@ -694,7 +706,7 @@ ipcMain.on('update-preferences', (event, data) => {
     })
 })
 
-ipcMain.on('change-collapse', (event, value) => {
+ipcMain.on('change-collapse', (_, value) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(
     {
@@ -908,7 +920,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
           label: i18n.t('main_menu.application.preferences'),
           accelerator: 'CmdOrCtrl+,',
           click: () => {
-            mainWindow.webContents.send('open-preferences')
+            mainWindow!.webContents.send('open-preferences')
           }
         },
         ...macGeneralMenu,
@@ -929,7 +941,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
           label: i18n.t('main_menu.toot.new'),
           accelerator: 'CmdOrCtrl+N',
           click: () => {
-            mainWindow.webContents.send('CmdOrCtrl+N')
+            mainWindow!.webContents.send('CmdOrCtrl+N')
           }
         }
       ]
@@ -1007,7 +1019,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
           accelerator: 'CmdOrCtrl+K',
           enabled: true,
           click: () => {
-            mainWindow.webContents.send('CmdOrCtrl+K')
+            mainWindow!.webContents.send('CmdOrCtrl+K')
           }
         },
         {
