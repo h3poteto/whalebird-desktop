@@ -11,18 +11,13 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import LocalAccount from '~/src/types/localAccount'
 import { Notify } from './App'
 import { RootState } from '@/store'
+import { UnreadNotification } from '~/src/types/unreadNotification'
 
 declare var Notification: any
 
 interface MyEmoji {
   name: string,
   image: string
-}
-
-interface UnreadNotification {
-  direct: boolean,
-  local: boolean,
-  public: boolean
 }
 
 export interface TimelineSpaceState {
