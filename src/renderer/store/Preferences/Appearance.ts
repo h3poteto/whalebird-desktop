@@ -2,30 +2,17 @@ import { ipcRenderer } from 'electron'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
-import { LightTheme } from '@/utils/theme'
+import { LightTheme, ThemeType } from '@/utils/theme'
 import DefaultFonts from '@/utils/fonts'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-
-interface ColorThemeSet {
-  background_color: string,
-  selected_background_color: string,
-  global_header_color: string,
-  side_menu_color: string,
-  primary_color: string,
-  regular_color: string,
-  secondary_color: string,
-  border_color: string,
-  header_menu_color: string,
-  wrapper_mask_color: string
-}
 
 interface AppearanceSet {
   theme: string,
   fontSize: number,
   displayNameStyle: number,
   timeFormat: number,
-  customThemeColor: ColorThemeSet,
+  customThemeColor: ThemeType,
   font: string
 }
 
@@ -174,7 +161,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
     })
   },
   updateCustomThemeColor: ({ dispatch, state, commit }, value: object) => {
-    const newCustom: ColorThemeSet = Object.assign({}, state.appearance.customThemeColor, value)
+    const newCustom: ThemeType = Object.assign({}, state.appearance.customThemeColor, value)
     const newAppearance: AppearanceSet = Object.assign({}, state.appearance, {
       customThemeColor: newCustom
     })

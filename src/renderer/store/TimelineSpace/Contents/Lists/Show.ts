@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron'
 import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import { LoadPositionWithList } from '~src/types/load_position'
+import { LoadPositionWithList } from '@/types/loadPosition'
 
 export interface ShowState {
   timeline: Array<Status>,

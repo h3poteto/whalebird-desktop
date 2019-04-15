@@ -1,10 +1,9 @@
 import Mastodon, { Status, Attachment, Tag, Response, Account } from 'megalodon'
 import { ipcRenderer } from 'electron'
-import Visibility from '~/src/constants/visibility'
+import Visibility, { VisibilityType } from '~/src/constants/visibility'
 import TootStatus, { StatusState } from './NewToot/Status'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
-import VisibilityType from '~/src/types/visibility'
 
 export interface NewTootState {
   modalOpen: boolean,
@@ -216,7 +215,7 @@ const actions: ActionTree<NewTootState, RootState> = {
       rootState.TimelineSpace.account.baseURL + '/api/v1'
     )
     const res: Response<Account> = await client.get<Account>('/accounts/verify_credentials')
-    const visibility: VisibilityType = Object.values(Visibility as Array<Visibility>).find((v) => {
+    const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find((v) => {
       return v.key === res.data.source!.privacy
     })
     if (visibility === undefined) {

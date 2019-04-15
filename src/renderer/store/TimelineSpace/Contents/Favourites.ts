@@ -2,7 +2,7 @@ import Mastodon, { Status, Response } from 'megalodon'
 import parse from 'parse-link-header'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import AccountType from '~/src/types/account'
+import LocalAccount from '~/src/types/localAccount'
 
 export interface FavouritesState {
   favourites: Array<Status>,
@@ -72,7 +72,7 @@ const mutations: MutationTree<FavouritesState> = {
 }
 
 const actions: ActionTree<FavouritesState, RootState> = {
-  fetchFavourites: async ({ commit }, account: AccountType): Promise<Array<Status>> => {
+  fetchFavourites: async ({ commit }, account: LocalAccount): Promise<Array<Status>> => {
     const client = new Mastodon(
       account.accessToken!,
       account.baseURL + '/api/v1'

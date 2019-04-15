@@ -1,7 +1,7 @@
 import Mastodon, { Account, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import { RemoveAccountFromList } from '~/src/types/remove_account_from_list'
+import { RemoveAccountFromList } from '@/types/removeAccountFromList'
 
 export interface EditState {
   members: Array<Account>
