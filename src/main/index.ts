@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, ipcMain, shell, Menu, Tray, BrowserWindow, BrowserWindowConstructorOptions, MenuItemConstructorOptions } from 'electron'
+import { app, ipcMain, shell, Menu, Tray, BrowserWindow, BrowserWindowConstructorOptions, MenuItemConstructorOptions, Event } from 'electron'
 import Datastore from 'nedb'
 import { isEmpty } from 'lodash'
 import log from 'electron-log'
@@ -20,6 +20,7 @@ import Hashtags from './hashtags'
 import UnreadNotification from './unread_notification'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
+import LocalAccount from '~src/types/localAccount'
 
 /**
  * Context menu
@@ -99,7 +100,7 @@ async function listAccounts () {
   }
 }
 
-async function changeAccount (account, index) {
+async function changeAccount (account: LocalAccount, index: number) {
   // In MacOS, user can hide the window.
   // In this time, mainWindow in not exist, so we have to create window.
   if (mainWindow === null) {
@@ -263,7 +264,7 @@ app.on('activate', () => {
 
 let auth = new Authentication(accountManager)
 
-ipcMain.on('get-auth-url', (event, domain) => {
+ipcMain.on('get-auth-url', (event: Event, domain: string) => {
   auth.getAuthorizationUrl(domain)
     .then((url) => {
       log.debug(url)
@@ -277,7 +278,7 @@ ipcMain.on('get-auth-url', (event, domain) => {
     })
 })
 
-ipcMain.on('get-access-token', (event, code) => {
+ipcMain.on('get-access-token', (event: Event, code: string) => {
   auth.getAccessToken(code)
     .then((token) => {
       accountDB.findOne({
@@ -295,7 +296,7 @@ ipcMain.on('get-access-token', (event, code) => {
 })
 
 // environments
-ipcMain.on('get-social-token', (event, _) => {
+ipcMain.on('get-social-token', (event: Event, _) => {
   const token = process.env.SOCIAL_TOKEN
   if (isEmpty(token)) {
     return event.sender.send('error-get-social-token', new EmptyTokenError())

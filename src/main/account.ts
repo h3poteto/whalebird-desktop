@@ -1,8 +1,12 @@
 import { isEmpty } from 'lodash'
-import Mastodon from 'megalodon'
+import Mastodon, { Account as RemoteAccount } from 'megalodon'
+import Datastore from 'nedb'
+import LocalAccount from '~/src/types/localAccount'
 
 export default class Account {
-  constructor (db) {
+  private db: Datastore
+
+  constructor (db: Datastore) {
     this.db = db
   }
 
@@ -12,7 +16,7 @@ export default class Account {
     await this.updateUnique()
   }
 
-  updateUnique () {
+  updateUnique (): Promise<{}> {
     return new Promise((resolve, reject) => {
       // At first, remove old index.
       this.db.removeIndex('order', (err) => {
@@ -20,7 +24,7 @@ export default class Account {
         // Add unique index.
         this.db.ensureIndex({ fieldName: 'order', unique: true, sparse: true }, (err) => {
           if (err) reject(err)
-          resolve(null)
+          resolve({})
         })
       })
     })
@@ -32,7 +36,7 @@ export default class Account {
   async reorder () {
     const accounts = await this.listAllAccounts()
     await Promise.all(accounts.map(async (account, index) => {
-      const update = await this.updateAccount(account._id, Object.assign(account, { order: index + 1 }))
+      const update = await this.updateAccount(account._id!, Object.assign(account, { order: index + 1 }))
       return update
     }))
     const ordered = await this.listAllAccounts()
@@ -49,16 +53,16 @@ export default class Account {
     }
     if (accounts[0].order < 1 || accounts[accounts.length - 1].order > accounts.length) {
       await Promise.all(accounts.map(async (element, index) => {
-        const update = await this.updateAccount(element._id, Object.assign(element, { order: index + 1 }))
+        const update = await this.updateAccount(element._id!, Object.assign(element, { order: index + 1 }))
         return update
       }))
     }
     return null
   }
 
-  insertAccount (obj) {
+  insertAccount (localAccount: LocalAccount): Promise<LocalAccount> {
     return new Promise((resolve, reject) => {
-      this.db.insert(obj, (err, doc) => {
+      this.db.insert<LocalAccount>(localAccount, (err, doc) => {
         if (err) return reject(err)
         if (isEmpty(doc)) return reject(new EmptyRecordError('empty'))
         resolve(doc)
@@ -69,9 +73,9 @@ export default class Account {
   /**
    * List up all accounts either authenticated or not authenticated.
    */
-  listAllAccounts (order = 1) {
+  listAllAccounts (order = 1): Promise<Array<LocalAccount>> {
     return new Promise((resolve, reject) => {
-      this.db.find().sort({ order: order }).exec((err, docs) => {
+      this.db.find<LocalAccount>({}).sort({ order: order }).exec((err, docs) => {
         if (err) return reject(err)
         if (isEmpty(docs)) return reject(new EmptyRecordError('empty'))
         resolve(docs)
@@ -82,9 +86,9 @@ export default class Account {
   /**
    * List up authenticated accounts.
    */
-  listAccounts () {
+  listAccounts (): Promise<Array<LocalAccount>> {
     return new Promise((resolve, reject) => {
-      this.db.find({ accessToken: { $ne: '' } }).sort({ order: 1 }).exec((err, docs) => {
+      this.db.find<LocalAccount>({ accessToken: { $ne: '' } }).sort({ order: 1 }).exec((err, docs) => {
         if (err) return reject(err)
         if (isEmpty(docs)) return reject(new EmptyRecordError('empty'))
         resolve(docs)
@@ -93,14 +97,14 @@ export default class Account {
   }
 
   // Get the last account.
-  async lastAccount () {
+  async lastAccount (): Promise<LocalAccount> {
     const accounts = await this.listAllAccounts(-1)
     return accounts[0]
   }
 
-  getAccount (id) {
+  getAccount (id: string): Promise<LocalAccount> {
     return new Promise((resolve, reject) => {
-      this.db.findOne(
+      this.db.findOne<LocalAccount>(
         {
           _id: id
         },
@@ -113,9 +117,9 @@ export default class Account {
     })
   }
 
-  searchAccount (obj) {
+  searchAccount (obj: any): Promise<LocalAccount> {
     return new Promise((resolve, reject) => {
-      this.db.findOne(
+      this.db.findOne<LocalAccount>(
         obj,
         (err, doc) => {
           if (err) return reject(err)
@@ -125,16 +129,16 @@ export default class Account {
     })
   }
 
-  searchAccounts (obj, order = 1) {
+  searchAccounts (obj: any, order = 1): Promise<Array<LocalAccount>> {
     return new Promise((resolve, reject) => {
-      this.db.find(obj).sort({ order: order }).exec((err, docs) => {
+      this.db.find<LocalAccount>(obj).sort({ order: order }).exec((err, docs) => {
         if (err) return reject(err)
         resolve(docs)
       })
     })
   }
 
-  updateAccount (id, obj) {
+  updateAccount (id: string, obj: any): Promise<LocalAccount> {
     return new Promise((resolve, reject) => {
       this.db.update(
         {
@@ -144,7 +148,7 @@ export default class Account {
         { multi: true },
         (err, _numReplaced) => {
           if (err) return reject(err)
-          this.db.findOne(
+          this.db.findOne<LocalAccount>(
             {
               _id: id
             },
@@ -158,7 +162,7 @@ export default class Account {
     })
   }
 
-  removeAccount (id) {
+  removeAccount (id: string): Promise<number> {
     return new Promise((resolve, reject) => {
       this.db.remove(
         {
@@ -173,7 +177,7 @@ export default class Account {
     })
   }
 
-  removeAll () {
+  removeAll (): Promise<number> {
     return new Promise((resolve, reject) => {
       this.db.remove(
         {},
@@ -186,7 +190,7 @@ export default class Account {
     })
   }
 
-  async forwardAccount (ac) {
+  async forwardAccount (ac: LocalAccount): Promise<LocalAccount | {}> {
     // Find account which is the previous of the target account.
     const accounts = await this.searchAccounts({ order: { $lt: ac.order } }, -1)
       .catch((err) => {
@@ -194,7 +198,7 @@ export default class Account {
         return []
       })
     if (accounts.length < 1) {
-      return null
+      return Promise.resolve({})
     }
     const previousAccount = accounts[0]
     const targetOrder = ac.order
@@ -202,21 +206,21 @@ export default class Account {
 
     // At first, we need to update the previous account with dummy order.
     // Because this column is uniqued, so can not update with same order.
-    await this.updateAccount(previousAccount._id, Object.assign(
+    await this.updateAccount(previousAccount._id!, Object.assign(
       previousAccount,
       {
         order: -1
       }
     ))
     // Change order of the target account.
-    const updated = await this.updateAccount(ac._id, Object.assign(
+    const updated = await this.updateAccount(ac._id!, Object.assign(
       ac,
       {
         order: previousOrder
       }
     ))
     // Update the previous account with right order.
-    await this.updateAccount(previousAccount._id, Object.assign(
+    await this.updateAccount(previousAccount._id!, Object.assign(
       previousAccount,
       {
         order: targetOrder
@@ -225,7 +229,7 @@ export default class Account {
     return updated
   }
 
-  async backwardAccount (ac) {
+  async backwardAccount (ac: LocalAccount): Promise<LocalAccount | {}> {
     // Find account which is the next of the target account.
     const accounts = await this.searchAccounts({ order: { $gt: ac.order } }, 1)
       .catch((err) => {
@@ -233,7 +237,7 @@ export default class Account {
         return []
       })
     if (accounts.length < 1) {
-      return null
+      return Promise.resolve({})
     }
     const nextAccount = accounts[0]
     const targetOrder = ac.order
@@ -241,21 +245,21 @@ export default class Account {
 
     // At first, we need to update the next account with dummy order.
     // Because this colum is uniqued, so can not update with same order.
-    await this.updateAccount(nextAccount._id, Object.assign(
+    await this.updateAccount(nextAccount._id!, Object.assign(
       nextAccount,
       {
         order: -1
       }
     ))
     // Change order of the target account/
-    const updated = await this.updateAccount(ac._id, Object.assign(
+    const updated = await this.updateAccount(ac._id!, Object.assign(
       ac,
       {
         order: nextOrder
       }
     ))
     // Update the next account with right order.
-    await this.updateAccount(nextAccount._id, Object.assign(
+    await this.updateAccount(nextAccount._id!, Object.assign(
       nextAccount,
       {
         order: targetOrder
@@ -264,10 +268,10 @@ export default class Account {
     return updated
   }
 
-  async refreshAccounts () {
+  async refreshAccounts (): Promise<Array<LocalAccount>> {
     const accounts = await this.listAccounts()
     if (accounts.length < 1) {
-      return accounts.length
+      return accounts
     }
     const results = await Promise.all(accounts.map(async (account) => {
       const refresh = await this.refresh(account)
@@ -276,51 +280,41 @@ export default class Account {
     return results
   }
 
-  refresh (account) {
+  async refresh (account: LocalAccount): Promise<LocalAccount> {
     const client = new Mastodon(
-      account.accessToken,
+      account.accessToken!,
       account.baseURL + '/api/v1'
     )
-    return client.get('/accounts/verify_credentials')
+    return client.get<RemoteAccount>('/accounts/verify_credentials')
       .then(res => {
         const json = {
           username: res.data.username,
           accountId: res.data.id,
           avatar: res.data.avatar
         }
-        return this.updateAccount(account._id, json)
+        return this.updateAccount(account._id!, json)
       })
   }
 
   // Confirm the access token, and check duplicate
-  async fetchAccount (account, accessToken) {
+  async fetchAccount (account: LocalAccount, accessToken: string): Promise<RemoteAccount> {
     const client = new Mastodon(
       accessToken,
       account.baseURL + '/api/v1'
     )
-    const data = await client.get('/accounts/verify_credentials')
+    const res = await client.get<RemoteAccount>('/accounts/verify_credentials')
     const query = {
       baseURL: account.baseURL,
-      username: data.username
+      username: res.data.username
     }
     const duplicates = await this.searchAccounts(query)
     if (duplicates.length > 0) {
-      throw new DuplicateRecordError(`${data.username}@${account.baseURL} is duplicated`)
+      throw new DuplicateRecordError(`${res.data.username}@${account.baseURL} is duplicated`)
     }
-    return data
+    return res.data
   }
 }
 
-class EmptyRecordError extends Error {
-  constructor (msg) {
-    super(msg)
-    this.name = 'EmptyRecordError'
-  }
-}
+class EmptyRecordError extends Error {}
 
-class DuplicateRecordError extends Error {
-  constructor (msg) {
-    super(msg)
-    this.name = 'DuplicateRecordError'
-  }
-}
+class DuplicateRecordError extends Error {}
