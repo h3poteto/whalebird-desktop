@@ -2,7 +2,7 @@ import router from '@/router'
 import i18n from '~/src/config/i18n'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { List } from 'megalodon'
-import Hashtag from '~/src/types/hashtag'
+import LocalTag from '~/src/types/localTag'
 import { RootState } from '@/store'
 
 export interface Channel {
@@ -95,7 +95,7 @@ const mutations: MutationTree<JumpState> = {
       return channel
     })
   },
-  [MUTATION_TYPES.UPDATE_TAG_CHANNEL]: (state, tags: Array<Hashtag>) => {
+  [MUTATION_TYPES.UPDATE_TAG_CHANNEL]: (state, tags: Array<LocalTag>) => {
     state.tagChannelList = tags.map(t => {
       const channel: Channel = {
         name: `#${t.tagName}`,

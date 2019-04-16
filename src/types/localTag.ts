@@ -1,4 +1,4 @@
-export default interface Hasthag {
+export default interface LocalTag {
   tagName: string,
   _id?: string
 }

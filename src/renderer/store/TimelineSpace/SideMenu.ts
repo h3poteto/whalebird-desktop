@@ -1,7 +1,7 @@
 import Mastodon, { List, Response } from 'megalodon'
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import Hashtag from '~/src/types/hashtag'
+import LocalTag from '~/src/types/localTag'
 import LocalAccount from '~/src/types/localAccount'
 import { RootState } from '@/store'
 
@@ -13,7 +13,7 @@ export interface SideMenuState {
   unreadDirectMessagesTimeline: boolean,
   unreadPublicTimeline: boolean,
   lists: Array<List>,
-  tags: Array<Hashtag>,
+  tags: Array<LocalTag>,
   collapse: boolean
 }
 
@@ -66,7 +66,7 @@ const mutations: MutationTree<SideMenuState> = {
   [MUTATION_TYPES.CHANGE_COLLAPSE]: (state, collapse: boolean) => {
     state.collapse = collapse
   },
-  [MUTATION_TYPES.UPDATE_TAGS]: (state, tags: Array<Hashtag>) => {
+  [MUTATION_TYPES.UPDATE_TAGS]: (state, tags: Array<LocalTag>) => {
     state.tags = tags
   }
 }
@@ -105,7 +105,7 @@ const actions: ActionTree<SideMenuState, RootState> = {
   },
   listTags: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('response-list-hashtags', (_, tags: Array<Hashtag>) => {
+      ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
         ipcRenderer.removeAllListeners('error-list-hashtags')
         commit(MUTATION_TYPES.UPDATE_TAGS, tags)
         resolve(tags)
