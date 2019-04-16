@@ -2,7 +2,7 @@
 
 import { app, ipcMain, shell, Menu, Tray, BrowserWindow, BrowserWindowConstructorOptions, MenuItemConstructorOptions } from 'electron'
 import Datastore from 'nedb'
-import empty from 'is-empty'
+import { isEmpty } from 'lodash'
 import log from 'electron-log'
 import windowStateKeeper from 'electron-window-state'
 import simplayer from 'simplayer'
@@ -282,9 +282,9 @@ ipcMain.on('get-access-token', (event, code) => {
     .then((token) => {
       accountDB.findOne({
         accessToken: token
-      }, (err, doc) => {
+      }, (err, doc: any) => {
         if (err) return event.sender.send('error-get-access-token', err)
-        if (empty(doc)) return event.sender.send('error-get-access-token', 'error document is empty')
+        if (isEmpty(doc)) return event.sender.send('error-get-access-token', 'error document is empty')
         event.sender.send('response-get-access-token', doc._id)
       })
     })
@@ -297,7 +297,7 @@ ipcMain.on('get-access-token', (event, code) => {
 // environments
 ipcMain.on('get-social-token', (event, _) => {
   const token = process.env.SOCIAL_TOKEN
-  if (empty(token)) {
+  if (isEmpty(token)) {
     return event.sender.send('error-get-social-token', new EmptyTokenError())
   }
   event.sender.send('response-get-social-token', token)

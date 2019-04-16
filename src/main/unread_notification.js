@@ -1,4 +1,4 @@
-import empty from 'is-empty'
+import { isEmpty } from 'lodash'
 import Datastore from 'nedb'
 
 export default class UnreadNotification {
@@ -48,7 +48,7 @@ export default class UnreadNotification {
     return new Promise((resolve, reject) => {
       this.db.findOne(obj, (err, doc) => {
         if (err) return reject(err)
-        if (empty(doc)) return reject(new EmptyRecordError('empty'))
+        if (isEmpty(doc)) return reject(new EmptyRecordError('empty'))
         resolve(doc)
       })
     })

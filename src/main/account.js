@@ -1,4 +1,4 @@
-import empty from 'is-empty'
+import { isEmpty } from 'lodash'
 import Mastodon from 'megalodon'
 
 export default class Account {
@@ -60,7 +60,7 @@ export default class Account {
     return new Promise((resolve, reject) => {
       this.db.insert(obj, (err, doc) => {
         if (err) return reject(err)
-        if (empty(doc)) return reject(new EmptyRecordError('empty'))
+        if (isEmpty(doc)) return reject(new EmptyRecordError('empty'))
         resolve(doc)
       })
     })
@@ -73,7 +73,7 @@ export default class Account {
     return new Promise((resolve, reject) => {
       this.db.find().sort({ order: order }).exec((err, docs) => {
         if (err) return reject(err)
-        if (empty(docs)) return reject(new EmptyRecordError('empty'))
+        if (isEmpty(docs)) return reject(new EmptyRecordError('empty'))
         resolve(docs)
       })
     })
@@ -86,7 +86,7 @@ export default class Account {
     return new Promise((resolve, reject) => {
       this.db.find({ accessToken: { $ne: '' } }).sort({ order: 1 }).exec((err, docs) => {
         if (err) return reject(err)
-        if (empty(docs)) return reject(new EmptyRecordError('empty'))
+        if (isEmpty(docs)) return reject(new EmptyRecordError('empty'))
         resolve(docs)
       })
     })
@@ -106,7 +106,7 @@ export default class Account {
         },
         (err, doc) => {
           if (err) return reject(err)
-          if (empty(doc)) return reject(new EmptyRecordError('empty'))
+          if (isEmpty(doc)) return reject(new EmptyRecordError('empty'))
           resolve(doc)
         }
       )
@@ -119,7 +119,7 @@ export default class Account {
         obj,
         (err, doc) => {
           if (err) return reject(err)
-          if (empty(doc)) return reject(new EmptyRecordError('empty'))
+          if (isEmpty(doc)) return reject(new EmptyRecordError('empty'))
           resolve(doc)
         })
     })
@@ -150,7 +150,7 @@ export default class Account {
             },
             (err, doc) => {
               if (err) return reject(err)
-              if (empty(doc)) return reject(new EmptyRecordError('empty'))
+              if (isEmpty(doc)) return reject(new EmptyRecordError('empty'))
               resolve(doc)
             })
         }
