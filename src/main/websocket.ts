@@ -1,37 +1,40 @@
-import Mastodon from 'megalodon'
+import Mastodon, { WebSocket as SocketListener, Status, Notification } from 'megalodon'
 import log from 'electron-log'
+import LocalAccount from '~src/types/localAccount'
 
 export default class WebSocket {
-  constructor (account) {
-    this.account = account
+  private client: Mastodon
+  private listener: SocketListener | null
+
+  constructor (account: LocalAccount) {
     const url = account.baseURL.replace(/^https:\/\//, 'wss://')
     this.client = new Mastodon(
-      account.accessToken,
+      account.accessToken!,
       url + '/api/v1'
     )
     this.listener = null
   }
 
-  startUserStreaming (updateCallback, notificationCallback, errCallback) {
+  startUserStreaming (updateCallback: Function, notificationCallback: Function, errCallback: Function) {
     this.listener = this.client.socket('/streaming', 'user')
 
     this.listener.on('connect', _ => {
       log.info('/streaming/?stream=user started')
     })
 
-    this.listener.on('update', (status) => {
+    this.listener.on('update', (status: Status) => {
       updateCallback(status)
     })
 
-    this.listener.on('notification', (notification) => {
+    this.listener.on('notification', (notification: Notification) => {
       notificationCallback(notification)
     })
 
-    this.listener.on('error', (err) => {
+    this.listener.on('error', (err: Error) => {
       errCallback(err)
     })
 
-    this.listener.on('parser-error', (err) => {
+    this.listener.on('parser-error', (err: Error) => {
       errCallback(err)
     })
   }
@@ -46,21 +49,21 @@ export default class WebSocket {
    * When hashtag timeline, the path is `hashtag&tag=tag_name`.
    * When list timeline, the path is `list&list=list_id`.
    */
-  start (stream, updateCallback, errCallback) {
+  start (stream: string, updateCallback: Function, errCallback: Function) {
     this.listener = this.client.socket('/streaming', stream)
     this.listener.on('connect', _ => {
       log.info(`/streaming/?stream=${stream} started`)
     })
 
-    this.listener.on('update', status => {
+    this.listener.on('update', (status: Status) => {
       updateCallback(status)
     })
 
-    this.listener.on('error', (err) => {
+    this.listener.on('error', (err: Error) => {
       errCallback(err)
     })
 
-    this.listener.on('parser-error', (err) => {
+    this.listener.on('parser-error', (err: Error) => {
       errCallback(err)
     })
   }
@@ -72,10 +75,10 @@ export default class WebSocket {
       this.listener.removeAllListeners('notification')
       this.listener.removeAllListeners('error')
       this.listener.removeAllListeners('parser-error')
-      this.listener.on('error', (e) => {
+      this.listener.on('error', (e: Error) => {
         log.error(e)
       })
-      this.listener.on('parser-error', (e) => {
+      this.listener.on('parser-error', (e: Error) => {
         log.error(e)
       })
       this.listener.stop()

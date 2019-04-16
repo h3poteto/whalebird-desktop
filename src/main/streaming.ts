@@ -1,51 +1,54 @@
-import Mastodon from 'megalodon'
+import Mastodon, { StreamListener, Status, Notification } from 'megalodon'
 import log from 'electron-log'
+import LocalAccount from '~/src/types/localAccount'
 
 export default class Streaming {
-  constructor (account) {
-    this.account = account
+  private client: Mastodon
+  private listener: StreamListener | null
+
+  constructor (account: LocalAccount) {
     this.client = new Mastodon(
-      account.accessToken,
+      account.accessToken!,
       account.baseURL + '/api/v1'
     )
     this.listener = null
   }
 
-  startUserStreaming (updateCallback, notificationCallback, errCallback) {
+  startUserStreaming (updateCallback: Function, notificationCallback: Function, errCallback: Function) {
     this.listener = this.client.stream('/streaming/user')
 
     this.listener.on('connect', _ => {
       log.info('/streaming/user started')
     })
 
-    this.listener.on('update', (status) => {
+    this.listener.on('update', (status: Status) => {
       updateCallback(status)
     })
 
-    this.listener.on('notification', (notification) => {
+    this.listener.on('notification', (notification: Notification) => {
       notificationCallback(notification)
     })
 
-    this.listener.on('error', (err) => {
+    this.listener.on('error', (err: Error) => {
       errCallback(err)
     })
 
-    this.listener.on('connection-limit-exceeded', err => {
+    this.listener.on('connection-limit-exceeded', (err: Error) => {
       errCallback(err)
     })
   }
 
-  start (path, updateCallback, errCallback) {
+  start (path: string, updateCallback: Function, errCallback: Function) {
     this.listener = this.client.stream(path)
     this.listener.on('connect', _ => {
       log.info(`${path} started`)
     })
 
-    this.listener.on('update', (status) => {
+    this.listener.on('update', (status: Status) => {
       updateCallback(status)
     })
 
-    this.listener.on('error', (err) => {
+    this.listener.on('error', (err: Error) => {
       errCallback(err)
     })
 
@@ -61,10 +64,10 @@ export default class Streaming {
       this.listener.removeAllListeners('notification')
       this.listener.removeAllListeners('error')
       this.listener.removeAllListeners('parser-error')
-      this.listener.on('error', (e) => {
+      this.listener.on('error', (e: Error) => {
         log.error(e)
       })
-      this.listener.on('parser-error', (e) => {
+      this.listener.on('parser-error', (e: Error) => {
         log.error(e)
       })
       this.listener.stop()
