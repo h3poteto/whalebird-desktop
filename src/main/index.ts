@@ -17,11 +17,12 @@ import StreamingManager from './streaming_manager'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
-import UnreadNotification from './unread_notification'
+import UnreadNotification from './unreadNotification'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
 import LocalAccount from '~src/types/localAccount'
 import LocalTag from '~src/types/localTag'
+import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 
 /**
  * Context menu
@@ -657,13 +658,13 @@ ipcMain.on('stop-tag-streaming', (_event, _) => {
 })
 
 // sounds
-ipcMain.on('fav-rt-action-sound', (_event, _) => {
+ipcMain.on('fav-rt-action-sound', (_event: Event, _) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
       if (conf.general.sound.fav_rb) {
         const sound = path.join(soundBasePath, 'operation_sound01.wav')
-        simplayer(sound, (err) => {
+        simplayer(sound, (err: Error) => {
           if (err) log.error(err)
         })
       }
@@ -671,13 +672,13 @@ ipcMain.on('fav-rt-action-sound', (_event, _) => {
     .catch(err => log.error(err))
 })
 
-ipcMain.on('toot-action-sound', (_event, _) => {
+ipcMain.on('toot-action-sound', (_event: Event, _) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
       if (conf.general.sound.toot) {
         const sound = path.join(soundBasePath, 'operation_sound02.wav')
-        simplayer(sound, (err) => {
+        simplayer(sound, (err: Error) => {
           if (err) log.error(err)
         })
       }
@@ -686,7 +687,7 @@ ipcMain.on('toot-action-sound', (_event, _) => {
 })
 
 // preferences
-ipcMain.on('get-preferences', (event, _) => {
+ipcMain.on('get-preferences', (event: Event, _) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -697,7 +698,7 @@ ipcMain.on('get-preferences', (event, _) => {
     })
 })
 
-ipcMain.on('update-preferences', (event, data) => {
+ipcMain.on('update-preferences', (event: Event, data: any) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(data)
     .then((conf) => {
@@ -708,7 +709,7 @@ ipcMain.on('update-preferences', (event, data) => {
     })
 })
 
-ipcMain.on('change-collapse', (_, value) => {
+ipcMain.on('change-collapse', (_, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(
     {
@@ -721,7 +722,7 @@ ipcMain.on('change-collapse', (_, value) => {
     })
 })
 
-ipcMain.on('get-collapse', (event, _) => {
+ipcMain.on('get-collapse', (event: Event, _) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -729,7 +730,7 @@ ipcMain.on('get-collapse', (event, _) => {
     })
 })
 
-ipcMain.on('change-global-header', (event, value) => {
+ipcMain.on('change-global-header', (event: Event, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(
     {
@@ -745,7 +746,7 @@ ipcMain.on('change-global-header', (event, value) => {
     })
 })
 
-ipcMain.on('get-global-header', (event, _) => {
+ipcMain.on('get-global-header', (event: Event, _) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -753,7 +754,7 @@ ipcMain.on('get-global-header', (event, _) => {
     })
 })
 
-ipcMain.on('change-language', (event, value) => {
+ipcMain.on('change-language', (event: Event, value: string) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(
     {
@@ -813,7 +814,7 @@ ipcMain.on('list-fonts', (event: Event, _) => {
 })
 
 // Unread notifications
-ipcMain.on('get-unread-notification', (event, accountID) => {
+ipcMain.on('get-unread-notification', (event: Event, accountID: string) => {
   unreadNotification.findOne({
     accountID: accountID
   })
@@ -826,9 +827,9 @@ ipcMain.on('get-unread-notification', (event, accountID) => {
     })
 })
 
-ipcMain.on('update-unread-notification', (event, obj) => {
-  const { accountID } = obj
-  unreadNotification.insertOrUpdate(accountID, obj)
+ipcMain.on('update-unread-notification', (event: Event, config: UnreadNotificationConfig) => {
+  const { accountID } = config
+  unreadNotification.insertOrUpdate(accountID!, config)
     .then(_ => {
       event.sender.send('response-update-unread-notification', true)
     })
@@ -839,7 +840,7 @@ ipcMain.on('update-unread-notification', (event, obj) => {
 })
 
 // Application control
-ipcMain.on('relaunch', (_event, _) => {
+ipcMain.on('relaunch', (_event: Event, _) => {
   app.relaunch()
   app.exit()
 })
