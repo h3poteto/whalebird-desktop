@@ -801,7 +801,7 @@ ipcMain.on('remove-hashtag', (event, tag) => {
 })
 
 // Fonts
-ipcMain.on('list-fonts', (event, _) => {
+ipcMain.on('list-fonts', (event: Event, _) => {
   Fonts()
     .then(list => {
       event.sender.send('response-list-fonts', list)
