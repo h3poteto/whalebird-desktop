@@ -2,22 +2,14 @@ import { ipcRenderer } from 'electron'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
-import { LightTheme, ThemeType } from '@/utils/theme'
+import { LightTheme, ThemeColorType } from '~/src/constants/themeColor'
 import DefaultFonts from '@/utils/fonts'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-
-interface AppearanceSet {
-  theme: string,
-  fontSize: number,
-  displayNameStyle: number,
-  timeFormat: number,
-  customThemeColor: ThemeType,
-  font: string
-}
+import { Appearance } from '~/src/types/appearance'
 
 export interface AppearanceState {
-  appearance: AppearanceSet,
+  appearance: Appearance,
   fonts: Array<string>
 }
 
@@ -39,7 +31,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<AppearanceState> = {
-  [MUTATION_TYPES.UPDATE_APPEARANCE]: (state, conf: AppearanceSet) => {
+  [MUTATION_TYPES.UPDATE_APPEARANCE]: (state, conf: Appearance) => {
     state.appearance = conf
   },
   [MUTATION_TYPES.UPDATE_FONTS]: (state, fonts: Array<string>) => {
@@ -57,7 +49,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
       })
       ipcRenderer.once('response-get-preferences', (_, conf: any) => {
         ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as AppearanceSet)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
         resolve(conf)
       })
     })
@@ -77,7 +69,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
     })
   },
   updateTheme: ({ dispatch, commit, state }, themeKey: string) => {
-    const newAppearance: AppearanceSet = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, state.appearance, {
       theme: themeKey
     })
     const config = {
@@ -91,14 +83,14 @@ const actions: ActionTree<AppearanceState, RootState> = {
       })
       ipcRenderer.once('response-update-preferences', (_, conf: any) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as AppearanceSet)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
     })
   },
   updateFontSize: ({ dispatch, commit, state }, fontSize: number) => {
-    const newAppearance: AppearanceSet = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, state.appearance, {
       fontSize: fontSize
     })
     const config = {
@@ -112,14 +104,14 @@ const actions: ActionTree<AppearanceState, RootState> = {
       })
       ipcRenderer.once('response-update-preferences', (_, conf: any) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as AppearanceSet)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
     })
   },
   updateDisplayNameStyle: ({ dispatch, commit, state }, value: number) => {
-    const newAppearance: AppearanceSet = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, state.appearance, {
       displayNameStyle: value
     })
     const config = {
@@ -134,13 +126,13 @@ const actions: ActionTree<AppearanceState, RootState> = {
       ipcRenderer.once('response-update-preferences', (_, conf: any) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as AppearanceSet)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
         resolve(conf.appearance)
       })
     })
   },
   updateTimeFormat: ({ dispatch, commit, state }, value: number) => {
-    const newAppearance: AppearanceSet = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, state.appearance, {
       timeFormat: value
     })
     const config = {
@@ -155,14 +147,14 @@ const actions: ActionTree<AppearanceState, RootState> = {
       ipcRenderer.once('response-update-preferences', (_, conf: any) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as AppearanceSet)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
         resolve(conf.appearance)
       })
     })
   },
   updateCustomThemeColor: ({ dispatch, state, commit }, value: object) => {
-    const newCustom: ThemeType = Object.assign({}, state.appearance.customThemeColor, value)
-    const newAppearance: AppearanceSet = Object.assign({}, state.appearance, {
+    const newCustom: ThemeColorType = Object.assign({}, state.appearance.customThemeColor, value)
+    const newAppearance: Appearance = Object.assign({}, state.appearance, {
       customThemeColor: newCustom
     })
     const config = {
@@ -176,14 +168,14 @@ const actions: ActionTree<AppearanceState, RootState> = {
       })
       ipcRenderer.once('response-update-preferences', (_, conf: any) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as AppearanceSet)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
     })
   },
   updateFont: ({ dispatch, state, commit }, value: string) => {
-    const newAppearance: AppearanceSet = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, state.appearance, {
       font: value
     })
     const config = {
@@ -197,7 +189,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
       })
       ipcRenderer.once('response-update-preferences', (_, conf: any) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as AppearanceSet)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
@@ -205,11 +197,9 @@ const actions: ActionTree<AppearanceState, RootState> = {
   }
 }
 
-const Appearance: Module<AppearanceState, RootState> = {
+export default {
   namespaced: true,
   state: state,
   mutations: mutations,
   actions: actions
-}
-
-export default Appearance
+} as Module<AppearanceState, RootState>

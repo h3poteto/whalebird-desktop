@@ -65,6 +65,11 @@ let mainConfig = {
     ])
   ],
   resolve: {
+    alias: {
+      // Same as tsconfig.json
+      '@': path.join(__dirname, '../src/renderer'),
+      '~': path.join(__dirname, '../')
+    },
     extensions: ['.js', '.json', '.node', '.ts']
   },
   target: 'electron-main'

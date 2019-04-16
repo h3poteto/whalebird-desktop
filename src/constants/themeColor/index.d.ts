@@ -1,4 +1,4 @@
-export type ThemeType = {
+export type ThemeColorType = {
   background_color: string,
   selected_background_color: string,
   global_header_color: string,
@@ -11,10 +11,10 @@ export type ThemeType = {
   wrapper_mask_color: string
 }
 
-declare var LightTheme: ThemeType
-declare var DarkTheme: ThemeType
-declare var SolarizedLightTheme: ThemeType
-declare var SolarizedDarkTheme: ThemeType
-declare var KimbieDarkTheme: ThemeType
+declare var LightTheme: ThemeColorType
+declare var DarkTheme: ThemeColorType
+declare var SolarizedLightTheme: ThemeColorType
+declare var SolarizedDarkTheme: ThemeColorType
+declare var KimbieDarkTheme: ThemeColorType
 
 export { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme }
