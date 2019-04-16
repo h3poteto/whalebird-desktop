@@ -1,10 +1,10 @@
 import { ipcRenderer } from 'electron'
-import Hashtag from '~/src/types/hashtag'
+import LocalTag from '~/src/types/localTag'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export interface ListState {
-  tags: Array<Hashtag>
+  tags: Array<LocalTag>
 }
 
 const state = (): ListState => ({
@@ -16,7 +16,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<ListState> = {
-  [MUTATION_TYPES.UPDATE_TAGS]: (state, tags: Array<Hashtag>) => {
+  [MUTATION_TYPES.UPDATE_TAGS]: (state, tags: Array<LocalTag>) => {
     state.tags = tags
   }
 }
@@ -24,7 +24,7 @@ const mutations: MutationTree<ListState> = {
 const actions: ActionTree<ListState, RootState> = {
   listTags: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('response-list-hashtags', (_, tags: Array<Hashtag>) => {
+      ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
         ipcRenderer.removeAllListeners('error-list-hashtags')
         commit(MUTATION_TYPES.UPDATE_TAGS, tags)
         resolve(tags)
@@ -36,7 +36,7 @@ const actions: ActionTree<ListState, RootState> = {
       ipcRenderer.send('list-hashtags')
     })
   },
-  removeTag: ({ dispatch }, tag: Hashtag) => {
+  removeTag: ({ dispatch }, tag: LocalTag) => {
     return new Promise((resolve, reject) => {
       ipcRenderer.once('response-remove-hashtag', () => {
         ipcRenderer.removeAllListeners('error-remove-hashtag')

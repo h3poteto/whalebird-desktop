@@ -21,6 +21,7 @@ import UnreadNotification from './unread_notification'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
 import LocalAccount from '~src/types/localAccount'
+import LocalTag from '~src/types/localTag'
 
 /**
  * Context menu
@@ -767,7 +768,7 @@ ipcMain.on('change-language', (event, value) => {
 })
 
 // hashtag
-ipcMain.on('save-hashtag', (event, tag) => {
+ipcMain.on('save-hashtag', (event: Event, tag: string) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags.insertTag(tag)
     .then(() => {
@@ -778,7 +779,7 @@ ipcMain.on('save-hashtag', (event, tag) => {
     })
 })
 
-ipcMain.on('list-hashtags', (event, _) => {
+ipcMain.on('list-hashtags', (event: Event, _) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags.listTags()
     .then((tags) => {
@@ -789,7 +790,7 @@ ipcMain.on('list-hashtags', (event, _) => {
     })
 })
 
-ipcMain.on('remove-hashtag', (event, tag) => {
+ipcMain.on('remove-hashtag', (event: Event, tag: LocalTag) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags.removeTag(tag)
     .then(() => {
