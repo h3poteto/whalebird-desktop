@@ -10,10 +10,11 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
+import { Status, Notification } from 'megalodon'
 
 import Authentication from './auth'
 import Account from './account'
-import StreamingManager from './streaming_manager'
+import StreamingManager from './streamingManager'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
@@ -307,7 +308,7 @@ ipcMain.on('get-social-token', (event: Event, _) => {
 })
 
 // nedb
-ipcMain.on('list-accounts', (event, _) => {
+ipcMain.on('list-accounts', (event: Event, _) => {
   accountManager.listAccounts()
     .catch((err) => {
       log.error(err)
@@ -318,7 +319,7 @@ ipcMain.on('list-accounts', (event, _) => {
     })
 })
 
-ipcMain.on('get-local-account', (event, id) => {
+ipcMain.on('get-local-account', (event: Event, id: string) => {
   accountManager.getAccount(id)
     .catch((err) => {
       log.error(err)
@@ -329,7 +330,7 @@ ipcMain.on('get-local-account', (event, id) => {
     })
 })
 
-ipcMain.on('update-account', (event, acct) => {
+ipcMain.on('update-account', (event: Event, acct: LocalAccount) => {
   accountManager.refresh(acct)
     .then((ac) => {
       event.sender.send('response-update-account', ac)
@@ -339,7 +340,7 @@ ipcMain.on('update-account', (event, acct) => {
     })
 })
 
-ipcMain.on('remove-account', (event, id) => {
+ipcMain.on('remove-account', (event: Event, id: string) => {
   accountManager.removeAccount(id)
     .then(() => {
       event.sender.send('response-remove-account')
@@ -349,7 +350,7 @@ ipcMain.on('remove-account', (event, id) => {
     })
 })
 
-ipcMain.on('forward-account', (event, acct) => {
+ipcMain.on('forward-account', (event: Event, acct: LocalAccount) => {
   accountManager.forwardAccount(acct)
     .then(() => {
       event.sender.send('response-forward-account')
@@ -360,7 +361,7 @@ ipcMain.on('forward-account', (event, acct) => {
     })
 })
 
-ipcMain.on('backward-account', (event, acct) => {
+ipcMain.on('backward-account', (event: Event, acct: LocalAccount) => {
   accountManager.backwardAccount(acct)
     .then(() => {
       event.sender.send('response-backward-account')
@@ -370,7 +371,7 @@ ipcMain.on('backward-account', (event, acct) => {
     })
 })
 
-ipcMain.on('refresh-accounts', (event, _) => {
+ipcMain.on('refresh-accounts', (event: Event, _) => {
   accountManager.refreshAccounts()
     .then((accounts) => {
       event.sender.send('response-refresh-accounts', accounts)
@@ -380,7 +381,7 @@ ipcMain.on('refresh-accounts', (event, _) => {
     })
 })
 
-ipcMain.on('remove-all-accounts', (event, _) => {
+ipcMain.on('remove-all-accounts', (event: Event, _) => {
   accountManager.removeAll()
     .then(() => {
       event.sender.send('response-remove-all-accounts')
@@ -399,16 +400,16 @@ ipcMain.on('reset-badge', () => {
 })
 
 // streaming
-// TODO: use type
-let userStreaming: any = null
+let userStreaming: StreamingManager | null = null
 
-ipcMain.on('start-user-streaming', (event, obj) => {
+type StreamingSetting = {
+  account: LocalAccount,
+  useWebsocket: boolean
+}
+
+ipcMain.on('start-user-streaming', (event: Event, obj: StreamingSetting) => {
   const { account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-user-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old user streaming
       if (userStreaming !== null) {
@@ -418,10 +419,10 @@ ipcMain.on('start-user-streaming', (event, obj) => {
 
       userStreaming = new StreamingManager(acct, useWebsocket)
       userStreaming.startUser(
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-user-streaming', update)
         },
-        (notification) => {
+        (notification: Notification) => {
           event.sender.send('notification-start-user-streaming', notification)
           // Does not exist a endpoint for only mention. And mention is a part of notification.
           // So we have to get mention from notification.
@@ -432,7 +433,7 @@ ipcMain.on('start-user-streaming', (event, obj) => {
             app.dock.setBadge('•')
           }
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           // In macOS, sometimes window is closed (not quit).
           // When window is closed, we can not send event to webContents; because it is destroyed.
@@ -443,25 +444,24 @@ ipcMain.on('start-user-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-user-streaming', err)
+    })
 })
 
-ipcMain.on('stop-user-streaming', (_event, _) => {
+ipcMain.on('stop-user-streaming', (_event: Event, _) => {
   if (userStreaming !== null) {
     userStreaming.stop()
     userStreaming = null
   }
 })
 
-// TODO: use type
-let directMessagesStreaming: any = null
+let directMessagesStreaming: StreamingManager | null = null
 
-ipcMain.on('start-directmessages-streaming', (event, obj) => {
+ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSetting) => {
   const { account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-directmessages-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old directmessages streaming
       if (directMessagesStreaming !== null) {
@@ -473,10 +473,10 @@ ipcMain.on('start-directmessages-streaming', (event, obj) => {
       directMessagesStreaming.start(
         'direct',
         '',
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-directmessages-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-directmessages-streaming', err)
@@ -484,25 +484,24 @@ ipcMain.on('start-directmessages-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-directmessages-streaming', err)
+    })
 })
 
-ipcMain.on('stop-directmessages-streaming', (_event, _) => {
+ipcMain.on('stop-directmessages-streaming', (_event: Event, _) => {
   if (directMessagesStreaming !== null) {
     directMessagesStreaming.stop()
     directMessagesStreaming = null
   }
 })
 
-// TODO: use type
-let localStreaming: any = null
+let localStreaming: StreamingManager | null = null
 
-ipcMain.on('start-local-streaming', (event, obj) => {
+ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
   const { account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-local-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old local streaming
       if (localStreaming !== null) {
@@ -514,10 +513,10 @@ ipcMain.on('start-local-streaming', (event, obj) => {
       localStreaming.start(
         'public/local',
         '',
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-local-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-local-streaming', err)
@@ -525,25 +524,24 @@ ipcMain.on('start-local-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-local-streaming', err)
+    })
 })
 
-ipcMain.on('stop-local-streaming', (_event, _) => {
+ipcMain.on('stop-local-streaming', (_event: Event, _) => {
   if (localStreaming !== null) {
     localStreaming.stop()
     localStreaming = null
   }
 })
 
-// TODO: use type
-let publicStreaming: any = null
+let publicStreaming: StreamingManager | null = null
 
-ipcMain.on('start-public-streaming', (event, obj) => {
+ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
   const { account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-public-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old public streaming
       if (publicStreaming !== null) {
@@ -555,10 +553,10 @@ ipcMain.on('start-public-streaming', (event, obj) => {
       publicStreaming.start(
         'public',
         '',
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-public-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-public-streaming', err)
@@ -566,25 +564,28 @@ ipcMain.on('start-public-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-public-streaming', err)
+    })
 })
 
-ipcMain.on('stop-public-streaming', (_event, _) => {
+ipcMain.on('stop-public-streaming', (_event: Event, _) => {
   if (publicStreaming !== null) {
     publicStreaming.stop()
     publicStreaming = null
   }
 })
 
-// TODO: use type
-let listStreaming: any = null
+let listStreaming: StreamingManager | null = null
 
-ipcMain.on('start-list-streaming', (event, obj) => {
+type ListID = {
+  listID: number
+}
+
+ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting) => {
   const { listID, account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-list-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old list streaming
       if (listStreaming !== null) {
@@ -596,10 +597,10 @@ ipcMain.on('start-list-streaming', (event, obj) => {
       listStreaming.start(
         'list',
         `list=${listID}`,
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-list-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-list-streaming', err)
@@ -607,25 +608,28 @@ ipcMain.on('start-list-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-list-streaming', err)
+    })
 })
 
-ipcMain.on('stop-list-streaming', (_event, _) => {
+ipcMain.on('stop-list-streaming', (_event: Event, _) => {
   if (listStreaming !== null) {
     listStreaming.stop()
     listStreaming = null
   }
 })
 
-// TODO: use type
-let tagStreaming: any = null
+let tagStreaming: StreamingManager | null = null
 
-ipcMain.on('start-tag-streaming', (event, obj) => {
+type Tag = {
+  tag: string
+}
+
+ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) => {
   const { tag, account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-tag-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old tag streaming
       if (tagStreaming !== null) {
@@ -637,16 +641,20 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
       tagStreaming.start(
         'hashtag',
         `tag=${tag}`,
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-tag-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-tag-streaming', err)
           }
         }
       )
+    })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-tag-streaming', err)
     })
 })
 
