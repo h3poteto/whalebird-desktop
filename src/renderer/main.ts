@@ -12,7 +12,7 @@ import VueI18Next from '@panter/vue-i18next'
 
 import './assets/fonts/fonts.css'
 import App from './App.vue'
-import router from './router'
+import router from '@/router'
 import store from './store'
 import i18next from '~/src/config/i18n'
 
