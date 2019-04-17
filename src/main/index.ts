@@ -94,7 +94,7 @@ const soundBasePath = process.env.NODE_ENV === 'development'
   ? path.join(__dirname, '../../build/sounds/')
   : path.join(process.resourcesPath!, 'build/sounds/')
 
-async function listAccounts () {
+async function listAccounts (): Promise<Array<LocalAccount>> {
   try {
     const accounts = await accountManager.listAccounts()
     return accounts
@@ -158,7 +158,7 @@ async function createWindow () {
    * List accounts
    */
   const accounts = await listAccounts()
-  const accountsChange = accounts.map((a, index) => {
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
     return {
       label: a.domain,
       accelerator: `CmdOrCtrl+${index + 1}`,
@@ -299,7 +299,7 @@ ipcMain.on('get-access-token', (event: Event, code: string) => {
 })
 
 // environments
-ipcMain.on('get-social-token', (event: Event, _) => {
+ipcMain.on('get-social-token', (event: Event) => {
   const token = process.env.SOCIAL_TOKEN
   if (isEmpty(token)) {
     return event.sender.send('error-get-social-token', new EmptyTokenError())
@@ -308,7 +308,7 @@ ipcMain.on('get-social-token', (event: Event, _) => {
 })
 
 // nedb
-ipcMain.on('list-accounts', (event: Event, _) => {
+ipcMain.on('list-accounts', (event: Event) => {
   accountManager.listAccounts()
     .catch((err) => {
       log.error(err)
@@ -371,7 +371,7 @@ ipcMain.on('backward-account', (event: Event, acct: LocalAccount) => {
     })
 })
 
-ipcMain.on('refresh-accounts', (event: Event, _) => {
+ipcMain.on('refresh-accounts', (event: Event) => {
   accountManager.refreshAccounts()
     .then((accounts) => {
       event.sender.send('response-refresh-accounts', accounts)
@@ -381,7 +381,7 @@ ipcMain.on('refresh-accounts', (event: Event, _) => {
     })
 })
 
-ipcMain.on('remove-all-accounts', (event: Event, _) => {
+ipcMain.on('remove-all-accounts', (event: Event) => {
   accountManager.removeAll()
     .then(() => {
       event.sender.send('response-remove-all-accounts')
@@ -450,7 +450,7 @@ ipcMain.on('start-user-streaming', (event: Event, obj: StreamingSetting) => {
     })
 })
 
-ipcMain.on('stop-user-streaming', (_event: Event, _) => {
+ipcMain.on('stop-user-streaming', () => {
   if (userStreaming !== null) {
     userStreaming.stop()
     userStreaming = null
@@ -490,7 +490,7 @@ ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSettin
     })
 })
 
-ipcMain.on('stop-directmessages-streaming', (_event: Event, _) => {
+ipcMain.on('stop-directmessages-streaming', () => {
   if (directMessagesStreaming !== null) {
     directMessagesStreaming.stop()
     directMessagesStreaming = null
@@ -530,7 +530,7 @@ ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
     })
 })
 
-ipcMain.on('stop-local-streaming', (_event: Event, _) => {
+ipcMain.on('stop-local-streaming', () => {
   if (localStreaming !== null) {
     localStreaming.stop()
     localStreaming = null
@@ -570,7 +570,7 @@ ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
     })
 })
 
-ipcMain.on('stop-public-streaming', (_event: Event, _) => {
+ipcMain.on('stop-public-streaming', () => {
   if (publicStreaming !== null) {
     publicStreaming.stop()
     publicStreaming = null
@@ -614,7 +614,7 @@ ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting
     })
 })
 
-ipcMain.on('stop-list-streaming', (_event: Event, _) => {
+ipcMain.on('stop-list-streaming', () => {
   if (listStreaming !== null) {
     listStreaming.stop()
     listStreaming = null
@@ -658,7 +658,7 @@ ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) =>
     })
 })
 
-ipcMain.on('stop-tag-streaming', (_event, _) => {
+ipcMain.on('stop-tag-streaming', () => {
   if (tagStreaming !== null) {
     tagStreaming.stop()
     tagStreaming = null
@@ -666,7 +666,7 @@ ipcMain.on('stop-tag-streaming', (_event, _) => {
 })
 
 // sounds
-ipcMain.on('fav-rt-action-sound', (_event: Event, _) => {
+ipcMain.on('fav-rt-action-sound', () => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -680,7 +680,7 @@ ipcMain.on('fav-rt-action-sound', (_event: Event, _) => {
     .catch(err => log.error(err))
 })
 
-ipcMain.on('toot-action-sound', (_event: Event, _) => {
+ipcMain.on('toot-action-sound', () => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -695,7 +695,7 @@ ipcMain.on('toot-action-sound', (_event: Event, _) => {
 })
 
 // preferences
-ipcMain.on('get-preferences', (event: Event, _) => {
+ipcMain.on('get-preferences', (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -717,7 +717,7 @@ ipcMain.on('update-preferences', (event: Event, data: any) => {
     })
 })
 
-ipcMain.on('change-collapse', (_, value: boolean) => {
+ipcMain.on('change-collapse', (_event: Event, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(
     {
@@ -730,7 +730,7 @@ ipcMain.on('change-collapse', (_, value: boolean) => {
     })
 })
 
-ipcMain.on('get-collapse', (event: Event, _) => {
+ipcMain.on('get-collapse', (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -754,7 +754,7 @@ ipcMain.on('change-global-header', (event: Event, value: boolean) => {
     })
 })
 
-ipcMain.on('get-global-header', (event: Event, _) => {
+ipcMain.on('get-global-header', (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -788,7 +788,7 @@ ipcMain.on('save-hashtag', (event: Event, tag: string) => {
     })
 })
 
-ipcMain.on('list-hashtags', (event: Event, _) => {
+ipcMain.on('list-hashtags', (event: Event) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags.listTags()
     .then((tags) => {
@@ -811,7 +811,7 @@ ipcMain.on('remove-hashtag', (event: Event, tag: LocalTag) => {
 })
 
 // Fonts
-ipcMain.on('list-fonts', (event: Event, _) => {
+ipcMain.on('list-fonts', (event: Event) => {
   Fonts()
     .then(list => {
       event.sender.send('response-list-fonts', list)
@@ -848,7 +848,7 @@ ipcMain.on('update-unread-notification', (event: Event, config: UnreadNotificati
 })
 
 // Application control
-ipcMain.on('relaunch', (_event: Event, _) => {
+ipcMain.on('relaunch', () => {
   app.relaunch()
   app.exit()
 })
@@ -878,11 +878,11 @@ class EmptyTokenError {}
 /**
  * Set application menu
  */
-const ApplicationMenu = (accountsChange, i18n) => {
+const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: i18n.i18n) => {
   /**
    * For mac menu
    */
-  const macGeneralMenu = process.platform !== 'darwin' ? [] : [
+  const macGeneralMenu: Array<MenuItemConstructorOptions> = process.platform !== 'darwin' ? [] : [
     {
       type: 'separator'
     },
@@ -908,7 +908,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
     }
   ]
 
-  const template = [
+  const template: Array<MenuItemConstructorOptions> = [
     {
       label: i18n.t('main_menu.application.name'),
       submenu: [
@@ -1041,7 +1041,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
     }
   ]
 
-  const menu = Menu.buildFromTemplate(template)
+  const menu: Menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 }
 
