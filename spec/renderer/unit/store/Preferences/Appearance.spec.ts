@@ -1,7 +1,7 @@
 import Theme from '~/src/constants/theme'
 import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
-import { LightTheme } from '~/src/renderer/utils/theme'
+import { LightTheme } from '~/src/constants/themeColor'
 import DefaultFonts from '@/utils/fonts'
 import Appearance, { AppearanceState, MUTATION_TYPES } from '@/store/Preferences/Appearance'
 

@@ -1,8 +1,11 @@
-import empty from 'is-empty'
+import { isEmpty } from 'lodash'
 import Datastore from 'nedb'
+import { UnreadNotification as Config } from '~/src/types/unreadNotification'
 
 export default class UnreadNotification {
-  constructor (path) {
+  private db: Datastore
+
+  constructor (path: string) {
     this.db = new Datastore({
       filename: path,
       autoload: true
@@ -21,19 +24,19 @@ export default class UnreadNotification {
         // Add unique index.
         this.db.ensureIndex({ fieldName: 'accountID', unique: true, sparse: true }, (err) => {
           if (err) reject(err)
-          resolve(null)
+          resolve({})
         })
       })
     })
   }
 
-  insertOrUpdate (accountID, obj) {
+  insertOrUpdate (accountID: string, config: Config): Promise<number> {
     return new Promise((resolve, reject) => {
       this.db.update(
         {
           accountID: accountID
         },
-        obj,
+        config,
         {
           upsert: true
         },
@@ -44,20 +47,15 @@ export default class UnreadNotification {
     })
   }
 
-  findOne (obj) {
+  findOne (obj: any): Promise<Config> {
     return new Promise((resolve, reject) => {
-      this.db.findOne(obj, (err, doc) => {
+      this.db.findOne<Config>(obj, (err, doc) => {
         if (err) return reject(err)
-        if (empty(doc)) return reject(new EmptyRecordError('empty'))
+        if (isEmpty(doc)) return reject(new EmptyRecordError('empty'))
         resolve(doc)
       })
     })
   }
 }
 
-class EmptyRecordError extends Error {
-  constructor (msg) {
-    super(msg)
-    this.name = 'EmptyRecordError'
-  }
-}
+class EmptyRecordError extends Error {}

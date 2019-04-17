@@ -1,11 +1,20 @@
 import Mastodon from 'megalodon'
+import Account from './account'
+import LocalAccount from '~src/types/localAccount'
 
 const appName = 'Whalebird'
 const appURL = 'https://whalebird.org'
 const scope = 'read write follow'
 
 export default class Authentication {
-  constructor (accountDB) {
+  private db: Account
+  private baseURL: string
+  private domain: string
+  private clientId: string
+  private clientSecret: string
+  private protocol: 'http' | 'https'
+
+  constructor (accountDB: Account) {
     this.db = accountDB
     this.baseURL = ''
     this.domain = ''
@@ -14,14 +23,14 @@ export default class Authentication {
     this.protocol = 'https'
   }
 
-  setOtherInstance (domain) {
+  setOtherInstance (domain: string) {
     this.baseURL = `${this.protocol}://${domain}`
     this.domain = domain
     this.clientId = ''
     this.clientSecret = ''
   }
 
-  async getAuthorizationUrl (domain = 'mastodon.social') {
+  async getAuthorizationUrl (domain = 'mastodon.social'): Promise<string> {
     this.setOtherInstance(domain)
     const res = await Mastodon.registerApp(
       appName, {
@@ -39,7 +48,7 @@ export default class Authentication {
         console.log(err)
         return 1
       })
-    const json = {
+    const local: LocalAccount = {
       baseURL: this.baseURL,
       domain: this.domain,
       clientId: this.clientId,
@@ -47,15 +56,18 @@ export default class Authentication {
       accessToken: '',
       refreshToken: '',
       username: '',
-      accountId: '',
+      accountId: null,
       avatar: '',
       order: order
     }
-    await this.db.insertAccount(json)
+    await this.db.insertAccount(local)
+    if (res.url === null) {
+      throw new AuthenticationURLError('Can not get url')
+    }
     return res.url
   }
 
-  async getAccessToken (code) {
+  async getAccessToken (code: string): Promise<string> {
     const tokenData = await Mastodon.fetchAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
     const search = {
       baseURL: this.baseURL,
@@ -67,7 +79,7 @@ export default class Authentication {
     const accessToken = tokenData.accessToken
     const refreshToken = tokenData.refreshToken
     const data = await this.db.fetchAccount(rec, accessToken)
-    await this.db.updateAccount(rec._id, {
+    await this.db.updateAccount(rec._id!, {
       username: data.username,
       accountId: data.id,
       avatar: data.avatar,
@@ -78,3 +90,5 @@ export default class Authentication {
   }
   // TODO: Refresh access token when expired
 }
+
+class AuthenticationURLError extends Error {}

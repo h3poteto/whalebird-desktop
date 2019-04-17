@@ -1,25 +1,29 @@
 'use strict'
 
-import { app, ipcMain, shell, Menu, Tray } from 'electron'
+import { app, ipcMain, shell, Menu, Tray, BrowserWindow, BrowserWindowConstructorOptions, MenuItemConstructorOptions, Event } from 'electron'
 import Datastore from 'nedb'
-import empty from 'is-empty'
+import { isEmpty } from 'lodash'
 import log from 'electron-log'
 import windowStateKeeper from 'electron-window-state'
 import simplayer from 'simplayer'
 import path from 'path'
 import ContextMenu from 'electron-context-menu'
-import * as Splashscreen from '@trodi/electron-splashscreen'
+import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
+import { Status, Notification } from 'megalodon'
 
 import Authentication from './auth'
 import Account from './account'
-import StreamingManager from './streaming_manager'
+import StreamingManager from './streamingManager'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
-import UnreadNotification from './unread_notification'
+import UnreadNotification from './unreadNotification'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
+import LocalAccount from '~src/types/localAccount'
+import LocalTag from '~src/types/localTag'
+import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 
 /**
  * Context menu
@@ -32,6 +36,10 @@ ContextMenu()
 log.transports.console.level = 'debug'
 log.transports.file.level = 'info'
 
+declare namespace global {
+  let __static: string
+}
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -40,8 +48,8 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let mainWindow
-let tray = null
+let mainWindow: BrowserWindow | null
+let tray: Tray
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -61,7 +69,7 @@ let accountDB = new Datastore({
 })
 const accountManager = new Account(accountDB)
 accountManager.initialize()
-  .catch(err => log.error(err))
+  .catch((err: Error) => log.error(err))
 
 const hashtagsDBPath = process.env.NODE_ENV === 'production'
   ? userData + '/db/hashtags.db'
@@ -76,7 +84,7 @@ const unreadNotificationDBPath = process.env.NODE_ENV === 'production'
   : 'unread_notification.db'
 const unreadNotification = new UnreadNotification(unreadNotificationDBPath)
 unreadNotification.initialize()
-  .catch(err => log.error(err))
+  .catch((err: Error) => log.error(err))
 
 const preferencesDBPath = process.env.NODE_ENV === 'production'
   ? userData + './db/preferences.json'
@@ -84,9 +92,9 @@ const preferencesDBPath = process.env.NODE_ENV === 'production'
 
 const soundBasePath = process.env.NODE_ENV === 'development'
   ? path.join(__dirname, '../../build/sounds/')
-  : path.join(process.resourcesPath, 'build/sounds/')
+  : path.join(process.resourcesPath!, 'build/sounds/')
 
-async function listAccounts () {
+async function listAccounts (): Promise<Array<LocalAccount>> {
   try {
     const accounts = await accountManager.listAccounts()
     return accounts
@@ -95,14 +103,14 @@ async function listAccounts () {
   }
 }
 
-async function changeAccount (account, index) {
+async function changeAccount (account: LocalAccount, index: number) {
   // In MacOS, user can hide the window.
   // In this time, mainWindow in not exist, so we have to create window.
   if (mainWindow === null) {
     await createWindow()
     // We have to wait the web contents is loaded.
-    mainWindow.webContents.on('did-finish-load', () => {
-      mainWindow.webContents.send('change-account', Object.assign(account, { index: index }))
+    mainWindow!.webContents.on('did-finish-load', () => {
+      mainWindow!.webContents.send('change-account', Object.assign(account, { index: index }))
     })
   } else {
     mainWindow.webContents.send('change-account', Object.assign(account, { index: index }))
@@ -123,24 +131,24 @@ async function getLanguage () {
  * Minimize to tray when click close button
  */
 async function setMinimizeToTray () {
-  mainWindow.on('close', (event) => {
-    mainWindow.hide()
-    mainWindow.setSkipTaskbar(true)
+  mainWindow!.on('close', (event) => {
+    mainWindow!.hide()
+    mainWindow!.setSkipTaskbar(true)
     event.preventDefault()
   })
   tray = new Tray(path.join(__dirname, '../../build/icons/256x256.png'))
   const contextMenu = Menu.buildFromTemplate([
-    { label: i18n.t('main_menu.application.quit'), click: () => { mainWindow.destroy() } }
+    { label: i18n.t('main_menu.application.quit'), click: () => { mainWindow!.destroy() } }
   ])
   tray.setToolTip(i18n.t('main_menu.application.name'))
   tray.setContextMenu(contextMenu)
   tray.on('click', () => {
-    if (mainWindow.isVisible()) {
-      mainWindow.hide()
-      mainWindow.setSkipTaskbar(true)
+    if (mainWindow!.isVisible()) {
+      mainWindow!.hide()
+      mainWindow!.setSkipTaskbar(true)
     } else {
-      mainWindow.show()
-      mainWindow.setSkipTaskbar(false)
+      mainWindow!.show()
+      mainWindow!.setSkipTaskbar(false)
     }
   })
 }
@@ -150,7 +158,7 @@ async function createWindow () {
    * List accounts
    */
   const accounts = await listAccounts()
-  const accountsChange = accounts.map((a, index) => {
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
     return {
       label: a.domain,
       accelerator: `CmdOrCtrl+${index + 1}`,
@@ -187,10 +195,10 @@ async function createWindow () {
    */
   let mainWindowState = windowStateKeeper({
     defaultWidth: 1000,
-    height: 563
+    defaultHeight: 563
   })
   //  mainWindow = new BrowserWindow({
-  const mainOpts = {
+  const mainOpts: BrowserWindowConstructorOptions = {
     titleBarStyle: 'hidden',
     x: mainWindowState.x,
     y: mainWindowState.y,
@@ -199,7 +207,7 @@ async function createWindow () {
     useContentSize: true,
     icon: path.resolve(__dirname, '../../build/icons/256x256.png')
   }
-  const config = {
+  const config: Config = {
     windowOpts: mainOpts,
     templateUrl: splashURL,
     splashScreenOpts: {
@@ -207,7 +215,7 @@ async function createWindow () {
       height: 325
     }
   }
-  mainWindow = Splashscreen.initSplashScreen(config)
+  mainWindow = initSplashScreen(config)
 
   mainWindowState.manage(mainWindow)
 
@@ -238,14 +246,16 @@ app.on('window-all-closed', () => {
   } else {
     // In MacOS, we should change disable some menu items.
     const menu = Menu.getApplicationMenu()
-    // Preferences
-    menu.items[0].submenu.items[2].enabled = false
-    // New Toot
-    menu.items[1].submenu.items[0].enabled = false
-    // Open Window
-    menu.items[4].submenu.items[1].enabled = true
-    // Jump to
-    menu.items[4].submenu.items[4].enabled = false
+    if (menu !== null) {
+      // Preferences
+      ((menu.items[0] as MenuItemConstructorOptions).submenu as Menu).items[2].enabled = false as boolean
+      // New Toot
+      ((menu.items[1] as MenuItemConstructorOptions).submenu as Menu).items[0].enabled = false as boolean
+      // Open Window
+      ((menu.items[4] as MenuItemConstructorOptions).submenu as Menu).items[1].enabled = true as boolean
+      // Jump to
+      ((menu.items[4] as MenuItemConstructorOptions).submenu as Menu).items[4].enabled = false as boolean
+    }
   }
 })
 
@@ -257,7 +267,7 @@ app.on('activate', () => {
 
 let auth = new Authentication(accountManager)
 
-ipcMain.on('get-auth-url', (event, domain) => {
+ipcMain.on('get-auth-url', (event: Event, domain: string) => {
   auth.getAuthorizationUrl(domain)
     .then((url) => {
       log.debug(url)
@@ -271,14 +281,14 @@ ipcMain.on('get-auth-url', (event, domain) => {
     })
 })
 
-ipcMain.on('get-access-token', (event, code) => {
+ipcMain.on('get-access-token', (event: Event, code: string) => {
   auth.getAccessToken(code)
     .then((token) => {
       accountDB.findOne({
         accessToken: token
-      }, (err, doc) => {
+      }, (err, doc: any) => {
         if (err) return event.sender.send('error-get-access-token', err)
-        if (empty(doc)) return event.sender.send('error-get-access-token', 'error document is empty')
+        if (isEmpty(doc)) return event.sender.send('error-get-access-token', 'error document is empty')
         event.sender.send('response-get-access-token', doc._id)
       })
     })
@@ -289,16 +299,16 @@ ipcMain.on('get-access-token', (event, code) => {
 })
 
 // environments
-ipcMain.on('get-social-token', (event, _) => {
+ipcMain.on('get-social-token', (event: Event) => {
   const token = process.env.SOCIAL_TOKEN
-  if (empty(token)) {
+  if (isEmpty(token)) {
     return event.sender.send('error-get-social-token', new EmptyTokenError())
   }
   event.sender.send('response-get-social-token', token)
 })
 
 // nedb
-ipcMain.on('list-accounts', (event, _) => {
+ipcMain.on('list-accounts', (event: Event) => {
   accountManager.listAccounts()
     .catch((err) => {
       log.error(err)
@@ -309,7 +319,7 @@ ipcMain.on('list-accounts', (event, _) => {
     })
 })
 
-ipcMain.on('get-local-account', (event, id) => {
+ipcMain.on('get-local-account', (event: Event, id: string) => {
   accountManager.getAccount(id)
     .catch((err) => {
       log.error(err)
@@ -320,7 +330,7 @@ ipcMain.on('get-local-account', (event, id) => {
     })
 })
 
-ipcMain.on('update-account', (event, acct) => {
+ipcMain.on('update-account', (event: Event, acct: LocalAccount) => {
   accountManager.refresh(acct)
     .then((ac) => {
       event.sender.send('response-update-account', ac)
@@ -330,7 +340,7 @@ ipcMain.on('update-account', (event, acct) => {
     })
 })
 
-ipcMain.on('remove-account', (event, id) => {
+ipcMain.on('remove-account', (event: Event, id: string) => {
   accountManager.removeAccount(id)
     .then(() => {
       event.sender.send('response-remove-account')
@@ -340,7 +350,7 @@ ipcMain.on('remove-account', (event, id) => {
     })
 })
 
-ipcMain.on('forward-account', (event, acct) => {
+ipcMain.on('forward-account', (event: Event, acct: LocalAccount) => {
   accountManager.forwardAccount(acct)
     .then(() => {
       event.sender.send('response-forward-account')
@@ -351,7 +361,7 @@ ipcMain.on('forward-account', (event, acct) => {
     })
 })
 
-ipcMain.on('backward-account', (event, acct) => {
+ipcMain.on('backward-account', (event: Event, acct: LocalAccount) => {
   accountManager.backwardAccount(acct)
     .then(() => {
       event.sender.send('response-backward-account')
@@ -361,7 +371,7 @@ ipcMain.on('backward-account', (event, acct) => {
     })
 })
 
-ipcMain.on('refresh-accounts', (event, _) => {
+ipcMain.on('refresh-accounts', (event: Event) => {
   accountManager.refreshAccounts()
     .then((accounts) => {
       event.sender.send('response-refresh-accounts', accounts)
@@ -371,7 +381,7 @@ ipcMain.on('refresh-accounts', (event, _) => {
     })
 })
 
-ipcMain.on('remove-all-accounts', (event, _) => {
+ipcMain.on('remove-all-accounts', (event: Event) => {
   accountManager.removeAll()
     .then(() => {
       event.sender.send('response-remove-all-accounts')
@@ -390,15 +400,16 @@ ipcMain.on('reset-badge', () => {
 })
 
 // streaming
-let userStreaming = null
+let userStreaming: StreamingManager | null = null
 
-ipcMain.on('start-user-streaming', (event, obj) => {
+type StreamingSetting = {
+  account: LocalAccount,
+  useWebsocket: boolean
+}
+
+ipcMain.on('start-user-streaming', (event: Event, obj: StreamingSetting) => {
   const { account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-user-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old user streaming
       if (userStreaming !== null) {
@@ -408,10 +419,10 @@ ipcMain.on('start-user-streaming', (event, obj) => {
 
       userStreaming = new StreamingManager(acct, useWebsocket)
       userStreaming.startUser(
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-user-streaming', update)
         },
-        (notification) => {
+        (notification: Notification) => {
           event.sender.send('notification-start-user-streaming', notification)
           // Does not exist a endpoint for only mention. And mention is a part of notification.
           // So we have to get mention from notification.
@@ -422,7 +433,7 @@ ipcMain.on('start-user-streaming', (event, obj) => {
             app.dock.setBadge('•')
           }
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           // In macOS, sometimes window is closed (not quit).
           // When window is closed, we can not send event to webContents; because it is destroyed.
@@ -433,24 +444,24 @@ ipcMain.on('start-user-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-user-streaming', err)
+    })
 })
 
-ipcMain.on('stop-user-streaming', (_event, _) => {
+ipcMain.on('stop-user-streaming', () => {
   if (userStreaming !== null) {
     userStreaming.stop()
     userStreaming = null
   }
 })
 
-let directMessagesStreaming = null
+let directMessagesStreaming: StreamingManager | null = null
 
-ipcMain.on('start-directmessages-streaming', (event, obj) => {
+ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSetting) => {
   const { account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-directmessages-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old directmessages streaming
       if (directMessagesStreaming !== null) {
@@ -462,10 +473,10 @@ ipcMain.on('start-directmessages-streaming', (event, obj) => {
       directMessagesStreaming.start(
         'direct',
         '',
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-directmessages-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-directmessages-streaming', err)
@@ -473,24 +484,24 @@ ipcMain.on('start-directmessages-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-directmessages-streaming', err)
+    })
 })
 
-ipcMain.on('stop-directmessages-streaming', (_event, _) => {
+ipcMain.on('stop-directmessages-streaming', () => {
   if (directMessagesStreaming !== null) {
     directMessagesStreaming.stop()
     directMessagesStreaming = null
   }
 })
 
-let localStreaming = null
+let localStreaming: StreamingManager | null = null
 
-ipcMain.on('start-local-streaming', (event, obj) => {
+ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
   const { account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-local-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old local streaming
       if (localStreaming !== null) {
@@ -502,10 +513,10 @@ ipcMain.on('start-local-streaming', (event, obj) => {
       localStreaming.start(
         'public/local',
         '',
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-local-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-local-streaming', err)
@@ -513,24 +524,24 @@ ipcMain.on('start-local-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-local-streaming', err)
+    })
 })
 
-ipcMain.on('stop-local-streaming', (_event, _) => {
+ipcMain.on('stop-local-streaming', () => {
   if (localStreaming !== null) {
     localStreaming.stop()
     localStreaming = null
   }
 })
 
-let publicStreaming = null
+let publicStreaming: StreamingManager | null = null
 
-ipcMain.on('start-public-streaming', (event, obj) => {
+ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
   const { account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-public-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old public streaming
       if (publicStreaming !== null) {
@@ -542,10 +553,10 @@ ipcMain.on('start-public-streaming', (event, obj) => {
       publicStreaming.start(
         'public',
         '',
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-public-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-public-streaming', err)
@@ -553,24 +564,28 @@ ipcMain.on('start-public-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-public-streaming', err)
+    })
 })
 
-ipcMain.on('stop-public-streaming', (_event, _) => {
+ipcMain.on('stop-public-streaming', () => {
   if (publicStreaming !== null) {
     publicStreaming.stop()
     publicStreaming = null
   }
 })
 
-let listStreaming = null
+let listStreaming: StreamingManager | null = null
 
-ipcMain.on('start-list-streaming', (event, obj) => {
+type ListID = {
+  listID: number
+}
+
+ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting) => {
   const { listID, account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-list-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old list streaming
       if (listStreaming !== null) {
@@ -582,10 +597,10 @@ ipcMain.on('start-list-streaming', (event, obj) => {
       listStreaming.start(
         'list',
         `list=${listID}`,
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-list-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-list-streaming', err)
@@ -593,24 +608,28 @@ ipcMain.on('start-list-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-list-streaming', err)
+    })
 })
 
-ipcMain.on('stop-list-streaming', (_event, _) => {
+ipcMain.on('stop-list-streaming', () => {
   if (listStreaming !== null) {
     listStreaming.stop()
     listStreaming = null
   }
 })
 
-let tagStreaming = null
+let tagStreaming: StreamingManager | null = null
 
-ipcMain.on('start-tag-streaming', (event, obj) => {
+type Tag = {
+  tag: string
+}
+
+ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) => {
   const { tag, account, useWebsocket } = obj
-  accountManager.getAccount(account._id)
-    .catch((err) => {
-      log.error(err)
-      event.sender.send('error-start-tag-streaming', err)
-    })
+  accountManager.getAccount(account._id!)
     .then((acct) => {
       // Stop old tag streaming
       if (tagStreaming !== null) {
@@ -622,10 +641,10 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
       tagStreaming.start(
         'hashtag',
         `tag=${tag}`,
-        (update) => {
+        (update: Status) => {
           event.sender.send('update-start-tag-streaming', update)
         },
-        (err) => {
+        (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
             event.sender.send('error-start-tag-streaming', err)
@@ -633,9 +652,13 @@ ipcMain.on('start-tag-streaming', (event, obj) => {
         }
       )
     })
+    .catch((err) => {
+      log.error(err)
+      event.sender.send('error-start-tag-streaming', err)
+    })
 })
 
-ipcMain.on('stop-tag-streaming', (_event, _) => {
+ipcMain.on('stop-tag-streaming', () => {
   if (tagStreaming !== null) {
     tagStreaming.stop()
     tagStreaming = null
@@ -643,13 +666,13 @@ ipcMain.on('stop-tag-streaming', (_event, _) => {
 })
 
 // sounds
-ipcMain.on('fav-rt-action-sound', (_event, _) => {
+ipcMain.on('fav-rt-action-sound', () => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
       if (conf.general.sound.fav_rb) {
         const sound = path.join(soundBasePath, 'operation_sound01.wav')
-        simplayer(sound, (err) => {
+        simplayer(sound, (err: Error) => {
           if (err) log.error(err)
         })
       }
@@ -657,13 +680,13 @@ ipcMain.on('fav-rt-action-sound', (_event, _) => {
     .catch(err => log.error(err))
 })
 
-ipcMain.on('toot-action-sound', (_event, _) => {
+ipcMain.on('toot-action-sound', () => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
       if (conf.general.sound.toot) {
         const sound = path.join(soundBasePath, 'operation_sound02.wav')
-        simplayer(sound, (err) => {
+        simplayer(sound, (err: Error) => {
           if (err) log.error(err)
         })
       }
@@ -672,7 +695,7 @@ ipcMain.on('toot-action-sound', (_event, _) => {
 })
 
 // preferences
-ipcMain.on('get-preferences', (event, _) => {
+ipcMain.on('get-preferences', (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -683,7 +706,7 @@ ipcMain.on('get-preferences', (event, _) => {
     })
 })
 
-ipcMain.on('update-preferences', (event, data) => {
+ipcMain.on('update-preferences', (event: Event, data: any) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(data)
     .then((conf) => {
@@ -694,7 +717,7 @@ ipcMain.on('update-preferences', (event, data) => {
     })
 })
 
-ipcMain.on('change-collapse', (event, value) => {
+ipcMain.on('change-collapse', (_event: Event, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(
     {
@@ -707,7 +730,7 @@ ipcMain.on('change-collapse', (event, value) => {
     })
 })
 
-ipcMain.on('get-collapse', (event, _) => {
+ipcMain.on('get-collapse', (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -715,7 +738,7 @@ ipcMain.on('get-collapse', (event, _) => {
     })
 })
 
-ipcMain.on('change-global-header', (event, value) => {
+ipcMain.on('change-global-header', (event: Event, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(
     {
@@ -731,7 +754,7 @@ ipcMain.on('change-global-header', (event, value) => {
     })
 })
 
-ipcMain.on('get-global-header', (event, _) => {
+ipcMain.on('get-global-header', (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load()
     .then((conf) => {
@@ -739,7 +762,7 @@ ipcMain.on('get-global-header', (event, _) => {
     })
 })
 
-ipcMain.on('change-language', (event, value) => {
+ipcMain.on('change-language', (event: Event, value: string) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.update(
     {
@@ -754,7 +777,7 @@ ipcMain.on('change-language', (event, value) => {
 })
 
 // hashtag
-ipcMain.on('save-hashtag', (event, tag) => {
+ipcMain.on('save-hashtag', (event: Event, tag: string) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags.insertTag(tag)
     .then(() => {
@@ -765,7 +788,7 @@ ipcMain.on('save-hashtag', (event, tag) => {
     })
 })
 
-ipcMain.on('list-hashtags', (event, _) => {
+ipcMain.on('list-hashtags', (event: Event) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags.listTags()
     .then((tags) => {
@@ -776,7 +799,7 @@ ipcMain.on('list-hashtags', (event, _) => {
     })
 })
 
-ipcMain.on('remove-hashtag', (event, tag) => {
+ipcMain.on('remove-hashtag', (event: Event, tag: LocalTag) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags.removeTag(tag)
     .then(() => {
@@ -788,7 +811,7 @@ ipcMain.on('remove-hashtag', (event, tag) => {
 })
 
 // Fonts
-ipcMain.on('list-fonts', (event, _) => {
+ipcMain.on('list-fonts', (event: Event) => {
   Fonts()
     .then(list => {
       event.sender.send('response-list-fonts', list)
@@ -799,7 +822,7 @@ ipcMain.on('list-fonts', (event, _) => {
 })
 
 // Unread notifications
-ipcMain.on('get-unread-notification', (event, accountID) => {
+ipcMain.on('get-unread-notification', (event: Event, accountID: string) => {
   unreadNotification.findOne({
     accountID: accountID
   })
@@ -812,9 +835,9 @@ ipcMain.on('get-unread-notification', (event, accountID) => {
     })
 })
 
-ipcMain.on('update-unread-notification', (event, obj) => {
-  const { accountID } = obj
-  unreadNotification.insertOrUpdate(accountID, obj)
+ipcMain.on('update-unread-notification', (event: Event, config: UnreadNotificationConfig) => {
+  const { accountID } = config
+  unreadNotification.insertOrUpdate(accountID!, config)
     .then(_ => {
       event.sender.send('response-update-unread-notification', true)
     })
@@ -825,7 +848,7 @@ ipcMain.on('update-unread-notification', (event, obj) => {
 })
 
 // Application control
-ipcMain.on('relaunch', (_event, _) => {
+ipcMain.on('relaunch', () => {
   app.relaunch()
   app.exit()
 })
@@ -855,11 +878,11 @@ class EmptyTokenError {}
 /**
  * Set application menu
  */
-const ApplicationMenu = (accountsChange, i18n) => {
+const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: i18n.i18n) => {
   /**
    * For mac menu
    */
-  const macGeneralMenu = process.platform !== 'darwin' ? [] : [
+  const macGeneralMenu: Array<MenuItemConstructorOptions> = process.platform !== 'darwin' ? [] : [
     {
       type: 'separator'
     },
@@ -885,7 +908,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
     }
   ]
 
-  const template = [
+  const template: Array<MenuItemConstructorOptions> = [
     {
       label: i18n.t('main_menu.application.name'),
       submenu: [
@@ -908,7 +931,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
           label: i18n.t('main_menu.application.preferences'),
           accelerator: 'CmdOrCtrl+,',
           click: () => {
-            mainWindow.webContents.send('open-preferences')
+            mainWindow!.webContents.send('open-preferences')
           }
         },
         ...macGeneralMenu,
@@ -929,7 +952,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
           label: i18n.t('main_menu.toot.new'),
           accelerator: 'CmdOrCtrl+N',
           click: () => {
-            mainWindow.webContents.send('CmdOrCtrl+N')
+            mainWindow!.webContents.send('CmdOrCtrl+N')
           }
         }
       ]
@@ -1007,7 +1030,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
           accelerator: 'CmdOrCtrl+K',
           enabled: true,
           click: () => {
-            mainWindow.webContents.send('CmdOrCtrl+K')
+            mainWindow!.webContents.send('CmdOrCtrl+K')
           }
         },
         {
@@ -1018,7 +1041,7 @@ const ApplicationMenu = (accountsChange, i18n) => {
     }
   ]
 
-  const menu = Menu.buildFromTemplate(template)
+  const menu: Menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 }
 
