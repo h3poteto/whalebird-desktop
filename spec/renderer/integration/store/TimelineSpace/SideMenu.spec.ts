@@ -4,7 +4,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import SideMenu, { SideMenuState } from '~/src/renderer/store/TimelineSpace/SideMenu'
-import Hashtag from '~/src/types/hashtag'
+import LocalTag from '~/src/types/localTag'
 
 jest.mock('megalodon')
 
@@ -116,10 +116,10 @@ describe('SideMenu', () => {
 
   describe('listTags', () => {
     it('should be listed', async () => {
-      const tag1: Hashtag = {
+      const tag1: LocalTag = {
         tagName: 'tag1'
       }
-      const tag2: Hashtag = {
+      const tag2: LocalTag = {
         tagName: 'tag2'
       }
       ipcMain.once('list-hashtags', (event: any, _) => {

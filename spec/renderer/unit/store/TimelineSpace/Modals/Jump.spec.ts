@@ -1,6 +1,6 @@
 import i18n from '~/src/config/i18n'
 import Jump, { JumpState, MUTATION_TYPES, Channel } from '@/store/TimelineSpace/Modals/Jump'
-import Hashtag from '~/src/types/hashtag'
+import LocalTag from '~/src/types/localTag'
 import { List } from 'megalodon'
 
 describe('TimelineSpace/Modals/Jump', () => {
@@ -87,10 +87,10 @@ describe('TimelineSpace/Modals/Jump', () => {
 
     describe('updateTagChannel', () => {
       it('should be updated', () => {
-        const whalebird: Hashtag = {
+        const whalebird: LocalTag = {
           tagName: 'whalebird'
         }
-        const tqrk: Hashtag = {
+        const tqrk: LocalTag = {
           tagName: 'tqrk'
         }
         const channelList = [whalebird, tqrk]

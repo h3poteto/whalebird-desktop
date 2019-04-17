@@ -2,10 +2,7 @@ import { ipcRenderer } from 'electron'
 import Language from '~/src/constants/language'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-
-interface LanguageSet {
-  language: string
-}
+import { Language as LanguageSet } from '~/src/types/language'
 
 export interface LanguageState {
   language: LanguageSet

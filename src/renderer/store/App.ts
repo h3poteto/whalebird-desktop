@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 import { MutationTree, ActionTree, Module } from 'vuex'
 import router from '@/router'
-import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme, ThemeType } from '@/utils/theme'
+import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme, ThemeColorType } from '~/src/constants/themeColor'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -11,7 +11,7 @@ import { RootState } from '@/store'
 import { Notify } from '~/src/types/notify'
 
 export interface AppState {
-  theme: ThemeType,
+  theme: ThemeColorType,
   fontSize: number,
   displayNameStyle: number,
   notify: Notify,
