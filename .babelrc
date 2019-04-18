@@ -8,14 +8,24 @@
         }],
         "@babel/preset-typescript"
       ],
-      "plugins": ["istanbul"]
+      "plugins": [
+        "istanbul",
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime"
+      ]
     },
     "main": {
       "presets": [
         ["@babel/preset-env", {
           "targets": { "node": 9 }
         }],
-        "stage-0"
+        "@babel/preset-typescript"
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime"
       ]
     },
     "renderer": {
@@ -25,14 +35,23 @@
           "targets": { "node": "current" }
         }],
         "@babel/preset-typescript"
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime"
       ]
     },
     "web": {
       "presets": [
         ["@babel/preset-env", {
           "modules": false
-        }],
-        "stage-0"
+        }]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime"
       ]
     }
   }
