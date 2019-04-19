@@ -8,7 +8,8 @@ export type ThemeColorType = {
   secondary_color: string,
   border_color: string,
   header_menu_color: string,
-  wrapper_mask_color: string
+  wrapper_mask_color: string,
+  scrollbar_color: string
 }
 
 declare var LightTheme: ThemeColorType
