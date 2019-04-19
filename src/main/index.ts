@@ -21,8 +21,8 @@ import Hashtags from './hashtags'
 import UnreadNotification from './unreadNotification'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
-import LocalAccount from '~src/types/localAccount'
-import LocalTag from '~src/types/localTag'
+import LocalAccount from '~/src/types/localAccount'
+import LocalTag from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 
 /**
@@ -49,7 +49,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow: BrowserWindow | null
-let tray: Tray
+let tray: Tray | null
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -1038,6 +1038,12 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
         },
         ...accountsChange
       ]
+    },
+    {
+      label: 'debug',
+      click: () => {
+        mainWindow!.webContents.openDevTools()
+      }
     }
   ]
 
