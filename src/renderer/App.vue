@@ -44,7 +44,8 @@ export default {
 </script>
 
 <style lang="scss">
-html, body, #app {
+html,
+body {
   --theme-background-color: #ffffff;
   --theme-selected-background-color: #f2f6fc;
   --theme-global-header-color: #4a5664;
@@ -89,7 +90,14 @@ html, body, #app {
   button {
     font-family: var(--specified-fonts);
   }
+}
 
+html, body, #app, #global_header {
+  height: 100%;
+  margin: 0;
+}
+
+#app {
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -102,11 +110,6 @@ html, body, #app {
     background-color: var(--theme-scrollbar-color);
     border-radius: 10px;
   }
-}
-
-html, body, #app, #global_header {
-  height: 100%;
-  margin: 0;
 }
 
 p {
