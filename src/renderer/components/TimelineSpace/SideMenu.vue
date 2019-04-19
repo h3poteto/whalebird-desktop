@@ -330,5 +330,18 @@ export default {
     border-radius: 0 4px 4px 0;
     background-color: var(--theme-global-header-color);
   }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+  }
 }
 </style>
