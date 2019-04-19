@@ -1,6 +1,6 @@
 import Streaming from './streaming'
 import WebSocket from './websocket'
-import LocalAccount from '~src/types/localAccount'
+import LocalAccount from '~/src/types/localAccount'
 
 export default class StreamingManager {
   private streaming: Streaming

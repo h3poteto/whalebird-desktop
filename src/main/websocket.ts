@@ -1,6 +1,6 @@
 import Mastodon, { WebSocket as SocketListener, Status, Notification } from 'megalodon'
 import log from 'electron-log'
-import LocalAccount from '~src/types/localAccount'
+import LocalAccount from '~/src/types/localAccount'
 
 export default class WebSocket {
   private client: Mastodon
