@@ -282,7 +282,7 @@ export default {
     height: calc(100% - 82px);
     width: 180px;
     border: none;
-    overflow-y: auto;
+    overflow-y: hidden;
 
     .el-badge__content {
       background-color: #409eff;
@@ -305,6 +305,10 @@ export default {
       line-height: 32px;
       font-size: 14px;
     }
+  }
+
+  .timeline-menu:hover /deep/ {
+    overflow-y: auto;
   }
 
   .narrow-menu /deep/ {
