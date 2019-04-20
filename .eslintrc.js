@@ -29,6 +29,7 @@ module.exports = {
       }
     ],
     camelcase: 'off',
-    '@typescript-eslint/camelcase': 'off'
+    '@typescript-eslint/camelcase': 'off',
+    'space-before-function-paren': 'off'
   }
 }
