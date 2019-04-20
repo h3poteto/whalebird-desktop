@@ -9,13 +9,11 @@ module.exports = {
     browser: true,
     node: true
   },
- extends: 'standard',
+  extends: ['standard', 'prettier'],
   globals: {
     __static: true
   },
-  plugins: [
-    '@typescript-eslint'
-  ],
+  plugins: ['@typescript-eslint', 'prettier'],
   rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
@@ -27,10 +25,10 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
-        'argsIgnorePattern': '^_'
+        argsIgnorePattern: '^_'
       }
     ],
-    'camelcase': 'off',
+    camelcase: 'off',
     '@typescript-eslint/camelcase': 'off'
   }
 }
