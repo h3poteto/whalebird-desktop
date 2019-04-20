@@ -1,4 +1,10 @@
 {
+  "main_menu": {
+    "develop": {
+      "name": "Develop",
+      "debug": "Debugger"
+    }
+  },
   "preferences": {
     "general": {
       "timeline": {
