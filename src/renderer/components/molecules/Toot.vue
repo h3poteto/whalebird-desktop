@@ -27,7 +27,7 @@
           <span class="acct">{{ accountName(originalMessage.account) }}</span>
         </div>
         <div class="timestamp">
-          <time :datetime="originalMessage.created_at" :title="readableTimestamp">
+          <time :datetime="originalMessage.created_at" :title="readableTimestamp" @click="openDetail(message)">
             {{ timestamp }}
           </time>
         </div>
@@ -570,6 +570,7 @@ export default {
         text-align: right;
         color: #909399;
         float: right;
+        cursor: pointer;
       }
     }
 
