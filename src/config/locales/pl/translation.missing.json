@@ -1,4 +1,10 @@
 {
+  "main_menu": {
+    "develop": {
+      "name": "Develop",
+      "debug": "Debugger"
+    }
+  },
   "side_menu": {
     "direct": "Direct messages"
   },
