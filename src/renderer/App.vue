@@ -45,7 +45,8 @@ export default {
 
 <style lang="scss">
 html,
-body {
+body,
+#app {
   --theme-background-color: #ffffff;
   --theme-selected-background-color: #f2f6fc;
   --theme-global-header-color: #4a5664;
