@@ -11,15 +11,15 @@ import { RootState } from '@/store'
 import { Notify } from '~/src/types/notify'
 
 export interface AppState {
-  theme: ThemeColorType,
-  fontSize: number,
-  displayNameStyle: number,
-  notify: Notify,
-  timeFormat: number,
-  language: string,
-  defaultFonts: Array<string>,
-  ignoreCW: boolean,
-  ignoreNFSW: boolean,
+  theme: ThemeColorType
+  fontSize: number
+  displayNameStyle: number
+  notify: Notify
+  timeFormat: number
+  language: string
+  defaultFonts: Array<string>
+  ignoreCW: boolean
+  ignoreNFSW: boolean
   hideAllAttachments: boolean
 }
 
