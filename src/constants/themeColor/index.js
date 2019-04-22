@@ -8,7 +8,8 @@ export const LightTheme = {
   secondary_color: '#909399',
   border_color: '#ebeef5',
   header_menu_color: '#ffffff',
-  wrapper_mask_color: 'rgba(255, 255, 255, 0.7)'
+  wrapper_mask_color: 'rgba(255, 255, 255, 0.7)',
+  scrollbar_color: 'rgba(0, 0, 0, 0.4)'
 }
 
 export const DarkTheme = {
@@ -21,7 +22,8 @@ export const DarkTheme = {
   secondary_color: '#e4e7ed',
   border_color: '#606266',
   header_menu_color: '#444b5d',
-  wrapper_mask_color: 'rgba(0, 0, 0, 0.7)'
+  wrapper_mask_color: 'rgba(0, 0, 0, 0.7)',
+  scrollbar_color: 'rgba(255, 255, 255, 0.4)'
 }
 
 export const SolarizedLightTheme = {
@@ -34,7 +36,8 @@ export const SolarizedLightTheme = {
   secondary_color: '#839496',
   border_color: '#93a1a1',
   header_menu_color: '#fdf6e3',
-  wrapper_mask_color: 'rgba(255, 255, 255, 0.7)'
+  wrapper_mask_color: 'rgba(255, 255, 255, 0.7)',
+  scrollbar_color: 'rgba(0, 0, 0, 0.4)'
 }
 
 export const SolarizedDarkTheme = {
@@ -47,7 +50,8 @@ export const SolarizedDarkTheme = {
   secondary_color: '#839496',
   border_color: '#93a1a1',
   header_menu_color: '#393f4f',
-  wrapper_mask_color: 'rgba(0, 0, 0, 0.7)'
+  wrapper_mask_color: 'rgba(0, 0, 0, 0.7)',
+  scrollbar_color: 'rgba(255, 255, 255, 0.4)'
 }
 
 export const KimbieDarkTheme = {
@@ -60,5 +64,6 @@ export const KimbieDarkTheme = {
   secondary_color: '#d3af86',
   border_color: '#d6baad',
   header_menu_color: '#a57a4c',
-  wrapper_mask_color: 'rgba(0, 0, 0, 0.7)'
+  wrapper_mask_color: 'rgba(0, 0, 0, 0.7)',
+  scrollbar_color: 'rgba(255, 255, 255, 0.4)'
 }
