@@ -23,6 +23,7 @@ export default {
           '--theme-border-color': state.App.theme.border_color,
           '--theme-header-menu-color': state.App.theme.header_menu_color,
           '--theme-wrapper-mask-color': state.App.theme.wrapper_mask_color,
+          '--theme-scrollbar-color': state.App.theme.scrollbar_color,
           '--base-font-size': `${state.App.fontSize}px`,
           '--specified-fonts': state.App.defaultFonts.join(', ')
         }
@@ -43,7 +44,9 @@ export default {
 </script>
 
 <style lang="scss">
-html, body, #app {
+html,
+body,
+#app {
   --theme-background-color: #ffffff;
   --theme-selected-background-color: #f2f6fc;
   --theme-global-header-color: #4a5664;
@@ -54,6 +57,7 @@ html, body, #app {
   --theme-border-color: #ebeef5;
   --theme-header-menu-color: #ffffff;
   --theme-wrapper-mask-color: rgba(255, 255, 255, 0.7);
+  --theme-scrollbar-color: rgba(0, 0, 0, 0.4);
 
   background-color: var(--theme-background-color);
   color: var(--theme-primary-color);
@@ -92,6 +96,21 @@ html, body, #app {
 html, body, #app, #global_header {
   height: 100%;
   margin: 0;
+}
+
+#app {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--theme-scrollbar-color);
+    border-radius: 10px;
+  }
 }
 
 p {
