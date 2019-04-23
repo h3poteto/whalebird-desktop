@@ -25,8 +25,8 @@
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
     "build:mac": "node .electron-vue/build.js && electron-builder --mac --x64",
-    "build:linux": "node .electron-vue/build.js && electron-builder --linux --x64",
-    "build:windows": "node .electron-vue/build.js && electron-builder --win --x64",
+    "build:linux": "node .electron-vue/build.js && electron-builder --linux",
+    "build:windows": "node .electron-vue/build.js && electron-builder --win",
     "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Whalebird' --platform=mas --arch=x64 --electron-version=4.0.8 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/test' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/whalebird.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=org.whalebird.desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
     "dev": "node .electron-vue/dev-runner.js",
     "e2e": "npm run pack && mocha test/e2e",
@@ -44,7 +44,7 @@
   "build": {
     "productName": "Whalebird",
     "appId": "org.whalebird.desktop",
-    "artifactName": "${productName}-${version}-${os}.${ext}",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "build"
     },
@@ -79,7 +79,15 @@
     },
     "win": {
       "icon": "build/icons/icon.ico",
-      "target": "nsis"
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
     },
     "nsis": {
       "oneClick": false,
@@ -88,10 +96,33 @@
     "linux": {
       "icon": "build/icons",
       "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "tar.bz2"
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "rpm",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "tar.bz2",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "snap",
+          "arch": [
+            "x64"
+          ]
+        }
       ],
       "category": "Network"
     }
