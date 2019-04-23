@@ -1070,17 +1070,6 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
         },
         ...accountsChange
       ]
-    },
-    {
-      label: i18n.t('main_menu.develop.name'),
-      submenu: [
-        {
-          label: i18n.t('main_menu.develop.debug'),
-          click: () => {
-            mainWindow!.webContents.openDevTools()
-          }
-        }
-      ]
     }
   ]
 

@@ -33,10 +33,6 @@
       "open": "ウィンドウを表示",
       "minimize": "縮小",
       "jump_to": "ジャンプ"
-    },
-    "develop": {
-      "name": "開発",
-      "debug": "デバッグ"
     }
   },
   "global_header": {
