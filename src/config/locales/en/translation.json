@@ -33,10 +33,6 @@
       "open": "Open Window",
       "minimize": "Minimize",
       "jump_to": "Jump to"
-    },
-    "develop": {
-      "name": "Develop",
-      "debug": "Debugger"
     }
   },
   "global_header": {
