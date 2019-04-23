@@ -38,7 +38,10 @@ import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unre
 /**
  * Context menu
  */
-ContextMenu()
+ContextMenu({
+  showCopyImageAddress: true,
+  showSaveImageAs: true
+})
 
 /**
  * Set log level
