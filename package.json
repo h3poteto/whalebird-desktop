@@ -26,7 +26,8 @@
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
     "build:mac": "node .electron-vue/build.js && electron-builder --mac --x64",
     "build:linux": "node .electron-vue/build.js && electron-builder --linux",
-    "build:windows": "node .electron-vue/build.js && electron-builder --win",
+    "build:win32": "node .electron-vue/build.js && electron-builder --win --ia32",
+    "build:win64": "node .electron-vue/build.js && electron-builder --win --x64",
     "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Whalebird' --platform=mas --arch=x64 --electron-version=4.0.8 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/test' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/whalebird.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=org.whalebird.desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
     "dev": "node .electron-vue/dev-runner.js",
     "e2e": "npm run pack && mocha test/e2e",
@@ -79,15 +80,7 @@
     },
     "win": {
       "icon": "build/icons/icon.ico",
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ]
+      "target": "nsis"
     },
     "nsis": {
       "oneClick": false,
