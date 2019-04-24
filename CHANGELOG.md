@@ -1,4 +1,98 @@
 # Change Log
+
+## [2.7.1]
+### Added
+- [#898](https://github.com/h3poteto/whalebird-desktop/pull/898) Build package for 32bit
+- [#891](https://github.com/h3poteto/whalebird-desktop/pull/891) Introduce prettier combinated eslint
+- [#862](https://github.com/h3poteto/whalebird-desktop/pull/862) Add detail link on timestamp in toot
+
+### Changed
+
+- [#888](https://github.com/h3poteto/whalebird-desktop/pull/888) Change scrollbar design
+- [#887](https://github.com/h3poteto/whalebird-desktop/pull/887) Remove unused setting files
+- [#850](https://github.com/h3poteto/whalebird-desktop/issues/850) Use typescript in store
+
+### Fixed
+
+- [#897](https://github.com/h3poteto/whalebird-desktop/pull/897) Show a menu item for save image in context menu
+- [#407](https://github.com/h3poteto/whalebird-desktop/issues/407) Can not remove the list members
+
+
+
+## [2.7.0] - 2019-03-25
+### Added
+
+- [#849](https://github.com/h3poteto/whalebird-desktop/pull/849) Add mentions timeline
+- [#847](https://github.com/h3poteto/whalebird-desktop/pull/847) Add integration tests for ListMembership modal
+- [#846](https://github.com/h3poteto/whalebird-desktop/pull/846) Add integration tests for AddListMember modal
+
+### Changed
+
+- [#855](https://github.com/h3poteto/whalebird-desktop/pull/855) Add mention timeline to jump list
+- [#853](https://github.com/h3poteto/whalebird-desktop/pull/853) Update electron-builder version to 20.39.0
+- [#845](https://github.com/h3poteto/whalebird-desktop/pull/845) Update electron version to 4.0.8
+
+### Fixed
+
+- [#856](https://github.com/h3poteto/whalebird-desktop/pull/856) Hide long username and instance name in side menu
+- [#854](https://github.com/h3poteto/whalebird-desktop/pull/854) Fix validation which checks toot max length
+- [#852](https://github.com/h3poteto/whalebird-desktop/pull/852) Add ttfinfo
+- [#842](https://github.com/h3poteto/whalebird-desktop/pull/842) Merge french translation missing file to translation
+- [#841](https://github.com/h3poteto/whalebird-desktop/pull/841) Fix package.json for Windows
+- [#839](https://github.com/h3poteto/whalebird-desktop/pull/839) Completing French translation
+
+
+
+## [2.6.3] - 2019-02-25
+### Added
+- [#836](https://github.com/h3poteto/whalebird-desktop/pull/836) Add option to hide all attachments
+- [#833](https://github.com/h3poteto/whalebird-desktop/pull/833) Add tests for Jump modal
+- [#827](https://github.com/h3poteto/whalebird-desktop/pull/827) Add option to ignore CW and NFSW
+- [#824](https://github.com/h3poteto/whalebird-desktop/pull/824) Add unit/integration tests for TimelineSpace
+- [#823](https://github.com/h3poteto/whalebird-desktop/pull/823) Add unit tests for Home
+- [#820](https://github.com/h3poteto/whalebird-desktop/pull/820) Add intergation tests for Contents/Home
+
+### Changed
+- [#838](https://github.com/h3poteto/whalebird-desktop/pull/838) Update megalodon version to 0.5.0
+- [#828](https://github.com/h3poteto/whalebird-desktop/pull/828) refactor: Use computed instead of methods in Toot
+- [#819](https://github.com/h3poteto/whalebird-desktop/pull/819) Update Korean translation
+
+### Fixed
+- [#837](https://github.com/h3poteto/whalebird-desktop/pull/837) Reload app general config after change preferences
+- [#835](https://github.com/h3poteto/whalebird-desktop/pull/835) Adjust z-index for emoji picker in NewTootModal
+- [#834](https://github.com/h3poteto/whalebird-desktop/pull/834) Fix state definition in integration spec
+- [#826](https://github.com/h3poteto/whalebird-desktop/pull/826) Merge and lint ko translation json
+
+
+
+## [2.6.2] - 2019-01-08
+
+### Added
+- [#818](https://github.com/h3poteto/whalebird-desktop/pull/818) Add Makefile to build release files
+- [#786](https://github.com/h3poteto/whalebird-desktop/pull/786) Add a button to switch websocket for streaming
+
+### Changed
+- [#817](https://github.com/h3poteto/whalebird-desktop/pull/817) Add integration/unit tests for TimelineSpace/HeaderMenu
+- [#815](https://github.com/h3poteto/whalebird-desktop/pull/815) Add unit/integration tests for SideMenu
+- [#814](https://github.com/h3poteto/whalebird-desktop/pull/814) Add unit/integration tests for GlobalHeader
+- [#813](https://github.com/h3poteto/whalebird-desktop/pull/813) Add Preferences store tests
+- [#812](https://github.com/h3poteto/whalebird-desktop/pull/812) Add Authorize store tests
+- [#811](https://github.com/h3poteto/whalebird-desktop/pull/811) Fix Login spec to use ipc mock
+- [#810](https://github.com/h3poteto/whalebird-desktop/pull/810) Add Login store unit tests
+- [#809](https://github.com/h3poteto/whalebird-desktop/pull/809) Use jest for unit tests instead of mocha
+
+### Fixed
+- [#808](https://github.com/h3poteto/whalebird-desktop/pull/808) Fix cursor position when user types arrow keys on image description
+- [#807](https://github.com/h3poteto/whalebird-desktop/pull/807) Don't send event to webContents when window is already closed
+- [#806](https://github.com/h3poteto/whalebird-desktop/pull/806) Fix typo when stop direct messages streaming
+- [#805](https://github.com/h3poteto/whalebird-desktop/pull/805) Use same arrow icon for collapse buttons
+- [#803](https://github.com/h3poteto/whalebird-desktop/pull/803) Use same arrow icon for collapse buttons
+- [#799](https://github.com/h3poteto/whalebird-desktop/pull/799) Rescue parser error after streaming listener is closed
+- [#790](https://github.com/h3poteto/whalebird-desktop/pull/790) Emojify display name in follow notification
+- [#787](https://github.com/h3poteto/whalebird-desktop/pull/787) Updated English Text
+
+
+
 ## [2.6.1] - 2018-12-14
 
 ### Added
