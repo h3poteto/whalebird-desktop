@@ -2,7 +2,7 @@
 
 VERSION = 1.0.0
 
-all: install mac linux windows
+all: install mac linux win32 win64
 
 install: package.json
 	npm install
@@ -13,12 +13,17 @@ mac:
 
 linux:
 	npm run build:linux
-	mv build/Whalebird-${VERSION}-linux.deb build/Whalebird-${VERSION}-linux-x64.deb
-	mv build/Whalebird-${VERSION}-linux.rpm build/Whalebird-${VERSION}-linux-x64.rpm
-	mv build/Whalebird-${VERSION}-linux.tar.bz2 build/Whalebird-${VERSION}-linux-x64.tar.bz2
+	mv build/Whalebird-${VERSION}-linux-amd64.deb build/Whalebird-${VERSION}-linux-x64.deb
+	mv build/Whalebird-${VERSION}-linux-x86_64.rpm build/Whalebird-${VERSION}-linux-x64.rpm
+	mv build/Whalebird-${VERSION}-linux-i386.deb build/Whalebird-${VERSION}-linux-ia32.deb
+	mv build/Whalebird-${VERSION}-linux-i686.rpm build/Whalebird-${VERSION}-linux-ia32.rpm
 
-windows:
-	npm run build:windows
+win32:
+	npm run build:win32
+	mv build/Whalebird-${VERSION}-win.exe build/Whalebird-${VERSION}-windows-ia32.exe
+
+win64:
+	npm run build:win64
 	mv build/Whalebird-${VERSION}-win.exe build/Whalebird-${VERSION}-windows-x64.exe
 
 clean:
