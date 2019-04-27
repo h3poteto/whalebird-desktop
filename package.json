@@ -20,31 +20,35 @@
   },
   "main": "./dist/electron/main.js",
   "scripts": {
-    "build": "node .electron-vue/build.js && electron-builder",
-    "build:dir": "node .electron-vue/build.js && electron-builder --dir",
-    "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
-    "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
-    "build:mac": "node .electron-vue/build.js && electron-builder --mac --x64",
-    "build:linux": "node .electron-vue/build.js && electron-builder --linux --x64",
-    "build:windows": "node .electron-vue/build.js && electron-builder --win --x64",
-    "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Roma' --platform=mas --arch=x64 --electron-version=4.0.8 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/test' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/roma.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=com.vm.Roma-Desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
     "dev": "node .electron-vue/dev-runner.js",
     "e2e": "npm run pack && mocha test/e2e",
-    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src spec",
-    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src test",
+    "lint": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter src spec",
+    "lint:fix": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter --fix src test",
     "stylelint": "stylelint '**/*.vue' --syntax scss",
+    "build": "node .electron-vue/build.js",
+    "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
+    "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
+    "build:mac": "npm run build && npm run package:mac",
+    "build:linux": "npm run build && npm run package:linux",
+    "build:win32": "npm run build && npm run package:win32",
+    "build:win64": "npm run build && npm run package:win64",
+    "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Roma' --platform=mas --arch=x64 --electron-version=4.0.8 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/test' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/roma.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=com.vm.Roma-Desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
+    "package:mac": "electron-builder --mac --x64",
+    "package:linux": "electron-builder --linux",
+    "package:win32": "electron-builder --win --ia32",
+    "package:win64": "electron-builder --win --x64",
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --mode production --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --mode production --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix",
-    "spec": "NODE_ENV=test jest -u"
+    "spec": "NODE_ENV=test jest -u --maxWorkers=3"
   },
   "build": {
     "productName": "Roma",
     "appId": "com.vm.Roma-Desktop",
-    "artifactName": "${productName}-${version}-${os}.${ext}",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "build"
     },
@@ -88,24 +92,64 @@
     "linux": {
       "icon": "build/icons",
       "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "tar.bz2"
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "rpm",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "tar.bz2",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "snap",
+          "arch": [
+            "x64"
+          ]
+        }
       ],
       "category": "Network"
     }
   },
   "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
     "moduleNameMapper": {
-      "@/router": "<rootDir>/spec/mock/router.js",
+      "@/router": "<rootDir>/spec/mock/router.ts",
       "^@/(.+)": "<rootDir>/src/renderer/$1",
       "^~/(.+)": "<rootDir>/$1",
-      "electron": "<rootDir>/spec/mock/electron.js"
+      "electron": "<rootDir>/spec/mock/electron.ts"
     },
     "testMatch": [
-      "**/spec/**/*.spec.js?(x)"
-    ]
+      "**/spec/**/*.spec.ts"
+    ],
+    "preset": "ts-jest/presets/js-with-ts",
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest",
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "setupFiles": [
+      "core-js"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    }
   },
   "dependencies": {
     "@panter/vue-i18next": "^0.13.0",
@@ -115,7 +159,7 @@
     "axios": "^0.18.0",
     "boom": "^7.3.0",
     "deep-extend": "^0.6.0",
-    "electron-context-menu": "^0.10.1",
+    "electron-context-menu": "^0.12.0",
     "electron-json-storage": "^4.1.5",
     "electron-log": "^2.2.17",
     "electron-window-state": "^5.0.3",
@@ -126,9 +170,8 @@
     "hoek": "^6.1.2",
     "i18next": "^12.1.0",
     "i18next-sync-fs-backend": "^1.1.0",
-    "is-empty": "^1.2.0",
     "lodash": "^4.17.11",
-    "megalodon": "0.5.0",
+    "megalodon": "0.6.3",
     "moment": "^2.21.0",
     "mousetrap": "^1.6.2",
     "nedb": "^1.8.0",
@@ -151,46 +194,62 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/runtime": "^7.4.3",
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.2.0",
+    "@types/electron-json-storage": "^4.0.0",
+    "@types/i18next": "^12.1.0",
+    "@types/jest": "^24.0.11",
+    "@types/lodash": "^4.14.123",
+    "@types/nedb": "^1.8.7",
+    "@types/node": "^11.11.4",
+    "@types/parse-link-header": "^1.0.0",
+    "@typescript-eslint/eslint-plugin": "^1.5.0",
+    "@typescript-eslint/parser": "^1.5.0",
+    "@typescript-eslint/typescript-estree": "^1.5.0",
     "@vue/test-utils": "^1.0.0-beta.28",
     "ajv": "^6.6.1",
-    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.6.0",
-    "babel-loader": "^7.1.4",
+    "babel-jest": "^24.5.0",
+    "babel-loader": "^8.0.5",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-plugin-istanbul": "^5.1.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "cfonts": "^2.3.0",
     "chai": "^4.2.0",
     "chalk": "^2.4.1",
     "copy-webpack-plugin": "^4.6.0",
+    "core-js": "^3.0.0",
     "cross-env": "^5.1.6",
     "css-loader": "^0.28.11",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "4.0.8",
     "electron-builder": "^20.39.0",
-    "electron-debug": "^2.0.0",
+    "electron-debug": "^2.2.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-ipc-mock": "0.0.3",
     "electron-packager": "^12.2.0",
     "electron-updater": "^4.0.6",
     "eslint": "^5.9.0",
+    "eslint-config-prettier": "^4.1.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-html": "^4.0.6",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.2.2",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
-    "jest": "^23.6.0",
+    "jest": "^24.5.0",
     "jsdom": "^13.0.0",
     "karma": "^3.1.3",
     "karma-chai": "^0.1.0",
@@ -205,12 +264,16 @@
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
     "node-sass": "^4.10.0",
+    "prettier": "^1.17.0",
     "regenerator-runtime": "^0.13.1",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.23.1",
     "stylelint": "^9.9.0",
     "stylelint-config-standard": "^18.2.0",
+    "ts-jest": "^24.0.0",
+    "ts-loader": "^5.3.3",
     "ttfinfo": "^0.2.0",
+    "typescript": "^3.3.4000",
     "url-loader": "^1.1.2",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^15.2.4",

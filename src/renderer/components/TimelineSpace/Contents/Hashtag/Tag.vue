@@ -89,7 +89,7 @@ export default {
     })
   },
   watch: {
-    tag: function (newTag, oldTag) {
+    tag: function (newTag, _oldTag) {
       this.$store.commit('TimelineSpace/changeLoading', true)
       this.reset()
       this.load(newTag)
@@ -105,7 +105,7 @@ export default {
           })
       }
     },
-    focusedId: function (newState, oldState) {
+    focusedId: function (newState, _oldState) {
       if (newState && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', false)
       } else if (newState === null && !this.heading) {
@@ -157,7 +157,7 @@ export default {
       if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementsByName('tag')[0].clientHeight - 10) && !this.lazyloading) {
         this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/lazyFetchTimeline', {
           tag: this.tag,
-          last: this.timeline[this.timeline.length - 1]
+          status: this.timeline[this.timeline.length - 1]
         })
       }
       // for unread control

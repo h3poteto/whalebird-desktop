@@ -86,7 +86,7 @@ export default {
     }
   },
   watch: {
-    account: function (newAccount, oldAccount) {
+    account: function (_newAccount, _oldAccount) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/clearTimeline')
       this.load()
     }

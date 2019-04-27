@@ -152,7 +152,7 @@ export default {
     account: function () {
       this.activeTab = 1
     },
-    loading: function (newState, oldState) {
+    loading: function (newState, _oldState) {
       this.$emit('change-loading', newState)
     }
   },

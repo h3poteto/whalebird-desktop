@@ -3,37 +3,53 @@
   "env": {
     "test": {
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
           "targets": { "node": 9 }
-        }],
-        "stage-0"
+        }]
       ],
-      "plugins": ["istanbul"]
+      "plugins": [
+        "istanbul",
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime"
+      ]
     },
     "main": {
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
           "targets": { "node": 9 }
-        }],
-        "stage-0"
+        }]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime"
       ]
     },
     "renderer": {
       "presets": [
-        ["env", {
-          "modules": false
-        }],
-        "stage-0"
+        ["@babel/preset-env", {
+          "modules": false,
+          "targets": { "node": "current" }
+        }]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime"
       ]
     },
     "web": {
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
           "modules": false
-        }],
-        "stage-0"
+        }]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime"
       ]
     }
-  },
-  "plugins": ["transform-runtime"]
+  }
 }

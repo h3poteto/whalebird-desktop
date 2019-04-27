@@ -110,7 +110,7 @@ export default {
           })
       }
     },
-    focusedId: function (newState, oldState) {
+    focusedId: function (newState, _oldState) {
       if (newState >= 0 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
       } else if (newState === null && !this.heading) {
