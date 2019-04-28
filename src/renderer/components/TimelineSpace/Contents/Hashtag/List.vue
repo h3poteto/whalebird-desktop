@@ -31,8 +31,8 @@ export default {
     this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/listTags')
   },
   methods: {
-    openTimeline (tag) {
-      this.$router.push({ path: `/${this.$route.params.id}/hashtag/${tag}` })
+    openTimeline (tagName) {
+      this.$router.push({ path: `/${this.$route.params.id}/hashtag/${tagName}` })
     },
     deleteTag (tag) {
       this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/removeTag', tag)

@@ -282,7 +282,7 @@ export default {
     height: calc(100% - 82px);
     width: 180px;
     border: none;
-    overflow-y: auto;
+    overflow-y: hidden;
 
     .el-badge__content {
       background-color: #409eff;
@@ -307,6 +307,10 @@ export default {
     }
   }
 
+  .timeline-menu:hover /deep/ {
+    overflow-y: auto;
+  }
+
   .narrow-menu /deep/ {
     width: 64px;
 
@@ -329,6 +333,19 @@ export default {
     padding: 4px 0 0 0;
     border-radius: 0 4px 4px 0;
     background-color: var(--theme-global-header-color);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
   }
 }
 </style>

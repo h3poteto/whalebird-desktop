@@ -11,7 +11,7 @@ const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 let mainConfig = {
   entry: {
-    main: path.join(__dirname, '../src/main/index.js')
+    main: path.join(__dirname, '../src/main/index.ts')
   },
   externals: [
     ...Object.keys(dependencies || {})
@@ -19,7 +19,7 @@ let mainConfig = {
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.(js|ts)$/,
         enforce: 'pre',
         exclude: /node_modules/,
         use: {
@@ -28,6 +28,11 @@ let mainConfig = {
             formatter: require('eslint-friendly-formatter')
           }
         }
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader'
       },
       {
         test: /\.js$/,
@@ -60,7 +65,12 @@ let mainConfig = {
     ])
   ],
   resolve: {
-    extensions: ['.js', '.json', '.node']
+    alias: {
+      // Same as tsconfig.json
+      '@': path.join(__dirname, '../src/renderer'),
+      '~': path.join(__dirname, '../')
+    },
+    extensions: ['.js', '.json', '.node', '.ts']
   },
   target: 'electron-main'
 }
