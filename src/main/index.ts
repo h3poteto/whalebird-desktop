@@ -203,7 +203,6 @@ async function createWindow() {
     defaultWidth: 1000,
     defaultHeight: 563
   })
-  //  mainWindow = new BrowserWindow({
   const mainOpts: BrowserWindowConstructorOptions = {
     titleBarStyle: 'hidden',
     x: mainWindowState.x,
@@ -211,7 +210,12 @@ async function createWindow() {
     width: mainWindowState.width,
     height: mainWindowState.height,
     useContentSize: true,
-    icon: path.resolve(__dirname, '../../build/icons/256x256.png')
+    icon: path.resolve(__dirname, '../../build/icons/256x256.png'),
+    webPreferences: {
+      // It is required to use ipcRenderer in renderer process.
+      // But it is not secure, so if you want to disable this option, please use preload script.
+      nodeIntegration: true
+    }
   }
   const config: Config = {
     windowOpts: mainOpts,
