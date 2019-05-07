@@ -14,7 +14,8 @@ const list: List = {
 const state = (): HeaderMenuState => {
   return {
     title: 'Home',
-    reload: false
+    reload: false,
+    loading: false
   }
 }
 
