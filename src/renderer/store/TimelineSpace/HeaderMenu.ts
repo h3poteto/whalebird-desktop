@@ -1,20 +1,24 @@
 import Mastodon, { List, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
+import AxiosLoading from '@/utils/axiosLoading'
 
 export interface HeaderMenuState {
-  title: string,
+  title: string
   reload: boolean
+  loading: boolean
 }
 
 const state = (): HeaderMenuState => ({
   title: 'Home',
-  reload: false
+  reload: false,
+  loading: false
 })
 
 export const MUTATION_TYPES = {
   UPDATE_TITLE: 'updateTitle',
-  CHANGE_RELOAD: 'changeReload'
+  CHANGE_RELOAD: 'changeReload',
+  CHANGE_LOADING: 'changeLoading'
 }
 
 const mutations: MutationTree<HeaderMenuState> = {
@@ -23,18 +27,27 @@ const mutations: MutationTree<HeaderMenuState> = {
   },
   [MUTATION_TYPES.CHANGE_RELOAD]: (state, value: boolean) => {
     state.reload = value
+  },
+  [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
+    state.loading = value
   }
 }
 
 const actions: ActionTree<HeaderMenuState, RootState> = {
   fetchList: async ({ commit, rootState }, listID: number): Promise<List> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<List> = await client.get<List>(`/lists/${listID}`)
     commit(MUTATION_TYPES.UPDATE_TITLE, `#${res.data.title}`)
     return res.data
+  },
+  setupLoading: ({ commit }) => {
+    const axiosLoading = new AxiosLoading()
+    axiosLoading.on('start', (_: number) => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, true)
+    })
+    axiosLoading.on('done', () => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
+    })
   }
 }
 

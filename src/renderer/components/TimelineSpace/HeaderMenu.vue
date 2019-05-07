@@ -1,59 +1,66 @@
 <template>
-<nav id="header_menu" :aria-label="title">
-  <div class="channel">
-    <h1>{{ title }}</h1>
-  </div>
-  <div class="tools">
-    <el-button v-if="!pleroma" type="text" class="action" @click="switchStreaming" :title="$t('header_menu.switch_streaming')">
-      <svg :class="useWebsocket ? 'websocket' : 'not-websocket'" width="25" height="18" viewBox="0 0 256 193" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><path d="M192.44 144.645h31.78V68.339l-35.805-35.804-22.472 22.472 26.497 26.497v63.14zm31.864 15.931H113.452L86.954 134.08l11.237-11.236 21.885 21.885h45.028l-44.357-44.441 11.32-11.32 44.357 44.358V88.296l-21.801-21.801 11.152-11.153L110.685 0H0l31.696 31.696v.084H97.436l23.227 23.227-33.96 33.96L63.476 65.74V47.712h-31.78v31.193l55.007 55.007L64.314 156.3l35.805 35.805H256l-31.696-31.529z" /></svg>
-    </el-button>
-    <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
-      <icon name="regular/edit" scale="1.1"></icon>
-    </el-button>
-    <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
-      <icon name="sync-alt"></icon>
-    </el-button>
-    <el-popover
-      placement="left-start"
-      width="320"
-      popper-class="theme-popover"
-      trigger="click"
-      v-model="filterVisible">
-      <div>
-        <el-form role="form" label-position="left" label-width="125px" size="medium">
-          <el-form-item for="filter" :label="$t('header_menu.filter.title')">
-            <div class="el-input">
-              <input
-                id="filter"
-                class="el-input__inner"
-                v-model="filter"
-                :placeholder="$t('header_menu.filter.placeholder')"
-                v-shortkey.avoid
-                :aria-label="$t('header_menu.filter.placeholder')"
-                :title="$t('header_menu.filter.placeholder')"
-                >
-            </div>
-          </el-form-item>
-          <el-form-item for="show-reblogs" :label="$t('header_menu.filter.show_reblogs')" v-if="extrasFilterable()">
-            <el-checkbox id="show-reblogs" v-model="showReblogs"></el-checkbox>
-          </el-form-item>
-          <el-form-item for="show-replies" :label="$t('header_menu.filter.show_replies')" v-if="extrasFilterable()">
-            <el-checkbox id="show-replies" v-model="showReplies"></el-checkbox>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="applyFilter(filter)">{{ $t('header_menu.filter.apply') }}</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-      <el-button v-show="filterable()" slot="reference" type="text" class="action" :title="$t('header_menu.filter.title')">
-        <icon name="sliders-h"></icon>
+  <nav id="header_menu" :aria-label="title">
+    <div class="channel">
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="tools">
+      <img src="../../assets/images/loading-spinner-wide.svg" v-show="loading" class="header-loading" />
+      <el-button v-if="!pleroma" type="text" class="action" @click="switchStreaming" :title="$t('header_menu.switch_streaming')">
+        <svg
+          :class="useWebsocket ? 'websocket' : 'not-websocket'"
+          width="25"
+          height="18"
+          viewBox="0 0 256 193"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMid"
+        >
+          <path
+            d="M192.44 144.645h31.78V68.339l-35.805-35.804-22.472 22.472 26.497 26.497v63.14zm31.864 15.931H113.452L86.954 134.08l11.237-11.236 21.885 21.885h45.028l-44.357-44.441 11.32-11.32 44.357 44.358V88.296l-21.801-21.801 11.152-11.153L110.685 0H0l31.696 31.696v.084H97.436l23.227 23.227-33.96 33.96L63.476 65.74V47.712h-31.78v31.193l55.007 55.007L64.314 156.3l35.805 35.805H256l-31.696-31.529z"
+          />
+        </svg>
       </el-button>
-    </el-popover>
-    <el-button type="text" class="action" @click="settings" :title="$t('header_menu.settings')">
-      <icon name="cog" scale="1.1"></icon>
-    </el-button>
-  </div>
-</nav>
+      <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
+        <icon name="regular/edit" scale="1.1"></icon>
+      </el-button>
+      <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
+        <icon name="sync-alt"></icon>
+      </el-button>
+      <el-popover placement="left-start" width="320" popper-class="theme-popover" trigger="click" v-model="filterVisible">
+        <div>
+          <el-form role="form" label-position="left" label-width="125px" size="medium">
+            <el-form-item for="filter" :label="$t('header_menu.filter.title')">
+              <div class="el-input">
+                <input
+                  id="filter"
+                  class="el-input__inner"
+                  v-model="filter"
+                  :placeholder="$t('header_menu.filter.placeholder')"
+                  v-shortkey.avoid
+                  :aria-label="$t('header_menu.filter.placeholder')"
+                  :title="$t('header_menu.filter.placeholder')"
+                />
+              </div>
+            </el-form-item>
+            <el-form-item for="show-reblogs" :label="$t('header_menu.filter.show_reblogs')" v-if="extrasFilterable()">
+              <el-checkbox id="show-reblogs" v-model="showReblogs"></el-checkbox>
+            </el-form-item>
+            <el-form-item for="show-replies" :label="$t('header_menu.filter.show_replies')" v-if="extrasFilterable()">
+              <el-checkbox id="show-replies" v-model="showReplies"></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="applyFilter(filter)">{{ $t('header_menu.filter.apply') }}</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <el-button v-show="filterable()" slot="reference" type="text" class="action" :title="$t('header_menu.filter.title')">
+          <icon name="sliders-h"></icon>
+        </el-button>
+      </el-popover>
+      <el-button type="text" class="action" @click="settings" :title="$t('header_menu.settings')">
+        <icon name="cog" scale="1.1"></icon>
+      </el-button>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -61,7 +68,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'header-menu',
-  data () {
+  data() {
     return {
       filter: '',
       filterVisible: false,
@@ -71,28 +78,30 @@ export default {
   },
   computed: {
     ...mapState('TimelineSpace/HeaderMenu', {
-      title: state => state.title
+      title: state => state.title,
+      loading: state => state.loading
     }),
     ...mapState('TimelineSpace', {
       useWebsocket: state => state.useWebsocket,
       pleroma: state => state.pleroma
     })
   },
-  created () {
+  created() {
     this.channelName()
     this.loadFilter()
+    this.$store.dispatch('TimelineSpace/HeaderMenu/setupLoading')
   },
   watch: {
-    '$route': function () {
+    $route: function() {
       this.channelName()
       this.loadFilter()
     }
   },
   methods: {
-    id () {
+    id() {
       return this.$route.params.id
     },
-    channelName () {
+    channelName() {
       switch (this.$route.name) {
         case 'home':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.home'))
@@ -139,15 +148,15 @@ export default {
           break
       }
     },
-    switchStreaming () {
+    switchStreaming() {
       this.$store.dispatch('TimelineSpace/stopStreamings')
       this.$store.commit('TimelineSpace/changeUseWebsocket', !this.useWebsocket)
       this.$store.dispatch('TimelineSpace/startStreamings')
     },
-    openNewTootModal () {
+    openNewTootModal() {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
     },
-    reload () {
+    reload() {
       switch (this.$route.name) {
         case 'home':
         case 'notifications':
@@ -164,7 +173,7 @@ export default {
           console.log('Not implemented')
       }
     },
-    reloadable () {
+    reloadable() {
       switch (this.$route.name) {
         case 'home':
         case 'notifications':
@@ -180,7 +189,7 @@ export default {
           return false
       }
     },
-    loadFilter () {
+    loadFilter() {
       switch (this.$route.name) {
         case 'home':
           this.filter = this.$store.state.TimelineSpace.Contents.Home.filter
@@ -215,7 +224,7 @@ export default {
           console.log('Not implemented')
       }
     },
-    applyFilter (filter) {
+    applyFilter(filter) {
       switch (this.$route.name) {
         case 'home':
           this.$store.commit('TimelineSpace/Contents/Home/changeFilter', filter)
@@ -251,7 +260,7 @@ export default {
       }
       this.filterVisible = false
     },
-    filterable () {
+    filterable() {
       switch (this.$route.name) {
         case 'home':
         case 'notifications':
@@ -267,7 +276,7 @@ export default {
           return false
       }
     },
-    extrasFilterable () {
+    extrasFilterable() {
       switch (this.$route.name) {
         case 'home':
           return true
@@ -275,7 +284,7 @@ export default {
           return false
       }
     },
-    settings () {
+    settings() {
       const url = `/${this.id()}/settings`
       this.$router.push(url)
     }
@@ -303,6 +312,13 @@ export default {
 
   .tools {
     font-size: 18px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .header-loading {
+      width: 18px;
+    }
 
     .action {
       color: var(--theme-secondary-color);
