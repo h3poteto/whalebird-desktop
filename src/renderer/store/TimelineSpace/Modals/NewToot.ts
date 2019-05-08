@@ -170,7 +170,7 @@ const actions: ActionTree<NewTootState, RootState> = {
   },
   openModal: ({ dispatch, commit, state }) => {
     if (!state.replyToMessage && state.pinedHashtag) {
-      commit(MUTATION_TYPES.UPDATE_INITIAL_STATUS, state.hashtags.map(t => ` #${t.name}`).join())
+      commit(MUTATION_TYPES.UPDATE_INITIAL_STATUS, state.hashtags.map(t => `#${t.name}`).join(' '))
     }
     commit(MUTATION_TYPES.CHANGE_MODAL, true)
     dispatch('fetchVisibility')
