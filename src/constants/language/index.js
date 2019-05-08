@@ -22,5 +22,9 @@ export default {
   pl: {
     name: 'Polski',
     key: 'pl'
+  },
+  it: {
+    name: 'Italiano',
+    key: 'it'
   }
 }
