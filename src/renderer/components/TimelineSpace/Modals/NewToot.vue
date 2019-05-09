@@ -130,7 +130,6 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 import Poll from './NewToot/Poll'
@@ -295,7 +294,7 @@ export default {
       this.updateImage(file)
     },
     onPaste(e) {
-      const mimeTypes = clipboard.availableFormats().filter(type => type.startsWith('image'))
+      const mimeTypes = window.clipboard.availableFormats().filter(type => type.startsWith('image'))
       if (mimeTypes.length === 0) {
         return
       }
