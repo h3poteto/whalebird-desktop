@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import { MutationTree, ActionTree, Module } from 'vuex'
 import router from '@/router'
 import { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme, ThemeColorType } from '~/src/constants/themeColor'
@@ -9,6 +8,9 @@ import Language from '~/src/constants/language'
 import DefaultFonts from '@/utils/fonts'
 import { RootState } from '@/store'
 import { Notify } from '~/src/types/notify'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export interface AppState {
   theme: ThemeColorType
@@ -90,22 +92,22 @@ const mutations: MutationTree<AppState> = {
 
 const actions: ActionTree<AppState, RootState> = {
   watchShortcutsEvents: () => {
-    ipcRenderer.on('open-preferences', () => {
+    win.ipcRenderer.on('open-preferences', () => {
       router.push('/preferences/general')
     })
   },
   removeShortcutsEvents: () => {
-    ipcRenderer.removeAllListeners('open-preferences')
+    win.ipcRenderer.removeAllListeners('open-preferences')
   },
   loadPreferences: ({ commit, dispatch }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('get-preferences')
-      ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-get-preferences')
+      win.ipcRenderer.send('get-preferences')
+      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: any) => {
-        ipcRenderer.removeAllListeners('error-get-preferences')
+      win.ipcRenderer.once('response-get-preferences', (_, conf: any) => {
+        win.ipcRenderer.removeAllListeners('error-get-preferences')
         dispatch('updateTheme', conf.appearance as any)
         commit(MUTATION_TYPES.UPDATE_DISPLAY_NAME_STYLE, conf.appearance.displayNameStyle as number)
         commit(MUTATION_TYPES.UPDATE_FONT_SIZE, conf.appearance.fontSize as number)

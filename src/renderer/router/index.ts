@@ -1,6 +1,34 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Login from '@/components/Login.vue'
+import Authorize from '@/components/Authorize.vue'
+import Preferences from '@/components/Preferences.vue'
+import PreferencesGeneral from '@/components/Preferences/General.vue'
+import PreferencesAppearance from '@/components/Preferences/Appearance.vue'
+import PreferencesNotification from '@/components/Preferences/Notification.vue'
+import PreferencesAccount from '@/components/Preferences/Account.vue'
+import PreferencesLanguage from '@/components/Preferences/Language.vue'
+import GlobalHeader from '@/components/GlobalHeader.vue'
+import Settings from '@/components/Settings.vue'
+import SettingsGeneral from '@/components/Settings/General.vue'
+import SettingsTimeline from '@/components/Settings/Timeline.vue'
+import TimelineSpace from '@/components/TimelineSpace.vue'
+import TimelineSpaceContentsHome from '@/components/TimelineSpace/Contents/Home.vue'
+import TimelineSpaceContentsNotifications from '@/components/TimelineSpace/Contents/Notifications.vue'
+import TimelineSpaceContentsMentions from '@/components/TimelineSpace/Contents/Mentions.vue'
+import TimelineSpaceContentsFavourites from '@/components/TimelineSpace/Contents/Favourites.vue'
+import TimelineSpaceContentsLocal from '@/components/TimelineSpace/Contents/Local.vue'
+import TimelineSpaceContentsPublic from '@/components/TimelineSpace/Contents/Public.vue'
+import TimelineSpaceContentsHashtag from '@/components/TimelineSpace/Contents/Hashtag.vue'
+import TimelineSpaceContentsHashtagList from '@/components/TimelineSpace/Contents/Hashtag/List.vue'
+import TimelineSpaceContentsHashtagTag from '@/components/TimelineSpace/Contents/Hashtag/Tag.vue'
+import TimelineSpaceContentsSearch from '@/components/TimelineSpace/Contents/Search.vue'
+import TimelineSpaceContentsDirectMessages from '@/components/TimelineSpace/Contents/DirectMessages.vue'
+import TimelineSpaceContentsListsIndex from '@/components/TimelineSpace/Contents/Lists/Index.vue'
+import TimelineSpaceContentsListsEdit from '@/components/TimelineSpace/Contents/Lists/Edit.vue'
+import TimelineSpaceContentsListsShow from '@/components/TimelineSpace/Contents/Lists/Show.vue'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -8,113 +36,113 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: require('@/components/Login').default
+      component: Login
     },
     {
       path: '/authorize',
       name: 'authorize',
-      component: require('@/components/Authorize').default,
-      props: (route) => ({ url: route.query.url })
+      component: Authorize,
+      props: route => ({ url: route.query.url })
     },
     {
       path: '/preferences/',
       name: 'preferences',
-      component: require('@/components/Preferences').default,
+      component: Preferences,
       children: [
         {
           path: 'general',
           name: 'general',
-          component: require('@/components/Preferences/General').default
+          component: PreferencesGeneral
         },
         {
           path: 'appearance',
           name: 'appearance',
-          component: require('@/components/Preferences/Appearance').default
+          component: PreferencesAppearance
         },
         {
           path: 'notification',
           name: 'notification',
-          component: require('@/components/Preferences/Notification').default
+          component: PreferencesNotification
         },
         {
           path: 'account',
           name: 'account',
-          component: require('@/components/Preferences/Account').default
+          component: PreferencesAccount
         },
         {
           path: 'language',
           name: 'language',
-          component: require('@/components/Preferences/Language').default
+          component: PreferencesLanguage
         }
       ]
     },
     {
       path: '/',
       name: 'global-header',
-      component: require('@/components/GlobalHeader').default,
+      component: GlobalHeader,
       children: [
         {
           path: ':id/settings/',
-          component: require('@/components/Settings').default,
+          component: Settings,
           children: [
             {
               path: 'general',
-              component: require('@/components/Settings/General').default
+              component: SettingsGeneral
             },
             {
               path: 'timeline',
-              component: require('@/components/Settings/Timeline').default
+              component: SettingsTimeline
             }
           ]
         },
         {
           path: ':id/',
           name: 'timeline-space',
-          component: require('@/components/TimelineSpace').default,
+          component: TimelineSpace,
           children: [
             {
               path: 'home',
               name: 'home',
-              component: require('@/components/TimelineSpace/Contents/Home').default
+              component: TimelineSpaceContentsHome
             },
             {
               path: 'notifications',
               name: 'notifications',
-              component: require('@/components/TimelineSpace/Contents/Notifications').default
+              component: TimelineSpaceContentsNotifications
             },
             {
               path: 'mentions',
               name: 'mentions',
-              component: require('@/components/TimelineSpace/Contents/Mentions').default
+              component: TimelineSpaceContentsMentions
             },
             {
               path: 'favourites',
               name: 'favourites',
-              component: require('@/components/TimelineSpace/Contents/Favourites').default
+              component: TimelineSpaceContentsFavourites
             },
             {
               path: 'local',
               name: 'local',
-              component: require('@/components/TimelineSpace/Contents/Local').default
+              component: TimelineSpaceContentsLocal
             },
             {
               path: 'public',
               name: 'public',
-              component: require('@/components/TimelineSpace/Contents/Public').default
+              component: TimelineSpaceContentsPublic
             },
             {
               path: 'hashtag/',
-              component: require('@/components/TimelineSpace/Contents/Hashtag').default,
+              component: TimelineSpaceContentsHashtag,
               children: [
                 {
                   path: '',
                   name: 'hashtag-list',
-                  component: require('@/components/TimelineSpace/Contents/Hashtag/List').default
+                  component: TimelineSpaceContentsHashtagList
                 },
                 {
                   path: ':tag',
                   name: 'tag',
-                  component: require('@/components/TimelineSpace/Contents/Hashtag/Tag').default,
+                  component: TimelineSpaceContentsHashtagTag,
                   props: true
                 }
               ]
@@ -122,28 +150,28 @@ const router = new Router({
             {
               path: 'search',
               name: 'search',
-              component: require('@/components/TimelineSpace/Contents/Search').default
+              component: TimelineSpaceContentsSearch
             },
             {
               path: 'direct-messages',
               name: 'direct-messages',
-              component: require('@/components/TimelineSpace/Contents/DirectMessages').default
+              component: TimelineSpaceContentsDirectMessages
             },
             {
               path: 'lists',
               name: 'lists',
-              component: require('@/components/TimelineSpace/Contents/Lists/Index').default
+              component: TimelineSpaceContentsListsIndex
             },
             {
               path: 'lists/:list_id/edit',
               name: 'edit-list',
-              component: require('@/components/TimelineSpace/Contents/Lists/Edit').default,
+              component: TimelineSpaceContentsListsEdit,
               props: true
             },
             {
               path: 'lists/:list_id',
               name: 'list',
-              component: require('@/components/TimelineSpace/Contents/Lists/Show').default,
+              component: TimelineSpaceContentsListsShow,
               props: true
             }
           ]

@@ -214,7 +214,9 @@ async function createWindow() {
     webPreferences: {
       // It is required to use ipcRenderer in renderer process.
       // But it is not secure, so if you want to disable this option, please use preload script.
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false,
+      preload: path.resolve(__dirname, './preload.js')
     }
   }
   const config: Config = {
