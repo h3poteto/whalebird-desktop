@@ -26,6 +26,7 @@ const state = (): SideMenuState => {
     unreadLocalTimeline: false,
     unreadDirectMessagesTimeline: false,
     unreadPublicTimeline: false,
+    unreadFollowRequests: false,
     lists: [],
     tags: [],
     collapse: false
@@ -62,10 +63,7 @@ describe('SideMenu', () => {
         get: (_path: string, _params: object) => {
           return new Promise<Response<List[]>>(resolve => {
             const res: Response<List[]> = {
-              data: [
-                list1,
-                list2
-              ],
+              data: [list1, list2],
               status: 200,
               statusText: 'OK',
               headers: {}

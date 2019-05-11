@@ -49,6 +49,7 @@
     "notification": "Notification",
     "mention": "Mention",
     "direct": "Direct messages",
+    "follow_requests": "Follow Requests",
     "favourite": "Favourite",
     "local": "Local timeline",
     "public": "Public timeline",

@@ -1,23 +1,23 @@
 <template>
-<div
-  id="timeline_space"
-  v-loading="loading"
-  :element-loading-text="$t('message.loading')"
-  element-loading-spinner="el-icon-loading"
-  element-loading-background="rgba(0, 0, 0, 0.8)"
-  v-shortkey="shortcutEnabled ? {help: ['shift', '?']} : {}"
-  @shortkey="handleKey"
+  <div
+    id="timeline_space"
+    v-loading="loading"
+    :element-loading-text="$t('message.loading')"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+    v-shortkey="shortcutEnabled ? { help: ['shift', '?'] } : {}"
+    @shortkey="handleKey"
   >
-  <side-menu></side-menu>
-  <div :class="collapse ? 'page-narrow':'page'">
-    <header class="header" style="-webkit-app-region: drag;">
-      <header-menu></header-menu>
-    </header>
-    <contents></contents>
+    <side-menu></side-menu>
+    <div :class="collapse ? 'page-narrow' : 'page'">
+      <header class="header" style="-webkit-app-region: drag;">
+        <header-menu></header-menu>
+      </header>
+      <contents></contents>
+    </div>
+    <modals></modals>
+    <receive-drop v-show="droppableVisible"></receive-drop>
   </div>
-  <modals></modals>
-  <receive-drop v-show="droppableVisible"></receive-drop>
-</div>
 </template>
 
 <script>
@@ -32,7 +32,7 @@ import ReceiveDrop from './TimelineSpace/ReceiveDrop'
 export default {
   name: 'timeline-space',
   components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop },
-  data () {
+  data() {
     return {
       dropTarget: null,
       droppableVisible: false
@@ -43,23 +43,20 @@ export default {
       loading: state => state.TimelineSpace.loading,
       collapse: state => state.TimelineSpace.SideMenu.collapse
     }),
-    ...mapGetters('TimelineSpace/Modals', [
-      'modalOpened'
-    ]),
-    shortcutEnabled: function () {
+    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
+    shortcutEnabled: function() {
       return !this.modalOpened
     }
   },
-  async created () {
+  async created() {
     this.$store.dispatch('TimelineSpace/Contents/SideBar/close')
     this.$store.commit('TimelineSpace/changeLoading', true)
-    await this.initialize()
-      .finally(() => {
-        this.$store.commit('TimelineSpace/changeLoading', false)
-        this.$store.commit('GlobalHeader/updateChanging', false)
-      })
+    await this.initialize().finally(() => {
+      this.$store.commit('TimelineSpace/changeLoading', false)
+      this.$store.commit('GlobalHeader/updateChanging', false)
+    })
   },
-  mounted () {
+  mounted() {
     window.addEventListener('dragenter', this.onDragEnter)
     window.addEventListener('dragleave', this.onDragLeave)
     window.addEventListener('dragover', this.onDragOver)
@@ -68,7 +65,7 @@ export default {
       this.$store.commit('TimelineSpace/Modals/Jump/changeModal', true)
     })
   },
-  beforeDestroy () {
+  beforeDestroy() {
     window.removeEventListener('dragenter', this.onDragEnter)
     window.removeEventListener('dragleave', this.onDragLeave)
     window.removeEventListener('dragover', this.onDragOver)
@@ -77,14 +74,14 @@ export default {
     this.$store.dispatch('TimelineSpace/unbindStreamings')
   },
   methods: {
-    async clear () {
+    async clear() {
       await this.$store.dispatch('TimelineSpace/clearAccount')
       this.$store.dispatch('TimelineSpace/clearContentsTimelines')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
       await this.$store.dispatch('TimelineSpace/clearUnread')
       return 'clear'
     },
-    async initialize () {
+    async initialize() {
       await this.clear()
 
       this.$store.dispatch('TimelineSpace/watchShortcutEvents')
@@ -95,16 +92,16 @@ export default {
         })
       })
       this.$store.dispatch('TimelineSpace/SideMenu/fetchLists', account)
+      this.$store.dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account)
       await this.$store.dispatch('TimelineSpace/loadUnreadNotification', this.$route.params.id)
 
       // Load timelines
-      await this.$store.dispatch('TimelineSpace/fetchContentsTimelines', account)
-        .catch(_ => {
-          this.$message({
-            message: this.$t('message.timeline_fetch_error'),
-            type: 'error'
-          })
+      await this.$store.dispatch('TimelineSpace/fetchContentsTimelines', account).catch(_ => {
+        this.$message({
+          message: this.$t('message.timeline_fetch_error'),
+          type: 'error'
         })
+      })
 
       await this.$store.dispatch('TimelineSpace/detectPleroma')
       // Bind streamings
@@ -115,7 +112,7 @@ export default {
       this.$store.dispatch('TimelineSpace/fetchEmojis', account)
       this.$store.dispatch('TimelineSpace/fetchInstance', account)
     },
-    handleDrop (e) {
+    handleDrop(e) {
       e.preventDefault()
       e.stopPropagation()
       this.droppableVisible = false
@@ -132,28 +129,27 @@ export default {
       }
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaId')
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.attach_error'),
-            type: 'error'
-          })
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file).catch(() => {
+        this.$message({
+          message: this.$t('message.attach_error'),
+          type: 'error'
         })
+      })
       return false
     },
-    onDragEnter (e) {
+    onDragEnter(e) {
       this.dropTarget = e.target
       this.droppableVisible = true
     },
-    onDragLeave (e) {
+    onDragLeave(e) {
       if (e.target === this.dropTarget) {
         this.droppableVisible = false
       }
     },
-    onDragOver (e) {
+    onDragOver(e) {
       e.preventDefault()
     },
-    handleKey (event) {
+    handleKey(event) {
       switch (event.srcKey) {
         case 'help':
           this.$store.commit('TimelineSpace/Modals/Shortcut/changeModal', true)
@@ -205,5 +201,4 @@ export default {
     width: calc(100% - 65px - 64px);
   }
 }
-
 </style>
