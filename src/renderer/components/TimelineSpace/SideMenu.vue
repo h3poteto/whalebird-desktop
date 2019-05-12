@@ -61,7 +61,12 @@
         <span>{{ $t('side_menu.direct') }}</span>
         <el-badge is-dot :hidden="!unreadDirectMessagesTimeline"> </el-badge>
       </el-menu-item>
-      <el-menu-item v-if="unreadFollowRequests" :index="`/${id()}/mentions`" role="menuitem" :title="$t('side_menu.follow_requests')">
+      <el-menu-item
+        v-if="unreadFollowRequests"
+        :index="`/${id()}/follow-requests`"
+        role="menuitem"
+        :title="$t('side_menu.follow_requests')"
+      >
         <icon name="users"></icon>
         <span>{{ $t('side_menu.follow_requests') }}</span>
         <el-badge is-dot></el-badge>
