@@ -214,7 +214,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_MEDIA_ID, 0)
   },
   updateHashtags: ({ commit, state }, tags: Array<Tag>) => {
-    if (state.pinedHashtag) {
+    if (state.pinedHashtag && tags.length > 0) {
       commit(MUTATION_TYPES.UPDATE_HASHTAGS, tags)
     }
   },
