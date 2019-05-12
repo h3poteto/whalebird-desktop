@@ -62,6 +62,8 @@
     "notification": "Notification",
     "mention": "Mention",
     "favourite": "Favourite",
+    "follow_requests": "Follow Requests",
+    "direct_messages": "Direct Messages",
     "local": "Local timeline",
     "public": "Public timeline",
     "hashtag": "Hashtag",
@@ -299,6 +301,10 @@
       "followers": "Followers"
     }
   },
+  "follow_requests": {
+    "accept": "Accept",
+    "reject": "Reject"
+  },
   "hashtag": {
     "tag_name": "Tag name",
     "delete_tag": "Delete tag",
@@ -338,6 +344,8 @@
     "timeline_fetch_error": "Failed to fetch timeline",
     "notification_fetch_error": "Failed to fetch notification",
     "favourite_fetch_error": "Failed to fetch favorite",
+    "follow_request_accept_error": "Failed to accept the request",
+    "follow_reuqest_reject_error": "failed to reject the request",
     "start_streaming_error": "Failed to start streaming",
     "attach_error": "Could not attach the file",
     "authorize_duplicate_error": "Can not login the same account of the same domain",
