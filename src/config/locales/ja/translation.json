@@ -48,6 +48,7 @@
     "home": "ホーム",
     "notification": "通知",
     "direct": "ダイレクトメッセージ",
+    "follow_requests": "フォローリクエスト",
     "favourite": "お気に入り",
     "local": "ローカル",
     "public": "連合",
@@ -59,6 +60,8 @@
     "home": "ホーム",
     "notification": "通知",
     "favourite": "お気に入り",
+    "follow_requests": "フォローリクエスト",
+    "direct_messages": "ダイレクトメッセージ",
     "local": "ローカルタイムライン",
     "public": "連合タイムライン",
     "hashtag": "ハッシュタグ",
@@ -289,6 +292,10 @@
       "followers": "フォロワー"
     }
   },
+  "follow_requests": {
+    "accept": "承認",
+    "reject": "却下"
+  },
   "hashtag": {
     "tag_name": "タグ名",
     "delete_tag": "タグを削除",
@@ -328,6 +335,8 @@
     "timeline_fetch_error": "タイムラインの読み込みに失敗しました",
     "notification_fetch_error": "通知の読み込みに失敗しました",
     "favourite_fetch_error": "お気に入りの読み込みに失敗しました",
+    "follow_request_accept_error": "フォローリクエストの承認に失敗しました",
+    "follow_reuqest_reject_error": "フォローリクエストの却下に失敗しました",
     "start_streaming_error": "ストリーミングを開始できませんでした",
     "attach_error": "ファイルを添付できませんでした",
     "authorize_duplicate_error": "同一ドメイン同一アカウントではログインできません",
