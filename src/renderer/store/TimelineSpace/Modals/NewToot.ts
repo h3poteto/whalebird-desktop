@@ -5,6 +5,12 @@ import TootStatus, { StatusState } from './NewToot/Status'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import AxiosLoading from '@/utils/axiosLoading'
+import { NewTootModalOpen, NewTootTootLength, NewTootAttachLength, NewTootMediaDescription } from '@/errors/validations'
+
+type MediaDescription = {
+  id: number
+  description: string
+}
 
 export interface NewTootState {
   modalOpen: boolean
@@ -13,6 +19,7 @@ export interface NewTootState {
   replyToMessage: Status | null
   blockSubmit: boolean
   attachedMedias: Array<Attachment>
+  mediaDescriptions: { [key: number]: string | null }
   visibility: number
   sensitive: boolean
   attachedMediaId: number
@@ -32,6 +39,7 @@ const state = (): NewTootState => ({
   replyToMessage: null,
   blockSubmit: false,
   attachedMedias: [],
+  mediaDescriptions: {},
   visibility: Visibility.Public.value,
   sensitive: false,
   attachedMediaId: 0,
@@ -49,6 +57,9 @@ export const MUTATION_TYPES = {
   APPEND_ATTACHED_MEDIAS: 'appendAttachedMedias',
   CLEAR_ATTACHED_MEDIAS: 'clearAttachedMedias',
   REMOVE_MEDIA: 'removeMedia',
+  UPDATE_MEDIA_DESCRIPTION: 'updateMediaDescription',
+  CLEAR_MEDIA_DESCRIPTIONS: 'clearMediaDescriptions',
+  REMOVE_MEDIA_DESCRIPTION: 'removeMediaDescription',
   CHANGE_VISIBILITY_VALUE: 'changeVisibilityValue',
   CHANGE_SENSITIVE: 'changeSensitive',
   UPDATE_MEDIA_ID: 'updateMediaId',
@@ -81,6 +92,17 @@ const mutations: MutationTree<NewTootState> = {
   },
   [MUTATION_TYPES.REMOVE_MEDIA]: (state, media: Attachment) => {
     state.attachedMedias = state.attachedMedias.filter(m => m.id !== media.id)
+  },
+  [MUTATION_TYPES.UPDATE_MEDIA_DESCRIPTION]: (state, value: MediaDescription) => {
+    state.mediaDescriptions[value.id] = value.description
+  },
+  [MUTATION_TYPES.CLEAR_MEDIA_DESCRIPTIONS]: state => {
+    state.mediaDescriptions = {}
+  },
+  [MUTATION_TYPES.REMOVE_MEDIA_DESCRIPTION]: (state, id: number) => {
+    const descriptions = state.mediaDescriptions
+    delete descriptions[id]
+    state.mediaDescriptions = descriptions
   },
   /**
    * changeVisibilityValue
@@ -118,20 +140,52 @@ const actions: ActionTree<NewTootState, RootState> = {
       commit(MUTATION_TYPES.CHANGE_LOADING, false)
     })
   },
-  updateMedia: async ({ rootState }, media: Attachment) => {
+  updateMedia: async ({ rootState }, mediaDescription: MediaDescription) => {
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
       throw new AuthenticationError()
     }
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken, rootState.TimelineSpace.account.baseURL + '/api/v1')
-    const attachments = Object.keys(media).map(async id => {
-      return client.put<Attachment>(`/media/${id}`, { description: media[id] })
+    const attachments = Object.keys(mediaDescription).map(async id => {
+      if (mediaDescription[id] !== null) {
+        return client.put<Attachment>(`/media/${id}`, { description: mediaDescription[id] })
+      } else {
+        return Promise.resolve({})
+      }
     })
     return Promise.all(attachments).catch(err => {
       console.error(err)
       throw err
     })
   },
-  postToot: async ({ state, commit, rootState }, form) => {
+  postToot: async ({ state, commit, rootState, dispatch }, { status, spoiler }) => {
+    if (!state.modalOpen) {
+      throw new NewTootModalOpen()
+    }
+
+    if (status.length < 1 || status.length > rootState.TimelineSpace.tootMax) {
+      throw new NewTootTootLength()
+    }
+
+    const visibilityKey: string | undefined = Object.keys(Visibility).find(key => {
+      return Visibility[key].value === state.visibility
+    })
+    let specifiedVisibility: string = Visibility.Public.key
+    if (visibilityKey !== undefined) {
+      specifiedVisibility = Visibility[visibilityKey].key
+    }
+    let form = {
+      status: status,
+      visibility: specifiedVisibility,
+      sensitive: state.sensitive,
+      spoiler_text: spoiler
+    }
+
+    if (state.replyToMessage !== null) {
+      form = Object.assign(form, {
+        in_reply_to_id: state.replyToMessage.id
+      })
+    }
+
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
       throw new AuthenticationError()
     }
@@ -139,6 +193,22 @@ const actions: ActionTree<NewTootState, RootState> = {
       return
     }
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, true)
+
+    if (state.attachedMedias.length > 0) {
+      if (state.attachedMedias.length > 4) {
+        throw new NewTootAttachLength()
+      }
+      form = Object.assign(form, {
+        media_ids: state.attachedMedias.map(m => {
+          return m.id
+        })
+      })
+      // Update media descriptions
+      await dispatch('updateMedia', state.mediaDescriptions).catch(_ => {
+        throw new NewTootMediaDescription()
+      })
+    }
+
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken, rootState.TimelineSpace.account.baseURL + '/api/v1')
     return client
       .post<Status>('/statuses', form)
@@ -182,6 +252,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     commit(MUTATION_TYPES.SET_REPLY_TO, null)
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, false)
     commit(MUTATION_TYPES.CLEAR_ATTACHED_MEDIAS)
+    commit(MUTATION_TYPES.CLEAR_MEDIA_DESCRIPTIONS)
     commit(MUTATION_TYPES.CHANGE_SENSITIVE, false)
     commit(MUTATION_TYPES.CHANGE_VISIBILITY_VALUE, Visibility.Public.value)
   },
@@ -210,8 +281,16 @@ const actions: ActionTree<NewTootState, RootState> = {
   incrementMediaId: ({ commit, state }) => {
     commit(MUTATION_TYPES.UPDATE_MEDIA_ID, state.attachedMediaId + 1)
   },
+  decrementMediaId: ({ commit, state }) => {
+    commit(MUTATION_TYPES.UPDATE_MEDIA_ID, state.attachedMediaId - 1)
+  },
   resetMediaId: ({ commit }) => {
     commit(MUTATION_TYPES.UPDATE_MEDIA_ID, 0)
+  },
+  removeMedia: ({ commit, dispatch }, media: Attachment) => {
+    commit(MUTATION_TYPES.REMOVE_MEDIA, media)
+    commit(MUTATION_TYPES.REMOVE_MEDIA_DESCRIPTION, media.id)
+    dispatch('decrementMediaId')
   },
   updateHashtags: ({ commit, state }, tags: Array<Tag>) => {
     if (state.pinedHashtag && tags.length > 0) {
