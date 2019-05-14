@@ -8,6 +8,7 @@ import Search, { SearchModuleState } from './Contents/Search'
 import Lists from './Contents/Lists'
 import Hashtag, { HashtagModuleState } from './Contents/Hashtag'
 import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
+import FollowRequests, { FollowRequestsState } from './Contents/FollowRequests'
 import Mentions, { MentionsState } from './Contents/Mentions'
 import { Module } from 'vuex'
 import { RootState } from '@/store'
@@ -15,16 +16,17 @@ import { RootState } from '@/store'
 export interface ContentsState {}
 
 export interface ContentsModuleState extends ContentsState {
-  SideBar: SideBarModuleState,
-  Home: HomeState,
-  Notifications: NotificationsState,
-  Mentions: MentionsState,
-  DirectMessages: DirectMessagesState,
-  Favourites: FavouritesState,
-  Local: LocalState,
-  Public: PublicState,
-  Search: SearchModuleState,
+  SideBar: SideBarModuleState
+  Home: HomeState
+  Notifications: NotificationsState
+  Mentions: MentionsState
+  DirectMessages: DirectMessagesState
+  Favourites: FavouritesState
+  Local: LocalState
+  Public: PublicState
+  Search: SearchModuleState
   Hashtag: HashtagModuleState
+  FollowRequests: FollowRequestsState
 }
 
 const state = (): ContentsState => ({})
@@ -43,7 +45,8 @@ const Contents: Module<ContentsState, RootState> = {
     Public,
     Search,
     Lists,
-    Hashtag
+    Hashtag,
+    FollowRequests
   }
 }
 

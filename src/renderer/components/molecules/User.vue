@@ -1,34 +1,51 @@
 <template>
-<div class="user" @click="openUser(user)" aria-label="user">
-  <div class="icon" role="presentation">
-    <FailoverImg :src="user.avatar" :alt="`Avatar of ${user.username}`" />
-  </div>
-  <div class="name">
-    <div class="username">
-      <bdi v-html="username(user)"></bdi>
+  <div class="user" @click="openUser(user)" aria-label="user">
+    <div class="icon" role="presentation">
+      <FailoverImg :src="user.avatar" :alt="`Avatar of ${user.username}`" />
     </div>
-    <div class="acct">
-      @{{ user.acct }}
+    <div class="name">
+      <div class="username">
+        <bdi v-html="username(user)"></bdi>
+      </div>
+      <div class="acct">@{{ user.acct }}</div>
+    </div>
+    <div class="tool" v-if="remove">
+      <el-button type="text" @click.stop.prevent="removeAccount(user)">
+        <icon name="times"></icon>
+      </el-button>
+    </div>
+    <div class="tool" v-if="relationship">
+      <el-button
+        v-if="relationship.following"
+        class="unfollow"
+        type="text"
+        @click.stop.prevent="unfollowAccount(user)"
+        :title="$t('side_bar.account_profile.unfollow')"
+      >
+        <icon name="user-times"></icon>
+      </el-button>
+      <el-button v-else-if="relationship.requested" class="requested" type="text" :title="$t('side_bar.account_profile.follow_requested')">
+        <icon name="hourglass"></icon>
+      </el-button>
+      <el-button
+        v-else-if="!relationship.following"
+        class="follow"
+        type="text"
+        @click.stop.prevent="followAccount(user)"
+        :title="$t('side_bar.account_profile.follow')"
+      >
+        <icon name="user-plus"></icon>
+      </el-button>
+    </div>
+    <div class="tool" v-else-if="request">
+      <el-button class="accept" type="text" @click.stop.prevent="acceptRequest(user)" :title="$t('follow_requests.accept')">
+        <icon name="check"></icon>
+      </el-button>
+      <el-button class="reject" type="text" @click.stop.prevent="rejectRequest(user)" :tilte="$t('follow_requests.reject')">
+        <icon name="times"></icon>
+      </el-button>
     </div>
   </div>
-  <div class="tool" v-if="remove">
-    <el-button type="text" @click.stop.prevent="removeAccount(user)">
-      <icon name="times"></icon>
-    </el-button>
-  </div>
-  <div class="tool" v-if="relationship">
-    <el-button v-if="relationship.following" class="unfollow" type="text" @click.stop.prevent="unfollowAccount(user)" :title="$t('side_bar.account_profile.unfollow')">
-      <icon name="user-times"></icon>
-    </el-button>
-    <el-button v-else-if="relationship.requested" class="requested" type="text" :title="$t('side_bar.account_profile.follow_requested')">
-      <icon name="hourglass"></icon>
-    </el-button>
-    <el-button v-else-if="!relationship.following" class="follow" type="text" @click.stop.prevent="followAccount(user)" :title="$t('side_bar.account_profile.follow')">
-      <icon name="user-plus"></icon>
-    </el-button>
-  </div>
-  </div>
-</div>
 </template>
 
 <script>
@@ -52,29 +69,39 @@ export default {
     relationship: {
       type: Object,
       default: null
+    },
+    request: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    username (account) {
+    username(account) {
       if (account.display_name !== '') {
         return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
     },
-    openUser (account) {
+    openUser(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    removeAccount (account) {
+    removeAccount(account) {
       this.$emit('removeAccount', account)
     },
-    unfollowAccount (account) {
+    unfollowAccount(account) {
       this.$emit('unfollowAccount', account)
     },
-    followAccount (account) {
+    followAccount(account) {
       this.$emit('followAccount', account)
+    },
+    acceptRequest(account) {
+      this.$emit('acceptRequest', account)
+    },
+    rejectRequest(account) {
+      this.$emit('rejectRequest', account)
     }
   }
 }
@@ -150,6 +177,11 @@ export default {
       color: var(--theme-primary-color);
       padding-top: 8px;
       padding-bottom: 8px;
+    }
+
+    .accept,
+    .reject {
+      margin-right: 24px;
     }
   }
 }
