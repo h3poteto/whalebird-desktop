@@ -1,4 +1,4 @@
-import Mastodon, { List, Response } from 'megalodon'
+import Mastodon, { List, Response, Account } from 'megalodon'
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import LocalTag from '~/src/types/localTag'
@@ -6,14 +6,15 @@ import LocalAccount from '~/src/types/localAccount'
 import { RootState } from '@/store'
 
 export interface SideMenuState {
-  unreadHomeTimeline: boolean,
-  unreadNotifications: boolean,
-  unreadMentions: boolean,
-  unreadLocalTimeline: boolean,
-  unreadDirectMessagesTimeline: boolean,
-  unreadPublicTimeline: boolean,
-  lists: Array<List>,
-  tags: Array<LocalTag>,
+  unreadHomeTimeline: boolean
+  unreadNotifications: boolean
+  unreadMentions: boolean
+  unreadLocalTimeline: boolean
+  unreadDirectMessagesTimeline: boolean
+  unreadPublicTimeline: boolean
+  unreadFollowRequests: boolean
+  lists: Array<List>
+  tags: Array<LocalTag>
   collapse: boolean
 }
 
@@ -24,6 +25,7 @@ const state = (): SideMenuState => ({
   unreadLocalTimeline: false,
   unreadDirectMessagesTimeline: false,
   unreadPublicTimeline: false,
+  unreadFollowRequests: false,
   lists: [],
   tags: [],
   collapse: false
@@ -36,6 +38,7 @@ export const MUTATION_TYPES = {
   CHANGE_UNREAD_LOCAL_TIMELINE: 'changeUnreadLocalTimeline',
   CHANGE_UNREAD_DIRECT_MESSAGES_TIMELINE: 'changeUnreadDirectMessagesTimeline',
   CHANGE_UNREAD_PUBLIC_TIMELINE: 'changeUnreadPublicTimeline',
+  CHANGE_UNREAD_FOLLOW_REQUESTS: 'changeUnreadFollowRequests',
   UPDATE_LISTS: 'updateLists',
   CHANGE_COLLAPSE: 'changeCollapse',
   UPDATE_TAGS: 'updateTags'
@@ -60,6 +63,9 @@ const mutations: MutationTree<SideMenuState> = {
   [MUTATION_TYPES.CHANGE_UNREAD_PUBLIC_TIMELINE]: (state, value: boolean) => {
     state.unreadPublicTimeline = value
   },
+  [MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS]: (state, value: boolean) => {
+    state.unreadFollowRequests = value
+  },
   [MUTATION_TYPES.UPDATE_LISTS]: (state, lists: Array<List>) => {
     state.lists = lists
   },
@@ -74,12 +80,16 @@ const mutations: MutationTree<SideMenuState> = {
 const actions: ActionTree<SideMenuState, RootState> = {
   fetchLists: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<List>> => {
     if (account === null) account = rootState.TimelineSpace.account
-    const client = new Mastodon(
-      account!.accessToken!,
-      account!.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(account!.accessToken!, account!.baseURL + '/api/v1')
     const res: Response<Array<List>> = await client.get<Array<List>>('/lists')
     commit(MUTATION_TYPES.UPDATE_LISTS, res.data)
+    return res.data
+  },
+  fetchFollowRequests: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Account>> => {
+    if (account === null) account = rootState.TimelineSpace.account
+    const client = new Mastodon(account!.accessToken!, account!.baseURL + '/api/v1')
+    const res: Response<Array<Account>> = await client.get<Array<Account>>('/follow_requests')
+    commit(MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS, res.data.length > 0)
     return res.data
   },
   clearUnread: ({ commit }) => {

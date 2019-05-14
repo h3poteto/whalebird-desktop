@@ -115,6 +115,9 @@ export default {
         case 'mentions':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.mention'))
           break
+        case 'follow-requests':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.follow_requests'))
+          break
         case 'local':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.local'))
           break
@@ -134,7 +137,7 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.lists'))
           break
         case 'direct-messages':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', 'Direct Messages')
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.direct_messages'))
           break
         case 'edit-list':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.members'))

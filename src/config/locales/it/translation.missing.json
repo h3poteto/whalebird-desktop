@@ -1,1 +1,17 @@
-
+{
+  "side_menu": {
+    "follow_requests": "Follow Requests"
+  },
+  "header_menu": {
+    "follow_requests": "Follow Requests",
+    "direct_messages": "Direct Messages"
+  },
+  "follow_requests": {
+    "accept": "Accept",
+    "reject": "Reject"
+  },
+  "message": {
+    "follow_request_accept_error": "Failed to accept the request",
+    "follow_reuqest_reject_error": "failed to reject the request"
+  }
+}
