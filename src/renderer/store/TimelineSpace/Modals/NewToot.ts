@@ -5,7 +5,15 @@ import TootStatus, { StatusState } from './NewToot/Status'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import AxiosLoading from '@/utils/axiosLoading'
-import { NewTootModalOpen, NewTootTootLength, NewTootAttachLength, NewTootMediaDescription } from '@/errors/validations'
+import {
+  NewTootModalOpen,
+  NewTootBlockSubmit,
+  NewTootTootLength,
+  NewTootAttachLength,
+  NewTootMediaDescription,
+  NewTootUnknownType,
+  AuthenticationError
+} from '@/errors/validations'
 
 type MediaDescription = {
   id: number
@@ -157,7 +165,7 @@ const actions: ActionTree<NewTootState, RootState> = {
       throw err
     })
   },
-  postToot: async ({ state, commit, rootState, dispatch }, { status, spoiler }) => {
+  postToot: async ({ state, commit, rootState, dispatch }, { status, spoiler }): Promise<Status> => {
     if (!state.modalOpen) {
       throw new NewTootModalOpen()
     }
@@ -190,9 +198,8 @@ const actions: ActionTree<NewTootState, RootState> = {
       throw new AuthenticationError()
     }
     if (state.blockSubmit) {
-      return
+      throw new NewTootBlockSubmit()
     }
-    commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, true)
 
     if (state.attachedMedias.length > 0) {
       if (state.attachedMedias.length > 4) {
@@ -209,6 +216,7 @@ const actions: ActionTree<NewTootState, RootState> = {
       })
     }
 
+    commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, true)
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken, rootState.TimelineSpace.account.baseURL + '/api/v1')
     return client
       .post<Status>('/statuses', form)
@@ -268,7 +276,7 @@ const actions: ActionTree<NewTootState, RootState> = {
       .post<Attachment>('/media', formData)
       .then(res => {
         commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, false)
-        if (res.data.type === 'unknown') throw new UnknownTypeError()
+        if (res.data.type === 'unknown') throw new NewTootUnknownType()
         commit(MUTATION_TYPES.APPEND_ATTACHED_MEDIAS, res.data)
         return res.data
       })
@@ -329,6 +337,3 @@ const NewToot: Module<NewTootState, RootState> = {
 }
 
 export default NewToot
-
-class AuthenticationError {}
-class UnknownTypeError {}

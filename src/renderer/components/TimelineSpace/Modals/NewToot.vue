@@ -120,6 +120,7 @@ import { mapState, mapGetters } from 'vuex'
 import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
+import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit } from '@/errors/validations'
 
 export default {
   name: 'new-toot',
@@ -216,15 +217,31 @@ export default {
         spoiler: this.spoiler
       }
 
-      await this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form).catch(err => {
+      try {
+        await this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
+        this.$store.dispatch('TimelineSpace/Modals/NewToot/updateHashtags', status.tags)
+        this.close()
+      } catch (err) {
         console.error(err)
-        this.$message({
-          message: this.$t('message.toot_error'),
-          type: 'error'
-        })
-      })
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/updateHashtags', status.tags)
-      this.close()
+        if (err instanceof NewTootTootLength) {
+          this.$message({
+            message: this.$t('validation.new_toot.toot_length', { min: 1, max: this.tootMax }),
+            type: 'error'
+          })
+        } else if (err instanceof NewTootAttachLength) {
+          this.$message({
+            message: this.$t('validation.new_toot.attach_length', { max: 4 }),
+            type: 'error'
+          })
+        } else if (err instanceof NewTootModalOpen || err instanceof NewTootBlockSubmit) {
+          // Nothing
+        } else {
+          this.$message({
+            message: this.$t('message.toot_error'),
+            type: 'error'
+          })
+        }
+      }
     },
     selectImage() {
       this.$refs.image.click()
