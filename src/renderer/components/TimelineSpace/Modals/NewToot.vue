@@ -22,7 +22,8 @@
           maxlength="420"
           class="image-description"
           :placeholder="$t('modals.new_toot.description')"
-          v-model="mediaDescriptions[media.id]"
+          :value="mediaDescriptions[media.id]"
+          @input="updateDescription(media.id, $event.target.value)"
           v-shortkey="{ left: ['arrowleft'], right: ['arrowright'] }"
           @shortkey="handleDescriptionKey"
           role="textbox"
@@ -119,6 +120,7 @@ import { mapState, mapGetters } from 'vuex'
 import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
+import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit } from '@/errors/validations'
 
 export default {
   name: 'new-toot',
@@ -128,7 +130,6 @@ export default {
   data() {
     return {
       status: '',
-      mediaDescriptions: {},
       spoiler: '',
       showContentWarning: false,
       visibilityList: Visibility
@@ -145,6 +146,7 @@ export default {
       },
       attachedMedias: state => state.attachedMedias,
       attachedMediaId: state => state.attachedMediaId,
+      mediaDescriptions: state => state.mediaDescriptions,
       blockSubmit: state => state.blockSubmit,
       visibility: state => state.visibility,
       sensitive: state => state.sensitive,
@@ -210,57 +212,36 @@ export default {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
     async toot() {
-      if (!this.newTootModal) {
-        return
-      }
-      if (this.status.length < 1 || this.status.length > this.tootMax) {
-        return this.$message({
-          message: this.$t('validation.new_toot.toot_length', { min: 1, max: this.tootMax }),
-          type: 'error'
-        })
-      }
-      const visibilityKey = Object.keys(Visibility).find(key => {
-        return Visibility[key].value === this.visibility
-      })
-      let form = {
+      const form = {
         status: this.status,
-        visibility: Visibility[visibilityKey].key,
-        sensitive: this.sensitive,
-        spoiler_text: this.spoiler
+        spoiler: this.spoiler
       }
-      if (this.replyToId !== null) {
-        form = Object.assign(form, {
-          in_reply_to_id: this.replyToId
-        })
-      }
-      if (this.attachedMedias.length > 0) {
-        if (this.attachedMedias.length > 4) {
-          return this.$message({
+
+      try {
+        await this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
+        this.$store.dispatch('TimelineSpace/Modals/NewToot/updateHashtags', status.tags)
+        this.close()
+      } catch (err) {
+        console.error(err)
+        if (err instanceof NewTootTootLength) {
+          this.$message({
+            message: this.$t('validation.new_toot.toot_length', { min: 1, max: this.tootMax }),
+            type: 'error'
+          })
+        } else if (err instanceof NewTootAttachLength) {
+          this.$message({
             message: this.$t('validation.new_toot.attach_length', { max: 4 }),
             type: 'error'
           })
-        }
-        form = Object.assign(form, {
-          media_ids: this.attachedMedias.map(m => {
-            return m.id
-          })
-        })
-      }
-
-      const status = await this.$store
-        .dispatch('TimelineSpace/Modals/NewToot/updateMedia', this.mediaDescriptions)
-        .then(() => {
-          return this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
-        })
-        .catch(e => {
-          console.error(e)
+        } else if (err instanceof NewTootModalOpen || err instanceof NewTootBlockSubmit) {
+          // Nothing
+        } else {
           this.$message({
             message: this.$t('message.toot_error'),
             type: 'error'
           })
-        })
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/updateHashtags', status.tags)
-      this.close()
+        }
+      }
     },
     selectImage() {
       this.$refs.image.click()
@@ -305,8 +286,7 @@ export default {
       })
     },
     removeAttachment(media) {
-      this.$store.commit('TimelineSpace/Modals/NewToot/removeMedia', media)
-      delete this.mediaDescriptions[media.id]
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/removeMedia', media)
     },
     changeVisibility(level) {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibilityValue', level)
@@ -340,6 +320,9 @@ export default {
         default:
           return true
       }
+    },
+    updateDescription(id, value) {
+      this.$store.commit('TimelineSpace/Modals/NewToot/updateMediaDescription', { id: id, description: value })
     }
   }
 }
