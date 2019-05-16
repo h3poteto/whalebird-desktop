@@ -1,14 +1,14 @@
 <template>
-<div class="members">
-  <div class="add-account">
-    <el-button type="text" class="add-button" @click="addAccount">
-      <icon name="plus"></icon>
-    </el-button>
+  <div class="members">
+    <div class="add-account">
+      <el-button type="text" class="add-button" @click="addAccount">
+        <icon name="plus"></icon>
+      </el-button>
+    </div>
+    <template v-for="account in members">
+      <user :user="account" :remove="true" @removeAccount="removeAccount"></user>
+    </template>
   </div>
-  <template v-for="account in members">
-    <user :user="account" :remove="true" @removeAccount="removeAccount"></user>
-  </template>
-</div>
 </template>
 
 <script>
@@ -24,12 +24,12 @@ export default {
       members: state => state.TimelineSpace.Contents.Lists.Edit.members
     })
   },
-  created () {
+  created() {
     this.init()
   },
   methods: {
-    async init () {
-      this.$store.commit('TimelineSpace/changeLoading', true)
+    async init() {
+      this.$store.commit('TimelineSpace/Contents/changeLoading', true)
       try {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', this.list_id)
       } catch (err) {
@@ -38,11 +38,11 @@ export default {
           type: 'error'
         })
       } finally {
-        this.$store.commit('TimelineSpace/changeLoading', false)
+        this.$store.commit('TimelineSpace/Contents/changeLoading', false)
       }
     },
-    async removeAccount (account) {
-      this.$store.commit('TimelineSpace/changeLoading', true)
+    async removeAccount(account) {
+      this.$store.commit('TimelineSpace/Contents/changeLoading', true)
       try {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/removeAccount', {
           account: account,
@@ -55,10 +55,10 @@ export default {
           type: 'error'
         })
       } finally {
-        this.$store.commit('TimelineSpace/changeLoading', false)
+        this.$store.commit('TimelineSpace/Contents/changeLoading', false)
       }
     },
-    addAccount () {
+    addAccount() {
       this.$store.commit('TimelineSpace/Modals/AddListMember/setListId', this.list_id)
       this.$store.dispatch('TimelineSpace/Modals/AddListMember/changeModal', true)
     }
