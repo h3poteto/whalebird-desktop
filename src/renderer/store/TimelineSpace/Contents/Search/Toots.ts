@@ -22,18 +22,16 @@ const mutations: MutationTree<TootsState> = {
 
 const actions: ActionTree<TootsState, RootState> = {
   search: ({ commit, rootState }, query: string): Promise<Array<Status>> => {
-    commit('TimelineSpace/Contents/Search/changeLoading', true, { root: true })
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
-    return client.get<Results>('/search', { q: query, resolve: true })
+    commit('TimelineSpace/Contents/changeLoading', true, { root: true })
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    return client
+      .get<Results>('/search', { q: query, resolve: true })
       .then(res => {
         commit(MUTATION_TYPES.UPDATE_RESULTS, res.data.statuses)
         return res.data.statuses
       })
       .finally(() => {
-        commit('TimelineSpace/Contents/Search/changeLoading', false, { root: true })
+        commit('TimelineSpace/Contents/changeLoading', false, { root: true })
       })
   }
 }

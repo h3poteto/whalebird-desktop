@@ -22,7 +22,7 @@ const mutations: MutationTree<AccountState> = {
 
 const actions: ActionTree<AccountState, RootState> = {
   search: async ({ commit, rootState }, query: string): Promise<Array<Account>> => {
-    commit('TimelineSpace/Contents/Search/changeLoading', true, { root: true })
+    commit('TimelineSpace/Contents/changeLoading', true, { root: true })
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     return client
       .get<Array<Account>>('/accounts/search', { q: query, resolve: true })
@@ -31,7 +31,7 @@ const actions: ActionTree<AccountState, RootState> = {
         return res.data
       })
       .finally(() => {
-        commit('TimelineSpace/Contents/Search/changeLoading', false, { root: true })
+        commit('TimelineSpace/Contents/changeLoading', false, { root: true })
       })
   }
 }
