@@ -28,6 +28,8 @@ import Contents from './TimelineSpace/Contents'
 import Modals from './TimelineSpace/Modals'
 import Mousetrap from 'mousetrap'
 import ReceiveDrop from './TimelineSpace/ReceiveDrop'
+import { AccountLoadError } from '@/errors/load'
+import { TimelineFetchError } from '@/errors/fetch'
 
 export default {
   name: 'timeline-space',
@@ -50,9 +52,7 @@ export default {
   },
   async created() {
     this.$store.dispatch('TimelineSpace/Contents/SideBar/close')
-    this.$store.commit('TimelineSpace/changeLoading', true)
     await this.initialize().finally(() => {
-      this.$store.commit('TimelineSpace/changeLoading', false)
       this.$store.commit('GlobalHeader/updateChanging', false)
     })
   },
@@ -84,33 +84,21 @@ export default {
     async initialize() {
       await this.clear()
 
-      this.$store.dispatch('TimelineSpace/watchShortcutEvents')
-      const account = await this.$store.dispatch('TimelineSpace/localAccount', this.$route.params.id).catch(() => {
-        this.$message({
-          message: this.$t('message.account_load_error'),
-          type: 'error'
-        })
-      })
-      this.$store.dispatch('TimelineSpace/SideMenu/fetchLists', account)
-      this.$store.dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account)
-      await this.$store.dispatch('TimelineSpace/loadUnreadNotification', this.$route.params.id)
-
-      // Load timelines
-      await this.$store.dispatch('TimelineSpace/fetchContentsTimelines', account).catch(_ => {
-        this.$message({
-          message: this.$t('message.timeline_fetch_error'),
-          type: 'error'
-        })
-      })
-
-      await this.$store.dispatch('TimelineSpace/detectPleroma')
-      // Bind streamings
-      await this.$store.dispatch('TimelineSpace/bindStreamings', account)
-      // Start streamings
-      this.$store.dispatch('TimelineSpace/startStreamings', account)
-
-      this.$store.dispatch('TimelineSpace/fetchEmojis', account)
-      this.$store.dispatch('TimelineSpace/fetchInstance', account)
+      try {
+        this.$store.dispatch('TimelineSpace/initLoad', this.$route.params.id)
+      } catch (err) {
+        if (err instanceof AccountLoadError) {
+          this.$message({
+            message: this.$t('message.account_load_error'),
+            type: 'error'
+          })
+        } else if (err instanceof TimelineFetchError) {
+          this.$message({
+            message: this.$t('message.timeline_fetch_error'),
+            type: 'error'
+          })
+        }
+      }
     },
     handleDrop(e) {
       e.preventDefault()
