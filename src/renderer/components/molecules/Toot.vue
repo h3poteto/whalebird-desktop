@@ -449,7 +449,7 @@ export default {
           .then(data => {
             this.$emit('update', data)
           })
-          .catche(err => {
+          .catch(err => {
             console.error(err)
             this.$message({
               message: this.$t('message.unfavourite_error'),
