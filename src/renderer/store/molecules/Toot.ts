@@ -8,30 +8,33 @@ export interface TootState {}
 const state = (): TootState => ({})
 
 const actions: ActionTree<TootState, RootState> = {
-  reblog: async ({ rootState }, message: Status) => {
+  reblog: async ({ rootState, dispatch }, message: Status) => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/reblog`)
     // API returns new status when reblog.
     // Reblog target status is in the data.reblog.
     // So I send data.reblog as status for update local timeline.
     ipcRenderer.send('fav-rt-action-sound')
+    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data.reblog
   },
-  unreblog: async ({ rootState }, message: Status) => {
+  unreblog: async ({ rootState, dispatch }, message: Status) => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/unreblog`)
+    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
   addFavourite: async ({ rootState, dispatch }, message: Status) => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/favourite`)
     ipcRenderer.send('fav-rt-action-sound')
-    dispatch('TimelineSpace/addFavouriteToot', res.data, { root: true })
+    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  removeFavourite: async ({ rootState }, message: Status) => {
+  removeFavourite: async ({ rootState, dispatch }, message: Status) => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/unfavourite`)
+    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
   deleteToot: async ({ rootState }, message: Status) => {
