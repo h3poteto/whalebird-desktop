@@ -112,6 +112,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       throw new AccountLoadError()
     })
 
+    await dispatch('detectPleroma')
     dispatch('TimelineSpace/SideMenu/fetchLists', account, { root: true })
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account, { root: true })
     await dispatch('loadUnreadNotification', accountId)
@@ -119,7 +120,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     await dispatch('fetchContentsTimelines', account).catch(_ => {
       throw new TimelineFetchError()
     })
-    await dispatch('detectPleroma')
     await dispatch('bindStreamings', account)
     dispatch('startStreamings', account)
     dispatch('fetchEmojis', account)
