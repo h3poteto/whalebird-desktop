@@ -15,7 +15,7 @@ const actions: ActionTree<TootState, RootState> = {
     // Reblog target status is in the data.reblog.
     // So I send data.reblog as status for update local timeline.
     ipcRenderer.send('fav-rt-action-sound')
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
+    dispatch('TimelineSpace/updateTootForAllTimelines', res.data.reblog, { root: true })
     return res.data.reblog
   },
   unreblog: async ({ rootState, dispatch }, message: Status) => {
