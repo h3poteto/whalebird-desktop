@@ -1,141 +1,178 @@
 <template>
-<div
-  class="status"
-  tabIndex="0"
-  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], right: ['l'], left: ['h'], reply: ['r'], boost: ['b'], fav: ['f'], open: ['o'], profile: ['p'], image: ['i'], cw: ['x']} : {}"
-  @shortkey="handleTootControl"
-  ref="status"
-  @click="$emit('selectToot')"
-  role="article"
-  aria-label="toot"
+  <div
+    class="status"
+    tabIndex="0"
+    v-shortkey="
+      shortcutEnabled
+        ? {
+            next: ['j'],
+            prev: ['k'],
+            right: ['l'],
+            left: ['h'],
+            reply: ['r'],
+            boost: ['b'],
+            fav: ['f'],
+            open: ['o'],
+            profile: ['p'],
+            image: ['i'],
+            cw: ['x']
+          }
+        : {}
+    "
+    @shortkey="handleTootControl"
+    ref="status"
+    @click="$emit('selectToot')"
+    role="article"
+    aria-label="toot"
   >
-  <div v-show="filtered" class="filtered">
-    Filtered
-  </div>
-  <div v-show="!filtered" class="toot">
-    <div class="icon" role="presentation">
-      <FailoverImg
-        :src="originalMessage.account.avatar"
-        @click="openUser(originalMessage.account)"
-        :alt="`Avatar of ${originalMessage.account.username}`"
+    <div v-show="filtered" class="filtered">
+      Filtered
+    </div>
+    <div v-show="!filtered" class="toot">
+      <div class="icon" role="presentation">
+        <FailoverImg
+          :src="originalMessage.account.avatar"
+          @click="openUser(originalMessage.account)"
+          :alt="`Avatar of ${originalMessage.account.username}`"
         />
-    </div>
-    <div class="detail" v-on:dblclick="openDetail(message)">
-      <div class="toot-header">
-        <div class="user" @click="openUser(originalMessage.account)">
-          <span class="display-name" @click="openUser(message.account)"><bdi v-html="username(originalMessage.account)"></bdi></span>
-          <span class="acct">{{ accountName(originalMessage.account) }}</span>
-        </div>
-        <div class="timestamp">
-          <time :datetime="originalMessage.created_at" :title="readableTimestamp" @click="openDetail(message)">
-            {{ timestamp }}
-          </time>
-        </div>
-        <div class="clearfix"></div>
       </div>
-      <div class="content-wrapper">
-        <div class="spoiler" v-show="spoilered">
-          <span v-html="spoilerText()"></span>
-          <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
-            {{ $t('cards.toot.show_more') }}
-          </el-button>
-          <el-button v-else type="primary" size="medium" class="spoil-button" @click="showContent = false">
-            {{ $t('cards.toot.hide')}}
-          </el-button>
-        </div>
-        <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
-      </div>
-      <div class="attachments">
-        <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
-          {{ $t('cards.toot.sensitive') }}
-        </el-button>
-        <div v-show="isShowAttachments">
-          <el-button v-show="sensitive && isShowAttachments" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
-            <icon name="eye" class="hide"></icon>
-          </el-button>
-          <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
-            <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments)" :title="media.description" />
-            <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
-            <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
+      <div class="detail" v-on:dblclick="openDetail(message)">
+        <div class="toot-header">
+          <div class="user" @click="openUser(originalMessage.account)">
+            <span class="display-name" @click="openUser(message.account)"><bdi v-html="username(originalMessage.account)"></bdi></span>
+            <span class="acct">{{ accountName(originalMessage.account) }}</span>
           </div>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-      <div class="reblogger" v-show="message.reblog !== null">
-        <icon name="retweet"></icon>
-        <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
-          <FailoverImg
-            :src="message.account.avatar"
-            :alt="`Avatar of ${message.account.username}`" />
-        </span>
-        <span class="reblogger-name" @click="openUser(message.account)" :title="`Reblogged by ${message.account.username}`" :aria-label="`Reblogged by ${message.account.username}`">
-          <bdi v-html="username(message.account)"></bdi>
-        </span>
-      </div>
-      <div class="tool-box">
-        <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
-          <icon name="reply" scale="0.9"></icon>
-        </el-button>
-        <el-button v-show="locked" type="text" class="locked">
-          <icon name="lock" scale="0.9"></icon>
-        </el-button>
-        <el-button v-show="directed" type="text" class="directed">
-          <icon name="envelope" scale="0.9"></icon>
-        </el-button>
-        <el-button v-show="!locked&&!directed" type="text" @click="changeReblog(originalMessage)" :class="originalMessage.reblogged ? 'reblogged' : 'reblog'" :title="$t('cards.toot.reblog')">
-          <icon name="retweet" scale="0.9"></icon>
-        </el-button>
-        <span class="count">
-          {{ reblogsCount }}
-        </span>
-        <el-button type="text" @click="changeFavourite(originalMessage)" :class="originalMessage.favourited ? 'favourited animated bounceIn' : 'favourite'" :title="$t('cards.toot.fav')" :aria-label="$t('cards.toot.fav')">
-          <icon name="star" scale="0.9"></icon>
-        </el-button>
-        <span class="count">
-          {{ favouritesCount }}
-        </span>
-        <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
-          <icon name="thumbtack" scale="0.9"></icon>
-        </el-button>
-        <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
-          <div class="popper toot-menu">
-            <ul class="menu-list">
-              <li role="button" @click="openDetail(message)">
-                {{ $t('cards.toot.view_toot_detail') }}
-              </li>
-              <li role="button" @click="openBrowser(originalMessage)">
-                {{ $t('cards.toot.open_in_browser') }}
-              </li>
-              <li role="button" @click="copyLink(originalMessage)">
-                {{ $t('cards.toot.copy_link_to_toot') }}
-              </li>
-              <li role="button" class="separate" @click="confirmMute()">
-                {{ $t('cards.toot.mute') }}
-              </li>
-              <li role="button" @click="block()">
-                {{ $t('cards.toot.block') }}
-              </li>
-              <li role="button" @click="reportUser()" v-if="!isMyMessage">
-                {{ $t('cards.toot.report') }}
-              </li>
-              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
-                {{ $t('cards.toot.delete') }}
-              </li>
-            </ul>
+          <div class="timestamp">
+            <time :datetime="originalMessage.created_at" :title="readableTimestamp" @click="openDetail(message)">
+              {{ timestamp }}
+            </time>
           </div>
-          <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
-            <icon name="ellipsis-h" scale="0.9"></icon>
+          <div class="clearfix"></div>
+        </div>
+        <div class="content-wrapper">
+          <div class="spoiler" v-show="spoilered">
+            <span v-html="spoilerText()"></span>
+            <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
+              {{ $t('cards.toot.show_more') }}
+            </el-button>
+            <el-button v-else type="primary" size="medium" class="spoil-button" @click="showContent = false">
+              {{ $t('cards.toot.hide') }}
+            </el-button>
+          </div>
+          <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
+        </div>
+        <div class="attachments">
+          <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
+            {{ $t('cards.toot.sensitive') }}
           </el-button>
-        </popper>
+          <div v-show="isShowAttachments">
+            <el-button
+              v-show="sensitive && isShowAttachments"
+              class="hide-sensitive"
+              type="text"
+              @click="showAttachments = false"
+              :title="$t('cards.toot.hide')"
+            >
+              <icon name="eye" class="hide"></icon>
+            </el-button>
+            <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
+              <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments)" :title="media.description" />
+              <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
+              <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="reblogger" v-show="message.reblog !== null">
+          <icon name="retweet"></icon>
+          <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
+            <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
+          </span>
+          <span
+            class="reblogger-name"
+            @click="openUser(message.account)"
+            :title="`Reblogged by ${message.account.username}`"
+            :aria-label="`Reblogged by ${message.account.username}`"
+          >
+            <bdi v-html="username(message.account)"></bdi>
+          </span>
+        </div>
+        <div class="tool-box">
+          <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
+            <icon name="reply" scale="0.9"></icon>
+          </el-button>
+          <el-button v-show="locked" type="text" class="locked">
+            <icon name="lock" scale="0.9"></icon>
+          </el-button>
+          <el-button v-show="directed" type="text" class="directed">
+            <icon name="envelope" scale="0.9"></icon>
+          </el-button>
+          <el-button
+            v-show="!locked && !directed"
+            type="text"
+            @click="changeReblog(originalMessage)"
+            :class="originalMessage.reblogged ? 'reblogged' : 'reblog'"
+            :title="$t('cards.toot.reblog')"
+          >
+            <icon name="retweet" scale="0.9"></icon>
+          </el-button>
+          <span class="count">
+            {{ reblogsCount }}
+          </span>
+          <el-button
+            type="text"
+            @click="changeFavourite(originalMessage)"
+            :class="originalMessage.favourited ? 'favourited animated bounceIn' : 'favourite'"
+            :title="$t('cards.toot.fav')"
+            :aria-label="$t('cards.toot.fav')"
+          >
+            <icon name="star" scale="0.9"></icon>
+          </el-button>
+          <span class="count">
+            {{ favouritesCount }}
+          </span>
+          <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
+            <icon name="thumbtack" scale="0.9"></icon>
+          </el-button>
+          <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
+            <div class="popper toot-menu">
+              <ul class="menu-list">
+                <li role="button" @click="openDetail(message)">
+                  {{ $t('cards.toot.view_toot_detail') }}
+                </li>
+                <li role="button" @click="openBrowser(originalMessage)">
+                  {{ $t('cards.toot.open_in_browser') }}
+                </li>
+                <li role="button" @click="copyLink(originalMessage)">
+                  {{ $t('cards.toot.copy_link_to_toot') }}
+                </li>
+                <li role="button" class="separate" @click="confirmMute()">
+                  {{ $t('cards.toot.mute') }}
+                </li>
+                <li role="button" @click="block()">
+                  {{ $t('cards.toot.block') }}
+                </li>
+                <li role="button" @click="reportUser()" v-if="!isMyMessage">
+                  {{ $t('cards.toot.report') }}
+                </li>
+                <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
+                  {{ $t('cards.toot.delete') }}
+                </li>
+              </ul>
+            </div>
+            <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
+              <icon name="ellipsis-h" scale="0.9"></icon>
+            </el-button>
+          </popper>
+        </div>
+        <div class="application" v-show="application !== null">
+          {{ $t('cards.toot.via', { application: application }) }}
+        </div>
       </div>
-      <div class="application" v-show="application !== null">
-        {{ $t('cards.toot.via', { application: application }) }}
-      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
+    <div class="fill-line"></div>
   </div>
-  <div class="fill-line"></div>
-</div>
 </template>
 
 <script>
@@ -154,7 +191,7 @@ export default {
   components: {
     FailoverImg
   },
-  data () {
+  data() {
     return {
       showContent: this.$store.state.App.ignoreCW,
       showAttachments: this.$store.state.App.ignoreNFSW,
@@ -190,72 +227,71 @@ export default {
       timeFormat: state => state.timeFormat,
       language: state => state.language
     }),
-    shortcutEnabled: function () {
+    shortcutEnabled: function() {
       return this.focused && !this.overlaid
     },
-    timestamp: function () {
+    timestamp: function() {
       return this.parseDatetime(this.originalMessage.created_at, this.now)
     },
-    readableTimestamp: function () {
+    readableTimestamp: function() {
       moment.locale(this.language)
       return moment(this.originalMessage.created_at).format('LLLL')
     },
-    originalMessage: function () {
+    originalMessage: function() {
       if (this.message.reblog !== null) {
         return this.message.reblog
       } else {
         return this.message
       }
     },
-    mediaAttachments: function () {
+    mediaAttachments: function() {
       return this.originalMessage.media_attachments
     },
-    reblogsCount: function () {
+    reblogsCount: function() {
       if (this.originalMessage.reblogs_count > 0) {
         return this.originalMessage.reblogs_count
       }
       return ''
     },
-    favouritesCount: function () {
+    favouritesCount: function() {
       if (this.originalMessage.favourites_count > 0) {
         return this.originalMessage.favourites_count
       }
       return ''
     },
-    isMyMessage: function () {
+    isMyMessage: function() {
       return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
     },
-    application: function () {
+    application: function() {
       let msg = this.originalMessage
-      if (msg.application !== undefined &&
-          msg.application !== null) {
+      if (msg.application !== undefined && msg.application !== null) {
         return msg.application.name
       }
       return null
     },
-    spoilered: function () {
+    spoilered: function() {
       return this.originalMessage.spoiler_text.length > 0
     },
-    isShowContent: function () {
+    isShowContent: function() {
       return !this.spoilered || this.showContent
     },
-    sensitive: function () {
+    sensitive: function() {
       return (this.hideAllAttachments || this.originalMessage.sensitive) && this.mediaAttachments.length > 0
     },
-    isShowAttachments: function () {
+    isShowAttachments: function() {
       return !this.sensitive || this.showAttachments
     },
-    filtered: function () {
+    filtered: function() {
       return this.filter.length > 0 && this.originalMessage.content.search(this.filter) >= 0
     },
-    locked: function () {
+    locked: function() {
       return this.message.visibility === 'private'
     },
-    directed: function () {
+    directed: function() {
       return this.message.visibility === 'direct'
     }
   },
-  mounted () {
+  mounted() {
     if (this.focused) {
       this.$refs.status.focus()
     }
@@ -263,24 +299,24 @@ export default {
       this.$data.now = Date.now()
     }, 60000)
   },
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(this.updateInterval)
   },
   watch: {
-    focused: function (newState, oldState) {
+    focused: function(newState, oldState) {
       if (newState) {
-        this.$nextTick(function () {
+        this.$nextTick(function() {
           this.$refs.status.focus()
         })
       } else if (oldState && !newState) {
-        this.$nextTick(function () {
+        this.$nextTick(function() {
           this.$refs.status.blur()
         })
       }
     }
   },
   methods: {
-    username (account) {
+    username(account) {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
           if (account.display_name !== '') {
@@ -298,7 +334,7 @@ export default {
           return account.acct
       }
     },
-    accountName (account) {
+    accountName(account) {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
           return `@${account.acct}`
@@ -307,7 +343,7 @@ export default {
           return ''
       }
     },
-    parseDatetime (datetime, epoch) {
+    parseDatetime(datetime, epoch) {
       switch (this.timeFormat) {
         case TimeFormat.Absolute.value:
           return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
@@ -316,7 +352,7 @@ export default {
           return moment(datetime).from(epoch)
       }
     },
-    tootClick (e) {
+    tootClick(e) {
       const parsedTag = findTag(e.target, 'toot')
       if (parsedTag !== null) {
         const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
@@ -326,12 +362,13 @@ export default {
       const parsedAccount = findAccount(e.target, 'toot')
       if (parsedAccount !== null) {
         this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
-          .then((account) => {
+        this.$store
+          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
+          .then(account => {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err)
             this.openLink(e)
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
@@ -340,60 +377,64 @@ export default {
       }
       this.openLink(e)
     },
-    openLink (e) {
+    openLink(e) {
       const link = findLink(e.target, 'toot')
       if (link !== null) {
         return shell.openExternal(link)
       }
     },
-    openReply () {
+    openReply() {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', this.originalMessage)
     },
-    openDetail (message) {
+    openDetail(message) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
       this.$refs.popper.doClose()
     },
-    openBrowser (message) {
+    openBrowser(message) {
       shell.openExternal(message.url)
       this.$refs.popper.doClose()
     },
-    copyLink (message) {
+    copyLink(message) {
       clipboard.writeText(message.url, 'toot-link')
       this.$refs.popper.doClose()
     },
-    reportUser () {
+    reportUser() {
       this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage)
       this.$refs.popper.doClose()
     },
-    confirmMute () {
+    confirmMute() {
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage.account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
       this.$refs.popper.doClose()
     },
-    block () {
+    block() {
       this.$store.dispatch('molecules/Toot/block', this.originalMessage.account)
       this.$refs.popper.doClose()
     },
-    changeReblog (message) {
+    changeReblog(message) {
       if (message.reblogged) {
-        this.$store.dispatch('molecules/Toot/unreblog', message)
-          .then((data) => {
+        this.$store
+          .dispatch('molecules/Toot/unreblog', message)
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch(() => {
+          .catch(err => {
+            console.error(err)
             this.$message({
               message: this.$t('message.unreblog_error'),
               type: 'error'
             })
           })
       } else {
-        this.$store.dispatch('molecules/Toot/reblog', message)
-          .then((data) => {
+        this.$store
+          .dispatch('molecules/Toot/reblog', message)
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch(() => {
+          .catch(err => {
+            console.error(err)
             this.$message({
               message: this.$t('message.reblog_error'),
               type: 'error'
@@ -401,24 +442,28 @@ export default {
           })
       }
     },
-    changeFavourite (message) {
+    changeFavourite(message) {
       if (message.favourited) {
-        this.$store.dispatch('molecules/Toot/removeFavourite', message)
-          .then((data) => {
+        this.$store
+          .dispatch('molecules/Toot/removeFavourite', message)
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch(() => {
+          .catch(err => {
+            console.error(err)
             this.$message({
               message: this.$t('message.unfavourite_error'),
               type: 'error'
             })
           })
       } else {
-        this.$store.dispatch('molecules/Toot/addFavourite', message)
-          .then((data) => {
+        this.$store
+          .dispatch('molecules/Toot/addFavourite', message)
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch(() => {
+          .catch(err => {
+            console.error(err)
             this.$message({
               message: this.$t('message.favourite_error'),
               type: 'error'
@@ -426,26 +471,25 @@ export default {
           })
       }
     },
-    openImage (url, rawMediaList) {
-      const mediaList = rawMediaList.map((media) => {
+    openImage(url, rawMediaList) {
+      const mediaList = rawMediaList.map(media => {
         return media.url
       })
       const currentIndex = mediaList.indexOf(url)
-      this.$store.dispatch(
-        'TimelineSpace/Modals/ImageViewer/openModal',
-        {
-          currentIndex: currentIndex,
-          mediaList: rawMediaList
-        })
+      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
+        currentIndex: currentIndex,
+        mediaList: rawMediaList
+      })
     },
-    openUser (account) {
+    openUser(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    deleteToot (message) {
-      this.$store.dispatch('molecules/Toot/deleteToot', message)
-        .then((message) => {
+    deleteToot(message) {
+      this.$store
+        .dispatch('molecules/Toot/deleteToot', message)
+        .then(message => {
           this.$emit('delete', message)
         })
         .catch(() => {
@@ -455,15 +499,15 @@ export default {
           })
         })
     },
-    status () {
+    status() {
       const original = this.originalMessage
       return emojify(original.content, original.emojis)
     },
-    spoilerText () {
+    spoilerText() {
       const original = this.originalMessage
       return emojify(original.spoiler_text, original.emojis)
     },
-    handleTootControl (event) {
+    handleTootControl(event) {
       switch (event.srcKey) {
         case 'next':
           this.$emit('focusNext')
@@ -510,7 +554,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .toot {
   padding: 8px 0 0 16px;
 
