@@ -441,6 +441,21 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   stopDirectMessagesStreaming: () => {
     ipcRenderer.send('stop-directmessages-streaming')
+  },
+  addFavouriteToot: ({ commit, state }, status: Status): boolean => {
+    commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })
+    commit('TimelineSpace/Contents/Notifications/updateToot', status, { root: true })
+    commit('TimelineSpace/Contents/Mentions/updateToot', status, { root: true })
+    if (state.unreadNotification.direct) {
+      commit('TimelineSpace/Contents/DirectMessages/updateToot', status, { root: true })
+    }
+    if (state.unreadNotification.local) {
+      commit('TimelineSpace/Contents/Local/updateToot', state, { root: true })
+    }
+    if (state.unreadNotification.public) {
+      commit('TimelineSpace/Contents/Public/updateToot', state, { root: true })
+    }
+    return true
   }
 }
 
