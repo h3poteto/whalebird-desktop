@@ -1,29 +1,30 @@
 <template>
   <div id="search">
-    <div class="search-header" v-loading="loading" :element-loading-background="loadingBackground">
+    <div class="search-header">
       <el-form :inline="true">
         <el-select v-model="target" :placeholder="$t('search.search')" class="search-target">
-          <el-option
-            v-for="item in searchTargets"
-            :key="item.target"
-            :label="item.label"
-            :value="item.target">
-          </el-option>
+          <el-option v-for="item in searchTargets" :key="item.target" :label="item.label" :value="item.target"> </el-option>
         </el-select>
-        <input v-model="query" :placeholder="$t('search.keyword')" class="search-keyword" v-shortkey.avoid v-on:keyup.enter="search" autofocus></input>
+        <input
+          v-model="query"
+          :placeholder="$t('search.keyword')"
+          class="search-keyword"
+          v-shortkey.avoid
+          v-on:keyup.enter="search"
+          autofocus
+        />
         <div class="clearfix"></div>
       </el-form>
     </div>
     <div class="search-result">
-      <search-account v-if="target==='account'"></search-account>
-      <search-tag v-else-if="target==='tag'"></search-tag>
-      <search-toots v-else-if="target==='toot'"></search-toots>
+      <search-account v-if="target === 'account'"></search-account>
+      <search-tag v-else-if="target === 'tag'"></search-tag>
+      <search-toots v-else-if="target === 'toot'"></search-toots>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import SearchAccount from './Search/Account'
 import SearchTag from './Search/Tag'
 import SearchToots from './Search/Toots'
@@ -31,19 +32,15 @@ import SearchToots from './Search/Toots'
 export default {
   name: 'search',
   components: { SearchAccount, SearchTag, SearchToots },
-  data () {
+  data() {
     return {
       target: 'account',
       query: ''
     }
   },
   computed: {
-    ...mapState({
-      loading: state => state.TimelineSpace.Contents.Search.loading,
-      loadingBackground: state => state.App.theme.wrapper_mask_color
-    }),
     searchTargets: {
-      get () {
+      get() {
         return [
           {
             target: 'account',
@@ -62,34 +59,31 @@ export default {
     }
   },
   methods: {
-    search () {
+    search() {
       switch (this.target) {
         case 'account':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Account/search', this.query)
-            .catch(() => {
-              this.$message({
-                message: this.$t('message.search_error'),
-                type: 'error'
-              })
+          this.$store.dispatch('TimelineSpace/Contents/Search/Account/search', this.query).catch(() => {
+            this.$message({
+              message: this.$t('message.search_error'),
+              type: 'error'
             })
+          })
           break
         case 'tag':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Tag/search', `#${this.query}`)
-            .catch(() => {
-              this.$message({
-                message: this.$t('message.search_error'),
-                type: 'error'
-              })
+          this.$store.dispatch('TimelineSpace/Contents/Search/Tag/search', `#${this.query}`).catch(() => {
+            this.$message({
+              message: this.$t('message.search_error'),
+              type: 'error'
             })
+          })
           break
         case 'toot':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Toots/search', this.query)
-            .catch(() => {
-              this.$message({
-                message: this.$t('message.search_error'),
-                type: 'error'
-              })
+          this.$store.dispatch('TimelineSpace/Contents/Search/Toots/search', this.query).catch(() => {
+            this.$message({
+              message: this.$t('message.search_error'),
+              type: 'error'
             })
+          })
           break
         default:
           break
