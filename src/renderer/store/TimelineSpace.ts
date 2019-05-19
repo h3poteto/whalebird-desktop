@@ -450,10 +450,10 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Contents/DirectMessages/updateToot', status, { root: true })
     }
     if (state.unreadNotification.local) {
-      commit('TimelineSpace/Contents/Local/updateToot', state, { root: true })
+      commit('TimelineSpace/Contents/Local/updateToot', status, { root: true })
     }
     if (state.unreadNotification.public) {
-      commit('TimelineSpace/Contents/Public/updateToot', state, { root: true })
+      commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
     }
     return true
   }
