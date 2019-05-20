@@ -1,6 +1,25 @@
 # Change Log
 
-## [2.7.1]
+## [2.7.2]
+### Added
+- [#911](https://github.com/h3poteto/whalebird-desktop/pull/911) Add a menu to read follow requests, and accept/reject it
+- [#903](https://github.com/h3poteto/whalebird-desktop/pull/903) Add Italian translation
+- [#902](https://github.com/h3poteto/whalebird-desktop/pull/902) Add request loading circle
+### Changed
+- [#917](https://github.com/h3poteto/whalebird-desktop/pull/917) Change loading in order to change channel while loading
+- [#916](https://github.com/h3poteto/whalebird-desktop/pull/916) Stop loading after fetch home timeline
+- [#914](https://github.com/h3poteto/whalebird-desktop/pull/914) refactor: Move logics to vuex store in new toot
+- [#910](https://github.com/h3poteto/whalebird-desktop/pull/910) Update electron version to 5.0.1 for mas
+- [#900](https://github.com/h3poteto/whalebird-desktop/pull/900) Update electron version to 5.0.1
+- [#899](https://github.com/h3poteto/whalebird-desktop/pull/899) Use accounts/search API instead of v2/search
+### Fixed
+- [#919](https://github.com/h3poteto/whalebird-desktop/pull/919) Fix favourite and reblog event
+- [#918](https://github.com/h3poteto/whalebird-desktop/pull/918) Update favourited, Reblogged toot in all timelines
+- [#912](https://github.com/h3poteto/whalebird-desktop/pull/912) Update pinned hashtags if tags are exist
+- [#908](https://github.com/h3poteto/whalebird-desktop/pull/908) Remove commas between pinned hashtags in new toot
+
+
+## [2.7.1] - 2019-04-25
 ### Added
 - [#898](https://github.com/h3poteto/whalebird-desktop/pull/898) Build package for 32bit
 - [#891](https://github.com/h3poteto/whalebird-desktop/pull/891) Introduce prettier combinated eslint
