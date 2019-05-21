@@ -120,6 +120,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     await dispatch('fetchContentsTimelines', account).catch(_ => {
       throw new TimelineFetchError()
     })
+    await dispatch('unbindStreamings')
     await dispatch('bindStreamings', account)
     dispatch('startStreamings', account)
     dispatch('fetchEmojis', account)
