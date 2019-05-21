@@ -415,6 +415,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   unbindUserStreaming: () => {
     ipcRenderer.removeAllListeners('update-start-user-streaming')
+    ipcRenderer.removeAllListeners('mention-start-user-streaming')
     ipcRenderer.removeAllListeners('notification-start-user-streaming')
     ipcRenderer.removeAllListeners('error-start-user-streaming')
   },
