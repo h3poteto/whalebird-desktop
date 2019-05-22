@@ -56,7 +56,7 @@ export default class Authentication {
       clientId: this.clientId,
       clientSecret: this.clientSecret,
       accessToken: '',
-      refreshToken: '',
+      refreshToken: null,
       username: '',
       accountId: null,
       avatar: '',
@@ -90,20 +90,6 @@ export default class Authentication {
     })
     return accessToken
   }
-
-  async updateAccessToken(id: string): Promise<string> {
-    const account = await this.db.getAccount(id)
-    if (!account.refreshToken) {
-      throw new RefreshTokenDoesNotExist()
-    }
-    const data: OAuth.TokenData = await Mastodon.refreshToken(account.clientId, account.clientSecret, account.refreshToken, account.baseURL)
-    await this.db.updateAccount(id, {
-      accessToken: data.access_token,
-      refreshToken: data.refresh_token
-    })
-    return data.access_token
-  }
 }
 
 class AuthenticationURLError extends Error {}
-class RefreshTokenDoesNotExist extends Error {}
