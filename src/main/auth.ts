@@ -1,4 +1,4 @@
-import Mastodon from 'megalodon'
+import Mastodon, { OAuth } from 'megalodon'
 import Account from './account'
 import LocalAccount from '~/src/types/localAccount'
 
@@ -14,7 +14,7 @@ export default class Authentication {
   private clientSecret: string
   private protocol: 'http' | 'https'
 
-  constructor (accountDB: Account) {
+  constructor(accountDB: Account) {
     this.db = accountDB
     this.baseURL = ''
     this.domain = ''
@@ -23,17 +23,18 @@ export default class Authentication {
     this.protocol = 'https'
   }
 
-  setOtherInstance (domain: string) {
+  setOtherInstance(domain: string) {
     this.baseURL = `${this.protocol}://${domain}`
     this.domain = domain
     this.clientId = ''
     this.clientSecret = ''
   }
 
-  async getAuthorizationUrl (domain = 'mastodon.social'): Promise<string> {
+  async getAuthorizationUrl(domain = 'mastodon.social'): Promise<string> {
     this.setOtherInstance(domain)
     const res = await Mastodon.registerApp(
-      appName, {
+      appName,
+      {
         scopes: scope,
         website: appURL
       },
@@ -42,9 +43,10 @@ export default class Authentication {
     this.clientId = res.clientId
     this.clientSecret = res.clientSecret
 
-    const order = await this.db.lastAccount()
+    const order = await this.db
+      .lastAccount()
       .then(account => account.order + 1)
-      .catch((err) => {
+      .catch(err => {
         console.log(err)
         return 1
       })
@@ -67,8 +69,8 @@ export default class Authentication {
     return res.url
   }
 
-  async getAccessToken (code: string): Promise<string> {
-    const tokenData = await Mastodon.fetchAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
+  async getAccessToken(code: string): Promise<string> {
+    const tokenData: OAuth.TokenData = await Mastodon.fetchAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
     const search = {
       baseURL: this.baseURL,
       domain: this.domain,
@@ -88,7 +90,20 @@ export default class Authentication {
     })
     return accessToken
   }
-  // TODO: Refresh access token when expired
+
+  async updateAccessToken(id: string): Promise<string> {
+    const account = await this.db.getAccount(id)
+    if (!account.refreshToken) {
+      throw new RefreshTokenDoesNotExist()
+    }
+    const data: OAuth.TokenData = await Mastodon.refreshToken(account.clientId, account.clientSecret, account.refreshToken, account.baseURL)
+    await this.db.updateAccount(id, {
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token
+    })
+    return data.access_token
+  }
 }
 
 class AuthenticationURLError extends Error {}
+class RefreshTokenDoesNotExist extends Error {}
