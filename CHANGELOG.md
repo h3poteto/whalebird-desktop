@@ -1,6 +1,17 @@
 # Change Log
 
-## [2.7.2]
+## [2.7.3]
+### Added
+- [#925](https://github.com/h3poteto/whalebird-desktop/pull/925) Update access token using refresh token when expire the token
+
+### Fixed
+
+- [#927](https://github.com/h3poteto/whalebird-desktop/pull/927) Downgrade electron version to 4.2.2
+- [#924](https://github.com/h3poteto/whalebird-desktop/pull/924) Stop loading after initialized in direct messages
+- [#922](https://github.com/h3poteto/whalebird-desktop/pull/922) Unbind streaming for mentions when change accounts
+
+
+## [2.7.2] - 2019-05-21
 ### Added
 - [#911](https://github.com/h3poteto/whalebird-desktop/pull/911) Add a menu to read follow requests, and accept/reject it
 - [#903](https://github.com/h3poteto/whalebird-desktop/pull/903) Add Italian translation
