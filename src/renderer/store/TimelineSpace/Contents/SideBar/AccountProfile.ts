@@ -42,7 +42,7 @@ const mutations: MutationTree<AccountProfileState> = {
 }
 
 const actions: ActionTree<AccountProfileState, RootState> = {
-  fetchAccount: async ({ rootState }, accountID: number): Promise<Account> => {
+  fetchAccount: async ({ rootState }, accountID: string): Promise<Account> => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Account> = await client.get<Account>(`/accounts/${accountID}`)
     return res.data

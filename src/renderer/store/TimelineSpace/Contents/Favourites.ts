@@ -5,10 +5,10 @@ import { RootState } from '@/store'
 import LocalAccount from '~/src/types/localAccount'
 
 export interface FavouritesState {
-  favourites: Array<Status>,
-  lazyLoading: boolean,
-  filter: string,
-  maxId: number | null
+  favourites: Array<Status>
+  lazyLoading: boolean
+  filter: string
+  maxId: string | null
 }
 
 const state = (): FavouritesState => ({
@@ -36,7 +36,7 @@ const mutations: MutationTree<FavouritesState> = {
     state.favourites = state.favourites.concat(favourites)
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Status) => {
-    state.favourites = state.favourites.map((toot) => {
+    state.favourites = state.favourites.map(toot => {
       if (toot.id === message.id) {
         return message
       } else if (toot.reblog !== null && toot.reblog.id === message.id) {
@@ -52,7 +52,7 @@ const mutations: MutationTree<FavouritesState> = {
     })
   },
   [MUTATION_TYPES.DELETE_TOOT]: (state, message: Status) => {
-    state.favourites = state.favourites.filter((toot) => {
+    state.favourites = state.favourites.filter(toot => {
       if (toot.reblog !== null && toot.reblog.id === message.id) {
         return false
       } else {
@@ -66,24 +66,21 @@ const mutations: MutationTree<FavouritesState> = {
   [MUTATION_TYPES.CHANGE_FILTER]: (state, filter: string) => {
     state.filter = filter
   },
-  [MUTATION_TYPES.CHANGE_MAX_ID]: (state, id: number | null) => {
+  [MUTATION_TYPES.CHANGE_MAX_ID]: (state, id: string | null) => {
     state.maxId = id
   }
 }
 
 const actions: ActionTree<FavouritesState, RootState> = {
   fetchFavourites: async ({ commit }, account: LocalAccount): Promise<Array<Status>> => {
-    const client = new Mastodon(
-      account.accessToken!,
-      account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(account.accessToken!, account.baseURL + '/api/v1')
     const res: Response<Array<Status>> = await client.get<Array<Status>>('/favourites', { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_FAVOURITES, res.data)
     // Parse link header
     try {
       const link = parse(res.headers.link)
       if (link !== null) {
-        commit(MUTATION_TYPES.CHANGE_MAX_ID, parseInt(link.next.max_id))
+        commit(MUTATION_TYPES.CHANGE_MAX_ID, link.next.max_id)
       } else {
         commit(MUTATION_TYPES.CHANGE_MAX_ID, null)
       }
@@ -101,20 +98,16 @@ const actions: ActionTree<FavouritesState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
-    const res: Response<Array<Status>> = await client.get<Array<Status>>('/favourites', { max_id: state.maxId, limit: 40 })
-      .finally(() => {
-        commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
-      })
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const res: Response<Array<Status>> = await client.get<Array<Status>>('/favourites', { max_id: state.maxId, limit: 40 }).finally(() => {
+      commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
+    })
     commit(MUTATION_TYPES.INSERT_FAVOURITES, res.data)
     // Parse link header
     try {
       const link = parse(res.headers.link)
       if (link !== null) {
-        commit(MUTATION_TYPES.CHANGE_MAX_ID, parseInt(link.next.max_id))
+        commit(MUTATION_TYPES.CHANGE_MAX_ID, link.next.max_id)
       } else {
         commit(MUTATION_TYPES.CHANGE_MAX_ID, null)
       }

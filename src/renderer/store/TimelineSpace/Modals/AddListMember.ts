@@ -3,9 +3,9 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export interface AddListMemberState {
-  modalOpen: boolean,
-  accounts: Array<Account>,
-  targetListId: number | null
+  modalOpen: boolean
+  accounts: Array<Account>
+  targetListId: string | null
 }
 
 const state = (): AddListMemberState => ({
@@ -27,7 +27,7 @@ const mutations: MutationTree<AddListMemberState> = {
   [MUTATION_TYPES.UPDATE_ACCOUNTS]: (state, accounts: Array<Account>) => {
     state.accounts = accounts
   },
-  [MUTATION_TYPES.SET_LIST_ID]: (state, id: number) => {
+  [MUTATION_TYPES.SET_LIST_ID]: (state, id: string) => {
     state.targetListId = id
   }
 }
@@ -37,10 +37,7 @@ const actions: ActionTree<AddListMemberState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_MODAL, value)
   },
   search: async ({ commit, rootState }, name: string): Promise<Array<Account>> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', {
       q: name,
       following: true
@@ -49,10 +46,7 @@ const actions: ActionTree<AddListMemberState, RootState> = {
     return res.data
   },
   add: async ({ state, rootState }, account: Account): Promise<{}> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<{}> = await client.post<{}>(`/lists/${state.targetListId}/accounts`, {
       account_ids: [account.id]
     })

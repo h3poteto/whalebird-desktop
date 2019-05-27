@@ -104,7 +104,7 @@ const mutations: MutationTree<TimelineSpaceState> = {
 }
 
 const actions: ActionTree<TimelineSpaceState, RootState> = {
-  initLoad: async ({ dispatch, commit }, accountId: number): Promise<Account> => {
+  initLoad: async ({ dispatch, commit }, accountId: string): Promise<Account> => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     dispatch('watchShortcutEvents')
     const account = await dispatch('localAccount', accountId).catch(_ => {

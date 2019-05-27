@@ -16,7 +16,7 @@ import {
 } from '@/errors/validations'
 
 type MediaDescription = {
-  id: number
+  id: string
   description: string
 }
 
@@ -27,10 +27,10 @@ export interface NewTootState {
   replyToMessage: Status | null
   blockSubmit: boolean
   attachedMedias: Array<Attachment>
-  mediaDescriptions: { [key: number]: string | null }
+  mediaDescriptions: { [key: string]: string | null }
   visibility: number
   sensitive: boolean
-  attachedMediaId: number
+  attachedMediaCount: number
   pinedHashtag: boolean
   hashtags: Array<Tag>
   loading: boolean
@@ -50,7 +50,7 @@ const state = (): NewTootState => ({
   mediaDescriptions: {},
   visibility: Visibility.Public.value,
   sensitive: false,
-  attachedMediaId: 0,
+  attachedMediaCount: 0,
   pinedHashtag: false,
   hashtags: [],
   loading: false
@@ -70,7 +70,7 @@ export const MUTATION_TYPES = {
   REMOVE_MEDIA_DESCRIPTION: 'removeMediaDescription',
   CHANGE_VISIBILITY_VALUE: 'changeVisibilityValue',
   CHANGE_SENSITIVE: 'changeSensitive',
-  UPDATE_MEDIA_ID: 'updateMediaId',
+  UPDATE_MEDIA_COUNT: 'updateMediaCount',
   CHANGE_PINED_HASHTAG: 'changePinedHashtag',
   UPDATE_HASHTAGS: 'updateHashtags',
   CHANGE_LOADING: 'changeLoading'
@@ -107,7 +107,7 @@ const mutations: MutationTree<NewTootState> = {
   [MUTATION_TYPES.CLEAR_MEDIA_DESCRIPTIONS]: state => {
     state.mediaDescriptions = {}
   },
-  [MUTATION_TYPES.REMOVE_MEDIA_DESCRIPTION]: (state, id: number) => {
+  [MUTATION_TYPES.REMOVE_MEDIA_DESCRIPTION]: (state, id: string) => {
     const descriptions = state.mediaDescriptions
     delete descriptions[id]
     state.mediaDescriptions = descriptions
@@ -124,8 +124,8 @@ const mutations: MutationTree<NewTootState> = {
   [MUTATION_TYPES.CHANGE_SENSITIVE]: (state, value: boolean) => {
     state.sensitive = value
   },
-  [MUTATION_TYPES.UPDATE_MEDIA_ID]: (state, value: number) => {
-    state.attachedMediaId = value
+  [MUTATION_TYPES.UPDATE_MEDIA_COUNT]: (state, count: number) => {
+    state.attachedMediaCount = count
   },
   [MUTATION_TYPES.CHANGE_PINED_HASHTAG]: (state, value: boolean) => {
     state.pinedHashtag = value
@@ -286,19 +286,19 @@ const actions: ActionTree<NewTootState, RootState> = {
         throw err
       })
   },
-  incrementMediaId: ({ commit, state }) => {
-    commit(MUTATION_TYPES.UPDATE_MEDIA_ID, state.attachedMediaId + 1)
+  incrementMediaCount: ({ commit, state }) => {
+    commit(MUTATION_TYPES.UPDATE_MEDIA_COUNT, state.attachedMediaCount + 1)
   },
-  decrementMediaId: ({ commit, state }) => {
-    commit(MUTATION_TYPES.UPDATE_MEDIA_ID, state.attachedMediaId - 1)
+  decrementMediaCount: ({ commit, state }) => {
+    commit(MUTATION_TYPES.UPDATE_MEDIA_COUNT, state.attachedMediaCount - 1)
   },
-  resetMediaId: ({ commit }) => {
-    commit(MUTATION_TYPES.UPDATE_MEDIA_ID, 0)
+  resetMediaCount: ({ commit }) => {
+    commit(MUTATION_TYPES.UPDATE_MEDIA_COUNT, 0)
   },
   removeMedia: ({ commit, dispatch }, media: Attachment) => {
     commit(MUTATION_TYPES.REMOVE_MEDIA, media)
     commit(MUTATION_TYPES.REMOVE_MEDIA_DESCRIPTION, media.id)
-    dispatch('decrementMediaId')
+    dispatch('decrementMediaCount')
   },
   updateHashtags: ({ commit, state }, tags: Array<Tag>) => {
     if (state.pinedHashtag && tags.length > 0) {

@@ -208,7 +208,7 @@ export default {
   methods: {
     close() {
       this.filteredAccount = []
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaId')
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
     async toot() {
@@ -277,7 +277,7 @@ export default {
       this.updateImage(file)
     },
     updateImage(file) {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaId')
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file).catch(() => {
         this.$message({
           message: this.$t('message.attach_error'),
