@@ -9,12 +9,12 @@ import LocalTag from '~/src/types/localTag'
 jest.mock('megalodon')
 
 const list1: List = {
-  id: 1,
+  id: '1',
   title: 'example1'
 }
 
 const list2: List = {
-  id: 2,
+  id: '2',
   title: 'example2'
 }
 

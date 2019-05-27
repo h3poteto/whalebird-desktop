@@ -56,15 +56,15 @@ describe('TimelineSpace/Modals/Jump', () => {
     describe('updateListChannel', () => {
       it('should be updated', () => {
         const admin: List = {
-          id: 0,
+          id: '0',
           title: 'admin'
         }
         const engineer: List = {
-          id: 1,
+          id: '1',
           title: 'engineer'
         }
         const designer: List = {
-          id: 2,
+          id: '2',
           title: 'designer'
         }
         const channelList = [admin, engineer, designer]

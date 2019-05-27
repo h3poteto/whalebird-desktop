@@ -7,7 +7,7 @@ import HeaderMenu, { HeaderMenuState } from '~/src/renderer/store/TimelineSpace/
 jest.mock('megalodon')
 
 const list: List = {
-  id: 1,
+  id: '1',
   title: 'example'
 }
 

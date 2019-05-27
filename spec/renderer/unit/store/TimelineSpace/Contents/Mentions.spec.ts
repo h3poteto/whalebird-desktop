@@ -2,7 +2,7 @@ import { Account, Notification, Status, Application } from 'megalodon'
 import Mentions, { MentionsState, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Mentions'
 
 const account1: Account = {
-  id: 1,
+  id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
   display_name: 'h3poteto',
@@ -24,7 +24,7 @@ const account1: Account = {
 }
 
 const account2: Account = {
-  id: 2,
+  id: '2',
   username: 'h3poteto',
   acct: 'h3poteto@mstdn.io',
   display_name: 'h3poteto',
@@ -46,7 +46,7 @@ const account2: Account = {
 }
 
 const status: Status = {
-  id: 1,
+  id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
   account: account1,
@@ -77,7 +77,7 @@ const status: Status = {
 }
 
 const notification1: Notification = {
-  id: 1,
+  id: '1',
   account: account2,
   status: status,
   type: 'favourite',
@@ -85,7 +85,7 @@ const notification1: Notification = {
 }
 
 const notification2: Notification = {
-  id: 2,
+  id: '2',
   account: account2,
   status: status,
   type: 'reblog',

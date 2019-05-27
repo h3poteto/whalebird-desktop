@@ -7,7 +7,7 @@ import AddListMember, { AddListMemberState } from '@/store/TimelineSpace/Modals/
 jest.mock('megalodon')
 
 const account: Account = {
-  id: 1,
+  id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
   display_name: 'h3poteto',
@@ -83,9 +83,7 @@ describe('AddListMember', () => {
         get: () => {
           return new Promise<Response<Account[]>>(resolve => {
             const res: Response<Account[]> = {
-              data: [
-                account
-              ],
+              data: [account],
               status: 200,
               statusText: 'OK',
               headers: {}
@@ -97,9 +95,7 @@ describe('AddListMember', () => {
 
       mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('AddListMember/search', 'akira')
-      expect(store.state.AddListMember.accounts).toEqual([
-        account
-      ])
+      expect(store.state.AddListMember.accounts).toEqual([account])
     })
   })
 
