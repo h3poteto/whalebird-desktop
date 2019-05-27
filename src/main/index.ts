@@ -607,7 +607,7 @@ ipcMain.on('stop-public-streaming', () => {
 let listStreaming: StreamingManager | null = null
 
 type ListID = {
-  listID: number
+  listID: string
 }
 
 ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting) => {

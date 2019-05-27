@@ -9,7 +9,7 @@ export interface LoadPositionWithAccount extends LoadPosition {
 }
 
 export interface LoadPositionWithList extends LoadPosition {
-  list_id: number
+  list_id: string
 }
 
 export interface LoadPositionWithTag extends LoadPosition {
