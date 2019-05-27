@@ -2,7 +2,7 @@ import { Account, Status, Application } from 'megalodon'
 import Home, { HomeState, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Home'
 
 const account: Account = {
-  id: 1,
+  id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
   display_name: 'h3poteto',
@@ -23,7 +23,7 @@ const account: Account = {
   bot: false
 }
 const status1: Status = {
-  id: 1,
+  id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
   account: account,
@@ -53,7 +53,7 @@ const status1: Status = {
   pinned: null
 }
 const status2: Status = {
-  id: 2,
+  id: '2',
   uri: 'http://example.com',
   url: 'http://example.com',
   account: account,
@@ -212,7 +212,7 @@ describe('TimelineSpace/Contents/Home', () => {
       })
       describe('message is reblogged', () => {
         const rebloggedStatus: Status = {
-          id: 3,
+          id: '3',
           uri: 'http://example.com',
           url: 'http://example.com',
           account: account,
@@ -285,7 +285,7 @@ describe('TimelineSpace/Contents/Home', () => {
       describe('message is reblogged', () => {
         beforeEach(() => {
           const rebloggedStatus: Status = {
-            id: 3,
+            id: '3',
             uri: 'http://example.com',
             url: 'http://example.com',
             account: account,

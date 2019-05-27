@@ -34,7 +34,7 @@ const mutations: MutationTree<HeaderMenuState> = {
 }
 
 const actions: ActionTree<HeaderMenuState, RootState> = {
-  fetchList: async ({ commit, rootState }, listID: number): Promise<List> => {
+  fetchList: async ({ commit, rootState }, listID: string): Promise<List> => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<List> = await client.get<List>(`/lists/${listID}`)
     commit(MUTATION_TYPES.UPDATE_TITLE, `#${res.data.title}`)

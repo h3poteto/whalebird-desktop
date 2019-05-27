@@ -7,7 +7,7 @@ import ListMembership, { ListMembershipState } from '@/store/TimelineSpace/Modal
 jest.mock('megalodon')
 
 const account: Account = {
-  id: 1,
+  id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
   display_name: 'h3poteto',
@@ -29,12 +29,12 @@ const account: Account = {
 }
 
 const list1: List = {
-  id: 1,
+  id: '1',
   title: 'list1'
 }
 
 const list2: List = {
-  id: 2,
+  id: '2',
   title: 'list2'
 }
 
@@ -86,10 +86,7 @@ describe('ListMembership', () => {
         get: (_path: string, _params: object) => {
           return new Promise<Response<List[]>>(resolve => {
             const res: Response<List[]> = {
-              data: [
-                list1,
-                list2
-              ],
+              data: [list1, list2],
               status: 200,
               statusText: 'OK',
               headers: {}
@@ -100,9 +97,9 @@ describe('ListMembership', () => {
       }
       mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('ListMembership/fetchListMembership', {
-        id: 5
+        id: '5'
       })
-      expect(store.state.ListMembership.belongToLists).toEqual([1, 2])
+      expect(store.state.ListMembership.belongToLists).toEqual(['1', '2'])
     })
   })
 
@@ -112,10 +109,7 @@ describe('ListMembership', () => {
         get: (_path: string, _params: object) => {
           return new Promise<Response<List[]>>(resolve => {
             const res: Response<List[]> = {
-              data: [
-                list1,
-                list2
-              ],
+              data: [list1, list2],
               status: 200,
               statusText: 'OK',
               headers: {}
@@ -126,10 +120,7 @@ describe('ListMembership', () => {
       }
       mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('ListMembership/fetchLists')
-      expect(store.state.ListMembership.lists).toEqual([
-        list1,
-        list2
-      ])
+      expect(store.state.ListMembership.lists).toEqual([list1, list2])
     })
   })
 
@@ -140,9 +131,7 @@ describe('ListMembership', () => {
           modalOpen: false,
           account: account,
           lists: [],
-          belongToLists: [
-            list2
-          ]
+          belongToLists: [list2]
         }
       }
     })
