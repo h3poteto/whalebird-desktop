@@ -386,6 +386,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
     })
+    ipcRenderer.on('delete-start-public-streaming', (_, id: string) => {
+      commit('TimelineSpace/Contents/Public/deleteToot', id, { root: true })
+    })
   },
   startPublicStreaming: ({ state }) => {
     // @ts-ignore

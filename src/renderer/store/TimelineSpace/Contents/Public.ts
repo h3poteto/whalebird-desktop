@@ -76,12 +76,12 @@ const mutations: MutationTree<PublicState> = {
       }
     })
   },
-  [MUTATION_TYPES.DELETE_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.DELETE_TOOT]: (state, id: string) => {
     state.timeline = state.timeline.filter(toot => {
-      if (toot.reblog !== null && toot.reblog.id === message.id) {
+      if (toot.reblog !== null && toot.reblog.id === id) {
         return false
       } else {
-        return toot.id !== message.id
+        return toot.id !== id
       }
     })
   },
