@@ -361,6 +361,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
     })
+    ipcRenderer.on('delete-start-local-streaming', (_, id: string) => {
+      commit('TimelineSpace/Contents/Local/deleteToot', id, { root: true })
+    })
   },
   startLocalStreaming: ({ state }) => {
     // @ts-ignore
