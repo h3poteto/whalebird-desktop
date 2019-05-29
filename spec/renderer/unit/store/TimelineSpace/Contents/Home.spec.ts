@@ -277,7 +277,7 @@ describe('TimelineSpace/Contents/Home', () => {
           }
         })
         it('should be deleted', () => {
-          Home.mutations![MUTATION_TYPES.DELETE_TOOT](state, status1)
+          Home.mutations![MUTATION_TYPES.DELETE_TOOT](state, status1.id)
           expect(state.timeline).toEqual([status2])
         })
       })
@@ -325,7 +325,7 @@ describe('TimelineSpace/Contents/Home', () => {
           }
         })
         it('should be deleted', () => {
-          Home.mutations![MUTATION_TYPES.DELETE_TOOT](state, status1)
+          Home.mutations![MUTATION_TYPES.DELETE_TOOT](state, status1.id)
           expect(state.timeline).toEqual([status2])
         })
       })

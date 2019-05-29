@@ -334,6 +334,11 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadMentions', true, { root: true })
     })
+    ipcRenderer.on('delete-start-user-streaming', (_, id: string) => {
+      commit('TimelineSpace/Contents/Home/deleteToot', id, { root: true })
+      commit('TimelineSpace/Contents/Notifications/deleteToot', id, { root: true })
+      commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
+    })
   },
   startUserStreaming: ({ state }): Promise<{}> => {
     // @ts-ignore
@@ -418,6 +423,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     ipcRenderer.removeAllListeners('update-start-user-streaming')
     ipcRenderer.removeAllListeners('mention-start-user-streaming')
     ipcRenderer.removeAllListeners('notification-start-user-streaming')
+    ipcRenderer.removeAllListeners('delete-start-user-streaming')
     ipcRenderer.removeAllListeners('error-start-user-streaming')
   },
   stopUserStreaming: () => {
