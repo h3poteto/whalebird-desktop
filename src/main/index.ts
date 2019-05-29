@@ -457,6 +457,9 @@ ipcMain.on('start-user-streaming', (event: Event, obj: StreamingSetting) => {
             app.dock.setBadge('•')
           }
         },
+        (id: string) => {
+          event.sender.send('delete-start-user-streaming', id)
+        },
         (err: Error) => {
           log.error(err)
           // In macOS, sometimes window is closed (not quit).
@@ -501,6 +504,9 @@ ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSettin
         (update: Status) => {
           event.sender.send('update-start-directmessages-streaming', update)
         },
+        (id: string) => {
+          event.sender.send('delete-start-directmessages-streaming', id)
+        },
         (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
@@ -542,6 +548,9 @@ ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
         (update: Status) => {
           event.sender.send('update-start-local-streaming', update)
         },
+        (id: string) => {
+          event.sender.send('delete-start-local-streaming', id)
+        },
         (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
@@ -582,6 +591,9 @@ ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
         '',
         (update: Status) => {
           event.sender.send('update-start-public-streaming', update)
+        },
+        (id: string) => {
+          event.sender.send('delete-start-public-streaming', id)
         },
         (err: Error) => {
           log.error(err)
@@ -628,6 +640,9 @@ ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting
         (update: Status) => {
           event.sender.send('update-start-list-streaming', update)
         },
+        (id: string) => {
+          event.sender.send('delete-start-list-streaming', id)
+        },
         (err: Error) => {
           log.error(err)
           if (!event.sender.isDestroyed()) {
@@ -672,6 +687,9 @@ ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) =>
         `tag=${tag}`,
         (update: Status) => {
           event.sender.send('update-start-tag-streaming', update)
+        },
+        (id: string) => {
+          event.sender.send('delete-start-tag-streaming', id)
         },
         (err: Error) => {
           log.error(err)
