@@ -405,6 +405,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', true, { root: true })
     })
+    ipcRenderer.on('delete-start-directmessages-streaming', (_, id: string) => {
+      commit('TimelineSpace/Contents/DirectMessages/deleteToot', id, { root: true })
+    })
   },
   startDirectMessagesStreaming: ({ state }) => {
     // @ts-ignore
