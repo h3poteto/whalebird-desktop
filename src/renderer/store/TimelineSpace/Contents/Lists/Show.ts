@@ -78,12 +78,12 @@ const mutations: MutationTree<ShowState> = {
       }
     })
   },
-  [MUTATION_TYPES.DELETE_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.DELETE_TOOT]: (state, id: string) => {
     state.timeline = state.timeline.filter(toot => {
-      if (toot.reblog !== null && toot.reblog.id === message.id) {
+      if (toot.reblog !== null && toot.reblog.id === id) {
         return false
       } else {
-        return toot.id !== message.id
+        return toot.id !== id
       }
     })
   },
@@ -109,6 +109,9 @@ const actions: ActionTree<ShowState, RootState> = {
         commit(MUTATION_TYPES.ARCHIVE_TIMELINE)
       }
     })
+    ipcRenderer.on('delete-start-list-streaming', (_, id: string) => {
+      commit(MUTATION_TYPES.DELETE_TOOT, id)
+    })
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
@@ -126,6 +129,7 @@ const actions: ActionTree<ShowState, RootState> = {
     return new Promise(resolve => {
       ipcRenderer.removeAllListeners('error-start-list-streaming')
       ipcRenderer.removeAllListeners('update-start-list-streaming')
+      ipcRenderer.removeAllListeners('delete-start-list-streaming')
       ipcRenderer.send('stop-list-streaming')
       resolve()
     })

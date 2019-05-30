@@ -143,7 +143,7 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Lists/Show/updateToot', message)
     },
     deleteToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Lists/Show/deleteToot', message)
+      this.$store.commit('TimelineSpace/Contents/Lists/Show/deleteToot', message.id)
     },
     onScroll(event) {
       if (
