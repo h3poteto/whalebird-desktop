@@ -167,7 +167,7 @@ export default {
       this.$store.commit('TimelineSpace/Contents/DirectMessages/updateToot', message)
     },
     deleteToot(message) {
-      this.$store.commit('TimelineSpace/Contents/DirectMessages/deleteToot', message)
+      this.$store.commit('TimelineSpace/Contents/DirectMessages/deleteToot', message.id)
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
