@@ -334,6 +334,11 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadMentions', true, { root: true })
     })
+    ipcRenderer.on('delete-start-user-streaming', (_, id: string) => {
+      commit('TimelineSpace/Contents/Home/deleteToot', id, { root: true })
+      commit('TimelineSpace/Contents/Notifications/deleteToot', id, { root: true })
+      commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
+    })
   },
   startUserStreaming: ({ state }): Promise<{}> => {
     // @ts-ignore
@@ -355,6 +360,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
         commit('TimelineSpace/Contents/Local/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
+    })
+    ipcRenderer.on('delete-start-local-streaming', (_, id: string) => {
+      commit('TimelineSpace/Contents/Local/deleteToot', id, { root: true })
     })
   },
   startLocalStreaming: ({ state }) => {
@@ -378,6 +386,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
     })
+    ipcRenderer.on('delete-start-public-streaming', (_, id: string) => {
+      commit('TimelineSpace/Contents/Public/deleteToot', id, { root: true })
+    })
   },
   startPublicStreaming: ({ state }) => {
     // @ts-ignore
@@ -400,6 +411,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', true, { root: true })
     })
+    ipcRenderer.on('delete-start-directmessages-streaming', (_, id: string) => {
+      commit('TimelineSpace/Contents/DirectMessages/deleteToot', id, { root: true })
+    })
   },
   startDirectMessagesStreaming: ({ state }) => {
     // @ts-ignore
@@ -418,6 +432,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     ipcRenderer.removeAllListeners('update-start-user-streaming')
     ipcRenderer.removeAllListeners('mention-start-user-streaming')
     ipcRenderer.removeAllListeners('notification-start-user-streaming')
+    ipcRenderer.removeAllListeners('delete-start-user-streaming')
     ipcRenderer.removeAllListeners('error-start-user-streaming')
   },
   stopUserStreaming: () => {
@@ -426,6 +441,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   unbindLocalStreaming: () => {
     ipcRenderer.removeAllListeners('error-start-local-streaming')
     ipcRenderer.removeAllListeners('update-start-local-streaming')
+    ipcRenderer.removeAllListeners('delete-start-local-streaming')
   },
   stopLocalStreaming: () => {
     ipcRenderer.send('stop-local-streaming')
@@ -433,6 +449,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   unbindPublicStreaming: () => {
     ipcRenderer.removeAllListeners('error-start-public-streaming')
     ipcRenderer.removeAllListeners('update-start-public-streaming')
+    ipcRenderer.removeAllListeners('delete-start-public-streaming')
   },
   stopPublicStreaming: () => {
     ipcRenderer.send('stop-public-streaming')
@@ -440,6 +457,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   unbindDirectMessagesStreaming: () => {
     ipcRenderer.removeAllListeners('error-start-directmessages-streaming')
     ipcRenderer.removeAllListeners('update-start-directmessages-streaming')
+    ipcRenderer.removeAllListeners('delete-start-directmessages-streaming')
   },
   stopDirectMessagesStreaming: () => {
     ipcRenderer.send('stop-directmessages-streaming')
