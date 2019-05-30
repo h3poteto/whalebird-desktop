@@ -6,7 +6,8 @@ describe('TimelineSpace/HeaderMenu', () => {
     beforeEach(() => {
       state = {
         title: 'Home',
-        reload: false
+        reload: false,
+        loading: false
       }
     })
     describe('changeReload', () => {

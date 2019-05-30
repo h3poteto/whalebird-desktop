@@ -30,7 +30,8 @@ export default {
         Language.fr,
         Language.ja,
         Language.ko,
-        Language.pl
+        Language.pl,
+        Language.it
       ]
     }
   },

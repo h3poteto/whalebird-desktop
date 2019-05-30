@@ -14,7 +14,7 @@ const router = new Router({
       path: '/authorize',
       name: 'authorize',
       component: require('@/components/Authorize').default,
-      props: (route) => ({ url: route.query.url })
+      props: route => ({ url: route.query.url })
     },
     {
       path: '/preferences/',
@@ -86,6 +86,11 @@ const router = new Router({
               path: 'mentions',
               name: 'mentions',
               component: require('@/components/TimelineSpace/Contents/Mentions').default
+            },
+            {
+              path: 'follow-requests',
+              name: 'follow-requests',
+              component: require('@/components/TimelineSpace/Contents/FollowRequests').default
             },
             {
               path: 'favourites',
