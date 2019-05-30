@@ -142,7 +142,7 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/updateToot', toot)
     },
     deleteToot(toot) {
-      this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/deleteToot', toot)
+      this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/deleteToot', toot.id)
     },
     onScroll(event) {
       if (
