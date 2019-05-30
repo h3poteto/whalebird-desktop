@@ -441,6 +441,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   unbindLocalStreaming: () => {
     ipcRenderer.removeAllListeners('error-start-local-streaming')
     ipcRenderer.removeAllListeners('update-start-local-streaming')
+    ipcRenderer.removeAllListeners('delete-start-local-streaming')
   },
   stopLocalStreaming: () => {
     ipcRenderer.send('stop-local-streaming')
@@ -448,6 +449,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   unbindPublicStreaming: () => {
     ipcRenderer.removeAllListeners('error-start-public-streaming')
     ipcRenderer.removeAllListeners('update-start-public-streaming')
+    ipcRenderer.removeAllListeners('delete-start-public-streaming')
   },
   stopPublicStreaming: () => {
     ipcRenderer.send('stop-public-streaming')
@@ -455,6 +457,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   unbindDirectMessagesStreaming: () => {
     ipcRenderer.removeAllListeners('error-start-directmessages-streaming')
     ipcRenderer.removeAllListeners('update-start-directmessages-streaming')
+    ipcRenderer.removeAllListeners('delete-start-directmessages-streaming')
   },
   stopDirectMessagesStreaming: () => {
     ipcRenderer.send('stop-directmessages-streaming')
