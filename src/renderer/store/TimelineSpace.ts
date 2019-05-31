@@ -12,21 +12,23 @@ import LocalAccount from '~/src/types/localAccount'
 import { Notify } from '~/src/types/notify'
 import { RootState } from '@/store'
 import { UnreadNotification } from '~/src/types/unreadNotification'
+import { AccountLoadError } from '@/errors/load'
+import { TimelineFetchError } from '@/errors/fetch'
 
 declare var Notification: any
 
 interface MyEmoji {
-  name: string,
+  name: string
   image: string
 }
 
 export interface TimelineSpaceState {
-  account: LocalAccount,
-  loading: boolean,
-  emojis: Array<MyEmoji>,
-  tootMax: number,
-  unreadNotification: UnreadNotification,
-  useWebsocket: boolean,
+  account: LocalAccount
+  loading: boolean
+  emojis: Array<MyEmoji>
+  tootMax: number
+  unreadNotification: UnreadNotification
+  useWebsocket: boolean
   pleroma: boolean
 }
 
@@ -76,7 +78,7 @@ const mutations: MutationTree<TimelineSpaceState> = {
     state.loading = value
   },
   [MUTATION_TYPES.UPDATE_EMOJIS]: (state, emojis: Array<Emoji>) => {
-    state.emojis = emojis.map((e) => {
+    state.emojis = emojis.map(e => {
       return {
         name: `:${e.shortcode}:`,
         image: e.url
@@ -102,10 +104,33 @@ const mutations: MutationTree<TimelineSpaceState> = {
 }
 
 const actions: ActionTree<TimelineSpaceState, RootState> = {
+  initLoad: async ({ dispatch, commit }, accountId: number): Promise<Account> => {
+    commit(MUTATION_TYPES.CHANGE_LOADING, true)
+    dispatch('watchShortcutEvents')
+    const account = await dispatch('localAccount', accountId).catch(_ => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
+      throw new AccountLoadError()
+    })
+
+    await dispatch('detectPleroma')
+    dispatch('TimelineSpace/SideMenu/fetchLists', account, { root: true })
+    dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account, { root: true })
+    await dispatch('loadUnreadNotification', accountId)
+    commit(MUTATION_TYPES.CHANGE_LOADING, false)
+    await dispatch('fetchContentsTimelines', account).catch(_ => {
+      throw new TimelineFetchError()
+    })
+    await dispatch('unbindStreamings')
+    await dispatch('bindStreamings', account)
+    dispatch('startStreamings', account)
+    dispatch('fetchEmojis', account)
+    dispatch('fetchInstance', account)
+    return account
+  },
   // -------------------------------------------------
   // Accounts
   // -------------------------------------------------
-  localAccount: ({ dispatch, commit }, id: string): Promise<LocalAccount> => {
+  localAccount: async ({ dispatch, commit }, id: string): Promise<LocalAccount> => {
     return new Promise((resolve, reject) => {
       ipcRenderer.send('get-local-account', id)
       ipcRenderer.once('error-get-local-account', (_, err: Error) => {
@@ -121,7 +146,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
               commit(MUTATION_TYPES.UPDATE_ACCOUNT, acct)
               resolve(acct)
             })
-            .catch((err) => {
+            .catch(err => {
               reject(err)
             })
         } else {
@@ -216,7 +241,11 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     })
   },
   fetchContentsTimelines: async ({ dispatch, state }) => {
-    await dispatch('TimelineSpace/Contents/Home/fetchTimeline', {}, { root: true })
+    dispatch('TimelineSpace/Contents/changeLoading', true, { root: true })
+    await dispatch('TimelineSpace/Contents/Home/fetchTimeline', {}, { root: true }).finally(() => {
+      dispatch('TimelineSpace/Contents/changeLoading', false, { root: true })
+    })
+
     await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', {}, { root: true })
     await dispatch('TimelineSpace/Contents/Mentions/fetchMentions', {}, { root: true })
     if (state.unreadNotification.direct) {
@@ -308,7 +337,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   startUserStreaming: ({ state }): Promise<{}> => {
     // @ts-ignore
-    return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-user-streaming', {
         account: state.account,
         useWebsocket: state.useWebsocket
@@ -329,7 +359,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   startLocalStreaming: ({ state }) => {
     // @ts-ignore
-    return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-local-streaming', {
         account: state.account,
         useWebsocket: state.useWebsocket
@@ -350,7 +381,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   startPublicStreaming: ({ state }) => {
     // @ts-ignore
-    return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-public-streaming', {
         account: state.account,
         useWebsocket: state.useWebsocket
@@ -371,7 +403,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   startDirectMessagesStreaming: ({ state }) => {
     // @ts-ignore
-    return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-directmessages-streaming', {
         account: state.account,
         useWebsocket: state.useWebsocket
@@ -383,6 +416,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   unbindUserStreaming: () => {
     ipcRenderer.removeAllListeners('update-start-user-streaming')
+    ipcRenderer.removeAllListeners('mention-start-user-streaming')
     ipcRenderer.removeAllListeners('notification-start-user-streaming')
     ipcRenderer.removeAllListeners('error-start-user-streaming')
   },
@@ -409,13 +443,28 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   stopDirectMessagesStreaming: () => {
     ipcRenderer.send('stop-directmessages-streaming')
+  },
+  updateTootForAllTimelines: ({ commit, state }, status: Status): boolean => {
+    commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })
+    commit('TimelineSpace/Contents/Notifications/updateToot', status, { root: true })
+    commit('TimelineSpace/Contents/Mentions/updateToot', status, { root: true })
+    if (state.unreadNotification.direct) {
+      commit('TimelineSpace/Contents/DirectMessages/updateToot', status, { root: true })
+    }
+    if (state.unreadNotification.local) {
+      commit('TimelineSpace/Contents/Local/updateToot', status, { root: true })
+    }
+    if (state.unreadNotification.public) {
+      commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
+    }
+    return true
   }
 }
 
 export interface TimelineSpaceModuleState extends TimelineSpaceState {
-  SideMenu: SideMenuState,
-  HeaderMenu: HeaderMenuState,
-  Modals: ModalsModuleState,
+  SideMenu: SideMenuState
+  HeaderMenu: HeaderMenuState
+  Modals: ModalsModuleState
   Contents: ContentsModuleState
 }
 
@@ -434,7 +483,7 @@ const TimelineSpace: Module<TimelineSpaceState, RootState> = {
 
 export default TimelineSpace
 
-function createNotification (notification: NotificationType, notifyConfig: Notify) {
+function createNotification(notification: NotificationType, notifyConfig: Notify) {
   switch (notification.type) {
     case 'favourite':
       if (notifyConfig.favourite) {
@@ -471,7 +520,7 @@ function createNotification (notification: NotificationType, notifyConfig: Notif
   }
 }
 
-function username (account: Account) {
+function username(account: Account) {
   if (account.display_name !== '') {
     return account.display_name
   } else {

@@ -3,12 +3,12 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export interface HomeState {
-  lazyLoading: boolean,
-  heading: boolean,
-  showReblogs: boolean,
-  showReplies: boolean,
-  timeline: Array<Status>,
-  unreadTimeline: Array<Status>,
+  lazyLoading: boolean
+  heading: boolean
+  showReblogs: boolean
+  showReplies: boolean
+  timeline: Array<Status>
+  unreadTimeline: Array<Status>
   filter: string
 }
 
@@ -55,23 +55,23 @@ const mutations: MutationTree<HomeState> = {
   [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Status>) => {
     state.timeline = messages
   },
-  [MUTATION_TYPES.MERGE_TIMELINE]: (state) => {
+  [MUTATION_TYPES.MERGE_TIMELINE]: state => {
     state.timeline = state.unreadTimeline.slice(0, 80).concat(state.timeline)
     state.unreadTimeline = []
   },
   [MUTATION_TYPES.INSERT_TIMELINE]: (state, messages: Array<Status>) => {
     state.timeline = state.timeline.concat(messages)
   },
-  [MUTATION_TYPES.ARCHIVE_TIMELINE]: (state) => {
+  [MUTATION_TYPES.ARCHIVE_TIMELINE]: state => {
     state.timeline = state.timeline.slice(0, 40)
   },
-  [MUTATION_TYPES.CLEAR_TIMELINE]: (state) => {
+  [MUTATION_TYPES.CLEAR_TIMELINE]: state => {
     state.timeline = []
     state.unreadTimeline = []
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Status) => {
     // Replace target message in homeTimeline and notifications
-    state.timeline = state.timeline.map((toot) => {
+    state.timeline = state.timeline.map(toot => {
       if (toot.id === message.id) {
         return message
       } else if (toot.reblog !== null && toot.reblog.id === message.id) {
@@ -87,7 +87,7 @@ const mutations: MutationTree<HomeState> = {
     })
   },
   [MUTATION_TYPES.DELETE_TOOT]: (state, message: Status) => {
-    state.timeline = state.timeline.filter((toot) => {
+    state.timeline = state.timeline.filter(toot => {
       if (toot.reblog !== null && toot.reblog.id === message.id) {
         return false
       } else {
@@ -108,10 +108,7 @@ const mutations: MutationTree<HomeState> = {
 
 const actions: ActionTree<HomeState, RootState> = {
   fetchTimeline: async ({ commit, rootState }) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Array<Status>> = await client.get<Array<Status>>('/timelines/home', { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
@@ -121,11 +118,9 @@ const actions: ActionTree<HomeState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
-    return client.get<Array<Status>>('/timelines/home', { max_id: lastStatus.id, limit: 40 })
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    return client
+      .get<Array<Status>>('/timelines/home', { max_id: lastStatus.id, limit: 40 })
       .then(res => {
         commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
         return res.data

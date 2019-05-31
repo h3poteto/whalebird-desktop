@@ -1,12 +1,17 @@
 <template>
-<div id="contents">
-  <div id="scrollable" :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'">
-    <router-view></router-view>
+  <div id="contents">
+    <div
+      id="scrollable"
+      :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'"
+      v-loading="loading"
+      :element-loading-text="$t('message.loading')"
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
+      <router-view></router-view>
+    </div>
+    <side-bar :overlaid="modalOpened"></side-bar>
   </div>
-  <side-bar
-    :overlaid="modalOpened"
-    ></side-bar>
-</div>
 </template>
 
 <script>
@@ -19,12 +24,13 @@ export default {
     SideBar
   },
   computed: {
-    ...mapState({
-      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar
+    ...mapState('TimelineSpace/Contents', {
+      loading: state => state.loading
     }),
-    ...mapGetters('TimelineSpace/Modals', [
-      'modalOpened'
-    ])
+    ...mapState('TimelineSpace/Contents/SideBar', {
+      openSideBar: state => state.openSideBar
+    }),
+    ...mapGetters('TimelineSpace/Modals', ['modalOpened'])
   }
 }
 </script>

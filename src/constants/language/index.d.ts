@@ -9,7 +9,8 @@ export type LanguageList = {
   fr: LanguageType,
   ja: LanguageType,
   ko: LanguageType,
-  pl: LanguageType
+  pl: LanguageType,
+  it: LanguageType
 }
 
 declare var l: LanguageList
