@@ -218,7 +218,7 @@ export default {
       }
 
       try {
-        await this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
+        const status = await this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
         this.$store.dispatch('TimelineSpace/Modals/NewToot/updateHashtags', status.tags)
         this.close()
       } catch (err) {
