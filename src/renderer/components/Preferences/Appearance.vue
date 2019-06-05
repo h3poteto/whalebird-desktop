@@ -27,7 +27,7 @@
       </el-form-item>
     </el-form>
     <el-form class="toot-padding section" size="small" label-position="top">
-      <el-form-item for="toot-padding" :label="$t('preferences.appearance.too_padding.title')">
+      <el-form-item for="toot-padding" :label="$t('preferences.appearance.toot_padding')">
         <el-input-number id="toot-padding" :value="tootPadding" :min="0" :max="24" @change="updateTootPadding"></el-input-number>
       </el-form-item>
     </el-form>
