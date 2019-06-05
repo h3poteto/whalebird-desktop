@@ -8,8 +8,8 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Appearance } from '~/src/types/appearance'
 
-export interface AppearanceState {
-  appearance: Appearance,
+export type AppearanceState = {
+  appearance: Appearance
   fonts: Array<string>
 }
 
@@ -20,7 +20,8 @@ const state = (): AppearanceState => ({
     displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
     timeFormat: TimeFormat.Absolute.value,
     customThemeColor: LightTheme,
-    font: DefaultFonts[0]
+    font: DefaultFonts[0],
+    tootPadding: 8
   },
   fonts: []
 })
@@ -177,6 +178,27 @@ const actions: ActionTree<AppearanceState, RootState> = {
   updateFont: ({ dispatch, state, commit }, value: string) => {
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       font: value
+    })
+    const config = {
+      appearance: newAppearance
+    }
+    return new Promise((resolve, reject) => {
+      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
+        reject(err)
+      })
+      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        dispatch('App/loadPreferences', null, { root: true })
+        resolve(conf.appearance)
+      })
+    })
+  },
+  updateTootPadding: ({ dispatch, state, commit }, value: number) => {
+    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+      tootPadding: value
     })
     const config = {
       appearance: newAppearance

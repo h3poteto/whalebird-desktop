@@ -152,6 +152,7 @@
       },
       "font_size": "フォントサイズ",
       "font_family": "フォント",
+      "toot_padding": "トゥート周りの空白",
       "display_style": {
         "title": "ユーザ名の表示形式",
         "display_name_and_username": "表示名+ユーザー名",
