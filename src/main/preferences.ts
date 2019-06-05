@@ -13,12 +13,12 @@ import { Appearance } from '~/src/types/appearance'
 import { Language as LanguageSet } from '~/src/types/language'
 
 type General = {
-  sound: Sound,
+  sound: Sound
   timeline: Timeline
 }
 
 type State = {
-  collapse: boolean,
+  collapse: boolean
   hideGlobalHeader: boolean
 }
 
@@ -27,10 +27,10 @@ type Notification = {
 }
 
 type BaseConfig = {
-  general: General,
-  state: State,
-  language: LanguageSet,
-  notification: Notification,
+  general: General
+  state: State
+  language: LanguageSet
+  notification: Notification
   appearance: Appearance
 }
 
@@ -76,7 +76,8 @@ const appearance: Appearance = {
   displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
   timeFormat: TimeFormat.Absolute.value,
   customThemeColor: LightTheme,
-  font: DefaultFonts[0]
+  font: DefaultFonts[0],
+  tootPadding: 8
 }
 
 const Base: BaseConfig = {
@@ -90,11 +91,11 @@ const Base: BaseConfig = {
 export default class Preferences {
   private path: string
 
-  constructor (path: string) {
+  constructor(path: string) {
     this.path = path
   }
 
-  async load (): Promise<BaseConfig> {
+  async load(): Promise<BaseConfig> {
     try {
       const preferences = await this.get()
       return objectAssignDeep({}, Base, preferences)
@@ -103,7 +104,7 @@ export default class Preferences {
     }
   }
 
-  get (): Promise<BaseConfig> {
+  get(): Promise<BaseConfig> {
     return new Promise((resolve, reject) => {
       storage.get(this.path, (err, data) => {
         if (err) return reject(err)
@@ -112,16 +113,16 @@ export default class Preferences {
     })
   }
 
-  save (data: BaseConfig): Promise<BaseConfig> {
+  save(data: BaseConfig): Promise<BaseConfig> {
     return new Promise((resolve, reject) => {
-      storage.set(this.path, data, (err) => {
+      storage.set(this.path, data, err => {
         if (err) return reject(err)
         return resolve(data)
       })
     })
   }
 
-  async update (obj: any): Promise<BaseConfig> {
+  async update(obj: any): Promise<BaseConfig> {
     const current = await this.load()
     const data = objectAssignDeep({}, current, obj)
     const result = await this.save(data)
