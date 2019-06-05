@@ -622,7 +622,7 @@ export default {
       color: var(--theme-primary-color);
 
       .content {
-        margin: 4px 0 8px;
+        margin: var(--toot-padding) 0;
         word-wrap: break-word;
       }
 

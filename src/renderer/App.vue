@@ -11,7 +11,7 @@ export default {
   name: 'Whalebird',
   computed: {
     ...mapState({
-      theme: (state) => {
+      theme: state => {
         return {
           '--theme-background-color': state.App.theme.background_color,
           '--theme-selected-background-color': state.App.theme.selected_background_color,
@@ -24,20 +24,20 @@ export default {
           '--theme-header-menu-color': state.App.theme.header_menu_color,
           '--theme-wrapper-mask-color': state.App.theme.wrapper_mask_color,
           '--theme-scrollbar-color': state.App.theme.scrollbar_color,
+          '--toot-padding': `${state.App.tootPadding}px`,
           '--base-font-size': `${state.App.fontSize}px`,
           '--specified-fonts': state.App.defaultFonts.join(', ')
         }
       }
     })
   },
-  created () {
+  created() {
     this.$store.dispatch('App/watchShortcutsEvents')
-    this.$store.dispatch('App/loadPreferences')
-      .then((conf) => {
-        this.$i18n.i18next.changeLanguage(conf.language.language)
-      })
+    this.$store.dispatch('App/loadPreferences').then(conf => {
+      this.$i18n.i18next.changeLanguage(conf.language.language)
+    })
   },
-  destroyed () {
+  destroyed() {
     this.$store.dispatch('App/removeShortcutsEvents')
   }
 }
@@ -70,6 +70,7 @@ body,
     color: #409eff;
   }
 
+  --toot-padding: 8px;
   --base-font-size: 14px;
 
   font-size: var(--base-font-size);
@@ -78,7 +79,8 @@ body,
     background-color: #d9e1e8;
   }
 
-  --specified-fonts: 'Noto Sans', 'Noto Sans CJK JP', 'Takaoゴシック', 'ヒラギノ角ゴ ProN W3', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --specified-fonts: 'Noto Sans', 'Noto Sans CJK JP', 'Takaoゴシック', 'ヒラギノ角ゴ ProN W3', '-apple-system', 'BlinkMacSystemFont',
+    'Segoe UI', 'Roboto', 'Helvetica Neue', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
   font-family: var(--specified-fonts);
 
@@ -93,7 +95,10 @@ body,
   }
 }
 
-html, body, #app, #global_header {
+html,
+body,
+#app,
+#global_header {
   height: 100%;
   margin: 0;
 }
@@ -118,9 +123,9 @@ p {
 }
 
 .clearfix:after {
-  content:" ";
-  display:block;
-  clear:both;
+  content: ' ';
+  display: block;
+  clear: both;
 }
 </style>
 <style src="animate.css/animate.min.css"></style>
