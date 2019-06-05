@@ -47,7 +47,7 @@ const actions: ActionTree<TimelineState, RootState> = {
       ipcRenderer.send('get-unread-notification', rootState.Settings.accountID)
     })
   },
-  changeUnreadNotification: ({ dispatch, state, rootState }, timeline: any): Promise<boolean> => {
+  changeUnreadNotification: ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
     const settings: UnreadNotification = Object.assign({}, state.unreadNotification, timeline, {
       accountID: rootState.Settings.accountID
     })
