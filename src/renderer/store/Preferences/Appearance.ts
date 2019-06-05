@@ -7,6 +7,7 @@ import DefaultFonts from '@/utils/fonts'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Appearance } from '~/src/types/appearance'
+import { BaseConfig } from '~/src/types/preference'
 
 export type AppearanceState = {
   appearance: Appearance
@@ -48,9 +49,9 @@ const actions: ActionTree<AppearanceState, RootState> = {
         ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf)
       })
     })
@@ -82,9 +83,9 @@ const actions: ActionTree<AppearanceState, RootState> = {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
@@ -103,9 +104,9 @@ const actions: ActionTree<AppearanceState, RootState> = {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
@@ -124,10 +125,10 @@ const actions: ActionTree<AppearanceState, RootState> = {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf.appearance)
       })
     })
@@ -145,10 +146,10 @@ const actions: ActionTree<AppearanceState, RootState> = {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf.appearance)
       })
     })
@@ -167,9 +168,9 @@ const actions: ActionTree<AppearanceState, RootState> = {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
@@ -188,9 +189,9 @@ const actions: ActionTree<AppearanceState, RootState> = {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
@@ -209,9 +210,9 @@ const actions: ActionTree<AppearanceState, RootState> = {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance as Appearance)
+        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
