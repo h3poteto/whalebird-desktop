@@ -11,28 +11,7 @@ import { Timeline } from '~/src/types/timeline'
 import { Notify } from '~/src/types/notify'
 import { Appearance } from '~/src/types/appearance'
 import { Language as LanguageSet } from '~/src/types/language'
-
-type General = {
-  sound: Sound
-  timeline: Timeline
-}
-
-type State = {
-  collapse: boolean
-  hideGlobalHeader: boolean
-}
-
-type Notification = {
-  notify: Notify
-}
-
-type BaseConfig = {
-  general: General
-  state: State
-  language: LanguageSet
-  notification: Notification
-  appearance: Appearance
-}
+import { General, State, Notification, BaseConfig } from '~/src/types/preference'
 
 const sound: Sound = {
   fav_rb: true,
