@@ -1,15 +1,15 @@
 import Datastore from 'nedb'
-import LocalTag from '~/src/types/localTag'
+import { LocalTag } from '~/src/types/localTag'
 
 export default class Hashtags {
   private db: Datastore
 
-  constructor (db: Datastore) {
+  constructor(db: Datastore) {
     this.db = db
-    this.db.ensureIndex({ fieldName: 'tagName', unique: true }, (_) => {})
+    this.db.ensureIndex({ fieldName: 'tagName', unique: true }, _ => {})
   }
 
-  listTags (): Promise<Array<LocalTag>> {
+  listTags(): Promise<Array<LocalTag>> {
     return new Promise((resolve, reject) => {
       this.db.find<LocalTag>({}, (err, docs) => {
         if (err) return reject(err)
@@ -18,7 +18,7 @@ export default class Hashtags {
     })
   }
 
-  insertTag (tag: string): Promise<LocalTag> {
+  insertTag(tag: string): Promise<LocalTag> {
     return new Promise((resolve, reject) => {
       this.db.insert({ tagName: tag }, (err, doc) => {
         if (err) return reject(err)
@@ -27,7 +27,7 @@ export default class Hashtags {
     })
   }
 
-  removeTag (localTag: LocalTag): Promise<number> {
+  removeTag(localTag: LocalTag): Promise<number> {
     return new Promise((resolve, reject) => {
       this.db.remove(
         {

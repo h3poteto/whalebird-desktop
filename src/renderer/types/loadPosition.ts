@@ -1,17 +1,17 @@
 import { Status, Account } from 'megalodon'
 
-export interface LoadPosition {
+export type LoadPosition = {
   status: Status
 }
 
-export interface LoadPositionWithAccount extends LoadPosition {
+export type LoadPositionWithAccount = LoadPosition & {
   account: Account
 }
 
-export interface LoadPositionWithList extends LoadPosition {
+export type LoadPositionWithList = LoadPosition & {
   list_id: string
 }
 
-export interface LoadPositionWithTag extends LoadPosition {
+export type LoadPositionWithTag = LoadPosition & {
   tag: string
 }

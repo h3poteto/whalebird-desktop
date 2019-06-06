@@ -2,7 +2,7 @@ import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface DirectMessagesState {
+export type DirectMessagesState = {
   lazyLoading: boolean
   heading: boolean
   timeline: Array<Status>

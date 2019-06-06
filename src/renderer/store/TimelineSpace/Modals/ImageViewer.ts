@@ -2,10 +2,10 @@ import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { Attachment } from 'megalodon'
 import { RootState } from '@/store'
 
-export interface ImageViewerState {
-  modalOpen: boolean,
-  currentIndex: number,
-  mediaList: Array<Attachment>,
+export type ImageViewerState = {
+  modalOpen: boolean
+  currentIndex: number
+  mediaList: Array<Attachment>
   loading: boolean
 }
 
@@ -35,10 +35,10 @@ const mutations: MutationTree<ImageViewerState> = {
   [MUTATION_TYPES.CHANGE_MEDIA_LIST]: (state, mediaList: Array<Attachment>) => {
     state.mediaList = mediaList
   },
-  [MUTATION_TYPES.INCREMENT_INDEX]: (state) => {
+  [MUTATION_TYPES.INCREMENT_INDEX]: state => {
     state.currentIndex++
   },
-  [MUTATION_TYPES.DECREMENT_INDEX]: (state) => {
+  [MUTATION_TYPES.DECREMENT_INDEX]: state => {
     state.currentIndex--
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
@@ -86,14 +86,14 @@ const getters: GetterTree<ImageViewerState, RootState> = {
     return null
   },
   showLeft: (state): boolean => {
-    const notFirst = (state.currentIndex > 0)
-    const isManyItem = (state.mediaList.length > 1)
-    return (notFirst && isManyItem)
+    const notFirst = state.currentIndex > 0
+    const isManyItem = state.mediaList.length > 1
+    return notFirst && isManyItem
   },
   showRight: (state): boolean => {
-    const notLast = (state.currentIndex < (state.mediaList.length - 1))
-    const isManyItem = (state.mediaList.length > 1)
-    return (notLast && isManyItem)
+    const notLast = state.currentIndex < state.mediaList.length - 1
+    const isManyItem = state.mediaList.length > 1
+    return notLast && isManyItem
   }
 }
 

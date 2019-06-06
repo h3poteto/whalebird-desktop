@@ -4,7 +4,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { LoadPositionWithList } from '@/types/loadPosition'
 
-export interface ShowState {
+export type ShowState = {
   timeline: Array<Status>
   unreadTimeline: Array<Status>
   lazyLoading: boolean

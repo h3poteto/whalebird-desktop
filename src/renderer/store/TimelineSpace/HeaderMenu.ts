@@ -3,7 +3,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import AxiosLoading from '@/utils/axiosLoading'
 
-export interface HeaderMenuState {
+export type HeaderMenuState = {
   title: string
   reload: boolean
   loading: boolean

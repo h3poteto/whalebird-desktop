@@ -31,8 +31,8 @@ import Hashtags from './hashtags'
 import UnreadNotification from './unreadNotification'
 import i18n from '../config/i18n'
 import Language from '../constants/language'
-import LocalAccount from '~/src/types/localAccount'
-import LocalTag from '~/src/types/localTag'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 
 /**

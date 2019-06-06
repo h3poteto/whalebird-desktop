@@ -2,7 +2,7 @@ import Mastodon, { Status, Results } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface TootsState {
+export type TootsState = {
   results: Array<Status>
 }
 

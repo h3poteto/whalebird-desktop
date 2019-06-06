@@ -13,11 +13,11 @@ import Mentions, { MentionsState } from './Contents/Mentions'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface ContentsState {
+export type ContentsState = {
   loading: boolean
 }
 
-export interface ContentsModuleState extends ContentsState {
+type ContentsModule = {
   SideBar: SideBarModuleState
   Home: HomeState
   Notifications: NotificationsState
@@ -30,6 +30,8 @@ export interface ContentsModuleState extends ContentsState {
   Hashtag: HashtagModuleState
   FollowRequests: FollowRequestsState
 }
+
+export type ContentsModuleState = ContentsModule & ContentsState
 
 const state = (): ContentsState => ({
   loading: false
