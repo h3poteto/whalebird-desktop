@@ -5,7 +5,7 @@ import { RootState } from '@/store'
 import { Language as LanguageSet } from '~/src/types/language'
 import { BaseConfig } from '~/src/types/preference'
 
-export interface LanguageState {
+export type LanguageState = {
   language: LanguageSet
 }
 

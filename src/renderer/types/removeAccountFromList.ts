@@ -1,6 +1,6 @@
 import { Account } from 'megalodon'
 
-export interface RemoveAccountFromList {
+export type RemoveAccountFromList = {
   account: Account
   listId: string
 }

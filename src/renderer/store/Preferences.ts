@@ -6,17 +6,19 @@ import Notification, { NotificationState } from './Preferences/Notification'
 import { Module } from 'vuex'
 import { RootState } from '@/store'
 
-export interface PreferencesState {}
+export type PreferencesState = {}
 
 const state = (): PreferencesState => ({})
 
-export interface PreferencesModuleState extends PreferencesState {
-  General: GeneralState,
-  Account: AccountState,
-  Language: LanguageState,
-  Notification: NotificationState,
+type PreferencesModule = {
+  General: GeneralState
+  Account: AccountState
+  Language: LanguageState
+  Notification: NotificationState
   Appearance: AppearanceState
 }
+
+export type PreferencesModuleState = PreferencesState & PreferencesModule
 
 const Preferences: Module<PreferencesState, RootState> = {
   namespaced: true,

@@ -20,7 +20,7 @@ type MediaDescription = {
   description: string
 }
 
-export interface NewTootState {
+export type NewTootState = {
   modalOpen: boolean
   initialStatus: string
   initialSpoiler: string
@@ -36,9 +36,11 @@ export interface NewTootState {
   loading: boolean
 }
 
-export interface NewTootModuleState extends NewTootState {
+type NewTootModule = {
   Status: StatusState
 }
+
+export type NewTootModuleState = NewTootModule & NewTootState
 
 const state = (): NewTootState => ({
   modalOpen: false,

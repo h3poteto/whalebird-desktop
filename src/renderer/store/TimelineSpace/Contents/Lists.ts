@@ -4,13 +4,15 @@ import Edit, { EditState } from './Lists/Edit'
 import { Module } from 'vuex'
 import { RootState } from '@/store'
 
-export interface ListsState {}
+export type ListsState = {}
 
-export interface ListsModuleState extends ListsState {
-  Index: IndexState,
-  Show: ShowState,
+type ListModule = {
+  Index: IndexState
+  Show: ShowState
   Edit: EditState
 }
+
+export type ListsModuleState = ListModule & ListsState
 
 const state = (): ListsState => ({})
 

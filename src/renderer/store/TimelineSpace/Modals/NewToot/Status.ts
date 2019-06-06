@@ -11,7 +11,7 @@ interface SuggestAccount extends Suggest {}
 
 interface SuggestHashtag extends Suggest {}
 
-export interface StatusState {
+export type StatusState = {
   filteredAccounts: Array<SuggestAccount>
   filteredHashtags: Array<SuggestHashtag>
 }

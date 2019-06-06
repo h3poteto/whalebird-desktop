@@ -3,7 +3,7 @@ import Mastodon, { Notification, Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface NotificationsState {
+export type NotificationsState = {
   lazyLoading: boolean
   heading: boolean
   notifications: Array<Notification>

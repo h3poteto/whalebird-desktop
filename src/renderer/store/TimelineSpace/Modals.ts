@@ -9,18 +9,20 @@ import Report, { ReportState } from './Modals/Report'
 import { Module, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
 
-export interface ModalsState {}
+export type ModalsState = {}
 
-export interface ModalsModuleState extends ModalsState {
-  Jump: JumpState,
-  AddListMember: AddListMemberState,
-  ImageViewer: ImageViewerState,
-  ListMembership: ListMembershipState,
-  MuteConfirm: MuteConfirmState,
-  NewToot: NewTootModuleState,
-  Report: ReportState,
+type ModalsModule = {
+  Jump: JumpState
+  AddListMember: AddListMemberState
+  ImageViewer: ImageViewerState
+  ListMembership: ListMembershipState
+  MuteConfirm: MuteConfirmState
+  NewToot: NewTootModuleState
+  Report: ReportState
   Shortcut: ShortcutState
 }
+
+export type ModalsModuleState = ModalsModule & ModalsState
 
 const state = (): ModalsState => ({})
 

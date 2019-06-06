@@ -4,7 +4,7 @@ import { RootState } from '@/store'
 import { Notify } from '~/src/types/notify'
 import { BaseConfig, Notification } from '~/src/types/preference'
 
-export interface NotificationState {
+export type NotificationState = {
   notification: Notification
 }
 

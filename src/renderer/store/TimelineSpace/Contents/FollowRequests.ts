@@ -2,7 +2,7 @@ import Mastodon, { Account, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface FollowRequestsState {
+export type FollowRequestsState = {
   requests: Array<Account>
 }
 
