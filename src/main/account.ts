@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash'
 import Mastodon, { Account as RemoteAccount } from 'megalodon'
 import Datastore from 'nedb'
 import log from 'electron-log'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
 export default class Account {
   private db: Datastore

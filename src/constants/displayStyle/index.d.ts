@@ -1,11 +1,11 @@
-export interface DisplayStyleType {
-  name: string,
+export type DisplayStyleType = {
+  name: string
   value: number
 }
 
-export interface DisplayStyleList {
-  DisplayNameAndUsername: DisplayStyleType,
-  DisplayName: DisplayStyleType,
+export type DisplayStyleList = {
+  DisplayNameAndUsername: DisplayStyleType
+  DisplayName: DisplayStyleType
   Username: DisplayStyleType
 }
 

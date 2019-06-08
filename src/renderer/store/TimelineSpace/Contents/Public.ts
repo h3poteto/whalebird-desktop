@@ -2,7 +2,7 @@ import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface PublicState {
+export type PublicState = {
   timeline: Array<Status>
   unreadTimeline: Array<Status>
   lazyLoading: boolean

@@ -2,9 +2,9 @@ import Mastodon, { Status, Response } from 'megalodon'
 import parse from 'parse-link-header'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
-export interface FavouritesState {
+export type FavouritesState = {
   favourites: Array<Status>
   lazyLoading: boolean
   filter: string

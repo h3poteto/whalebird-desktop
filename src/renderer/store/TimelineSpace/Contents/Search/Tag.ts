@@ -2,7 +2,7 @@ import Mastodon, { Tag, Results } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface TagState {
+export type TagState = {
   results: Array<Tag>
 }
 

@@ -1,6 +1,6 @@
 import Mastodon, { StreamListener, Status, Notification } from 'megalodon'
 import log from 'electron-log'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
 export default class Streaming {
   private client: Mastodon

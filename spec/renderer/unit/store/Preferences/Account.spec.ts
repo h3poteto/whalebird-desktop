@@ -1,5 +1,5 @@
 import Account, { AccountState, MUTATION_TYPES } from '@/store/Preferences/Account'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
 const account: LocalAccount = {
   _id: 'sample',

@@ -5,17 +5,19 @@ import Followers, { FollowersState } from './AccountProfile/Followers'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface AccountProfileState {
+export type AccountProfileState = {
   account: Account | null
   relationship: Relationship | null
   loading: boolean
 }
 
-export interface AccountProfileModuleState extends AccountProfileState {
+type AccountProfileModule = {
   Followers: FollowersState
   Follows: FollowsState
   Timeline: TimelineState
 }
+
+export type AccountProfileModuleState = AccountProfileModule & AccountProfileState
 
 const state = (): AccountProfileState => ({
   account: null,

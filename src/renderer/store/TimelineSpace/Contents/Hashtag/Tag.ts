@@ -4,7 +4,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { LoadPositionWithTag } from '@/types/loadPosition'
 
-export interface TagState {
+export type TagState = {
   timeline: Array<Status>
   unreadTimeline: Array<Status>
   lazyLoading: boolean

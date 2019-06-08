@@ -4,12 +4,14 @@ import Tag, { TagState } from './Hashtag/Tag'
 import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface HashtagState {}
+export type HashtagState = {}
 
-export interface HashtagModuleState extends HashtagState {
-  List: ListState,
+type HashtagModule = {
+  List: ListState
   Tag: TagState
 }
+
+export type HashtagModuleState = HashtagModule & HashtagState
 
 const state = (): HashtagState => ({})
 

@@ -5,7 +5,7 @@ import { Sound } from '~/src/types/sound'
 import { Timeline } from '~/src/types/timeline'
 import { BaseConfig, General } from '~/src/types/preference'
 
-export interface GeneralState {
+export type GeneralState = {
   general: General
   loading: boolean
 }

@@ -2,20 +2,20 @@ import router from '@/router'
 import i18n from '~/src/config/i18n'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { List } from 'megalodon'
-import LocalTag from '~/src/types/localTag'
+import { LocalTag } from '~/src/types/localTag'
 import { RootState } from '@/store'
 
-export interface Channel {
-  name: string,
+export type Channel = {
+  name: string
   path: string
 }
 
-export interface JumpState {
-  modalOpen: boolean,
-  channel: string,
-  defaultChannelList: Array<Channel>,
-  listChannelList: Array<Channel>,
-  tagChannelList: Array<Channel>,
+export type JumpState = {
+  modalOpen: boolean
+  channel: string
+  defaultChannelList: Array<Channel>
+  listChannelList: Array<Channel>
+  tagChannelList: Array<Channel>
   selectedChannel: Channel
 }
 
@@ -87,7 +87,7 @@ const mutations: MutationTree<JumpState> = {
     state.selectedChannel = channel
   },
   [MUTATION_TYPES.UPDATE_LIST_CHANNEL]: (state, lists: Array<List>) => {
-    state.listChannelList = lists.map((l) => {
+    state.listChannelList = lists.map(l => {
       const channel: Channel = {
         name: `#${l.title}`,
         path: `lists/${l.id}`

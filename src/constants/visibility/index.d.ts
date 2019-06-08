@@ -1,13 +1,13 @@
-export interface VisibilityType {
-  name: string,
-  value: number,
+export type VisibilityType = {
+  name: string
+  value: number
   key: string
 }
 
-export interface VisibilityList {
-  Public: VisibilityType,
-  Unlisted: VisibilityType,
-  Private: VisibilityType,
+export type VisibilityList = {
+  Public: VisibilityType
+  Unlisted: VisibilityType
+  Private: VisibilityType
   Direct: VisibilityType
 }
 

@@ -1,6 +1,6 @@
 import i18n from '~/src/config/i18n'
 import Jump, { JumpState, MUTATION_TYPES, Channel } from '@/store/TimelineSpace/Modals/Jump'
-import LocalTag from '~/src/types/localTag'
+import { LocalTag } from '~/src/types/localTag'
 import { List } from 'megalodon'
 
 describe('TimelineSpace/Modals/Jump', () => {

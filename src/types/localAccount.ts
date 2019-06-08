@@ -1,4 +1,4 @@
-export default interface LocalAccount {
+export type LocalAccount = {
   _id?: string
   baseURL: string
   domain: string

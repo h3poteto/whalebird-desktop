@@ -14,23 +14,21 @@ import molecules, { MoleculesModuleState } from './molecules'
 
 Vue.use(Vuex)
 
-export interface RootState {
-  App: AppState,
-  GlobalHeader: GlobalHeaderState,
-  Login: LoginState,
-  Authorize: AuthorizeState,
-  TimelineSpace: TimelineSpaceModuleState,
-  Preferences: PreferencesModuleState,
-  Settings: SettingsModuleState,
-  molecules: MoleculesModuleState,
+export type RootState = {
+  App: AppState
+  GlobalHeader: GlobalHeaderState
+  Login: LoginState
+  Authorize: AuthorizeState
+  TimelineSpace: TimelineSpaceModuleState
+  Preferences: PreferencesModuleState
+  Settings: SettingsModuleState
+  molecules: MoleculesModuleState
   route: Route
 }
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
-  plugins: process.env.NODE_ENV !== 'production'
-    ? [createLogger({})]
-    : [],
+  plugins: process.env.NODE_ENV !== 'production' ? [createLogger({})] : [],
   modules: {
     App,
     GlobalHeader,
