@@ -1,10 +1,10 @@
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
 
-export interface AccountState {
-  accounts: Array<LocalAccount>,
+export type AccountState = {
+  accounts: Array<LocalAccount>
   accountLoading: boolean
 }
 

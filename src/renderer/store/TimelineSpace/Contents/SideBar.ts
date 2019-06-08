@@ -3,18 +3,20 @@ import TootDetail, { TootDetailState } from './SideBar/TootDetail'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface SideBarState {
-  openSideBar: boolean,
+export type SideBarState = {
+  openSideBar: boolean
   // 0: blank
   // 1: account-profile
   // 2: toot-detail
   component: number
 }
 
-export interface SideBarModuleState extends SideBarState {
-  TootDetail: TootDetailState,
+type SideBarModule = {
+  TootDetail: TootDetailState
   AccountProfile: AccountProfileModuleState
 }
+
+export type SideBarModuleState = SideBarModule & SideBarState
 
 const state = (): SideBarState => ({
   openSideBar: false,

@@ -2,7 +2,7 @@ import Mastodon, { Account, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface AddListMemberState {
+export type AddListMemberState = {
   modalOpen: boolean
   accounts: Array<Account>
   targetListId: string | null

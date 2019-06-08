@@ -2,9 +2,9 @@ import Mastodon, { Status, Context, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface TootDetailState {
-  message: Status | null,
-  ancestors: Array<Status>,
+export type TootDetailState = {
+  message: Status | null
+  ancestors: Array<Status>
   descendants: Array<Status>
 }
 
@@ -38,7 +38,7 @@ const mutations: MutationTree<TootDetailState> = {
   },
   [MUTATION_TYPES.UPDATE_ANCESTORS_TOOT]: (state, message: Status) => {
     // Replace target message in ancestors
-    state.ancestors = state.ancestors.map((toot) => {
+    state.ancestors = state.ancestors.map(toot => {
       if (toot.id === message.id) {
         return message
       } else if (toot.reblog !== null && toot.reblog.id === message.id) {
@@ -54,7 +54,7 @@ const mutations: MutationTree<TootDetailState> = {
     })
   },
   [MUTATION_TYPES.DELETE_ANCESTORS_TOOT]: (state, message: Status) => {
-    state.ancestors = state.ancestors.filter((toot) => {
+    state.ancestors = state.ancestors.filter(toot => {
       if (toot.reblog !== null && toot.reblog.id === message.id) {
         return false
       } else {
@@ -87,7 +87,7 @@ const mutations: MutationTree<TootDetailState> = {
   },
   [MUTATION_TYPES.UPDATE_DESCENDANTS_TOOT]: (state, message: Status) => {
     // Replace target message in descendants
-    state.descendants = state.descendants.map((toot) => {
+    state.descendants = state.descendants.map(toot => {
       if (toot.id === message.id) {
         return message
       } else if (toot.reblog !== null && toot.reblog.id === message.id) {
@@ -103,7 +103,7 @@ const mutations: MutationTree<TootDetailState> = {
     })
   },
   [MUTATION_TYPES.DELETE_DESCENDANTS_TOOT]: (state, message: Status) => {
-    state.descendants = state.descendants.filter((toot) => {
+    state.descendants = state.descendants.filter(toot => {
       if (toot.reblog !== null && toot.reblog.id === message.id) {
         return false
       } else {
@@ -120,10 +120,7 @@ const actions: ActionTree<TootDetailState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_TOOT, message)
   },
   fetchToot: async ({ commit, rootState }, message: Status) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Context> = await client.get<Context>(`/statuses/${message.id}/context`, { limit: 40 })
 
     commit(MUTATION_TYPES.UPDATE_ANCESTORS, res.data.ancestors)

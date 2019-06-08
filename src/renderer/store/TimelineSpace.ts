@@ -8,7 +8,7 @@ import Contents, { ContentsModuleState } from './TimelineSpace/Contents'
 import router from '@/router'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 import { Notify } from '~/src/types/notify'
 import { RootState } from '@/store'
 import { UnreadNotification } from '~/src/types/unreadNotification'
@@ -17,12 +17,12 @@ import { TimelineFetchError } from '@/errors/fetch'
 
 declare var Notification: any
 
-interface MyEmoji {
+type MyEmoji = {
   name: string
   image: string
 }
 
-export interface TimelineSpaceState {
+export type TimelineSpaceState = {
   account: LocalAccount
   loading: boolean
   emojis: Array<MyEmoji>
@@ -479,12 +479,14 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   }
 }
 
-export interface TimelineSpaceModuleState extends TimelineSpaceState {
+type TimelineSpaceModule = {
   SideMenu: SideMenuState
   HeaderMenu: HeaderMenuState
   Modals: ModalsModuleState
   Contents: ContentsModuleState
 }
+
+export type TimelineSpaceModuleState = TimelineSpaceModule & TimelineSpaceState
 
 const TimelineSpace: Module<TimelineSpaceState, RootState> = {
   namespaced: true,

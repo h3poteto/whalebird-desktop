@@ -2,7 +2,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import Account, { AccountState } from '@/store/Preferences/Account'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
 const account: LocalAccount = {
   _id: 'sample',
@@ -54,10 +54,9 @@ describe('Account', () => {
         event.sender.send('error-list-accounts', new Error())
       })
 
-      await store.dispatch('Account/loadAccounts')
-        .catch((err: Error) => {
-          expect(err instanceof Error).toEqual(true)
-        })
+      await store.dispatch('Account/loadAccounts').catch((err: Error) => {
+        expect(err instanceof Error).toEqual(true)
+      })
     })
     it('success', async () => {
       ipcMain.once('list-accounts', (event: any, _) => {
@@ -73,10 +72,9 @@ describe('Account', () => {
       ipcMain.once('remove-account', (event: any, _) => {
         event.sender.send('error-remove-account', new Error())
       })
-      await store.dispatch('Account/removeAccount', account)
-        .catch((err: Error) => {
-          expect(err instanceof Error).toEqual(true)
-        })
+      await store.dispatch('Account/removeAccount', account).catch((err: Error) => {
+        expect(err instanceof Error).toEqual(true)
+      })
     })
     it('success', async () => {
       ipcMain.once('remove-account', (event: any, _) => {
@@ -92,10 +90,9 @@ describe('Account', () => {
       ipcMain.once('forward-account', (event: any, _) => {
         event.sender.send('error-forward-account', new Error())
       })
-      await store.dispatch('Account/forwardAccount', account)
-        .catch((err: Error) => {
-          expect(err instanceof Error).toEqual(true)
-        })
+      await store.dispatch('Account/forwardAccount', account).catch((err: Error) => {
+        expect(err instanceof Error).toEqual(true)
+      })
     })
     it('success', async () => {
       ipcMain.once('forward-account', (event: any, _) => {
@@ -111,10 +108,9 @@ describe('Account', () => {
       ipcMain.once('backward-account', (event: any, _) => {
         event.sender.send('error-backward-account', new Error())
       })
-      await store.dispatch('Account/backwardAccount', account)
-        .catch((err: Error) => {
-          expect(err instanceof Error).toEqual(true)
-        })
+      await store.dispatch('Account/backwardAccount', account).catch((err: Error) => {
+        expect(err instanceof Error).toEqual(true)
+      })
     })
     it('success', async () => {
       ipcMain.once('backward-account', (event: any, _) => {
@@ -130,10 +126,9 @@ describe('Account', () => {
       ipcMain.once('remove-all-accounts', (event: any, _) => {
         event.sender.send('error-remove-all-accounts', new Error())
       })
-      await store.dispatch('Account/removeAllAccounts', account)
-        .catch((err: Error) => {
-          expect(err instanceof Error).toEqual(true)
-        })
+      await store.dispatch('Account/removeAllAccounts', account).catch((err: Error) => {
+        expect(err instanceof Error).toEqual(true)
+      })
     })
     it('success', async () => {
       ipcMain.once('remove-all-accounts', (event: any, _) => {

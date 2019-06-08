@@ -1,9 +1,9 @@
 import { ipcRenderer } from 'electron'
-import LocalTag from '~/src/types/localTag'
+import { LocalTag } from '~/src/types/localTag'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface ListState {
+export type ListState = {
   tags: Array<LocalTag>
 }
 

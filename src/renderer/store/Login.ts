@@ -3,8 +3,8 @@ import axios from 'axios'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface LoginState {
-  selectedInstance: string | null,
+export type LoginState = {
+  selectedInstance: string | null
   searching: boolean
 }
 
@@ -46,10 +46,9 @@ const actions: ActionTree<LoginState, RootState> = {
   },
   confirmInstance: async ({ commit }, domain: string): Promise<boolean> => {
     commit(MUTATION_TYPES.CHANGE_SEARCHING, true)
-    await axios.get(`https://${domain}/api/v1/instance`)
-      .finally(() => {
-        commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
-      })
+    await axios.get(`https://${domain}/api/v1/instance`).finally(() => {
+      commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
+    })
     commit(MUTATION_TYPES.CHANGE_INSTANCE, domain)
     return true
   }

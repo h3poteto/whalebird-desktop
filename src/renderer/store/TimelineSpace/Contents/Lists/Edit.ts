@@ -3,7 +3,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { RemoveAccountFromList } from '@/types/removeAccountFromList'
 
-export interface EditState {
+export type EditState = {
   members: Array<Account>
 }
 

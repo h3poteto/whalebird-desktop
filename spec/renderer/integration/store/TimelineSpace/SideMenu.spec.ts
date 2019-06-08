@@ -4,7 +4,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
 import SideMenu, { SideMenuState } from '~/src/renderer/store/TimelineSpace/SideMenu'
-import LocalTag from '~/src/types/localTag'
+import { LocalTag } from '~/src/types/localTag'
 
 jest.mock('megalodon')
 
