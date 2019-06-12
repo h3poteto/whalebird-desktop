@@ -7,7 +7,7 @@ export default class Streaming {
   private listener: StreamListener | null
 
   constructor(account: LocalAccount) {
-    this.client = new Mastodon(account.accessToken!, account.baseURL + '/api/v1')
+    this.client = new Mastodon(account.accessToken!, account.baseURL + '/api/v1', 'Whalebird')
     this.listener = null
   }
 
