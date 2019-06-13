@@ -1,5 +1,5 @@
 import { Response, Status, Account, Application } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon.ts'
+import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import DirectMessages, { DirectMessagesState } from '@/store/TimelineSpace/Contents/DirectMessages'
@@ -186,7 +186,7 @@ describe('Home', () => {
           }
         }
         mockedMegalodon.mockImplementation(() => mockClient)
-        await store.dispatch('DirectMessages/lazyFetchTimeline', { id: 20 })
+        await store.dispatch('DirectMessages/lazyFetchTimeline', status1)
         expect(store.state.DirectMessages.lazyLoading).toEqual(false)
         expect(store.state.DirectMessages.timeline).toEqual([status1, status2])
       })
