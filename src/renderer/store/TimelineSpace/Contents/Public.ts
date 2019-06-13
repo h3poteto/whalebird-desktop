@@ -94,10 +94,11 @@ const mutations: MutationTree<PublicState> = {
 }
 
 const actions: ActionTree<PublicState, RootState> = {
-  fetchPublicTimeline: async ({ commit, rootState }) => {
+  fetchPublicTimeline: async ({ commit, rootState }): Promise<Array<Status>> => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Array<Status>> = await client.get<Array<Status>>('/timelines/public', { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
+    return res.data
   },
   lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Status): Promise<Array<Status> | null> => {
     if (state.lazyLoading) {
