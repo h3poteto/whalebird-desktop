@@ -23,7 +23,7 @@
         </el-select>
       </el-form-item>
       <el-form-item for="font-size" :label="$t('preferences.appearance.font_size')">
-        <el-input-number id="font-size" :value="fontSize" :min="9" :max="18" @change="updateFontSize"></el-input-number>
+        <el-input-number id="font-size" :value="fontSize" :min="9" :max="72" @change="updateFontSize"></el-input-number>
       </el-form-item>
     </el-form>
     <el-form class="toot-padding section" size="small" label-position="top">
