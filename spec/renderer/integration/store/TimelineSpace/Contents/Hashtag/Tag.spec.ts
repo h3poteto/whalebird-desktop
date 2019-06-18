@@ -2,7 +2,8 @@ import { Response, Status, Account, Application } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import Home, { HomeState } from '@/store/TimelineSpace/Contents/Home'
+import Tag, { TagState } from '@/store/TimelineSpace/Contents/Hashtag/Tag'
+import { LoadPositionWithTag } from '@/types/loadPosition'
 
 jest.mock('megalodon')
 
@@ -88,15 +89,13 @@ const status2: Status = {
   pinned: null
 }
 
-let state = (): HomeState => {
+let state = (): TagState => {
   return {
     lazyLoading: false,
     heading: true,
     timeline: [],
     unreadTimeline: [],
-    filter: '',
-    showReblogs: true,
-    showReplies: true
+    filter: ''
   }
 }
 
@@ -104,8 +103,8 @@ const initStore = () => {
   return {
     namespaced: true,
     state: state(),
-    actions: Home.actions,
-    mutations: Home.mutations
+    actions: Tag.actions,
+    mutations: Tag.mutations
   }
 }
 
@@ -128,14 +127,14 @@ describe('Home', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Home: initStore(),
+        Tag: initStore(),
         TimelineSpace: timelineState
       }
     })
     mockedMegalodon.mockClear()
   })
 
-  describe('fetchTimeline', () => {
+  describe('fetch', () => {
     it('should be updated', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
@@ -152,9 +151,9 @@ describe('Home', () => {
       }
 
       mockedMegalodon.mockImplementation(() => mockClient)
-      const statuses = await store.dispatch('Home/fetchTimeline')
+      const statuses = await store.dispatch('Tag/fetch', 'tag')
       expect(statuses).toEqual([status1])
-      expect(store.state.Home.timeline).toEqual([status1])
+      expect(store.state.Tag.timeline).toEqual([status1])
     })
   })
 
@@ -167,9 +166,7 @@ describe('Home', () => {
             heading: true,
             timeline: [status1],
             unreadTimeline: [],
-            filter: '',
-            showReblogs: true,
-            showReplies: true
+            filter: ''
           }
         }
       })
@@ -188,9 +185,13 @@ describe('Home', () => {
           }
         }
         mockedMegalodon.mockImplementation(() => mockClient)
-        await store.dispatch('Home/lazyFetchTimeline', status1)
-        expect(store.state.Home.lazyLoading).toEqual(false)
-        expect(store.state.Home.timeline).toEqual([status1, status2])
+        const loadPositionWithTag: LoadPositionWithTag = {
+          status: status1,
+          tag: 'tag'
+        }
+        await store.dispatch('Tag/lazyFetchTimeline', loadPositionWithTag)
+        expect(store.state.Tag.lazyLoading).toEqual(false)
+        expect(store.state.Tag.timeline).toEqual([status1, status2])
       })
     })
   })

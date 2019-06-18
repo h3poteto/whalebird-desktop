@@ -1,3 +1,4 @@
+import { Event } from 'electron'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Theme from '~/src/constants/theme'
@@ -52,14 +53,14 @@ describe('Preferences/Appearance', () => {
         App: App
       }
     })
-    ipcMain.once('update-preferences', (event: any, config: any) => {
+    ipcMain.once('update-preferences', (event: Event, config: any) => {
       event.sender.send('response-update-preferences', config)
     })
   })
 
   describe('load', () => {
     it('loadAppearance', async () => {
-      ipcMain.once('get-preferences', (event: any, _) => {
+      ipcMain.once('get-preferences', (event: Event, _) => {
         event.sender.send('response-get-preferences', {
           appearance: {
             theme: Theme.Dark.key,
@@ -72,7 +73,7 @@ describe('Preferences/Appearance', () => {
       expect(store.state.Preferences.appearance.fontSize).toEqual(15)
     })
     it('loadFonts', async () => {
-      ipcMain.once('list-fonts', (event, _) => {
+      ipcMain.once('list-fonts', (event: Event, _) => {
         event.sender.send('response-list-fonts', ['my-font'])
       })
       await store.dispatch('Preferences/loadFonts')

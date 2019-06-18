@@ -2,7 +2,8 @@ import { Response, Status, Account, Application } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import Home, { HomeState } from '@/store/TimelineSpace/Contents/Home'
+import Show, { ShowState } from '@/store/TimelineSpace/Contents/Lists/Show'
+import { LoadPositionWithList } from '@/types/loadPosition'
 
 jest.mock('megalodon')
 
@@ -27,6 +28,7 @@ const account: Account = {
   fields: null,
   bot: false
 }
+
 const status1: Status = {
   id: '1',
   uri: 'http://example.com',
@@ -57,6 +59,7 @@ const status1: Status = {
   language: null,
   pinned: null
 }
+
 const status2: Status = {
   id: '2',
   uri: 'http://example.com',
@@ -88,15 +91,13 @@ const status2: Status = {
   pinned: null
 }
 
-let state = (): HomeState => {
+let state = (): ShowState => {
   return {
     lazyLoading: false,
     heading: true,
     timeline: [],
     unreadTimeline: [],
-    filter: '',
-    showReblogs: true,
-    showReplies: true
+    filter: ''
   }
 }
 
@@ -104,8 +105,8 @@ const initStore = () => {
   return {
     namespaced: true,
     state: state(),
-    actions: Home.actions,
-    mutations: Home.mutations
+    actions: Show.actions,
+    mutations: Show.mutations
   }
 }
 
@@ -119,7 +120,7 @@ const timelineState = {
   }
 }
 
-describe('Home', () => {
+describe('Lists/Show', () => {
   let store
   let localVue
 
@@ -128,7 +129,7 @@ describe('Home', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Home: initStore(),
+        Show: initStore(),
         TimelineSpace: timelineState
       }
     })
@@ -152,46 +153,46 @@ describe('Home', () => {
       }
 
       mockedMegalodon.mockImplementation(() => mockClient)
-      const statuses = await store.dispatch('Home/fetchTimeline')
-      expect(statuses).toEqual([status1])
-      expect(store.state.Home.timeline).toEqual([status1])
+      await store.dispatch('Show/fetchTimeline', '1')
+      expect(store.state.Show.timeline).toEqual([status1])
     })
   })
 
   describe('lazyFetchTimeline', () => {
-    describe('success', () => {
-      beforeAll(() => {
-        state = () => {
-          return {
-            lazyLoading: false,
-            heading: true,
-            timeline: [status1],
-            unreadTimeline: [],
-            filter: '',
-            showReblogs: true,
-            showReplies: true
-          }
+    beforeAll(() => {
+      state = () => {
+        return {
+          lazyLoading: false,
+          heading: true,
+          timeline: [status1],
+          unreadTimeline: [],
+          filter: ''
         }
-      })
-      it('should be updated', async () => {
-        const mockClient = {
-          get: (_path: string, _params: object) => {
-            return new Promise<Response<Array<Status>>>(resolve => {
-              const res: Response<Array<Status>> = {
-                data: [status2],
-                status: 200,
-                statusText: 'OK',
-                headers: {}
-              }
-              resolve(res)
-            })
-          }
+      }
+    })
+    it('should be updated', async () => {
+      const mockClient = {
+        get: (_path: string, _params: object) => {
+          return new Promise<Response<Array<Status>>>(resolve => {
+            const res: Response<Array<Status>> = {
+              data: [status2],
+              status: 200,
+              statusText: 'OK',
+              headers: {}
+            }
+            resolve(res)
+          })
         }
-        mockedMegalodon.mockImplementation(() => mockClient)
-        await store.dispatch('Home/lazyFetchTimeline', status1)
-        expect(store.state.Home.lazyLoading).toEqual(false)
-        expect(store.state.Home.timeline).toEqual([status1, status2])
-      })
+      }
+
+      mockedMegalodon.mockImplementation(() => mockClient)
+      const loadPosition: LoadPositionWithList = {
+        status: status1,
+        list_id: '1'
+      }
+      await store.dispatch('Show/lazyFetchTimeline', loadPosition)
+      expect(store.state.Show.timeline).toEqual([status1, status2])
+      expect(store.state.Show.lazyLoading).toEqual(false)
     })
   })
 })
