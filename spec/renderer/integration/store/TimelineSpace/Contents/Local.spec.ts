@@ -2,7 +2,7 @@ import { Response, Status, Account, Application } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import Home, { HomeState } from '@/store/TimelineSpace/Contents/Home'
+import Local, { LocalState } from '@/store/TimelineSpace/Contents/Local'
 
 jest.mock('megalodon')
 
@@ -88,15 +88,13 @@ const status2: Status = {
   pinned: null
 }
 
-let state = (): HomeState => {
+let state = (): LocalState => {
   return {
     lazyLoading: false,
     heading: true,
     timeline: [],
     unreadTimeline: [],
-    filter: '',
-    showReblogs: true,
-    showReplies: true
+    filter: ''
   }
 }
 
@@ -104,8 +102,8 @@ const initStore = () => {
   return {
     namespaced: true,
     state: state(),
-    actions: Home.actions,
-    mutations: Home.mutations
+    actions: Local.actions,
+    mutations: Local.mutations
   }
 }
 
@@ -128,14 +126,14 @@ describe('Home', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Home: initStore(),
+        Local: initStore(),
         TimelineSpace: timelineState
       }
     })
     mockedMegalodon.mockClear()
   })
 
-  describe('fetchTimeline', () => {
+  describe('fetchLocalTimeline', () => {
     it('should be updated', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
@@ -152,9 +150,9 @@ describe('Home', () => {
       }
 
       mockedMegalodon.mockImplementation(() => mockClient)
-      const statuses = await store.dispatch('Home/fetchTimeline')
+      const statuses = await store.dispatch('Local/fetchLocalTimeline')
       expect(statuses).toEqual([status1])
-      expect(store.state.Home.timeline).toEqual([status1])
+      expect(store.state.Local.timeline).toEqual([status1])
     })
   })
 
@@ -188,9 +186,9 @@ describe('Home', () => {
           }
         }
         mockedMegalodon.mockImplementation(() => mockClient)
-        await store.dispatch('Home/lazyFetchTimeline', status1)
-        expect(store.state.Home.lazyLoading).toEqual(false)
-        expect(store.state.Home.timeline).toEqual([status1, status2])
+        await store.dispatch('Local/lazyFetchTimeline', status1)
+        expect(store.state.Local.lazyLoading).toEqual(false)
+        expect(store.state.Local.timeline).toEqual([status1, status2])
       })
     })
   })
