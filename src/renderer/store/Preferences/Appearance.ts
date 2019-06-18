@@ -44,7 +44,6 @@ const mutations: MutationTree<AppearanceState> = {
 const actions: ActionTree<AppearanceState, RootState> = {
   loadAppearance: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('get-preferences')
       ipcRenderer.once('error-get-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
@@ -54,11 +53,11 @@ const actions: ActionTree<AppearanceState, RootState> = {
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf)
       })
+      ipcRenderer.send('get-preferences')
     })
   },
   loadFonts: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('list-fonts')
       ipcRenderer.once('error-list-fonts', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-list-fonts')
         reject(err)
@@ -68,6 +67,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
         commit(MUTATION_TYPES.UPDATE_FONTS, [DefaultFonts[0]].concat(fonts))
         resolve(fonts)
       })
+      ipcRenderer.send('list-fonts')
     })
   },
   updateTheme: ({ dispatch, commit, state }, themeKey: string) => {
@@ -78,7 +78,6 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-preferences', config)
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
@@ -89,6 +88,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
+      ipcRenderer.send('update-preferences', config)
     })
   },
   updateFontSize: ({ dispatch, commit, state }, fontSize: number) => {
@@ -99,7 +99,6 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-preferences', config)
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
@@ -110,6 +109,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
+      ipcRenderer.send('update-preferences', config)
     })
   },
   updateDisplayNameStyle: ({ dispatch, commit, state }, value: number) => {
@@ -120,7 +120,6 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-preferences', config)
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
@@ -131,6 +130,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf.appearance)
       })
+      ipcRenderer.send('update-preferences', config)
     })
   },
   updateTimeFormat: ({ dispatch, commit, state }, value: number) => {
@@ -141,7 +141,6 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-preferences', config)
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
@@ -152,6 +151,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf.appearance)
       })
+      ipcRenderer.send('update-preferences', config)
     })
   },
   updateCustomThemeColor: ({ dispatch, state, commit }, value: object) => {
@@ -163,7 +163,6 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-preferences', config)
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
@@ -174,6 +173,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
+      ipcRenderer.send('update-preferences', config)
     })
   },
   updateFont: ({ dispatch, state, commit }, value: string) => {
@@ -184,7 +184,6 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-preferences', config)
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
@@ -195,6 +194,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
+      ipcRenderer.send('update-preferences', config)
     })
   },
   updateTootPadding: ({ dispatch, state, commit }, value: number) => {
@@ -205,7 +205,6 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-preferences', config)
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
@@ -216,6 +215,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
+      ipcRenderer.send('update-preferences', config)
     })
   }
 }
