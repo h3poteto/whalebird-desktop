@@ -3,8 +3,9 @@ import Language from '~/src/constants/language'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Language as LanguageSet } from '~/src/types/language'
+import { BaseConfig } from '~/src/types/preference'
 
-export interface LanguageState {
+export type LanguageState = {
   language: LanguageSet
 }
 
@@ -36,7 +37,7 @@ const actions: ActionTree<LanguageState, RootState> = {
         ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-get-preferences')
         commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language as LanguageSet)
         resolve(conf)

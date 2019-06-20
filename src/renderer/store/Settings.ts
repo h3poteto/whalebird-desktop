@@ -3,8 +3,8 @@ import Timeline, { TimelineState } from './Settings/Timeline'
 import { Module, MutationTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface SettingsState {
-  accountID: number | null
+export type SettingsState = {
+  accountID: string | null
 }
 
 const state = (): SettingsState => ({
@@ -16,15 +16,17 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<SettingsState> = {
-  [MUTATION_TYPES.CHANGE_ACCOUNT_ID]: (state, id: number) => {
+  [MUTATION_TYPES.CHANGE_ACCOUNT_ID]: (state, id: string) => {
     state.accountID = id
   }
 }
 
-export interface SettingsModuleState extends SettingsState {
-  General: GeneralState,
-  Timeline: TimelineState,
+type SettingsModule = {
+  General: GeneralState
+  Timeline: TimelineState
 }
+
+export type SettingsModuleState = SettingsModule & SettingsState
 
 const Settings: Module<SettingsState, RootState> = {
   namespaced: true,

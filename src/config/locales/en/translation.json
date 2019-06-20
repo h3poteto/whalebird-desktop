@@ -155,6 +155,7 @@
       },
       "font_size": "Font size",
       "font_family": "Font family",
+      "toot_padding": "Padding around toots",
       "display_style": {
         "title": "Display style of username",
         "display_name_and_username": "Display name and username",

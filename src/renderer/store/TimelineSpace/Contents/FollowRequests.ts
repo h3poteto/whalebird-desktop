@@ -2,7 +2,7 @@ import Mastodon, { Account, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface FollowRequestsState {
+export type FollowRequestsState = {
   requests: Array<Account>
 }
 
@@ -30,14 +30,14 @@ const actions: ActionTree<FollowRequestsState, RootState> = {
   acceptRequest: async ({ dispatch, rootState }, user: Account) => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<{}> = await client.post<{}>(`/follow_requests/${user.id}/authorize`)
-    dispatch('fetchRequests')
+    await dispatch('fetchRequests')
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', rootState.TimelineSpace.account, { root: true })
     return res.data
   },
   rejectRequest: async ({ dispatch, rootState }, user: Account) => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<{}> = await client.post<{}>(`/follow_requests/${user.id}/reject`)
-    dispatch('fetchRequests')
+    await dispatch('fetchRequests')
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', rootState.TimelineSpace.account, { root: true })
     return res.data
   }

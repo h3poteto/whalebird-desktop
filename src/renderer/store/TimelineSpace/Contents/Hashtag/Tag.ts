@@ -4,11 +4,11 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { LoadPositionWithTag } from '@/types/loadPosition'
 
-export interface TagState {
-  timeline: Array<Status>,
-  unreadTimeline: Array<Status>,
-  lazyLoading: boolean,
-  heading: boolean,
+export type TagState = {
+  timeline: Array<Status>
+  unreadTimeline: Array<Status>
+  lazyLoading: boolean
+  heading: boolean
   filter: string
 }
 
@@ -48,22 +48,22 @@ const mutations: MutationTree<TagState> = {
   [MUTATION_TYPES.UPDATE_TIMELINE]: (state, timeline: Array<Status>) => {
     state.timeline = timeline
   },
-  [MUTATION_TYPES.MERGE_TIMELINE]: (state) => {
+  [MUTATION_TYPES.MERGE_TIMELINE]: state => {
     state.timeline = state.unreadTimeline.slice(0, 80).concat(state.timeline)
     state.unreadTimeline = []
   },
   [MUTATION_TYPES.INSERT_TIMELINE]: (state, messages: Array<Status>) => {
     state.timeline = state.timeline.concat(messages)
   },
-  [MUTATION_TYPES.ARCHIVE_TIMELINE]: (state) => {
+  [MUTATION_TYPES.ARCHIVE_TIMELINE]: state => {
     state.timeline = state.timeline.slice(0, 40)
   },
-  [MUTATION_TYPES.CLEAR_TIMELINE]: (state) => {
+  [MUTATION_TYPES.CLEAR_TIMELINE]: state => {
     state.timeline = []
     state.unreadTimeline = []
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Status) => {
-    state.timeline = state.timeline.map((toot) => {
+    state.timeline = state.timeline.map(toot => {
       if (toot.id === message.id) {
         return message
       } else if (toot.reblog !== null && toot.reblog.id === message.id) {
@@ -78,12 +78,12 @@ const mutations: MutationTree<TagState> = {
       }
     })
   },
-  [MUTATION_TYPES.DELETE_TOOT]: (state, message: Status) => {
-    state.timeline = state.timeline.filter((toot) => {
-      if (toot.reblog !== null && toot.reblog.id === message.id) {
+  [MUTATION_TYPES.DELETE_TOOT]: (state, id: string) => {
+    state.timeline = state.timeline.filter(toot => {
+      if (toot.reblog !== null && toot.reblog.id === id) {
         return false
       } else {
-        return toot.id !== message.id
+        return toot.id !== id
       }
     })
   },
@@ -97,10 +97,7 @@ const mutations: MutationTree<TagState> = {
 
 const actions: ActionTree<TagState, RootState> = {
   fetch: async ({ commit, rootState }, tag: string): Promise<Array<Status>> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Array<Status>> = await client.get<Array<Status>>(`/timelines/tag/${encodeURIComponent(tag)}`, { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
@@ -112,8 +109,12 @@ const actions: ActionTree<TagState, RootState> = {
         commit(MUTATION_TYPES.ARCHIVE_TIMELINE)
       }
     })
+    ipcRenderer.on('delete-start-tag-streaming', (_, id: string) => {
+      commit(MUTATION_TYPES.DELETE_TOOT, id)
+    })
     // @ts-ignore
-    return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-tag-streaming', {
         tag: encodeURIComponent(tag),
         account: rootState.TimelineSpace.account,
@@ -128,6 +129,7 @@ const actions: ActionTree<TagState, RootState> = {
     return new Promise(resolve => {
       ipcRenderer.removeAllListeners('error-start-tag-streaming')
       ipcRenderer.removeAllListeners('update-start-tag-streaming')
+      ipcRenderer.removeAllListeners('delete-start-tag-streaming')
       ipcRenderer.send('stop-tag-streaming')
       resolve()
     })
@@ -137,11 +139,9 @@ const actions: ActionTree<TagState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
-    return client.get<Array<Status>>(`/timelines/tag/${loadPosition.tag}`, { max_id: loadPosition.status.id, limit: 40 })
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    return client
+      .get<Array<Status>>(`/timelines/tag/${loadPosition.tag}`, { max_id: loadPosition.status.id, limit: 40 })
       .then(res => {
         commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
         return res.data

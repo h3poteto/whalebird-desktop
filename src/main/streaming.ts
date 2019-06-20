@@ -1,20 +1,17 @@
 import Mastodon, { StreamListener, Status, Notification } from 'megalodon'
 import log from 'electron-log'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
 export default class Streaming {
   private client: Mastodon
   private listener: StreamListener | null
 
-  constructor (account: LocalAccount) {
-    this.client = new Mastodon(
-      account.accessToken!,
-      account.baseURL + '/api/v1'
-    )
+  constructor(account: LocalAccount) {
+    this.client = new Mastodon(account.accessToken!, account.baseURL + '/api/v1', 'Whalebird')
     this.listener = null
   }
 
-  startUserStreaming (updateCallback: Function, notificationCallback: Function, errCallback: Function) {
+  startUserStreaming(updateCallback: Function, notificationCallback: Function, deleteCallback: Function, errCallback: Function) {
     this.listener = this.client.stream('/streaming/user')
 
     this.listener.on('connect', _ => {
@@ -29,6 +26,10 @@ export default class Streaming {
       notificationCallback(notification)
     })
 
+    this.listener.on('delete', (id: string) => {
+      deleteCallback(id)
+    })
+
     this.listener.on('error', (err: Error) => {
       errCallback(err)
     })
@@ -38,7 +39,7 @@ export default class Streaming {
     })
   }
 
-  start (path: string, updateCallback: Function, errCallback: Function) {
+  start(path: string, updateCallback: Function, deleteCallback: Function, errCallback: Function) {
     this.listener = this.client.stream(path)
     this.listener.on('connect', _ => {
       log.info(`${path} started`)
@@ -46,6 +47,10 @@ export default class Streaming {
 
     this.listener.on('update', (status: Status) => {
       updateCallback(status)
+    })
+
+    this.listener.on('delete', (id: string) => {
+      deleteCallback(id)
     })
 
     this.listener.on('error', (err: Error) => {
@@ -57,7 +62,7 @@ export default class Streaming {
     })
   }
 
-  stop () {
+  stop() {
     if (this.listener) {
       this.listener.removeAllListeners('connect')
       this.listener.removeAllListeners('update')

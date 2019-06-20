@@ -6,6 +6,11 @@
     "follow_requests": "Follow Requests",
     "direct_messages": "Direct Messages"
   },
+  "preferences": {
+    "appearance": {
+      "toot_padding": "Padding around toot"
+    }
+  },
   "follow_requests": {
     "accept": "Accept",
     "reject": "Reject"

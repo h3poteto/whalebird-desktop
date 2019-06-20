@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron'
 import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface AuthorizeState {}
+export type AuthorizeState = {}
 
 const state = (): AuthorizeState => ({})
 

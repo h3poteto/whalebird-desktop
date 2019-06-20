@@ -3,8 +3,8 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import Visibility, { VisibilityType } from '~/src/constants/visibility'
 import { RootState } from '@/store'
 
-export interface GeneralState {
-  visibility: number,
+export type GeneralState = {
+  visibility: number
   sensitive: boolean
 }
 
@@ -29,12 +29,9 @@ const mutations: MutationTree<GeneralState> = {
 
 const actions: ActionTree<GeneralState, RootState> = {
   fetchSettings: async ({ commit, rootState }): Promise<Account> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res = await client.get<Account>('/accounts/verify_credentials')
-    const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find((v) => {
+    const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
       return v.key === res.data.source!.privacy
     })
     commit(MUTATION_TYPES.CHANGE_VISIBILITY, visibility!.value)
@@ -42,11 +39,8 @@ const actions: ActionTree<GeneralState, RootState> = {
     return res.data
   },
   setVisibility: async ({ commit, rootState }, value: number) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
-    const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find((v) => {
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
       return v.value === value
     })
     const res = await client.patch<Account>('/accounts/update_credentials', {
@@ -58,10 +52,7 @@ const actions: ActionTree<GeneralState, RootState> = {
     return res.data
   },
   setSensitive: async ({ commit, rootState }, value: boolean) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res = await client.patch<Account>('/accounts/update_credentials', {
       source: {
         sensitive: value

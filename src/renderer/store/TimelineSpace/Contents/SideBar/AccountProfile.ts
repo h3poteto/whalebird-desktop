@@ -5,17 +5,19 @@ import Followers, { FollowersState } from './AccountProfile/Followers'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface AccountProfileState {
+export type AccountProfileState = {
   account: Account | null
   relationship: Relationship | null
   loading: boolean
 }
 
-export interface AccountProfileModuleState extends AccountProfileState {
+type AccountProfileModule = {
   Followers: FollowersState
   Follows: FollowsState
   Timeline: TimelineState
 }
+
+export type AccountProfileModuleState = AccountProfileModule & AccountProfileState
 
 const state = (): AccountProfileState => ({
   account: null,
@@ -42,7 +44,7 @@ const mutations: MutationTree<AccountProfileState> = {
 }
 
 const actions: ActionTree<AccountProfileState, RootState> = {
-  fetchAccount: async ({ rootState }, accountID: number): Promise<Account> => {
+  fetchAccount: async ({ rootState }, accountID: string): Promise<Account> => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Account> = await client.get<Account>(`/accounts/${accountID}`)
     return res.data

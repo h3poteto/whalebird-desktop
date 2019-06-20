@@ -7,7 +7,7 @@ import Mentions from '~/src/renderer/store/TimelineSpace/Contents/Mentions'
 jest.mock('megalodon')
 
 const account: Account = {
-  id: 1,
+  id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
   display_name: 'h3poteto',
@@ -29,7 +29,7 @@ const account: Account = {
 }
 
 const status: Status = {
-  id: 1,
+  id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
   account: account,
@@ -62,7 +62,7 @@ const status: Status = {
 const mention: Notification = {
   account: account,
   created_at: '2019-03-26T21:40:32',
-  id: 1,
+  id: '1',
   status: status,
   type: 'mention'
 }
@@ -70,7 +70,7 @@ const mention: Notification = {
 const reblog: Notification = {
   account: account,
   created_at: '2019-03-26T21:40:32',
-  id: 2,
+  id: '2',
   status: status,
   type: 'reblog'
 }
@@ -78,7 +78,7 @@ const reblog: Notification = {
 const favourite: Notification = {
   account: account,
   created_at: '2019-03-26T21:40:32',
-  id: 3,
+  id: '3',
   status: status,
   type: 'favourite'
 }
@@ -86,7 +86,7 @@ const favourite: Notification = {
 const follow: Notification = {
   account: account,
   created_at: '2019-03-26T21:40:32',
-  id: 4,
+  id: '4',
   status: null,
   type: 'follow'
 }
@@ -142,12 +142,7 @@ describe('Mentions', () => {
         get: (_path: string, _params: object) => {
           return new Promise<Response<Notification[]>>(resolve => {
             const res: Response<Notification[]> = {
-              data: [
-                mention,
-                reblog,
-                favourite,
-                follow
-              ],
+              data: [mention, reblog, favourite, follow],
               status: 200,
               statusText: 'OK',
               headers: {}
@@ -159,12 +154,7 @@ describe('Mentions', () => {
 
       mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('Mentions/fetchMentions')
-      expect(store.state.Mentions.mentions).toEqual([
-        mention,
-        reblog,
-        favourite,
-        follow
-      ])
+      expect(store.state.Mentions.mentions).toEqual([mention, reblog, favourite, follow])
     })
   })
 
@@ -193,10 +183,7 @@ describe('Mentions', () => {
           return {
             lazyLoading: false,
             heading: true,
-            mentions: [
-              mention,
-              reblog
-            ],
+            mentions: [mention, reblog],
             unreadMentions: [],
             filter: ''
           }
@@ -207,10 +194,7 @@ describe('Mentions', () => {
           get: (_path: string, _params: object) => {
             return new Promise<Response<Notification[]>>(resolve => {
               const res: Response<Notification[]> = {
-                data: [
-                  favourite,
-                  follow
-                ],
+                data: [favourite, follow],
                 status: 200,
                 statusText: 'OK',
                 headers: {}
@@ -222,12 +206,7 @@ describe('Mentions', () => {
 
         mockedMegalodon.mockImplementation(() => mockClient)
         await store.dispatch('Mentions/lazyFetchMentions', { id: 1 })
-        expect(store.state.Mentions.mentions).toEqual([
-          mention,
-          reblog,
-          favourite,
-          follow
-        ])
+        expect(store.state.Mentions.mentions).toEqual([mention, reblog, favourite, follow])
         expect(store.state.Mentions.lazyLoading).toEqual(false)
       })
     })
@@ -239,12 +218,7 @@ describe('Mentions', () => {
         return {
           lazyLoading: false,
           heading: true,
-          mentions: [
-            mention,
-            favourite,
-            reblog,
-            follow
-          ],
+          mentions: [mention, favourite, reblog, follow],
           unreadMentions: [],
           filter: ''
         }
@@ -252,9 +226,7 @@ describe('Mentions', () => {
     })
     it('should return only mentions', () => {
       const mentions = store.getters['Mentions/mentions']
-      expect(mentions).toEqual([
-        mention
-      ])
+      expect(mentions).toEqual([mention])
     })
   })
 })

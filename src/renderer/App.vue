@@ -24,6 +24,7 @@ export default {
           '--theme-header-menu-color': state.App.theme.header_menu_color,
           '--theme-wrapper-mask-color': state.App.theme.wrapper_mask_color,
           '--theme-scrollbar-color': state.App.theme.scrollbar_color,
+          '--toot-padding': `${state.App.tootPadding}px`,
           '--base-font-size': `${state.App.fontSize}px`,
           '--specified-fonts': state.App.defaultFonts.join(', ')
         }
@@ -69,6 +70,7 @@ body,
     color: #409eff;
   }
 
+  --toot-padding: 8px;
   --base-font-size: 14px;
 
   font-size: var(--base-font-size);

@@ -1,35 +1,35 @@
 import Streaming from './streaming'
 import WebSocket from './websocket'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
 export default class StreamingManager {
   private streaming: Streaming
   private websocket: WebSocket
   private useWebsocket: boolean
 
-  constructor (account: LocalAccount, useWebsocket = false) {
+  constructor(account: LocalAccount, useWebsocket = false) {
     this.streaming = new Streaming(account)
     this.websocket = new WebSocket(account)
     this.useWebsocket = useWebsocket
   }
 
-  startUser (updateCallback: Function, notificationCallback: Function, errCallback: Function) {
+  startUser(updateCallback: Function, notificationCallback: Function, deleteCallback: Function, errCallback: Function) {
     if (this.useWebsocket) {
-      this._startUserSocket(updateCallback, notificationCallback, errCallback)
+      this._startUserSocket(updateCallback, notificationCallback, deleteCallback, errCallback)
     } else {
-      this._startUserStreaming(updateCallback, notificationCallback, errCallback)
+      this._startUserStreaming(updateCallback, notificationCallback, deleteCallback, errCallback)
     }
   }
 
-  start (path: string, params: string, updateCallback: Function, errCallback: Function) {
+  start(path: string, params: string, updateCallback: Function, deleteCallback: Function, errCallback: Function) {
     if (this.useWebsocket) {
-      this._startSocket(path, params, updateCallback, errCallback)
+      this._startSocket(path, params, updateCallback, deleteCallback, errCallback)
     } else {
-      this._startStreaming(path, params, updateCallback, errCallback)
+      this._startStreaming(path, params, updateCallback, deleteCallback, errCallback)
     }
   }
 
-  stop () {
+  stop() {
     this._stopStreaming()
     this._stopSocket()
   }
@@ -37,43 +37,35 @@ export default class StreamingManager {
   /**
    * Using streaming for Mastodon
    */
-  _startUserStreaming (updateCallback: Function, notificationCallback: Function, errCallback: Function) {
-    this.streaming.startUserStreaming(updateCallback, notificationCallback, errCallback)
+  _startUserStreaming(updateCallback: Function, notificationCallback: Function, deleteCallback: Function, errCallback: Function) {
+    this.streaming.startUserStreaming(updateCallback, notificationCallback, deleteCallback, errCallback)
   }
 
-  _startStreaming (path: string, params: string, updateCallback: Function, errCallback: Function) {
+  _startStreaming(path: string, params: string, updateCallback: Function, deleteCallback, errCallback: Function) {
     const target = `/streaming/${path}?${params}`
-    this.streaming.start(
-      target,
-      updateCallback,
-      errCallback
-    )
+    this.streaming.start(target, updateCallback, deleteCallback, errCallback)
   }
 
-  _stopStreaming () {
+  _stopStreaming() {
     this.streaming.stop()
   }
 
   /**
    * Using websocket for Pleroma
    */
-  _startUserSocket (updateCallback: Function, notificationCallback: Function, errCallback: Function) {
-    this.websocket.startUserStreaming(updateCallback, notificationCallback, errCallback)
+  _startUserSocket(updateCallback: Function, notificationCallback: Function, deleteCallback: Function, errCallback: Function) {
+    this.websocket.startUserStreaming(updateCallback, notificationCallback, deleteCallback, errCallback)
   }
 
-  _startSocket (path: string, params: string, updateCallback: Function, errCallback: Function) {
+  _startSocket(path: string, params: string, updateCallback: Function, deleteCallback: Function, errCallback: Function) {
     let stream = path
     if (stream === 'public/local') {
       stream = 'public:local'
     }
-    this.websocket.start(
-      `${stream}&${params}`,
-      updateCallback,
-      errCallback
-    )
+    this.websocket.start(`${stream}&${params}`, updateCallback, deleteCallback, errCallback)
   }
 
-  _stopSocket () {
+  _stopSocket() {
     this.websocket.stop()
   }
 }

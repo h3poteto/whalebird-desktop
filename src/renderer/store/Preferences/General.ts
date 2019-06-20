@@ -3,13 +3,10 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Sound } from '~/src/types/sound'
 import { Timeline } from '~/src/types/timeline'
+import { BaseConfig, General } from '~/src/types/preference'
 
-interface GeneralSet {
-  sound: Sound,
-  timeline: Timeline
-}
-export interface GeneralState {
-  general: GeneralSet,
+export type GeneralState = {
+  general: General
   loading: boolean
 }
 
@@ -34,7 +31,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<GeneralState> = {
-  [MUTATION_TYPES.UPDATE_GENERAL]: (state, conf: GeneralSet) => {
+  [MUTATION_TYPES.UPDATE_GENERAL]: (state, conf: General) => {
     state.general = conf
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
@@ -52,9 +49,9 @@ const actions: ActionTree<GeneralState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as GeneralSet)
+        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         resolve(conf)
       })
@@ -63,7 +60,7 @@ const actions: ActionTree<GeneralState, RootState> = {
   updateSound: ({ commit, state }, sound: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newSound: Sound = Object.assign({}, state.general.sound, sound)
-    const newGeneral: GeneralSet = Object.assign({}, state.general, {
+    const newGeneral: General = Object.assign({}, state.general, {
       sound: newSound
     })
     const config = {
@@ -76,9 +73,9 @@ const actions: ActionTree<GeneralState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as GeneralSet)
+        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         resolve(conf)
       })
@@ -87,7 +84,7 @@ const actions: ActionTree<GeneralState, RootState> = {
   updateTimeline: ({ commit, state, dispatch }, timeline: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newTimeline: Timeline = Object.assign({}, state.general.timeline, timeline)
-    const newGeneral: GeneralSet = Object.assign({}, state.general, {
+    const newGeneral: General = Object.assign({}, state.general, {
       timeline: newTimeline
     })
     const config = {
@@ -99,9 +96,9 @@ const actions: ActionTree<GeneralState, RootState> = {
         commit('changeLoading', false)
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as GeneralSet)
+        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf)
@@ -110,11 +107,10 @@ const actions: ActionTree<GeneralState, RootState> = {
     })
   }
 }
-const General: Module<GeneralState, RootState> = {
+
+export default {
   namespaced: true,
   state: state,
   mutations: mutations,
   actions: actions
-}
-
-export default General
+} as Module<GeneralState, RootState>

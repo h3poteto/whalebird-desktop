@@ -15,7 +15,8 @@ describe('Preferences/Appearance', () => {
         displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
         timeFormat: TimeFormat.Absolute.value,
         customThemeColor: LightTheme,
-        font: DefaultFonts[0]
+        font: DefaultFonts[0],
+        tootPadding: 8
       },
       fonts: []
     }

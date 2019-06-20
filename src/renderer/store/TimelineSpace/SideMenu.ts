@@ -1,11 +1,11 @@
 import Mastodon, { List, Response, Account } from 'megalodon'
 import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import LocalTag from '~/src/types/localTag'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalTag } from '~/src/types/localTag'
+import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
 
-export interface SideMenuState {
+export type SideMenuState = {
   unreadHomeTimeline: boolean
   unreadNotifications: boolean
   unreadMentions: boolean

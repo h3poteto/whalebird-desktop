@@ -1,6 +1,6 @@
 import Toot, { TootState } from './molecules/Toot'
 
-export interface MoleculesModuleState {
+export type MoleculesModuleState = {
   Toot: TootState
 }
 

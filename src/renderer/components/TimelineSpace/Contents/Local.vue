@@ -144,7 +144,7 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Local/updateToot', message)
     },
     deleteToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Local/deleteToot', message)
+      this.$store.commit('TimelineSpace/Contents/Local/deleteToot', message.id)
     },
     onScroll(event) {
       if (event.target.clientHeight + event.target.scrollTop >= document.getElementById('local').clientHeight - 10 && !this.lazyloading) {

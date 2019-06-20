@@ -4,13 +4,15 @@ import Toots, { TootsState } from './Search/Toots'
 import { Module } from 'vuex'
 import { RootState } from '@/store'
 
-export interface SearchState {}
+export type SearchState = {}
 
-export interface SearchModuleState extends SearchState {
+type SearchModule = {
   Account: AccountState
   Tag: TagState
   Toots: TootsState
 }
+
+export type SearchModuleState = SearchModule & SearchState
 
 const state = (): SearchState => ({})
 

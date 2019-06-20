@@ -3,7 +3,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { RemoveAccountFromList } from '@/types/removeAccountFromList'
 
-export interface EditState {
+export type EditState = {
   members: Array<Account>
 }
 
@@ -22,11 +22,8 @@ const mutations: MutationTree<EditState> = {
 }
 
 const actions: ActionTree<EditState, RootState> = {
-  fetchMembers: async ({ commit, rootState }, listId: number): Promise<Array<Account>> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+  fetchMembers: async ({ commit, rootState }, listId: string): Promise<Array<Account>> => {
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Array<Account>> = await client.get<Array<Account>>(`/lists/${listId}/accounts`, {
       limit: 0
     })
@@ -34,10 +31,7 @@ const actions: ActionTree<EditState, RootState> = {
     return res.data
   },
   removeAccount: async ({ rootState }, remove: RemoveAccountFromList): Promise<{}> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1'
-    )
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     return client.del<{}>(`/lists/${remove.listId}/accounts`, {
       account_ids: [remove.account.id]
     })
