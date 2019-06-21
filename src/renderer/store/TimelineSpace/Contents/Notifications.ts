@@ -3,7 +3,7 @@ import Mastodon, { Notification, Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface NotificationsState {
+export type NotificationsState = {
   lazyLoading: boolean
   heading: boolean
   notifications: Array<Notification>
@@ -27,6 +27,7 @@ export const MUTATION_TYPES = {
   MERGE_NOTIFICATIONS: 'mergeNotifications',
   INSERT_NOTIFICATIONS: 'insertNotifications',
   UPDATE_TOOT: 'updateToot',
+  DELETE_TOOT: 'deleteToot',
   CLEAR_NOTIFICATIONS: 'clearNotifications',
   ARCHIVE_NOTIFICATIONS: 'archiveNotifications',
   CHANGE_FILTER: 'changeFilter'
@@ -67,6 +68,19 @@ const mutations: MutationTree<NotificationsState> = {
         return Object.assign(notification, status)
       } else {
         return notification
+      }
+    })
+  },
+  [MUTATION_TYPES.DELETE_TOOT]: (state, id: string) => {
+    state.notifications = state.notifications.filter(notification => {
+      if (notification.status) {
+        if (notification.status.reblog && notification.status.reblog.id === id) {
+          return false
+        } else {
+          return notification.status.id !== id
+        }
+      } else {
+        return true
       }
     })
   },

@@ -4,7 +4,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { UnreadNotification } from '~/src/types/unreadNotification'
 
-export interface TimelineState {
+export type TimelineState = {
   unreadNotification: UnreadNotification
 }
 
@@ -47,7 +47,7 @@ const actions: ActionTree<TimelineState, RootState> = {
       ipcRenderer.send('get-unread-notification', rootState.Settings.accountID)
     })
   },
-  changeUnreadNotification: ({ dispatch, state, rootState }, timeline: any): Promise<boolean> => {
+  changeUnreadNotification: ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
     const settings: UnreadNotification = Object.assign({}, state.unreadNotification, timeline, {
       accountID: rootState.Settings.accountID
     })

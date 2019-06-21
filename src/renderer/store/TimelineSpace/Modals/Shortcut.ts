@@ -1,7 +1,7 @@
 import { Module, MutationTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface ShortcutState {
+export type ShortcutState = {
   modalOpen: boolean
 }
 

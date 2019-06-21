@@ -116,7 +116,7 @@ export default {
         return false
       }
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaId')
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file).catch(() => {
         this.$message({
           message: this.$t('message.attach_error'),

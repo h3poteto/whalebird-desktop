@@ -2,7 +2,7 @@ import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface PublicState {
+export type PublicState = {
   timeline: Array<Status>
   unreadTimeline: Array<Status>
   lazyLoading: boolean
@@ -76,12 +76,12 @@ const mutations: MutationTree<PublicState> = {
       }
     })
   },
-  [MUTATION_TYPES.DELETE_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.DELETE_TOOT]: (state, id: string) => {
     state.timeline = state.timeline.filter(toot => {
-      if (toot.reblog !== null && toot.reblog.id === message.id) {
+      if (toot.reblog !== null && toot.reblog.id === id) {
         return false
       } else {
-        return toot.id !== message.id
+        return toot.id !== id
       }
     })
   },
@@ -94,10 +94,11 @@ const mutations: MutationTree<PublicState> = {
 }
 
 const actions: ActionTree<PublicState, RootState> = {
-  fetchPublicTimeline: async ({ commit, rootState }) => {
+  fetchPublicTimeline: async ({ commit, rootState }): Promise<Array<Status>> => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Array<Status>> = await client.get<Array<Status>>('/timelines/public', { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
+    return res.data
   },
   lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Status): Promise<Array<Status> | null> => {
     if (state.lazyLoading) {

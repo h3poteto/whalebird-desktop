@@ -1,12 +1,12 @@
 import { ipcRenderer } from 'electron'
 import router from '@/router'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
-export interface GlobalHeaderState {
-  accounts: Array<LocalAccount>,
-  changing: boolean,
+export type GlobalHeaderState = {
+  accounts: Array<LocalAccount>
+  changing: boolean
   hide: boolean
 }
 
@@ -70,7 +70,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       if (state.changing) {
         return null
       }
-      if (rootState.route.params.id as string === account._id!) {
+      if ((rootState.route.params.id as string) === account._id!) {
         return null
       }
       // When the modal window is active, don't change account

@@ -2,12 +2,9 @@ import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Notify } from '~/src/types/notify'
+import { BaseConfig, Notification } from '~/src/types/preference'
 
-interface Notification {
-  notify: Notify
-}
-
-export interface NotificationState {
+export type NotificationState = {
   notification: Notification
 }
 
@@ -40,9 +37,9 @@ const actions: ActionTree<NotificationState, RootState> = {
         ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification as Notification)
+        commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
         resolve(conf)
       })
     })
@@ -57,8 +54,8 @@ const actions: ActionTree<NotificationState, RootState> = {
     }
     return new Promise(resolve => {
       ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('response-update-preferences', (_, conf: any) => {
-        commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification as Notification)
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.notification)
       })

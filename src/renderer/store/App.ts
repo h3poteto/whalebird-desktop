@@ -9,8 +9,10 @@ import Language from '~/src/constants/language'
 import DefaultFonts from '@/utils/fonts'
 import { RootState } from '@/store'
 import { Notify } from '~/src/types/notify'
+import { BaseConfig } from '~/src/types/preference'
+import { Appearance } from '~src/types/appearance'
 
-export interface AppState {
+export type AppState = {
   theme: ThemeColorType
   fontSize: number
   displayNameStyle: number
@@ -21,6 +23,7 @@ export interface AppState {
   ignoreCW: boolean
   ignoreNFSW: boolean
   hideAllAttachments: boolean
+  tootPadding: number
 }
 
 const state = (): AppState => ({
@@ -33,6 +36,7 @@ const state = (): AppState => ({
     favourite: true,
     follow: true
   },
+  tootPadding: 8,
   timeFormat: TimeFormat.Absolute.value,
   language: Language.en.key,
   defaultFonts: DefaultFonts,
@@ -46,6 +50,7 @@ const MUTATION_TYPES = {
   UPDATE_FONT_SIZE: 'updateFontSize',
   UPDATE_DISPLAY_NAME_STYLE: 'updateDisplayNameStyle',
   UPDATE_NOTIFY: 'updateNotify',
+  UPDATE_TOOT_PADDING: 'updateTootPadding',
   UPDATE_TIME_FORMAT: 'updateTimeFormat',
   UPDATE_LANGUAGE: 'updateLanguage',
   ADD_FONT: 'addFont',
@@ -55,7 +60,7 @@ const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<AppState> = {
-  [MUTATION_TYPES.UPDATE_THEME]: (state: AppState, themeColorList: any) => {
+  [MUTATION_TYPES.UPDATE_THEME]: (state: AppState, themeColorList: ThemeColorType) => {
     state.theme = themeColorList
   },
   [MUTATION_TYPES.UPDATE_FONT_SIZE]: (state: AppState, value: number) => {
@@ -66,6 +71,9 @@ const mutations: MutationTree<AppState> = {
   },
   [MUTATION_TYPES.UPDATE_NOTIFY]: (state: AppState, notify: Notify) => {
     state.notify = notify
+  },
+  [MUTATION_TYPES.UPDATE_TOOT_PADDING]: (state: AppState, value: number) => {
+    state.tootPadding = value
   },
   [MUTATION_TYPES.UPDATE_TIME_FORMAT]: (state: AppState, format: number) => {
     state.timeFormat = format
@@ -104,23 +112,24 @@ const actions: ActionTree<AppState, RootState> = {
         ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: any) => {
+      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
         ipcRenderer.removeAllListeners('error-get-preferences')
-        dispatch('updateTheme', conf.appearance as any)
-        commit(MUTATION_TYPES.UPDATE_DISPLAY_NAME_STYLE, conf.appearance.displayNameStyle as number)
-        commit(MUTATION_TYPES.UPDATE_FONT_SIZE, conf.appearance.fontSize as number)
-        commit(MUTATION_TYPES.UPDATE_NOTIFY, conf.notification.notify as Notify)
-        commit(MUTATION_TYPES.UPDATE_TIME_FORMAT, conf.appearance.timeFormat as number)
-        commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language.language as string)
-        commit(MUTATION_TYPES.ADD_FONT, conf.appearance.font as string)
-        commit(MUTATION_TYPES.UPDATE_IGNORE_CW, conf.general.timeline.cw as boolean)
-        commit(MUTATION_TYPES.UPDATE_IGNORE_NFSW, conf.general.timeline.nfsw as boolean)
-        commit(MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS, conf.general.timeline.hideAllAttachments as boolean)
+        dispatch('updateTheme', conf.appearance)
+        commit(MUTATION_TYPES.UPDATE_DISPLAY_NAME_STYLE, conf.appearance.displayNameStyle)
+        commit(MUTATION_TYPES.UPDATE_FONT_SIZE, conf.appearance.fontSize)
+        commit(MUTATION_TYPES.UPDATE_NOTIFY, conf.notification.notify)
+        commit(MUTATION_TYPES.UPDATE_TIME_FORMAT, conf.appearance.timeFormat)
+        commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language.language)
+        commit(MUTATION_TYPES.UPDATE_TOOT_PADDING, conf.appearance.tootPadding)
+        commit(MUTATION_TYPES.ADD_FONT, conf.appearance.font)
+        commit(MUTATION_TYPES.UPDATE_IGNORE_CW, conf.general.timeline.cw)
+        commit(MUTATION_TYPES.UPDATE_IGNORE_NFSW, conf.general.timeline.nfsw)
+        commit(MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS, conf.general.timeline.hideAllAttachments)
         resolve(conf)
       })
     })
   },
-  updateTheme: ({ commit }, appearance: any) => {
+  updateTheme: ({ commit }, appearance: Appearance) => {
     const themeKey: string = appearance.theme
     switch (themeKey) {
       case Theme.Light.key:

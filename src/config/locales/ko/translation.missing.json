@@ -8,6 +8,9 @@
         "nfsw": "Always ignore NFSW of medias",
         "hideAllAttachments": "Hide all medias"
       }
+    },
+    "appearance": {
+      "toot_padding": "Padding around toot"
     }
   },
   "side_menu": {

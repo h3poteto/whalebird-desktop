@@ -1,21 +1,18 @@
 import Mastodon, { WebSocket as SocketListener, Status, Notification } from 'megalodon'
 import log from 'electron-log'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
 export default class WebSocket {
   private client: Mastodon
   private listener: SocketListener | null
 
-  constructor (account: LocalAccount) {
+  constructor(account: LocalAccount) {
     const url = account.baseURL.replace(/^https:\/\//, 'wss://')
-    this.client = new Mastodon(
-      account.accessToken!,
-      url + '/api/v1'
-    )
+    this.client = new Mastodon(account.accessToken!, url + '/api/v1')
     this.listener = null
   }
 
-  startUserStreaming (updateCallback: Function, notificationCallback: Function, errCallback: Function) {
+  startUserStreaming(updateCallback: Function, notificationCallback: Function, deleteCallback: Function, errCallback: Function) {
     this.listener = this.client.socket('/streaming', 'user')
 
     this.listener.on('connect', _ => {
@@ -28,6 +25,10 @@ export default class WebSocket {
 
     this.listener.on('notification', (notification: Notification) => {
       notificationCallback(notification)
+    })
+
+    this.listener.on('delete', (id: string) => {
+      deleteCallback(id)
     })
 
     this.listener.on('error', (err: Error) => {
@@ -49,7 +50,7 @@ export default class WebSocket {
    * When hashtag timeline, the path is `hashtag&tag=tag_name`.
    * When list timeline, the path is `list&list=list_id`.
    */
-  start (stream: string, updateCallback: Function, errCallback: Function) {
+  start(stream: string, updateCallback: Function, deleteCallback: Function, errCallback: Function) {
     this.listener = this.client.socket('/streaming', stream)
     this.listener.on('connect', _ => {
       log.info(`/streaming/?stream=${stream} started`)
@@ -57,6 +58,10 @@ export default class WebSocket {
 
     this.listener.on('update', (status: Status) => {
       updateCallback(status)
+    })
+
+    this.listener.on('delete', (id: string) => {
+      deleteCallback(id)
     })
 
     this.listener.on('error', (err: Error) => {
@@ -68,7 +73,7 @@ export default class WebSocket {
     })
   }
 
-  stop () {
+  stop() {
     if (this.listener) {
       this.listener.removeAllListeners('connect')
       this.listener.removeAllListeners('update')

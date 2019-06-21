@@ -1,4 +1,4 @@
-export default interface LocalTag {
-  tagName: string,
+export type LocalTag = {
+  tagName: string
   _id?: string
 }

@@ -94,6 +94,9 @@ const contentsStore = {
     Local: LocalStore,
     Public: PublicStore,
     Mentions: MentionStore
+  },
+  actions: {
+    changeLoading: jest.fn()
   }
 }
 
@@ -168,7 +171,7 @@ describe('TimelineSpace', () => {
         }
       })
       it('should be detected', async () => {
-        (Mastodon.get as any).mockResolvedValue(mockedResponse)
+        ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
         await store.dispatch('TimelineSpace/detectPleroma')
         expect(store.state.TimelineSpace.pleroma).toEqual(true)
         expect(store.state.TimelineSpace.useWebsocket).toEqual(true)
@@ -203,7 +206,7 @@ describe('TimelineSpace', () => {
         }
       })
       it('should be detected', async () => {
-        (Mastodon.get as any).mockResolvedValue(mockedResponse)
+        ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
         await store.dispatch('TimelineSpace/detectPleroma')
         expect(store.state.TimelineSpace.pleroma).toEqual(false)
         expect(store.state.TimelineSpace.useWebsocket).toEqual(false)
@@ -229,17 +232,14 @@ describe('TimelineSpace', () => {
         visible_in_picker: true
       }
       mockedResponse = {
-        data: [
-          emacsEmoji,
-          rubyEmoji
-        ],
+        data: [emacsEmoji, rubyEmoji],
         status: 200,
         statusText: 'OK',
         headers: {}
       }
     })
     it('should be updated', async () => {
-      (Mastodon.get as any).mockResolvedValue(mockedResponse)
+      ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
       await store.dispatch('TimelineSpace/fetchEmojis', {})
       expect(store.state.TimelineSpace.emojis).toEqual([
         {
@@ -249,7 +249,8 @@ describe('TimelineSpace', () => {
         {
           image: 'http://example.com/ruby',
           name: ':ruby:'
-        }])
+        }
+      ])
     })
   })
 
@@ -264,7 +265,7 @@ describe('TimelineSpace', () => {
       }
     })
     it('should be updated', async () => {
-      (Mastodon.get as any).mockResolvedValue(mockedResponse)
+      ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
       await store.dispatch('TimelineSpace/fetchInstance', {})
       expect(store.state.TimelineSpace.tootMax).toEqual(5000)
     })

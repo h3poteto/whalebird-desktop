@@ -1,72 +1,68 @@
 <template>
-<div
-  class="status"
-  tabIndex="0"
-  ref="status"
-  >
-  <div class="toot">
-    <div class="icon">
-      <img :src="sampleIcon" />
-    </div>
-    <div class="detail">
-      <div class="toot-header">
-        <div class="user">
-          <span class="display-name">{{ username }}</span>
-          <span class="acct">{{ accountName }}</span>
-        </div>
-        <div class="timestamp">
-          {{ timestamp }}
-        </div>
-        <div class="clearfix"></div>
+  <div class="status" tabIndex="0" ref="status">
+    <div class="toot">
+      <div class="icon">
+        <img :src="sampleIcon" />
       </div>
-      <div class="content-wrapper">
-        <div class="content" v-html="status"></div>
-      </div>
-      <div class="tool-box">
-        <el-button type="text" class="reply" :title="$t('cards.toot.reply')">
-          <icon name="reply" scale="0.9"></icon>
-        </el-button>
-        <el-button type="text" class="reblog" :title="$t('cards.toot.reblog')">
-          <icon name="retweet" scale="0.9"></icon>
-        </el-button>
-        <span class="count">
-          {{ reblogsCount }}
-        </span>
-        <el-button type="text" class="favourite" :title="$t('cards.toot.fav')">
-          <icon name="star" scale="0.9"></icon>
-        </el-button>
-        <span class="count">
-          {{ favouritesCount }}
-        </span>
-        <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
-          <div class="popper toot-menu">
-            <ul class="menu-list">
-              <li role="button">
-                {{ $t('cards.toot.view_toot_detail') }}
-              </li>
-              <li role="button">
-                {{ $t('cards.toot.open_in_browser') }}
-              </li>
-              <li role="button">
-                {{ $t('cards.toot.copy_link_to_toot') }}
-              </li>
-              <li role="button" class="separate">
-                {{ $t('cards.toot.delete') }}
-              </li>
-            </ul>
+      <div class="detail">
+        <div class="toot-header">
+          <div class="user">
+            <span class="display-name">{{ username }}</span>
+            <span class="acct">{{ accountName }}</span>
           </div>
-          <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
-            <icon name="ellipsis-h" scale="0.9"></icon>
+          <div class="timestamp">
+            {{ timestamp }}
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="content-wrapper">
+          <div class="content" v-html="status"></div>
+        </div>
+        <div class="tool-box">
+          <el-button type="text" class="reply" :title="$t('cards.toot.reply')">
+            <icon name="reply" scale="0.9"></icon>
           </el-button>
-        </popper>
+          <el-button type="text" class="reblog" :title="$t('cards.toot.reblog')">
+            <icon name="retweet" scale="0.9"></icon>
+          </el-button>
+          <span class="count">
+            {{ reblogsCount }}
+          </span>
+          <el-button type="text" class="favourite" :title="$t('cards.toot.fav')">
+            <icon name="star" scale="0.9"></icon>
+          </el-button>
+          <span class="count">
+            {{ favouritesCount }}
+          </span>
+          <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
+            <div class="popper toot-menu">
+              <ul class="menu-list">
+                <li role="button">
+                  {{ $t('cards.toot.view_toot_detail') }}
+                </li>
+                <li role="button">
+                  {{ $t('cards.toot.open_in_browser') }}
+                </li>
+                <li role="button">
+                  {{ $t('cards.toot.copy_link_to_toot') }}
+                </li>
+                <li role="button" class="separate">
+                  {{ $t('cards.toot.delete') }}
+                </li>
+              </ul>
+            </div>
+            <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
+              <icon name="ellipsis-h" scale="0.9"></icon>
+            </el-button>
+          </popper>
+        </div>
+        <div class="application">
+          {{ $t('cards.toot.via', { application: 'Whalebird' }) }}
+        </div>
       </div>
-      <div class="application">
-        {{ $t('cards.toot.via', { application: 'Whalebird' }) }}
-      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
   </div>
-</div>
 </template>
 
 <script>
@@ -87,10 +83,10 @@ export default {
     }
   },
   computed: {
-    sampleIcon () {
+    sampleIcon() {
       return 'https://github.com/h3poteto/whalebird-desktop/raw/master/build/icons/256x256.png'
     },
-    username () {
+    username() {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
         case DisplayStyle.DisplayName.value:
@@ -99,7 +95,7 @@ export default {
           return 'Roma@mastodon.social'
       }
     },
-    accountName () {
+    accountName() {
       switch (this.displayNameStyle) {
         case DisplayStyle.DisplayNameAndUsername.value:
           return 'Roma@mastodon.social'
@@ -107,7 +103,7 @@ export default {
           return ''
       }
     },
-    timestamp () {
+    timestamp() {
       switch (this.timeFormat) {
         case TimeFormat.Absolute.value:
           return '2018-08-12 20:35:41'
@@ -115,13 +111,13 @@ export default {
           return moment('2018-08-12 20:35:41').fromNow()
       }
     },
-    status () {
+    status() {
       return '<p>Sample status</p>'
     },
-    reblogsCount () {
+    reblogsCount() {
       return 1
     },
-    favouritesCount () {
+    favouritesCount() {
       return 5
     }
   }
@@ -183,7 +179,7 @@ export default {
       color: var(--theme-primary-color);
 
       .content {
-        margin: 4px 0 8px;
+        margin: var(--toot-padding) 0;
         word-wrap: break-word;
       }
 
@@ -270,5 +266,4 @@ export default {
   background-color: var(--theme-selected-background-color);
   outline: 0;
 }
-
 </style>

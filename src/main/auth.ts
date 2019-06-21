@@ -1,6 +1,6 @@
 import Mastodon, { OAuth } from 'megalodon'
 import Account from './account'
-import LocalAccount from '~/src/types/localAccount'
+import { LocalAccount } from '~/src/types/localAccount'
 
 const appName = 'Roma - desktop'
 const appURL = 'https://pleroma.coma'
