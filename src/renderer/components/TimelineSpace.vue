@@ -75,6 +75,7 @@ export default {
   },
   methods: {
     async clear() {
+      this.$store.dispatch('TimelineSpace/unbindStreamings')
       await this.$store.dispatch('TimelineSpace/clearAccount')
       this.$store.dispatch('TimelineSpace/clearContentsTimelines')
       await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
@@ -85,7 +86,7 @@ export default {
       await this.clear()
 
       try {
-        this.$store.dispatch('TimelineSpace/initLoad', this.$route.params.id)
+        await this.$store.dispatch('TimelineSpace/initLoad', this.$route.params.id)
       } catch (err) {
         if (err instanceof AccountLoadError) {
           this.$message({
@@ -99,6 +100,8 @@ export default {
           })
         }
       }
+
+      await this.$store.dispatch('TimelineSpace/prepareSpace')
     },
     handleDrop(e) {
       e.preventDefault()

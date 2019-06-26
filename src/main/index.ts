@@ -461,8 +461,8 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
               app.dock.setBadge('•')
             }
           },
-          (id: string) => {
-            event.sender.send(`delete-start-all-user-streamings-${id}`, id)
+          (statusId: string) => {
+            event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
           },
           (err: Error) => {
             log.error(err)

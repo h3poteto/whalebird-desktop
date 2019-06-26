@@ -8,6 +8,7 @@ describe('TimelineSpace', () => {
     beforeEach(() => {
       state = {
         account: blankAccount,
+        previousAccount: null,
         loading: false,
         emojis: [],
         tootMax: 500,
@@ -44,7 +45,8 @@ describe('TimelineSpace', () => {
           {
             image: 'http://example.com/ruby',
             name: ':ruby:'
-          }])
+          }
+        ])
       })
     })
 

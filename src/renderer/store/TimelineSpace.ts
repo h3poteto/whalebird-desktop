@@ -19,6 +19,7 @@ type MyEmoji = {
 
 export type TimelineSpaceState = {
   account: LocalAccount
+  previousAccount: LocalAccount | null
   loading: boolean
   emojis: Array<MyEmoji>
   tootMax: number
@@ -43,6 +44,7 @@ export const blankAccount: LocalAccount = {
 
 const state = (): TimelineSpaceState => ({
   account: blankAccount,
+  previousAccount: null,
   loading: false,
   emojis: [],
   tootMax: 500,
@@ -57,6 +59,7 @@ const state = (): TimelineSpaceState => ({
 
 export const MUTATION_TYPES = {
   UPDATE_ACCOUNT: 'updateAccount',
+  UPDATE_PREVIOUS_ACCOUNT: 'updatePreviousAccount',
   CHANGE_LOADING: 'changeLoading',
   UPDATE_EMOJIS: 'updateEmojis',
   UPDATE_TOOT_MAX: 'updateTootMax',
@@ -68,6 +71,9 @@ export const MUTATION_TYPES = {
 const mutations: MutationTree<TimelineSpaceState> = {
   [MUTATION_TYPES.UPDATE_ACCOUNT]: (state, account: LocalAccount) => {
     state.account = account
+  },
+  [MUTATION_TYPES.UPDATE_PREVIOUS_ACCOUNT]: (state, account: LocalAccount) => {
+    state.previousAccount = account
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
     state.loading = value
@@ -115,12 +121,15 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     await dispatch('fetchContentsTimelines', account).catch(_ => {
       throw new TimelineFetchError()
     })
-    await dispatch('unbindStreamings')
+    return account
+  },
+  prepareSpace: async ({ state, dispatch, commit }) => {
     await dispatch('bindStreamings')
     dispatch('startStreamings')
-    dispatch('fetchEmojis', account)
-    dispatch('fetchInstance', account)
-    return account
+    await dispatch('fetchEmojis', state.account)
+    await dispatch('fetchInstance', state.account)
+    // Backup current account information.
+    commit(MUTATION_TYPES.UPDATE_PREVIOUS_ACCOUNT, state.account)
   },
   // -------------------------------------------------
   // Accounts
@@ -299,6 +308,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // Each streaming methods
   // ------------------------------------------------
   bindUserStreaming: ({ commit, state, rootState }) => {
+    if (!state.account._id) {
+      throw new Error('Account is not set')
+    }
     ipcRenderer.on(`update-start-all-user-streamings-${state.account._id!}`, (_, update: Status) => {
       commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
       // Sometimes archive old statuses
@@ -416,10 +428,16 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     })
   },
   unbindUserStreaming: ({ state }) => {
-    ipcRenderer.removeAllListeners(`update-start-all-user-streamings-${state.account._id!}`)
-    ipcRenderer.removeAllListeners(`mention-start-all-user-streamings-${state.account._id!}`)
-    ipcRenderer.removeAllListeners(`notification-start-all-user-streamings-${state.account._id!}`)
-    ipcRenderer.removeAllListeners(`delete-start-all-user-streamings-${state.account._id!}`)
+    // When unbind is called, sometimes account is already cleared and account does not have _id.
+    // So we have to get previous account to unbind streamings.
+    if (state.previousAccount) {
+      ipcRenderer.removeAllListeners(`update-start-all-user-streamings-${state.previousAccount._id!}`)
+      ipcRenderer.removeAllListeners(`mention-start-all-user-streamings-${state.previousAccount._id!}`)
+      ipcRenderer.removeAllListeners(`notification-start-all-user-streamings-${state.previousAccount._id!}`)
+      ipcRenderer.removeAllListeners(`delete-start-all-user-streamings-${state.previousAccount._id!}`)
+    } else {
+      console.info('previous account does not exist')
+    }
   },
   // stopUserStreaming: () => {
   //   ipcRenderer.send('stop-user-streaming')
