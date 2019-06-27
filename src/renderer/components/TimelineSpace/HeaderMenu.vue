@@ -191,7 +191,7 @@ export default {
           this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
           break
         default:
-          console.log('Not implemented')
+          console.error('Not implemented')
       }
     },
     reloadable() {

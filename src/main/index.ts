@@ -484,6 +484,15 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
   })
 })
 
+ipcMain.on('stop-all-user-streamings', () => {
+  Object.keys(userStreamings).map((key: string) => {
+    if (userStreamings[key]) {
+      userStreamings[key]!.stop()
+      userStreamings[key] = null
+    }
+  })
+})
+
 // streaming
 let userStreaming: StreamingManager | null = null
 

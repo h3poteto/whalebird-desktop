@@ -118,7 +118,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account, { root: true })
     await dispatch('loadUnreadNotification', accountId)
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
-    await dispatch('fetchContentsTimelines', account).catch(_ => {
+    await dispatch('fetchContentsTimelines').catch(_ => {
       throw new TimelineFetchError()
     })
     return account

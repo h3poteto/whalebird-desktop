@@ -137,6 +137,9 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       ipcRenderer.send('start-all-user-streamings', state.accounts)
     })
   },
+  stopUserStreamings: () => {
+    ipcRenderer.send('stop-all-user-streamings')
+  },
   bindUserStreamingsForNotify: ({ rootState }) => {
     ipcRenderer.on('notification-start-all-user-streamings', (_, accountNotification: AccountNotification) => {
       const { id, notification } = accountNotification
