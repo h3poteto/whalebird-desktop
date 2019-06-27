@@ -34,6 +34,7 @@ import Language from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
+import { AccountNotification } from '~/src/types/accountNotification'
 
 /**
  * Context menu
@@ -420,6 +421,65 @@ ipcMain.on('reset-badge', () => {
   if (process.platform === 'darwin') {
     app.dock.setBadge('')
   }
+})
+
+// user streaming
+let userStreamings: { [key: string]: StreamingManager | null } = {}
+
+ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAccount>) => {
+  accounts.map(account => {
+    const id: string = account._id!
+    accountManager
+      .getAccount(id)
+      .then(acct => {
+        // Stop old user streaming
+        if (userStreamings[id]) {
+          userStreamings[id]!.stop()
+          userStreamings[id] = null
+        }
+        userStreamings[id] = new StreamingManager(acct, true)
+        userStreamings[id]!.startUser(
+          (update: Status) => {
+            event.sender.send(`update-start-all-user-streamings-${id}`, update)
+          },
+          (notification: Notification) => {
+            const accountNotification: AccountNotification = {
+              id: id,
+              notification: notification
+            }
+            // To notiy badge
+            event.sender.send('notification-start-all-user-streamings', accountNotification)
+            // To update notification timeline
+            event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
+
+            // Does not exist a endpoint for only mention. And mention is a part of notification.
+            // So we have to get mention from notification.
+            if (notification.type === 'mention') {
+              event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
+            }
+            if (process.platform === 'darwin') {
+              app.dock.setBadge('•')
+            }
+          },
+          (id: string) => {
+            event.sender.send(`delete-start-all-user-streamings-${id}`, id)
+          },
+          (err: Error) => {
+            log.error(err)
+            // In macOS, sometimes window is closed (not quit).
+            // When window is closed, we can not send event to webContents; because it is destroyed.
+            // So we have to guard it.
+            if (!event.sender.isDestroyed()) {
+              event.sender.send('error-start-all-user-streamings', err)
+            }
+          }
+        )
+      })
+      .catch(err => {
+        log.error(err)
+        event.sender.send('error-start-all-user-streamings', err)
+      })
+  })
 })
 
 // streaming
