@@ -50,6 +50,9 @@ export default {
   created() {
     this.initialize()
   },
+  destroyed() {
+    this.$store.dispatch('GlobalHeader/unbindUserStreamings')
+  },
   methods: {
     activeRoute() {
       return this.$route.path
