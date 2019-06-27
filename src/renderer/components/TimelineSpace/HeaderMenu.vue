@@ -5,7 +5,13 @@
     </div>
     <div class="tools">
       <img src="../../assets/images/loading-spinner-wide.svg" v-show="loading" class="header-loading" />
-      <el-button v-if="!pleroma" type="text" class="action" @click="switchStreaming" :title="$t('header_menu.switch_streaming')">
+      <el-button
+        v-if="streamingSwitchable()"
+        type="text"
+        class="action"
+        @click="switchStreaming"
+        :title="$t('header_menu.switch_streaming')"
+      >
         <svg
           :class="useWebsocket ? 'websocket' : 'not-websocket'"
           width="25"
@@ -149,6 +155,18 @@ export default {
           console.log(this.$route)
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.home'))
           break
+      }
+    },
+    streamingSwitchable() {
+      switch (this.$route.name) {
+        case 'direct-messages':
+        case 'local':
+        case 'public':
+        case 'tag':
+        case 'list':
+          return !this.pleroma
+        default:
+          return false
       }
     },
     switchStreaming() {
