@@ -7,6 +7,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Notify } from '~/src/types/notify'
 import { AccountNotification } from '~/src/types/accountNotification'
+import { StreamingError } from '~src/errors/streamingError'
 
 declare var Notification: any
 
@@ -51,13 +52,11 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       console.error(err)
     }
     const accounts = await dispatch('listAccounts')
-    try {
-      dispatch('bindUserStreamingsForNotify')
-      dispatch('startUserStreamings')
-    } catch (err) {
-      console.error(err)
-    }
     return accounts
+  },
+  startStreamings: async ({ dispatch }) => {
+    dispatch('bindUserStreamingsForNotify')
+    dispatch('startUserStreamings')
   },
   listAccounts: ({ dispatch, commit }): Promise<Array<LocalAccount>> => {
     return new Promise((resolve, reject) => {
@@ -132,7 +131,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
   startUserStreamings: ({ state }): Promise<{}> => {
     // @ts-ignore
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-start-all-user-streamings', (_, err: Error) => {
+      ipcRenderer.once('error-start-all-user-streamings', (_, err: StreamingError) => {
         reject(err)
       })
       ipcRenderer.send('start-all-user-streamings', state.accounts)
