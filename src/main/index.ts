@@ -35,6 +35,7 @@ import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 import { AccountNotification } from '~/src/types/accountNotification'
+import { StreamingError } from '~/src/errors/streamingError'
 
 /**
  * Context menu
@@ -475,9 +476,10 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
           }
         )
       })
-      .catch(err => {
+      .catch((err: Error) => {
         log.error(err)
-        event.sender.send('error-start-all-user-streamings', err)
+        const streamingError = new StreamingError(err.message, account.domain)
+        event.sender.send('error-start-all-user-streamings', streamingError)
       })
   })
 })

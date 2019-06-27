@@ -31,6 +31,7 @@
 <script>
 import { mapState } from 'vuex'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+import { StreamingError } from '~/src/errors/streamingError'
 
 export default {
   name: 'global-header',
@@ -54,14 +55,24 @@ export default {
       return this.$route.path
     },
     async initialize() {
-      try {
-        const accounts = await this.$store.dispatch('GlobalHeader/initLoad')
-        if (this.$route.params.id === undefined) {
-          return this.$router.push({ path: `/${accounts[0]._id}/home` })
-        }
-      } catch (err) {
-        return this.$router.push({ path: '/login' })
-      }
+      await this.$store
+        .dispatch('GlobalHeader/initLoad')
+        .then(accounts => {
+          this.$store.dispatch('GlobalHeader/startStreamings').catch(err => {
+            if (err instanceof StreamingError) {
+              this.$message({
+                message: this.$t('message.start_all_streamings_error', { domain: err.domain }),
+                type: 'error'
+              })
+            }
+          })
+          if (this.$route.params.id === undefined) {
+            this.$router.push({ path: `/${accounts[0]._id}/home` })
+          }
+        })
+        .catch(_ => {
+          return this.$router.push({ path: '/login' })
+        })
     }
   }
 }
