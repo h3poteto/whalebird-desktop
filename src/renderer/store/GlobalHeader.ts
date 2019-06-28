@@ -150,6 +150,8 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
           // We have to wait until change el-menu-item
           setTimeout(() => router.push(`/${id}/notifications`), 1000)
         }
+      } else {
+        console.log('could not create notify')
       }
     })
   },
@@ -168,7 +170,7 @@ const GlobalHeader: Module<GlobalHeaderState, RootState> = {
 
 export default GlobalHeader
 
-function createNotification(notification: NotificationType, notifyConfig: Notify) {
+function createNotification(notification: NotificationType, notifyConfig: Notify): Notification | null {
   switch (notification.type) {
     case 'favourite':
       if (notifyConfig.favourite) {
@@ -203,6 +205,7 @@ function createNotification(notification: NotificationType, notifyConfig: Notify
       }
       break
   }
+  return null
 }
 
 function username(account: Account) {
