@@ -11,7 +11,13 @@
       active-text-color="#ffffff"
       role="menubar"
     >
-      <el-menu-item :index="`/${account._id}/home`" v-for="(account, index) in accounts" v-bind:key="account._id" role="menuitem">
+      <el-menu-item
+        :index="`/${account._id}/home`"
+        :route="{ path: `/${account._id}/home` }"
+        v-for="(account, index) in accounts"
+        v-bind:key="account._id"
+        role="menuitem"
+      >
         <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
         <FailoverImg v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
         <FailoverImg :src="`${account.baseURL}/favicon.ico`" :failoverSrc="`${account.baseURL}/favicon.png`" class="instance-icon" />

@@ -146,7 +146,9 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       let notify = createNotification(notification, rootState.App.notify as Notify)
       if (notify) {
         notify.onclick = () => {
-          router.push(`/${id}/notifications`)
+          router.push(`/${id}/home`)
+          // We have to wait until change el-menu-item
+          setTimeout(() => router.push(`/${id}/notifications`), 1000)
         }
       }
     })
