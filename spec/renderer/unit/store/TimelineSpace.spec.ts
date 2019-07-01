@@ -8,7 +8,7 @@ describe('TimelineSpace', () => {
     beforeEach(() => {
       state = {
         account: blankAccount,
-        previousAccount: null,
+        bindingAccount: null,
         loading: false,
         emojis: [],
         tootMax: 500,

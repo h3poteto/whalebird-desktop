@@ -19,7 +19,7 @@ type MyEmoji = {
 
 export type TimelineSpaceState = {
   account: LocalAccount
-  previousAccount: LocalAccount | null
+  bindingAccount: LocalAccount | null
   loading: boolean
   emojis: Array<MyEmoji>
   tootMax: number
@@ -44,7 +44,7 @@ export const blankAccount: LocalAccount = {
 
 const state = (): TimelineSpaceState => ({
   account: blankAccount,
-  previousAccount: null,
+  bindingAccount: null,
   loading: false,
   emojis: [],
   tootMax: 500,
@@ -59,7 +59,7 @@ const state = (): TimelineSpaceState => ({
 
 export const MUTATION_TYPES = {
   UPDATE_ACCOUNT: 'updateAccount',
-  UPDATE_PREVIOUS_ACCOUNT: 'updatePreviousAccount',
+  UPDATE_BINDING_ACCOUNT: 'updateBindingAccount',
   CHANGE_LOADING: 'changeLoading',
   UPDATE_EMOJIS: 'updateEmojis',
   UPDATE_TOOT_MAX: 'updateTootMax',
@@ -72,8 +72,8 @@ const mutations: MutationTree<TimelineSpaceState> = {
   [MUTATION_TYPES.UPDATE_ACCOUNT]: (state, account: LocalAccount) => {
     state.account = account
   },
-  [MUTATION_TYPES.UPDATE_PREVIOUS_ACCOUNT]: (state, account: LocalAccount) => {
-    state.previousAccount = account
+  [MUTATION_TYPES.UPDATE_BINDING_ACCOUNT]: (state, account: LocalAccount) => {
+    state.bindingAccount = account
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
     state.loading = value
@@ -123,13 +123,13 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     })
     return account
   },
-  prepareSpace: async ({ state, dispatch, commit }) => {
+  prepareSpace: async ({ state, dispatch }) => {
     await dispatch('bindStreamings')
     dispatch('startStreamings')
     await dispatch('fetchEmojis', state.account)
     await dispatch('fetchInstance', state.account)
-    // Backup current account information.
-    commit(MUTATION_TYPES.UPDATE_PREVIOUS_ACCOUNT, state.account)
+    // // Backup current account information.
+    // commit(MUTATION_TYPES.UPDATE_PREVIOUS_ACCOUNT, state.account)
   },
   // -------------------------------------------------
   // Accounts
@@ -307,10 +307,14 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // ------------------------------------------------
   // Each streaming methods
   // ------------------------------------------------
-  bindUserStreaming: ({ commit, state, rootState }) => {
+  bindUserStreaming: async ({ commit, state, rootState, dispatch }) => {
     if (!state.account._id) {
       throw new Error('Account is not set')
     }
+    // We have to wait to unbind previous streaming.
+    await dispatch('waitToUnbindUserStreaming')
+
+    commit(MUTATION_TYPES.UPDATE_BINDING_ACCOUNT, state.account)
     ipcRenderer.on(`update-start-all-user-streamings-${state.account._id!}`, (_, update: Status) => {
       commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
       // Sometimes archive old statuses
@@ -414,16 +418,18 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       })
     })
   },
-  unbindUserStreaming: ({ state }) => {
+  unbindUserStreaming: ({ state, commit }) => {
     // When unbind is called, sometimes account is already cleared and account does not have _id.
     // So we have to get previous account to unbind streamings.
-    if (state.previousAccount) {
-      ipcRenderer.removeAllListeners(`update-start-all-user-streamings-${state.previousAccount._id!}`)
-      ipcRenderer.removeAllListeners(`mention-start-all-user-streamings-${state.previousAccount._id!}`)
-      ipcRenderer.removeAllListeners(`notification-start-all-user-streamings-${state.previousAccount._id!}`)
-      ipcRenderer.removeAllListeners(`delete-start-all-user-streamings-${state.previousAccount._id!}`)
+    if (state.bindingAccount) {
+      ipcRenderer.removeAllListeners(`update-start-all-user-streamings-${state.bindingAccount._id!}`)
+      ipcRenderer.removeAllListeners(`mention-start-all-user-streamings-${state.bindingAccount._id!}`)
+      ipcRenderer.removeAllListeners(`notification-start-all-user-streamings-${state.bindingAccount._id!}`)
+      ipcRenderer.removeAllListeners(`delete-start-all-user-streamings-${state.bindingAccount._id!}`)
+      // And we have to clear binding account after unbind.
+      commit(MUTATION_TYPES.UPDATE_BINDING_ACCOUNT, null)
     } else {
-      console.info('previous account does not exist')
+      console.info('binding account does not exist')
     }
   },
   unbindLocalStreaming: () => {
@@ -464,6 +470,15 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
     }
     return true
+  },
+  waitToUnbindUserStreaming: async ({ state, dispatch }): Promise<boolean> => {
+    if (!state.bindingAccount) {
+      return true
+    }
+    dispatch('unbindUserStreaming')
+    await sleep(500)
+    const res: boolean = await dispatch('waitToUnbindUserStreaming')
+    return res
   }
 }
 
@@ -490,3 +505,5 @@ const TimelineSpace: Module<TimelineSpaceState, RootState> = {
 }
 
 export default TimelineSpace
+
+const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec))
