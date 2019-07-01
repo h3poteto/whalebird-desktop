@@ -3,21 +3,24 @@
     <el-menu
       v-if="!hide"
       :default-active="activeRoute()"
-       class="el-menu-vertical account-menu"
+      class="el-menu-vertical account-menu"
       :collapse="true"
       :router="true"
       :background-color="themeColor"
       text-color="#909399"
       active-text-color="#ffffff"
-      role="menubar">
-      <el-menu-item :index="`/${account._id}/home`" v-for="(account, index) in accounts" v-bind:key="account._id" role="menuitem">
+      role="menubar"
+    >
+      <el-menu-item
+        :index="`/${account._id}/home`"
+        :route="{ path: `/${account._id}/home` }"
+        v-for="(account, index) in accounts"
+        v-bind:key="account._id"
+        role="menuitem"
+      >
         <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
         <FailoverImg v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
-        <FailoverImg
-          :src="`${account.baseURL}/favicon.ico`"
-          :failoverSrc="`${account.baseURL}/favicon.png`"
-          class="instance-icon"
-        />
+        <FailoverImg :src="`${account.baseURL}/favicon.ico`" :failoverSrc="`${account.baseURL}/favicon.png`" class="instance-icon" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
       <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem">
@@ -25,16 +28,16 @@
         <span slot="new">New</span>
       </el-menu-item>
     </el-menu>
-    <div :class="hide ? 'space no-global-header':'space with-global-header' ">
+    <div :class="hide ? 'space no-global-header' : 'space with-global-header'">
       <router-view :key="$route.params.id"></router-view>
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+import { StreamingError } from '~/src/errors/streamingError'
 
 export default {
   name: 'global-header',
@@ -50,25 +53,35 @@ export default {
       themeColor: state => state.App.theme.global_header_color
     })
   },
-  created () {
+  created() {
     this.initialize()
   },
+  destroyed() {
+    this.$store.dispatch('GlobalHeader/unbindUserStreamings')
+  },
   methods: {
-    activeRoute () {
+    activeRoute() {
       return this.$route.path
     },
-    async initialize () {
-      await this.$store.dispatch('GlobalHeader/removeShortcutEvents')
-      await this.$store.dispatch('GlobalHeader/loadHide')
-      this.$store.dispatch('GlobalHeader/watchShortcutEvents')
-      try {
-        const accounts = await this.$store.dispatch('GlobalHeader/listAccounts')
-        if (this.$route.params.id === undefined) {
-          return this.$router.push({ path: `/${accounts[0]._id}/home` })
-        }
-      } catch (err) {
-        return this.$router.push({ path: '/login' })
-      }
+    async initialize() {
+      await this.$store
+        .dispatch('GlobalHeader/initLoad')
+        .then(accounts => {
+          this.$store.dispatch('GlobalHeader/startStreamings').catch(err => {
+            if (err instanceof StreamingError) {
+              this.$message({
+                message: this.$t('message.start_all_streamings_error', { domain: err.domain }),
+                type: 'error'
+              })
+            }
+          })
+          if (this.$route.params.id === undefined) {
+            this.$router.push({ path: `/${accounts[0]._id}/home` })
+          }
+        })
+        .catch(_ => {
+          return this.$router.push({ path: '/login' })
+        })
     }
   }
 }
