@@ -339,19 +339,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
     })
   },
-  // startUserStreaming: ({ state }): Promise<{}> => {
-  //   // @ts-ignore
-  //   return new Promise((resolve, reject) => {
-  //     // eslint-disable-line no-unused-vars
-  //     ipcRenderer.send('start-user-streaming', {
-  //       account: state.account,
-  //       useWebsocket: state.useWebsocket
-  //     })
-  //     ipcRenderer.once('error-start-user-streaming', (_, err: Error) => {
-  //       reject(err)
-  //     })
-  //   })
-  // },
   bindLocalStreaming: ({ commit, rootState }) => {
     ipcRenderer.on('update-start-local-streaming', (_, update: Status) => {
       commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
@@ -439,9 +426,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       console.info('previous account does not exist')
     }
   },
-  // stopUserStreaming: () => {
-  //   ipcRenderer.send('stop-user-streaming')
-  // },
   unbindLocalStreaming: () => {
     ipcRenderer.removeAllListeners('error-start-local-streaming')
     ipcRenderer.removeAllListeners('update-start-local-streaming')

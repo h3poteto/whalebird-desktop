@@ -493,67 +493,10 @@ ipcMain.on('stop-all-user-streamings', () => {
   })
 })
 
-// streaming
-let userStreaming: StreamingManager | null = null
-
 type StreamingSetting = {
   account: LocalAccount
   useWebsocket: boolean
 }
-
-ipcMain.on('start-user-streaming', (event: Event, obj: StreamingSetting) => {
-  const { account, useWebsocket } = obj
-  accountManager
-    .getAccount(account._id!)
-    .then(acct => {
-      // Stop old user streaming
-      if (userStreaming !== null) {
-        userStreaming.stop()
-        userStreaming = null
-      }
-
-      userStreaming = new StreamingManager(acct, useWebsocket)
-      userStreaming.startUser(
-        (update: Status) => {
-          event.sender.send('update-start-user-streaming', update)
-        },
-        (notification: Notification) => {
-          event.sender.send('notification-start-user-streaming', notification)
-          // Does not exist a endpoint for only mention. And mention is a part of notification.
-          // So we have to get mention from notification.
-          if (notification.type === 'mention') {
-            event.sender.send('mention-start-user-streaming', notification)
-          }
-          if (process.platform === 'darwin') {
-            app.dock.setBadge('•')
-          }
-        },
-        (id: string) => {
-          event.sender.send('delete-start-user-streaming', id)
-        },
-        (err: Error) => {
-          log.error(err)
-          // In macOS, sometimes window is closed (not quit).
-          // When window is closed, we can not send event to webContents; because it is destroyed.
-          // So we have to guard it.
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('error-start-user-streaming', err)
-          }
-        }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-start-user-streaming', err)
-    })
-})
-
-ipcMain.on('stop-user-streaming', () => {
-  if (userStreaming !== null) {
-    userStreaming.stop()
-    userStreaming = null
-  }
-})
 
 let directMessagesStreaming: StreamingManager | null = null
 
