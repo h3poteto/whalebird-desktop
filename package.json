@@ -231,7 +231,7 @@
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "4.2.4",
-    "electron-builder": "^20.39.0",
+    "electron-builder": "^20.44.4",
     "electron-debug": "^2.2.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-ipc-mock": "0.0.3",
