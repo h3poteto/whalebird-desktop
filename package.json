@@ -232,7 +232,7 @@
     "electron-debug": "^2.2.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-ipc-mock": "0.0.3",
-    "electron-packager": "^12.2.0",
+    "electron-packager": "^14.0.1",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-standard": "^12.0.0",
