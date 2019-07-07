@@ -1,6 +1,7 @@
-import mock from 'electron-ipc-mock'
+import createIPCMock from 'electron-mock-ipc'
 
-const instance = mock()
-const ipcMain = instance.ipcMain
-const ipcRenderer = instance.ipcRenderer
+const mocked = createIPCMock()
+const ipcMain = mocked.ipcMain
+const ipcRenderer = mocked.ipcRenderer
+
 export { ipcMain, ipcRenderer }
