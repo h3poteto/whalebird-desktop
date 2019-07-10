@@ -175,16 +175,16 @@ export default class Account {
     })
   }
 
-  removeAccount(id: string): Promise<number> {
+  removeAccount(id: string): Promise<string> {
     return new Promise((resolve, reject) => {
       this.db.remove(
         {
           _id: id
         },
         { multi: true },
-        (err, numRemoved) => {
+        (err, _numRemoved) => {
           if (err) return reject(err)
-          resolve(numRemoved)
+          resolve(id)
         }
       )
     })
