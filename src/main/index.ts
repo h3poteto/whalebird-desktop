@@ -363,8 +363,9 @@ ipcMain.on('update-account', (event: Event, acct: LocalAccount) => {
 ipcMain.on('remove-account', (event: Event, id: string) => {
   accountManager
     .removeAccount(id)
-    .then(() => {
-      event.sender.send('response-remove-account')
+    .then((id) => {
+      stopUserStreaming(id)
+      event.sender.send('response-remove-account', id)
     })
     .catch(err => {
       event.sender.send('error-remove-account', err)
@@ -492,6 +493,19 @@ ipcMain.on('stop-all-user-streamings', () => {
     }
   })
 })
+
+/**
+ * Stop an user streaming in all user streamings.
+ * @param id specified user id in nedb.
+ */
+const stopUserStreaming = (id: string) => {
+  Object.keys(userStreamings).map((key: string) => {
+    if (key === id && userStreamings[id]) {
+      userStreamings[id]!.stop()
+      userStreamings[id] = null
+    }
+  })
+}
 
 type StreamingSetting = {
   account: LocalAccount
