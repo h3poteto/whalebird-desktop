@@ -46,6 +46,7 @@ const status1: Status = {
   mentions: [],
   tags: [],
   card: null,
+  poll: null,
   application: {
     name: 'Web'
   } as Application,
@@ -76,6 +77,7 @@ const status2: Status = {
   mentions: [],
   tags: [],
   card: null,
+  poll: null,
   application: {
     name: 'Web'
   } as Application,
@@ -235,6 +237,7 @@ describe('TimelineSpace/Contents/Home', () => {
           mentions: [],
           tags: [],
           card: null,
+          poll: null,
           application: {
             name: 'Web'
           } as Application,
@@ -308,6 +311,7 @@ describe('TimelineSpace/Contents/Home', () => {
             mentions: [],
             tags: [],
             card: null,
+            poll: null,
             application: {
               name: 'Web'
             } as Application,
