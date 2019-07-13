@@ -49,7 +49,7 @@ const actions: ActionTree<AccountState, RootState> = {
         ipcRenderer.removeAllListeners('response-remove-account')
         reject(err)
       })
-      ipcRenderer.once('response-remove-account', () => {
+      ipcRenderer.once('response-remove-account', (_id: string) => {
         ipcRenderer.removeAllListeners('error-remove-account')
         resolve()
       })

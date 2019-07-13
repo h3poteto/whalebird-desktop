@@ -339,6 +339,7 @@
     "follow_request_accept_error": "フォローリクエストの承認に失敗しました",
     "follow_reuqest_reject_error": "フォローリクエストの却下に失敗しました",
     "start_streaming_error": "ストリーミングを開始できませんでした",
+    "start_all_streamings_error": "{{domain}}のストリーミングを開始できませんでした",
     "attach_error": "ファイルを添付できませんでした",
     "authorize_duplicate_error": "同一ドメイン同一アカウントではログインできません",
     "authorize_error": "認証に失敗しました",

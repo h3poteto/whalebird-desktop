@@ -34,6 +34,8 @@ import Language from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
+import { AccountNotification } from '~/src/types/accountNotification'
+import { StreamingError } from '~/src/errors/streamingError'
 
 /**
  * Context menu
@@ -361,8 +363,9 @@ ipcMain.on('update-account', (event: Event, acct: LocalAccount) => {
 ipcMain.on('remove-account', (event: Event, id: string) => {
   accountManager
     .removeAccount(id)
-    .then(() => {
-      event.sender.send('response-remove-account')
+    .then((id) => {
+      stopUserStreaming(id)
+      event.sender.send('response-remove-account', id)
     })
     .catch(err => {
       event.sender.send('error-remove-account', err)
@@ -422,67 +425,92 @@ ipcMain.on('reset-badge', () => {
   }
 })
 
-// streaming
-let userStreaming: StreamingManager | null = null
+// user streaming
+let userStreamings: { [key: string]: StreamingManager | null } = {}
+
+ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAccount>) => {
+  accounts.map(account => {
+    const id: string = account._id!
+    accountManager
+      .getAccount(id)
+      .then(acct => {
+        // Stop old user streaming
+        if (userStreamings[id]) {
+          userStreamings[id]!.stop()
+          userStreamings[id] = null
+        }
+        userStreamings[id] = new StreamingManager(acct, true)
+        userStreamings[id]!.startUser(
+          (update: Status) => {
+            event.sender.send(`update-start-all-user-streamings-${id}`, update)
+          },
+          (notification: Notification) => {
+            const accountNotification: AccountNotification = {
+              id: id,
+              notification: notification
+            }
+            // To notiy badge
+            event.sender.send('notification-start-all-user-streamings', accountNotification)
+            // To update notification timeline
+            event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
+
+            // Does not exist a endpoint for only mention. And mention is a part of notification.
+            // So we have to get mention from notification.
+            if (notification.type === 'mention') {
+              event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
+            }
+            if (process.platform === 'darwin') {
+              app.dock.setBadge('•')
+            }
+          },
+          (statusId: string) => {
+            event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
+          },
+          (err: Error) => {
+            log.error(err)
+            // In macOS, sometimes window is closed (not quit).
+            // When window is closed, we can not send event to webContents; because it is destroyed.
+            // So we have to guard it.
+            if (!event.sender.isDestroyed()) {
+              event.sender.send('error-start-all-user-streamings', err)
+            }
+          }
+        )
+      })
+      .catch((err: Error) => {
+        log.error(err)
+        const streamingError = new StreamingError(err.message, account.domain)
+        event.sender.send('error-start-all-user-streamings', streamingError)
+      })
+  })
+})
+
+ipcMain.on('stop-all-user-streamings', () => {
+  Object.keys(userStreamings).map((key: string) => {
+    if (userStreamings[key]) {
+      userStreamings[key]!.stop()
+      userStreamings[key] = null
+    }
+  })
+})
+
+/**
+ * Stop an user streaming in all user streamings.
+ * @param id specified user id in nedb.
+ */
+const stopUserStreaming = (id: string) => {
+  Object.keys(userStreamings).map((key: string) => {
+    if (key === id && userStreamings[id]) {
+      userStreamings[id]!.stop()
+      userStreamings[id] = null
+    }
+  })
+}
 
 type StreamingSetting = {
   account: LocalAccount
   useWebsocket: boolean
 }
-
-ipcMain.on('start-user-streaming', (event: Event, obj: StreamingSetting) => {
-  const { account, useWebsocket } = obj
-  accountManager
-    .getAccount(account._id!)
-    .then(acct => {
-      // Stop old user streaming
-      if (userStreaming !== null) {
-        userStreaming.stop()
-        userStreaming = null
-      }
-
-      userStreaming = new StreamingManager(acct, useWebsocket)
-      userStreaming.startUser(
-        (update: Status) => {
-          event.sender.send('update-start-user-streaming', update)
-        },
-        (notification: Notification) => {
-          event.sender.send('notification-start-user-streaming', notification)
-          // Does not exist a endpoint for only mention. And mention is a part of notification.
-          // So we have to get mention from notification.
-          if (notification.type === 'mention') {
-            event.sender.send('mention-start-user-streaming', notification)
-          }
-          if (process.platform === 'darwin') {
-            app.dock.setBadge('•')
-          }
-        },
-        (id: string) => {
-          event.sender.send('delete-start-user-streaming', id)
-        },
-        (err: Error) => {
-          log.error(err)
-          // In macOS, sometimes window is closed (not quit).
-          // When window is closed, we can not send event to webContents; because it is destroyed.
-          // So we have to guard it.
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('error-start-user-streaming', err)
-          }
-        }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-start-user-streaming', err)
-    })
-})
-
-ipcMain.on('stop-user-streaming', () => {
-  if (userStreaming !== null) {
-    userStreaming.stop()
-    userStreaming = null
-  }
-})
 
 let directMessagesStreaming: StreamingManager | null = null
 

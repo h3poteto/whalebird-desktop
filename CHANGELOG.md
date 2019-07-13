@@ -1,6 +1,38 @@
 # Change Log
 
-## [2.7.3]
+## [2.7.5] - 2019-06-20
+### Changed
+- [#945](https://github.com/h3poteto/whalebird-desktop/pull/945) Update Electron version to 4.2.4
+- [#944](https://github.com/h3poteto/whalebird-desktop/pull/944) Allow up to 72pt font in Appearance
+- [#939](https://github.com/h3poteto/whalebird-desktop/pull/939) Add integration tests for Contents
+
+### Fixed
+- [#942](https://github.com/h3poteto/whalebird-desktop/pull/942) Update megalodon version to 0.7.5
+
+
+## [2.7.4] - 2019-06-12
+### Added
+
+- [#935](https://github.com/h3poteto/whalebird-desktop/pull/935) Customize toot padding
+- [#929](https://github.com/h3poteto/whalebird-desktop/pull/929) Add arm architecture in build target
+
+### Changed
+
+- [#938](https://github.com/h3poteto/whalebird-desktop/pull/938) Update megalodon version to 0.7.2
+- [#937](https://github.com/h3poteto/whalebird-desktop/pull/937) refactor: Use type instead of interface
+- [#936](https://github.com/h3poteto/whalebird-desktop/pull/936) refactor: Replace any type and organize preference
+- [#931](https://github.com/h3poteto/whalebird-desktop/pull/931) Update megalodon version to 0.7.1
+- [#930](https://github.com/h3poteto/whalebird-desktop/pull/930) Handle delete event of streamings
+
+### Fixed
+
+- [#941](https://github.com/h3poteto/whalebird-desktop/pull/941) Update megalodon for User Agent and add User Agent in streaming
+- [#933](https://github.com/h3poteto/whalebird-desktop/pull/933) Fix hashtag when it is fixed
+- [#928](https://github.com/h3poteto/whalebird-desktop/pull/928) Upgrade megalodon and fix id type
+
+
+
+## [2.7.3] - 2019-05-27
 ### Added
 - [#925](https://github.com/h3poteto/whalebird-desktop/pull/925) Update access token using refresh token when expire the token
 
