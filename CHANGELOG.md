@@ -1,5 +1,21 @@
 # Change Log
 
+## [2.8.0] - 2019-07-13
+### Added
+- [#946](https://github.com/h3poteto/whalebird-desktop/pull/946) Run all userstreaming in background and notify for all accounts
+
+### Changed
+- [#955](https://github.com/h3poteto/whalebird-desktop/pull/955) Remove unused tests and packages
+- [#954](https://github.com/h3poteto/whalebird-desktop/pull/954) Update outdated packages
+- [#953](https://github.com/h3poteto/whalebird-desktop/pull/953) Use electrom-mock-ipc instead of electron-ipc-mock
+- [#951](https://github.com/h3poteto/whalebird-desktop/pull/951) Update node version to 10.16.0
+- [#950](https://github.com/h3poteto/whalebird-desktop/pull/950) Update megalodon version to 0.8.0
+
+### Fixed
+- [#957](https://github.com/h3poteto/whalebird-desktop/pull/957) Stop user streaming after remove account association
+
+
+
 ## [2.7.5] - 2019-06-20
 ### Changed
 - [#945](https://github.com/h3poteto/whalebird-desktop/pull/945) Update Electron version to 4.2.4
