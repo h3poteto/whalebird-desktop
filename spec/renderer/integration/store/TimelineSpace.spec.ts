@@ -30,6 +30,7 @@ const mockedInstance: Instance = {
 const state = (): TimelineSpaceState => {
   return {
     account: blankAccount,
+    bindingAccount: null,
     loading: false,
     emojis: [],
     tootMax: 500,

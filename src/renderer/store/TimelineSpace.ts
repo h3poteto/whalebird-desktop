@@ -1,21 +1,16 @@
-import sanitizeHtml from 'sanitize-html'
 import { ipcRenderer } from 'electron'
 import Mastodon, { Account, Emoji, Instance, Status, Notification as NotificationType } from 'megalodon'
 import SideMenu, { SideMenuState } from './TimelineSpace/SideMenu'
 import HeaderMenu, { HeaderMenuState } from './TimelineSpace/HeaderMenu'
 import Modals, { ModalsModuleState } from './TimelineSpace/Modals'
 import Contents, { ContentsModuleState } from './TimelineSpace/Contents'
-import router from '@/router'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { LocalAccount } from '~/src/types/localAccount'
-import { Notify } from '~/src/types/notify'
 import { RootState } from '@/store'
 import { UnreadNotification } from '~/src/types/unreadNotification'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
-
-declare var Notification: any
 
 type MyEmoji = {
   name: string
@@ -24,6 +19,7 @@ type MyEmoji = {
 
 export type TimelineSpaceState = {
   account: LocalAccount
+  bindingAccount: LocalAccount | null
   loading: boolean
   emojis: Array<MyEmoji>
   tootMax: number
@@ -48,6 +44,7 @@ export const blankAccount: LocalAccount = {
 
 const state = (): TimelineSpaceState => ({
   account: blankAccount,
+  bindingAccount: null,
   loading: false,
   emojis: [],
   tootMax: 500,
@@ -62,6 +59,7 @@ const state = (): TimelineSpaceState => ({
 
 export const MUTATION_TYPES = {
   UPDATE_ACCOUNT: 'updateAccount',
+  UPDATE_BINDING_ACCOUNT: 'updateBindingAccount',
   CHANGE_LOADING: 'changeLoading',
   UPDATE_EMOJIS: 'updateEmojis',
   UPDATE_TOOT_MAX: 'updateTootMax',
@@ -73,6 +71,9 @@ export const MUTATION_TYPES = {
 const mutations: MutationTree<TimelineSpaceState> = {
   [MUTATION_TYPES.UPDATE_ACCOUNT]: (state, account: LocalAccount) => {
     state.account = account
+  },
+  [MUTATION_TYPES.UPDATE_BINDING_ACCOUNT]: (state, account: LocalAccount) => {
+    state.bindingAccount = account
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
     state.loading = value
@@ -117,15 +118,18 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account, { root: true })
     await dispatch('loadUnreadNotification', accountId)
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
-    await dispatch('fetchContentsTimelines', account).catch(_ => {
+    await dispatch('fetchContentsTimelines').catch(_ => {
       throw new TimelineFetchError()
     })
-    await dispatch('unbindStreamings')
-    await dispatch('bindStreamings', account)
-    dispatch('startStreamings', account)
-    dispatch('fetchEmojis', account)
-    dispatch('fetchInstance', account)
     return account
+  },
+  prepareSpace: async ({ state, dispatch }) => {
+    await dispatch('bindStreamings')
+    dispatch('startStreamings')
+    await dispatch('fetchEmojis', state.account)
+    await dispatch('fetchInstance', state.account)
+    // // Backup current account information.
+    // commit(MUTATION_TYPES.UPDATE_PREVIOUS_ACCOUNT, state.account)
   },
   // -------------------------------------------------
   // Accounts
@@ -266,8 +270,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Mentions/clearMentions', {}, { root: true })
   },
-  bindStreamings: ({ dispatch, state }, account: LocalAccount) => {
-    dispatch('bindUserStreaming', account)
+  bindStreamings: ({ dispatch, state }) => {
+    dispatch('bindUserStreaming')
     if (state.unreadNotification.direct) {
       dispatch('bindDirectMessagesStreaming')
     }
@@ -279,7 +283,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     }
   },
   startStreamings: ({ dispatch, state }) => {
-    dispatch('startUserStreaming')
     if (state.unreadNotification.direct) {
       dispatch('startDirectMessagesStreaming')
     }
@@ -291,7 +294,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     }
   },
   stopStreamings: ({ dispatch }) => {
-    dispatch('stopUserStreaming')
     dispatch('stopDirectMessagesStreaming')
     dispatch('stopLocalStreaming')
     dispatch('stopPublicStreaming')
@@ -305,8 +307,15 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // ------------------------------------------------
   // Each streaming methods
   // ------------------------------------------------
-  bindUserStreaming: ({ commit, rootState }, account: LocalAccount) => {
-    ipcRenderer.on('update-start-user-streaming', (_, update: Status) => {
+  bindUserStreaming: async ({ commit, state, rootState, dispatch }) => {
+    if (!state.account._id) {
+      throw new Error('Account is not set')
+    }
+    // We have to wait to unbind previous streaming.
+    await dispatch('waitToUnbindUserStreaming')
+
+    commit(MUTATION_TYPES.UPDATE_BINDING_ACCOUNT, state.account)
+    ipcRenderer.on(`update-start-all-user-streamings-${state.account._id!}`, (_, update: Status) => {
       commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
       // Sometimes archive old statuses
       if (rootState.TimelineSpace.Contents.Home.heading && Math.random() > 0.8) {
@@ -314,43 +323,24 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
     })
-    ipcRenderer.on('notification-start-user-streaming', (_, notification: NotificationType) => {
-      let notify = createNotification(notification, rootState.App.notify as Notify)
-      if (notify) {
-        notify.onclick = () => {
-          router.push(`/${account._id}/notifications`)
-        }
-      }
+    ipcRenderer.on(`notification-start-all-user-streamings-${state.account._id!}`, (_, notification: NotificationType) => {
       commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
       if (rootState.TimelineSpace.Contents.Notifications.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Notifications/archiveNotifications', null, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
     })
-    ipcRenderer.on('mention-start-user-streaming', (_, mention: NotificationType) => {
+    ipcRenderer.on(`mention-start-all-user-streamings-${state.account._id!}`, (_, mention: NotificationType) => {
       commit('TimelineSpace/Contents/Mentions/appendMentions', mention, { root: true })
       if (rootState.TimelineSpace.Contents.Mentions.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Mentions/archiveMentions', null, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadMentions', true, { root: true })
     })
-    ipcRenderer.on('delete-start-user-streaming', (_, id: string) => {
+    ipcRenderer.on(`delete-start-all-user-streamings-${state.account._id!}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Home/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Notifications/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
-    })
-  },
-  startUserStreaming: ({ state }): Promise<{}> => {
-    // @ts-ignore
-    return new Promise((resolve, reject) => {
-      // eslint-disable-line no-unused-vars
-      ipcRenderer.send('start-user-streaming', {
-        account: state.account,
-        useWebsocket: state.useWebsocket
-      })
-      ipcRenderer.once('error-start-user-streaming', (_, err: Error) => {
-        reject(err)
-      })
     })
   },
   bindLocalStreaming: ({ commit, rootState }) => {
@@ -428,15 +418,19 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       })
     })
   },
-  unbindUserStreaming: () => {
-    ipcRenderer.removeAllListeners('update-start-user-streaming')
-    ipcRenderer.removeAllListeners('mention-start-user-streaming')
-    ipcRenderer.removeAllListeners('notification-start-user-streaming')
-    ipcRenderer.removeAllListeners('delete-start-user-streaming')
-    ipcRenderer.removeAllListeners('error-start-user-streaming')
-  },
-  stopUserStreaming: () => {
-    ipcRenderer.send('stop-user-streaming')
+  unbindUserStreaming: ({ state, commit }) => {
+    // When unbind is called, sometimes account is already cleared and account does not have _id.
+    // So we have to get previous account to unbind streamings.
+    if (state.bindingAccount) {
+      ipcRenderer.removeAllListeners(`update-start-all-user-streamings-${state.bindingAccount._id!}`)
+      ipcRenderer.removeAllListeners(`mention-start-all-user-streamings-${state.bindingAccount._id!}`)
+      ipcRenderer.removeAllListeners(`notification-start-all-user-streamings-${state.bindingAccount._id!}`)
+      ipcRenderer.removeAllListeners(`delete-start-all-user-streamings-${state.bindingAccount._id!}`)
+      // And we have to clear binding account after unbind.
+      commit(MUTATION_TYPES.UPDATE_BINDING_ACCOUNT, null)
+    } else {
+      console.info('binding account does not exist')
+    }
   },
   unbindLocalStreaming: () => {
     ipcRenderer.removeAllListeners('error-start-local-streaming')
@@ -476,6 +470,15 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
     }
     return true
+  },
+  waitToUnbindUserStreaming: async ({ state, dispatch }): Promise<boolean> => {
+    if (!state.bindingAccount) {
+      return true
+    }
+    dispatch('unbindUserStreaming')
+    await sleep(500)
+    const res: boolean = await dispatch('waitToUnbindUserStreaming')
+    return res
   }
 }
 
@@ -503,47 +506,4 @@ const TimelineSpace: Module<TimelineSpaceState, RootState> = {
 
 export default TimelineSpace
 
-function createNotification(notification: NotificationType, notifyConfig: Notify) {
-  switch (notification.type) {
-    case 'favourite':
-      if (notifyConfig.favourite) {
-        return new Notification('Favourite', {
-          body: `${username(notification.account)} favourited your status`
-        })
-      }
-      break
-    case 'follow':
-      if (notifyConfig.follow) {
-        return new Notification('Follow', {
-          body: `${username(notification.account)} is now following you`
-        })
-      }
-      break
-    case 'mention':
-      if (notifyConfig.reply) {
-        // Clean html tags
-        return new Notification(`${notification.status!.account.display_name}`, {
-          body: sanitizeHtml(notification.status!.content, {
-            allowedTags: [],
-            allowedAttributes: []
-          })
-        })
-      }
-      break
-    case 'reblog':
-      if (notifyConfig.reblog) {
-        return new Notification('Reblog', {
-          body: `${username(notification.account)} boosted your status`
-        })
-      }
-      break
-  }
-}
-
-function username(account: Account) {
-  if (account.display_name !== '') {
-    return account.display_name
-  } else {
-    return account.username
-  }
-}
+const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec))

@@ -348,6 +348,7 @@
     "follow_request_accept_error": "Failed to accept the request",
     "follow_reuqest_reject_error": "failed to reject the request",
     "start_streaming_error": "Failed to start streaming",
+    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
     "attach_error": "Could not attach the file",
     "authorize_duplicate_error": "Can not login the same account of the same domain",
     "authorize_error": "Failed to authorize",

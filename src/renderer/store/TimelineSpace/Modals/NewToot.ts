@@ -141,14 +141,24 @@ const mutations: MutationTree<NewTootState> = {
 }
 
 const actions: ActionTree<NewTootState, RootState> = {
-  setupLoading: ({ commit }) => {
+  setupLoading: ({ dispatch }) => {
     const axiosLoading = new AxiosLoading()
     axiosLoading.on('start', (_: number) => {
-      commit(MUTATION_TYPES.CHANGE_LOADING, true)
+      dispatch('startLoading')
     })
     axiosLoading.on('done', () => {
-      commit(MUTATION_TYPES.CHANGE_LOADING, false)
+      dispatch('stopLoading')
     })
+  },
+  startLoading: ({ commit, state }) => {
+    if (state.modalOpen && !state.loading) {
+      commit(MUTATION_TYPES.CHANGE_LOADING, true)
+    }
+  },
+  stopLoading: ({ commit, state }) => {
+    if (state.modalOpen && state.loading) {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
+    }
   },
   updateMedia: async ({ rootState }, mediaDescription: MediaDescription) => {
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
