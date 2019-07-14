@@ -60,16 +60,7 @@
             </el-button>
           </div>
           <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
-          <div class="poll" v-show="isShowContent" v-if="poll">
-            <ul class="poll-list">
-              <li v-for="(option, id) in poll.options" v-bind:key="id">
-                <el-radio v-model="pollRadio" :label="option.title">{{ option.title }}</el-radio>
-              </li>
-            </ul>
-            <el-button type="success">Vote</el-button>
-            {{ poll.votes_count }} votes,
-            until {{ parseDatetime(poll.expires_at, now) }}
-          </div>
+          <Poll v-show="isShowContent" v-if="poll" :poll="poll"></Poll>
         </div>
         <div class="attachments">
           <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
@@ -194,20 +185,21 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+import Poll from '~/src/renderer/components/molecules/Toot/Poll'
 import { setInterval, clearInterval } from 'timers'
 
 export default {
   name: 'toot',
   components: {
-    FailoverImg
+    FailoverImg,
+    Poll
   },
   data() {
     return {
       showContent: this.$store.state.App.ignoreCW,
       showAttachments: this.$store.state.App.ignoreNFSW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
-      now: Date.now(),
-      pollRadio: null
+      now: Date.now()
     }
   },
   props: {
@@ -638,17 +630,6 @@ export default {
       .content {
         margin: var(--toot-padding) 0;
         word-wrap: break-word;
-      }
-
-      .poll {
-        .poll-list {
-          list-style: none;
-          padding-left: 16px;
-
-          li {
-            margin: 4px 0;
-          }
-        }
       }
 
       .emojione {
