@@ -60,6 +60,16 @@
             </el-button>
           </div>
           <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
+          <div class="poll" v-show="isShowContent" v-if="poll">
+            <ul class="poll-list">
+              <li v-for="(option, id) in poll.options" v-bind:key="id">
+                <el-radio v-model="pollRadio" :label="option.title">{{ option.title }}</el-radio>
+              </li>
+            </ul>
+            <el-button type="success">Vote</el-button>
+            {{ poll.votes_count }} votes,
+            until {{ parseDatetime(poll.expires_at, now) }}
+          </div>
         </div>
         <div class="attachments">
           <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
@@ -196,7 +206,8 @@ export default {
       showContent: this.$store.state.App.ignoreCW,
       showAttachments: this.$store.state.App.ignoreNFSW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
-      now: Date.now()
+      now: Date.now(),
+      pollRadio: null
     }
   },
   props: {
@@ -274,6 +285,9 @@ export default {
     },
     isShowContent: function() {
       return !this.spoilered || this.showContent
+    },
+    poll: function() {
+      return this.originalMessage.poll
     },
     sensitive: function() {
       return (this.hideAllAttachments || this.originalMessage.sensitive) && this.mediaAttachments.length > 0
@@ -624,6 +638,17 @@ export default {
       .content {
         margin: var(--toot-padding) 0;
         word-wrap: break-word;
+      }
+
+      .poll {
+        .poll-list {
+          list-style: none;
+          padding-left: 16px;
+
+          li {
+            margin: 4px 0;
+          }
+        }
       }
 
       .emojione {
