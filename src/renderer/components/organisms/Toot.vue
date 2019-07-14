@@ -199,7 +199,8 @@ export default {
       showContent: this.$store.state.App.ignoreCW,
       showAttachments: this.$store.state.App.ignoreNFSW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
-      now: Date.now()
+      now: Date.now(),
+      pollResponse: null
     }
   },
   props: {
@@ -279,7 +280,11 @@ export default {
       return !this.spoilered || this.showContent
     },
     poll: function() {
-      return this.originalMessage.poll
+      if (this.pollResponse) {
+        return this.pollResponse
+      } else {
+        return this.originalMessage.poll
+      }
     },
     sensitive: function() {
       return (this.hideAllAttachments || this.originalMessage.sensitive) && this.mediaAttachments.length > 0
@@ -555,8 +560,12 @@ export default {
           break
       }
     },
-    vote(choices) {
-      console.log(choices)
+    async vote(choices) {
+      const res = await this.$store.dispatch('organisms/Toot/vote', {
+        id: this.poll.id,
+        choices: choices
+      })
+      this.pollResponse = res
     }
   }
 }
