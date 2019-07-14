@@ -60,7 +60,7 @@
             </el-button>
           </div>
           <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
-          <Poll v-show="isShowContent" v-if="poll" :poll="poll"></Poll>
+          <Poll v-show="isShowContent" v-if="poll" :poll="poll" @vote="vote"></Poll>
         </div>
         <div class="attachments">
           <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
@@ -416,13 +416,13 @@ export default {
       this.$refs.popper.doClose()
     },
     block() {
-      this.$store.dispatch('molecules/Toot/block', this.originalMessage.account)
+      this.$store.dispatch('organisms/Toot/block', this.originalMessage.account)
       this.$refs.popper.doClose()
     },
     changeReblog(message) {
       if (message.reblogged) {
         this.$store
-          .dispatch('molecules/Toot/unreblog', message)
+          .dispatch('organisms/Toot/unreblog', message)
           .then(data => {
             this.$emit('update', data)
           })
@@ -435,7 +435,7 @@ export default {
           })
       } else {
         this.$store
-          .dispatch('molecules/Toot/reblog', message)
+          .dispatch('organisms/Toot/reblog', message)
           .then(data => {
             this.$emit('update', data)
           })
@@ -451,7 +451,7 @@ export default {
     changeFavourite(message) {
       if (message.favourited) {
         this.$store
-          .dispatch('molecules/Toot/removeFavourite', message)
+          .dispatch('organisms/Toot/removeFavourite', message)
           .then(data => {
             this.$emit('update', data)
           })
@@ -464,7 +464,7 @@ export default {
           })
       } else {
         this.$store
-          .dispatch('molecules/Toot/addFavourite', message)
+          .dispatch('organisms/Toot/addFavourite', message)
           .then(data => {
             this.$emit('update', data)
           })
@@ -494,7 +494,7 @@ export default {
     },
     deleteToot(message) {
       this.$store
-        .dispatch('molecules/Toot/deleteToot', message)
+        .dispatch('organisms/Toot/deleteToot', message)
         .then(message => {
           this.$emit('delete', message)
         })
@@ -554,6 +554,9 @@ export default {
           this.showAttachments = !this.showAttachments
           break
       }
+    },
+    vote(choices) {
+      console.log(choices)
     }
   }
 }
