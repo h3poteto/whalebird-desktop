@@ -3,8 +3,7 @@
     "follow_requests": "Follow Requests"
   },
   "header_menu": {
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages"
+    "follow_requests": "Follow Requests"
   },
   "preferences": {
     "appearance": {
@@ -15,6 +14,16 @@
     "accept": "Accept",
     "reject": "Reject"
   },
+  "cards": {
+    "toot": {
+      "poll": {
+        "vote": "Vote",
+        "votes_count": "votes",
+        "until": "until {{datetime}}",
+        "left": "{{datetime}} left"
+      }
+    }
+  }
   "message": {
     "follow_request_accept_error": "Failed to accept the request",
     "follow_reuqest_reject_error": "failed to reject the request",

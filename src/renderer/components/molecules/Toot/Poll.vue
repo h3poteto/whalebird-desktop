@@ -16,9 +16,9 @@
         </li>
       </template>
     </ul>
-    <el-button type="success" size="small" @click="vote" v-if="!poll.voted" :disabled="pollRadio === null">Vote</el-button>
-    <span class="votes-count">{{ poll.votes_count }} votes,</span>
-    <span class="until">until {{ parseDatetime(poll.expires_at, now) }}</span>
+    <el-button type="success" size="small" @click="vote" v-if="!poll.voted" :disabled="pollRadio === null">{{ $t('cards.toot.poll.vote') }}</el-button>
+    <span class="votes-count">{{ poll.votes_count }} {{ $t('cards.toot.poll.votes_count') }},</span>
+    <span class="until">{{ parseDatetime(poll.expires_at, now) }}</span>
   </div>
 </template>
 
@@ -50,10 +50,10 @@ export default {
     parseDatetime(datetime, epoch) {
       switch (this.timeFormat) {
         case TimeFormat.Absolute.value:
-          return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+          return this.$t('cards.toot.poll.until', { datetime: moment(datetime).format('YYYY-MM-DD HH:mm:ss') })
         case TimeFormat.Relative.value:
           moment.locale(this.language)
-          return moment(datetime).from(epoch)
+          return this.$t('cards.toot.poll.left', { datetime: moment(datetime).from(epoch) })
       }
     },
     vote() {

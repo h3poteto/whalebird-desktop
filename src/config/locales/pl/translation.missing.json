@@ -1,5 +1,6 @@
 {
   "side_menu": {
+    "mention": "Mentions",
     "direct": "Direct messages",
     "follow_requests": "Follow Requests"
   },
@@ -7,6 +8,7 @@
     "settings": "Settings",
     "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it.",
     "follow_requests": "Follow Requests",
+    "mention": "Mentions",
     "direct_messages": "Direct Messages"
   },
   "settings": {
@@ -48,6 +50,16 @@
   "follow_requests": {
     "accept": "Accept",
     "reject": "Reject"
+  },
+  "cards": {
+    "toot": {
+      "poll": {
+        "vote": "Vote",
+        "votes_count": "votes",
+        "until": "until {{datetime}}",
+        "left": "{{datetime}} left"
+      }
+    }
   },
   "message": {
     "follow_request_accept_error": "Failed to accept the request",

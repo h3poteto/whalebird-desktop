@@ -47,7 +47,8 @@
     "expand": "拡大",
     "home": "ホーム",
     "notification": "通知",
-    "direct": "ダイレクトメッセージ",
+    "mention": "返信",
+    "direct": "DM",
     "follow_requests": "フォローリクエスト",
     "favourite": "お気に入り",
     "local": "ローカル",
@@ -59,6 +60,7 @@
   "header_menu": {
     "home": "ホーム",
     "notification": "通知",
+    "mention": "返信",
     "favourite": "お気に入り",
     "follow_requests": "フォローリクエスト",
     "direct_messages": "ダイレクトメッセージ",
@@ -271,7 +273,13 @@
       "reblog": "ブースト",
       "fav": "お気に入り",
       "detail": "詳細",
-      "pinned": "固定されたトゥート"
+      "pinned": "固定されたトゥート",
+      "poll": {
+        "vote": "投票",
+        "votes_count": "投票数",
+        "until": "{{datetime}}まで",
+        "left": "{{datetime}}まで"
+      }
     }
   },
   "side_bar": {
