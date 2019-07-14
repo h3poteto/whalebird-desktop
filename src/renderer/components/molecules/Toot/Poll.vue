@@ -16,9 +16,9 @@
         </li>
       </template>
     </ul>
-    <el-button type="success" @click="vote" v-if="!poll.voted" :disabled="pollRadio === null">Vote</el-button>
-    {{ poll.votes_count }} votes,
-    until {{ parseDatetime(poll.expires_at, now) }}
+    <el-button type="success" size="small" @click="vote" v-if="!poll.voted" :disabled="pollRadio === null">Vote</el-button>
+    <span class="votes-count">{{ poll.votes_count }} votes,</span>
+    <span class="until">until {{ parseDatetime(poll.expires_at, now) }}</span>
   </div>
 </template>
 
@@ -78,6 +78,10 @@ export default {
       position: relative;
       margin: 4px 0;
       line-height: 32px;
+
+      .el-radio /deep/ {
+        color: var(--theme-regular-color);
+      }
     }
 
     .voted {
@@ -101,6 +105,11 @@ export default {
         }
       }
     }
+  }
+
+  .votes-count {
+    display: inline-block;
+    padding-left: 8px;
   }
 }
 </style>
