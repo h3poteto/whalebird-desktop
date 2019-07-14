@@ -47,7 +47,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import Toot from '~/src/renderer/components/molecules/Toot'
+import Toot from '~/src/renderer/components/organisms/Toot'
 import { Event } from '~/src/renderer/components/event'
 
 export default {

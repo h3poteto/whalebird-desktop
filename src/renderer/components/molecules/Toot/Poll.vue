@@ -5,7 +5,7 @@
         <el-radio v-model="pollRadio" :label="option.title">{{ option.title }}</el-radio>
       </li>
     </ul>
-    <el-button type="success">Vote</el-button>
+    <el-button type="success" @click="vote" :disabled="pollRadio === null">Vote</el-button>
     {{ poll.votes_count }} votes,
     until {{ parseDatetime(poll.expires_at, now) }}
   </div>
@@ -19,7 +19,7 @@ import TimeFormat from '~/src/constants/timeFormat'
 export default {
   data() {
     return {
-      pollRadio: '',
+      pollRadio: null,
       now: Date.now()
     }
   },
@@ -45,6 +45,11 @@ export default {
           return moment(datetime).from(epoch)
       }
     },
+    vote() {
+      if (this.pollRadio !== null) {
+        this.$emit('vote', [this.pollRadio])
+      }
+    }
   }
 }
 </script>
