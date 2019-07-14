@@ -1,7 +1,12 @@
-import Mastodon, { Response, Status, Account } from 'megalodon'
+import Mastodon, { Response, Status, Account, Poll } from 'megalodon'
 import { ipcRenderer } from 'electron'
 import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
+
+type VoteParam = {
+  id: string
+  choices: Array<string>
+}
 
 export type TootState = {}
 
@@ -45,6 +50,13 @@ const actions: ActionTree<TootState, RootState> = {
   block: async ({ rootState }, account: Account) => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     return client.post(`/accounts/${account.id}/block`)
+  },
+  vote: async({ rootState }, params: VoteParam): Promise<Poll> => {
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const res = await client.post<Poll>(`/polls/${params.id}/votes`, {
+      choices: params.choices
+    })
+    return res.data
   }
 }
 
