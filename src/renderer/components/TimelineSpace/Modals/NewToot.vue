@@ -14,17 +14,7 @@
       </div>
       <Status v-model="status" :opened="newTootModal" :fixCursorPos="hashtagInserting" @paste="onPaste" @toot="toot" />
     </el-form>
-    <div class="poll" v-if="openPoll">
-      <ul class="poll-list">
-        <li class="poll-option" v-for="(option, id) in polls" v-bind:key="id">
-          <el-radio :disabled="true" :label="id">
-            <el-input :placeholder="`choice ${id}`" v-model="polls[id]" size="small"></el-input>
-            <el-button class="remove-poll" type="text" @click="removePoll(id)" size="small"><icon name="times"></icon></el-button>
-          </el-radio>
-        </li>
-      </ul>
-      <el-button class="add-poll" type="info" size="small" @click="addPoll" plain>Add a choice</el-button>
-    </div>
+    <Poll v-if="openPoll"></Poll>
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
@@ -136,12 +126,14 @@ import { mapState, mapGetters } from 'vuex'
 import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
+import Poll from './NewToot/Poll'
 import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit } from '@/errors/validations'
 
 export default {
   name: 'new-toot',
   components: {
-    Status
+    Status,
+    Poll
   },
   data() {
     return {
@@ -149,8 +141,7 @@ export default {
       spoiler: '',
       showContentWarning: false,
       visibilityList: Visibility,
-      openPoll: false,
-      polls: ['', '']
+      openPoll: false
     }
   },
   computed: {
@@ -344,12 +335,6 @@ export default {
     },
     togglePollForm() {
       this.openPoll = !this.openPoll
-    },
-    addPoll() {
-      this.polls.push('')
-    },
-    removePoll(id) {
-      this.polls.splice(id, 1)
     }
   }
 }
@@ -379,27 +364,6 @@ export default {
         &::placeholder {
           color: #c0c4cc;
         }
-      }
-    }
-
-    .poll {
-      border-top: 1px solid #ebebeb;
-
-      .poll-list {
-        list-style: none;
-        padding-left: 16px;
-
-        .poll-option {
-          line-height: 38px;
-
-          .remove-poll {
-            margin-left: 4px;
-          }
-        }
-      }
-
-      .add-poll {
-        margin: 0 0 8px 40px;
       }
     }
 
