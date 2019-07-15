@@ -1,78 +1,101 @@
 <template>
-<div
-  class="status"
-  tabIndex="0"
-  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], right: ['l'], left: ['h'], open: ['o'], profile: ['p']} : {}"
-  @shortkey="handleStatusControl"
-  ref="status"
-  @click="$emit('select')"
-  role="article"
-  aria-label="favourited toot"
+  <div
+    class="status"
+    tabIndex="0"
+    v-shortkey="shortcutEnabled ? { next: ['j'], prev: ['k'], right: ['l'], left: ['h'], open: ['o'], profile: ['p'] } : {}"
+    @shortkey="handleStatusControl"
+    ref="status"
+    @click="$emit('select')"
+    role="article"
+    aria-label="favourited toot"
   >
-  <div v-show="filtered(message)" class="filtered">
-    Filtered
-  </div>
-  <div v-show="!filtered(message)" class="favourite">
-    <div class="action">
-      <div class="action-mark">
-        <icon name="star" scale="0.7"></icon>
-      </div>
-      <div class="action-detail">
-        <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> favourited your status
-      </div>
-      <div class="action-icon" role="presentation">
-        <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
-      </div>
+    <div v-show="filtered(message)" class="filtered">
+      Filtered
     </div>
-    <div class="clearfix"></div>
-    <div class="target" v-on:dblclick="openDetail(message.status)">
-      <div class="icon" @click="openUser(message.status.account)">
-        <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" role="presentation" />
+    <div v-show="!filtered(message)" class="favourite">
+      <div class="action">
+        <div class="action-mark">
+          <icon name="star" scale="0.7"></icon>
+        </div>
+        <div class="action-detail">
+          <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> favourited your status
+        </div>
+        <div class="action-icon" role="presentation">
+          <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
+        </div>
       </div>
-      <div class="detail">
-        <div class="toot-header">
-          <div class="user" @click="openUser(message.status.account)">
-            <span class="display-name"><bdi v-html="username(message.status.account)"></bdi></span>
-          </div>
-          <div class="timestamp">
-            {{ parseDatetime(message.status.created_at) }}
-          </div>
-        <div class="clearfix"></div>
+      <div class="clearfix"></div>
+      <div class="target" v-on:dblclick="openDetail(message.status)">
+        <div class="icon" @click="openUser(message.status.account)">
+          <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" role="presentation" />
         </div>
-        <div class="content-wrapper">
-          <div class="spoiler" v-show="spoilered(message.status)">
-            <span v-html="spoilerText(message.status)"></span>
-            <el-button v-if="!isShowContent(message.status)" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
-              {{ $t('cards.toot.show_more') }}
-            </el-button>
-            <el-button v-else plain type="primary" size="medium" class="spoil-button" @click="showContent = false">
-              {{ $t('cards.toot.hide')}}
-            </el-button>
-          </div>
-          <div class="content" v-show="isShowContent(message.status)" v-html="status(message.status)" @click.capture.prevent="tootClick"></div>
-        </div>
-        <div class="attachments">
-          <el-button v-show="sensitive(message.status) && !isShowAttachments(message.status)" class="show-sensitive" type="info" @click="showAttachments = true">
-            {{ $t('cards.toot.sensitive') }}
-          </el-button>
-          <div v-show="isShowAttachments(message.status)">
-            <el-button v-show="sensitive(message.status) && isShowAttachments(message.status)" class="hide-sensitive" type="text" @click="showAttachments = false" :title="$t('cards.toot.hide')">
-              <icon name="eye" class="hide"></icon>
-            </el-button>
-            <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message.status)">
-              <FailoverImg :src="media.preview_url" :title="media.description" />
-              <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
-              <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
+        <div class="detail">
+          <div class="toot-header">
+            <div class="user" @click="openUser(message.status.account)">
+              <span class="display-name"><bdi v-html="username(message.status.account)"></bdi></span>
             </div>
+            <div class="timestamp">
+              {{ parseDatetime(message.status.created_at) }}
+            </div>
+            <div class="clearfix"></div>
           </div>
-          <div class="clearfix"></div>
+          <div class="content-wrapper">
+            <div class="spoiler" v-show="spoilered(message.status)">
+              <span v-html="spoilerText(message.status)"></span>
+              <el-button
+                v-if="!isShowContent(message.status)"
+                plain
+                type="primary"
+                size="medium"
+                class="spoil-button"
+                @click="showContent = true"
+              >
+                {{ $t('cards.toot.show_more') }}
+              </el-button>
+              <el-button v-else plain type="primary" size="medium" class="spoil-button" @click="showContent = false">
+                {{ $t('cards.toot.hide') }}
+              </el-button>
+            </div>
+            <div
+              class="content"
+              v-show="isShowContent(message.status)"
+              v-html="status(message.status)"
+              @click.capture.prevent="tootClick"
+            ></div>
+          </div>
+          <div class="attachments">
+            <el-button
+              v-show="sensitive(message.status) && !isShowAttachments(message.status)"
+              class="show-sensitive"
+              type="info"
+              @click="showAttachments = true"
+            >
+              {{ $t('cards.toot.sensitive') }}
+            </el-button>
+            <div v-show="isShowAttachments(message.status)">
+              <el-button
+                v-show="sensitive(message.status) && isShowAttachments(message.status)"
+                class="hide-sensitive"
+                type="text"
+                @click="showAttachments = false"
+                :title="$t('cards.toot.hide')"
+              >
+                <icon name="eye" class="hide"></icon>
+              </el-button>
+              <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message.status)">
+                <FailoverImg :src="media.preview_url" :title="media.description" />
+                <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
+                <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
         </div>
       </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
+    <div class="fill-line"></div>
   </div>
-  <div class="fill-line"></div>
-</div>
 </template>
 
 <script>
@@ -107,7 +130,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       showContent: false,
       showAttachments: false
@@ -119,37 +142,37 @@ export default {
       timeFormat: state => state.App.timeFormat,
       language: state => state.App.language
     }),
-    shortcutEnabled: function () {
+    shortcutEnabled: function() {
       return this.focused && !this.overlaid
     }
   },
-  mounted () {
+  mounted() {
     if (this.focused) {
       this.$refs.status.focus()
     }
   },
   watch: {
-    focused: function (newState, oldState) {
+    focused: function(newState, oldState) {
       if (newState) {
-        this.$nextTick(function () {
+        this.$nextTick(function() {
           this.$refs.status.focus()
         })
       } else if (oldState && !newState) {
-        this.$nextTick(function () {
+        this.$nextTick(function() {
           this.$refs.status.blur()
         })
       }
     }
   },
   methods: {
-    username (account) {
+    username(account) {
       if (account.display_name !== '') {
         return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
     },
-    parseDatetime (datetime) {
+    parseDatetime(datetime) {
       switch (this.timeFormat) {
         case TimeFormat.Absolute.value:
           return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
@@ -158,7 +181,7 @@ export default {
           return moment(datetime).fromNow()
       }
     },
-    tootClick (e) {
+    tootClick(e) {
       const parsedTag = findTag(e.target, 'favourite')
       if (parsedTag !== null) {
         const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
@@ -168,12 +191,13 @@ export default {
       const parsedAccount = findAccount(e.target, 'favourite')
       if (parsedAccount !== null) {
         this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
-          .then((account) => {
+        this.$store
+          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
+          .then(account => {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err)
             this.openLink(e)
             this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
@@ -182,47 +206,47 @@ export default {
       }
       this.openLink(e)
     },
-    openLink (e) {
+    openLink(e) {
       const link = findLink(e.target, 'favourite')
       if (link !== null) {
         return shell.openExternal(link)
       }
     },
-    openUser (account) {
+    openUser(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    openDetail (message) {
+    openDetail(message) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    mediaAttachments (message) {
+    mediaAttachments(message) {
       return message.media_attachments
     },
-    filtered (message) {
+    filtered(message) {
       return this.filter.length > 0 && message.status.content.search(this.filter) >= 0
     },
-    spoilered (message) {
+    spoilered(message) {
       return message.spoiler_text.length > 0
     },
-    isShowContent (message) {
+    isShowContent(message) {
       return !this.spoilered(message) || this.showContent
     },
-    sensitive (message) {
+    sensitive(message) {
       return message.sensitive && this.mediaAttachments(message).length > 0
     },
-    isShowAttachments (message) {
+    isShowAttachments(message) {
       return !this.sensitive(message) || this.showAttachments
     },
-    status (message) {
+    status(message) {
       return emojify(message.content, message.emojis)
     },
-    spoilerText (message) {
+    spoilerText(message) {
       return emojify(message.spoiler_text, message.emojis)
     },
-    handleStatusControl (event) {
+    handleStatusControl(event) {
       switch (event.srcKey) {
         case 'next':
           this.$emit('focusNext')
@@ -319,6 +343,21 @@ export default {
       margin: 8px 8px 0 42px;
       color: #909399;
 
+      .content-wrapper /deep/ {
+        font-size: var(--base-font-size);
+        margin: 0;
+
+        .content {
+          font-size: var(--base-font-size);
+          word-wrap: break-word;
+        }
+
+        .emojione {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
       .toot-header {
         height: 22px;
 
@@ -339,21 +378,6 @@ export default {
           font-size: var(--base-font-size);
           text-align: right;
           width: 100%;
-        }
-      }
-
-      .content-wrapper /deep/ {
-        font-size: var(--base-font-size);
-        margin: 0;
-
-        .content {
-          font-size: var(--base-font-size);
-          word-wrap: break-word;
-        }
-
-        .emojione {
-          width: 20px;
-          height: 20px;
         }
       }
 

@@ -60,6 +60,7 @@
             </el-button>
           </div>
           <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
+          <Poll v-show="isShowContent" v-if="poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
         </div>
         <div class="attachments">
           <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
@@ -184,19 +185,22 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+import Poll from '~/src/renderer/components/molecules/Toot/Poll'
 import { setInterval, clearInterval } from 'timers'
 
 export default {
   name: 'toot',
   components: {
-    FailoverImg
+    FailoverImg,
+    Poll
   },
   data() {
     return {
       showContent: this.$store.state.App.ignoreCW,
       showAttachments: this.$store.state.App.ignoreNFSW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
-      now: Date.now()
+      now: Date.now(),
+      pollResponse: null
     }
   },
   props: {
@@ -274,6 +278,13 @@ export default {
     },
     isShowContent: function() {
       return !this.spoilered || this.showContent
+    },
+    poll: function() {
+      if (this.pollResponse) {
+        return this.pollResponse
+      } else {
+        return this.originalMessage.poll
+      }
     },
     sensitive: function() {
       return (this.hideAllAttachments || this.originalMessage.sensitive) && this.mediaAttachments.length > 0
@@ -410,13 +421,13 @@ export default {
       this.$refs.popper.doClose()
     },
     block() {
-      this.$store.dispatch('molecules/Toot/block', this.originalMessage.account)
+      this.$store.dispatch('organisms/Toot/block', this.originalMessage.account)
       this.$refs.popper.doClose()
     },
     changeReblog(message) {
       if (message.reblogged) {
         this.$store
-          .dispatch('molecules/Toot/unreblog', message)
+          .dispatch('organisms/Toot/unreblog', message)
           .then(data => {
             this.$emit('update', data)
           })
@@ -429,7 +440,7 @@ export default {
           })
       } else {
         this.$store
-          .dispatch('molecules/Toot/reblog', message)
+          .dispatch('organisms/Toot/reblog', message)
           .then(data => {
             this.$emit('update', data)
           })
@@ -445,7 +456,7 @@ export default {
     changeFavourite(message) {
       if (message.favourited) {
         this.$store
-          .dispatch('molecules/Toot/removeFavourite', message)
+          .dispatch('organisms/Toot/removeFavourite', message)
           .then(data => {
             this.$emit('update', data)
           })
@@ -458,7 +469,7 @@ export default {
           })
       } else {
         this.$store
-          .dispatch('molecules/Toot/addFavourite', message)
+          .dispatch('organisms/Toot/addFavourite', message)
           .then(data => {
             this.$emit('update', data)
           })
@@ -488,7 +499,7 @@ export default {
     },
     deleteToot(message) {
       this.$store
-        .dispatch('molecules/Toot/deleteToot', message)
+        .dispatch('organisms/Toot/deleteToot', message)
         .then(message => {
           this.$emit('delete', message)
         })
@@ -548,6 +559,17 @@ export default {
           this.showAttachments = !this.showAttachments
           break
       }
+    },
+    async vote(choices) {
+      const res = await this.$store.dispatch('organisms/Toot/vote', {
+        id: this.poll.id,
+        choices: choices
+      })
+      this.pollResponse = res
+    },
+    async refresh(id) {
+      const res = await this.$store.dispatch('organisms/Toot/refresh', id)
+      this.pollResponse = res
     }
   }
 }
@@ -582,6 +604,44 @@ export default {
     float: left;
     width: calc(100% - 52px);
 
+    .content-wrapper /deep/ {
+      font-size: var(--base-font-size);
+      color: var(--theme-primary-color);
+
+      .content {
+        margin: var(--toot-padding) 0;
+        word-wrap: break-word;
+      }
+
+      .emojione {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .reblogger {
+      color: #909399;
+
+      .reblogger-icon {
+        img {
+          width: 16px;
+          height: 16px;
+          border-radius: 2px;
+          cursor: pointer;
+        }
+      }
+
+      .reblogger-name /deep/ {
+        font-size: calc(var(--base-font-size) * 0.86);
+        cursor: pointer;
+
+        .emojione {
+          max-width: 10px;
+          max-height: 10px;
+        }
+      }
+    }
+
     .toot-header {
       .user {
         float: left;
@@ -614,21 +674,6 @@ export default {
         color: #909399;
         float: right;
         cursor: pointer;
-      }
-    }
-
-    .content-wrapper /deep/ {
-      font-size: var(--base-font-size);
-      color: var(--theme-primary-color);
-
-      .content {
-        margin: var(--toot-padding) 0;
-        word-wrap: break-word;
-      }
-
-      .emojione {
-        width: 20px;
-        height: 20px;
       }
     }
 
@@ -686,29 +731,6 @@ export default {
           left: 4px;
           color: #fff;
           background-color: rgba(0, 0, 0, 0.3);
-        }
-      }
-    }
-
-    .reblogger {
-      color: #909399;
-
-      .reblogger-icon {
-        img {
-          width: 16px;
-          height: 16px;
-          border-radius: 2px;
-          cursor: pointer;
-        }
-      }
-
-      .reblogger-name /deep/ {
-        font-size: calc(var(--base-font-size) * 0.86);
-        cursor: pointer;
-
-        .emojione {
-          max-width: 10px;
-          max-height: 10px;
         }
       }
     }

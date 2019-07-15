@@ -280,7 +280,14 @@
       "reblog": "Reblog",
       "fav": "Favourite",
       "detail": "Toot details",
-      "pinned": "Pinned toot"
+      "pinned": "Pinned toot",
+      "poll": {
+        "vote": "Vote",
+        "votes_count": "votes",
+        "until": "until {{datetime}}",
+        "left": "{{datetime}} left",
+        "refresh": "Refresh"
+      }
     }
   },
   "side_bar": {
