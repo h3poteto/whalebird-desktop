@@ -60,7 +60,7 @@
             </el-button>
           </div>
           <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
-          <Poll v-show="isShowContent" v-if="poll" :poll="poll" @vote="vote"></Poll>
+          <Poll v-show="isShowContent" v-if="poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
         </div>
         <div class="attachments">
           <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
@@ -565,6 +565,10 @@ export default {
         id: this.poll.id,
         choices: choices
       })
+      this.pollResponse = res
+    },
+    async refresh(id) {
+      const res = await this.$store.dispatch('organisms/Toot/refresh', id)
       this.pollResponse = res
     }
   }

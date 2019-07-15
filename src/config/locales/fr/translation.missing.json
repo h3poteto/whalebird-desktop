@@ -22,7 +22,8 @@
         "vote": "Vote",
         "votes_count": "votes",
         "until": "until {{datetime}}",
-        "left": "{{datetime}} left"
+        "left": "{{datetime}} left",
+        "refresh": "Refresh"
       }
     }
   },

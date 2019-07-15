@@ -51,11 +51,16 @@ const actions: ActionTree<TootState, RootState> = {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     return client.post(`/accounts/${account.id}/block`)
   },
-  vote: async({ rootState }, params: VoteParam): Promise<Poll> => {
+  vote: async ({ rootState }, params: VoteParam): Promise<Poll> => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res = await client.post<Poll>(`/polls/${params.id}/votes`, {
       choices: params.choices
     })
+    return res.data
+  },
+  refresh: async ({ rootState }, id: string): Promise<Poll> => {
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const res = await client.get<Poll>(`/polls/${id}`)
     return res.data
   }
 }

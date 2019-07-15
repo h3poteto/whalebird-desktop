@@ -1,6 +1,7 @@
 <template>
-  <div class="poll">
-    <ul class="poll-list" v-if="poll">
+<div class="poll">
+  <template v-if="poll">
+    <ul class="poll-list">
       <template v-if="poll.voted">
         <li class="voted" v-for="(option, id) in poll.options" v-bind:key="id">
           <span class="progress-bar" :style="progress(option.votes_count * 100 / poll.votes_count)"></span>
@@ -16,10 +17,12 @@
         </li>
       </template>
     </ul>
-    <el-button type="success" size="small" @click="vote" v-if="!poll.voted" :disabled="pollRadio === null">{{ $t('cards.toot.poll.vote') }}</el-button>
+    <el-button v-if="!poll.voted" type="success" size="small" @click="vote" :disabled="pollRadio === null">{{ $t('cards.toot.poll.vote') }}</el-button>
+    <el-button v-else type="text" @click="refresh">{{ $t('cards.toot.poll.refresh') }}</el-button>
     <span class="votes-count">{{ poll.votes_count }} {{ $t('cards.toot.poll.votes_count') }},</span>
     <span class="until">{{ parseDatetime(poll.expires_at, now) }}</span>
-  </div>
+  </template>
+</div>
 </template>
 
 <script>
@@ -63,6 +66,9 @@ export default {
     },
     progress(percent) {
       return `width: ${percent}%`
+    },
+    refresh() {
+      this.$emit('refresh', this.poll.id)
     }
   }
 }
