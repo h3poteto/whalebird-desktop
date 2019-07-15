@@ -1,28 +1,30 @@
 <template>
-<div class="poll">
-  <template v-if="poll">
-    <ul class="poll-list">
-      <template v-if="poll.voted">
-        <li class="voted" v-for="(option, id) in poll.options" v-bind:key="id">
-          <span class="progress-bar" :style="progress(option.votes_count * 100 / poll.votes_count)"></span>
-          <label class="text">
-            <span class="percentage">{{ option.votes_count * 100 / poll.votes_count }}%</span>
-            <span>{{ option.title }}</span>
-          </label>
-        </li>
-      </template>
-      <template v-else>
-        <li class="not-voted" v-for="(option, id) in poll.options" v-bind:key="id">
-          <el-radio v-model="pollRadio" :label="id">{{ option.title }}</el-radio>
-        </li>
-      </template>
-    </ul>
-    <el-button v-if="!poll.voted" type="success" size="small" @click="vote" :disabled="pollRadio === null">{{ $t('cards.toot.poll.vote') }}</el-button>
-    <el-button v-else type="text" @click="refresh">{{ $t('cards.toot.poll.refresh') }}</el-button>
-    <span class="votes-count">{{ poll.votes_count }} {{ $t('cards.toot.poll.votes_count') }},</span>
-    <span class="until">{{ parseDatetime(poll.expires_at, now) }}</span>
-  </template>
-</div>
+  <div class="poll">
+    <template v-if="poll">
+      <ul class="poll-list">
+        <template v-if="poll.voted">
+          <li class="voted" v-for="(option, id) in poll.options" v-bind:key="id">
+            <span class="progress-bar" :style="progress(percentage(option.votes_count, poll.votes_count))"></span>
+            <label class="text">
+              <span class="percentage">{{ percentage(option.votes_count, poll.votes_count) }}%</span>
+              <span>{{ option.title }}</span>
+            </label>
+          </li>
+        </template>
+        <template v-else>
+          <li class="not-voted" v-for="(option, id) in poll.options" v-bind:key="id">
+            <el-radio v-model="pollRadio" :label="id">{{ option.title }}</el-radio>
+          </li>
+        </template>
+      </ul>
+      <el-button v-if="!poll.voted" type="success" size="small" @click="vote" :disabled="pollRadio === null">{{
+        $t('cards.toot.poll.vote')
+      }}</el-button>
+      <el-button v-else type="text" @click="refresh">{{ $t('cards.toot.poll.refresh') }}</el-button>
+      <span class="votes-count">{{ poll.votes_count }} {{ $t('cards.toot.poll.votes_count') }},</span>
+      <span class="until">{{ parseDatetime(poll.expires_at, now) }}</span>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -58,6 +60,12 @@ export default {
           moment.locale(this.language)
           return this.$t('cards.toot.poll.left', { datetime: moment(datetime).from(epoch) })
       }
+    },
+    percentage(option_votes, poll_votes) {
+      if (poll_votes === 0) {
+        return 0
+      }
+      return (option_votes * 100) / poll_votes
     },
     vote() {
       if (this.pollRadio !== null) {
