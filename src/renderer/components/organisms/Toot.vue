@@ -604,6 +604,44 @@ export default {
     float: left;
     width: calc(100% - 52px);
 
+    .content-wrapper /deep/ {
+      font-size: var(--base-font-size);
+      color: var(--theme-primary-color);
+
+      .content {
+        margin: var(--toot-padding) 0;
+        word-wrap: break-word;
+      }
+
+      .emojione {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .reblogger {
+      color: #909399;
+
+      .reblogger-icon {
+        img {
+          width: 16px;
+          height: 16px;
+          border-radius: 2px;
+          cursor: pointer;
+        }
+      }
+
+      .reblogger-name /deep/ {
+        font-size: calc(var(--base-font-size) * 0.86);
+        cursor: pointer;
+
+        .emojione {
+          max-width: 10px;
+          max-height: 10px;
+        }
+      }
+    }
+
     .toot-header {
       .user {
         float: left;
@@ -636,21 +674,6 @@ export default {
         color: #909399;
         float: right;
         cursor: pointer;
-      }
-    }
-
-    .content-wrapper /deep/ {
-      font-size: var(--base-font-size);
-      color: var(--theme-primary-color);
-
-      .content {
-        margin: var(--toot-padding) 0;
-        word-wrap: break-word;
-      }
-
-      .emojione {
-        width: 20px;
-        height: 20px;
       }
     }
 
@@ -708,29 +731,6 @@ export default {
           left: 4px;
           color: #fff;
           background-color: rgba(0, 0, 0, 0.3);
-        }
-      }
-    }
-
-    .reblogger {
-      color: #909399;
-
-      .reblogger-icon {
-        img {
-          width: 16px;
-          height: 16px;
-          border-radius: 2px;
-          cursor: pointer;
-        }
-      }
-
-      .reblogger-name /deep/ {
-        font-size: calc(var(--base-font-size) * 0.86);
-        cursor: pointer;
-
-        .emojione {
-          max-width: 10px;
-          max-height: 10px;
         }
       }
     }
