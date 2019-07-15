@@ -8,7 +8,7 @@
         </el-radio>
       </li>
     </ul>
-    <el-button class="add-poll" type="info" size="small" @click="addPoll" plain>Add a choice</el-button>
+    <el-button class="add-poll" type="info" size="small" @click="addPoll" plain>{{ $t('modals.new_toot.poll.add_choice') }}</el-button>
   </div>
 </template>
 

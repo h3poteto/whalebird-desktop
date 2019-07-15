@@ -186,13 +186,14 @@
       "close_confirm": "Czy na pewno chcesz porzucić tworzenie wpisu?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Anuluj",
-      "add_image": "Dodaj obraz",
-      "change_visibility": "Zmień widoczność",
-      "add_cw": "Dodaj ostrzeżenie zawartości",
-      "change_sensitive": "Zmień wrażliwy",
-      "pined_hashtag": "Pin the hashtag",
       "description": "Wprowadź opis dla niewidomych i niedowidzących",
-      "pinned": "Przypięty wpis"
+      "fotter": {
+        "add_image": "Dodaj obraz",
+        "change_visibility": "Zmień widoczność",
+        "change_sensitive": "Zmień wrażliwy",
+        "add_cw": "Dodaj ostrzeżenie zawartości",
+        "pined_hashtag": "Pin the hashtag"
+      }
     },
     "jump": {
       "jump_to": "Przejdź do…"
@@ -244,7 +245,8 @@
       "reply": "Odpowiadać",
       "reblog": "Podbić wpisu",
       "fav": "Ulubiony",
-      "detail": "Szczegół"
+      "detail": "Szczegół",
+      "pinned": "Przypięty wpis"
     }
   },
   "side_bar": {
