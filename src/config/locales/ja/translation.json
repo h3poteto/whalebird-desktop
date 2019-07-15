@@ -276,9 +276,10 @@
       "pinned": "固定されたトゥート",
       "poll": {
         "vote": "投票",
-        "votes_count": "投票数",
+        "votes_count": "投票",
         "until": "{{datetime}}まで",
-        "left": "{{datetime}}まで"
+        "left": "{{datetime}}まで",
+        "refresh": "更新"
       }
     }
   },

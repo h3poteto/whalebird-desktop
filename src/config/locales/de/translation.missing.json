@@ -57,10 +57,11 @@
         "vote": "Vote",
         "votes_count": "votes",
         "until": "until {{datetime}}",
-        "left": "{{datetime}} left"
+        "left": "{{datetime}} left",
+        "refresh": "Refresh"
       }
     }
-  }
+  },
   "message": {
     "follow_request_accept_error": "Failed to accept the request",
     "follow_reuqest_reject_error": "failed to reject the request",
