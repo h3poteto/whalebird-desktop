@@ -19,6 +19,7 @@
         <li class="poll-option" v-for="(option, id) in polls" v-bind:key="id">
           <el-radio :disabled="true" :label="id">
             <el-input :placeholder="`choice ${id}`" v-model="polls[id]" size="small"></el-input>
+            <el-button class="remove-poll" type="text" @click="removePoll(id)" size="small"><icon name="times"></icon></el-button>
           </el-radio>
         </li>
       </ul>
@@ -346,6 +347,9 @@ export default {
     },
     addPoll() {
       this.polls.push('')
+    },
+    removePoll(id) {
+      this.polls.splice(id, 1)
     }
   }
 }
@@ -387,6 +391,10 @@ export default {
 
         .poll-option {
           line-height: 38px;
+
+          .remove-poll {
+            margin-left: 4px;
+          }
         }
       }
 
