@@ -14,6 +14,16 @@
       </div>
       <Status v-model="status" :opened="newTootModal" :fixCursorPos="hashtagInserting" @paste="onPaste" @toot="toot" />
     </el-form>
+    <div class="poll" v-if="openPoll">
+      <ul class="poll-list">
+        <li class="poll-option" v-for="(option, id) in polls" v-bind:key="id">
+          <el-radio :disabled="true" :label="id">
+            <el-input :placeholder="`choice ${id}`" v-model="polls[id]" size="small"></el-input>
+          </el-radio>
+        </li>
+      </ul>
+      <el-button class="add-poll" type="info" size="small" @click="addPoll" plain>Add a choice</el-button>
+    </div>
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
@@ -39,6 +49,11 @@
           <icon name="camera"></icon>
         </el-button>
         <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId" />
+      </div>
+      <div class="poll">
+        <el-button size="small" type="text" @click="togglePollForm" :title="$t('modals.new_toot.poll')">
+          <icon name="poll"></icon>
+        </el-button>
       </div>
       <div class="privacy">
         <el-dropdown trigger="click" @command="changeVisibility">
@@ -132,7 +147,9 @@ export default {
       status: '',
       spoiler: '',
       showContentWarning: false,
-      visibilityList: Visibility
+      visibilityList: Visibility,
+      openPoll: false,
+      polls: ['', '']
     }
   },
   computed: {
@@ -323,6 +340,12 @@ export default {
     },
     updateDescription(id, value) {
       this.$store.commit('TimelineSpace/Modals/NewToot/updateMediaDescription', { id: id, description: value })
+    },
+    togglePollForm() {
+      this.openPoll = !this.openPoll
+    },
+    addPoll() {
+      this.polls.push('')
     }
   }
 }
@@ -352,6 +375,23 @@ export default {
         &::placeholder {
           color: #c0c4cc;
         }
+      }
+    }
+
+    .poll {
+      border-top: 1px solid #ebebeb;
+
+      .poll-list {
+        list-style: none;
+        padding-left: 16px;
+
+        .poll-option {
+          line-height: 38px;
+        }
+      }
+
+      .add-poll {
+        margin: 0 0 8px 40px;
       }
     }
 
@@ -427,6 +467,11 @@ export default {
       .image-input {
         display: none;
       }
+    }
+
+    .poll {
+      float: left;
+      margin-left: 8px;
     }
 
     .privacy {
