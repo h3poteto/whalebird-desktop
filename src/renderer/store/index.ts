@@ -10,7 +10,7 @@ import Authorize, { AuthorizeState } from './Authorize'
 import TimelineSpace, { TimelineSpaceModuleState } from './TimelineSpace'
 import Preferences, { PreferencesModuleState } from './Preferences'
 import Settings, { SettingsModuleState } from './Settings'
-import molecules, { MoleculesModuleState } from './molecules'
+import organisms, { OrganismsModuleState } from './organisms'
 
 Vue.use(Vuex)
 
@@ -22,7 +22,7 @@ export type RootState = {
   TimelineSpace: TimelineSpaceModuleState
   Preferences: PreferencesModuleState
   Settings: SettingsModuleState
-  molecules: MoleculesModuleState
+  molecules: OrganismsModuleState
   route: Route
 }
 
@@ -37,6 +37,6 @@ export default new Vuex.Store({
     TimelineSpace,
     Preferences,
     Settings,
-    molecules
+    organisms
   }
 })

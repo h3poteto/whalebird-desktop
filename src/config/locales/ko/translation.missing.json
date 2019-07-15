@@ -14,15 +14,27 @@
     }
   },
   "side_menu": {
+    "mention": "Mentions",
     "follow_requests": "Follow Requests"
   },
   "header_menu": {
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages"
+    "mention": "Mentions",
+    "follow_requests": "Follow Requests"
   },
   "follow_requests": {
     "accept": "Accept",
     "reject": "Reject"
+  },
+  "cards": {
+    "toot": {
+      "poll": {
+        "vote": "Vote",
+        "votes_count": "votes",
+        "until": "until {{datetime}}",
+        "left": "{{datetime}} left",
+        "refresh": "Refresh"
+      }
+    }
   },
   "message": {
     "follow_request_accept_error": "Failed to accept the request",

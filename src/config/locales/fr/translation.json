@@ -58,6 +58,7 @@
   "header_menu": {
     "home": "Accueil",
     "notification": "Notifications",
+    "direct_messages": "Messages Privés",
     "favourite": "Favoris",
     "local": "Fil public local",
     "public": "Fil public global",

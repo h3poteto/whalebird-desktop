@@ -30,7 +30,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import Notification from '~/src/renderer/components/molecules/Notification'
+import Notification from '~/src/renderer/components/organisms/Notification'
 import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
