@@ -27,6 +27,14 @@
     "tag": "Hashtag"
   },
   "modals": {
+    "new_toot": {
+      "footer": {
+        "poll": "Add a poll"
+      },
+      "poll": {
+        "add_choice": "Add a choice"
+      }
+    },
     "shortcut": {
       "h": "Switch the focus to left column",
       "l": "Switch the focus to right column",

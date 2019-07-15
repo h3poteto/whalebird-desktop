@@ -213,12 +213,18 @@
       "close_confirm": "Are you sure you want to cancel the new toot?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Cancel",
-      "add_image": "Add images",
-      "change_visibility": "Change visibility",
-      "add_cw": "Add content warning",
-      "change_sensitive": "Change sensitive",
-      "pined_hashtag": "Pin the hashtag",
-      "description": "Describe for the visually impaired"
+      "description": "Describe for the visually impaired",
+      "footer": {
+        "add_image": "Add images",
+        "poll": "Add a poll",
+        "change_visibility": "Change visibility",
+        "change_sensitive": "Change sensitive",
+        "add_cw": "Add content warning",
+        "pined_hashtag": "Pin the hashtag"
+      },
+      "poll": {
+        "add_choice": "Add a choice"
+      }
     },
     "jump": {
       "jump_to": "Jump to..."

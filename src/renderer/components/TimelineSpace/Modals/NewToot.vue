@@ -36,19 +36,19 @@
     </div>
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
-        <el-button size="small" type="text" @click="selectImage" :title="$t('modals.new_toot.add_image')">
+        <el-button size="small" type="text" @click="selectImage" :title="$t('modals.new_toot.footer.add_image')">
           <icon name="camera"></icon>
         </el-button>
         <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId" />
       </div>
       <div class="poll">
-        <el-button size="small" type="text" @click="togglePollForm" :title="$t('modals.new_toot.poll')">
+        <el-button size="small" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
           <icon name="poll"></icon>
         </el-button>
       </div>
       <div class="privacy">
         <el-dropdown trigger="click" @command="changeVisibility">
-          <el-button size="small" type="text" :title="$t('modals.new_toot.change_visibility')">
+          <el-button size="small" type="text" :title="$t('modals.new_toot.footer.change_visibility')">
             <icon :name="visibilityIcon"></icon>
           </el-button>
           <el-dropdown-menu slot="dropdown">
@@ -76,7 +76,7 @@
           size="small"
           type="text"
           @click="changeSensitive"
-          :title="$t('modals.new_toot.change_sensitive')"
+          :title="$t('modals.new_toot.footer.change_sensitive')"
           :aria-pressed="sensitive"
         >
           <icon name="eye-slash" v-show="!sensitive"></icon>
@@ -88,7 +88,7 @@
           size="small"
           type="text"
           @click="showContentWarning = !showContentWarning"
-          :title="$t('modals.new_toot.add_cw')"
+          :title="$t('modals.new_toot.footer.add_cw')"
           :class="showContentWarning ? '' : 'clickable'"
           :aria-pressed="showContentWarning"
         >
@@ -100,7 +100,7 @@
           size="small"
           type="text"
           @click="pinedHashtag = !pinedHashtag"
-          :title="$t('modals.new_toot.pined_hashtag')"
+          :title="$t('modals.new_toot.footer.pined_hashtag')"
           :class="pinedHashtag ? '' : 'clickable'"
           :aria-pressed="pinedHashtag"
         >
