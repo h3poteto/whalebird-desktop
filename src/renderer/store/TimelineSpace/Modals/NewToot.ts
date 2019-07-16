@@ -20,6 +20,12 @@ type MediaDescription = {
   description: string
 }
 
+type TootForm = {
+  status: string
+  spoiler: string
+  polls: Array<string>
+}
+
 export type NewTootState = {
   modalOpen: boolean
   initialStatus: string
@@ -177,12 +183,12 @@ const actions: ActionTree<NewTootState, RootState> = {
       throw err
     })
   },
-  postToot: async ({ state, commit, rootState, dispatch }, { status, spoiler }): Promise<Status> => {
+  postToot: async ({ state, commit, rootState, dispatch }, params: TootForm): Promise<Status> => {
     if (!state.modalOpen) {
       throw new NewTootModalOpen()
     }
 
-    if (status.length < 1 || status.length > rootState.TimelineSpace.tootMax) {
+    if (params.status.length < 1 || params.status.length > rootState.TimelineSpace.tootMax) {
       throw new NewTootTootLength()
     }
 
@@ -193,11 +199,17 @@ const actions: ActionTree<NewTootState, RootState> = {
     if (visibilityKey !== undefined) {
       specifiedVisibility = Visibility[visibilityKey].key
     }
+
     let form = {
-      status: status,
+      status: params.status,
       visibility: specifiedVisibility,
       sensitive: state.sensitive,
-      spoiler_text: spoiler
+      spoiler_text: params.spoiler,
+      poll: {
+        expires_in: 86400,
+        multiple: false,
+        options: params.polls
+      }
     }
 
     if (state.replyToMessage !== null) {
