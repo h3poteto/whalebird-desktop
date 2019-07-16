@@ -224,7 +224,8 @@ export default {
     async toot() {
       const form = {
         status: this.status,
-        spoiler: this.spoiler
+        spoiler: this.spoiler,
+        polls: this.polls
       }
 
       try {
