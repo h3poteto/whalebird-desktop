@@ -218,6 +218,7 @@ export default {
   methods: {
     close() {
       this.filteredAccount = []
+      this.polls = ['', '']
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
