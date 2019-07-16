@@ -14,7 +14,14 @@
       </div>
       <Status v-model="status" :opened="newTootModal" :fixCursorPos="hashtagInserting" @paste="onPaste" @toot="toot" />
     </el-form>
-    <Poll v-if="openPoll" v-model="polls" @addPoll="addPoll" @removePoll="removePoll"></Poll>
+    <Poll
+      v-if="openPoll"
+      v-model="polls"
+      @addPoll="addPoll"
+      @removePoll="removePoll"
+      :defaultExpire="pollExpire"
+      @changeExpire="changeExpire"
+    ></Poll>
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
@@ -142,7 +149,11 @@ export default {
       showContentWarning: false,
       visibilityList: Visibility,
       openPoll: false,
-      polls: ['', '']
+      polls: ['', ''],
+      pollExpire: {
+        label: this.$t('modals.new_toot.poll.expires.1_day'),
+        value: 3600 * 24
+      }
     }
   },
   computed: {
@@ -219,6 +230,10 @@ export default {
     close() {
       this.filteredAccount = []
       this.polls = ['', '']
+      this.pollExpire = {
+        label: this.$t('modals.new_toot.poll.expires.1_day'),
+        value: 3600 * 24
+      }
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
@@ -226,7 +241,8 @@ export default {
       const form = {
         status: this.status,
         spoiler: this.spoiler,
-        polls: this.polls
+        polls: this.polls,
+        pollExpireSeconds: this.pollExpire.value
       }
 
       try {
@@ -344,6 +360,9 @@ export default {
     },
     removePoll(id) {
       this.polls.splice(id, 1)
+    },
+    changeExpire(obj) {
+      this.pollExpire = obj
     }
   }
 }
