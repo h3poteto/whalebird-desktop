@@ -1,9 +1,9 @@
 <template>
   <div class="poll">
     <ul class="poll-list">
-      <li class="poll-option" v-for="(option, id) in polls" v-bind:key="id">
+      <li class="poll-option" v-for="(option, id) in value" v-bind:key="id">
         <el-radio :disabled="true" :label="id">
-          <el-input :placeholder="`choice ${id}`" v-model="polls[id]" size="small"></el-input>
+          <el-input :placeholder="`choice ${id}`" :value="value[id]" @input="value => updateOption(value, id)" size="small"></el-input>
           <el-button class="remove-poll" type="text" @click="removePoll(id)" size="small"><icon name="times"></icon></el-button>
         </el-radio>
       </li>
@@ -15,17 +15,17 @@
 <script>
 export default {
   name: 'poll',
-  data() {
-    return {
-      polls: ['', '']
-    }
-  },
+  props: ['value'],
   methods: {
     addPoll() {
-      this.polls.push('')
+      this.$emit('addPoll')
     },
     removePoll(id) {
-      this.polls.splice(id, 1)
+      this.$emit('removePoll', id)
+    },
+    updateOption(item, index) {
+      const newValue = [...this.value.slice(0, index), item, ...this.value.slice(index + 1)]
+      this.$emit('input', newValue)
     }
   }
 }

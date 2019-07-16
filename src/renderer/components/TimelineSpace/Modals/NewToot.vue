@@ -14,7 +14,7 @@
       </div>
       <Status v-model="status" :opened="newTootModal" :fixCursorPos="hashtagInserting" @paste="onPaste" @toot="toot" />
     </el-form>
-    <Poll v-if="openPoll"></Poll>
+    <Poll v-if="openPoll" v-model="polls" @addPoll="addPoll" @removePoll="removePoll"></Poll>
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
@@ -141,7 +141,8 @@ export default {
       spoiler: '',
       showContentWarning: false,
       visibilityList: Visibility,
-      openPoll: false
+      openPoll: false,
+      polls: ['', '']
     }
   },
   computed: {
@@ -335,6 +336,12 @@ export default {
     },
     togglePollForm() {
       this.openPoll = !this.openPoll
+    },
+    addPoll() {
+      this.polls.push('')
+    },
+    removePoll(id) {
+      this.polls.splice(id, 1)
     }
   }
 }
