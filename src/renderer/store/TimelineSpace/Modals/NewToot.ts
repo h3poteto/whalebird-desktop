@@ -24,6 +24,7 @@ type TootForm = {
   status: string
   spoiler: string
   polls: Array<string>
+  pollExpireSeconds: number
 }
 
 export type NewTootState = {
@@ -206,7 +207,7 @@ const actions: ActionTree<NewTootState, RootState> = {
       sensitive: state.sensitive,
       spoiler_text: params.spoiler,
       poll: {
-        expires_in: 86400,
+        expires_in: params.pollExpireSeconds,
         multiple: false,
         options: params.polls
       }
