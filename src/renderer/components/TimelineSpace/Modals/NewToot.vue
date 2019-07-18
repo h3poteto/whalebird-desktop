@@ -14,6 +14,14 @@
       </div>
       <Status v-model="status" :opened="newTootModal" :fixCursorPos="hashtagInserting" @paste="onPaste" @toot="toot" />
     </el-form>
+    <Poll
+      v-if="openPoll"
+      v-model="polls"
+      @addPoll="addPoll"
+      @removePoll="removePoll"
+      :defaultExpire="pollExpire"
+      @changeExpire="changeExpire"
+    ></Poll>
     <div class="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
@@ -35,14 +43,19 @@
     </div>
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
-        <el-button size="small" type="text" @click="selectImage" :title="$t('modals.new_toot.add_image')">
+        <el-button size="small" type="text" @click="selectImage" :title="$t('modals.new_toot.footer.add_image')">
           <icon name="camera"></icon>
         </el-button>
         <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId" />
       </div>
+      <div class="poll">
+        <el-button size="small" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
+          <icon name="poll"></icon>
+        </el-button>
+      </div>
       <div class="privacy">
         <el-dropdown trigger="click" @command="changeVisibility">
-          <el-button size="small" type="text" :title="$t('modals.new_toot.change_visibility')">
+          <el-button size="small" type="text" :title="$t('modals.new_toot.footer.change_visibility')">
             <icon :name="visibilityIcon"></icon>
           </el-button>
           <el-dropdown-menu slot="dropdown">
@@ -70,7 +83,7 @@
           size="small"
           type="text"
           @click="changeSensitive"
-          :title="$t('modals.new_toot.change_sensitive')"
+          :title="$t('modals.new_toot.footer.change_sensitive')"
           :aria-pressed="sensitive"
         >
           <icon name="eye-slash" v-show="!sensitive"></icon>
@@ -82,7 +95,7 @@
           size="small"
           type="text"
           @click="showContentWarning = !showContentWarning"
-          :title="$t('modals.new_toot.add_cw')"
+          :title="$t('modals.new_toot.footer.add_cw')"
           :class="showContentWarning ? '' : 'clickable'"
           :aria-pressed="showContentWarning"
         >
@@ -94,7 +107,7 @@
           size="small"
           type="text"
           @click="pinedHashtag = !pinedHashtag"
-          :title="$t('modals.new_toot.pined_hashtag')"
+          :title="$t('modals.new_toot.footer.pined_hashtag')"
           :class="pinedHashtag ? '' : 'clickable'"
           :aria-pressed="pinedHashtag"
         >
@@ -120,19 +133,27 @@ import { mapState, mapGetters } from 'vuex'
 import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
+import Poll from './NewToot/Poll'
 import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit } from '@/errors/validations'
 
 export default {
   name: 'new-toot',
   components: {
-    Status
+    Status,
+    Poll
   },
   data() {
     return {
       status: '',
       spoiler: '',
       showContentWarning: false,
-      visibilityList: Visibility
+      visibilityList: Visibility,
+      openPoll: false,
+      polls: ['', ''],
+      pollExpire: {
+        label: this.$t('modals.new_toot.poll.expires.1_day'),
+        value: 3600 * 24
+      }
     }
   },
   computed: {
@@ -208,13 +229,20 @@ export default {
   methods: {
     close() {
       this.filteredAccount = []
+      this.polls = ['', '']
+      this.pollExpire = {
+        label: this.$t('modals.new_toot.poll.expires.1_day'),
+        value: 3600 * 24
+      }
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
     async toot() {
       const form = {
         status: this.status,
-        spoiler: this.spoiler
+        spoiler: this.spoiler,
+        polls: this.polls,
+        pollExpireSeconds: this.pollExpire.value
       }
 
       try {
@@ -323,6 +351,18 @@ export default {
     },
     updateDescription(id, value) {
       this.$store.commit('TimelineSpace/Modals/NewToot/updateMediaDescription', { id: id, description: value })
+    },
+    togglePollForm() {
+      this.openPoll = !this.openPoll
+    },
+    addPoll() {
+      this.polls.push('')
+    },
+    removePoll(id) {
+      this.polls.splice(id, 1)
+    },
+    changeExpire(obj) {
+      this.pollExpire = obj
     }
   }
 }
@@ -427,6 +467,11 @@ export default {
       .image-input {
         display: none;
       }
+    }
+
+    .poll {
+      float: left;
+      margin-left: 8px;
     }
 
     .privacy {

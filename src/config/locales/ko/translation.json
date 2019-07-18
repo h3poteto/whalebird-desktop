@@ -200,13 +200,14 @@
       "close_confirm": "툿 작성을 그만둘까요?",
       "close_confirm_ok": "예",
       "close_confirm_cancel": "취소",
-      "add_image": "이미지 추가",
-      "change_visibility": "공개 범위 변경",
-      "add_cw": "경고 문구 추가",
-      "change_sensitive": "민감한 미디어 설정",
-      "pined_hashtag": "해시태그고정",
       "description": "시각장애인을 위한 설명",
-      "pinned": "고정 된 툿"
+      "footer": {
+        "add_image": "이미지 추가",
+        "change_visibility": "공개 범위 변경",
+        "change_sensitive": "민감한 미디어 설정",
+        "add_cw": "경고 문구 추가",
+        "pined_hashtag": "해시태그고정"
+      }
     },
     "jump": {
       "jump_to": "이동"
@@ -261,7 +262,8 @@
       "reply": "답장하기",
       "reblog": "부스트",
       "fav": "즐겨찾기",
-      "detail": "툿 자세히 보기"
+      "detail": "툿 자세히 보기",
+      "pinned": "고정 된 툿"
     }
   },
   "side_bar": {

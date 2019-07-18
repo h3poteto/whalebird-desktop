@@ -212,12 +212,27 @@
       "close_confirm": "本当に閉じますか？",
       "close_confirm_ok": "閉じる",
       "close_confirm_cancel": "キャンセル",
-      "add_image": "画像を添付",
-      "change_visibility": "プライバシー設定",
-      "add_cw": "閲覧注意を追加",
-      "change_sensitive": "メディアの閲覧注意設定",
-      "pined_hashtag": "ハッシュタグを固定する",
-      "description": "メディアの説明を追加"
+      "description": "メディアの説明を追加",
+      "footer": {
+        "add_image": "画像を添付",
+        "poll": "アンケートを追加",
+        "change_visibility": "プライバシー設定",
+        "change_sensitive": "メディアの閲覧注意設定",
+        "add_cw": "閲覧注意を追加",
+        "pined_hashtag": "ハッシュタグを固定する"
+      },
+      "poll": {
+        "add_choice": "選択肢を追加",
+        "expires": {
+          "5_minutes": "5分後",
+          "30_minutes": "30分後",
+          "1_hour": "1時間後",
+          "6_hours": "6時間後",
+          "1_day": "1日後",
+          "3_days": "3日後",
+          "7_days": "7日後"
+        }
+      }
     },
     "jump": {
       "jump_to": "移動..."
