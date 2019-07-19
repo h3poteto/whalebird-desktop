@@ -103,8 +103,8 @@ $ npm run dev
 ### How to add new language
 
 1. First, please prepare [translation](https://github.com/h3poteto/whalebird-desktop/blob/master/src/config/locales/fr/translation.json), and [translation missing](https://github.com/h3poteto/whalebird-desktop/blob/master/src/config/locales/fr/translation.missing.json) file for your language.
-2. Next, add your language to constants like [French](https://github.com/h3poteto/whalebird-desktop/blob/master/src/constants/language.js#L10-L13).
-3. Finally, add your language at [here](https://github.com/h3poteto/whalebird-desktop/blob/master/src/renderer/components/Preferences/Language.vue#L37).
+2. Next, add your language to constants like [French](https://github.com/h3poteto/whalebird-desktop/blob/master/src/constants/language/index.js#L10-L13).
+3. Finally, add your language at [here](https://github.com/h3poteto/whalebird-desktop/blob/master/src/renderer/components/Preferences/Language.vue#L30).
 
 If there is something unknown, please refer to this pull request: https://github.com/h3poteto/whalebird-desktop/pull/502
 
