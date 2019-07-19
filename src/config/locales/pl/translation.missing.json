@@ -9,7 +9,10 @@
     "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it.",
     "follow_requests": "Follow Requests",
     "mention": "Mentions",
-    "direct_messages": "Direct Messages"
+    "direct_messages": "Direct Messages",
+    "filter": {
+      "show_dms": "Show direct messages"
+    }
   },
   "settings": {
     "timeline": {
@@ -43,6 +46,12 @@
           "7_days": "7 days"
         }
       }
+    },
+    "report": {
+      "title": "Reporting this user",
+      "comment": "Additional comments",
+      "cancel": "Cancel",
+      "ok": "Report"
     },
     "shortcut": {
       "h": "Switch the focus to left column",
