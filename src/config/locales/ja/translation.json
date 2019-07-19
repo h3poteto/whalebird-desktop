@@ -73,6 +73,7 @@
     "filter": {
       "title": "フィルター",
       "placeholder": "正規表現でフィルター",
+      "show_dms": "DMを表示",
       "show_reblogs": "ブースト表示",
       "show_replies": "返信表示",
       "apply": "適用"
@@ -269,6 +270,12 @@
       "x": "CWとNSFWの表示切り替え",
       "?": "このヘルプを開く",
       "esc": "ページを閉じる"
+    },
+    "report": {
+      "title": "このユーザを報告する",
+      "comment": "追加のコメント",
+      "cancel": "キャンセル",
+      "ok": "報告"
     }
   },
   "cards": {

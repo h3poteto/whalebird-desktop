@@ -187,7 +187,7 @@
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Anuluj",
       "description": "Wprowadź opis dla niewidomych i niedowidzących",
-      "fotter": {
+      "footer": {
         "add_image": "Dodaj obraz",
         "change_visibility": "Zmień widoczność",
         "change_sensitive": "Zmień wrażliwy",

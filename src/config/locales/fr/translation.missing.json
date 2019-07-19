@@ -5,7 +5,10 @@
   },
   "header_menu": {
     "mention": "Mention",
-    "follow_requests": "Follow Requests"
+    "follow_requests": "Follow Requests",
+    "filter": {
+      "show_dms": "Show direct messages"
+    }
   },
   "preferences": {
     "appearance": {
@@ -33,6 +36,12 @@
           "7_days": "7 days"
         }
       }
+    },
+    "report": {
+      "title": "Reporting this user",
+      "comment": "Additional comments",
+      "cancel": "Cancel",
+      "ok": "Report"
     }
   },
   "cards": {
