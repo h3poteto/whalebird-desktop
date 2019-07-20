@@ -229,7 +229,8 @@ export default {
   methods: {
     close() {
       this.filteredAccount = []
-      this.polls = ['', '']
+      this.openPoll = false
+      this.polls = []
       this.pollExpire = {
         label: this.$t('modals.new_toot.poll.expires.1_day'),
         value: 3600 * 24
