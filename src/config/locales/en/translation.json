@@ -406,7 +406,8 @@
     "new_toot": {
       "toot_length": "Toot length should be {{min}} to {{max}}",
       "attach_length": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos"
+      "attach_image": "You can only attach images or videos",
+      "poll_invalid": "Invalid poll choices"
     }
   }
 }

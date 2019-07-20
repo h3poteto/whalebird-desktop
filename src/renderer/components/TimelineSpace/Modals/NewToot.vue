@@ -134,7 +134,7 @@ import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 import Poll from './NewToot/Poll'
-import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit } from '@/errors/validations'
+import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit, NewTootPollInvalid } from '@/errors/validations'
 
 export default {
   name: 'new-toot',
@@ -149,7 +149,7 @@ export default {
       showContentWarning: false,
       visibilityList: Visibility,
       openPoll: false,
-      polls: ['', ''],
+      polls: [],
       pollExpire: {
         label: this.$t('modals.new_toot.poll.expires.1_day'),
         value: 3600 * 24
@@ -261,6 +261,11 @@ export default {
             message: this.$t('validation.new_toot.attach_length', { max: 4 }),
             type: 'error'
           })
+        } else if (err instanceof NewTootPollInvalid) {
+          this.$message({
+            message: this.$t('validation.new_toot.poll_invalid'),
+            type: 'error'
+          })
         } else if (err instanceof NewTootModalOpen || err instanceof NewTootBlockSubmit) {
           // Nothing
         } else {
@@ -354,6 +359,11 @@ export default {
     },
     togglePollForm() {
       this.openPoll = !this.openPoll
+      if (this.openPoll) {
+        this.polls = ['', '']
+      } else {
+        this.polls = []
+      }
     },
     addPoll() {
       this.polls.push('')
