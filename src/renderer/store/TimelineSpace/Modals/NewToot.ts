@@ -11,6 +11,7 @@ import {
   NewTootTootLength,
   NewTootAttachLength,
   NewTootMediaDescription,
+  NewTootPollInvalid,
   NewTootUnknownType,
   AuthenticationError
 } from '@/errors/validations'
@@ -205,17 +206,27 @@ const actions: ActionTree<NewTootState, RootState> = {
       status: params.status,
       visibility: specifiedVisibility,
       sensitive: state.sensitive,
-      spoiler_text: params.spoiler,
-      poll: {
-        expires_in: params.pollExpireSeconds,
-        multiple: false,
-        options: params.polls
-      }
+      spoiler_text: params.spoiler
     }
 
     if (state.replyToMessage !== null) {
       form = Object.assign(form, {
         in_reply_to_id: state.replyToMessage.id
+      })
+    }
+
+    if (params.polls.length > 1) {
+      params.polls.map(poll => {
+        if (poll.length < 1) {
+          throw new NewTootPollInvalid()
+        }
+      })
+      form = Object.assign(form, {
+        poll: {
+          expires_in: params.pollExpireSeconds,
+          multiple: false,
+          options: params.polls
+        }
       })
     }
 

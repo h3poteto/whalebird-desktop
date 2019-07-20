@@ -134,7 +134,7 @@ import { clipboard } from 'electron'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 import Poll from './NewToot/Poll'
-import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit } from '@/errors/validations'
+import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit, NewTootPollInvalid } from '@/errors/validations'
 
 export default {
   name: 'new-toot',
@@ -259,6 +259,11 @@ export default {
         } else if (err instanceof NewTootAttachLength) {
           this.$message({
             message: this.$t('validation.new_toot.attach_length', { max: 4 }),
+            type: 'error'
+          })
+        } else if (err instanceof NewTootPollInvalid) {
+          this.$message({
+            message: this.$t('validation.new_toot.poll_invalid'),
             type: 'error'
           })
         } else if (err instanceof NewTootModalOpen || err instanceof NewTootBlockSubmit) {
