@@ -8,6 +8,8 @@ export class NewTootAttachLength extends Error {}
 
 export class NewTootMediaDescription extends Error {}
 
+export class NewTootPollInvalid extends Error {}
+
 export class NewTootUnknownType extends Error {}
 
 export class AuthenticationError extends Error {}
