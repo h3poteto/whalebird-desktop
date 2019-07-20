@@ -406,7 +406,8 @@
     "new_toot": {
       "toot_length": "トゥートの長さは {{min}} から {{max}}文字である必要があります",
       "attach_length": "添付ファイルは {{max}} つまでです",
-      "attach_image": "画像かビデオしか添付できません"
+      "attach_image": "画像かビデオしか添付できません",
+      "poll_invalid": "アンケートに不正な選択肢が含まれています"
     }
   }
 }
