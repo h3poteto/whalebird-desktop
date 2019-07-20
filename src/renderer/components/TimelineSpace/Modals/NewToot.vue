@@ -149,7 +149,7 @@ export default {
       showContentWarning: false,
       visibilityList: Visibility,
       openPoll: false,
-      polls: ['', ''],
+      polls: [],
       pollExpire: {
         label: this.$t('modals.new_toot.poll.expires.1_day'),
         value: 3600 * 24
@@ -354,6 +354,11 @@ export default {
     },
     togglePollForm() {
       this.openPoll = !this.openPoll
+      if (this.openPoll) {
+        this.polls = ['', '']
+      } else {
+        this.polls = []
+      }
     },
     addPoll() {
       this.polls.push('')
