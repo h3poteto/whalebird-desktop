@@ -445,7 +445,9 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
         userStreamings[id] = new StreamingManager(acct, true)
         userStreamings[id]!.startUser(
           (update: Status) => {
-            event.sender.send(`update-start-all-user-streamings-${id}`, update)
+            if (!event.sender.isDestroyed()) {
+              event.sender.send(`update-start-all-user-streamings-${id}`, update)
+            }
           },
           (notification: RemoteNotification) => {
             const preferences = new Preferences(preferencesDBPath)
