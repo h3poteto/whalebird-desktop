@@ -1,15 +1,9 @@
-import sanitizeHtml from 'sanitize-html'
-import { Account, Notification as NotificationType } from 'megalodon'
 import { ipcRenderer } from 'electron'
 import router from '@/router'
 import { LocalAccount } from '~/src/types/localAccount'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import { Notify } from '~/src/types/notify'
-import { AccountNotification } from '~/src/types/accountNotification'
 import { StreamingError } from '~src/errors/streamingError'
-
-declare var Notification: any
 
 export type GlobalHeaderState = {
   accounts: Array<LocalAccount>
@@ -55,7 +49,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     return accounts
   },
   startStreamings: async ({ dispatch }) => {
-    dispatch('bindUserStreamingsForNotify')
+    dispatch('bindNotification')
     dispatch('startUserStreamings')
   },
   listAccounts: ({ dispatch, commit }): Promise<Array<LocalAccount>> => {
@@ -140,24 +134,13 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
   stopUserStreamings: () => {
     ipcRenderer.send('stop-all-user-streamings')
   },
-  bindUserStreamingsForNotify: ({ rootState }) => {
-    ipcRenderer.on('notification-start-all-user-streamings', (_, accountNotification: AccountNotification) => {
-      const { id, notification } = accountNotification
-      let notify = createNotification(notification, rootState.App.notify as Notify)
-      if (notify) {
-        notify.onclick = () => {
-          router.push(`/${id}/home`)
-          // We have to wait until change el-menu-item
-          setTimeout(() => router.push(`/${id}/notifications`), 1000)
-        }
-      } else {
-        console.log('could not create notify')
-      }
+  bindNotification: () => {
+    ipcRenderer.removeAllListeners('open-notification-tab')
+    ipcRenderer.on('open-notification-tab', (_, id: string) => {
+      router.push(`/${id}/home`)
+      // We have to wait until change el-menu-item
+      setTimeout(() => router.push(`/${id}/notifications`), 500)
     })
-  },
-  unbindUserStreamings: () => {
-    ipcRenderer.removeAllListeners('notification-start-all-user-streamings')
-    ipcRenderer.removeAllListeners('error-start-all-user-streamings')
   }
 }
 
@@ -169,49 +152,3 @@ const GlobalHeader: Module<GlobalHeaderState, RootState> = {
 }
 
 export default GlobalHeader
-
-function createNotification(notification: NotificationType, notifyConfig: Notify): Notification | null {
-  switch (notification.type) {
-    case 'favourite':
-      if (notifyConfig.favourite) {
-        return new Notification('Favourite', {
-          body: `${username(notification.account)} favourited your status`
-        })
-      }
-      break
-    case 'follow':
-      if (notifyConfig.follow) {
-        return new Notification('Follow', {
-          body: `${username(notification.account)} is now following you`
-        })
-      }
-      break
-    case 'mention':
-      if (notifyConfig.reply) {
-        // Clean html tags
-        return new Notification(`${notification.status!.account.display_name}`, {
-          body: sanitizeHtml(notification.status!.content, {
-            allowedTags: [],
-            allowedAttributes: []
-          })
-        })
-      }
-      break
-    case 'reblog':
-      if (notifyConfig.reblog) {
-        return new Notification('Reblog', {
-          body: `${username(notification.account)} boosted your status`
-        })
-      }
-      break
-  }
-  return null
-}
-
-function username(account: Account) {
-  if (account.display_name !== '') {
-    return account.display_name
-  } else {
-    return account.username
-  }
-}
