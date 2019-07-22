@@ -32,14 +32,13 @@ import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
 import UnreadNotification from './unreadNotification'
-import i18n from '../config/i18n'
+import i18n from '~/src/config/i18n'
 import Language from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 import { Notify } from '~/src/types/notify'
 import { StreamingError } from '~/src/errors/streamingError'
-import i18next from '~/src/config/i18n'
 
 /**
  * Context menu
@@ -1153,8 +1152,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'favourite':
       if (notifyConfig.favourite) {
         return {
-          title: i18next.t('notification.favourite.title'),
-          body: i18next.t('notification.favourite.body', { username: username(notification.account) }),
+          title: i18n.t('notification.favourite.title'),
+          body: i18n.t('notification.favourite.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
@@ -1162,8 +1161,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'follow':
       if (notifyConfig.follow) {
         return {
-          title: i18next.t('notification.follow.title'),
-          body: i18next.t('notification.follow.body', { username: username(notification.account) }),
+          title: i18n.t('notification.follow.title'),
+          body: i18n.t('notification.follow.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
@@ -1183,8 +1182,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'reblog':
       if (notifyConfig.reblog) {
         return {
-          title: i18next.t('notification.reblog.title'),
-          body: i18next.t('notification.reblog.body', { username: username(notification.account) }),
+          title: i18n.t('notification.reblog.title'),
+          body: i18n.t('notification.reblog.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
