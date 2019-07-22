@@ -454,25 +454,36 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
               if (options !== null) {
                 const notify = new Notification(options)
                 notify.on('click', _ => {
-                  event.sender.send('open-notification-tab', id)
+                  if (!event.sender.isDestroyed()) {
+                    event.sender.send('open-notification-tab', id)
+                  }
                 })
                 notify.show()
               }
             })
-            // To update notification timeline
-            event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
-
-            // Does not exist a endpoint for only mention. And mention is a part of notification.
-            // So we have to get mention from notification.
-            if (notification.type === 'mention') {
-              event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
-            }
             if (process.platform === 'darwin') {
               app.dock.setBadge('•')
             }
+
+            // In macOS and Windows, sometimes window is closed (not quit).
+            // But streamings are always running.
+            // When window is closed, we can not send event to webContents; because it is already destroyed.
+            // So we have to guard it.
+            if (!event.sender.isDestroyed()) {
+              // To update notification timeline
+              event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
+
+              // Does not exist a endpoint for only mention. And mention is a part of notification.
+              // So we have to get mention from notification.
+              if (notification.type === 'mention') {
+                event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
+              }
+            }
           },
           (statusId: string) => {
-            event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
+            if (!event.sender.isDestroyed()) {
+              event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
+            }
           },
           (err: Error) => {
             log.error(err)
@@ -488,7 +499,9 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
       .catch((err: Error) => {
         log.error(err)
         const streamingError = new StreamingError(err.message, account.domain)
-        event.sender.send('error-start-all-user-streamings', streamingError)
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('error-start-all-user-streamings', streamingError)
+        }
       })
   })
 })
@@ -538,10 +551,14 @@ ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSettin
         'direct',
         '',
         (update: Status) => {
-          event.sender.send('update-start-directmessages-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-directmessages-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-directmessages-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-directmessages-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -553,7 +570,9 @@ ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSettin
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-directmessages-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-directmessages-streaming', err)
+      }
     })
 })
 
@@ -582,10 +601,14 @@ ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
         'public/local',
         '',
         (update: Status) => {
-          event.sender.send('update-start-local-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-local-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-local-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-local-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -597,7 +620,9 @@ ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-local-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-local-streaming', err)
+      }
     })
 })
 
@@ -626,10 +651,14 @@ ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
         'public',
         '',
         (update: Status) => {
-          event.sender.send('update-start-public-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-public-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-public-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-public-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -641,7 +670,9 @@ ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-public-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-public-streaming', err)
+      }
     })
 })
 
@@ -674,10 +705,14 @@ ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting
         'list',
         `list=${listID}`,
         (update: Status) => {
-          event.sender.send('update-start-list-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-list-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-list-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-list-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -689,7 +724,9 @@ ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-list-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-list-streaming', err)
+      }
     })
 })
 
@@ -722,10 +759,14 @@ ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) =>
         'hashtag',
         `tag=${tag}`,
         (update: Status) => {
-          event.sender.send('update-start-tag-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-tag-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-tag-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-tag-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -737,7 +778,9 @@ ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) =>
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-tag-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-tag-streaming', err)
+      }
     })
 })
 
