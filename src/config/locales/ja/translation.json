@@ -409,5 +409,19 @@
       "attach_image": "画像かビデオしか添付できません",
       "poll_invalid": "アンケートに不正な選択肢が含まれています"
     }
+  },
+  "notification": {
+    "favourite": {
+      "title": "お気に入り",
+      "body": "{{username}} さんにお気に入り登録されました"
+    },
+    "follow": {
+      "title": "フォロー",
+      "body": "{{username}} さんにフォローされました"
+    },
+    "reblog": {
+      "title": "ブースト",
+      "body": "{{username}} さんにブーストされました"
+    }
   }
 }

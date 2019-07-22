@@ -9,7 +9,9 @@ import {
   BrowserWindow,
   BrowserWindowConstructorOptions,
   MenuItemConstructorOptions,
-  Event
+  Event,
+  Notification,
+  NotificationConstructorOptions
 } from 'electron'
 import Datastore from 'nedb'
 import { isEmpty } from 'lodash'
@@ -20,7 +22,8 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import { Status, Notification } from 'megalodon'
+import { Status, Notification as RemoteNotification, Account as RemoteAccount } from 'megalodon'
+import sanitizeHtml from 'sanitize-html'
 
 import Authentication from './auth'
 import Account from './account'
@@ -29,12 +32,12 @@ import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
 import UnreadNotification from './unreadNotification'
-import i18n from '../config/i18n'
+import i18n from '~/src/config/i18n'
 import Language from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
-import { AccountNotification } from '~/src/types/accountNotification'
+import { Notify } from '~/src/types/notify'
 import { StreamingError } from '~/src/errors/streamingError'
 
 /**
@@ -363,7 +366,7 @@ ipcMain.on('update-account', (event: Event, acct: LocalAccount) => {
 ipcMain.on('remove-account', (event: Event, id: string) => {
   accountManager
     .removeAccount(id)
-    .then((id) => {
+    .then(id => {
       stopUserStreaming(id)
       event.sender.send('response-remove-account', id)
     })
@@ -444,13 +447,18 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
           (update: Status) => {
             event.sender.send(`update-start-all-user-streamings-${id}`, update)
           },
-          (notification: Notification) => {
-            const accountNotification: AccountNotification = {
-              id: id,
-              notification: notification
-            }
-            // To notiy badge
-            event.sender.send('notification-start-all-user-streamings', accountNotification)
+          (notification: RemoteNotification) => {
+            const preferences = new Preferences(preferencesDBPath)
+            preferences.load().then(conf => {
+              const options = createNotification(notification, conf.notification.notify)
+              if (options !== null) {
+                const notify = new Notification(options)
+                notify.on('click', _ => {
+                  event.sender.send('open-notification-tab', id)
+                })
+                notify.show()
+              }
+            })
             // To update notification timeline
             event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
 
@@ -1136,5 +1144,60 @@ async function reopenWindow() {
     return null
   } else {
     return null
+  }
+}
+
+const createNotification = (notification: RemoteNotification, notifyConfig: Notify): NotificationConstructorOptions | null => {
+  switch (notification.type) {
+    case 'favourite':
+      if (notifyConfig.favourite) {
+        return {
+          title: i18n.t('notification.favourite.title'),
+          body: i18n.t('notification.favourite.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    case 'follow':
+      if (notifyConfig.follow) {
+        return {
+          title: i18n.t('notification.follow.title'),
+          body: i18n.t('notification.follow.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    case 'mention':
+      if (notifyConfig.reply) {
+        return {
+          title: `${username(notification.status!.account)}`,
+          body: sanitizeHtml(notification.status!.content, {
+            allowedTags: [],
+            allowedAttributes: []
+          }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    case 'reblog':
+      if (notifyConfig.reblog) {
+        return {
+          title: i18n.t('notification.reblog.title'),
+          body: i18n.t('notification.reblog.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    default:
+      break
+  }
+  return null
+}
+
+const username = (account: RemoteAccount): string => {
+  if (account.display_name !== '') {
+    return account.display_name
+  } else {
+    return account.username
   }
 }
