@@ -65,7 +65,7 @@ export default {
       if (poll_votes === 0) {
         return 0
       }
-      return (option_votes * 100) / poll_votes
+      return ((option_votes * 100) / poll_votes).toFixed(0)
     },
     vote() {
       if (this.pollRadio !== null) {
