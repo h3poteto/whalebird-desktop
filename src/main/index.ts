@@ -39,6 +39,7 @@ import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 import { Notify } from '~/src/types/notify'
 import { StreamingError } from '~/src/errors/streamingError'
+import i18next from '~/src/config/i18n'
 
 /**
  * Context menu
@@ -1152,8 +1153,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'favourite':
       if (notifyConfig.favourite) {
         return {
-          title: 'Favourite',
-          body: `${username(notification.account)} favourited your status`,
+          title: i18next.t('notification.favourite.title'),
+          body: i18next.t('notification.favourite.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
@@ -1161,8 +1162,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'follow':
       if (notifyConfig.follow) {
         return {
-          title: 'Follow',
-          body: `${username(notification.account)} is now following you`,
+          title: i18next.t('notification.follow.title'),
+          body: i18next.t('notification.follow.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
@@ -1182,8 +1183,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'reblog':
       if (notifyConfig.reblog) {
         return {
-          title: 'Reblog',
-          body: `${username(notification.account)} boosted your status`,
+          title: i18next.t('notification.reblog.title'),
+          body: i18next.t('notification.reblog.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
