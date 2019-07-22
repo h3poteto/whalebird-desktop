@@ -97,5 +97,19 @@
     "new_toot": {
       "poll_invalid": "Invalid poll choices"
     }
+  },
+  "notification": {
+    "favourite": {
+      "title": "Favourite",
+      "body": "{{username}} favourited your status"
+    },
+    "follow": {
+      "title": "Follow",
+      "body": "{{username}} is now following you"
+    },
+    "reblog": {
+      "title": "Reblog",
+      "body": "{{username}} boosted your status"
+    }
   }
 }
