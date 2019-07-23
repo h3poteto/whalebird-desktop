@@ -24,7 +24,9 @@ import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
 import { Status, Notification as RemoteNotification, Account as RemoteAccount } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
+import { ToastNotification } from 'electron-windows-notifications'
 
+import pkg from '~/package.json'
 import Authentication from './auth'
 import Account from './account'
 import StreamingManager from './streamingManager'
@@ -74,6 +76,8 @@ const splashURL =
   process.env.NODE_ENV === 'development'
     ? path.resolve(__dirname, '../../static/splash-screen.html')
     : `${__dirname}/static/splash-screen.html`
+
+const appId = pkg.build.appId
 
 // https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
@@ -454,13 +458,29 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
             preferences.load().then(conf => {
               const options = createNotification(notification, conf.notification.notify)
               if (options !== null) {
-                const notify = new Notification(options)
-                notify.on('click', _ => {
-                  if (!event.sender.isDestroyed()) {
-                    event.sender.send('open-notification-tab', id)
-                  }
-                })
-                notify.show()
+                // Now Notification API do not work on Windows10.
+                // But electron-windows-notification can use.
+                if (process.platform === 'win32') {
+                  const notify = new ToastNotification({
+                    appId: appId,
+                    template: `<toast><visual><binding template="ToastTGeneric"><text>%s</text><text>%s</text></binding></visual></toast>`,
+                    strings: [options.title, options.body]
+                  })
+                  notify.on('activated', () => {
+                    if (!event.sender.isDestroyed()) {
+                      event.sender.send('open-notification-tab', id)
+                    }
+                  })
+                  notify.show()
+                } else {
+                  const notify = new Notification(options)
+                  notify.on('click', _ => {
+                    if (!event.sender.isDestroyed()) {
+                      event.sender.send('open-notification-tab', id)
+                    }
+                  })
+                  notify.show()
+                }
               }
             })
             if (process.platform === 'darwin') {

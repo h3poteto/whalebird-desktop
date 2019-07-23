@@ -162,6 +162,7 @@
     "electron-json-storage": "^4.1.5",
     "electron-log": "^2.2.17",
     "electron-window-state": "^5.0.3",
+    "electron-windows-notifications": "^3.0.2",
     "element-ui": "^2.4.11",
     "emoji-mart-vue": "^2.6.6",
     "emojilib": "^2.4.0",
