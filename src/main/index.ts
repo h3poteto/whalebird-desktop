@@ -25,6 +25,7 @@ import openAboutWindow from 'about-window'
 import { Status, Notification as RemoteNotification, Account as RemoteAccount } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
 
+import pkg from '~/package.json'
 import Authentication from './auth'
 import Account from './account'
 import StreamingManager from './streamingManager'
@@ -69,6 +70,8 @@ if (process.env.NODE_ENV !== 'development') {
 let mainWindow: BrowserWindow | null
 let tray: Tray | null
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
+
+const appId = pkg.build.appId
 
 const splashURL =
   process.env.NODE_ENV === 'development'
@@ -195,6 +198,12 @@ async function createWindow() {
     const dockMenu = Menu.buildFromTemplate(accountsChange)
     app.dock.setMenu(dockMenu)
   }
+
+  /**
+   * Windows10 don' notify, so we have to set appId
+   * https://github.com/electron/electron/issues/10864
+   */
+  app.setAppUserModelId(appId)
 
   /**
    * Enable accessibility
