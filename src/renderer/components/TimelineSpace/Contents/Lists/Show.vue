@@ -28,7 +28,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import Toot from '~/src/renderer/components/molecules/Toot'
+import Toot from '~/src/renderer/components/organisms/Toot'
 import scrollTop from '../../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'

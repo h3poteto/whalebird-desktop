@@ -8,7 +8,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Toot from '~/src/renderer/components/molecules/Toot'
+import Toot from '~/src/renderer/components/organisms/Toot'
 
 export default {
   name: 'search-account',

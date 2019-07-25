@@ -60,6 +60,7 @@
     "home": "Pagina Iniziale",
     "notification": "Notifiche",
     "mention": "Menzioni",
+    "direct_messages": "Messaggi diretti",
     "favourite": "Preferiti",
     "local": "Timeline locale",
     "public": "Timeline pubblica",
@@ -209,12 +210,14 @@
       "close_confirm": "Sei sicuro/a di voler cancellare il nuovo toot?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Annulla",
-      "add_image": "Aggiungi immagini",
-      "change_visibility": "Modifica visibilità",
-      "add_cw": "Aggiungi avviso sui contenuti",
-      "change_sensitive": "Modifica sensibilità",
-      "pined_hashtag": "Fissa l'hashtag",
-      "description": "Descrivi per i non vedenti"
+      "description": "Descrivi per i non vedenti",
+      "footer": {
+        "add_image": "Aggiungi immagini",
+        "change_visibility": "Modifica visibilità",
+        "change_sensitive": "Modifica sensibilità",
+        "add_cw": "Aggiungi avviso sui contenuti",
+        "pined_hashtag": "Fissa l'hashtag"
+      }
     },
     "jump": {
       "jump_to": "Salta a..."

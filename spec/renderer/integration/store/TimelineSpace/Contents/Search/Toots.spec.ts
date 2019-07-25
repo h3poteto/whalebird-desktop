@@ -52,6 +52,7 @@ const status: Status = {
   mentions: [],
   tags: [],
   card: null,
+  poll: null,
   application: {
     name: 'Web'
   } as Application,

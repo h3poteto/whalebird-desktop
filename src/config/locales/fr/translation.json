@@ -58,6 +58,7 @@
   "header_menu": {
     "home": "Accueil",
     "notification": "Notifications",
+    "direct_messages": "Messages Privés",
     "favourite": "Favoris",
     "local": "Fil public local",
     "public": "Fil public global",
@@ -206,12 +207,14 @@
       "close_confirm": "Êtes-vous certain de vouloir fermer ce nouveau pouet ?",
       "close_confirm_ok": "Oui",
       "close_confirm_cancel": "Annuler",
-      "add_image": "Ajouter une image",
-      "change_visibility": "Changer la visibilité",
-      "add_cw": "Ajouter un avertissement de contenu",
-      "change_sensitive": "Changer sensible",
-      "pined_hashtag": "Accrochez le hashtag",
-      "description": "Décrire pour les malvoyant·e·s"
+      "description": "Décrire pour les malvoyant·e·s",
+      "footer": {
+        "add_image": "Ajouter une image",
+        "change_visibility": "Changer la visibilité",
+        "change_sensitive": "Changer sensible",
+        "add_cw": "Ajouter un avertissement de contenu",
+        "pined_hashtag": "Accrochez le hashtag"
+      }
     },
     "jump": {
       "jump_to": "Aller à..."

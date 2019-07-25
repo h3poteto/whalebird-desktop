@@ -9,7 +9,9 @@ import {
   BrowserWindow,
   BrowserWindowConstructorOptions,
   MenuItemConstructorOptions,
-  Event
+  Event,
+  Notification,
+  NotificationConstructorOptions
 } from 'electron'
 import Datastore from 'nedb'
 import { isEmpty } from 'lodash'
@@ -20,8 +22,10 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import { Status, Notification } from 'megalodon'
+import { Status, Notification as RemoteNotification, Account as RemoteAccount } from 'megalodon'
+import sanitizeHtml from 'sanitize-html'
 
+import pkg from '~/package.json'
 import Authentication from './auth'
 import Account from './account'
 import StreamingManager from './streamingManager'
@@ -29,12 +33,12 @@ import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
 import UnreadNotification from './unreadNotification'
-import i18n from '../config/i18n'
+import i18n from '~/src/config/i18n'
 import Language from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
-import { AccountNotification } from '~/src/types/accountNotification'
+import { Notify } from '~/src/types/notify'
 import { StreamingError } from '~/src/errors/streamingError'
 
 /**
@@ -66,6 +70,8 @@ if (process.env.NODE_ENV !== 'development') {
 let mainWindow: BrowserWindow | null
 let tray: Tray | null
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
+
+const appId = pkg.build.appId
 
 const splashURL =
   process.env.NODE_ENV === 'development'
@@ -192,6 +198,12 @@ async function createWindow() {
     const dockMenu = Menu.buildFromTemplate(accountsChange)
     app.dock.setMenu(dockMenu)
   }
+
+  /**
+   * Windows10 don' notify, so we have to set appId
+   * https://github.com/electron/electron/issues/10864
+   */
+  app.setAppUserModelId(appId)
 
   /**
    * Enable accessibility
@@ -363,7 +375,7 @@ ipcMain.on('update-account', (event: Event, acct: LocalAccount) => {
 ipcMain.on('remove-account', (event: Event, id: string) => {
   accountManager
     .removeAccount(id)
-    .then((id) => {
+    .then(id => {
       stopUserStreaming(id)
       event.sender.send('response-remove-account', id)
     })
@@ -442,29 +454,47 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
         userStreamings[id] = new StreamingManager(acct, true)
         userStreamings[id]!.startUser(
           (update: Status) => {
-            event.sender.send(`update-start-all-user-streamings-${id}`, update)
+            if (!event.sender.isDestroyed()) {
+              event.sender.send(`update-start-all-user-streamings-${id}`, update)
+            }
           },
-          (notification: Notification) => {
-            const accountNotification: AccountNotification = {
-              id: id,
-              notification: notification
-            }
-            // To notiy badge
-            event.sender.send('notification-start-all-user-streamings', accountNotification)
-            // To update notification timeline
-            event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
-
-            // Does not exist a endpoint for only mention. And mention is a part of notification.
-            // So we have to get mention from notification.
-            if (notification.type === 'mention') {
-              event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
-            }
+          (notification: RemoteNotification) => {
+            const preferences = new Preferences(preferencesDBPath)
+            preferences.load().then(conf => {
+              const options = createNotification(notification, conf.notification.notify)
+              if (options !== null) {
+                const notify = new Notification(options)
+                notify.on('click', _ => {
+                  if (!event.sender.isDestroyed()) {
+                    event.sender.send('open-notification-tab', id)
+                  }
+                })
+                notify.show()
+              }
+            })
             if (process.platform === 'darwin') {
               app.dock.setBadge('•')
             }
+
+            // In macOS and Windows, sometimes window is closed (not quit).
+            // But streamings are always running.
+            // When window is closed, we can not send event to webContents; because it is already destroyed.
+            // So we have to guard it.
+            if (!event.sender.isDestroyed()) {
+              // To update notification timeline
+              event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
+
+              // Does not exist a endpoint for only mention. And mention is a part of notification.
+              // So we have to get mention from notification.
+              if (notification.type === 'mention') {
+                event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
+              }
+            }
           },
           (statusId: string) => {
-            event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
+            if (!event.sender.isDestroyed()) {
+              event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
+            }
           },
           (err: Error) => {
             log.error(err)
@@ -480,7 +510,9 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
       .catch((err: Error) => {
         log.error(err)
         const streamingError = new StreamingError(err.message, account.domain)
-        event.sender.send('error-start-all-user-streamings', streamingError)
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('error-start-all-user-streamings', streamingError)
+        }
       })
   })
 })
@@ -530,10 +562,14 @@ ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSettin
         'direct',
         '',
         (update: Status) => {
-          event.sender.send('update-start-directmessages-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-directmessages-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-directmessages-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-directmessages-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -545,7 +581,9 @@ ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSettin
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-directmessages-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-directmessages-streaming', err)
+      }
     })
 })
 
@@ -574,10 +612,14 @@ ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
         'public/local',
         '',
         (update: Status) => {
-          event.sender.send('update-start-local-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-local-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-local-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-local-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -589,7 +631,9 @@ ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-local-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-local-streaming', err)
+      }
     })
 })
 
@@ -618,10 +662,14 @@ ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
         'public',
         '',
         (update: Status) => {
-          event.sender.send('update-start-public-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-public-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-public-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-public-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -633,7 +681,9 @@ ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-public-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-public-streaming', err)
+      }
     })
 })
 
@@ -666,10 +716,14 @@ ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting
         'list',
         `list=${listID}`,
         (update: Status) => {
-          event.sender.send('update-start-list-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-list-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-list-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-list-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -681,7 +735,9 @@ ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-list-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-list-streaming', err)
+      }
     })
 })
 
@@ -714,10 +770,14 @@ ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) =>
         'hashtag',
         `tag=${tag}`,
         (update: Status) => {
-          event.sender.send('update-start-tag-streaming', update)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('update-start-tag-streaming', update)
+          }
         },
         (id: string) => {
-          event.sender.send('delete-start-tag-streaming', id)
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('delete-start-tag-streaming', id)
+          }
         },
         (err: Error) => {
           log.error(err)
@@ -729,7 +789,9 @@ ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) =>
     })
     .catch(err => {
       log.error(err)
-      event.sender.send('error-start-tag-streaming', err)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-tag-streaming', err)
+      }
     })
 })
 
@@ -1136,5 +1198,60 @@ async function reopenWindow() {
     return null
   } else {
     return null
+  }
+}
+
+const createNotification = (notification: RemoteNotification, notifyConfig: Notify): NotificationConstructorOptions | null => {
+  switch (notification.type) {
+    case 'favourite':
+      if (notifyConfig.favourite) {
+        return {
+          title: i18n.t('notification.favourite.title'),
+          body: i18n.t('notification.favourite.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    case 'follow':
+      if (notifyConfig.follow) {
+        return {
+          title: i18n.t('notification.follow.title'),
+          body: i18n.t('notification.follow.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    case 'mention':
+      if (notifyConfig.reply) {
+        return {
+          title: `${username(notification.status!.account)}`,
+          body: sanitizeHtml(notification.status!.content, {
+            allowedTags: [],
+            allowedAttributes: []
+          }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    case 'reblog':
+      if (notifyConfig.reblog) {
+        return {
+          title: i18n.t('notification.reblog.title'),
+          body: i18n.t('notification.reblog.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    default:
+      break
+  }
+  return null
+}
+
+const username = (account: RemoteAccount): string => {
+  if (account.display_name !== '') {
+    return account.display_name
+  } else {
+    return account.username
   }
 }

@@ -213,12 +213,27 @@
       "close_confirm": "Are you sure you want to cancel the new post?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Cancel",
-      "add_image": "Add images",
-      "change_visibility": "Change visibility",
-      "add_cw": "Add content warning",
-      "change_sensitive": "Change sensitive",
-      "pined_hashtag": "Pin the hashtag",
-      "description": "Describe for the visually impaired"
+      "description": "Describe for the visually impaired",
+      "footer": {
+        "add_image": "Add images",
+        "poll": "Add a poll",
+        "change_visibility": "Change visibility",
+        "change_sensitive": "Change sensitive",
+        "add_cw": "Add content warning",
+        "pined_hashtag": "Pin the hashtag"
+      },
+      "poll": {
+        "add_choice": "Add a choice",
+        "expires": {
+          "5_minutes": "5 minutes",
+          "30_minutes": "30 minutes",
+          "1_hour": "1 hour",
+          "6_hours": "6 hours",
+          "1_day": "1 day",
+          "3_days": "3 days",
+          "7_days": "7 days"
+        }
+      }
     },
     "jump": {
       "jump_to": "Jump to..."
@@ -280,7 +295,14 @@
       "reblog": "Reblog",
       "fav": "Favourite",
       "detail": "Status details",
-      "pinned": "Pinned toot"
+      "pinned": "Pinned status",
+      "poll": {
+        "vote": "Vote",
+        "votes_count": "votes",
+        "until": "until {{datetime}}",
+        "left": "{{datetime}} left",
+        "refresh": "Refresh"
+      }
     }
   },
   "side_bar": {
@@ -384,7 +406,22 @@
     "new_toot": {
       "toot_length": "Status length should be {{min}} to {{max}}",
       "attach_length": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos"
+      "attach_image": "You can only attach images or videos",
+      "poll_invalid": "Invalid poll choices"
+    }
+  },
+  "notification": {
+    "favourite": {
+      "title": "Favourite",
+      "body": "{{username}} favourited your status"
+    },
+    "follow": {
+      "title": "Follow",
+      "body": "{{username}} is now following you"
+    },
+    "reblog": {
+      "title": "Reblog",
+      "body": "{{username}} boosted your status"
     }
   }
 }

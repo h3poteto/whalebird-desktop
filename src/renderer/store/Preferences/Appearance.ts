@@ -37,7 +37,7 @@ const mutations: MutationTree<AppearanceState> = {
     state.appearance = conf
   },
   [MUTATION_TYPES.UPDATE_FONTS]: (state, fonts: Array<string>) => {
-    state.fonts = fonts
+    state.fonts = Array.from(new Set(fonts))
   }
 }
 

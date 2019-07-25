@@ -74,6 +74,7 @@ const status1: Status = {
   mentions: [],
   tags: [],
   card: null,
+  poll: null,
   application: {
     name: 'Web'
   } as Application,
@@ -105,6 +106,7 @@ const status2: Status = {
   mentions: [],
   tags: [],
   card: null,
+  poll: null,
   application: {
     name: 'Web'
   } as Application,
@@ -136,6 +138,7 @@ const rebloggedStatus: Status = {
   mentions: [],
   tags: [],
   card: null,
+  poll: null,
   application: {
     name: 'Web'
   } as Application,
