@@ -1,5 +1,6 @@
 {
   "side_menu": {
+    "mention": "Mention",
     "direct": "Direct messages",
     "follow_requests": "Follow Requests"
   },
@@ -7,7 +8,11 @@
     "settings": "Settings",
     "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it.",
     "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages"
+    "mention": "Mention",
+    "direct_messages": "Direct Messages",
+    "filter": {
+      "show_dms": "Show direct messages"
+    }
   },
   "settings": {
     "timeline": {
@@ -25,6 +30,29 @@
     "tag": "Hashtag"
   },
   "modals": {
+    "new_toot": {
+      "footer": {
+        "poll": "Add a poll"
+      },
+      "poll": {
+        "add_choice": "Add a choice",
+        "expires": {
+          "5_minutes": "5 minutes",
+          "30_minutes": "30 minutes",
+          "1_hour": "1 hour",
+          "6_hours": "6 hours",
+          "1_day": "1 day",
+          "3_days": "3 days",
+          "7_days": "7 days"
+        }
+      }
+    },
+    "report": {
+      "title": "Reporting this user",
+      "comment": "Additional comments",
+      "cancel": "Cancel",
+      "ok": "Report"
+    },
     "shortcut": {
       "h": "Switch the focus to left column",
       "l": "Switch the focus to right column",
@@ -49,9 +77,39 @@
     "accept": "Accept",
     "reject": "Reject"
   },
+  "cards": {
+    "toot": {
+      "poll": {
+        "vote": "Vote",
+        "votes_count": "votes",
+        "until": "until {{datetime}}",
+        "left": "{{datetime}} left",
+        "refresh": "Refresh"
+      }
+    }
+  },
   "message": {
     "follow_request_accept_error": "Failed to accept the request",
     "follow_reuqest_reject_error": "failed to reject the request",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}"
+  },
+  "validation": {
+    "new_toot": {
+      "poll_invalid": "Invalid poll choices"
+    }
+  },
+  "notification": {
+    "favourite": {
+      "title": "Favourite",
+      "body": "{{username}} favourited your status"
+    },
+    "follow": {
+      "title": "Follow",
+      "body": "{{username}} is now following you"
+    },
+    "reblog": {
+      "title": "Reblog",
+      "body": "{{username}} boosted your status"
+    }
   }
 }

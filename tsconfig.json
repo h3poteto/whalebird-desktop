@@ -10,6 +10,7 @@
     "sourceMap": true,
     "downlevelIteration": true,
     "strict": true,
+    "resolveJsonModule": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
     "strictFunctionTypes": true,

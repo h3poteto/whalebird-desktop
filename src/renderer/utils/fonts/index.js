@@ -10,5 +10,7 @@ export default [
   'Helvetica Neue',
   'Apple Color Emoji',
   'Segoe UI Emoji',
-  'Segoe UI Symbol'
+  'Segoe UI Symbol',
+  'Noto Color Emoji',
+  'Noto Emoji'
 ]
