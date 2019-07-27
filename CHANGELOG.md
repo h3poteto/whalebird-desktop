@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.8.2] - 2019-07-25
+### Changed
+- [#974](https://github.com/h3poteto/whalebird-desktop/pull/974) Notify notification in main process
+- [#973](https://github.com/h3poteto/whalebird-desktop/pull/973) Update screenshot in README for recent updates
+
+### Fixed
+- [#981](https://github.com/h3poteto/whalebird-desktop/pull/981) Set appId to notify in windows10
+- [#979](https://github.com/h3poteto/whalebird-desktop/pull/979) fix: Check webContents status when receive status in streaming
+- [#978](https://github.com/h3poteto/whalebird-desktop/pull/978) Check webContent status before send event in all streamings
+- [#977](https://github.com/h3poteto/whalebird-desktop/pull/977) Fix digits number of percentage in polls
+
+
 ## [2.8.1] - 2019-07-21
 ### Added
 - [#966](https://github.com/h3poteto/whalebird-desktop/pull/966) Add a spec for translation json files
