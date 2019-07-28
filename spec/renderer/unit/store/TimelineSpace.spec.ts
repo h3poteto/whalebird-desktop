@@ -17,7 +17,6 @@ describe('TimelineSpace', () => {
           local: unreadSettings.Local.default,
           public: unreadSettings.Public.default
         },
-        useWebsocket: false,
         pleroma: false
       }
     })
