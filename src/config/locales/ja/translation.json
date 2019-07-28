@@ -78,7 +78,6 @@
       "show_replies": "返信表示",
       "apply": "適用"
     },
-    "switch_streaming": "Websocketによるストリーミングを行う．もしタイムラインが自動で更新されない場合にはお試しください",
     "new_toot": "トゥート",
     "reload": "再読み込み",
     "settings": "設定"

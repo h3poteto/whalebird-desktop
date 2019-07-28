@@ -6,7 +6,6 @@
   },
   "header_menu": {
     "settings": "Settings",
-    "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it.",
     "follow_requests": "Follow Requests",
     "mention": "Mentions",
     "direct_messages": "Direct Messages",
