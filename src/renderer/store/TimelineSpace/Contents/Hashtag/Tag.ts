@@ -117,8 +117,7 @@ const actions: ActionTree<TagState, RootState> = {
       // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-tag-streaming', {
         tag: encodeURIComponent(tag),
-        account: rootState.TimelineSpace.account,
-        useWebsocket: rootState.TimelineSpace.useWebsocket
+        account: rootState.TimelineSpace.account
       })
       ipcRenderer.once('error-start-tag-streaming', (_, err: Error) => {
         reject(err)
