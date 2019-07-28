@@ -75,8 +75,7 @@
     },
     "new_toot": "Pouet",
     "reload": "Recharger",
-    "settings": "Paramètres",
-    "switch_streaming": "Utiliser websocket pour le streaming. Option à essayer si le fil d'actualité ne se recharge pas"
+    "settings": "Paramètres"
   },
   "settings": {
     "title": "Settings",

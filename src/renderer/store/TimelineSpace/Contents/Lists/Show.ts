@@ -117,8 +117,7 @@ const actions: ActionTree<ShowState, RootState> = {
       // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-list-streaming', {
         listID: listID,
-        account: rootState.TimelineSpace.account,
-        useWebsocket: rootState.TimelineSpace.useWebsocket
+        account: rootState.TimelineSpace.account
       })
       ipcRenderer.once('error-start-list-streaming', (_, err: Error) => {
         reject(err)

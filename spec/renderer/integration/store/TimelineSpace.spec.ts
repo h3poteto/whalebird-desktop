@@ -39,7 +39,6 @@ const state = (): TimelineSpaceState => {
       local: true,
       public: true
     },
-    useWebsocket: false,
     pleroma: false
   }
 }
@@ -175,7 +174,6 @@ describe('TimelineSpace', () => {
         ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
         await store.dispatch('TimelineSpace/detectPleroma')
         expect(store.state.TimelineSpace.pleroma).toEqual(true)
-        expect(store.state.TimelineSpace.useWebsocket).toEqual(true)
       })
     })
     describe('API is not pleroma', () => {
@@ -210,7 +208,6 @@ describe('TimelineSpace', () => {
         ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
         await store.dispatch('TimelineSpace/detectPleroma')
         expect(store.state.TimelineSpace.pleroma).toEqual(false)
-        expect(store.state.TimelineSpace.useWebsocket).toEqual(false)
       })
     })
   })

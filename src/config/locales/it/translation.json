@@ -76,7 +76,6 @@
       "show_replies": "Mostra risposte",
       "apply": "Applica"
     },
-    "switch_streaming": "Usa websocket per lo streaming. Se la cronologia non si aggiorna con lo streaming, provare ad abilitare questa opzione.",
     "new_toot": "Toot",
     "reload": "Ricarica",
     "settings": "Impostazioni"
