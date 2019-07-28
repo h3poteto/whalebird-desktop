@@ -28,7 +28,7 @@ import sanitizeHtml from 'sanitize-html'
 import pkg from '~/package.json'
 import Authentication from './auth'
 import Account from './account'
-import StreamingManager from './streamingManager'
+import WebSocket from './websocket'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
@@ -438,7 +438,7 @@ ipcMain.on('reset-badge', () => {
 })
 
 // user streaming
-let userStreamings: { [key: string]: StreamingManager | null } = {}
+let userStreamings: { [key: string]: WebSocket | null } = {}
 
 ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAccount>) => {
   accounts.map(account => {
@@ -451,8 +451,8 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
           userStreamings[id]!.stop()
           userStreamings[id] = null
         }
-        userStreamings[id] = new StreamingManager(acct, true)
-        userStreamings[id]!.startUser(
+        userStreamings[id] = new WebSocket(acct)
+        userStreamings[id]!.startUserStreaming(
           (update: Status) => {
             if (!event.sender.isDestroyed()) {
               event.sender.send(`update-start-all-user-streamings-${id}`, update)
@@ -541,13 +541,12 @@ const stopUserStreaming = (id: string) => {
 
 type StreamingSetting = {
   account: LocalAccount
-  useWebsocket: boolean
 }
 
-let directMessagesStreaming: StreamingManager | null = null
+let directMessagesStreaming: WebSocket | null = null
 
 ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSetting) => {
-  const { account, useWebsocket } = obj
+  const { account } = obj
   accountManager
     .getAccount(account._id!)
     .then(acct => {
@@ -557,10 +556,9 @@ ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSettin
         directMessagesStreaming = null
       }
 
-      directMessagesStreaming = new StreamingManager(acct, useWebsocket)
+      directMessagesStreaming = new WebSocket(acct)
       directMessagesStreaming.start(
         'direct',
-        '',
         (update: Status) => {
           if (!event.sender.isDestroyed()) {
             event.sender.send('update-start-directmessages-streaming', update)
@@ -594,10 +592,10 @@ ipcMain.on('stop-directmessages-streaming', () => {
   }
 })
 
-let localStreaming: StreamingManager | null = null
+let localStreaming: WebSocket | null = null
 
 ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
-  const { account, useWebsocket } = obj
+  const { account } = obj
   accountManager
     .getAccount(account._id!)
     .then(acct => {
@@ -607,10 +605,9 @@ ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
         localStreaming = null
       }
 
-      localStreaming = new StreamingManager(acct, useWebsocket)
+      localStreaming = new WebSocket(acct)
       localStreaming.start(
-        'public/local',
-        '',
+        'public:local',
         (update: Status) => {
           if (!event.sender.isDestroyed()) {
             event.sender.send('update-start-local-streaming', update)
@@ -644,10 +641,10 @@ ipcMain.on('stop-local-streaming', () => {
   }
 })
 
-let publicStreaming: StreamingManager | null = null
+let publicStreaming: WebSocket | null = null
 
 ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
-  const { account, useWebsocket } = obj
+  const { account } = obj
   accountManager
     .getAccount(account._id!)
     .then(acct => {
@@ -657,10 +654,9 @@ ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
         publicStreaming = null
       }
 
-      publicStreaming = new StreamingManager(acct, useWebsocket)
+      publicStreaming = new WebSocket(acct)
       publicStreaming.start(
         'public',
-        '',
         (update: Status) => {
           if (!event.sender.isDestroyed()) {
             event.sender.send('update-start-public-streaming', update)
@@ -694,14 +690,14 @@ ipcMain.on('stop-public-streaming', () => {
   }
 })
 
-let listStreaming: StreamingManager | null = null
+let listStreaming: WebSocket | null = null
 
 type ListID = {
   listID: string
 }
 
 ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting) => {
-  const { listID, account, useWebsocket } = obj
+  const { listID, account } = obj
   accountManager
     .getAccount(account._id!)
     .then(acct => {
@@ -711,10 +707,9 @@ ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting
         listStreaming = null
       }
 
-      listStreaming = new StreamingManager(acct, useWebsocket)
+      listStreaming = new WebSocket(acct)
       listStreaming.start(
-        'list',
-        `list=${listID}`,
+        `list&list=${listID}`,
         (update: Status) => {
           if (!event.sender.isDestroyed()) {
             event.sender.send('update-start-list-streaming', update)
@@ -748,14 +743,14 @@ ipcMain.on('stop-list-streaming', () => {
   }
 })
 
-let tagStreaming: StreamingManager | null = null
+let tagStreaming: WebSocket | null = null
 
 type Tag = {
   tag: string
 }
 
 ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) => {
-  const { tag, account, useWebsocket } = obj
+  const { tag, account } = obj
   accountManager
     .getAccount(account._id!)
     .then(acct => {
@@ -765,10 +760,9 @@ ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) =>
         tagStreaming = null
       }
 
-      tagStreaming = new StreamingManager(acct, useWebsocket)
+      tagStreaming = new WebSocket(acct)
       tagStreaming.start(
-        'hashtag',
-        `tag=${tag}`,
+        `hashtag&tag=${tag}`,
         (update: Status) => {
           if (!event.sender.isDestroyed()) {
             event.sender.send('update-start-tag-streaming', update)
