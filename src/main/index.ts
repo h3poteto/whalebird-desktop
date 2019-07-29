@@ -28,7 +28,7 @@ import sanitizeHtml from 'sanitize-html'
 import pkg from '~/package.json'
 import Authentication from './auth'
 import Account from './account'
-import WebSocket from './websocket'
+import WebSocket, { StreamingURL } from './websocket'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
@@ -441,79 +441,78 @@ ipcMain.on('reset-badge', () => {
 let userStreamings: { [key: string]: WebSocket | null } = {}
 
 ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAccount>) => {
-  accounts.map(account => {
+  accounts.map(async account => {
     const id: string = account._id!
-    accountManager
-      .getAccount(id)
-      .then(acct => {
-        // Stop old user streaming
-        if (userStreamings[id]) {
-          userStreamings[id]!.stop()
-          userStreamings[id] = null
-        }
-        userStreamings[id] = new WebSocket(acct)
-        userStreamings[id]!.startUserStreaming(
-          (update: Status) => {
-            if (!event.sender.isDestroyed()) {
-              event.sender.send(`update-start-all-user-streamings-${id}`, update)
+    try {
+      const acct = await accountManager.getAccount(id)
+      // Stop old user streaming
+      if (userStreamings[id]) {
+        userStreamings[id]!.stop()
+        userStreamings[id] = null
+      }
+      const url = await StreamingURL(acct)
+      userStreamings[id] = new WebSocket(acct, url)
+      userStreamings[id]!.startUserStreaming(
+        (update: Status) => {
+          if (!event.sender.isDestroyed()) {
+            event.sender.send(`update-start-all-user-streamings-${id}`, update)
+          }
+        },
+        (notification: RemoteNotification) => {
+          const preferences = new Preferences(preferencesDBPath)
+          preferences.load().then(conf => {
+            const options = createNotification(notification, conf.notification.notify)
+            if (options !== null) {
+              const notify = new Notification(options)
+              notify.on('click', _ => {
+                if (!event.sender.isDestroyed()) {
+                  event.sender.send('open-notification-tab', id)
+                }
+              })
+              notify.show()
             }
-          },
-          (notification: RemoteNotification) => {
-            const preferences = new Preferences(preferencesDBPath)
-            preferences.load().then(conf => {
-              const options = createNotification(notification, conf.notification.notify)
-              if (options !== null) {
-                const notify = new Notification(options)
-                notify.on('click', _ => {
-                  if (!event.sender.isDestroyed()) {
-                    event.sender.send('open-notification-tab', id)
-                  }
-                })
-                notify.show()
-              }
-            })
-            if (process.platform === 'darwin') {
-              app.dock.setBadge('•')
-            }
+          })
+          if (process.platform === 'darwin') {
+            app.dock.setBadge('•')
+          }
 
-            // In macOS and Windows, sometimes window is closed (not quit).
-            // But streamings are always running.
-            // When window is closed, we can not send event to webContents; because it is already destroyed.
-            // So we have to guard it.
-            if (!event.sender.isDestroyed()) {
-              // To update notification timeline
-              event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
+          // In macOS and Windows, sometimes window is closed (not quit).
+          // But streamings are always running.
+          // When window is closed, we can not send event to webContents; because it is already destroyed.
+          // So we have to guard it.
+          if (!event.sender.isDestroyed()) {
+            // To update notification timeline
+            event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
 
-              // Does not exist a endpoint for only mention. And mention is a part of notification.
-              // So we have to get mention from notification.
-              if (notification.type === 'mention') {
-                event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
-              }
-            }
-          },
-          (statusId: string) => {
-            if (!event.sender.isDestroyed()) {
-              event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
-            }
-          },
-          (err: Error) => {
-            log.error(err)
-            // In macOS, sometimes window is closed (not quit).
-            // When window is closed, we can not send event to webContents; because it is destroyed.
-            // So we have to guard it.
-            if (!event.sender.isDestroyed()) {
-              event.sender.send('error-start-all-user-streamings', err)
+            // Does not exist a endpoint for only mention. And mention is a part of notification.
+            // So we have to get mention from notification.
+            if (notification.type === 'mention') {
+              event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
             }
           }
-        )
-      })
-      .catch((err: Error) => {
-        log.error(err)
-        const streamingError = new StreamingError(err.message, account.domain)
-        if (!event.sender.isDestroyed()) {
-          event.sender.send('error-start-all-user-streamings', streamingError)
+        },
+        (statusId: string) => {
+          if (!event.sender.isDestroyed()) {
+            event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
+          }
+        },
+        (err: Error) => {
+          log.error(err)
+          // In macOS, sometimes window is closed (not quit).
+          // When window is closed, we can not send event to webContents; because it is destroyed.
+          // So we have to guard it.
+          if (!event.sender.isDestroyed()) {
+            event.sender.send('error-start-all-user-streamings', err)
+          }
         }
-      })
+      )
+    } catch (err) {
+      log.error(err)
+      const streamingError = new StreamingError(err.message, account.domain)
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('error-start-all-user-streamings', streamingError)
+      }
+    }
   })
 })
 
@@ -545,44 +544,44 @@ type StreamingSetting = {
 
 let directMessagesStreaming: WebSocket | null = null
 
-ipcMain.on('start-directmessages-streaming', (event: Event, obj: StreamingSetting) => {
+ipcMain.on('start-directmessages-streaming', async (event: Event, obj: StreamingSetting) => {
   const { account } = obj
-  accountManager
-    .getAccount(account._id!)
-    .then(acct => {
-      // Stop old directmessages streaming
-      if (directMessagesStreaming !== null) {
-        directMessagesStreaming.stop()
-        directMessagesStreaming = null
-      }
+  try {
+    const acct = await accountManager.getAccount(account._id!)
 
-      directMessagesStreaming = new WebSocket(acct)
-      directMessagesStreaming.start(
-        'direct',
-        (update: Status) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('update-start-directmessages-streaming', update)
-          }
-        },
-        (id: string) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('delete-start-directmessages-streaming', id)
-          }
-        },
-        (err: Error) => {
-          log.error(err)
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('error-start-directmessages-streaming', err)
-          }
+    // Stop old directmessages streaming
+    if (directMessagesStreaming !== null) {
+      directMessagesStreaming.stop()
+      directMessagesStreaming = null
+    }
+
+    const url = await StreamingURL(acct)
+    directMessagesStreaming = new WebSocket(acct, url)
+    directMessagesStreaming.start(
+      'direct',
+      (update: Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('update-start-directmessages-streaming', update)
         }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      if (!event.sender.isDestroyed()) {
-        event.sender.send('error-start-directmessages-streaming', err)
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('delete-start-directmessages-streaming', id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('error-start-directmessages-streaming', err)
+        }
       }
-    })
+    )
+  } catch (err) {
+    log.error(err)
+    if (!event.sender.isDestroyed()) {
+      event.sender.send('error-start-directmessages-streaming', err)
+    }
+  }
 })
 
 ipcMain.on('stop-directmessages-streaming', () => {
@@ -594,44 +593,44 @@ ipcMain.on('stop-directmessages-streaming', () => {
 
 let localStreaming: WebSocket | null = null
 
-ipcMain.on('start-local-streaming', (event: Event, obj: StreamingSetting) => {
+ipcMain.on('start-local-streaming', async (event: Event, obj: StreamingSetting) => {
   const { account } = obj
-  accountManager
-    .getAccount(account._id!)
-    .then(acct => {
-      // Stop old local streaming
-      if (localStreaming !== null) {
-        localStreaming.stop()
-        localStreaming = null
-      }
+  try {
+    const acct = await accountManager.getAccount(account._id!)
 
-      localStreaming = new WebSocket(acct)
-      localStreaming.start(
-        'public:local',
-        (update: Status) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('update-start-local-streaming', update)
-          }
-        },
-        (id: string) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('delete-start-local-streaming', id)
-          }
-        },
-        (err: Error) => {
-          log.error(err)
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('error-start-local-streaming', err)
-          }
+    // Stop old local streaming
+    if (localStreaming !== null) {
+      localStreaming.stop()
+      localStreaming = null
+    }
+
+    const url = await StreamingURL(acct)
+    localStreaming = new WebSocket(acct, url)
+    localStreaming.start(
+      'public:local',
+      (update: Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('update-start-local-streaming', update)
         }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      if (!event.sender.isDestroyed()) {
-        event.sender.send('error-start-local-streaming', err)
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('delete-start-local-streaming', id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('error-start-local-streaming', err)
+        }
       }
-    })
+    )
+  } catch (err) {
+    log.error(err)
+    if (!event.sender.isDestroyed()) {
+      event.sender.send('error-start-local-streaming', err)
+    }
+  }
 })
 
 ipcMain.on('stop-local-streaming', () => {
@@ -643,44 +642,44 @@ ipcMain.on('stop-local-streaming', () => {
 
 let publicStreaming: WebSocket | null = null
 
-ipcMain.on('start-public-streaming', (event: Event, obj: StreamingSetting) => {
+ipcMain.on('start-public-streaming', async (event: Event, obj: StreamingSetting) => {
   const { account } = obj
-  accountManager
-    .getAccount(account._id!)
-    .then(acct => {
-      // Stop old public streaming
-      if (publicStreaming !== null) {
-        publicStreaming.stop()
-        publicStreaming = null
-      }
+  try {
+    const acct = await accountManager.getAccount(account._id!)
 
-      publicStreaming = new WebSocket(acct)
-      publicStreaming.start(
-        'public',
-        (update: Status) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('update-start-public-streaming', update)
-          }
-        },
-        (id: string) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('delete-start-public-streaming', id)
-          }
-        },
-        (err: Error) => {
-          log.error(err)
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('error-start-public-streaming', err)
-          }
+    // Stop old public streaming
+    if (publicStreaming !== null) {
+      publicStreaming.stop()
+      publicStreaming = null
+    }
+
+    const url = await StreamingURL(acct)
+    publicStreaming = new WebSocket(acct, url)
+    publicStreaming.start(
+      'public',
+      (update: Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('update-start-public-streaming', update)
         }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      if (!event.sender.isDestroyed()) {
-        event.sender.send('error-start-public-streaming', err)
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('delete-start-public-streaming', id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('error-start-public-streaming', err)
+        }
       }
-    })
+    )
+  } catch (err) {
+    log.error(err)
+    if (!event.sender.isDestroyed()) {
+      event.sender.send('error-start-public-streaming', err)
+    }
+  }
 })
 
 ipcMain.on('stop-public-streaming', () => {
@@ -696,44 +695,44 @@ type ListID = {
   listID: string
 }
 
-ipcMain.on('start-list-streaming', (event: Event, obj: ListID & StreamingSetting) => {
+ipcMain.on('start-list-streaming', async (event: Event, obj: ListID & StreamingSetting) => {
   const { listID, account } = obj
-  accountManager
-    .getAccount(account._id!)
-    .then(acct => {
-      // Stop old list streaming
-      if (listStreaming !== null) {
-        listStreaming.stop()
-        listStreaming = null
-      }
+  try {
+    const acct = await accountManager.getAccount(account._id!)
 
-      listStreaming = new WebSocket(acct)
-      listStreaming.start(
-        `list&list=${listID}`,
-        (update: Status) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('update-start-list-streaming', update)
-          }
-        },
-        (id: string) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('delete-start-list-streaming', id)
-          }
-        },
-        (err: Error) => {
-          log.error(err)
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('error-start-list-streaming', err)
-          }
+    // Stop old list streaming
+    if (listStreaming !== null) {
+      listStreaming.stop()
+      listStreaming = null
+    }
+
+    const url = await StreamingURL(acct)
+    listStreaming = new WebSocket(acct, url)
+    listStreaming.start(
+      `list&list=${listID}`,
+      (update: Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('update-start-list-streaming', update)
         }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      if (!event.sender.isDestroyed()) {
-        event.sender.send('error-start-list-streaming', err)
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('delete-start-list-streaming', id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('error-start-list-streaming', err)
+        }
       }
-    })
+    )
+  } catch (err) {
+    log.error(err)
+    if (!event.sender.isDestroyed()) {
+      event.sender.send('error-start-list-streaming', err)
+    }
+  }
 })
 
 ipcMain.on('stop-list-streaming', () => {
@@ -749,44 +748,44 @@ type Tag = {
   tag: string
 }
 
-ipcMain.on('start-tag-streaming', (event: Event, obj: Tag & StreamingSetting) => {
+ipcMain.on('start-tag-streaming', async (event: Event, obj: Tag & StreamingSetting) => {
   const { tag, account } = obj
-  accountManager
-    .getAccount(account._id!)
-    .then(acct => {
-      // Stop old tag streaming
-      if (tagStreaming !== null) {
-        tagStreaming.stop()
-        tagStreaming = null
-      }
+  try {
+    const acct = await accountManager.getAccount(account._id!)
 
-      tagStreaming = new WebSocket(acct)
-      tagStreaming.start(
-        `hashtag&tag=${tag}`,
-        (update: Status) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('update-start-tag-streaming', update)
-          }
-        },
-        (id: string) => {
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('delete-start-tag-streaming', id)
-          }
-        },
-        (err: Error) => {
-          log.error(err)
-          if (!event.sender.isDestroyed()) {
-            event.sender.send('error-start-tag-streaming', err)
-          }
+    // Stop old tag streaming
+    if (tagStreaming !== null) {
+      tagStreaming.stop()
+      tagStreaming = null
+    }
+
+    const url = await StreamingURL(acct)
+    tagStreaming = new WebSocket(acct, url)
+    tagStreaming.start(
+      `hashtag&tag=${tag}`,
+      (update: Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('update-start-tag-streaming', update)
         }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      if (!event.sender.isDestroyed()) {
-        event.sender.send('error-start-tag-streaming', err)
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('delete-start-tag-streaming', id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('error-start-tag-streaming', err)
+        }
       }
-    })
+    )
+  } catch (err) {
+    log.error(err)
+    if (!event.sender.isDestroyed()) {
+      event.sender.send('error-start-tag-streaming', err)
+    }
+  }
 })
 
 ipcMain.on('stop-tag-streaming', () => {

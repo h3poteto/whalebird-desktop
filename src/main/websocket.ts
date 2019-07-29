@@ -1,13 +1,21 @@
-import Mastodon, { WebSocket as SocketListener, Status, Notification } from 'megalodon'
+import Mastodon, { WebSocket as SocketListener, Status, Notification, Instance } from 'megalodon'
 import log from 'electron-log'
 import { LocalAccount } from '~/src/types/localAccount'
+
+const StreamingURL = async (account: LocalAccount): Promise<string> => {
+  const client = new Mastodon(account.accessToken!, account.baseURL + '/api/v1')
+  const res = await client.get<Instance>('/instance')
+  return res.data.urls.streaming_api
+}
+
+export { StreamingURL }
 
 export default class WebSocket {
   private client: Mastodon
   private listener: SocketListener | null
 
-  constructor(account: LocalAccount) {
-    const url = account.baseURL.replace(/^https:\/\//, 'wss://')
+  constructor(account: LocalAccount, streamingURL: string) {
+    const url = streamingURL.replace(/^https:\/\//, 'wss://')
     this.client = new Mastodon(account.accessToken!, url + '/api/v1')
     this.listener = null
   }
