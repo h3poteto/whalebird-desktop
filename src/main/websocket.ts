@@ -3,8 +3,7 @@ import log from 'electron-log'
 import { LocalAccount } from '~/src/types/localAccount'
 
 const StreamingURL = async (account: LocalAccount): Promise<string> => {
-  const client = new Mastodon(account.accessToken!, account.baseURL + '/api/v1')
-  const res = await client.get<Instance>('/instance')
+  const res = await Mastodon.get<Instance>('/api/v1/instance', {}, account.baseURL)
   return res.data.urls.streaming_api
 }
 
