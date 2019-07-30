@@ -40,6 +40,7 @@ import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 import { Notify } from '~/src/types/notify'
 import { StreamingError } from '~/src/errors/streamingError'
+import HashtagCache from './cache/hashtag'
 
 /**
  * Context menu
@@ -99,6 +100,15 @@ const unreadNotification = new UnreadNotification(unreadNotificationDBPath)
 unreadNotification.initialize().catch((err: Error) => log.error(err))
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
+
+/**
+ * Cache path
+ */
+const hashtagCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/hashtag.db' : 'cache/hashtag.db'
+const hashtagCacheDB = new Datastore({
+  filename: hashtagCachePath,
+  autoload: true
+})
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
@@ -982,6 +992,19 @@ ipcMain.on('update-unread-notification', (event: Event, config: UnreadNotificati
       console.error(err)
       event.sender.send('error-update-unread-notification', err)
     })
+})
+
+// Cache
+ipcMain.on('get-cache-hashtag', async (event: Event) => {
+  const db = new HashtagCache(hashtagCacheDB)
+  const tags = await db.listTags()
+  event.sender.send('response-get-cache-hashtag', tags)
+})
+
+ipcMain.on('insert-cache-hashtag', async (event: Event, name: string) => {
+  const db = new HashtagCache(hashtagCacheDB)
+  const tag = await db.insertHashtag(name)
+  event.sender.send('response-insert-cache-hashtag', tag)
 })
 
 // Application control
