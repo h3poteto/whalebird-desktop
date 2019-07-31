@@ -105,10 +105,7 @@ const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './
  * Cache path
  */
 const hashtagCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/hashtag.db' : 'cache/hashtag.db'
-const hashtagCacheDB = new Datastore({
-  filename: hashtagCachePath,
-  autoload: true
-})
+const hashtagCache = new HashtagCache(hashtagCachePath)
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
@@ -467,6 +464,10 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
           if (!event.sender.isDestroyed()) {
             event.sender.send(`update-start-all-user-streamings-${id}`, update)
           }
+          // Cache hashtag
+          update.tags.map(async tag => {
+            await hashtagCache.insertHashtag(tag.name)
+          })
         },
         (notification: RemoteNotification) => {
           const preferences = new Preferences(preferencesDBPath)
@@ -995,16 +996,16 @@ ipcMain.on('update-unread-notification', (event: Event, config: UnreadNotificati
 })
 
 // Cache
-ipcMain.on('get-cache-hashtag', async (event: Event) => {
-  const db = new HashtagCache(hashtagCacheDB)
-  const tags = await db.listTags()
-  event.sender.send('response-get-cache-hashtag', tags)
+ipcMain.on('get-cache-hashtags', async (event: Event) => {
+  const tags = await hashtagCache.listTags()
+  event.sender.send('response-get-cache-hashtags', tags)
 })
 
-ipcMain.on('insert-cache-hashtag', async (event: Event, name: string) => {
-  const db = new HashtagCache(hashtagCacheDB)
-  const tag = await db.insertHashtag(name)
-  event.sender.send('response-insert-cache-hashtag', tag)
+ipcMain.on('insert-cache-hashtags', (event: Event, tags: Array<string>) => {
+  tags.map(async name => {
+    await hashtagCache.insertHashtag(name)
+  })
+  event.sender.send('response-insert-cache-hashtag')
 })
 
 // Application control

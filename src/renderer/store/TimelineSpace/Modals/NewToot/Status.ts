@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron'
 import Mastodon, { Account, Tag, Response, Results } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
@@ -58,9 +59,11 @@ const actions: ActionTree<StatusState, RootState> = {
     return res.data.accounts
   },
   searchHashtag: async ({ commit, rootState }, word: string) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v2')
     const res: Response<Results> = await client.get<Results>('/search', { q: word })
     commit(MUTATION_TYPES.UPDATE_FILTERED_HASHTAGS, res.data.hashtags)
+    console.log(res.data)
+    ipcRenderer.send('insert-cache-hashtags', res.data.hashtags)
     if (res.data.hashtags.length === 0) throw new Error('Empty')
     return res.data.hashtags
   }
