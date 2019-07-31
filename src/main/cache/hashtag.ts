@@ -4,8 +4,11 @@ import { LocalTag } from '~/src/types/localTag'
 export default class HashtagCache {
   private db: Datastore
 
-  constructor(db: Datastore) {
-    this.db = db
+  constructor(path: string) {
+    this.db = new Datastore({
+      filename: path,
+      autoload: true
+    })
     this.db.ensureIndex({ fieldName: 'tagName', unique: true }, _ => {})
   }
 
@@ -19,9 +22,9 @@ export default class HashtagCache {
   }
 
   insertHashtag(tag: string): Promise<LocalTag> {
-    return new Promise((resolve, reject) => {
-      this.db.insert({ tagName: tag }, (err, doc) => {
-        if (err) return reject(err)
+    return new Promise(resolve => {
+      // Ignore error for unique constraints.
+      this.db.insert({ tagName: tag }, (_, doc) => {
         resolve(doc)
       })
     })
