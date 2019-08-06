@@ -1,47 +1,47 @@
 {
   "side_menu": {
     "mention": "Mention",
-    "follow_requests": "Follow Requests"
+    "follow_requests": "Demandes de suivi"
   },
   "header_menu": {
     "mention": "Mention",
-    "follow_requests": "Follow Requests",
+    "follow_requests": "Demandes de suivi",
     "filter": {
-      "show_dms": "Show direct messages"
+      "show_dms": "Afficher les messages directs"
     }
   },
   "preferences": {
     "appearance": {
-      "toot_padding": "Padding around toot"
+      "toot_padding": "Agrandissement du message"
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "Accepter",
+    "reject": "Refuser"
   },
   "modals": {
     "new_toot": {
       "footer": {
-        "poll": "Add a poll"
+        "poll": "Créer un sondage"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Ajouter un choix",
         "expires": {
           "5_minutes": "5 minutes",
           "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "1_hour": "1 heure",
+          "6_hours": "6 heures",
+          "1_day": "1 jour",
+          "3_days": "3 jours",
+          "7_days": "7 jours"
         }
       }
     },
     "report": {
-      "title": "Reporting this user",
-      "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
+      "title": "Signalement de cet utilisateur",
+      "comment": "Observations supplémentaires",
+      "cancel": "Annuler",
+      "ok": "Signaler"
     }
   },
   "cards": {
@@ -49,34 +49,34 @@
       "poll": {
         "vote": "Vote",
         "votes_count": "votes",
-        "until": "until {{datetime}}",
-        "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "until": "jusqu'à {{datetime}}",
+        "left": "{{datetime}} restant",
+        "refresh": "Actualiser"
       }
     }
   },
   "message": {
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_reuqest_reject_error": "failed to reject the request",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}"
+    "follow_request_accept_error": "Impossible d'accepter la demande",
+    "follow_reuqest_reject_error": "Impossible de refuser la demande",
+    "start_all_streamings_error": "Impossible de démarrer la diffusion de {{domain}}"
   },
   "validation": {
     "new_toot": {
-      "poll_invalid": "Invalid poll choices"
+      "poll_invalid": "Choix de sondage invalides"
     }
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{{username}} favourited your status"
+      "title": "Favori",
+      "body": "{{username}} a ajouté à ses favoris"
     },
     "follow": {
       "title": "Follow",
-      "body": "{{username}} is now following you"
+      "body": "{{username}} vous suit"
     },
     "reblog": {
       "title": "Reblog",
-      "body": "{{username}} boosted your status"
+      "body": "{{username}} a partagé votre statut"
     }
   }
 }
