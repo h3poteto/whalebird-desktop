@@ -241,12 +241,16 @@ describe('TimelineSpace', () => {
       await store.dispatch('TimelineSpace/fetchEmojis', {})
       expect(store.state.TimelineSpace.emojis).toEqual([
         {
-          image: 'http://example.com/emacs',
-          name: ':emacs:'
+          shortcode: 'emacs',
+          url: 'http://example.com/emacs',
+          static_url: 'http://example.com/emacs',
+          visible_in_picker: true
         },
         {
-          image: 'http://example.com/ruby',
-          name: ':ruby:'
+          shortcode: 'ruby',
+          url: 'http://example.com/ruby',
+          static_url: 'http://example.com/ruby',
+          visible_in_picker: true
         }
       ])
     })
