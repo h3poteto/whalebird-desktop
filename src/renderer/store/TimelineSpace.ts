@@ -12,16 +12,11 @@ import { UnreadNotification } from '~/src/types/unreadNotification'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 
-type MyEmoji = {
-  name: string
-  image: string
-}
-
 export type TimelineSpaceState = {
   account: LocalAccount
   bindingAccount: LocalAccount | null
   loading: boolean
-  emojis: Array<MyEmoji>
+  emojis: Array<Emoji>
   tootMax: number
   unreadNotification: UnreadNotification
   pleroma: boolean
@@ -76,12 +71,7 @@ const mutations: MutationTree<TimelineSpaceState> = {
     state.loading = value
   },
   [MUTATION_TYPES.UPDATE_EMOJIS]: (state, emojis: Array<Emoji>) => {
-    state.emojis = emojis.map(e => {
-      return {
-        name: `:${e.shortcode}:`,
-        image: e.url
-      }
-    })
+    state.emojis = emojis
   },
   [MUTATION_TYPES.UPDATE_TOOT_MAX]: (state, value: number | null) => {
     if (value) {
