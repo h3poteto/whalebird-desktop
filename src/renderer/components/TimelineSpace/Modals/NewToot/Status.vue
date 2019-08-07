@@ -162,11 +162,7 @@ export default {
     },
     async suggestAccount(start, word) {
       try {
-        await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/searchAccount', word)
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeOpenSuggest', true)
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeStartIndex', start)
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeMatchWord', word)
-        this.$store.commit('TimelineSpace/Modasl/NewToot/Status/filteredSuggestionFromAccounts')
+        await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestAccount', { word: word, start: start })
         return true
       } catch (err) {
         console.log(err)

@@ -94,11 +94,18 @@ type WordStart = {
 }
 
 const actions: ActionTree<StatusState, RootState> = {
-  searchAccount: async ({ commit, rootState }, word: string) => {
+  suggestAccount: async ({ commit, rootState }, wordStart: WordStart) => {
+    commit(MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS)
+    commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
+    const { word, start } = wordStart
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Results> = await client.get<Results>('/search', { q: word, resolve: false })
     commit(MUTATION_TYPES.UPDATE_FILTERED_ACCOUNTS, res.data.accounts)
     if (res.data.accounts.length === 0) throw new Error('Empty')
+    commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
+    commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
+    commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
+    commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
     return res.data.accounts
   },
   suggestHashtag: async ({ commit, rootState }, wordStart: WordStart) => {
