@@ -51,10 +51,9 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import emojilib from 'emojilib'
 import { Picker } from 'emoji-mart-vue'
 import ClickOutside from 'vue-click-outside'
-import suggestText from '../../../../utils/suggestText'
+import suggestText from '@/utils/suggestText'
 
 export default {
   name: 'status',
@@ -84,9 +83,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      customEmojis: state => state.TimelineSpace.emojis
-    }),
     ...mapState('TimelineSpace/Modals/NewToot/Status', {
       filteredAccounts: state => state.filteredAccounts,
       filteredHashtags: state => state.filteredHashtags,
@@ -179,35 +175,17 @@ export default {
       }
     },
     suggestEmoji(start, word) {
-      // Find native emojis
-      const filteredEmojiName = emojilib.ordered.filter(emoji => `:${emoji}`.includes(word))
-      const filteredNativeEmoji = filteredEmojiName.map(name => {
-        return {
-          name: `:${name}:`,
-          code: emojilib.lib[name].char
-        }
-      })
-      // Find custom emojis
-      const filteredCustomEmoji = this.customEmojis.filter(emoji => emoji.name.includes(word))
-      const filtered = filteredNativeEmoji.concat(filteredCustomEmoji)
-      if (filtered.length > 0) {
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeOpenSuggest', true)
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeStartIndex', start)
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeMatchWord', word)
-        this.$store.commit(
-          'TimelineSpace/Modals/NewToot/Status/changeFilteredSuggestion',
-          filtered.filter((e, i, array) => {
-            return array.findIndex(ar => e.name === ar.name) === i
-          })
-        )
-      } else {
+      try {
+        this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestEmoji', { word: word, start: start })
+        return true
+      } catch (err) {
         this.closeSuggest()
+        return false
       }
-      return true
     },
     closeSuggest() {
       if (this.openSuggest) {
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/closeSuggest')
+        this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/closeSuggest')
         this.highlightedIndex = 0
       }
     },
