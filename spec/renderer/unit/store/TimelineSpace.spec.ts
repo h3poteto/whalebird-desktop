@@ -1,5 +1,4 @@
 import TimelineSpace, { TimelineSpaceState, blankAccount, MUTATION_TYPES } from '~/src/renderer/store/TimelineSpace'
-import { Emoji } from 'megalodon'
 import unreadSettings from '~/src/constants/unreadNotification'
 
 describe('TimelineSpace', () => {
@@ -19,34 +18,6 @@ describe('TimelineSpace', () => {
         },
         pleroma: false
       }
-    })
-
-    describe('updateEmojis', () => {
-      it('should be updated', () => {
-        const emacsEmoji: Emoji = {
-          shortcode: 'emacs',
-          url: 'http://example.com/emacs',
-          static_url: 'http://example.com/emacs',
-          visible_in_picker: true
-        }
-        const rubyEmoji: Emoji = {
-          shortcode: 'ruby',
-          url: 'http://example.com/ruby',
-          static_url: 'http://example.com/ruby',
-          visible_in_picker: true
-        }
-        TimelineSpace.mutations![MUTATION_TYPES.UPDATE_EMOJIS](state, [emacsEmoji, rubyEmoji])
-        expect(state.emojis).toEqual([
-          {
-            image: 'http://example.com/emacs',
-            name: ':emacs:'
-          },
-          {
-            image: 'http://example.com/ruby',
-            name: ':ruby:'
-          }
-        ])
-      })
     })
 
     describe('updateTootMax', () => {

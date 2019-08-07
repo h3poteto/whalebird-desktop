@@ -125,7 +125,8 @@
   "jest": {
     "moduleFileExtensions": [
       "ts",
-      "js"
+      "js",
+      "json"
     ],
     "moduleNameMapper": {
       "@/router": "<rootDir>/spec/mock/router.ts",
