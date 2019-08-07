@@ -207,13 +207,8 @@ export default {
     },
     closeSuggest() {
       if (this.openSuggest) {
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeOpenSuggest', false)
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeStartIndex', null)
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/changeMatchWord', null)
+        this.$store.commit('TimelineSpace/Modals/NewToot/Status/closeSuggest')
         this.highlightedIndex = 0
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredSuggestion')
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredAccounts')
-        this.$store.commit('TimelineSpace/Modals/NewToot/Status/clearFilteredHashtags')
       }
     },
     suggestHighlight(index) {

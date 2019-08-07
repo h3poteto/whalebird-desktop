@@ -141,6 +141,14 @@ const actions: ActionTree<StatusState, RootState> = {
       return res.data.hashtags
     }
     await Promise.all([searchCache(), searchAPI()])
+  },
+  closeSuggest: ({ commit }) => {
+    commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, false)
+    commit(MUTATION_TYPES.CHANGE_START_INDEX, null)
+    commit(MUTATION_TYPES.CHANGE_MATCH_WORD, null)
+    commit(MUTATION_TYPES.CLEAR_FILTERED_SUGGESTION)
+    commit(MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS)
+    commit(MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS)
   }
 }
 
