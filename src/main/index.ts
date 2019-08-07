@@ -40,6 +40,7 @@ import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 import { Notify } from '~/src/types/notify'
 import { StreamingError } from '~/src/errors/streamingError'
+import HashtagCache from './cache/hashtag'
 
 /**
  * Context menu
@@ -99,6 +100,12 @@ const unreadNotification = new UnreadNotification(unreadNotificationDBPath)
 unreadNotification.initialize().catch((err: Error) => log.error(err))
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
+
+/**
+ * Cache path
+ */
+const hashtagCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/hashtag.db' : 'cache/hashtag.db'
+const hashtagCache = new HashtagCache(hashtagCachePath)
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
@@ -457,6 +464,10 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
           if (!event.sender.isDestroyed()) {
             event.sender.send(`update-start-all-user-streamings-${id}`, update)
           }
+          // Cache hashtag
+          update.tags.map(async tag => {
+            await hashtagCache.insertHashtag(tag.name)
+          })
         },
         (notification: RemoteNotification) => {
           const preferences = new Preferences(preferencesDBPath)
@@ -982,6 +993,19 @@ ipcMain.on('update-unread-notification', (event: Event, config: UnreadNotificati
       console.error(err)
       event.sender.send('error-update-unread-notification', err)
     })
+})
+
+// Cache
+ipcMain.on('get-cache-hashtags', async (event: Event) => {
+  const tags = await hashtagCache.listTags()
+  event.sender.send('response-get-cache-hashtags', tags)
+})
+
+ipcMain.on('insert-cache-hashtags', (event: Event, tags: Array<string>) => {
+  tags.map(async name => {
+    await hashtagCache.insertHashtag(name)
+  })
+  event.sender.send('response-insert-cache-hashtag')
 })
 
 // Application control
