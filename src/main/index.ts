@@ -41,6 +41,8 @@ import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unre
 import { Notify } from '~/src/types/notify'
 import { StreamingError } from '~/src/errors/streamingError'
 import HashtagCache from './cache/hashtag'
+import AccountCache from './cache/account'
+import { InsertAccountCache } from '~/src/types/insertAccountCache'
 
 /**
  * Context menu
@@ -106,6 +108,9 @@ const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './
  */
 const hashtagCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/hashtag.db' : 'cache/hashtag.db'
 const hashtagCache = new HashtagCache(hashtagCachePath)
+
+const accountCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/account.db' : 'cache/account.db'
+const accountCache = new AccountCache(accountCachePath)
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
@@ -1005,7 +1010,22 @@ ipcMain.on('insert-cache-hashtags', (event: Event, tags: Array<string>) => {
   tags.map(async name => {
     await hashtagCache.insertHashtag(name)
   })
-  event.sender.send('response-insert-cache-hashtag')
+  event.sender.send('response-insert-cache-hashtags')
+})
+
+ipcMain.on('get-cache-accounts', async (event: Event, ownerID: string) => {
+  const accounts = await accountCache.listAccounts(ownerID)
+  event.sender.send('response-get-cache-accounts', accounts)
+})
+
+ipcMain.on('insert-cache-accounts', (event: Event, obj: InsertAccountCache) => {
+  const { ownerID, accts } = obj
+  accts.map(async acct => {
+    await accountCache.insertAccount(ownerID, acct).catch(err => {
+      console.warn(err)
+    })
+  })
+  event.sender.send('response-insert-cache-accounts')
 })
 
 // Application control
