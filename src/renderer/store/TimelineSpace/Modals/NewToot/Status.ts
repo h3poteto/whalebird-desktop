@@ -4,6 +4,7 @@ import Mastodon, { Account, Tag, Response, Results } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
 import { LocalTag } from '~/src/types/localTag'
+import { InsertAccountCache } from '~/src/types/insertAccountCache'
 
 type Suggest = {
   name: string
@@ -113,6 +114,10 @@ const actions: ActionTree<StatusState, RootState> = {
     const res: Response<Results> = await client.get<Results>('/search', { q: word, resolve: false })
     commit(MUTATION_TYPES.UPDATE_FILTERED_ACCOUNTS, res.data.accounts)
     if (res.data.accounts.length === 0) throw new Error('Empty')
+    ipcRenderer.send('insert-cache-accounts', {
+      ownerID: rootState.TimelineSpace.account._id!,
+      accts: res.data.accounts.map(a => a.acct)
+    } as InsertAccountCache)
     commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
     commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
     commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
