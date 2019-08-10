@@ -1,10 +1,11 @@
 import { ipcRenderer } from 'electron'
 import emojilib from 'emojilib'
-import Mastodon, { Account, Tag, Response, Results } from 'megalodon'
+import Mastodon, { Response, Results } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
 import { LocalTag } from '~/src/types/localTag'
 import { InsertAccountCache } from '~/src/types/insertAccountCache'
+import { CachedAccount } from '~/src/types/cachedAccount'
 
 type Suggest = {
   name: string
@@ -39,7 +40,7 @@ const state = (): StatusState => ({
 })
 
 export const MUTATION_TYPES = {
-  UPDATE_FILTERED_ACCOUNTS: 'updateFilteredAccounts',
+  APPEND_FILTERED_ACCOUNTS: 'appendFilteredAccounts',
   CLEAR_FILTERED_ACCOUNTS: 'clearFilteredAccounts',
   APPEND_FILTERED_HASHTAGS: 'appendFilteredHashtags',
   CLEAR_FILTERED_HASHTAGS: 'clearFilteredHashtags',
@@ -55,16 +56,17 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<StatusState> = {
-  [MUTATION_TYPES.UPDATE_FILTERED_ACCOUNTS]: (state, accounts: Array<Account>) => {
-    state.filteredAccounts = accounts.map(a => ({
-      name: `@${a.acct}`,
+  [MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS]: (state, accounts: Array<string>) => {
+    const appended = accounts.map(a => ({
+      name: `@${a}`,
       image: null
     }))
+    state.filteredAccounts = appended.filter((elem, index, self) => self.indexOf(elem) === index)
   },
   [MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS]: state => {
     state.filteredAccounts = []
   },
-  [MUTATION_TYPES.APPEND_FILTERED_HASHTAGS]: (state, tags: Array<Tag>) => {
+  [MUTATION_TYPES.APPEND_FILTERED_HASHTAGS]: (state, tags: Array<string>) => {
     const appended = tags.map(t => ({
       name: `#${t}`,
       image: null
@@ -110,19 +112,39 @@ const actions: ActionTree<StatusState, RootState> = {
     commit(MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
     const { word, start } = wordStart
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
-    const res: Response<Results> = await client.get<Results>('/search', { q: word, resolve: false })
-    commit(MUTATION_TYPES.UPDATE_FILTERED_ACCOUNTS, res.data.accounts)
-    if (res.data.accounts.length === 0) throw new Error('Empty')
-    ipcRenderer.send('insert-cache-accounts', {
-      ownerID: rootState.TimelineSpace.account._id!,
-      accts: res.data.accounts.map(a => a.acct)
-    } as InsertAccountCache)
-    commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
-    commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
-    commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
-    commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
-    return res.data.accounts
+    const searchCache = () => {
+      return new Promise(resolve => {
+        const target = word.replace('@', '')
+        ipcRenderer.once('response-get-cache-accounts', (_, accounts: Array<CachedAccount>) => {
+          console.log(accounts)
+          const matched = accounts.map(account => account.acct).filter(acct => acct.includes(target))
+          if (matched.length === 0) throw new Error('Empty')
+          commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, matched)
+          commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
+          commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
+          commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
+          commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
+          resolve(matched)
+        })
+        ipcRenderer.send('get-cache-accounts', rootState.TimelineSpace.account._id)
+      })
+    }
+    const searchAPI = async () => {
+      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+      const res: Response<Results> = await client.get<Results>('/search', { q: word, resolve: false })
+      if (res.data.accounts.length === 0) throw new Error('Empty')
+      commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, res.data.accounts.map(account => account.acct))
+      ipcRenderer.send('insert-cache-accounts', {
+        ownerID: rootState.TimelineSpace.account._id!,
+        accts: res.data.accounts.map(a => a.acct)
+      } as InsertAccountCache)
+      commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
+      commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
+      commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
+      commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
+      return res.data.accounts
+    }
+    await Promise.all([searchCache(), searchAPI()])
   },
   suggestHashtag: async ({ commit, rootState }, wordStart: WordStart) => {
     commit(MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS)
@@ -132,14 +154,14 @@ const actions: ActionTree<StatusState, RootState> = {
       return new Promise(resolve => {
         const target = word.replace('#', '')
         ipcRenderer.once('response-get-cache-hashtags', (_, tags: Array<LocalTag>) => {
-          const mached = tags.filter(tag => tag.tagName.includes(target)).map(tag => tag.tagName)
-          commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, mached)
-          if (mached.length === 0) throw new Error('Empty')
+          const matched = tags.map(tag => tag.tagName).filter(tag => tag.includes(target))
+          if (matched.length === 0) throw new Error('Empty')
+          commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, matched)
           commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
           commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
           commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
           commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
-          resolve(mached)
+          resolve(matched)
         })
         ipcRenderer.send('get-cache-hashtags')
       })
@@ -148,8 +170,8 @@ const actions: ActionTree<StatusState, RootState> = {
       const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
       const res: Response<Results> = await client.get<Results>('/search', { q: word })
       commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, res.data.hashtags)
-      ipcRenderer.send('insert-cache-hashtags', res.data.hashtags)
       if (res.data.hashtags.length === 0) throw new Error('Empty')
+      ipcRenderer.send('insert-cache-hashtags', res.data.hashtags)
       commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
       commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
