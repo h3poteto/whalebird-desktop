@@ -465,7 +465,7 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
       const url = await StreamingURL(acct)
       userStreamings[id] = new WebSocket(acct, url)
       userStreamings[id]!.startUserStreaming(
-        (update: Status) => {
+        async (update: Status) => {
           if (!event.sender.isDestroyed()) {
             event.sender.send(`update-start-all-user-streamings-${id}`, update)
           }
@@ -473,6 +473,9 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
           update.tags.map(async tag => {
             await hashtagCache.insertHashtag(tag.name)
           })
+          // Cache account
+          // Ignore error for unique constratins.
+          await accountCache.insertAccount(id, update.account.acct).catch(err => console.info(err))
         },
         (notification: RemoteNotification) => {
           const preferences = new Preferences(preferencesDBPath)
@@ -1021,9 +1024,8 @@ ipcMain.on('get-cache-accounts', async (event: Event, ownerID: string) => {
 ipcMain.on('insert-cache-accounts', (event: Event, obj: InsertAccountCache) => {
   const { ownerID, accts } = obj
   accts.map(async acct => {
-    await accountCache.insertAccount(ownerID, acct).catch(err => {
-      console.warn(err)
-    })
+    // Ignore error for unique constratins.
+    await accountCache.insertAccount(ownerID, acct).catch(err => console.info(err))
   })
   event.sender.send('response-insert-cache-accounts')
 })
