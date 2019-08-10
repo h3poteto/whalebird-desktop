@@ -474,8 +474,7 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
             await hashtagCache.insertHashtag(tag.name)
           })
           // Cache account
-          // Ignore error for unique constratins.
-          await accountCache.insertAccount(id, update.account.acct).catch(err => console.info(err))
+          await accountCache.insertAccount(id, update.account.acct).catch(err => console.error(err))
         },
         (notification: RemoteNotification) => {
           const preferences = new Preferences(preferencesDBPath)
@@ -1024,8 +1023,7 @@ ipcMain.on('get-cache-accounts', async (event: Event, ownerID: string) => {
 ipcMain.on('insert-cache-accounts', (event: Event, obj: InsertAccountCache) => {
   const { ownerID, accts } = obj
   accts.map(async acct => {
-    // Ignore error for unique constratins.
-    await accountCache.insertAccount(ownerID, acct).catch(err => console.info(err))
+    await accountCache.insertAccount(ownerID, acct).catch(err => console.error(err))
   })
   event.sender.send('response-insert-cache-accounts')
 })

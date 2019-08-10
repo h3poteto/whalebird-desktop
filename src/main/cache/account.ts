@@ -25,11 +25,12 @@ export default class AccountCache {
     return new Promise((resolve, reject) => {
       // At first confirm records for unique.
       this.db.findOne<CachedAccount>({ owner_id: ownerID, acct: acct }, (err, doc) => {
-        if (err) return reject(err)
-        if (!isEmpty(doc)) return reject(new Error('Record already exists'))
-        this.db.insert<CachedAccount>({ owner_id: ownerID, acct: acct }, (err, doc) => {
+        if (err) return err
+        // Ignore error for unique constraints.
+        if (!isEmpty(doc)) return err
+        return this.db.insert<CachedAccount>({ owner_id: ownerID, acct: acct }, (err, doc) => {
           if (err) return reject(err)
-          resolve(doc)
+          return resolve(doc)
         })
       })
     })
