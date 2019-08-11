@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 import emojilib from 'emojilib'
-import Mastodon, { Response, Results } from 'megalodon'
+import Mastodon, { Account, Response, Results } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
 import { LocalTag } from '~/src/types/localTag'
@@ -154,19 +154,19 @@ const actions: ActionTree<StatusState, RootState> = {
       })
     }
     const searchAPI = async () => {
-      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v2')
-      const res: Response<Results> = await client.get<Results>('/search', { q: word, resolve: false })
-      if (res.data.accounts.length === 0) throw new Error('Empty')
-      commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, res.data.accounts.map(account => account.acct))
+      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+      const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', { q: word, resolve: false })
+      if (res.data.length === 0) throw new Error('Empty')
+      commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, res.data.map(account => account.acct))
       ipcRenderer.send('insert-cache-accounts', {
         ownerID: rootState.TimelineSpace.account._id!,
-        accts: res.data.accounts.map(a => a.acct)
+        accts: res.data.map(a => a.acct)
       } as InsertAccountCache)
       commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
       commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
       commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
-      return res.data.accounts
+      return res.data
     }
     await Promise.all([searchCache(), searchAPI()])
   },
