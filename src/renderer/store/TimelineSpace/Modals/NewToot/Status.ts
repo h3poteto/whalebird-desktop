@@ -154,7 +154,7 @@ const actions: ActionTree<StatusState, RootState> = {
       })
     }
     const searchAPI = async () => {
-      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v2')
       const res: Response<Results> = await client.get<Results>('/search', { q: word, resolve: false })
       if (res.data.accounts.length === 0) throw new Error('Empty')
       commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, res.data.accounts.map(account => account.acct))
@@ -191,11 +191,11 @@ const actions: ActionTree<StatusState, RootState> = {
       })
     }
     const searchAPI = async () => {
-      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v2')
       const res: Response<Results> = await client.get<Results>('/search', { q: word })
-      commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, res.data.hashtags)
       if (res.data.hashtags.length === 0) throw new Error('Empty')
-      ipcRenderer.send('insert-cache-hashtags', res.data.hashtags)
+      commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, res.data.hashtags.map(tag => tag.name))
+      ipcRenderer.send('insert-cache-hashtags', res.data.hashtags.map(tag => tag.name))
       commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
       commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
