@@ -57,21 +57,46 @@ export const MUTATION_TYPES = {
 
 const mutations: MutationTree<StatusState> = {
   [MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS]: (state, accounts: Array<string>) => {
-    const appended = accounts.map(a => ({
+    const suggestion = accounts.map(a => ({
       name: `@${a}`,
       image: null
     }))
-    state.filteredAccounts = appended.filter((elem, index, self) => self.indexOf(elem) === index)
+    const appended = state.filteredAccounts.concat(suggestion)
+    const unique = appended.filter((v1, i1, a1) => {
+      return (
+        a1.findIndex(v2 => {
+          return v1.name === v2.name
+        }) === i1
+      )
+    })
+    state.filteredAccounts = unique.sort((a, b) => {
+      if (a.name < b.name) return -1
+      if (a.name > b.name) return 1
+      return 0
+    })
   },
   [MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS]: state => {
     state.filteredAccounts = []
   },
   [MUTATION_TYPES.APPEND_FILTERED_HASHTAGS]: (state, tags: Array<string>) => {
-    const appended = tags.map(t => ({
+    const suggestion = tags.map(t => ({
       name: `#${t}`,
       image: null
     }))
-    state.filteredHashtags = appended.filter((elem, index, self) => self.indexOf(elem) === index)
+    const appended = state.filteredHashtags.concat(suggestion)
+    const unique = appended.filter((v1, i1, a1) => {
+      return (
+        a1.findIndex(v2 => {
+          return v1.name === v2.name
+        }) === i1
+      )
+    })
+    Array.from(new Set(appended))
+    state.filteredHashtags = unique.sort((a, b) => {
+      if (a.name < b.name) return -1
+      if (a.name > b.name) return 1
+      return 0
+    })
   },
   [MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS]: state => {
     state.filteredHashtags = []
@@ -116,7 +141,6 @@ const actions: ActionTree<StatusState, RootState> = {
       return new Promise(resolve => {
         const target = word.replace('@', '')
         ipcRenderer.once('response-get-cache-accounts', (_, accounts: Array<CachedAccount>) => {
-          console.log(accounts)
           const matched = accounts.map(account => account.acct).filter(acct => acct.includes(target))
           if (matched.length === 0) throw new Error('Empty')
           commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, matched)
