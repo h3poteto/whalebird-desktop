@@ -26,5 +26,9 @@ export default {
   it: {
     name: 'Italiano',
     key: 'it'
+  },
+  zh_cn: {
+    name: '简体中文',
+    key: 'zh_cn'
   }
 }
