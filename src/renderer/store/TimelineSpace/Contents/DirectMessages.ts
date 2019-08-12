@@ -1,4 +1,4 @@
-import Mastodon, { Status, Response } from 'megalodon'
+import Mastodon, { Status, Response, Conversation } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -97,10 +97,10 @@ const mutations: MutationTree<DirectMessagesState> = {
 const actions: ActionTree<DirectMessagesState, RootState> = {
   fetchTimeline: async ({ commit, rootState }): Promise<Array<Status>> => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
-    const res: Response<Array<Status>> = await client.get<Array<Status>>('/timelines/direct', { limit: 40 })
-
-    commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
-    return res.data
+    const res: Response<Array<Conversation>> = await client.get<Array<Conversation>>('/conversations', { limit: 40 })
+    const statuses: Array<Status> = res.data.map(con => con.last_status!)
+    commit(MUTATION_TYPES.UPDATE_TIMELINE, statuses)
+    return statuses
   },
   lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Status): Promise<Array<Status> | null> => {
     if (state.lazyLoading) {
@@ -109,10 +109,11 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     return client
-      .get<Array<Status>>('/timelines/direct', { max_id: lastStatus.id, limit: 40 })
+      .get<Array<Conversation>>('/conversations', { max_id: lastStatus.id, limit: 40 })
       .then(res => {
-        commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
-        return res.data
+        const statuses: Array<Status> = res.data.map(con => con.last_status!)
+        commit(MUTATION_TYPES.INSERT_TIMELINE, statuses)
+        return statuses
       })
       .finally(() => {
         commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
