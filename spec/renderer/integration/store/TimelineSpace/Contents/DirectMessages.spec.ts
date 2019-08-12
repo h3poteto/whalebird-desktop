@@ -1,4 +1,4 @@
-import { Response, Status, Account, Application } from 'megalodon'
+import { Response, Status, Account, Application, Conversation } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
@@ -27,6 +27,7 @@ const account: Account = {
   fields: null,
   bot: false
 }
+
 const status1: Status = {
   id: '1',
   uri: 'http://example.com',
@@ -58,6 +59,7 @@ const status1: Status = {
   language: null,
   pinned: null
 }
+
 const status2: Status = {
   id: '2',
   uri: 'http://example.com',
@@ -88,6 +90,20 @@ const status2: Status = {
   } as Application,
   language: null,
   pinned: null
+}
+
+const conversation1: Conversation = {
+  id: '1',
+  accounts: [account],
+  last_status: status1,
+  unread: false
+}
+
+const conversation2: Conversation = {
+  id: '2',
+  accounts: [account],
+  last_status: status2,
+  unread: false
 }
 
 let state = (): DirectMessagesState => {
@@ -139,9 +155,9 @@ describe('Home', () => {
     it('should be updated', async () => {
       const mockClient = {
         get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Status>>>(resolve => {
-            const res: Response<Array<Status>> = {
-              data: [status1],
+          return new Promise<Response<Array<Conversation>>>(resolve => {
+            const res: Response<Array<Conversation>> = {
+              data: [conversation1],
               status: 200,
               statusText: 'OK',
               headers: {}
@@ -176,9 +192,9 @@ describe('Home', () => {
       it('should be updated', async () => {
         const mockClient = {
           get: (_path: string, _params: object) => {
-            return new Promise<Response<Array<Status>>>(resolve => {
-              const res: Response<Array<Status>> = {
-                data: [status2],
+            return new Promise<Response<Array<Conversation>>>(resolve => {
+              const res: Response<Array<Conversation>> = {
+                data: [conversation2],
                 status: 200,
                 statusText: 'OK',
                 headers: {}
