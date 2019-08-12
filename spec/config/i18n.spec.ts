@@ -4,7 +4,7 @@ import keys from 'all-object-keys'
 import objectAssignDeep from 'object-assign-deep'
 
 const defaultLocale = 'en'
-const locales = ['de', 'fr', 'it', 'ja', 'ko', 'pl']
+const locales = ['de', 'fr', 'it', 'ja', 'ko', 'pl', 'zh_cn']
 
 const enJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, `../../src/config/locales/${defaultLocale}/translation.json`), 'utf8'))
 
