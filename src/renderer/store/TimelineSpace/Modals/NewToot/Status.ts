@@ -27,6 +27,7 @@ export type StatusState = {
   openSuggest: boolean
   startIndex: number | null
   matchWord: string | null
+  client: Mastodon | null
 }
 
 const state = (): StatusState => ({
@@ -36,7 +37,8 @@ const state = (): StatusState => ({
   filteredEmojis: [],
   openSuggest: false,
   startIndex: null,
-  matchWord: null
+  matchWord: null,
+  client: null
 })
 
 export const MUTATION_TYPES = {
@@ -52,7 +54,9 @@ export const MUTATION_TYPES = {
   FILTERED_SUGGESTION_FROM_HASHTAGS: 'filteredSuggestionFromHashtags',
   FILTERED_SUGGESTION_FROM_ACCOUNTS: 'filteredSuggestionFromAccounts',
   FILTERED_SUGGESTION_FROM_EMOJIS: 'filteredSuggestionFromEmojis',
-  CLEAR_FILTERED_SUGGESTION: 'clearFilteredSuggestion'
+  CLEAR_FILTERED_SUGGESTION: 'clearFilteredSuggestion',
+  SET_CLIENT: 'setClient',
+  CLEAR_CLIENT: 'clearClient'
 }
 
 const mutations: MutationTree<StatusState> = {
@@ -124,6 +128,12 @@ const mutations: MutationTree<StatusState> = {
   },
   [MUTATION_TYPES.CLEAR_FILTERED_SUGGESTION]: state => {
     state.filteredSuggestion = []
+  },
+  [MUTATION_TYPES.SET_CLIENT]: (state, client: Mastodon) => {
+    state.client = client
+  },
+  [MUTATION_TYPES.CLEAR_CLIENT]: state => {
+    state.client = null
   }
 }
 
@@ -133,7 +143,8 @@ type WordStart = {
 }
 
 const actions: ActionTree<StatusState, RootState> = {
-  suggestAccount: async ({ commit, rootState }, wordStart: WordStart) => {
+  suggestAccount: async ({ commit, rootState, dispatch }, wordStart: WordStart) => {
+    dispatch('cancelRequest')
     commit(MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
     const { word, start } = wordStart
@@ -155,6 +166,7 @@ const actions: ActionTree<StatusState, RootState> = {
     }
     const searchAPI = async () => {
       const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+      commit(MUTATION_TYPES.SET_CLIENT, client)
       const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', { q: word, resolve: false })
       if (res.data.length === 0) throw new Error('Empty')
       commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, res.data.map(account => account.acct))
@@ -170,7 +182,8 @@ const actions: ActionTree<StatusState, RootState> = {
     }
     await Promise.all([searchCache(), searchAPI()])
   },
-  suggestHashtag: async ({ commit, rootState }, wordStart: WordStart) => {
+  suggestHashtag: async ({ commit, rootState, dispatch }, wordStart: WordStart) => {
+    dispatch('cancelRequest')
     commit(MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
     const { word, start } = wordStart
@@ -192,6 +205,7 @@ const actions: ActionTree<StatusState, RootState> = {
     }
     const searchAPI = async () => {
       const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v2')
+      commit(MUTATION_TYPES.SET_CLIENT, client)
       const res: Response<Results> = await client.get<Results>('/search', { q: word })
       if (res.data.hashtags.length === 0) throw new Error('Empty')
       commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, res.data.hashtags.map(tag => tag.name))
@@ -237,13 +251,20 @@ const actions: ActionTree<StatusState, RootState> = {
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_EMOJIS)
     return filtered
   },
-  closeSuggest: ({ commit }) => {
+  cancelRequest: ({ state }) => {
+    if (state.client) {
+      state.client.cancel()
+    }
+  },
+  closeSuggest: ({ commit, dispatch }) => {
+    dispatch('cancelRequest')
     commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, false)
     commit(MUTATION_TYPES.CHANGE_START_INDEX, null)
     commit(MUTATION_TYPES.CHANGE_MATCH_WORD, null)
     commit(MUTATION_TYPES.CLEAR_FILTERED_SUGGESTION)
     commit(MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS)
     commit(MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS)
+    commit(MUTATION_TYPES.CLEAR_CLIENT)
   }
 }
 
