@@ -233,7 +233,7 @@
           "7_days": "7 jours"
         }
       }
-    },          
+    },
     "jump": {
       "jump_to": "Aller à..."
     },
@@ -274,7 +274,7 @@
       "title": "Signalement de cet utilisateur",
       "comment": "Observations supplémentaires",
       "cancel": "Annuler",
-      "ok": "Signaler"  
+      "ok": "Signaler"
     }
   },
   "cards": {
@@ -294,7 +294,7 @@
       "reblog": "Repouet",
       "fav": "Préféré",
       "detail": "Détails",
-      "pinned": "Pouet épinglé"
+      "pinned": "Pouet épinglé",
       "poll": {
         "vote": "Vote",
         "votes_count": "votes",
@@ -369,7 +369,7 @@
     "follow_request_accept_error": "Impossible d'accepter la demande",
     "follow_reuqest_reject_error": "Impossible de refuser la demande",
     "start_streaming_error": "Erreur au démarrage du flux",
-    "start_all_streamings_error": "Impossible de démarrer la diffusion de {{domain}}"
+    "start_all_streamings_error": "Impossible de démarrer la diffusion de {{domain}}",
     "attach_error": "Impossible de joindre le fichier",
     "authorize_duplicate_error": "Vous êtes déjà connecté avec le même compte sur le même domaine.",
     "authorize_error": "Erreur à l'autoristation",
@@ -405,7 +405,7 @@
     "new_toot": {
       "toot_length": "Le nombre de caractères d'un pouet doit être compris entre {{min}} et {{max}}",
       "attach_length": "Nous ne pouvez joindre qu'un maximum de {{max}} images à votre pouet",
-      "attach_image": "Vous ne pouvez attacher que des images ou des vidéos"
+      "attach_image": "Vous ne pouvez attacher que des images ou des vidéos",
       "poll_invalid": "Choix de sondage invalides"
     }
   },
