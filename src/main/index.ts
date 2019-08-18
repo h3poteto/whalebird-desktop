@@ -125,7 +125,7 @@ async function listAccounts(): Promise<Array<LocalAccount>> {
 }
 
 async function changeAccount(account: LocalAccount, index: number) {
-  // In MacOS, user can hide the window.
+  // Sometimes application is closed to tray.
   // In this time, mainWindow in not exist, so we have to create window.
   if (mainWindow === null) {
     await createWindow()
@@ -134,6 +134,7 @@ async function changeAccount(account: LocalAccount, index: number) {
       mainWindow!.webContents.send('change-account', Object.assign(account, { index: index }))
     })
   } else {
+    mainWindow.show()
     mainWindow.webContents.send('change-account', Object.assign(account, { index: index }))
   }
 }
@@ -146,37 +147,6 @@ async function getLanguage() {
   } catch (err) {
     return Language.en.key
   }
-}
-
-/**
- * Minimize to tray when click close button
- */
-async function setMinimizeToTray() {
-  mainWindow!.on('close', event => {
-    mainWindow!.hide()
-    mainWindow!.setSkipTaskbar(true)
-    event.preventDefault()
-  })
-  tray = new Tray(path.join(__dirname, '../../build/icons/256x256.png'))
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: i18n.t('main_menu.application.quit'),
-      click: () => {
-        mainWindow!.destroy()
-      }
-    }
-  ])
-  tray.setToolTip(i18n.t('main_menu.application.name'))
-  tray.setContextMenu(contextMenu)
-  tray.on('click', () => {
-    if (mainWindow!.isVisible()) {
-      mainWindow!.hide()
-      mainWindow!.setSkipTaskbar(true)
-    } else {
-      mainWindow!.show()
-      mainWindow!.setSkipTaskbar(false)
-    }
-  })
 }
 
 async function createWindow() {
@@ -263,10 +233,32 @@ async function createWindow() {
     mainWindow = null
   })
 
-  // Minimize to tray for win32
-  if (process.platform === 'win32') {
-    setMinimizeToTray()
+  // Show tray icon only linux and windows.
+  if (process.platform !== 'darwin') {
+    // Show tray icon
+    tray = new Tray(path.join(__dirname, '../../build/icons/256x256.png'))
+    const trayMenu = TrayMenu(accountsChange, i18n)
+    tray.setContextMenu(trayMenu)
+
+    // For Windows
+    tray.setToolTip(i18n.t('main_menu.application.name'))
+    tray.on('click', () => {
+      if (mainWindow!.isVisible()) {
+        mainWindow!.hide()
+        mainWindow!.setSkipTaskbar(true)
+      } else {
+        mainWindow!.show()
+        mainWindow!.setSkipTaskbar(false)
+      }
+    })
   }
+
+  // Minimize to tray
+  mainWindow!.on('close', event => {
+    mainWindow!.hide()
+    mainWindow!.setSkipTaskbar(true)
+    event.preventDefault()
+  })
 }
 
 // Do not lower the rendering priority of Chromium when background
@@ -1227,6 +1219,20 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
 
   const menu: Menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+}
+
+const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: i18n.i18n): Menu => {
+  const template: Array<MenuItemConstructorOptions> = [
+    ...accountsChange,
+    {
+      label: i18n.t('main_menu.application.quit'),
+      click: () => {
+        mainWindow!.destroy()
+      }
+    }
+  ]
+  const menu: Menu = Menu.buildFromTemplate(template)
+  return menu
 }
 
 async function reopenWindow() {
