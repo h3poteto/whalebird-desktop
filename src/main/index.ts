@@ -276,13 +276,13 @@ app.on('window-all-closed', () => {
     const menu = Menu.getApplicationMenu()
     if (menu !== null) {
       // Preferences
-      ;((menu.items[0] as MenuItemConstructorOptions).submenu as Menu).items[2].enabled = false as boolean
+      menu.items[0].submenu.items[2].enabled = false as boolean
       // New Toot
-      ;((menu.items[1] as MenuItemConstructorOptions).submenu as Menu).items[0].enabled = false as boolean
+      menu.items[1].submenu.items[0].enabled = false as boolean
       // Open Window
-      ;((menu.items[4] as MenuItemConstructorOptions).submenu as Menu).items[1].enabled = true as boolean
+      menu.items[4].submenu.items[1].enabled = true as boolean
       // Jump to
-      ;((menu.items[4] as MenuItemConstructorOptions).submenu as Menu).items[4].enabled = false as boolean
+      menu.items[4].submenu.items[4].enabled = false as boolean
     }
   }
 })
