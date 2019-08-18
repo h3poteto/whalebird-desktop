@@ -236,7 +236,7 @@ async function createWindow() {
   // Show tray icon only linux and windows.
   if (process.platform !== 'darwin') {
     // Show tray icon
-    tray = new Tray(path.join(__dirname, '../../build/icons/256x256.png'))
+    tray = new Tray(path.join(__dirname, '../../build/icons/tray_icon.png'))
     const trayMenu = TrayMenu(accountsChange, i18n)
     tray.setContextMenu(trayMenu)
 
