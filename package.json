@@ -215,7 +215,7 @@
     "ajv": "^6.6.1",
     "all-object-keys": "^1.1.1",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.5",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-plugin-istanbul": "^5.1.0",
