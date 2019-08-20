@@ -170,7 +170,7 @@
     "hoek": "^6.1.2",
     "i18next": "^12.1.0",
     "i18next-sync-fs-backend": "^1.1.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "megalodon": "0.9.0",
     "moment": "^2.21.0",
     "mousetrap": "^1.6.2",
