@@ -5,23 +5,23 @@
     "follow_requests": "Follow Requests"
   },
   "header_menu": {
-    "settings": "Settings",
+    "settings": "Einstellungen",
     "follow_requests": "Follow Requests",
-    "mention": "Mention",
-    "direct_messages": "Direct Messages",
+    "mention": "Erwähnen",
+    "direct_messages": "Direkt Nachrichten",
     "filter": {
       "show_dms": "Show direct messages"
     }
   },
   "settings": {
     "timeline": {
-      "title": "Timeline",
+      "title": "Zeitleiste",
       "unread_notification": {
         "title": "Unread Notification",
         "description": "Customize unread notifications for each timelines.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "direct": "Direkt Nachrichten",
+        "local": "Lokale Zeitleiste",
+        "public": "Öffentliche Zeitleiste"
       }
     }
   },
@@ -31,59 +31,59 @@
   "modals": {
     "new_toot": {
       "footer": {
-        "poll": "Add a poll"
+        "poll": "Umfrage hinzufügen"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Zeitauswahl",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 Minuten",
+          "30_minutes": "30 Minuten",
+          "1_hour": "1 Stunde",
+          "6_hours": "6 Stunde",
+          "1_day": "1 Tag",
+          "3_days": "3 Tage",
+          "7_days": "7 Tage"
         }
       }
     },
     "report": {
-      "title": "Reporting this user",
-      "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
+      "title": "Melde diesen Benutzer",
+      "comment": "Warum soll geblockt werden?",
+      "cancel": "Abbrechen",
+      "ok": "Senden"
     },
     "shortcut": {
       "h": "Switch the focus to left column",
       "l": "Switch the focus to right column",
-      "?": "Show this help"
+      "?": "Zeige diese Hilfe"
     }
   },
   "preferences": {
     "general": {
       "timeline": {
-        "title": "Timeline",
+        "title": "Zeitleiste",
         "description": "Customize view in your timelines.",
-        "cw": "Always ignore contents warnings",
-        "nfsw": "Always ignore NFSW of medias",
-        "hideAllAttachments": "Hide all medias"
+        "cw": "Ignoriere immer Content Warnungen",
+        "nfsw": "Ignogiere immer NFSW Medien",
+        "hideAllAttachments": "Verstecke alle Medien"
       }
     },
     "appearance": {
-      "toot_padding": "Padding around toot"
+      "toot_padding": "Abstand zwischen den Toot"
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "Annehmen",
+    "reject": "Ablehnen"
   },
   "cards": {
     "toot": {
       "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
-        "until": "until {{datetime}}",
-        "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "vote": "Abstimmen",
+        "votes_count": "Stimmen",
+        "until": "bis {{datetime}}",
+        "left": "{{datetime}} verstrichen",
+        "refresh": "Aktualisieren"
       }
     }
   },
@@ -94,20 +94,20 @@
   },
   "validation": {
     "new_toot": {
-      "poll_invalid": "Invalid poll choices"
+      "poll_invalid": "Ungültige Umfragen-Auswahl"
     }
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
+      "title": "Favoriten",
       "body": "{{username}} favourited your status"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{{username}} is now following you"
+      "title": "Folgen",
+      "body": "{{username}} folgt dir jetzt"
     },
     "reblog": {
-      "title": "Reblog",
+      "title": "Teilen",
       "body": "{{username}} boosted your status"
     }
   }
