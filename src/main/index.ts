@@ -251,14 +251,14 @@ async function createWindow() {
         mainWindow!.setSkipTaskbar(false)
       }
     })
-  }
 
-  // Minimize to tray
-  mainWindow!.on('close', event => {
-    mainWindow!.hide()
-    mainWindow!.setSkipTaskbar(true)
-    event.preventDefault()
-  })
+    // Minimize to tray
+    mainWindow!.on('close', event => {
+      mainWindow!.hide()
+      mainWindow!.setSkipTaskbar(true)
+      event.preventDefault()
+    })
+  }
 }
 
 // Do not lower the rendering priority of Chromium when background
