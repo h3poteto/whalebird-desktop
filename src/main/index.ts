@@ -74,6 +74,25 @@ let mainWindow: BrowserWindow | null
 let tray: Tray | null
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
+// Enforces single instance for linux and windows.
+const gotTheLock = app.requestSingleInstanceLock()
+
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', () => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      if (!mainWindow!.isVisible()) {
+        mainWindow!.show()
+        mainWindow!.setSkipTaskbar(false)
+      }
+      mainWindow.focus()
+    }
+  })
+}
+
 const appId = pkg.build.appId
 
 const splashURL =
