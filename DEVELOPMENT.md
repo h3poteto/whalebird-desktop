@@ -1,22 +1,51 @@
 ## Release
+### Build
+At first, you have to build.
+
+```bash
+$ make build
+```
+
+This command only generate javascript codes for Electron, so if you want to create release package, please read following document.
+
 ### Binary
-When you build release packages, please use `electron-builder`.
+I use `electron-builder` to create package, but it is hidden by Makefile. So you can use make command.
 
 ```bash
 # for linux
-$ npm run build:linux
+$ make linux VERSION=2.8.0
 
+# for 64 bit Windows
+$ make wi64 VERSION=2.8.0
+```
+
+You have to use macOS to build packages for macOS.
+And you have to install certificates for Mac Application.
+
+- Mac App Distribution: `Developer ID Application: Akira Fukushima (DR9TBDD8DFM)`
+- Mac App Installer Distribution: `Developer ID Appplication: Akira Fukushima (DR9TBDD8DFM)`
+
+Then use make command.
+
+```bash
 # for mac
-# This command automatically loads the Developer ID Application certificate from your keychain.
-$ npm run build:mac
+$ make mac VERSION=2.8.0
+```
+This command automatically loads the Developer ID Application certificate from your keychain.
+If you want to specify a certificate, please set `CSC_NAME` before this command.
+
+
+```bash
+$ export CSC_NAME="Akira Fukushima (DR9TBDD8DFM)"
+$ make mac VERSION=2.8.0
 ```
 
 ### AppStore
 
 Please prepare certificates on your Apple developer console. The following keys are required:
 
-- Mac App Distribution: `3rd Party Mac Developer Application: NAME (TEAM_ID)`
-- Mac Installer Distribution: `3rd Party Mac Developer Installer: NAME (TEAM_ID)`
+- Mac App Distribution: `3rd Party Mac Developer Application: Akira Fukushima (DR9TBDD8DFM)`
+- Mac Installer Distribution: `3rd Party Mac Developer Installer: Akira Fukushima (DR9TBDD8DFM)`
 
 and register your KeyChain.
 
@@ -40,17 +69,20 @@ First, please prepare snapcraft command.
 ```bash
 $ brew install snapcraft
 ```
-
-And prepare docker environment which is used in snapcraft building.
-
-Build app for linux.
+or
 
 ```bash
-$ npm run build:linux
+$ snap install snapcraft --classic
+```
+
+Build command for linux generates a snap file.
+
+```bash
+$ make linux VERSION=2.8.0
 ```
 
 And upload.
 
 ```bash
-$ snapcraft push build/whalebird_1.0.0_amd64.snap --release stable
+$ snapcraft push build/Whalebird-2.8.0-linux-amd64.snap  --release beta
 ```

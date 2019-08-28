@@ -39,7 +39,6 @@ const state = (): TimelineSpaceState => {
       local: true,
       public: true
     },
-    useWebsocket: false,
     pleroma: false
   }
 }
@@ -175,7 +174,6 @@ describe('TimelineSpace', () => {
         ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
         await store.dispatch('TimelineSpace/detectPleroma')
         expect(store.state.TimelineSpace.pleroma).toEqual(true)
-        expect(store.state.TimelineSpace.useWebsocket).toEqual(true)
       })
     })
     describe('API is not pleroma', () => {
@@ -210,7 +208,6 @@ describe('TimelineSpace', () => {
         ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
         await store.dispatch('TimelineSpace/detectPleroma')
         expect(store.state.TimelineSpace.pleroma).toEqual(false)
-        expect(store.state.TimelineSpace.useWebsocket).toEqual(false)
       })
     })
   })
@@ -244,12 +241,16 @@ describe('TimelineSpace', () => {
       await store.dispatch('TimelineSpace/fetchEmojis', {})
       expect(store.state.TimelineSpace.emojis).toEqual([
         {
-          image: 'http://example.com/emacs',
-          name: ':emacs:'
+          shortcode: 'emacs',
+          url: 'http://example.com/emacs',
+          static_url: 'http://example.com/emacs',
+          visible_in_picker: true
         },
         {
-          image: 'http://example.com/ruby',
-          name: ':ruby:'
+          shortcode: 'ruby',
+          url: 'http://example.com/ruby',
+          static_url: 'http://example.com/ruby',
+          visible_in_picker: true
         }
       ])
     })

@@ -31,7 +31,8 @@ export default {
         Language.ja,
         Language.ko,
         Language.pl,
-        Language.it
+        Language.it,
+        Language.zh_cn
       ]
     }
   },

@@ -78,7 +78,6 @@
       "show_replies": "Show replies",
       "apply": "Apply"
     },
-    "switch_streaming": "Use websocket for streaming. If the timeline does not update with streaming, please try it.",
     "new_toot": "Post",
     "reload": "Reload",
     "settings": "Settings"

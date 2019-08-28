@@ -1,5 +1,37 @@
 # Change Log
 
+## [2.8.3] - 2019-08-13
+### Added
+- [#1000](https://github.com/h3poteto/whalebird-desktop/pull/1000) Add spec for zh_cn translation json
+- [#998](https://github.com/h3poteto/whalebird-desktop/pull/998) Simplified Chinese translation
+- [#995](https://github.com/h3poteto/whalebird-desktop/pull/995) Cache accounts and search cache when suggest
+- [#990](https://github.com/h3poteto/whalebird-desktop/pull/990) Cache hashtags
+- [#984](https://github.com/h3poteto/whalebird-desktop/pull/984) Add description for CSC_NAME in document
+
+### Changed
+- [#997](https://github.com/h3poteto/whalebird-desktop/pull/997) Use v2 API for suggestion
+- [#994](https://github.com/h3poteto/whalebird-desktop/pull/994) Move suggest logic to vuex
+- [#986](https://github.com/h3poteto/whalebird-desktop/pull/986) Use websocket as default streaming method for all timelines
+
+### Fixed
+- [#1001](https://github.com/h3poteto/whalebird-desktop/pull/1001) Fix API endpoint for direct messages, use conversations
+- [#996](https://github.com/h3poteto/whalebird-desktop/pull/996) Fix uniqueness in suggestion
+- [#987](https://github.com/h3poteto/whalebird-desktop/pull/987) Get streaming url for instance API before start streaming
+
+
+
+## [2.8.2] - 2019-07-25
+### Changed
+- [#974](https://github.com/h3poteto/whalebird-desktop/pull/974) Notify notification in main process
+- [#973](https://github.com/h3poteto/whalebird-desktop/pull/973) Update screenshot in README for recent updates
+
+### Fixed
+- [#981](https://github.com/h3poteto/whalebird-desktop/pull/981) Set appId to notify in windows10
+- [#979](https://github.com/h3poteto/whalebird-desktop/pull/979) fix: Check webContents status when receive status in streaming
+- [#978](https://github.com/h3poteto/whalebird-desktop/pull/978) Check webContent status before send event in all streamings
+- [#977](https://github.com/h3poteto/whalebird-desktop/pull/977) Fix digits number of percentage in polls
+
+
 ## [2.8.1] - 2019-07-21
 ### Added
 - [#966](https://github.com/h3poteto/whalebird-desktop/pull/966) Add a spec for translation json files
