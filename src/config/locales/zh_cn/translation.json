@@ -1,0 +1,426 @@
+{
+  "main_menu": {
+    "application": {
+      "name": "Whalebird",
+      "about": "关于 Whalebird",
+      "preferences": "首选项...",
+      "services": "服务",
+      "hide": "隐藏 Whalebird",
+      "hide_others": "隐藏其它窗口",
+      "show_all": "全部显示",
+      "quit": "退出"
+    },
+    "toot": {
+      "name": "嘟文",
+      "new": "发嘟"
+    },
+    "edit": {
+      "name": "编辑",
+      "undo": "撤销",
+      "redo": "重做",
+      "cut": "剪切",
+      "copy": "复制",
+      "paste": "粘贴",
+      "select_all": "全选"
+    },
+    "view": {
+      "name": "视图",
+      "toggle_full_screen": "切换全屏"
+    },
+    "window": {
+      "name": "窗口",
+      "close": "关闭窗口",
+      "open": "打开窗口",
+      "minimize": "最小化",
+      "jump_to": "跳转至"
+    }
+  },
+  "global_header": {
+    "add_new_account": "添加账户"
+  },
+  "side_menu": {
+    "profile": "个人资料",
+    "show_profile": "查看个人资料",
+    "edit_profile": "修改个人资料",
+    "settings": "设置",
+    "collapse": "折叠",
+    "expand": "展开",
+    "home": "主页",
+    "notification": "通知",
+    "mention": "提到我的",
+    "direct": "私信",
+    "follow_requests": "关注请求",
+    "favourite": "收藏的内容",
+    "local": "本站",
+    "public": "跨站",
+    "hashtag": "话题",
+    "search": "搜索",
+    "lists": "列表"
+  },
+  "header_menu": {
+    "home": "主页",
+    "notification": "通知",
+    "mention": "提到我的",
+    "favourite": "收藏的内容",
+    "follow_requests": "关注请求",
+    "direct_messages": "私信",
+    "local": "本站",
+    "public": "跨站",
+    "hashtag": "话题",
+    "search": "搜索",
+    "lists": "列表",
+    "members": "成员",
+    "filter": {
+      "title": "筛选",
+      "placeholder": "正则表达式",
+      "show_dms": "显示私信",
+      "show_reblogs": "显示转嘟",
+      "show_replies": "显示评论",
+      "apply": "应用"
+    },
+    "new_toot": "发嘟",
+    "reload": "刷新",
+    "settings": "设置"
+  },
+  "settings": {
+    "title": "设置",
+    "general": {
+      "title": "一般",
+      "toot": {
+        "title": "嘟文",
+        "visibility": {
+          "description": "默认可见范围",
+          "public": "公开",
+          "unlisted": "不公开",
+          "private": "仅关注者",
+          "direct": "私信"
+        },
+        "sensitive": {
+          "description": "总是将媒体标记为敏感内容"
+        }
+      }
+    },
+    "timeline": {
+      "title": "时间线",
+      "unread_notification": {
+        "title": "未读通知",
+        "description": "单独设定各时间线的未读通知。",
+        "direct": "私信",
+        "local": "本站",
+        "public": "跨站"
+      }
+    }
+  },
+  "preferences": {
+    "title": "首选项",
+    "general": {
+      "title": "一般",
+      "sounds": {
+        "title": "音效",
+        "description": "设定反馈音效。",
+        "fav_rb": "收藏或转发嘟文时",
+        "toot": "发布嘟文时"
+      },
+      "timeline": {
+        "title": "时间线",
+        "description": "设定查看时间线的方式。",
+        "cw": "始终展开具有内容警告的嘟文",
+        "nfsw": "总是显示被标记为敏感内容的媒体",
+        "hideAllAttachments": "总是隐藏所有媒体"
+      }
+    },
+    "appearance": {
+      "title": "外观",
+      "theme_color": "颜色主题",
+      "theme": {
+        "light": "明亮",
+        "dark": "深暗",
+        "solarized_light": "Solarized Light",
+        "solarized_dark": "Solarized Dark",
+        "kimbie_dark": "Kimbie Dark",
+        "custom": "自定义"
+      },
+      "custom_theme": {
+        "background_color": "基本背景",
+        "selected_background_color": "选中的背景",
+        "global_header_color": "账户菜单",
+        "side_menu_color": "侧边栏",
+        "primary_color": "首要文字",
+        "regular_color": "普通文字",
+        "secondary_color": "次要文字",
+        "border_color": "边界",
+        "header_menu_color": "标题菜单",
+        "wrapper_mask_color": "Modal 封装"
+      },
+      "font_size": "字体大小",
+      "font_family": "字体族",
+      "toot_padding": "嘟文周围的空白",
+      "display_style": {
+        "title": "用户名展示风格",
+        "display_name_and_username": "昵称和用户名",
+        "display_name": "昵称",
+        "username": "用户名"
+      },
+      "time_format": {
+        "title": "时间格式",
+        "absolute": "绝对时间",
+        "relative": "相对时间"
+      }
+    },
+    "notification": {
+      "title": "通知",
+      "enable": {
+        "description": "设定通知事件。",
+        "reply": "有用户回复我的嘟文时通知我",
+        "reblog": "有用户转发我的嘟文时通知我",
+        "favourite": "有用户收藏我的嘟文时通知我",
+        "follow": "有用户关注我时通知我"
+      }
+    },
+    "account": {
+      "title": "账户",
+      "connected": "关联的账户",
+      "username": "用户名",
+      "domain": "域名",
+      "association": "关联",
+      "order": "顺序",
+      "remove_association": "移除关联",
+      "remove_all_associations": "移除所有关联",
+      "confirm": "确定",
+      "cancel": "取消",
+      "confirm_message": "确定移除所有关联吗？"
+    },
+    "language": {
+      "title": "语言",
+      "language_description": "设定 Whalebird 的界面语言。",
+      "notice": "需要重启",
+      "confirm": {
+        "title": "警告",
+        "message": "程序需要重新启动。继续吗？",
+        "ok": "重启",
+        "cancel": "取消"
+      }
+    }
+  },
+  "modals": {
+    "new_toot": {
+      "title": "发嘟",
+      "cw": "折叠部分的警告消息",
+      "status": "在想啥？",
+      "cancel": "取消",
+      "toot": "嘟嘟！",
+      "close_confirm": "确定取消发嘟吗？",
+      "close_confirm_ok": "确定",
+      "close_confirm_cancel": "取消",
+      "description": "为视觉障碍人士提供描述",
+      "footer": {
+        "add_image": "上传图片",
+        "poll": "发起投票",
+        "change_visibility": "设置嘟文可见范围",
+        "change_sensitive": "设置嘟文内容敏感性",
+        "add_cw": "添加内容警告",
+        "pined_hashtag": "保留话题标签"
+      },
+      "poll": {
+        "add_choice": "添加一个选项",
+        "expires": {
+          "5_minutes": "5 分钟",
+          "30_minutes": "30 分钟",
+          "1_hour": "1 小时",
+          "6_hours": "6 小时",
+          "1_day": "1 天",
+          "3_days": "3 天",
+          "7_days": "7 天"
+        }
+      }
+    },
+    "jump": {
+      "jump_to": "跳转至..."
+    },
+    "add_list_member": {
+      "title": "向列表添加成员",
+      "account_name": "用户名"
+    },
+    "list_membership": {
+      "title": "列表成员"
+    },
+    "mute_confirm": {
+      "title": "确定隐藏吗？",
+      "body": "隐藏来自该用户的通知",
+      "cancel": "取消",
+      "ok": "确定"
+    },
+    "shortcut": {
+      "title": "快捷键",
+      "ctrl_number": "切换账户",
+      "ctrl_k": "跳转至其他时间线",
+      "ctrl_n": "打开发嘟弹窗",
+      "ctrl_enter": "发布嘟文",
+      "j": "选择下一条嘟文",
+      "k": "选择上一条嘟文",
+      "h": "聚焦至左侧的列",
+      "l": "聚焦至右侧的列",
+      "r": "回复嘟文",
+      "b": "转发嘟文",
+      "f": "收藏嘟文",
+      "o": "展开嘟文",
+      "p": "展开嘟文发布者的个人资料",
+      "i": "展开图片",
+      "x": "显示 / 隐藏内容警告和敏感内容",
+      "?": "显示此帮助",
+      "esc": "关闭当前页"
+    },
+    "report": {
+      "title": "举报该用户",
+      "comment": "附言",
+      "cancel": "取消",
+      "ok": "举报"
+    }
+  },
+  "cards": {
+    "toot": {
+      "show_more": "显示",
+      "hide": "隐藏",
+      "sensitive": "显示敏感内容",
+      "view_toot_detail": "展开嘟文",
+      "open_in_browser": "在浏览器中打开",
+      "copy_link_to_toot": "复制嘟文链接",
+      "mute": "隐藏",
+      "block": "屏蔽",
+      "report": "举报",
+      "delete": "删除",
+      "via": "来自 {{application}}",
+      "reply": "回复",
+      "reblog": "转嘟",
+      "fav": "收藏",
+      "detail": "更多",
+      "pinned": "置顶",
+      "poll": {
+        "vote": "投票",
+        "votes_count": "投票计数",
+        "until": "在 {{datetime}} 截止",
+        "left": "剩余 {{datetime}}",
+        "refresh": "刷新"
+      }
+    }
+  },
+  "side_bar": {
+    "account_profile": {
+      "follows_you": "关注你",
+      "doesnt_follow_you": "没有关注你",
+      "detail": "更多",
+      "follow": "关注",
+      "unfollow": "取消关注",
+      "follow_requested": "已请求关注",
+      "open_in_browser": "在浏览器中打开",
+      "manage_list_memberships": "从列表中添加或删除",
+      "mute": "隐藏",
+      "unmute": "不再隐藏",
+      "unblock": "解除屏蔽",
+      "block": "屏蔽",
+      "toots": "嘟文",
+      "follows": "正在关注",
+      "followers": "关注者"
+    }
+  },
+  "follow_requests": {
+    "accept": "接受",
+    "reject": "拒绝"
+  },
+  "hashtag": {
+    "tag_name": "话题名称",
+    "delete_tag": "删除话题",
+    "save_tag": "保存话题"
+  },
+  "search": {
+    "search": "搜索",
+    "account": "用户",
+    "tag": "话题",
+    "keyword": "关键词",
+    "toot": "嘟文"
+  },
+  "lists": {
+    "index": {
+      "new_list": "新列表的标题",
+      "edit": "编辑"
+    }
+  },
+  "login": {
+    "domain_name_label": "首先让我们登入一个 Mastodon 实例。请输入实例的域名：",
+    "search": "搜索",
+    "login": "登录"
+  },
+  "authorize": {
+    "manually_1": "一个认证页面已经在浏览器中打开。",
+    "manually_2": "如果页面没有打开，请手动进入下列 URL：",
+    "code_label": "请粘贴浏览器中显示的授权码：",
+    "submit": "提交"
+  },
+  "receive_drop": {
+    "drop_message": "拖放以上传"
+  },
+  "message": {
+    "account_load_error": "读取账户失败",
+    "account_remove_error": "移除账户失败",
+    "preferences_load_error": "读取首选项失败",
+    "timeline_fetch_error": "获取时间线失败",
+    "notification_fetch_error": "获取通知失败",
+    "favourite_fetch_error": "获取收藏失败",
+    "follow_request_accept_error": "接受请求失败",
+    "follow_reuqest_reject_error": "拒绝请求失败",
+    "start_streaming_error": "打开流媒体失败",
+    "start_all_streamings_error": "打开 {{domain}} 的流媒体失败",
+    "attach_error": "附加文件失败",
+    "authorize_duplicate_error": "不能重复登录同一域名的同一帐户",
+    "authorize_error": "认证失败",
+    "followers_fetch_error": "读取关注者列表失败",
+    "follows_fetch_error": "读取关注列表失败",
+    "toot_fetch_error": "展开嘟文失败",
+    "follow_error": "关注失败",
+    "unfollow_error": "取消关注失败",
+    "lists_fetch_error": "读取列表失败",
+    "list_create_error": "创建列表失败",
+    "members_fetch_error": "读取成员失败",
+    "remove_user_error": "移除用户失败",
+    "find_account_error": "找不到用户",
+    "reblog_error": "转嘟失败",
+    "unreblog_error": "取消转嘟失败",
+    "favourite_error": "收藏失败",
+    "unfavourite_error": "取消收藏失败",
+    "delete_error": "删除嘟文失败",
+    "search_error": "搜索失败",
+    "toot_error": "发嘟失败",
+    "update_list_memberships_error": "更新列表成员失败",
+    "add_user_error": "添加用户失败",
+    "authorize_url_error": "无法获取认证 URL",
+    "domain_confirmed": "{{domain}} 已确认，请登录",
+    "domain_doesnt_exist": "{{domain}} 不存在",
+    "loading": "加载中..."
+  },
+  "validation": {
+    "login": {
+      "require_domain_name": "需要域名",
+      "domain_format": "只能输入域名"
+    },
+    "new_toot": {
+      "toot_length": "嘟文长度应在 {{min}} 到 {{max}} 字之间",
+      "attach_length": "最多上传 {{max}} 张图片",
+      "attach_image": "只能上传图片或视频",
+      "poll_invalid": "投票选项无效"
+    }
+  },
+  "notification": {
+    "favourite": {
+      "title": "收藏",
+      "body": "{{username}} 收藏了你的嘟文"
+    },
+    "follow": {
+      "title": "关注",
+      "body": "{{username}} 正在关注你"
+    },
+    "reblog": {
+      "title": "转嘟",
+      "body": "{{username}} 转发了你的嘟文"
+    }
+  }
+}

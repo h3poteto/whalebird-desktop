@@ -1,12 +1,8 @@
 <template>
-  <div
-    id="current-media"
-    v-loading="loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
-  >
-    <video :src="src" v-if="isMovieFile()" controls v-on:loadstart="loaded()"></video>
+  <div id="current-media" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <video :src="src" v-if="isMovieFile()" autoplay loop controls v-on:loadstart="loaded()"></video>
     <video :src="src" v-else-if="isGIF()" autoplay loop v-on:loadstart="loaded()"></video>
-    <img :src="src" v-else v-on:load="loaded()">
+    <img :src="src" v-else v-on:load="loaded()" />
   </div>
 </template>
 
@@ -30,13 +26,13 @@ export default {
     })
   },
   methods: {
-    isMovieFile () {
+    isMovieFile() {
       return ['video'].includes(this.type)
     },
-    isGIF () {
+    isGIF() {
       return ['gifv'].includes(this.type)
     },
-    async loaded () {
+    async loaded() {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/loaded')
     }
   }

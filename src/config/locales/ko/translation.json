@@ -75,8 +75,7 @@
     },
     "new_toot": "툿",
     "reload": "새로고침",
-    "settings": "설정",
-    "switch_streaming": "스트리밍 웹소켓을 사용하도록 설정합니다. 타임라인이 자동으로 갱신되지 않는다면 이 항목을 사용함으로 설정하십시오."
+    "settings": "설정"
   },
   "settings": {
     "title": "설정",

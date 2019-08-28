@@ -12,19 +12,13 @@ import { UnreadNotification } from '~/src/types/unreadNotification'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 
-type MyEmoji = {
-  name: string
-  image: string
-}
-
 export type TimelineSpaceState = {
   account: LocalAccount
   bindingAccount: LocalAccount | null
   loading: boolean
-  emojis: Array<MyEmoji>
+  emojis: Array<Emoji>
   tootMax: number
   unreadNotification: UnreadNotification
-  useWebsocket: boolean
   pleroma: boolean
 }
 
@@ -53,7 +47,6 @@ const state = (): TimelineSpaceState => ({
     local: unreadSettings.Local.default,
     public: unreadSettings.Public.default
   },
-  useWebsocket: false,
   pleroma: false
 })
 
@@ -64,8 +57,7 @@ export const MUTATION_TYPES = {
   UPDATE_EMOJIS: 'updateEmojis',
   UPDATE_TOOT_MAX: 'updateTootMax',
   UPDATE_UNREAD_NOTIFICATION: 'updateUnreadNotification',
-  CHANGE_PLEROMA: 'changePleroma',
-  CHANGE_USE_WEBSOCKET: 'changeUseWebsocket'
+  CHANGE_PLEROMA: 'changePleroma'
 }
 
 const mutations: MutationTree<TimelineSpaceState> = {
@@ -79,12 +71,7 @@ const mutations: MutationTree<TimelineSpaceState> = {
     state.loading = value
   },
   [MUTATION_TYPES.UPDATE_EMOJIS]: (state, emojis: Array<Emoji>) => {
-    state.emojis = emojis.map(e => {
-      return {
-        name: `:${e.shortcode}:`,
-        image: e.url
-      }
-    })
+    state.emojis = emojis
   },
   [MUTATION_TYPES.UPDATE_TOOT_MAX]: (state, value: number | null) => {
     if (value) {
@@ -98,9 +85,6 @@ const mutations: MutationTree<TimelineSpaceState> = {
   },
   [MUTATION_TYPES.CHANGE_PLEROMA]: (state, pleroma: boolean) => {
     state.pleroma = pleroma
-  },
-  [MUTATION_TYPES.CHANGE_USE_WEBSOCKET]: (state, use: boolean) => {
-    state.useWebsocket = use
   }
 }
 
@@ -181,10 +165,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     const res = await Mastodon.get<Instance>('/instance', {}, state.account.baseURL + '/api/v1')
     if (res.data.version.includes('Pleroma')) {
       commit(MUTATION_TYPES.CHANGE_PLEROMA, true)
-      commit(MUTATION_TYPES.CHANGE_USE_WEBSOCKET, true)
     } else {
       commit(MUTATION_TYPES.CHANGE_PLEROMA, false)
-      commit(MUTATION_TYPES.CHANGE_USE_WEBSOCKET, false)
     }
   },
   // -----------------------------------------------
@@ -360,8 +342,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-local-streaming', {
-        account: state.account,
-        useWebsocket: state.useWebsocket
+        account: state.account
       })
       ipcRenderer.once('error-start-local-streaming', (_, err: Error) => {
         reject(err)
@@ -385,8 +366,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-public-streaming', {
-        account: state.account,
-        useWebsocket: state.useWebsocket
+        account: state.account
       })
       ipcRenderer.once('error-start-public-streaming', (_, err: Error) => {
         reject(err)
@@ -410,8 +390,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
       ipcRenderer.send('start-directmessages-streaming', {
-        account: state.account,
-        useWebsocket: state.useWebsocket
+        account: state.account
       })
       ipcRenderer.once('error-start-directmessages-streaming', (_, err: Error) => {
         reject(err)
