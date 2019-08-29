@@ -184,8 +184,8 @@ export default {
       }
     },
     closeSuggest() {
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/closeSuggest')
       if (this.openSuggest) {
-        this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/closeSuggest')
         this.highlightedIndex = 0
       }
     },
