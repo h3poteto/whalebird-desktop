@@ -482,7 +482,7 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
           }
           // Cache hashtag
           update.tags.map(async tag => {
-            await hashtagCache.insertHashtag(tag.name)
+            await hashtagCache.insertHashtag(tag.name).catch(err => console.error(err))
           })
           // Cache account
           await accountCache.insertAccount(id, update.account.acct).catch(err => console.error(err))
@@ -1021,7 +1021,7 @@ ipcMain.on('get-cache-hashtags', async (event: Event) => {
 
 ipcMain.on('insert-cache-hashtags', (event: Event, tags: Array<string>) => {
   tags.map(async name => {
-    await hashtagCache.insertHashtag(name)
+    await hashtagCache.insertHashtag(name).catch(err => console.error(err))
   })
   event.sender.send('response-insert-cache-hashtags')
 })
