@@ -611,6 +611,7 @@ export default {
       .content {
         margin: var(--toot-padding) 0;
         word-wrap: break-word;
+        word-break: break-all;
       }
 
       .emojione {
