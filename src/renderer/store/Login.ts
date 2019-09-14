@@ -46,9 +46,17 @@ const actions: ActionTree<LoginState, RootState> = {
   },
   confirmInstance: async ({ commit }, domain: string): Promise<boolean> => {
     commit(MUTATION_TYPES.CHANGE_SEARCHING, true)
-    await axios.get(`https://${domain}/api/v1/instance`).finally(() => {
+    // https://gist.github.com/okapies/60d62d0df0163bbfb4ab09c1766558e8
+    // Check /.well-known/host-meta to confirm mastodon instance.
+    const res = await axios.get(`https://${domain}/.well-known/host-meta`).finally(() => {
       commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
     })
+    const parser = new DOMParser()
+    const dom = parser.parseFromString(res.data, 'text/xml')
+    const link = dom.getElementsByTagName('Link')[0].outerHTML
+    if (!link.includes(`https://${domain}/.well-known/webfinger`)) {
+      throw new Error('domain is not activity pub')
+    }
     commit(MUTATION_TYPES.CHANGE_INSTANCE, domain)
     return true
   }
