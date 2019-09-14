@@ -42,10 +42,9 @@ describe('Login', () => {
         ipcMain.once('get-auth-url', event => {
           event.sender.send('error-get-auth-url', new Error())
         })
-        await store.dispatch('Login/fetchLogin', 'pleroma.io')
-          .catch((err: Error) => {
-            expect(err instanceof Error).toEqual(true)
-          })
+        await store.dispatch('Login/fetchLogin', 'pleroma.io').catch((err: Error) => {
+          expect(err instanceof Error).toEqual(true)
+        })
       })
     })
     describe('success', () => {
@@ -72,9 +71,10 @@ describe('Login', () => {
       // https://github.com/facebook/jest/issues/6552
       // https://github.com/kulshekhar/ts-jest/issues/828
       const mockedAxios = axios as any
-      const res: Promise<object> = new Promise<object>(resolve => {
+      const res: Promise<{}> = new Promise<{}>(resolve => {
         resolve({
-          data: 'test'
+          data:
+            '<?xml version="1.0" encoding="UTF-8"?><XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link rel="lrdd" template="https://pleroma.io/.well-known/webfinger?resource={uri}" type="application/xrd+xml" /></XRD>'
         })
       })
       mockedAxios.get.mockImplementation(() => res)
