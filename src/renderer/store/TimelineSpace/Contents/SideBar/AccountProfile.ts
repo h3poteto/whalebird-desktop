@@ -74,6 +74,17 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data[0])
     return res.data
   },
+  reload: async ({ dispatch, state, commit }) => {
+    commit(MUTATION_TYPES.CHANGE_LOADING, true)
+    Promise.all([
+      dispatch('fetchRelationship', state.account),
+      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/fetchTimeline', state.account, { root: true }),
+      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchFollowers', state.account, { root: true }),
+      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchFollows', state.account, { root: true })
+    ]).finally(() => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
+    })
+  },
   follow: async ({ commit, rootState, dispatch }, account: Account) => {
     const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
     const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/follow`)
