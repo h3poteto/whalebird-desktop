@@ -120,6 +120,7 @@ export default {
 .slide-detail-leave-active {
   transition: all 0.5s;
 }
+
 .slide-detail-enter,
 .slide-detail-leave-to {
   margin-right: -360px;
