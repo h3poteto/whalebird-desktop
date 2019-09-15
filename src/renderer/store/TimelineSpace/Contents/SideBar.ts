@@ -3,12 +3,15 @@ import TootDetail, { TootDetailState } from './SideBar/TootDetail'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
+enum Component {
+  Blank,
+  AccountProfile,
+  TootDetail
+}
+
 export type SideBarState = {
   openSideBar: boolean
-  // 0: blank
-  // 1: account-profile
-  // 2: toot-detail
-  component: number
+  component: Component
 }
 
 type SideBarModule = {
@@ -20,7 +23,7 @@ export type SideBarModuleState = SideBarModule & SideBarState
 
 const state = (): SideBarState => ({
   openSideBar: false,
-  component: 0
+  component: Component.Blank
 })
 
 export const MUTATION_TYPES = {
@@ -32,7 +35,7 @@ const mutations: MutationTree<SideBarState> = {
   [MUTATION_TYPES.CHANGE_OPEN_SIDEBAR]: (state, value: boolean) => {
     state.openSideBar = value
   },
-  [MUTATION_TYPES.CHANGE_COMPONENT]: (state, value: number) => {
+  [MUTATION_TYPES.CHANGE_COMPONENT]: (state, value: Component) => {
     state.component = value
   }
 }
@@ -41,13 +44,13 @@ const actions: ActionTree<SideBarState, RootState> = {
   close: ({ dispatch, commit }) => {
     dispatch('TimelineSpace/Contents/SideBar/AccountProfile/close', {}, { root: true })
     commit(MUTATION_TYPES.CHANGE_OPEN_SIDEBAR, false)
-    commit(MUTATION_TYPES.CHANGE_COMPONENT, 0)
+    commit(MUTATION_TYPES.CHANGE_COMPONENT, Component.Blank)
   },
   openAccountComponent: ({ commit }) => {
-    commit(MUTATION_TYPES.CHANGE_COMPONENT, 1)
+    commit(MUTATION_TYPES.CHANGE_COMPONENT, Component.AccountProfile)
   },
   openTootComponent: ({ commit }) => {
-    commit(MUTATION_TYPES.CHANGE_COMPONENT, 2)
+    commit(MUTATION_TYPES.CHANGE_COMPONENT, Component.TootDetail)
   }
 }
 
