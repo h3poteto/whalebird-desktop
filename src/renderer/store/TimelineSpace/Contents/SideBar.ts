@@ -46,6 +46,13 @@ const actions: ActionTree<SideBarState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_OPEN_SIDEBAR, false)
     commit(MUTATION_TYPES.CHANGE_COMPONENT, Component.Blank)
   },
+  reload: ({ state, dispatch }) => {
+    if (state.component === Component.AccountProfile) {
+      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/reload', {}, { root: true })
+    } else if (state.component === Component.TootDetail) {
+      dispatch('TimelineSpace/Contents/SideBar/TootDetail/reload', {}, { root: true })
+    }
+  },
   openAccountComponent: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_COMPONENT, Component.AccountProfile)
   },

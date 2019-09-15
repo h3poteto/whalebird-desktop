@@ -3,7 +3,7 @@
     <div id="side_bar" v-if="openSideBar" v-shortkey="shortcutEnabled ? { close: ['esc'] } : {}" @shortkey="handleKey">
       <div class="header">
         <i class="el-icon-loading" v-show="loading"></i>
-        <i class="el-icon-refresh" @click="refresh"></i>
+        <i class="el-icon-refresh" @click="reload"></i>
         <i class="el-icon-close" @click="close"></i>
       </div>
       <div id="sidebar_scrollable">
@@ -64,7 +64,9 @@ export default {
     changeLoading(value) {
       this.loading = value
     },
-    refresh() {},
+    reload() {
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/reload')
+    },
     handleKey(event) {
       switch (event.srcKey) {
         case 'close':
