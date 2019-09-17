@@ -7,8 +7,7 @@ const chalk = require('chalk')
 const del = require('del')
 const { spawn } = require('child_process')
 const webpack = require('webpack')
-const Multispinner = require('multispinner')
-
+const ora = require('ora')
 
 const mainConfig = require('./webpack.main.config')
 const rendererConfig = require('./webpack.renderer.config')
@@ -23,54 +22,62 @@ if (process.env.BUILD_TARGET === 'clean') clean()
 else if (process.env.BUILD_TARGET === 'web') web()
 else build()
 
-function clean () {
+function clean() {
   del.sync(['build/*', '!build/icons', '!build/icons/icon.*', '!build/sounds', '!build/sounds/*'])
   console.log(`\n${doneLog}\n`)
   process.exit()
 }
 
-function build () {
+async function build() {
   greeting()
 
   del.sync(['dist/electron/*', '!.gitkeep'])
 
-  const tasks = ['main', 'renderer']
-  const m = new Multispinner(tasks, {
-    preText: 'building',
-    postText: 'process'
-  })
-
   let results = ''
 
-  m.on('success', () => {
-    process.stdout.write('\x1B[2J\x1B[0f')
-    console.log(`\n\n${results}`)
-    console.log(`${okayLog}take it away ${chalk.yellow('`electron-builder`')}\n`)
-    process.exit()
+  const mainSpinner = ora({
+    prefixText: 'building',
+    text: 'processing'
+  })
+  const rendererSpinner = ora({
+    prefixText: 'building',
+    text: 'processing'
   })
 
-  pack(mainConfig).then(result => {
-    results += result + '\n\n'
-    m.success('main')
-  }).catch(err => {
-    m.error('main')
-    console.log(`\n  ${errorLog}failed to build main process`)
-    console.error(`\n${err}\n`)
-    process.exit(1)
-  })
+  mainSpinner.start()
+  rendererSpinner.start()
 
-  pack(rendererConfig).then(result => {
-    results += result + '\n\n'
-    m.success('renderer')
-  }).catch(err => {
-    m.error('renderer')
-    console.log(`\n  ${errorLog}failed to build renderer process`)
-    console.error(`\n${err}\n`)
-    process.exit(1)
-  })
+  const main = pack(mainConfig)
+    .then(result => {
+      results += result + '\n\n'
+      mainSpinner.succeed()
+    })
+    .catch(err => {
+      mainSpinner.fail()
+      console.log(`\n  ${errorLog}failed to build main process`)
+      console.error(`\n${err}\n`)
+      process.exit(1)
+    })
+
+  const renderer = pack(rendererConfig)
+    .then(result => {
+      results += result + '\n\n'
+      rendererSpinner.succeed()
+    })
+    .catch(err => {
+      rendererSpinner.fail()
+      console.log(`\n  ${errorLog}failed to build renderer process`)
+      console.error(`\n${err}\n`)
+      process.exit(1)
+    })
+  await Promise.all([main, renderer])
+  process.stdout.write('\x1B[2J\x1B[0f')
+  console.log(`\n\n${results}`)
+  console.log(`${okayLog}take it away ${chalk.yellow('`electron-builder`')}\n`)
+  process.exit()
 }
 
-function pack (config) {
+function pack(config) {
   return new Promise((resolve, reject) => {
     config.mode = 'production'
     webpack(config, (err, stats) => {
@@ -78,42 +85,47 @@ function pack (config) {
       else if (stats.hasErrors()) {
         let err = ''
 
-        stats.toString({
-          chunks: false,
-          colors: true
-        })
-        .split(/\r?\n/)
-        .forEach(line => {
-          err += `    ${line}\n`
-        })
+        stats
+          .toString({
+            chunks: false,
+            colors: true
+          })
+          .split(/\r?\n/)
+          .forEach(line => {
+            err += `    ${line}\n`
+          })
 
         reject(err)
       } else {
-        resolve(stats.toString({
-          chunks: false,
-          colors: true
-        }))
+        resolve(
+          stats.toString({
+            chunks: false,
+            colors: true
+          })
+        )
       }
     })
   })
 }
 
-function web () {
+function web() {
   del.sync(['dist/web/*', '!.gitkeep'])
   webConfig.mode = 'production'
   webpack(webConfig, (err, stats) => {
     if (err || stats.hasErrors()) console.log(err)
 
-    console.log(stats.toString({
-      chunks: false,
-      colors: true
-    }))
+    console.log(
+      stats.toString({
+        chunks: false,
+        colors: true
+      })
+    )
 
     process.exit()
   })
 }
 
-function greeting () {
+function greeting() {
   const cols = process.stdout.columns
   let text = ''
 
