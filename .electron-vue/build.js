@@ -7,7 +7,7 @@ const chalk = require('chalk')
 const del = require('del')
 const { spawn } = require('child_process')
 const webpack = require('webpack')
-const ora = require('ora')
+const Listr = require('listr')
 
 const mainConfig = require('./webpack.main.config')
 const rendererConfig = require('./webpack.renderer.config')
@@ -35,46 +35,49 @@ async function build() {
 
   let results = ''
 
-  const mainSpinner = ora({
-    prefixText: 'building',
-    text: 'processing'
-  })
-  const rendererSpinner = ora({
-    prefixText: 'building',
-    text: 'processing'
-  })
+  const tasks = new Listr(
+    [
+      {
+        title: 'building master process',
+        task: async () => {
+          await pack(mainConfig)
+            .then(result => {
+              results += result + '\n\n'
+            })
+            .catch(err => {
+              console.log(`\n  ${errorLog}failed to build main process`)
+              console.error(`\n${err}\n`)
+            })
+        }
+      },
+      {
+        title: 'building renderer process',
+        task: async () => {
+          await pack(rendererConfig)
+            .then(result => {
+              results += result + '\n\n'
+            })
+            .catch(err => {
+              console.log(`\n  ${errorLog}failed to build renderer process`)
+              console.error(`\n${err}\n`)
+            })
+        }
+      }
+    ],
+    { concurrent: 2 }
+  )
 
-  mainSpinner.start()
-  rendererSpinner.start()
-
-  const main = pack(mainConfig)
-    .then(result => {
-      results += result + '\n\n'
-      mainSpinner.succeed()
+  await tasks
+    .run()
+    .then(() => {
+      process.stdout.write('\x1B[2J\x1B[0f')
+      console.log(`\n\n${results}`)
+      console.log(`${okayLog}take it away ${chalk.yellow('`electron-builder`')}\n`)
+      process.exit()
     })
     .catch(err => {
-      mainSpinner.fail()
-      console.log(`\n  ${errorLog}failed to build main process`)
-      console.error(`\n${err}\n`)
       process.exit(1)
     })
-
-  const renderer = pack(rendererConfig)
-    .then(result => {
-      results += result + '\n\n'
-      rendererSpinner.succeed()
-    })
-    .catch(err => {
-      rendererSpinner.fail()
-      console.log(`\n  ${errorLog}failed to build renderer process`)
-      console.error(`\n${err}\n`)
-      process.exit(1)
-    })
-  await Promise.all([main, renderer])
-  process.stdout.write('\x1B[2J\x1B[0f')
-  console.log(`\n\n${results}`)
-  console.log(`${okayLog}take it away ${chalk.yellow('`electron-builder`')}\n`)
-  process.exit()
 }
 
 function pack(config) {
