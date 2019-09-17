@@ -14,6 +14,10 @@ mac:
 	npm run package:mac
 	mv build/Whalebird-${VERSION}-mac.dmg build/Whalebird-${VERSION}-darwin-x64.dmg
 
+mas:
+	npm run build:mas
+	./appStore.sh
+
 linux:
 	npm run package:linux
 	mv build/Whalebird-${VERSION}-linux-amd64.deb build/Whalebird-${VERSION}-linux-x64.deb
