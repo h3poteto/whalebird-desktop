@@ -113,6 +113,13 @@
           ]
         },
         {
+          "target": "pacman",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
           "target": "snap",
           "arch": [
             "x64"
