@@ -96,7 +96,7 @@ const actions: ActionTree<GeneralState, RootState> = {
     return new Promise((resolve, reject) => {
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
-        commit('changeLoading', false)
+        commit(MUTATION_TYPES.CHANGE_LOADING, false)
         reject(err)
       })
       ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
@@ -119,20 +119,22 @@ const actions: ActionTree<GeneralState, RootState> = {
       general: newGeneral
     }
     return new Promise((resolve, reject) => {
-      // TODO: call change settings
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        reject(err)
+      ipcRenderer.once('response-change-auto-launch', () => {
+        ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+          ipcRenderer.removeAllListeners('response-update-preferences')
+          commit(MUTATION_TYPES.CHANGE_LOADING, false)
+          reject(err)
+        })
+        ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+          ipcRenderer.removeAllListeners('error-update-preferences')
+          commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
+          commit(MUTATION_TYPES.CHANGE_LOADING, false)
+          dispatch('App/loadPreferences', null, { root: true })
+          resolve(conf)
+        })
+        ipcRenderer.send('update-preferences', config)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf)
-      })
-      ipcRenderer.send('update-preferences', config)
+      ipcRenderer.send('change-auto-launch', newOther.launch)
     })
   }
 }
