@@ -3,7 +3,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Sound } from '~/src/types/sound'
 import { Timeline } from '~/src/types/timeline'
-import { BaseConfig, General } from '~/src/types/preference'
+import { BaseConfig, General, Other } from '~/src/types/preference'
 
 export type GeneralState = {
   general: General
@@ -20,6 +20,9 @@ const state = (): GeneralState => ({
       cw: false,
       nfsw: false,
       hideAllAttachments: false
+    },
+    other: {
+      launch: false
     }
   },
   loading: false
@@ -94,6 +97,32 @@ const actions: ActionTree<GeneralState, RootState> = {
       ipcRenderer.once('error-update-preferences', (_, err: Error) => {
         ipcRenderer.removeAllListeners('response-update-preferences')
         commit('changeLoading', false)
+        reject(err)
+      })
+      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        ipcRenderer.removeAllListeners('error-update-preferences')
+        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
+        commit(MUTATION_TYPES.CHANGE_LOADING, false)
+        dispatch('App/loadPreferences', null, { root: true })
+        resolve(conf)
+      })
+      ipcRenderer.send('update-preferences', config)
+    })
+  },
+  updateOther: ({ commit, state, dispatch }, other: {}) => {
+    commit(MUTATION_TYPES.CHANGE_LOADING, true)
+    const newOther: Other = Object.assign({}, state.general.other, other)
+    const newGeneral: General = Object.assign({}, state.general, {
+      other: newOther
+    })
+    const config = {
+      general: newGeneral
+    }
+    return new Promise((resolve, reject) => {
+      // TODO: call change settings
+      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        ipcRenderer.removeAllListeners('response-update-preferences')
+        commit(MUTATION_TYPES.CHANGE_LOADING, false)
         reject(err)
       })
       ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {

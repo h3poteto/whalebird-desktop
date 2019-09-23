@@ -11,7 +11,7 @@ import { Timeline } from '~/src/types/timeline'
 import { Notify } from '~/src/types/notify'
 import { Appearance } from '~/src/types/appearance'
 import { Language as LanguageSet } from '~/src/types/language'
-import { General, State, Notification, BaseConfig } from '~/src/types/preference'
+import { General, State, Notification, BaseConfig, Other } from '~/src/types/preference'
 
 const sound: Sound = {
   fav_rb: true,
@@ -24,9 +24,14 @@ const timeline: Timeline = {
   hideAllAttachments: false
 }
 
+const other: Other = {
+  launch: false
+}
+
 const general: General = {
   sound: sound,
-  timeline: timeline
+  timeline: timeline,
+  other: other
 }
 
 const state: State = {

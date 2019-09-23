@@ -473,7 +473,6 @@ ipcMain.on('change-auto-launch', (event: Event, enable: boolean) => {
       launcher.disable()
     }
     event.sender.send('response-change-auto-launch', enable)
-    return
   })
 })
 
