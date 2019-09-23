@@ -24,6 +24,7 @@ import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
 import { Status, Notification as RemoteNotification, Account as RemoteAccount } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
+import AutoLaunch from 'auto-launch'
 
 import pkg from '~/package.json'
 import Authentication from './auth'
@@ -107,6 +108,8 @@ const splashURL =
 
 // https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
+const appPath = app.getPath('exe')
+
 const accountDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/account.db' : 'account.db'
 let accountDB = new Datastore({
   filename: accountDBPath,
@@ -456,6 +459,22 @@ ipcMain.on('remove-all-accounts', (event: Event) => {
       log.error(err)
       event.sender.send('error-remove-all-accounts', err)
     })
+})
+
+ipcMain.on('change-auto-launch', (event: Event, enable: boolean) => {
+  const launcher = new AutoLaunch({
+    name: 'Whalebird',
+    path: appPath
+  })
+  launcher.isEnabled().then(enabled => {
+    if (!enabled && enable) {
+      launcher.enable()
+    } else if (enabled && !enable) {
+      launcher.disable()
+    }
+    event.sender.send('response-change-auto-launch', enable)
+    return
+  })
 })
 
 // badge
