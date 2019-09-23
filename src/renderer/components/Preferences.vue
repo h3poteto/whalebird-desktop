@@ -18,7 +18,8 @@
           class="setting-menu"
           :text-color="primaryColor"
           :background-color="backgroundColor"
-          :router="true">
+          :router="true"
+        >
           <el-menu-item index="/preferences/general">
             <icon name="cog" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.general.title') }}</span>
@@ -60,10 +61,10 @@ export default {
     })
   },
   methods: {
-    close () {
-      this.$router.push('/')
+    close() {
+      this.$router.push({ path: '/', query: { redirect: 'home' } })
     },
-    activeRoute () {
+    activeRoute() {
       return this.$route.path
     }
   }

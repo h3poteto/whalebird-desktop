@@ -1,5 +1,13 @@
 <template>
-  <el-form ref="loginForm" label-width="120px" label-position="top" v-on:submit.prevent="confirm('loginForm')" class="login-form" :rules="rules" :model="form">
+  <el-form
+    ref="loginForm"
+    label-width="120px"
+    label-position="top"
+    v-on:submit.prevent="confirm('loginForm')"
+    class="login-form"
+    :rules="rules"
+    :model="form"
+  >
     <h1>Roma</h1>
     <img src="../../assets/images/logo-roma.png" width="75" />
     <el-form-item :label="$t('login.domain_name_label')" prop="domainName">
@@ -9,21 +17,18 @@
     <el-form-item class="hidden">
       <el-input></el-input>
     </el-form-item>
-    <el-button
-      type="secondary"
-      @click="confirm('loginForm')"
-      v-if="selectedInstance === null"
-      v-loading="searching"
-      element-loading-background="rgba(0, 0, 0, 0.8)">
-      {{ $t('login.search') }}
-    </el-button>
     <el-form-item class="submit">
+      <el-button type="secondary" class="login" @click="login" v-if="allowLogin">
+        {{ $t('login.login') }}
+      </el-button>
       <el-button
         type="secondary"
-        class="login"
-        @click="login"
-        v-if="selectedInstance !== null">
-        {{ $t('login.login') }}
+        v-else
+        @click="confirm('loginForm')"
+        v-loading="searching"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
+        {{ $t('login.search') }}
       </el-button>
     </el-form-item>
   </el-form>
@@ -35,7 +40,7 @@ import { domainFormat } from '../../utils/validator'
 
 export default {
   name: 'login-form',
-  data () {
+  data() {
     return {
       form: {
         domainName: ''
@@ -47,8 +52,11 @@ export default {
       selectedInstance: state => state.Login.selectedInstance,
       searching: state => state.Login.searching
     }),
+    allowLogin: function() {
+      return this.selectedInstance && this.form.domainName === this.selectedInstance
+    },
     rules: {
-      get () {
+      get() {
         return {
           domainName: [
             {
@@ -67,15 +75,16 @@ export default {
     }
   },
   methods: {
-    login () {
+    login() {
       const loading = this.$loading({
         lock: true,
         text: this.$t('message.loading'),
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      this.$store.dispatch('Login/fetchLogin', this.selectedInstance)
-        .then((url) => {
+      this.$store
+        .dispatch('Login/fetchLogin', this.selectedInstance)
+        .then(url => {
           loading.close()
           this.$store.dispatch('Login/pageBack')
           this.$router.push({ path: '/authorize', query: { url: url } })
@@ -88,10 +97,11 @@ export default {
           })
         })
     },
-    confirm (formName) {
-      this.$refs[formName].validate((valid) => {
+    confirm(formName) {
+      this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store.dispatch('Login/confirmInstance', this.form.domainName)
+          this.$store
+            .dispatch('Login/confirmInstance', this.form.domainName)
             .then(() => {
               this.$message({
                 message: this.$t('message.domain_confirmed', { domain: this.form.domainName }),
@@ -113,7 +123,7 @@ export default {
         }
       })
     },
-    handleKey (_event) {
+    handleKey(_event) {
       if (!this.selectedInstance) {
         this.confirm('loginForm')
       } else {

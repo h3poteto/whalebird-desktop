@@ -74,6 +74,30 @@ let mainWindow: BrowserWindow | null
 let tray: Tray | null
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
+// MAS build is not allowed requestSingleInstanceLock.
+// ref: https://github.com/h3poteto/whalebird-desktop/issues/1030
+// ref: https://github.com/electron/electron-osx-sign/issues/137#issuecomment-307626305
+if (process.platform !== 'darwin') {
+  // Enforces single instance for linux and windows.
+  const gotTheLock = app.requestSingleInstanceLock()
+
+  if (!gotTheLock) {
+    app.quit()
+  } else {
+    app.on('second-instance', () => {
+      // Someone tried to run a second instance, we should focus our window.
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore()
+        if (!mainWindow!.isVisible()) {
+          mainWindow!.show()
+          mainWindow!.setSkipTaskbar(false)
+        }
+        mainWindow.focus()
+      }
+    })
+  }
+}
+
 const appId = pkg.build.appId
 
 const splashURL =
@@ -463,7 +487,7 @@ ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAcco
           }
           // Cache hashtag
           update.tags.map(async tag => {
-            await hashtagCache.insertHashtag(tag.name)
+            await hashtagCache.insertHashtag(tag.name).catch(err => console.error(err))
           })
           // Cache account
           await accountCache.insertAccount(id, update.account.acct).catch(err => console.error(err))
@@ -1002,7 +1026,7 @@ ipcMain.on('get-cache-hashtags', async (event: Event) => {
 
 ipcMain.on('insert-cache-hashtags', (event: Event, tags: Array<string>) => {
   tags.map(async name => {
-    await hashtagCache.insertHashtag(name)
+    await hashtagCache.insertHashtag(name).catch(err => console.error(err))
   })
   event.sender.send('response-insert-cache-hashtags')
 })
@@ -1096,7 +1120,12 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
               icon_path: path.resolve(__dirname, '../../build/icons/256x256.png'),
               copyright: 'Copyright (c) 2018 AkiraFukushima',
               package_json_dir: path.resolve(__dirname, '../../'),
-              open_devtools: process.env.NODE_ENV !== 'production'
+              open_devtools: process.env.NODE_ENV !== 'production',
+              win_options: {
+                webPreferences: {
+                  nodeIntegration: true
+                }
+              }
             })
           }
         },

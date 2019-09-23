@@ -1,27 +1,18 @@
 {
   "side_menu": {
-    "mention": "Mention",
-    "direct": "Direct messages",
     "follow_requests": "Follow Requests"
   },
   "header_menu": {
-    "settings": "Settings",
     "follow_requests": "Follow Requests",
-    "mention": "Mention",
-    "direct_messages": "Direct Messages",
     "filter": {
       "show_dms": "Show direct messages"
     }
   },
   "settings": {
     "timeline": {
-      "title": "Timeline",
       "unread_notification": {
         "title": "Unread Notification",
-        "description": "Customize unread notifications for each timelines.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "description": "Customize unread notifications for each timelines."
       }
     }
   },
@@ -29,61 +20,30 @@
     "tag": "Hashtag"
   },
   "modals": {
-    "new_toot": {
-      "footer": {
-        "poll": "Add a poll"
-      },
-      "poll": {
-        "add_choice": "Add a choice",
-        "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
-        }
-      }
-    },
-    "report": {
-      "title": "Reporting this user",
-      "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
-    },
     "shortcut": {
+      "title": "Keyboard shortcuts",
+      "ctrl_number": "Switch accounts",
+      "ctrl_k": "Jump to other timelines",
+      "ctrl_n": "Open the new toot modal",
+      "ctrl_enter": "Post the toot",
+      "j": "Select the next toot",
+      "k": "Select the previous toot",
       "h": "Switch the focus to left column",
       "l": "Switch the focus to right column",
-      "?": "Show this help"
+      "r": "Reply to the toot",
+      "b": "Reblog the toot",
+      "f": "Favourite the toot",
+      "o": "Open details of the toot",
+      "p": "Open account profile of the toot",
+      "i": "Open the images",
+      "x": "Show/hide CW and NSFW",
+      "esc": "Close current page"
     }
   },
   "preferences": {
     "general": {
       "timeline": {
-        "title": "Timeline",
-        "description": "Customize view in your timelines.",
-        "cw": "Always ignore contents warnings",
-        "nfsw": "Always ignore NFSW of medias",
-        "hideAllAttachments": "Hide all medias"
-      }
-    },
-    "appearance": {
-      "toot_padding": "Padding around toot"
-    }
-  },
-  "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
-  },
-  "cards": {
-    "toot": {
-      "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
-        "until": "until {{datetime}}",
-        "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "description": "Customize view in your timelines."
       }
     }
   },
@@ -91,24 +51,5 @@
     "follow_request_accept_error": "Failed to accept the request",
     "follow_reuqest_reject_error": "failed to reject the request",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}"
-  },
-  "validation": {
-    "new_toot": {
-      "poll_invalid": "Invalid poll choices"
-    }
-  },
-  "notification": {
-    "favourite": {
-      "title": "Favourite",
-      "body": "{{username}} favourited your status"
-    },
-    "follow": {
-      "title": "Follow",
-      "body": "{{username}} is now following you"
-    },
-    "reblog": {
-      "title": "Reblog",
-      "body": "{{username}} boosted your status"
-    }
   }
 }

@@ -126,6 +126,9 @@ const actions: ActionTree<TootDetailState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_ANCESTORS, res.data.ancestors)
     commit(MUTATION_TYPES.UPDATE_DESCENDANTS, res.data.descendants)
     return res.data
+  },
+  reload: async ({ state, dispatch }) => {
+    await dispatch('fetchToot', state.message)
   }
 }
 
