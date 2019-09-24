@@ -1,6 +1,6 @@
 {
   "name": "Roma",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "author": "Pleroma Foundation <pleromafoundationllc@gmail.com>",
   "description": "An Electron based Pleroma and Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
@@ -15,8 +15,8 @@
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
   },
   "config": {
-    "buildVersion": "8",
-    "appVersion": "1.2.2"
+    "buildVersion": "9",
+    "appVersion": "1.2.3"
   },
   "main": "./dist/electron/main.js",
   "scripts": {
