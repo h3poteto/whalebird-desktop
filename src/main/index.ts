@@ -142,6 +142,11 @@ const accountCache = new AccountCache(accountCachePath)
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
 
+const launcher = new AutoLaunch({
+  name: 'Whalebird',
+  path: appPath
+})
+
 async function listAccounts(): Promise<Array<LocalAccount>> {
   try {
     const accounts = await accountManager.listAccounts()
@@ -209,7 +214,7 @@ async function createWindow() {
   }
 
   /**
-   * Windows10 don' notify, so we have to set appId
+   * Windows10 don't notify, so we have to set appId
    * https://github.com/electron/electron/issues/10864
    */
   app.setAppUserModelId(appId)
@@ -462,10 +467,6 @@ ipcMain.on('remove-all-accounts', (event: Event) => {
 })
 
 ipcMain.on('change-auto-launch', (event: Event, enable: boolean) => {
-  const launcher = new AutoLaunch({
-    name: 'Whalebird',
-    path: appPath
-  })
   launcher.isEnabled().then(enabled => {
     if (!enabled && enable) {
       launcher.enable()
@@ -879,16 +880,20 @@ ipcMain.on('toot-action-sound', () => {
 })
 
 // preferences
-ipcMain.on('get-preferences', (event: Event) => {
+ipcMain.on('get-preferences', async (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .load()
-    .then(conf => {
-      event.sender.send('response-get-preferences', conf)
+  const enabled = await launcher.isEnabled()
+  await preferences
+    .update({
+      general: {
+        other: enabled
+      }
     })
-    .catch(err => {
-      event.sender.send('error-get-preferences', err)
-    })
+    .catch(err => console.error(err))
+  const conf = await preferences.load().catch(err => {
+    event.sender.send('error-get-preferences', err)
+  })
+  event.sender.send('response-get-preferences', conf)
 })
 
 ipcMain.on('update-preferences', (event: Event, data: any) => {
