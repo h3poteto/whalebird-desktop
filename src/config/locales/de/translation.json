@@ -52,7 +52,9 @@
     "public": "Öffenliche Timeline",
     "hashtag": "Hashtag",
     "search": "Suche",
-    "lists": "Listen"
+    "lists": "Listen",
+    "mention": "Erwähnen",
+    "direct": "Direkt Nachrichten"
   },
   "header_menu": {
     "home": "Home",
@@ -72,7 +74,10 @@
       "apply": "Übernehmen"
     },
     "new_toot": "Status",
-    "reload": "Neu laden"
+    "reload": "Neu laden",
+    "settings": "Einstellungen",
+    "mention": "Erwähnen",
+    "direct_messages": "Direkt Nachrichten"
   },
   "settings": {
     "title": "Settings",
@@ -91,6 +96,14 @@
           "description": "Mark medias as sensitive by default"
         }
       }
+    },
+    "timeline": {
+      "title": "Zeitleiste",
+      "unread_notification": {
+        "direct": "Direkt Nachrichten",
+        "local": "Lokale Zeitleiste",
+        "public": "Öffentliche Zeitleiste"
+      }
     }
   },
   "preferences": {
@@ -102,6 +115,12 @@
         "description": "Please set feedback sounds.",
         "fav_rb": "When you favourite or boost the toot",
         "toot": "When you post toot"
+      },
+      "timeline": {
+        "title": "Zeitleiste",
+        "cw": "Ignoriere immer Content Warnungen",
+        "nfsw": "Ignogiere immer NFSW Medien",
+        "hideAllAttachments": "Verstecke alle Medien"
       }
     },
     "appearance": {
@@ -129,6 +148,7 @@
       },
       "font_size": "Schriftgröße",
       "font_family": "Font family",
+      "toot_padding": "Abstand zwischen den Toot",
       "display_style": {
         "title": "Anzeigestil",
         "display_name_and_username": "Anzeige- und Benutzername",
@@ -187,13 +207,32 @@
       "close_confirm_ok": "Schließen",
       "close_confirm_cancel": "Abbrechen",
       "description": "Für Menschen mit Sehbehinderung beschreiben",
+      "poll": {
+        "add_choice": "Zeitauswahl",
+        "expires": {
+          "5_minutes": "5 Minuten",
+          "30_minutes": "30 Minuten",
+          "1_hour": "1 Stunde",
+          "6_hours": "6 Stunde",
+          "1_day": "1 Tag",
+          "3_days": "3 Tage",
+          "7_days": "7 Tage"
+        }
+      },
       "footer": {
         "add_image": "Bild hinzufügen",
         "change_visibility": "Sichtbarkeit ändern",
         "change_sensitive": "Ändern Sie empfindlich",
         "add_cw": "Inhalt hinzufügen Warnung",
-        "pined_hashtag": "Pin the hashtag"
+        "pined_hashtag": "Pin the hashtag",
+        "poll": "Umfrage hinzufügen"
       }
+    },
+    "report": {
+      "title": "Melde diesen Benutzer",
+      "comment": "Warum soll geblockt werden?",
+      "cancel": "Abbrechen",
+      "ok": "Senden"
     },
     "jump": {
       "jump_to": "Springe zu..."
@@ -212,22 +251,12 @@
       "ok": "Mute"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
-      "esc": "Close current page"
+      "?": "Zeige diese Hilfe"
     }
+  },
+  "follow_requests": {
+    "accept": "Annehmen",
+    "reject": "Ablehnen"
   },
   "cards": {
     "toot": {
@@ -246,7 +275,14 @@
       "reblog": "Reblog",
       "fav": "Favorit",
       "detail": "Toot details",
-      "pinned": "Angehefteter Beitrag"
+      "pinned": "Angehefteter Beitrag",
+      "poll": {
+        "vote": "Abstimmen",
+        "votes_count": "Stimmen",
+        "until": "bis {{datetime}}",
+        "left": "{{datetime}} verstrichen",
+        "refresh": "Aktualisieren"
+      }
     }
   },
   "side_bar": {
@@ -342,7 +378,22 @@
     "new_toot": {
       "toot_length": "Länge des Toots sollte zwischen {{min}} und {{max}} sein",
       "attach_length": "Du kannst maximal {{max}} Bilder anhängen",
-      "attach_image": "Du kannst nur Bilder oder Videos anhängen"
+      "attach_image": "Du kannst nur Bilder oder Videos anhängen",
+      "poll_invalid": "Ungültige Umfragen-Auswahl"
+    }
+  },
+  "notification": {
+    "favourite": {
+      "title": "Favoriten",
+      "body": "{{username}} favourited your status"
+    },
+    "follow": {
+      "title": "Folgen",
+      "body": "{{username}} folgt dir jetzt"
+    },
+    "reblog": {
+      "title": "Teilen",
+      "body": "{{username}} boosted your status"
     }
   }
 }

@@ -1,4 +1,5 @@
 import Datastore from 'nedb'
+import fs from 'fs'
 import { LocalTag } from '~/src/types/localTag'
 
 export default class HashtagCache {
@@ -7,9 +8,20 @@ export default class HashtagCache {
   constructor(path: string) {
     this.db = new Datastore({
       filename: path,
-      autoload: true
+      autoload: true,
+      onload: (err: Error) => {
+        if (err) {
+          fs.unlink(path, err => {
+            if (err) {
+              console.error(err)
+            }
+          })
+        }
+      }
     })
-    this.db.ensureIndex({ fieldName: 'tagName', unique: true }, _ => {})
+    this.db.ensureIndex({ fieldName: 'tagName', unique: true, sparse: true }, err => {
+      if (err) console.error(err)
+    })
   }
 
   listTags(): Promise<Array<LocalTag>> {
@@ -22,9 +34,10 @@ export default class HashtagCache {
   }
 
   insertHashtag(tag: string): Promise<LocalTag> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       // Ignore error for unique constraints.
-      this.db.insert({ tagName: tag }, (_, doc) => {
+      this.db.insert({ tagName: tag }, (err, doc) => {
+        if (err) return reject(err)
         resolve(doc)
       })
     })

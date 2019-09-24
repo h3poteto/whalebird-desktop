@@ -1,41 +1,43 @@
 <template>
-<div id="authorize">
-  <div>
-    <el-header>
-      <el-row>
-        <el-col :span="24" class="close">
-          <el-button type="text" icon="el-icon-close" @click="close" class="close-button">
-          </el-button>
-        </el-col>
-      </el-row>
-    </el-header>
-    <el-main>
-      <div class="authorization-url">
-        <p>{{ $t('authorize.manually_1') }}</p>
-        <p>{{ $t('authorize.manually_2') }}</p>
-        <p class="url">{{ $route.query.url }}</p>
-      </div>
-      <el-form ref="form" :model="authorizeForm" label-width="120px" label-position="top" class="authorize-form" v-on:submit.prevent="authorizeSubmit">
-        <el-form-item :label="$t('authorize.code_label')">
-          <el-input v-model="authorizeForm.code"></el-input>
-        </el-form-item>
-        <!-- Dummy form to guard submitting with enter -->
-        <el-form-item class="hidden">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item class="submit">
-          <el-button
-            type="secondary"
-            @click="authorizeSubmit"
-            v-loading="submitting"
-            element-loading-background="rgba(0, 0, 0, 0.8)">
-            {{ $t('authorize.submit') }}
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </el-main>
+  <div id="authorize">
+    <div>
+      <el-header>
+        <el-row>
+          <el-col :span="24" class="close">
+            <el-button type="text" icon="el-icon-close" @click="close" class="close-button"> </el-button>
+          </el-col>
+        </el-row>
+      </el-header>
+      <el-main>
+        <div class="authorization-url">
+          <p>{{ $t('authorize.manually_1') }}</p>
+          <p>{{ $t('authorize.manually_2') }}</p>
+          <p class="url">{{ $route.query.url }}</p>
+        </div>
+        <el-form
+          ref="form"
+          :model="authorizeForm"
+          label-width="120px"
+          label-position="top"
+          class="authorize-form"
+          v-on:submit.prevent="authorizeSubmit"
+        >
+          <el-form-item :label="$t('authorize.code_label')">
+            <el-input v-model="authorizeForm.code"></el-input>
+          </el-form-item>
+          <!-- Dummy form to guard submitting with enter -->
+          <el-form-item class="hidden">
+            <el-input></el-input>
+          </el-form-item>
+          <el-form-item class="submit">
+            <el-button type="secondary" @click="authorizeSubmit" v-loading="submitting" element-loading-background="rgba(0, 0, 0, 0.8)">
+              {{ $t('authorize.submit') }}
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </el-main>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -47,7 +49,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       authorizeForm: {
         code: ''
@@ -55,20 +57,21 @@ export default {
       submitting: false
     }
   },
-  mounted () {
+  mounted() {
     console.log(this.url)
   },
   methods: {
-    authorizeSubmit () {
+    authorizeSubmit() {
       this.submitting = true
-      this.$store.dispatch('Authorize/submit', this.authorizeForm.code)
+      this.$store
+        .dispatch('Authorize/submit', this.authorizeForm.code)
         .finally(() => {
           this.submitting = false
         })
-        .then((id) => {
+        .then(id => {
           this.$router.push({ path: `/${id}/home` })
         })
-        .catch((err) => {
+        .catch(err => {
           if (err.name === 'DuplicateRecordError') {
             this.$message({
               message: this.$t('message.authorize_duplicate_error'),
@@ -82,8 +85,8 @@ export default {
           }
         })
     },
-    close () {
-      return this.$router.push({ path: '/' })
+    close() {
+      return this.$router.push({ path: '/', query: { redirect: 'home' } })
     }
   }
 }
@@ -109,7 +112,7 @@ export default {
     max-width: 80%;
 
     .url {
-      font-weight:bold;
+      font-weight: bold;
       color: #696969;
       word-wrap: break-word;
     }

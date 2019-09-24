@@ -46,6 +46,13 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       console.error(err)
     }
     const accounts = await dispatch('listAccounts')
+    // Block to root path when user use browser-back, like mouse button.
+    // Because any contents are not rendered when browser back to / from home.
+    router.beforeEach((to, from, next) => {
+      if (!(to.fullPath === '/' && from.name)) {
+        return next()
+      }
+    })
     return accounts
   },
   startStreamings: async ({ dispatch }) => {

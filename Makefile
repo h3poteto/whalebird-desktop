@@ -14,6 +14,10 @@ mac:
 	npm run package:mac
 	mv build/Roma-${VERSION}-mac.dmg build/Roma-${VERSION}-darwin-x64.dmg
 
+mas:
+	npm run build:mas
+	./appStore.sh
+
 linux:
 	npm run package:linux
 	mv build/Roma-${VERSION}-linux-amd64.deb build/Roma-${VERSION}-linux-x64.deb

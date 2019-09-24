@@ -31,7 +31,7 @@
     "build:linux": "npm run build && npm run package:linux",
     "build:win32": "npm run build && npm run package:win32",
     "build:win64": "npm run build && npm run package:win64",
-    "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Roma' --platform=mas --arch=x64 --electron-version=5.0.9 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/roma.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=com.vm.Roma-Desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
+    "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Roma' --platform=mas --arch=x64 --electron-version=5.0.10 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/roma.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=com.vm.Roma-Desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
     "package:mac": "electron-builder --mac --x64",
     "package:linux": "electron-builder --linux",
     "package:win32": "electron-builder --win --ia32",
@@ -113,6 +113,13 @@
           ]
         },
         {
+          "target": "pacman",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
           "target": "snap",
           "arch": [
             "x64"
@@ -154,7 +161,7 @@
   "dependencies": {
     "@panter/vue-i18next": "^0.13.0",
     "@trodi/electron-splashscreen": "^0.3.4",
-    "about-window": "^1.11.0",
+    "about-window": "^1.13.1",
     "animate.css": "^3.7.0",
     "axios": "^0.18.1",
     "boom": "^7.3.0",
@@ -170,8 +177,8 @@
     "hoek": "^6.1.2",
     "i18next": "^12.1.0",
     "i18next-sync-fs-backend": "^1.1.1",
-    "lodash": "^4.17.11",
-    "megalodon": "0.9.0",
+    "lodash": "^4.17.15",
+    "megalodon": "1.0.3",
     "moment": "^2.21.0",
     "mousetrap": "^1.6.2",
     "nedb": "^1.8.0",
@@ -215,7 +222,7 @@
     "ajv": "^6.6.1",
     "all-object-keys": "^1.1.1",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.5",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-plugin-istanbul": "^5.1.0",
@@ -229,12 +236,12 @@
     "css-loader": "^3.0.0",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron": "5.0.9",
+    "electron": "5.0.10",
     "electron-builder": "^20.44.4",
     "electron-debug": "^2.2.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-mock-ipc": "^0.1.3",
-    "electron-packager": "^14.0.1",
+    "electron-packager": "^14.0.5",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-standard": "^12.0.0",
@@ -251,8 +258,8 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.5.0",
     "jsdom": "^13.0.0",
+    "listr": "^0.14.3",
     "mini-css-extract-plugin": "^0.4.5",
-    "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
     "node-sass": "^4.12.0",
     "prettier": "^1.17.0",
@@ -271,9 +278,9 @@
     "vue-loader": "^15.2.4",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.17",
-    "webpack": "^4.35.3",
+    "webpack": "^4.39.2",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.7.2",
+    "webpack-dev-server": "^3.8.0",
     "webpack-hot-middleware": "^2.24.3",
     "webpack-merge": "^4.1.4"
   }

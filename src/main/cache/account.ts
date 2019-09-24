@@ -1,5 +1,6 @@
 import { isEmpty } from 'lodash'
 import Datastore from 'nedb'
+import fs from 'fs'
 import { CachedAccount } from '~/src/types/cachedAccount'
 
 export default class AccountCache {
@@ -8,7 +9,16 @@ export default class AccountCache {
   constructor(path: string) {
     this.db = new Datastore({
       filename: path,
-      autoload: true
+      autoload: true,
+      onload: (err: Error) => {
+        if (err) {
+          fs.unlink(path, err => {
+            if (err) {
+              console.error(err)
+            }
+          })
+        }
+      }
     })
   }
 
