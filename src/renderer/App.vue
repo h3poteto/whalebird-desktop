@@ -8,7 +8,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'Whalebird',
+  name: 'Roma',
   computed: {
     ...mapState({
       theme: state => {
