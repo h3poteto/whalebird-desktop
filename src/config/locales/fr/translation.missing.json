@@ -1,1 +1,7 @@
-{}
+{
+  "modals": {
+    "shortcut": {
+      "ctrl_r": "Reload current timeline"
+    }
+  }
+}

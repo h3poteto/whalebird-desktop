@@ -31,6 +31,9 @@
           "7_days": "7 days"
         }
       }
+    },
+    "shortcut": {
+      "ctrl_r": "Reload current timeline"
     }
   },
   "cards": {
