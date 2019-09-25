@@ -1,11 +1,11 @@
 {
   "main_menu": {
     "application": {
-      "name": "Whalebird",
-      "about": "A Proposito di Whalebird",
+      "name": "Roma",
+      "about": "A Proposito di Roma",
       "preferences": "Preferenze...",
       "services": "Servizi",
-      "hide": "Nascondi Whalebird",
+      "hide": "Nascondi Roma",
       "hide_others": "Nascondi Altri",
       "show_all": "Mostra Tutto",
       "quit": "Esci"
@@ -189,7 +189,7 @@
     },
     "language": {
       "title": "Lingua",
-      "language_description": "Scegli la lingua che desideri utilizzare con Whalebird.",
+      "language_description": "Scegli la lingua che desideri utilizzare con Roma.",
       "notice": "Richiede il riavvio",
       "confirm": {
         "title": "Avviso",

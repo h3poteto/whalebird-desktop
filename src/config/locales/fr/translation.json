@@ -2,10 +2,10 @@
   "main_menu": {
     "application": {
       "name": "Roma",
-      "about": "À propos de Whalebird",
+      "about": "À propos de Roma",
       "preferences": "Préférences...",
       "services": "Services",
-      "hide": "Cacher Whalebird",
+      "hide": "Cacher Roma",
       "hide_others": "Cacher les autres",
       "show_all": "Tout afficher",
       "quit": "Quitter"
@@ -192,7 +192,7 @@
     },
     "language": {
       "title": "Langue",
-      "language_description": "Choisissez le language que vous souhaitez utiliser avec Whalebird.",
+      "language_description": "Choisissez le language que vous souhaitez utiliser avec Roma.",
       "notice": "Nécessite un redémarrage",
       "confirm": {
         "title": "Avertissement",
