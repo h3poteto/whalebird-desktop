@@ -2,10 +2,10 @@
   "main_menu": {
     "application": {
       "name": "Roma",
-      "about": "Whalebird 에 대하여",
+      "about": "Roma 에 대하여",
       "preferences": "설정",
       "services": "서비스",
-      "hide": "Whalebird 숨기기",
+      "hide": "Roma 숨기기",
       "hide_others": "나머지 숨기기",
       "show_all": "모두 보이기",
       "quit": "나가기"
@@ -179,7 +179,7 @@
     },
     "language": {
       "title": "언어",
-      "language_description": "Whalebird에서 사용할 언어를 선택해 주세요.",
+      "language_description": "Roma에서 사용할 언어를 선택해 주세요.",
       "notice": "재실행이 필요합니다",
       "confirm": {
         "title": "알림",

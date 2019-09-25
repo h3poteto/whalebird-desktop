@@ -1,11 +1,11 @@
 {
   "main_menu": {
     "application": {
-      "name": "Whalebird",
-      "about": "关于 Whalebird",
+      "name": "Roma",
+      "about": "关于 Roma",
       "preferences": "首选项...",
       "services": "服务",
-      "hide": "隐藏 Whalebird",
+      "hide": "隐藏 Roma",
       "hide_others": "隐藏其它窗口",
       "show_all": "全部显示",
       "quit": "退出"
@@ -192,7 +192,7 @@
     },
     "language": {
       "title": "语言",
-      "language_description": "设定 Whalebird 的界面语言。",
+      "language_description": "设定 Roma 的界面语言。",
       "notice": "需要重启",
       "confirm": {
         "title": "警告",
