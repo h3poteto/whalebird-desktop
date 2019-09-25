@@ -45,6 +45,10 @@
     "general": {
       "timeline": {
         "description": "Customize view in your timelines."
+      },
+      "other": {
+        "title": "Other options",
+        "launch": "Launch app on login"
       }
     }
   },

@@ -3,5 +3,13 @@
     "shortcut": {
       "ctrl_r": "Reload current timeline"
     }
+  },
+  "preferences": {
+    "general": {
+      "other": {
+        "title": "Other options",
+        "launch": "Launch app on login"
+      }
+    }
   }
 }
