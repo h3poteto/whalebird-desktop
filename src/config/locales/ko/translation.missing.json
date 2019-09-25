@@ -51,6 +51,9 @@
       "comment": "Additional comments",
       "cancel": "Cancel",
       "ok": "Report"
+    },
+    "shortcut": {
+      "ctrl_r": "Reload current timeline"
     }
   },
   "cards": {
