@@ -57,7 +57,7 @@
           </popper>
         </div>
         <div class="application">
-          {{ $t('cards.toot.via', { application: 'Whalebird' }) }}
+          {{ $t('cards.toot.via', { application: 'Roma' }) }}
         </div>
       </div>
       <div class="clearfix"></div>
