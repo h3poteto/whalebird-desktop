@@ -14,6 +14,9 @@ const state = (): GeneralState => {
         cw: false,
         nfsw: false,
         hideAllAttachments: false
+      },
+      other: {
+        launch: false
       }
     },
     loading: false
@@ -31,7 +34,7 @@ const initStore = () => {
 const app = {
   namespaced: true,
   actions: {
-    loadPreferences (_) {
+    loadPreferences(_) {
       return true
     }
   }

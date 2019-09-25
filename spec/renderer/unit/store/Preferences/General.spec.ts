@@ -13,6 +13,9 @@ describe('Preferences/General', () => {
           cw: false,
           nfsw: false,
           hideAllAttachments: false
+        },
+        other: {
+          launch: false
         }
       },
       loading: false

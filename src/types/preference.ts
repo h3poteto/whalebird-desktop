@@ -4,9 +4,14 @@ import { Notify } from '~/src/types/notify'
 import { Appearance } from '~/src/types/appearance'
 import { Language } from '~/src/types/language'
 
+export type Other = {
+  launch: boolean
+}
+
 export type General = {
   sound: Sound
   timeline: Timeline
+  other: Other
 }
 
 export type State = {

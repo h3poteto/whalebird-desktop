@@ -127,6 +127,10 @@
         "cw": "Always ignore contents warnings",
         "nfsw": "Always ignore NFSW of medias",
         "hideAllAttachments": "Hide all medias"
+      },
+      "other": {
+        "title": "Other options",
+        "launch": "Launch app on login"
       }
     },
     "appearance": {
