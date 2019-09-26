@@ -24,7 +24,7 @@
         <el-switch id="hideAllAttachments" v-model="timeline_hide_attachments" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
-    <el-form class="other section" label-position="right" label-width="250px" size="small">
+    <el-form class="other section" label-position="right" label-width="250px" size="small" v-if="notDarwin">
       <h3>{{ $t('preferences.general.other.title') }}</h3>
       <el-form-item for="launch" :label="$t('preferences.general.other.launch')">
         <el-switch id="launch" v-model="other_launch" active-color="#13ce66"> </el-switch>
@@ -34,14 +34,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'general',
   computed: {
-    ...mapState({
-      loading: state => state.Preferences.General.loading
+    ...mapState('Preferences/General', {
+      loading: state => state.loading
     }),
+    ...mapGetters('Preferences/General', ['notDarwin']),
     sound_fav_rb: {
       get() {
         return this.$store.state.Preferences.General.general.sound.fav_rb

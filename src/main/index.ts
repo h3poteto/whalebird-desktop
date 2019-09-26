@@ -142,10 +142,18 @@ const accountCache = new AccountCache(accountCachePath)
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
 
-const launcher = new AutoLaunch({
-  name: 'Whalebird',
-  path: appPath
-})
+let launcher: AutoLaunch | null = null
+
+// On MAS build, auto launch is not working.
+// We have to use Launch Agent: https://github.com/Teamwork/node-auto-launch/issues/43
+// But it is too difficult to build, and Slack does not provide this function in MAS build.
+// Therefore I don't provide this function for MacOS.
+if (process.platform !== 'darwin') {
+  launcher = new AutoLaunch({
+    name: 'Whalebird',
+    path: appPath
+  })
+}
 
 async function listAccounts(): Promise<Array<LocalAccount>> {
   try {
@@ -467,14 +475,18 @@ ipcMain.on('remove-all-accounts', (event: Event) => {
 })
 
 ipcMain.on('change-auto-launch', (event: Event, enable: boolean) => {
-  launcher.isEnabled().then(enabled => {
-    if (!enabled && enable) {
-      launcher.enable()
-    } else if (enabled && !enable) {
-      launcher.disable()
-    }
-    event.sender.send('response-change-auto-launch', enable)
-  })
+  if (launcher) {
+    launcher.isEnabled().then(enabled => {
+      if (!enabled && enable && launcher) {
+        launcher.enable()
+      } else if (enabled && !enable && launcher) {
+        launcher.disable()
+      }
+      event.sender.send('response-change-auto-launch', enable)
+    })
+  } else {
+    event.sender.send('response-change-auto-launch', false)
+  }
 })
 
 // badge
@@ -882,7 +894,10 @@ ipcMain.on('toot-action-sound', () => {
 // preferences
 ipcMain.on('get-preferences', async (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
-  const enabled = await launcher.isEnabled()
+  let enabled = false
+  if (launcher) {
+    enabled = await launcher.isEnabled()
+  }
   await preferences
     .update({
       general: {
