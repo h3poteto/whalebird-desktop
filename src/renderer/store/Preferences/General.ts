@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import { Module, MutationTree, ActionTree } from 'vuex'
+import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import { Sound } from '~/src/types/sound'
 import { Timeline } from '~/src/types/timeline'
@@ -139,9 +139,16 @@ const actions: ActionTree<GeneralState, RootState> = {
   }
 }
 
+const getters: GetterTree<GeneralState, RootState> = {
+  notDarwin: () => {
+    return process.platform !== 'darwin'
+  }
+}
+
 export default {
   namespaced: true,
   state: state,
   mutations: mutations,
-  actions: actions
+  actions: actions,
+  getters: getters
 } as Module<GeneralState, RootState>
