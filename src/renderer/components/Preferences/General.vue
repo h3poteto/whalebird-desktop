@@ -1,5 +1,5 @@
 <template>
-  <div id="general" v-loading="loading">
+  <div id="general" v-loading="loading" :element-loading-background="backgroundColor">
     <h2>{{ $t('preferences.general.title') }}</h2>
     <el-form class="sounds section" label-position="right" label-width="250px" size="small">
       <h3>{{ $t('preferences.general.sounds.title') }}</h3>
@@ -41,6 +41,9 @@ export default {
   computed: {
     ...mapState('Preferences/General', {
       loading: state => state.loading
+    }),
+    ...mapState({
+      backgroundColor: state => state.App.theme.background_color
     }),
     ...mapGetters('Preferences/General', ['notDarwin']),
     sound_fav_rb: {
