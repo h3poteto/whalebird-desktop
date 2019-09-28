@@ -129,8 +129,9 @@ export default {
       return false
     },
     onDragEnter(e) {
-      this.dropTarget = e.target
-      this.droppableVisible = true
+      console.log(e)
+      // this.dropTarget = e.target
+      // this.droppableVisible = true
     },
     onDragLeave(e) {
       if (e.target === this.dropTarget) {

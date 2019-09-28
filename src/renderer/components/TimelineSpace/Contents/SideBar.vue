@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-detail">
-    <div id="side_bar" v-if="openSideBar" v-shortkey="shortcutEnabled ? { close: ['esc'] } : {}" @shortkey="handleKey">
+    <div class="side-bar" v-if="openSideBar" v-shortkey="shortcutEnabled ? { close: ['esc'] } : {}" @shortkey="handleKey">
       <div class="header">
         <i class="el-icon-loading" v-show="loading"></i>
         <i class="el-icon-refresh" @click="reload"></i>
@@ -79,14 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#side_bar {
-  position: fixed;
-  top: 48px;
-  right: 0;
-  width: 360px;
-  height: calc(100% - 48px);
-  border-left: solid 1px var(--theme-border-color);
-
+.side-bar {
   .header {
     background-color: var(--theme-selected-background-color);
     padding: 4px 8px;
