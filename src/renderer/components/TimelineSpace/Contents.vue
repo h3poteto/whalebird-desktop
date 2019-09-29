@@ -15,7 +15,9 @@
         <div>
           <div id="resizer">
             <div class="border"></div>
-            <div class="knob" @mousedown="dragStart"></div>
+            <div class="knob" @mousedown="dragStart">
+              <icon name="ellipsis-v" class="icon"></icon>
+            </div>
           </div>
           <side-bar id="side_bar" :overlaid="modalOpened"></side-bar>
         </div>
@@ -116,6 +118,14 @@ export default {
       z-index: 1000;
       border-radius: 0 8px 8px 0;
       cursor: col-resize;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 72px;
+
+      .icon {
+        display: inline-block;
+        color: var(--theme-secondary-color);
+      }
     }
   }
 
