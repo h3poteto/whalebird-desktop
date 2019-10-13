@@ -1292,6 +1292,16 @@ const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: i18n.
   const template: Array<MenuItemConstructorOptions> = [
     ...accountsChange,
     {
+      label: i18n.t('main_menu.application.open'),
+      click: async () => {
+        if (mainWindow) {
+          mainWindow.show()
+        } else {
+          await createWindow()
+        }
+      }
+    },
+    {
       label: i18n.t('main_menu.application.quit'),
       click: () => {
         mainWindow!.destroy()
