@@ -18,16 +18,10 @@
       <el-input></el-input>
     </el-form-item>
     <el-form-item class="submit">
-      <el-button type="secondary" class="login" @click="login" v-if="allowLogin">
+      <el-button type="primary" class="login" @click="login" v-if="allowLogin">
         {{ $t('login.login') }}
       </el-button>
-      <el-button
-        type="secondary"
-        v-else
-        @click="confirm('loginForm')"
-        v-loading="searching"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-      >
+      <el-button type="primary" v-else @click="confirm('loginForm')" v-loading="searching" element-loading-background="rgba(0, 0, 0, 0.8)">
         {{ $t('login.search') }}
       </el-button>
     </el-form-item>

@@ -74,6 +74,7 @@ export default {
 <style lang="scss" scoped>
 #preferences {
   height: 100%;
+  overflow: auto;
 
   .header {
     text-align: center;

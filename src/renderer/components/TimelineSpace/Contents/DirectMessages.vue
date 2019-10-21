@@ -248,7 +248,7 @@ export default {
   .upper-with-side-bar {
     position: fixed;
     bottom: 20px;
-    right: calc(20px + 360px);
+    right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
   }
 }

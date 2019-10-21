@@ -1,5 +1,55 @@
 # Change Log
 
+## [2.8.6] - 2019-09-19
+### Added
+- [#1043](https://github.com/h3poteto/whalebird-desktop/pull/1043) Start to pacman support in release package
+- [#1038](https://github.com/h3poteto/whalebird-desktop/pull/1038) Add reload method in SideBar
+
+### Changed
+- [#1044](https://github.com/h3poteto/whalebird-desktop/pull/1044) Update electron version to 5.0.10
+- [#1041](https://github.com/h3poteto/whalebird-desktop/pull/1041) Replace multispinner with another one
+- [#1033](https://github.com/h3poteto/whalebird-desktop/pull/1033) Use authorized request to get instance information when start streamings
+- [#1032](https://github.com/h3poteto/whalebird-desktop/pull/1032) Confirm ActivityPub instance to read host-meta before login
+
+### Fixed
+- [#1042](https://github.com/h3poteto/whalebird-desktop/pull/1042) Do not enforce single instance in darwin
+- [#1037](https://github.com/h3poteto/whalebird-desktop/pull/1037) Fix validation status when change the domain in Login
+
+
+## [2.8.5] - 2019-09-09
+### Changed
+- [#1029](https://github.com/h3poteto/whalebird-desktop/pull/1029) Block to root path when user use brower-back
+- [#1024](https://github.com/h3poteto/whalebird-desktop/pull/1024) Update German translation
+- [#1020](https://github.com/h3poteto/whalebird-desktop/pull/1020) audit: Update eslint-utils version to 1.4.2
+- [#1016](https://github.com/h3poteto/whalebird-desktop/pull/1016) Update megalodon version to 1.0.2
+- [#1015](https://github.com/h3poteto/whalebird-desktop/pull/1015) Update megalodon version to 1.0.1
+- [#1014](https://github.com/h3poteto/whalebird-desktop/pull/1014) Enforces single instance for linux and windows
+
+### Fixed
+- [#1026](https://github.com/h3poteto/whalebird-desktop/pull/1026) Set word-break for toot content
+- [#1023](https://github.com/h3poteto/whalebird-desktop/pull/1023) Update megalodon version to 1.0.3
+- [#1019](https://github.com/h3poteto/whalebird-desktop/pull/1019) fix: Close request when modal is closed
+- [#1018](https://github.com/h3poteto/whalebird-desktop/pull/1018) fix: Remove cache file when load error
+- [#1013](https://github.com/h3poteto/whalebird-desktop/pull/1013) Enable nodeIntegration in about window
+
+
+
+## [2.8.4] - 2019-08-23
+### Added
+- [#1006](https://github.com/h3poteto/whalebird-desktop/pull/1006) Show tray icon only linux and windows, and append tray menu
+
+### Changed
+- [#1008](https://github.com/h3poteto/whalebird-desktop/pull/1008) Set autoplay for movie attachments
+- [#1007](https://github.com/h3poteto/whalebird-desktop/pull/1007) Update Electron version to 5.0.9
+- [#1004](https://github.com/h3poteto/whalebird-desktop/pull/1004) Cancel requests when suggestion is selected or closed
+- [#1003](https://github.com/h3poteto/whalebird-desktop/pull/1003) Update changelog
+
+### Fixed
+- [#1011](https://github.com/h3poteto/whalebird-desktop/pull/1011) Through close event when platform is darwin
+- [#1005](https://github.com/h3poteto/whalebird-desktop/pull/1005) Update French translation
+
+
+
 ## [2.8.3] - 2019-08-13
 ### Added
 - [#1000](https://github.com/h3poteto/whalebird-desktop/pull/1000) Add spec for zh_cn translation json

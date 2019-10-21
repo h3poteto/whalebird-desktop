@@ -6,6 +6,12 @@
     "follow_requests": "Follow Requests"
   },
   "preferences": {
+    "general": {
+      "other": {
+        "title": "Other options",
+        "launch": "Launch app on login"
+      }
+    },
     "appearance": {
       "toot_padding": "Padding around toot"
     }
@@ -31,6 +37,9 @@
           "7_days": "7 days"
         }
       }
+    },
+    "shortcut": {
+      "ctrl_r": "Reload current timeline"
     }
   },
   "cards": {

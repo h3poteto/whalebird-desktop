@@ -576,6 +576,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.status {
+  background-color: var(--theme-background-color);
+}
+
 .toot {
   padding: 8px 0 0 16px;
 

@@ -129,8 +129,10 @@ export default {
       return false
     },
     onDragEnter(e) {
-      this.dropTarget = e.target
-      this.droppableVisible = true
+      if (e.dataTransfer.types.indexOf('Files') >= 0) {
+        this.dropTarget = e.target
+        this.droppableVisible = true
+      }
     },
     onDragLeave(e) {
       if (e.target === this.dropTarget) {
