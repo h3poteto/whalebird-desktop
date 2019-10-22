@@ -13,6 +13,7 @@
     "toot": {
       "name": "Status",
       "new": "New Status"
+
     },
     "edit": {
       "name": "Edit",
@@ -127,6 +128,10 @@
         "cw": "Always ignore contents warnings",
         "nfsw": "Always ignore NFSW of medias",
         "hideAllAttachments": "Hide all medias"
+      },
+      "other": {
+        "title": "Other options",
+        "launch": "Launch app on login"
       }
     },
     "appearance": {
@@ -256,6 +261,7 @@
       "ctrl_k": "Jump to other timelines",
       "ctrl_n": "Open the new post modal",
       "ctrl_enter": "Post the status",
+      "ctrl_r": "Reload current timeline",
       "j": "Select the next status",
       "k": "Select the previous status",
       "h": "Switch focus to the left column",

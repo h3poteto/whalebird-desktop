@@ -24,6 +24,7 @@ import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
 import { Status, Notification as RemoteNotification, Account as RemoteAccount } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
+import AutoLaunch from 'auto-launch'
 
 import pkg from '~/package.json'
 import Authentication from './auth'
@@ -107,6 +108,8 @@ const splashURL =
 
 // https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
+const appPath = app.getPath('exe')
+
 const accountDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/account.db' : 'account.db'
 let accountDB = new Datastore({
   filename: accountDBPath,
@@ -138,6 +141,19 @@ const accountCache = new AccountCache(accountCachePath)
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
+
+let launcher: AutoLaunch | null = null
+
+// On MAS build, auto launch is not working.
+// We have to use Launch Agent: https://github.com/Teamwork/node-auto-launch/issues/43
+// But it is too difficult to build, and Slack does not provide this function in MAS build.
+// Therefore I don't provide this function for MacOS.
+if (process.platform !== 'darwin') {
+  launcher = new AutoLaunch({
+    name: 'Whalebird',
+    path: appPath
+  })
+}
 
 async function listAccounts(): Promise<Array<LocalAccount>> {
   try {
@@ -206,7 +222,7 @@ async function createWindow() {
   }
 
   /**
-   * Windows10 don' notify, so we have to set appId
+   * Windows10 don't notify, so we have to set appId
    * https://github.com/electron/electron/issues/10864
    */
   app.setAppUserModelId(appId)
@@ -456,6 +472,21 @@ ipcMain.on('remove-all-accounts', (event: Event) => {
       log.error(err)
       event.sender.send('error-remove-all-accounts', err)
     })
+})
+
+ipcMain.on('change-auto-launch', (event: Event, enable: boolean) => {
+  if (launcher) {
+    launcher.isEnabled().then(enabled => {
+      if (!enabled && enable && launcher) {
+        launcher.enable()
+      } else if (enabled && !enable && launcher) {
+        launcher.disable()
+      }
+      event.sender.send('response-change-auto-launch', enable)
+    })
+  } else {
+    event.sender.send('response-change-auto-launch', false)
+  }
 })
 
 // badge
@@ -861,16 +892,23 @@ ipcMain.on('toot-action-sound', () => {
 })
 
 // preferences
-ipcMain.on('get-preferences', (event: Event) => {
+ipcMain.on('get-preferences', async (event: Event) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .load()
-    .then(conf => {
-      event.sender.send('response-get-preferences', conf)
+  let enabled = false
+  if (launcher) {
+    enabled = await launcher.isEnabled()
+  }
+  await preferences
+    .update({
+      general: {
+        other: enabled
+      }
     })
-    .catch(err => {
-      event.sender.send('error-get-preferences', err)
-    })
+    .catch(err => console.error(err))
+  const conf = await preferences.load().catch(err => {
+    event.sender.send('error-get-preferences', err)
+  })
+  event.sender.send('response-get-preferences', conf)
 })
 
 ipcMain.on('update-preferences', (event: Event, data: any) => {

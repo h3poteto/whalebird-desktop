@@ -53,6 +53,7 @@
       "ok": "Report"
     },
     "shortcut": {
+      "ctrl_r": "Reload current timeline",
       "h": "Switch the focus to left column",
       "l": "Switch the focus to right column",
       "?": "Show this help"
@@ -66,6 +67,10 @@
         "cw": "Always ignore contents warnings",
         "nfsw": "Always ignore NFSW of medias",
         "hideAllAttachments": "Hide all medias"
+      },
+      "other": {
+        "title": "Other options",
+        "launch": "Launch app on login"
       }
     },
     "appearance": {

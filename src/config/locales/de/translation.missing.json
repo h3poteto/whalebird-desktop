@@ -26,6 +26,7 @@
       "ctrl_k": "Jump to other timelines",
       "ctrl_n": "Open the new toot modal",
       "ctrl_enter": "Post the toot",
+      "ctrl_r": "Reload current timeline",
       "j": "Select the next toot",
       "k": "Select the previous toot",
       "h": "Switch the focus to left column",
@@ -44,6 +45,10 @@
     "general": {
       "timeline": {
         "description": "Customize view in your timelines."
+      },
+      "other": {
+        "title": "Other options",
+        "launch": "Launch app on login"
       }
     }
   },

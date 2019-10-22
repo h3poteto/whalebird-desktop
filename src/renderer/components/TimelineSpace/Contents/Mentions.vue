@@ -1,31 +1,28 @@
 <template>
-<div id="mentions" v-shortkey="shortcutEnabled ? {next: ['j']} : {}" @shortkey="handleKey">
-  <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
-  <div v-shortkey="{linux: ['ctrl', 'r'], mac: ['meta', 'r']}" @shortkey="reload()">
-  </div>
-  <transition-group name="timeline" tag="div">
-    <div class="mentions" v-for="message in mentions" :key="message.id">
-      <notification
-        :message="message"
-        :filter="filter"
-        :focused="message.id === focusedId"
-        :overlaid="modalOpened"
-        v-on:update="updateToot"
-        @focusNext="focusNext"
-        @focusPrev="focusPrev"
-        @focusRight="focusSidebar"
-        @selectNotification="focusNotification(message)"
+  <div id="mentions" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
+    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
+    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+    <transition-group name="timeline" tag="div">
+      <div class="mentions" v-for="message in mentions" :key="message.id">
+        <notification
+          :message="message"
+          :filter="filter"
+          :focused="message.id === focusedId"
+          :overlaid="modalOpened"
+          v-on:update="updateToot"
+          @focusNext="focusNext"
+          @focusPrev="focusPrev"
+          @focusRight="focusSidebar"
+          @selectNotification="focusNotification(message)"
         >
-      </notification>
+        </notification>
+      </div>
+    </transition-group>
+    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
+    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
+      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
     </div>
-  </transition-group>
-  <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor">
   </div>
-  <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-    <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle>
-    </el-button>
-  </div>
-</div>
 </template>
 
 <script>
@@ -39,7 +36,7 @@ export default {
   name: 'mentions',
   components: { Notification },
   mixins: [reloadable],
-  data () {
+  data() {
     return {
       focusedId: null
     }
@@ -60,13 +57,9 @@ export default {
       unread: state => state.unreadMentions,
       filter: state => state.filter
     }),
-    ...mapGetters('TimelineSpace/Modals', [
-      'modalOpened'
-    ]),
-    ...mapGetters('TimelineSpace/Contents/Mentions', [
-      'mentions'
-    ]),
-    shortcutEnabled: function () {
+    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
+    ...mapGetters('TimelineSpace/Contents/Mentions', ['mentions']),
+    shortcutEnabled: function() {
       if (this.modalOpened) {
         return false
       }
@@ -78,27 +71,27 @@ export default {
       return currentIndex === -1
     }
   },
-  mounted () {
+  mounted() {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
     document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         this.focusedId = previousFocusedId
       })
     })
   },
-  beforeUpdate () {
+  beforeUpdate() {
     if (this.$store.state.TimelineSpace.SideMenu.unreadMentions && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     Event.$off('focus-timeline')
   },
-  destroyed () {
+  destroyed() {
     this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
     this.$store.commit('TimelineSpace/Contents/Mentions/archiveMentions')
@@ -108,15 +101,14 @@ export default {
     }
   },
   watch: {
-    startReload: function (newState, oldState) {
+    startReload: function(newState, oldState) {
       if (!oldState && newState) {
-        this.reload()
-          .finally(() => {
-            this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
-          })
+        this.reload().finally(() => {
+          this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
+        })
       }
     },
-    focusedId: function (newState, _oldState) {
+    focusedId: function(newState, _oldState) {
       if (newState && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
       } else if (newState === null && !this.heading) {
@@ -126,26 +118,28 @@ export default {
     }
   },
   methods: {
-    onScroll (event) {
+    onScroll(event) {
       // for lazyLoading
-      if (((event.target.clientHeight + event.target.scrollTop) >= document.getElementById('mentions').clientHeight - 10) && !this.lazyloading) {
-        this.$store.dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', this.mentions[this.mentions.length - 1])
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.timeline_fetch_error'),
-              type: 'error'
-            })
+      if (
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('mentions').clientHeight - 10 &&
+        !this.lazyloading
+      ) {
+        this.$store.dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', this.mentions[this.mentions.length - 1]).catch(() => {
+          this.$message({
+            message: this.$t('message.timeline_fetch_error'),
+            type: 'error'
           })
+        })
       }
       // for unread control
-      if ((event.target.scrollTop > 10) && this.heading) {
+      if (event.target.scrollTop > 10 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
-      } else if ((event.target.scrollTop <= 10) && !this.heading) {
+      } else if (event.target.scrollTop <= 10 && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
       }
     },
-    async reload () {
+    async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
         await this.reloadable()
@@ -153,17 +147,14 @@ export default {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
     },
-    updateToot (message) {
+    updateToot(message) {
       this.$store.commit('TimelineSpace/Contents/Mentions/updateToot', message)
     },
-    upper () {
-      scrollTop(
-        document.getElementById('scrollable'),
-        0
-      )
+    upper() {
+      scrollTop(document.getElementById('scrollable'), 0)
       this.focusedId = null
     },
-    focusNext () {
+    focusNext() {
       const currentIndex = this.mentions.findIndex(toot => this.focusedId === toot.id)
       if (currentIndex === -1) {
         this.focusedId = this.mentions[0].id
@@ -171,7 +162,7 @@ export default {
         this.focusedId = this.mentions[currentIndex + 1].id
       }
     },
-    focusPrev () {
+    focusPrev() {
       const currentIndex = this.mentions.findIndex(toot => this.focusedId === toot.id)
       if (currentIndex === 0) {
         this.focusedId = null
@@ -179,13 +170,13 @@ export default {
         this.focusedId = this.mentions[currentIndex - 1].id
       }
     },
-    focusNotification (message) {
+    focusNotification(message) {
       this.focusedId = message.id
     },
-    focusSidebar () {
+    focusSidebar() {
       Event.$emit('focus-sidebar')
     },
-    handleKey (event) {
+    handleKey(event) {
       switch (event.srcKey) {
         case 'next':
           this.focusedId = this.mentions[0].id
@@ -229,7 +220,8 @@ export default {
   .upper-with-side-bar {
     position: fixed;
     bottom: 20px;
-    right: calc(20px + 360px);
+    right: calc(20px + var(--current-sidebar-width));
+    transition: all 0.5s;
   }
 }
 </style>

@@ -22,6 +22,7 @@ Roma is a mastodon client for desktop application.
 <tr><td> Change accounts                 </td><td>             <kbd>Cmd + 1, 2, 3...</kbd>    </td><td> <kbd>Ctrl + 1, 2, 3...</kbd> </td></tr>
 <tr><td> Jump to another timeline        </td><td>             <kbd>Cmd + k</kbd>             </td><td> <kbd>Ctrl + k</kbd>          </td></tr>
 <tr><td> Open new toot window            </td><td>             <kbd>Cmd + n</kbd>             </td><td> <kbd>Ctrl + n</kbd>          </td></tr>
+<tr><td> Reload current timeline         </td><td>             <kbd>Cmd + r</kbd>             </td><td> <kbd>Ctrl + r</kbd>          </td></tr>
 <tr><td> Select next toot                </td><td>             <kbd>j</kbd>                   </td><td> <kbd>j</kbd>          </td></tr>
 <tr><td> Select previous toot            </td><td>             <kbd>k</kbd>                   </td><td> <kbd>k</kbd>          </td></tr>
 <tr><td> Switch focus to left column     </td><td>             <kbd>h</kbd>                   </td><td> <kbd>h</kbd>          </td></tr>

@@ -10,7 +10,7 @@ describe('account', () => {
     })
   })
   describe('Beginning of the sentence', () => {
-    const str = '@h3pote Status body'
+    const str = '@h3pote toot body'
     it('should match', () => {
       const [start, word] = suggestText(str, 7)
       expect(word).toEqual('@h3pote')
@@ -18,7 +18,7 @@ describe('account', () => {
     })
   })
   describe('Halfway of the sentence', () => {
-    const str = 'Status body @h3pote status'
+    const str = 'toot body @h3pote toot'
     it('should match', () => {
       const [start, word] = suggestText(str, 17)
       expect(word).toEqual('@h3pote')
@@ -26,7 +26,7 @@ describe('account', () => {
     })
   })
   describe('End of the sentence', () => {
-    const str = 'Status body @h3pote'
+    const str = 'toot body @h3pote'
     it('should match', () => {
       const [start, word] = suggestText(str, 17)
       expect(word).toEqual('@h3pote')
@@ -34,7 +34,7 @@ describe('account', () => {
     })
   })
   describe('No space', () => {
-    const str = 'statusbody@h3pote'
+    const str = 'tootbody@h3pote'
     it('should not match', () => {
       const [start, word] = suggestText(str, 15)
       expect(word).toEqual(null)
