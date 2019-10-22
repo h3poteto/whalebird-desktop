@@ -195,6 +195,15 @@
       "cancel": "Cancel",
       "confirm_message": "Are you sure to remove all associations?"
     },
+    "network": {
+      "title": "Network",
+      "proxy": {
+        "title": "Proxy Configuration",
+        "no": "No proxy",
+        "system": "Use system proxy",
+        "manual": "Manual proxy configuration"
+      }
+    },
     "language": {
       "title": "Language",
       "language_description": "Choose the language you would like to use with Whalebird.",
