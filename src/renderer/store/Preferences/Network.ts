@@ -1,10 +1,13 @@
+import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
+import { BaseConfig } from '~/src/types/preference'
+import { Proxy, ProxySource, ProxyProtocol } from '~/src/types/proxy'
 
 export type NetworkState = {
-  source: 'no' | 'system' | 'manual'
+  source: ProxySource
   proxy: {
-    protocol: string
+    protocol: '' | ProxyProtocol
     host: string
     port: string
   }
@@ -12,7 +15,7 @@ export type NetworkState = {
 
 const state = (): NetworkState => {
   return {
-    source: 'no',
+    source: ProxySource.no,
     proxy: {
       protocol: '',
       host: '',
@@ -22,6 +25,7 @@ const state = (): NetworkState => {
 }
 
 export const MUTATION_TYPES = {
+  UPDATE_PROXY: 'updateProxy',
   CHANGE_SOURCE: 'changeSource',
   UPDATE_PROTOCOL: 'updateProtocol',
   UPDATE_HOST: 'updateHost',
@@ -29,11 +33,47 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<NetworkState> = {
-  [MUTATION_TYPES.CHANGE_SOURCE]: (state, source: 'no' | 'system' | 'manual') => {
-    state.source = source
+  [MUTATION_TYPES.UPDATE_PROXY]: (state, config: Proxy) => {
+    state.source = config.source
+    state.proxy = config.manualProxyConfig
   },
-  [MUTATION_TYPES.UPDATE_PROTOCOL]: (state, protocol: string) => {
-    state.proxy.protocol = protocol
+  [MUTATION_TYPES.CHANGE_SOURCE]: (state, source: 'no' | 'system' | 'manual') => {
+    switch (source) {
+      case 'no':
+        state.source = ProxySource.no
+        break
+      case 'system':
+        state.source = ProxySource.system
+        break
+      case 'manual':
+        state.source = ProxySource.manual
+        break
+    }
+  },
+  [MUTATION_TYPES.UPDATE_PROTOCOL]: (state, protocol: '' | 'http' | 'https' | 'socks4' | 'socks4a' | 'socks5' | 'socks5h') => {
+    switch (protocol) {
+      case 'http':
+        state.proxy.protocol = ProxyProtocol.http
+        break
+      case 'https':
+        state.proxy.protocol = ProxyProtocol.https
+        break
+      case 'socks4':
+        state.proxy.protocol = ProxyProtocol.socks4
+        break
+      case 'socks4a':
+        state.proxy.protocol = ProxyProtocol.socks4a
+        break
+      case 'socks5':
+        state.proxy.protocol = ProxyProtocol.socks5
+        break
+      case 'socks5h':
+        state.proxy.protocol = ProxyProtocol.socks5h
+        break
+      default:
+        state.proxy.protocol = ''
+        break
+    }
   },
   [MUTATION_TYPES.UPDATE_HOST]: (state, host: string) => {
     state.proxy.host = host
@@ -44,6 +84,20 @@ const mutations: MutationTree<NetworkState> = {
 }
 
 const actions: ActionTree<NetworkState, RootState> = {
+  loadProxy: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      ipcRenderer.send('get-preferences')
+      ipcRenderer.once('error-get-preferences', (_, err: Error) => {
+        ipcRenderer.removeAllListeners('response-get-preferences')
+        reject(err)
+      })
+      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
+        ipcRenderer.removeAllListeners('error-get-preferences')
+        commit(MUTATION_TYPES.UPDATE_PROXY, conf.proxy as Proxy)
+        resolve(conf)
+      })
+    })
+  },
   changeSource: ({ commit }, source: string) => {
     commit(MUTATION_TYPES.CHANGE_SOURCE, source)
   },
@@ -55,6 +109,9 @@ const actions: ActionTree<NetworkState, RootState> = {
   },
   updatePort: ({ commit }, port: string) => {
     commit(MUTATION_TYPES.UPDATE_PORT, port)
+  },
+  saveProxyConfig: ({ state }) => {
+    ipcRenderer.send('update-proxy-config', state)
   }
 }
 

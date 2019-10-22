@@ -27,6 +27,9 @@
       <el-form-item for="proxyPort" :label="$t('preferences.network.proxy.port')">
         <el-input v-model="proxyPort" :disabled="!manualProxyConfiguration" placeholder="8080"></el-input>
       </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSave">{{ $t('preferences.network.save') }}</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -69,6 +72,19 @@ export default {
       set(value) {
         this.$store.dispatch('Preferences/Network/updatePort', value)
       }
+    }
+  },
+  created() {
+    this.$store.dispatch('Preferences/Network/loadProxy').catch(() => {
+      this.$message({
+        message: this.$t('message.preferences_load_error'),
+        type: 'error'
+      })
+    })
+  },
+  methods: {
+    onSave() {
+      this.$store.dispatch('Preferences/Network/saveProxyConfig')
     }
   }
 }

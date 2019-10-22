@@ -213,7 +213,8 @@
           "socks5": "socks5",
           "socks5h": "socks5h"
         }
-      }
+      },
+      "save": "Save"
     },
     "language": {
       "title": "Language",
