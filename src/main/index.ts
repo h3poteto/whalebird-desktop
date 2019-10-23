@@ -9,7 +9,7 @@ import {
   BrowserWindow,
   BrowserWindowConstructorOptions,
   MenuItemConstructorOptions,
-  Event,
+  IpcMainEvent,
   Notification,
   NotificationConstructorOptions
 } from 'electron'
@@ -231,7 +231,7 @@ async function createWindow() {
   /**
    * Enable accessibility
    */
-  app.setAccessibilitySupportEnabled(true)
+  app.accessibilitySupportEnabled = true
 
   /**
    * Initial window options
@@ -336,7 +336,7 @@ app.on('activate', () => {
 
 let auth = new Authentication(accountManager)
 
-ipcMain.on('get-auth-url', (event: Event, domain: string) => {
+ipcMain.on('get-auth-url', (event: IpcMainEvent, domain: string) => {
   auth
     .getAuthorizationUrl(domain)
     .then(url => {
@@ -351,7 +351,7 @@ ipcMain.on('get-auth-url', (event: Event, domain: string) => {
     })
 })
 
-ipcMain.on('get-access-token', (event: Event, code: string) => {
+ipcMain.on('get-access-token', (event: IpcMainEvent, code: string) => {
   auth
     .getAccessToken(code)
     .then(token => {
@@ -373,7 +373,7 @@ ipcMain.on('get-access-token', (event: Event, code: string) => {
 })
 
 // environments
-ipcMain.on('get-social-token', (event: Event) => {
+ipcMain.on('get-social-token', (event: IpcMainEvent) => {
   const token = process.env.SOCIAL_TOKEN
   if (isEmpty(token)) {
     return event.sender.send('error-get-social-token', new EmptyTokenError())
@@ -382,7 +382,7 @@ ipcMain.on('get-social-token', (event: Event) => {
 })
 
 // nedb
-ipcMain.on('list-accounts', (event: Event) => {
+ipcMain.on('list-accounts', (event: IpcMainEvent) => {
   accountManager
     .listAccounts()
     .catch(err => {
@@ -394,7 +394,7 @@ ipcMain.on('list-accounts', (event: Event) => {
     })
 })
 
-ipcMain.on('get-local-account', (event: Event, id: string) => {
+ipcMain.on('get-local-account', (event: IpcMainEvent, id: string) => {
   accountManager
     .getAccount(id)
     .catch(err => {
@@ -406,7 +406,7 @@ ipcMain.on('get-local-account', (event: Event, id: string) => {
     })
 })
 
-ipcMain.on('update-account', (event: Event, acct: LocalAccount) => {
+ipcMain.on('update-account', (event: IpcMainEvent, acct: LocalAccount) => {
   accountManager
     .refresh(acct)
     .then(ac => {
@@ -417,7 +417,7 @@ ipcMain.on('update-account', (event: Event, acct: LocalAccount) => {
     })
 })
 
-ipcMain.on('remove-account', (event: Event, id: string) => {
+ipcMain.on('remove-account', (event: IpcMainEvent, id: string) => {
   accountManager
     .removeAccount(id)
     .then(id => {
@@ -429,7 +429,7 @@ ipcMain.on('remove-account', (event: Event, id: string) => {
     })
 })
 
-ipcMain.on('forward-account', (event: Event, acct: LocalAccount) => {
+ipcMain.on('forward-account', (event: IpcMainEvent, acct: LocalAccount) => {
   accountManager
     .forwardAccount(acct)
     .then(() => {
@@ -441,7 +441,7 @@ ipcMain.on('forward-account', (event: Event, acct: LocalAccount) => {
     })
 })
 
-ipcMain.on('backward-account', (event: Event, acct: LocalAccount) => {
+ipcMain.on('backward-account', (event: IpcMainEvent, acct: LocalAccount) => {
   accountManager
     .backwardAccount(acct)
     .then(() => {
@@ -452,7 +452,7 @@ ipcMain.on('backward-account', (event: Event, acct: LocalAccount) => {
     })
 })
 
-ipcMain.on('refresh-accounts', (event: Event) => {
+ipcMain.on('refresh-accounts', (event: IpcMainEvent) => {
   accountManager
     .refreshAccounts()
     .then(accounts => {
@@ -463,7 +463,7 @@ ipcMain.on('refresh-accounts', (event: Event) => {
     })
 })
 
-ipcMain.on('remove-all-accounts', (event: Event) => {
+ipcMain.on('remove-all-accounts', (event: IpcMainEvent) => {
   accountManager
     .removeAll()
     .then(() => {
@@ -475,7 +475,7 @@ ipcMain.on('remove-all-accounts', (event: Event) => {
     })
 })
 
-ipcMain.on('change-auto-launch', (event: Event, enable: boolean) => {
+ipcMain.on('change-auto-launch', (event: IpcMainEvent, enable: boolean) => {
   if (launcher) {
     launcher.isEnabled().then(enabled => {
       if (!enabled && enable && launcher) {
@@ -500,7 +500,7 @@ ipcMain.on('reset-badge', () => {
 // user streaming
 let userStreamings: { [key: string]: WebSocket | null } = {}
 
-ipcMain.on('start-all-user-streamings', (event: Event, accounts: Array<LocalAccount>) => {
+ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<LocalAccount>) => {
   accounts.map(async account => {
     const id: string = account._id!
     try {
@@ -610,7 +610,7 @@ type StreamingSetting = {
 
 let directMessagesStreaming: WebSocket | null = null
 
-ipcMain.on('start-directmessages-streaming', async (event: Event, obj: StreamingSetting) => {
+ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
   try {
     const acct = await accountManager.getAccount(account._id!)
@@ -659,7 +659,7 @@ ipcMain.on('stop-directmessages-streaming', () => {
 
 let localStreaming: WebSocket | null = null
 
-ipcMain.on('start-local-streaming', async (event: Event, obj: StreamingSetting) => {
+ipcMain.on('start-local-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
   try {
     const acct = await accountManager.getAccount(account._id!)
@@ -708,7 +708,7 @@ ipcMain.on('stop-local-streaming', () => {
 
 let publicStreaming: WebSocket | null = null
 
-ipcMain.on('start-public-streaming', async (event: Event, obj: StreamingSetting) => {
+ipcMain.on('start-public-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
   try {
     const acct = await accountManager.getAccount(account._id!)
@@ -761,7 +761,7 @@ type ListID = {
   listID: string
 }
 
-ipcMain.on('start-list-streaming', async (event: Event, obj: ListID & StreamingSetting) => {
+ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListID & StreamingSetting) => {
   const { listID, account } = obj
   try {
     const acct = await accountManager.getAccount(account._id!)
@@ -814,7 +814,7 @@ type Tag = {
   tag: string
 }
 
-ipcMain.on('start-tag-streaming', async (event: Event, obj: Tag & StreamingSetting) => {
+ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: Tag & StreamingSetting) => {
   const { tag, account } = obj
   try {
     const acct = await accountManager.getAccount(account._id!)
@@ -893,7 +893,7 @@ ipcMain.on('toot-action-sound', () => {
 })
 
 // preferences
-ipcMain.on('get-preferences', async (event: Event) => {
+ipcMain.on('get-preferences', async (event: IpcMainEvent) => {
   const preferences = new Preferences(preferencesDBPath)
   let enabled = false
   if (launcher) {
@@ -912,7 +912,7 @@ ipcMain.on('get-preferences', async (event: Event) => {
   event.sender.send('response-get-preferences', conf)
 })
 
-ipcMain.on('update-preferences', (event: Event, data: any) => {
+ipcMain.on('update-preferences', (event: IpcMainEvent, data: any) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences
     .update(data)
@@ -924,7 +924,7 @@ ipcMain.on('update-preferences', (event: Event, data: any) => {
     })
 })
 
-ipcMain.on('change-collapse', (_event: Event, value: boolean) => {
+ipcMain.on('change-collapse', (_event: IpcMainEvent, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences
     .update({
@@ -937,14 +937,14 @@ ipcMain.on('change-collapse', (_event: Event, value: boolean) => {
     })
 })
 
-ipcMain.on('get-collapse', (event: Event) => {
+ipcMain.on('get-collapse', (event: IpcMainEvent) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load().then(conf => {
     event.sender.send('response-get-collapse', conf.state.collapse)
   })
 })
 
-ipcMain.on('change-global-header', (event: Event, value: boolean) => {
+ipcMain.on('change-global-header', (event: IpcMainEvent, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences
     .update({
@@ -960,7 +960,7 @@ ipcMain.on('change-global-header', (event: Event, value: boolean) => {
     })
 })
 
-ipcMain.on('get-global-header', (event: Event) => {
+ipcMain.on('get-global-header', (event: IpcMainEvent) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences.load().then(conf => {
     event.sender.send('response-get-global-header', conf.state.hideGlobalHeader)
@@ -968,7 +968,7 @@ ipcMain.on('get-global-header', (event: Event) => {
 })
 
 // proxy
-ipcMain.on('update-proxy-config', (event: Event, proxy: Proxy) => {
+ipcMain.on('update-proxy-config', (event: IpcMainEvent, proxy: Proxy) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences
     .update({
@@ -983,7 +983,7 @@ ipcMain.on('update-proxy-config', (event: Event, proxy: Proxy) => {
 })
 
 // language
-ipcMain.on('change-language', (event: Event, value: string) => {
+ipcMain.on('change-language', (event: IpcMainEvent, value: string) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences
     .update({
@@ -998,7 +998,7 @@ ipcMain.on('change-language', (event: Event, value: string) => {
 })
 
 // hashtag
-ipcMain.on('save-hashtag', (event: Event, tag: string) => {
+ipcMain.on('save-hashtag', (event: IpcMainEvent, tag: string) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags
     .insertTag(tag)
@@ -1010,7 +1010,7 @@ ipcMain.on('save-hashtag', (event: Event, tag: string) => {
     })
 })
 
-ipcMain.on('list-hashtags', (event: Event) => {
+ipcMain.on('list-hashtags', (event: IpcMainEvent) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags
     .listTags()
@@ -1022,7 +1022,7 @@ ipcMain.on('list-hashtags', (event: Event) => {
     })
 })
 
-ipcMain.on('remove-hashtag', (event: Event, tag: LocalTag) => {
+ipcMain.on('remove-hashtag', (event: IpcMainEvent, tag: LocalTag) => {
   const hashtags = new Hashtags(hashtagsDB)
   hashtags
     .removeTag(tag)
@@ -1035,7 +1035,7 @@ ipcMain.on('remove-hashtag', (event: Event, tag: LocalTag) => {
 })
 
 // Fonts
-ipcMain.on('list-fonts', (event: Event) => {
+ipcMain.on('list-fonts', (event: IpcMainEvent) => {
   Fonts()
     .then(list => {
       event.sender.send('response-list-fonts', list)
@@ -1046,7 +1046,7 @@ ipcMain.on('list-fonts', (event: Event) => {
 })
 
 // Unread notifications
-ipcMain.on('get-unread-notification', (event: Event, accountID: string) => {
+ipcMain.on('get-unread-notification', (event: IpcMainEvent, accountID: string) => {
   unreadNotification
     .findOne({
       accountID: accountID
@@ -1060,7 +1060,7 @@ ipcMain.on('get-unread-notification', (event: Event, accountID: string) => {
     })
 })
 
-ipcMain.on('update-unread-notification', (event: Event, config: UnreadNotificationConfig) => {
+ipcMain.on('update-unread-notification', (event: IpcMainEvent, config: UnreadNotificationConfig) => {
   const { accountID } = config
   unreadNotification
     .insertOrUpdate(accountID!, config)
@@ -1074,24 +1074,24 @@ ipcMain.on('update-unread-notification', (event: Event, config: UnreadNotificati
 })
 
 // Cache
-ipcMain.on('get-cache-hashtags', async (event: Event) => {
+ipcMain.on('get-cache-hashtags', async (event: IpcMainEvent) => {
   const tags = await hashtagCache.listTags()
   event.sender.send('response-get-cache-hashtags', tags)
 })
 
-ipcMain.on('insert-cache-hashtags', (event: Event, tags: Array<string>) => {
+ipcMain.on('insert-cache-hashtags', (event: IpcMainEvent, tags: Array<string>) => {
   tags.map(async name => {
     await hashtagCache.insertHashtag(name).catch(err => console.error(err))
   })
   event.sender.send('response-insert-cache-hashtags')
 })
 
-ipcMain.on('get-cache-accounts', async (event: Event, ownerID: string) => {
+ipcMain.on('get-cache-accounts', async (event: IpcMainEvent, ownerID: string) => {
   const accounts = await accountCache.listAccounts(ownerID)
   event.sender.send('response-get-cache-accounts', accounts)
 })
 
-ipcMain.on('insert-cache-accounts', (event: Event, obj: InsertAccountCache) => {
+ipcMain.on('insert-cache-accounts', (event: IpcMainEvent, obj: InsertAccountCache) => {
   const { ownerID, accts } = obj
   accts.map(async acct => {
     await accountCache.insertAccount(ownerID, acct).catch(err => console.error(err))
@@ -1143,8 +1143,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
           },
           {
             label: i18n.t('main_menu.application.services'),
-            role: 'services',
-            submenu: []
+            role: 'services'
           },
           {
             type: 'separator'
@@ -1155,7 +1154,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
           },
           {
             label: i18n.t('main_menu.application.hide_others'),
-            role: 'hideothers'
+            role: 'hideOthers'
           },
           {
             label: i18n.t('main_menu.application.show_all'),
@@ -1253,7 +1252,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
           accelerator: 'CmdOrCtrl+A',
           role: 'selectall'
         }
-      ]
+      ] as Array<MenuItemConstructorOptions>
     },
     {
       label: i18n.t('main_menu.view.name'),
