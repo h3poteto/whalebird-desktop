@@ -14,6 +14,27 @@
     },
     "appearance": {
       "toot_padding": "Padding around toot"
+    },
+    "network": {
+      "title": "Network",
+      "proxy": {
+        "title": "Proxy Configuration",
+        "no": "No proxy",
+        "system": "Use system proxy",
+        "manual": "Manual proxy configuration",
+        "protocol": "Protocol",
+        "host": "Proxy host",
+        "port": "Proxy port",
+        "protocol_list": {
+          "http": "http",
+          "https": "https",
+          "socks4": "socks4",
+          "socks4a": "socks4a",
+          "socks5": "socks5",
+          "socks5h": "socks5h"
+        }
+      },
+      "save": "Save"
     }
   },
   "follow_requests": {
