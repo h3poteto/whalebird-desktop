@@ -36,6 +36,10 @@
             <icon name="user" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.account.title') }}</span>
           </el-menu-item>
+          <el-menu-item index="/preferences/network">
+            <icon name="network-wired" class="icon" scale="1.3"></icon>
+            <span>{{ $t('preferences.network.title') }}</span>
+          </el-menu-item>
           <el-menu-item index="/preferences/language">
             <icon name="language" class="icon" scale="1.3"></icon>
             <span>{{ $t('preferences.language.title') }}</span>

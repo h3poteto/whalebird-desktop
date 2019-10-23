@@ -42,6 +42,11 @@ const router = new Router({
           component: require('@/components/Preferences/Account').default
         },
         {
+          path: 'network',
+          name: 'network',
+          component: require('@/components/Preferences/Network').default
+        },
+        {
           path: 'language',
           name: 'language',
           component: require('@/components/Preferences/Language').default

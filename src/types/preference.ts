@@ -3,6 +3,7 @@ import { Timeline } from '~/src/types/timeline'
 import { Notify } from '~/src/types/notify'
 import { Appearance } from '~/src/types/appearance'
 import { Language } from '~/src/types/language'
+import { Proxy } from '~/src/types/proxy'
 
 export type Other = {
   launch: boolean
@@ -29,4 +30,5 @@ export type BaseConfig = {
   language: Language
   notification: Notification
   appearance: Appearance
+  proxy: Proxy
 }

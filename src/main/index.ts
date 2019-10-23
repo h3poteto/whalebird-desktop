@@ -44,6 +44,7 @@ import { StreamingError } from '~/src/errors/streamingError'
 import HashtagCache from './cache/hashtag'
 import AccountCache from './cache/account'
 import { InsertAccountCache } from '~/src/types/insertAccountCache'
+import { Proxy } from '~/src/types/proxy'
 
 /**
  * Context menu
@@ -966,6 +967,22 @@ ipcMain.on('get-global-header', (event: Event) => {
   })
 })
 
+// proxy
+ipcMain.on('update-proxy-config', (event: Event, proxy: Proxy) => {
+  const preferences = new Preferences(preferencesDBPath)
+  preferences
+    .update({
+      proxy: proxy
+    })
+    .then(conf => {
+      event.sender.send('response-update-proxy-config', conf)
+    })
+    .catch(err => {
+      log.error(err)
+    })
+})
+
+// language
 ipcMain.on('change-language', (event: Event, value: string) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences
