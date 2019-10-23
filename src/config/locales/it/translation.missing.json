@@ -25,6 +25,8 @@
         "protocol": "Protocol",
         "host": "Proxy host",
         "port": "Proxy port",
+        "username": "Proxy username",
+        "password": "Proxy password",
         "protocol_list": {
           "http": "http",
           "https": "https",

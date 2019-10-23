@@ -205,6 +205,8 @@
         "protocol": "プロトコル",
         "host": "ホスト",
         "port": "ポート",
+        "username": "ユーザー名",
+        "password": "パスワード",
         "protocol_list": {
           "http": "http",
           "https": "https",

@@ -13,11 +13,15 @@ export enum ProxyProtocol {
   socks5h = 'socks5h'
 }
 
+export type ManualProxy = {
+  protocol: '' | ProxyProtocol
+  host: string
+  port: string
+  username: string
+  password: string
+}
+
 export type Proxy = {
   source: ProxySource
-  manualProxyConfig: {
-    protocol: '' | ProxyProtocol
-    host: string
-    port: string
-  }
+  manualProxyConfig: ManualProxy
 }

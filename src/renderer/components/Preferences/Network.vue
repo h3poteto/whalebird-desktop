@@ -27,6 +27,12 @@
       <el-form-item for="proxyPort" :label="$t('preferences.network.proxy.port')">
         <el-input v-model="proxyPort" :disabled="!manualProxyConfiguration" placeholder="8080"></el-input>
       </el-form-item>
+      <el-form-item for="proxyUsername" :label="$t('preferences.network.proxy.username')">
+        <el-input v-model="proxyUsername" :disabled="!manualProxyConfiguration" placeholder="username"></el-input>
+      </el-form-item>
+      <el-form-item for="proxyPassword" :label="$t('preferences.network.proxy.password')">
+        <el-input v-model="proxyPassword" :disabled="!manualProxyConfiguration" placeholder="password" show-password></el-input>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSave">{{ $t('preferences.network.save') }}</el-button>
       </el-form-item>
@@ -71,6 +77,22 @@ export default {
       },
       set(value) {
         this.$store.dispatch('Preferences/Network/updatePort', value)
+      }
+    },
+    proxyUsername: {
+      get() {
+        return this.$store.state.Preferences.Network.proxy.username
+      },
+      set(value) {
+        this.$store.dispatch('Preferences/Network/updateUsername', value)
+      }
+    },
+    proxyPassword: {
+      get() {
+        return this.$store.state.Preferences.Network.proxy.password
+      },
+      set(value) {
+        this.$store.dispatch('Preferences/Network/updatePassword', value)
       }
     }
   },

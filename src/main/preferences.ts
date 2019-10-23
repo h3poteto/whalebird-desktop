@@ -70,7 +70,9 @@ const proxy: Proxy = {
   manualProxyConfig: {
     protocol: '',
     host: '',
-    port: ''
+    port: '',
+    username: '',
+    password: ''
   }
 }
 

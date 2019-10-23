@@ -2,15 +2,11 @@ import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import { BaseConfig } from '~/src/types/preference'
-import { Proxy, ProxySource, ProxyProtocol } from '~/src/types/proxy'
+import { Proxy, ProxySource, ProxyProtocol, ManualProxy } from '~/src/types/proxy'
 
 export type NetworkState = {
   source: ProxySource
-  proxy: {
-    protocol: '' | ProxyProtocol
-    host: string
-    port: string
-  }
+  proxy: ManualProxy
 }
 
 const state = (): NetworkState => {
@@ -19,7 +15,9 @@ const state = (): NetworkState => {
     proxy: {
       protocol: '',
       host: '',
-      port: ''
+      port: '',
+      username: '',
+      password: ''
     }
   }
 }
@@ -29,7 +27,9 @@ export const MUTATION_TYPES = {
   CHANGE_SOURCE: 'changeSource',
   UPDATE_PROTOCOL: 'updateProtocol',
   UPDATE_HOST: 'updateHost',
-  UPDATE_PORT: 'updatePort'
+  UPDATE_PORT: 'updatePort',
+  UPDATE_USERNAME: 'updateUsername',
+  UPDATE_PASSWORD: 'updatePassword'
 }
 
 const mutations: MutationTree<NetworkState> = {
@@ -80,6 +80,12 @@ const mutations: MutationTree<NetworkState> = {
   },
   [MUTATION_TYPES.UPDATE_PORT]: (state, port: string) => {
     state.proxy.port = port
+  },
+  [MUTATION_TYPES.UPDATE_USERNAME]: (state, username: string) => {
+    state.proxy.username = username
+  },
+  [MUTATION_TYPES.UPDATE_PASSWORD]: (state, password: string) => {
+    state.proxy.password = password
   }
 }
 
@@ -110,8 +116,18 @@ const actions: ActionTree<NetworkState, RootState> = {
   updatePort: ({ commit }, port: string) => {
     commit(MUTATION_TYPES.UPDATE_PORT, port)
   },
+  updateUsername: ({ commit }, username: string) => {
+    commit(MUTATION_TYPES.UPDATE_USERNAME, username)
+  },
+  updatePassword: ({ commit }, password: string) => {
+    commit(MUTATION_TYPES.UPDATE_PASSWORD, password)
+  },
   saveProxyConfig: ({ state }) => {
-    ipcRenderer.send('update-proxy-config', state)
+    const proxy: Proxy = {
+      source: state.source,
+      manualProxyConfig: state.proxy
+    }
+    ipcRenderer.send('update-proxy-config', proxy)
   }
 }
 
