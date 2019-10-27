@@ -17,9 +17,9 @@ export default class WebSocket {
   private client: Mastodon
   private listener: SocketListener | null
 
-  constructor(account: LocalAccount, streamingURL: string) {
+  constructor(account: LocalAccount, streamingURL: string, proxy: ProxyConfig | false) {
     const url = streamingURL.replace(/^https:\/\//, 'wss://')
-    this.client = new Mastodon(account.accessToken!, url + '/api/v1')
+    this.client = new Mastodon(account.accessToken!, url + '/api/v1', 'Whalebird', proxy)
     this.listener = null
   }
 

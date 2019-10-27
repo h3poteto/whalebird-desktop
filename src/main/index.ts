@@ -529,7 +529,7 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
       }
       const proxy = await proxyConfiguration.forMastodon()
       const url = await StreamingURL(acct, proxy)
-      userStreamings[id] = new WebSocket(acct, url)
+      userStreamings[id] = new WebSocket(acct, url, proxy)
       userStreamings[id]!.startUserStreaming(
         async (update: Status) => {
           if (!event.sender.isDestroyed()) {
@@ -640,7 +640,7 @@ ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, obj: St
     }
     const proxy = await proxyConfiguration.forMastodon()
     const url = await StreamingURL(acct, proxy)
-    directMessagesStreaming = new WebSocket(acct, url)
+    directMessagesStreaming = new WebSocket(acct, url, proxy)
     directMessagesStreaming.start(
       'direct',
       (update: Status) => {
@@ -689,7 +689,7 @@ ipcMain.on('start-local-streaming', async (event: IpcMainEvent, obj: StreamingSe
     }
     const proxy = await proxyConfiguration.forMastodon()
     const url = await StreamingURL(acct, proxy)
-    localStreaming = new WebSocket(acct, url)
+    localStreaming = new WebSocket(acct, url, proxy)
     localStreaming.start(
       'public:local',
       (update: Status) => {
@@ -738,7 +738,7 @@ ipcMain.on('start-public-streaming', async (event: IpcMainEvent, obj: StreamingS
     }
     const proxy = await proxyConfiguration.forMastodon()
     const url = await StreamingURL(acct, proxy)
-    publicStreaming = new WebSocket(acct, url)
+    publicStreaming = new WebSocket(acct, url, proxy)
     publicStreaming.start(
       'public',
       (update: Status) => {
@@ -791,7 +791,7 @@ ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListID & Str
     }
     const proxy = await proxyConfiguration.forMastodon()
     const url = await StreamingURL(acct, proxy)
-    listStreaming = new WebSocket(acct, url)
+    listStreaming = new WebSocket(acct, url, proxy)
     listStreaming.start(
       `list&list=${listID}`,
       (update: Status) => {
@@ -844,7 +844,7 @@ ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: Tag & Streami
     }
     const proxy = await proxyConfiguration.forMastodon()
     const url = await StreamingURL(acct, proxy)
-    tagStreaming = new WebSocket(acct, url)
+    tagStreaming = new WebSocket(acct, url, proxy)
     tagStreaming.start(
       `hashtag&tag=${tag}`,
       (update: Status) => {
