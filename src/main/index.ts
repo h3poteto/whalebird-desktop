@@ -1001,7 +1001,7 @@ ipcMain.on('update-proxy-config', (event: IpcMainEvent, proxy: Proxy) => {
 })
 
 ipcMain.on('get-proxy-configuration', async (event: IpcMainEvent) => {
-  const proxy = await proxyConfiguration.getConfig()
+  const proxy = await proxyConfiguration.forMastodon()
   event.sender.send('response-get-proxy-configuration', proxy)
 })
 
