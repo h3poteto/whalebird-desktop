@@ -28,14 +28,24 @@ const mutations: MutationTree<FollowersState> = {
 
 const actions: ActionTree<FollowersState, RootState> = {
   fetchFollowers: async ({ commit, rootState }, account: Account) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Account>> = await client.get<Array<Account>>(`/accounts/${account.id}/followers`, { limit: 80 })
     commit(MUTATION_TYPES.UPDATE_FOLLOWERS, res.data)
     return res.data
   },
   fetchRelationships: async ({ commit, rootState }, accounts: Array<Account>) => {
     const ids = accounts.map(a => a.id)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Relationship>> = await client.get<Array<Relationship>>(`/accounts/relationships`, {
       id: ids
     })

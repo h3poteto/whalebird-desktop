@@ -36,6 +36,7 @@ export default {
     this.$store.dispatch('App/loadPreferences').then(conf => {
       this.$i18n.i18next.changeLanguage(conf.language.language)
     })
+    this.$store.dispatch('App/loadProxy')
   },
   destroyed() {
     this.$store.dispatch('App/removeShortcutsEvents')

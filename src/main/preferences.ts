@@ -1,4 +1,5 @@
 import storage from 'electron-json-storage'
+import log from 'electron-log'
 import objectAssignDeep from 'object-assign-deep'
 import DisplayStyle from '../constants/displayStyle'
 import Theme from '../constants/theme'
@@ -97,6 +98,7 @@ export default class Preferences {
       const preferences = await this.get()
       return objectAssignDeep({}, Base, preferences)
     } catch (err) {
+      log.error(err)
       return Base
     }
   }

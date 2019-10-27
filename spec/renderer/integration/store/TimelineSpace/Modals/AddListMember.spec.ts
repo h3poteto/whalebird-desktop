@@ -54,6 +54,13 @@ const timelineState = {
   }
 }
 
+const appState = {
+  namespaced: true,
+  state: {
+    proxyConfiguration: false
+  }
+}
+
 describe('AddListMember', () => {
   let store
   let localVue
@@ -64,7 +71,8 @@ describe('AddListMember', () => {
     store = new Vuex.Store({
       modules: {
         AddListMember: initStore(),
-        TimelineSpace: timelineState
+        TimelineSpace: timelineState,
+        App: appState
       }
     })
     mockedMegalodon.mockClear()

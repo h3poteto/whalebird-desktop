@@ -112,6 +112,13 @@ const initStore = () => {
   }
 }
 
+const appState = {
+  namespaced: true,
+  state: {
+    proxyConfiguration: false
+  }
+}
+
 describe('TimelineSpace', () => {
   let store
   let localVue
@@ -121,7 +128,8 @@ describe('TimelineSpace', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        TimelineSpace: initStore()
+        TimelineSpace: initStore(),
+        App: appState
       }
     })
   })

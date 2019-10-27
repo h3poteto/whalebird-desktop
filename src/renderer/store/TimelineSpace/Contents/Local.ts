@@ -95,7 +95,12 @@ const mutations: MutationTree<LocalState> = {
 
 const actions: ActionTree<LocalState, RootState> = {
   fetchLocalTimeline: async ({ commit, rootState }): Promise<Array<Status>> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Status>> = await client.get<Array<Status>>('/timelines/public', { limit: 40, local: true })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
@@ -105,7 +110,12 @@ const actions: ActionTree<LocalState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     return client
       .get<Array<Status>>('/timelines/public', { max_id: lastStatus.id, limit: 40, local: true })
       .then(res => {

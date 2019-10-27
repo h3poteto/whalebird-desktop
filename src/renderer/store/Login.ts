@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import axios from 'axios'
+import Mastodon from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -44,11 +44,11 @@ const actions: ActionTree<LoginState, RootState> = {
   pageBack: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_INSTANCE, null)
   },
-  confirmInstance: async ({ commit }, domain: string): Promise<boolean> => {
+  confirmInstance: async ({ commit, rootState }, domain: string): Promise<boolean> => {
     commit(MUTATION_TYPES.CHANGE_SEARCHING, true)
     // https://gist.github.com/okapies/60d62d0df0163bbfb4ab09c1766558e8
     // Check /.well-known/host-meta to confirm mastodon instance.
-    const res = await axios.get(`https://${domain}/.well-known/host-meta`).finally(() => {
+    const res = await Mastodon.get<any>('/.well-known/host-meta', {}, `https://${domain}`, rootState.App.proxyConfiguration).finally(() => {
       commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
     })
     const parser = new DOMParser()

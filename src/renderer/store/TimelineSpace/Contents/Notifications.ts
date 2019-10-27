@@ -97,7 +97,12 @@ const mutations: MutationTree<NotificationsState> = {
 
 const actions: ActionTree<NotificationsState, RootState> = {
   fetchNotifications: async ({ commit, rootState }): Promise<Array<Notification>> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Notification>> = await client.get<Array<Notification>>('/notifications', { limit: 30 })
 
     commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, res.data)
@@ -108,7 +113,12 @@ const actions: ActionTree<NotificationsState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     return client
       .get<Array<Notification>>('/notifications', { max_id: lastNotification.id, limit: 30 })
       .then(res => {

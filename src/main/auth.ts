@@ -1,4 +1,4 @@
-import Mastodon, { OAuth } from 'megalodon'
+import Mastodon, { OAuth, ProxyConfig } from 'megalodon'
 import Account from './account'
 import { LocalAccount } from '~/src/types/localAccount'
 
@@ -30,7 +30,7 @@ export default class Authentication {
     this.clientSecret = ''
   }
 
-  async getAuthorizationUrl(domain = 'mastodon.social'): Promise<string> {
+  async getAuthorizationUrl(domain = 'mastodon.social', proxy: ProxyConfig | false): Promise<string> {
     this.setOtherInstance(domain)
     const res = await Mastodon.registerApp(
       appName,
@@ -38,7 +38,8 @@ export default class Authentication {
         scopes: scope,
         website: appURL
       },
-      this.baseURL
+      this.baseURL,
+      proxy
     )
     this.clientId = res.clientId
     this.clientSecret = res.clientSecret
@@ -69,8 +70,15 @@ export default class Authentication {
     return res.url
   }
 
-  async getAccessToken(code: string): Promise<string> {
-    const tokenData: OAuth.TokenData = await Mastodon.fetchAccessToken(this.clientId, this.clientSecret, code, this.baseURL)
+  async getAccessToken(code: string, proxy: ProxyConfig | false): Promise<string> {
+    const tokenData: OAuth.TokenData = await Mastodon.fetchAccessToken(
+      this.clientId,
+      this.clientSecret,
+      code,
+      this.baseURL,
+      'urn:ietf:wg:oauth:2.0:oob',
+      proxy
+    )
     const search = {
       baseURL: this.baseURL,
       domain: this.domain,
@@ -80,7 +88,7 @@ export default class Authentication {
     const rec = await this.db.searchAccount(search)
     const accessToken = tokenData.accessToken
     const refreshToken = tokenData.refreshToken
-    const data = await this.db.fetchAccount(rec, accessToken)
+    const data = await this.db.fetchAccount(rec, accessToken, proxy)
     await this.db.updateAccount(rec._id!, {
       username: data.username,
       accountId: data.id,

@@ -4,6 +4,7 @@ import {
   app,
   ipcMain,
   shell,
+  session,
   Menu,
   Tray,
   BrowserWindow,
@@ -45,6 +46,7 @@ import HashtagCache from './cache/hashtag'
 import AccountCache from './cache/account'
 import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { Proxy } from '~/src/types/proxy'
+import ProxyConfiguration from './proxy'
 
 /**
  * Context menu
@@ -144,6 +146,7 @@ const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
 
 let launcher: AutoLaunch | null = null
+const proxyConfiguration = new ProxyConfiguration(preferencesDBPath)
 
 // On MAS build, auto launch is not working.
 // We have to use Launch Agent: https://github.com/Teamwork/node-auto-launch/issues/43
@@ -270,6 +273,16 @@ async function createWindow() {
 
   mainWindow.webContents.on('will-navigate', event => event.preventDefault())
 
+  /**
+   * Get system proxy configuration.
+   */
+  if (session && session.defaultSession) {
+    session.defaultSession.resolveProxy('https://mastodon.social', proxyInfo => {
+      proxyConfiguration.setSystemProxy(proxyInfo)
+      log.info(`System proxy configuration: ${proxyInfo}`)
+    })
+  }
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })
@@ -336,9 +349,10 @@ app.on('activate', () => {
 
 let auth = new Authentication(accountManager)
 
-ipcMain.on('get-auth-url', (event: IpcMainEvent, domain: string) => {
+ipcMain.on('get-auth-url', async (event: IpcMainEvent, domain: string) => {
+  const proxy = await proxyConfiguration.forMastodon()
   auth
-    .getAuthorizationUrl(domain)
+    .getAuthorizationUrl(domain, proxy)
     .then(url => {
       log.debug(url)
       event.sender.send('response-get-auth-url', url)
@@ -351,9 +365,10 @@ ipcMain.on('get-auth-url', (event: IpcMainEvent, domain: string) => {
     })
 })
 
-ipcMain.on('get-access-token', (event: IpcMainEvent, code: string) => {
+ipcMain.on('get-access-token', async (event: IpcMainEvent, code: string) => {
+  const proxy = await proxyConfiguration.forMastodon()
   auth
-    .getAccessToken(code)
+    .getAccessToken(code, proxy)
     .then(token => {
       accountDB.findOne(
         {
@@ -406,9 +421,10 @@ ipcMain.on('get-local-account', (event: IpcMainEvent, id: string) => {
     })
 })
 
-ipcMain.on('update-account', (event: IpcMainEvent, acct: LocalAccount) => {
+ipcMain.on('update-account', async (event: IpcMainEvent, acct: LocalAccount) => {
+  const proxy = await proxyConfiguration.forMastodon()
   accountManager
-    .refresh(acct)
+    .refresh(acct, proxy)
     .then(ac => {
       event.sender.send('response-update-account', ac)
     })
@@ -452,9 +468,10 @@ ipcMain.on('backward-account', (event: IpcMainEvent, acct: LocalAccount) => {
     })
 })
 
-ipcMain.on('refresh-accounts', (event: IpcMainEvent) => {
+ipcMain.on('refresh-accounts', async (event: IpcMainEvent) => {
+  const proxy = await proxyConfiguration.forMastodon()
   accountManager
-    .refreshAccounts()
+    .refreshAccounts(proxy)
     .then(accounts => {
       event.sender.send('response-refresh-accounts', accounts)
     })
@@ -510,8 +527,9 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
         userStreamings[id]!.stop()
         userStreamings[id] = null
       }
-      const url = await StreamingURL(acct)
-      userStreamings[id] = new WebSocket(acct, url)
+      const proxy = await proxyConfiguration.forMastodon()
+      const url = await StreamingURL(acct, proxy)
+      userStreamings[id] = new WebSocket(acct, url, proxy)
       userStreamings[id]!.startUserStreaming(
         async (update: Status) => {
           if (!event.sender.isDestroyed()) {
@@ -620,9 +638,9 @@ ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, obj: St
       directMessagesStreaming.stop()
       directMessagesStreaming = null
     }
-
-    const url = await StreamingURL(acct)
-    directMessagesStreaming = new WebSocket(acct, url)
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(acct, proxy)
+    directMessagesStreaming = new WebSocket(acct, url, proxy)
     directMessagesStreaming.start(
       'direct',
       (update: Status) => {
@@ -669,9 +687,9 @@ ipcMain.on('start-local-streaming', async (event: IpcMainEvent, obj: StreamingSe
       localStreaming.stop()
       localStreaming = null
     }
-
-    const url = await StreamingURL(acct)
-    localStreaming = new WebSocket(acct, url)
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(acct, proxy)
+    localStreaming = new WebSocket(acct, url, proxy)
     localStreaming.start(
       'public:local',
       (update: Status) => {
@@ -718,9 +736,9 @@ ipcMain.on('start-public-streaming', async (event: IpcMainEvent, obj: StreamingS
       publicStreaming.stop()
       publicStreaming = null
     }
-
-    const url = await StreamingURL(acct)
-    publicStreaming = new WebSocket(acct, url)
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(acct, proxy)
+    publicStreaming = new WebSocket(acct, url, proxy)
     publicStreaming.start(
       'public',
       (update: Status) => {
@@ -771,9 +789,9 @@ ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListID & Str
       listStreaming.stop()
       listStreaming = null
     }
-
-    const url = await StreamingURL(acct)
-    listStreaming = new WebSocket(acct, url)
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(acct, proxy)
+    listStreaming = new WebSocket(acct, url, proxy)
     listStreaming.start(
       `list&list=${listID}`,
       (update: Status) => {
@@ -824,9 +842,9 @@ ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: Tag & Streami
       tagStreaming.stop()
       tagStreaming = null
     }
-
-    const url = await StreamingURL(acct)
-    tagStreaming = new WebSocket(acct, url)
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(acct, proxy)
+    tagStreaming = new WebSocket(acct, url, proxy)
     tagStreaming.start(
       `hashtag&tag=${tag}`,
       (update: Status) => {
@@ -980,6 +998,11 @@ ipcMain.on('update-proxy-config', (event: IpcMainEvent, proxy: Proxy) => {
     .catch(err => {
       log.error(err)
     })
+})
+
+ipcMain.on('get-proxy-configuration', async (event: IpcMainEvent) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  event.sender.send('response-get-proxy-configuration', proxy)
 })
 
 // language
