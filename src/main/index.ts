@@ -4,6 +4,7 @@ import {
   app,
   ipcMain,
   shell,
+  session,
   Menu,
   Tray,
   BrowserWindow,
@@ -45,6 +46,7 @@ import HashtagCache from './cache/hashtag'
 import AccountCache from './cache/account'
 import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { Proxy } from '~/src/types/proxy'
+import ProxyConfiguration from './proxy'
 
 /**
  * Context menu
@@ -144,6 +146,7 @@ const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
 
 let launcher: AutoLaunch | null = null
+const proxyConfiguration = new ProxyConfiguration(preferencesDBPath)
 
 // On MAS build, auto launch is not working.
 // We have to use Launch Agent: https://github.com/Teamwork/node-auto-launch/issues/43
@@ -269,6 +272,16 @@ async function createWindow() {
   mainWindow.loadURL(winURL)
 
   mainWindow.webContents.on('will-navigate', event => event.preventDefault())
+
+  /**
+   * Get system proxy configuration.
+   */
+  if (session && session.defaultSession) {
+    session.defaultSession.resolveProxy('https://mastodon.social', proxyInfo => {
+      proxyConfiguration.setSystemProxy(proxyInfo)
+      log.info(`System proxy configuration: ${proxyInfo}`)
+    })
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -980,6 +993,11 @@ ipcMain.on('update-proxy-config', (event: IpcMainEvent, proxy: Proxy) => {
     .catch(err => {
       log.error(err)
     })
+})
+
+ipcMain.on('get-proxy-configuration', async (event: IpcMainEvent) => {
+  const proxy = await proxyConfiguration.getConfig()
+  event.sender.send('response-get-proxy-configuration', proxy)
 })
 
 // language
