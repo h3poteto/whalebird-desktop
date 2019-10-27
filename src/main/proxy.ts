@@ -1,3 +1,4 @@
+import { ProxyConfig } from 'megalodon'
 import { ProxySource, ManualProxy, ProxyProtocol } from '~/src/types/proxy'
 import Preferences from './preferences'
 
@@ -11,6 +12,35 @@ export default class ProxyConfiguration {
 
   public setSystemProxy(proxy: string) {
     this.systemProxy = proxy
+  }
+
+  public async forMastodon(): Promise<false | ProxyConfig> {
+    const proxy = await this.getConfig()
+    if (!proxy) {
+      return false
+    } else {
+      let protocol = ProxyProtocol.http
+      if (proxy.protocol !== '') {
+        protocol = proxy.protocol
+      }
+      if (proxy.username.length > 0) {
+        return {
+          host: proxy.host,
+          port: parseInt(proxy.port, 10),
+          protocol: protocol,
+          auth: {
+            username: proxy.username,
+            password: proxy.password
+          }
+        }
+      } else {
+        return {
+          host: proxy.host,
+          port: parseInt(proxy.port, 10),
+          protocol: protocol
+        }
+      }
+    }
   }
 
   public async getConfig(): Promise<false | ManualProxy> {

@@ -1,12 +1,12 @@
-import Mastodon, { WebSocket as SocketListener, Status, Notification, Instance, Response } from 'megalodon'
+import Mastodon, { WebSocket as SocketListener, Status, Notification, Instance, Response, ProxyConfig } from 'megalodon'
 import log from 'electron-log'
 import { LocalAccount } from '~/src/types/localAccount'
 
-const StreamingURL = async (account: LocalAccount): Promise<string> => {
+const StreamingURL = async (account: LocalAccount, proxy: ProxyConfig | false): Promise<string> => {
   if (!account.accessToken) {
     throw new Error('access token is empty')
   }
-  const client = new Mastodon(account.accessToken, account.baseURL + '/api/v1')
+  const client = new Mastodon(account.accessToken, account.baseURL + '/api/v1', 'Whalebird', proxy)
   const res: Response<Instance> = await client.get<Instance>('/instance')
   return res.data.urls.streaming_api
 }

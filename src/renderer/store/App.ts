@@ -102,6 +102,7 @@ const mutations: MutationTree<AppState> = {
     state.hideAllAttachments = hideAllAttachments
   },
   [MUTATION_TYPES.UPDATE_PROXY_CONFIGURATION]: (state, proxy: ManualProxy | false) => {
+    // TODO: use src/main/proxy.ts#forMastodon
     if (!proxy) {
       state.proxyConfiguration = false
     } else {
