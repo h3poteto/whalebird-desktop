@@ -45,12 +45,22 @@ const mutations: MutationTree<AccountProfileState> = {
 
 const actions: ActionTree<AccountProfileState, RootState> = {
   fetchAccount: async ({ rootState }, accountID: string): Promise<Account> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Account> = await client.get<Account>(`/accounts/${accountID}`)
     return res.data
   },
   searchAccount: async ({ rootState }, parsedAccount): Promise<Account> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', { q: parsedAccount.url, resolve: true })
     if (res.data.length <= 0) throw new AccountNotFound('empty result')
     const account = res.data.find(a => `@${a.acct}` === parsedAccount.acct)
@@ -69,7 +79,12 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   fetchRelationship: async ({ commit, rootState }, account: Account): Promise<Relationship> => {
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, null)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Relationship> = await client.get<Relationship>('/accounts/relationships', { id: [account.id] })
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data[0])
     return res.data
@@ -86,14 +101,24 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     })
   },
   follow: async ({ commit, rootState, dispatch }, account: Account) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/follow`)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
   },
   unfollow: async ({ commit, rootState, dispatch }, account: Account) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/unfollow`)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
@@ -103,21 +128,36 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, null)
   },
   unmute: async ({ rootState, commit, dispatch }, account: Account) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/unmute`)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
   },
   block: async ({ rootState, commit, dispatch }, account: Account) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/block`)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
   },
   unblock: async ({ rootState, commit, dispatch }, account: Account) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/unblock`)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)

@@ -165,7 +165,12 @@ const actions: ActionTree<StatusState, RootState> = {
       })
     }
     const searchAPI = async () => {
-      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken!,
+        rootState.TimelineSpace.account.baseURL + '/api/v1',
+        rootState.App.userAgent,
+        rootState.App.proxyConfiguration
+      )
       commit(MUTATION_TYPES.SET_CLIENT, client)
       const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', { q: word, resolve: false })
       if (res.data.length === 0) throw new Error('Empty')
@@ -204,7 +209,12 @@ const actions: ActionTree<StatusState, RootState> = {
       })
     }
     const searchAPI = async () => {
-      const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v2')
+      const client = new Mastodon(
+        rootState.TimelineSpace.account.accessToken!,
+        rootState.TimelineSpace.account.baseURL + '/api/v2',
+        rootState.App.userAgent,
+        rootState.App.proxyConfiguration
+      )
       commit(MUTATION_TYPES.SET_CLIENT, client)
       const res: Response<Results> = await client.get<Results>('/search', { q: word })
       if (res.data.hashtags.length === 0) throw new Error('Empty')

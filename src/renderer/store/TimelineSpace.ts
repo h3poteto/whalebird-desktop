@@ -161,8 +161,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_ACCOUNT, blankAccount)
     return true
   },
-  detectPleroma: async ({ commit, state }) => {
-    const res = await Mastodon.get<Instance>('/instance', {}, state.account.baseURL + '/api/v1')
+  detectPleroma: async ({ commit, state, rootState }) => {
+    const res = await Mastodon.get<Instance>('/instance', {}, state.account.baseURL + '/api/v1', rootState.App.proxyConfiguration)
     if (res.data.version.includes('Pleroma')) {
       commit(MUTATION_TYPES.CHANGE_PLEROMA, true)
     } else {
@@ -194,16 +194,16 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchEmojis
    */
-  fetchEmojis: async ({ commit }, account: LocalAccount): Promise<Array<Emoji>> => {
-    const res = await Mastodon.get<Array<Emoji>>('/custom_emojis', {}, account.baseURL + '/api/v1')
+  fetchEmojis: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Emoji>> => {
+    const res = await Mastodon.get<Array<Emoji>>('/custom_emojis', {}, account.baseURL + '/api/v1', rootState.App.proxyConfiguration)
     commit(MUTATION_TYPES.UPDATE_EMOJIS, res.data)
     return res.data
   },
   /**
    * fetchInstance
    */
-  fetchInstance: async ({ commit }, account: LocalAccount) => {
-    const res = await Mastodon.get<Instance>('/instance', {}, account.baseURL + '/api/v1')
+  fetchInstance: async ({ commit, rootState }, account: LocalAccount) => {
+    const res = await Mastodon.get<Instance>('/instance', {}, account.baseURL + '/api/v1', rootState.App.proxyConfiguration)
     commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
     return true
   },

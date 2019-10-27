@@ -10,7 +10,9 @@ import DefaultFonts from '@/utils/fonts'
 import { RootState } from '@/store'
 import { Notify } from '~/src/types/notify'
 import { BaseConfig } from '~/src/types/preference'
-import { Appearance } from '~src/types/appearance'
+import { Appearance } from '~/src/types/appearance'
+import { ManualProxy, ProxyProtocol } from '~/src/types/proxy'
+import { ProxyConfig } from 'megalodon'
 
 export type AppState = {
   theme: ThemeColorType
@@ -24,6 +26,8 @@ export type AppState = {
   ignoreNFSW: boolean
   hideAllAttachments: boolean
   tootPadding: number
+  proxyConfiguration: ProxyConfig | false
+  userAgent: string
 }
 
 const state = (): AppState => ({
@@ -42,7 +46,9 @@ const state = (): AppState => ({
   defaultFonts: DefaultFonts,
   ignoreCW: false,
   ignoreNFSW: false,
-  hideAllAttachments: false
+  hideAllAttachments: false,
+  proxyConfiguration: false,
+  userAgent: 'Whalebird'
 })
 
 const MUTATION_TYPES = {
@@ -56,7 +62,8 @@ const MUTATION_TYPES = {
   ADD_FONT: 'addFont',
   UPDATE_IGNORE_CW: 'updateIgnoreCW',
   UPDATE_IGNORE_NFSW: 'updateIgnoreNFSW',
-  UPDATE_HIDE_ALL_ATTACHMENTS: 'updateHideAllAttachments'
+  UPDATE_HIDE_ALL_ATTACHMENTS: 'updateHideAllAttachments',
+  UPDATE_PROXY_CONFIGURATION: 'updateProxyConfiguration'
 }
 
 const mutations: MutationTree<AppState> = {
@@ -93,6 +100,33 @@ const mutations: MutationTree<AppState> = {
   },
   [MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS]: (state: AppState, hideAllAttachments: boolean) => {
     state.hideAllAttachments = hideAllAttachments
+  },
+  [MUTATION_TYPES.UPDATE_PROXY_CONFIGURATION]: (state, proxy: ManualProxy | false) => {
+    if (!proxy) {
+      state.proxyConfiguration = false
+    } else {
+      let protocol = ProxyProtocol.http
+      if (proxy.protocol !== '') {
+        protocol = proxy.protocol
+      }
+      if (proxy.username.length > 0) {
+        state.proxyConfiguration = {
+          host: proxy.host,
+          port: parseInt(proxy.port, 10),
+          protocol: protocol,
+          auth: {
+            username: proxy.username,
+            password: proxy.password
+          }
+        }
+      } else {
+        state.proxyConfiguration = {
+          host: proxy.host,
+          port: parseInt(proxy.port, 10),
+          protocol: protocol
+        }
+      }
+    }
   }
 }
 
@@ -154,6 +188,15 @@ const actions: ActionTree<AppState, RootState> = {
         commit(MUTATION_TYPES.UPDATE_THEME, LightTheme)
         break
     }
+  },
+  loadProxy: ({ commit }) => {
+    return new Promise(resolve => {
+      ipcRenderer.once('response-get-proxy-configuration', (_, proxy: ManualProxy | false) => {
+        commit(MUTATION_TYPES.UPDATE_PROXY_CONFIGURATION, proxy)
+        resolve(proxy)
+      })
+      ipcRenderer.send('get-proxy-configuration')
+    })
   }
 }
 

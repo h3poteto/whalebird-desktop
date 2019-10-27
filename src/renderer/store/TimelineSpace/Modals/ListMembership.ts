@@ -47,13 +47,23 @@ const actions: ActionTree<ListMembershipState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
   fetchListMembership: async ({ commit, rootState }, account: Account) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<List>> = await client.get<Array<List>>(`/accounts/${account.id}/lists`)
     commit(MUTATION_TYPES.CHANGE_BELONG_TO_LISTS, res.data.map(l => l.id))
     return res.data
   },
   fetchLists: async ({ commit, rootState }) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<List>> = await client.get<Array<List>>('/lists')
     commit(MUTATION_TYPES.CHANGE_LISTS, res.data)
     return res.data
@@ -63,7 +73,12 @@ const actions: ActionTree<ListMembershipState, RootState> = {
     const removedLists = lodash.difference(state.belongToLists, belongToLists)
     const addedLists = lodash.difference(belongToLists, state.belongToLists)
     commit(MUTATION_TYPES.CHANGE_BELONG_TO_LISTS, belongToLists)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const removedPromise = removedLists.map(id => {
       return client.del<{}>(`/lists/${id}/accounts`, {
         account_ids: [state.account!.id]

@@ -23,7 +23,12 @@ const mutations: MutationTree<TagState> = {
 const actions: ActionTree<TagState, RootState> = {
   search: ({ commit, rootState }, query: string): Promise<Array<Tag>> => {
     commit('TimelineSpace/Contents/changeLoading', true, { root: true })
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v2')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v2',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     return client
       .get<Results>('/search', { q: query, resolve: true })
       .then(res => {
