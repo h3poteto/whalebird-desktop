@@ -38,6 +38,13 @@ const timelineState = {
   }
 }
 
+const appState = {
+  namespaced: true,
+  state: {
+    proxyConfiguration: false
+  }
+}
+
 describe('HeaderMenu', () => {
   let store
   let localVue
@@ -48,7 +55,8 @@ describe('HeaderMenu', () => {
     store = new Vuex.Store({
       modules: {
         HeaderMenu: initStore(),
-        TimelineSpace: timelineState
+        TimelineSpace: timelineState,
+        App: appState
       }
     })
     mockedMegalodon.mockClear()

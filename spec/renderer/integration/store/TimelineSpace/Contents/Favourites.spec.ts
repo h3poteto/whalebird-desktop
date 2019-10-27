@@ -133,6 +133,13 @@ const timelineState = {
   }
 }
 
+const appState = {
+  namespaced: true,
+  state: {
+    proxyConfiguration: false
+  }
+}
+
 describe('Favourites', () => {
   let store
   let localVue
@@ -143,7 +150,8 @@ describe('Favourites', () => {
     store = new Vuex.Store({
       modules: {
         Favourites: initStore(),
-        TimelineSpace: timelineState
+        TimelineSpace: timelineState,
+        App: appState
       }
     })
     mockedMegalodon.mockClear()

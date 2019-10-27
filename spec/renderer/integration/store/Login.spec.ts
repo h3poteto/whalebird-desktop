@@ -22,6 +22,13 @@ const initStore = () => {
   }
 }
 
+const appState = {
+  namespaced: true,
+  state: {
+    proxyConfiguration: false
+  }
+}
+
 describe('Login', () => {
   let store
   let localVue
@@ -31,7 +38,8 @@ describe('Login', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        Login: initStore()
+        Login: initStore(),
+        App: appState
       }
     })
   })
