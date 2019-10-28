@@ -2,7 +2,7 @@ import Mastodon, { Account, Relationship, Response } from 'megalodon'
 import Timeline, { TimelineState } from './AccountProfile/Timeline'
 import Follows, { FollowsState } from './AccountProfile/Follows'
 import Followers, { FollowersState } from './AccountProfile/Followers'
-import { Module, MutationTree, ActionTree } from 'vuex'
+import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type AccountProfileState = {
@@ -165,6 +165,21 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   }
 }
 
+const getters: GetterTree<AccountProfileState, RootState> = {
+  isOwnProfile: (state, _getters, rootState) => {
+    if (!state.account) {
+      return false
+    }
+    const own = rootState.TimelineSpace.account
+    // For Mastodon
+    if (`${own.baseURL}/@${own.username}` === state.account.url) {
+      return true
+    }
+    // For Pleroma
+    return `${own.baseURL}/users/${own.username}` === state.account.url
+  }
+}
+
 const AccountProfile: Module<AccountProfileState, RootState> = {
   namespaced: true,
   modules: {
@@ -174,7 +189,8 @@ const AccountProfile: Module<AccountProfileState, RootState> = {
   },
   state: state,
   mutations: mutations,
-  actions: actions
+  actions: actions,
+  getters: getters
 }
 
 class AccountNotFound extends Error {}
