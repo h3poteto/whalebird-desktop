@@ -122,11 +122,17 @@ const actions: ActionTree<NetworkState, RootState> = {
   updatePassword: ({ commit }, password: string) => {
     commit(MUTATION_TYPES.UPDATE_PASSWORD, password)
   },
-  saveProxyConfig: ({ state }) => {
+  saveProxyConfig: ({ state, dispatch }) => {
     const proxy: Proxy = {
       source: state.source,
       manualProxyConfig: state.proxy
     }
+    ipcRenderer.once('response-update-proxy-config', async () => {
+      dispatch('App/loadProxy', {}, { root: true })
+      // Originally we have to restart all streamings after user change proxy configuration.
+      // But streamings are restart after close preferences.
+      // So we don't have to restart streaming here.
+    })
     ipcRenderer.send('update-proxy-config', proxy)
   }
 }
