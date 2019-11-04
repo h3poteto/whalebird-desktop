@@ -376,6 +376,8 @@
   },
   "login": {
     "domain_name_label": "ドメイン名を入力してマストドンにログインしてください．",
+    "proxy_info": "もしプロキシを利用する場合は",
+    "proxy_here": "こちら．",
     "search": "検索",
     "login": "ログイン"
   },
