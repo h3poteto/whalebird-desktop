@@ -376,6 +376,8 @@
   },
   "login": {
     "domain_name_label": "First, let's log in to a Mastodon instance. Please enter an instance domain name.",
+    "proxy_info": "If you want to use proxy server, please setup your proxy in",
+    "proxy_here": " here",
     "search": "Search",
     "login": "Login"
   },

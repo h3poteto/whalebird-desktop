@@ -11,6 +11,9 @@
     <el-form-item :label="$t('login.domain_name_label')" prop="domainName">
       <el-input v-model="form.domainName" placeholder="mastodon.social" v-shortkey="['enter']" @shortkey.native="handleKey"></el-input>
     </el-form-item>
+    <p class="proxy-info">
+      {{ $t('login.proxy_info') }}<router-link to="/preferences/network">{{ $t('login.proxy_here') }}</router-link>
+    </p>
     <!-- Dummy form to guard submitting with enter -->
     <el-form-item class="hidden">
       <el-input></el-input>
@@ -164,6 +167,11 @@ export default {
 
   .hidden {
     display: none;
+  }
+
+  .proxy-info {
+    color: #dcdfe6;
+    margin-bottom: 24px;
   }
 }
 </style>

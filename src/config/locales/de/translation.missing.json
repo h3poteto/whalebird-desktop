@@ -79,5 +79,9 @@
     "follow_request_accept_error": "Failed to accept the request",
     "follow_reuqest_reject_error": "failed to reject the request",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}"
+  },
+  "login": {
+    "proxy_info": "If you want to use proxy server, please setup your proxy in",
+    "proxy_here": " here"
   }
 }
