@@ -349,7 +349,6 @@
     "add_user_error": "사용자를 추가할 수 없습니다",
     "authorize_url_error": "인증 URL을 가져올 수 없습니다",
     "domain_confirmed": "{{domain}} 도메인이 확인되었습니다. 로그인 해주세요.",
-    "domain_doesnt_exist": "{{domain}} 도메인이 없습니다.",
     "loading": "로딩중..."
   },
   "validation": {

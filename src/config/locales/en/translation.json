@@ -425,7 +425,7 @@
     "add_user_error": "Failed to add user",
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
-    "domain_doesnt_exist": "{{domain}} does not exist",
+    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the instance URL",
     "loading": "Loading..."
   },
   "validation": {

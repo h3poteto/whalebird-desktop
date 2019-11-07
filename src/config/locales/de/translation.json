@@ -368,7 +368,6 @@
     "add_user_error": "Hinzufügen des Benutzers fehlgeschlagen",
     "authorize_url_error": "Konnte Zugrifss-URL nicht laden",
     "domain_confirmed": "{{domain}} ist bestätigt, bitte einloggen",
-    "domain_doesnt_exist": "{{domain}} existiert nicht",
     "loading": "Laden..."
   },
   "validation": {

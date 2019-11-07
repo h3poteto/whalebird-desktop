@@ -365,7 +365,6 @@
     "add_user_error": "Impossibile aggiungere un utente",
     "authorize_url_error": "Impossibile ottenere l'URL di autorizzazione",
     "domain_confirmed": "{{domain}} è confermato, per favore accedi",
-    "domain_doesnt_exist": "{{domain}} non esiste",
     "loading": "Caricamento..."
   },
   "validation": {
