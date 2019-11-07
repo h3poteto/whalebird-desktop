@@ -1,10 +1,10 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain } from '~/spec/mock/electron'
-import axios from 'axios'
+import Mastodon, { Instance, Response } from 'megalodon'
 import Login, { LoginState } from '@/store/Login'
 
-jest.mock('axios')
+jest.mock('megalodon')
 
 const state = (): LoginState => {
   return {
@@ -78,14 +78,53 @@ describe('Login', () => {
       // Provide Promise.resolve for finally keywrod.
       // https://github.com/facebook/jest/issues/6552
       // https://github.com/kulshekhar/ts-jest/issues/828
-      const mockedAxios = axios as any
-      const res: Promise<{}> = new Promise<{}>(resolve => {
+      const mockedClient = Mastodon as any
+      const instance: Promise<Response<Instance>> = new Promise<Response<Instance>>(resolve => {
+        const res: Response<Instance> = {
+          data: {
+            uri: 'http://example.com',
+            title: 'test-mastodon',
+            description: 'description',
+            email: 'hoge@example.com',
+            version: '1.0.0',
+            thumbnail: null,
+            urls: {
+              streaming_api: 'http://example.com'
+            },
+            stats: {
+              user_count: 1,
+              status_count: 10,
+              domain_count: 10
+            },
+            languages: ['en'],
+            contact_account: null
+          } as Instance,
+          status: 200,
+          statusText: '200',
+          headers: null
+        }
+        resolve(res)
+      })
+      mockedClient.get.mockImplementation(() => instance)
+      const result = await store.dispatch('Login/confirmInstance', 'pleroma.io')
+      expect(result).toEqual(true)
+      expect(store.state.Login.selectedInstance).toEqual('pleroma.io')
+    })
+
+    it('should failover host-meta', async () => {
+      const mockedClient = Mastodon as any
+      // @ts-ignore
+      const instance: Promise<any> = new Promise<any>((resolve, reject) => {
+        const err = new Error('err')
+        reject(err)
+      })
+      const hostMeta: Promise<{}> = new Promise<{}>(resolve => {
         resolve({
           data:
             '<?xml version="1.0" encoding="UTF-8"?><XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link rel="lrdd" template="https://pleroma.io/.well-known/webfinger?resource={uri}" type="application/xrd+xml" /></XRD>'
         })
       })
-      mockedAxios.get.mockImplementation(() => res)
+      mockedClient.get.mockImplementationOnce(() => instance).mockImplementationOnce(() => hostMeta)
       const result = await store.dispatch('Login/confirmInstance', 'pleroma.io')
       expect(result).toEqual(true)
       expect(store.state.Login.selectedInstance).toEqual('pleroma.io')
