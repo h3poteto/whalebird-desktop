@@ -46,13 +46,14 @@ const actions: ActionTree<LoginState, RootState> = {
   },
   confirmInstance: async ({ commit, rootState }, domain: string): Promise<boolean> => {
     commit(MUTATION_TYPES.CHANGE_SEARCHING, true)
+    const cleanDomain = domain.trim()
     try {
-      await Mastodon.get<Instance>('/api/v1/instance', {}, `https://${domain}`, rootState.App.proxyConfiguration)
+      await Mastodon.get<Instance>('/api/v1/instance', {}, `https://${cleanDomain}`, rootState.App.proxyConfiguration)
       commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
     } catch (err) {
       // https://gist.github.com/okapies/60d62d0df0163bbfb4ab09c1766558e8
       // Check /.well-known/host-meta to confirm mastodon instance.
-      const res = await Mastodon.get<any>('/.well-known/host-meta', {}, `https://${domain}`, rootState.App.proxyConfiguration).finally(
+      const res = await Mastodon.get<any>('/.well-known/host-meta', {}, `https://${cleanDomain}`, rootState.App.proxyConfiguration).finally(
         () => {
           commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
         }
@@ -60,11 +61,11 @@ const actions: ActionTree<LoginState, RootState> = {
       const parser = new DOMParser()
       const dom = parser.parseFromString(res.data, 'text/xml')
       const link = dom.getElementsByTagName('Link')[0].outerHTML
-      if (!link.includes(`https://${domain}/.well-known/webfinger`)) {
+      if (!link.includes(`https://${cleanDomain}/.well-known/webfinger`)) {
         throw new Error('domain is not activity pub')
       }
     }
-    commit(MUTATION_TYPES.CHANGE_INSTANCE, domain)
+    commit(MUTATION_TYPES.CHANGE_INSTANCE, cleanDomain)
     return true
   }
 }
