@@ -323,7 +323,7 @@
       "reblog": "Condividi",
       "fav": "Preferisci",
       "detail": "Dettagli del Toot",
-      "pinned": "Toot Fissati"
+      "pinned": "Toot Fissati",
       "poll": {
         "vote": "Vota",
         "votes_count": "voti",
@@ -436,7 +436,7 @@
     "new_toot": {
       "toot_length": "La lunghezza del toot deve essere da {{min}} a {{max}}",
       "attach_length": "È possibile allegare fino a {{max}} immagini",
-      "attach_image": "È possibile allegare solo immagini o video"
+      "attach_image": "È possibile allegare solo immagini o video",
       "poll_invalid": "Scelte del sondaggio non valide"
     }
   },
