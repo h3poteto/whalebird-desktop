@@ -395,7 +395,6 @@
     "add_user_error": "Erreur lors de l'ajout d'un utilisateur⋅trice",
     "authorize_url_error": "Erreur à la récupération de l'URL d'autorisation",
     "domain_confirmed": "{{domain}} est confirmé, veuillez à présent vous connecter",
-    "domain_doesnt_exist": "{{domain}} n'existe pas",
     "loading": "Chargement..."
   },
   "validation": {
