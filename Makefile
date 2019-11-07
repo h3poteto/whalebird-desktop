@@ -24,6 +24,7 @@ linux:
 	mv build/Whalebird-${VERSION}-linux-x86_64.rpm build/Whalebird-${VERSION}-linux-x64.rpm
 	mv build/Whalebird-${VERSION}-linux-i386.deb build/Whalebird-${VERSION}-linux-ia32.deb
 	mv build/Whalebird-${VERSION}-linux-i686.rpm build/Whalebird-${VERSION}-linux-ia32.rpm
+	mv build/Whalebird-${VERSION}-linux-x86_64.AppImage build/Whalebird-${VERSION}-linux-x64.AppImage
 
 win32:
 	npm run package:win32
