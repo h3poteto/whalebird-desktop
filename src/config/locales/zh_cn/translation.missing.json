@@ -40,6 +40,6 @@
     "proxy_here": " here"
   },
   "message": {
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the instance URL"
+    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL"
   }
 }

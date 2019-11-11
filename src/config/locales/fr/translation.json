@@ -347,7 +347,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Tout d'abord, connectons-nous à votre instance Mastodon.  Entez votre nom de domaine :",
+    "domain_name_label": "Tout d'abord, connectons-nous à votre serveur Mastodon.  Entez votre nom de domaine :",
     "search": "Rechercher",
     "login": "Connexion"
   },
