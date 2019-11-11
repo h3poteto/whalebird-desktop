@@ -323,7 +323,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Als erstes wollen wir uns bei einer Mastodon-Instanz anmelden. Bitte gib den Domainnamen einer Instanz an.",
+    "domain_name_label": "Als erstes wollen wir uns bei einer Mastodon-Server anmelden. Bitte gib den Domainnamen einer Server an.",
     "search": "Suche",
     "login": "Anmelden"
   },

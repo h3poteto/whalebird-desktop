@@ -287,7 +287,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Na początek musisz się zalogować na instancję Mastodona. Wprowadź domenę instancji.",
+    "domain_name_label": "Na początek musisz się zalogować na serwerze Mastodona. Wprowadź domenę serwerze.",
     "search": "Znajdź",
     "login": "Zaloguj się"
   },

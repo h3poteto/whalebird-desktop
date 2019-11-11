@@ -119,7 +119,7 @@
     "follow_request_accept_error": "Failed to accept the request",
     "follow_reuqest_reject_error": "failed to reject the request",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the instance URL"
+    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL"
   },
   "validation": {
     "new_toot": {

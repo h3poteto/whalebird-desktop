@@ -320,7 +320,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Innanzitutto, esegui l'accesso ad un'istanza di Mastodon. Si prega di inserire un nome di dominio di istanza.",
+    "domain_name_label": "Innanzitutto, esegui l'accesso a un server di Mastodon. Si prega di inserire un nome di dominio di server.",
     "search": "Cerca",
     "login": "Accesso"
   },
