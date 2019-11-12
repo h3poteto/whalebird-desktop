@@ -11,7 +11,7 @@ export type NetworkState = {
 
 const state = (): NetworkState => {
   return {
-    source: ProxySource.no,
+    source: ProxySource.system,
     proxy: {
       protocol: '',
       host: '',

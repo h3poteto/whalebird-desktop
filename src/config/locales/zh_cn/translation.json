@@ -395,7 +395,6 @@
     "add_user_error": "添加用户失败",
     "authorize_url_error": "无法获取认证 URL",
     "domain_confirmed": "{{domain}} 已确认，请登录",
-    "domain_doesnt_exist": "{{domain}} 不存在",
     "loading": "加载中..."
   },
   "validation": {

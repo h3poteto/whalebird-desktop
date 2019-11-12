@@ -67,7 +67,7 @@ const appearance: Appearance = {
 }
 
 const proxy: Proxy = {
-  source: ProxySource.no,
+  source: ProxySource.system,
   manualProxyConfig: {
     protocol: '',
     host: '',
