@@ -172,35 +172,74 @@ describe('TimelineSpace/Contents/Mentions', () => {
 
     describe('appendMentions', () => {
       describe('heading', () => {
-        beforeEach(() => {
-          state = {
-            lazyLoading: false,
-            heading: true,
-            mentions: [notification1],
-            unreadMentions: [],
-            filter: ''
-          }
+        describe('normal', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: true,
+              mentions: [notification1],
+              unreadMentions: [],
+              filter: ''
+            }
+          })
+          it('should update mentions', () => {
+            Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
+            expect(state.mentions).toEqual([notification2, notification1])
+            expect(state.unreadMentions).toEqual([])
+          })
         })
-        it('should update mentions', () => {
-          Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
-          expect(state.mentions).toEqual([notification2, notification1])
-          expect(state.unreadMentions).toEqual([])
+
+        describe('duplicated status', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: true,
+              mentions: [notification2, notification1],
+              unreadMentions: [],
+              filter: ''
+            }
+          })
+          it('should not be updated mentions', () => {
+            Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
+            expect(state.mentions).toEqual([notification2, notification1])
+            expect(state.unreadMentions).toEqual([])
+          })
         })
       })
+
       describe('not heading', () => {
-        beforeEach(() => {
-          state = {
-            lazyLoading: false,
-            heading: false,
-            mentions: [notification1],
-            unreadMentions: [],
-            filter: ''
-          }
+        describe('normal', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: false,
+              mentions: [notification1],
+              unreadMentions: [],
+              filter: ''
+            }
+          })
+          it('should update mentions', () => {
+            Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
+            expect(state.mentions).toEqual([notification1])
+            expect(state.unreadMentions).toEqual([notification2])
+          })
         })
-        it('should update mentions', () => {
-          Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
-          expect(state.mentions).toEqual([notification1])
-          expect(state.unreadMentions).toEqual([notification2])
+
+        describe('duplicated status', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: false,
+              mentions: [notification1],
+              unreadMentions: [notification2],
+              filter: ''
+            }
+          })
+          it('should not be updated mentions', () => {
+            Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
+            expect(state.mentions).toEqual([notification1])
+            expect(state.unreadMentions).toEqual([notification2])
+          })
         })
       })
     })

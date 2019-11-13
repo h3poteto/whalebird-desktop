@@ -40,10 +40,13 @@ const mutations: MutationTree<MentionsState> = {
     state.heading = value
   },
   [MUTATION_TYPES.APPEND_MENTIONS]: (state, update: Notification) => {
-    if (state.heading) {
-      state.mentions = [update].concat(state.mentions)
-    } else {
-      state.unreadMentions = [update].concat(state.unreadMentions)
+    // Reject duplicated status in timeline
+    if (!state.mentions.find(item => item.id === update.id) && !state.unreadMentions.find(item => item.id === update.id)) {
+      if (state.heading) {
+        state.mentions = [update].concat(state.mentions)
+      } else {
+        state.unreadMentions = [update].concat(state.unreadMentions)
+      }
     }
   },
   [MUTATION_TYPES.UPDATE_MENTIONS]: (state, messages: Array<Notification>) => {
