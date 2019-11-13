@@ -184,5 +184,78 @@ describe('TimelineSpace/Contents/Notifications', () => {
         })
       })
     })
+
+    describe('appendTimeline', () => {
+      describe('heading', () => {
+        describe('normal', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: true,
+              notifications: [notification1],
+              unreadNotifications: [],
+              filter: ''
+            }
+          })
+          it('should update timeline', () => {
+            Notifications.mutations![MUTATION_TYPES.APPEND_NOTIFICATIONS](state, notification2)
+            expect(state.notifications).toEqual([notification2, notification1])
+            expect(state.unreadNotifications).toEqual([])
+          })
+        })
+
+        describe('duplicated status', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: true,
+              notifications: [notification2, notification1],
+              unreadNotifications: [],
+              filter: ''
+            }
+          })
+          it('should not update timeline', () => {
+            Notifications.mutations![MUTATION_TYPES.APPEND_NOTIFICATIONS](state, notification2)
+            expect(state.notifications).toEqual([notification2, notification1])
+            expect(state.unreadNotifications).toEqual([])
+          })
+        })
+      })
+
+      describe('not heading', () => {
+        describe('normal', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: false,
+              notifications: [notification1],
+              unreadNotifications: [],
+              filter: ''
+            }
+          })
+          it('should update unreadTimeline', () => {
+            Notifications.mutations![MUTATION_TYPES.APPEND_NOTIFICATIONS](state, notification2)
+            expect(state.notifications).toEqual([notification1])
+            expect(state.unreadNotifications).toEqual([notification2])
+          })
+        })
+        describe('duplicated status', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: false,
+              notifications: [notification1],
+              unreadNotifications: [notification2],
+              filter: ''
+            }
+          })
+          it('should not update unreadTimeline', () => {
+            Notifications.mutations![MUTATION_TYPES.APPEND_NOTIFICATIONS](state, notification2)
+            expect(state.notifications).toEqual([notification1])
+            expect(state.unreadNotifications).toEqual([notification2])
+          })
+        })
+      })
+    })
   })
 })

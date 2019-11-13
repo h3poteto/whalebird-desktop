@@ -46,10 +46,13 @@ const mutations: MutationTree<HomeState> = {
     state.heading = value
   },
   [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Status) => {
-    if (state.heading) {
-      state.timeline = [update].concat(state.timeline)
-    } else {
-      state.unreadTimeline = [update].concat(state.unreadTimeline)
+    // Reject duplicated status in timeline
+    if (!state.timeline.find(item => item.id === update.id) && !state.unreadTimeline.find(item => item.id === update.id)) {
+      if (state.heading) {
+        state.timeline = [update].concat(state.timeline)
+      } else {
+        state.unreadTimeline = [update].concat(state.unreadTimeline)
+      }
     }
   },
   [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Status>) => {
