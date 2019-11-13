@@ -41,10 +41,16 @@ const mutations: MutationTree<NotificationsState> = {
     state.heading = value
   },
   [MUTATION_TYPES.APPEND_NOTIFICATIONS]: (state, notification: Notification) => {
-    if (state.heading) {
-      state.notifications = [notification].concat(state.notifications)
-    } else {
-      state.unreadNotifications = [notification].concat(state.unreadNotifications)
+    // Reject duplicated status in timeline
+    if (
+      !state.notifications.find(item => item.id === notification.id) &&
+      !state.unreadNotifications.find(item => item.id === notification.id)
+    ) {
+      if (state.heading) {
+        state.notifications = [notification].concat(state.notifications)
+      } else {
+        state.unreadNotifications = [notification].concat(state.unreadNotifications)
+      }
     }
   },
   [MUTATION_TYPES.UPDATE_NOTIFICATIONS]: (state, notifications: Array<Notification>) => {
