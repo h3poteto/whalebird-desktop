@@ -159,7 +159,7 @@
       },
       "font_size": "Dimensione carattere",
       "font_family": "Tipo di carattere",
-      "toot_padding": "Spaziatura attorno ai toot",
+      "toot_padding": "Spaziatura intorno ai toots",
       "display_style": {
         "title": "Visualizza lo stile del nome utente",
         "display_name_and_username": "Visualizza nome e nome utente",
@@ -200,8 +200,8 @@
       "proxy": {
         "title": "Configurazione Proxy",
         "no": "Nessun proxy",
-        "system": "Usa impostazioni proxy di sistema",
-        "manual": "Configurazione manuale proxy",
+        "system": "Usa proxy di sistema",
+        "manual": "Configurazione proxy manuale",
         "protocol": "Protocollo",
         "host": "Host",
         "port": "Porta",
@@ -237,13 +237,13 @@
       "status": "Cosa ti passa per la testa?",
       "cancel": "Annulla",
       "toot": "Toot",
-      "close_confirm": "Sei sicuro/a di voler cancellare il nuovo toot?",
+      "close_confirm": "Sei sicuro di voler cancellare il nuovo toot?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Annulla",
       "description": "Descrivi per i non vedenti",
       "footer": {
         "add_image": "Aggiungi immagini",
-        "poll": "Aggiungi un sondaggio",
+	"poll": "Aggiungi un sondaggio",
         "change_visibility": "Modifica visibilità",
         "change_sensitive": "Modifica sensibilità",
         "add_cw": "Aggiungi avviso sui contenuti",
@@ -284,7 +284,7 @@
       "ctrl_k": "Salta ad altre cronologie",
       "ctrl_n": "Apri una finestra modale per pubblicare un nuovo toot",
       "ctrl_enter": "Posta un toot",
-      "ctrl_r": "Ricarica la timeline attuale",
+      "ctrl_r": "Reload current timeline",
       "j": "Seleziona il prossimo toot",
       "k": "Seleziona il toot precedente",
       "h": "Abilita focalizzazione sulla colonna sinistra",
@@ -329,7 +329,7 @@
         "votes_count": "voti",
         "until": "fino a {{datetime}}",
         "left": "{{datetime}} mancanti",
-        "refresh": "Ricarica"
+        "refresh": "Aggiorna"
       }
     }
   },
@@ -375,8 +375,8 @@
     }
   },
   "login": {
-    "domain_name_label": "Innanzitutto, esegui l'accesso ad un server di Mastodon. Si prega di inserire il nome dominio del server.",
-    "proxy_info": "Se vuoi utilizzare un server proxy, si prega di impostare il proxy ",
+    "domain_name_label": "Innanzitutto, esegui l'accesso ad un server di Mastodon. Si prega di inserire il nome dominio di un server.",
+    "proxy_info": "Se vuoi utilizzare un server proxy, si prega di impostare il tuo proxy ",
     "proxy_here": "qui",
     "search": "Cerca",
     "login": "Accesso"
@@ -425,6 +425,7 @@
     "add_user_error": "Impossibile aggiungere un utente",
     "authorize_url_error": "Impossibile ottenere l'URL di autorizzazione",
     "domain_confirmed": "{{domain}} è confermato, per favore accedi",
+    "domain_doesnt_exist": "Impossibile connettersi a {{domain}}, assicurarsi che l'URL del server sia corretto",
     "loading": "Caricamento..."
   },
   "validation": {
@@ -445,8 +446,8 @@
       "body": "{{username}} ha preferito il tuo stato"
     },
     "follow": {
-      "title": "Seguaci",
-      "body": "{{username}} ti sta seguendo"
+      "title": "Seguiti",
+      "body": "{{username}} is now following you"
     },
     "reblog": {
       "title": "Condivisioni",
