@@ -31,7 +31,6 @@ export default class WebSocket {
     })
 
     this.listener.on('update', (status: Status) => {
-      log.info('receive update')
       updateCallback(status)
     })
 
