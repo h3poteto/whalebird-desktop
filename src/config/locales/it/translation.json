@@ -376,8 +376,8 @@
   },
   "login": {
     "domain_name_label": "Innanzitutto, esegui l'accesso ad un server di Mastodon. Si prega di inserire il nome dominio di un server.",
-    "proxy_info": "Se vuoi utilizzare un server proxy, si prega di impostare il tuo proxy ",
-    "proxy_here": "qui",
+    "proxy_info": "Se vuoi utilizzare un server proxy, si prega di impostare il tuo proxy",
+    "proxy_here": " qui",
     "search": "Cerca",
     "login": "Accesso"
   },
