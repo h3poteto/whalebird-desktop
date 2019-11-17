@@ -237,7 +237,7 @@
     "babel-register": "^6.26.0",
     "cfonts": "^2.3.0",
     "chai": "^4.2.0",
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.2",
     "copy-webpack-plugin": "^4.6.0",
     "core-js": "^3.0.0",
     "cross-env": "^5.1.6",
