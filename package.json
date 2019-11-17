@@ -229,7 +229,7 @@
     "@vue/test-utils": "^1.0.0-beta.29",
     "ajv": "^6.6.1",
     "all-object-keys": "^1.1.1",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.5",
     "babel-minify-webpack-plugin": "^0.3.1",
