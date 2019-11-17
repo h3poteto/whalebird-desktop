@@ -283,7 +283,7 @@
     "typescript": "^3.3.4000",
     "url-loader": "^1.1.2",
     "vue-html-loader": "^1.2.4",
-    "vue-loader": "^15.2.4",
+    "vue-loader": "^15.7.2",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.39.2",
