@@ -1,3 +1,12 @@
 files:
   - source: /src/config/locales/en/translation.json
-    translation: /src/config/locales/%two_letters_code%/translation.json
+    translation: /src/config/locales/%locale%/translation.json
+    languages_mapping:
+      locale:
+        'de': 'de'
+        'fr': 'fr'
+        'it': 'it'
+        'ja': 'ja'
+        'ko': 'ko'
+        'pl': 'pl'
+        'zh-CN': 'zh_cn'
