@@ -5,20 +5,20 @@ import Backend from 'i18next-sync-fs-backend'
 const options: InitOptions = {
   initImmediate: false,
   lng: 'en',
+  fallbackLng: 'en',
+  saveMissing: true,
   backend: {
     // path where resources get loaded from
     loadPath: path.resolve(__dirname, './locales/{{lng}}/{{ns}}.json'),
 
     // path to post missing resources
-    addPath: path.resolve(__dirname, './locales/{{lng}}/{{ns}}.missing.json'),
+    addPath: path.resolve(__dirname, './locales/en/{{ns}}.json'),
 
     // jsonIndent to use when storing json files
     jsonIndent: 2
   }
 }
 
-i18next
-  .use(Backend)
-  .init(options)
+i18next.use(Backend).init(options)
 
 export default i18next
