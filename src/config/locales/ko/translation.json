@@ -2,125 +2,125 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "about": "Whalebird 에 대하여",
+      "preferences": "설정",
+      "services": "서비스",
+      "hide": "Whalebird 숨기기",
+      "hide_others": "나머지 숨기기",
+      "show_all": "모두 보이기",
+      "open": "창 열기",
+      "quit": "나가기"
     },
     "toot": {
-      "name": "Toot",
-      "new": "New Toot"
+      "name": "툿",
+      "new": "새 툿"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "수정",
+      "undo": "되돌리기",
+      "redo": "다시 실행",
+      "cut": "잘라내기",
+      "copy": "복사",
+      "paste": "붙여넣기",
+      "select_all": "모두 선택"
     },
     "view": {
-      "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "name": "보이기",
+      "toggle_full_screen": "전체화면 토글"
     },
     "window": {
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
-      "jump_to": "Jump to"
+      "name": "창",
+      "close": "창 닫기",
+      "open": "창 열기",
+      "minimize": "최소화",
+      "jump_to": "이동"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "계정 추가"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
-    "collapse": "Collapse",
-    "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
+    "profile": "프로필",
+    "show_profile": "프로필 보기",
+    "edit_profile": "프로필 수정",
+    "settings": "설정",
+    "collapse": "접기",
+    "expand": "펼치기",
+    "home": "홈",
+    "notification": "알림",
     "mention": "Mention",
-    "direct": "Direct messages",
+    "direct": "메세지",
     "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists"
+    "favourite": "즐겨찾기",
+    "local": "로컬",
+    "public": "연합",
+    "hashtag": "해시태그",
+    "search": "검색",
+    "lists": "리스트"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
+    "home": "홈",
+    "notification": "알림",
     "mention": "Mention",
-    "favourite": "Favourite",
+    "favourite": "즐겨찾기",
     "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists",
-    "members": "Members",
+    "direct_messages": "메세지",
+    "local": "로컬",
+    "public": "연합",
+    "hashtag": "해시태그",
+    "search": "검색",
+    "lists": "리스트",
+    "members": "멤버",
     "filter": {
-      "title": "Filter",
-      "placeholder": "Filter out by regular expressions",
+      "title": "필터",
+      "placeholder": "정규식으로 필터링",
       "show_dms": "Show direct messages",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "show_reblogs": "부스트 표시",
+      "show_replies": "답글 표시",
+      "apply": "적용"
     },
-    "new_toot": "Toot",
-    "reload": "Reload",
-    "settings": "Settings"
+    "new_toot": "툿",
+    "reload": "새로고침",
+    "settings": "설정"
   },
   "settings": {
-    "title": "Settings",
+    "title": "설정",
     "general": {
-      "title": "General",
+      "title": "일반",
       "toot": {
-        "title": "Toot",
+        "title": "툿",
         "visibility": {
-          "description": "Customize default visibility of toot.",
-          "public": "Public",
-          "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "description": "툿의 기본 공개범위를 변경합니다.",
+          "public": "공개",
+          "unlisted": "미등록",
+          "private": "비공개",
+          "direct": "다이렉트"
         },
         "sensitive": {
-          "description": "Mark media as sensitive by default"
+          "description": "자동으로 모든 미디어를 민감한 미디어로 분류"
         }
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "타임라인",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "title": "읽지 않은 알림",
+        "description": "각 타임라인마다 새 알림 표시 여부를 설정합니다.",
+        "direct": "메세지",
+        "local": "로컬",
+        "public": "퍼블릭"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "설정",
     "general": {
-      "title": "General",
+      "title": "일반",
       "sounds": {
-        "title": "Sounds",
-        "description": "Please set feedback sounds.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "title": "사운드",
+        "description": "피드백 소리를 설정해 주세요.",
+        "fav_rb": "툿을 즐겨찾기하거나 부스트 했을 때",
+        "toot": "새 툿을 보낼 때"
       },
       "timeline": {
         "title": "Timeline",
@@ -135,65 +135,65 @@
       }
     },
     "appearance": {
-      "title": "Appearance",
-      "theme_color": "Theme color",
+      "title": "외관",
+      "theme_color": "테마 색상",
       "theme": {
-        "light": "Light",
-        "dark": "Dark",
+        "light": "밝은 테마",
+        "dark": "어두운 테마",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "사용자 설정"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
-        "wrapper_mask_color": "Modal wrapper"
+        "background_color": "기본 배경 색상",
+        "selected_background_color": "선택 배경 색상",
+        "global_header_color": "계정 메뉴 색상",
+        "side_menu_color": "사이드 바 색상",
+        "primary_color": "기본 글꼴 색상",
+        "regular_color": "레귤러 글꼴 색상",
+        "secondary_color": "보조 글꼴 색상",
+        "border_color": "경계선 색상",
+        "header_menu_color": "헤더 메뉴 색상",
+        "wrapper_mask_color": "모달 랩퍼 색상"
       },
-      "font_size": "Font size",
-      "font_family": "Font family",
+      "font_size": "글꼴 크기",
+      "font_family": "글꼴 패밀리",
       "toot_padding": "Padding around toots",
       "display_style": {
-        "title": "Display style of username",
-        "display_name_and_username": "Display name and username",
-        "display_name": "Display name",
-        "username": "Username"
+        "title": "사용자 표시 형식",
+        "display_name_and_username": "닉네임과 아이디 모두 보이기",
+        "display_name": "닉네임만 보이기",
+        "username": "아이디만 보이기"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "title": "시간 표시 형식",
+        "absolute": "고정 시각 표시",
+        "relative": "상대 시간 표시"
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "알림",
       "enable": {
-        "description": "Please set notification events.",
-        "reply": "Notify me when I receive a reply",
-        "reblog": "Notify me when I receive a reblog",
-        "favourite": "Notify me when I receive a favourite",
-        "follow": "Notify me when I receive a follow"
+        "description": "알림 범위를 설정해 주세요.",
+        "reply": "답장을 받았을 때 알림을 받습니다",
+        "reblog": "누군가 부스트했을 때 알림을 받습니다",
+        "favourite": "누군가 즐겨찾기 했을 때 알림을 받습니다",
+        "follow": "누군가 나를 팔로우 했을 때 알림을 받습니다"
       }
     },
     "account": {
-      "title": "Account",
-      "connected": "Connected Account",
-      "username": "Username",
-      "domain": "Domain",
-      "association": "Association",
-      "order": "Order",
-      "remove_association": "Remove assocication",
-      "remove_all_associations": "Remove all associations",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "confirm_message": "Are you sure to remove all associations?"
+      "title": "계정",
+      "connected": "연결된 계정",
+      "username": "닉네임",
+      "domain": "도메인",
+      "association": "연결된 계정",
+      "order": "순서",
+      "remove_association": "연결 해제",
+      "remove_all_associations": "모든 연결 해제",
+      "confirm": "확인",
+      "cancel": "취소",
+      "confirm_message": "모든 연결을 해제하시겠습니까?"
     },
     "network": {
       "title": "Network",
@@ -219,35 +219,35 @@
       "save": "Save"
     },
     "language": {
-      "title": "Language",
-      "language_description": "Choose the language you would like to use with Whalebird.",
-      "notice": "Requires relaunch",
+      "title": "언어",
+      "language_description": "Whalebird에서 사용할 언어를 선택해 주세요.",
+      "notice": "재실행이 필요합니다",
       "confirm": {
-        "title": "Warning",
-        "message": "You have to restart this application. Continue?",
-        "ok": "Restart Now",
-        "cancel": "Cancel"
+        "title": "알림",
+        "message": "어플리케이션을 재실행해야 합니다. 계속할까요?",
+        "ok": "지금 재실행",
+        "cancel": "취소"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
-      "cw": "Write your warning here",
-      "status": "What is on your mind?",
-      "cancel": "Cancel",
-      "toot": "Toot",
-      "close_confirm": "Are you sure you want to cancel the new toot?",
-      "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Cancel",
-      "description": "Describe for the visually impaired",
+      "title": "새 툿",
+      "cw": "여기에 경고 문구를 입력하세요",
+      "status": "무슨 생각을 하고 있나요?",
+      "cancel": "취소",
+      "toot": "툿",
+      "close_confirm": "툿 작성을 그만둘까요?",
+      "close_confirm_ok": "예",
+      "close_confirm_cancel": "취소",
+      "description": "시각장애인을 위한 설명",
       "footer": {
-        "add_image": "Add images",
+        "add_image": "이미지 추가",
         "poll": "Add a poll",
-        "change_visibility": "Change visibility",
-        "change_sensitive": "Change sensitive",
-        "add_cw": "Add content warning",
-        "pined_hashtag": "Pin the hashtag"
+        "change_visibility": "공개 범위 변경",
+        "change_sensitive": "민감한 미디어 설정",
+        "add_cw": "경고 문구 추가",
+        "pined_hashtag": "해시태그고정"
       },
       "poll": {
         "add_choice": "Add a choice",
@@ -263,41 +263,41 @@
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "이동"
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "리스트에 멤버 추가",
+      "account_name": "계정 이름"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "리스트 멤버"
     },
     "mute_confirm": {
-      "title": "Are you sure you want to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "정말로 뮤트하시겠습니까?",
+      "body": "이 사용자로부터의 모든 알림이 꺼집니다.",
+      "cancel": "취소",
+      "ok": "뮤트"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
+      "title": "키보드 단축키",
+      "ctrl_number": "계정 변경",
+      "ctrl_k": "다른 타임라인으로 이동",
+      "ctrl_n": "새 툿 작성창 띄우기",
+      "ctrl_enter": "툿 보내기",
       "ctrl_r": "Reload current timeline",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
-      "?": "Show this help",
-      "esc": "Close current page"
+      "j": "다음 툿으로 이동",
+      "k": "이전 툿으로 이동",
+      "h": "왼쪽 칼럼으로 포커스 이동",
+      "l": "오른쪽 칼럼으로 포커스 이동",
+      "r": "툿에 멘션 보내기",
+      "b": "툿 부스트",
+      "f": "툿 즐겨찾기",
+      "o": "툿 세부사항 열기",
+      "p": "툿 작성자 프로필 열기",
+      "i": "이미지 열기",
+      "x": "경고 문구 및 민감한 미디어 토글",
+      "?": "이 도움말 보이기",
+      "esc": "현재 페이지 닫기"
     },
     "report": {
       "title": "Reporting this user",
@@ -308,22 +308,22 @@
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
-      "sensitive": "Show sensitive content",
-      "view_toot_detail": "View Toot Detail",
-      "open_in_browser": "Open in Browser",
-      "copy_link_to_toot": "Copy Link to Toot",
-      "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
-      "delete": "Delete",
-      "via": "via {{application}}",
-      "reply": "Reply",
-      "reblog": "Reblog",
-      "fav": "Favourite",
-      "detail": "Toot details",
-      "pinned": "Pinned toot",
+      "show_more": "더보기",
+      "hide": "숨기기",
+      "sensitive": "민감한 미디어 표시",
+      "view_toot_detail": "툿 자세히 보기",
+      "open_in_browser": "브라우저에서 열기",
+      "copy_link_to_toot": "툿 링크 복사하기",
+      "mute": "뮤트",
+      "block": "차단",
+      "report": "신고",
+      "delete": "삭제",
+      "via": "{{application}} 에서",
+      "reply": "답장하기",
+      "reblog": "부스트",
+      "fav": "즐겨찾기",
+      "detail": "툿 자세히 보기",
+      "pinned": "고정 된 툿",
       "poll": {
         "vote": "Vote",
         "votes_count": "votes",
@@ -335,21 +335,21 @@
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
-      "doesnt_follow_you": "Doesn't follow you",
-      "detail": "Detail",
-      "follow": "Follow",
-      "unfollow": "Unfollow",
-      "follow_requested": "Follow requested",
-      "open_in_browser": "Open in Browser",
-      "manage_list_memberships": "Manage List Memberships",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
-      "toots": "Toots",
-      "follows": "Follows",
-      "followers": "Followers"
+      "follows_you": "사용자를 팔로잉 중입니다",
+      "doesnt_follow_you": "사용자를 팔로잉하지 않습니다",
+      "detail": "자세히",
+      "follow": "팔로우",
+      "unfollow": "언팔로우",
+      "follow_requested": "팔로우 요청중",
+      "open_in_browser": "브라우저에서 열기",
+      "manage_list_memberships": "리스트 멤버 관리",
+      "mute": "뮤트",
+      "unmute": "뮤트 해제",
+      "unblock": "차단 해제",
+      "block": "차단",
+      "toots": "툿",
+      "follows": "팔로잉",
+      "followers": "팔로워"
     }
   },
   "follow_requests": {
@@ -357,86 +357,86 @@
     "reject": "Reject"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "태그 이름",
+    "delete_tag": "태그 삭제",
+    "save_tag": "태그 저장"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
-    "toot": "Toot"
+    "search": "검색",
+    "account": "계정",
+    "tag": "해시태그",
+    "keyword": "키워드",
+    "toot": "툿"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
-      "edit": "Edit"
+      "new_list": "새 리스트",
+      "edit": "수정"
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
+    "domain_name_label": "우선, 마스토돈 인스턴스에 로그인 할 거예요. 인스턴스 도메인 주소를 입력해주세요.",
     "proxy_info": "If you want to use proxy server, please setup your proxy in",
     "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "search": "검색",
+    "login": "로그인"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
-    "submit": "Submit"
+    "manually_1": "브라우저에서 인증 페이지가 열렸어요.",
+    "manually_2": "만약 열리지 않았다면, 아래 링크를 복사해서 브라우저에 입력해주세요.",
+    "code_label": "브라우저에 나타난 인증 코드를 복사해서 붙여넣어 주세요:",
+    "submit": "제출"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "여기에 놓아 업로드하세요"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
-    "preferences_load_error": "Failed to load preferences",
-    "timeline_fetch_error": "Failed to fetch timeline",
-    "notification_fetch_error": "Failed to fetch notification",
-    "favourite_fetch_error": "Failed to fetch favorite",
+    "account_load_error": "계정을 읽어 올 수 없습니다",
+    "account_remove_error": "계정을 제거할 수 없습니다",
+    "preferences_load_error": "설정을 읽을 수 없습니다",
+    "timeline_fetch_error": "타임라인을 가져올 수 없습니다",
+    "notification_fetch_error": "알림을 가져올 수 없습니다",
+    "favourite_fetch_error": "즐겨찾기를 가져올 수 없습니다",
     "follow_request_accept_error": "Failed to accept the request",
     "follow_reuqest_reject_error": "failed to reject the request",
-    "start_streaming_error": "Failed to start streaming",
+    "start_streaming_error": "스트리밍을 시작할 수 없습니다",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}",
-    "attach_error": "Could not attach the file",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
-    "authorize_error": "Failed to authorize",
-    "followers_fetch_error": "Failed to fetch followers",
-    "follows_fetch_error": "Failed to fetch follows",
-    "toot_fetch_error": "Failed to fetch the toot detail",
-    "follow_error": "Failed to follow the user",
-    "unfollow_error": "Failed to unfollow the user",
-    "lists_fetch_error": "Failed to fetch lists",
-    "list_create_error": "Failed to create a list",
-    "members_fetch_error": "Failed to fetch members",
-    "remove_user_error": "Failed to remove the user",
-    "find_account_error": "Account not found",
-    "reblog_error": "Failed to reblog",
-    "unreblog_error": "Failed to unreblog",
-    "favourite_error": "Failed to favourite",
-    "unfavourite_error": "Failed to unfavourite",
-    "delete_error": "Failed to delete the toot",
-    "search_error": "Failed to search",
-    "toot_error": "Failed to toot",
-    "update_list_memberships_error": "Failed to update the list memberships",
-    "add_user_error": "Failed to add user",
-    "authorize_url_error": "Failed to get authorize url",
-    "domain_confirmed": "{{domain}} is confirmed, please login",
+    "attach_error": "파일을 첨부할 수 없습니다",
+    "authorize_duplicate_error": "같은 도메인의 같은 계정을 중복 등록할 수 없습니다",
+    "authorize_error": "인증에 실패했습니다",
+    "followers_fetch_error": "팔로워 정보를 가져올 수 없습니다",
+    "follows_fetch_error": "팔로우 정보를 가져올 수 없습니다",
+    "toot_fetch_error": "툿 세부사항을 가져올 수 없습니다",
+    "follow_error": "사용자를 팔로우할 수 없습니다",
+    "unfollow_error": "사용자를 언팔로우할 수 없습니다",
+    "lists_fetch_error": "리스트를 가져올 수 없습니다",
+    "list_create_error": "리스트를 생성할 수 없습니다",
+    "members_fetch_error": "멤버를 가져올 수 없습니다",
+    "remove_user_error": "사용자를 제거할 수 없습니다",
+    "find_account_error": "계정을 찾을 수 없습니다",
+    "reblog_error": "부스트할 수 없습니다",
+    "unreblog_error": "부스트를 취소할 수 없습니다",
+    "favourite_error": "즐겨찾기를 설정할 수 없습니다",
+    "unfavourite_error": "즐겨찾기를 해제할 수 없습니다",
+    "delete_error": "툿을 삭제할 수 없습니다",
+    "search_error": "찾을 수 없습니다",
+    "toot_error": "툿을 보낼 수 없습니다",
+    "update_list_memberships_error": "리스트 멤버를 업데이트할 수 없습니다",
+    "add_user_error": "사용자를 추가할 수 없습니다",
+    "authorize_url_error": "인증 URL을 가져올 수 없습니다",
+    "domain_confirmed": "{{domain}} 도메인이 확인되었습니다. 로그인 해주세요.",
     "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
-    "loading": "Loading..."
+    "loading": "로딩중..."
   },
   "validation": {
     "login": {
-      "require_domain_name": "A domain name is required",
-      "domain_format": "Please only enter the domain name"
+      "require_domain_name": "도메인 주소가 필요합니다",
+      "domain_format": "도메인 주소만 입력해주세요"
     },
     "new_toot": {
-      "toot_length": "Toot length should be {{min}} to {{max}}",
-      "attach_length": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
+      "toot_length": "툿 글자수는 최소 {{min}} 자 에서 최대 {{max}} 자 입니다",
+      "attach_length": "사진은 최대 {{max}} 장 까지 첨부할 수 있습니다",
+      "attach_image": "이미지나 비디오만 첨부할 수 있습니다",
       "poll_invalid": "Invalid poll choices"
     }
   },
