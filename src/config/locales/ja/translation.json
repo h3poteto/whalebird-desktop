@@ -59,7 +59,7 @@
     "lists": "リスト"
   },
   "header_menu": {
-    "home": "Home",
+    "home": "ホーム",
     "notification": "通知",
     "mention": "返信",
     "favourite": "お気に入り",
@@ -216,7 +216,7 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "保存"
     },
     "language": {
       "title": "言語",
