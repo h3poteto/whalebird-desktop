@@ -20,7 +20,7 @@
       "undo": "Cofnij",
       "redo": "Powtórz",
       "cut": "Wytnij",
-      "copy": "Copy",
+      "copy": "Kopiuj",
       "paste": "Wklej",
       "select_all": "Zaznacz wszystko"
     },
@@ -173,7 +173,7 @@
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "Powiadomienia",
       "enable": {
         "description": "Please set notification events.",
         "reply": "Notify me when I receive reply",
