@@ -243,7 +243,7 @@
       "description": "Descrivi per i non vedenti",
       "footer": {
         "add_image": "Aggiungi immagini",
-	    "poll": "Aggiungi un sondaggio",
+        "poll": "Aggiungi un sondaggio",
         "change_visibility": "Modifica visibilità",
         "change_sensitive": "Modifica sensibilità",
         "add_cw": "Aggiungi avviso sui contenuti",
