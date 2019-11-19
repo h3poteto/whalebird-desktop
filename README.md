@@ -75,6 +75,11 @@ $ sudo snap install whalebird
 
 You can download `.exe` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
 
+## Translation
+If you can speak multiple languages, could you please help with translation in [Crowdin](https://crowdin.com/project/whalebird)?
+
+Or if you want add new language, please create an issue. I will add it.
+
 ## Development
 
 We'd love you to contribute to Whalebird.
@@ -100,15 +105,6 @@ $ npm install
 # serve with hot reload at localhost:9080
 $ npm run dev
 ```
-
-### How to add new language
-
-1. First, please prepare [translation](https://github.com/h3poteto/whalebird-desktop/blob/master/src/config/locales/fr/translation.json), and [translation missing](https://github.com/h3poteto/whalebird-desktop/blob/master/src/config/locales/fr/translation.missing.json) file for your language.
-2. Next, add your language to constants like [French](https://github.com/h3poteto/whalebird-desktop/blob/master/src/constants/language/index.js#L10-L13).
-3. Finally, add your language at [here](https://github.com/h3poteto/whalebird-desktop/blob/master/src/renderer/components/Preferences/Language.vue#L30).
-
-If there is something unknown, please refer to this pull request: https://github.com/h3poteto/whalebird-desktop/pull/502
-
 
 # License
 The software is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
