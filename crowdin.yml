@@ -10,7 +10,7 @@ files:
         it: it
         ja: ja
         ko: ko
-        no: no
+        'no': 'no'
         pl: pl
         pt-PT: pt_pt
         ru: ru
