@@ -189,6 +189,7 @@ async function getLanguage() {
     const conf = await preferences.load()
     return conf.language.language
   } catch (err) {
+    log.warn(err)
     return Language.en.key
   }
 }
