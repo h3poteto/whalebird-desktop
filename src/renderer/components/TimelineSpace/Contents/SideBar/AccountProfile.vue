@@ -54,66 +54,53 @@
             <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
               <icon name="user-times" scale="1.5"></icon>
             </div>
-            <div class="icon" role="presentation">
-              <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
+            <div v-else-if="relationship.requested" :title="$t('side_bar.account_profile.follow_requested')">
+              <icon name="hourglass" scale="1.5"></icon>
             </div>
-            <div class="follow-status" v-if="relationship !== null && relationship !== '' && account.username !== user.username">
-              <div
-                v-if="relationship.following"
-                class="unfollow"
-                @click="unfollow(account)"
-                :title="$t('side_bar.account_profile.unfollow')"
-              >
-                <icon name="user-times" scale="1.5"></icon>
-              </div>
-              <div v-else-if="relationship.requested" :title="$t('side_bar.account_profile.follow_requested')">
-                <icon name="hourglass" scale="1.5"></icon>
-              </div>
-              <div v-else class="follow" @click="follow(account)" :title="$t('side_bar.account_profile.follow')">
-                <icon name="user-plus" scale="1.5"></icon>
-              </div>
+            <div v-else class="follow" @click="follow(account)" :title="$t('side_bar.account_profile.follow')">
+              <icon name="user-plus" scale="1.5"></icon>
             </div>
           </div>
-          <div class="username">
-            <bdi v-html="username(account)"></bdi>
-          </div>
-          <div class="account">@{{ account.acct }}</div>
-          <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
         </div>
+        <div class="username">
+          <bdi v-html="username(account)"></bdi>
+        </div>
+        <div class="account">@{{ account.acct }}</div>
+        <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
       </div>
-      <div class="metadata">
-        <dl v-for="(data, index) in account.fields" :key="index">
-          <dt>
-            {{ data.name }}
-          </dt>
-          <dd v-html="data.value" @click.capture.prevent="metadataClick"></dd>
-        </dl>
-      </div>
-      <el-row class="basic-info">
-        <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
-          <el-button type="text" class="tab" @click="changeTab(1)">
-            <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
-            <div class="count">{{ account.statuses_count }}</div>
-          </el-button>
-        </el-col>
-        <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
-          <el-button type="text" class="tab" @click="changeTab(2)">
-            <div class="title">{{ $t('side_bar.account_profile.follows') }}</div>
-            <div class="count">{{ account.following_count }}</div>
-          </el-button>
-        </el-col>
-        <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
-          <el-button type="text" class="tab" @click="changeTab(3)">
-            <div class="title">{{ $t('side_bar.account_profile.followers') }}</div>
-            <div class="count">{{ account.followers_count }}</div>
-          </el-button>
-        </el-col>
-      </el-row>
-      <div class="timeline">
-        <timeline :account="account" v-if="activeTab === 1"></timeline>
-        <follows :account="account" v-if="activeTab === 2"></follows>
-        <followers :account="account" v-if="activeTab === 3"></followers>
-      </div>
+    </div>
+    <div class="metadata">
+      <dl v-for="(data, index) in account.fields" :key="index">
+        <dt>
+          {{ data.name }}
+        </dt>
+        <dd v-html="data.value" @click.capture.prevent="metadataClick"></dd>
+      </dl>
+    </div>
+    <el-row class="basic-info">
+      <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
+        <el-button type="text" class="tab" @click="changeTab(1)">
+          <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
+          <div class="count">{{ account.statuses_count }}</div>
+        </el-button>
+      </el-col>
+      <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
+        <el-button type="text" class="tab" @click="changeTab(2)">
+          <div class="title">{{ $t('side_bar.account_profile.follows') }}</div>
+          <div class="count">{{ account.following_count }}</div>
+        </el-button>
+      </el-col>
+      <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
+        <el-button type="text" class="tab" @click="changeTab(3)">
+          <div class="title">{{ $t('side_bar.account_profile.followers') }}</div>
+          <div class="count">{{ account.followers_count }}</div>
+        </el-button>
+      </el-col>
+    </el-row>
+    <div class="timeline">
+      <timeline :account="account" v-if="activeTab === 1"></timeline>
+      <follows :account="account" v-if="activeTab === 2"></follows>
+      <followers :account="account" v-if="activeTab === 3"></followers>
     </div>
   </div>
 </template>
