@@ -103,7 +103,6 @@
 <script>
 import { mapState } from 'vuex'
 import moment from 'moment'
-import { shell } from 'electron'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -209,7 +208,7 @@ export default {
     openLink(e) {
       const link = findLink(e.target, 'reblog')
       if (link !== null) {
-        return shell.openExternal(link)
+        return window.shell.openExternal(link)
       }
     },
     openUser(account) {

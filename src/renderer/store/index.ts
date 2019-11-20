@@ -11,10 +11,13 @@ import TimelineSpace, { TimelineSpaceModuleState } from './TimelineSpace'
 import Preferences, { PreferencesModuleState } from './Preferences'
 import Settings, { SettingsModuleState } from './Settings'
 import organisms, { OrganismsModuleState } from './organisms'
+import { MyWindow } from '~/src/types/global'
 
 Vue.use(Vuex)
 
-export type RootState = {
+const win = window as MyWindow
+
+export interface RootState {
   App: AppState
   GlobalHeader: GlobalHeaderState
   Login: LoginState
@@ -27,8 +30,8 @@ export type RootState = {
 }
 
 export default new Vuex.Store({
-  strict: process.env.NODE_ENV !== 'production',
-  plugins: process.env.NODE_ENV !== 'production' ? [createLogger({})] : [],
+  strict: win.process.env.NODE_ENV !== 'production',
+  plugins: win.process.env.NODE_ENV !== 'production' ? [createLogger({})] : [],
   modules: {
     App,
     GlobalHeader,

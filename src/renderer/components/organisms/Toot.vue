@@ -178,7 +178,6 @@
 
 <script>
 import moment from 'moment'
-import { shell, clipboard } from 'electron'
 import { mapState } from 'vuex'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import DisplayStyle from '~/src/constants/displayStyle'
@@ -391,7 +390,7 @@ export default {
     openLink(e) {
       const link = findLink(e.target, 'toot')
       if (link !== null) {
-        return shell.openExternal(link)
+        return window.shell.openExternal(link)
       }
     },
     openReply() {
@@ -404,11 +403,11 @@ export default {
       this.$refs.popper.doClose()
     },
     openBrowser(message) {
-      shell.openExternal(message.url)
+      window.shell.openExternal(message.url)
       this.$refs.popper.doClose()
     },
     copyLink(message) {
-      clipboard.writeText(message.url, 'toot-link')
+      window.clipboard.writeText(message.url, 'toot-link')
       this.$refs.popper.doClose()
     },
     reportUser() {

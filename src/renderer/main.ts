@@ -16,15 +16,6 @@ import router from '@/router'
 import store from './store'
 import i18next from '~/src/config/i18n'
 
-declare function require(x: string): any
-
-declare var process: {
-  env: {
-    NODE_ENV: string,
-    IS_WEB: boolean
-  }
-}
-
 Vue.use(ElementUI, { locale })
 Vue.use(shortkey)
 Vue.use(VueI18Next)
@@ -33,7 +24,6 @@ Vue.component('popper', Popper)
 
 sync(store, router)
 
-if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 
 const i18n: VueI18Next = new VueI18Next(i18next)
