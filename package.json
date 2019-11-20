@@ -198,7 +198,7 @@
     "system-font-families": "^0.4.1",
     "tunnel-agent": "^0.6.0",
     "vue": "^2.5.17",
-    "vue-awesome": "^3.2.0",
+    "vue-awesome": "^4.0.2",
     "vue-click-outside": "^1.0.7",
     "vue-electron": "^1.0.6",
     "vue-popperjs": "^1.6.1",
