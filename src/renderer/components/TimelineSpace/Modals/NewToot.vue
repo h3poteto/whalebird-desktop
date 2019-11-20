@@ -299,7 +299,7 @@ export default {
         return
       }
       e.preventDefault()
-      const image = clipboard.readImage()
+      const image = window.clipboard.readImage()
       let data
       if (/^image\/jpe?g$/.test(mimeTypes[0])) {
         data = image.toJPEG(100)
