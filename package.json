@@ -165,7 +165,7 @@
     }
   },
   "dependencies": {
-    "@panter/vue-i18next": "^0.13.0",
+    "@panter/vue-i18next": "^0.15.1",
     "@trodi/electron-splashscreen": "^0.3.4",
     "about-window": "^1.13.2",
     "animate.css": "^3.7.0",
