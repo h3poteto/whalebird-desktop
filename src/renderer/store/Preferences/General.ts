@@ -4,6 +4,9 @@ import { RootState } from '@/store'
 import { Sound } from '~/src/types/sound'
 import { Timeline } from '~/src/types/timeline'
 import { BaseConfig, General, Other } from '~/src/types/preference'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type GeneralState = {
   general: General
@@ -141,7 +144,7 @@ const actions: ActionTree<GeneralState, RootState> = {
 
 const getters: GetterTree<GeneralState, RootState> = {
   notDarwin: () => {
-    return process.platform !== 'darwin'
+    return win.platform !== 'darwin'
   }
 }
 
