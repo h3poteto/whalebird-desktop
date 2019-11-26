@@ -4,5 +4,7 @@ export interface MyWindow extends Window {
   shell: Shell
   ipcRenderer: IpcRenderer
   clipboard: Clipboard
-  process: NodeJS.Process
+  node_env: string
+  platform: string
+  static_path: string
 }

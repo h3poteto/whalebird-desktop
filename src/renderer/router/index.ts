@@ -9,6 +9,7 @@ import PreferencesAppearance from '@/components/Preferences/Appearance.vue'
 import PreferencesNotification from '@/components/Preferences/Notification.vue'
 import PreferencesAccount from '@/components/Preferences/Account.vue'
 import PreferencesLanguage from '@/components/Preferences/Language.vue'
+import PreferencesNetwork from '@/components/Preferences/Network.vue'
 import GlobalHeader from '@/components/GlobalHeader.vue'
 import Settings from '@/components/Settings.vue'
 import SettingsGeneral from '@/components/Settings/General.vue'
@@ -28,6 +29,7 @@ import TimelineSpaceContentsDirectMessages from '@/components/TimelineSpace/Cont
 import TimelineSpaceContentsListsIndex from '@/components/TimelineSpace/Contents/Lists/Index.vue'
 import TimelineSpaceContentsListsEdit from '@/components/TimelineSpace/Contents/Lists/Edit.vue'
 import TimelineSpaceContentsListsShow from '@/components/TimelineSpace/Contents/Lists/Show.vue'
+import TimelineSpaceContentsFollowRequests from '@/components/TimelineSpace/Contents/FollowRequests.vue'
 
 Vue.use(Router)
 
@@ -72,7 +74,7 @@ const router = new Router({
         {
           path: 'network',
           name: 'network',
-          component: require('@/components/Preferences/Network').default
+          component: PreferencesNetwork
         },
         {
           path: 'language',
@@ -123,7 +125,7 @@ const router = new Router({
             {
               path: 'follow-requests',
               name: 'follow-requests',
-              component: require('@/components/TimelineSpace/Contents/FollowRequests').default
+              component: TimelineSpaceContentsFollowRequests
             },
             {
               path: 'favourites',

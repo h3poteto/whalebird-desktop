@@ -30,8 +30,8 @@ export interface RootState {
 }
 
 export default new Vuex.Store({
-  strict: win.process.env.NODE_ENV !== 'production',
-  plugins: win.process.env.NODE_ENV !== 'production' ? [createLogger({})] : [],
+  strict: win.node_env !== 'production',
+  plugins: win.node_env !== 'production' ? [createLogger({})] : [],
   modules: {
     App,
     GlobalHeader,
