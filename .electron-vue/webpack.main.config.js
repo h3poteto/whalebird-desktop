@@ -13,9 +13,7 @@ let mainConfig = {
   entry: {
     main: path.join(__dirname, '../src/main/index.ts')
   },
-  externals: [
-    ...Object.keys(dependencies || {})
-  ],
+  externals: [...Object.keys(dependencies || {})],
   module: {
     rules: [
       {
@@ -42,6 +40,12 @@ let mainConfig = {
       {
         test: /\.node$/,
         use: 'node-loader'
+      },
+      {
+        test: /\.json$/,
+        exclude: /node_modules/,
+        use: 'json-loader',
+        type: 'javascript/auto'
       }
     ]
   },
@@ -81,7 +85,7 @@ let mainConfig = {
 if (process.env.NODE_ENV !== 'production') {
   mainConfig.plugins.push(
     new webpack.DefinePlugin({
-      '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
+      __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
     })
   )
 }

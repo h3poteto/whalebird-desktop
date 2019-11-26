@@ -117,6 +117,12 @@ let rendererConfig = {
             name: 'fonts/[name]--[folder].[ext]'
           }
         }
+      },
+      {
+        test: /\.json$/,
+        exclude: /node_modules/,
+        use: 'json-loader',
+        type: 'javascript/auto'
       }
     ]
   },
