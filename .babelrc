@@ -4,7 +4,7 @@
     "test": {
       "presets": [
         ["@babel/preset-env", {
-          "targets": { "node": 9 }
+          "targets": { "node": 10 }
         }]
       ],
       "plugins": [
@@ -17,7 +17,7 @@
     "main": {
       "presets": [
         ["@babel/preset-env", {
-          "targets": { "node": 9 }
+          "targets": { "node": 10 }
         }]
       ],
       "plugins": [
@@ -30,7 +30,7 @@
       "presets": [
         ["@babel/preset-env", {
           "modules": false,
-          "targets": { "node": "current" }
+          "targets": { "electron": "6" }
         }]
       ],
       "plugins": [
