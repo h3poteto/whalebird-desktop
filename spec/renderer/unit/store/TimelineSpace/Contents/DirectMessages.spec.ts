@@ -85,6 +85,38 @@ const status2: Status = {
   pinned: null
 }
 
+const rebloggedStatus: Status = {
+  id: '3',
+  uri: 'http://example.com',
+  url: 'http://example.com',
+  account: account,
+  in_reply_to_id: null,
+  in_reply_to_account_id: null,
+  reblog: status1,
+  content: '',
+  created_at: '2019-03-31T21:40:32',
+  emojis: [],
+  replies_count: 0,
+  reblogs_count: 0,
+  favourites_count: 0,
+  reblogged: null,
+  favourited: null,
+  muted: null,
+  sensitive: false,
+  spoiler_text: '',
+  visibility: 'public',
+  media_attachments: [],
+  mentions: [],
+  tags: [],
+  card: null,
+  poll: null,
+  application: {
+    name: 'Web'
+  } as Application,
+  language: null,
+  pinned: null
+}
+
 describe('TimelineSpace/Contents/DirectMessages', () => {
   describe('mutations', () => {
     let state: DirectMessagesState
@@ -108,37 +140,6 @@ describe('TimelineSpace/Contents/DirectMessages', () => {
 
       describe('message is reblogged', () => {
         beforeEach(() => {
-          const rebloggedStatus: Status = {
-            id: '3',
-            uri: 'http://example.com',
-            url: 'http://example.com',
-            account: account,
-            in_reply_to_id: null,
-            in_reply_to_account_id: null,
-            reblog: status1,
-            content: '',
-            created_at: '2019-03-31T21:40:32',
-            emojis: [],
-            replies_count: 0,
-            reblogs_count: 0,
-            favourites_count: 0,
-            reblogged: null,
-            favourited: null,
-            muted: null,
-            sensitive: false,
-            spoiler_text: '',
-            visibility: 'public',
-            media_attachments: [],
-            mentions: [],
-            tags: [],
-            card: null,
-            poll: null,
-            application: {
-              name: 'Web'
-            } as Application,
-            language: null,
-            pinned: null
-          }
           state = {
             lazyLoading: false,
             heading: true,
@@ -150,6 +151,80 @@ describe('TimelineSpace/Contents/DirectMessages', () => {
         it('should be deleted', () => {
           DirectMessages.mutations![MUTATION_TYPES.DELETE_TOOT](state, status1.id)
           expect(state.timeline).toEqual([status2])
+        })
+      })
+    })
+
+    describe('appendTimeline', () => {
+      describe('heading', () => {
+        describe('normal', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: true,
+              timeline: [status2, status1],
+              unreadTimeline: [],
+              filter: ''
+            }
+          })
+          it('should be updated timeline', () => {
+            DirectMessages.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
+            expect(state.timeline).toEqual([rebloggedStatus, status2, status1])
+            expect(state.unreadTimeline).toEqual([])
+          })
+        })
+
+        describe('duplicated status', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: true,
+              timeline: [rebloggedStatus, status2, status1],
+              unreadTimeline: [],
+              filter: ''
+            }
+          })
+          it('should not be updated timeline', () => {
+            DirectMessages.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
+            expect(state.timeline).toEqual([rebloggedStatus, status2, status1])
+            expect(state.unreadTimeline).toEqual([])
+          })
+        })
+      })
+
+      describe('not heading', () => {
+        describe('normal', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: false,
+              timeline: [status2, status1],
+              unreadTimeline: [],
+              filter: ''
+            }
+          })
+          it('should be updated timeline', () => {
+            DirectMessages.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
+            expect(state.timeline).toEqual([status2, status1])
+            expect(state.unreadTimeline).toEqual([rebloggedStatus])
+          })
+        })
+
+        describe('duplicated status', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: false,
+              timeline: [rebloggedStatus, status2, status1],
+              unreadTimeline: [],
+              filter: ''
+            }
+          })
+          it('should not be updated timeline', () => {
+            DirectMessages.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
+            expect(state.timeline).toEqual([rebloggedStatus, status2, status1])
+            expect(state.unreadTimeline).toEqual([])
+          })
         })
       })
     })

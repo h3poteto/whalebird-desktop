@@ -8,6 +8,7 @@
       "hide": "Ukryj Roma",
       "hide_others": "Ukryj pozostałe",
       "show_all": "Pokaż wszystkie",
+      "open": "Open Window",
       "quit": "Wyjdź"
     },
     "toot": {
@@ -286,7 +287,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Na początek musisz się zalogować na instancję Mastodona. Wprowadź domenę instancji.",
+    "domain_name_label": "Na początek musisz się zalogować na serwerze Mastodona. Wprowadź domenę serwerze.",
     "search": "Znajdź",
     "login": "Zaloguj się"
   },
@@ -331,7 +332,6 @@
     "add_user_error": "Nie udało się dodać użytkownika",
     "authorize_url_error": "Nie udało się uzyskać adresu autoryzacji",
     "domain_confirmed": "{{domain}} została potwierdzona, zaloguj się",
-    "domain_doesnt_exist": "{{domain}} nie istnieje",
     "loading": "Ładowanie…"
   },
   "validation": {

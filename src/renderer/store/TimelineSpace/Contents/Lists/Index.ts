@@ -22,13 +22,23 @@ const mutations: MutationTree<IndexState> = {
 
 const actions: ActionTree<IndexState, RootState> = {
   fetchLists: async ({ commit, rootState }): Promise<Array<List>> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<List>> = await client.get<Array<List>>('/lists')
     commit(MUTATION_TYPES.CHANGE_LISTS, res.data)
     return res.data
   },
   createList: async ({ rootState }, title: string): Promise<List> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<List> = await client.post<List>('/lists', {
       title: title
     })

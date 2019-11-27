@@ -191,6 +191,13 @@ const timelineState = {
   }
 }
 
+const appState = {
+  namespaced: true,
+  state: {
+    proxyConfiguration: false
+  }
+}
+
 describe('Notifications', () => {
   let store
   let localVue
@@ -201,7 +208,8 @@ describe('Notifications', () => {
     store = new Vuex.Store({
       modules: {
         Notifications: initStore(),
-        TimelineSpace: timelineState
+        TimelineSpace: timelineState,
+        App: appState
       }
     })
     mockedMegalodon.mockClear()

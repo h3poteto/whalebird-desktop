@@ -34,7 +34,12 @@ const actions: ActionTree<MuteConfirmState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
   submit: async ({ state, rootState, dispatch }, notify: boolean) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${state.account!.id}/mute`, {
       notifications: notify
     })

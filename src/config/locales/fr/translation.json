@@ -8,6 +8,7 @@
       "hide": "Cacher Roma",
       "hide_others": "Cacher les autres",
       "show_all": "Tout afficher",
+      "open": "Ouvrir la fenêtre",
       "quit": "Quitter"
     },
     "toot": {
@@ -346,7 +347,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Tout d'abord, connectons-nous à votre instance Mastodon.  Entez votre nom de domaine :",
+    "domain_name_label": "Tout d'abord, connectons-nous à votre serveur Mastodon.  Entez votre nom de domaine :",
     "search": "Rechercher",
     "login": "Connexion"
   },
@@ -394,7 +395,6 @@
     "add_user_error": "Erreur lors de l'ajout d'un utilisateur⋅trice",
     "authorize_url_error": "Erreur à la récupération de l'URL d'autorisation",
     "domain_confirmed": "{{domain}} est confirmé, veuillez à présent vous connecter",
-    "domain_doesnt_exist": "{{domain}} n'existe pas",
     "loading": "Chargement..."
   },
   "validation": {

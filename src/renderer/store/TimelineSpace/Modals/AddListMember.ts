@@ -37,7 +37,12 @@ const actions: ActionTree<AddListMemberState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_MODAL, value)
   },
   search: async ({ commit, rootState }, name: string): Promise<Array<Account>> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', {
       q: name,
       following: true
@@ -46,7 +51,12 @@ const actions: ActionTree<AddListMemberState, RootState> = {
     return res.data
   },
   add: async ({ state, rootState }, account: Account): Promise<{}> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<{}> = await client.post<{}>(`/lists/${state.targetListId}/accounts`, {
       account_ids: [account.id]
     })

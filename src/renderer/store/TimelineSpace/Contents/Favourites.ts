@@ -72,8 +72,13 @@ const mutations: MutationTree<FavouritesState> = {
 }
 
 const actions: ActionTree<FavouritesState, RootState> = {
-  fetchFavourites: async ({ commit }, account: LocalAccount): Promise<Array<Status>> => {
-    const client = new Mastodon(account.accessToken!, account.baseURL + '/api/v1')
+  fetchFavourites: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Status>> => {
+    const client = new Mastodon(
+      account.accessToken!,
+      account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Status>> = await client.get<Array<Status>>('/favourites', { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_FAVOURITES, res.data)
     // Parse link header
@@ -98,7 +103,12 @@ const actions: ActionTree<FavouritesState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Status>> = await client.get<Array<Status>>('/favourites', { max_id: state.maxId, limit: 40 }).finally(() => {
       commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
     })

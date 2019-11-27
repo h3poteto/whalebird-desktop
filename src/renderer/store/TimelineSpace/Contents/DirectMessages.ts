@@ -40,10 +40,13 @@ const mutations: MutationTree<DirectMessagesState> = {
     state.heading = value
   },
   [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Status) => {
-    if (state.heading) {
-      state.timeline = [update].concat(state.timeline)
-    } else {
-      state.unreadTimeline = [update].concat(state.unreadTimeline)
+    // Reject duplicated status in timeline
+    if (!state.timeline.find(item => item.id === update.id) && !state.unreadTimeline.find(item => item.id === update.id)) {
+      if (state.heading) {
+        state.timeline = [update].concat(state.timeline)
+      } else {
+        state.unreadTimeline = [update].concat(state.unreadTimeline)
+      }
     }
   },
   [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Status>) => {
@@ -96,7 +99,12 @@ const mutations: MutationTree<DirectMessagesState> = {
 
 const actions: ActionTree<DirectMessagesState, RootState> = {
   fetchTimeline: async ({ commit, rootState }): Promise<Array<Status>> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Conversation>> = await client.get<Array<Conversation>>('/conversations', { limit: 40 })
     const statuses: Array<Status> = res.data.map(con => con.last_status!)
     commit(MUTATION_TYPES.UPDATE_TIMELINE, statuses)
@@ -107,7 +115,12 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     return client
       .get<Array<Conversation>>('/conversations', { max_id: lastStatus.id, limit: 40 })
       .then(res => {

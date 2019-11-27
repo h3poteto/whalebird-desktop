@@ -10,6 +10,36 @@
         "title": "Other options",
         "launch": "Launch app on login"
       }
+    },
+    "network": {
+      "title": "Network",
+      "proxy": {
+        "title": "Proxy Configuration",
+        "no": "No proxy",
+        "system": "Use system proxy",
+        "manual": "Manual proxy configuration",
+        "protocol": "Protocol",
+        "host": "Proxy host",
+        "port": "Proxy port",
+        "username": "Proxy username",
+        "password": "Proxy password",
+        "protocol_list": {
+          "http": "http",
+          "https": "https",
+          "socks4": "socks4",
+          "socks4a": "socks4a",
+          "socks5": "socks5",
+          "socks5h": "socks5h"
+        }
+      },
+      "save": "Save"
     }
+  },
+  "login": {
+    "proxy_info": "If you want to use proxy server, please setup your proxy in",
+    "proxy_here": " here"
+  },
+  "message": {
+    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL"
   }
 }

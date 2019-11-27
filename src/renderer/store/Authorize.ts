@@ -9,7 +9,7 @@ const state = (): AuthorizeState => ({})
 const actions: ActionTree<AuthorizeState, RootState> = {
   submit: (_, code: string) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('get-access-token', code)
+      ipcRenderer.send('get-access-token', code.trim())
       ipcRenderer.once('response-get-access-token', (_, id: string) => {
         ipcRenderer.removeAllListeners('error-get-access-token')
         resolve(id)

@@ -8,6 +8,7 @@
       "hide": "Romaを隠す",
       "hide_others": "ほかを隠す",
       "show_all": "すべてを表示",
+      "open": "ウィンドウを開く",
       "quit": "終了"
     },
     "toot": {
@@ -194,6 +195,29 @@
       "cancel": "キャンセル",
       "confirm_message": "本当に全ての連携を削除しますか？"
     },
+    "network": {
+      "title": "ネットワーク",
+      "proxy": {
+        "title": "プロキシー設定",
+        "no": "プロキシーを使わない",
+        "system": "OSのプロキシー設定を利用する",
+        "manual": "プロキシーを手動で設定する",
+        "protocol": "プロトコル",
+        "host": "ホスト",
+        "port": "ポート",
+        "username": "ユーザー名",
+        "password": "パスワード",
+        "protocol_list": {
+          "http": "http",
+          "https": "https",
+          "socks4": "socks4",
+          "socks4a": "socks4a",
+          "socks5": "socks5",
+          "socks5h": "socks5h"
+        }
+      },
+      "save": "Save"
+    },
     "language": {
       "title": "言語",
       "language_description": "Romaの表示言語を選択",
@@ -352,6 +376,8 @@
   },
   "login": {
     "domain_name_label": "ドメイン名を入力してマストドンにログインしてください．",
+    "proxy_info": "もしプロキシを利用する場合は",
+    "proxy_here": "こちら．",
     "search": "検索",
     "login": "ログイン"
   },
@@ -399,7 +425,7 @@
     "add_user_error": "メンバー追加に失敗しました",
     "authorize_url_error": "認証用URLの取得に失敗しました",
     "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
-    "domain_doesnt_exist": "{{domain}} は存在しません",
+    "domain_doesnt_exist": "{{domain}} に接続できません，URLを確認してください",
     "loading": "読み込み中..."
   },
   "validation": {

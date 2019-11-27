@@ -172,7 +172,12 @@ const actions: ActionTree<NewTootState, RootState> = {
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
       throw new AuthenticationError()
     }
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const attachments = Object.keys(mediaDescription).map(async id => {
       if (mediaDescription[id] !== null) {
         return client.put<Attachment>(`/media/${id}`, { description: mediaDescription[id] })
@@ -253,7 +258,12 @@ const actions: ActionTree<NewTootState, RootState> = {
     }
 
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, true)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     return client
       .post<Status>('/statuses', form)
       .then((res: Response<Status>) => {
@@ -305,7 +315,12 @@ const actions: ActionTree<NewTootState, RootState> = {
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
       throw new AuthenticationError()
     }
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const formData = new FormData()
     formData.append('file', image)
     return client
@@ -342,7 +357,12 @@ const actions: ActionTree<NewTootState, RootState> = {
     }
   },
   fetchVisibility: async ({ commit, rootState }) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Account> = await client.get<Account>('/accounts/verify_credentials')
     const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
       return v.key === res.data.source!.privacy

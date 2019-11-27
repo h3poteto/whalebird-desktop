@@ -31,7 +31,7 @@
     "build:linux": "npm run build && npm run package:linux",
     "build:win32": "npm run build && npm run package:win32",
     "build:win64": "npm run build && npm run package:win64",
-    "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Roma' --platform=mas --arch=x64 --electron-version=5.0.11 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/roma.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=com.vm.Roma-Desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
+    "build:mas": "npm run build:clean && npm run pack && electron-packager ./ 'Roma' --platform=mas --arch=x64 --electron-version=6.1.0 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/roma.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=com.vm.Roma-Desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
     "package:mac": "electron-builder --mac --x64",
     "package:linux": "electron-builder --linux",
     "package:win32": "electron-builder --win --ia32",
@@ -89,6 +89,12 @@
     "linux": {
       "icon": "build/icons",
       "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
         {
           "target": "deb",
           "arch": [
@@ -171,7 +177,7 @@
     "electron-json-storage": "^4.1.5",
     "electron-log": "^2.2.17",
     "electron-window-state": "^5.0.3",
-    "element-ui": "^2.4.11",
+    "element-ui": "2.4.11",
     "emoji-mart-vue": "^2.6.6",
     "emojilib": "^2.4.0",
     "hawk": "^7.0.10",
@@ -179,7 +185,7 @@
     "i18next": "^12.1.0",
     "i18next-sync-fs-backend": "^1.1.1",
     "lodash": "^4.17.15",
-    "megalodon": "1.0.3",
+    "megalodon": "2.0.1",
     "moment": "^2.21.0",
     "mousetrap": "^1.6.2",
     "nedb": "^1.8.0",
@@ -238,7 +244,7 @@
     "css-loader": "^3.0.0",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron": "5.0.11",
+    "electron": "6.1.0",
     "electron-builder": "^21.2.0",
     "electron-debug": "^2.2.0",
     "electron-devtools-installer": "^2.2.4",

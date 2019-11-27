@@ -85,7 +85,12 @@ const mutations: MutationTree<TimelineState> = {
 const actions: ActionTree<TimelineState, RootState> = {
   fetchTimeline: async ({ commit, rootState }, account: Account) => {
     commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const pinned: Response<Array<Status>> = await client.get<Array<Status>>(`/accounts/${account.id}/statuses`, { limit: 10, pinned: true })
     commit(MUTATION_TYPES.UPDATE_PINNED_TOOTS, pinned.data)
     const res: Response<Array<Status>> = await client.get<Array<Status>>(`/accounts/${account.id}/statuses`, { limit: 40 })
@@ -98,7 +103,12 @@ const actions: ActionTree<TimelineState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     try {
       const res: Response<Array<Status>> = await client.get<Array<Status>>(`/accounts/${loadPosition.account.id}/statuses`, {
         max_id: loadPosition.status.id,

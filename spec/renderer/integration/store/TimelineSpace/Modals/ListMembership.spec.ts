@@ -65,6 +65,13 @@ const timelineState = {
   }
 }
 
+const appState = {
+  namespaced: true,
+  state: {
+    proxyConfiguration: false
+  }
+}
+
 describe('ListMembership', () => {
   let store
   let localVue
@@ -75,7 +82,8 @@ describe('ListMembership', () => {
     store = new Vuex.Store({
       modules: {
         ListMembership: initStore(),
-        TimelineSpace: timelineState
+        TimelineSpace: timelineState,
+        App: appState
       }
     })
   })

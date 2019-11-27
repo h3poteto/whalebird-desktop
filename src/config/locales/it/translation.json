@@ -8,6 +8,7 @@
       "hide": "Nascondi Roma",
       "hide_others": "Nascondi Altri",
       "show_all": "Mostra Tutto",
+      "open": "Apri Finestra",
       "quit": "Esci"
     },
     "toot": {
@@ -319,7 +320,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Innanzitutto, esegui l'accesso ad un'istanza di Mastodon. Si prega di inserire un nome di dominio di istanza.",
+    "domain_name_label": "Innanzitutto, esegui l'accesso a un server di Mastodon. Si prega di inserire un nome di dominio di server.",
     "search": "Cerca",
     "login": "Accesso"
   },
@@ -364,7 +365,6 @@
     "add_user_error": "Impossibile aggiungere un utente",
     "authorize_url_error": "Impossibile ottenere l'URL di autorizzazione",
     "domain_confirmed": "{{domain}} è confermato, per favore accedi",
-    "domain_doesnt_exist": "{{domain}} non esiste",
     "loading": "Caricamento..."
   },
   "validation": {

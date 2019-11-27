@@ -1,5 +1,22 @@
 # Change Log
 
+## [2.9.0] - 2019-10-11
+### Added
+- [#1056](https://github.com/h3poteto/whalebird-desktop/pull/1056) Upgrade electron version to 5.0.11
+- [#1045](https://github.com/h3poteto/whalebird-desktop/pull/1045) Add a preference to auto launch at login
+
+### Changed
+- [#1057](https://github.com/h3poteto/whalebird-desktop/pull/1057) Update electron-builder version to 21.2.0
+- [#1053](https://github.com/h3poteto/whalebird-desktop/pull/1053) Allow resize sidebar using drag
+- [#1049](https://github.com/h3poteto/whalebird-desktop/pull/1049) Through auto-launch in darwin
+- [#1048](https://github.com/h3poteto/whalebird-desktop/pull/1048) Add shortcut description for reload
+- [#1047](https://github.com/h3poteto/whalebird-desktop/pull/1047) Remove QR code for bitcoin
+
+### Fixed
+- [#1052](https://github.com/h3poteto/whalebird-desktop/pull/1052) Fix scrollbar design for preferences and settings
+- [#1050](https://github.com/h3poteto/whalebird-desktop/pull/1050) Fix loading color in preferences
+
+
 ## [2.8.6] - 2019-09-19
 ### Added
 - [#1043](https://github.com/h3poteto/whalebird-desktop/pull/1043) Start to pacman support in release package

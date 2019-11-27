@@ -1,4 +1,5 @@
 import storage from 'electron-json-storage'
+import log from 'electron-log'
 import objectAssignDeep from 'object-assign-deep'
 import DisplayStyle from '../constants/displayStyle'
 import Theme from '../constants/theme'
@@ -12,6 +13,7 @@ import { Notify } from '~/src/types/notify'
 import { Appearance } from '~/src/types/appearance'
 import { Language as LanguageSet } from '~/src/types/language'
 import { General, State, Notification, BaseConfig, Other } from '~/src/types/preference'
+import { Proxy, ProxySource } from '~/src/types/proxy'
 
 const sound: Sound = {
   fav_rb: true,
@@ -64,12 +66,24 @@ const appearance: Appearance = {
   tootPadding: 8
 }
 
+const proxy: Proxy = {
+  source: ProxySource.system,
+  manualProxyConfig: {
+    protocol: '',
+    host: '',
+    port: '',
+    username: '',
+    password: ''
+  }
+}
+
 const Base: BaseConfig = {
   general: general,
   state: state,
   language: language,
   notification: notification,
-  appearance: appearance
+  appearance: appearance,
+  proxy: proxy
 }
 
 export default class Preferences {
@@ -84,6 +98,7 @@ export default class Preferences {
       const preferences = await this.get()
       return objectAssignDeep({}, Base, preferences)
     } catch (err) {
+      log.error(err)
       return Base
     }
   }

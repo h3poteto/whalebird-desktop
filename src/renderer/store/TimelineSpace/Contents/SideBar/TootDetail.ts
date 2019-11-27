@@ -120,7 +120,12 @@ const actions: ActionTree<TootDetailState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_TOOT, message)
   },
   fetchToot: async ({ commit, rootState }, message: Status) => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Context> = await client.get<Context>(`/statuses/${message.id}/context`, { limit: 40 })
 
     commit(MUTATION_TYPES.UPDATE_ANCESTORS, res.data.ancestors)
