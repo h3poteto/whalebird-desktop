@@ -8,14 +8,14 @@
      aria-label="account profile">
   <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
     <div class="header">
-      <div class="follow-follower" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
+      <div class="follow-follower" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
         <div class="follower-status">
           <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
           <el-tag class="status" size="medium" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
         </div>
       </div>
       <div class="user-info">
-        <div class="more" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
+        <div class="more" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
           <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
             <div class="popper">
               <ul class="menu-list">
@@ -48,7 +48,7 @@
         <div class="icon" role="presentation">
           <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
         </div>
-        <div class="follow-status" v-if="relationship !== null && relationship !== '' && account.username!==user.username">
+        <div class="follow-status" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
           <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
             <icon name="user-times" scale="1.5"></icon>
           </div>
@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { shell } from 'electron'
 import { findLink } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
@@ -131,7 +131,6 @@ export default {
   },
   computed: {
     ...mapState({
-      user: state => state.TimelineSpace.account,
       theme: (state) => {
         return {
           '--theme-mask-color': state.App.theme.wrapper_mask_color,
@@ -146,7 +145,8 @@ export default {
       loading: state => state.loading,
       muting: state => state.relationship && state.relationship.muting,
       blocking: state => state.relationship && state.relationship.blocking
-    })
+    }),
+    ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile', ['isOwnProfile'])
   },
   watch: {
     account: function () {

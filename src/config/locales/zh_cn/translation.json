@@ -8,6 +8,7 @@
       "hide": "隐藏 Roma",
       "hide_others": "隐藏其它窗口",
       "show_all": "全部显示",
+      "open": "打开窗口",
       "quit": "退出"
     },
     "toot": {
@@ -394,7 +395,6 @@
     "add_user_error": "添加用户失败",
     "authorize_url_error": "无法获取认证 URL",
     "domain_confirmed": "{{domain}} 已确认，请登录",
-    "domain_doesnt_exist": "{{domain}} 不存在",
     "loading": "加载中..."
   },
   "validation": {

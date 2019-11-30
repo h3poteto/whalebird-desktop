@@ -24,6 +24,7 @@ linux:
 	mv build/Roma-${VERSION}-linux-x86_64.rpm build/Roma-${VERSION}-linux-x64.rpm
 	mv build/Roma-${VERSION}-linux-i386.deb build/Roma-${VERSION}-linux-ia32.deb
 	mv build/Roma-${VERSION}-linux-i686.rpm build/Roma-${VERSION}-linux-ia32.rpm
+	mv build/Roma-${VERSION}-linux-x86_64.AppImage build/Roma-${VERSION}-linux-x64.AppImage
 
 win32:
 	npm run package:win32

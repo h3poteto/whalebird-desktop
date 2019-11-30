@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import axios from 'axios'
+import Mastodon, { Instance } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -44,20 +44,28 @@ const actions: ActionTree<LoginState, RootState> = {
   pageBack: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_INSTANCE, null)
   },
-  confirmInstance: async ({ commit }, domain: string): Promise<boolean> => {
+  confirmInstance: async ({ commit, rootState }, domain: string): Promise<boolean> => {
     commit(MUTATION_TYPES.CHANGE_SEARCHING, true)
-    // https://gist.github.com/okapies/60d62d0df0163bbfb4ab09c1766558e8
-    // Check /.well-known/host-meta to confirm mastodon instance.
-    const res = await axios.get(`https://${domain}/.well-known/host-meta`).finally(() => {
+    const cleanDomain = domain.trim()
+    try {
+      await Mastodon.get<Instance>('/api/v1/instance', {}, `https://${cleanDomain}`, rootState.App.proxyConfiguration)
       commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
-    })
-    const parser = new DOMParser()
-    const dom = parser.parseFromString(res.data, 'text/xml')
-    const link = dom.getElementsByTagName('Link')[0].outerHTML
-    if (!link.includes(`https://${domain}/.well-known/webfinger`)) {
-      throw new Error('domain is not activity pub')
+    } catch (err) {
+      // https://gist.github.com/okapies/60d62d0df0163bbfb4ab09c1766558e8
+      // Check /.well-known/host-meta to confirm mastodon instance.
+      const res = await Mastodon.get<any>('/.well-known/host-meta', {}, `https://${cleanDomain}`, rootState.App.proxyConfiguration).finally(
+        () => {
+          commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
+        }
+      )
+      const parser = new DOMParser()
+      const dom = parser.parseFromString(res.data, 'text/xml')
+      const link = dom.getElementsByTagName('Link')[0].outerHTML
+      if (!link.includes(`https://${cleanDomain}/.well-known/webfinger`)) {
+        throw new Error('domain is not activity pub')
+      }
     }
-    commit(MUTATION_TYPES.CHANGE_INSTANCE, domain)
+    commit(MUTATION_TYPES.CHANGE_INSTANCE, cleanDomain)
     return true
   }
 }

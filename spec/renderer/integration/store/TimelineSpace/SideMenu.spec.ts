@@ -42,6 +42,13 @@ const initStore = () => {
   }
 }
 
+const appState = {
+  namespaced: true,
+  state: {
+    proxyConfiguration: false
+  }
+}
+
 describe('SideMenu', () => {
   let store
   let localVue
@@ -51,7 +58,8 @@ describe('SideMenu', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        SideMenu: initStore()
+        SideMenu: initStore(),
+        App: appState
       }
     })
     mockedMegalodon.mockClear()

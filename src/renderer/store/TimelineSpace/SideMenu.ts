@@ -80,14 +80,24 @@ const mutations: MutationTree<SideMenuState> = {
 const actions: ActionTree<SideMenuState, RootState> = {
   fetchLists: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<List>> => {
     if (account === null) account = rootState.TimelineSpace.account
-    const client = new Mastodon(account!.accessToken!, account!.baseURL + '/api/v1')
+    const client = new Mastodon(
+      account!.accessToken!,
+      account!.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<List>> = await client.get<Array<List>>('/lists')
     commit(MUTATION_TYPES.UPDATE_LISTS, res.data)
     return res.data
   },
   fetchFollowRequests: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Account>> => {
     if (account === null) account = rootState.TimelineSpace.account
-    const client = new Mastodon(account!.accessToken!, account!.baseURL + '/api/v1')
+    const client = new Mastodon(
+      account!.accessToken!,
+      account!.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Account>> = await client.get<Array<Account>>('/follow_requests')
     commit(MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS, res.data.length > 0)
     return res.data

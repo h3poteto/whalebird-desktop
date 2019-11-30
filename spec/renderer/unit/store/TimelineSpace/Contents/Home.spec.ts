@@ -116,40 +116,81 @@ describe('TimelineSpace/Contents/Home', () => {
 
     describe('appendTimeline', () => {
       describe('heading', () => {
-        beforeEach(() => {
-          state = {
-            lazyLoading: false,
-            heading: true,
-            timeline: [status1],
-            unreadTimeline: [],
-            filter: '',
-            showReblogs: true,
-            showReplies: true
-          }
+        describe('normal', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: true,
+              timeline: [status1],
+              unreadTimeline: [],
+              filter: '',
+              showReblogs: true,
+              showReplies: true
+            }
+          })
+          it('should update timeline', () => {
+            Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+            expect(state.timeline).toEqual([status2, status1])
+            expect(state.unreadTimeline).toEqual([])
+          })
         })
-        it('should update timeline', () => {
-          Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
-          expect(state.timeline).toEqual([status2, status1])
-          expect(state.unreadTimeline).toEqual([])
+
+        describe('duplicated status', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: true,
+              timeline: [status2, status1],
+              unreadTimeline: [],
+              filter: '',
+              showReblogs: true,
+              showReplies: true
+            }
+          })
+          it('should not update timeline', () => {
+            Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+            expect(state.timeline).toEqual([status2, status1])
+            expect(state.unreadTimeline).toEqual([])
+          })
         })
       })
 
       describe('not heading', () => {
-        beforeEach(() => {
-          state = {
-            lazyLoading: false,
-            heading: false,
-            timeline: [status1],
-            unreadTimeline: [],
-            filter: '',
-            showReblogs: true,
-            showReplies: true
-          }
+        describe('normal', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: false,
+              timeline: [status1],
+              unreadTimeline: [],
+              filter: '',
+              showReblogs: true,
+              showReplies: true
+            }
+          })
+          it('should update unreadTimeline', () => {
+            Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+            expect(state.timeline).toEqual([status1])
+            expect(state.unreadTimeline).toEqual([status2])
+          })
         })
-        it('should update unreadTimeline', () => {
-          Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
-          expect(state.timeline).toEqual([status1])
-          expect(state.unreadTimeline).toEqual([status2])
+        describe('duplicated status', () => {
+          beforeEach(() => {
+            state = {
+              lazyLoading: false,
+              heading: false,
+              timeline: [],
+              unreadTimeline: [status2, status1],
+              filter: '',
+              showReblogs: true,
+              showReplies: true
+            }
+          })
+          it('should not update unreadTimeline', () => {
+            Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+            expect(state.timeline).toEqual([])
+            expect(state.unreadTimeline).toEqual([status2, status1])
+          })
         })
       })
     })

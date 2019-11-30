@@ -39,10 +39,13 @@ const mutations: MutationTree<TagState> = {
     state.heading = value
   },
   [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Status) => {
-    if (state.heading) {
-      state.timeline = [update].concat(state.timeline)
-    } else {
-      state.unreadTimeline = [update].concat(state.unreadTimeline)
+    // Reject duplicated status in timeline
+    if (!state.timeline.find(item => item.id === update.id) && !state.unreadTimeline.find(item => item.id === update.id)) {
+      if (state.heading) {
+        state.timeline = [update].concat(state.timeline)
+      } else {
+        state.unreadTimeline = [update].concat(state.unreadTimeline)
+      }
     }
   },
   [MUTATION_TYPES.UPDATE_TIMELINE]: (state, timeline: Array<Status>) => {
@@ -97,7 +100,12 @@ const mutations: MutationTree<TagState> = {
 
 const actions: ActionTree<TagState, RootState> = {
   fetch: async ({ commit, rootState }, tag: string): Promise<Array<Status>> => {
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     const res: Response<Array<Status>> = await client.get<Array<Status>>(`/timelines/tag/${encodeURIComponent(tag)}`, { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
@@ -138,7 +146,12 @@ const actions: ActionTree<TagState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(rootState.TimelineSpace.account.accessToken!, rootState.TimelineSpace.account.baseURL + '/api/v1')
+    const client = new Mastodon(
+      rootState.TimelineSpace.account.accessToken!,
+      rootState.TimelineSpace.account.baseURL + '/api/v1',
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
     return client
       .get<Array<Status>>(`/timelines/tag/${loadPosition.tag}`, { max_id: loadPosition.status.id, limit: 40 })
       .then(res => {
