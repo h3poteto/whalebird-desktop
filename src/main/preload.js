@@ -1,6 +1,7 @@
 const electron = require('electron')
 const path = require('path')
 const mod = require('module')
+
 global.ipcRenderer = electron.ipcRenderer
 global.shell = electron.shell
 global.clipboard = electron.clipboard

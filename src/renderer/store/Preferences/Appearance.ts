@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -8,6 +7,9 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Appearance } from '~/src/types/appearance'
 import { BaseConfig } from '~/src/types/preference'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type AppearanceState = {
   appearance: Appearance
@@ -44,30 +46,30 @@ const mutations: MutationTree<AppearanceState> = {
 const actions: ActionTree<AppearanceState, RootState> = {
   loadAppearance: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-get-preferences')
+      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-get-preferences')
+      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-get-preferences')
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf)
       })
-      ipcRenderer.send('get-preferences')
+      win.ipcRenderer.send('get-preferences')
     })
   },
   loadFonts: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-list-fonts', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-list-fonts')
+      win.ipcRenderer.once('error-list-fonts', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-list-fonts')
         reject(err)
       })
-      ipcRenderer.once('response-list-fonts', (_, fonts: Array<string>) => {
-        ipcRenderer.removeAllListeners('error-list-fonts')
+      win.ipcRenderer.once('response-list-fonts', (_, fonts: Array<string>) => {
+        win.ipcRenderer.removeAllListeners('error-list-fonts')
         commit(MUTATION_TYPES.UPDATE_FONTS, [DefaultFonts[0]].concat(fonts))
         resolve(fonts)
       })
-      ipcRenderer.send('list-fonts')
+      win.ipcRenderer.send('list-fonts')
     })
   },
   updateTheme: ({ dispatch, commit, state }, themeKey: string) => {
@@ -78,17 +80,17 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
-      ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.send('update-preferences', config)
     })
   },
   updateFontSize: ({ dispatch, commit, state }, fontSize: number) => {
@@ -99,17 +101,17 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
-      ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.send('update-preferences', config)
     })
   },
   updateDisplayNameStyle: ({ dispatch, commit, state }, value: number) => {
@@ -120,17 +122,17 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf.appearance)
       })
-      ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.send('update-preferences', config)
     })
   },
   updateTimeFormat: ({ dispatch, commit, state }, value: number) => {
@@ -141,17 +143,17 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         dispatch('App/loadPreferences', null, { root: true })
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         resolve(conf.appearance)
       })
-      ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.send('update-preferences', config)
     })
   },
   updateCustomThemeColor: ({ dispatch, state, commit }, value: object) => {
@@ -163,17 +165,17 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
-      ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.send('update-preferences', config)
     })
   },
   updateFont: ({ dispatch, state, commit }, value: string) => {
@@ -184,17 +186,17 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
-      ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.send('update-preferences', config)
     })
   },
   updateTootPadding: ({ dispatch, state, commit }, value: number) => {
@@ -205,17 +207,17 @@ const actions: ActionTree<AppearanceState, RootState> = {
       appearance: newAppearance
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf.appearance)
       })
-      ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.send('update-preferences', config)
     })
   }
 }

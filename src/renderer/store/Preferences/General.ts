@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import { Sound } from '~/src/types/sound'
@@ -49,14 +48,14 @@ const actions: ActionTree<GeneralState, RootState> = {
   loadGeneral: ({ commit }) => {
     return new Promise((resolve, reject) => {
       commit(MUTATION_TYPES.CHANGE_LOADING, true)
-      ipcRenderer.send('get-preferences')
-      ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-get-preferences')
+      win.ipcRenderer.send('get-preferences')
+      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-get-preferences')
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-get-preferences')
+      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-get-preferences')
         commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         resolve(conf)
@@ -73,14 +72,14 @@ const actions: ActionTree<GeneralState, RootState> = {
       general: newGeneral
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-preferences', config)
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         resolve(conf)
@@ -97,19 +96,19 @@ const actions: ActionTree<GeneralState, RootState> = {
       general: newGeneral
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-preferences')
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         reject(err)
       })
-      ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-update-preferences')
+      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-update-preferences')
         commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
         commit(MUTATION_TYPES.CHANGE_LOADING, false)
         dispatch('App/loadPreferences', null, { root: true })
         resolve(conf)
       })
-      ipcRenderer.send('update-preferences', config)
+      win.ipcRenderer.send('update-preferences', config)
     })
   },
   updateOther: ({ commit, state, dispatch }, other: {}) => {
@@ -122,22 +121,22 @@ const actions: ActionTree<GeneralState, RootState> = {
       general: newGeneral
     }
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('response-change-auto-launch', () => {
-        ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-          ipcRenderer.removeAllListeners('response-update-preferences')
+      win.ipcRenderer.once('response-change-auto-launch', () => {
+        win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
+          win.ipcRenderer.removeAllListeners('response-update-preferences')
           commit(MUTATION_TYPES.CHANGE_LOADING, false)
           reject(err)
         })
-        ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-          ipcRenderer.removeAllListeners('error-update-preferences')
+        win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
+          win.ipcRenderer.removeAllListeners('error-update-preferences')
           commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
           commit(MUTATION_TYPES.CHANGE_LOADING, false)
           dispatch('App/loadPreferences', null, { root: true })
           resolve(conf)
         })
-        ipcRenderer.send('update-preferences', config)
+        win.ipcRenderer.send('update-preferences', config)
       })
-      ipcRenderer.send('change-auto-launch', newOther.launch)
+      win.ipcRenderer.send('change-auto-launch', newOther.launch)
     })
   }
 }
