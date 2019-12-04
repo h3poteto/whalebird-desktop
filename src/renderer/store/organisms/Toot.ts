@@ -1,7 +1,9 @@
 import Mastodon, { Response, Status, Account, Poll } from 'megalodon'
-import { ipcRenderer } from 'electron'
 import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 type VoteParam = {
   id: string
@@ -24,7 +26,7 @@ const actions: ActionTree<TootState, RootState> = {
     // API returns new status when reblog.
     // Reblog target status is in the data.reblog.
     // So I send data.reblog as status for update local timeline.
-    ipcRenderer.send('fav-rt-action-sound')
+    win.ipcRenderer.send('fav-rt-action-sound')
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data.reblog, { root: true })
     return res.data.reblog
   },
@@ -47,7 +49,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.App.proxyConfiguration
     )
     const res: Response<Status> = await client.post<Status>(`/statuses/${message.id}/favourite`)
-    ipcRenderer.send('fav-rt-action-sound')
+    win.ipcRenderer.send('fav-rt-action-sound')
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
