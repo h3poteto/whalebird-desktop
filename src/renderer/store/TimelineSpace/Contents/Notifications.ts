@@ -1,7 +1,9 @@
-import { ipcRenderer } from 'electron'
 import Mastodon, { Notification, Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type NotificationsState = {
   lazyLoading: boolean
@@ -136,7 +138,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
       })
   },
   resetBadge: () => {
-    ipcRenderer.send('reset-badge')
+    win.ipcRenderer.send('reset-badge')
   }
 }
 

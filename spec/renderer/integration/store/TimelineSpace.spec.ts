@@ -1,9 +1,11 @@
 import Mastodon, { Emoji, Instance, Response } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import { ipcMain } from '~/spec/mock/electron'
+import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import TimelineSpace, { TimelineSpaceState, blankAccount } from '~/src/renderer/store/TimelineSpace'
 import unreadSettings from '~/src/constants/unreadNotification'
+import { MyWindow } from '~/src/types/global'
+;(window as MyWindow).ipcRenderer = ipcRenderer
 
 jest.mock('megalodon')
 

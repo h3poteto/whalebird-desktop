@@ -144,8 +144,7 @@
     "moduleNameMapper": {
       "@/router": "<rootDir>/spec/mock/router.ts",
       "^@/(.+)": "<rootDir>/src/renderer/$1",
-      "^~/(.+)": "<rootDir>/$1",
-      "electron": "<rootDir>/spec/mock/electron.ts"
+      "^~/(.+)": "<rootDir>/$1"
     },
     "testMatch": [
       "**/spec/**/*.spec.ts"
@@ -263,7 +262,7 @@
     "eslint-plugin-vue": "^5.2.2",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
-    "jest": "^24.5.0",
+    "jest": "^24.9.0",
     "jsdom": "^15.2.1",
     "json-loader": "^0.5.7",
     "listr": "^0.14.3",

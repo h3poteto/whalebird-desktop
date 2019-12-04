@@ -1,7 +1,9 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import { ipcMain } from '~/spec/mock/electron'
+import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import General, { GeneralState } from '@/store/Preferences/General'
+import { MyWindow } from '~/src/types/global'
+;(window as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): GeneralState => {
   return {
