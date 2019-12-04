@@ -1,9 +1,11 @@
 import Mastodon, { List, Response, Account } from 'megalodon'
-import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { LocalTag } from '~/src/types/localTag'
 import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type SideMenuState = {
   unreadHomeTimeline: boolean
@@ -111,13 +113,13 @@ const actions: ActionTree<SideMenuState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_UNREAD_PUBLIC_TIMELINE, false)
   },
   changeCollapse: ({ commit }, value: boolean) => {
-    ipcRenderer.send('change-collapse', value)
+    win.ipcRenderer.send('change-collapse', value)
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
   },
   readCollapse: ({ commit }) => {
     return new Promise(resolve => {
-      ipcRenderer.send('get-collapse')
-      ipcRenderer.once('response-get-collapse', (_, value: boolean) => {
+      win.ipcRenderer.send('get-collapse')
+      win.ipcRenderer.once('response-get-collapse', (_, value: boolean) => {
         commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
         resolve(value)
       })
@@ -125,16 +127,16 @@ const actions: ActionTree<SideMenuState, RootState> = {
   },
   listTags: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
-        ipcRenderer.removeAllListeners('error-list-hashtags')
+      win.ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
+        win.ipcRenderer.removeAllListeners('error-list-hashtags')
         commit(MUTATION_TYPES.UPDATE_TAGS, tags)
         resolve(tags)
       })
-      ipcRenderer.once('error-list-hashtags', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-list-hashtags')
+      win.ipcRenderer.once('error-list-hashtags', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-list-hashtags')
         reject(err)
       })
-      ipcRenderer.send('list-hashtags')
+      win.ipcRenderer.send('list-hashtags')
     })
   }
 }

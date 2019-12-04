@@ -1,7 +1,9 @@
-import { ipcRenderer } from 'electron'
 import { LocalTag } from '~/src/types/localTag'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type ListState = {
   tags: Array<LocalTag>
@@ -24,31 +26,31 @@ const mutations: MutationTree<ListState> = {
 const actions: ActionTree<ListState, RootState> = {
   listTags: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
-        ipcRenderer.removeAllListeners('error-list-hashtags')
+      win.ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
+        win.ipcRenderer.removeAllListeners('error-list-hashtags')
         commit(MUTATION_TYPES.UPDATE_TAGS, tags)
         resolve(tags)
       })
-      ipcRenderer.once('error-list-hashtags', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-list-hashtags')
+      win.ipcRenderer.once('error-list-hashtags', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-list-hashtags')
         reject(err)
       })
-      ipcRenderer.send('list-hashtags')
+      win.ipcRenderer.send('list-hashtags')
     })
   },
   removeTag: ({ dispatch }, tag: LocalTag) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('response-remove-hashtag', () => {
-        ipcRenderer.removeAllListeners('error-remove-hashtag')
+      win.ipcRenderer.once('response-remove-hashtag', () => {
+        win.ipcRenderer.removeAllListeners('error-remove-hashtag')
         dispatch('listTags')
         dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
         resolve('deleted')
       })
-      ipcRenderer.once('error-remove-hashtag', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-remove-hashtag')
+      win.ipcRenderer.once('error-remove-hashtag', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-remove-hashtag')
         reject(err)
       })
-      ipcRenderer.send('remove-hashtag', tag)
+      win.ipcRenderer.send('remove-hashtag', tag)
     })
   }
 }

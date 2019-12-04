@@ -2,9 +2,11 @@ import { Response, List } from 'megalodon'
 import mockedMegalodon from '~/spec/mock/megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import { ipcMain } from '~/spec/mock/electron'
+import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import SideMenu, { SideMenuState } from '~/src/renderer/store/TimelineSpace/SideMenu'
 import { LocalTag } from '~/src/types/localTag'
+import { MyWindow } from '~/src/types/global'
+;(window as MyWindow).ipcRenderer = ipcRenderer
 
 jest.mock('megalodon')
 
