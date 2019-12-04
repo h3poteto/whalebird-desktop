@@ -11,7 +11,9 @@ import { Notify } from '~/src/types/notify'
 import { BaseConfig } from '~/src/types/preference'
 import { Appearance } from '~/src/types/appearance'
 import { ProxyConfig } from 'megalodon'
-import { ipcRenderer } from 'electron'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type AppState = {
   theme: ThemeColorType
@@ -107,22 +109,22 @@ const mutations: MutationTree<AppState> = {
 
 const actions: ActionTree<AppState, RootState> = {
   watchShortcutsEvents: () => {
-    ipcRenderer.on('open-preferences', () => {
+    win.ipcRenderer.on('open-preferences', () => {
       router.push('/preferences/general')
     })
   },
   removeShortcutsEvents: () => {
-    ipcRenderer.removeAllListeners('open-preferences')
+    win.ipcRenderer.removeAllListeners('open-preferences')
   },
   loadPreferences: ({ commit, dispatch }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('get-preferences')
-      ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-get-preferences')
+      win.ipcRenderer.send('get-preferences')
+      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-get-preferences')
+      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-get-preferences')
         dispatch('updateTheme', conf.appearance)
         commit(MUTATION_TYPES.UPDATE_DISPLAY_NAME_STYLE, conf.appearance.displayNameStyle)
         commit(MUTATION_TYPES.UPDATE_FONT_SIZE, conf.appearance.fontSize)
@@ -166,11 +168,11 @@ const actions: ActionTree<AppState, RootState> = {
   },
   loadProxy: ({ commit }) => {
     return new Promise(resolve => {
-      ipcRenderer.once('response-get-proxy-configuration', (_, proxy: ProxyConfig | false) => {
+      win.ipcRenderer.once('response-get-proxy-configuration', (_, proxy: ProxyConfig | false) => {
         commit(MUTATION_TYPES.UPDATE_PROXY_CONFIGURATION, proxy)
         resolve(proxy)
       })
-      ipcRenderer.send('get-proxy-configuration')
+      win.ipcRenderer.send('get-proxy-configuration')
     })
   }
 }
