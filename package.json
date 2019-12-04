@@ -275,7 +275,7 @@
     "sass-loader": "^7.0.3",
     "style-loader": "^1.0.0",
     "stylelint": "^10.1.0",
-    "stylelint-config-standard": "^18.3.0",
+    "stylelint-config-standard": "^19.0.0",
     "ts-jest": "^24.0.2",
     "ts-loader": "^6.2.1",
     "ttfinfo": "^0.2.0",
