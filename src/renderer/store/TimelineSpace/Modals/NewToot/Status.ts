@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import emojilib from 'emojilib'
 import Mastodon, { Account, Response, Results } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
@@ -6,6 +5,9 @@ import { RootState } from '@/store/index'
 import { LocalTag } from '~/src/types/localTag'
 import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { CachedAccount } from '~/src/types/cachedAccount'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 type Suggest = {
   name: string
@@ -151,7 +153,7 @@ const actions: ActionTree<StatusState, RootState> = {
     const searchCache = () => {
       return new Promise(resolve => {
         const target = word.replace('@', '')
-        ipcRenderer.once('response-get-cache-accounts', (_, accounts: Array<CachedAccount>) => {
+        win.ipcRenderer.once('response-get-cache-accounts', (_, accounts: Array<CachedAccount>) => {
           const matched = accounts.map(account => account.acct).filter(acct => acct.includes(target))
           if (matched.length === 0) throw new Error('Empty')
           commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, matched)
@@ -161,7 +163,7 @@ const actions: ActionTree<StatusState, RootState> = {
           commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
           resolve(matched)
         })
-        ipcRenderer.send('get-cache-accounts', rootState.TimelineSpace.account._id)
+        win.ipcRenderer.send('get-cache-accounts', rootState.TimelineSpace.account._id)
       })
     }
     const searchAPI = async () => {
@@ -174,8 +176,11 @@ const actions: ActionTree<StatusState, RootState> = {
       commit(MUTATION_TYPES.SET_CLIENT, client)
       const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', { q: word, resolve: false })
       if (res.data.length === 0) throw new Error('Empty')
-      commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, res.data.map(account => account.acct))
-      ipcRenderer.send('insert-cache-accounts', {
+      commit(
+        MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS,
+        res.data.map(account => account.acct)
+      )
+      win.ipcRenderer.send('insert-cache-accounts', {
         ownerID: rootState.TimelineSpace.account._id!,
         accts: res.data.map(a => a.acct)
       } as InsertAccountCache)
@@ -195,7 +200,7 @@ const actions: ActionTree<StatusState, RootState> = {
     const searchCache = () => {
       return new Promise(resolve => {
         const target = word.replace('#', '')
-        ipcRenderer.once('response-get-cache-hashtags', (_, tags: Array<LocalTag>) => {
+        win.ipcRenderer.once('response-get-cache-hashtags', (_, tags: Array<LocalTag>) => {
           const matched = tags.map(tag => tag.tagName).filter(tag => tag.includes(target))
           if (matched.length === 0) throw new Error('Empty')
           commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, matched)
@@ -205,7 +210,7 @@ const actions: ActionTree<StatusState, RootState> = {
           commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
           resolve(matched)
         })
-        ipcRenderer.send('get-cache-hashtags')
+        win.ipcRenderer.send('get-cache-hashtags')
       })
     }
     const searchAPI = async () => {
@@ -218,8 +223,14 @@ const actions: ActionTree<StatusState, RootState> = {
       commit(MUTATION_TYPES.SET_CLIENT, client)
       const res: Response<Results> = await client.get<Results>('/search', { q: word })
       if (res.data.hashtags.length === 0) throw new Error('Empty')
-      commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, res.data.hashtags.map(tag => tag.name))
-      ipcRenderer.send('insert-cache-hashtags', res.data.hashtags.map(tag => tag.name))
+      commit(
+        MUTATION_TYPES.APPEND_FILTERED_HASHTAGS,
+        res.data.hashtags.map(tag => tag.name)
+      )
+      win.ipcRenderer.send(
+        'insert-cache-hashtags',
+        res.data.hashtags.map(tag => tag.name)
+      )
       commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
       commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
