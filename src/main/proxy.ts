@@ -44,7 +44,7 @@ export default class ProxyConfiguration {
   }
 
   public async getConfig(): Promise<false | ManualProxy> {
-    const conf = await this.preferences.get()
+    const conf = await this.preferences.load()
     const source = conf.proxy.source as ProxySource
     switch (source) {
       case ProxySource.no:
