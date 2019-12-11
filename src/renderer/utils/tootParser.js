@@ -1,4 +1,4 @@
-export function findLink (target, parentClass = 'toot') {
+export function findLink(target, parentClass = 'toot') {
   if (target.localName === 'a') {
     return target.href
   }
@@ -11,7 +11,7 @@ export function findLink (target, parentClass = 'toot') {
   return findLink(target.parentNode, parentClass)
 }
 
-export function findTag (target, parentClass = 'toot') {
+export function findTag(target, parentClass = 'toot') {
   if (target.getAttribute('class') && target.getAttribute('class').includes('hashtag')) {
     return parseTag(target.href)
   }
@@ -29,14 +29,14 @@ export function findTag (target, parentClass = 'toot') {
   return findTag(target.parentNode, parentClass)
 }
 
-export function parseTag (tagURL) {
+export function parseTag(tagURL) {
   const res = tagURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(tag|tags)\/(.+)/)
   return res[3]
 }
 
-export function findAccount (target, parentClass = 'toot') {
+export function findAccount(target, parentClass = 'toot') {
   if (target.getAttribute('class') && target.getAttribute('class').includes('u-url')) {
-    if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/users\/[a-zA-Z0-9-_.]+/)) {
+    if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/users\/[a-zA-Z0-9-_.]+$/)) {
       return parsePleromaAccount(target.href)
     } else {
       return parseMastodonAccount(target.href)
@@ -44,11 +44,11 @@ export function findAccount (target, parentClass = 'toot') {
   }
   // In Pleroma, link does not have class.
   // So we have to check URL.
-  if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/@[a-zA-Z0-9-_.]+/)) {
+  if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/@[a-zA-Z0-9-_.]+$/)) {
     return parseMastodonAccount(target.href)
   }
   // Toot URL of Pleroma does not contain @.
-  if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/users\/[a-zA-Z0-9-_.]+/)) {
+  if (target.href && target.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/users\/[a-zA-Z0-9-_.]+$/)) {
     return parsePleromaAccount(target.href)
   }
   if (target.parentNode === undefined || target.parentNode === null) {
@@ -60,8 +60,8 @@ export function findAccount (target, parentClass = 'toot') {
   return findAccount(target.parentNode, parentClass)
 }
 
-export function parseMastodonAccount (accountURL) {
-  const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(@[a-zA-Z0-9-_.]+)/)
+export function parseMastodonAccount(accountURL) {
+  const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(@[a-zA-Z0-9-_.]+)$/)
   const domainName = res[1]
   const accountName = res[2]
   return {
@@ -71,8 +71,8 @@ export function parseMastodonAccount (accountURL) {
   }
 }
 
-export function parsePleromaAccount (accountURL) {
-  const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/users\/([a-zA-Z0-9-_.]+)/)
+export function parsePleromaAccount(accountURL) {
+  const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/users\/([a-zA-Z0-9-_.]+)$/)
   const domainName = res[1]
   const accountName = res[2]
   return {
