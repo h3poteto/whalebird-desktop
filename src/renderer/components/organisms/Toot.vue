@@ -373,7 +373,10 @@ export default {
       if (parsedAccount !== null) {
         this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
         this.$store
-          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
+          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', {
+            parsedAccount: parsedAccount,
+            status: this.originalMessage
+          })
           .then(account => {
             this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
             this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
