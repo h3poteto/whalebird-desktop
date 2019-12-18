@@ -11,7 +11,8 @@ const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 let mainConfig = {
   entry: {
-    main: path.join(__dirname, '../src/main/index.ts')
+    main: path.join(__dirname, '../src/main/index.ts'),
+    preload: path.join(__dirname, '../src/main/preload.js')
   },
   externals: [...Object.keys(dependencies || {})],
   module: {
