@@ -230,7 +230,6 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.5",
-    "babel-minify-webpack-plugin": "^0.3.1",
     "babel-plugin-istanbul": "^5.1.0",
     "babel-register": "^6.26.0",
     "cfonts": "^2.3.0",
