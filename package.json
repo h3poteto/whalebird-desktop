@@ -270,7 +270,7 @@
     "node-sass": "^4.13.0",
     "prettier": "^1.17.0",
     "prettier-stylelint": "^0.4.2",
-    "regenerator-runtime": "^0.13.1",
+    "regenerator-runtime": "^0.13.3",
     "sass-loader": "^7.0.3",
     "style-loader": "^1.0.0",
     "stylelint": "^10.1.0",
