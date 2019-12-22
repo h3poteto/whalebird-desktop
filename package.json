@@ -211,7 +211,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.7.1",
-    "@babel/runtime": "^7.4.3",
+    "@babel/runtime": "^7.7.4",
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.2.0",
     "@types/auto-launch": "^5.0.1",
     "@types/electron-json-storage": "^4.0.0",
