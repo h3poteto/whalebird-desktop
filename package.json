@@ -215,7 +215,7 @@
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.2.0",
     "@types/auto-launch": "^5.0.1",
     "@types/electron-json-storage": "^4.0.0",
-    "@types/i18next": "^12.1.0",
+    "@types/i18next": "^13.0.0",
     "@types/jest": "^24.0.15",
     "@types/lodash": "^4.14.149",
     "@types/nedb": "^1.8.7",
