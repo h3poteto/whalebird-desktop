@@ -133,7 +133,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import { shell } from 'electron'
 
 export default {
   name: 'side-menu',
@@ -178,7 +177,7 @@ export default {
           this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
           break
         case 'edit':
-          shell.openExternal(this.account.baseURL + '/settings/profile')
+          window.shell.openExternal(this.account.baseURL + '/settings/profile')
           break
         case 'settings':
           const url = `/${this.id()}/settings`

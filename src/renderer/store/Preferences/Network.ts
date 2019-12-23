@@ -1,8 +1,10 @@
-import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import { BaseConfig } from '~/src/types/preference'
 import { Proxy, ProxySource, ProxyProtocol, ManualProxy } from '~/src/types/proxy'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type NetworkState = {
   source: ProxySource
@@ -92,13 +94,13 @@ const mutations: MutationTree<NetworkState> = {
 const actions: ActionTree<NetworkState, RootState> = {
   loadProxy: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('get-preferences')
-      ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-get-preferences')
+      win.ipcRenderer.send('get-preferences')
+      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-get-preferences')
+      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-get-preferences')
         commit(MUTATION_TYPES.UPDATE_PROXY, conf.proxy as Proxy)
         resolve(conf)
       })
@@ -127,13 +129,13 @@ const actions: ActionTree<NetworkState, RootState> = {
       source: state.source,
       manualProxyConfig: state.proxy
     }
-    ipcRenderer.once('response-update-proxy-config', async () => {
+    win.ipcRenderer.once('response-update-proxy-config', async () => {
       dispatch('App/loadProxy', {}, { root: true })
       // Originally we have to restart all streamings after user change proxy configuration.
       // But streamings are restart after close preferences.
       // So we don't have to restart streaming here.
     })
-    ipcRenderer.send('update-proxy-config', proxy)
+    win.ipcRenderer.send('update-proxy-config', proxy)
   }
 }
 

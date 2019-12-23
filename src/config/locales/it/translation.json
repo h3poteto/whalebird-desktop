@@ -50,6 +50,7 @@
     "notification": "Notifiche",
     "mention": "Menzioni",
     "direct": "Messaggi diretti",
+    "follow_requests": "Richieste di seguirti",
     "favourite": "Preferiti",
     "local": "Timeline locale",
     "public": "Timeline pubblica",
@@ -61,8 +62,9 @@
     "home": "Pagina Iniziale",
     "notification": "Notifiche",
     "mention": "Menzioni",
-    "direct_messages": "Messaggi diretti",
     "favourite": "Preferiti",
+    "follow_requests": "Richieste di seguirti",
+    "direct_messages": "Messaggi diretti",
     "local": "Timeline locale",
     "public": "Timeline pubblica",
     "hashtag": "Hashtag",
@@ -126,6 +128,10 @@
         "cw": "Ignora sempre gli avvisi sui contenuti",
         "nfsw": "Ignora sempre contenuti multimediali inappropriati",
         "hideAllAttachments": "Nascondi tutti i contenuti multimediali"
+      },
+      "other": {
+        "title": "Altre opzioni",
+        "launch": "Avvia l'app al login"
       }
     },
     "appearance": {
@@ -153,6 +159,7 @@
       },
       "font_size": "Dimensione carattere",
       "font_family": "Tipo di carattere",
+      "toot_padding": "Spaziatura intorno ai toots",
       "display_style": {
         "title": "Visualizza lo stile del nome utente",
         "display_name_and_username": "Visualizza nome e nome utente",
@@ -188,6 +195,29 @@
       "cancel": "Annulla",
       "confirm_message": "Sei sicuro/a di rimuovere tutte le associazioni?"
     },
+    "network": {
+      "title": "Rete",
+      "proxy": {
+        "title": "Configurazione Proxy",
+        "no": "Nessun proxy",
+        "system": "Usa proxy di sistema",
+        "manual": "Configurazione proxy manuale",
+        "protocol": "Protocollo",
+        "host": "Host",
+        "port": "Porta",
+        "username": "Nome utente",
+        "password": "Password",
+        "protocol_list": {
+          "http": "http",
+          "https": "https",
+          "socks4": "socks4",
+          "socks4a": "socks4a",
+          "socks5": "socks5",
+          "socks5h": "socks5h"
+        }
+      },
+      "save": "Salva"
+    },
     "language": {
       "title": "Lingua",
       "language_description": "Scegli la lingua che desideri utilizzare con Roma.",
@@ -207,16 +237,29 @@
       "status": "Cosa ti passa per la testa?",
       "cancel": "Annulla",
       "toot": "Toot",
-      "close_confirm": "Sei sicuro/a di voler cancellare il nuovo toot?",
+      "close_confirm": "Sei sicuro di voler cancellare il nuovo toot?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Annulla",
       "description": "Descrivi per i non vedenti",
       "footer": {
         "add_image": "Aggiungi immagini",
+        "poll": "Aggiungi un sondaggio",
         "change_visibility": "Modifica visibilità",
         "change_sensitive": "Modifica sensibilità",
         "add_cw": "Aggiungi avviso sui contenuti",
         "pined_hashtag": "Fissa l'hashtag"
+      },
+      "poll": {
+        "add_choice": "Aggiungi una scelta",
+        "expires": {
+          "5_minutes": "5 minuti",
+          "30_minutes": "30 minuti",
+          "1_hour": "1 ora",
+          "6_hours": "6 ore",
+          "1_day": "1 giorno",
+          "3_days": "3 giorni",
+          "7_days": "7 giorni"
+        }
       }
     },
     "jump": {
@@ -241,6 +284,7 @@
       "ctrl_k": "Salta ad altre cronologie",
       "ctrl_n": "Apri una finestra modale per pubblicare un nuovo toot",
       "ctrl_enter": "Posta un toot",
+      "ctrl_r": "Ricarica la timeline corrente",
       "j": "Seleziona il prossimo toot",
       "k": "Seleziona il toot precedente",
       "h": "Abilita focalizzazione sulla colonna sinistra",
@@ -279,7 +323,14 @@
       "reblog": "Condividi",
       "fav": "Preferisci",
       "detail": "Dettagli del Toot",
-      "pinned": "Toot Fissati"
+      "pinned": "Toot Fissati",
+      "poll": {
+        "vote": "Vota",
+        "votes_count": "voti",
+        "until": "fino a {{datetime}}",
+        "left": "{{datetime}} mancanti",
+        "refresh": "Aggiorna"
+      }
     }
   },
   "side_bar": {
@@ -301,6 +352,10 @@
       "followers": "Seguaci"
     }
   },
+  "follow_requests": {
+    "accept": "Accetta",
+    "reject": "Rifiuta"
+  },
   "hashtag": {
     "tag_name": "Cerca tag",
     "delete_tag": "Cancella tag",
@@ -320,7 +375,9 @@
     }
   },
   "login": {
-    "domain_name_label": "Innanzitutto, esegui l'accesso a un server di Mastodon. Si prega di inserire un nome di dominio di server.",
+    "domain_name_label": "Innanzitutto, esegui l'accesso ad un server di Mastodon. Si prega di inserire il nome dominio di un server.",
+    "proxy_info": "Se vuoi utilizzare un server proxy, si prega di impostare il tuo proxy ",
+    "proxy_here": "qui",
     "search": "Cerca",
     "login": "Accesso"
   },
@@ -340,7 +397,10 @@
     "timeline_fetch_error": "Impossibile recuperare la cronologia",
     "notification_fetch_error": "Impossibile recuperare le notifiche",
     "favourite_fetch_error": "Impossibile recuperare i preferiti",
+    "follow_request_accept_error": "Impossibile accettare la richiesta",
+    "follow_reuqest_reject_error": "Impossibile rifiutare la richiesta",
     "start_streaming_error": "Impossibile avviare lo streaming",
+    "start_all_streamings_error": "Impossibile avviare lo streaming di {{domain}}",
     "attach_error": "Non è stato possibile allegare il file",
     "authorize_duplicate_error": "Non è possibile accedere allo stesso account dello stesso dominio",
     "authorize_error": "Autorizzazione fallita",
@@ -365,6 +425,7 @@
     "add_user_error": "Impossibile aggiungere un utente",
     "authorize_url_error": "Impossibile ottenere l'URL di autorizzazione",
     "domain_confirmed": "{{domain}} è confermato, per favore accedi",
+    "domain_doesnt_exist": "Impossibile connettersi a {{domain}}, assicurarsi che l'URL del server sia corretto",
     "loading": "Caricamento..."
   },
   "validation": {
@@ -375,7 +436,22 @@
     "new_toot": {
       "toot_length": "La lunghezza del toot deve essere da {{min}} a {{max}}",
       "attach_length": "È possibile allegare fino a {{max}} immagini",
-      "attach_image": "È possibile allegare solo immagini o video"
+      "attach_image": "È possibile allegare solo immagini o video",
+      "poll_invalid": "Scelte del sondaggio non valide"
+    }
+  },
+  "notification": {
+    "favourite": {
+      "title": "Preferenze",
+      "body": "{{username}} ha preferito il tuo stato"
+    },
+    "follow": {
+      "title": "Seguiti",
+      "body": "{{username}} is now following you"
+    },
+    "reblog": {
+      "title": "Condivisioni",
+      "body": "{{username}} ha condiviso il tuo stato"
     }
   }
 }

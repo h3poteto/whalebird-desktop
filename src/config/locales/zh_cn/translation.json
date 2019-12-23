@@ -128,6 +128,10 @@
         "cw": "始终展开具有内容警告的嘟文",
         "nfsw": "总是显示被标记为敏感内容的媒体",
         "hideAllAttachments": "总是隐藏所有媒体"
+      },
+      "other": {
+        "title": "其它选项",
+        "launch": "登录时启动程序"
       }
     },
     "appearance": {
@@ -190,6 +194,29 @@
       "confirm": "确定",
       "cancel": "取消",
       "confirm_message": "确定移除所有关联吗？"
+    },
+    "network": {
+      "title": "网络",
+      "proxy": {
+        "title": "代理配置",
+        "no": "不使用代理",
+        "system": "使用系统代理",
+        "manual": "手动配置代理",
+        "protocol": "协议",
+        "host": "代理主机",
+        "port": "代理端口",
+        "username": "用户名",
+        "password": "密码",
+        "protocol_list": {
+          "http": "http",
+          "https": "https",
+          "socks4": "socks4",
+          "socks4a": "socks4a",
+          "socks5": "socks5",
+          "socks5h": "socks5h"
+        }
+      },
+      "save": "保存"
     },
     "language": {
       "title": "语言",
@@ -257,6 +284,7 @@
       "ctrl_k": "跳转至其他时间线",
       "ctrl_n": "打开发嘟弹窗",
       "ctrl_enter": "发布嘟文",
+      "ctrl_r": "重新加载当前时间线",
       "j": "选择下一条嘟文",
       "k": "选择上一条嘟文",
       "h": "聚焦至左侧的列",
@@ -348,6 +376,8 @@
   },
   "login": {
     "domain_name_label": "首先让我们登入一个 Mastodon 实例。请输入实例的域名：",
+    "proxy_info": "If you want to use proxy server, please setup your proxy in",
+    "proxy_here": " here",
     "search": "搜索",
     "login": "登录"
   },
@@ -395,6 +425,7 @@
     "add_user_error": "添加用户失败",
     "authorize_url_error": "无法获取认证 URL",
     "domain_confirmed": "{{domain}} 已确认，请登录",
+    "domain_doesnt_exist": "连接 {{domain}} 失败，请确认服务器 URL",
     "loading": "加载中..."
   },
   "validation": {

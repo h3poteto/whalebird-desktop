@@ -1,0 +1,18 @@
+files:
+  - source: /src/config/locales/en/translation.json
+    translation: /src/config/locales/%locale%/translation.json
+    languages_mapping:
+      locale:
+        cs: cs
+        de: de
+        es-ES: es_es
+        fr: fr
+        it: it
+        ja: ja
+        ko: ko
+        'no': 'no'
+        pl: pl
+        pt-PT: pt_pt
+        ru: ru
+        sv-SE: sv_se
+        zh-CN: zh_cn

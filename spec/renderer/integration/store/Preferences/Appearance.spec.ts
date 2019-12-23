@@ -7,7 +7,9 @@ import TimeFormat from '~/src/constants/timeFormat'
 import { LightTheme, DarkTheme } from '~/src/constants/themeColor'
 import DefaultFonts from '@/utils/fonts'
 import Appearance, { AppearanceState } from '@/store/Preferences/Appearance'
-import { ipcMain } from '~/spec/mock/electron'
+import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
+import { MyWindow } from '~/src/types/global'
+;(window as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): AppearanceState => {
   return {
@@ -53,35 +55,45 @@ describe('Preferences/Appearance', () => {
         App: App
       }
     })
-    ipcMain.once('update-preferences', (event: IpcMainEvent, config: any) => {
-      event.sender.send('response-update-preferences', config)
-    })
   })
 
   describe('load', () => {
-    it('loadAppearance', async () => {
-      ipcMain.once('get-preferences', (event: IpcMainEvent, _) => {
-        event.sender.send('response-get-preferences', {
-          appearance: {
-            theme: Theme.Dark.key,
-            fontSize: 15
-          }
+    describe('loadAppearance', () => {
+      beforeEach(() => {
+        ipcMain.once('get-preferences', (event: IpcMainEvent, _) => {
+          event.sender.send('response-get-preferences', {
+            appearance: {
+              theme: Theme.Dark.key,
+              fontSize: 15
+            }
+          })
         })
       })
-      await store.dispatch('Preferences/loadAppearance')
-      expect(store.state.Preferences.appearance.theme).toEqual(Theme.Dark.key)
-      expect(store.state.Preferences.appearance.fontSize).toEqual(15)
-    })
-    it('loadFonts', async () => {
-      ipcMain.once('list-fonts', (event: IpcMainEvent, _) => {
-        event.sender.send('response-list-fonts', ['my-font'])
+      it('should be loaded', async () => {
+        await store.dispatch('Preferences/loadAppearance')
+        expect(store.state.Preferences.appearance.theme).toEqual(Theme.Dark.key)
+        expect(store.state.Preferences.appearance.fontSize).toEqual(15)
       })
-      await store.dispatch('Preferences/loadFonts')
-      expect(store.state.Preferences.fonts).toEqual([DefaultFonts[0], 'my-font'])
+    })
+    describe('loadFonts', () => {
+      beforeEach(() => {
+        ipcMain.once('list-fonts', (event: IpcMainEvent, _) => {
+          event.sender.send('response-list-fonts', ['my-font'])
+        })
+      })
+      it('should be loaded', async () => {
+        await store.dispatch('Preferences/loadFonts')
+        expect(store.state.Preferences.fonts).toEqual([DefaultFonts[0], 'my-font'])
+      })
     })
   })
 
   describe('update', () => {
+    beforeEach(() => {
+      ipcMain.once('update-preferences', (event: IpcMainEvent, config: any) => {
+        event.sender.send('response-update-preferences', config)
+      })
+    })
     it('updateTheme', async () => {
       await store.dispatch('Preferences/updateTheme', Theme.Dark.key)
       expect(store.state.Preferences.appearance.theme).toEqual(Theme.Dark.key)

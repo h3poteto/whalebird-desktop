@@ -93,9 +93,9 @@ export default class Preferences {
     this.path = path
   }
 
-  async load(): Promise<BaseConfig> {
+  public async load(): Promise<BaseConfig> {
     try {
-      const preferences = await this.get()
+      const preferences = await this._get()
       return objectAssignDeep({}, Base, preferences)
     } catch (err) {
       log.error(err)
@@ -103,7 +103,7 @@ export default class Preferences {
     }
   }
 
-  get(): Promise<BaseConfig> {
+  private _get(): Promise<BaseConfig> {
     return new Promise((resolve, reject) => {
       storage.get(this.path, (err, data) => {
         if (err) return reject(err)
@@ -112,7 +112,7 @@ export default class Preferences {
     })
   }
 
-  save(data: BaseConfig): Promise<BaseConfig> {
+  private _save(data: BaseConfig): Promise<BaseConfig> {
     return new Promise((resolve, reject) => {
       storage.set(this.path, data, err => {
         if (err) return reject(err)
@@ -121,10 +121,10 @@ export default class Preferences {
     })
   }
 
-  async update(obj: any): Promise<BaseConfig> {
+  public async update(obj: any): Promise<BaseConfig> {
     const current = await this.load()
     const data = objectAssignDeep({}, current, obj)
-    const result = await this.save(data)
+    const result = await this._save(data)
     return result
   }
 }

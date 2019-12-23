@@ -1,8 +1,10 @@
-import { ipcRenderer } from 'electron'
 import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { LoadPositionWithList } from '@/types/loadPosition'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type ShowState = {
   timeline: Array<Status>
@@ -111,33 +113,33 @@ const actions: ActionTree<ShowState, RootState> = {
     return res.data
   },
   startStreaming: ({ state, commit, rootState }, listID: string) => {
-    ipcRenderer.on('update-start-list-streaming', (_, update: Status) => {
+    win.ipcRenderer.on('update-start-list-streaming', (_, update: Status) => {
       commit(MUTATION_TYPES.APPEND_TIMELINE, update)
       if (state.heading && Math.random() > 0.8) {
         commit(MUTATION_TYPES.ARCHIVE_TIMELINE)
       }
     })
-    ipcRenderer.on('delete-start-list-streaming', (_, id: string) => {
+    win.ipcRenderer.on('delete-start-list-streaming', (_, id: string) => {
       commit(MUTATION_TYPES.DELETE_TOOT, id)
     })
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      ipcRenderer.send('start-list-streaming', {
+      win.ipcRenderer.send('start-list-streaming', {
         listID: listID,
         account: rootState.TimelineSpace.account
       })
-      ipcRenderer.once('error-start-list-streaming', (_, err: Error) => {
+      win.ipcRenderer.once('error-start-list-streaming', (_, err: Error) => {
         reject(err)
       })
     })
   },
   stopStreaming: () => {
     return new Promise(resolve => {
-      ipcRenderer.removeAllListeners('error-start-list-streaming')
-      ipcRenderer.removeAllListeners('update-start-list-streaming')
-      ipcRenderer.removeAllListeners('delete-start-list-streaming')
-      ipcRenderer.send('stop-list-streaming')
+      win.ipcRenderer.removeAllListeners('error-start-list-streaming')
+      win.ipcRenderer.removeAllListeners('update-start-list-streaming')
+      win.ipcRenderer.removeAllListeners('delete-start-list-streaming')
+      win.ipcRenderer.send('stop-list-streaming')
       resolve()
     })
   },

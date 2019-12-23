@@ -1,6 +1,6 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import { ipcMain } from '~/spec/mock/electron'
+import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import App from '@/store/App'
 import DisplayStyle from '~/src/constants/displayStyle'
 import { LightTheme, DarkTheme } from '~/src/constants/themeColor'
@@ -8,6 +8,8 @@ import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
 import Language from '~/src/constants/language'
 import DefaultFonts from '@/utils/fonts'
+import { MyWindow } from '~/src/types/global'
+;(window as MyWindow).ipcRenderer = ipcRenderer
 
 const state = () => {
   return {
@@ -58,11 +60,10 @@ describe('App', () => {
         ipcMain.once('get-preferences', (event: any, _) => {
           event.sender.send('error-get-preferences', new Error())
         })
-        await store.dispatch('App/loadPreferences')
-          .catch((err) => {
-            expect(err instanceof Error).toEqual(true)
-            expect(store.state.App.theme).toEqual(LightTheme)
-          })
+        await store.dispatch('App/loadPreferences').catch(err => {
+          expect(err instanceof Error).toEqual(true)
+          expect(store.state.App.theme).toEqual(LightTheme)
+        })
       })
     })
     describe('success', () => {

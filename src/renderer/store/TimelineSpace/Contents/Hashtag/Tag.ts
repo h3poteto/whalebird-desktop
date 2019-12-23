@@ -1,8 +1,10 @@
-import { ipcRenderer } from 'electron'
 import Mastodon, { Status, Response } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { LoadPositionWithTag } from '@/types/loadPosition'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type TagState = {
   timeline: Array<Status>
@@ -111,33 +113,33 @@ const actions: ActionTree<TagState, RootState> = {
     return res.data
   },
   startStreaming: ({ state, commit, rootState }, tag: string) => {
-    ipcRenderer.on('update-start-tag-streaming', (_, update: Status) => {
+    win.ipcRenderer.on('update-start-tag-streaming', (_, update: Status) => {
       commit(MUTATION_TYPES.APPEND_TIMELINE, update)
       if (state.heading && Math.random() > 0.8) {
         commit(MUTATION_TYPES.ARCHIVE_TIMELINE)
       }
     })
-    ipcRenderer.on('delete-start-tag-streaming', (_, id: string) => {
+    win.ipcRenderer.on('delete-start-tag-streaming', (_, id: string) => {
       commit(MUTATION_TYPES.DELETE_TOOT, id)
     })
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      ipcRenderer.send('start-tag-streaming', {
+      win.ipcRenderer.send('start-tag-streaming', {
         tag: encodeURIComponent(tag),
         account: rootState.TimelineSpace.account
       })
-      ipcRenderer.once('error-start-tag-streaming', (_, err: Error) => {
+      win.ipcRenderer.once('error-start-tag-streaming', (_, err: Error) => {
         reject(err)
       })
     })
   },
   stopStreaming: () => {
     return new Promise(resolve => {
-      ipcRenderer.removeAllListeners('error-start-tag-streaming')
-      ipcRenderer.removeAllListeners('update-start-tag-streaming')
-      ipcRenderer.removeAllListeners('delete-start-tag-streaming')
-      ipcRenderer.send('stop-tag-streaming')
+      win.ipcRenderer.removeAllListeners('error-start-tag-streaming')
+      win.ipcRenderer.removeAllListeners('update-start-tag-streaming')
+      win.ipcRenderer.removeAllListeners('delete-start-tag-streaming')
+      win.ipcRenderer.send('stop-tag-streaming')
       resolve()
     })
   },

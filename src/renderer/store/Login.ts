@@ -1,7 +1,9 @@
-import { ipcRenderer } from 'electron'
 import Mastodon, { Instance } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type LoginState = {
   selectedInstance: string | null
@@ -30,13 +32,13 @@ const mutations: MutationTree<LoginState> = {
 const actions: ActionTree<LoginState, RootState> = {
   fetchLogin: (_, instance: string) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('get-auth-url', instance)
-      ipcRenderer.once('error-get-auth-url', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-get-auth-url')
+      win.ipcRenderer.send('get-auth-url', instance)
+      win.ipcRenderer.once('error-get-auth-url', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-get-auth-url')
         reject(err)
       })
-      ipcRenderer.once('response-get-auth-url', (_, url: string) => {
-        ipcRenderer.removeAllListeners('response-get-auth-url')
+      win.ipcRenderer.once('response-get-auth-url', (_, url: string) => {
+        win.ipcRenderer.removeAllListeners('response-get-auth-url')
         resolve(url)
       })
     })

@@ -1,8 +1,10 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import { ipcMain } from '~/spec/mock/electron'
+import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import Account, { AccountState } from '@/store/Preferences/Account'
 import { LocalAccount } from '~/src/types/localAccount'
+import { MyWindow } from '~/src/types/global'
+;(window as MyWindow).ipcRenderer = ipcRenderer
 
 const account: LocalAccount = {
   _id: 'sample',
