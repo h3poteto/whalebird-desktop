@@ -1,7 +1,9 @@
-import { ipcRenderer } from 'electron'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type AccountState = {
   accounts: Array<LocalAccount>
@@ -30,13 +32,13 @@ const mutations: MutationTree<AccountState> = {
 const actions: ActionTree<AccountState, RootState> = {
   loadAccounts: ({ commit }): Promise<Array<LocalAccount>> => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('list-accounts', 'list')
-      ipcRenderer.once('error-list-accounts', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-list-accounts')
+      win.ipcRenderer.send('list-accounts', 'list')
+      win.ipcRenderer.once('error-list-accounts', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-list-accounts')
         reject(err)
       })
-      ipcRenderer.once('response-list-accounts', (_, accounts: Array<LocalAccount>) => {
-        ipcRenderer.removeAllListeners('error-list-accounts')
+      win.ipcRenderer.once('response-list-accounts', (_, accounts: Array<LocalAccount>) => {
+        win.ipcRenderer.removeAllListeners('error-list-accounts')
         commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
         resolve(accounts)
       })
@@ -44,52 +46,52 @@ const actions: ActionTree<AccountState, RootState> = {
   },
   removeAccount: (_, account: LocalAccount) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('remove-account', account._id)
-      ipcRenderer.once('error-remove-account', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-remove-account')
+      win.ipcRenderer.send('remove-account', account._id)
+      win.ipcRenderer.once('error-remove-account', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-remove-account')
         reject(err)
       })
-      ipcRenderer.once('response-remove-account', (_, _id: string) => {
-        ipcRenderer.removeAllListeners('error-remove-account')
+      win.ipcRenderer.once('response-remove-account', (_, _id: string) => {
+        win.ipcRenderer.removeAllListeners('error-remove-account')
         resolve()
       })
     })
   },
   forwardAccount: (_, account: LocalAccount) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('forward-account', account)
-      ipcRenderer.once('error-forward-account', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-forward-account')
+      win.ipcRenderer.send('forward-account', account)
+      win.ipcRenderer.once('error-forward-account', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-forward-account')
         reject(err)
       })
-      ipcRenderer.once('response-forward-account', () => {
-        ipcRenderer.removeAllListeners('error-forward-account')
+      win.ipcRenderer.once('response-forward-account', () => {
+        win.ipcRenderer.removeAllListeners('error-forward-account')
         resolve()
       })
     })
   },
   backwardAccount: (_, account: LocalAccount) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('backward-account', account)
-      ipcRenderer.once('error-backward-account', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-forward-account')
+      win.ipcRenderer.send('backward-account', account)
+      win.ipcRenderer.once('error-backward-account', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-forward-account')
         reject(err)
       })
-      ipcRenderer.once('response-backward-account', () => {
-        ipcRenderer.removeAllListeners('error-backward-account')
+      win.ipcRenderer.once('response-backward-account', () => {
+        win.ipcRenderer.removeAllListeners('error-backward-account')
         resolve()
       })
     })
   },
   removeAllAccounts: () => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('remove-all-accounts')
-      ipcRenderer.once('error-remove-all-accounts', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-remove-all-accounts')
+      win.ipcRenderer.send('remove-all-accounts')
+      win.ipcRenderer.once('error-remove-all-accounts', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-remove-all-accounts')
         reject(err)
       })
-      ipcRenderer.once('response-remove-all-accounts', () => {
-        ipcRenderer.removeAllListeners('error-remove-all-accounts')
+      win.ipcRenderer.once('response-remove-all-accounts', () => {
+        win.ipcRenderer.removeAllListeners('error-remove-all-accounts')
         resolve()
       })
     })

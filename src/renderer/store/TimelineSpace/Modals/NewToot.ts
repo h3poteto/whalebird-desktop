@@ -1,5 +1,4 @@
 import Mastodon, { Status, Attachment, Tag, Response, Account } from 'megalodon'
-import { ipcRenderer } from 'electron'
 import Visibility, { VisibilityType } from '~/src/constants/visibility'
 import TootStatus, { StatusState } from './NewToot/Status'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
@@ -15,6 +14,9 @@ import {
   NewTootUnknownType,
   AuthenticationError
 } from '@/errors/validations'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 type MediaDescription = {
   id: string
@@ -267,7 +269,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     return client
       .post<Status>('/statuses', form)
       .then((res: Response<Status>) => {
-        ipcRenderer.send('toot-action-sound')
+        win.ipcRenderer.send('toot-action-sound')
         return res.data
       })
       .finally(() => {

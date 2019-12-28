@@ -1,9 +1,11 @@
-import { ipcRenderer } from 'electron'
 import Language from '~/src/constants/language'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { Language as LanguageSet } from '~/src/types/language'
 import { BaseConfig } from '~/src/types/preference'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type LanguageState = {
   language: LanguageSet
@@ -32,13 +34,13 @@ const mutations: MutationTree<LanguageState> = {
 const actions: ActionTree<LanguageState, RootState> = {
   loadLanguage: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('get-preferences')
-      ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-get-preferences')
+      win.ipcRenderer.send('get-preferences')
+      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-get-preferences')
         reject(err)
       })
-      ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        ipcRenderer.removeAllListeners('error-get-preferences')
+      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
+        win.ipcRenderer.removeAllListeners('error-get-preferences')
         commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language as LanguageSet)
         resolve(conf)
       })
@@ -46,15 +48,15 @@ const actions: ActionTree<LanguageState, RootState> = {
   },
   changeLanguage: ({ commit }, key: string) => {
     return new Promise(resolve => {
-      ipcRenderer.send('change-language', key)
-      ipcRenderer.once('response-change-language', (_, value: string) => {
+      win.ipcRenderer.send('change-language', key)
+      win.ipcRenderer.once('response-change-language', (_, value: string) => {
         commit(MUTATION_TYPES.CHANGE_LANGUAGE, value)
         resolve(value)
       })
     })
   },
   relaunch: () => {
-    ipcRenderer.send('relaunch')
+    win.ipcRenderer.send('relaunch')
   }
 }
 

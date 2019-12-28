@@ -30,5 +30,29 @@ export default {
   zh_cn: {
     name: '简体中文',
     key: 'zh_cn'
+  },
+  cs: {
+    name: 'čeština',
+    key: 'cs'
+  },
+  es_es: {
+    name: 'Español',
+    key: 'es_es'
+  },
+  no: {
+    name: 'norsk',
+    key: 'no'
+  },
+  pt_pt: {
+    name: 'Português',
+    key: 'pt_pt'
+  },
+  ru: {
+    name: 'русский',
+    key: 'ru'
+  },
+  sv_se: {
+    name: 'svenska',
+    key: 'sv_se'
   }
 }

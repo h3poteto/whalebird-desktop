@@ -20,7 +20,7 @@
       "undo": "Cofnij",
       "redo": "Powtórz",
       "cut": "Wytnij",
-      "copy": "Copy",
+      "copy": "Kopiuj",
       "paste": "Wklej",
       "select_all": "Zaznacz wszystko"
     },
@@ -48,6 +48,9 @@
     "expand": "Rozszerzać",
     "home": "Strona główna",
     "notification": "Powiadomienia",
+    "mention": "Mention",
+    "direct": "Direct messages",
+    "follow_requests": "Follow Requests",
     "favourite": "Ulubione",
     "local": "Lokalna oś czasu",
     "public": "Publiczna oś czasu",
@@ -58,7 +61,10 @@
   "header_menu": {
     "home": "Strona główna",
     "notification": "Powiadomienia",
+    "mention": "Mention",
     "favourite": "Ulubione",
+    "follow_requests": "Follow Requests",
+    "direct_messages": "Direct Messages",
     "local": "Lokalna oś czasu",
     "public": "Publiczna oś czasu",
     "hashtag": "Hashtagi",
@@ -68,12 +74,14 @@
     "filter": {
       "title": "Filtruj",
       "placeholder": "Filtruj z użyciem wyrażeń regularnych",
+      "show_dms": "Show direct messages",
       "show_reblogs": "Pokazuj podbicia",
       "show_replies": "Pokazuj odpowiedzi",
       "apply": "Zastosuj"
     },
     "new_toot": "Wpisy",
-    "reload": "Przeładować"
+    "reload": "Przeładować",
+    "settings": "Settings"
   },
   "settings": {
     "title": "Settings",
@@ -92,6 +100,16 @@
           "description": "Mark medias as sensitive by default"
         }
       }
+    },
+    "timeline": {
+      "title": "Timeline",
+      "unread_notification": {
+        "title": "Unread Notification",
+        "description": "Customize unread notifications for each timeline.",
+        "direct": "Direct Messages",
+        "local": "Local Timeline",
+        "public": "Public Timeline"
+      }
     }
   },
   "preferences": {
@@ -103,6 +121,17 @@
         "description": "Please set feedback sounds.",
         "fav_rb": "Polubienie i podbicie",
         "toot": "Wpisy"
+      },
+      "timeline": {
+        "title": "Timeline",
+        "description": "Customize view in your timelines.",
+        "cw": "Always ignore contents warnings",
+        "nfsw": "Always ignore NFSW of medias",
+        "hideAllAttachments": "Hide all medias"
+      },
+      "other": {
+        "title": "Other options",
+        "launch": "Launch app on login"
       }
     },
     "appearance": {
@@ -130,6 +159,7 @@
       },
       "font_size": "Rozmiar czcionki",
       "font_family": "Font family",
+      "toot_padding": "Padding around toots",
       "display_style": {
         "title": "Styl wyświetlania",
         "display_name_and_username": "Nazwa wyświetlana i nazwa użytkownika",
@@ -143,7 +173,7 @@
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "Powiadomienia",
       "enable": {
         "description": "Please set notification events.",
         "reply": "Notify me when I receive reply",
@@ -164,6 +194,29 @@
       "confirm": "Potwierdź",
       "cancel": "Anuluj",
       "confirm_message": "Czy na pewno chcesz usunąć wszystkie powiązania?"
+    },
+    "network": {
+      "title": "Network",
+      "proxy": {
+        "title": "Proxy Configuration",
+        "no": "No proxy",
+        "system": "Use system proxy",
+        "manual": "Manual proxy configuration",
+        "protocol": "Protocol",
+        "host": "Proxy host",
+        "port": "Proxy port",
+        "username": "Proxy username",
+        "password": "Proxy password",
+        "protocol_list": {
+          "http": "http",
+          "https": "https",
+          "socks4": "socks4",
+          "socks4a": "socks4a",
+          "socks5": "socks5",
+          "socks5h": "socks5h"
+        }
+      },
+      "save": "Save"
     },
     "language": {
       "title": "Język",
@@ -190,10 +243,23 @@
       "description": "Wprowadź opis dla niewidomych i niedowidzących",
       "footer": {
         "add_image": "Dodaj obraz",
+        "poll": "Add a poll",
         "change_visibility": "Zmień widoczność",
         "change_sensitive": "Zmień wrażliwy",
         "add_cw": "Dodaj ostrzeżenie zawartości",
         "pined_hashtag": "Pin the hashtag"
+      },
+      "poll": {
+        "add_choice": "Add a choice",
+        "expires": {
+          "5_minutes": "5 minutes",
+          "30_minutes": "30 minutes",
+          "1_hour": "1 hour",
+          "6_hours": "6 hours",
+          "1_day": "1 day",
+          "3_days": "3 days",
+          "7_days": "7 days"
+        }
       }
     },
     "jump": {
@@ -216,10 +282,13 @@
       "title": "Keyboard shortcuts",
       "ctrl_number": "Switch accounts",
       "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new post modal",
+      "ctrl_n": "Open the new toot modal",
       "ctrl_enter": "Post the status",
+      "ctrl_r": "Reload current timeline",
       "j": "Select the next status",
       "k": "Select the previous status",
+      "h": "Switch focus to the left column",
+      "l": "Switch focus to the right column",
       "r": "Reply to the status",
       "b": "Reblog the status",
       "f": "Favourite the status",
@@ -227,7 +296,14 @@
       "p": "Open account profile of the status",
       "i": "Open the images",
       "x": "Show/hide CW and NSFW",
+      "?": "Show this help",
       "esc": "Close current page"
+    },
+    "report": {
+      "title": "Reporting this user",
+      "comment": "Additional comments",
+      "cancel": "Cancel",
+      "ok": "Report"
     }
   },
   "cards": {
@@ -247,7 +323,14 @@
       "reblog": "Podbić wpisu",
       "fav": "Ulubiony",
       "detail": "Szczegół",
-      "pinned": "Przypięty wpis"
+      "pinned": "Przypięty wpis",
+      "poll": {
+        "vote": "Vote",
+        "votes_count": "votes",
+        "until": "until {{datetime}}",
+        "left": "{{datetime}} left",
+        "refresh": "Refresh"
+      }
     }
   },
   "side_bar": {
@@ -269,6 +352,10 @@
       "followers": "Śledzący"
     }
   },
+  "follow_requests": {
+    "accept": "Accept",
+    "reject": "Reject"
+  },
   "hashtag": {
     "tag_name": "Tag",
     "delete_tag": "Delete tag",
@@ -277,6 +364,7 @@
   "search": {
     "search": "Szukaj",
     "account": "Konta",
+    "tag": "Hashtag",
     "keyword": "Słowo kluczowe",
     "toot": "Wpisy"
   },
@@ -288,6 +376,8 @@
   },
   "login": {
     "domain_name_label": "Na początek musisz się zalogować na serwerze Mastodona. Wprowadź domenę serwerze.",
+    "proxy_info": "If you want to use proxy server, please setup your proxy in",
+    "proxy_here": " here",
     "search": "Znajdź",
     "login": "Zaloguj się"
   },
@@ -307,7 +397,10 @@
     "timeline_fetch_error": "Nie udało się załadować osi czasu",
     "notification_fetch_error": "Nie udało się załadować powiadomień",
     "favourite_fetch_error": "Nie udało się załadować ulubionych",
+    "follow_request_accept_error": "Failed to accept the request",
+    "follow_reuqest_reject_error": "failed to reject the request",
     "start_streaming_error": "Nie udało się rozpocząć strumieniowania",
+    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
     "attach_error": "Nie udało się załączyć pliku",
     "authorize_duplicate_error": "Nie możesz zalogować się na to samo konto na tej samej instancji",
     "authorize_error": "Uwierzytelnienie nie powiodło się",
@@ -332,6 +425,7 @@
     "add_user_error": "Nie udało się dodać użytkownika",
     "authorize_url_error": "Nie udało się uzyskać adresu autoryzacji",
     "domain_confirmed": "{{domain}} została potwierdzona, zaloguj się",
+    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
     "loading": "Ładowanie…"
   },
   "validation": {
@@ -342,7 +436,22 @@
     "new_toot": {
       "toot_length": "Długość wpisu może wynosić od {{min}} do {{max}}",
       "attach_length": "Możesz załączyć maksymalnie {{max}} obrazów",
-      "attach_image": "Możesz załączyć tylko obrazy lub filmy"
+      "attach_image": "Możesz załączyć tylko obrazy lub filmy",
+      "poll_invalid": "Invalid poll choices"
+    }
+  },
+  "notification": {
+    "favourite": {
+      "title": "Favourite",
+      "body": "{{username}} favourited your status"
+    },
+    "follow": {
+      "title": "Follow",
+      "body": "{{username}} is now following you"
+    },
+    "reblog": {
+      "title": "Reblog",
+      "body": "{{username}} boosted your status"
     }
   }
 }

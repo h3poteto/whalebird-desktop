@@ -1,5 +1,32 @@
 # Change Log
 
+## [3.0.0] - 2019-11-17
+### Added
+- [#1090](https://github.com/h3poteto/whalebird-desktop/pull/1090) Add AppImage in release builds
+- [#1081](https://github.com/h3poteto/whalebird-desktop/pull/1081) Add notice in login for users who use proxy server
+- [#1069](https://github.com/h3poteto/whalebird-desktop/pull/1069) Reload proxy configuration after changed
+- [#1066](https://github.com/h3poteto/whalebird-desktop/pull/1066) Load proxy information and apply for all network connection
+- [#1060](https://github.com/h3poteto/whalebird-desktop/pull/1060) Add a tray menu to open window
+- [#1064](https://github.com/h3poteto/whalebird-desktop/pull/1064) Add proxy configuration in preferences
+
+### Changed
+- [#1094](https://github.com/h3poteto/whalebird-desktop/pull/1094) Use system proxy as default in preferences
+- [#1093](https://github.com/h3poteto/whalebird-desktop/pull/1093) Update word instance to server
+- [#1088](https://github.com/h3poteto/whalebird-desktop/pull/1088) Update translation when domain does not find
+- [#1087](https://github.com/h3poteto/whalebird-desktop/pull/1087) Check instance API before request host-meta when confirm instance
+- [#1067](https://github.com/h3poteto/whalebird-desktop/pull/1067) Update electron version to 6.1.0
+- [#1063](https://github.com/h3poteto/whalebird-desktop/pull/1063) Replace old Hiragino font for macOS
+- [#1062](https://github.com/h3poteto/whalebird-desktop/pull/1062) Update megalodon version to 2.0.0
+
+### Fixed
+- [#1101](https://github.com/h3poteto/whalebird-desktop/pull/1101) fix: Codesign script for app store
+- [#1100](https://github.com/h3poteto/whalebird-desktop/pull/1100) fix: Remove debugging code in websocket
+- [#1099](https://github.com/h3poteto/whalebird-desktop/pull/1099) Update megalodon version to 2.0.1
+- [#1097](https://github.com/h3poteto/whalebird-desktop/pull/1097) Reject duplicated status when append statuses in mutations
+- [#1089](https://github.com/h3poteto/whalebird-desktop/pull/1089) Trim authorization token and domain URL
+- [#1068](https://github.com/h3poteto/whalebird-desktop/pull/1068) Fix comparison between login user and target account
+
+
 ## [2.9.0] - 2019-10-11
 ### Added
 - [#1056](https://github.com/h3poteto/whalebird-desktop/pull/1056) Upgrade electron version to 5.0.11

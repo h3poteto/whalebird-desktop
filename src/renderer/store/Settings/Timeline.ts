@@ -1,8 +1,10 @@
-import { ipcRenderer } from 'electron'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { UnreadNotification } from '~/src/types/unreadNotification'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type TimelineState = {
   unreadNotification: UnreadNotification
@@ -29,13 +31,13 @@ const mutations: MutationTree<TimelineState> = {
 const actions: ActionTree<TimelineState, RootState> = {
   loadUnreadNotification: ({ commit, rootState }): Promise<boolean> => {
     return new Promise(resolve => {
-      ipcRenderer.once('response-get-unread-notification', (_, settings: UnreadNotification) => {
-        ipcRenderer.removeAllListeners('error-get-unread-notification')
+      win.ipcRenderer.once('response-get-unread-notification', (_, settings: UnreadNotification) => {
+        win.ipcRenderer.removeAllListeners('error-get-unread-notification')
         commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
         resolve(true)
       })
-      ipcRenderer.once('error-get-unread-notification', () => {
-        ipcRenderer.removeAllListeners('response-get-unread-notification')
+      win.ipcRenderer.once('error-get-unread-notification', () => {
+        win.ipcRenderer.removeAllListeners('response-get-unread-notification')
         const settings: UnreadNotification = {
           direct: unreadSettings.Direct.default,
           local: unreadSettings.Local.default,
@@ -44,7 +46,7 @@ const actions: ActionTree<TimelineState, RootState> = {
         commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
         resolve(false)
       })
-      ipcRenderer.send('get-unread-notification', rootState.Settings.accountID)
+      win.ipcRenderer.send('get-unread-notification', rootState.Settings.accountID)
     })
   },
   changeUnreadNotification: ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
@@ -52,16 +54,16 @@ const actions: ActionTree<TimelineState, RootState> = {
       accountID: rootState.Settings.accountID
     })
     return new Promise((resolve, reject) => {
-      ipcRenderer.once('response-update-unread-notification', () => {
-        ipcRenderer.removeAllListeners('error-update-unread-notification')
+      win.ipcRenderer.once('response-update-unread-notification', () => {
+        win.ipcRenderer.removeAllListeners('error-update-unread-notification')
         dispatch('loadUnreadNotification')
         resolve(true)
       })
-      ipcRenderer.once('error-update-unread-notification', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-unread-notification')
+      win.ipcRenderer.once('error-update-unread-notification', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-unread-notification')
         reject(err)
       })
-      ipcRenderer.send('update-unread-notification', settings)
+      win.ipcRenderer.send('update-unread-notification', settings)
     })
   }
 }

@@ -1,114 +1,112 @@
 <template>
-<div id="account_profile"
-     v-loading="loading"
-     :element-loading-text="$t('message.loading')"
-     element-loading-spinner="el-icon-loading"
-     element-loading-background="rgba(0, 0, 0, 0.8)"
-     role="article"
-     aria-label="account profile">
-  <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
-    <div class="header">
-      <div class="follow-follower" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
-        <div class="follower-status">
-          <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
-          <el-tag class="status" size="medium" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
+  <div
+    id="account_profile"
+    v-loading="loading"
+    :element-loading-text="$t('message.loading')"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+    role="article"
+    aria-label="account profile"
+  >
+    <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
+      <div class="header">
+        <div class="follow-follower" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+          <div class="follower-status">
+            <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
+            <el-tag class="status" size="medium" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
+          </div>
         </div>
-      </div>
-      <div class="user-info">
-        <div class="more" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
-          <popper trigger="click" :options="{placement: 'bottom'}" ref="popper">
-            <div class="popper">
-              <ul class="menu-list">
-                <li role="button" @click="openBrowser(account)">
-                  {{ $t('side_bar.account_profile.open_in_browser') }}
-                </li>
-                <li role="button" @click="addToList(account)">
-                  {{ $t('side_bar.account_profile.manage_list_memberships') }}
-                </li>
-                <li role="button" @click="unmute(account)" v-if="muting">
-                  {{ $t('side_bar.account_profile.unmute') }}
-                </li>
-                <li role="button" @click="confirmMute(account)" v-else>
-                  {{ $t('side_bar.account_profile.mute') }}
-                </li>
-                <li role="button" @click="unblock(account)" v-if="blocking">
-                  {{ $t('side_bar.account_profile.unblock') }}
-                </li>
-                <li role="button" @click="block(account)" v-else>
-                  {{ $t('side_bar.account_profile.block') }}
-                </li>
-              </ul>
-            </div>
+        <div class="user-info">
+          <div class="more" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+            <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
+              <div class="popper">
+                <ul class="menu-list">
+                  <li role="button" @click="openBrowser(account)">
+                    {{ $t('side_bar.account_profile.open_in_browser') }}
+                  </li>
+                  <li role="button" @click="addToList(account)">
+                    {{ $t('side_bar.account_profile.manage_list_memberships') }}
+                  </li>
+                  <li role="button" @click="unmute(account)" v-if="muting">
+                    {{ $t('side_bar.account_profile.unmute') }}
+                  </li>
+                  <li role="button" @click="confirmMute(account)" v-else>
+                    {{ $t('side_bar.account_profile.mute') }}
+                  </li>
+                  <li role="button" @click="unblock(account)" v-if="blocking">
+                    {{ $t('side_bar.account_profile.unblock') }}
+                  </li>
+                  <li role="button" @click="block(account)" v-else>
+                    {{ $t('side_bar.account_profile.block') }}
+                  </li>
+                </ul>
+              </div>
 
-            <el-button slot="reference" type="text" :title="$t('side_bar.account_profile.detail')">
-              <icon name="cog" scale="1.4"></icon>
-            </el-button>
-          </popper>
-        </div>
-        <div class="icon" role="presentation">
-          <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
-        </div>
-        <div class="follow-status" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
-          <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
-            <icon name="user-times" scale="1.5"></icon>
+              <el-button slot="reference" type="text" :title="$t('side_bar.account_profile.detail')">
+                <icon name="cog" scale="1.4"></icon>
+              </el-button>
+            </popper>
           </div>
-          <div v-else-if="relationship.requested" :title="$t('side_bar.account_profile.follow_requested')">
-            <icon name="hourglass" scale="1.5"></icon>
+          <div class="icon" role="presentation">
+            <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
           </div>
-          <div v-else class="follow" @click="follow(account)" :title="$t('side_bar.account_profile.follow')">
-            <icon name="user-plus" scale="1.5"></icon>
+          <div class="follow-status" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+            <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
+              <icon name="user-times" scale="1.5"></icon>
+            </div>
+            <div v-else-if="relationship.requested" :title="$t('side_bar.account_profile.follow_requested')">
+              <icon name="hourglass" scale="1.5"></icon>
+            </div>
+            <div v-else class="follow" @click="follow(account)" :title="$t('side_bar.account_profile.follow')">
+              <icon name="user-plus" scale="1.5"></icon>
+            </div>
           </div>
         </div>
+        <div class="username">
+          <bdi v-html="username(account)"></bdi>
+        </div>
+        <div class="account">@{{ account.acct }}</div>
+        <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
       </div>
-      <div class="username">
-        <bdi v-html="username(account)"></bdi>
-      </div>
-      <div class="account">
-        @{{ account.acct }}
-      </div>
-      <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
+    </div>
+    <div class="metadata">
+      <dl v-for="(data, index) in account.fields" :key="index">
+        <dt>
+          {{ data.name }}
+        </dt>
+        <dd v-html="data.value" @click.capture.prevent="metadataClick"></dd>
+      </dl>
+    </div>
+    <el-row class="basic-info">
+      <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
+        <el-button type="text" class="tab" @click="changeTab(1)">
+          <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
+          <div class="count">{{ account.statuses_count }}</div>
+        </el-button>
+      </el-col>
+      <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
+        <el-button type="text" class="tab" @click="changeTab(2)">
+          <div class="title">{{ $t('side_bar.account_profile.follows') }}</div>
+          <div class="count">{{ account.following_count }}</div>
+        </el-button>
+      </el-col>
+      <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
+        <el-button type="text" class="tab" @click="changeTab(3)">
+          <div class="title">{{ $t('side_bar.account_profile.followers') }}</div>
+          <div class="count">{{ account.followers_count }}</div>
+        </el-button>
+      </el-col>
+    </el-row>
+    <div class="timeline">
+      <timeline :account="account" v-if="activeTab === 1"></timeline>
+      <follows :account="account" v-if="activeTab === 2"></follows>
+      <followers :account="account" v-if="activeTab === 3"></followers>
     </div>
   </div>
-  <div class="metadata">
-    <dl v-for="(data, index) in account.fields" :key="index">
-      <dt>
-        {{ data.name }}
-      </dt>
-      <dd v-html="data.value" @click.capture.prevent="metadataClick">
-      </dd>
-    </dl>
-  </div>
-  <el-row class="basic-info">
-    <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
-      <el-button type="text" class="tab" @click="changeTab(1)">
-        <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
-        <div class="count">{{ account.statuses_count }}</div>
-      </el-button>
-    </el-col>
-    <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
-      <el-button type="text" class="tab" @click="changeTab(2)">
-        <div class="title">{{ $t('side_bar.account_profile.follows') }}</div>
-        <div class="count">{{ account.following_count }}</div>
-      </el-button>
-    </el-col>
-    <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
-      <el-button type="text" class="tab" @click="changeTab(3)">
-        <div class="title">{{ $t('side_bar.account_profile.followers') }}</div>
-        <div class="count">{{ account.followers_count }}</div>
-      </el-button>
-    </el-col>
-  </el-row>
-  <div class="timeline">
-    <timeline :account="account" v-if="activeTab === 1"></timeline>
-    <follows :account="account" v-if="activeTab === 2"></follows>
-    <followers :account="account" v-if="activeTab === 3"></followers>
-  </div>
-</div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import { shell } from 'electron'
 import { findLink } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import Timeline from './AccountProfile/Timeline'
@@ -124,14 +122,14 @@ export default {
     Followers,
     FailoverImg
   },
-  data () {
+  data() {
     return {
       activeTab: 1
     }
   },
   computed: {
     ...mapState({
-      theme: (state) => {
+      theme: state => {
         return {
           '--theme-mask-color': state.App.theme.wrapper_mask_color,
           '--theme-border-color': state.App.theme.border_color,
@@ -149,31 +147,31 @@ export default {
     ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile', ['isOwnProfile'])
   },
   watch: {
-    account: function () {
+    account: function() {
       this.activeTab = 1
     },
-    loading: function (newState, _oldState) {
+    loading: function(newState, _oldState) {
       this.$emit('change-loading', newState)
     }
   },
   methods: {
-    username (account) {
+    username(account) {
       if (account.display_name !== '') {
         return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
     },
-    note (account) {
+    note(account) {
       return emojify(account.note, account.emojis)
     },
-    noteClick (e) {
+    noteClick(e) {
       const link = findLink(e.target, 'note')
       if (link !== null) {
-        shell.openExternal(link)
+        window.shell.openExternal(link)
       }
     },
-    follow (account) {
+    follow(account) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
       try {
         this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
@@ -186,7 +184,7 @@ export default {
         this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
       }
     },
-    unfollow (account) {
+    unfollow(account) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
       try {
         this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
@@ -199,39 +197,39 @@ export default {
         this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
       }
     },
-    changeTab (index) {
+    changeTab(index) {
       this.activeTab = index
     },
-    openBrowser (account) {
-      shell.openExternal(account.url)
+    openBrowser(account) {
+      window.shell.openExternal(account.url)
       this.$refs.popper.doClose()
     },
-    addToList (account) {
+    addToList(account) {
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/setAccount', account)
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', true)
       this.$refs.popper.doClose()
     },
-    confirmMute (account) {
+    confirmMute(account) {
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
       this.$refs.popper.doClose()
     },
-    unmute (account) {
+    unmute(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unmute', account)
       this.$refs.popper.doClose()
     },
-    block (account) {
+    block(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/block', account)
       this.$refs.popper.doClose()
     },
-    unblock (account) {
+    unblock(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unblock', account)
       this.$refs.popper.doClose()
     },
-    metadataClick (e) {
+    metadataClick(e) {
       const link = findLink(e.target, 'metadata')
       if (link !== null) {
-        return shell.openExternal(link)
+        return window.shell.openExternal(link)
       }
     }
   }

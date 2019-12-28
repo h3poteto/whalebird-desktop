@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import Mastodon, { Account, Emoji, Instance, Status, Notification as NotificationType } from 'megalodon'
 import SideMenu, { SideMenuState } from './TimelineSpace/SideMenu'
 import HeaderMenu, { HeaderMenuState } from './TimelineSpace/HeaderMenu'
@@ -11,6 +10,9 @@ import { RootState } from '@/store'
 import { UnreadNotification } from '~/src/types/unreadNotification'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
+import { MyWindow } from '~/src/types/global'
+
+const win = window as MyWindow
 
 export type TimelineSpaceState = {
   account: LocalAccount
@@ -120,13 +122,13 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // -------------------------------------------------
   localAccount: async ({ dispatch, commit }, id: string): Promise<LocalAccount> => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('get-local-account', id)
-      ipcRenderer.once('error-get-local-account', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-get-local-account')
+      win.ipcRenderer.send('get-local-account', id)
+      win.ipcRenderer.once('error-get-local-account', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-get-local-account')
         reject(err)
       })
-      ipcRenderer.once('response-get-local-account', (_, account: LocalAccount) => {
-        ipcRenderer.removeAllListeners('error-get-local-account')
+      win.ipcRenderer.once('response-get-local-account', (_, account: LocalAccount) => {
+        win.ipcRenderer.removeAllListeners('error-get-local-account')
 
         if (account.username === undefined || account.username === null || account.username === '') {
           dispatch('fetchAccount', account)
@@ -146,13 +148,13 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   fetchAccount: (_, account: LocalAccount): Promise<LocalAccount> => {
     return new Promise((resolve, reject) => {
-      ipcRenderer.send('update-account', account)
-      ipcRenderer.once('error-update-account', (_, err: Error) => {
-        ipcRenderer.removeAllListeners('response-update-account')
+      win.ipcRenderer.send('update-account', account)
+      win.ipcRenderer.once('error-update-account', (_, err: Error) => {
+        win.ipcRenderer.removeAllListeners('response-update-account')
         reject(err)
       })
-      ipcRenderer.once('response-update-account', (_, account: LocalAccount) => {
-        ipcRenderer.removeAllListeners('error-update-account')
+      win.ipcRenderer.once('response-update-account', (_, account: LocalAccount) => {
+        win.ipcRenderer.removeAllListeners('error-update-account')
         resolve(account)
       })
     })
@@ -173,16 +175,16 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // Shortcuts
   // -----------------------------------------------
   watchShortcutEvents: ({ commit, dispatch }) => {
-    ipcRenderer.on('CmdOrCtrl+N', () => {
+    win.ipcRenderer.on('CmdOrCtrl+N', () => {
       dispatch('TimelineSpace/Modals/NewToot/openModal', {}, { root: true })
     })
-    ipcRenderer.on('CmdOrCtrl+K', () => {
+    win.ipcRenderer.on('CmdOrCtrl+K', () => {
       commit('TimelineSpace/Modals/Jump/changeModal', true, { root: true })
     })
   },
   removeShortcutEvents: async () => {
-    ipcRenderer.removeAllListeners('CmdOrCtrl+N')
-    ipcRenderer.removeAllListeners('CmdOrCtrl+K')
+    win.ipcRenderer.removeAllListeners('CmdOrCtrl+N')
+    win.ipcRenderer.removeAllListeners('CmdOrCtrl+K')
     return true
   },
   /**
@@ -209,13 +211,13 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   loadUnreadNotification: ({ commit }, accountID: string) => {
     return new Promise(resolve => {
-      ipcRenderer.once('response-get-unread-notification', (_, settings: UnreadNotification) => {
-        ipcRenderer.removeAllListeners('error-get-unread-notification')
+      win.ipcRenderer.once('response-get-unread-notification', (_, settings: UnreadNotification) => {
+        win.ipcRenderer.removeAllListeners('error-get-unread-notification')
         commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
         resolve(settings)
       })
-      ipcRenderer.once('error-get-unread-notification', () => {
-        ipcRenderer.removeAllListeners('response-get-unread-notification')
+      win.ipcRenderer.once('error-get-unread-notification', () => {
+        win.ipcRenderer.removeAllListeners('response-get-unread-notification')
         commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, {
           direct: unreadSettings.Direct.default,
           local: unreadSettings.Local.default,
@@ -223,7 +225,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
         } as UnreadNotification)
         resolve({})
       })
-      ipcRenderer.send('get-unread-notification', accountID)
+      win.ipcRenderer.send('get-unread-notification', accountID)
     })
   },
   fetchContentsTimelines: async ({ dispatch, state }) => {
@@ -297,7 +299,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     await dispatch('waitToUnbindUserStreaming')
 
     commit(MUTATION_TYPES.UPDATE_BINDING_ACCOUNT, state.account)
-    ipcRenderer.on(`update-start-all-user-streamings-${state.account._id!}`, (_, update: Status) => {
+    win.ipcRenderer.on(`update-start-all-user-streamings-${state.account._id!}`, (_, update: Status) => {
       commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
       // Sometimes archive old statuses
       if (rootState.TimelineSpace.Contents.Home.heading && Math.random() > 0.8) {
@@ -305,35 +307,35 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
     })
-    ipcRenderer.on(`notification-start-all-user-streamings-${state.account._id!}`, (_, notification: NotificationType) => {
+    win.ipcRenderer.on(`notification-start-all-user-streamings-${state.account._id!}`, (_, notification: NotificationType) => {
       commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
       if (rootState.TimelineSpace.Contents.Notifications.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Notifications/archiveNotifications', null, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
     })
-    ipcRenderer.on(`mention-start-all-user-streamings-${state.account._id!}`, (_, mention: NotificationType) => {
+    win.ipcRenderer.on(`mention-start-all-user-streamings-${state.account._id!}`, (_, mention: NotificationType) => {
       commit('TimelineSpace/Contents/Mentions/appendMentions', mention, { root: true })
       if (rootState.TimelineSpace.Contents.Mentions.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Mentions/archiveMentions', null, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadMentions', true, { root: true })
     })
-    ipcRenderer.on(`delete-start-all-user-streamings-${state.account._id!}`, (_, id: string) => {
+    win.ipcRenderer.on(`delete-start-all-user-streamings-${state.account._id!}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Home/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Notifications/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
     })
   },
   bindLocalStreaming: ({ commit, rootState }) => {
-    ipcRenderer.on('update-start-local-streaming', (_, update: Status) => {
+    win.ipcRenderer.on('update-start-local-streaming', (_, update: Status) => {
       commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Local/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
     })
-    ipcRenderer.on('delete-start-local-streaming', (_, id: string) => {
+    win.ipcRenderer.on('delete-start-local-streaming', (_, id: string) => {
       commit('TimelineSpace/Contents/Local/deleteToot', id, { root: true })
     })
   },
@@ -341,23 +343,23 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      ipcRenderer.send('start-local-streaming', {
+      win.ipcRenderer.send('start-local-streaming', {
         account: state.account
       })
-      ipcRenderer.once('error-start-local-streaming', (_, err: Error) => {
+      win.ipcRenderer.once('error-start-local-streaming', (_, err: Error) => {
         reject(err)
       })
     })
   },
   bindPublicStreaming: ({ commit, rootState }) => {
-    ipcRenderer.on('update-start-public-streaming', (_, update: Status) => {
+    win.ipcRenderer.on('update-start-public-streaming', (_, update: Status) => {
       commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Public/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
     })
-    ipcRenderer.on('delete-start-public-streaming', (_, id: string) => {
+    win.ipcRenderer.on('delete-start-public-streaming', (_, id: string) => {
       commit('TimelineSpace/Contents/Public/deleteToot', id, { root: true })
     })
   },
@@ -365,23 +367,23 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      ipcRenderer.send('start-public-streaming', {
+      win.ipcRenderer.send('start-public-streaming', {
         account: state.account
       })
-      ipcRenderer.once('error-start-public-streaming', (_, err: Error) => {
+      win.ipcRenderer.once('error-start-public-streaming', (_, err: Error) => {
         reject(err)
       })
     })
   },
   bindDirectMessagesStreaming: ({ commit, rootState }) => {
-    ipcRenderer.on('update-start-directmessages-streaming', (_, update: Status) => {
+    win.ipcRenderer.on('update-start-directmessages-streaming', (_, update: Status) => {
       commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.DirectMessages.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/DirectMessages/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', true, { root: true })
     })
-    ipcRenderer.on('delete-start-directmessages-streaming', (_, id: string) => {
+    win.ipcRenderer.on('delete-start-directmessages-streaming', (_, id: string) => {
       commit('TimelineSpace/Contents/DirectMessages/deleteToot', id, { root: true })
     })
   },
@@ -389,10 +391,10 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      ipcRenderer.send('start-directmessages-streaming', {
+      win.ipcRenderer.send('start-directmessages-streaming', {
         account: state.account
       })
-      ipcRenderer.once('error-start-directmessages-streaming', (_, err: Error) => {
+      win.ipcRenderer.once('error-start-directmessages-streaming', (_, err: Error) => {
         reject(err)
       })
     })
@@ -401,10 +403,10 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     // When unbind is called, sometimes account is already cleared and account does not have _id.
     // So we have to get previous account to unbind streamings.
     if (state.bindingAccount) {
-      ipcRenderer.removeAllListeners(`update-start-all-user-streamings-${state.bindingAccount._id!}`)
-      ipcRenderer.removeAllListeners(`mention-start-all-user-streamings-${state.bindingAccount._id!}`)
-      ipcRenderer.removeAllListeners(`notification-start-all-user-streamings-${state.bindingAccount._id!}`)
-      ipcRenderer.removeAllListeners(`delete-start-all-user-streamings-${state.bindingAccount._id!}`)
+      win.ipcRenderer.removeAllListeners(`update-start-all-user-streamings-${state.bindingAccount._id!}`)
+      win.ipcRenderer.removeAllListeners(`mention-start-all-user-streamings-${state.bindingAccount._id!}`)
+      win.ipcRenderer.removeAllListeners(`notification-start-all-user-streamings-${state.bindingAccount._id!}`)
+      win.ipcRenderer.removeAllListeners(`delete-start-all-user-streamings-${state.bindingAccount._id!}`)
       // And we have to clear binding account after unbind.
       commit(MUTATION_TYPES.UPDATE_BINDING_ACCOUNT, null)
     } else {
@@ -412,28 +414,28 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     }
   },
   unbindLocalStreaming: () => {
-    ipcRenderer.removeAllListeners('error-start-local-streaming')
-    ipcRenderer.removeAllListeners('update-start-local-streaming')
-    ipcRenderer.removeAllListeners('delete-start-local-streaming')
+    win.ipcRenderer.removeAllListeners('error-start-local-streaming')
+    win.ipcRenderer.removeAllListeners('update-start-local-streaming')
+    win.ipcRenderer.removeAllListeners('delete-start-local-streaming')
   },
   stopLocalStreaming: () => {
-    ipcRenderer.send('stop-local-streaming')
+    win.ipcRenderer.send('stop-local-streaming')
   },
   unbindPublicStreaming: () => {
-    ipcRenderer.removeAllListeners('error-start-public-streaming')
-    ipcRenderer.removeAllListeners('update-start-public-streaming')
-    ipcRenderer.removeAllListeners('delete-start-public-streaming')
+    win.ipcRenderer.removeAllListeners('error-start-public-streaming')
+    win.ipcRenderer.removeAllListeners('update-start-public-streaming')
+    win.ipcRenderer.removeAllListeners('delete-start-public-streaming')
   },
   stopPublicStreaming: () => {
-    ipcRenderer.send('stop-public-streaming')
+    win.ipcRenderer.send('stop-public-streaming')
   },
   unbindDirectMessagesStreaming: () => {
-    ipcRenderer.removeAllListeners('error-start-directmessages-streaming')
-    ipcRenderer.removeAllListeners('update-start-directmessages-streaming')
-    ipcRenderer.removeAllListeners('delete-start-directmessages-streaming')
+    win.ipcRenderer.removeAllListeners('error-start-directmessages-streaming')
+    win.ipcRenderer.removeAllListeners('update-start-directmessages-streaming')
+    win.ipcRenderer.removeAllListeners('delete-start-directmessages-streaming')
   },
   stopDirectMessagesStreaming: () => {
-    ipcRenderer.send('stop-directmessages-streaming')
+    win.ipcRenderer.send('stop-directmessages-streaming')
   },
   updateTootForAllTimelines: ({ commit, state }, status: Status): boolean => {
     commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })

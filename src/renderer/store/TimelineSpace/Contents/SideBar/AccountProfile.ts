@@ -1,9 +1,20 @@
-import Mastodon, { Account, Relationship, Response } from 'megalodon'
+import Mastodon, { Account, Relationship, Response, Status, Context } from 'megalodon'
 import Timeline, { TimelineState } from './AccountProfile/Timeline'
 import Follows, { FollowsState } from './AccountProfile/Follows'
 import Followers, { FollowersState } from './AccountProfile/Followers'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
+
+type ParsedAccount = {
+  username: string
+  acct: string
+  url: string
+}
+
+type SearchAccount = {
+  parsedAccount: ParsedAccount
+  status: Status
+}
 
 export type AccountProfileState = {
   account: Account | null
@@ -54,22 +65,40 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     const res: Response<Account> = await client.get<Account>(`/accounts/${accountID}`)
     return res.data
   },
-  searchAccount: async ({ rootState }, parsedAccount): Promise<Account> => {
+  searchAccount: async ({ rootState }, searchAccount: SearchAccount): Promise<Account> => {
     const client = new Mastodon(
       rootState.TimelineSpace.account.accessToken!,
       rootState.TimelineSpace.account.baseURL + '/api/v1',
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', { q: parsedAccount.url, resolve: true })
+
+    // Find account in toot
+    if (searchAccount.status.in_reply_to_account_id) {
+      const res: Response<Account> = await client.get<Account>(`/accounts/${searchAccount.status.in_reply_to_account_id}`)
+      if (res.status === 200) {
+        const user = accountMatch([res.data], searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
+        if (user) return user
+      }
+    }
+
+    // Find account in context
+    if (searchAccount.status.in_reply_to_id) {
+      const res: Response<Context> = await client.get<Context>(`/statuses/${searchAccount.status.id}/context`)
+      if (res.status === 200) {
+        const accounts: Array<Account> = res.data.ancestors.map(s => s.account).concat(res.data.descendants.map(s => s.account))
+        const user = accountMatch(accounts, searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
+        if (user) return user
+      }
+    }
+
+    // Search account name
+    const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', {
+      q: searchAccount.parsedAccount.url,
+      resolve: true
+    })
     if (res.data.length <= 0) throw new AccountNotFound('empty result')
-    const account = res.data.find(a => `@${a.acct}` === parsedAccount.acct)
-    if (account) return account
-    const pleromaUser = res.data.find(a => a.acct === parsedAccount.acct)
-    if (pleromaUser) return pleromaUser
-    const localUser = res.data.find(a => `@${a.username}@${rootState.TimelineSpace.account.domain}` === parsedAccount.acct)
-    if (localUser) return localUser
-    const user = res.data.find(a => a.url === parsedAccount.url)
+    const user = accountMatch(res.data, searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
     if (!user) throw new AccountNotFound('not found')
     return user
   },
@@ -196,3 +225,15 @@ const AccountProfile: Module<AccountProfileState, RootState> = {
 class AccountNotFound extends Error {}
 
 export default AccountProfile
+
+const accountMatch = (findAccounts: Array<Account>, parsedAccount: ParsedAccount, domain: string): Account | false => {
+  const account = findAccounts.find(a => `@${a.acct}` === parsedAccount.acct)
+  if (account) return account
+  const pleromaUser = findAccounts.find(a => a.acct === parsedAccount.acct)
+  if (pleromaUser) return pleromaUser
+  const localUser = findAccounts.find(a => `@${a.username}@${domain}` === parsedAccount.acct)
+  if (localUser) return localUser
+  const user = findAccounts.find(a => a.url === parsedAccount.url)
+  if (!user) return false
+  return user
+}
