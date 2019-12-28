@@ -43,7 +43,7 @@
     "profile": "Profil",
     "show_profile": "Profil ansehen",
     "edit_profile": "Profil bearbeiten",
-    "settings": "Settings",
+    "settings": "Einstellungen",
     "collapse": "Zusammenbruch",
     "expand": "Erweitern",
     "home": "Home",
@@ -84,7 +84,7 @@
     "settings": "Einstellungen"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Einstellungen",
     "general": {
       "title": "Settings",
       "toot": {
@@ -104,7 +104,7 @@
     "timeline": {
       "title": "Zeitleiste",
       "unread_notification": {
-        "title": "Unread Notification",
+        "title": "Ungelesene Benachrichtigungen",
         "description": "Customize unread notifications for each timeline.",
         "direct": "Direkt Nachrichten",
         "local": "Lokale Zeitleiste",
@@ -130,7 +130,7 @@
         "hideAllAttachments": "Verstecke alle Medien"
       },
       "other": {
-        "title": "Other options",
+        "title": "Andere Optionen",
         "launch": "Launch app on login"
       }
     },
@@ -149,7 +149,7 @@
         "background_color": "Base background",
         "selected_background_color": "Focused background",
         "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
+        "side_menu_color": "Seitenmenü",
         "primary_color": "Primary font",
         "regular_color": "Regular font",
         "secondary_color": "Secondary font",
@@ -202,7 +202,7 @@
         "no": "No proxy",
         "system": "Use system proxy",
         "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
+        "protocol": "Protokoll",
         "host": "Proxy host",
         "port": "Proxy port",
         "username": "Proxy username",
