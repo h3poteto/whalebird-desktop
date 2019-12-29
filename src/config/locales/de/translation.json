@@ -43,7 +43,7 @@
     "profile": "Profil",
     "show_profile": "Profil ansehen",
     "edit_profile": "Profil bearbeiten",
-    "settings": "Settings",
+    "settings": "Einstellungen",
     "collapse": "Zusammenbruch",
     "expand": "Erweitern",
     "home": "Home",
@@ -84,7 +84,7 @@
     "settings": "Einstellungen"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Einstellungen",
     "general": {
       "title": "Settings",
       "toot": {
@@ -104,7 +104,7 @@
     "timeline": {
       "title": "Zeitleiste",
       "unread_notification": {
-        "title": "Unread Notification",
+        "title": "Ungelesene Benachrichtigungen",
         "description": "Customize unread notifications for each timeline.",
         "direct": "Direkt Nachrichten",
         "local": "Lokale Zeitleiste",
@@ -130,7 +130,7 @@
         "hideAllAttachments": "Verstecke alle Medien"
       },
       "other": {
-        "title": "Other options",
+        "title": "Andere Optionen",
         "launch": "Launch app on login"
       }
     },
@@ -148,17 +148,17 @@
       "custom_theme": {
         "background_color": "Base background",
         "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
+        "global_header_color": "Konto-Menü",
+        "side_menu_color": "Seitenmenü",
+        "primary_color": "Primäre Schriftart",
+        "regular_color": "Normale Schriftart",
+        "secondary_color": "Sekundäre Schriftart",
         "border_color": "Border",
-        "header_menu_color": "Header menu",
+        "header_menu_color": "Kopfzeilen-Menü",
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Schriftgröße",
-      "font_family": "Font family",
+      "font_family": "Schriftfamilie",
       "toot_padding": "Abstand zwischen den Toot",
       "display_style": {
         "title": "Anzeigestil",
@@ -167,7 +167,7 @@
         "username": "Benutzername"
       },
       "time_format": {
-        "title": "Time format",
+        "title": "Zeitformat",
         "absolute": "Absolute",
         "relative": "Relative"
       }
@@ -196,13 +196,13 @@
       "confirm_message": "Möchtest du wirklich alle Verbindungen trennen?"
     },
     "network": {
-      "title": "Network",
+      "title": "Netzwerk",
       "proxy": {
         "title": "Proxy Configuration",
         "no": "No proxy",
         "system": "Use system proxy",
         "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
+        "protocol": "Protokoll",
         "host": "Proxy host",
         "port": "Proxy port",
         "username": "Proxy username",
