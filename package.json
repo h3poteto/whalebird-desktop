@@ -224,7 +224,7 @@
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
     "@typescript-eslint/typescript-estree": "^1.5.0",
-    "@vue/test-utils": "^1.0.0-beta.29",
+    "@vue/test-utils": "^1.0.0-beta.30",
     "ajv": "^6.6.1",
     "all-object-keys": "^1.1.1",
     "babel-eslint": "^10.0.3",
