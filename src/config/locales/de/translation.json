@@ -5,10 +5,10 @@
       "about": "Über Whalebird",
       "preferences": "Einstellungen …",
       "services": "Dienste",
-      "hide": "Whalebird verstecken",
-      "hide_others": "Andere verstecken",
+      "hide": "Whalebird ausblenden",
+      "hide_others": "Andere ausblenden",
       "show_all": "Alle anzeigen",
-      "open": "Open Window",
+      "open": "Fenster öffnen",
       "quit": "Beenden"
     },
     "toot": {
@@ -18,22 +18,22 @@
     "edit": {
       "name": "Bearbeiten",
       "undo": "Rückgängig",
-      "redo": "Wiederholen",
+      "redo": "Wiederherstellen",
       "cut": "Ausschneiden",
       "copy": "Kopieren",
       "paste": "Einfügen",
-      "select_all": "Alle auswählen"
+      "select_all": "Alles Auswählen"
     },
     "view": {
       "name": "Ansicht",
-      "toggle_full_screen": "Vollbild umschalten"
+      "toggle_full_screen": "Vollbildmodus umschalten"
     },
     "window": {
       "name": "Fenster",
       "close": "Fenster schließen",
-      "open": "Open Window",
+      "open": "Fenster öffnen",
       "minimize": "Minimieren",
-      "jump_to": "Springe zu"
+      "jump_to": "Gehe zu"
     }
   },
   "global_header": {
@@ -44,13 +44,13 @@
     "show_profile": "Profil ansehen",
     "edit_profile": "Profil bearbeiten",
     "settings": "Einstellungen",
-    "collapse": "Zusammenbruch",
-    "expand": "Erweitern",
-    "home": "Home",
+    "collapse": "Einklappen",
+    "expand": "Ausklappen",
+    "home": "Start",
     "notification": "Benachrichtigung",
-    "mention": "Erwähnen",
-    "direct": "Direkt Nachrichten",
-    "follow_requests": "Follow Requests",
+    "mention": "Erwähnung",
+    "direct": "Direktnachrichten",
+    "follow_requests": "Follower-Anfragen",
     "favourite": "Favorit",
     "local": "Lokale Timeline",
     "public": "Öffenliche Timeline",
@@ -59,12 +59,12 @@
     "lists": "Listen"
   },
   "header_menu": {
-    "home": "Home",
+    "home": "Start",
     "notification": "Benachrichtigung",
-    "mention": "Erwähnen",
+    "mention": "Erwähnung",
     "favourite": "Favorit",
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direkt Nachrichten",
+    "follow_requests": "Follower-Anfragen",
+    "direct_messages": "Direktnachrichten",
     "local": "Lokale Timeline",
     "public": "Öffenliche Timeline",
     "hashtag": "Hashtag",
@@ -74,7 +74,7 @@
     "filter": {
       "title": "Filter",
       "placeholder": "Mit regulären Ausdrücken filtern",
-      "show_dms": "Show direct messages",
+      "show_dms": "Direktnachrichten anzeigen",
       "show_reblogs": "Geteilte Beiträge anzeigen",
       "show_replies": "Antworten anzeigen",
       "apply": "Übernehmen"
@@ -163,7 +163,7 @@
       "display_style": {
         "title": "Anzeigestil",
         "display_name_and_username": "Anzeige- und Benutzername",
-        "display_name": "Anzeigename",
+        "display_name": "Angezeigter Name",
         "username": "Benutzername"
       },
       "time_format": {
@@ -175,11 +175,11 @@
     "notification": {
       "title": "Notification",
       "enable": {
-        "description": "Pelase set notification events.",
-        "reply": "Notify me when I receive reply",
-        "reblog": "Notify me when I receive reblog",
-        "favourite": "Notify me when I receive favourite",
-        "follow": "Notify me when I receive follow"
+        "description": "Ereignisse, bei denen ich benachrichtigt werden möchte",
+        "reply": "Wenn ich eine Antwort erhalte",
+        "reblog": "Wenn einer meiner Toots geteilt wird",
+        "favourite": "Wenn einer meiner Toots favorisiert wird",
+        "follow": "Wenn mir ein anderer Benutzer folgt"
       }
     },
     "account": {
