@@ -55,8 +55,16 @@ export default {
     }
   },
   watch: {
-    src: function(newSrc, _oldSrc) {
+    src: async function(newSrc, _oldSrc) {
       this.originalSrc = newSrc
+      if (this.readExif) {
+        try {
+          const transformed = await exifImageUrl(newSrc)
+          this.originalSrc = transformed
+        } catch (err) {
+          console.error(err)
+        }
+      }
     }
   },
   methods: {
