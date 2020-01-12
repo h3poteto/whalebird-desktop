@@ -1,6 +1,9 @@
 import loadImage from 'blueimp-load-image'
 
 const parseExtension = url => {
+  if (!url) {
+    return null
+  }
   if (url.match(/\.jpg$/) || url.match(/\.jpeg$/) || url.match(/\.JPG$/) || url.match(/\.JPEG$/)) {
     return 'image/jpeg'
   } else if (url.match(/\.png$/) || url.match(/\.PNG$/)) {
@@ -19,7 +22,7 @@ const exifImageUrl = url => {
   return new Promise((resolve, reject) => {
     const extension = parseExtension(url)
     if (!extension) {
-      reject(Error('url is not image'))
+      reject(Error(`url is not image: ${url}`))
     }
     loadImage(
       url,
