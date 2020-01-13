@@ -143,7 +143,7 @@
           <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
             <div class="popper toot-menu">
               <ul class="menu-list">
-                <li role="button" @click="openDetail(message)">
+                <li role="button" @click="openDetail(message)" v-show="!detailed">
                   {{ $t('cards.toot.view_toot_detail') }}
                 </li>
                 <li role="button" @click="openBrowser(originalMessage)">
@@ -225,6 +225,10 @@ export default {
       default: false
     },
     pinned: {
+      type: Boolean,
+      default: false
+    },
+    detailed: {
       type: Boolean,
       default: false
     }
