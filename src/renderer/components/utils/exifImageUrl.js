@@ -22,11 +22,14 @@ const exifImageUrl = url => {
   return new Promise((resolve, reject) => {
     const extension = parseExtension(url)
     if (!extension) {
-      reject(Error(`url is not image: ${url}`))
+      return reject(Error(`url is not image: ${url}`))
     }
     loadImage(
       url,
       canvas => {
+        if (canvas.type === 'error') {
+          return reject(Error(`can not load image: ${url}`))
+        }
         const data = canvas.toDataURL(extension)
         resolve(data)
       },
