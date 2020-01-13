@@ -50,7 +50,7 @@ export default {
         const transformed = await exifImageUrl(this.src)
         this.originalSrc = transformed
       } catch (err) {
-        console.error(err)
+        console.warn(err)
       }
     }
   },
@@ -62,7 +62,7 @@ export default {
           const transformed = await exifImageUrl(newSrc)
           this.originalSrc = transformed
         } catch (err) {
-          console.error(err)
+          console.warn(err)
         }
       }
     }
