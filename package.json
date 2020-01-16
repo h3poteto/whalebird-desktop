@@ -227,7 +227,7 @@
     "@typescript-eslint/typescript-estree": "^1.5.0",
     "@vue/test-utils": "^1.0.0-beta.30",
     "ajv": "^6.6.1",
-    "all-object-keys": "^1.1.1",
+    "all-object-keys": "^2.1.1",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
