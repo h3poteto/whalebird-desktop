@@ -223,7 +223,7 @@
     "@types/node": "^13.1.6",
     "@types/parse-link-header": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
-    "@typescript-eslint/parser": "^2.15.0",
+    "@typescript-eslint/parser": "^2.17.0",
     "@typescript-eslint/typescript-estree": "^1.5.0",
     "@vue/test-utils": "^1.0.0-beta.30",
     "ajv": "^6.6.1",
