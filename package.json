@@ -173,7 +173,7 @@
     "blueimp-load-image": "^2.26.0",
     "boom": "^7.3.0",
     "deep-extend": "^0.6.0",
-    "electron-context-menu": "^0.15.2",
+    "electron-context-menu": "^0.16.0",
     "electron-json-storage": "^4.1.8",
     "electron-log": "^2.2.17",
     "electron-window-state": "^5.0.3",
