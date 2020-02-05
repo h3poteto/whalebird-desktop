@@ -1,5 +1,70 @@
 # Change Log
 
+## [3.1.0] - 2020-01-23
+### Added
+- [#1223](https://github.com/h3poteto/whalebird-desktop/pull/1223) Read exif and rotate image for all attachment images
+
+### Changed
+
+- [#1239](https://github.com/h3poteto/whalebird-desktop/pull/1239) Bump all-object-keys from 1.1.1 to 2.1.1
+- [#1238](https://github.com/h3poteto/whalebird-desktop/pull/1238) Bump webpack-cli from 3.1.2 to 3.3.10
+- [#1237](https://github.com/h3poteto/whalebird-desktop/pull/1237) Bump @types/node from 11.11.4 to 13.1.6
+- [#1236](https://github.com/h3poteto/whalebird-desktop/pull/1236) Bump ts-jest from 24.2.0 to 24.3.0
+- [#1235](https://github.com/h3poteto/whalebird-desktop/pull/1235) Bump electron-context-menu from 0.15.1 to 0.15.2
+- [#1234](https://github.com/h3poteto/whalebird-desktop/pull/1234) Bump element-ui from 2.4.11 to 2.13.0
+- [#1233](https://github.com/h3poteto/whalebird-desktop/pull/1233) Bump @babel/plugin-transform-runtime from 7.6.2 to 7.8.3
+- [#1230](https://github.com/h3poteto/whalebird-desktop/pull/1230) Bump @babel/runtime from 7.7.7 to 7.8.0
+- [#1229](https://github.com/h3poteto/whalebird-desktop/pull/1229) Bump vuex from 3.0.1 to 3.1.2
+- [#1228](https://github.com/h3poteto/whalebird-desktop/pull/1238) Bump @mapbox/stylelint-processor-arbitrary-tags from 0.2.0 to 0.3.0
+- [#1227](https://github.com/h3poteto/whalebird-desktop/pull/1227) Bump @typescript-eslint/parser from 1.5.0 to 2.15.0
+- [#1224](https://github.com/h3poteto/whalebird-desktop/pull/1224) Hide detail menu in toot detail sidebar
+- [#1217](https://github.com/h3poteto/whalebird-desktop/pull/1217) Update electron-builder version to >= 22.0.0
+- [#1215](https://github.com/h3poteto/whalebird-desktop/pull/1215) Bump moment from 2.22.2 to 2.24.0
+- [#1211](https://github.com/h3poteto/whalebird-desktop/pull/1211) Bump electron-mock-ipc from 0.3.1 to 0.3.2
+- [#1214](https://github.com/h3poteto/whalebird-desktop/pull/1214) Bump eslint-plugin-node from 10.0.0 to 11.0.0
+- [#1213](https://github.com/h3poteto/whalebird-desktop/pull/1213) Bump axios from 0.19.0 to 0.19.1
+- [#1212](https://github.com/h3poteto/whalebird-desktop/pull/1212) Bump i18next from 12.1.0 to 19.0.3
+- [#1210](https://github.com/h3poteto/whalebird-desktop/pull/1210) Bump url-loader from 2.2.0 to 3.0.0
+- [#1209](https://github.com/h3poteto/whalebird-desktop/pull/1209) Bump stylelint from 10.1.0 to 12.0.1
+- [#1208](https://github.com/h3poteto/whalebird-desktop/pull/1208) Bump vue-shortkey from 3.1.6 to 3.1.7
+
+### Fixed
+
+- [#1232](https://github.com/h3poteto/whalebird-desktop/pull/1232) Fix url-loader for loading icon
+- [#1231](https://github.com/h3poteto/whalebird-desktop/pull/1231) Catch error when can not load image in exifImageUrl
+- [#1221](https://github.com/h3poteto/whalebird-desktop/pull/1221) Fix lazy loading for account timeline in sidebar
+- [#1219](https://github.com/h3poteto/whalebird-desktop/pull/1219) Fix i18next namespace for new version
+
+
+
+## [3.0.3] - 2020-01-08
+### Changed
+- [#1207](https://github.com/h3poteto/whalebird-desktop/pull/1207) Update electron version to 6.1.7
+- [#1201](https://github.com/h3poteto/whalebird-desktop/pull/1201) Bump @types/jest from 24.0.15 to 24.0.25
+- [#1204](https://github.com/h3poteto/whalebird-desktop/pull/1204) Bump animate.css from 3.7.0 to 3.7.2
+- [#1203](https://github.com/h3poteto/whalebird-desktop/pull/1203) Bump ts-jest from 24.0.2 to 24.2.0
+- [#1202](https://github.com/h3poteto/whalebird-desktop/pull/1202) Bump webpack-dev-server from 3.9.0 to 3.10.1
+- [#1200](https://github.com/h3poteto/whalebird-desktop/pull/1200) Bump @types/nedb from 1.8.7 to 1.8.9
+- [#1199](https://github.com/h3poteto/whalebird-desktop/pull/1199) Bump eslint-plugin-vue from 6.0.1 to 6.1.2
+- [#1198](https://github.com/h3poteto/whalebird-desktop/pull/1198) Bump cfonts from 2.4.5 to 2.4.6
+- [#1197](https://github.com/h3poteto/whalebird-desktop/pull/1197) Bump @babel/core from 7.4.3 to 7.7.7
+- [#1205](https://github.com/h3poteto/whalebird-desktop/pull/1205) New Crowdin translations
+- [#1194](https://github.com/h3poteto/whalebird-desktop/pull/1194) Bump eslint-plugin-prettier from 3.0.1 to 3.1.2
+- [#1196](https://github.com/h3poteto/whalebird-desktop/pull/1196) Bump eslint-config-prettier from 6.7.0 to 6.9.0
+- [#1195](https://github.com/h3poteto/whalebird-desktop/pull/1195) Bump @babel/runtime from 7.7.4 to 7.7.7
+- [#1193](https://github.com/h3poteto/whalebird-desktop/pull/1193) Bump @vue/test-utils from 1.0.0-beta.29 to 1.0.0-beta.30
+- [#1192](https://github.com/h3poteto/whalebird-desktop/pull/1192) New Crowdin translations
+- [#1191](https://github.com/h3poteto/whalebird-desktop/pull/1191) Bump core-js from 3.0.0 to 3.6.1
+- [#1186](https://github.com/h3poteto/whalebird-desktop/pull/1186) Bump vue and vue-template-compiler
+- [#1190](https://github.com/h3poteto/whalebird-desktop/pull/1190) Bump style-loader from 1.0.0 to 1.1.2
+- [#1185](https://github.com/h3poteto/whalebird-desktop/pull/1185) Bump copy-webpack-plugin from 5.0.5 to 5.1.1
+- [#1183](https://github.com/h3poteto/whalebird-desktop/pull/1183) Bump eslint-plugin-vue from 5.2.2 to 6.0.1
+- [#1182](https://github.com/h3poteto/whalebird-desktop/pull/1182) Bump eslint-plugin-import from 2.18.2 to 2.19.1
+- [#1180](https://github.com/h3poteto/whalebird-desktop/pull/1180) Bump eslint-config-prettier from 4.1.0 to 6.7.0
+- [#1176](https://github.com/h3poteto/whalebird-desktop/pull/1176) Bump @babel/plugin-proposal-object-rest-spread from 7.7.4 to 7.7.7
+
+
+
 ## [3.0.2] - 2019-12-23
 ### Changed
 - [#1142](https://github.com/h3poteto/whalebird-desktop/pull/1142) Bump cfonts from 2.3.0 to 2.4.5
