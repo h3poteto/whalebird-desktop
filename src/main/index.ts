@@ -35,7 +35,8 @@ import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
 import UnreadNotification from './unreadNotification'
-import i18n from '~/src/config/i18n'
+import i18next from '~/src/config/i18n'
+import { i18n as I18n } from 'i18next'
 import Language from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
@@ -211,12 +212,12 @@ async function createWindow() {
    * Get language
    */
   const language = await getLanguage()
-  i18n.changeLanguage(language)
+  i18next.changeLanguage(language)
 
   /**
    * Set application menu
    */
-  ApplicationMenu(accountsChange, i18n)
+  ApplicationMenu(accountsChange, i18next)
 
   /**
    * Set dock menu for mac
@@ -294,11 +295,11 @@ async function createWindow() {
   if (process.platform !== 'darwin') {
     // Show tray icon
     tray = new Tray(path.join(__dirname, '../../build/icons/tray_icon.png'))
-    const trayMenu = TrayMenu(accountsChange, i18n)
+    const trayMenu = TrayMenu(accountsChange, i18next)
     tray.setContextMenu(trayMenu)
 
     // For Windows
-    tray.setToolTip(i18n.t('main_menu.application.name'))
+    tray.setToolTip(i18next.t('main_menu.application.name'))
     tray.on('click', () => {
       if (mainWindow!.isVisible()) {
         mainWindow!.hide()
@@ -1018,7 +1019,7 @@ ipcMain.on('change-language', (event: IpcMainEvent, value: string) => {
       }
     })
     .then(conf => {
-      i18n.changeLanguage(conf.language.language)
+      i18next.changeLanguage(conf.language.language)
       event.sender.send('response-change-language', conf.language.language)
     })
 })
@@ -1156,7 +1157,7 @@ class EmptyTokenError {}
 /**
  * Set application menu
  */
-const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: i18n.i18n) => {
+const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n) => {
   /**
    * For mac menu
    */
@@ -1330,7 +1331,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
   Menu.setApplicationMenu(menu)
 }
 
-const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: i18n.i18n): Menu => {
+const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n): Menu => {
   const template: Array<MenuItemConstructorOptions> = [
     ...accountsChange,
     {
@@ -1368,8 +1369,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'favourite':
       if (notifyConfig.favourite) {
         return {
-          title: i18n.t('notification.favourite.title'),
-          body: i18n.t('notification.favourite.body', { username: username(notification.account) }),
+          title: i18next.t('notification.favourite.title'),
+          body: i18next.t('notification.favourite.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
@@ -1377,8 +1378,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'follow':
       if (notifyConfig.follow) {
         return {
-          title: i18n.t('notification.follow.title'),
-          body: i18n.t('notification.follow.body', { username: username(notification.account) }),
+          title: i18next.t('notification.follow.title'),
+          body: i18next.t('notification.follow.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
@@ -1398,8 +1399,8 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
     case 'reblog':
       if (notifyConfig.reblog) {
         return {
-          title: i18n.t('notification.reblog.title'),
-          body: i18n.t('notification.reblog.body', { username: username(notification.account) }),
+          title: i18next.t('notification.reblog.title'),
+          body: i18next.t('notification.reblog.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }

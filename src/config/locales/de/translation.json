@@ -5,10 +5,10 @@
       "about": "Über Roma",
       "preferences": "Einstellungen …",
       "services": "Dienste",
-      "hide": "Roma verstecken",
-      "hide_others": "Andere verstecken",
+      "hide": "Roma ausblenden",
+      "hide_others": "Andere ausblenden",
       "show_all": "Alle anzeigen",
-      "open": "Open Window",
+      "open": "Fenster öffnen",
       "quit": "Beenden"
     },
     "toot": {
@@ -18,22 +18,22 @@
     "edit": {
       "name": "Bearbeiten",
       "undo": "Rückgängig",
-      "redo": "Wiederholen",
+      "redo": "Wiederherstellen",
       "cut": "Ausschneiden",
       "copy": "Kopieren",
       "paste": "Einfügen",
-      "select_all": "Alle auswählen"
+      "select_all": "Alles Auswählen"
     },
     "view": {
       "name": "Ansicht",
-      "toggle_full_screen": "Vollbild umschalten"
+      "toggle_full_screen": "Vollbildmodus umschalten"
     },
     "window": {
       "name": "Fenster",
       "close": "Fenster schließen",
-      "open": "Open Window",
+      "open": "Fenster öffnen",
       "minimize": "Minimieren",
-      "jump_to": "Springe zu"
+      "jump_to": "Gehe zu"
     }
   },
   "global_header": {
@@ -43,14 +43,14 @@
     "profile": "Profil",
     "show_profile": "Profil ansehen",
     "edit_profile": "Profil bearbeiten",
-    "settings": "Settings",
-    "collapse": "Zusammenbruch",
-    "expand": "Erweitern",
-    "home": "Home",
+    "settings": "Einstellungen",
+    "collapse": "Einklappen",
+    "expand": "Ausklappen",
+    "home": "Start",
     "notification": "Benachrichtigung",
-    "mention": "Erwähnen",
-    "direct": "Direkt Nachrichten",
-    "follow_requests": "Follow Requests",
+    "mention": "Erwähnung",
+    "direct": "Direktnachrichten",
+    "follow_requests": "Follower-Anfragen",
     "favourite": "Favorit",
     "local": "Lokale Timeline",
     "public": "Öffenliche Timeline",
@@ -59,12 +59,12 @@
     "lists": "Listen"
   },
   "header_menu": {
-    "home": "Home",
+    "home": "Start",
     "notification": "Benachrichtigung",
-    "mention": "Erwähnen",
+    "mention": "Erwähnung",
     "favourite": "Favorit",
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direkt Nachrichten",
+    "follow_requests": "Follower-Anfragen",
+    "direct_messages": "Direktnachrichten",
     "local": "Lokale Timeline",
     "public": "Öffenliche Timeline",
     "hashtag": "Hashtag",
@@ -74,7 +74,7 @@
     "filter": {
       "title": "Filter",
       "placeholder": "Mit regulären Ausdrücken filtern",
-      "show_dms": "Show direct messages",
+      "show_dms": "Direktnachrichten anzeigen",
       "show_reblogs": "Geteilte Beiträge anzeigen",
       "show_replies": "Antworten anzeigen",
       "apply": "Übernehmen"
@@ -84,13 +84,13 @@
     "settings": "Einstellungen"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Einstellungen",
     "general": {
       "title": "Settings",
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Customize default visibility of toot.",
+          "description": "Standardsichtbarkeit von Toots anpassen.",
           "public": "Öffenlich",
           "unlisted": "Nicht gelistet",
           "private": "Privat",
@@ -104,8 +104,8 @@
     "timeline": {
       "title": "Zeitleiste",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timeline.",
+        "title": "Ungelesene Benachrichtigungen",
+        "description": "Ungelesen-Benachrichtigungen für jede Zeitleiste anpassen.",
         "direct": "Direkt Nachrichten",
         "local": "Lokale Zeitleiste",
         "public": "Öffentliche Zeitleiste"
@@ -118,20 +118,20 @@
       "title": "Allgemein",
       "sounds": {
         "title": "Klänge",
-        "description": "Please set feedback sounds.",
+        "description": "Whalebird soll ein Audiosignal spielen",
         "fav_rb": "When you favourite or boost the toot",
-        "toot": "When you post toot"
+        "toot": "Wenn ich einen Toot poste"
       },
       "timeline": {
         "title": "Zeitleiste",
-        "description": "Customize view in your timelines.",
+        "description": "Passen Sie die Ansicht in Ihren Zeitleisten an.",
         "cw": "Ignoriere immer Content Warnungen",
         "nfsw": "Ignogiere immer NFSW Medien",
         "hideAllAttachments": "Verstecke alle Medien"
       },
       "other": {
-        "title": "Other options",
-        "launch": "Launch app on login"
+        "title": "Andere Optionen",
+        "launch": "App beim Login starten"
       }
     },
     "appearance": {
@@ -141,45 +141,45 @@
         "light": "Hell",
         "dark": "Dunkel",
         "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
+        "solarized_dark": "SolarizedDunkel",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "Angepasst"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
-        "wrapper_mask_color": "Modal wrapper"
+        "background_color": "Basis-Hintergrund",
+        "selected_background_color": "Fokussierter Hintergrund",
+        "global_header_color": "Konto-Menü",
+        "side_menu_color": "Seitenmenü",
+        "primary_color": "Primäre Schriftart",
+        "regular_color": "Normale Schriftart",
+        "secondary_color": "Sekundäre Schriftart",
+        "border_color": "Rand",
+        "header_menu_color": "Kopfzeilen-Menü",
+        "wrapper_mask_color": "Modaler Wrapper"
       },
       "font_size": "Schriftgröße",
-      "font_family": "Font family",
+      "font_family": "Schriftfamilie",
       "toot_padding": "Abstand zwischen den Toot",
       "display_style": {
         "title": "Anzeigestil",
         "display_name_and_username": "Anzeige- und Benutzername",
-        "display_name": "Anzeigename",
+        "display_name": "Angezeigter Name",
         "username": "Benutzername"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "title": "Zeitformat",
+        "absolute": "Absolut",
+        "relative": "Relativ"
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "Benachrichtigung",
       "enable": {
-        "description": "Pelase set notification events.",
-        "reply": "Notify me when I receive reply",
-        "reblog": "Notify me when I receive reblog",
-        "favourite": "Notify me when I receive favourite",
-        "follow": "Notify me when I receive follow"
+        "description": "Ereignisse, bei denen ich benachrichtigt werden möchte",
+        "reply": "Wenn ich eine Antwort erhalte",
+        "reblog": "Wenn einer meiner Toots geteilt wird",
+        "favourite": "Wenn einer meiner Toots favorisiert wird",
+        "follow": "Wenn mir ein anderer Benutzer folgt"
       }
     },
     "account": {
@@ -196,31 +196,31 @@
       "confirm_message": "Möchtest du wirklich alle Verbindungen trennen?"
     },
     "network": {
-      "title": "Network",
+      "title": "Netzwerk",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
-        "host": "Proxy host",
-        "port": "Proxy port",
-        "username": "Proxy username",
-        "password": "Proxy password",
+        "title": "Proxykonfiguration",
+        "no": "Kein Proxy",
+        "system": "Systemproxy verwenden",
+        "manual": "Manuelle Proxy-Konfiguration",
+        "protocol": "Protokoll",
+        "host": "Proxy-Server",
+        "port": "Proxy-Port",
+        "username": "Proxy-Benutzername",
+        "password": "Proxy-Passwort",
         "protocol_list": {
           "http": "http",
           "https": "https",
           "socks4": "socks4",
-          "socks4a": "socks4a",
-          "socks5": "socks5",
-          "socks5h": "socks5h"
+          "socks4a": "Socks4a",
+          "socks5": "Socks5",
+          "socks5h": "Socks5h"
         }
       },
-      "save": "Save"
+      "save": "Speichern"
     },
     "language": {
       "title": "Sprache",
-      "language_description": "Choose the language you would like to use with Roma.",
+      "language_description": "Wählen Sie die Sprache, die Sie mit Roma verwenden möchten.",
       "notice": "Erfordert Neustart",
       "confirm": {
         "title": "Warnung",
@@ -247,7 +247,7 @@
         "change_visibility": "Sichtbarkeit ändern",
         "change_sensitive": "Ändern Sie empfindlich",
         "add_cw": "Inhalt hinzufügen Warnung",
-        "pined_hashtag": "Pin the hashtag"
+        "pined_hashtag": "Den Hashtag anheften"
       },
       "poll": {
         "add_choice": "Zeitauswahl",
@@ -274,30 +274,30 @@
     },
     "mute_confirm": {
       "title": "Are you sure to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "body": "Benachrichtigung von diesem Benutzer ausblenden?",
+      "cancel": "Abbrechen",
+      "ok": "Stummschalten"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "ctrl_r": "Reload current timeline",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
+      "title": "Tastenkürzel",
+      "ctrl_number": "Wechsel zu einem anderen Konto",
+      "ctrl_k": "Zu anderen Zeitleisten springen",
+      "ctrl_n": "Neues Toot-Modal öffnen",
+      "ctrl_enter": "Den Toot posten",
+      "ctrl_r": "Aktuelle Zeitleiste neu laden",
+      "j": "Wähle den nächsten Toot",
+      "k": "Wähle den vorherigen Toot",
+      "h": "Wechsle den Fokus auf die linken Spalte",
+      "l": "Wechsle den Fokus auf die rechte Spalte",
+      "r": "Auf den Toot antworten",
+      "b": "Diesen Toot teilen",
+      "f": "Den Toot favorisieren",
+      "o": "Details des Toot öffnen",
+      "p": "Kontoprofil des Toot öffnen",
+      "i": "Bilder öffnen",
+      "x": "CW und NSFW ein-/ausblenden",
       "?": "Zeige diese Hilfe",
-      "esc": "Close current page"
+      "esc": "Aktuelle Seite schließen"
     },
     "report": {
       "title": "Melde diesen Benutzer",
@@ -314,15 +314,15 @@
       "view_toot_detail": "Zeige Toot-Details",
       "open_in_browser": "Im Browser öffnen",
       "copy_link_to_toot": "Link zum Toot kopieren",
-      "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
+      "mute": "Stummschalten",
+      "block": "Blocken",
+      "report": "Melden",
       "delete": "Löschen",
-      "via": "via {{application}}",
+      "via": "über {{application}}",
       "reply": "Antworten",
-      "reblog": "Reblog",
+      "reblog": "Teilen",
       "fav": "Favorit",
-      "detail": "Toot details",
+      "detail": "Details des Toot",
       "pinned": "Angehefteter Beitrag",
       "poll": {
         "vote": "Abstimmen",
@@ -343,10 +343,10 @@
       "follow_requested": "Folgen Sie angefordert",
       "open_in_browser": "Im Browser öffnen",
       "manage_list_memberships": "Listen-Mitgliedschaften verwalten",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
+      "mute": "Stummschalten",
+      "unmute": "Stummschaltung aufheben",
+      "unblock": "Block aufheben",
+      "block": "Blocken",
       "toots": "Toots",
       "follows": "Follows",
       "followers": "Follower"
@@ -358,8 +358,8 @@
   },
   "hashtag": {
     "tag_name": "Tagname",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "delete_tag": "Tag löschen",
+    "save_tag": "Tag speichern"
   },
   "search": {
     "search": "Suche",
@@ -376,8 +376,8 @@
   },
   "login": {
     "domain_name_label": "Als erstes wollen wir uns bei einer Mastodon-Server anmelden. Bitte gib den Domainnamen einer Server an.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
+    "proxy_info": "Wenn Sie den Proxy-Server verwenden möchten, richten Sie bitte Ihren Proxy ein in",
+    "proxy_here": " hier",
     "search": "Suche",
     "login": "Anmelden"
   },
@@ -397,10 +397,10 @@
     "timeline_fetch_error": "Timeline konnte nicht abgerufen werden",
     "notification_fetch_error": "Benachrichtigung konnte nicht abgerufen werden",
     "favourite_fetch_error": "Favorit konnte nicht abgerufen werden",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_reuqest_reject_error": "failed to reject the request",
+    "follow_request_accept_error": "Anfrage konnte nicht angenommen werden",
+    "follow_reuqest_reject_error": "konnte die Anfrage nicht ablehnen",
     "start_streaming_error": "Streaming konnte nicht gestartet werden",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
+    "start_all_streamings_error": "Fehler beim Starten des Streamings von {{domain}}",
     "attach_error": "Kontte Datei nicht anhängen",
     "authorize_duplicate_error": "Kann nicht das gleiche Konto der gleichen Domain einloggen",
     "authorize_error": "Autorisierung fehlgeschlagen",
@@ -425,7 +425,7 @@
     "add_user_error": "Hinzufügen des Benutzers fehlgeschlagen",
     "authorize_url_error": "Konnte Zugrifss-URL nicht laden",
     "domain_confirmed": "{{domain}} ist bestätigt, bitte einloggen",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
+    "domain_doesnt_exist": "Verbindung mit {{domain}} fehlgeschlagen, stellen Sie sicher, dass die Server-URL",
     "loading": "Laden..."
   },
   "validation": {
@@ -443,7 +443,7 @@
   "notification": {
     "favourite": {
       "title": "Favoriten",
-      "body": "{{username}} favourited your status"
+      "body": "{{username}} hat Ihren Status favorisiert"
     },
     "follow": {
       "title": "Folgen",
@@ -451,7 +451,7 @@
     },
     "reblog": {
       "title": "Teilen",
-      "body": "{{username}} boosted your status"
+      "body": "{{username}} hat deinen Status geboosted"
     }
   }
 }

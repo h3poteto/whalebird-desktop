@@ -11,7 +11,7 @@
         @focusPrev="focusPrev"
         @focusLeft="focusTimeline"
         @selectToot="focusToot(message)"
-        >
+      >
       </toot>
     </div>
     <div class="original-toot" ref="original">
@@ -19,13 +19,14 @@
         :message="message"
         :focused="message.uri + message.id === focusedId"
         :overlaid="modalOpened"
+        :detailed="true"
         v-on:update="updateToot"
         v-on:delete="deleteToot"
         @focusNext="focusNext"
         @focusPrev="focusPrev"
         @focusLeft="focusTimeline"
         @selectToot="focusToot(message)"
-        >
+      >
       </toot>
     </div>
     <div class="toot-descendants" v-for="(message, index) in descendants" v-bind:key="'descendants' + index">
@@ -39,7 +40,7 @@
         @focusPrev="focusPrev"
         @focusLeft="focusTimeline"
         @selectToot="focusToot(message)"
-        >
+      >
       </toot>
     </div>
   </div>
@@ -53,7 +54,7 @@ import { Event } from '~/src/renderer/components/event'
 export default {
   name: 'toot-detail',
   components: { Toot },
-  data () {
+  data() {
     return {
       focusedId: null
     }
@@ -65,40 +66,39 @@ export default {
       descendants: state => state.descendants,
       timeline: state => state.ancestors.concat([state.message]).concat(state.descendants)
     }),
-    ...mapGetters('TimelineSpace/Modals', [
-      'modalOpened'
-    ])
+    ...mapGetters('TimelineSpace/Modals', ['modalOpened'])
   },
-  created () {
+  created() {
     this.load()
   },
-  mounted () {
+  mounted() {
     Event.$on('focus-sidebar', () => {
       this.focusedId = 0
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
       })
     })
   },
   watch: {
-    message: function () {
+    message: function() {
       this.load()
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     Event.$emit('focus-timeline')
     Event.$off('focus-sidebar')
   },
   methods: {
-    originalMessage (message) {
+    originalMessage(message) {
       if (message.reblog !== null) {
         return message.reblog
       } else {
         return message
       }
     },
-    load () {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/fetchToot', this.originalMessage(this.message))
+    load() {
+      this.$store
+        .dispatch('TimelineSpace/Contents/SideBar/TootDetail/fetchToot', this.originalMessage(this.message))
         .then(() => {
           const toot = this.$refs.original
           toot.scrollIntoView()
@@ -110,25 +110,25 @@ export default {
           })
         })
     },
-    updateAncestorsToot (message) {
+    updateAncestorsToot(message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateAncestorsToot', message)
     },
-    deleteAncestorsToot (message) {
+    deleteAncestorsToot(message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteAncestorsToot', message)
     },
-    updateToot (message) {
+    updateToot(message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateToot', message)
     },
-    deleteToot (message) {
+    deleteToot(message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteToot', message)
     },
-    updateDescendantsToot (message) {
+    updateDescendantsToot(message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateDescendantsToot', message)
     },
-    deleteDescendantsToot (message) {
+    deleteDescendantsToot(message) {
       this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteDescendantsToot', message)
     },
-    focusNext () {
+    focusNext() {
       const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       if (currentIndex === -1) {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
@@ -136,16 +136,16 @@ export default {
         this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
       }
     },
-    focusPrev () {
+    focusPrev() {
       const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       if (currentIndex > 0) {
         this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
       }
     },
-    focusToot (message) {
+    focusToot(message) {
       this.focusedId = message.uri + message.id
     },
-    focusTimeline () {
+    focusTimeline() {
       this.focusedId = 0
       Event.$emit('focus-timeline')
     }

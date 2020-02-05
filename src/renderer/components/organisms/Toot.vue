@@ -77,7 +77,12 @@
               <icon name="eye" class="hide"></icon>
             </el-button>
             <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
-              <FailoverImg :src="media.preview_url" @click="openImage(media.url, mediaAttachments)" :title="media.description" />
+              <FailoverImg
+                :src="media.preview_url"
+                @click="openImage(media.url, mediaAttachments)"
+                :title="media.description"
+                :readExif="true"
+              />
               <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
               <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
             </div>
@@ -138,7 +143,7 @@
           <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
             <div class="popper toot-menu">
               <ul class="menu-list">
-                <li role="button" @click="openDetail(message)">
+                <li role="button" @click="openDetail(message)" v-show="!detailed">
                   {{ $t('cards.toot.view_toot_detail') }}
                 </li>
                 <li role="button" @click="openBrowser(originalMessage)">
@@ -220,6 +225,10 @@ export default {
       default: false
     },
     pinned: {
+      type: Boolean,
+      default: false
+    },
+    detailed: {
       type: Boolean,
       default: false
     }
