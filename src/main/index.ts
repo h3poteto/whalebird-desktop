@@ -12,7 +12,8 @@ import {
   MenuItemConstructorOptions,
   IpcMainEvent,
   Notification,
-  NotificationConstructorOptions
+  NotificationConstructorOptions,
+  nativeTheme
 } from 'electron'
 import Datastore from 'nedb'
 import { isEmpty } from 'lodash'
@@ -213,6 +214,11 @@ async function createWindow() {
    */
   const language = await getLanguage()
   i18next.changeLanguage(language)
+
+  /**
+   * Load system theme color for dark mode
+   */
+  nativeTheme.themeSource = 'system'
 
   /**
    * Set application menu
