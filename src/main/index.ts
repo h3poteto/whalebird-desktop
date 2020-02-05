@@ -281,10 +281,9 @@ async function createWindow() {
    * Get system proxy configuration.
    */
   if (session && session.defaultSession) {
-    session.defaultSession.resolveProxy('https://mastodon.social', proxyInfo => {
-      proxyConfiguration.setSystemProxy(proxyInfo)
-      log.info(`System proxy configuration: ${proxyInfo}`)
-    })
+    const proxyInfo = await session.defaultSession.resolveProxy('https://mastodon.social')
+    proxyConfiguration.setSystemProxy(proxyInfo)
+    log.info(`System proxy configuration: ${proxyInfo}`)
   }
 
   mainWindow.on('closed', () => {
@@ -332,15 +331,21 @@ app.on('window-all-closed', () => {
   } else {
     // In MacOS, we should change disable some menu items.
     const menu = Menu.getApplicationMenu()
-    if (menu !== null) {
-      // Preferences
-      menu.items[0].submenu.items[2].enabled = false as boolean
-      // New Toot
-      menu.items[1].submenu.items[0].enabled = false as boolean
-      // Open Window
-      menu.items[4].submenu.items[1].enabled = true as boolean
-      // Jump to
-      menu.items[4].submenu.items[4].enabled = false as boolean
+    if (menu) {
+      if (menu.items[0].submenu) {
+        // Preferences
+        menu.items[0].submenu.items[2].enabled = false
+      }
+      if (menu.items[1].submenu) {
+        // New Toot
+        menu.items[1].submenu.items[0].enabled = false
+      }
+      if (menu.items[4].submenu) {
+        // Open Window
+        menu.items[4].submenu.items[1].enabled = true
+        // Jump to
+        menu.items[4].submenu.items[4].enabled = false
+      }
     }
   }
 })
