@@ -231,7 +231,7 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
-    "babel-plugin-istanbul": "^5.1.0",
+    "babel-plugin-istanbul": "^6.0.0",
     "babel-register": "^6.26.0",
     "cfonts": "^2.4.6",
     "chai": "^4.2.0",
