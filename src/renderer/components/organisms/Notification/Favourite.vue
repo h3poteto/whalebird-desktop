@@ -351,6 +351,10 @@ export default {
           word-wrap: break-word;
         }
 
+        .content p {
+          unicode-bidi: plaintext;
+        }
+
         .emojione {
           width: 20px;
           height: 20px;
