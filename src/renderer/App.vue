@@ -93,6 +93,7 @@ body,
   select,
   button {
     font-family: var(--specified-fonts);
+    unicode-bidi: plaintext;
   }
 }
 
