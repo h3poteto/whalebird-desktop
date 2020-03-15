@@ -1,73 +1,39 @@
-import Mastodon, { WebSocket as SocketListener, Status, Notification, Instance, Response, ProxyConfig } from 'megalodon'
+import generator, { MegalodonInterface, WebSocketInterface, Entity, ProxyConfig } from 'megalodon'
 import log from 'electron-log'
 import { LocalAccount } from '~/src/types/localAccount'
 
-const StreamingURL = async (account: LocalAccount, proxy: ProxyConfig | false): Promise<string> => {
+const StreamingURL = async (
+  sns: 'mastodon' | 'pleroma' | 'misskey',
+  account: LocalAccount,
+  proxy: ProxyConfig | false
+): Promise<string> => {
   if (!account.accessToken) {
     throw new Error('access token is empty')
   }
-  const client = new Mastodon(account.accessToken, account.baseURL + '/api/v1', 'Whalebird', proxy)
-  const res: Response<Instance> = await client.get<Instance>('/instance')
+  const client = generator(sns, account.baseURL, account.accessToken, 'Whalebird', proxy)
+  const res = await client.getInstance()
   return res.data.urls.streaming_api
 }
 
 export { StreamingURL }
 
-export default class WebSocket {
-  private client: Mastodon
-  private listener: SocketListener | null
+class WebSocket {
+  public client: MegalodonInterface
+  public listener: WebSocketInterface | null
 
-  constructor(account: LocalAccount, streamingURL: string, proxy: ProxyConfig | false) {
+  constructor(sns: 'mastodon' | 'pleroma' | 'misskey', account: LocalAccount, streamingURL: string, proxy: ProxyConfig | false) {
     const url = streamingURL.replace(/^https:\/\//, 'wss://')
-    this.client = new Mastodon(account.accessToken!, url + '/api/v1', 'Whalebird', proxy)
+    this.client = generator(sns, url, account.accessToken, 'Whalebird', proxy)
     this.listener = null
   }
 
-  startUserStreaming(updateCallback: Function, notificationCallback: Function, deleteCallback: Function, errCallback: Function) {
-    this.listener = this.client.socket('/streaming', 'user')
+  public bindListener(updateCallback: Function, deleteCallback: Function, errCallback: Function) {
+    if (!this.listener) {
+      log.error('listener does not exist')
+      return
+    }
 
-    this.listener.on('connect', _ => {
-      log.info('/streaming/?stream=user started')
-    })
-
-    this.listener.on('update', (status: Status) => {
-      updateCallback(status)
-    })
-
-    this.listener.on('notification', (notification: Notification) => {
-      notificationCallback(notification)
-    })
-
-    this.listener.on('delete', (id: string) => {
-      deleteCallback(id)
-    })
-
-    this.listener.on('error', (err: Error) => {
-      errCallback(err)
-    })
-
-    this.listener.on('parser-error', (err: Error) => {
-      errCallback(err)
-    })
-  }
-
-  /**
-   * Start new custom streaming with websocket.
-   * @param stream Path of streaming.
-   * @param updateCallback A callback function which is called update.
-   * @param errCallback A callback function which ic called error.
-   * When local timeline, the path is `public:local`.
-   * When public timeline, the path is `public`.
-   * When hashtag timeline, the path is `hashtag&tag=tag_name`.
-   * When list timeline, the path is `list&list=list_id`.
-   */
-  start(stream: string, updateCallback: Function, deleteCallback: Function, errCallback: Function) {
-    this.listener = this.client.socket('/streaming', stream)
-    this.listener.on('connect', _ => {
-      log.info(`/streaming/?stream=${stream} started`)
-    })
-
-    this.listener.on('update', (status: Status) => {
+    this.listener.on('update', (status: Entity.Status) => {
       updateCallback(status)
     })
 
@@ -84,7 +50,7 @@ export default class WebSocket {
     })
   }
 
-  stop() {
+  public stop() {
     if (this.listener) {
       this.listener.removeAllListeners('connect')
       this.listener.removeAllListeners('update')
@@ -100,5 +66,81 @@ export default class WebSocket {
       this.listener.stop()
       log.info('streaming stopped')
     }
+  }
+}
+
+export class UserStreaming extends WebSocket {
+  public start(updateCallback: Function, notificationCallback: Function, deleteCallback: Function, errCallback: Function) {
+    this.listener = this.client.userSocket()
+
+    this.listener.on('connect', _ => {
+      log.info('user streaming is started')
+    })
+
+    this.listener.on('notification', (notification: Entity.Notification) => {
+      notificationCallback(notification)
+    })
+
+    this.bindListener(updateCallback, deleteCallback, errCallback)
+  }
+}
+
+export class DirectStreaming extends WebSocket {
+  public start(updateCallback: Function, deleteCallback: Function, errCallback: Function) {
+    this.listener = this.client.directSocket()
+
+    this.listener.on('connect', _ => {
+      log.info('direct streaming is started')
+    })
+
+    this.bindListener(updateCallback, deleteCallback, errCallback)
+  }
+}
+
+export class LocalStreaming extends WebSocket {
+  public start(updateCallback: Function, deleteCallback: Function, errCallback: Function) {
+    this.listener = this.client.localSocket()
+
+    this.listener.on('connect', _ => {
+      log.info('local streaming is started')
+    })
+
+    this.bindListener(updateCallback, deleteCallback, errCallback)
+  }
+}
+
+export class PublicStreaming extends WebSocket {
+  public start(updateCallback: Function, deleteCallback: Function, errCallback: Function) {
+    this.listener = this.client.publicSocket()
+
+    this.listener.on('connect', _ => {
+      log.info('public streaming is started')
+    })
+
+    this.bindListener(updateCallback, deleteCallback, errCallback)
+  }
+}
+
+export class ListStreaming extends WebSocket {
+  public start(listID: string, updateCallback: Function, deleteCallback: Function, errCallback: Function) {
+    this.listener = this.client.listSocket(listID)
+
+    this.listener.on('connect', _ => {
+      log.info('list streaming is started')
+    })
+
+    this.bindListener(updateCallback, deleteCallback, errCallback)
+  }
+}
+
+export class TagStreaming extends WebSocket {
+  public start(tag: string, updateCallback: Function, deleteCallback: Function, errCallback: Function) {
+    this.listener = this.client.tagSocket(tag)
+
+    this.listener.on('connect', _ => {
+      log.info('tag streaming is started')
+    })
+
+    this.bindListener(updateCallback, deleteCallback, errCallback)
   }
 }

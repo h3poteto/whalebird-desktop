@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash'
-import Mastodon, { Account as RemoteAccount, ProxyConfig } from 'megalodon'
+import generator, { detector, Entity, ProxyConfig } from 'megalodon'
 import Datastore from 'nedb'
 import log from 'electron-log'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -295,10 +295,11 @@ export default class Account {
    * @return {LocalAccount} updated account
    */
   async refresh(account: LocalAccount, proxy: ProxyConfig | false): Promise<LocalAccount> {
-    let client = new Mastodon(account.accessToken!, account.baseURL + '/api/v1', 'Whalebird', proxy)
+    const sns = await detector(account.baseURL, proxy)
+    let client = generator(sns, account.baseURL, account.accessToken, 'Whalebird', proxy)
     let json = {}
     try {
-      const res = await client.get<RemoteAccount>('/accounts/verify_credentials')
+      const res = await client.verifyAccountCredentials()
       json = {
         username: res.data.username,
         accountId: res.data.id,
@@ -311,9 +312,9 @@ export default class Account {
       if (!account.refreshToken) {
         throw new RefreshTokenDoesNotExist()
       }
-      const token = await Mastodon.refreshToken(account.clientId, account.clientSecret, account.refreshToken, account.baseURL, proxy)
-      client = new Mastodon(token.access_token, account.baseURL + '/api/v1', 'Whalebird', proxy)
-      const res = await client.get<RemoteAccount>('/accounts/verify_credentials')
+      const token = await client.refreshToken(account.clientId, account.clientSecret, account.refreshToken)
+      client = generator(sns, account.baseURL, token.access_token, 'Whalebird', proxy)
+      const res = await client.verifyAccountCredentials()
       json = {
         username: res.data.username,
         accountId: res.data.id,
@@ -326,9 +327,14 @@ export default class Account {
   }
 
   // Confirm the access token, and check duplicate
-  async fetchAccount(account: LocalAccount, accessToken: string, proxy: ProxyConfig | false): Promise<RemoteAccount> {
-    const client = new Mastodon(accessToken, account.baseURL + '/api/v1', 'Whalebird', proxy)
-    const res = await client.get<RemoteAccount>('/accounts/verify_credentials')
+  async fetchAccount(
+    sns: 'mastodon' | 'pleroma' | 'misskey',
+    account: LocalAccount,
+    accessToken: string,
+    proxy: ProxyConfig | false
+  ): Promise<Entity.Account> {
+    const client = generator(sns, account.baseURL, accessToken, 'Whalebird', proxy)
+    const res = await client.verifyAccountCredentials()
     const query = {
       baseURL: account.baseURL,
       username: res.data.username

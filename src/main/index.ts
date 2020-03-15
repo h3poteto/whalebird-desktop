@@ -24,14 +24,14 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import { Status, Notification as RemoteNotification, Account as RemoteAccount } from 'megalodon'
+import { Entity, detector } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
 
 import pkg from '~/package.json'
 import Authentication from './auth'
 import Account from './account'
-import WebSocket, { StreamingURL } from './websocket'
+import { StreamingURL, UserStreaming, DirectStreaming, LocalStreaming, PublicStreaming, ListStreaming, TagStreaming } from './websocket'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
@@ -530,7 +530,7 @@ ipcMain.on('reset-badge', () => {
 })
 
 // user streaming
-let userStreamings: { [key: string]: WebSocket | null } = {}
+let userStreamings: { [key: string]: UserStreaming | null } = {}
 
 ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<LocalAccount>) => {
   accounts.map(async account => {
@@ -543,10 +543,11 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
         userStreamings[id] = null
       }
       const proxy = await proxyConfiguration.forMastodon()
-      const url = await StreamingURL(acct, proxy)
-      userStreamings[id] = new WebSocket(acct, url, proxy)
-      userStreamings[id]!.startUserStreaming(
-        async (update: Status) => {
+      const sns = await detector(acct.baseURL, proxy)
+      const url = await StreamingURL(sns, acct, proxy)
+      userStreamings[id] = new UserStreaming(sns, acct, url, proxy)
+      userStreamings[id]!.start(
+        async (update: Entity.Status) => {
           if (!event.sender.isDestroyed()) {
             event.sender.send(`update-start-all-user-streamings-${id}`, update)
           }
@@ -557,7 +558,7 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
           // Cache account
           await accountCache.insertAccount(id, update.account.acct).catch(err => console.error(err))
         },
-        (notification: RemoteNotification) => {
+        (notification: Entity.Notification) => {
           const preferences = new Preferences(preferencesDBPath)
           preferences.load().then(conf => {
             const options = createNotification(notification, conf.notification.notify)
@@ -641,7 +642,7 @@ type StreamingSetting = {
   account: LocalAccount
 }
 
-let directMessagesStreaming: WebSocket | null = null
+let directMessagesStreaming: DirectStreaming | null = null
 
 ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
@@ -654,11 +655,11 @@ ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, obj: St
       directMessagesStreaming = null
     }
     const proxy = await proxyConfiguration.forMastodon()
-    const url = await StreamingURL(acct, proxy)
-    directMessagesStreaming = new WebSocket(acct, url, proxy)
+    const sns = await detector(acct.baseURL, proxy)
+    const url = await StreamingURL(sns, acct, proxy)
+    directMessagesStreaming = new DirectStreaming(sns, acct, url, proxy)
     directMessagesStreaming.start(
-      'direct',
-      (update: Status) => {
+      (update: Entity.Status) => {
         if (!event.sender.isDestroyed()) {
           event.sender.send('update-start-directmessages-streaming', update)
         }
@@ -690,7 +691,7 @@ ipcMain.on('stop-directmessages-streaming', () => {
   }
 })
 
-let localStreaming: WebSocket | null = null
+let localStreaming: LocalStreaming | null = null
 
 ipcMain.on('start-local-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
@@ -703,11 +704,11 @@ ipcMain.on('start-local-streaming', async (event: IpcMainEvent, obj: StreamingSe
       localStreaming = null
     }
     const proxy = await proxyConfiguration.forMastodon()
-    const url = await StreamingURL(acct, proxy)
-    localStreaming = new WebSocket(acct, url, proxy)
+    const sns = await detector(acct.baseURL, proxy)
+    const url = await StreamingURL(sns, acct, proxy)
+    localStreaming = new LocalStreaming(sns, acct, url, proxy)
     localStreaming.start(
-      'public:local',
-      (update: Status) => {
+      (update: Entity.Status) => {
         if (!event.sender.isDestroyed()) {
           event.sender.send('update-start-local-streaming', update)
         }
@@ -739,7 +740,7 @@ ipcMain.on('stop-local-streaming', () => {
   }
 })
 
-let publicStreaming: WebSocket | null = null
+let publicStreaming: PublicStreaming | null = null
 
 ipcMain.on('start-public-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
@@ -752,11 +753,11 @@ ipcMain.on('start-public-streaming', async (event: IpcMainEvent, obj: StreamingS
       publicStreaming = null
     }
     const proxy = await proxyConfiguration.forMastodon()
-    const url = await StreamingURL(acct, proxy)
-    publicStreaming = new WebSocket(acct, url, proxy)
+    const sns = await detector(acct.baseURL, proxy)
+    const url = await StreamingURL(sns, acct, proxy)
+    publicStreaming = new PublicStreaming(sns, acct, url, proxy)
     publicStreaming.start(
-      'public',
-      (update: Status) => {
+      (update: Entity.Status) => {
         if (!event.sender.isDestroyed()) {
           event.sender.send('update-start-public-streaming', update)
         }
@@ -788,7 +789,7 @@ ipcMain.on('stop-public-streaming', () => {
   }
 })
 
-let listStreaming: WebSocket | null = null
+let listStreaming: ListStreaming | null = null
 
 type ListID = {
   listID: string
@@ -805,11 +806,12 @@ ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListID & Str
       listStreaming = null
     }
     const proxy = await proxyConfiguration.forMastodon()
-    const url = await StreamingURL(acct, proxy)
-    listStreaming = new WebSocket(acct, url, proxy)
+    const sns = await detector(acct.baseURL, proxy)
+    const url = await StreamingURL(sns, acct, proxy)
+    listStreaming = new ListStreaming(sns, acct, url, proxy)
     listStreaming.start(
-      `list&list=${listID}`,
-      (update: Status) => {
+      listID,
+      (update: Entity.Status) => {
         if (!event.sender.isDestroyed()) {
           event.sender.send('update-start-list-streaming', update)
         }
@@ -841,7 +843,7 @@ ipcMain.on('stop-list-streaming', () => {
   }
 })
 
-let tagStreaming: WebSocket | null = null
+let tagStreaming: TagStreaming | null = null
 
 type Tag = {
   tag: string
@@ -858,11 +860,12 @@ ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: Tag & Streami
       tagStreaming = null
     }
     const proxy = await proxyConfiguration.forMastodon()
-    const url = await StreamingURL(acct, proxy)
-    tagStreaming = new WebSocket(acct, url, proxy)
+    const sns = await detector(acct.baseURL, proxy)
+    const url = await StreamingURL(sns, acct, proxy)
+    tagStreaming = new TagStreaming(sns, acct, url, proxy)
     tagStreaming.start(
-      `hashtag&tag=${tag}`,
-      (update: Status) => {
+      tag,
+      (update: Entity.Status) => {
         if (!event.sender.isDestroyed()) {
           event.sender.send('update-start-tag-streaming', update)
         }
@@ -1375,7 +1378,7 @@ async function reopenWindow() {
   }
 }
 
-const createNotification = (notification: RemoteNotification, notifyConfig: Notify): NotificationConstructorOptions | null => {
+const createNotification = (notification: Entity.Notification, notifyConfig: Notify): NotificationConstructorOptions | null => {
   switch (notification.type) {
     case 'favourite':
       if (notifyConfig.favourite) {
@@ -1422,7 +1425,7 @@ const createNotification = (notification: RemoteNotification, notifyConfig: Noti
   return null
 }
 
-const username = (account: RemoteAccount): string => {
+const username = (account: Entity.Account): string => {
   if (account.display_name !== '') {
     return account.display_name
   } else {
