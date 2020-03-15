@@ -1,9 +1,9 @@
-import Mastodon, { Status, Results } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type TootsState = {
-  results: Array<Status>
+  results: Array<Entity.Status>
 }
 
 const state = (): TootsState => ({
@@ -15,22 +15,23 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<TootsState> = {
-  [MUTATION_TYPES.UPDATE_RESULTS]: (state, results: Array<Status>) => {
+  [MUTATION_TYPES.UPDATE_RESULTS]: (state, results: Array<Entity.Status>) => {
     state.results = results
   }
 }
 
 const actions: ActionTree<TootsState, RootState> = {
-  search: ({ commit, rootState }, query: string): Promise<Array<Status>> => {
+  search: ({ commit, rootState }, query: string): Promise<Array<Entity.Status>> => {
     commit('TimelineSpace/Contents/changeLoading', true, { root: true })
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
     return client
-      .get<Results>('/search', { q: query, resolve: true })
+      .search(query, 'statuses', { resolve: true })
       .then(res => {
         commit(MUTATION_TYPES.UPDATE_RESULTS, res.data.statuses)
         return res.data.statuses

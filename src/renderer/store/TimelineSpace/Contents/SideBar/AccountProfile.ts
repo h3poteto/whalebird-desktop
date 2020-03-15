@@ -1,4 +1,4 @@
-import Mastodon, { Account, Relationship, Response, Status, Context } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import Timeline, { TimelineState } from './AccountProfile/Timeline'
 import Follows, { FollowsState } from './AccountProfile/Follows'
 import Followers, { FollowersState } from './AccountProfile/Followers'
@@ -13,12 +13,12 @@ type ParsedAccount = {
 
 type SearchAccount = {
   parsedAccount: ParsedAccount
-  status: Status
+  status: Entity.Status
 }
 
 export type AccountProfileState = {
-  account: Account | null
-  relationship: Relationship | null
+  account: Entity.Account | null
+  relationship: Entity.Relationship | null
   loading: boolean
 }
 
@@ -43,10 +43,10 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<AccountProfileState> = {
-  [MUTATION_TYPES.CHANGE_ACCOUNT]: (state, account: Account | null) => {
+  [MUTATION_TYPES.CHANGE_ACCOUNT]: (state, account: Entity.Account | null) => {
     state.account = account
   },
-  [MUTATION_TYPES.CHANGE_RELATIONSHIP]: (state, relationship: Relationship | null) => {
+  [MUTATION_TYPES.CHANGE_RELATIONSHIP]: (state, relationship: Entity.Relationship | null) => {
     state.relationship = relationship
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
@@ -55,27 +55,29 @@ const mutations: MutationTree<AccountProfileState> = {
 }
 
 const actions: ActionTree<AccountProfileState, RootState> = {
-  fetchAccount: async ({ rootState }, accountID: string): Promise<Account> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  fetchAccount: async ({ rootState }, accountID: string): Promise<Entity.Account> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Account> = await client.get<Account>(`/accounts/${accountID}`)
+    const res = await client.getAccount(accountID)
     return res.data
   },
-  searchAccount: async ({ rootState }, searchAccount: SearchAccount): Promise<Account> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  searchAccount: async ({ rootState }, searchAccount: SearchAccount): Promise<Entity.Account> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
 
     // Find account in toot
     if (searchAccount.status.in_reply_to_account_id) {
-      const res: Response<Account> = await client.get<Account>(`/accounts/${searchAccount.status.in_reply_to_account_id}`)
+      const res = await client.getAccount(searchAccount.status.in_reply_to_account_id)
       if (res.status === 200) {
         const user = accountMatch([res.data], searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
         if (user) return user
@@ -84,37 +86,35 @@ const actions: ActionTree<AccountProfileState, RootState> = {
 
     // Find account in context
     if (searchAccount.status.in_reply_to_id) {
-      const res: Response<Context> = await client.get<Context>(`/statuses/${searchAccount.status.id}/context`)
+      const res = await client.getStatusContext(searchAccount.status.id)
       if (res.status === 200) {
-        const accounts: Array<Account> = res.data.ancestors.map(s => s.account).concat(res.data.descendants.map(s => s.account))
+        const accounts: Array<Entity.Account> = res.data.ancestors.map(s => s.account).concat(res.data.descendants.map(s => s.account))
         const user = accountMatch(accounts, searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
         if (user) return user
       }
     }
 
     // Search account name
-    const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', {
-      q: searchAccount.parsedAccount.url,
-      resolve: true
-    })
+    const res = await client.searchAccount(searchAccount.parsedAccount.url, { resolve: true })
     if (res.data.length <= 0) throw new AccountNotFound('empty result')
     const user = accountMatch(res.data, searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
     if (!user) throw new AccountNotFound('not found')
     return user
   },
-  changeAccount: ({ commit, dispatch }, account: Account) => {
+  changeAccount: ({ commit, dispatch }, account: Entity.Account) => {
     dispatch('fetchRelationship', account)
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
-  fetchRelationship: async ({ commit, rootState }, account: Account): Promise<Relationship> => {
+  fetchRelationship: async ({ commit, rootState }, account: Entity.Account): Promise<Entity.Relationship> => {
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, null)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Relationship> = await client.get<Relationship>('/accounts/relationships', { id: [account.id] })
+    const res = await client.getRelationship([account.id])
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data[0])
     return res.data
   },
@@ -129,26 +129,28 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       commit(MUTATION_TYPES.CHANGE_LOADING, false)
     })
   },
-  follow: async ({ commit, rootState, dispatch }, account: Account) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  follow: async ({ commit, rootState, dispatch }, account: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/follow`)
+    const res = await client.followAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
   },
-  unfollow: async ({ commit, rootState, dispatch }, account: Account) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  unfollow: async ({ commit, rootState, dispatch }, account: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/unfollow`)
+    const res = await client.unfollowAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
@@ -156,38 +158,41 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   close: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, null)
   },
-  unmute: async ({ rootState, commit, dispatch }, account: Account) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  unmute: async ({ rootState, commit, dispatch }, account: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/unmute`)
+    const res = await client.unmuteAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
   },
-  block: async ({ rootState, commit, dispatch }, account: Account) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  block: async ({ rootState, commit, dispatch }, account: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/block`)
+    const res = await client.blockAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
   },
   unblock: async ({ rootState, commit, dispatch }, account: Account) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${account.id}/unblock`)
+    const res = await client.unblockAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
@@ -226,7 +231,7 @@ class AccountNotFound extends Error {}
 
 export default AccountProfile
 
-const accountMatch = (findAccounts: Array<Account>, parsedAccount: ParsedAccount, domain: string): Account | false => {
+const accountMatch = (findAccounts: Array<Entity.Account>, parsedAccount: ParsedAccount, domain: string): Entity.Account | false => {
   const account = findAccounts.find(a => `@${a.acct}` === parsedAccount.acct)
   if (account) return account
   const pleromaUser = findAccounts.find(a => a.acct === parsedAccount.acct)

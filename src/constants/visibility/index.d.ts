@@ -1,7 +1,7 @@
 export type VisibilityType = {
   name: string
   value: number
-  key: string
+  key: 'public' | 'unlisted' | 'private' | 'direct'
 }
 
 export type VisibilityList = {

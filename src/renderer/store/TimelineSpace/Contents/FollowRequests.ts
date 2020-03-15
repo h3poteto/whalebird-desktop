@@ -1,9 +1,9 @@
-import Mastodon, { Account, Response } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type FollowRequestsState = {
-  requests: Array<Account>
+  requests: Array<Entity.Account>
 }
 
 const state = (): FollowRequestsState => ({
@@ -15,43 +15,46 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<FollowRequestsState> = {
-  [MUTATION_TYPES.UPDATE_REQUESTS]: (state, accounts: Array<Account>) => {
+  [MUTATION_TYPES.UPDATE_REQUESTS]: (state, accounts: Array<Entity.Account>) => {
     state.requests = accounts
   }
 }
 
 const actions: ActionTree<FollowRequestsState, RootState> = {
-  fetchRequests: async ({ commit, rootState }): Promise<Array<Account>> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  fetchRequests: async ({ commit, rootState }): Promise<Array<Entity.Account>> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Account>> = await client.get<Array<Account>>('/follow_requests')
+    const res = await client.getFollowRequests()
     commit(MUTATION_TYPES.UPDATE_REQUESTS, res.data)
     return res.data
   },
-  acceptRequest: async ({ dispatch, rootState }, user: Account) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  acceptRequest: async ({ dispatch, rootState }, user: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<{}> = await client.post<{}>(`/follow_requests/${user.id}/authorize`)
+    const res = await client.acceptFollowRequest(user.id)
     await dispatch('fetchRequests')
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', rootState.TimelineSpace.account, { root: true })
     return res.data
   },
-  rejectRequest: async ({ dispatch, rootState }, user: Account) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  rejectRequest: async ({ dispatch, rootState }, user: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<{}> = await client.post<{}>(`/follow_requests/${user.id}/reject`)
+    const res = await client.rejectFollowRequest(user.id)
     await dispatch('fetchRequests')
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', rootState.TimelineSpace.account, { root: true })
     return res.data

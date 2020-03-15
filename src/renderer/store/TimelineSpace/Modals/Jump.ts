@@ -1,7 +1,7 @@
 import router from '@/router'
 import i18n from '~/src/config/i18n'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import { List } from 'megalodon'
+import { Entity } from 'megalodon'
 import { LocalTag } from '~/src/types/localTag'
 import { RootState } from '@/store'
 
@@ -86,7 +86,7 @@ const mutations: MutationTree<JumpState> = {
   [MUTATION_TYPES.CHANGE_SELECTED]: (state, channel: Channel) => {
     state.selectedChannel = channel
   },
-  [MUTATION_TYPES.UPDATE_LIST_CHANNEL]: (state, lists: Array<List>) => {
+  [MUTATION_TYPES.UPDATE_LIST_CHANNEL]: (state, lists: Array<Entity.List>) => {
     state.listChannelList = lists.map(l => {
       const channel: Channel = {
         name: `#${l.title}`,

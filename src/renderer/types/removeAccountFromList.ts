@@ -1,6 +1,6 @@
-import { Account } from 'megalodon'
+import { Entity } from 'megalodon'
 
 export type RemoveAccountFromList = {
-  account: Account
+  account: Entity.Account
   listId: string
 }

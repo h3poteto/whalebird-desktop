@@ -1,4 +1,4 @@
-import Mastodon, { List, Response } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import AxiosLoading from '@/utils/axiosLoading'
@@ -34,14 +34,15 @@ const mutations: MutationTree<HeaderMenuState> = {
 }
 
 const actions: ActionTree<HeaderMenuState, RootState> = {
-  fetchList: async ({ commit, rootState }, listID: string): Promise<List> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  fetchList: async ({ commit, rootState }, listID: string): Promise<Entity.List> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<List> = await client.get<List>(`/lists/${listID}`)
+    const res = await client.getList(listID)
     commit(MUTATION_TYPES.UPDATE_TITLE, `#${res.data.title}`)
     return res.data
   },

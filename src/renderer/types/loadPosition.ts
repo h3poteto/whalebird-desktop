@@ -1,11 +1,11 @@
-import { Status, Account } from 'megalodon'
+import { Entity } from 'megalodon'
 
 export type LoadPosition = {
-  status: Status
+  status: Entity.Status
 }
 
 export type LoadPositionWithAccount = LoadPosition & {
-  account: Account
+  account: Entity.Account
 }
 
 export type LoadPositionWithList = LoadPosition & {

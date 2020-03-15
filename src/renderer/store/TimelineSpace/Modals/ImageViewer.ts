@@ -1,11 +1,11 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
-import { Attachment } from 'megalodon'
+import { Entity } from 'megalodon'
 import { RootState } from '@/store'
 
 export type ImageViewerState = {
   modalOpen: boolean
   currentIndex: number
-  mediaList: Array<Attachment>
+  mediaList: Array<Entity.Attachment>
   loading: boolean
 }
 
@@ -32,7 +32,7 @@ const mutations: MutationTree<ImageViewerState> = {
   [MUTATION_TYPES.CHANGE_CURRENT_INDEX]: (state, currentIndex: number) => {
     state.currentIndex = currentIndex
   },
-  [MUTATION_TYPES.CHANGE_MEDIA_LIST]: (state, mediaList: Array<Attachment>) => {
+  [MUTATION_TYPES.CHANGE_MEDIA_LIST]: (state, mediaList: Array<Entity.Attachment>) => {
     state.mediaList = mediaList
   },
   [MUTATION_TYPES.INCREMENT_INDEX]: state => {
@@ -50,7 +50,7 @@ const actions: ActionTree<ImageViewerState, RootState> = {
   openModal: ({ commit }, { currentIndex, mediaList }) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, true)
     commit(MUTATION_TYPES.CHANGE_CURRENT_INDEX, currentIndex as number)
-    commit(MUTATION_TYPES.CHANGE_MEDIA_LIST, mediaList as Array<Attachment>)
+    commit(MUTATION_TYPES.CHANGE_MEDIA_LIST, mediaList as Array<Entity.Attachment>)
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
   },
   closeModal: ({ commit }) => {

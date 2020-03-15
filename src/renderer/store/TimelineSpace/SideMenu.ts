@@ -1,4 +1,4 @@
-import Mastodon, { List, Response, Account } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { LocalTag } from '~/src/types/localTag'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -15,7 +15,7 @@ export type SideMenuState = {
   unreadDirectMessagesTimeline: boolean
   unreadPublicTimeline: boolean
   unreadFollowRequests: boolean
-  lists: Array<List>
+  lists: Array<Entity.List>
   tags: Array<LocalTag>
   collapse: boolean
 }
@@ -68,7 +68,7 @@ const mutations: MutationTree<SideMenuState> = {
   [MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS]: (state, value: boolean) => {
     state.unreadFollowRequests = value
   },
-  [MUTATION_TYPES.UPDATE_LISTS]: (state, lists: Array<List>) => {
+  [MUTATION_TYPES.UPDATE_LISTS]: (state, lists: Array<Entity.List>) => {
     state.lists = lists
   },
   [MUTATION_TYPES.CHANGE_COLLAPSE]: (state, collapse: boolean) => {
@@ -80,27 +80,29 @@ const mutations: MutationTree<SideMenuState> = {
 }
 
 const actions: ActionTree<SideMenuState, RootState> = {
-  fetchLists: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<List>> => {
+  fetchLists: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Entity.List>> => {
     if (account === null) account = rootState.TimelineSpace.account
-    const client = new Mastodon(
-      account!.accessToken!,
-      account!.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      account.baseURL,
+      account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<List>> = await client.get<Array<List>>('/lists')
+    const res = await client.getLists()
     commit(MUTATION_TYPES.UPDATE_LISTS, res.data)
     return res.data
   },
-  fetchFollowRequests: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Account>> => {
+  fetchFollowRequests: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Entity.Account>> => {
     if (account === null) account = rootState.TimelineSpace.account
-    const client = new Mastodon(
-      account!.accessToken!,
-      account!.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      account.baseURL,
+      account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Account>> = await client.get<Array<Account>>('/follow_requests')
+    const res = await client.getFollowRequests()
     commit(MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS, res.data.length > 0)
     return res.data
   },

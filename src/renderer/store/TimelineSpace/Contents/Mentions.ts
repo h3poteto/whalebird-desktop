@@ -1,12 +1,12 @@
-import Mastodon, { Notification, Response } from 'megalodon'
+import generator, { Entity, NotificationType } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type MentionsState = {
   lazyLoading: boolean
   heading: boolean
-  mentions: Array<Notification>
-  unreadMentions: Array<Notification>
+  mentions: Array<Entity.Notification>
+  unreadMentions: Array<Entity.Notification>
   filter: string
 }
 
@@ -39,7 +39,7 @@ const mutations: MutationTree<MentionsState> = {
   [MUTATION_TYPES.CHANGE_HEADING]: (state, value: boolean) => {
     state.heading = value
   },
-  [MUTATION_TYPES.APPEND_MENTIONS]: (state, update: Notification) => {
+  [MUTATION_TYPES.APPEND_MENTIONS]: (state, update: Entity.Notification) => {
     // Reject duplicated status in timeline
     if (!state.mentions.find(item => item.id === update.id) && !state.unreadMentions.find(item => item.id === update.id)) {
       if (state.heading) {
@@ -49,14 +49,14 @@ const mutations: MutationTree<MentionsState> = {
       }
     }
   },
-  [MUTATION_TYPES.UPDATE_MENTIONS]: (state, messages: Array<Notification>) => {
+  [MUTATION_TYPES.UPDATE_MENTIONS]: (state, messages: Array<Entity.Notification>) => {
     state.mentions = messages
   },
   [MUTATION_TYPES.MERGE_MENTIONS]: state => {
     state.mentions = state.unreadMentions.slice(0, 80).concat(state.mentions)
     state.unreadMentions = []
   },
-  [MUTATION_TYPES.INSERT_MENTIONS]: (state, messages: Array<Notification>) => {
+  [MUTATION_TYPES.INSERT_MENTIONS]: (state, messages: Array<Entity.Notification>) => {
     state.mentions = state.mentions.concat(messages)
   },
   [MUTATION_TYPES.ARCHIVE_MENTIONS]: state => {
@@ -66,9 +66,9 @@ const mutations: MutationTree<MentionsState> = {
     state.mentions = []
     state.unreadMentions = []
   },
-  [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Notification) => {
+  [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Notification) => {
     state.mentions = state.mentions.map(mention => {
-      if (mention.status !== null && mention.status.id === message.id) {
+      if (mention.status !== undefined && mention.status.id === message.id) {
         const status = {
           status: message
         }
@@ -97,33 +97,39 @@ const mutations: MutationTree<MentionsState> = {
 }
 
 const actions: ActionTree<MentionsState, RootState> = {
-  fetchMentions: async ({ commit, rootState }): Promise<Array<Notification>> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  fetchMentions: async ({ commit, rootState }): Promise<Array<Entity.Notification>> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Notification>> = await client.get<Array<Notification>>('/notifications', {
+    const res = await client.getNotifications({
       limit: 30,
-      exclude_types: ['follow', 'favourite', 'reblog']
+      exclude_types: [NotificationType.Follow, NotificationType.Favourite, NotificationType.Reblog, NotificationType.Poll]
     })
     commit(MUTATION_TYPES.UPDATE_MENTIONS, res.data)
     return res.data
   },
-  lazyFetchMentions: async ({ state, commit, rootState }, lastMention: Notification): Promise<Array<Notification> | null> => {
+  lazyFetchMentions: async ({ state, commit, rootState }, lastMention: Entity.Notification): Promise<Array<Entity.Notification> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
     return client
-      .get<Array<Notification>>('/notifications', { max_id: lastMention.id, limit: 30, exclude_types: ['follow', 'favourite', 'reblog'] })
+      .getNotifications({
+        max_id: lastMention.id,
+        limit: 30,
+        exclude_types: [NotificationType.Follow, NotificationType.Favourite, NotificationType.Reblog, NotificationType.Poll]
+      })
       .then(res => {
         commit(MUTATION_TYPES.INSERT_MENTIONS, res.data)
         return res.data
