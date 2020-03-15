@@ -1,13 +1,52 @@
-import { Account, Response } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Entity, Response } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import FollowRequests, { FollowRequestsState } from '@/store/TimelineSpace/Contents/FollowRequests'
 import { SideMenuState } from '@/store/TimelineSpace/SideMenu'
 
-jest.mock('megalodon')
+const mockClient = {
+  getFollowRequests: () => {
+    return new Promise<Response<Array<Entity.Account>>>(resolve => {
+      const res: Response<Array<Entity.Account>> = {
+        data: [account],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  },
+  acceptFollowRequest: () => {
+    return new Promise<Response<{}>>(resolve => {
+      const res: Response<{}> = {
+        data: {},
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  },
+  rejectFollowRequest: () => {
+    return new Promise<Response<{}>>(resolve => {
+      const res: Response<{}> = {
+        data: {},
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const account: Account = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -77,7 +116,8 @@ const timelineState = {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
-    }
+    },
+    sns: 'mastodon'
   }
 }
 
@@ -102,26 +142,10 @@ describe('Home', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('fetchRequests', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Account>>>(resolve => {
-            const res: Response<Array<Account>> = {
-              data: [account],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('FollowRequests/fetchRequests')
       expect(store.state.FollowRequests.requests).toEqual([account])
     })
@@ -136,32 +160,18 @@ describe('Home', () => {
       }
     })
     it('should be succeed', async () => {
-      const mockClient = {
-        post: (_path: string, _params: object) => {
-          return new Promise<Response<{}>>(resolve => {
-            const res: Response<{}> = {
-              data: {},
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        },
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Account>>>(resolve => {
-            const res: Response<Array<Account>> = {
-              data: [],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
+      mockClient.getFollowRequests = () => {
+        return new Promise<Response<Array<Entity.Account>>>(resolve => {
+          const res: Response<Array<Entity.Account>> = {
+            data: [],
+            status: 200,
+            statusText: 'OK',
+            headers: {}
+          }
+          resolve(res)
+        })
       }
 
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('FollowRequests/acceptRequest', account)
       expect(store.state.FollowRequests.requests).toEqual([])
     })
@@ -176,32 +186,18 @@ describe('Home', () => {
       }
     })
     it('should be succeed', async () => {
-      const mockClient = {
-        post: (_path: string, _params: object) => {
-          return new Promise<Response<{}>>(resolve => {
-            const res: Response<{}> = {
-              data: {},
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        },
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Account>>>(resolve => {
-            const res: Response<Array<Account>> = {
-              data: [],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
+      mockClient.getFollowRequests = () => {
+        return new Promise<Response<Array<Entity.Account>>>(resolve => {
+          const res: Response<Array<Entity.Account>> = {
+            data: [],
+            status: 200,
+            statusText: 'OK',
+            headers: {}
+          }
+          resolve(res)
+        })
       }
 
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('FollowRequests/rejectRequest', account)
       expect(store.state.FollowRequests.requests).toEqual([])
     })

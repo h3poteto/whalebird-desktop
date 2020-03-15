@@ -1,13 +1,30 @@
-import { Response, Status, Account, Application } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Tag, { TagState } from '@/store/TimelineSpace/Contents/Hashtag/Tag'
 import { LoadPositionWithTag } from '@/types/loadPosition'
 
-jest.mock('megalodon')
+const mockClient = {
+  getTagTimeline: () => {
+    return new Promise<Response<Array<Entity.Status>>>(resolve => {
+      const res: Response<Array<Entity.Status>> = {
+        data: [status1],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const account: Account = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -28,7 +45,7 @@ const account: Account = {
   fields: null,
   bot: false
 }
-const status1: Status = {
+const status1: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -55,11 +72,11 @@ const status1: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
-const status2: Status = {
+const status2: Entity.Status = {
   id: '2',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -86,7 +103,7 @@ const status2: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
@@ -141,26 +158,10 @@ describe('Home', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('fetch', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Status>>>(resolve => {
-            const res: Response<Array<Status>> = {
-              data: [status1],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       const statuses = await store.dispatch('Tag/fetch', 'tag')
       expect(statuses).toEqual([status1])
       expect(store.state.Tag.timeline).toEqual([status1])
@@ -181,20 +182,17 @@ describe('Home', () => {
         }
       })
       it('should be updated', async () => {
-        const mockClient = {
-          get: (_path: string, _params: object) => {
-            return new Promise<Response<Array<Status>>>(resolve => {
-              const res: Response<Array<Status>> = {
-                data: [status2],
-                status: 200,
-                statusText: 'OK',
-                headers: {}
-              }
-              resolve(res)
-            })
-          }
+        mockClient.getTagTimeline = () => {
+          return new Promise<Response<Array<Entity.Status>>>(resolve => {
+            const res: Response<Array<Entity.Status>> = {
+              data: [status2],
+              status: 200,
+              statusText: 'OK',
+              headers: {}
+            }
+            resolve(res)
+          })
         }
-        mockedMegalodon.mockImplementation(() => mockClient)
         const loadPositionWithTag: LoadPositionWithTag = {
           status: status1,
           tag: 'tag'

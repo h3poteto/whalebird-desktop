@@ -1,12 +1,40 @@
-import { Response, Account } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import AddListMember, { AddListMemberState } from '@/store/TimelineSpace/Modals/AddListMember'
 
-jest.mock('megalodon')
+const mockClient = {
+  searchAccount: () => {
+    return new Promise<Response<Entity.Account[]>>(resolve => {
+      const res: Response<Entity.Account[]> = {
+        data: [account],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  },
+  addAccountsToList: () => {
+    return new Promise<Response>(resolve => {
+      const res: Response = {
+        data: {},
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const account: Account = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -50,7 +78,8 @@ const timelineState = {
   state: {
     account: {
       _id: '0'
-    }
+    },
+    sns: 'mastodon'
   }
 }
 
@@ -75,7 +104,6 @@ describe('AddListMember', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('changeModal', () => {
@@ -87,21 +115,6 @@ describe('AddListMember', () => {
 
   describe('search', () => {
     it('should be searched', async () => {
-      const mockClient = {
-        get: () => {
-          return new Promise<Response<Account[]>>(resolve => {
-            const res: Response<Account[]> = {
-              data: [account],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('AddListMember/search', 'akira')
       expect(store.state.AddListMember.accounts).toEqual([account])
     })
@@ -109,21 +122,6 @@ describe('AddListMember', () => {
 
   describe('add', () => {
     it('should be added a member to the list', async () => {
-      const mockClient = {
-        post: () => {
-          return new Promise<Response>(resolve => {
-            const res: Response = {
-              data: {},
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       const result = await store.dispatch('AddListMember/add', 'akira')
       expect(result).toEqual({})
     })

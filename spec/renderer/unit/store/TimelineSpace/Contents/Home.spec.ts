@@ -1,7 +1,7 @@
-import { Account, Status, Application } from 'megalodon'
+import { Entity } from 'megalodon'
 import Home, { HomeState, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Home'
 
-const account: Account = {
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -22,7 +22,7 @@ const account: Account = {
   fields: null,
   bot: false
 }
-const status1: Status = {
+const status1: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -49,11 +49,11 @@ const status1: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
-const status2: Status = {
+const status2: Entity.Status = {
   id: '2',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -80,7 +80,7 @@ const status2: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
@@ -245,7 +245,7 @@ describe('TimelineSpace/Contents/Home', () => {
             showReplies: true
           }
         })
-        const favouritedStatus: Status = Object.assign(status1, {
+        const favouritedStatus: Entity.Status = Object.assign(status1, {
           favourited: true
         })
         it('should be updated', () => {
@@ -254,7 +254,7 @@ describe('TimelineSpace/Contents/Home', () => {
         })
       })
       describe('message is reblogged', () => {
-        const rebloggedStatus: Status = {
+        const rebloggedStatus: Entity.Status = {
           id: '3',
           uri: 'http://example.com',
           url: 'http://example.com',
@@ -281,11 +281,11 @@ describe('TimelineSpace/Contents/Home', () => {
           poll: null,
           application: {
             name: 'Web'
-          } as Application,
+          } as Entity.Application,
           language: null,
           pinned: null
         }
-        const favouritedStatus: Status = Object.assign(status1, {
+        const favouritedStatus: Entity.Status = Object.assign(status1, {
           favourited: true
         })
         beforeEach(() => {
@@ -328,7 +328,7 @@ describe('TimelineSpace/Contents/Home', () => {
 
       describe('message is reblogged', () => {
         beforeEach(() => {
-          const rebloggedStatus: Status = {
+          const rebloggedStatus: Entity.Status = {
             id: '3',
             uri: 'http://example.com',
             url: 'http://example.com',
@@ -355,7 +355,7 @@ describe('TimelineSpace/Contents/Home', () => {
             poll: null,
             application: {
               name: 'Web'
-            } as Application,
+            } as Entity.Application,
             language: null,
             pinned: null
           }

@@ -1,5 +1,4 @@
-import { Response, List } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Entity, Response } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
@@ -8,14 +7,34 @@ import { LocalTag } from '~/src/types/localTag'
 import { MyWindow } from '~/src/types/global'
 ;(window as MyWindow).ipcRenderer = ipcRenderer
 
-jest.mock('megalodon')
+const mockClient = {
+  getLists: () => {
+    return new Promise<Response<Entity.List[]>>(resolve => {
+      const res: Response<Entity.List[]> = {
+        data: [list1, list2],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const list1: List = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+// import mockedMegalodon from '~/spec/mock/megalodon'
+
+const list1: Entity.List = {
   id: '1',
   title: 'example1'
 }
 
-const list2: List = {
+const list2: Entity.List = {
   id: '2',
   title: 'example2'
 }
@@ -44,10 +63,17 @@ const initStore = () => {
   }
 }
 
-const appState = {
+const appStore = {
   namespaced: true,
   state: {
     proxyConfiguration: false
+  }
+}
+
+const timelineStore = {
+  namespaced: true,
+  state: {
+    sns: 'mastodon'
   }
 }
 
@@ -61,29 +87,16 @@ describe('SideMenu', () => {
     store = new Vuex.Store({
       modules: {
         SideMenu: initStore(),
-        App: appState
+        App: appStore,
+        TimelineSpace: timelineStore
       }
     })
-    mockedMegalodon.mockClear()
+    // mockedMegalodon.mockClear()
   })
 
   describe('fetchLists', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<List[]>>(resolve => {
-            const res: Response<List[]> = {
-              data: [list1, list2],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
+      // mockedMegalodon.mockImplementation(() => mockClient)
       const account = {
         accessToken: 'token',
         baseURL: 'http://localhost'

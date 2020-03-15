@@ -1,12 +1,62 @@
-import { Response, List, Account } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import ListMembership, { ListMembershipState } from '@/store/TimelineSpace/Modals/ListMembership'
 
-jest.mock('megalodon')
+const mockClient = {
+  getAccountLists: () => {
+    return new Promise<Response<Entity.List[]>>(resolve => {
+      const res: Response<Entity.List[]> = {
+        data: [list1, list2],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  },
+  getLists: () => {
+    return new Promise<Response<Entity.List[]>>(resolve => {
+      const res: Response<Entity.List[]> = {
+        data: [list1, list2],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  },
+  deleteAccountsFromList: () => {
+    return new Promise<Response>(resolve => {
+      const res: Response = {
+        data: {},
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  },
+  addAccountsToList: () => {
+    return new Promise<Response>(resolve => {
+      const res: Response = {
+        data: {},
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const account: Account = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -28,12 +78,12 @@ const account: Account = {
   bot: false
 }
 
-const list1: List = {
+const list1: Entity.List = {
   id: '1',
   title: 'list1'
 }
 
-const list2: List = {
+const list2: Entity.List = {
   id: '2',
   title: 'list2'
 }
@@ -89,21 +139,7 @@ describe('ListMembership', () => {
   })
 
   describe('fetchListMembership', () => {
-    it('should be changed', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<List[]>>(resolve => {
-            const res: Response<List[]> = {
-              data: [list1, list2],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-      mockedMegalodon.mockImplementation(() => mockClient)
+    it('should get', async () => {
       await store.dispatch('ListMembership/fetchListMembership', {
         id: '5'
       })
@@ -113,20 +149,6 @@ describe('ListMembership', () => {
 
   describe('fetchLists', () => {
     it('should be changed', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<List[]>>(resolve => {
-            const res: Response<List[]> = {
-              data: [list1, list2],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('ListMembership/fetchLists')
       expect(store.state.ListMembership.lists).toEqual([list1, list2])
     })
@@ -144,31 +166,6 @@ describe('ListMembership', () => {
       }
     })
     it('should be changed', async () => {
-      const mockClient = {
-        del: (_path: string, _params: object) => {
-          return new Promise<Response>(resolve => {
-            const res: Response = {
-              data: {},
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        },
-        post: (_path: string, _params: object) => {
-          return new Promise<Response>(resolve => {
-            const res: Response = {
-              data: {},
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('ListMembership/changeBelongToLists', [list1])
       expect(store.state.ListMembership.belongToLists).toEqual([list1])
     })

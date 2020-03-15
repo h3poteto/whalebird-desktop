@@ -1,12 +1,33 @@
-import { Response, Results, Status, Account, Application } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Toots, { TootsState } from '@/store/TimelineSpace/Contents/Search/Toots'
 
-jest.mock('megalodon')
+const mockClient = {
+  search: () => {
+    return new Promise<Response<Entity.Results>>(resolve => {
+      const res: Response<Entity.Results> = {
+        data: {
+          accounts: [],
+          statuses: [status],
+          hashtags: []
+        },
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const account: Account = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -28,7 +49,7 @@ const account: Account = {
   bot: false
 }
 
-const status: Status = {
+const status: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -55,7 +76,7 @@ const status: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
@@ -93,7 +114,8 @@ const timelineState = {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
-    }
+    },
+    sns: 'mastodon'
   }
 }
 
@@ -118,30 +140,10 @@ describe('Search/Account', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('search', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Results>>(resolve => {
-            const res: Response<Results> = {
-              data: {
-                accounts: [],
-                statuses: [status],
-                hashtags: []
-              },
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('Toots/search', 'query')
       expect(store.state.Toots.results).toEqual([status])
     })

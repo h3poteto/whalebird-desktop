@@ -1,7 +1,7 @@
-import { Account, Status, Application } from 'megalodon'
+import { Entity } from 'megalodon'
 import Show, { ShowState, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Show'
 
-const account: Account = {
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -22,7 +22,7 @@ const account: Account = {
   fields: null,
   bot: false
 }
-const status1: Status = {
+const status1: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -49,11 +49,11 @@ const status1: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
-const status2: Status = {
+const status2: Entity.Status = {
   id: '2',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -80,12 +80,12 @@ const status2: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const rebloggedStatus: Status = {
+const rebloggedStatus: Entity.Status = {
   id: '3',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -112,7 +112,7 @@ const rebloggedStatus: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
