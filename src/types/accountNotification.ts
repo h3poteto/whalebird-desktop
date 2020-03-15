@@ -1,6 +1,6 @@
-import { Notification } from 'megalodon'
+import { Entity } from 'megalodon'
 
 export type AccountNotification = {
   id: string
-  notification: Notification
+  notification: Entity.Notification
 }

@@ -1,4 +1,4 @@
-import Mastodon, { Emoji, Instance, Response } from 'megalodon'
+import { Entity, Response } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
@@ -7,9 +7,20 @@ import unreadSettings from '~/src/constants/unreadNotification'
 import { MyWindow } from '~/src/types/global'
 ;(window as MyWindow).ipcRenderer = ipcRenderer
 
-jest.mock('megalodon')
+const emacsEmoji: Entity.Emoji = {
+  shortcode: 'emacs',
+  url: 'http://example.com/emacs',
+  static_url: 'http://example.com/emacs',
+  visible_in_picker: true
+}
+const rubyEmoji: Entity.Emoji = {
+  shortcode: 'ruby',
+  url: 'http://example.com/ruby',
+  static_url: 'http://example.com/ruby',
+  visible_in_picker: true
+}
 
-const mockedInstance: Instance = {
+const mockedInstance: Entity.Instance = {
   uri: 'http://pleroma.io',
   title: 'pleroma',
   description: '',
@@ -29,6 +40,38 @@ const mockedInstance: Instance = {
   max_toot_chars: 5000
 }
 
+const mockClient = {
+  getInstance: () => {
+    return new Promise<Response<Entity.Instance>>(resolve => {
+      const res: Response<Entity.Instance> = {
+        data: mockedInstance,
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  },
+  getInstanceCustomEmojis: () => {
+    return new Promise<Response<Array<Entity.Emoji>>>(resolve => {
+      const res: Response<Array<Entity.Emoji>> = {
+        data: [emacsEmoji, rubyEmoji],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
+
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  detector: jest.fn(() => 'pleroma'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
 const state = (): TimelineSpaceState => {
   return {
     account: blankAccount,
@@ -41,7 +84,7 @@ const state = (): TimelineSpaceState => {
       local: true,
       public: true
     },
-    pleroma: false
+    sns: 'mastodon'
   }
 }
 
@@ -169,117 +212,26 @@ describe('TimelineSpace', () => {
     })
   })
 
-  describe('detectPleroma', () => {
+  describe('detectSNS', () => {
     describe('API is pleroma', () => {
-      let mockedResponse: Response<Instance>
-      beforeEach(() => {
-        mockedResponse = {
-          data: mockedInstance,
-          status: 200,
-          statusText: 'OK',
-          headers: {}
-        }
-      })
       it('should be detected', async () => {
-        ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
-        await store.dispatch('TimelineSpace/detectPleroma')
-        expect(store.state.TimelineSpace.pleroma).toEqual(true)
-      })
-    })
-    describe('API is not pleroma', () => {
-      let mockedResponse: Response<Instance>
-      beforeEach(() => {
-        const instance: Instance = {
-          uri: 'http://mstdn.io',
-          title: 'mstnd.io',
-          description: '',
-          email: 'test@example.com',
-          version: '2.7.0',
-          thumbnail: null,
-          urls: {
-            streaming_api: 'wss://mstdn.io'
-          },
-          stats: {
-            user_count: 10,
-            status_count: 1000,
-            domain_count: 100
-          },
-          languages: ['en'],
-          contact_account: null
-        }
-        mockedResponse = {
-          data: instance,
-          status: 200,
-          statusText: 'OK',
-          headers: {}
-        }
-      })
-      it('should be detected', async () => {
-        ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
-        await store.dispatch('TimelineSpace/detectPleroma')
-        expect(store.state.TimelineSpace.pleroma).toEqual(false)
+        await store.dispatch('TimelineSpace/detectSNS')
+        expect(store.state.TimelineSpace.sns).toEqual('pleroma')
       })
     })
   })
 
   describe('fetchEmojis', () => {
-    let emacsEmoji: Emoji
-    let rubyEmoji: Emoji
-    let mockedResponse: Response<Array<Emoji>>
-    beforeEach(() => {
-      emacsEmoji = {
-        shortcode: 'emacs',
-        url: 'http://example.com/emacs',
-        static_url: 'http://example.com/emacs',
-        visible_in_picker: true
-      }
-      rubyEmoji = {
-        shortcode: 'ruby',
-        url: 'http://example.com/ruby',
-        static_url: 'http://example.com/ruby',
-        visible_in_picker: true
-      }
-      mockedResponse = {
-        data: [emacsEmoji, rubyEmoji],
-        status: 200,
-        statusText: 'OK',
-        headers: {}
-      }
-    })
     it('should be updated', async () => {
-      ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
       await store.dispatch('TimelineSpace/fetchEmojis', {})
-      expect(store.state.TimelineSpace.emojis).toEqual([
-        {
-          shortcode: 'emacs',
-          url: 'http://example.com/emacs',
-          static_url: 'http://example.com/emacs',
-          visible_in_picker: true
-        },
-        {
-          shortcode: 'ruby',
-          url: 'http://example.com/ruby',
-          static_url: 'http://example.com/ruby',
-          visible_in_picker: true
-        }
-      ])
+      expect(store.state.TimelineSpace.emojis).toEqual([emacsEmoji, rubyEmoji])
     })
   })
 
   describe('fetchInstance', () => {
-    let mockedResponse: Response<Instance>
-    beforeEach(() => {
-      mockedResponse = {
-        data: mockedInstance,
-        status: 200,
-        statusText: 'OK',
-        headers: {}
-      }
-    })
     it('should be updated', async () => {
-      ;(Mastodon.get as any).mockResolvedValue(mockedResponse)
       await store.dispatch('TimelineSpace/fetchInstance', {})
-      expect(store.state.TimelineSpace.tootMax).toEqual(5000)
+      expect(store.state.TimelineSpace.tootMax).toEqual(mockedInstance.max_toot_chars)
     })
   })
 

@@ -1,7 +1,7 @@
-import { Account, Notification, Status, Application } from 'megalodon'
+import { Entity } from 'megalodon'
 import Mentions, { MentionsState, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Mentions'
 
-const account1: Account = {
+const account1: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -23,7 +23,7 @@ const account1: Account = {
   bot: false
 }
 
-const account2: Account = {
+const account2: Entity.Account = {
   id: '2',
   username: 'h3poteto',
   acct: 'h3poteto@mstdn.io',
@@ -45,7 +45,7 @@ const account2: Account = {
   bot: false
 }
 
-const status1: Status = {
+const status1: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -72,12 +72,12 @@ const status1: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const status2: Status = {
+const status2: Entity.Status = {
   id: '2',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -104,12 +104,12 @@ const status2: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const rebloggedStatus: Status = {
+const rebloggedStatus: Entity.Status = {
   id: '3',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -136,12 +136,12 @@ const rebloggedStatus: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const notification1: Notification = {
+const notification1: Entity.Notification = {
   id: '1',
   account: account2,
   status: status1,
@@ -149,7 +149,7 @@ const notification1: Notification = {
   created_at: '2019-04-01T17:01:32'
 }
 
-const notification2: Notification = {
+const notification2: Entity.Notification = {
   id: '2',
   account: account2,
   status: rebloggedStatus,
@@ -288,7 +288,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
         }
       })
       it('should be updated', () => {
-        const favourited: Status = Object.assign(status1, {
+        const favourited: Entity.Status = Object.assign(status1, {
           favourited: true
         })
         Mentions.mutations![MUTATION_TYPES.UPDATE_TOOT](state, favourited)

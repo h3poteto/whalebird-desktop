@@ -1,5 +1,5 @@
 import emojilib from 'emojilib'
-import Mastodon, { Account, Response, Results } from 'megalodon'
+import generator, { MegalodonInterface } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
 import { LocalTag } from '~/src/types/localTag'
@@ -29,7 +29,7 @@ export type StatusState = {
   openSuggest: boolean
   startIndex: number | null
   matchWord: string | null
-  client: Mastodon | null
+  client: MegalodonInterface | null
 }
 
 const state = (): StatusState => ({
@@ -131,7 +131,7 @@ const mutations: MutationTree<StatusState> = {
   [MUTATION_TYPES.CLEAR_FILTERED_SUGGESTION]: state => {
     state.filteredSuggestion = []
   },
-  [MUTATION_TYPES.SET_CLIENT]: (state, client: Mastodon) => {
+  [MUTATION_TYPES.SET_CLIENT]: (state, client: MegalodonInterface) => {
     state.client = client
   },
   [MUTATION_TYPES.CLEAR_CLIENT]: state => {
@@ -167,14 +167,15 @@ const actions: ActionTree<StatusState, RootState> = {
       })
     }
     const searchAPI = async () => {
-      const client = new Mastodon(
-        rootState.TimelineSpace.account.accessToken!,
-        rootState.TimelineSpace.account.baseURL + '/api/v1',
+      const client = generator(
+        rootState.TimelineSpace.sns,
+        rootState.TimelineSpace.account.baseURL,
+        rootState.TimelineSpace.account.accessToken,
         rootState.App.userAgent,
         rootState.App.proxyConfiguration
       )
       commit(MUTATION_TYPES.SET_CLIENT, client)
-      const res: Response<Array<Account>> = await client.get<Array<Account>>('/accounts/search', { q: word, resolve: false })
+      const res = await client.searchAccount(word)
       if (res.data.length === 0) throw new Error('Empty')
       commit(
         MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS,
@@ -214,14 +215,15 @@ const actions: ActionTree<StatusState, RootState> = {
       })
     }
     const searchAPI = async () => {
-      const client = new Mastodon(
-        rootState.TimelineSpace.account.accessToken!,
-        rootState.TimelineSpace.account.baseURL + '/api/v2',
+      const client = generator(
+        rootState.TimelineSpace.sns,
+        rootState.TimelineSpace.account.baseURL,
+        rootState.TimelineSpace.account.accessToken,
         rootState.App.userAgent,
         rootState.App.proxyConfiguration
       )
       commit(MUTATION_TYPES.SET_CLIENT, client)
-      const res: Response<Results> = await client.get<Results>('/search', { q: word })
+      const res = await client.search(word, 'hashtags')
       if (res.data.hashtags.length === 0) throw new Error('Empty')
       commit(
         MUTATION_TYPES.APPEND_FILTERED_HASHTAGS,

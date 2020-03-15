@@ -1,10 +1,10 @@
-import Mastodon, { OAuth, ProxyConfig } from 'megalodon'
+import generator, { ProxyConfig, detector } from 'megalodon'
 import Account from './account'
 import { LocalAccount } from '~/src/types/localAccount'
 
 const appName = 'Whalebird'
 const appURL = 'https://whalebird.org'
-const scope = 'read write follow'
+const scopes = ['read', 'write', 'follow']
 
 export default class Authentication {
   private db: Account
@@ -32,15 +32,12 @@ export default class Authentication {
 
   async getAuthorizationUrl(domain = 'mastodon.social', proxy: ProxyConfig | false): Promise<string> {
     this.setOtherInstance(domain)
-    const res = await Mastodon.registerApp(
-      appName,
-      {
-        scopes: scope,
-        website: appURL
-      },
-      this.baseURL,
-      proxy
-    )
+    const sns = await detector(this.baseURL, proxy)
+    const client = generator(sns, this.baseURL, null, 'Whalebird', proxy)
+    const res = await client.registerApp(appName, {
+      scopes: scopes,
+      website: appURL
+    })
     this.clientId = res.clientId
     this.clientSecret = res.clientSecret
 
@@ -71,14 +68,9 @@ export default class Authentication {
   }
 
   async getAccessToken(code: string, proxy: ProxyConfig | false): Promise<string> {
-    const tokenData: OAuth.TokenData = await Mastodon.fetchAccessToken(
-      this.clientId,
-      this.clientSecret,
-      code,
-      this.baseURL,
-      'urn:ietf:wg:oauth:2.0:oob',
-      proxy
-    )
+    const sns = await detector(this.baseURL, proxy)
+    const client = generator(sns, this.baseURL, null, 'Whalebird', proxy)
+    const tokenData = await client.fetchAccessToken(this.clientId, this.clientSecret, code, 'urn:ietf:wg:oauth:2.0:oob')
     const search = {
       baseURL: this.baseURL,
       domain: this.domain,
@@ -88,7 +80,7 @@ export default class Authentication {
     const rec = await this.db.searchAccount(search)
     const accessToken = tokenData.accessToken
     const refreshToken = tokenData.refreshToken
-    const data = await this.db.fetchAccount(rec, accessToken, proxy)
+    const data = await this.db.fetchAccount(sns, rec, accessToken, proxy)
     await this.db.updateAccount(rec._id!, {
       username: data.username,
       accountId: data.id,

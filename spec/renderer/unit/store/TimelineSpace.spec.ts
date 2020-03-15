@@ -16,7 +16,7 @@ describe('TimelineSpace', () => {
           local: unreadSettings.Local.default,
           public: unreadSettings.Public.default
         },
-        pleroma: false
+        sns: 'mastodon'
       }
     })
 

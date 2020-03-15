@@ -1,4 +1,4 @@
-import Mastodon, { Account } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -21,16 +21,17 @@ const mutations: MutationTree<AccountState> = {
 }
 
 const actions: ActionTree<AccountState, RootState> = {
-  search: async ({ commit, rootState }, query: string): Promise<Array<Account>> => {
+  search: async ({ commit, rootState }, query: string): Promise<Array<Entity.Account>> => {
     commit('TimelineSpace/Contents/changeLoading', true, { root: true })
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
     return client
-      .get<Array<Account>>('/accounts/search', { q: query, resolve: true })
+      .searchAccount(query, { resolve: true })
       .then(res => {
         commit(MUTATION_TYPES.UPDATE_RESULTS, res.data)
         return res.data

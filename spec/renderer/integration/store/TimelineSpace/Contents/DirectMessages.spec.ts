@@ -1,12 +1,29 @@
-import { Response, Status, Account, Application, Conversation } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import DirectMessages, { DirectMessagesState } from '@/store/TimelineSpace/Contents/DirectMessages'
 
-jest.mock('megalodon')
+const mockClient = {
+  getConversationTimeline: () => {
+    return new Promise<Response<Array<Entity.Conversation>>>(resolve => {
+      const res: Response<Array<Entity.Conversation>> = {
+        data: [conversation1],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const account: Account = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -28,7 +45,7 @@ const account: Account = {
   bot: false
 }
 
-const status1: Status = {
+const status1: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -55,12 +72,12 @@ const status1: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const status2: Status = {
+const status2: Entity.Status = {
   id: '2',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -87,19 +104,19 @@ const status2: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const conversation1: Conversation = {
+const conversation1: Entity.Conversation = {
   id: '1',
   accounts: [account],
   last_status: status1,
   unread: false
 }
 
-const conversation2: Conversation = {
+const conversation2: Entity.Conversation = {
   id: '2',
   accounts: [account],
   last_status: status2,
@@ -131,7 +148,8 @@ const timelineState = {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
-    }
+    },
+    sns: 'mastodon'
   }
 }
 
@@ -156,26 +174,10 @@ describe('Home', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('fetchTimeline', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Conversation>>>(resolve => {
-            const res: Response<Array<Conversation>> = {
-              data: [conversation1],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       const statuses = await store.dispatch('DirectMessages/fetchTimeline')
       expect(statuses).toEqual([status1])
       expect(store.state.DirectMessages.timeline).toEqual([status1])
@@ -198,20 +200,17 @@ describe('Home', () => {
         }
       })
       it('should be updated', async () => {
-        const mockClient = {
-          get: (_path: string, _params: object) => {
-            return new Promise<Response<Array<Conversation>>>(resolve => {
-              const res: Response<Array<Conversation>> = {
-                data: [conversation2],
-                status: 200,
-                statusText: 'OK',
-                headers: {}
-              }
-              resolve(res)
-            })
-          }
+        mockClient.getConversationTimeline = () => {
+          return new Promise<Response<Array<Entity.Conversation>>>(resolve => {
+            const res: Response<Array<Entity.Conversation>> = {
+              data: [conversation2],
+              status: 200,
+              statusText: 'OK',
+              headers: {}
+            }
+            resolve(res)
+          })
         }
-        mockedMegalodon.mockImplementation(() => mockClient)
         await store.dispatch('DirectMessages/lazyFetchTimeline', status1)
         expect(store.state.DirectMessages.lazyLoading).toEqual(false)
         expect(store.state.DirectMessages.timeline).toEqual([status1, status2])

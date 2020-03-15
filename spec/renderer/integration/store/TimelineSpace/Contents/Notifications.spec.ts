@@ -1,12 +1,29 @@
-import { Response, Status, Account, Application, Notification } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon.ts'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Notifications, { NotificationsState } from '@/store/TimelineSpace/Contents/Notifications'
 
-jest.mock('megalodon')
+const mockClient = {
+  getNotifications: () => {
+    return new Promise<Response<Array<Entity.Notification>>>(resolve => {
+      const res: Response<Array<Entity.Notification>> = {
+        data: [notification1],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const account1: Account = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+const account1: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -28,7 +45,7 @@ const account1: Account = {
   bot: false
 }
 
-const account2: Account = {
+const account2: Entity.Account = {
   id: '2',
   username: 'h3poteto',
   acct: 'h3poteto@mstdn.io',
@@ -50,7 +67,7 @@ const account2: Account = {
   bot: false
 }
 
-const status1: Status = {
+const status1: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -77,12 +94,12 @@ const status1: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const status2: Status = {
+const status2: Entity.Status = {
   id: '2',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -109,12 +126,12 @@ const status2: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const rebloggedStatus: Status = {
+const rebloggedStatus: Entity.Status = {
   id: '3',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -141,12 +158,12 @@ const rebloggedStatus: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const notification1: Notification = {
+const notification1: Entity.Notification = {
   id: '1',
   account: account2,
   status: status1,
@@ -154,7 +171,7 @@ const notification1: Notification = {
   created_at: '2019-04-01T17:01:32'
 }
 
-const notification2: Notification = {
+const notification2: Entity.Notification = {
   id: '2',
   account: account2,
   status: rebloggedStatus,
@@ -212,26 +229,10 @@ describe('Notifications', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('fetchNotifications', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Notification>>>(resolve => {
-            const res: Response<Array<Notification>> = {
-              data: [notification1],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       const response = await store.dispatch('Notifications/fetchNotifications')
       expect(response).toEqual([notification1])
       expect(store.state.Notifications.notifications).toEqual([notification1])
@@ -251,20 +252,17 @@ describe('Notifications', () => {
       }
     })
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Notification>>>(resolve => {
-            const res: Response<Array<Notification>> = {
-              data: [notification2],
-              status: 200,
-              statusText: '200',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
+      mockClient.getNotifications = () => {
+        return new Promise<Response<Array<Entity.Notification>>>(resolve => {
+          const res: Response<Array<Entity.Notification>> = {
+            data: [notification2],
+            status: 200,
+            statusText: 'OK',
+            headers: {}
+          }
+          resolve(res)
+        })
       }
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('Notifications/lazyFetchNotifications', notification1)
       expect(store.state.Notifications.lazyLoading).toEqual(false)
       expect(store.state.Notifications.notifications).toEqual([notification1, notification2])

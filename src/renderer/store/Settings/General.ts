@@ -1,4 +1,4 @@
-import Mastodon, { Account } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import Visibility, { VisibilityType } from '~/src/constants/visibility'
 import { RootState } from '@/store'
@@ -28,14 +28,15 @@ const mutations: MutationTree<GeneralState> = {
 }
 
 const actions: ActionTree<GeneralState, RootState> = {
-  fetchSettings: async ({ commit, rootState }): Promise<Account> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  fetchSettings: async ({ commit, rootState }): Promise<Entity.Account> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res = await client.get<Account>('/accounts/verify_credentials')
+    const res = await client.verifyAccountCredentials()
     const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
       return v.key === res.data.source!.privacy
     })
@@ -44,35 +45,29 @@ const actions: ActionTree<GeneralState, RootState> = {
     return res.data
   },
   setVisibility: async ({ commit, rootState }, value: number) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
     const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
       return v.value === value
     })
-    const res = await client.patch<Account>('/accounts/update_credentials', {
-      source: {
-        privacy: visibility!.key
-      }
-    })
+    const res = await client.updateCredentials({ source: { privacy: visibility!.key } })
     commit(MUTATION_TYPES.CHANGE_VISIBILITY, visibility!.value)
     return res.data
   },
   setSensitive: async ({ commit, rootState }, value: boolean) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res = await client.patch<Account>('/accounts/update_credentials', {
-      source: {
-        sensitive: value
-      }
-    })
+    const res = await client.updateCredentials({ source: { sensitive: value } })
     commit(MUTATION_TYPES.CHANGE_SENSITIVE, value)
     return res.data
   }

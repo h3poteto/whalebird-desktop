@@ -1,12 +1,29 @@
-import { Response, Account, Notification, Status, Application } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Mentions from '~/src/renderer/store/TimelineSpace/Contents/Mentions'
 
-jest.mock('megalodon')
+const mockClient = {
+  getNotifications: () => {
+    return new Promise<Response<Entity.Notification[]>>(resolve => {
+      const res: Response<Entity.Notification[]> = {
+        data: [mention, reblog, favourite, follow],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
 
-const account: Account = {
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
+
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -28,7 +45,7 @@ const account: Account = {
   bot: false
 }
 
-const status: Status = {
+const status: Entity.Status = {
   id: '1',
   uri: 'http://example.com',
   url: 'http://example.com',
@@ -55,12 +72,12 @@ const status: Status = {
   poll: null,
   application: {
     name: 'Web'
-  } as Application,
+  } as Entity.Application,
   language: null,
   pinned: null
 }
 
-const mention: Notification = {
+const mention: Entity.Notification = {
   account: account,
   created_at: '2019-03-26T21:40:32',
   id: '1',
@@ -68,7 +85,7 @@ const mention: Notification = {
   type: 'mention'
 }
 
-const reblog: Notification = {
+const reblog: Entity.Notification = {
   account: account,
   created_at: '2019-03-26T21:40:32',
   id: '2',
@@ -76,7 +93,7 @@ const reblog: Notification = {
   type: 'reblog'
 }
 
-const favourite: Notification = {
+const favourite: Entity.Notification = {
   account: account,
   created_at: '2019-03-26T21:40:32',
   id: '3',
@@ -84,11 +101,10 @@ const favourite: Notification = {
   type: 'favourite'
 }
 
-const follow: Notification = {
+const follow: Entity.Notification = {
   account: account,
   created_at: '2019-03-26T21:40:32',
   id: '4',
-  status: null,
   type: 'follow'
 }
 
@@ -142,26 +158,10 @@ describe('Mentions', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('fetchMentions', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Notification[]>>(resolve => {
-            const res: Response<Notification[]> = {
-              data: [mention, reblog, favourite, follow],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('Mentions/fetchMentions')
       expect(store.state.Mentions.mentions).toEqual([mention, reblog, favourite, follow])
     })
@@ -199,21 +199,18 @@ describe('Mentions', () => {
         }
       })
       it('should be updated', async () => {
-        const mockClient = {
-          get: (_path: string, _params: object) => {
-            return new Promise<Response<Notification[]>>(resolve => {
-              const res: Response<Notification[]> = {
-                data: [favourite, follow],
-                status: 200,
-                statusText: 'OK',
-                headers: {}
-              }
-              resolve(res)
-            })
-          }
+        mockClient.getNotifications = () => {
+          return new Promise<Response<Entity.Notification[]>>(resolve => {
+            const res: Response<Entity.Notification[]> = {
+              data: [favourite, follow],
+              status: 200,
+              statusText: 'OK',
+              headers: {}
+            }
+            resolve(res)
+          })
         }
 
-        mockedMegalodon.mockImplementation(() => mockClient)
         await store.dispatch('Mentions/lazyFetchMentions', { id: 1 })
         expect(store.state.Mentions.mentions).toEqual([mention, reblog, favourite, follow])
         expect(store.state.Mentions.lazyLoading).toEqual(false)

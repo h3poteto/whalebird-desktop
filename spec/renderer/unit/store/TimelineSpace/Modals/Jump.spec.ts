@@ -1,7 +1,7 @@
 import i18n from '~/src/config/i18n'
 import Jump, { JumpState, MUTATION_TYPES, Channel } from '@/store/TimelineSpace/Modals/Jump'
 import { LocalTag } from '~/src/types/localTag'
-import { List } from 'megalodon'
+import { Entity } from 'megalodon'
 
 describe('TimelineSpace/Modals/Jump', () => {
   describe('mutations', () => {
@@ -55,15 +55,15 @@ describe('TimelineSpace/Modals/Jump', () => {
 
     describe('updateListChannel', () => {
       it('should be updated', () => {
-        const admin: List = {
+        const admin: Entity.List = {
           id: '0',
           title: 'admin'
         }
-        const engineer: List = {
+        const engineer: Entity.List = {
           id: '1',
           title: 'engineer'
         }
-        const designer: List = {
+        const designer: Entity.List = {
           id: '2',
           title: 'designer'
         }

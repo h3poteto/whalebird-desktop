@@ -1,10 +1,10 @@
-import Mastodon, { Account, Response } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { RemoveAccountFromList } from '@/types/removeAccountFromList'
 
 export type EditState = {
-  members: Array<Account>
+  members: Array<Entity.Account>
 }
 
 const state = (): EditState => ({
@@ -16,35 +16,33 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<EditState> = {
-  [MUTATION_TYPES.CHANGE_MEMBERS]: (state, members: Array<Account>) => {
+  [MUTATION_TYPES.CHANGE_MEMBERS]: (state, members: Array<Entity.Account>) => {
     state.members = members
   }
 }
 
 const actions: ActionTree<EditState, RootState> = {
-  fetchMembers: async ({ commit, rootState }, listId: string): Promise<Array<Account>> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  fetchMembers: async ({ commit, rootState }, listId: string): Promise<Array<Entity.Account>> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Account>> = await client.get<Array<Account>>(`/lists/${listId}/accounts`, {
-      limit: 0
-    })
+    const res = await client.getAccountsInList(listId, { limit: 0 })
     commit(MUTATION_TYPES.CHANGE_MEMBERS, res.data)
     return res.data
   },
   removeAccount: async ({ rootState }, remove: RemoveAccountFromList): Promise<{}> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    return client.del<{}>(`/lists/${remove.listId}/accounts`, {
-      account_ids: [remove.account.id]
-    })
+    return client.deleteAccountsFromList(remove.listId, [remove.account.id])
   }
 }
 

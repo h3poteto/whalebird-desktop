@@ -1,11 +1,11 @@
-import Mastodon, { Status, Response } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import parse from 'parse-link-header'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { LocalAccount } from '~/src/types/localAccount'
 
 export type FavouritesState = {
-  favourites: Array<Status>
+  favourites: Array<Entity.Status>
   lazyLoading: boolean
   filter: string
   maxId: string | null
@@ -29,13 +29,13 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<FavouritesState> = {
-  [MUTATION_TYPES.UPDATE_FAVOURITES]: (state, favourites: Array<Status>) => {
+  [MUTATION_TYPES.UPDATE_FAVOURITES]: (state, favourites: Array<Entity.Status>) => {
     state.favourites = favourites
   },
-  [MUTATION_TYPES.INSERT_FAVOURITES]: (state, favourites: Array<Status>) => {
+  [MUTATION_TYPES.INSERT_FAVOURITES]: (state, favourites: Array<Entity.Status>) => {
     state.favourites = state.favourites.concat(favourites)
   },
-  [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Status) => {
     state.favourites = state.favourites.map(toot => {
       if (toot.id === message.id) {
         return message
@@ -51,7 +51,7 @@ const mutations: MutationTree<FavouritesState> = {
       }
     })
   },
-  [MUTATION_TYPES.DELETE_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.DELETE_TOOT]: (state, message: Entity.Status) => {
     state.favourites = state.favourites.filter(toot => {
       if (toot.reblog !== null && toot.reblog.id === message.id) {
         return false
@@ -72,14 +72,15 @@ const mutations: MutationTree<FavouritesState> = {
 }
 
 const actions: ActionTree<FavouritesState, RootState> = {
-  fetchFavourites: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Status>> => {
-    const client = new Mastodon(
-      account.accessToken!,
-      account.baseURL + '/api/v1',
+  fetchFavourites: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Entity.Status>> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      account.baseURL,
+      account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Status>> = await client.get<Array<Status>>('/favourites', { limit: 40 })
+    const res = await client.getFavourites({ limit: 40 })
     commit(MUTATION_TYPES.UPDATE_FAVOURITES, res.data)
     // Parse link header
     try {
@@ -95,7 +96,7 @@ const actions: ActionTree<FavouritesState, RootState> = {
     }
     return res.data
   },
-  lazyFetchFavourites: async ({ state, commit, rootState }): Promise<Array<Status> | null> => {
+  lazyFetchFavourites: async ({ state, commit, rootState }): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
@@ -103,13 +104,14 @@ const actions: ActionTree<FavouritesState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Status>> = await client.get<Array<Status>>('/favourites', { max_id: state.maxId, limit: 40 }).finally(() => {
+    const res = await client.getFavourites({ max_id: state.maxId, limit: 40 }).finally(() => {
       commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
     })
     commit(MUTATION_TYPES.INSERT_FAVOURITES, res.data)

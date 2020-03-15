@@ -1,12 +1,12 @@
-import Mastodon, { Status, Response, Conversation } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type DirectMessagesState = {
   lazyLoading: boolean
   heading: boolean
-  timeline: Array<Status>
-  unreadTimeline: Array<Status>
+  timeline: Array<Entity.Status>
+  unreadTimeline: Array<Entity.Status>
   filter: string
 }
 
@@ -39,7 +39,7 @@ const mutations: MutationTree<DirectMessagesState> = {
   [MUTATION_TYPES.CHANGE_HEADING]: (state, value: boolean) => {
     state.heading = value
   },
-  [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Status) => {
+  [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Entity.Status) => {
     // Reject duplicated status in timeline
     if (!state.timeline.find(item => item.id === update.id) && !state.unreadTimeline.find(item => item.id === update.id)) {
       if (state.heading) {
@@ -49,14 +49,14 @@ const mutations: MutationTree<DirectMessagesState> = {
       }
     }
   },
-  [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Status>) => {
+  [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Entity.Status>) => {
     state.timeline = messages
   },
   [MUTATION_TYPES.MERGE_TIMELINE]: state => {
     state.timeline = state.unreadTimeline.slice(0, 80).concat(state.timeline)
     state.unreadTimeline = []
   },
-  [MUTATION_TYPES.INSERT_TIMELINE]: (state, messages: Array<Status>) => {
+  [MUTATION_TYPES.INSERT_TIMELINE]: (state, messages: Array<Entity.Status>) => {
     state.timeline = state.timeline.concat(messages)
   },
   [MUTATION_TYPES.ARCHIVE_TIMELINE]: state => {
@@ -66,7 +66,7 @@ const mutations: MutationTree<DirectMessagesState> = {
     state.timeline = []
     state.unreadTimeline = []
   },
-  [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Status) => {
     // Replace target message in DirectMessagesTimeline and notifications
     state.timeline = state.timeline.map(toot => {
       if (toot.id === message.id) {
@@ -98,33 +98,35 @@ const mutations: MutationTree<DirectMessagesState> = {
 }
 
 const actions: ActionTree<DirectMessagesState, RootState> = {
-  fetchTimeline: async ({ commit, rootState }): Promise<Array<Status>> => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  fetchTimeline: async ({ commit, rootState }): Promise<Array<Entity.Status>> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Conversation>> = await client.get<Array<Conversation>>('/conversations', { limit: 40 })
-    const statuses: Array<Status> = res.data.map(con => con.last_status!)
+    const res = await client.getConversationTimeline({ limit: 40 })
+    const statuses: Array<Entity.Status> = res.data.map(con => con.last_status!)
     commit(MUTATION_TYPES.UPDATE_TIMELINE, statuses)
     return statuses
   },
-  lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Status): Promise<Array<Status> | null> => {
+  lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
     return client
-      .get<Array<Conversation>>('/conversations', { max_id: lastStatus.id, limit: 40 })
+      .getConversationTimeline({ max_id: lastStatus.id, limit: 40 })
       .then(res => {
-        const statuses: Array<Status> = res.data.map(con => con.last_status!)
+        const statuses: Array<Entity.Status> = res.data.map(con => con.last_status!)
         commit(MUTATION_TYPES.INSERT_TIMELINE, statuses)
         return statuses
       })

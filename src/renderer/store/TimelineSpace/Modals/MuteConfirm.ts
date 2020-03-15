@@ -1,4 +1,4 @@
-import Mastodon, { Account, Response, Relationship } from 'megalodon'
+import generator from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -34,15 +34,14 @@ const actions: ActionTree<MuteConfirmState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
   submit: async ({ state, rootState, dispatch }, notify: boolean) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Relationship> = await client.post<Relationship>(`/accounts/${state.account!.id}/mute`, {
-      notifications: notify
-    })
+    const res = await client.muteAccount(state.account!.id, notify)
     // Reload relationship
     dispatch('TimelineSpace/Contents/SideBar/AccountProfile/fetchRelationship', state.account, { root: true })
     return res.data

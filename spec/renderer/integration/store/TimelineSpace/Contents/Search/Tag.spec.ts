@@ -1,16 +1,37 @@
-import { Response, Results, Tag } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import TagStore, { TagState } from '@/store/TimelineSpace/Contents/Search/Tag'
 
-jest.mock('megalodon')
-
-const tag1: Tag = {
+const tag1: Entity.Tag = {
   name: 'tag1',
   url: 'http://example.com/tag1',
   history: null
 }
+
+const mockClient = {
+  search: () => {
+    return new Promise<Response<Entity.Results>>(resolve => {
+      const res: Response<Entity.Results> = {
+        data: {
+          accounts: [],
+          statuses: [],
+          hashtags: [tag1]
+        },
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
+
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
 
 let state = (): TagState => {
   return {
@@ -45,7 +66,8 @@ const timelineState = {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
-    }
+    },
+    sns: 'mastodon'
   }
 }
 const appState = {
@@ -55,7 +77,7 @@ const appState = {
   }
 }
 
-describe('Search/Account', () => {
+describe('Search/Tag', () => {
   let store
   let localVue
 
@@ -69,30 +91,10 @@ describe('Search/Account', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('search', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Results>>(resolve => {
-            const res: Response<Results> = {
-              data: {
-                accounts: [],
-                statuses: [],
-                hashtags: [tag1]
-              },
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('Tag/search', 'query')
       expect(store.state.Tag.results).toEqual([tag1])
     })

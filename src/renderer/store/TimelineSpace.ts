@@ -1,4 +1,4 @@
-import Mastodon, { Account, Emoji, Instance, Status, Notification as NotificationType } from 'megalodon'
+import generator, { detector, Entity } from 'megalodon'
 import SideMenu, { SideMenuState } from './TimelineSpace/SideMenu'
 import HeaderMenu, { HeaderMenuState } from './TimelineSpace/HeaderMenu'
 import Modals, { ModalsModuleState } from './TimelineSpace/Modals'
@@ -18,10 +18,10 @@ export type TimelineSpaceState = {
   account: LocalAccount
   bindingAccount: LocalAccount | null
   loading: boolean
-  emojis: Array<Emoji>
+  emojis: Array<Entity.Emoji>
   tootMax: number
   unreadNotification: UnreadNotification
-  pleroma: boolean
+  sns: 'mastodon' | 'pleroma' | 'misskey'
 }
 
 export const blankAccount: LocalAccount = {
@@ -49,7 +49,7 @@ const state = (): TimelineSpaceState => ({
     local: unreadSettings.Local.default,
     public: unreadSettings.Public.default
   },
-  pleroma: false
+  sns: 'mastodon'
 })
 
 export const MUTATION_TYPES = {
@@ -59,7 +59,7 @@ export const MUTATION_TYPES = {
   UPDATE_EMOJIS: 'updateEmojis',
   UPDATE_TOOT_MAX: 'updateTootMax',
   UPDATE_UNREAD_NOTIFICATION: 'updateUnreadNotification',
-  CHANGE_PLEROMA: 'changePleroma'
+  CHANGE_SNS: 'changeSNS'
 }
 
 const mutations: MutationTree<TimelineSpaceState> = {
@@ -72,7 +72,7 @@ const mutations: MutationTree<TimelineSpaceState> = {
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
     state.loading = value
   },
-  [MUTATION_TYPES.UPDATE_EMOJIS]: (state, emojis: Array<Emoji>) => {
+  [MUTATION_TYPES.UPDATE_EMOJIS]: (state, emojis: Array<Entity.Emoji>) => {
     state.emojis = emojis
   },
   [MUTATION_TYPES.UPDATE_TOOT_MAX]: (state, value: number | null) => {
@@ -85,8 +85,8 @@ const mutations: MutationTree<TimelineSpaceState> = {
   [MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION]: (state, settings: UnreadNotification) => {
     state.unreadNotification = settings
   },
-  [MUTATION_TYPES.CHANGE_PLEROMA]: (state, pleroma: boolean) => {
-    state.pleroma = pleroma
+  [MUTATION_TYPES.CHANGE_SNS]: (state, sns: 'mastodon' | 'pleroma' | 'misskey') => {
+    state.sns = sns
   }
 }
 
@@ -99,7 +99,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       throw new AccountLoadError()
     })
 
-    await dispatch('detectPleroma')
+    await dispatch('detectSNS')
     dispatch('TimelineSpace/SideMenu/fetchLists', account, { root: true })
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account, { root: true })
     await dispatch('loadUnreadNotification', accountId)
@@ -163,13 +163,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_ACCOUNT, blankAccount)
     return true
   },
-  detectPleroma: async ({ commit, state, rootState }) => {
-    const res = await Mastodon.get<Instance>('/instance', {}, state.account.baseURL + '/api/v1', rootState.App.proxyConfiguration)
-    if (res.data.version.includes('Pleroma')) {
-      commit(MUTATION_TYPES.CHANGE_PLEROMA, true)
-    } else {
-      commit(MUTATION_TYPES.CHANGE_PLEROMA, false)
-    }
+  detectSNS: async ({ commit, state, rootState }) => {
+    const sns = await detector(state.account.baseURL, rootState.App.proxyConfiguration)
+    commit(MUTATION_TYPES.CHANGE_SNS, sns)
   },
   // -----------------------------------------------
   // Shortcuts
@@ -196,16 +192,18 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchEmojis
    */
-  fetchEmojis: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Emoji>> => {
-    const res = await Mastodon.get<Array<Emoji>>('/custom_emojis', {}, account.baseURL + '/api/v1', rootState.App.proxyConfiguration)
+  fetchEmojis: async ({ commit, state, rootState }, account: LocalAccount): Promise<Array<Entity.Emoji>> => {
+    const client = generator(state.sns, account.baseURL, null, 'Whalebird', rootState.App.proxyConfiguration)
+    const res = await client.getInstanceCustomEmojis()
     commit(MUTATION_TYPES.UPDATE_EMOJIS, res.data)
     return res.data
   },
   /**
    * fetchInstance
    */
-  fetchInstance: async ({ commit, rootState }, account: LocalAccount) => {
-    const res = await Mastodon.get<Instance>('/instance', {}, account.baseURL + '/api/v1', rootState.App.proxyConfiguration)
+  fetchInstance: async ({ commit, state, rootState }, account: LocalAccount) => {
+    const client = generator(state.sns, account.baseURL, null, 'Whalebird', rootState.App.proxyConfiguration)
+    const res = await client.getInstance()
     commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
     return true
   },
@@ -299,7 +297,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     await dispatch('waitToUnbindUserStreaming')
 
     commit(MUTATION_TYPES.UPDATE_BINDING_ACCOUNT, state.account)
-    win.ipcRenderer.on(`update-start-all-user-streamings-${state.account._id!}`, (_, update: Status) => {
+    win.ipcRenderer.on(`update-start-all-user-streamings-${state.account._id!}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
       // Sometimes archive old statuses
       if (rootState.TimelineSpace.Contents.Home.heading && Math.random() > 0.8) {
@@ -307,14 +305,14 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
     })
-    win.ipcRenderer.on(`notification-start-all-user-streamings-${state.account._id!}`, (_, notification: NotificationType) => {
+    win.ipcRenderer.on(`notification-start-all-user-streamings-${state.account._id!}`, (_, notification: Entity.Notification) => {
       commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
       if (rootState.TimelineSpace.Contents.Notifications.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Notifications/archiveNotifications', null, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
     })
-    win.ipcRenderer.on(`mention-start-all-user-streamings-${state.account._id!}`, (_, mention: NotificationType) => {
+    win.ipcRenderer.on(`mention-start-all-user-streamings-${state.account._id!}`, (_, mention: Entity.Notification) => {
       commit('TimelineSpace/Contents/Mentions/appendMentions', mention, { root: true })
       if (rootState.TimelineSpace.Contents.Mentions.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Mentions/archiveMentions', null, { root: true })
@@ -328,7 +326,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     })
   },
   bindLocalStreaming: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-local-streaming', (_, update: Status) => {
+    win.ipcRenderer.on('update-start-local-streaming', (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Local/archiveTimeline', {}, { root: true })
@@ -352,7 +350,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     })
   },
   bindPublicStreaming: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-public-streaming', (_, update: Status) => {
+    win.ipcRenderer.on('update-start-public-streaming', (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Public/archiveTimeline', {}, { root: true })
@@ -376,7 +374,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     })
   },
   bindDirectMessagesStreaming: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-directmessages-streaming', (_, update: Status) => {
+    win.ipcRenderer.on('update-start-directmessages-streaming', (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.DirectMessages.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/DirectMessages/archiveTimeline', {}, { root: true })
@@ -437,7 +435,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   stopDirectMessagesStreaming: () => {
     win.ipcRenderer.send('stop-directmessages-streaming')
   },
-  updateTootForAllTimelines: ({ commit, state }, status: Status): boolean => {
+  updateTootForAllTimelines: ({ commit, state }, status: Entity.Status): boolean => {
     commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Notifications/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Mentions/updateToot', status, { root: true })

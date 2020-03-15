@@ -1,4 +1,4 @@
-import Mastodon, { Status, Attachment, Tag, Response, Account } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import Visibility, { VisibilityType } from '~/src/constants/visibility'
 import TootStatus, { StatusState } from './NewToot/Status'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
@@ -34,15 +34,15 @@ export type NewTootState = {
   modalOpen: boolean
   initialStatus: string
   initialSpoiler: string
-  replyToMessage: Status | null
+  replyToMessage: Entity.Status | null
   blockSubmit: boolean
-  attachedMedias: Array<Attachment>
+  attachedMedias: Array<Entity.Attachment>
   mediaDescriptions: { [key: string]: string | null }
   visibility: number
   sensitive: boolean
   attachedMediaCount: number
   pinedHashtag: boolean
-  hashtags: Array<Tag>
+  hashtags: Array<Entity.Tag>
   loading: boolean
 }
 
@@ -92,7 +92,7 @@ const mutations: MutationTree<NewTootState> = {
   [MUTATION_TYPES.CHANGE_MODAL]: (state, value: boolean) => {
     state.modalOpen = value
   },
-  [MUTATION_TYPES.SET_REPLY_TO]: (state, message: Status) => {
+  [MUTATION_TYPES.SET_REPLY_TO]: (state, message: Entity.Status) => {
     state.replyToMessage = message
   },
   [MUTATION_TYPES.UPDATE_INITIAL_STATUS]: (state, status: string) => {
@@ -104,13 +104,13 @@ const mutations: MutationTree<NewTootState> = {
   [MUTATION_TYPES.CHANGE_BLOCK_SUBMIT]: (state, value: boolean) => {
     state.blockSubmit = value
   },
-  [MUTATION_TYPES.APPEND_ATTACHED_MEDIAS]: (state, media: Attachment) => {
+  [MUTATION_TYPES.APPEND_ATTACHED_MEDIAS]: (state, media: Entity.Attachment) => {
     state.attachedMedias = state.attachedMedias.concat([media])
   },
   [MUTATION_TYPES.CLEAR_ATTACHED_MEDIAS]: state => {
     state.attachedMedias = []
   },
-  [MUTATION_TYPES.REMOVE_MEDIA]: (state, media: Attachment) => {
+  [MUTATION_TYPES.REMOVE_MEDIA]: (state, media: Entity.Attachment) => {
     state.attachedMedias = state.attachedMedias.filter(m => m.id !== media.id)
   },
   [MUTATION_TYPES.UPDATE_MEDIA_DESCRIPTION]: (state, value: MediaDescription) => {
@@ -142,7 +142,7 @@ const mutations: MutationTree<NewTootState> = {
   [MUTATION_TYPES.CHANGE_PINED_HASHTAG]: (state, value: boolean) => {
     state.pinedHashtag = value
   },
-  [MUTATION_TYPES.UPDATE_HASHTAGS]: (state, tags: Array<Tag>) => {
+  [MUTATION_TYPES.UPDATE_HASHTAGS]: (state, tags: Array<Entity.Tag>) => {
     state.hashtags = tags
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
@@ -174,15 +174,16 @@ const actions: ActionTree<NewTootState, RootState> = {
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
       throw new AuthenticationError()
     }
-    const client = new Mastodon(
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
     const attachments = Object.keys(mediaDescription).map(async id => {
       if (mediaDescription[id] !== null) {
-        return client.put<Attachment>(`/media/${id}`, { description: mediaDescription[id] })
+        return client.updateMedia(id, { description: mediaDescription[id] })
       } else {
         return Promise.resolve({})
       }
@@ -192,7 +193,7 @@ const actions: ActionTree<NewTootState, RootState> = {
       throw err
     })
   },
-  postToot: async ({ state, commit, rootState, dispatch }, params: TootForm): Promise<Status> => {
+  postToot: async ({ state, commit, rootState, dispatch }, params: TootForm): Promise<Entity.Status> => {
     if (!state.modalOpen) {
       throw new NewTootModalOpen()
     }
@@ -204,13 +205,12 @@ const actions: ActionTree<NewTootState, RootState> = {
     const visibilityKey: string | undefined = Object.keys(Visibility).find(key => {
       return Visibility[key].value === state.visibility
     })
-    let specifiedVisibility: string = Visibility.Public.key
+    let specifiedVisibility: 'public' | 'unlisted' | 'private' | 'direct' = Visibility.Public.key
     if (visibilityKey !== undefined) {
       specifiedVisibility = Visibility[visibilityKey].key
     }
 
     let form = {
-      status: params.status,
       visibility: specifiedVisibility,
       sensitive: state.sensitive,
       spoiler_text: params.spoiler
@@ -260,15 +260,16 @@ const actions: ActionTree<NewTootState, RootState> = {
     }
 
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, true)
-    const client = new Mastodon(
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
     return client
-      .post<Status>('/statuses', form)
-      .then((res: Response<Status>) => {
+      .postStatus(params.status, form)
+      .then(res => {
         win.ipcRenderer.send('toot-action-sound')
         return res.data
       })
@@ -276,7 +277,7 @@ const actions: ActionTree<NewTootState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, false)
       })
   },
-  openReply: ({ commit, rootState }, message: Status) => {
+  openReply: ({ commit, rootState }, message: Entity.Status) => {
     commit(MUTATION_TYPES.SET_REPLY_TO, message)
     const mentionAccounts = [message.account.acct]
       .concat(message.mentions.map(a => a.acct))
@@ -317,16 +318,15 @@ const actions: ActionTree<NewTootState, RootState> = {
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
       throw new AuthenticationError()
     }
-    const client = new Mastodon(
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const formData = new FormData()
-    formData.append('file', image)
     return client
-      .post<Attachment>('/media', formData)
+      .uploadMedia(image)
       .then(res => {
         commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, false)
         if (res.data.type === 'unknown') throw new NewTootUnknownType()
@@ -348,24 +348,25 @@ const actions: ActionTree<NewTootState, RootState> = {
   resetMediaCount: ({ commit }) => {
     commit(MUTATION_TYPES.UPDATE_MEDIA_COUNT, 0)
   },
-  removeMedia: ({ commit, dispatch }, media: Attachment) => {
+  removeMedia: ({ commit, dispatch }, media: Entity.Attachment) => {
     commit(MUTATION_TYPES.REMOVE_MEDIA, media)
     commit(MUTATION_TYPES.REMOVE_MEDIA_DESCRIPTION, media.id)
     dispatch('decrementMediaCount')
   },
-  updateHashtags: ({ commit, state }, tags: Array<Tag>) => {
+  updateHashtags: ({ commit, state }, tags: Array<Entity.Tag>) => {
     if (state.pinedHashtag && tags.length > 0) {
       commit(MUTATION_TYPES.UPDATE_HASHTAGS, tags)
     }
   },
   fetchVisibility: async ({ commit, rootState }) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Account> = await client.get<Account>('/accounts/verify_credentials')
+    const res = await client.verifyAccountCredentials()
     const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
       return v.key === res.data.source!.privacy
     })

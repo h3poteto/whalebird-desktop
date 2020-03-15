@@ -1,11 +1,11 @@
-import Mastodon, { Status, Response } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { LoadPositionWithAccount } from '@/types/loadPosition'
 
 export type TimelineState = {
-  timeline: Array<Status>
-  pinnedToots: Array<Status>
+  timeline: Array<Entity.Status>
+  pinnedToots: Array<Entity.Status>
   lazyLoading: boolean
 }
 
@@ -26,19 +26,19 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<TimelineState> = {
-  [MUTATION_TYPES.UPDATE_TIMELINE]: (state, timeline: Array<Status>) => {
+  [MUTATION_TYPES.UPDATE_TIMELINE]: (state, timeline: Array<Entity.Status>) => {
     state.timeline = timeline
   },
-  [MUTATION_TYPES.INSERT_TIMELINE]: (state, messages: Array<Status>) => {
+  [MUTATION_TYPES.INSERT_TIMELINE]: (state, messages: Array<Entity.Status>) => {
     state.timeline = state.timeline.concat(messages)
   },
-  [MUTATION_TYPES.UPDATE_PINNED_TOOTS]: (state, messages: Array<Status>) => {
+  [MUTATION_TYPES.UPDATE_PINNED_TOOTS]: (state, messages: Array<Entity.Status>) => {
     state.pinnedToots = messages
   },
   [MUTATION_TYPES.CHANGE_LAZY_LOADING]: (state, value: boolean) => {
     state.lazyLoading = value
   },
-  [MUTATION_TYPES.UPDATE_PINNED_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.UPDATE_PINNED_TOOT]: (state, message: Entity.Status) => {
     state.pinnedToots = state.pinnedToots.map(toot => {
       if (toot.id === message.id) {
         return message
@@ -54,7 +54,7 @@ const mutations: MutationTree<TimelineState> = {
       }
     })
   },
-  [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Status) => {
     // Replace target message in timeline
     state.timeline = state.timeline.map(toot => {
       if (toot.id === message.id) {
@@ -71,7 +71,7 @@ const mutations: MutationTree<TimelineState> = {
       }
     })
   },
-  [MUTATION_TYPES.DELETE_TOOT]: (state, message: Status) => {
+  [MUTATION_TYPES.DELETE_TOOT]: (state, message: Entity.Status) => {
     state.timeline = state.timeline.filter(toot => {
       if (toot.reblog !== null && toot.reblog.id === message.id) {
         return false
@@ -85,15 +85,16 @@ const mutations: MutationTree<TimelineState> = {
 const actions: ActionTree<TimelineState, RootState> = {
   fetchTimeline: async ({ commit, rootState }, account: Account) => {
     commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const pinned: Response<Array<Status>> = await client.get<Array<Status>>(`/accounts/${account.id}/statuses`, { limit: 10, pinned: true })
+    const pinned = await client.getAccountStatuses(account.id, { pinned: true, limit: 10 })
     commit(MUTATION_TYPES.UPDATE_PINNED_TOOTS, pinned.data)
-    const res: Response<Array<Status>> = await client.get<Array<Status>>(`/accounts/${account.id}/statuses`, { limit: 40 })
+    const res = await client.getAccountStatuses(account.id, { limit: 40, pinned: false })
     commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
@@ -103,16 +104,18 @@ const actions: ActionTree<TimelineState, RootState> = {
       return Promise.resolve(null)
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
     try {
-      const res: Response<Array<Status>> = await client.get<Array<Status>>(`/accounts/${loadPosition.account.id}/statuses`, {
+      const res = await client.getAccountStatuses(loadPosition.account.id, {
         max_id: loadPosition.status.id,
-        limit: 40
+        limit: 40,
+        pinned: false
       })
       commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
     } finally {

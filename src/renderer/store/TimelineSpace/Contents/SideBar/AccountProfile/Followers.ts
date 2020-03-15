@@ -1,10 +1,10 @@
-import Mastodon, { Account, Relationship, Response } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type FollowersState = {
-  followers: Array<Account>
-  relationships: Array<Relationship>
+  followers: Array<Entity.Account>
+  relationships: Array<Entity.Relationship>
 }
 
 const state = (): FollowersState => ({
@@ -18,37 +18,38 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<FollowersState> = {
-  [MUTATION_TYPES.UPDATE_FOLLOWERS]: (state, users: Array<Account>) => {
+  [MUTATION_TYPES.UPDATE_FOLLOWERS]: (state, users: Array<Entity.Account>) => {
     state.followers = users
   },
-  [MUTATION_TYPES.UPDATE_RELATIONSHIPS]: (state, relations: Array<Relationship>) => {
+  [MUTATION_TYPES.UPDATE_RELATIONSHIPS]: (state, relations: Array<Entity.Relationship>) => {
     state.relationships = relations
   }
 }
 
 const actions: ActionTree<FollowersState, RootState> = {
-  fetchFollowers: async ({ commit, rootState }, account: Account) => {
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+  fetchFollowers: async ({ commit, rootState }, account: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Account>> = await client.get<Array<Account>>(`/accounts/${account.id}/followers`, { limit: 80 })
+    const res = await client.getAccountFollowers(account.id, { limit: 80 })
     commit(MUTATION_TYPES.UPDATE_FOLLOWERS, res.data)
     return res.data
   },
-  fetchRelationships: async ({ commit, rootState }, accounts: Array<Account>) => {
+  fetchRelationships: async ({ commit, rootState }, accounts: Array<Entity.Account>) => {
     const ids = accounts.map(a => a.id)
-    const client = new Mastodon(
-      rootState.TimelineSpace.account.accessToken!,
-      rootState.TimelineSpace.account.baseURL + '/api/v1',
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res: Response<Array<Relationship>> = await client.get<Array<Relationship>>(`/accounts/relationships`, {
-      id: ids
-    })
+    const res = await client.getRelationship(ids)
     commit(MUTATION_TYPES.UPDATE_RELATIONSHIPS, res.data)
     return res.data
   }

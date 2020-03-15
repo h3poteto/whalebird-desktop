@@ -1,12 +1,9 @@
-import { Response, Account } from 'megalodon'
-import mockedMegalodon from '~/spec/mock/megalodon'
+import { Response, Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import AccountStore, { AccountState } from '@/store/TimelineSpace/Contents/Search/Account'
 
-jest.mock('megalodon')
-
-const account: Account = {
+const account: Entity.Account = {
   id: '1',
   username: 'h3poteto',
   acct: 'h3poteto@pleroma.io',
@@ -27,6 +24,26 @@ const account: Account = {
   fields: null,
   bot: false
 }
+
+const mockClient = {
+  searchAccount: () => {
+    return new Promise<Response<Array<Entity.Account>>>(resolve => {
+      const res: Response<Array<Entity.Account>> = {
+        data: [account],
+        status: 200,
+        statusText: 'OK',
+        headers: {}
+      }
+      resolve(res)
+    })
+  }
+}
+
+jest.mock('megalodon', () => ({
+  ...jest.requireActual('megalodon'),
+  default: jest.fn(() => mockClient),
+  __esModule: true
+}))
 
 let state = (): AccountState => {
   return {
@@ -61,7 +78,8 @@ const timelineState = {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
-    }
+    },
+    sns: 'mastodon'
   }
 }
 
@@ -86,26 +104,10 @@ describe('Search/Account', () => {
         App: appState
       }
     })
-    mockedMegalodon.mockClear()
   })
 
   describe('search', () => {
     it('should be updated', async () => {
-      const mockClient = {
-        get: (_path: string, _params: object) => {
-          return new Promise<Response<Array<Account>>>(resolve => {
-            const res: Response<Array<Account>> = {
-              data: [account],
-              status: 200,
-              statusText: 'OK',
-              headers: {}
-            }
-            resolve(res)
-          })
-        }
-      }
-
-      mockedMegalodon.mockImplementation(() => mockClient)
       await store.dispatch('Account/search', 'query')
       expect(store.state.Account.results).toEqual([account])
     })

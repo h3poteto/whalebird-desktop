@@ -1,9 +1,9 @@
-import { Account } from 'megalodon'
+import { Entity } from 'megalodon'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import AccountProfile, { AccountProfileState } from '~/src/renderer/store/TimelineSpace/Contents/SideBar/AccountProfile'
 
-const state = (account: Account | null): AccountProfileState => {
+const state = (account: Entity.Account | null): AccountProfileState => {
   return {
     loading: false,
     relationship: null,
@@ -29,7 +29,7 @@ const timelineSpace = {
   }
 }
 
-const initStore = (account: Account | null) => {
+const initStore = (account: Entity.Account | null) => {
   return {
     namespaced: true,
     state: state(account),
@@ -56,7 +56,7 @@ describe('AccountProfile', () => {
 
   describe('isOwnProfile', () => {
     describe('target is a same Mastodon account', () => {
-      const account: Account = {
+      const account: Entity.Account = {
         id: '1',
         username: 'h3poteto',
         acct: 'h3poteto@example.com',
@@ -91,7 +91,7 @@ describe('AccountProfile', () => {
     })
 
     describe('target is another Mastodon account', () => {
-      const account: Account = {
+      const account: Entity.Account = {
         id: '1',
         username: 'h3poteto',
         acct: 'h3poteto@another.example.com',
@@ -126,7 +126,7 @@ describe('AccountProfile', () => {
     })
 
     describe('target is a same Pleroma account', () => {
-      const account: Account = {
+      const account: Entity.Account = {
         id: '1',
         username: 'h3poteto',
         acct: 'h3poteto@example.com',
@@ -161,7 +161,7 @@ describe('AccountProfile', () => {
     })
 
     describe('target is another Pleroma account', () => {
-      const account: Account = {
+      const account: Entity.Account = {
         id: '1',
         username: 'h3poteto',
         acct: 'h3poteto@another.example.com',
