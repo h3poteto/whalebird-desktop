@@ -1,19 +1,17 @@
 linter:
   eslint:
     npm_install: true
+    config: '.eslintrc.js'
+    ext: '.js,.vue,.ts'
+    ignore-path: .eslintignore
     dir:
       - src
       - spec
-    options:
-      config: '.eslintrc.js'
-      ext: '.js,.vue,.ts'
-      ignore-path: .eslintignore
 
   stylelint:
     npm_install: true
-    options:
-      config: .stylelintrc.json
-      ignore-path: .stylelintignore
-      syntax: scss
-      ignore-disables: true
-      glob: '**/*.vue'
+    config: .stylelintrc.json
+    ignore-path: .stylelintignore
+    syntax: scss
+    ignore-disables: true
+    glob: '**/*.vue'
