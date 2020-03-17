@@ -9,14 +9,23 @@ export type AuthorizeState = {}
 const state = (): AuthorizeState => ({})
 
 const actions: ActionTree<AuthorizeState, RootState> = {
-  submit: (_, code: string) => {
+  submit: (_, request: { code: string | null; sns: 'mastodon' | 'pleroma' | 'misskey' }) => {
     return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('get-access-token', code.trim())
+      let req = {
+        sns: request.sns
+      }
+      if (request.code) {
+        req = Object.assign(req, {
+          code: request.code.trim()
+        })
+      }
+      win.ipcRenderer.send('get-access-token', req)
       win.ipcRenderer.once('response-get-access-token', (_, id: string) => {
         win.ipcRenderer.removeAllListeners('error-get-access-token')
         resolve(id)
       })
       win.ipcRenderer.once('error-get-access-token', (_, err: Error) => {
+        console.error(err)
         win.ipcRenderer.removeAllListeners('response-get-access-token')
         reject(err)
       })

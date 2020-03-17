@@ -97,7 +97,7 @@ export default class Account {
   listAccounts(): Promise<Array<LocalAccount>> {
     return new Promise((resolve, reject) => {
       this.db
-        .find<LocalAccount>({ accessToken: { $ne: '' } })
+        .find<LocalAccount>({ $and: [{ accessToken: { $ne: '' } }, { accessToken: { $ne: null } }] })
         .sort({ order: 1 })
         .exec((err, docs) => {
           if (err) return reject(err)

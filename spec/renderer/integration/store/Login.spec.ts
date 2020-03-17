@@ -14,7 +14,8 @@ jest.mock('megalodon', () => ({
 const state = (): LoginState => {
   return {
     selectedInstance: null,
-    searching: false
+    searching: false,
+    sns: 'mastodon'
   }
 }
 

@@ -364,10 +364,15 @@ app.on('activate', () => {
 
 let auth = new Authentication(accountManager)
 
-ipcMain.on('get-auth-url', async (event: IpcMainEvent, domain: string) => {
+type AuthRequest = {
+  instance: string
+  sns: 'mastodon' | 'pleroma' | 'misskey'
+}
+
+ipcMain.on('get-auth-url', async (event: IpcMainEvent, request: AuthRequest) => {
   const proxy = await proxyConfiguration.forMastodon()
   auth
-    .getAuthorizationUrl(domain, proxy)
+    .getAuthorizationUrl(request.sns, request.instance, proxy)
     .then(url => {
       log.debug(url)
       event.sender.send('response-get-auth-url', url)
@@ -380,10 +385,15 @@ ipcMain.on('get-auth-url', async (event: IpcMainEvent, domain: string) => {
     })
 })
 
-ipcMain.on('get-access-token', async (event: IpcMainEvent, code: string) => {
+type TokenRequest = {
+  code: string | null
+  sns: 'mastodon' | 'pleroma' | 'misskey'
+}
+
+ipcMain.on('get-access-token', async (event: IpcMainEvent, request: TokenRequest) => {
   const proxy = await proxyConfiguration.forMastodon()
   auth
-    .getAccessToken(code, proxy)
+    .getAccessToken(request.sns, request.code, proxy)
     .then(token => {
       accountDB.findOne(
         {
