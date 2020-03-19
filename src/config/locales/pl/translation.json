@@ -385,6 +385,7 @@
     "manually_1": "Strona autoryzacji została otwarta w Twojej przeglądarce.",
     "manually_2": "Jeżeli nie, odwiedź następujący adres w przeglądarce.",
     "code_label": "Wklej kod autoryzacyjny z przeglądarki:",
+    "misskey_label": "Please submit after you authorize in your browser.",
     "submit": "Wyślij"
   },
   "receive_drop": {
