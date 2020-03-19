@@ -220,7 +220,7 @@
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.149",
     "@types/nedb": "^1.8.9",
-    "@types/node": "^13.1.6",
+    "@types/node": "^13.9.2",
     "@types/parse-link-header": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.18.0",
