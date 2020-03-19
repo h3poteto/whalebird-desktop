@@ -22,7 +22,8 @@
           class="authorize-form"
           v-on:submit.prevent="authorizeSubmit"
         >
-          <el-form-item :label="$t('authorize.code_label')" v-show="sns !== 'misskey'">
+          <p v-if="sns === 'misskey'">{{ $t('authorize.misskey_label') }}</p>
+          <el-form-item :label="$t('authorize.code_label')" v-else>
             <el-input v-model="authorizeForm.code"></el-input>
           </el-form-item>
           <!-- Dummy form to guard submitting with enter -->
