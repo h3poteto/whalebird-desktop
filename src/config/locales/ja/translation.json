@@ -385,6 +385,7 @@
     "manually_1": "認証用ページが自動的に開きます．",
     "manually_2": "もし開かない場合は，以下のURLから手動で認証用ページを開いてください．",
     "code_label": "ブラウザに表示された認証コードを貼り付けてください",
+    "misskey_label": "Please submit after you authorize in your browser.",
     "submit": "認証"
   },
   "receive_drop": {
