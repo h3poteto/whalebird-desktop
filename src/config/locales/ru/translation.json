@@ -385,6 +385,7 @@
     "manually_1": "An authorization page has opened in your browser.",
     "manually_2": "If it has not opened, please go to the following URL manually.",
     "code_label": "Please paste the authorization code from your browser:",
+    "misskey_label": "Please submit after you authorize in your browser.",
     "submit": "Submit"
   },
   "receive_drop": {
