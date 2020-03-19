@@ -385,6 +385,7 @@
     "manually_1": "Jetzt wird die Zugriffsseite in deinem Browser geöffnet.",
     "manually_2": "Falls nicht, öffne bitte die folgende URL von Hand.",
     "code_label": "Bitte füge den Zugrifsscode aus dem Browser ein:",
+    "misskey_label": "Please submit after you authorize in your browser.",
     "submit": "Absenden"
   },
   "receive_drop": {
