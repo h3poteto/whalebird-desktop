@@ -385,6 +385,7 @@
     "manually_1": "一个认证页面已经在浏览器中打开。",
     "manually_2": "如果页面没有打开，请手动进入下列 URL：",
     "code_label": "请粘贴浏览器中显示的授权码：",
+    "misskey_label": "Please submit after you authorize in your browser.",
     "submit": "提交"
   },
   "receive_drop": {

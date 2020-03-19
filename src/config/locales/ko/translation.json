@@ -385,6 +385,7 @@
     "manually_1": "브라우저에서 인증 페이지가 열렸어요.",
     "manually_2": "만약 열리지 않았다면, 아래 링크를 복사해서 브라우저에 입력해주세요.",
     "code_label": "브라우저에 나타난 인증 코드를 복사해서 붙여넣어 주세요:",
+    "misskey_label": "Please submit after you authorize in your browser.",
     "submit": "제출"
   },
   "receive_drop": {

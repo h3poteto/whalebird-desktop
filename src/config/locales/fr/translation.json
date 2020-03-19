@@ -385,6 +385,7 @@
     "manually_1": "La page d'autorisation est à présent affichée dans votre navigateur.",
     "manually_2": "Si ce n'était pas le cas, veuillez ouvrir le lien suivant manuellement.",
     "code_label": "Recopier le code d'autorisation depuis votre navigateur:",
+    "misskey_label": "Please submit after you authorize in your browser.",
     "submit": "Envoyer"
   },
   "receive_drop": {
