@@ -368,7 +368,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     )
     const res = await client.verifyAccountCredentials()
     const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
-      return v.key === res.data.source!.privacy
+      return res.data.source !== undefined && v.key === res.data.source.privacy
     })
     if (visibility === undefined) {
       throw new Error('Visibility value is invalid')

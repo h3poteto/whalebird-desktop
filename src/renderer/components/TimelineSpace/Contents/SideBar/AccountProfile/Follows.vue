@@ -1,15 +1,16 @@
 <template>
-<div id="follows">
-  <template v-for="follow in follows">
-    <user :user="follow"
-          v-bind:key="follow.id"
-          :relationship="targetRelation(follow.id)"
-          @followAccount="followAccount"
-          @unfollowAccount="unfollowAccount"
-          >
-    </user>
-  </template>
-</div>
+  <div id="follows">
+    <template v-for="follow in follows">
+      <user
+        :user="follow"
+        v-bind:key="follow.id"
+        :relationship="targetRelation(follow.id)"
+        @followAccount="followAccount"
+        @unfollowAccount="unfollowAccount"
+      >
+      </user>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -18,7 +19,7 @@ import User from '~/src/renderer/components/molecules/User'
 
 export default {
   name: 'follows',
-  props: [ 'account' ],
+  props: ['account'],
   components: { User },
   computed: {
     ...mapState('TimelineSpace/Contents/SideBar/AccountProfile/Follows', {
@@ -26,21 +27,22 @@ export default {
       relationships: state => state.relationships
     })
   },
-  created () {
+  created() {
     this.load()
   },
   watch: {
-    account: function (_newAccount, _oldAccount) {
+    account: function(_newAccount, _oldAccount) {
       this.load()
     }
   },
   methods: {
-    async load () {
+    async load() {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
       try {
         const follows = await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchFollows', this.account)
         await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchRelationships', follows)
       } catch (err) {
+        console.error(err)
         this.$message({
           message: this.$t('message.follows_fetch_error'),
           type: 'error'
@@ -49,10 +51,10 @@ export default {
         this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
       }
     },
-    targetRelation (id) {
+    targetRelation(id) {
       return this.relationships.find(r => r.id === id)
     },
-    async followAccount (account) {
+    async followAccount(account) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
       try {
         await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
@@ -66,7 +68,7 @@ export default {
         this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
       }
     },
-    async unfollowAccount (account) {
+    async unfollowAccount(account) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
       try {
         await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
@@ -84,5 +86,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

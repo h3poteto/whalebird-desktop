@@ -44,7 +44,7 @@ const router = new Router({
       path: '/authorize',
       name: 'authorize',
       component: Authorize,
-      props: route => ({ url: route.query.url })
+      props: route => ({ url: route.query.url, sns: route.query.sns })
     },
     {
       path: '/preferences/',

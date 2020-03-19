@@ -22,7 +22,8 @@
           class="authorize-form"
           v-on:submit.prevent="authorizeSubmit"
         >
-          <el-form-item :label="$t('authorize.code_label')">
+          <p v-if="sns === 'misskey'">{{ $t('authorize.misskey_label') }}</p>
+          <el-form-item :label="$t('authorize.code_label')" v-else>
             <el-input v-model="authorizeForm.code"></el-input>
           </el-form-item>
           <!-- Dummy form to guard submitting with enter -->
@@ -47,12 +48,16 @@ export default {
     url: {
       type: String,
       default: ''
+    },
+    sns: {
+      type: String,
+      default: 'mastodon'
     }
   },
   data() {
     return {
       authorizeForm: {
-        code: ''
+        code: null
       },
       submitting: false
     }
@@ -64,7 +69,10 @@ export default {
     authorizeSubmit() {
       this.submitting = true
       this.$store
-        .dispatch('Authorize/submit', this.authorizeForm.code)
+        .dispatch('Authorize/submit', {
+          code: this.authorizeForm.code,
+          sns: this.sns
+        })
         .finally(() => {
           this.submitting = false
         })

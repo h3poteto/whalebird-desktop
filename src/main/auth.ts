@@ -1,45 +1,48 @@
-import generator, { ProxyConfig, detector } from 'megalodon'
+import generator, { ProxyConfig } from 'megalodon'
+import crypto from 'crypto'
 import Account from './account'
 import { LocalAccount } from '~/src/types/localAccount'
 
 const appName = 'Whalebird'
 const appURL = 'https://whalebird.org'
-const scopes = ['read', 'write', 'follow']
 
 export default class Authentication {
   private db: Account
-  private baseURL: string
-  private domain: string
-  private clientId: string
-  private clientSecret: string
+  private baseURL: string | null = null
+  private domain: string | null = null
+  private clientId: string | null = null
+  private clientSecret: string | null = null
+  private sessionToken: string | null = null
   private protocol: 'http' | 'https'
 
   constructor(accountDB: Account) {
     this.db = accountDB
-    this.baseURL = ''
-    this.domain = ''
-    this.clientId = ''
-    this.clientSecret = ''
     this.protocol = 'https'
   }
 
   setOtherInstance(domain: string) {
     this.baseURL = `${this.protocol}://${domain}`
     this.domain = domain
-    this.clientId = ''
-    this.clientSecret = ''
+    this.clientId = null
+    this.clientSecret = null
   }
 
-  async getAuthorizationUrl(domain = 'mastodon.social', proxy: ProxyConfig | false): Promise<string> {
+  async getAuthorizationUrl(
+    sns: 'mastodon' | 'pleroma' | 'misskey',
+    domain: string = 'mastodon.social',
+    proxy: ProxyConfig | false
+  ): Promise<string> {
     this.setOtherInstance(domain)
-    const sns = await detector(this.baseURL, proxy)
+    if (!this.baseURL || !this.domain) {
+      throw new Error('domain is required')
+    }
     const client = generator(sns, this.baseURL, null, 'Whalebird', proxy)
     const res = await client.registerApp(appName, {
-      scopes: scopes,
       website: appURL
     })
     this.clientId = res.clientId
     this.clientSecret = res.clientSecret
+    this.sessionToken = res.session_token
 
     const order = await this.db
       .lastAccount()
@@ -53,11 +56,11 @@ export default class Authentication {
       domain: this.domain,
       clientId: this.clientId,
       clientSecret: this.clientSecret,
-      accessToken: '',
+      accessToken: null,
       refreshToken: null,
-      username: '',
+      username: null,
       accountId: null,
-      avatar: '',
+      avatar: null,
       order: order
     }
     await this.db.insertAccount(local)
@@ -67,10 +70,24 @@ export default class Authentication {
     return res.url
   }
 
-  async getAccessToken(code: string, proxy: ProxyConfig | false): Promise<string> {
-    const sns = await detector(this.baseURL, proxy)
+  async getAccessToken(sns: 'mastodon' | 'pleroma' | 'misskey', code: string | null, proxy: ProxyConfig | false): Promise<string> {
+    if (!this.baseURL) {
+      throw new Error('domain is required')
+    }
+    if (!this.clientSecret) {
+      throw new Error('client secret is required')
+    }
     const client = generator(sns, this.baseURL, null, 'Whalebird', proxy)
-    const tokenData = await client.fetchAccessToken(this.clientId, this.clientSecret, code, 'urn:ietf:wg:oauth:2.0:oob')
+
+    // In Misskey session token is required instead of authentication code.
+    let authCode = code
+    if (!code) {
+      authCode = this.sessionToken
+    }
+    if (!authCode) {
+      throw new Error('auth code is required')
+    }
+    const tokenData = await client.fetchAccessToken(this.clientId, this.clientSecret, authCode, 'urn:ietf:wg:oauth:2.0:oob')
     const search = {
       baseURL: this.baseURL,
       domain: this.domain,
@@ -78,7 +95,14 @@ export default class Authentication {
       clientSecret: this.clientSecret
     }
     const rec = await this.db.searchAccount(search)
-    const accessToken = tokenData.accessToken
+    let accessToken = tokenData.accessToken
+    // In misskey, access token is sha256(userToken + clientSecret)
+    if (sns === 'misskey') {
+      accessToken = crypto
+        .createHash('sha256')
+        .update(tokenData.accessToken + this.clientSecret, 'utf8')
+        .digest('hex')
+    }
     const refreshToken = tokenData.refreshToken
     const data = await this.db.fetchAccount(sns, rec, accessToken, proxy)
     await this.db.updateAccount(rec._id!, {

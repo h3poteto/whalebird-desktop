@@ -114,8 +114,8 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res = await client.getRelationship([account.id])
-    commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data[0])
+    const res = await client.getRelationship(account.id)
+    commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     return res.data
   },
   reload: async ({ dispatch, state, commit }) => {

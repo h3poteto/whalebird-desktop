@@ -49,7 +49,7 @@ const actions: ActionTree<FollowersState, RootState> = {
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res = await client.getRelationship(ids)
+    const res = await client.getRelationships(ids)
     commit(MUTATION_TYPES.UPDATE_RELATIONSHIPS, res.data)
     return res.data
   }

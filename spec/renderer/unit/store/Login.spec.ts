@@ -6,7 +6,8 @@ describe('Login', () => {
     beforeEach(() => {
       state = {
         selectedInstance: null,
-        searching: false
+        searching: false,
+        sns: 'mastodon'
       }
     })
     describe('changeInstance', () => {
