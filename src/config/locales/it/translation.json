@@ -385,6 +385,7 @@
     "manually_1": "Una pagina di autorizzazione è stata aperta nel tuo browser.",
     "manually_2": "Se il browser non è stato aperto, vai al seguente URL manualmente.",
     "code_label": "Incolla il codice di autorizzazione dal browser:",
+    "misskey_label": "Please submit after you authorize in your browser.",
     "submit": "Sottoscrivi"
   },
   "receive_drop": {
