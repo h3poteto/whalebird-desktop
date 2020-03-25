@@ -289,6 +289,6 @@
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1",
     "webpack-hot-middleware": "^2.25.0",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.2.2"
   }
 }
