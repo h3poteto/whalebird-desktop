@@ -222,7 +222,7 @@
     "@types/nedb": "^1.8.9",
     "@types/node": "^13.1.6",
     "@types/parse-link-header": "^1.0.0",
-    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.18.0",
     "@typescript-eslint/typescript-estree": "^2.16.0",
     "@vue/test-utils": "^1.0.0-beta.30",
