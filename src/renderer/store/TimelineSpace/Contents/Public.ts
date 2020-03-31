@@ -97,7 +97,7 @@ const mutations: MutationTree<PublicState> = {
 }
 
 const actions: ActionTree<PublicState, RootState> = {
-  fetchPublicTimeline: async ({ commit, rootState }): Promise<Array<Entity.Status>> => {
+  fetchPublicTimeline: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -105,9 +105,15 @@ const actions: ActionTree<PublicState, RootState> = {
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res = await client.getPublicTimeline({ limit: 40 })
-    commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
-    return res.data
+    try {
+      const res = await client.getPublicTimeline({ limit: 40 })
+      commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
+      return res.data
+    } catch (err) {
+      // Disable public timeline
+      dispatch('TimelineSpace/SideMenu/disablePublic', {}, { root: true })
+      return []
+    }
   },
   lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {

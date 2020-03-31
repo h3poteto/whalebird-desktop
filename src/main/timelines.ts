@@ -18,47 +18,37 @@ const confirm = async (account: LocalAccount, proxy: ProxyConfig | false) => {
     list: true
   }
 
-  try {
-    await client.getHomeTimeline({ limit: 1 })
-  } catch (err) {
-    timelines = { ...timelines, home: false }
+  const notification = async () => {
+    return client.getNotifications({ limit: 1 }).catch(() => {
+      timelines = { ...timelines, notification: false, mention: false }
+    })
   }
-
-  try {
-    await client.getNotifications({ limit: 1 })
-  } catch (err) {
-    timelines = { ...timelines, notification: false, mention: false }
+  const direct = async () => {
+    return client.getConversationTimeline({ limit: 1 }).catch(() => {
+      timelines = { ...timelines, direct: false }
+    })
   }
-
-  try {
-    await client.getConversationTimeline({ limit: 1 })
-  } catch (err) {
-    timelines = { ...timelines, direct: false }
+  const favourite = async () => {
+    return client.getFavourites({ limit: 1 }).catch(() => {
+      timelines = { ...timelines, favourite: false }
+    })
   }
-
-  try {
-    await client.getFavourites({ limit: 1 })
-  } catch (err) {
-    timelines = { ...timelines, favourite: false }
+  const local = async () => {
+    return client.getLocalTimeline({ limit: 1 }).catch(() => {
+      timelines = { ...timelines, local: false }
+    })
   }
-
-  try {
-    await client.getLocalTimeline({ limit: 1 })
-  } catch (err) {
-    timelines = { ...timelines, local: false }
+  const pub = async () => {
+    return client.getPublicTimeline({ limit: 1 }).catch(() => {
+      timelines = { ...timelines, public: false }
+    })
   }
-
-  try {
-    await client.getPublicTimeline({ limit: 1 })
-  } catch (err) {
-    timelines = { ...timelines, public: false }
+  const tag = async () => {
+    return client.getTagTimeline('whalebird', { limit: 1 }).catch(() => {
+      timelines = { ...timelines, tag: false }
+    })
   }
-
-  try {
-    await client.getTagTimeline('whalebird', { limit: 1 })
-  } catch (err) {
-    timelines = { ...timelines, tag: false }
-  }
+  await Promise.all([notification(), direct(), favourite(), local(), pub(), tag()])
 
   return timelines
 }

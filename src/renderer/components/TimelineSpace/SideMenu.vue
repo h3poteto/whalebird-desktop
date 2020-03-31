@@ -46,17 +46,22 @@
         <span>{{ $t('side_menu.home') }}</span>
         <el-badge is-dot :hidden="!unreadHomeTimeline"> </el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/notifications`" role="menuitem" :title="$t('side_menu.notification')">
+      <el-menu-item
+        :index="`/${id()}/notifications`"
+        role="menuitem"
+        :title="$t('side_menu.notification')"
+        v-if="enabledTimelines.notification"
+      >
         <icon name="bell"></icon>
         <span>{{ $t('side_menu.notification') }}</span>
         <el-badge is-dot :hidden="!unreadNotifications"> </el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/mentions`" role="menuitem" :title="$t('side_menu.mention')">
+      <el-menu-item :index="`/${id()}/mentions`" role="menuitem" :title="$t('side_menu.mention')" v-if="enabledTimelines.mention">
         <icon name="at"></icon>
         <span>{{ $t('side_menu.mention') }}</span>
         <el-badge is-dot :hidden="!unreadMentions"> </el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/direct-messages`" role="menuitem" :title="$t('side_menu.direct')">
+      <el-menu-item :index="`/${id()}/direct-messages`" role="menuitem" :title="$t('side_menu.direct')" v-if="enabledTimelines.direct">
         <icon name="envelope"></icon>
         <span>{{ $t('side_menu.direct') }}</span>
         <el-badge is-dot :hidden="!unreadDirectMessagesTimeline"> </el-badge>
@@ -71,16 +76,16 @@
         <span>{{ $t('side_menu.follow_requests') }}</span>
         <el-badge is-dot></el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/favourites`" role="menuitem" :title="$t('side_menu.favourite')">
+      <el-menu-item :index="`/${id()}/favourites`" role="menuitem" :title="$t('side_menu.favourite')" v-if="enabledTimelines.favourite">
         <icon name="star"></icon>
         <span>{{ $t('side_menu.favourite') }}</span>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/local`" role="menuitem" :title="$t('side_menu.local')">
+      <el-menu-item :index="`/${id()}/local`" role="menuitem" :title="$t('side_menu.local')" v-if="enabledTimelines.local">
         <icon name="users"></icon>
         <span>{{ $t('side_menu.local') }}</span>
         <el-badge is-dot :hidden="!unreadLocalTimeline"> </el-badge>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/public`" role="menuitem" :title="$t('side_menu.public')">
+      <el-menu-item :index="`/${id()}/public`" role="menuitem" :title="$t('side_menu.public')" v-if="enabledTimelines.public">
         <icon name="globe"></icon>
         <span>{{ $t('side_menu.public') }}</span>
         <el-badge is-dot :hidden="!unreadPublicTimeline"> </el-badge>
@@ -93,7 +98,7 @@
         <icon name="hashtag"></icon>
         <span>{{ $t('side_menu.hashtag') }}</span>
       </el-menu-item>
-      <template v-for="tag in tags">
+      <template v-for="tag in tags" v-if="enabledTimelines.tag">
         <el-menu-item
           :index="`/${id()}/hashtag/${tag.tagName}`"
           :class="collapse ? '' : 'sub-menu'"
@@ -109,7 +114,7 @@
         <icon name="list-ul"></icon>
         <span>{{ $t('side_menu.lists') }}</span>
       </el-menu-item>
-      <template v-for="list in lists">
+      <template v-for="list in lists" v-if="enabledTimelines.list">
         <el-menu-item
           :index="`/${id()}/lists/${list.id}`"
           :class="collapse ? '' : 'sub-menu'"
@@ -147,7 +152,8 @@ export default {
       unreadFollowRequests: state => state.unreadFollowRequests,
       lists: state => state.lists,
       tags: state => state.tags,
-      collapse: state => state.collapse
+      collapse: state => state.collapse,
+      enabledTimelines: state => state.enabledTimelines
     }),
     ...mapState({
       account: state => state.TimelineSpace.account,

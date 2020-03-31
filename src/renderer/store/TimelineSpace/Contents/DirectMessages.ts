@@ -98,7 +98,7 @@ const mutations: MutationTree<DirectMessagesState> = {
 }
 
 const actions: ActionTree<DirectMessagesState, RootState> = {
-  fetchTimeline: async ({ commit, rootState }): Promise<Array<Entity.Status>> => {
+  fetchTimeline: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -106,10 +106,16 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res = await client.getConversationTimeline({ limit: 40 })
-    const statuses: Array<Entity.Status> = res.data.map(con => con.last_status!)
-    commit(MUTATION_TYPES.UPDATE_TIMELINE, statuses)
-    return statuses
+    try {
+      const res = await client.getConversationTimeline({ limit: 40 })
+      const statuses: Array<Entity.Status> = res.data.map(con => con.last_status!)
+      commit(MUTATION_TYPES.UPDATE_TIMELINE, statuses)
+      return statuses
+    } catch (err) {
+      // Disable direct timeline
+      dispatch('TimelineSpace/SideMenu/disableDirect', {}, { root: true })
+      return []
+    }
   },
   lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {

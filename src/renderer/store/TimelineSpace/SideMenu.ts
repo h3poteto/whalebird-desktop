@@ -128,6 +128,21 @@ const actions: ActionTree<SideMenuState, RootState> = {
     const timelines: EnabledTimelines = await win.ipcRenderer.invoke('confirm-timelines', account)
     commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
   },
+  disableLocal: ({ commit, state }) => {
+    let timelines = state.enabledTimelines
+    timelines = { ...timelines, local: false }
+    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
+  },
+  disablePublic: ({ commit, state }) => {
+    let timelines = state.enabledTimelines
+    timelines = { ...timelines, public: false }
+    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
+  },
+  disableDirect: ({ commit, state }) => {
+    let timelines = state.enabledTimelines
+    timelines = { ...timelines, direct: false }
+    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
+  },
   clearUnread: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_UNREAD_HOME_TIMELINE, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_NOTIFICATIONS, false)
