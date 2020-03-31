@@ -1,10 +1,10 @@
 # Change Log
 
 ## [4.0.0] - 2020-03-24
-## Added
+### Added
 - [#1298](https://github.com/h3poteto/whalebird-desktop/pull/1298) refs #816 Add support for Misskey login
 
-## Changed
+### Changed
 - [#1314](https://github.com/h3poteto/whalebird-desktop/pull/1314) New Crowdin translations
 - [#1312](https://github.com/h3poteto/whalebird-desktop/pull/1312) New Crowdin translations
 - [#1309](https://github.com/h3poteto/whalebird-desktop/pull/1309) New Crowdin translations
