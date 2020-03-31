@@ -1,5 +1,39 @@
 # Change Log
 
+## [4.0.0] - 2020-03-24
+## Added
+- [#1298](https://github.com/h3poteto/whalebird-desktop/pull/1298) refs #816 Add support for Misskey login
+
+## Changed
+- [#1314](https://github.com/h3poteto/whalebird-desktop/pull/1314) New Crowdin translations
+- [#1312](https://github.com/h3poteto/whalebird-desktop/pull/1312) New Crowdin translations
+- [#1309](https://github.com/h3poteto/whalebird-desktop/pull/1309) New Crowdin translations
+
+## [3.2.0] - 2020-03-17
+### Added
+- [#1278](https://github.com/h3poteto/whalebird-desktop/pull/1278) Add bidi support
+- [#1269](https://github.com/h3poteto/whalebird-desktop/pull/1269) Load system theme for dark mode
+
+### Changed
+- [#1296](https://github.com/h3poteto/whalebird-desktop/pull/1296) Update electron-builder version to 22.4.0
+- [#1292](https://github.com/h3poteto/whalebird-desktop/pull/1292) Update megalodon version to 3.0.0-beta.4
+- [#1293](https://github.com/h3poteto/whalebird-desktop/pull/1293) Update sideci settings
+- [#1291](https://github.com/h3poteto/whalebird-desktop/pull/1291) [Security] Bump acorn from 5.7.3 to 5.7.4
+- [#1268](https://github.com/h3poteto/whalebird-desktop/pull/1268) Upgrade Electron version to 7.1.11
+- [#1266](https://github.com/h3poteto/whalebird-desktop/pull/1266) Bump @typescript-eslint/eslint-plugin from 1.5.0 to 2.19.0
+- [#1264](https://github.com/h3poteto/whalebird-desktop/pull/1264) Bump electron-context-menu from 0.15.2 to 0.16.0
+- [#1262](https://github.com/h3poteto/whalebird-desktop/pull/1262) Bump vue-loader from 15.7.2 to 15.8.3
+- [#1261](https://github.com/h3poteto/whalebird-desktop/pull/1261) Bump electron-json-storage from 4.1.5 to 4.1.8
+- [#1260](https://github.com/h3poteto/whalebird-desktop/pull/1260) Bump eslint-plugin-import from 2.19.1 to 2.20.0
+- [#1259](https://github.com/h3poteto/whalebird-desktop/pull/1259) Bump prettier from 1.17.0 to 1.19.1
+- [#1254](https://github.com/h3poteto/whalebird-desktop/pull/1254) Bump @typescript-eslint/parser from 2.15.0 to 2.18.0
+- [#1256](https://github.com/h3poteto/whalebird-desktop/pull/1256) Bump @babel/core from 7.7.7 to 7.8.4
+- [#1252](https://github.com/h3poteto/whalebird-desktop/pull/1252) Bump @types/jest from 24.0.25 to 24.9.1
+- [#1248](https://github.com/h3poteto/whalebird-desktop/pull/1248) Bump sass-loader from 7.1.0 to 8.0.2
+- [#1246](https://github.com/h3poteto/whalebird-desktop/pull/1246) Bump core-js from 3.6.1 to 3.6.4
+- [#1244](https://github.com/h3poteto/whalebird-desktop/pull/1244) Bump @typescript-eslint/typescript-estree from 1.5.0 to 2.16.0
+- [#1241](https://github.com/h3poteto/whalebird-desktop/pull/1241) Bump @babel/plugin-proposal-class-properties from 7.7.0 to 7.8.3
+
 ## [3.1.0] - 2020-01-23
 ### Added
 - [#1223](https://github.com/h3poteto/whalebird-desktop/pull/1223) Read exif and rotate image for all attachment images
