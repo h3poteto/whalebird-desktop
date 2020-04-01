@@ -4,6 +4,7 @@ import { LocalTag } from '~/src/types/localTag'
 import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
+import { EnabledTimelines } from '~/src/types/enabledTimelines'
 
 const win = window as MyWindow
 
@@ -18,6 +19,7 @@ export type SideMenuState = {
   lists: Array<Entity.List>
   tags: Array<LocalTag>
   collapse: boolean
+  enabledTimelines: EnabledTimelines
 }
 
 const state = (): SideMenuState => ({
@@ -30,7 +32,18 @@ const state = (): SideMenuState => ({
   unreadFollowRequests: false,
   lists: [],
   tags: [],
-  collapse: false
+  collapse: false,
+  enabledTimelines: {
+    home: true,
+    notification: true,
+    mention: true,
+    direct: true,
+    favourite: true,
+    local: true,
+    public: true,
+    tag: true,
+    list: true
+  }
 })
 
 export const MUTATION_TYPES = {
@@ -43,7 +56,8 @@ export const MUTATION_TYPES = {
   CHANGE_UNREAD_FOLLOW_REQUESTS: 'changeUnreadFollowRequests',
   UPDATE_LISTS: 'updateLists',
   CHANGE_COLLAPSE: 'changeCollapse',
-  UPDATE_TAGS: 'updateTags'
+  UPDATE_TAGS: 'updateTags',
+  UPDATE_ENABLED_TIMELINES: 'updateEnabledTimelines'
 }
 
 const mutations: MutationTree<SideMenuState> = {
@@ -76,6 +90,9 @@ const mutations: MutationTree<SideMenuState> = {
   },
   [MUTATION_TYPES.UPDATE_TAGS]: (state, tags: Array<LocalTag>) => {
     state.tags = tags
+  },
+  [MUTATION_TYPES.UPDATE_ENABLED_TIMELINES]: (state, timelines: EnabledTimelines) => {
+    state.enabledTimelines = timelines
   }
 }
 
@@ -105,6 +122,26 @@ const actions: ActionTree<SideMenuState, RootState> = {
     const res = await client.getFollowRequests()
     commit(MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS, res.data.length > 0)
     return res.data
+  },
+  confirmTimelines: async ({ commit, rootState }, account: LocalAccount | null = null) => {
+    if (account === null) account = rootState.TimelineSpace.account
+    const timelines: EnabledTimelines = await win.ipcRenderer.invoke('confirm-timelines', account)
+    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
+  },
+  disableLocal: ({ commit, state }) => {
+    let timelines = state.enabledTimelines
+    timelines = { ...timelines, local: false }
+    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
+  },
+  disablePublic: ({ commit, state }) => {
+    let timelines = state.enabledTimelines
+    timelines = { ...timelines, public: false }
+    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
+  },
+  disableDirect: ({ commit, state }) => {
+    let timelines = state.enabledTimelines
+    timelines = { ...timelines, direct: false }
+    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
   },
   clearUnread: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_UNREAD_HOME_TIMELINE, false)

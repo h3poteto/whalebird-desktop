@@ -50,7 +50,18 @@ const state = (): SideMenuState => {
     unreadFollowRequests: false,
     lists: [],
     tags: [],
-    collapse: false
+    collapse: false,
+    enabledTimelines: {
+      home: true,
+      notification: true,
+      mention: true,
+      direct: true,
+      favourite: true,
+      local: true,
+      public: true,
+      tag: true,
+      list: true
+    }
   }
 }
 

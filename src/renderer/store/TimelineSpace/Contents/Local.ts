@@ -97,7 +97,7 @@ const mutations: MutationTree<LocalState> = {
 }
 
 const actions: ActionTree<LocalState, RootState> = {
-  fetchLocalTimeline: async ({ commit, rootState }): Promise<Array<Entity.Status>> => {
+  fetchLocalTimeline: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -105,9 +105,16 @@ const actions: ActionTree<LocalState, RootState> = {
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const res = await client.getLocalTimeline({ limit: 40 })
-    commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
-    return res.data
+
+    try {
+      const res = await client.getLocalTimeline({ limit: 40 })
+      commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
+      return res.data
+    } catch (err) {
+      // Disable local timeline
+      dispatch('TimelineSpace/SideMenu/disableLocal', {}, { root: true })
+      return []
+    }
   },
   lazyFetchTimeline: async ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {

@@ -13,7 +13,8 @@ import {
   IpcMainEvent,
   Notification,
   NotificationConstructorOptions,
-  nativeTheme
+  nativeTheme,
+  IpcMainInvokeEvent
 } from 'electron'
 import Datastore from 'nedb'
 import { isEmpty } from 'lodash'
@@ -49,6 +50,8 @@ import AccountCache from './cache/account'
 import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { Proxy } from '~/src/types/proxy'
 import ProxyConfiguration from './proxy'
+import confirm from './timelines'
+import { EnabledTimelines } from '~/src/types/enabledTimelines'
 
 /**
  * Context menu
@@ -538,6 +541,16 @@ ipcMain.on('reset-badge', () => {
     app.dock.setBadge('')
   }
 })
+
+ipcMain.handle(
+  'confirm-timelines',
+  async (_event: IpcMainInvokeEvent, account: LocalAccount): Promise<EnabledTimelines> => {
+    const proxy = await proxyConfiguration.forMastodon()
+    const timelines = await confirm(account, proxy)
+
+    return timelines
+  }
+)
 
 // user streaming
 let userStreamings: { [key: string]: UserStreaming | null } = {}
