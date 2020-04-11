@@ -1,28 +1,28 @@
 <template>
-<div
-  class="follow"
-  tabIndex="0"
-  v-shortkey="shortcutEnabled ? {next: ['j'], prev: ['k'], right: ['l'], profile: ['p']} : {}"
-  @shortkey="handleStatusControl"
-  ref="status"
-  @click="$emit('select')"
-  role="article"
-  aria-label="follow event"
+  <div
+    class="follow"
+    tabIndex="0"
+    v-shortkey="shortcutEnabled ? { next: ['j'], prev: ['k'], right: ['l'], profile: ['p'] } : {}"
+    @shortkey="handleStatusControl"
+    ref="status"
+    @click="$emit('select')"
+    role="article"
+    aria-label="follow event"
   >
-  <div class="action">
-    <div class="action-mark">
-      <icon name="user-plus" scale="0.7"></icon>
+    <div class="action">
+      <div class="action-mark">
+        <icon name="user-plus" scale="0.7"></icon>
+      </div>
+      <div class="action-detail">
+        <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> is now following you
+      </div>
+      <div class="action-icon" role="presentation">
+        <FailoverImg :src="message.account.avatar" />
+      </div>
     </div>
-    <div class="action-detail">
-      <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> is now following you
-    </div>
-    <div class="action-icon" role="presentation">
-      <FailoverImg :src="message.account.avatar" />
-    </div>
+    <div class="clearfix"></div>
+    <div class="fill-line"></div>
   </div>
-  <div class="clearfix"></div>
-  <div class="fill-line"></div>
-</div>
 </template>
 
 <script>
@@ -53,7 +53,7 @@ export default {
       return this.focused && !this.overlaid
     }
   },
-  mounted () {
+  mounted() {
     if (this.focused) {
       this.$refs.status.focus()
     }
@@ -72,19 +72,19 @@ export default {
     }
   },
   methods: {
-    username (account) {
+    username(account) {
       if (account.display_name !== '') {
         return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
     },
-    openUser (account) {
+    openUser(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
-    handleStatusControl (event) {
+    handleStatusControl(event) {
       switch (event.srcKey) {
         case 'next':
           this.$emit('focusNext')

@@ -93,10 +93,10 @@ export default {
     }),
     ...mapGetters('TimelineSpace/Modals/NewToot/Status', ['pickerEmojis']),
     status: {
-      get: function() {
+      get: function () {
         return this.value
       },
-      set: function(value) {
+      set: function (value) {
         this.$emit('input', value)
       }
     }
@@ -110,9 +110,9 @@ export default {
     }
   },
   watch: {
-    opened: function(newState, oldState) {
+    opened: function (newState, oldState) {
       if (!oldState && newState) {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.$refs.status.focus()
           if (this.fixCursorPos) {
             this.$refs.status.setSelectionRange(0, 0)
@@ -268,6 +268,7 @@ export default {
 .status {
   position: relative;
   z-index: 1;
+  font-size: var(--base-font-size);
 
   textarea {
     display: block;
@@ -300,7 +301,7 @@ export default {
     box-sizing: border-box;
 
     li {
-      font-size: 14px;
+      font-size: var(--base-font-size);
       padding: 0 20px;
       white-space: nowrap;
       overflow: hidden;
