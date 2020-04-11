@@ -7,7 +7,7 @@ import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { CachedAccount } from '~/src/types/cachedAccount'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 type Suggest = {
   name: string

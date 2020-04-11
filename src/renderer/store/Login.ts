@@ -3,7 +3,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type LoginState = {
   selectedInstance: string | null

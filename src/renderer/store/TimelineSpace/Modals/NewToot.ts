@@ -16,7 +16,7 @@ import {
 } from '@/errors/validations'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 type MediaDescription = {
   id: string

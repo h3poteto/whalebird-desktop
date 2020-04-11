@@ -9,7 +9,7 @@ import DefaultFonts from '@/utils/fonts'
 import Appearance, { AppearanceState } from '@/store/Preferences/Appearance'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import { MyWindow } from '~/src/types/global'
-;(window as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): AppearanceState => {
   return {

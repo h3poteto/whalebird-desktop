@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import General, { GeneralState } from '@/store/Preferences/General'
 import { MyWindow } from '~/src/types/global'
-;(window as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): GeneralState => {
   return {

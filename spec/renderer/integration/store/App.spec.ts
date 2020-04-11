@@ -9,7 +9,7 @@ import TimeFormat from '~/src/constants/timeFormat'
 import Language from '~/src/constants/language'
 import DefaultFonts from '@/utils/fonts'
 import { MyWindow } from '~/src/types/global'
-;(window as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const state = () => {
   return {

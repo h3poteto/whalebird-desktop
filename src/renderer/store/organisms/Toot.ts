@@ -3,7 +3,7 @@ import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 type VoteParam = {
   id: string

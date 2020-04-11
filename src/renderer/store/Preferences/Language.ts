@@ -5,7 +5,7 @@ import { Language as LanguageSet } from '~/src/types/language'
 import { BaseConfig } from '~/src/types/preference'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type LanguageState = {
   language: LanguageSet

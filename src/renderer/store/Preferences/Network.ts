@@ -4,7 +4,7 @@ import { BaseConfig } from '~/src/types/preference'
 import { Proxy, ProxySource, ProxyProtocol, ManualProxy } from '~/src/types/proxy'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type NetworkState = {
   source: ProxySource

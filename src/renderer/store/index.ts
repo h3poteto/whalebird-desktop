@@ -15,7 +15,7 @@ import { MyWindow } from '~/src/types/global'
 
 Vue.use(Vuex)
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export interface RootState {
   App: AppState

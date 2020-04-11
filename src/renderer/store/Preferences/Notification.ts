@@ -4,7 +4,7 @@ import { Notify } from '~/src/types/notify'
 import { BaseConfig, Notification } from '~/src/types/preference'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type NotificationState = {
   notification: Notification
