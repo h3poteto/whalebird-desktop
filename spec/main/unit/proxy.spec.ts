@@ -5,9 +5,13 @@ import { ManualProxy, ProxyProtocol } from '~/src/types/proxy'
 const preferencesDBPath = path.resolve(__dirname, '../../preferences.json')
 const proxyConfiguration = new ProxyConfiguration(preferencesDBPath)
 
-// electron.app is using in electron-json-storage
 jest.mock('electron', () => ({
-  app: jest.fn()
+  app: {
+    // getVersion is used by electron-log
+    getVersion: jest.fn(),
+    // getName is used by electron-json-storage
+    getName: jest.fn()
+  }
 }))
 
 describe('Parser', () => {
