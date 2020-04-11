@@ -4,7 +4,7 @@ import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import Language, { LanguageState } from '@/store/Preferences/Language'
 import DefaultLanguage from '~/src/constants/language'
 import { MyWindow } from '~/src/types/global'
-;(window as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): LanguageState => {
   return {

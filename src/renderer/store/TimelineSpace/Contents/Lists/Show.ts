@@ -4,7 +4,7 @@ import { RootState } from '@/store'
 import { LoadPositionWithList } from '@/types/loadPosition'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type ShowState = {
   timeline: Array<Entity.Status>

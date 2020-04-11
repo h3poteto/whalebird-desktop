@@ -3,7 +3,7 @@ import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type AccountState = {
   accounts: Array<LocalAccount>

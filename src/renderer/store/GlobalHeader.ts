@@ -5,7 +5,7 @@ import { RootState } from '@/store'
 import { StreamingError } from '~src/errors/streamingError'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type GlobalHeaderState = {
   accounts: Array<LocalAccount>

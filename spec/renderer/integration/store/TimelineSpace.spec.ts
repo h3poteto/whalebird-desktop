@@ -5,7 +5,7 @@ import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import TimelineSpace, { TimelineSpaceState, blankAccount } from '~/src/renderer/store/TimelineSpace'
 import unreadSettings from '~/src/constants/unreadNotification'
 import { MyWindow } from '~/src/types/global'
-;(window as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const emacsEmoji: Entity.Emoji = {
   shortcode: 'emacs',

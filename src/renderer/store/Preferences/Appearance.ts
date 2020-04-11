@@ -9,7 +9,7 @@ import { Appearance } from '~/src/types/appearance'
 import { BaseConfig } from '~/src/types/preference'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type AppearanceState = {
   appearance: Appearance

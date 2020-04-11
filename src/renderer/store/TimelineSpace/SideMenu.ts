@@ -6,7 +6,7 @@ import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 import { EnabledTimelines } from '~/src/types/enabledTimelines'
 
-const win = window as MyWindow
+const win = (window as any) as MyWindow
 
 export type SideMenuState = {
   unreadHomeTimeline: boolean

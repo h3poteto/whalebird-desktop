@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 import { LocalTag } from '~/src/types/localTag'
 import List, { ListState } from '@/store/TimelineSpace/Contents/Hashtag/List'
 import { MyWindow } from '~/src/types/global'
-;(window as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const tag1: LocalTag = {
   tagName: 'tag1',
