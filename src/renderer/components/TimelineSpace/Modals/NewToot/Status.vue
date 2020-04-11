@@ -284,6 +284,7 @@ export default {
     resize: none;
     height: 120px;
     transition: border-color 0.2s cubic-bezier(0.645, 0.045, 9.355, 1);
+    word-break: normal;
 
     &::placeholder {
       color: #c0c4cc;
