@@ -217,7 +217,7 @@ export default {
     this.$store.dispatch('TimelineSpace/Modals/NewToot/setupLoading')
   },
   watch: {
-    newTootModal: function(newState, oldState) {
+    newTootModal: function (newState, oldState) {
       if (!oldState && newState) {
         this.showContentWarning = this.initialSpoiler
         this.status = this.initialStatus
@@ -456,7 +456,7 @@ export default {
           font-size: 1.5rem;
 
           .fa-icon {
-            font-size: 0.9em;
+            font-size: 0.9rem;
             width: auto;
             height: 1em;
             max-width: 100%;
@@ -469,6 +469,7 @@ export default {
 
   .el-dialog__footer {
     background-color: #f2f6fc;
+    font-size: var(--base-font-size);
 
     .upload-image {
       text-align: left;
