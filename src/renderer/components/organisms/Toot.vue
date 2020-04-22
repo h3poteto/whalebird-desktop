@@ -137,21 +137,23 @@
           <span class="count">
             {{ favouritesCount }}
           </span>
-          <el-button class="emoji" type="text" @click="toggleEmojiPicker">
-            <icon name="regular/smile" scale="0.9"></icon>
-          </el-button>
-          <div v-if="openEmojiPicker" class="emoji-picker">
-            <picker
-              set="emojione"
-              :autoFocus="true"
-              @select="selectEmoji"
-              :sheetSize="32"
-              :perLine="7"
-              :emojiSize="24"
-              :showPreview="false"
-              :emojiTooltip="true"
-            />
-          </div>
+          <template v-if="sns !== 'mastodon'">
+            <el-button class="emoji" type="text" @click="toggleEmojiPicker">
+              <icon name="regular/smile" scale="0.9"></icon>
+            </el-button>
+            <div v-if="openEmojiPicker" class="emoji-picker">
+              <picker
+                set="emojione"
+                :autoFocus="true"
+                @select="selectEmoji"
+                :sheetSize="32"
+                :perLine="7"
+                :emojiSize="24"
+                :showPreview="false"
+                :emojiTooltip="true"
+              />
+            </div>
+          </template>
           <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
             <icon name="thumbtack" scale="0.9"></icon>
           </el-button>
@@ -260,6 +262,9 @@ export default {
       displayNameStyle: state => state.displayNameStyle,
       timeFormat: state => state.timeFormat,
       language: state => state.language
+    }),
+    ...mapState('TimelineSpace', {
+      sns: state => state.sns
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid && !this.openEmojiPicker
