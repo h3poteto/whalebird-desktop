@@ -610,8 +610,12 @@ export default {
     hideEmojiPicker() {
       this.openEmojiPicker = false
     },
-    selectEmoji(emoji) {
-      console.log(emoji)
+    async selectEmoji(emoji) {
+      await this.$store.dispatch('organisms/Toot/sendReaction', {
+        status_id: this.originalMessage.id,
+        native: emoji.native
+      })
+      this.hideEmojiPicker()
     }
   }
 }

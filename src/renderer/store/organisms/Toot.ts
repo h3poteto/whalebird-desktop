@@ -10,6 +10,11 @@ type VoteParam = {
   choices: Array<number>
 }
 
+type ReactionParam = {
+  status_id: string
+  native: string
+}
+
 export type TootState = {}
 
 const state = (): TootState => ({})
@@ -109,6 +114,17 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.App.proxyConfiguration
     )
     const res = await client.getPoll(id)
+    return res.data
+  },
+  sendReaction: async ({ rootState }, params: ReactionParam): Promise<Entity.Status> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
+    const res = await client.createEmojiReaction(params.status_id, params.native)
     return res.data
   }
 }
