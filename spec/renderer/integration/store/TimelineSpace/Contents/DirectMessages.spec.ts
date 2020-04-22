@@ -74,7 +74,8 @@ const status1: Entity.Status = {
     name: 'Web'
   } as Entity.Application,
   language: null,
-  pinned: null
+  pinned: null,
+  emoji_reactions: []
 }
 
 const status2: Entity.Status = {
@@ -106,7 +107,8 @@ const status2: Entity.Status = {
     name: 'Web'
   } as Entity.Application,
   language: null,
-  pinned: null
+  pinned: null,
+  emoji_reactions: []
 }
 
 const conversation1: Entity.Conversation = {
