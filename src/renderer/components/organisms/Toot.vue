@@ -103,6 +103,16 @@
             <bdi v-html="username(message.account)"></bdi>
           </span>
         </div>
+        <div class="emoji-reactions">
+          <template v-for="reaction in reactions">
+            <el-button v-if="reaction.me" type="success" size="medium" class="reaction" @click="removeReaction(reaction.name)"
+              >{{ reaction.name }} {{ reaction.count }}</el-button
+            >
+            <el-button v-else type="text" size="medium" class="reaction" @click="addReaction(reaction.name)"
+              >{{ reaction.name }} {{ reaction.count }}</el-button
+            >
+          </template>
+        </div>
         <div class="tool-box" v-click-outside="hideEmojiPicker">
           <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
             <icon name="reply" scale="0.9"></icon>
@@ -228,7 +238,8 @@ export default {
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now(),
       pollResponse: null,
-      openEmojiPicker: false
+      openEmojiPicker: false,
+      reactionResponse: null
     }
   },
   props: {
@@ -319,6 +330,13 @@ export default {
         return this.pollResponse
       } else {
         return this.originalMessage.poll
+      }
+    },
+    reactions: function () {
+      if (this.reactionResponse) {
+        return this.reactionResponse
+      } else {
+        return this.originalMessage.emoji_reactions
       }
     },
     sensitive: function () {
@@ -616,11 +634,26 @@ export default {
       this.openEmojiPicker = false
     },
     async selectEmoji(emoji) {
-      await this.$store.dispatch('organisms/Toot/sendReaction', {
+      const res = await this.$store.dispatch('organisms/Toot/sendReaction', {
         status_id: this.originalMessage.id,
         native: emoji.native
       })
+      this.reactionResponse = res
       this.hideEmojiPicker()
+    },
+    async addReaction(native) {
+      const res = await this.$store.dispatch('organisms/Toot/sendReaction', {
+        status_id: this.originalMessage.id,
+        native: native
+      })
+      this.reactionResponse = res
+    },
+    async removeReaction(native) {
+      const res = await this.$store.dispatch('organisms/Toot/deleteReaction', {
+        status_id: this.originalMessage.id,
+        native: native
+      })
+      this.reactionResponse = res
     }
   }
 }
@@ -792,6 +825,12 @@ export default {
           color: #fff;
           background-color: rgba(0, 0, 0, 0.3);
         }
+      }
+    }
+
+    .emoji-reactions {
+      .reaction {
+        padding: 10px 8px;
       }
     }
 
