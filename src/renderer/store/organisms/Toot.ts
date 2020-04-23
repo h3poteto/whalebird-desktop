@@ -116,7 +116,7 @@ const actions: ActionTree<TootState, RootState> = {
     const res = await client.getPoll(id)
     return res.data
   },
-  sendReaction: async ({ rootState }, params: ReactionParam): Promise<Entity.Status> => {
+  sendReaction: async ({ rootState }, params: ReactionParam): Promise<Array<Entity.Reaction>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -125,7 +125,24 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.App.proxyConfiguration
     )
     const res = await client.createEmojiReaction(params.status_id, params.native)
-    return res.data
+    if (res.data.reblog) {
+      return res.data.reblog.emoji_reactions
+    }
+    return res.data.emoji_reactions
+  },
+  deleteReaction: async ({ rootState }, params: ReactionParam): Promise<Array<Entity.Reaction>> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
+    const res = await client.deleteEmojiReaction(params.status_id, params.native)
+    if (res.data.reblog) {
+      return res.data.reblog.emoji_reactions
+    }
+    return res.data.emoji_reactions
   }
 }
 
