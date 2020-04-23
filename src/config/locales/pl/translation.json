@@ -8,7 +8,7 @@
       "hide": "Ukryj Whalebird",
       "hide_others": "Ukryj pozostałe",
       "show_all": "Pokaż wszystkie",
-      "open": "Open Window",
+      "open": "Otwórz okno",
       "quit": "Wyjdź"
     },
     "toot": {
@@ -31,7 +31,7 @@
     "window": {
       "name": "Okno",
       "close": "Zamknij okno",
-      "open": "Open Window",
+      "open": "Otwórz okno",
       "minimize": "Zminimalizuj",
       "jump_to": "Przejdź do"
     }
@@ -43,13 +43,13 @@
     "profile": "Profil",
     "show_profile": "Pokaż profil",
     "edit_profile": "Edytuj profil",
-    "settings": "Settings",
+    "settings": "Ustawienia",
     "collapse": "Zawalić się",
     "expand": "Rozszerzać",
     "home": "Strona główna",
     "notification": "Powiadomienia",
-    "mention": "Mention",
-    "direct": "Direct messages",
+    "mention": "Wspomnij",
+    "direct": "Bezpośrednie wiadomości",
     "follow_requests": "Follow Requests",
     "favourite": "Ulubione",
     "local": "Lokalna oś czasu",
@@ -61,7 +61,7 @@
   "header_menu": {
     "home": "Strona główna",
     "notification": "Powiadomienia",
-    "mention": "Mention",
+    "mention": "Wspomnij",
     "favourite": "Ulubione",
     "follow_requests": "Follow Requests",
     "direct_messages": "Direct Messages",
@@ -81,10 +81,10 @@
     },
     "new_toot": "Wpisy",
     "reload": "Przeładować",
-    "settings": "Settings"
+    "settings": "Ustawienia"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Ustawienia",
     "general": {
       "title": "Ogólne",
       "toot": {
@@ -102,13 +102,13 @@
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Oś czasu",
       "unread_notification": {
         "title": "Unread Notification",
         "description": "Customize unread notifications for each timeline.",
         "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "local": "Lokalna oś czasu",
+        "public": "Publiczna oś czasu"
       }
     }
   },
@@ -123,7 +123,7 @@
         "toot": "Wpisy"
       },
       "timeline": {
-        "title": "Timeline",
+        "title": "Oś czasu",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nfsw": "Always ignore NFSW of medias",
@@ -143,7 +143,7 @@
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "Własna"
       },
       "custom_theme": {
         "background_color": "Base background",
@@ -153,7 +153,7 @@
         "primary_color": "Primary font",
         "regular_color": "Regular font",
         "secondary_color": "Secondary font",
-        "border_color": "Border",
+        "border_color": "Obramowanie",
         "header_menu_color": "Header menu",
         "wrapper_mask_color": "Modal wrapper"
       },
@@ -167,7 +167,7 @@
         "username": "Nazwa użytkownika"
       },
       "time_format": {
-        "title": "Time format",
+        "title": "Format godziny",
         "absolute": "Absolute",
         "relative": "Relative"
       }
@@ -196,7 +196,7 @@
       "confirm_message": "Czy na pewno chcesz usunąć wszystkie powiązania?"
     },
     "network": {
-      "title": "Network",
+      "title": "Sieć",
       "proxy": {
         "title": "Proxy Configuration",
         "no": "No proxy",
