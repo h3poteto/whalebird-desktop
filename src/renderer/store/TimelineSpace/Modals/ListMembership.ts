@@ -73,10 +73,16 @@ const actions: ActionTree<ListMembershipState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_LISTS, res.data)
     return res.data
   },
-  changeBelongToLists: async ({ rootState, commit, state }, belongToLists: Array<Entity.List>) => {
+  changeBelongToLists: async ({ rootState, commit, state }, belongToLists: Array<string>) => {
     // Calcurate diff
-    const removedLists = lodash.difference(state.belongToLists, belongToLists)
-    const addedLists = lodash.difference(belongToLists, state.belongToLists)
+    const removedLists = lodash.difference(
+      state.belongToLists.map(l => l.id),
+      belongToLists
+    )
+    const addedLists = lodash.difference(
+      belongToLists,
+      state.belongToLists.map(l => l.id)
+    )
     commit(MUTATION_TYPES.CHANGE_BELONG_TO_LISTS, belongToLists)
     const client = generator(
       rootState.TimelineSpace.sns,
@@ -85,11 +91,11 @@ const actions: ActionTree<ListMembershipState, RootState> = {
       rootState.App.userAgent,
       rootState.App.proxyConfiguration
     )
-    const removedPromise = removedLists.map(list => {
-      return client.deleteAccountsFromList(list.id, [state.account!.id])
+    const removedPromise = removedLists.map(id => {
+      return client.deleteAccountsFromList(id, [state.account!.id])
     })
-    const addedPromise = addedLists.map(list => {
-      return client.addAccountsToList(list.id, [state.account!.id])
+    const addedPromise = addedLists.map(id => {
+      return client.addAccountsToList(id, [state.account!.id])
     })
     const res = await Promise.all(removedPromise.concat(addedPromise))
     return res
