@@ -179,7 +179,8 @@
         "reply": "Wenn ich eine Antwort erhalte",
         "reblog": "Wenn einer meiner Toots geteilt wird",
         "favourite": "Wenn einer meiner Toots favorisiert wird",
-        "follow": "Wenn mir ein anderer Benutzer folgt"
+        "follow": "Wenn mir ein anderer Benutzer folgt",
+        "reaction": "Notify me when I receive a emoji reaction"
       }
     },
     "account": {
@@ -453,6 +454,10 @@
     "reblog": {
       "title": "Teilen",
       "body": "{{username}} hat deinen Status geboosted"
+    },
+    "reaction": {
+      "title": "Reaction",
+      "body": "{{username}} reacted your status"
     }
   }
 }
