@@ -12,7 +12,8 @@ const state = (): NotificationState => {
         reply: true,
         reblog: true,
         favourite: true,
-        follow: true
+        follow: true,
+        reaction: true
       }
     }
   }
@@ -58,7 +59,8 @@ describe('Preferences/Notification', () => {
               reply: false,
               reblog: false,
               favourite: false,
-              follow: false
+              follow: false,
+              reaction: false
             }
           }
         })
@@ -70,7 +72,8 @@ describe('Preferences/Notification', () => {
             reply: false,
             reblog: false,
             favourite: false,
-            follow: false
+            follow: false,
+            reaction: false
           }
         })
       })
@@ -93,7 +96,8 @@ describe('Preferences/Notification', () => {
           reply: false,
           reblog: false,
           favourite: true,
-          follow: true
+          follow: true,
+          reaction: true
         }
       })
       expect(App.actions.loadPreferences).toBeCalled()

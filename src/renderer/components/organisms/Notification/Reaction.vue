@@ -18,7 +18,8 @@
           {{ message.emoji }}
         </div>
         <div class="action-detail">
-          <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> reacted to your status
+          <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span
+          >{{ $t('notification.reaction.body') }}
         </div>
         <div class="action-icon" role="presentation">
           <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />

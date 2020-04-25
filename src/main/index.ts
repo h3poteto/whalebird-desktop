@@ -1442,6 +1442,15 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         } as NotificationConstructorOptions
       }
       break
+    case 'emoji_reaction':
+      if (notifyConfig.reaction) {
+        return {
+          title: i18next.t('notification.reaction.title'),
+          body: i18next.t('notification.reaction.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
     default:
       break
   }
