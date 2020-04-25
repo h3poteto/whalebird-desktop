@@ -179,7 +179,8 @@
         "reply": "답장을 받았을 때 알림을 받습니다",
         "reblog": "누군가 부스트했을 때 알림을 받습니다",
         "favourite": "누군가 즐겨찾기 했을 때 알림을 받습니다",
-        "follow": "누군가 나를 팔로우 했을 때 알림을 받습니다"
+        "follow": "누군가 나를 팔로우 했을 때 알림을 받습니다",
+        "reaction": "Notify me when I receive a emoji reaction"
       }
     },
     "account": {
@@ -453,6 +454,10 @@
     "reblog": {
       "title": "Reblog",
       "body": "{{username}} boosted your status"
+    },
+    "reaction": {
+      "title": "Reaction",
+      "body": "{{username}} reacted your status"
     }
   }
 }
