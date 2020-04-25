@@ -179,7 +179,8 @@
         "reply": "Notifiez-moi quand je reçois une réponse",
         "reblog": "Notifiez-moi quand je reçois un reblog",
         "favourite": "Notifiez-moi quand je reçois un favoris",
-        "follow": "Notifiez-moi quand je reçois un follow"
+        "follow": "Notifiez-moi quand je reçois un follow",
+        "reaction": "Notify me when I receive a emoji reaction"
       }
     },
     "account": {
@@ -453,6 +454,10 @@
     "reblog": {
       "title": "Partage",
       "body": "{{username}} a partagé votre statut"
+    },
+    "reaction": {
+      "title": "Reaction",
+      "body": "{{username}} reacted your status"
     }
   }
 }
