@@ -179,7 +179,8 @@
         "reply": "Avvisami quando ricevo una risposta",
         "reblog": "Avvisami quando qualcuno condivide un mio toot",
         "favourite": "Avvisami quando qualcuno preferisce un mio toot",
-        "follow": "Avvisami quando qualcuno mi segue"
+        "follow": "Avvisami quando qualcuno mi segue",
+        "reaction": "Notify me when I receive a emoji reaction"
       }
     },
     "account": {
@@ -453,6 +454,10 @@
     "reblog": {
       "title": "Condivisioni",
       "body": "{{username}} ha condiviso il tuo stato"
+    },
+    "reaction": {
+      "title": "Reaction",
+      "body": "{{username}} reacted your status"
     }
   }
 }
