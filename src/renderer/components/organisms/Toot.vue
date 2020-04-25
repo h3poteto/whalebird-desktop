@@ -39,7 +39,7 @@
       <div class="detail" v-on:dblclick="openDetail(message)">
         <div class="toot-header">
           <div class="user" @click="openUser(originalMessage.account)">
-            <span class="display-name" @click="openUser(message.account)"><bdi v-html="username(originalMessage.account)"></bdi></span>
+            <span class="display-name"><bdi v-html="username(originalMessage.account)"></bdi></span>
             <span class="acct">{{ accountName(originalMessage.account) }}</span>
           </div>
           <div class="timestamp">
@@ -549,6 +549,7 @@ export default {
       })
     },
     openUser(account) {
+      console.log(account)
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
