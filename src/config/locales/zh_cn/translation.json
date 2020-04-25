@@ -179,7 +179,8 @@
         "reply": "有用户回复我的嘟文时通知我",
         "reblog": "有用户转发我的嘟文时通知我",
         "favourite": "有用户收藏我的嘟文时通知我",
-        "follow": "有用户关注我时通知我"
+        "follow": "有用户关注我时通知我",
+        "reaction": "Notify me when I receive a emoji reaction"
       }
     },
     "account": {
@@ -453,6 +454,10 @@
     "reblog": {
       "title": "转嘟",
       "body": "{{username}} 转发了你的嘟文"
+    },
+    "reaction": {
+      "title": "Reaction",
+      "body": "{{username}} reacted your status"
     }
   }
 }
