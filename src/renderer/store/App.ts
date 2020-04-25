@@ -39,7 +39,8 @@ const state = (): AppState => ({
     reply: true,
     reblog: true,
     favourite: true,
-    follow: true
+    follow: true,
+    reaction: true
   },
   tootPadding: 8,
   timeFormat: TimeFormat.Absolute.value,

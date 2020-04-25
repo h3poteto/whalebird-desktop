@@ -9,7 +9,8 @@ describe('Preferences/Notification', () => {
           reply: true,
           reblog: true,
           favourite: true,
-          follow: true
+          follow: true,
+          reaction: true
         }
       }
     }

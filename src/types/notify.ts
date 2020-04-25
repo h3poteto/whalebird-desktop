@@ -1,6 +1,7 @@
 export type Notify = {
-  reply: boolean,
-  reblog: boolean,
-  favourite: boolean,
+  reply: boolean
+  reblog: boolean
+  favourite: boolean
   follow: boolean
+  reaction: boolean
 }
