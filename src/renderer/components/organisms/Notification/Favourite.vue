@@ -18,7 +18,8 @@
           <icon name="star" scale="0.7"></icon>
         </div>
         <div class="action-detail">
-          <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> favourited your status
+          <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span
+          >{{ $t('notification.favourite.body') }}
         </div>
         <div class="action-icon" role="presentation">
           <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
@@ -141,7 +142,7 @@ export default {
       timeFormat: state => state.App.timeFormat,
       language: state => state.App.language
     }),
-    shortcutEnabled: function() {
+    shortcutEnabled: function () {
       return this.focused && !this.overlaid
     }
   },
@@ -151,13 +152,13 @@ export default {
     }
   },
   watch: {
-    focused: function(newState, oldState) {
+    focused: function (newState, oldState) {
       if (newState) {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.$refs.status.focus()
         })
       } else if (oldState && !newState) {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.$refs.status.blur()
         })
       }

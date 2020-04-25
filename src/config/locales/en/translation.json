@@ -453,6 +453,10 @@
     "reblog": {
       "title": "Reblog",
       "body": "{{username}} boosted your status"
+    },
+    "reaction": {
+      "title": "Reaction",
+      "body": "{{username}} reacted your status"
     }
   }
 }

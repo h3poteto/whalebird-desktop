@@ -14,7 +14,8 @@
         <icon name="user-plus" scale="0.7"></icon>
       </div>
       <div class="action-detail">
-        <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span> is now following you
+        <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span
+        >{{ $t('notification.follow.body') }}
       </div>
       <div class="action-icon" role="presentation">
         <FailoverImg :src="message.account.avatar" />
