@@ -280,7 +280,7 @@
     "ts-loader": "^6.2.2",
     "ttfinfo": "^0.2.0",
     "typescript": "^3.8.3",
-    "url-loader": "^3.0.0",
+    "url-loader": "^4.1.0",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^15.9.1",
     "vue-style-loader": "^4.1.0",
