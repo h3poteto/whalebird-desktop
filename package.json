@@ -239,7 +239,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "core-js": "^3.6.4",
     "cross-env": "^7.0.2",
-    "css-loader": "^3.2.0",
+    "css-loader": "^3.5.2",
     "del": "^5.1.0",
     "devtron": "^1.4.0",
     "electron": "7.2.1",
