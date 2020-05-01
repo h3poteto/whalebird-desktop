@@ -226,7 +226,7 @@
     "@typescript-eslint/parser": "^2.26.0",
     "@typescript-eslint/typescript-estree": "^2.28.0",
     "@vue/test-utils": "^1.0.0-beta.33",
-    "ajv": "^6.6.1",
+    "ajv": "^6.12.2",
     "all-object-keys": "^2.1.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.4.0",
