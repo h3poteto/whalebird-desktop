@@ -104,7 +104,7 @@
           </span>
         </div>
         <div class="emoji-reactions">
-          <template v-for="reaction in reactions">
+          <template v-for="reaction in originalMessage.emoji_reactions">
             <el-button v-if="reaction.me" type="success" size="medium" class="reaction" @click="removeReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
@@ -238,8 +238,7 @@ export default {
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now(),
       pollResponse: null,
-      openEmojiPicker: false,
-      reactionResponse: null
+      openEmojiPicker: false
     }
   },
   props: {
@@ -330,13 +329,6 @@ export default {
         return this.pollResponse
       } else {
         return this.originalMessage.poll
-      }
-    },
-    reactions: function () {
-      if (this.reactionResponse) {
-        return this.reactionResponse
-      } else {
-        return this.originalMessage.emoji_reactions
       }
     },
     sensitive: function () {
@@ -635,26 +627,26 @@ export default {
       this.openEmojiPicker = false
     },
     async selectEmoji(emoji) {
-      const res = await this.$store.dispatch('organisms/Toot/sendReaction', {
+      const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
         status_id: this.originalMessage.id,
         native: emoji.native
       })
-      this.reactionResponse = res
+      this.$emit('update', status)
       this.hideEmojiPicker()
     },
     async addReaction(native) {
-      const res = await this.$store.dispatch('organisms/Toot/sendReaction', {
+      const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
         status_id: this.originalMessage.id,
         native: native
       })
-      this.reactionResponse = res
+      this.$emit('update', status)
     },
     async removeReaction(native) {
-      const res = await this.$store.dispatch('organisms/Toot/deleteReaction', {
+      const status = await this.$store.dispatch('organisms/Toot/deleteReaction', {
         status_id: this.originalMessage.id,
         native: native
       })
-      this.reactionResponse = res
+      this.$emit('update', status)
     }
   }
 }
