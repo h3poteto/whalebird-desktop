@@ -180,7 +180,7 @@
         "reblog": "ブーストされた時",
         "favourite": "お気に入りされた時",
         "follow": "フォローされた時",
-        "reaction": "Notify me when I receive a emoji reaction"
+        "reaction": "絵文字リアクションを受け取ったとき"
       }
     },
     "account": {
@@ -456,8 +456,8 @@
       "body": "{{username}} さんにブーストされました"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "リアクション",
+      "body": "{{username}} さんがリアクションをつけました"
     }
   }
 }
