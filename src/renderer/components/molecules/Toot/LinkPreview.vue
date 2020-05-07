@@ -79,14 +79,17 @@ export default {
     height: 60px;
     padding: 4px 0 0 10px;
     color: var(--theme-secondary-color);
+    overflow: hidden;
 
     strong {
       display: block;
       text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     span {
-      display: inline;
+      display: block;
       padding: 4px 0;
       overflow: hidden;
       text-overflow: ellipsis;
