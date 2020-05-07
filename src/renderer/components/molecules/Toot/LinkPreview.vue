@@ -64,7 +64,7 @@ export default {
     box-sizing: border-box;
     height: 60px;
     padding: 4px 0 0 10px;
-    color: var(--theme-secondary-color);
+    color: #909399;
 
     strong {
       display: block;

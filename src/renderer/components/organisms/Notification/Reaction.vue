@@ -91,6 +91,13 @@
             </div>
             <div class="clearfix"></div>
           </div>
+          <LinkPreview
+            v-if="message.status.card && message.status.card.type === 'link'"
+            :icon="message.status.card.image"
+            :title="message.status.card.title"
+            :description="message.status.card.description"
+            :url="message.status.card.url"
+          />
         </div>
       </div>
       <div class="clearfix"></div>
@@ -106,11 +113,13 @@ import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import TimeFormat from '~/src/constants/timeFormat'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
 
 export default {
   name: 'reaction',
   components: {
-    FailoverImg
+    FailoverImg,
+    LinkPreview
   },
   props: {
     message: {
