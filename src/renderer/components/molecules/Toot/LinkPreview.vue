@@ -1,6 +1,6 @@
 <template>
-  <div class="link">
-    <el-image :src="icon" class="icon" :fit="cover" lazy>
+  <div class="link" @click="openLink(url)">
+    <el-image :src="icon" class="icon" fit="cover" lazy>
       <div class="image-slot" slot="error">
         <i class="el-icon-link"></i>
       </div>
@@ -30,7 +30,14 @@ export default {
     },
     url: {
       type: String,
-      default: ''
+      default: null
+    }
+  },
+  methods: {
+    openLink(link) {
+      if (link) {
+        return window.shell.openExternal(link)
+      }
     }
   }
 }
@@ -43,10 +50,17 @@ export default {
   overflow: hidden;
   margin-bottom: 4px;
   border: 1px solid var(--theme-selected-background-color);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--theme-selected-background-color);
+  }
 
   .icon {
     width: 60px;
     height: 60px;
+    min-width: 60px;
+    min-height: 60px;
 
     .image-slot {
       font-size: 24px;
@@ -64,15 +78,19 @@ export default {
     box-sizing: border-box;
     height: 60px;
     padding: 4px 0 0 10px;
-    color: #909399;
+    color: var(--theme-secondary-color);
 
     strong {
       display: block;
+      text-overflow: ellipsis;
     }
 
     span {
-      display: block;
+      display: inline;
       padding: 4px 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
