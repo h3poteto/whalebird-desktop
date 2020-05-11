@@ -89,6 +89,13 @@
           </div>
           <div class="clearfix"></div>
         </div>
+        <Quote
+          v-if="message.reblog && message.content !== message.reblog.content"
+          :icon="message.reblog.account.avatar"
+          :username="username(message.reblog.account)"
+          :accountName="accountName(message.reblog.account)"
+          :body="message.reblog.content"
+        />
         <LinkPreview
           v-if="originalMessage.card && originalMessage.card.type === 'link'"
           :icon="originalMessage.card.image"
@@ -96,7 +103,7 @@
           :description="originalMessage.card.description"
           :url="originalMessage.card.url"
         />
-        <div class="reblogger" v-show="message.reblog !== null">
+        <div class="reblogger" v-show="message.reblog && message.content === message.reblog.content">
           <icon name="retweet"></icon>
           <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
             <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
@@ -227,6 +234,7 @@ import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 import Poll from '~/src/renderer/components/molecules/Toot/Poll'
 import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
+import Quote from '@/components/molecules/Toot/Quote'
 import { setInterval, clearInterval } from 'timers'
 
 export default {
@@ -238,7 +246,8 @@ export default {
     FailoverImg,
     Poll,
     Picker,
-    LinkPreview
+    LinkPreview,
+    Quote
   },
   data() {
     return {
@@ -296,7 +305,7 @@ export default {
       return moment(this.originalMessage.created_at).format('LLLL')
     },
     originalMessage: function () {
-      if (this.message.reblog !== null) {
+      if (this.message.reblog && this.message.content === this.message.reblog.content) {
         return this.message.reblog
       } else {
         return this.message
