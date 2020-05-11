@@ -89,6 +89,13 @@
           </div>
           <div class="clearfix"></div>
         </div>
+        <LinkPreview
+          v-if="originalMessage.card && originalMessage.card.type === 'link'"
+          :icon="originalMessage.card.image"
+          :title="originalMessage.card.title"
+          :description="originalMessage.card.description"
+          :url="originalMessage.card.url"
+        />
         <div class="reblogger" v-show="message.reblog !== null">
           <icon name="retweet"></icon>
           <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
@@ -219,6 +226,7 @@ import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 import Poll from '~/src/renderer/components/molecules/Toot/Poll'
+import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
 import { setInterval, clearInterval } from 'timers'
 
 export default {
@@ -229,7 +237,8 @@ export default {
   components: {
     FailoverImg,
     Poll,
-    Picker
+    Picker,
+    LinkPreview
   },
   data() {
     return {
