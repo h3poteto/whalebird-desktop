@@ -75,7 +75,8 @@ const status: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 
 const mention: Entity.Notification = {

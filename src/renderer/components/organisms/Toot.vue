@@ -90,7 +90,7 @@
           <div class="clearfix"></div>
         </div>
         <Quote
-          v-if="message.reblog && message.content !== message.reblog.content"
+          v-if="message.quote"
           :icon="message.reblog.account.avatar"
           :username="username(message.reblog.account)"
           :accountName="accountName(message.reblog.account)"
@@ -103,7 +103,7 @@
           :description="originalMessage.card.description"
           :url="originalMessage.card.url"
         />
-        <div class="reblogger" v-show="message.reblog && message.content === message.reblog.content">
+        <div class="reblogger" v-show="message.reblog && !message.quote">
           <icon name="retweet"></icon>
           <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
             <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
@@ -305,7 +305,7 @@ export default {
       return moment(this.originalMessage.created_at).format('LLLL')
     },
     originalMessage: function () {
-      if (this.message.reblog && this.message.content === this.message.reblog.content) {
+      if (this.message.reblog && !this.message.quote) {
         return this.message.reblog
       } else {
         return this.message

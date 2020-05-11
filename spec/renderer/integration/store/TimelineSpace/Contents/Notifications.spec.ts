@@ -97,7 +97,8 @@ const status1: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 
 const status2: Entity.Status = {
@@ -130,7 +131,8 @@ const status2: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 
 const rebloggedStatus: Entity.Status = {
@@ -163,7 +165,8 @@ const rebloggedStatus: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 
 const notification1: Entity.Notification = {
