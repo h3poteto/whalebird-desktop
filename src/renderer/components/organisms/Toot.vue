@@ -21,7 +21,7 @@
     "
     @shortkey="handleTootControl"
     ref="status"
-    @click="$emit('selectToot')"
+    @click="$emit('selectToot', message)"
     role="article"
     aria-label="toot"
   >
@@ -95,6 +95,7 @@
           :username="username(message.reblog.account)"
           :accountName="accountName(message.reblog.account)"
           :body="message.reblog.content"
+          @select="openDetail(message.reblog)"
         />
         <LinkPreview
           v-if="originalMessage.card && originalMessage.card.type === 'link'"

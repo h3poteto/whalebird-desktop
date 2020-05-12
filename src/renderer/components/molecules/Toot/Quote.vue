@@ -1,5 +1,5 @@
 <template>
-  <div class="quote">
+  <div class="quote" v-on:click.stop.prevent="$emit('select')">
     <FailoverImg class="icon" :src="icon" :alt="`Avatar of ${username}`" />
     <div class="contents">
       <div class="header">
