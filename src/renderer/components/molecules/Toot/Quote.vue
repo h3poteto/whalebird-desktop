@@ -47,6 +47,7 @@ export default {
   margin-bottom: 4px;
   border: 1px solid var(--theme-selected-background-color);
   cursor: pointer;
+  font-size: var(--base-font-size);
 
   &:hover {
     background-color: var(--theme-selected-background-color);
