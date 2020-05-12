@@ -52,7 +52,8 @@ const status1: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 const status2: Entity.Status = {
   id: '2',
@@ -84,7 +85,8 @@ const status2: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 
 const rebloggedStatus: Entity.Status = {
@@ -95,7 +97,7 @@ const rebloggedStatus: Entity.Status = {
   in_reply_to_id: null,
   in_reply_to_account_id: null,
   reblog: status1,
-  content: '',
+  content: 'fuga',
   created_at: '2019-03-31T21:40:32',
   emojis: [],
   replies_count: 0,
@@ -117,7 +119,8 @@ const rebloggedStatus: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 
 describe('TimelineSpace/Contents/Lists/Show', () => {

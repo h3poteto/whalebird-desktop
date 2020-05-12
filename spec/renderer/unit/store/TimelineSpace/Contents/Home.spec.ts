@@ -52,7 +52,8 @@ const status1: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 const status2: Entity.Status = {
   id: '2',
@@ -84,7 +85,8 @@ const status2: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: []
+  emoji_reactions: [],
+  quote: false
 }
 
 describe('TimelineSpace/Contents/Home', () => {
@@ -286,7 +288,8 @@ describe('TimelineSpace/Contents/Home', () => {
           } as Entity.Application,
           language: null,
           pinned: null,
-          emoji_reactions: []
+          emoji_reactions: [],
+          quote: false
         }
         const favouritedStatus: Entity.Status = Object.assign(status1, {
           favourited: true
@@ -361,7 +364,8 @@ describe('TimelineSpace/Contents/Home', () => {
             } as Entity.Application,
             language: null,
             pinned: null,
-            emoji_reactions: []
+            emoji_reactions: [],
+            quote: false
           }
           state = {
             lazyLoading: false,
