@@ -63,15 +63,22 @@ $ brew cask install whalebird
 
 
 ### Linux
-
-You can download `.deb` or `.rpm` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+There are some packages in [release page](https://github.com/h3poteto/whalebird-desktop/releases), for example `.deb`, `.rpm` and `.AppImage`.
 If you do not want to use the package manager, please download `.tar.bz2` file and decompress it.
 
-Or please install the app from [snapcraft.io](https://snapcraft.io/whalebird).
+If you are using snap, please install from [snapcraft.io](https://snapcraft.io/whalebird).
 
 ```
 $ sudo snap install whalebird
 ```
+
+Or you can install from [Arch User Repository](https://aur.archlinux.org/packages/whalebird-bin/).
+
+```
+$ yay -S whalebird-bin
+```
+
+:sparkles: Thanks to [@ariasuni](https://github.com/ariasuni) for adding it to AUR.
 
 ### Windows
 
