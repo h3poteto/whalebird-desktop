@@ -712,6 +712,10 @@ export default {
       .content {
         margin: var(--toot-padding) 0;
         word-wrap: break-word;
+
+        pre {
+          white-space: pre-wrap;
+        }
       }
 
       .content p {
