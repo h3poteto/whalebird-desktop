@@ -33,7 +33,7 @@ jest.mock('megalodon', () => ({
   __esModule: true
 }))
 
-let state = (): TagState => {
+const state = (): TagState => {
   return {
     results: []
   }

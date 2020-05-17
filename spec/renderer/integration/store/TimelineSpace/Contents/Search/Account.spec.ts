@@ -45,7 +45,7 @@ jest.mock('megalodon', () => ({
   __esModule: true
 }))
 
-let state = (): AccountState => {
+const state = (): AccountState => {
   return {
     results: []
   }

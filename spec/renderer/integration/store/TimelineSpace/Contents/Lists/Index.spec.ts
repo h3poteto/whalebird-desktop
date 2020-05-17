@@ -39,7 +39,7 @@ const list: Entity.List = {
   title: 'list1'
 }
 
-let state = (): IndexState => {
+const state = (): IndexState => {
   return {
     lists: []
   }

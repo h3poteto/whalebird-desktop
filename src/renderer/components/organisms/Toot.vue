@@ -331,7 +331,7 @@ export default {
       return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
     },
     application: function () {
-      let msg = this.originalMessage
+      const msg = this.originalMessage
       if (msg.application !== undefined && msg.application !== null) {
         return msg.application.name
       }
@@ -615,13 +615,14 @@ export default {
         case 'profile':
           this.openUser(this.originalMessage.account)
           break
-        case 'image':
+        case 'image': {
           const images = this.mediaAttachments
           if (images.length === 0) {
             return 0
           }
           this.openImage(images[0].url, images)
           break
+        }
         case 'cw':
           this.showContent = !this.showContent
           this.showAttachments = !this.showAttachments
