@@ -57,7 +57,7 @@ const account: Entity.Account = {
   bot: false
 }
 
-let state = (): EditState => {
+const state = (): EditState => {
   return {
     members: []
   }

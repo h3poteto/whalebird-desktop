@@ -83,7 +83,7 @@ const status: Entity.Status = {
   quote: false
 }
 
-let state = (): TootsState => {
+const state = (): TootsState => {
   return {
     results: []
   }

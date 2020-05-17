@@ -2,8 +2,8 @@
 const textAtCursorMatch = (str, cursorPosition, separators = ['@', '#', ':']) => {
   let word
 
-  let left = str.slice(0, cursorPosition).search(/\S+$/)
-  let right = str.slice(cursorPosition).search(/\s/)
+  const left = str.slice(0, cursorPosition).search(/\S+$/)
+  const right = str.slice(cursorPosition).search(/\s/)
 
   if (right < 0) {
     word = str.slice(left)

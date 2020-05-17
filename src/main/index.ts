@@ -119,7 +119,7 @@ const userData = app.getPath('userData')
 const appPath = app.getPath('exe')
 
 const accountDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/account.db' : 'account.db'
-let accountDB = new Datastore({
+const accountDB = new Datastore({
   filename: accountDBPath,
   autoload: true
 })
@@ -127,7 +127,7 @@ const accountManager = new Account(accountDB)
 accountManager.initialize().catch((err: Error) => log.error(err))
 
 const hashtagsDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/hashtags.db' : 'hashtags.db'
-let hashtagsDB = new Datastore({
+const hashtagsDB = new Datastore({
   filename: hashtagsDBPath,
   autoload: true
 })
@@ -250,7 +250,7 @@ async function createWindow() {
   /**
    * Initial window options
    */
-  let mainWindowState = windowStateKeeper({
+  const mainWindowState = windowStateKeeper({
     defaultWidth: 1000,
     defaultHeight: 563
   })
@@ -365,7 +365,7 @@ app.on('activate', () => {
   }
 })
 
-let auth = new Authentication(accountManager)
+const auth = new Authentication(accountManager)
 
 type AuthRequest = {
   instance: string
@@ -553,7 +553,7 @@ ipcMain.handle(
 )
 
 // user streaming
-let userStreamings: { [key: string]: UserStreaming | null } = {}
+const userStreamings: { [key: string]: UserStreaming | null } = {}
 
 ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<LocalAccount>) => {
   accounts.map(async account => {

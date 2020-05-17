@@ -185,10 +185,11 @@ export default {
         case 'edit':
           window.shell.openExternal(this.account.baseURL + '/settings/profile')
           break
-        case 'settings':
+        case 'settings': {
           const url = `/${this.id()}/settings`
           this.$router.push(url)
           break
+        }
       }
     },
     doCollapse() {
