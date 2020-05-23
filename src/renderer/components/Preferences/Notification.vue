@@ -1,7 +1,7 @@
 <template>
   <div id="notification">
     <h2>{{ $t('preferences.notification.title') }}</h2>
-    <el-form class="section" label-position="right" label-width="300px" size="small">
+    <el-form class="section" label-position="right" label-width="360px" size="small">
       <p class="description">{{ $t('preferences.notification.enable.description') }}</p>
       <el-form-item for="notifyReply" :label="$t('preferences.notification.enable.reply')">
         <el-switch id="notifyReply" v-model="notifyReply" active-color="#13ce66"> </el-switch>
@@ -17,6 +17,9 @@
       </el-form-item>
       <el-form-item for="notifyFollow" :label="$t('preferences.notification.enable.follow')">
         <el-switch v-model="notifyFollow" active-color="#13ce66"> </el-switch>
+      </el-form-item>
+      <el-form-item for="notifyFollowRequest" :label="$t('preferences.notification.enable.follow_request')">
+        <el-switch v-model="notifyFollowRequest" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
   </div>
@@ -63,6 +66,16 @@ export default {
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
           follow: value
+        })
+      }
+    },
+    notifyFollowRequest: {
+      get() {
+        return this.$store.state.Preferences.Notification.notification.notify.follow_request
+      },
+      set(value) {
+        this.$store.dispatch('Preferences/Notification/updateNotify', {
+          follow_request: value
         })
       }
     },

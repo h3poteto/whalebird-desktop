@@ -1421,6 +1421,15 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         } as NotificationConstructorOptions
       }
       break
+    case 'follow_request':
+      if (notifyConfig.follow_request) {
+        return {
+          title: i18next.t('notification.follow_request.title'),
+          body: i18next.t('notification.follow_request.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
     case 'mention':
       if (notifyConfig.reply) {
         return {

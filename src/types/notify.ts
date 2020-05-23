@@ -3,5 +3,6 @@ export type Notify = {
   reblog: boolean
   favourite: boolean
   follow: boolean
+  follow_request: boolean
   reaction: boolean
 }

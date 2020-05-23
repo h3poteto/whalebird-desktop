@@ -23,6 +23,17 @@
       @select="$emit('selectNotification')"
     >
     </follow>
+    <FollowRequest
+      v-else-if="message.type === 'follow_request'"
+      :message="message"
+      :focused="focused"
+      :overlaid="overlaid"
+      @focusNext="$emit('focusNext')"
+      @focusPrev="$emit('focusPrev')"
+      @focusRight="$emit('focusRight')"
+      @select="$emit('selectNotification')"
+    >
+    </FollowRequest>
     <mention
       v-else-if="message.type === 'mention'"
       :message="message"
@@ -79,6 +90,7 @@
 <script>
 import Favourite from './Notification/Favourite'
 import Follow from './Notification/Follow'
+import FollowRequest from './Notification/FollowRequest'
 import Mention from './Notification/Mention'
 import Quote from './Notification/Quote'
 import Reblog from './Notification/Reblog'
@@ -104,7 +116,7 @@ export default {
       default: false
     }
   },
-  components: { Favourite, Follow, Mention, Quote, Reblog, Reaction },
+  components: { Favourite, Follow, FollowRequest, Mention, Quote, Reblog, Reaction },
   methods: {
     updateToot(message) {
       return this.$emit('update', message)
