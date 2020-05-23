@@ -451,6 +451,10 @@
       "title": "Seguiti",
       "body": "{{username}} is now following you"
     },
+    "follow_request": {
+      "title": "FollowRequest",
+      "body": "Receive a follow request from {{username}}"
+    },
     "reblog": {
       "title": "Condivisioni",
       "body": "{{username}} ha condiviso il tuo stato"
