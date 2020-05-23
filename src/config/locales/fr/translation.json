@@ -451,9 +451,17 @@
       "title": "Suivi",
       "body": "{{username}} vous suit"
     },
+    "follow_request": {
+      "title": "FollowRequest",
+      "body": "Receive a follow request from {{username}}"
+    },
     "reblog": {
       "title": "Partage",
       "body": "{{username}} a partagé votre statut"
+    },
+    "quote": {
+      "title": "Quote",
+      "body": "{{username}} quoted your status"
     },
     "reaction": {
       "title": "Reaction",

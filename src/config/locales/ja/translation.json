@@ -451,9 +451,17 @@
       "title": "フォロー",
       "body": "{{username}} さんにフォローされました"
     },
+    "follow_request": {
+      "title": "FollowRequest",
+      "body": "Receive a follow request from {{username}}"
+    },
     "reblog": {
       "title": "ブースト",
       "body": "{{username}} さんにブーストされました"
+    },
+    "quote": {
+      "title": "Quote",
+      "body": "{{username}} quoted your status"
     },
     "reaction": {
       "title": "リアクション",

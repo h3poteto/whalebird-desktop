@@ -451,9 +451,17 @@
       "title": "Folgen",
       "body": "{{username}} folgt dir jetzt"
     },
+    "follow_request": {
+      "title": "FollowRequest",
+      "body": "Receive a follow request from {{username}}"
+    },
     "reblog": {
       "title": "Teilen",
       "body": "{{username}} hat deinen Status geboosted"
+    },
+    "quote": {
+      "title": "Quote",
+      "body": "{{username}} quoted your status"
     },
     "reaction": {
       "title": "Reaction",

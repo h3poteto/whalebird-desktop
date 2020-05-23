@@ -451,9 +451,17 @@
       "title": "关注",
       "body": "{{username}} 正在关注你"
     },
+    "follow_request": {
+      "title": "FollowRequest",
+      "body": "Receive a follow request from {{username}}"
+    },
     "reblog": {
       "title": "转嘟",
       "body": "{{username}} 转发了你的嘟文"
+    },
+    "quote": {
+      "title": "Quote",
+      "body": "{{username}} quoted your status"
     },
     "reaction": {
       "title": "Reaction",
