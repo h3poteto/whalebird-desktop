@@ -455,6 +455,10 @@
       "title": "ブースト",
       "body": "{{username}} さんにブーストされました"
     },
+    "quote": {
+      "title": "Quote",
+      "body": "{{username}} quoted your status"
+    },
     "reaction": {
       "title": "リアクション",
       "body": "{{username}} さんがリアクションをつけました"
