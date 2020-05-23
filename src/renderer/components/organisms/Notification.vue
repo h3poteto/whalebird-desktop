@@ -37,8 +37,20 @@
       @select="$emit('selectNotification')"
     >
     </mention>
+    <quote
+      v-else-if="message.type === 'reblog' && message.status.quote"
+      :message="message"
+      :filter="filter"
+      :focused="focused"
+      :overlaid="overlaid"
+      @focusNext="$emit('focusNext')"
+      @focusPrev="$emit('focusPrev')"
+      @focusRight="$emit('focusRight')"
+      @select="$emit('selectNotification')"
+    >
+    </quote>
     <reblog
-      v-else-if="message.type === 'reblog'"
+      v-else-if="message.type === 'reblog' && !message.status.quote"
       :message="message"
       :filter="filter"
       :focused="focused"
@@ -68,6 +80,7 @@
 import Favourite from './Notification/Favourite'
 import Follow from './Notification/Follow'
 import Mention from './Notification/Mention'
+import Quote from './Notification/Quote'
 import Reblog from './Notification/Reblog'
 import Reaction from './Notification/Reaction'
 
@@ -91,7 +104,7 @@ export default {
       default: false
     }
   },
-  components: { Favourite, Follow, Mention, Reblog, Reaction },
+  components: { Favourite, Follow, Mention, Quote, Reblog, Reaction },
   methods: {
     updateToot(message) {
       return this.$emit('update', message)

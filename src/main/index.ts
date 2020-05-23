@@ -1435,11 +1435,19 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
       break
     case 'reblog':
       if (notifyConfig.reblog) {
-        return {
-          title: i18next.t('notification.reblog.title'),
-          body: i18next.t('notification.reblog.body', { username: username(notification.account) }),
-          silent: false
-        } as NotificationConstructorOptions
+        if (notification.status && notification.status.quote) {
+          return {
+            title: i18next.t('notification.quote.title'),
+            body: i18next.t('notification.quote.body', { username: username(notification.account) }),
+            silent: false
+          } as NotificationConstructorOptions
+        } else {
+          return {
+            title: i18next.t('notification.reblog.title'),
+            body: i18next.t('notification.reblog.body', { username: username(notification.account) }),
+            silent: false
+          } as NotificationConstructorOptions
+        }
       }
       break
     case 'emoji_reaction':
