@@ -17,6 +17,7 @@ const state: NotificationState = {
       reblog: true,
       favourite: true,
       follow: true,
+      follow_request: true,
       reaction: true
     }
   }

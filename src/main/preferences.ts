@@ -46,6 +46,7 @@ const notify: Notify = {
   reblog: true,
   favourite: true,
   follow: true,
+  follow_request: true,
   reaction: true
 }
 

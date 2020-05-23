@@ -40,6 +40,7 @@ const state = (): AppState => ({
     reblog: true,
     favourite: true,
     follow: true,
+    follow_request: true,
     reaction: true
   },
   tootPadding: 8,

@@ -13,6 +13,7 @@ const state = (): NotificationState => {
         reblog: true,
         favourite: true,
         follow: true,
+        follow_request: true,
         reaction: true
       }
     }
@@ -60,6 +61,7 @@ describe('Preferences/Notification', () => {
               reblog: false,
               favourite: false,
               follow: false,
+              follow_request: false,
               reaction: false
             }
           }
@@ -73,6 +75,7 @@ describe('Preferences/Notification', () => {
             reblog: false,
             favourite: false,
             follow: false,
+            follow_request: false,
             reaction: false
           }
         })
@@ -97,6 +100,7 @@ describe('Preferences/Notification', () => {
           reblog: false,
           favourite: true,
           follow: true,
+          follow_request: true,
           reaction: true
         }
       })
