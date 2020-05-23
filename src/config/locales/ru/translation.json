@@ -451,6 +451,10 @@
       "title": "Follow",
       "body": "{{username}} is now following you"
     },
+    "follow_request": {
+      "title": "FollowRequest",
+      "body": "Receive a follow request from {{username}}"
+    },
     "reblog": {
       "title": "Reblog",
       "body": "{{username}} boosted your status"
