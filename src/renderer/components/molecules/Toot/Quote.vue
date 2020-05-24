@@ -3,7 +3,7 @@
     <FailoverImg class="icon" :src="icon" :alt="`Avatar of ${username}`" />
     <div class="contents">
       <div class="header">
-        <strong>{{ username }}</strong>
+        <strong v-html="username"></strong>
         <span>{{ accountName }}</span>
       </div>
       <div class="body" v-html="body"></div>
@@ -63,8 +63,19 @@ export default {
   }
 
   .contents {
+    .header {
+      .emojione {
+        width: 20px;
+        height: 20px;
+      }
+    }
     .body {
       margin-top: 4px;
+
+      .emojione {
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 }

@@ -44,7 +44,7 @@
           </div>
           <div class="content-wrapper">
             <div class="spoiler" v-show="spoilered(message.status)">
-              <span v-html="spoilerText(message.status)"></span>
+              <span v-html="emojiText(message.status.spoiler_text, message.status.emojis)"></span>
               <el-button
                 v-if="!isShowContent(message.status)"
                 plain
@@ -62,7 +62,7 @@
             <div
               class="content"
               v-show="isShowContent(message.status)"
-              v-html="status(message.status)"
+              v-html="emojiText(message.status.content, message.status.emojis)"
               @click.capture.prevent="tootClick"
             ></div>
           </div>
@@ -98,7 +98,7 @@
             :icon="message.status.reblog.account.avatar"
             :username="username(message.status.reblog.account)"
             :accountName="''"
-            :body="message.status.reblog.content"
+            :body="emojiText(message.status.reblog.content, message.status.reblog.emojis)"
             @select="openDetail(message.status.reblog)"
           />
           <LinkPreview
@@ -259,11 +259,8 @@ export default {
     isShowAttachments(message) {
       return !this.sensitive(message) || this.showAttachments
     },
-    status(message) {
-      return emojify(message.content, message.emojis)
-    },
-    spoilerText(message) {
-      return emojify(message.spoiler_text, message.emojis)
+    emojiText(content, emojis) {
+      return emojify(content, emojis)
     },
     handleStatusControl(event) {
       switch (event.srcKey) {
