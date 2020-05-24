@@ -51,7 +51,7 @@
         </div>
         <div class="content-wrapper">
           <div class="spoiler" v-show="spoilered">
-            <span v-html="spoilerText()"></span>
+            <span v-html="emojiText(originalMessage.spoiler_text, originalMessage.emojis)"></span>
             <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
               {{ $t('cards.toot.show_more') }}
             </el-button>
@@ -59,7 +59,12 @@
               {{ $t('cards.toot.hide') }}
             </el-button>
           </div>
-          <div class="content" v-show="isShowContent" v-html="status()" @click.capture.prevent="tootClick"></div>
+          <div
+            class="content"
+            v-show="isShowContent"
+            v-html="emojiText(originalMessage.content, originalMessage.emojis)"
+            @click.capture.prevent="tootClick"
+          ></div>
           <Poll v-show="isShowContent" v-if="poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
         </div>
         <div class="attachments">
@@ -94,7 +99,7 @@
           :icon="message.reblog.account.avatar"
           :username="username(message.reblog.account)"
           :accountName="accountName(message.reblog.account)"
-          :body="message.reblog.content"
+          :body="emojiText(message.reblog.content, message.reblog.emojis)"
           @select="openDetail(message.reblog)"
         />
         <LinkPreview
@@ -578,13 +583,8 @@ export default {
           })
         })
     },
-    status() {
-      const original = this.originalMessage
-      return emojify(original.content, original.emojis)
-    },
-    spoilerText() {
-      const original = this.originalMessage
-      return emojify(original.spoiler_text, original.emojis)
+    emojiText(content, emojis) {
+      return emojify(content, emojis)
     },
     handleTootControl(event) {
       switch (event.srcKey) {

@@ -63,8 +63,19 @@ export default {
   }
 
   .contents {
+    .header {
+      .emojione {
+        width: 20px;
+        height: 20px;
+      }
+    }
     .body {
       margin-top: 4px;
+
+      .emojione {
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 }
