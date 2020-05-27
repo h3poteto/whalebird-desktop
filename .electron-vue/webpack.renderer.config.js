@@ -180,13 +180,18 @@ if (process.env.NODE_ENV === 'production') {
   rendererConfig.devtool = ''
   rendererConfig.mode = 'production'
   rendererConfig.plugins.push(
-    new CopyWebpackPlugin([
-      {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/electron/static'),
-        ignore: ['.*', '*~']
-      }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.join(__dirname, '../static'),
+          to: path.join(__dirname, '../dist/electron/static'),
+          globOptions: {
+            gitignore: true,
+            ignore: ['.*', '*~']
+          }
+        }
+      ]
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
