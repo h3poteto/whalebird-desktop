@@ -66,7 +66,6 @@ let mainConfig = {
           from: path.join(__dirname, '../src/config/locales'),
           to: path.join(__dirname, '../dist/electron/locales'),
           globOptions: {
-            gitignore: true,
             ignore: ['.*', '*~']
           }
         }
