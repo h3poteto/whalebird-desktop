@@ -177,7 +177,7 @@
     "electron-json-storage": "^4.1.8",
     "electron-log": "^4.1.1",
     "electron-window-state": "^5.0.3",
-    "element-ui": "2.13.0",
+    "element-ui": "2.13.2",
     "emoji-mart-vue": "^2.6.6",
     "emojilib": "^2.4.0",
     "hawk": "^7.0.10",
