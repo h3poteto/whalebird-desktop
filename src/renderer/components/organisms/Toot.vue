@@ -604,10 +604,10 @@ export default {
           this.openReply()
           break
         case 'boost':
-          this.changeReblog(this.message)
+          this.changeReblog(this.originalMessage)
           break
         case 'fav':
-          this.changeFavourite(this.message)
+          this.changeFavourite(this.originalMessage)
           break
         case 'open':
           this.openDetail(this.message)
