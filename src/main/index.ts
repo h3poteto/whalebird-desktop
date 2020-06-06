@@ -1331,6 +1331,17 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
       label: i18n.t('main_menu.window.name'),
       submenu: [
         {
+          label: i18n.t('main_menu.window.always_show_menu_bar'),
+          type: 'checkbox',
+          checked: true,
+          click: item => {
+            changeMenuAutoHide(!item.checked)
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
           label: i18n.t('main_menu.window.close'),
           role: 'close'
         },
@@ -1390,6 +1401,15 @@ const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n)
   ]
   const menu: Menu = Menu.buildFromTemplate(template)
   return menu
+}
+
+async function changeMenuAutoHide(autoHide: boolean) {
+  if (mainWindow === null) {
+    return null
+  }
+  mainWindow.autoHideMenuBar = autoHide
+  mainWindow.setMenuBarVisibility(!autoHide)
+  return null
 }
 
 async function reopenWindow() {
