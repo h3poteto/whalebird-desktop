@@ -710,6 +710,13 @@ export default {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
+      blockquote {
+        padding-left: 10px;
+        border-left: 3px solid #9baec8;
+        color: #9baec8;
+        margin: 0;
+      }
+
       .content {
         margin: var(--toot-padding) 0;
         word-wrap: break-word;
