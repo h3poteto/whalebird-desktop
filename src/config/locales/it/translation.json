@@ -25,7 +25,7 @@
       "select_all": "Seleziona Tutto"
     },
     "view": {
-      "name": "Vista",
+      "name": "Visualizza",
       "toggle_full_screen": "Abilita modalità a Schermo Intero"
     },
     "window": {
@@ -102,7 +102,7 @@
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Cronologia",
       "unread_notification": {
         "title": "Notifiche Non Lette",
         "description": "Personalizza le notifiche non lette per ciascuna Timeline.",
@@ -123,7 +123,7 @@
         "toot": "Quando posti un toot"
       },
       "timeline": {
-        "title": "Timeline",
+        "title": "Cronologia",
         "description": "Personalizza la visualizzazione nelle tue timeline.",
         "cw": "Ignora sempre gli avvisi sui contenuti",
         "nfsw": "Ignora sempre contenuti multimediali inappropriati",
@@ -138,10 +138,10 @@
       "title": "Aspetto",
       "theme_color": "Tema",
       "theme": {
-        "light": "Light",
-        "dark": "Dark",
-        "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
+        "light": "Chiaro",
+        "dark": "Scuro",
+        "solarized_light": "Chiaro Solarizzato",
+        "solarized_dark": "Scuro Solarizzato",
         "kimbie_dark": "KimbieDark",
         "custom": "Personalizzato"
       },
@@ -180,7 +180,7 @@
         "reblog": "Avvisami quando qualcuno condivide un mio toot",
         "favourite": "Avvisami quando qualcuno preferisce un mio toot",
         "follow": "Avvisami quando qualcuno mi segue",
-        "reaction": "Notify me when I receive a emoji reaction"
+        "reaction": "Avvisami quando ricevo una reazione emoji"
       }
     },
     "account": {
@@ -348,7 +348,7 @@
       "unmute": "Non silenziare",
       "unblock": "Sblocca",
       "block": "Blocca",
-      "toots": "Toots",
+      "toots": "Toot",
       "follows": "Seguiti",
       "followers": "Seguaci"
     }
@@ -386,7 +386,7 @@
     "manually_1": "Una pagina di autorizzazione è stata aperta nel tuo browser.",
     "manually_2": "Se il browser non è stato aperto, vai al seguente URL manualmente.",
     "code_label": "Incolla il codice di autorizzazione dal browser:",
-    "misskey_label": "Please submit after you authorize in your browser.",
+    "misskey_label": "Si prega di inviare dopo l'autorizzazione nel browser.",
     "submit": "Sottoscrivi"
   },
   "receive_drop": {
@@ -449,23 +449,23 @@
     },
     "follow": {
       "title": "Seguiti",
-      "body": "{{username}} is now following you"
+      "body": "{{username}} ha iniziato a seguirti"
     },
     "follow_request": {
-      "title": "FollowRequest",
-      "body": "Receive a follow request from {{username}}"
+      "title": "Richiesta di Seguirti",
+      "body": "Ricevi una richiesta di seguirti da {{username}}"
     },
     "reblog": {
       "title": "Condivisioni",
       "body": "{{username}} ha condiviso il tuo stato"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "Citazione",
+      "body": "{{username}} ha citato il tuo stato"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "Reazione",
+      "body": "{{username}} ha reagito al tuo stato"
     }
   }
 }
