@@ -29,7 +29,7 @@
       "toggle_full_screen": "フルスクリーンにする"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
+      "always_show_menu_bar": "メニューバーを常に表示",
       "name": "ウィンドウ",
       "close": "ウィンドウを閉じる",
       "open": "ウィンドウを表示",
@@ -453,16 +453,16 @@
       "body": "{{username}} さんにフォローされました"
     },
     "follow_request": {
-      "title": "FollowRequest",
-      "body": "Receive a follow request from {{username}}"
+      "title": "フォローリクエスト",
+      "body": "{{username}} からフォローリクエストを受け取りました"
     },
     "reblog": {
       "title": "ブースト",
       "body": "{{username}} さんにブーストされました"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "引用",
+      "body": "{{username}} があなたのステータスを引用しました"
     },
     "reaction": {
       "title": "リアクション",
