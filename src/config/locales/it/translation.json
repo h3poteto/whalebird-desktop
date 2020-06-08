@@ -29,6 +29,7 @@
       "toggle_full_screen": "Abilita modalità a Schermo Intero"
     },
     "window": {
+      "always_show_menu_bar": "Always Show Menu Bar",
       "name": "Finestra",
       "close": "Chiudi Finestra",
       "open": "Apri Finestra",
