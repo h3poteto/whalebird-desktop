@@ -29,6 +29,7 @@
       "toggle_full_screen": "Przełącz pełny ekran"
     },
     "window": {
+      "always_show_menu_bar": "Always Show Menu Bar",
       "name": "Okno",
       "close": "Zamknij okno",
       "open": "Otwórz okno",
