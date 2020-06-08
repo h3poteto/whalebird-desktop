@@ -29,6 +29,7 @@
       "toggle_full_screen": "フルスクリーンにする"
     },
     "window": {
+      "always_show_menu_bar": "Always Show Menu Bar",
       "name": "ウィンドウ",
       "close": "ウィンドウを閉じる",
       "open": "ウィンドウを表示",

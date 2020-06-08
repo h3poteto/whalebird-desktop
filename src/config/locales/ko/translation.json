@@ -29,6 +29,7 @@
       "toggle_full_screen": "전체화면 토글"
     },
     "window": {
+      "always_show_menu_bar": "Always Show Menu Bar",
       "name": "창",
       "close": "창 닫기",
       "open": "창 열기",
