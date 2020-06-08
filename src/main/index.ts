@@ -52,6 +52,7 @@ import { Proxy } from '~/src/types/proxy'
 import ProxyConfiguration from './proxy'
 import confirm from './timelines'
 import { EnabledTimelines } from '~/src/types/enabledTimelines'
+import { Menu as MenuPreferences } from '~/src/types/preference'
 
 /**
  * Context menu
@@ -199,6 +200,12 @@ async function getLanguage() {
   }
 }
 
+const getMenuPreferences = async (): Promise<MenuPreferences> => {
+  const preferences = new Preferences(preferencesDBPath)
+  const conf = await preferences.load()
+  return conf.menu
+}
+
 async function createWindow() {
   /**
    * List accounts
@@ -226,7 +233,13 @@ async function createWindow() {
   /**
    * Set application menu
    */
-  ApplicationMenu(accountsChange, i18next)
+  const menuPreferences = await getMenuPreferences()
+  const menu = ApplicationMenu(accountsChange, menuPreferences, i18next)
+  Menu.setApplicationMenu(menu)
+  let autoHideMenuBar = false
+  if (menuPreferences.autoHideMenu) {
+    autoHideMenuBar = true
+  }
 
   /**
    * Set dock menu for mac
@@ -262,6 +275,7 @@ async function createWindow() {
     height: mainWindowState.height,
     useContentSize: true,
     icon: path.resolve(__dirname, '../../build/icons/256x256.png'),
+    autoHideMenuBar: autoHideMenuBar,
     webPreferences: {
       // It is required to use ipcRenderer in renderer process.
       // But it is not secure, so if you want to disable this option, please use preload script.
@@ -1192,9 +1206,9 @@ app.on('ready', () => {
 class EmptyTokenError {}
 
 /**
- * Set application menu
+ * Genrate application menu
  */
-const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n) => {
+const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu: MenuPreferences, i18n: I18n): Menu => {
   /**
    * For mac menu
    */
@@ -1331,6 +1345,17 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
       label: i18n.t('main_menu.window.name'),
       submenu: [
         {
+          label: i18n.t('main_menu.window.always_show_menu_bar'),
+          type: 'checkbox',
+          checked: !menu.autoHideMenu,
+          click: item => {
+            changeMenuAutoHide(!item.checked)
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
           label: i18n.t('main_menu.window.close'),
           role: 'close'
         },
@@ -1364,8 +1389,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n
     }
   ]
 
-  const menu: Menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+  return Menu.buildFromTemplate(template)
 }
 
 const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n): Menu => {
@@ -1390,6 +1414,21 @@ const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n)
   ]
   const menu: Menu = Menu.buildFromTemplate(template)
   return menu
+}
+
+const changeMenuAutoHide = async (autoHide: boolean) => {
+  if (mainWindow === null) {
+    return null
+  }
+  mainWindow.autoHideMenuBar = autoHide
+  mainWindow.setMenuBarVisibility(!autoHide)
+  const preferences = new Preferences(preferencesDBPath)
+  preferences.update({
+    menu: {
+      autoHideMenu: autoHide
+    }
+  })
+  return null
 }
 
 async function reopenWindow() {
