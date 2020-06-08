@@ -29,6 +29,7 @@
       "toggle_full_screen": "Toggle Full Screen"
     },
     "window": {
+      "always_show_menu_bar": "Always Show Menu Bar",
       "name": "Window",
       "close": "Close Window",
       "open": "Open Window",
@@ -180,7 +181,6 @@
         "reblog": "Notify me when I receive a reblog",
         "favourite": "Notify me when I receive a favourite",
         "follow": "Notify me when I receive a follow",
-        "follow_request": "Notify me when I receive a follow request",
         "reaction": "Notify me when I receive a emoji reaction"
       }
     },
