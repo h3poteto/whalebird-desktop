@@ -29,6 +29,7 @@
       "toggle_full_screen": "切换全屏"
     },
     "window": {
+      "always_show_menu_bar": "Always Show Menu Bar",
       "name": "窗口",
       "close": "关闭窗口",
       "open": "打开窗口",
