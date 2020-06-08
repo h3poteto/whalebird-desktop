@@ -12,7 +12,7 @@ import { Timeline } from '~/src/types/timeline'
 import { Notify } from '~/src/types/notify'
 import { Appearance } from '~/src/types/appearance'
 import { Language as LanguageSet } from '~/src/types/language'
-import { General, State, Notification, BaseConfig, Other } from '~/src/types/preference'
+import { General, State, Notification, BaseConfig, Other, Menu } from '~/src/types/preference'
 import { Proxy, ProxySource } from '~/src/types/proxy'
 
 const sound: Sound = {
@@ -79,13 +79,18 @@ const proxy: Proxy = {
   }
 }
 
+const menu: Menu = {
+  autoHideMenu: false
+}
+
 const Base: BaseConfig = {
   general: general,
   state: state,
   language: language,
   notification: notification,
   appearance: appearance,
-  proxy: proxy
+  proxy: proxy,
+  menu: menu
 }
 
 export default class Preferences {

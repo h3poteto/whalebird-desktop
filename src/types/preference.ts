@@ -24,6 +24,10 @@ export type Notification = {
   notify: Notify
 }
 
+export type Menu = {
+  autoHideMenu: boolean
+}
+
 export type BaseConfig = {
   general: General
   state: State
@@ -31,4 +35,5 @@ export type BaseConfig = {
   notification: Notification
   appearance: Appearance
   proxy: Proxy
+  menu: Menu
 }
