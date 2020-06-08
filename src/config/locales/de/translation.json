@@ -29,6 +29,7 @@
       "toggle_full_screen": "Vollbildmodus umschalten"
     },
     "window": {
+      "always_show_menu_bar": "Always Show Menu Bar",
       "name": "Fenster",
       "close": "Fenster schließen",
       "open": "Fenster öffnen",
