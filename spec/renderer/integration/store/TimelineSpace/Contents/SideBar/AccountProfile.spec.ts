@@ -7,7 +7,8 @@ const state = (account: Entity.Account | null): AccountProfileState => {
   return {
     loading: false,
     relationship: null,
-    account: account
+    account: account,
+    identityProofs: []
   }
 }
 
