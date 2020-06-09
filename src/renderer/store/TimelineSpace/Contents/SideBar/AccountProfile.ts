@@ -20,6 +20,7 @@ export type AccountProfileState = {
   account: Entity.Account | null
   relationship: Entity.Relationship | null
   loading: boolean
+  identityProofs: Array<Entity.IdentityProof>
 }
 
 type AccountProfileModule = {
@@ -33,13 +34,15 @@ export type AccountProfileModuleState = AccountProfileModule & AccountProfileSta
 const state = (): AccountProfileState => ({
   account: null,
   relationship: null,
-  loading: false
+  loading: false,
+  identityProofs: []
 })
 
 export const MUTATION_TYPES = {
   CHANGE_ACCOUNT: 'changeAccount',
   CHANGE_RELATIONSHIP: 'changeRelationship',
-  CHANGE_LOADING: 'changeLoading'
+  CHANGE_LOADING: 'changeLoading',
+  CHANGE_IDENTITY_PROOFS: 'changeIdentityProofs'
 }
 
 const mutations: MutationTree<AccountProfileState> = {
@@ -51,11 +54,14 @@ const mutations: MutationTree<AccountProfileState> = {
   },
   [MUTATION_TYPES.CHANGE_LOADING]: (state, value: boolean) => {
     state.loading = value
+  },
+  [MUTATION_TYPES.CHANGE_IDENTITY_PROOFS]: (state, values: Array<Entity.IdentityProof>) => {
+    state.identityProofs = values
   }
 }
 
 const actions: ActionTree<AccountProfileState, RootState> = {
-  fetchAccount: async ({ rootState }, accountID: string): Promise<Entity.Account> => {
+  fetchAccount: async ({ rootState, dispatch }, accountID: string): Promise<Entity.Account> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -64,6 +70,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.App.proxyConfiguration
     )
     const res = await client.getAccount(accountID)
+    dispatch('identityProofs', res.data)
     return res.data
   },
   searchAccount: async ({ rootState }, searchAccount: SearchAccount): Promise<Entity.Account> => {
@@ -103,6 +110,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   changeAccount: ({ commit, dispatch }, account: Entity.Account) => {
     dispatch('fetchRelationship', account)
+    dispatch('identityProofs', account)
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
   fetchRelationship: async ({ commit, rootState }, account: Entity.Account): Promise<Entity.Relationship> => {
@@ -184,7 +192,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     dispatch('fetchRelationship', account)
     return res.data
   },
-  unblock: async ({ rootState, commit, dispatch }, account: Account) => {
+  unblock: async ({ rootState, commit, dispatch }, account: Entity.Account) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -196,6 +204,17 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
     dispatch('fetchRelationship', account)
     return res.data
+  },
+  identityProofs: async ({ rootState, commit }, account: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent,
+      rootState.App.proxyConfiguration
+    )
+    const res = await client.getIdentityProof(account.id)
+    commit(MUTATION_TYPES.CHANGE_IDENTITY_PROOFS, res.data)
   }
 }
 

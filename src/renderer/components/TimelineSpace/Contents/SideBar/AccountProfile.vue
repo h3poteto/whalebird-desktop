@@ -69,6 +69,14 @@
         <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
       </div>
     </div>
+    <div class="identity">
+      <dl v-for="(identity, index) in identityProofs" :key="index">
+        <dt>
+          {{ identity.provider }}
+        </dt>
+        <dd @click.capture.prevent="identityOpen(identity.profile_url)">{{ identity.provider_username }}</dd>
+      </dl>
+    </div>
     <div class="metadata">
       <dl v-for="(data, index) in account.fields" :key="index">
         <dt>
@@ -139,6 +147,7 @@ export default {
     }),
     ...mapState('TimelineSpace/Contents/SideBar/AccountProfile', {
       account: state => state.account,
+      identityProofs: state => state.identityProofs,
       relationship: state => state.relationship,
       loading: state => state.loading,
       muting: state => state.relationship && state.relationship.muting,
@@ -147,10 +156,10 @@ export default {
     ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile', ['isOwnProfile'])
   },
   watch: {
-    account: function() {
+    account: function () {
       this.activeTab = 1
     },
-    loading: function(newState, _oldState) {
+    loading: function (newState, _oldState) {
       this.$emit('change-loading', newState)
     }
   },
@@ -231,6 +240,9 @@ export default {
       if (link !== null) {
         return window.shell.openExternal(link)
       }
+    },
+    identityOpen(link) {
+      return window.shell.openExternal(link)
     }
   }
 }
@@ -337,6 +349,39 @@ export default {
       & /deep/ .emojione {
         max-width: 1.2em;
         height: 1.2em;
+      }
+    }
+  }
+
+  .identity {
+    dl {
+      display: flex;
+      border-top: 1px solid var(--theme-border-color);
+      margin: 0;
+
+      dt {
+        background-color: var(--theme-selected-background-color);
+        flex: 0 0 auto;
+        width: 120px;
+        text-align: center;
+        padding: 16px 4px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      dd {
+        background-color: rgba(121, 189, 154, 0.25);
+        flex: 1 1 auto;
+        padding: 16px 4px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+        margin: 0;
+        color: #79bd9a;
+        font-weight: bold;
+        cursor: pointer;
       }
     }
   }
