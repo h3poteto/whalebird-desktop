@@ -281,7 +281,8 @@ async function createWindow() {
       // But it is not secure, so if you want to disable this option, please use preload script.
       nodeIntegration: true,
       contextIsolation: false,
-      preload: path.resolve(__dirname, './preload.js')
+      preload: path.resolve(__dirname, './preload.js'),
+      spellcheck: true
     }
   }
   const config: Config = {
