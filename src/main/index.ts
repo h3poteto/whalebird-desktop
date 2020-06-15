@@ -1241,6 +1241,23 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
           }
         ]
 
+  const macWindowMenu: Array<MenuItemConstructorOptions> =
+    process.platform === 'darwin'
+      ? []
+      : [
+          {
+            label: i18n.t('main_menu.window.always_show_menu_bar'),
+            type: 'checkbox',
+            checked: !menu.autoHideMenu,
+            click: item => {
+              changeMenuAutoHide(!item.checked)
+            }
+          },
+          {
+            type: 'separator'
+          }
+        ]
+
   const template: Array<MenuItemConstructorOptions> = [
     {
       label: i18n.t('main_menu.application.name'),
@@ -1345,17 +1362,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
     {
       label: i18n.t('main_menu.window.name'),
       submenu: [
-        {
-          label: i18n.t('main_menu.window.always_show_menu_bar'),
-          type: 'checkbox',
-          checked: !menu.autoHideMenu,
-          click: item => {
-            changeMenuAutoHide(!item.checked)
-          }
-        },
-        {
-          type: 'separator'
-        },
+        ...macWindowMenu,
         {
           label: i18n.t('main_menu.window.close'),
           role: 'close'
