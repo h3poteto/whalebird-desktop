@@ -9,6 +9,8 @@ import 'vue-popperjs/dist/vue-popper.css'
 import { sync } from 'vuex-router-sync'
 import shortkey from 'vue-shortkey'
 import VueI18Next from '@panter/vue-i18next'
+import 'vue-resize/dist/vue-resize.css'
+import VueResize from 'vue-resize'
 
 import './assets/fonts/fonts.css'
 import App from './App.vue'
@@ -19,6 +21,7 @@ import i18next from '~/src/config/i18n'
 Vue.use(ElementUI, { locale })
 Vue.use(shortkey)
 Vue.use(VueI18Next)
+Vue.use(VueResize)
 Vue.component('icon', Icon)
 Vue.component('popper', Popper)
 

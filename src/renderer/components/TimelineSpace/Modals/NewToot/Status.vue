@@ -15,6 +15,7 @@
       role="textbox"
       contenteditable="true"
       aria-multiline="true"
+      :style="`height: ${height}px`"
       autofocus
     >
     </textarea>
@@ -74,6 +75,10 @@ export default {
     fixCursorPos: {
       type: Boolean,
       default: false
+    },
+    height: {
+      type: Number,
+      default: 120
     }
   },
   data() {
@@ -271,6 +276,7 @@ export default {
   font-size: var(--base-font-size);
 
   textarea {
+    position: relative;
     display: block;
     padding: 4px 32px 4px 16px;
     line-height: 1.5;
