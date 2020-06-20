@@ -3,12 +3,12 @@
     :title="$t('modals.new_toot.title')"
     :visible.sync="newTootModal"
     :before-close="closeConfirm"
-    width="400px"
+    width="600px"
     class="new-toot-modal"
     ref="dialog"
   >
     <el-form v-on:submit.prevent="toot" role="form">
-      <div class="spoiler" v-show="showContentWarning">
+      <div class="spoiler" v-if="showContentWarning" ref="spoiler">
         <div class="el-input">
           <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" v-shortkey.avoid />
         </div>
@@ -104,7 +104,7 @@
         <el-button
           size="small"
           type="text"
-          @click="showContentWarning = !showContentWarning"
+          @click="toggleContentWarning()"
           :title="$t('modals.new_toot.footer.add_cw')"
           :class="showContentWarning ? '' : 'clickable'"
           :aria-pressed="showContentWarning"
@@ -388,7 +388,6 @@ export default {
         }
       }
       await toggle()
-      console.log(this.$refs.poll)
       if (this.openPoll) {
         this.statusHeight = this.statusHeight - this.$refs.poll.$el.offsetHeight
       } else {
@@ -404,11 +403,21 @@ export default {
     changeExpire(obj) {
       this.pollExpire = obj
     },
+    async toggleContentWarning() {
+      const previousHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
+      await (this.showContentWarning = !this.showContentWarning)
+      if (this.showContentWarning) {
+        this.statusHeight = this.statusHeight - this.$refs.spoiler.offsetHeight
+      } else {
+        this.statusHeight = this.statusHeight + previousHeight
+      }
+    },
     handleResize(event) {
       const style = this.$refs.dialog.$el.firstChild.style
       if (style.overflow === '' || style.overflow === 'hidden') {
         const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
-        this.statusHeight = event.height - 63 - 54 - this.$refs.preview.offsetHeight - pollHeight
+        const spoilerHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
+        this.statusHeight = event.height - 63 - 54 - this.$refs.preview.offsetHeight - pollHeight - spoilerHeight
       }
     },
     pickerOpened(open) {
