@@ -164,6 +164,7 @@ export default {
     async suggestAccount(start, word) {
       try {
         await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestAccount', { word: word, start: start })
+        this.$emit('suggestOpened', true)
         return true
       } catch (err) {
         console.log(err)
@@ -173,6 +174,7 @@ export default {
     async suggestHashtag(start, word) {
       try {
         await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestHashtag', { word: word, start: start })
+        this.$emit('suggestOpened', true)
         return true
       } catch (err) {
         console.log(err)
@@ -182,6 +184,7 @@ export default {
     suggestEmoji(start, word) {
       try {
         this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestEmoji', { word: word, start: start })
+        this.$emit('suggestOpened', true)
         return true
       } catch (err) {
         this.closeSuggest()
@@ -193,6 +196,7 @@ export default {
       if (this.openSuggest) {
         this.highlightedIndex = 0
       }
+      this.$emit('suggestOpened', false)
     },
     suggestHighlight(index) {
       if (index < 0) {
@@ -254,8 +258,10 @@ export default {
       this.$emit('pickerOpened', this.openEmojiPicker)
     },
     hideEmojiPicker() {
+      if (this.openEmojiPicker) {
+        this.$emit('pickerOpened', this.openEmojiPicker)
+      }
       this.openEmojiPicker = false
-      this.$emit('pickerOpened', this.openEmojiPicker)
     },
     selectEmoji(emoji) {
       const current = this.$refs.status.selectionStart

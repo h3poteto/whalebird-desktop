@@ -20,7 +20,8 @@
         :height="statusHeight"
         @paste="onPaste"
         @toot="toot"
-        @pickerOpened="pickerOpened"
+        @pickerOpened="innerElementOpened"
+        @suggestOpened="innerElementOpened"
       />
     </el-form>
     <Poll
@@ -420,7 +421,7 @@ export default {
         this.statusHeight = event.height - 63 - 54 - this.$refs.preview.offsetHeight - pollHeight - spoilerHeight
       }
     },
-    pickerOpened(open) {
+    innerElementOpened(open) {
       if (open) {
         this.$refs.dialog.$el.firstChild.style.overflow = 'visible'
       } else {
