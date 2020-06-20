@@ -251,9 +251,11 @@ export default {
     },
     toggleEmojiPicker() {
       this.openEmojiPicker = !this.openEmojiPicker
+      this.$emit('pickerOpened', this.openEmojiPicker)
     },
     hideEmojiPicker() {
       this.openEmojiPicker = false
+      this.$emit('pickerOpened', this.openEmojiPicker)
     },
     selectEmoji(emoji) {
       const current = this.$refs.status.selectionStart
@@ -341,8 +343,8 @@ export default {
 
   .emoji-picker {
     position: absolute;
-    top: 32px;
-    left: 240px;
+    top: 0;
+    right: 32px;
   }
 }
 </style>

@@ -5,6 +5,7 @@
     :before-close="closeConfirm"
     width="400px"
     class="new-toot-modal"
+    ref="dialog"
   >
     <el-form v-on:submit.prevent="toot" role="form">
       <div class="spoiler" v-show="showContentWarning">
@@ -19,6 +20,7 @@
         :height="statusHeight"
         @paste="onPaste"
         @toot="toot"
+        @pickerOpened="pickerOpened"
       />
     </el-form>
     <Poll
@@ -403,8 +405,18 @@ export default {
       this.pollExpire = obj
     },
     handleResize(event) {
-      const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
-      this.statusHeight = event.height - 63 - 54 - this.$refs.preview.offsetHeight - pollHeight
+      const style = this.$refs.dialog.$el.firstChild.style
+      if (style.overflow === '' || style.overflow === 'hidden') {
+        const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
+        this.statusHeight = event.height - 63 - 54 - this.$refs.preview.offsetHeight - pollHeight
+      }
+    },
+    pickerOpened(open) {
+      if (open) {
+        this.$refs.dialog.$el.firstChild.style.overflow = 'visible'
+      } else {
+        this.$refs.dialog.$el.firstChild.style.overflow = 'hidden'
+      }
     }
   }
 }
@@ -416,6 +428,7 @@ export default {
     background-color: #f2f6fc;
     overflow: hidden;
     resize: both;
+    padding-bottom: 20px;
   }
 
   .el-dialog__header {
@@ -509,7 +522,6 @@ export default {
     background-color: #f2f6fc;
     font-size: var(--base-font-size);
     padding-bottom: 0;
-    margin-bottom: 20px;
 
     .upload-image {
       text-align: left;
