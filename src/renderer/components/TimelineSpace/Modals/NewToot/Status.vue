@@ -259,7 +259,7 @@ export default {
     },
     hideEmojiPicker() {
       if (this.openEmojiPicker) {
-        this.$emit('pickerOpened', this.openEmojiPicker)
+        this.$emit('pickerOpened', false)
       }
       this.openEmojiPicker = false
     },
