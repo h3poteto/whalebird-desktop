@@ -15,6 +15,7 @@
       role="textbox"
       contenteditable="true"
       aria-multiline="true"
+      :style="`height: ${height}px`"
       autofocus
     >
     </textarea>
@@ -74,6 +75,10 @@ export default {
     fixCursorPos: {
       type: Boolean,
       default: false
+    },
+    height: {
+      type: Number,
+      default: 120
     }
   },
   data() {
@@ -159,6 +164,7 @@ export default {
     async suggestAccount(start, word) {
       try {
         await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestAccount', { word: word, start: start })
+        this.$emit('suggestOpened', true)
         return true
       } catch (err) {
         console.log(err)
@@ -168,6 +174,7 @@ export default {
     async suggestHashtag(start, word) {
       try {
         await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestHashtag', { word: word, start: start })
+        this.$emit('suggestOpened', true)
         return true
       } catch (err) {
         console.log(err)
@@ -177,6 +184,7 @@ export default {
     suggestEmoji(start, word) {
       try {
         this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestEmoji', { word: word, start: start })
+        this.$emit('suggestOpened', true)
         return true
       } catch (err) {
         this.closeSuggest()
@@ -188,6 +196,7 @@ export default {
       if (this.openSuggest) {
         this.highlightedIndex = 0
       }
+      this.$emit('suggestOpened', false)
     },
     suggestHighlight(index) {
       if (index < 0) {
@@ -246,8 +255,12 @@ export default {
     },
     toggleEmojiPicker() {
       this.openEmojiPicker = !this.openEmojiPicker
+      this.$emit('pickerOpened', this.openEmojiPicker)
     },
     hideEmojiPicker() {
+      if (this.openEmojiPicker) {
+        this.$emit('pickerOpened', false)
+      }
       this.openEmojiPicker = false
     },
     selectEmoji(emoji) {
@@ -271,6 +284,7 @@ export default {
   font-size: var(--base-font-size);
 
   textarea {
+    position: relative;
     display: block;
     padding: 4px 32px 4px 16px;
     line-height: 1.5;
@@ -335,8 +349,8 @@ export default {
 
   .emoji-picker {
     position: absolute;
-    top: 32px;
-    left: 240px;
+    top: 0;
+    right: 32px;
   }
 }
 </style>

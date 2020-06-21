@@ -3,16 +3,26 @@
     :title="$t('modals.new_toot.title')"
     :visible.sync="newTootModal"
     :before-close="closeConfirm"
-    width="400px"
+    width="600px"
     class="new-toot-modal"
+    ref="dialog"
   >
     <el-form v-on:submit.prevent="toot" role="form">
-      <div class="spoiler" v-show="showContentWarning">
+      <div class="spoiler" v-if="showContentWarning" ref="spoiler">
         <div class="el-input">
           <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" v-shortkey.avoid />
         </div>
       </div>
-      <Status v-model="status" :opened="newTootModal" :fixCursorPos="hashtagInserting" @paste="onPaste" @toot="toot" />
+      <Status
+        v-model="status"
+        :opened="newTootModal"
+        :fixCursorPos="hashtagInserting"
+        :height="statusHeight"
+        @paste="onPaste"
+        @toot="toot"
+        @pickerOpened="innerElementOpened"
+        @suggestOpened="innerElementOpened"
+      />
     </el-form>
     <Poll
       v-if="openPoll"
@@ -21,8 +31,9 @@
       @removePoll="removePoll"
       :defaultExpire="pollExpire"
       @changeExpire="changeExpire"
+      ref="poll"
     ></Poll>
-    <div class="preview">
+    <div class="preview" ref="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
         <el-button type="text" @click="removeAttachment(media)" class="remove-image"><icon name="times-circle"></icon></el-button>
@@ -94,7 +105,7 @@
         <el-button
           size="small"
           type="text"
-          @click="showContentWarning = !showContentWarning"
+          @click="toggleContentWarning()"
           :title="$t('modals.new_toot.footer.add_cw')"
           :class="showContentWarning ? '' : 'clickable'"
           :aria-pressed="showContentWarning"
@@ -125,6 +136,7 @@
       </div>
       <div class="clearfix"></div>
     </div>
+    <resize-observer @notify="handleResize" />
   </el-dialog>
 </template>
 
@@ -152,7 +164,8 @@ export default {
       pollExpire: {
         label: this.$t('modals.new_toot.poll.expires.1_day'),
         value: 3600 * 24
-      }
+      },
+      statusHeight: 240
     }
   },
   computed: {
@@ -311,15 +324,23 @@ export default {
     },
     updateImage(file) {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaCount')
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file).catch(() => {
-        this.$message({
-          message: this.$t('message.attach_error'),
-          type: 'error'
+      this.$store
+        .dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
+        .then(() => {
+          this.statusHeight = this.statusHeight - this.$refs.preview.offsetHeight
         })
-      })
+        .catch(() => {
+          this.$message({
+            message: this.$t('message.attach_error'),
+            type: 'error'
+          })
+        })
     },
     removeAttachment(media) {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/removeMedia', media)
+      const previousHeight = this.$refs.preview.offsetHeight
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/removeMedia', media).then(() => {
+        this.statusHeight = this.statusHeight + previousHeight
+      })
     },
     changeVisibility(level) {
       this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibilityValue', level)
@@ -357,12 +378,21 @@ export default {
     updateDescription(id, value) {
       this.$store.commit('TimelineSpace/Modals/NewToot/updateMediaDescription', { id: id, description: value })
     },
-    togglePollForm() {
-      this.openPoll = !this.openPoll
+    async togglePollForm() {
+      const previousHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
+      const toggle = () => {
+        this.openPoll = !this.openPoll
+        if (this.openPoll) {
+          this.polls = ['', '']
+        } else {
+          this.polls = []
+        }
+      }
+      await toggle()
       if (this.openPoll) {
-        this.polls = ['', '']
+        this.statusHeight = this.statusHeight - this.$refs.poll.$el.offsetHeight
       } else {
-        this.polls = []
+        this.statusHeight = this.statusHeight + previousHeight
       }
     },
     addPoll() {
@@ -373,6 +403,30 @@ export default {
     },
     changeExpire(obj) {
       this.pollExpire = obj
+    },
+    async toggleContentWarning() {
+      const previousHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
+      await (this.showContentWarning = !this.showContentWarning)
+      if (this.showContentWarning) {
+        this.statusHeight = this.statusHeight - this.$refs.spoiler.offsetHeight
+      } else {
+        this.statusHeight = this.statusHeight + previousHeight
+      }
+    },
+    handleResize(event) {
+      const style = this.$refs.dialog.$el.firstChild.style
+      if (style.overflow === '' || style.overflow === 'hidden') {
+        const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
+        const spoilerHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
+        this.statusHeight = event.height - 63 - 54 - this.$refs.preview.offsetHeight - pollHeight - spoilerHeight
+      }
+    },
+    innerElementOpened(open) {
+      if (open) {
+        this.$refs.dialog.$el.firstChild.style.overflow = 'visible'
+      } else {
+        this.$refs.dialog.$el.firstChild.style.overflow = 'hidden'
+      }
     }
   }
 }
@@ -380,6 +434,13 @@ export default {
 
 <style lang="scss" scoped>
 .new-toot-modal /deep/ {
+  .el-dialog {
+    background-color: #f2f6fc;
+    overflow: hidden;
+    resize: both;
+    padding-bottom: 20px;
+  }
+
   .el-dialog__header {
     background-color: #4a5664;
 
@@ -470,6 +531,7 @@ export default {
   .el-dialog__footer {
     background-color: #f2f6fc;
     font-size: var(--base-font-size);
+    padding-bottom: 0;
 
     .upload-image {
       text-align: left;
