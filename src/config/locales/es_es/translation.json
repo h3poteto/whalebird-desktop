@@ -103,7 +103,7 @@
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Línea de tiempo",
       "unread_notification": {
         "title": "Unread Notification",
         "description": "Customize unread notifications for each timeline.",
