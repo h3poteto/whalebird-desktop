@@ -249,49 +249,49 @@
         "change_visibility": "Cambiar visibilidad",
         "change_sensitive": "Cambiar sensibilidad",
         "add_cw": "Añadir aviso de contenido",
-        "pined_hashtag": "Pin the hashtag"
+        "pined_hashtag": "Fijar la etiqueta"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Añadir una opción",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 minutos",
+          "30_minutes": "30 minutos",
+          "1_hour": "1 hora",
+          "6_hours": "6 horas",
+          "1_day": "1 día",
+          "3_days": "3 días",
+          "7_days": "7 días"
         }
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "Ir a..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "Añadir miembro a la lista",
+      "account_name": "Nombre de cuenta"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "Lista de miembros"
     },
     "mute_confirm": {
-      "title": "Are you sure you want to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "¿Estás seguro de que quieres silenciar?",
+      "body": "¿Ocultar notificación de este usuario?",
+      "cancel": "Cancelar",
+      "ok": "Silenciar"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "ctrl_r": "Reload current timeline",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
+      "title": "Atajos del teclado",
+      "ctrl_number": "Cambiar de cuenta",
+      "ctrl_k": "Ir a otras líneas de tiempo",
+      "ctrl_n": "Abra la nueva modalidad de toot",
+      "ctrl_enter": "Publicar el toot",
+      "ctrl_r": "Recargar línea de tiempo actual",
+      "j": "Selecciona el siguiente toot",
+      "k": "Seleccione el toot anterior",
+      "h": "Cambiar el foco a la columna izquierda",
+      "l": "Cambiar el foco a la columna derecha",
+      "r": "Responder al toot",
       "b": "Reblog the toot",
       "f": "Favourite the toot",
       "o": "Open details of the toot",
