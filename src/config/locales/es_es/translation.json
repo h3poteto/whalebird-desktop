@@ -292,30 +292,30 @@
       "h": "Cambiar el foco a la columna izquierda",
       "l": "Cambiar el foco a la columna derecha",
       "r": "Responder al toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
-      "?": "Show this help",
-      "esc": "Close current page"
+      "b": "Publique de nuevo el toot",
+      "f": "Favorezca el toot",
+      "o": "Abrir detalles del toot",
+      "p": "Abrir el perfil de cuenta del toot",
+      "i": "Abrir las imágenes",
+      "x": "Mostrar/ocultar CW y NSFW",
+      "?": "Mostrar esta ayuda",
+      "esc": "Cerrar página actual"
     },
     "report": {
-      "title": "Reporting this user",
-      "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
+      "title": "Denunciar este usuario",
+      "comment": "Comentarios adicionales",
+      "cancel": "Cancelar",
+      "ok": "Denunciar"
     }
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
-      "sensitive": "Show sensitive content",
-      "view_toot_detail": "View Toot Detail",
-      "open_in_browser": "Open in Browser",
-      "copy_link_to_toot": "Copy Link to Toot",
+      "show_more": "Mostrar más",
+      "hide": "Ocultar",
+      "sensitive": "Mostrar contenido sensible",
+      "view_toot_detail": "Ver Detalle del Toot",
+      "open_in_browser": "Abrir en el navegador",
+      "copy_link_to_toot": "Copiar el enlace al Toot",
       "mute": "Mute",
       "block": "Block",
       "report": "Report",
@@ -387,16 +387,16 @@
     "manually_1": "An authorization page has opened in your browser.",
     "manually_2": "If it has not opened, please go to the following URL manually.",
     "code_label": "Please paste the authorization code from your browser:",
-    "misskey_label": "Please submit after you authorize in your browser.",
-    "submit": "Submit"
+    "misskey_label": "Por favor, envíar después de autorizarlo en su navegador.",
+    "submit": "Enviar"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Soltar para subir a Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
-    "preferences_load_error": "Failed to load preferences",
+    "account_load_error": "Error al cargar las cuentas",
+    "account_remove_error": "Error al eliminar la cuenta",
+    "preferences_load_error": "Error al cargar las preferencias",
     "timeline_fetch_error": "Failed to fetch timeline",
     "notification_fetch_error": "Failed to fetch notification",
     "favourite_fetch_error": "Failed to fetch favorite",
