@@ -120,29 +120,29 @@
       "sounds": {
         "title": "Sonidos",
         "description": "Por favor, configure los sonidos de los comentarios.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "fav_rb": "Cuando favorezcas o impulses el toot",
+        "toot": "Cuando publicas toot"
       },
       "timeline": {
-        "title": "Timeline",
-        "description": "Customize view in your timelines.",
-        "cw": "Always ignore contents warnings",
-        "nfsw": "Always ignore NFSW of medias",
-        "hideAllAttachments": "Hide all medias"
+        "title": "Línea de tiempo",
+        "description": "Personaliza la vista en tus líneas de tiempo.",
+        "cw": "Ignorar siempre las advertencias de contenidos",
+        "nfsw": "Ignorar siempre NFSW de medios",
+        "hideAllAttachments": "Ocultar todos los medios"
       },
       "other": {
-        "title": "Other options",
-        "launch": "Launch app on login"
+        "title": "Otras opciones",
+        "launch": "Iniciar aplicación al iniciar sesión"
       }
     },
     "appearance": {
-      "title": "Appearance",
-      "theme_color": "Theme color",
+      "title": "Apariencia",
+      "theme_color": "Color del tema",
       "theme": {
-        "light": "Light",
-        "dark": "Dark",
-        "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
+        "light": "Claro",
+        "dark": "Oscuro",
+        "solarized_light": "Solarizado Claro",
+        "solarized_dark": "Solarizado oscuro",
         "kimbie_dark": "KimbieDark",
         "custom": "Personalizado"
       },
@@ -245,10 +245,10 @@
       "description": "Describe for the visually impaired",
       "footer": {
         "add_image": "Add images",
-        "poll": "Add a poll",
-        "change_visibility": "Change visibility",
-        "change_sensitive": "Change sensitive",
-        "add_cw": "Add content warning",
+        "poll": "Añadir una encuesta",
+        "change_visibility": "Cambiar visibilidad",
+        "change_sensitive": "Cambiar sensibilidad",
+        "add_cw": "Añadir aviso de contenido",
         "pined_hashtag": "Pin the hashtag"
       },
       "poll": {
