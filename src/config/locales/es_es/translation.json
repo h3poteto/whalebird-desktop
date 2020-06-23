@@ -2,70 +2,70 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "about": "Acerca de Whalebird",
+      "preferences": "Preferencias...",
+      "services": "Servicios",
+      "hide": "Ocultar Whalebird",
+      "hide_others": "Ocultar otros",
+      "show_all": "Mostrar todo",
+      "open": "Abrir ventana",
+      "quit": "Salir"
     },
     "toot": {
       "name": "Toot",
-      "new": "New Toot"
+      "new": "Nuevo Toot"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "Editar",
+      "undo": "Deshacer",
+      "redo": "Rehacer",
+      "cut": "Cortar",
+      "copy": "Copiar",
+      "paste": "Pegar",
+      "select_all": "Seleccionar todo"
     },
     "view": {
-      "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "name": "Ver",
+      "toggle_full_screen": "Cambiar a pantalla completa"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
-      "jump_to": "Jump to"
+      "always_show_menu_bar": "Mostrar siempre barra de menú",
+      "name": "Ventana",
+      "close": "Cerrar ventana",
+      "open": "Abrir ventana",
+      "minimize": "Minimizar",
+      "jump_to": "Ir a"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "Añadir nueva cuenta"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
-    "collapse": "Collapse",
-    "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists"
+    "profile": "Perfil",
+    "show_profile": "Mostrar perfil",
+    "edit_profile": "Editar perfil",
+    "settings": "Configuración",
+    "collapse": "Ocultar",
+    "expand": "Expandir",
+    "home": "Inicio",
+    "notification": "Notificación",
+    "mention": "Mención",
+    "direct": "Mensajes directos",
+    "follow_requests": "Solicitudes de seguimiento",
+    "favourite": "Favorito",
+    "local": "Línea de tiempo local",
+    "public": "Línea de tiempo pública",
+    "hashtag": "Etiqueta",
+    "search": "Buscar",
+    "lists": "Listas"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "favourite": "Favourite",
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages",
+    "home": "Inicio",
+    "notification": "Notificación",
+    "mention": "Mención",
+    "favourite": "Favorito",
+    "follow_requests": "Solicitudes de seguimiento",
+    "direct_messages": "Mensajes directos",
     "local": "Local timeline",
     "public": "Public timeline",
     "hashtag": "Hashtag",
@@ -144,10 +144,10 @@
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "Personalizado"
       },
       "custom_theme": {
-        "background_color": "Base background",
+        "background_color": "Color de fondo",
         "selected_background_color": "Focused background",
         "global_header_color": "Account menu",
         "side_menu_color": "Side menu",
