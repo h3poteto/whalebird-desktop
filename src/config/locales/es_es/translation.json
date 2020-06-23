@@ -70,35 +70,35 @@
     "public": "Línea de tiempo pública",
     "hashtag": "Etiqueta",
     "search": "Buscar",
-    "lists": "Lists",
-    "members": "Members",
+    "lists": "Listas",
+    "members": "Miembros",
     "filter": {
-      "title": "Filter",
-      "placeholder": "Filter out by regular expressions",
-      "show_dms": "Show direct messages",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "Filtro",
+      "placeholder": "Filtrar por expresiones regulares",
+      "show_dms": "Mostrar mensajes directos",
+      "show_reblogs": "Mostrar reblogs",
+      "show_replies": "Mostrar respuestas",
+      "apply": "Aplicar"
     },
     "new_toot": "Toot",
-    "reload": "Reload",
-    "settings": "Settings"
+    "reload": "Recargar",
+    "settings": "Configuración"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Configuración",
     "general": {
       "title": "General",
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Customize default visibility of toot.",
-          "public": "Public",
-          "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "description": "Personalizar la visibilidad predeterminada del toot.",
+          "public": "Público",
+          "unlisted": "Sin listar",
+          "private": "Privado",
+          "direct": "Directo"
         },
         "sensitive": {
-          "description": "Mark media as sensitive by default"
+          "description": "Marcar medio como sensible por defecto"
         }
       }
     },
