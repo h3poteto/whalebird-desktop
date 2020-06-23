@@ -105,21 +105,21 @@
     "timeline": {
       "title": "Línea de tiempo",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "title": "Notificación sin leer",
+        "description": "Personalizar notificaciones no leídas para cada línea de tiempo.",
+        "direct": "Mensajes directos",
+        "local": "Línea de tiempo local",
+        "public": "Línea de tiempo pública"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Preferencias",
     "general": {
       "title": "General",
       "sounds": {
-        "title": "Sounds",
-        "description": "Please set feedback sounds.",
+        "title": "Sonidos",
+        "description": "Por favor, configure los sonidos de los comentarios.",
         "fav_rb": "When you favorite or boost the toot",
         "toot": "When you post toot"
       },
