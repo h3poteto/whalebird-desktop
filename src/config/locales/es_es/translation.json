@@ -159,16 +159,16 @@
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Tamaño de letra",
-      "font_family": "Font family",
-      "toot_padding": "Padding around toots",
+      "font_family": "Tipo de letra",
+      "toot_padding": "Recuadro de toots",
       "display_style": {
-        "title": "Display style of username",
-        "display_name_and_username": "Display name and username",
-        "display_name": "Display name",
-        "username": "Username"
+        "title": "Mostrar estilo del nombre de usuario",
+        "display_name_and_username": "Nombre y nombre de usuario",
+        "display_name": "Mostrar nombre",
+        "username": "Nombre de usario"
       },
       "time_format": {
-        "title": "Time format",
+        "title": "Formato de hora",
         "absolute": "Absolute",
         "relative": "Relative"
       }
