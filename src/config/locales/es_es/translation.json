@@ -418,42 +418,42 @@
     "remove_user_error": "Error al eliminar el usuario",
     "find_account_error": "Cuenta no encontrada",
     "reblog_error": "Error al publicar de nuevo",
-    "unreblog_error": "Failed to unreblog",
-    "favourite_error": "Failed to favourite",
-    "unfavourite_error": "Failed to unfavourite",
-    "delete_error": "Failed to delete the toot",
-    "search_error": "Failed to search",
-    "toot_error": "Failed to toot",
-    "update_list_memberships_error": "Failed to update the list memberships",
-    "add_user_error": "Failed to add user",
-    "authorize_url_error": "Failed to get authorize url",
-    "domain_confirmed": "{{domain}} is confirmed, please login",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
-    "loading": "Loading..."
+    "unreblog_error": "Error al no publicar de nuevo",
+    "favourite_error": "Error al favorecer",
+    "unfavourite_error": "Error al no favorecer",
+    "delete_error": "Error al eliminar el toot",
+    "search_error": "Error al buscar",
+    "toot_error": "Error al enviar el toot",
+    "update_list_memberships_error": "Error al actualizar la lista de miembros",
+    "add_user_error": "Error al agregar usuario",
+    "authorize_url_error": "Error al obtener la url autorizada",
+    "domain_confirmed": "{{domain}} está confirmado, por favor inicia sesión",
+    "domain_doesnt_exist": "Error al conectar {{domain}}, confirme la URL del servidor",
+    "loading": "Cargando..."
   },
   "validation": {
     "login": {
-      "require_domain_name": "A domain name is required",
-      "domain_format": "Please only enter the domain name"
+      "require_domain_name": "Se requiere un nombre de dominio",
+      "domain_format": "Por favor, introduzca sólo el nombre de dominio"
     },
     "new_toot": {
-      "toot_length": "Toot length should be {{min}} to {{max}}",
-      "attach_length": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "toot_length": "La longitud del Toot debe ser de {{min}} a {{max}}",
+      "attach_length": "Solo puede adjuntar hasta {{max}} imágenes",
+      "attach_image": "Sólo puede adjuntar imágenes o vídeos",
+      "poll_invalid": "Opciones de encuestas inválidas"
     }
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{{username}} favourited your status"
+      "title": "Favorito",
+      "body": "{{username}} ha favorecido tu estado"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{{username}} is now following you"
+      "title": "Seguir",
+      "body": "{{username}} ahora te está siguiendo"
     },
     "follow_request": {
-      "title": "FollowRequest",
+      "title": "Solicitud de Seguimiento",
       "body": "Receive a follow request from {{username}}"
     },
     "reblog": {
