@@ -141,8 +141,8 @@
       "theme": {
         "light": "Claro",
         "dark": "Oscuro",
-        "solarized_light": "Solarizado Claro",
-        "solarized_dark": "Solarizado oscuro",
+        "solarized_light": "Soleado Claro",
+        "solarized_dark": "Soleado oscuro",
         "kimbie_dark": "KimbieDark",
         "custom": "Personalizado"
       },
@@ -165,7 +165,7 @@
         "title": "Mostrar estilo del nombre de usuario",
         "display_name_and_username": "Nombre y nombre de usuario",
         "display_name": "Mostrar nombre",
-        "username": "Nombre de usario"
+        "username": "Nombre de usuario"
       },
       "time_format": {
         "title": "Formato de hora",
@@ -187,7 +187,7 @@
     "account": {
       "title": "Cuenta",
       "connected": "Cuenta conectada",
-      "username": "Nombre de usario",
+      "username": "Nombre de usuario",
       "domain": "Dominio",
       "association": "Asociación",
       "order": "Orden",
@@ -344,7 +344,7 @@
       "unfollow": "Dejar de seguir",
       "follow_requested": "Solicitudes de seguimiento",
       "open_in_browser": "Abrir en el navegador",
-      "manage_list_memberships": "Administrar lista de membresías",
+      "manage_list_memberships": "Administrar lista de membresía",
       "mute": "Silenciar",
       "unmute": "Desactivar Silencio",
       "unblock": "Desbloquear",
@@ -379,15 +379,15 @@
   "login": {
     "domain_name_label": "Primero, iniciemos sesión en un servidor Mastodon. Por favor, introduzca un nombre de dominio del servidor.",
     "proxy_info": "Si desea utilizar el servidor proxy, configure su proxy en",
-    "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "proxy_here": " aquí",
+    "search": "Buscar",
+    "login": "Ingresar"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
-    "misskey_label": "Por favor, envíar después de autorizarlo en su navegador.",
+    "manually_1": "Se ha abierto una página de autorización en su navegador.",
+    "manually_2": "Si no se ha abierto, por favor vaya a la siguiente URL manualmente.",
+    "code_label": "Pegue el código de autorización de su navegador:",
+    "misskey_label": "Por favor, enviar después de autorizarlo en su navegador.",
     "submit": "Enviar"
   },
   "receive_drop": {
