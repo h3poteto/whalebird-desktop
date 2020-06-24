@@ -181,34 +181,34 @@
         "reblog": "Notificarme cuando reciba una nueva publicación de toot",
         "favourite": "Notificarme cuando reciba un favorecido",
         "follow": "Notificarme cuando reciba un seguimiento",
-        "reaction": "Notify me when I receive a emoji reaction"
+        "reaction": "Notificarme cuando reciba una reacción de emoji"
       }
     },
     "account": {
-      "title": "Account",
-      "connected": "Connected Account",
-      "username": "Username",
-      "domain": "Domain",
-      "association": "Association",
-      "order": "Order",
-      "remove_association": "Remove assocication",
-      "remove_all_associations": "Remove all associations",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "confirm_message": "Are you sure to remove all associations?"
+      "title": "Cuenta",
+      "connected": "Cuenta conectada",
+      "username": "Nombre de usario",
+      "domain": "Dominio",
+      "association": "Asociación",
+      "order": "Orden",
+      "remove_association": "Eliminar asociación",
+      "remove_all_associations": "Eliminar todas las asociaciones",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar",
+      "confirm_message": "¿Está seguro de eliminar todas las asociaciones?"
     },
     "network": {
-      "title": "Network",
+      "title": "Red",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
-        "host": "Proxy host",
-        "port": "Proxy port",
-        "username": "Proxy username",
-        "password": "Proxy password",
+        "title": "Configuración del proxy",
+        "no": "Sin proxy",
+        "system": "Usar proxy del sistema",
+        "manual": "Configuración manual del proxy",
+        "protocol": "Protocolo",
+        "host": "Servidor proxy",
+        "port": "Puerto del proxy",
+        "username": "Nombre de usuario del Proxy",
+        "password": "Contraseña del proxy",
         "protocol_list": {
           "http": "http",
           "https": "https",
@@ -218,33 +218,33 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "Guardar"
     },
     "language": {
-      "title": "Language",
-      "language_description": "Choose the language you would like to use with Whalebird.",
-      "notice": "Requires relaunch",
+      "title": "Idioma",
+      "language_description": "Elige el idioma que te gustaría usar con Whalebird.",
+      "notice": "Requiere reiniciar",
       "confirm": {
-        "title": "Warning",
-        "message": "You have to restart this application. Continue?",
-        "ok": "Restart Now",
-        "cancel": "Cancel"
+        "title": "Advertencia",
+        "message": "Tienes que reiniciar esta aplicación. ¿Continuar?",
+        "ok": "Reiniciar ahora",
+        "cancel": "Cancelar"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
-      "cw": "Write your warning here",
-      "status": "What is on your mind?",
-      "cancel": "Cancel",
+      "title": "Nuevo Toot",
+      "cw": "Escribe tu advertencia aquí",
+      "status": "¿En qué estás pensando?",
+      "cancel": "Cancelar",
       "toot": "Toot",
-      "close_confirm": "Are you sure you want to cancel the new toot?",
-      "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Cancel",
-      "description": "Describe for the visually impaired",
+      "close_confirm": "¿Está seguro que desea cancelar el nuevo toot?",
+      "close_confirm_ok": "Aceptar",
+      "close_confirm_cancel": "Cancelar",
+      "description": "Describir para los discapacitados visuales",
       "footer": {
-        "add_image": "Add images",
+        "add_image": "Añadir imágenes",
         "poll": "Añadir una encuesta",
         "change_visibility": "Cambiar visibilidad",
         "change_sensitive": "Cambiar sensibilidad",
@@ -454,19 +454,19 @@
     },
     "follow_request": {
       "title": "Solicitud de Seguimiento",
-      "body": "Receive a follow request from {{username}}"
+      "body": "Recibir una solicitud de seguimiento de {{username}}"
     },
     "reblog": {
-      "title": "Reblog",
-      "body": "{{username}} boosted your status"
+      "title": "Publicar de nuevo",
+      "body": "{{username}} ha impulsado tu estado"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "Cita",
+      "body": "{{username}} ha citado tu estado"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "Reacción",
+      "body": "{{username}} reaccionó a tu estado"
     }
   }
 }
