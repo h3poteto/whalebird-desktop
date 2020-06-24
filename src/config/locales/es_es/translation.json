@@ -156,7 +156,7 @@
         "secondary_color": "Fuente secundaria",
         "border_color": "Borde",
         "header_menu_color": "Menú de encabezamiento",
-        "wrapper_mask_color": "Modal wrapper"
+        "wrapper_mask_color": "Fondo de la tarjeta de usuario"
       },
       "font_size": "Tamaño de letra",
       "font_family": "Tipo de letra",
@@ -178,9 +178,9 @@
       "enable": {
         "description": "Por favor, configure los eventos de notificación.",
         "reply": "Notificarme cuando reciba una respuesta",
-        "reblog": "Notify me when I receive a reblog",
-        "favourite": "Notify me when I receive a favourite",
-        "follow": "Notify me when I receive a follow",
+        "reblog": "Notificarme cuando reciba una nueva publicación de toot",
+        "favourite": "Notificarme cuando reciba un favorecido",
+        "follow": "Notificarme cuando reciba un seguimiento",
         "reaction": "Notify me when I receive a emoji reaction"
       }
     },
