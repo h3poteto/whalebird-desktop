@@ -89,8 +89,7 @@ const actions: ActionTree<TimelineState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const pinned = await client.getAccountStatuses(account.id, { pinned: true, limit: 10 })
     commit(MUTATION_TYPES.UPDATE_PINNED_TOOTS, pinned.data)
@@ -108,8 +107,7 @@ const actions: ActionTree<TimelineState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     try {
       const res = await client.getAccountStatuses(loadPosition.account.id, {

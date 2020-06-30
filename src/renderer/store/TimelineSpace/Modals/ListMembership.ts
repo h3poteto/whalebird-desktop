@@ -51,8 +51,7 @@ const actions: ActionTree<ListMembershipState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getAccountLists(account.id)
     commit(
@@ -66,8 +65,7 @@ const actions: ActionTree<ListMembershipState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getLists()
     commit(MUTATION_TYPES.CHANGE_LISTS, res.data)
@@ -88,8 +86,7 @@ const actions: ActionTree<ListMembershipState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const removedPromise = removedLists.map(id => {
       return client.deleteAccountsFromList(id, [state.account!.id])

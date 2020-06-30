@@ -73,13 +73,7 @@ const mutations: MutationTree<FavouritesState> = {
 
 const actions: ActionTree<FavouritesState, RootState> = {
   fetchFavourites: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Entity.Status>> => {
-    const client = generator(
-      rootState.TimelineSpace.sns,
-      account.baseURL,
-      account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
-    )
+    const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
     const res = await client.getFavourites({ limit: 40 })
     commit(MUTATION_TYPES.UPDATE_FAVOURITES, res.data)
     // Parse link header
@@ -108,8 +102,7 @@ const actions: ActionTree<FavouritesState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getFavourites({ max_id: state.maxId, limit: 40 }).finally(() => {
       commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)

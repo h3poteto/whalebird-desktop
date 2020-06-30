@@ -41,8 +41,7 @@ const actions: ActionTree<AddListMemberState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.searchAccount(name, { following: true })
     commit(MUTATION_TYPES.UPDATE_ACCOUNTS, res.data)
@@ -53,8 +52,7 @@ const actions: ActionTree<AddListMemberState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.addAccountsToList(state.targetListId!, [account.id])
     return res.data

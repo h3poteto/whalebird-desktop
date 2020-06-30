@@ -124,8 +124,7 @@ const actions: ActionTree<TootDetailState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getStatusContext(message.id, { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_ANCESTORS, res.data.ancestors)

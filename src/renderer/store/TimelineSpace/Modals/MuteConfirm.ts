@@ -38,8 +38,7 @@ const actions: ActionTree<MuteConfirmState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.muteAccount(state.account!.id, notify)
     // Reload relationship

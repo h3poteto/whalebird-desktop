@@ -106,8 +106,7 @@ const actions: ActionTree<TagState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getTagTimeline(encodeURIComponent(tag), { limit: 40 })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
@@ -153,8 +152,7 @@ const actions: ActionTree<TagState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     return client
       .getTagTimeline(loadPosition.tag, { max_id: loadPosition.status.id, limit: 40 })

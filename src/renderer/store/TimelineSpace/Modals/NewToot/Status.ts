@@ -171,8 +171,7 @@ const actions: ActionTree<StatusState, RootState> = {
         rootState.TimelineSpace.sns,
         rootState.TimelineSpace.account.baseURL,
         rootState.TimelineSpace.account.accessToken,
-        rootState.App.userAgent,
-        rootState.App.proxyConfiguration
+        rootState.App.userAgent
       )
       commit(MUTATION_TYPES.SET_CLIENT, client)
       const res = await client.searchAccount(word)
@@ -219,8 +218,7 @@ const actions: ActionTree<StatusState, RootState> = {
         rootState.TimelineSpace.sns,
         rootState.TimelineSpace.account.baseURL,
         rootState.TimelineSpace.account.accessToken,
-        rootState.App.userAgent,
-        rootState.App.proxyConfiguration
+        rootState.App.userAgent
       )
       commit(MUTATION_TYPES.SET_CLIENT, client)
       const res = await client.search(word, 'hashtags')
