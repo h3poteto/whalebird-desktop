@@ -1049,7 +1049,7 @@ ipcMain.on('get-global-header', (event: IpcMainEvent) => {
 })
 
 // proxy
-ipcMain.on('update-proxy-config', async (event: IpcMainEvent, proxy: Proxy) => {
+ipcMain.handle('update-proxy-config', async (_event: IpcMainInvokeEvent, proxy: Proxy) => {
   const preferences = new Preferences(preferencesDBPath)
   try {
     const conf = await preferences.update({
@@ -1061,15 +1061,11 @@ ipcMain.on('update-proxy-config', async (event: IpcMainEvent, proxy: Proxy) => {
     } else {
       await mainWindow?.webContents.session.setProxy({})
     }
-    event.sender.send('response-update-proxy-config', conf)
+    return conf
   } catch (err) {
     log.error(err)
   }
-})
-
-ipcMain.on('get-proxy-configuration', async (event: IpcMainEvent) => {
-  const proxy = await proxyConfiguration.forMastodon()
-  event.sender.send('response-get-proxy-configuration', proxy)
+  return null
 })
 
 // language

@@ -124,18 +124,16 @@ const actions: ActionTree<NetworkState, RootState> = {
   updatePassword: ({ commit }, password: string) => {
     commit(MUTATION_TYPES.UPDATE_PASSWORD, password)
   },
-  saveProxyConfig: ({ state, dispatch }) => {
+  saveProxyConfig: async ({ state }) => {
     const proxy: Proxy = {
       source: state.source,
       manualProxyConfig: state.proxy
     }
-    win.ipcRenderer.once('response-update-proxy-config', async () => {
-      dispatch('App/loadProxy', {}, { root: true })
-      // Originally we have to restart all streamings after user change proxy configuration.
-      // But streamings are restart after close preferences.
-      // So we don't have to restart streaming here.
-    })
-    win.ipcRenderer.send('update-proxy-config', proxy)
+    // Originally we have to restart all streamings after user change proxy configuration.
+    // But streamings are restart after close preferences.
+    // So we don't have to restart streaming here.
+    // And we have to update webContents session, but it is care in main process.
+    await win.ipcRenderer.invoke('update-proxy-config', proxy)
   }
 }
 
