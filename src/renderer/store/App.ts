@@ -161,15 +161,6 @@ const actions: ActionTree<AppState, RootState> = {
         break
     }
   }
-  // loadProxy: ({ commit }) => {
-  //   return new Promise(resolve => {
-  //     win.ipcRenderer.once('response-get-proxy-configuration', (_, proxy: ProxyConfig | false) => {
-  //       commit(MUTATION_TYPES.UPDATE_PROXY_CONFIGURATION, proxy)
-  //       resolve(proxy)
-  //     })
-  //     win.ipcRenderer.send('get-proxy-configuration')
-  //   })
-  // }
 }
 
 const App: Module<AppState, RootState> = {
