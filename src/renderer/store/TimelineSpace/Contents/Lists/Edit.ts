@@ -27,8 +27,7 @@ const actions: ActionTree<EditState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getAccountsInList(listId, { limit: 0 })
     commit(MUTATION_TYPES.CHANGE_MEMBERS, res.data)
@@ -39,8 +38,7 @@ const actions: ActionTree<EditState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     return client.deleteAccountsFromList(remove.listId, [remove.account.id])
   }

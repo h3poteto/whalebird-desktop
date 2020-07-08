@@ -102,8 +102,7 @@ const actions: ActionTree<PublicState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     try {
       const res = await client.getPublicTimeline({ limit: 40 })
@@ -124,8 +123,7 @@ const actions: ActionTree<PublicState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     return client
       .getPublicTimeline({ max_id: lastStatus.id, limit: 40 })

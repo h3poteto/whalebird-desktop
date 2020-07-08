@@ -164,8 +164,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_ACCOUNT, blankAccount)
     return true
   },
-  detectSNS: async ({ commit, state, rootState }) => {
-    const sns = await detector(state.account.baseURL, rootState.App.proxyConfiguration)
+  detectSNS: async ({ commit, state }) => {
+    const sns = await detector(state.account.baseURL)
     commit(MUTATION_TYPES.CHANGE_SNS, sns)
   },
   // -----------------------------------------------
@@ -193,8 +193,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchEmojis
    */
-  fetchEmojis: async ({ commit, state, rootState }, account: LocalAccount): Promise<Array<Entity.Emoji>> => {
-    const client = generator(state.sns, account.baseURL, null, 'Whalebird', rootState.App.proxyConfiguration)
+  fetchEmojis: async ({ commit, state }, account: LocalAccount): Promise<Array<Entity.Emoji>> => {
+    const client = generator(state.sns, account.baseURL, null, 'Whalebird')
     const res = await client.getInstanceCustomEmojis()
     commit(MUTATION_TYPES.UPDATE_EMOJIS, res.data)
     return res.data
@@ -202,8 +202,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchInstance
    */
-  fetchInstance: async ({ commit, state, rootState }, account: LocalAccount) => {
-    const client = generator(state.sns, account.baseURL, null, 'Whalebird', rootState.App.proxyConfiguration)
+  fetchInstance: async ({ commit, state }, account: LocalAccount) => {
+    const client = generator(state.sns, account.baseURL, null, 'Whalebird')
     const res = await client.getInstance()
     commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
     return true

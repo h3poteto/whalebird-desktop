@@ -66,8 +66,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getAccount(accountID)
     dispatch('identityProofs', res.data)
@@ -78,8 +77,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
 
     // Find account in toot
@@ -119,8 +117,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getRelationship(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
@@ -142,8 +139,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.followAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
@@ -155,8 +151,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.unfollowAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
@@ -171,8 +166,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.unmuteAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
@@ -184,8 +178,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.blockAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
@@ -197,8 +190,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.unblockAccount(account.id)
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
@@ -210,8 +202,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getIdentityProof(account.id)
     commit(MUTATION_TYPES.CHANGE_IDENTITY_PROOFS, res.data)

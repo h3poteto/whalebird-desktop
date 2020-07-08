@@ -55,10 +55,10 @@ const actions: ActionTree<LoginState, RootState> = {
   pageBack: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_INSTANCE, null)
   },
-  confirmInstance: async ({ commit, rootState }, domain: string): Promise<boolean> => {
+  confirmInstance: async ({ commit }, domain: string): Promise<boolean> => {
     commit(MUTATION_TYPES.CHANGE_SEARCHING, true)
     const cleanDomain = domain.trim()
-    const sns = await detector(`https://${cleanDomain}`, rootState.App.proxyConfiguration)
+    const sns = await detector(`https://${cleanDomain}`)
     commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
     commit(MUTATION_TYPES.CHANGE_INSTANCE, cleanDomain)
     commit(MUTATION_TYPES.CHANGE_SNS, sns)

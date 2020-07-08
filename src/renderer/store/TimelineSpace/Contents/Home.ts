@@ -115,8 +115,7 @@ const actions: ActionTree<HomeState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getHomeTimeline({ limit: 40 })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
@@ -131,8 +130,7 @@ const actions: ActionTree<HomeState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     return client
       .getHomeTimeline({ max_id: lastStatus.id, limit: 40 })

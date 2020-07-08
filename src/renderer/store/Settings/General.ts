@@ -33,8 +33,7 @@ const actions: ActionTree<GeneralState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.verifyAccountCredentials()
     const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
@@ -49,8 +48,7 @@ const actions: ActionTree<GeneralState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
       return v.value === value
@@ -64,8 +62,7 @@ const actions: ActionTree<GeneralState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.updateCredentials({ source: { sensitive: value } })
     commit(MUTATION_TYPES.CHANGE_SENSITIVE, value)

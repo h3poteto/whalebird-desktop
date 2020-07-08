@@ -26,8 +26,7 @@ const actions: ActionTree<IndexState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getLists()
     commit(MUTATION_TYPES.CHANGE_LISTS, res.data)
@@ -38,8 +37,7 @@ const actions: ActionTree<IndexState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.createList(title)
     return res.data

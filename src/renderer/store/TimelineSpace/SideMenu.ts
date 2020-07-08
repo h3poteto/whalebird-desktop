@@ -99,26 +99,14 @@ const mutations: MutationTree<SideMenuState> = {
 const actions: ActionTree<SideMenuState, RootState> = {
   fetchLists: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Entity.List>> => {
     if (account === null) account = rootState.TimelineSpace.account
-    const client = generator(
-      rootState.TimelineSpace.sns,
-      account.baseURL,
-      account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
-    )
+    const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
     const res = await client.getLists()
     commit(MUTATION_TYPES.UPDATE_LISTS, res.data)
     return res.data
   },
   fetchFollowRequests: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Entity.Account>> => {
     if (account === null) account = rootState.TimelineSpace.account
-    const client = generator(
-      rootState.TimelineSpace.sns,
-      account.baseURL,
-      account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
-    )
+    const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
     const res = await client.getFollowRequests()
     commit(MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS, res.data.length > 0)
     return res.data

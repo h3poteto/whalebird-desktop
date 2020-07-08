@@ -297,10 +297,6 @@ async function createWindow() {
 
   mainWindowState.manage(mainWindow)
 
-  mainWindow.loadURL(winURL)
-
-  mainWindow.webContents.on('will-navigate', event => event.preventDefault())
-
   /**
    * Get system proxy configuration.
    */
@@ -309,6 +305,17 @@ async function createWindow() {
     proxyConfiguration.setSystemProxy(proxyInfo)
     log.info(`System proxy configuration: ${proxyInfo}`)
   }
+
+  /**
+   * Set proxy for BrowserWindow
+   */
+  const proxyConfig = await proxyConfiguration.forMastodon()
+  if (proxyConfig) {
+    await mainWindow.webContents.session.setProxy({ proxyRules: `${proxyConfig.protocol}://${proxyConfig.host}:${proxyConfig.port}` })
+  }
+  mainWindow.loadURL(winURL)
+
+  mainWindow.webContents.on('will-navigate', event => event.preventDefault())
 
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -1042,23 +1049,23 @@ ipcMain.on('get-global-header', (event: IpcMainEvent) => {
 })
 
 // proxy
-ipcMain.on('update-proxy-config', (event: IpcMainEvent, proxy: Proxy) => {
+ipcMain.handle('update-proxy-config', async (_event: IpcMainInvokeEvent, proxy: Proxy) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .update({
+  try {
+    const conf = await preferences.update({
       proxy: proxy
     })
-    .then(conf => {
-      event.sender.send('response-update-proxy-config', conf)
-    })
-    .catch(err => {
-      log.error(err)
-    })
-})
-
-ipcMain.on('get-proxy-configuration', async (event: IpcMainEvent) => {
-  const proxy = await proxyConfiguration.forMastodon()
-  event.sender.send('response-get-proxy-configuration', proxy)
+    const proxyConfig = await proxyConfiguration.forMastodon()
+    if (proxyConfig) {
+      await mainWindow?.webContents.session.setProxy({ proxyRules: `${proxyConfig.protocol}://${proxyConfig.host}:${proxyConfig.port}` })
+    } else {
+      await mainWindow?.webContents.session.setProxy({})
+    }
+    return conf
+  } catch (err) {
+    log.error(err)
+  }
+  return null
 })
 
 // language

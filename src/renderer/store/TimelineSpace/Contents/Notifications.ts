@@ -109,8 +109,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getNotifications({ limit: 30 })
     commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, res.data)
@@ -128,8 +127,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     return client
       .getNotifications({ max_id: lastNotification.id, limit: 30 })

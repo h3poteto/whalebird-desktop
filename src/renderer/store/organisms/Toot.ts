@@ -25,8 +25,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.reblogStatus(message.id)
     // API returns new status when reblog.
@@ -41,8 +40,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.unreblogStatus(message.id)
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
@@ -53,8 +51,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.favouriteStatus(message.id)
     win.ipcRenderer.send('fav-rt-action-sound')
@@ -66,8 +63,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.unfavouriteStatus(message.id)
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
@@ -78,8 +74,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     await client.deleteStatus(message.id)
     return message
@@ -89,8 +84,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     return client.blockAccount(account.id)
   },
@@ -99,8 +93,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.votePoll(params.id, params.choices)
     return res.data
@@ -110,8 +103,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getPoll(id)
     return res.data
@@ -121,8 +113,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.createEmojiReaction(params.status_id, params.native)
     return res.data
@@ -132,8 +123,7 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.deleteEmojiReaction(params.status_id, params.native)
     return res.data

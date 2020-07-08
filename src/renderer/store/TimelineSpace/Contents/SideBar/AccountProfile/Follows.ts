@@ -32,8 +32,7 @@ const actions: ActionTree<FollowsState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getAccountFollowing(account.id, { limit: 80 })
     commit(MUTATION_TYPES.UPDATE_FOLLOWS, res.data)
@@ -45,8 +44,7 @@ const actions: ActionTree<FollowsState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getRelationships(ids)
     commit(MUTATION_TYPES.UPDATE_RELATIONSHIPS, res.data)

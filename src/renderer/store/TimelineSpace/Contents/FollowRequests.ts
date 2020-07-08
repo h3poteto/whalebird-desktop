@@ -26,8 +26,7 @@ const actions: ActionTree<FollowRequestsState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.getFollowRequests()
     commit(MUTATION_TYPES.UPDATE_REQUESTS, res.data)
@@ -38,8 +37,7 @@ const actions: ActionTree<FollowRequestsState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.acceptFollowRequest(user.id)
     await dispatch('fetchRequests')
@@ -51,8 +49,7 @@ const actions: ActionTree<FollowRequestsState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     const res = await client.rejectFollowRequest(user.id)
     await dispatch('fetchRequests')

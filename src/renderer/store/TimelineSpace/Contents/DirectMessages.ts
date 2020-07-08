@@ -103,8 +103,7 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     try {
       const res = await client.getConversationTimeline({ limit: 40 })
@@ -126,8 +125,7 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent,
-      rootState.App.proxyConfiguration
+      rootState.App.userAgent
     )
     return client
       .getConversationTimeline({ max_id: lastStatus.id, limit: 40 })
