@@ -72,13 +72,11 @@ If you are using snap, please install from [snapcraft.io](https://snapcraft.io/w
 $ sudo snap install whalebird
 ```
 
-Or you can install from [Arch User Repository](https://aur.archlinux.org/packages/whalebird-bin/).
+Or you can install from [Arch User Repository](https://aur.archlinux.org/packages/whalebird/).
 
 ```
-$ yay -S whalebird-bin
+$ yay -S whalebird
 ```
-
-:sparkles: Thanks to [@ariasuni](https://github.com/ariasuni) for adding it to AUR.
 
 ### Windows
 
