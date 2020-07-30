@@ -26,27 +26,35 @@ const mockClient = {
       resolve(res)
     })
   },
-  deleteAccountsFromList: () => {
-    return new Promise<Response>(resolve => {
-      const res: Response = {
-        data: {},
-        status: 200,
-        statusText: 'OK',
-        headers: {}
-      }
-      resolve(res)
-    })
+  deleteAccountsFromList: (id: string, account_ids: Array<string>) => {
+    if (id === list3.id && account_ids[0]) {
+      return new Promise<Response>(resolve => {
+        const res: Response = {
+          data: {},
+          status: 200,
+          statusText: 'OK',
+          headers: {}
+        }
+        resolve(res)
+      })
+    } else {
+      return Promise.reject(new Error('list id or account id is not match'))
+    }
   },
-  addAccountsToList: () => {
-    return new Promise<Response>(resolve => {
-      const res: Response = {
-        data: {},
-        status: 200,
-        statusText: 'OK',
-        headers: {}
-      }
-      resolve(res)
-    })
+  addAccountsToList: (id: string, account_ids: Array<string>) => {
+    if (id === list1.id && account_ids[0] === account.id) {
+      return new Promise<Response>(resolve => {
+        const res: Response = {
+          data: {},
+          status: 200,
+          statusText: 'OK',
+          headers: {}
+        }
+        resolve(res)
+      })
+    } else {
+      return Promise.reject(new Error('list id or account id is not match'))
+    }
   }
 }
 
@@ -86,6 +94,11 @@ const list1: Entity.List = {
 const list2: Entity.List = {
   id: '2',
   title: 'list2'
+}
+
+const list3: Entity.List = {
+  id: '3',
+  title: 'list3'
 }
 
 let state = (): ListMembershipState => {
@@ -143,7 +156,7 @@ describe('ListMembership', () => {
       await store.dispatch('ListMembership/fetchListMembership', {
         id: '5'
       })
-      expect(store.state.ListMembership.belongToLists).toEqual(['1', '2'])
+      expect(store.state.ListMembership.belongToLists).toEqual([list1, list2])
     })
   })
 
@@ -161,13 +174,13 @@ describe('ListMembership', () => {
           modalOpen: false,
           account: account,
           lists: [],
-          belongToLists: [list2]
+          belongToLists: [list2, list3]
         }
       }
     })
     it('should be changed', async () => {
-      await store.dispatch('ListMembership/changeBelongToLists', [list1])
-      expect(store.state.ListMembership.belongToLists).toEqual([list1])
+      await store.dispatch('ListMembership/changeBelongToLists', [list1.id, list2.id])
+      expect(store.state.ListMembership.belongToLists).toEqual([list1, list2])
     })
   })
 })
