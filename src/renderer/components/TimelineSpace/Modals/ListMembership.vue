@@ -1,10 +1,5 @@
 <template>
-  <el-dialog
-    :title="$t('modals.list_membership.title')"
-    :visible.sync="listMembershipModal"
-    width="400px"
-    class="list-membership-modal"
-    >
+  <el-dialog :title="$t('modals.list_membership.title')" :visible.sync="listMembershipModal" width="400px" class="list-membership-modal">
     <el-checkbox-group v-model="belongToLists" v-loading="loading">
       <table class="lists">
         <tbody>
@@ -24,7 +19,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'list-membership',
-  data () {
+  data() {
     return {
       loading: false
     }
@@ -35,25 +30,28 @@ export default {
       lists: state => state.TimelineSpace.Modals.ListMembership.lists
     }),
     listMembershipModal: {
-      get () {
+      get() {
         return this.$store.state.TimelineSpace.Modals.ListMembership.modalOpen
       },
-      set (value) {
+      set(value) {
         this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', value)
       }
     },
     belongToLists: {
-      get () {
-        return this.$store.state.TimelineSpace.Modals.ListMembership.belongToLists
+      get() {
+        return this.$store.state.TimelineSpace.Modals.ListMembership.belongToLists.map(l => l.id)
       },
-      set (value) {
-        return this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeBelongToLists', value)
+      set(value) {
+        this.loading = true
+        return this.$store
+          .dispatch('TimelineSpace/Modals/ListMembership/changeBelongToLists', value)
           .catch(() => {
             this.$message({
               message: this.$t('message.update_list_memberships_error'),
               type: 'error'
             })
           })
+          .finally(() => (this.loading = false))
       }
     }
   },
@@ -65,7 +63,7 @@ export default {
     }
   },
   methods: {
-    async init () {
+    async init() {
       this.loading = true
       try {
         await this.$store.dispatch('TimelineSpace/Modals/ListMembership/fetchListMembership', this.account)

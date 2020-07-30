@@ -1,5 +1,4 @@
 import generator, { Entity } from 'megalodon'
-import lodash from 'lodash'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -54,10 +53,7 @@ const actions: ActionTree<ListMembershipState, RootState> = {
       rootState.App.userAgent
     )
     const res = await client.getAccountLists(account.id)
-    commit(
-      MUTATION_TYPES.CHANGE_BELONG_TO_LISTS,
-      res.data.map(l => l.id)
-    )
+    commit(MUTATION_TYPES.CHANGE_BELONG_TO_LISTS, res.data)
     return res.data
   },
   fetchLists: async ({ commit, rootState }) => {
@@ -71,17 +67,10 @@ const actions: ActionTree<ListMembershipState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_LISTS, res.data)
     return res.data
   },
-  changeBelongToLists: async ({ rootState, commit, state }, belongToLists: Array<string>) => {
+  changeBelongToLists: async ({ rootState, dispatch, state }, belongToLists: Array<string>) => {
     // Calcurate diff
-    const removedLists = lodash.difference(
-      state.belongToLists.map(l => l.id),
-      belongToLists
-    )
-    const addedLists = lodash.difference(
-      belongToLists,
-      state.belongToLists.map(l => l.id)
-    )
-    commit(MUTATION_TYPES.CHANGE_BELONG_TO_LISTS, belongToLists)
+    const removedLists = state.belongToLists.map(l => l.id).filter(i => belongToLists.indexOf(i) === -1)
+    const addedLists = belongToLists.filter(i => state.belongToLists.map(l => l.id).indexOf(i) === -1)
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -95,6 +84,7 @@ const actions: ActionTree<ListMembershipState, RootState> = {
       return client.addAccountsToList(id, [state.account!.id])
     })
     const res = await Promise.all(removedPromise.concat(addedPromise))
+    await dispatch('fetchListMembership', state.account!)
     return res
   }
 }
