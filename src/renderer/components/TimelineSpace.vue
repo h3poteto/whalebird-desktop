@@ -30,6 +30,7 @@ import Mousetrap from 'mousetrap'
 import ReceiveDrop from './TimelineSpace/ReceiveDrop'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
+import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'timeline-space',
@@ -46,7 +47,7 @@ export default {
       collapse: state => state.TimelineSpace.SideMenu.collapse
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    shortcutEnabled: function() {
+    shortcutEnabled: function () {
       return !this.modalOpened
     }
   },
@@ -120,12 +121,17 @@ export default {
       }
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaCount')
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/uploadImage', file).catch(() => {
-        this.$message({
-          message: this.$t('message.attach_error'),
-          type: 'error'
+      this.$store
+        .dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
+        .then(() => {
+          Event.$emit('image-uploaded')
         })
-      })
+        .catch(() => {
+          this.$message({
+            message: this.$t('message.attach_error'),
+            type: 'error'
+          })
+        })
       return false
     },
     onDragEnter(e) {
