@@ -277,7 +277,7 @@
     "style-loader": "^1.2.1",
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0",
-    "ts-jest": "^24.3.0",
+    "ts-jest": "^26.1.4",
     "ts-loader": "^8.0.1",
     "ttfinfo": "^0.2.0",
     "typescript": "^3.9.7",
