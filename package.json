@@ -280,7 +280,7 @@
     "ts-jest": "^24.3.0",
     "ts-loader": "^8.0.0",
     "ttfinfo": "^0.2.0",
-    "typescript": "^3.9.6",
+    "typescript": "^3.9.7",
     "url-loader": "^4.1.0",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^15.9.3",
