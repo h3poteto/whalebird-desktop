@@ -170,7 +170,7 @@
     "animate.css": "^4.1.0",
     "auto-launch": "^5.0.5",
     "axios": "^0.19.2",
-    "blueimp-load-image": "^5.13.0",
+    "blueimp-load-image": "^5.14.0",
     "boom": "^7.3.0",
     "deep-extend": "^0.6.0",
     "electron-context-menu": "^2.2.0",
