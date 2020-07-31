@@ -146,6 +146,7 @@ import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 import Poll from './NewToot/Poll'
 import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit, NewTootPollInvalid } from '@/errors/validations'
+import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'new-toot',
@@ -228,6 +229,11 @@ export default {
   },
   created() {
     this.$store.dispatch('TimelineSpace/Modals/NewToot/setupLoading')
+  },
+  mounted() {
+    Event.$on('image-uploaded', () => {
+      this.statusHeight = this.statusHeight - this.$refs.preview.offsetHeight
+    })
   },
   watch: {
     newTootModal: function (newState, oldState) {
