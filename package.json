@@ -273,7 +273,7 @@
     "prettier": "^2.0.5",
     "prettier-stylelint": "^0.4.2",
     "regenerator-runtime": "^0.13.7",
-    "sass-loader": "^9.0.2",
+    "sass-loader": "^9.0.3",
     "style-loader": "^1.2.1",
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0",
