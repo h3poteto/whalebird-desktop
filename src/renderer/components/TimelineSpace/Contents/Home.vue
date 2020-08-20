@@ -234,4 +234,4 @@ export default {
   }
 }
 </style>
-<style src="@/assets/timeline-transition.scss"></style>
+<style lang="scss" src="@/assets/timeline-transition.scss"></style>
