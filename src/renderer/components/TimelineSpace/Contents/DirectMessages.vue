@@ -57,7 +57,7 @@ export default {
       unreadNotification: state => state.TimelineSpace.unreadNotification
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    shortcutEnabled: function() {
+    shortcutEnabled: function () {
       if (this.modalOpened) {
         return false
       }
@@ -83,7 +83,7 @@ export default {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.focusedId = previousFocusedId
       })
     })
@@ -113,14 +113,14 @@ export default {
     }
   },
   watch: {
-    startReload: function(newState, oldState) {
+    startReload: function (newState, oldState) {
       if (!oldState && newState) {
         this.reload().finally(() => {
           this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
         })
       }
     },
-    focusedId: function(newState, _oldState) {
+    focusedId: function (newState, _oldState) {
       if (newState && this.heading) {
         this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', false)
       } else if (newState === null && !this.heading) {
@@ -253,4 +253,4 @@ export default {
   }
 }
 </style>
-<style src="@/assets/timeline-transition.scss"></style>
+<style lang="scss" src="@/assets/timeline-transition.scss"></style>

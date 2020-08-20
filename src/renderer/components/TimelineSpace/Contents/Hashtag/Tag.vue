@@ -55,7 +55,7 @@ export default {
       filter: state => state.TimelineSpace.Contents.Hashtag.Tag.filter
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    shortcutEnabled: function() {
+    shortcutEnabled: function () {
       if (this.modalOpened) {
         return false
       }
@@ -78,27 +78,27 @@ export default {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.focusedId = previousFocusedId
       })
     })
   },
   watch: {
-    tag: function(newTag, _oldTag) {
+    tag: function (newTag, _oldTag) {
       this.$store.commit('TimelineSpace/Contents/changeLoading', true)
       this.reset()
       this.load(newTag).finally(() => {
         this.$store.commit('TimelineSpace/Contents/changeLoading', false)
       })
     },
-    startReload: function(newState, oldState) {
+    startReload: function (newState, oldState) {
       if (!oldState && newState) {
         this.reload().finally(() => {
           this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
         })
       }
     },
-    focusedId: function(newState, _oldState) {
+    focusedId: function (newState, _oldState) {
       if (newState && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', false)
       } else if (newState === null && !this.heading) {
@@ -257,4 +257,4 @@ export default {
   transition: all 0.5s;
 }
 </style>
-<style src="@/assets/timeline-transition.scss"></style>
+<style lang="scss" src="@/assets/timeline-transition.scss"></style>
