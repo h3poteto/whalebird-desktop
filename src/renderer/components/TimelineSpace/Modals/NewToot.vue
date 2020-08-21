@@ -8,6 +8,7 @@
     ref="dialog"
   >
     <el-form v-on:submit.prevent="toot" role="form">
+      <Quote :message="quoteToMessage" :displayNameStyle="displayNameStyle" v-if="quoteToMessage !== null" ref="quote"></Quote>
       <div class="spoiler" v-if="showContentWarning" ref="spoiler">
         <div class="el-input">
           <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" v-shortkey.avoid />
@@ -145,6 +146,7 @@ import { mapState, mapGetters } from 'vuex'
 import Visibility from '~/src/constants/visibility'
 import Status from './NewToot/Status'
 import Poll from './NewToot/Poll'
+import Quote from './NewToot/Quote'
 import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit, NewTootPollInvalid } from '@/errors/validations'
 import { Event } from '~/src/renderer/components/event'
 
@@ -152,7 +154,8 @@ export default {
   name: 'new-toot',
   components: {
     Status,
-    Poll
+    Poll,
+    Quote
   },
   data() {
     return {
@@ -178,6 +181,7 @@ export default {
           return null
         }
       },
+      quoteToMessage: state => state.quoteToMessage,
       attachedMedias: state => state.attachedMedias,
       attachedMediaId: state => state.attachedMediaId,
       mediaDescriptions: state => state.mediaDescriptions,
@@ -204,6 +208,9 @@ export default {
     }),
     ...mapState('TimelineSpace', {
       tootMax: state => state.tootMax
+    }),
+    ...mapState('App', {
+      displayNameStyle: state => state.displayNameStyle
     }),
     ...mapGetters('TimelineSpace/Modals/NewToot', ['hashtagInserting']),
     newTootModal: {
@@ -424,7 +431,11 @@ export default {
       if (style.overflow === '' || style.overflow === 'hidden') {
         const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
         const spoilerHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
-        this.statusHeight = event.height - 63 - 54 - this.$refs.preview.offsetHeight - pollHeight - spoilerHeight
+        const quoteHeight = this.$refs.quote ? this.$refs.quote.$el.offsetHeight : 0
+        const headerHeight = 54
+        const footerHeight = 63
+        this.statusHeight =
+          event.height - footerHeight - headerHeight - this.$refs.preview.offsetHeight - pollHeight - spoilerHeight - quoteHeight
       }
     },
     innerElementOpened(open) {

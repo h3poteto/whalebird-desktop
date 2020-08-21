@@ -167,7 +167,7 @@
           <span class="count">
             {{ favouritesCount }}
           </span>
-          <el-button type="text" class="quote-btn" v-if="quoteSupported">
+          <el-button type="text" class="quote-btn" v-if="quoteSupported" @click="openQuote()">
             <icon name="quote-right" scale="0.9"></icon>
           </el-button>
           <template v-if="sns !== 'mastodon'">
@@ -376,7 +376,7 @@ export default {
       return this.message.visibility === 'direct'
     },
     quoteSupported: function () {
-      return QuoteSupported(this.sns, this.account)
+      return QuoteSupported(this.sns, this.account.domain)
     }
   },
   mounted() {
@@ -675,6 +675,9 @@ export default {
         native: native
       })
       this.$emit('update', status)
+    },
+    openQuote() {
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/openQuote', this.originalMessage)
     }
   }
 }
