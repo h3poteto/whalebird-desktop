@@ -95,10 +95,10 @@ const mutations: MutationTree<NewTootState> = {
   [MUTATION_TYPES.CHANGE_MODAL]: (state, value: boolean) => {
     state.modalOpen = value
   },
-  [MUTATION_TYPES.SET_REPLY_TO]: (state, message: Entity.Status) => {
+  [MUTATION_TYPES.SET_REPLY_TO]: (state, message: Entity.Status | null) => {
     state.replyToMessage = message
   },
-  [MUTATION_TYPES.SET_QUOTE_TO]: (state, message: Entity.Status) => {
+  [MUTATION_TYPES.SET_QUOTE_TO]: (state, message: Entity.Status | null) => {
     state.quoteToMessage = message
   },
   [MUTATION_TYPES.UPDATE_INITIAL_STATUS]: (state, status: string) => {
@@ -315,6 +315,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_INITIAL_STATUS, '')
     commit(MUTATION_TYPES.UPDATE_INITIAL_SPOILER, '')
     commit(MUTATION_TYPES.SET_REPLY_TO, null)
+    commit(MUTATION_TYPES.SET_QUOTE_TO, null)
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, false)
     commit(MUTATION_TYPES.CLEAR_ATTACHED_MEDIAS)
     commit(MUTATION_TYPES.CLEAR_MEDIA_DESCRIPTIONS)
