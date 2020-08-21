@@ -167,6 +167,9 @@
           <span class="count">
             {{ favouritesCount }}
           </span>
+          <el-button type="text" class="quote-btn" v-if="quoteSupported">
+            <icon name="quote-right" scale="0.9"></icon>
+          </el-button>
           <template v-if="sns !== 'mastodon'">
             <el-button class="emoji" type="text" @click="toggleEmojiPicker">
               <icon name="regular/smile" scale="0.9"></icon>
@@ -242,6 +245,7 @@ import Poll from '~/src/renderer/components/molecules/Toot/Poll'
 import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
 import Quote from '@/components/molecules/Toot/Quote'
 import { setInterval, clearInterval } from 'timers'
+import QuoteSupported from '@/utils/quoteSupported'
 
 export default {
   name: 'toot',
@@ -298,7 +302,8 @@ export default {
       language: state => state.language
     }),
     ...mapState('TimelineSpace', {
-      sns: state => state.sns
+      sns: state => state.sns,
+      account: state => state.account
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid && !this.openEmojiPicker
@@ -369,6 +374,9 @@ export default {
     },
     directed: function () {
       return this.message.visibility === 'direct'
+    },
+    quoteSupported: function () {
+      return QuoteSupported(this.sns, this.account)
     }
   },
   mounted() {
