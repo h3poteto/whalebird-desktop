@@ -35,6 +35,7 @@ export type NewTootState = {
   initialStatus: string
   initialSpoiler: string
   replyToMessage: Entity.Status | null
+  quoteToMessage: Entity.Status | null
   blockSubmit: boolean
   attachedMedias: Array<Entity.Attachment>
   mediaDescriptions: { [key: string]: string | null }
@@ -57,6 +58,7 @@ const state = (): NewTootState => ({
   initialStatus: '',
   initialSpoiler: '',
   replyToMessage: null,
+  quoteToMessage: null,
   blockSubmit: false,
   attachedMedias: [],
   mediaDescriptions: {},
@@ -71,6 +73,7 @@ const state = (): NewTootState => ({
 export const MUTATION_TYPES = {
   CHANGE_MODAL: 'changeModal',
   SET_REPLY_TO: 'setReplyTo',
+  SET_QUOTE_TO: 'setQuoteTo',
   UPDATE_INITIAL_STATUS: 'updateInitialStatus',
   UPDATE_INITIAL_SPOILER: 'updateInitialSpoiler',
   CHANGE_BLOCK_SUBMIT: 'changeBlockSubmit',
@@ -92,8 +95,11 @@ const mutations: MutationTree<NewTootState> = {
   [MUTATION_TYPES.CHANGE_MODAL]: (state, value: boolean) => {
     state.modalOpen = value
   },
-  [MUTATION_TYPES.SET_REPLY_TO]: (state, message: Entity.Status) => {
+  [MUTATION_TYPES.SET_REPLY_TO]: (state, message: Entity.Status | null) => {
     state.replyToMessage = message
+  },
+  [MUTATION_TYPES.SET_QUOTE_TO]: (state, message: Entity.Status | null) => {
+    state.quoteToMessage = message
   },
   [MUTATION_TYPES.UPDATE_INITIAL_STATUS]: (state, status: string) => {
     state.initialStatus = status
@@ -221,6 +227,12 @@ const actions: ActionTree<NewTootState, RootState> = {
       })
     }
 
+    if (state.quoteToMessage !== null) {
+      form = Object.assign(form, {
+        quote_id: state.quoteToMessage.id
+      })
+    }
+
     if (params.polls.length > 1) {
       params.polls.map(poll => {
         if (poll.length < 1) {
@@ -293,6 +305,10 @@ const actions: ActionTree<NewTootState, RootState> = {
     })
     commit(MUTATION_TYPES.CHANGE_VISIBILITY_VALUE, value)
   },
+  openQuote: ({ commit }, message: Entity.Status) => {
+    commit(MUTATION_TYPES.SET_QUOTE_TO, message)
+    commit(MUTATION_TYPES.CHANGE_MODAL, true)
+  },
   openModal: ({ dispatch, commit, state }) => {
     if (!state.replyToMessage && state.pinedHashtag) {
       commit(MUTATION_TYPES.UPDATE_INITIAL_STATUS, state.hashtags.map(t => `#${t.name}`).join(' '))
@@ -305,6 +321,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_INITIAL_STATUS, '')
     commit(MUTATION_TYPES.UPDATE_INITIAL_SPOILER, '')
     commit(MUTATION_TYPES.SET_REPLY_TO, null)
+    commit(MUTATION_TYPES.SET_QUOTE_TO, null)
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, false)
     commit(MUTATION_TYPES.CLEAR_ATTACHED_MEDIAS)
     commit(MUTATION_TYPES.CLEAR_MEDIA_DESCRIPTIONS)
