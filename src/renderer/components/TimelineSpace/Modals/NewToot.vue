@@ -427,6 +427,14 @@ export default {
       }
     },
     handleResize(event) {
+      // Ignore when the modal height already reach window height.
+      const vHeight = this.$refs.dialog.$el.firstChild.style.marginTop
+      const marginTop = (document.documentElement.clientHeight / 100) * parseInt(vHeight)
+      const limitHeight = document.documentElement.clientHeight - marginTop - 80
+      if (this.$refs.dialog.$el.firstChild.offsetHeight >= limitHeight) {
+        return
+      }
+      // When emoji picker is opened, resize event has to be stopped.
       const style = this.$refs.dialog.$el.firstChild.style
       if (style.overflow === '' || style.overflow === 'hidden') {
         const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
@@ -456,6 +464,8 @@ export default {
     overflow: hidden;
     resize: both;
     padding-bottom: 20px;
+    max-height: calc(100% - 15vh - 80px);
+    max-width: 95%;
   }
 
   .el-dialog__header {
