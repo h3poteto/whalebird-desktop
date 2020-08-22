@@ -227,6 +227,12 @@ const actions: ActionTree<NewTootState, RootState> = {
       })
     }
 
+    if (state.quoteToMessage !== null) {
+      form = Object.assign(form, {
+        quote_id: state.quoteToMessage.id
+      })
+    }
+
     if (params.polls.length > 1) {
       params.polls.map(poll => {
         if (poll.length < 1) {
