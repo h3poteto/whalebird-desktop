@@ -39,6 +39,7 @@ const state = (): SideMenuState => ({
     mention: true,
     direct: true,
     favourite: true,
+    bookmark: true,
     local: true,
     public: true,
     tag: true,
