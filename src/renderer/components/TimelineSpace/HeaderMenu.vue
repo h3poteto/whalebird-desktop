@@ -74,7 +74,7 @@ export default {
     this.$store.dispatch('TimelineSpace/HeaderMenu/setupLoading')
   },
   watch: {
-    $route: function() {
+    $route: function () {
       this.channelName()
       this.loadFilter()
     }
@@ -93,6 +93,9 @@ export default {
           break
         case 'favourites':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.favourite'))
+          break
+        case 'bookmarks':
+          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.bookmark'))
           break
         case 'mentions':
           this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.mention'))
@@ -142,6 +145,7 @@ export default {
         case 'notifications':
         case 'mentions':
         case 'favourites':
+        case 'bookmarks':
         case 'local':
         case 'public':
         case 'tag':
@@ -159,6 +163,7 @@ export default {
         case 'notifications':
         case 'mentions':
         case 'favourites':
+        case 'bookmarks':
         case 'local':
         case 'public':
         case 'tag':

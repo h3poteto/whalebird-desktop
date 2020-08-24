@@ -65,6 +65,7 @@
     "notification": "Notification",
     "mention": "Mention",
     "favourite": "Favourite",
+    "bookmark": "Bookmark",
     "follow_requests": "Follow Requests",
     "direct_messages": "Direct Messages",
     "local": "Local timeline",
