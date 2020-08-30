@@ -30,6 +30,7 @@ import TimelineSpaceContentsListsIndex from '@/components/TimelineSpace/Contents
 import TimelineSpaceContentsListsEdit from '@/components/TimelineSpace/Contents/Lists/Edit.vue'
 import TimelineSpaceContentsListsShow from '@/components/TimelineSpace/Contents/Lists/Show.vue'
 import TimelineSpaceContentsFollowRequests from '@/components/TimelineSpace/Contents/FollowRequests.vue'
+import TimelineSpaceContentsBookmarks from '@/components/TimelineSpace/Contents/Bookmarks.vue'
 
 Vue.use(Router)
 
@@ -131,6 +132,11 @@ const router = new Router({
               path: 'favourites',
               name: 'favourites',
               component: TimelineSpaceContentsFavourites
+            },
+            {
+              path: 'bookmarks',
+              name: 'bookmarks',
+              component: TimelineSpaceContentsBookmarks
             },
             {
               path: 'local',

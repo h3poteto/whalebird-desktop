@@ -4,6 +4,7 @@ export type EnabledTimelines = {
   mention: boolean
   direct: boolean
   favourite: boolean
+  bookmark: boolean
   local: boolean
   public: boolean
   tag: boolean

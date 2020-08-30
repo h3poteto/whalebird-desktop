@@ -12,6 +12,7 @@ const confirm = async (account: LocalAccount, proxy: ProxyConfig | false) => {
     mention: true,
     direct: true,
     favourite: true,
+    bookmark: true,
     local: true,
     public: true,
     tag: true,
@@ -33,6 +34,11 @@ const confirm = async (account: LocalAccount, proxy: ProxyConfig | false) => {
       timelines = { ...timelines, favourite: false }
     })
   }
+  const bookmark = async () => {
+    return client.getBookmarks({ limit: 1 }).catch(() => {
+      timelines = { ...timelines, bookmark: false }
+    })
+  }
   const local = async () => {
     return client.getLocalTimeline({ limit: 1 }).catch(() => {
       timelines = { ...timelines, local: false }
@@ -48,7 +54,7 @@ const confirm = async (account: LocalAccount, proxy: ProxyConfig | false) => {
       timelines = { ...timelines, tag: false }
     })
   }
-  await Promise.all([notification(), direct(), favourite(), local(), pub(), tag()])
+  await Promise.all([notification(), direct(), favourite(), bookmark(), local(), pub(), tag()])
 
   return timelines
 }

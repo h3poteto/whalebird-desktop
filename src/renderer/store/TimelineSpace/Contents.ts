@@ -2,6 +2,7 @@ import SideBar, { SideBarModuleState } from './Contents/SideBar'
 import Home, { HomeState } from './Contents/Home'
 import Notifications, { NotificationsState } from './Contents/Notifications'
 import Favourites, { FavouritesState } from './Contents/Favourites'
+import Bookmarks, { BookmarksState } from './Contents/Bookmarks'
 import Local, { LocalState } from './Contents/Local'
 import Public, { PublicState } from './Contents/Public'
 import Search, { SearchModuleState } from './Contents/Search'
@@ -24,6 +25,7 @@ type ContentsModule = {
   Mentions: MentionsState
   DirectMessages: DirectMessagesState
   Favourites: FavouritesState
+  Bookmarks: BookmarksState
   Local: LocalState
   Public: PublicState
   Search: SearchModuleState
@@ -61,6 +63,7 @@ const Contents: Module<ContentsState, RootState> = {
     Home,
     Notifications,
     Favourites,
+    Bookmarks,
     Local,
     DirectMessages,
     Mentions,

@@ -80,6 +80,10 @@
         <icon name="star"></icon>
         <span>{{ $t('side_menu.favourite') }}</span>
       </el-menu-item>
+      <el-menu-item :index="`/${id()}/bookmarks`" role="menuitem" :title="$t('side_menu.bookmark')" v-if="enabledTimelines.bookmark">
+        <icon name="bookmark"></icon>
+        <span>{{ $t('side_menu.bookmark') }}</span>
+      </el-menu-item>
       <el-menu-item :index="`/${id()}/local`" role="menuitem" :title="$t('side_menu.local')" v-if="enabledTimelines.local">
         <icon name="users"></icon>
         <span>{{ $t('side_menu.local') }}</span>
