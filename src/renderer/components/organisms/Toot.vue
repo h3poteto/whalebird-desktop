@@ -167,6 +167,15 @@
           <span class="count">
             {{ favouritesCount }}
           </span>
+          <el-button
+            class="bookmark"
+            type="text"
+            :text="$t('cards.toot.bookmark')"
+            :aria-label="$t('cards.toot.bookmark')"
+            v-if="bookmarkSupported"
+          >
+            <icon name="bookmark" scale="0.9"></icon>
+          </el-button>
           <el-button type="text" class="quote-btn" v-if="quoteSupported" @click="openQuote()">
             <icon name="quote-right" scale="0.9"></icon>
           </el-button>
@@ -304,6 +313,9 @@ export default {
     ...mapState('TimelineSpace', {
       sns: state => state.sns,
       account: state => state.account
+    }),
+    ...mapState('TimelineSpace/SideMenu', {
+      bookmarkSupported: state => state.enabledTimelines.bookmark
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid && !this.openEmojiPicker
@@ -894,6 +906,15 @@ export default {
         font-size: 0.8em;
         color: #909399;
         margin: 0 0 4px -8px;
+      }
+
+      .bookmark {
+        margin: 0 0 0 8px;
+      }
+
+      .bookmarked {
+        margin: 0 0 0 8px;
+        color: #ff5050;
       }
 
       .pinned {

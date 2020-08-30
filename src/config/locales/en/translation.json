@@ -327,6 +327,7 @@
       "reblog": "Reblog",
       "fav": "Favourite",
       "detail": "Toot details",
+      "bookmark": "Add bookmark",
       "pinned": "Pinned toot",
       "poll": {
         "vote": "Vote",
