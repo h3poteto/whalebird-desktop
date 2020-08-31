@@ -327,6 +327,7 @@
       "reblog": "부스트",
       "fav": "즐겨찾기",
       "detail": "툿 자세히 보기",
+      "bookmark": "Bookmark",
       "pinned": "고정 된 툿",
       "poll": {
         "vote": "Vote",
@@ -423,6 +424,8 @@
     "unreblog_error": "부스트를 취소할 수 없습니다",
     "favourite_error": "즐겨찾기를 설정할 수 없습니다",
     "unfavourite_error": "즐겨찾기를 해제할 수 없습니다",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "툿을 삭제할 수 없습니다",
     "search_error": "찾을 수 없습니다",
     "toot_error": "툿을 보낼 수 없습니다",
