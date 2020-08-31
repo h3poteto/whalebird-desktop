@@ -327,6 +327,7 @@
       "reblog": "Teilen",
       "fav": "Favorit",
       "detail": "Details des Toot",
+      "bookmark": "Bookmark",
       "pinned": "Angehefteter Beitrag",
       "poll": {
         "vote": "Abstimmen",
@@ -423,6 +424,8 @@
     "unreblog_error": "Widerruf des Reblogs fehlgeschlagen",
     "favourite_error": "Favorisieren fehlgeschlagen",
     "unfavourite_error": "Widerruf des Favorisierens fehlgeschlagen",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Löschen des Toots fehlgeschlagen",
     "search_error": "Suche fehlgeschlagen",
     "toot_error": "Toot fehlgeschlagen",
