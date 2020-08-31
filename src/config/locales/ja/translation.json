@@ -327,6 +327,7 @@
       "reblog": "ブースト",
       "fav": "お気に入り",
       "detail": "詳細",
+      "bookmark": "Bookmark",
       "pinned": "固定されたトゥート",
       "poll": {
         "vote": "投票",
@@ -423,6 +424,8 @@
     "unreblog_error": "ブースト解除に失敗しました",
     "favourite_error": "お気に入りできませんでした",
     "unfavourite_error": "お気に入り解除に失敗しました",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "トゥート削除に失敗しました",
     "search_error": "検索に失敗しました",
     "toot_error": "トゥートに失敗しました",

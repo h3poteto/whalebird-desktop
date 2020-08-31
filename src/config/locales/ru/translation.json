@@ -327,6 +327,7 @@
       "reblog": "Reblog",
       "fav": "Favourite",
       "detail": "Toot details",
+      "bookmark": "Bookmark",
       "pinned": "Pinned toot",
       "poll": {
         "vote": "Vote",
@@ -423,6 +424,8 @@
     "unreblog_error": "Failed to unreblog",
     "favourite_error": "Failed to favourite",
     "unfavourite_error": "Failed to unfavourite",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Failed to delete the toot",
     "search_error": "Failed to search",
     "toot_error": "Failed to toot",

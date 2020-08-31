@@ -327,6 +327,7 @@
       "reblog": "Podbić wpisu",
       "fav": "Ulubiony",
       "detail": "Szczegół",
+      "bookmark": "Bookmark",
       "pinned": "Przypięty wpis",
       "poll": {
         "vote": "Vote",
@@ -423,6 +424,8 @@
     "unreblog_error": "Nie udało się cofnąć podbicia",
     "favourite_error": "Nie udało się dodać wpisu do ulubionych",
     "unfavourite_error": "Nie udało się usunąć wpisu z ulubionych",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Nie udało się usunąć wpisu",
     "search_error": "Wyszukiwanie nie powiodło się",
     "toot_error": "Nie udało się utworzyć wpisu",

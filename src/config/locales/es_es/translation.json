@@ -327,6 +327,7 @@
       "reblog": "Publicar de nuevo",
       "fav": "Favorito",
       "detail": "Detalles del Toot",
+      "bookmark": "Bookmark",
       "pinned": "Toot fijado",
       "poll": {
         "vote": "Voto",
@@ -423,6 +424,8 @@
     "unreblog_error": "Error al no publicar de nuevo",
     "favourite_error": "Error al favorecer",
     "unfavourite_error": "Error al no favorecer",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Error al eliminar el toot",
     "search_error": "Error al buscar",
     "toot_error": "Error al enviar el toot",

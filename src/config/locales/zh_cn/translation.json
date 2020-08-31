@@ -327,6 +327,7 @@
       "reblog": "转嘟",
       "fav": "收藏",
       "detail": "更多",
+      "bookmark": "Bookmark",
       "pinned": "置顶",
       "poll": {
         "vote": "投票",
@@ -423,6 +424,8 @@
     "unreblog_error": "取消转嘟失败",
     "favourite_error": "收藏失败",
     "unfavourite_error": "取消收藏失败",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "删除嘟文失败",
     "search_error": "搜索失败",
     "toot_error": "发嘟失败",

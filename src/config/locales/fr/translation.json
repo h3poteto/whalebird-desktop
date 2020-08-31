@@ -327,6 +327,7 @@
       "reblog": "Repouet",
       "fav": "Préféré",
       "detail": "Détails",
+      "bookmark": "Bookmark",
       "pinned": "Pouet épinglé",
       "poll": {
         "vote": "Vote",
@@ -423,6 +424,8 @@
     "unreblog_error": "Erreur lors de la suppression du partage du pouet",
     "favourite_error": "Erreur à la création d'un favori",
     "unfavourite_error": "Erreur à la suprression d'un favori",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Erreur lors de la suppression d'un pouet",
     "search_error": "Erreur lors de la recherche",
     "toot_error": "Erreur à l'envoie du pouet",
