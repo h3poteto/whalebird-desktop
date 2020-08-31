@@ -76,6 +76,7 @@ const status1: Entity.Status = {
   language: null,
   pinned: null,
   emoji_reactions: [],
+  bookmarked: false,
   quote: false
 }
 
@@ -110,6 +111,7 @@ const status2: Entity.Status = {
   language: null,
   pinned: null,
   emoji_reactions: [],
+  bookmarked: false,
   quote: false
 }
 
@@ -144,6 +146,7 @@ const rebloggedStatus: Entity.Status = {
   language: null,
   pinned: null,
   emoji_reactions: [],
+  bookmarked: false,
   quote: false
 }
 

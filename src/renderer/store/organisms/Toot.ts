@@ -46,7 +46,7 @@ const actions: ActionTree<TootState, RootState> = {
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  addFavourite: async ({ rootState, dispatch }, message: Entity.Status) => {
+  addFavourite: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -58,7 +58,7 @@ const actions: ActionTree<TootState, RootState> = {
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  removeFavourite: async ({ rootState, dispatch }, message: Entity.Status) => {
+  removeFavourite: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -66,6 +66,29 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.App.userAgent
     )
     const res = await client.unfavouriteStatus(message.id)
+    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
+    return res.data
+  },
+  addBookmark: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    const res = await client.bookmarkStatus(message.id)
+    win.ipcRenderer.send('fav-rt-action-sound')
+    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
+    return res.data
+  },
+  removeBookmark: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    const res = await client.unbookmarkStatus(message.id)
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },

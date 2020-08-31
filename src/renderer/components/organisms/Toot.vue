@@ -168,7 +168,8 @@
             {{ favouritesCount }}
           </span>
           <el-button
-            class="bookmark"
+            @click="changeBookmark(originalMessage)"
+            :class="originalMessage.bookmarked ? 'bookmarked' : 'bookmark'"
             type="text"
             :text="$t('cards.toot.bookmark')"
             :aria-label="$t('cards.toot.bookmark')"
@@ -569,6 +570,35 @@ export default {
             console.error(err)
             this.$message({
               message: this.$t('message.favourite_error'),
+              type: 'error'
+            })
+          })
+      }
+    },
+    changeBookmark(message) {
+      if (message.bookmarked) {
+        this.$store
+          .dispatch('organisms/Toot/removeBookmark', message)
+          .then(data => {
+            this.$emit('update', data)
+          })
+          .catch(err => {
+            console.error(err)
+            this.$message({
+              message: this.$t('message.unbookmark_error'),
+              type: 'error'
+            })
+          })
+      } else {
+        this.$store
+          .dispatch('organisms/Toot/addBookmark', message)
+          .then(data => {
+            this.$emit('update', data)
+          })
+          .catch(err => {
+            console.error(err)
+            this.$message({
+              message: this.$t('message.bookmark_error'),
               type: 'error'
             })
           })
