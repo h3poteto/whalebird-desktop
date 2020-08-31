@@ -327,6 +327,7 @@
       "reblog": "Condividi",
       "fav": "Preferisci",
       "detail": "Dettagli del Toot",
+      "bookmark": "Bookmark",
       "pinned": "Toot Fissati",
       "poll": {
         "vote": "Vota",
@@ -423,6 +424,8 @@
     "unreblog_error": "Impossibile rimuovere la condivisione",
     "favourite_error": "Impossibile aggiungere ai preferiti",
     "unfavourite_error": "Impossibile rimuovere dai preferiti",
+    "bookmark_error": "Failed to bookmark",
+    "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Impossibile cancellare il toot",
     "search_error": "Impossibile eseguire la ricerca",
     "toot_error": "Impossibile pubblicare il toot",
