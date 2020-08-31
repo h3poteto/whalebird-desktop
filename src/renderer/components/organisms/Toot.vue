@@ -167,6 +167,16 @@
           <span class="count">
             {{ favouritesCount }}
           </span>
+          <el-button
+            @click="changeBookmark(originalMessage)"
+            :class="originalMessage.bookmarked ? 'bookmarked' : 'bookmark'"
+            type="text"
+            :text="$t('cards.toot.bookmark')"
+            :aria-label="$t('cards.toot.bookmark')"
+            v-if="bookmarkSupported"
+          >
+            <icon name="bookmark" scale="0.9"></icon>
+          </el-button>
           <el-button type="text" class="quote-btn" v-if="quoteSupported" @click="openQuote()">
             <icon name="quote-right" scale="0.9"></icon>
           </el-button>
@@ -304,6 +314,9 @@ export default {
     ...mapState('TimelineSpace', {
       sns: state => state.sns,
       account: state => state.account
+    }),
+    ...mapState('TimelineSpace/SideMenu', {
+      bookmarkSupported: state => state.enabledTimelines.bookmark
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid && !this.openEmojiPicker
@@ -557,6 +570,35 @@ export default {
             console.error(err)
             this.$message({
               message: this.$t('message.favourite_error'),
+              type: 'error'
+            })
+          })
+      }
+    },
+    changeBookmark(message) {
+      if (message.bookmarked) {
+        this.$store
+          .dispatch('organisms/Toot/removeBookmark', message)
+          .then(data => {
+            this.$emit('update', data)
+          })
+          .catch(err => {
+            console.error(err)
+            this.$message({
+              message: this.$t('message.unbookmark_error'),
+              type: 'error'
+            })
+          })
+      } else {
+        this.$store
+          .dispatch('organisms/Toot/addBookmark', message)
+          .then(data => {
+            this.$emit('update', data)
+          })
+          .catch(err => {
+            console.error(err)
+            this.$message({
+              message: this.$t('message.bookmark_error'),
               type: 'error'
             })
           })
@@ -894,6 +936,15 @@ export default {
         font-size: 0.8em;
         color: #909399;
         margin: 0 0 4px -8px;
+      }
+
+      .bookmark {
+        margin: 0 0 0 8px;
+      }
+
+      .bookmarked {
+        margin: 0 0 0 8px;
+        color: #ff5050;
       }
 
       .pinned {

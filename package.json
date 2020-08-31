@@ -184,7 +184,7 @@
     "hoek": "^6.1.3",
     "i18next": "^19.6.3",
     "lodash": "^4.17.19",
-    "megalodon": "3.2.5",
+    "megalodon": "3.3.0",
     "moment": "^2.27.0",
     "mousetrap": "^1.6.5",
     "nedb": "^1.8.0",
