@@ -44,7 +44,7 @@
     "profile": "Profil",
     "show_profile": "Voir le profil",
     "edit_profile": "Éditer mon profil",
-    "settings": "Settings",
+    "settings": "Paramètres",
     "collapse": "Réduire",
     "expand": "Développer",
     "home": "Accueil",
@@ -87,7 +87,7 @@
     "settings": "Paramètres"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Paramètres",
     "general": {
       "title": "Général",
       "toot": {
@@ -133,7 +133,7 @@
         "hideAllAttachments": "Cacher tous les médias"
       },
       "other": {
-        "title": "Other options",
+        "title": "Autres options",
         "launch": "Launch app on login"
       }
     },
@@ -200,7 +200,7 @@
       "confirm_message": "Êtes-vous certain de vouloir supprimer toutes les associations ?"
     },
     "network": {
-      "title": "Network",
+      "title": "Réseau",
       "proxy": {
         "title": "Proxy Configuration",
         "no": "No proxy",
@@ -208,7 +208,7 @@
         "manual": "Manual proxy configuration",
         "protocol": "Protocol",
         "host": "Proxy host",
-        "port": "Proxy port",
+        "port": "Port du proxy",
         "username": "Proxy username",
         "password": "Proxy password",
         "protocol_list": {
@@ -256,8 +256,8 @@
       "poll": {
         "add_choice": "Ajouter un choix",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
+          "5_minutes": "5 minutes",
+          "30_minutes": "30 minutes",
           "1_hour": "1 heure",
           "6_hours": "6 heures",
           "1_day": "1 jour",
@@ -382,7 +382,7 @@
   "login": {
     "domain_name_label": "Tout d'abord, connectons-nous à votre serveur Mastodon.  Entez votre nom de domaine :",
     "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
+    "proxy_here": " ici",
     "search": "Rechercher",
     "login": "Connexion"
   },
@@ -466,7 +466,7 @@
       "body": "{{username}} a partagé votre statut"
     },
     "quote": {
-      "title": "Quote",
+      "title": "Citation",
       "body": "{{username}} quoted your status"
     },
     "reaction": {
