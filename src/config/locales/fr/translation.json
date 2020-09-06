@@ -93,7 +93,7 @@
       "toot": {
         "title": "Pouet",
         "visibility": {
-          "description": "Customisez l'apparence par défaut du pouet.",
+          "description": "Personnaliser la visibilité par défaut du pouet.",
           "public": "Public",
           "unlisted": "Public sans être affiché sur le fil public",
           "private": "Abonné⋅e⋅s uniquement",
@@ -109,7 +109,7 @@
       "unread_notification": {
         "title": "Notifications non lues",
         "description": "Personnalisez les notifications non lues pour chaque fil d'actualité.",
-        "direct": "Messages Privés",
+        "direct": "Messages directs",
         "local": "Fil public local",
         "public": "Fil public global"
       }
@@ -123,7 +123,7 @@
         "title": "Sons",
         "description": "Sons de notification :",
         "fav_rb": "Partages et favoris",
-        "toot": "Pouets"
+        "toot": "Lorsque vous publiez un pouet"
       },
       "timeline": {
         "title": "Fil d'actualité",
@@ -134,7 +134,7 @@
       },
       "other": {
         "title": "Autres options",
-        "launch": "Launch app on login"
+        "launch": "Lancer l'application dès la connexion"
       }
     },
     "appearance": {
@@ -146,7 +146,7 @@
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "Personalisée"
       },
       "custom_theme": {
         "background_color": "Arrière plan de base",
@@ -166,7 +166,7 @@
       "display_style": {
         "title": "Format d'affichage",
         "display_name_and_username": "Nom et utilisateur⋅trice",
-        "display_name": "Nom",
+        "display_name": "Nom affiché",
         "username": "Utilisateur⋅trice"
       },
       "time_format": {
@@ -202,15 +202,15 @@
     "network": {
       "title": "Réseau",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
-        "host": "Proxy host",
+        "title": "Configuration du proxy",
+        "no": "Aucun proxy",
+        "system": "Utiliser le proxy du système",
+        "manual": "Configuration manuelle du proxy",
+        "protocol": "Protocole",
+        "host": "Hôte du proxy",
         "port": "Port du proxy",
-        "username": "Proxy username",
-        "password": "Proxy password",
+        "username": "Nom d'utilisateur du proxy",
+        "password": "Mot de passe du proxy",
         "protocol_list": {
           "http": "http",
           "https": "https",
@@ -220,16 +220,16 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "Sauvegarder"
     },
     "language": {
       "title": "Langue",
-      "language_description": "Choisissez le language que vous souhaitez utiliser avec Whalebird.",
+      "language_description": "Choisissez la langue que vous souhaitez utiliser sur Whalebird.",
       "notice": "Nécessite un redémarrage",
       "confirm": {
         "title": "Avertissement",
         "message": "Vous devez redémarrer l'application pour appliquer les modifications, continuer ?",
-        "ok": "Redémarrer",
+        "ok": "Redémarrer maintenant",
         "cancel": "Annuler"
       }
     }
@@ -238,10 +238,10 @@
     "new_toot": {
       "title": "Nouveau pouet",
       "cw": "Écrivez votre avertissement ici",
-      "status": "Qu'avez-vous en tête ?",
+      "status": "Qu’avez-vous en tête ?",
       "cancel": "Annuler",
       "toot": "Pouet!",
-      "close_confirm": "Êtes-vous certain de vouloir fermer ce nouveau pouet ?",
+      "close_confirm": "Êtes-vous sûr de vouloir annuler ce nouveau pouet ?",
       "close_confirm_ok": "Oui",
       "close_confirm_cancel": "Annuler",
       "description": "Décrire pour les malvoyant·e·s",
@@ -251,7 +251,7 @@
         "change_visibility": "Changer la visibilité",
         "change_sensitive": "Changer sensible",
         "add_cw": "Ajouter un avertissement de contenu",
-        "pined_hashtag": "Accrochez le hashtag"
+        "pined_hashtag": "Épingler le hashtag"
       },
       "poll": {
         "add_choice": "Ajouter un choix",
@@ -274,10 +274,10 @@
       "account_name": "Nom du compte"
     },
     "list_membership": {
-      "title": "Éditer la liste"
+      "title": "Liste des membres"
     },
     "mute_confirm": {
-      "title": "Vous êtes sur de bien vouloir muter cet utilisateur ?",
+      "title": "Vous êtes sur de bien vouloir mettre en silence cet utilisateur ?",
       "body": "Cacher les notifications de cet utilisateur?",
       "cancel": "Annuler",
       "ok": "Muter"
@@ -285,23 +285,23 @@
     "shortcut": {
       "title": "Raccourcis clavier",
       "ctrl_number": "Changer de compte",
-      "ctrl_k": "Aller à une autre timeline",
+      "ctrl_k": "Aller aux autres fils",
       "ctrl_n": "Nouveau pouet",
-      "ctrl_enter": "Poster le pouet",
-      "ctrl_r": "Reload current timeline",
+      "ctrl_enter": "Publier le pouet",
+      "ctrl_r": "Recharger le fil actuel",
       "j": "Sélectionner le pouet suivant",
       "k": "Sélectionner le pouet précédent",
       "h": "Changer le focus sur la colonne de gauche",
       "l": "Changer le focus sur la colonne de droite",
       "r": "Répondre au pouet",
       "b": "Rebloguer le pouet",
-      "f": "Favoriser le pouet",
+      "f": "Mettre le pouet en favori",
       "o": "Ouvrir les détails du pouet",
       "p": "Ouvrir le profil correspondant au pouet",
       "i": "Ouvrir les images",
       "x": "Montrer/Cacher Avertissement de contenu sensible et contenu NSFW",
       "?": "Montrer ce panneau d'aide",
-      "esc": "Fermer la page"
+      "esc": "Fermer la page en cours"
     },
     "report": {
       "title": "Signalement de cet utilisateur",
@@ -320,8 +320,8 @@
       "copy_link_to_toot": "Copier le lien du pouet",
       "mute": "Muter",
       "block": "Bloquer",
-      "report": "Reporter",
-      "delete": "Effacer",
+      "report": "Signaler",
+      "delete": "Supprimer",
       "via": "via {{application}}",
       "reply": "Répondre",
       "reblog": "Repouet",
@@ -331,7 +331,7 @@
       "pinned": "Pouet épinglé",
       "poll": {
         "vote": "Vote",
-        "votes_count": "votes",
+        "votes_count": "voix",
         "until": "jusqu'à {{datetime}}",
         "left": "{{datetime}} restant",
         "refresh": "Actualiser"
@@ -344,7 +344,7 @@
       "doesnt_follow_you": "Pas abonné⋅e",
       "detail": "Détail",
       "follow": "Suivre",
-      "unfollow": "Ne pas suivre",
+      "unfollow": "Se désabonner",
       "follow_requested": "Suivre demande",
       "open_in_browser": "Ouvrir dans un navigateur",
       "manage_list_memberships": "Inscriptions aux listes",
