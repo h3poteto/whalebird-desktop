@@ -13,7 +13,7 @@
     },
     "toot": {
       "name": "Pouet",
-      "new": "Nouveau"
+      "new": "Nouveau pouet"
     },
     "edit": {
       "name": "Modifier",
@@ -50,8 +50,8 @@
     "home": "Accueil",
     "notification": "Notifications",
     "mention": "Mention",
-    "direct": "Messages Privés",
-    "follow_requests": "Demandes de suivi",
+    "direct": "Messages directs",
+    "follow_requests": "Demandes d’abonnement",
     "favourite": "Favoris",
     "bookmark": "Bookmark",
     "local": "Fil public local",
@@ -66,8 +66,8 @@
     "mention": "Mention",
     "favourite": "Favoris",
     "bookmark": "Bookmark",
-    "follow_requests": "Demandes de suivi",
-    "direct_messages": "Messages Privés",
+    "follow_requests": "Demandes d’abonnement",
+    "direct_messages": "Messages directs",
     "local": "Fil public local",
     "public": "Fil public global",
     "hashtag": "Hashtag",
@@ -322,7 +322,7 @@
       "block": "Bloquer",
       "report": "Reporter",
       "delete": "Effacer",
-      "via": "par {{application}}",
+      "via": "via {{application}}",
       "reply": "Répondre",
       "reblog": "Repouet",
       "fav": "Préféré",
