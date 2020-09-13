@@ -52,7 +52,7 @@ and register your KeyChain.
 Then, create a Mac App ID like `org.whalebird.desktop`.
 
 ```bash
-$ npm run build:mas
+$ yarn run build:mas
 
 # This command automatically loads the certificates from you keychain.
 $ ./appStore.sh
