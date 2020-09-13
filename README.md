@@ -94,7 +94,7 @@ We'd love you to contribute to Whalebird.
 
 ### Minimum requirements for development
 
-* Node.js greater than or equal version 8.9.0 (10.x is recommended)
+* Node.js greater than or equal version 8.9.0 (12.x is recommended)
 * npm or yarn
 
 ### Getting started
@@ -108,10 +108,10 @@ $ cd whalebird-desktop
 $ sudo apt-get install libfontconfig-dev
 
 # install dependencies
-$ npm install
+$ yarn install
 
 # serve with hot reload at localhost:9080
-$ npm run dev
+$ yarn run dev
 ```
 
 # License
