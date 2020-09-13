@@ -17,7 +17,7 @@ jobs:
             - node_modules-{{ arch }}-node12.13.1-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install packages
-          command: npm install
+          command: yarn install
       - save_cache:
           name: Saving cache - node_modules
           key: node_modules-{{ arch }}-node12.13.1-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
@@ -25,4 +25,4 @@ jobs:
             - node_modules
       - run:
           name: spec
-          command: npm run spec
+          command: yarn run spec
