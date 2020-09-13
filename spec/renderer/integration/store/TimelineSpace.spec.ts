@@ -66,7 +66,7 @@ const mockClient = {
 }
 
 jest.mock('megalodon', () => ({
-  ...jest.requireActual('megalodon'),
+  ...jest.requireActual<object>('megalodon'),
   detector: jest.fn(() => 'pleroma'),
   default: jest.fn(() => mockClient),
   __esModule: true

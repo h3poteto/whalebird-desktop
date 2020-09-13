@@ -22,7 +22,7 @@ const mockClient = {
 }
 
 jest.mock('megalodon', () => ({
-  ...jest.requireActual('megalodon'),
+  ...jest.requireActual<object>('megalodon'),
   default: jest.fn(() => mockClient),
   __esModule: true
 }))

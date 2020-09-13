@@ -6,7 +6,7 @@ import { MyWindow } from '~/src/types/global'
 ;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 jest.mock('megalodon', () => ({
-  ...jest.requireActual('megalodon'),
+  ...jest.requireActual<object>('megalodon'),
   detector: jest.fn(() => 'pleroma'),
   __esModule: true
 }))
