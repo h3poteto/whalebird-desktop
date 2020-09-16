@@ -460,7 +460,7 @@ export default {
 <style lang="scss" scoped>
 .new-toot-modal /deep/ {
   .el-dialog {
-    background-color: #f2f6fc;
+    background-color: var(--theme-selected-background-color);
     overflow: hidden;
     resize: both;
     padding-bottom: 20px;
@@ -478,6 +478,12 @@ export default {
 
   .el-dialog__body {
     padding: 0;
+
+    .el-input__inner {
+      background-color: var(--theme-background-color);
+      color: var(--theme-primary-color);
+      border: 1px solid var(--theme-border-color);
+    }
 
     .spoiler {
       box-sizing: border-box;
@@ -556,7 +562,7 @@ export default {
   }
 
   .el-dialog__footer {
-    background-color: #f2f6fc;
+    background-color: var(--theme-selected-background-color);
     font-size: var(--base-font-size);
     padding-bottom: 0;
 
