@@ -273,6 +273,7 @@ async function createWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
+    backgroundColor: '#fff',
     useContentSize: true,
     icon: path.resolve(__dirname, '../../build/icons/256x256.png'),
     autoHideMenuBar: autoHideMenuBar,
