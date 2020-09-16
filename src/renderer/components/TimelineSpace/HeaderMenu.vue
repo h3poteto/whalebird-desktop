@@ -286,6 +286,7 @@ export default {
   justify-content: flex-end;
   align-items: center;
   user-select: none;
+  line-height: normal;
 
   .channel {
     margin-right: auto;

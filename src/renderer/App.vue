@@ -75,6 +75,7 @@ body,
   --base-font-size: 14px;
 
   font-size: var(--base-font-size);
+  line-height: 1.42;
 
   .theme-popover {
     background-color: #d9e1e8;
