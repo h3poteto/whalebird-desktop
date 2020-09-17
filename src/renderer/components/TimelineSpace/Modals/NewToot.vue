@@ -254,12 +254,14 @@ export default {
   methods: {
     close() {
       this.filteredAccount = []
+      const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
       this.openPoll = false
       this.polls = []
       this.pollExpire = {
         label: this.$t('modals.new_toot.poll.expires.1_day'),
         value: 3600 * 24
       }
+      this.statusHeight = this.statusHeight + pollHeight
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
