@@ -266,6 +266,8 @@ export default {
         value: 3600 * 24
       }
       this.statusHeight = this.statusHeight + pollHeight
+      const attachmentHeight = this.$refs.preview ? this.$refs.preview.offsetHeight : 0
+      this.statusHeight = this.statusHeight + attachmentHeight
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
