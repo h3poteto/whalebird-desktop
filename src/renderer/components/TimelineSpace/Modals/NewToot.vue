@@ -254,6 +254,10 @@ export default {
   methods: {
     close() {
       this.filteredAccount = []
+      const spoilerHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
+      this.showContentWarning = false
+      this.spoiler = ''
+      this.statusHeight = this.statusHeight + spoilerHeight
       const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
       this.openPoll = false
       this.polls = []
