@@ -19,7 +19,7 @@
       autofocus
     >
     </textarea>
-    <el-popover placement="bottom-start" width="300" trigger="manual" :value="openSuggest">
+    <el-popover placement="bottom-start" width="300" trigger="manual" :value="openSuggest" popper-class="suggest-popper">
       <ul class="suggest-list">
         <li
           v-for="(item, index) in filteredSuggestion"
@@ -277,11 +277,19 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.suggest-popper {
+  background-color: var(--theme-background-color);
+  border: 1px solid var(--theme-header-menu-color);
+}
+</style>
+
 <style lang="scss" scoped>
 .status {
   position: relative;
   z-index: 1;
   font-size: var(--base-font-size);
+  background-color: var(--theme-background-color);
 
   textarea {
     position: relative;
@@ -291,7 +299,7 @@ export default {
     box-sizing: border-box;
     width: 100%;
     font-size: inherit;
-    color: #606266;
+    color: var(--theme-primary-color);
     background-image: none;
     border: 0;
     border-radius: 4px;
@@ -299,6 +307,7 @@ export default {
     height: 120px;
     transition: border-color 0.2s cubic-bezier(0.645, 0.045, 9.355, 1);
     word-break: normal;
+    background-color: var(--theme-background-color);
 
     &::placeholder {
       color: #c0c4cc;
@@ -321,11 +330,11 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: #606266;
       height: 34px;
       line-height: 34px;
       box-sizing: border-box;
       cursor: pointer;
+      color: var(--theme-regular-color);
 
       .icon {
         display: inline-block;
@@ -336,7 +345,7 @@ export default {
     }
 
     .highlighted {
-      background-color: #f5f7fa;
+      background-color: var(--theme-selected-background-color);
     }
   }
 
