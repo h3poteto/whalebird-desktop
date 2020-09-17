@@ -254,12 +254,22 @@ export default {
   methods: {
     close() {
       this.filteredAccount = []
+      const spoilerHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
+      this.showContentWarning = false
+      this.spoiler = ''
+      this.statusHeight = this.statusHeight + spoilerHeight
+      const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
       this.openPoll = false
       this.polls = []
       this.pollExpire = {
         label: this.$t('modals.new_toot.poll.expires.1_day'),
         value: 3600 * 24
       }
+      this.statusHeight = this.statusHeight + pollHeight
+      const quoteHeight = this.$refs.quote ? this.$refs.quote.$el.offsetHeight : 0
+      this.statusHeight = this.statusHeight + quoteHeight
+      const attachmentHeight = this.$refs.preview ? this.$refs.preview.offsetHeight : 0
+      this.statusHeight = this.statusHeight + attachmentHeight
       this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaCount')
       this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
     },
