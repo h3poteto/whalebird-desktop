@@ -277,6 +277,13 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.suggest-popper {
+  background-color: var(--theme-background-color);
+  border: 1px solid var(--theme-header-menu-color);
+}
+</style>
+
 <style lang="scss" scoped>
 .status {
   position: relative;
@@ -323,11 +330,11 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: #606266;
       height: 34px;
       line-height: 34px;
       box-sizing: border-box;
       cursor: pointer;
+      color: var(--theme-regular-color);
 
       .icon {
         display: inline-block;
@@ -338,7 +345,7 @@ export default {
     }
 
     .highlighted {
-      background-color: #f5f7fa;
+      background-color: var(--theme-selected-background-color);
     }
   }
 
