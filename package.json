@@ -221,7 +221,7 @@
     "@types/parse-link-header": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
-    "@typescript-eslint/typescript-estree": "^3.10.1",
+    "@typescript-eslint/typescript-estree": "^4.1.1",
     "@vue/test-utils": "^1.0.3",
     "ajv": "^6.12.5",
     "all-object-keys": "^2.1.1",
