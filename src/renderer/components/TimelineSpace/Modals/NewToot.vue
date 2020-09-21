@@ -2,6 +2,7 @@
   <el-dialog
     :title="$t('modals.new_toot.title')"
     :visible.sync="newTootModal"
+    v-if="newTootModal"
     :before-close="closeConfirm"
     width="600px"
     class="new-toot-modal"
@@ -239,7 +240,9 @@ export default {
   },
   mounted() {
     Event.$on('image-uploaded', () => {
-      this.statusHeight = this.statusHeight - this.$refs.preview.offsetHeight
+      if (this.$refs.preview) {
+        this.statusHeight = this.statusHeight - this.$refs.preview.offsetHeight
+      }
     })
   },
   watch: {
