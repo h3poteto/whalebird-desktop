@@ -1,5 +1,46 @@
 # Change Log
 
+## [4.2.3] - 2020-09-25
+### Added
+- [#1780](https://github.com/h3poteto/whalebird-desktop/pull/1780) closes #1351 Add theme color in new toot window
+
+### Changed
+
+- [#1795](https://github.com/h3poteto/whalebird-desktop/pull/1795) Update electron version to 10.1.2 for mas
+- [#1786](https://github.com/h3poteto/whalebird-desktop/pull/1786) Bump typescript from 3.9.7 to 4.0.3
+- [#1793](https://github.com/h3poteto/whalebird-desktop/pull/1793) Bump ts-loader from 8.0.3 to 8.0.4
+- [#1774](https://github.com/h3poteto/whalebird-desktop/pull/1774) Bump @typescript-eslint/typescript-estree from 3.10.1 to 4.1.1
+- [#1773](https://github.com/h3poteto/whalebird-desktop/pull/1773) Bump electron from 10.1.0 to 10.1.2
+- [#1787](https://github.com/h3poteto/whalebird-desktop/pull/1787) Bump @types/node from 14.10.1 to 14.11.1
+- [#1794](https://github.com/h3poteto/whalebird-desktop/pull/1794) Bump ts-jest from 26.3.0 to 26.4.0
+- [#1792](https://github.com/h3poteto/whalebird-desktop/pull/1792) Bump html-webpack-plugin from 4.4.1 to 4.5.0
+- [#1788](https://github.com/h3poteto/whalebird-desktop/pull/1788) Bump copy-webpack-plugin from 6.1.0 to 6.1.1
+- [#1785](https://github.com/h3poteto/whalebird-desktop/pull/1785) Bump webpack from 4.44.1 to 4.44.2
+- [#1784](https://github.com/h3poteto/whalebird-desktop/pull/1784) Bump electron-builder from 22.8.0 to 22.8.1
+- [#1776](https://github.com/h3poteto/whalebird-desktop/pull/1776) Bump prettier from 2.1.1 to 2.1.2
+- [#1783](https://github.com/h3poteto/whalebird-desktop/pull/1783) Bump @types/jest from 26.0.13 to 26.0.14
+- [#1769](https://github.com/h3poteto/whalebird-desktop/pull/1769) Bump moment from 2.27.0 to 2.28.0
+- [#1770](https://github.com/h3poteto/whalebird-desktop/pull/1770) Bump ajv from 6.12.4 to 6.12.5
+- [#1740](https://github.com/h3poteto/whalebird-desktop/pull/1740) Bump axios from 0.19.2 to 0.20.0
+- [#1684](https://github.com/h3poteto/whalebird-desktop/pull/1784) Bump @babel/runtime from 7.11.0 to 7.11.2
+- [#1779](https://github.com/h3poteto/whalebird-desktop/pull/1779) Update issue templates
+- [#1778](https://github.com/h3poteto/whalebird-desktop/pull/1778) closes #1349 Set line-height in body to change according to font-size
+- [#1777](https://github.com/h3poteto/whalebird-desktop/pull/1777) closes #1755 Set backgroundColor to BrowserWindow to improve sub-pixel anti-aliasing
+- [#1764](https://github.com/h3poteto/whalebird-desktop/pull/1764) Fix npm command to yarn
+- [#1763](https://github.com/h3poteto/whalebird-desktop/pull/1763) Use yarn.lock to generate cache key in circleci
+- [#1762](https://github.com/h3poteto/whalebird-desktop/pull/1762) Clean up unused packages
+- [#1761](https://github.com/h3poteto/whalebird-desktop/pull/1761) Use yarn instead of npm
+- [#1756](https://github.com/h3poteto/whalebird-desktop/pull/1756) New Crowdin updates
+
+### Changed
+
+- [#1791](https://github.com/h3poteto/whalebird-desktop/pull/1791) closes #1285 Fix highlighted account icon
+- [#1790](https://github.com/h3poteto/whalebird-desktop/pull/1790) Re-render compose window using v-if for resize handler event
+- [#1781](https://github.com/h3poteto/whalebird-desktop/pull/1781) Fix window height of new toot when close window with some contents
+- [#1765](https://github.com/h3poteto/whalebird-desktop/pull/1765) Fix types in integration spec
+
+
+
 ## [4.2.2] - 2020-09-03
 ### Added
 - [#1732](https://github.com/h3poteto/whalebird-desktop/pull/1732) closes #1713 Support to add bookmarks
