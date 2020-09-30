@@ -118,7 +118,8 @@
 - [#1615](https://github.com/h3poteto/whalebird-desktop/pull/1615) Bump @babel/runtime from 7.10.4 to 7.10.5
 - [#1611](https://github.com/h3poteto/whalebird-desktop/pull/1611) Bump electron-context-menu from 2.1.0 to 2.2.0
 - [#1609](https://github.com/h3poteto/whalebird-desktop/pull/1609) Bump @types/nedb from 1.8.9 to 1.8.10
-- [#1623](https://github.com/h3poteto/whalebird-desktop/pull/1623) Add AUR badge in README-  [#1621]()) Change AUR package in README
+- [#1623](https://github.com/h3poteto/whalebird-desktop/pull/1623) Add AUR badge in README
+- [#1621](https://github.com/h3poteto/whalebird-desktop/pull/1621) Change AUR package in README
 
 ### Fixed
 
