@@ -32,7 +32,7 @@
 - [#1761](https://github.com/h3poteto/whalebird-desktop/pull/1761) Use yarn instead of npm
 - [#1756](https://github.com/h3poteto/whalebird-desktop/pull/1756) New Crowdin updates
 
-### Changed
+### Fixed
 
 - [#1791](https://github.com/h3poteto/whalebird-desktop/pull/1791) closes #1285 Fix highlighted account icon
 - [#1790](https://github.com/h3poteto/whalebird-desktop/pull/1790) Re-render compose window using v-if for resize handler event
