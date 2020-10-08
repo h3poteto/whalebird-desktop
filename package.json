@@ -263,7 +263,7 @@
     "jsdom": "^16.4.0",
     "json-loader": "^0.5.7",
     "listr": "^0.14.3",
-    "mini-css-extract-plugin": "^0.11.0",
+    "mini-css-extract-plugin": "^0.12.0",
     "node-loader": "^1.0.1",
     "node-sass": "^4.14.1",
     "prettier": "^2.1.2",
