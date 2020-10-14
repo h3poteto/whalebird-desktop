@@ -11,6 +11,8 @@ import shortkey from 'vue-shortkey'
 import VueI18Next from '@panter/vue-i18next'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
+import VueVirtualScroller from 'vue-virtual-scroller'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 import './assets/fonts/fonts.css'
 import App from './App.vue'
@@ -22,6 +24,7 @@ Vue.use(ElementUI, { locale })
 Vue.use(shortkey)
 Vue.use(VueI18Next)
 Vue.use(VueResize)
+Vue.use(VueVirtualScroller)
 Vue.component('icon', Icon)
 Vue.component('popper', Popper)
 

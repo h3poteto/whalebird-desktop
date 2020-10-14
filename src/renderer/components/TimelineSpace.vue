@@ -10,7 +10,7 @@
   >
     <side-menu></side-menu>
     <div :class="collapse ? 'page-narrow' : 'page'">
-      <header class="header" style="-webkit-app-region: drag;">
+      <header class="header" style="-webkit-app-region: drag">
         <header-menu></header-menu>
       </header>
       <contents></contents>
