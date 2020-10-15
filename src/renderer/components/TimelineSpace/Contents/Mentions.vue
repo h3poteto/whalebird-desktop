@@ -2,22 +2,24 @@
   <div id="mentions" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <transition-group name="timeline" tag="div">
-      <div class="mentions" v-for="message in mentions" :key="message.id">
-        <notification
-          :message="message"
-          :filter="filter"
-          :focused="message.id === focusedId"
-          :overlaid="modalOpened"
-          v-on:update="updateToot"
-          @focusNext="focusNext"
-          @focusPrev="focusPrev"
-          @focusRight="focusSidebar"
-          @selectNotification="focusNotification(message)"
-        >
-        </notification>
-      </div>
-    </transition-group>
+    <DynamicScroller :items="mentions" :min-item-size="60" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index">
+          <notification
+            :message="item"
+            :filter="filter"
+            :focused="item.id === focusedId"
+            :overlaid="modalOpened"
+            v-on:update="updateToot"
+            @focusNext="focusNext"
+            @focusPrev="focusPrev"
+            @focusRight="focusSidebar"
+            @selectNotification="focusNotification(item)"
+          >
+          </notification>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
