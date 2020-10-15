@@ -2,7 +2,7 @@
   <div id="home" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="filteredTimeline" :min-item-size="10" class="scroller" page-mode>
+    <DynamicScroller :items="filteredTimeline" :min-item-size="60" class="scroller" page-mode>
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index">
           <toot
