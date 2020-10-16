@@ -1,19 +1,23 @@
 <template>
   <div id="bookmarks" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <div class="bookmark" v-for="message in bookmarks" v-bind:key="message.id">
-      <toot
-        :message="message"
-        :focused="message.uri === focusedId"
-        :overlaid="modalOpened"
-        v-on:update="updateToot"
-        v-on:delete="deleteToot"
-        @focusNext="focusNext"
-        @focusPrev="focusPrev"
-        @focusRight="focusSidebar"
-        @selectToot="focusToot(message)"
-      ></toot>
-    </div>
+    <DynamicScroller :items="bookmarks" :min-item-size="60" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index">
+          <toot
+            :message="item"
+            :focused="item.uri === focusedId"
+            :overlaid="modalOpened"
+            v-on:update="updateToot"
+            v-on:delete="deleteToot"
+            @focusNext="focusNext"
+            @focusPrev="focusPrev"
+            @focusRight="focusSidebar"
+            @selectToot="focusToot(item)"
+          ></toot>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
