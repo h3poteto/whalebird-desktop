@@ -1,8 +1,12 @@
 <template>
   <div id="search_account">
-    <div v-bind:key="message.uri + message.id" v-for="message in results">
-      <toot :message="message"></toot>
-    </div>
+    <DynamicScroller :items="results" :min-item-size="60" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index">
+          <toot :message="item"></toot>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
   </div>
 </template>
 
@@ -18,11 +22,10 @@ export default {
       results: state => state.TimelineSpace.Contents.Search.Toots.results
     })
   },
-  destroyed () {
+  destroyed() {
     this.$store.commit('TimelineSpace/Contents/Search/Toots/updateResults', [])
   }
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
