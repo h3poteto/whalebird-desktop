@@ -1,8 +1,12 @@
 <template>
   <div id="search_tag">
-    <template v-for="tag in results">
-      <tag :tag="tag"></tag>
-    </template>
+    <DynamicScroller :items="results" :min-item-size="46" key-field="name" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.name]" :data-index="index">
+          <tag :tag="item"></tag>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
   </div>
 </template>
 
@@ -18,7 +22,7 @@ export default {
       results: state => state.results
     })
   },
-  destroyed () {
+  destroyed() {
     this.$store.commit('TimelineSpace/Contents/Search/Tag/updateResults', [])
   }
 }
