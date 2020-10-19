@@ -16,21 +16,25 @@
       >
       </toot>
     </template>
-    <template v-for="message in timeline">
-      <toot
-        :message="message"
-        :key="message.id"
-        :focused="message.uri + message.id === focusedId"
-        :overlaid="modalOpened"
-        v-on:update="updateToot"
-        v-on:delete="deleteToot"
-        @focusNext="focusNext"
-        @focusPrev="focusPrev"
-        @focusLeft="focusTimeline"
-        @selectToot="focusToot(message)"
-      >
-      </toot>
-    </template>
+    <DynamicScroller :items="timeline" :min-item-size="60" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index">
+          <toot
+            :message="item"
+            :key="item.id"
+            :focused="item.uri + item.id === focusedId"
+            :overlaid="modalOpened"
+            v-on:update="updateToot"
+            v-on:delete="deleteToot"
+            @focusNext="focusNext"
+            @focusPrev="focusPrev"
+            @focusLeft="focusTimeline"
+            @selectToot="focusToot(item)"
+          >
+          </toot>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
   </div>
 </template>
@@ -68,7 +72,7 @@ export default {
     document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
     Event.$on('focus-sidebar', () => {
       this.focusedId = 0
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
       })
     })
@@ -83,7 +87,7 @@ export default {
     }
   },
   watch: {
-    account: function(_newAccount, _oldAccount) {
+    account: function (_newAccount, _oldAccount) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/clearTimeline')
       this.load()
     }
