@@ -3,22 +3,22 @@
     "application": {
       "name": "Whalebird",
       "about": "Γef Whalebird",
-      "preferences": "Preferences...",
+      "preferences": "Isemnyifen...",
       "services": "Tinufa",
       "hide": "Ffer Whalebird",
       "hide_others": "Ffer Wayyaḍ",
       "show_all": "Smal Maṛṛa",
-      "open": "Open Window",
+      "open": "Ṛẓem Asatem",
       "quit": "Ffeɣ"
     },
     "toot": {
-      "name": "Toot",
-      "new": "New Toot"
+      "name": "Ansaɣ",
+      "new": "Ansaɣ Amaynu"
     },
     "edit": {
       "name": "Senfel",
-      "undo": "Undo",
-      "redo": "Redo",
+      "undo": "Ser",
+      "redo": "Ales",
       "cut": "Bbi",
       "copy": "Senɣel",
       "paste": "Sleɣ",
@@ -30,7 +30,7 @@
     },
     "window": {
       "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
+      "name": "Asatem",
       "close": "Rgel Asatem",
       "open": "Ṛẓem Asatem",
       "minimize": "Minimize",
@@ -58,7 +58,7 @@
     "public": "Public timeline",
     "hashtag": "Hactag",
     "search": "Rzu",
-    "lists": "Lists"
+    "lists": "Isedditen"
   },
   "header_menu": {
     "home": "Asenubeg",
@@ -371,7 +371,7 @@
     "account": "Amiḍan",
     "tag": "Hactag",
     "keyword": "keyword",
-    "toot": "Toot"
+    "toot": "Ansaɣ"
   },
   "lists": {
     "index": {
