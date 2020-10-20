@@ -66,10 +66,10 @@
     "mention": "Mention",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
-    "follow_requests": "Follow Requests",
+    "follow_requests": "Tutrawin n uḍfaṛ",
     "direct_messages": "Tuzinin Tusridin",
-    "local": "Local timeline",
-    "public": "Public timeline",
+    "local": "Ifili n uzmes adeɣran",
+    "public": "Ifili n uzmes agdudan",
     "hashtag": "Hactag",
     "search": "Rzu",
     "lists": "Isedditen",
@@ -83,15 +83,15 @@
       "apply": "Apply"
     },
     "new_toot": "Ansaɣ",
-    "reload": "Reload",
+    "reload": "Ales",
     "settings": "Tisɣal"
   },
   "settings": {
     "title": "Tisɣal",
     "general": {
-      "title": "General",
+      "title": "Amatay",
       "toot": {
-        "title": "Toot",
+        "title": "Ansaɣ",
         "visibility": {
           "description": "Customize default visibility of toot.",
           "public": "Agdudan",
@@ -105,32 +105,32 @@
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Ifili n Uzmes",
       "unread_notification": {
         "title": "Unread Notification",
         "description": "Customize unread notifications for each timeline.",
         "direct": "Tuzinin Tusridin",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "local": "Ifili n Uzmes Adeɣran",
+        "public": "Ifili n Uzmes Agdudan"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Isemnyifen",
     "general": {
-      "title": "General",
+      "title": "Amatay",
       "sounds": {
-        "title": "Sounds",
+        "title": "Imsliten",
         "description": "Please set feedback sounds.",
         "fav_rb": "When you favorite or boost the toot",
         "toot": "When you post toot"
       },
       "timeline": {
-        "title": "Timeline",
+        "title": "Ifili n Uzmes",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nfsw": "Always ignore NFSW of medias",
-        "hideAllAttachments": "Hide all medias"
+        "hideAllAttachments": "Ffer imidyaten maṛṛa"
       },
       "other": {
         "title": "Other options",
@@ -223,7 +223,7 @@
       "save": "Save"
     },
     "language": {
-      "title": "Language",
+      "title": "Tutlayt",
       "language_description": "Choose the language you would like to use with Whalebird.",
       "notice": "Requires relaunch",
       "confirm": {
@@ -238,7 +238,7 @@
     "new_toot": {
       "title": "New Toot",
       "cw": "Write your warning here",
-      "status": "What is on your mind?",
+      "status": "Ma'yd illan g ixef-nnek?",
       "cancel": "Ser",
       "toot": "Ansaɣ",
       "close_confirm": "Are you sure you want to cancel the new toot?",
@@ -323,16 +323,16 @@
       "report": "Mel",
       "delete": "Kkes",
       "via": "sɣur {{application}}",
-      "reply": "Reply",
+      "reply": "Rar",
       "reblog": "Reblog",
       "fav": "Favourite",
       "detail": "Toot details",
       "bookmark": "Bookmark",
       "pinned": "Pinned toot",
       "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
-        "until": "until {{datetime}}",
+        "vote": "Asettay",
+        "votes_count": "isettayen",
+        "until": "ar {{datetime}}",
         "left": "{{datetime}} ag qimen",
         "refresh": "Refresh"
       }
@@ -346,7 +346,7 @@
       "follow": "Ḍfeṛ",
       "unfollow": "Kkes aḍfaṛ",
       "follow_requested": "Ḍfeṛ tutrawin",
-      "open_in_browser": "Open in Browser",
+      "open_in_browser": "Ṛẓem g umessara",
       "manage_list_memberships": "Manage List Memberships",
       "mute": "Ẓẓiẓen",
       "unmute": "Kkes aẓiẓen",
@@ -358,11 +358,11 @@
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "Ḍeggi",
+    "reject": "Agy"
   },
   "hashtag": {
-    "tag_name": "Tag name",
+    "tag_name": "Isem n utag",
     "delete_tag": "Kkes atag",
     "save_tag": "Save tag"
   },
@@ -391,7 +391,7 @@
     "manually_2": "If it has not opened, please go to the following URL manually.",
     "code_label": "Please paste the authorization code from your browser:",
     "misskey_label": "Please submit after you authorize in your browser.",
-    "submit": "Submit"
+    "submit": "Azen"
   },
   "receive_drop": {
     "drop_message": "Drop to Upload to Mastodon"
