@@ -41,9 +41,9 @@
     "add_new_account": "Rnu yan umiḍan amaynu"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
+    "profile": "Ifres",
+    "show_profile": "Sken ifres",
+    "edit_profile": "Senfel ifres",
     "settings": "Tisɣal",
     "collapse": "Collapse",
     "expand": "Expand",
@@ -67,22 +67,22 @@
     "favourite": "Favourite",
     "bookmark": "Bookmark",
     "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages",
+    "direct_messages": "Tuzinin Tusridin",
     "local": "Local timeline",
     "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists",
-    "members": "Members",
+    "hashtag": "Hactag",
+    "search": "Rzu",
+    "lists": "Isedditen",
+    "members": "Agmamen",
     "filter": {
-      "title": "Filter",
+      "title": "Sty",
       "placeholder": "Filter out by regular expressions",
-      "show_dms": "Show direct messages",
+      "show_dms": "Smal tuzinin tusridin",
       "show_reblogs": "Show reblogs",
       "show_replies": "Show replies",
       "apply": "Apply"
     },
-    "new_toot": "Toot",
+    "new_toot": "Ansaɣ",
     "reload": "Reload",
     "settings": "Tisɣal"
   },
@@ -139,10 +139,10 @@
     },
     "appearance": {
       "title": "Appearance",
-      "theme_color": "Theme color",
+      "theme_color": "Aklu n usgum",
       "theme": {
-        "light": "Light",
-        "dark": "Dark",
+        "light": "Anafaw",
+        "dark": "Adɣmum",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
@@ -151,7 +151,7 @@
       "custom_theme": {
         "background_color": "Base background",
         "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
+        "global_header_color": "Talgamt n umiḍan",
         "side_menu_color": "Side menu",
         "primary_color": "Primary font",
         "regular_color": "Regular font",
@@ -160,7 +160,7 @@
         "header_menu_color": "Header menu",
         "wrapper_mask_color": "Modal wrapper"
       },
-      "font_size": "Font size",
+      "font_size": "Tiɣzi n tuniɣt",
       "font_family": "Font family",
       "toot_padding": "Padding around toots",
       "display_style": {
