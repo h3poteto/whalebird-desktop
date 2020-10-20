@@ -2,27 +2,27 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
+      "about": "Γef Whalebird",
       "preferences": "Preferences...",
       "services": "Services",
       "hide": "Hide Whalebird",
       "hide_others": "Hide Others",
       "show_all": "Show All",
       "open": "Open Window",
-      "quit": "Quit"
+      "quit": "Ffeɣ"
     },
     "toot": {
       "name": "Toot",
       "new": "New Toot"
     },
     "edit": {
-      "name": "Edit",
+      "name": "Senfel",
       "undo": "Undo",
       "redo": "Redo",
       "cut": "Cut",
-      "copy": "Copy",
+      "copy": "Senɣel",
       "paste": "Paste",
-      "select_all": "Select All"
+      "select_all": "Sty maṛṛa"
     },
     "view": {
       "name": "View",
@@ -44,25 +44,25 @@
     "profile": "Profile",
     "show_profile": "Show profile",
     "edit_profile": "Edit profile",
-    "settings": "Settings",
+    "settings": "Tisɣal",
     "collapse": "Collapse",
     "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
+    "home": "Asenubeg",
+    "notification": "Tineɣmisin",
     "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
+    "direct": "Tuzinin tusridin",
+    "follow_requests": "Ḍfeṛ tutrawin",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
     "local": "Local timeline",
     "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
+    "hashtag": "Hactag",
+    "search": "Rzu",
     "lists": "Lists"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
+    "home": "Asenubeg",
+    "notification": "Tineɣmisin",
     "mention": "Mention",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
@@ -84,20 +84,20 @@
     },
     "new_toot": "Toot",
     "reload": "Reload",
-    "settings": "Settings"
+    "settings": "Tisɣal"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Tisɣal",
     "general": {
       "title": "General",
       "toot": {
         "title": "Toot",
         "visibility": {
           "description": "Customize default visibility of toot.",
-          "public": "Public",
+          "public": "Agdudan",
           "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "private": "Uslig",
+          "direct": "Usrid"
         },
         "sensitive": {
           "description": "Mark media as sensitive by default"
@@ -109,7 +109,7 @@
       "unread_notification": {
         "title": "Unread Notification",
         "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
+        "direct": "Tuzinin Tusridin",
         "local": "Local Timeline",
         "public": "Public Timeline"
       }
@@ -187,8 +187,8 @@
       }
     },
     "account": {
-      "title": "Account",
-      "connected": "Connected Account",
+      "title": "Amiḍan",
+      "connected": "Ittuzdy Umiḍan",
       "username": "Username",
       "domain": "Domain",
       "association": "Association",
@@ -196,17 +196,17 @@
       "remove_association": "Remove assocication",
       "remove_all_associations": "Remove all associations",
       "confirm": "Confirm",
-      "cancel": "Cancel",
+      "cancel": "Ser",
       "confirm_message": "Are you sure to remove all associations?"
     },
     "network": {
-      "title": "Network",
+      "title": "Aẓeṭṭa",
       "proxy": {
         "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
+        "no": "Walu apṛuksy",
+        "system": "Semres apṛuksy n ungraw",
         "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
+        "protocol": "Apṛutukul",
         "host": "Proxy host",
         "port": "Proxy port",
         "username": "Proxy username",
@@ -258,29 +258,29 @@
         "expires": {
           "5_minutes": "5 minutes",
           "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "1_hour": "1 tsragt",
+          "6_hours": "6 tsragin",
+          "1_day": "1 wass",
+          "3_days": "3 wussan",
+          "7_days": "7 wussan"
         }
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "Ddu ɣer..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "Rnu agmam ɣer useddi",
+      "account_name": "Isem n umiḍan"
     },
     "list_membership": {
       "title": "List Memberships"
     },
     "mute_confirm": {
-      "title": "Are you sure you want to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "Is nit trid ad tẓẓiẓend?",
+      "body": "Ffer tineɣmisin seg unessmres-a?",
+      "cancel": "Ser",
+      "ok": "Ẓẓiẓen"
     },
     "shortcut": {
       "title": "Keyboard shortcuts",
@@ -306,20 +306,20 @@
     "report": {
       "title": "Reporting this user",
       "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
+      "cancel": "Ser",
+      "ok": "Mel"
     }
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
+      "show_more": "Smal uggar",
+      "hide": "Ffer",
       "sensitive": "Show sensitive content",
       "view_toot_detail": "View Toot Detail",
       "open_in_browser": "Open in Browser",
       "copy_link_to_toot": "Copy Link to Toot",
-      "mute": "Mute",
-      "block": "Block",
+      "mute": "Ẓẓiẓen",
+      "block": "Gdel",
       "report": "Report",
       "delete": "Delete",
       "via": "via {{application}}",
