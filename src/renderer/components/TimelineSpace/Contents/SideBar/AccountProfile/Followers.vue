@@ -1,14 +1,14 @@
 <template>
-<div id="followers">
-  <template v-for="follow in followers">
-    <user :user="follow"
-          :relationship="targetRelation(follow.id)"
-          @followAccount="followAccount"
-          @unfollowAccount="unfollowAccount"
-          >
-    </user>
-  </template>
-</div>
+  <div id="followers">
+    <DynamicScroller :items="followers" :min-item-size="53" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.item]" :data-index="index">
+          <user :user="item" :relationship="targetRelation(item.id)" @followAccount="followAccount" @unfollowAccount="unfollowAccount">
+          </user>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
+  </div>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ import User from '~/src/renderer/components/molecules/User'
 
 export default {
   name: 'followers',
-  props: [ 'account' ],
+  props: ['account'],
   components: { User },
   computed: {
     ...mapState('TimelineSpace/Contents/SideBar/AccountProfile/Followers', {
@@ -25,7 +25,7 @@ export default {
       relationships: state => state.relationships
     })
   },
-  created () {
+  created() {
     this.load()
   },
   watch: {
@@ -34,7 +34,7 @@ export default {
     }
   },
   methods: {
-    async load () {
+    async load() {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
       try {
         const followers = await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchFollowers', this.account)
@@ -48,10 +48,10 @@ export default {
         this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
       }
     },
-    targetRelation (id) {
+    targetRelation(id) {
       return this.relationships.find(r => r.id === id)
     },
-    async followAccount (account) {
+    async followAccount(account) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
       try {
         await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
@@ -65,7 +65,7 @@ export default {
         this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
       }
     },
-    async unfollowAccount (account) {
+    async unfollowAccount(account) {
       this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
       try {
         await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
@@ -83,5 +83,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

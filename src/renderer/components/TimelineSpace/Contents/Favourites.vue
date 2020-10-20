@@ -1,21 +1,25 @@
 <template>
   <div id="favourites" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <div class="fav" v-for="message in favourites" v-bind:key="message.id">
-      <toot
-        :message="message"
-        :filter="filter"
-        :focused="message.uri === focusedId"
-        :overlaid="modalOpened"
-        v-on:update="updateToot"
-        v-on:delete="deleteToot"
-        @focusNext="focusNext"
-        @focusPrev="focusPrev"
-        @focusRight="focusSidebar"
-        @selectToot="focusToot(message)"
-      >
-      </toot>
-    </div>
+    <DynamicScroller :items="favourites" :min-item-size="60" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index">
+          <toot
+            :message="item"
+            :filter="filter"
+            :focused="item.uri === focusedId"
+            :overlaid="modalOpened"
+            v-on:update="updateToot"
+            v-on:delete="deleteToot"
+            @focusNext="focusNext"
+            @focusPrev="focusPrev"
+            @focusRight="focusSidebar"
+            @selectToot="focusToot(item)"
+          >
+          </toot>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
@@ -51,7 +55,7 @@ export default {
       filter: state => state.TimelineSpace.Contents.Favourites.filter
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    shortcutEnabled: function() {
+    shortcutEnabled: function () {
       return !this.focusedId && !this.modalOpened
     }
   },
@@ -75,7 +79,7 @@ export default {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.focusedId = previousFocusedId
       })
     })
@@ -91,14 +95,14 @@ export default {
     }
   },
   watch: {
-    startReload: function(newState, oldState) {
+    startReload: function (newState, oldState) {
       if (!oldState && newState) {
         this.reload().finally(() => {
           this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
         })
       }
     },
-    focusedId: function(newState, _oldState) {
+    focusedId: function (newState, _oldState) {
       if (newState && this.heading) {
         this.heading = false
       } else if (newState === null && !this.heading) {

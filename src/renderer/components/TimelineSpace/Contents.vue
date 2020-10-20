@@ -49,7 +49,7 @@ export default {
       openSideBar: state => state.openSideBar
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    customWidth: function() {
+    customWidth: function () {
       return {
         '--current-sidebar-width': `${this.sidebarWidth}px`
       }
@@ -77,7 +77,7 @@ export default {
 #contents {
   --current-sidebar-width: 360px;
 
-  padding-top: 48px;
+  padding-top: 49px;
   height: 100%;
   box-sizing: border-box;
   user-select: text;

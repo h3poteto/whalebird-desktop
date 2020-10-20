@@ -2,23 +2,25 @@
   <div name="tag" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <transition-group name="timeline" tag="div">
-      <div class="tag-timeline" v-for="message in timeline" v-bind:key="message.uri + message.id">
-        <toot
-          :message="message"
-          :filter="filter"
-          :focused="message.uri + message.id === focusedId"
-          :overlaid="modalOpened"
-          v-on:update="updateToot"
-          v-on:delete="deleteToot"
-          @focusNext="focusNext"
-          @focusPrev="focusPrev"
-          @focusRight="focusSidebar"
-          @selectToot="focusToot(message)"
-        >
-        </toot>
-      </div>
-    </transition-group>
+    <DynamicScroller :items="timeline" :min-item-size="60" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index">
+          <toot
+            :message="item"
+            :filter="filter"
+            :focused="item.uri + item.id === focusedId"
+            :overlaid="modalOpened"
+            v-on:update="updateToot"
+            v-on:delete="deleteToot"
+            @focusNext="focusNext"
+            @focusPrev="focusPrev"
+            @focusRight="focusSidebar"
+            @selectToot="focusToot(item)"
+          >
+          </toot>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>

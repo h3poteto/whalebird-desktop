@@ -1,15 +1,19 @@
 <template>
   <div id="follows">
-    <template v-for="follow in follows">
-      <user
-        :user="follow"
-        v-bind:key="follow.id"
-        :relationship="targetRelation(follow.id)"
-        @followAccount="followAccount"
-        @unfollowAccount="unfollowAccount"
-      >
-      </user>
-    </template>
+    <DynamicScroller :items="follows" :min-item-size="53" class="scroller" page-mode>
+      <template v-slot="{ item, index, active }">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.item]" :data-index="index">
+          <user
+            :user="item"
+            v-bind:key="item.id"
+            :relationship="targetRelation(item.id)"
+            @followAccount="followAccount"
+            @unfollowAccount="unfollowAccount"
+          >
+          </user>
+        </DynamicScrollerItem>
+      </template>
+    </DynamicScroller>
   </div>
 </template>
 
@@ -31,7 +35,7 @@ export default {
     this.load()
   },
   watch: {
-    account: function(_newAccount, _oldAccount) {
+    account: function (_newAccount, _oldAccount) {
       this.load()
     }
   },
