@@ -332,8 +332,8 @@
       "poll": {
         "vote": "投票",
         "votes_count": "投票",
-        "until": "{{datetime}}まで",
-        "left": "{{datetime}}まで",
+        "until": "{{datetime}} まで",
+        "left": "{{datetime}} まで",
         "refresh": "更新"
       }
     }
@@ -406,7 +406,7 @@
     "follow_request_accept_error": "フォロー申請の承認に失敗しました",
     "follow_reuqest_reject_error": "フォロー申請の却下に失敗しました",
     "start_streaming_error": "ストリーミングを開始できませんでした",
-    "start_all_streamings_error": "{{domain}}のストリーミングを開始できませんでした",
+    "start_all_streamings_error": "{{domain}} のストリーミングを開始できませんでした",
     "attach_error": "ファイルを添付できませんでした",
     "authorize_duplicate_error": "同一ドメイン同一アカウントではログインできません",
     "authorize_error": "認証に失敗しました",
@@ -442,7 +442,7 @@
       "domain_format": "ドメイン名のみを入力してください"
     },
     "new_toot": {
-      "toot_length": "トゥートの長さは {{min}} から {{max}}文字である必要があります",
+      "toot_length": "トゥートの長さは {{min}} から {{max}} 文字である必要があります",
       "attach_length": "添付ファイルは {{max}} つまでです",
       "attach_image": "画像かビデオしか添付できません",
       "poll_invalid": "アンケートに不正な選択肢が含まれています"
