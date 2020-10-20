@@ -4,10 +4,10 @@
       "name": "Whalebird",
       "about": "Γef Whalebird",
       "preferences": "Preferences...",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
+      "services": "Tinufa",
+      "hide": "Ffer Whalebird",
+      "hide_others": "Ffer Wayyaḍ",
+      "show_all": "Smal Maṛṛa",
       "open": "Open Window",
       "quit": "Ffeɣ"
     },
@@ -19,26 +19,26 @@
       "name": "Senfel",
       "undo": "Undo",
       "redo": "Redo",
-      "cut": "Cut",
+      "cut": "Bbi",
       "copy": "Senɣel",
-      "paste": "Paste",
+      "paste": "Sleɣ",
       "select_all": "Sty maṛṛa"
     },
     "view": {
-      "name": "View",
+      "name": "Smal",
       "toggle_full_screen": "Toggle Full Screen"
     },
     "window": {
       "always_show_menu_bar": "Always Show Menu Bar",
       "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
+      "close": "Rgel Asatem",
+      "open": "Ṛẓem Asatem",
       "minimize": "Minimize",
-      "jump_to": "Jump to"
+      "jump_to": "Ddu ɣer"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "Rnu yan umiḍan amaynu"
   },
   "side_menu": {
     "profile": "Profile",
@@ -320,7 +320,7 @@
       "copy_link_to_toot": "Copy Link to Toot",
       "mute": "Ẓẓiẓen",
       "block": "Gdel",
-      "report": "Report",
+      "report": "Mel",
       "delete": "Delete",
       "via": "via {{application}}",
       "reply": "Reply",
@@ -348,10 +348,10 @@
       "follow_requested": "Follow requested",
       "open_in_browser": "Open in Browser",
       "manage_list_memberships": "Manage List Memberships",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
+      "mute": "Ẓẓiẓen",
+      "unmute": "Kkes aẓiẓen",
+      "unblock": "Kkes ageddul",
+      "block": "Gdel",
       "toots": "Toots",
       "follows": "Follows",
       "followers": "Followers"
@@ -363,28 +363,28 @@
   },
   "hashtag": {
     "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
+    "delete_tag": "Kkes atag",
     "save_tag": "Save tag"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
+    "search": "Rzu",
+    "account": "Amiḍan",
+    "tag": "Hactag",
     "keyword": "keyword",
     "toot": "Toot"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
-      "edit": "Edit"
+      "new_list": "Aseddi amaynu",
+      "edit": "Senfel"
     }
   },
   "login": {
     "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
     "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "proxy_here": " da",
+    "search": "Rzu",
+    "login": "Akcam"
   },
   "authorize": {
     "manually_1": "An authorization page has opened in your browser.",
@@ -455,10 +455,10 @@
     },
     "follow": {
       "title": "Follow",
-      "body": "{{username}} is now following you"
+      "body": "la-k iḍffeṛ {{username}}"
     },
     "follow_request": {
-      "title": "FollowRequest",
+      "title": "Tuttra n uḍfaṛ",
       "body": "Receive a follow request from {{username}}"
     },
     "reblog": {
