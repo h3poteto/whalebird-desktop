@@ -134,7 +134,7 @@
       },
       "other": {
         "title": "Other options",
-        "launch": "Launch app on login"
+        "launch": "Ṛẓem tisensi akd ukcam"
       }
     },
     "appearance": {
@@ -161,7 +161,7 @@
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Tiɣzi n tuniɣt",
-      "font_family": "Font family",
+      "font_family": "Tawacunt n tuniɣt",
       "toot_padding": "Padding around toots",
       "display_style": {
         "title": "Display style of username",
@@ -195,7 +195,7 @@
       "order": "Order",
       "remove_association": "Remove assocication",
       "remove_all_associations": "Remove all associations",
-      "confirm": "Confirm",
+      "confirm": "Seddid",
       "cancel": "Ser",
       "confirm_message": "Are you sure to remove all associations?"
     },
@@ -230,7 +230,7 @@
         "title": "Warning",
         "message": "You have to restart this application. Continue?",
         "ok": "Restart Now",
-        "cancel": "Cancel"
+        "cancel": "Ser"
       }
     }
   },
@@ -239,15 +239,15 @@
       "title": "New Toot",
       "cw": "Write your warning here",
       "status": "What is on your mind?",
-      "cancel": "Cancel",
-      "toot": "Toot",
+      "cancel": "Ser",
+      "toot": "Ansaɣ",
       "close_confirm": "Are you sure you want to cancel the new toot?",
-      "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Cancel",
+      "close_confirm_ok": "WAX",
+      "close_confirm_cancel": "Ser",
       "description": "Describe for the visually impaired",
       "footer": {
-        "add_image": "Add images",
-        "poll": "Add a poll",
+        "add_image": "Rnu yat n twlafet",
+        "poll": "Rnu yan n idew",
         "change_visibility": "Change visibility",
         "change_sensitive": "Change sensitive",
         "add_cw": "Add content warning",
@@ -321,8 +321,8 @@
       "mute": "Ẓẓiẓen",
       "block": "Gdel",
       "report": "Mel",
-      "delete": "Delete",
-      "via": "via {{application}}",
+      "delete": "Kkes",
+      "via": "sɣur {{application}}",
       "reply": "Reply",
       "reblog": "Reblog",
       "fav": "Favourite",
@@ -333,7 +333,7 @@
         "vote": "Vote",
         "votes_count": "votes",
         "until": "until {{datetime}}",
-        "left": "{{datetime}} left",
+        "left": "{{datetime}} ag qimen",
         "refresh": "Refresh"
       }
     }
@@ -343,9 +343,9 @@
       "follows_you": "Follows you",
       "doesnt_follow_you": "Doesn't follow you",
       "detail": "Detail",
-      "follow": "Follow",
-      "unfollow": "Unfollow",
-      "follow_requested": "Follow requested",
+      "follow": "Ḍfeṛ",
+      "unfollow": "Kkes aḍfaṛ",
+      "follow_requested": "Ḍfeṛ tutrawin",
       "open_in_browser": "Open in Browser",
       "manage_list_memberships": "Manage List Memberships",
       "mute": "Ẓẓiẓen",
@@ -353,7 +353,7 @@
       "unblock": "Kkes ageddul",
       "block": "Gdel",
       "toots": "Toots",
-      "follows": "Follows",
+      "follows": "Imeḍfaṛ",
       "followers": "Followers"
     }
   },
