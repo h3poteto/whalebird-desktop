@@ -54,5 +54,9 @@ export default {
   sv_se: {
     name: 'svenska',
     key: 'sv_se'
+  },
+  tzm: {
+    name: 'Tamaziɣt',
+    key: 'tzm'
   }
 }

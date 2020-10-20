@@ -33,6 +33,7 @@ export default {
         Language.pt_pt,
         Language.ru,
         Language.sv_se,
+        Language.tzm,
         Language.zh_cn
       ]
     }
