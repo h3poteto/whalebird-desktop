@@ -17,7 +17,7 @@
     },
     "edit": {
       "name": "Senfel",
-      "undo": "Ser",
+      "undo": "Sser",
       "redo": "Ales",
       "cut": "Bbi",
       "copy": "Senɣel",
@@ -129,7 +129,7 @@
         "title": "Ifili n uzmez",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
-        "nfsw": "Always ignore NFSW of medias",
+        "nfsw": "Nxxel abda tumayin n NFSW",
         "hideAllAttachments": "Ffer isenɣmisen maṛṛa"
       },
       "other": {
@@ -165,7 +165,7 @@
       "toot_padding": "Padding around toots",
       "display_style": {
         "title": "Display style of username",
-        "display_name_and_username": "Display name and username",
+        "display_name_and_username": "Smal isem d Isem n unessmres",
         "display_name": "Display name",
         "username": "Isem n unessmres"
       },
@@ -196,7 +196,7 @@
       "remove_association": "Remove assocication",
       "remove_all_associations": "Remove all associations",
       "confirm": "Seddid",
-      "cancel": "Ser",
+      "cancel": "Sser",
       "confirm_message": "Are you sure to remove all associations?"
     },
     "network": {
@@ -209,7 +209,7 @@
         "protocol": "Apṛutukul",
         "host": "Proxy host",
         "port": "Proxy port",
-        "username": "Proxy username",
+        "username": "Isem n unessmres n upruksi",
         "password": "Proxy password",
         "protocol_list": {
           "http": "http",
@@ -239,11 +239,11 @@
       "title": "New Toot",
       "cw": "Write your warning here",
       "status": "Ma'yd illan g ixef-nnek?",
-      "cancel": "Ser",
+      "cancel": "Sser",
       "toot": "Ansaɣ",
       "close_confirm": "Are you sure you want to cancel the new toot?",
       "close_confirm_ok": "WAX",
-      "close_confirm_cancel": "Ser",
+      "close_confirm_cancel": "Sser",
       "description": "Describe for the visually impaired",
       "footer": {
         "add_image": "Rnu yat n twlafet",
@@ -279,7 +279,7 @@
     "mute_confirm": {
       "title": "Is nit trid ad tẓẓiẓend?",
       "body": "Ffer tineɣmisin seg unessmres-a?",
-      "cancel": "Ser",
+      "cancel": "Sser",
       "ok": "Ẓẓiẓen"
     },
     "shortcut": {
@@ -306,7 +306,7 @@
     "report": {
       "title": "Reporting this user",
       "comment": "Additional comments",
-      "cancel": "Ser",
+      "cancel": "Sser",
       "ok": "Mel"
     }
   },
@@ -316,7 +316,7 @@
       "hide": "Ffer",
       "sensitive": "Show sensitive content",
       "view_toot_detail": "View Toot Detail",
-      "open_in_browser": "Open in Browser",
+      "open_in_browser": "Ṛṛem g umessara",
       "copy_link_to_toot": "Copy Link to Toot",
       "mute": "Ẓẓiẓen",
       "block": "Gdel",
