@@ -54,8 +54,8 @@
     "follow_requests": "Ḍfeṛ tutrawin",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
-    "local": "Ifili n uzmes adeɣran",
-    "public": "Ifili n uzmes agdudan",
+    "local": "Ifili n uzmez adɣran",
+    "public": "Ifili n uzmez agdudan",
     "hashtag": "Hactag",
     "search": "Rzu",
     "lists": "Isedditen"
@@ -68,8 +68,8 @@
     "bookmark": "Bookmark",
     "follow_requests": "Tutrawin n uḍfaṛ",
     "direct_messages": "Tuzinin Tusridin",
-    "local": "Ifili n uzmes adeɣran",
-    "public": "Ifili n uzmes agdudan",
+    "local": "Ifili n uzmez adɣran",
+    "public": "Ifili n uzmez agdudan",
     "hashtag": "Hactag",
     "search": "Rzu",
     "lists": "Isedditen",
@@ -105,13 +105,13 @@
       }
     },
     "timeline": {
-      "title": "Ifili n Uzmes",
+      "title": "Ifili n uzmez",
       "unread_notification": {
-        "title": "Unread Notification",
+        "title": "Tineɣmisin ur ittuɣrin",
         "description": "Customize unread notifications for each timeline.",
-        "direct": "Tuzinin Tusridin",
-        "local": "Ifili n Uzmes Adeɣran",
-        "public": "Ifili n Uzmes Agdudan"
+        "direct": "Tuzinin tusridin",
+        "local": "Ifili n uzmez adɣran",
+        "public": "Ifili n uzmez agdudan"
       }
     }
   },
@@ -121,16 +121,16 @@
       "title": "Amatay",
       "sounds": {
         "title": "Imsliten",
-        "description": "Please set feedback sounds.",
+        "description": "Imesli n tneɣmisin.",
         "fav_rb": "When you favorite or boost the toot",
         "toot": "When you post toot"
       },
       "timeline": {
-        "title": "Ifili n Uzmes",
+        "title": "Ifili n uzmez",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nfsw": "Always ignore NFSW of medias",
-        "hideAllAttachments": "Ffer imidyaten maṛṛa"
+        "hideAllAttachments": "Ffer isenɣmisen maṛṛa"
       },
       "other": {
         "title": "Other options",
