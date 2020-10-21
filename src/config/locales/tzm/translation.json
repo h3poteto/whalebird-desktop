@@ -459,7 +459,7 @@
     },
     "follow_request": {
       "title": "Tuttra n uḍfaṛ",
-      "body": "Receive a follow request from {{username}}"
+      "body": "Tiwḍ-ak tutra n uḍfaṛ seg {{username}}"
     },
     "reblog": {
       "title": "Reblog",
