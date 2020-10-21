@@ -133,7 +133,7 @@
         "hideAllAttachments": "Ffer isenɣmisen maṛṛa"
       },
       "other": {
-        "title": "Other options",
+        "title": "Tideɣrin yaḍnin",
         "launch": "Ṛẓem tisensi akd ukcam"
       }
     },
@@ -170,7 +170,7 @@
         "username": "Isem n unessmres"
       },
       "time_format": {
-        "title": "Time format",
+        "title": "Talɣa n wakud",
         "absolute": "Absolute",
         "relative": "Relative"
       }
@@ -178,7 +178,7 @@
     "notification": {
       "title": "Tineɣmist",
       "enable": {
-        "description": "Please set notification events.",
+        "description": "Tisɣal n tneɣmisin.",
         "reply": "Notify me when I receive a reply",
         "reblog": "Notify me when I receive a reblog",
         "favourite": "Notify me when I receive a favourite",
@@ -193,7 +193,7 @@
       "domain": "Iger",
       "association": "Association",
       "order": "Order",
-      "remove_association": "Remove assocication",
+      "remove_association": "Kkes tamesmunt",
       "remove_all_associations": "Remove all associations",
       "confirm": "Seddid",
       "cancel": "Sser",
@@ -210,7 +210,7 @@
         "host": "Proxy host",
         "port": "Proxy port",
         "username": "Isem n unessmres n upruksi",
-        "password": "Proxy password",
+        "password": "Taguri n uzeray n upṛuksi",
         "protocol_list": {
           "http": "http",
           "https": "https",
@@ -229,19 +229,19 @@
       "confirm": {
         "title": "Warning",
         "message": "You have to restart this application. Continue?",
-        "ok": "Restart Now",
+        "ok": "Als-senti dɣi",
         "cancel": "Ser"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
+      "title": "Ansaɣ Amaynu",
       "cw": "Write your warning here",
       "status": "Ma'yd illan g ixef-nnek?",
       "cancel": "Sser",
       "toot": "Ansaɣ",
-      "close_confirm": "Are you sure you want to cancel the new toot?",
+      "close_confirm": "Is nit txsed ad tssred Ansaɣ Amaynu?",
       "close_confirm_ok": "WAX",
       "close_confirm_cancel": "Sser",
       "description": "Describe for the visually impaired",
@@ -251,10 +251,10 @@
         "change_visibility": "Change visibility",
         "change_sensitive": "Change sensitive",
         "add_cw": "Add content warning",
-        "pined_hashtag": "Pin the hashtag"
+        "pined_hashtag": "Agel ahactag"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Rnu yan n ustay",
         "expires": {
           "5_minutes": "5 n tusdidin",
           "30_minutes": "30 n tusdidin",
@@ -274,7 +274,7 @@
       "account_name": "Isem n umiḍan"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "Aseddi n igmamen"
     },
     "mute_confirm": {
       "title": "Is nit trid ad tẓẓiẓend?",
@@ -287,24 +287,24 @@
       "ctrl_number": "Switch accounts",
       "ctrl_k": "Ddu ɣer ifiliten n uzmez yaḍnin",
       "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
+      "ctrl_enter": "Fser Ansaɣ",
       "ctrl_r": "Reload current timeline",
       "j": "Select the next toot",
-      "k": "Select the previous toot",
+      "k": "Sty Ansaɣ ameggaru",
       "h": "Switch focus to the left column",
       "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
+      "r": "Rar i unsaɣ",
       "b": "Reblog the toot",
       "f": "Favourite the toot",
       "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
+      "p": "Ṛẓem ifres n unsaɣ",
+      "i": "Ṛẓem tiwlafin",
+      "x": "Sken/ffer CW d NSFW",
       "?": "Smal tiwisi",
       "esc": "Rgel tasna tamirant"
     },
     "report": {
-      "title": "Reporting this user",
+      "title": "Amelli n unessmres-a",
       "comment": "Additional comments",
       "cancel": "Sser",
       "ok": "Mel"
@@ -352,7 +352,7 @@
       "unmute": "Kkes aẓiẓen",
       "unblock": "Kkes ageddul",
       "block": "Gdel",
-      "toots": "Toots",
+      "toots": "Ansaɣen",
       "follows": "Imeḍfaṛ",
       "followers": "Imeḍfaṛen"
     }
