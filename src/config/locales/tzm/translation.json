@@ -45,7 +45,7 @@
     "show_profile": "Sken ifres",
     "edit_profile": "Senfel ifres",
     "settings": "Tisɣal",
-    "collapse": "Collapse",
+    "collapse": "Smun",
     "expand": "Expand",
     "home": "Asenubeg",
     "notification": "Tineɣmisin",
@@ -54,8 +54,8 @@
     "follow_requests": "Ḍfeṛ tutrawin",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
+    "local": "Ifili n uzmes adeɣran",
+    "public": "Ifili n uzmes agdudan",
     "hashtag": "Hactag",
     "search": "Rzu",
     "lists": "Isedditen"
@@ -167,7 +167,7 @@
         "title": "Display style of username",
         "display_name_and_username": "Display name and username",
         "display_name": "Display name",
-        "username": "Username"
+        "username": "Isem n unessmres"
       },
       "time_format": {
         "title": "Time format",
@@ -176,7 +176,7 @@
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "Tineɣmist",
       "enable": {
         "description": "Please set notification events.",
         "reply": "Notify me when I receive a reply",
@@ -189,8 +189,8 @@
     "account": {
       "title": "Amiḍan",
       "connected": "Ittuzdy Umiḍan",
-      "username": "Username",
-      "domain": "Domain",
+      "username": "Isem n unessmres",
+      "domain": "Iger",
       "association": "Association",
       "order": "Order",
       "remove_association": "Remove assocication",
@@ -220,7 +220,7 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "Ḥḍu"
     },
     "language": {
       "title": "Tutlayt",
@@ -256,8 +256,8 @@
       "poll": {
         "add_choice": "Add a choice",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
+          "5_minutes": "5 n tusdidin",
+          "30_minutes": "30 n tusdidin",
           "1_hour": "1 tsragt",
           "6_hours": "6 tsragin",
           "1_day": "1 wass",
@@ -300,8 +300,8 @@
       "p": "Open account profile of the toot",
       "i": "Open the images",
       "x": "Show/hide CW and NSFW",
-      "?": "Show this help",
-      "esc": "Close current page"
+      "?": "Smal tiwisi",
+      "esc": "Rgel tasna tamirant"
     },
     "report": {
       "title": "Reporting this user",
@@ -340,8 +340,8 @@
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
-      "doesnt_follow_you": "Doesn't follow you",
+      "follows_you": "Iḍffer-k",
+      "doesnt_follow_you": "Ur-k iḍffeṛ",
       "detail": "Detail",
       "follow": "Ḍfeṛ",
       "unfollow": "Kkes aḍfaṛ",
@@ -354,7 +354,7 @@
       "block": "Gdel",
       "toots": "Toots",
       "follows": "Imeḍfaṛ",
-      "followers": "Followers"
+      "followers": "Imeḍfaṛen"
     }
   },
   "follow_requests": {
@@ -434,7 +434,7 @@
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
     "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
-    "loading": "Loading..."
+    "loading": "Azdam..."
   },
   "validation": {
     "login": {
@@ -454,7 +454,7 @@
       "body": "{{username}} favourited your status"
     },
     "follow": {
-      "title": "Follow",
+      "title": "Ḍfeṛ",
       "body": "la-k iḍffeṛ {{username}}"
     },
     "follow_request": {
