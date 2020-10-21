@@ -191,18 +191,18 @@
       "connected": "Ittuzdy Umiḍan",
       "username": "Isem n unessmres",
       "domain": "Iger",
-      "association": "Association",
-      "order": "Order",
+      "association": "Tamesmunt",
+      "order": "Yaḍen",
       "remove_association": "Kkes tamesmunt",
-      "remove_all_associations": "Remove all associations",
+      "remove_all_associations": "Kkes timesmunin maṛṛa",
       "confirm": "Seddid",
       "cancel": "Sser",
-      "confirm_message": "Are you sure to remove all associations?"
+      "confirm_message": "Is nit txsed ad tKkesd timesmunin maṛṛa?"
     },
     "network": {
       "title": "Aẓeṭṭa",
       "proxy": {
-        "title": "Proxy Configuration",
+        "title": "Tisɣal n upṛuksi",
         "no": "Walu apṛuksy",
         "system": "Semres apṛuksy n ungraw",
         "manual": "Manual proxy configuration",
@@ -224,7 +224,7 @@
     },
     "language": {
       "title": "Tutlayt",
-      "language_description": "Choose the language you would like to use with Whalebird.",
+      "language_description": "Dɣer tutlayt nna txsed ad-sis tssmrsed Whalebird.",
       "notice": "Requires relaunch",
       "confirm": {
         "title": "Warning",
