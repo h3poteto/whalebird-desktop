@@ -79,7 +79,7 @@
       "placeholder": "Filter out by regular expressions",
       "show_dms": "Smal tuzinin tusridin",
       "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
+      "show_replies": "Smal iratiten",
       "apply": "Apply"
     },
     "new_toot": "Ansaɣ",
@@ -152,11 +152,11 @@
         "background_color": "Base background",
         "selected_background_color": "Focused background",
         "global_header_color": "Talgamt n umiḍan",
-        "side_menu_color": "Side menu",
+        "side_menu_color": "Umuɣ n tama",
         "primary_color": "Primary font",
         "regular_color": "Regular font",
         "secondary_color": "Secondary font",
-        "border_color": "Border",
+        "border_color": "Imisi",
         "header_menu_color": "Header menu",
         "wrapper_mask_color": "Modal wrapper"
       },
@@ -172,7 +172,7 @@
       "time_format": {
         "title": "Talɣa n wakud",
         "absolute": "Absolute",
-        "relative": "Relative"
+        "relative": "Amaqqan"
       }
     },
     "notification": {
