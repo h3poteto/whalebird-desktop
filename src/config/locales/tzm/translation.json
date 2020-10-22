@@ -80,7 +80,7 @@
       "show_dms": "Smal tuzinin tusridin",
       "show_reblogs": "Show reblogs",
       "show_replies": "Smal iratiten",
-      "apply": "Apply"
+      "apply": "Seɣzen"
     },
     "new_toot": "Ansaɣ",
     "reload": "Ales",
@@ -164,9 +164,9 @@
       "font_family": "Tawacunt n tuniɣt",
       "toot_padding": "Asemɣeṛ n tuzint",
       "display_style": {
-        "title": "Display style of username",
+        "title": "Smal tamamkt n Isem n unessmres",
         "display_name_and_username": "Smal isem d Isem n unessmres",
-        "display_name": "Display name",
+        "display_name": "Smal isem",
         "username": "Isem n unessmres"
       },
       "time_format": {
@@ -413,12 +413,12 @@
     "followers_fetch_error": "Failed to fetch followers",
     "follows_fetch_error": "Failed to fetch follows",
     "toot_fetch_error": "Failed to fetch the toot detail",
-    "follow_error": "Azgel g uḍfaṛ n usmrs",
-    "unfollow_error": "Failed to unfollow the user",
+    "follow_error": "Azgel g uḍfaṛ n unessmres",
+    "unfollow_error": "Azgel g tukksa n uḍfaṛ n unessmres",
     "lists_fetch_error": "Failed to fetch lists",
     "list_create_error": "Failed to create a list",
     "members_fetch_error": "Failed to fetch members",
-    "remove_user_error": "Failed to remove the user",
+    "remove_user_error": "Azgel g usitey n unessmres",
     "find_account_error": "Ur ittwafa umiḍam",
     "reblog_error": "Failed to reblog",
     "unreblog_error": "Failed to unreblog",
@@ -430,7 +430,7 @@
     "search_error": "Failed to search",
     "toot_error": "Failed to toot",
     "update_list_memberships_error": "Failed to update the list memberships",
-    "add_user_error": "Failed to add user",
+    "add_user_error": "Azgel g urnnu n unessmres",
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
     "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
