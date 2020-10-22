@@ -228,7 +228,7 @@
       "notice": "Requires relaunch",
       "confirm": {
         "title": "Warning",
-        "message": "You have to restart this application. Continue?",
+        "message": "Ixṣ as talsed tsentid tisensi-a. ad tsmded?",
         "ok": "Als-senti dɣi",
         "cancel": "Ser"
       }
@@ -334,7 +334,7 @@
         "votes_count": "isettayen",
         "until": "ar {{datetime}}",
         "left": "{{datetime}} ag qimen",
-        "refresh": "Refresh"
+        "refresh": "Zzuzwu"
       }
     }
   },
@@ -408,7 +408,7 @@
     "start_streaming_error": "Failed to start streaming",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}",
     "attach_error": "Could not attach the file",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
+    "authorize_duplicate_error": "Ur tzmmared ad kcemd s imiḍanen imsasan g igran imsasan",
     "authorize_error": "Failed to authorize",
     "followers_fetch_error": "Failed to fetch followers",
     "follows_fetch_error": "Failed to fetch follows",
@@ -419,7 +419,7 @@
     "list_create_error": "Failed to create a list",
     "members_fetch_error": "Failed to fetch members",
     "remove_user_error": "Failed to remove the user",
-    "find_account_error": "Account not found",
+    "find_account_error": "Ur ittwafa umiḍam",
     "reblog_error": "Failed to reblog",
     "unreblog_error": "Failed to unreblog",
     "favourite_error": "Failed to favourite",
