@@ -149,20 +149,20 @@
         "custom": "Custom"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
+        "background_color": "Agilal n tsila",
+        "selected_background_color": "Agilal asmssi",
         "global_header_color": "Talgamt n umiḍan",
         "side_menu_color": "Umuɣ n tama",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
+        "primary_color": "Aklu n uḍṛiṣ amenzu",
+        "regular_color": "Aklu n uḍṛiṣ anaway",
+        "secondary_color": "Aklu n uḍṛiṣ asinan",
         "border_color": "Imisi",
-        "header_menu_color": "Header menu",
+        "header_menu_color": "Umuɣ n waflla",
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Tiɣzi n tuniɣt",
       "font_family": "Tawacunt n tuniɣt",
-      "toot_padding": "Padding around toots",
+      "toot_padding": "Asemɣeṛ n tuzint",
       "display_style": {
         "title": "Display style of username",
         "display_name_and_username": "Smal isem d Isem n unessmres",
@@ -179,7 +179,7 @@
       "title": "Tineɣmist",
       "enable": {
         "description": "Tisɣal n tneɣmisin.",
-        "reply": "Notify me when I receive a reply",
+        "reply": "Laɣa-d adday-d yawḍ yan urari",
         "reblog": "Notify me when I receive a reblog",
         "favourite": "Notify me when I receive a favourite",
         "follow": "Notify me when I receive a follow",
