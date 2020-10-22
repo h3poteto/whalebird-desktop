@@ -29,11 +29,11 @@
       "toggle_full_screen": "Toggle Full Screen"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
+      "always_show_menu_bar": "Smal awerra n waddad abda",
       "name": "Asatem",
       "close": "Rgel Asatem",
       "open": "Ṛẓem Asatem",
-      "minimize": "Minimize",
+      "minimize": "Semẓi",
       "jump_to": "Ddu ɣer"
     }
   },
@@ -56,7 +56,7 @@
     "bookmark": "Bookmark",
     "local": "Ifili n uzmez adɣran",
     "public": "Ifili n uzmez agdudan",
-    "hashtag": "Hactag",
+    "hashtag": "Hacṭag",
     "search": "Rzu",
     "lists": "Isedditen"
   },
@@ -70,7 +70,7 @@
     "direct_messages": "Tuzinin Tusridin",
     "local": "Ifili n uzmez adɣran",
     "public": "Ifili n uzmez agdudan",
-    "hashtag": "Hactag",
+    "hashtag": "Hacṭag",
     "search": "Rzu",
     "lists": "Isedditen",
     "members": "Agmamen",
@@ -183,7 +183,7 @@
         "reblog": "Notify me when I receive a reblog",
         "favourite": "Notify me when I receive a favourite",
         "follow": "Notify me when I receive a follow",
-        "reaction": "Notify me when I receive a emoji reaction"
+        "reaction": "Laɣa-d adday-d yawḍ yan umyagga"
       }
     },
     "account": {
@@ -225,7 +225,7 @@
     "language": {
       "title": "Tutlayt",
       "language_description": "Dɣer tutlayt nna txsed ad-sis tssmrsed Whalebird.",
-      "notice": "Requires relaunch",
+      "notice": "Issutur allas usenti",
       "confirm": {
         "title": "Warning",
         "message": "Ixṣ as talsed tsentid tisensi-a. ad tsmded?",
@@ -237,7 +237,7 @@
   "modals": {
     "new_toot": {
       "title": "Ansaɣ Amaynu",
-      "cw": "Write your warning here",
+      "cw": "Ara aɣatal-nnek da",
       "status": "Ma'yd illan g ixef-nnek?",
       "cancel": "Sser",
       "toot": "Ansaɣ",
@@ -251,7 +251,7 @@
         "change_visibility": "Change visibility",
         "change_sensitive": "Change sensitive",
         "add_cw": "Add content warning",
-        "pined_hashtag": "Agel ahactag"
+        "pined_hashtag": "Agel ahacṭag"
       },
       "poll": {
         "add_choice": "Rnu yan n ustay",
@@ -317,7 +317,7 @@
       "sensitive": "Show sensitive content",
       "view_toot_detail": "View Toot Detail",
       "open_in_browser": "Ṛṛem g umessara",
-      "copy_link_to_toot": "Copy Link to Toot",
+      "copy_link_to_toot": "Senɣel asɣen n unsaɣ",
       "mute": "Ẓẓiẓen",
       "block": "Gdel",
       "report": "Mel",
@@ -362,14 +362,14 @@
     "reject": "Agy"
   },
   "hashtag": {
-    "tag_name": "Isem n utag",
-    "delete_tag": "Kkes atag",
-    "save_tag": "Save tag"
+    "tag_name": "Isem n waṭag",
+    "delete_tag": "Kkes aṭag",
+    "save_tag": "Ḥḍu aṭag"
   },
   "search": {
     "search": "Rzu",
     "account": "Amiḍan",
-    "tag": "Hactag",
+    "tag": "Hacṭag",
     "keyword": "keyword",
     "toot": "Ansaɣ"
   },
@@ -394,26 +394,26 @@
     "submit": "Azen"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Ger i usali ɣer Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
+    "account_load_error": "Azgel g usali n imiḍanen",
+    "account_remove_error": "Azgel g usitey n imiḍanen",
     "preferences_load_error": "Failed to load preferences",
     "timeline_fetch_error": "Failed to fetch timeline",
     "notification_fetch_error": "Failed to fetch notification",
     "favourite_fetch_error": "Failed to fetch favorite",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_reuqest_reject_error": "failed to reject the request",
+    "follow_request_accept_error": "Azgel n udggi n tutrawin",
+    "follow_reuqest_reject_error": "azgel g waggeyn tutrawin",
     "start_streaming_error": "Failed to start streaming",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}",
     "attach_error": "Could not attach the file",
     "authorize_duplicate_error": "Ur tzmmared ad kcemd s imiḍanen imsasan g igran imsasan",
-    "authorize_error": "Failed to authorize",
+    "authorize_error": "Azgel g usureg",
     "followers_fetch_error": "Failed to fetch followers",
     "follows_fetch_error": "Failed to fetch follows",
     "toot_fetch_error": "Failed to fetch the toot detail",
-    "follow_error": "Failed to follow the user",
+    "follow_error": "Azgel g uḍfaṛ n usmrs",
     "unfollow_error": "Failed to unfollow the user",
     "lists_fetch_error": "Failed to fetch lists",
     "list_create_error": "Failed to create a list",
@@ -466,12 +466,12 @@
       "body": "{{username}} boosted your status"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "Bder",
+      "body": "Ibder {{username}} ɣef wadda-nnek"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "Amyagga",
+      "body": "Imyagga {{username}} ɣef waddad-nnek"
     }
   }
 }
