@@ -227,9 +227,9 @@ const getters: GetterTree<AccountProfileState, RootState> = {
 const AccountProfile: Module<AccountProfileState, RootState> = {
   namespaced: true,
   modules: {
-    Timeline,
     Follows,
-    Followers
+    Followers,
+    Timeline
   },
   state: state,
   mutations: mutations,
