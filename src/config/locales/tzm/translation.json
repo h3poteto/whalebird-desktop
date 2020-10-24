@@ -328,7 +328,7 @@
       "fav": "Favourite",
       "detail": "Toot details",
       "bookmark": "Bookmark",
-      "pinned": "Pinned toot",
+      "pinned": "Ansaɣ iɣnsen",
       "poll": {
         "vote": "Asettay",
         "votes_count": "isettayen",
@@ -380,7 +380,7 @@
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
+    "domain_name_label": "Tazwuri, kcem ɣer umkkay n Mastodon. Mek tufid skcem isem n yiger n umekkay.",
     "proxy_info": "Mek txsed ad tssmrsed amakkay n upṛuksi, mek tufid msel apṛksi-nnek g",
     "proxy_here": " da",
     "search": "Rzu",
@@ -433,7 +433,7 @@
     "add_user_error": "Azgel g urnnu n unessmres",
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
+    "domain_doesnt_exist": "Azgel g uzday ɣer {{domain}}, sɣzen URL n umkkay",
     "loading": "Azdam..."
   },
   "validation": {
@@ -442,9 +442,9 @@
       "domain_format": "Please only enter the domain name"
     },
     "new_toot": {
-      "toot_length": "Toot length should be {{min}} to {{max}}",
-      "attach_length": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
+      "toot_length": "Ixeṣ ad tili tiɣzi seg {{min}} ar {{max}}",
+      "attach_length": "Tzmred ɣas ad teqqned ar {{max}} twelafin",
+      "attach_image": "Tzmerd ɣas ad teqqned tiwlafin neɣ ividyuten",
       "poll_invalid": "Invalid poll choices"
     }
   },
