@@ -91,9 +91,9 @@ const actions: ActionTree<PostsState, RootState> = {
       rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent
     )
-    const pinned = await client.getAccountStatuses(account.id, { pinned: true, limit: 10, exclude_replies: true })
+    const pinned = await client.getAccountStatuses(account.id, { pinned: true, limit: 10 })
     commit(MUTATION_TYPES.UPDATE_PINNED_TOOTS, pinned.data)
-    const res = await client.getAccountStatuses(account.id, { limit: 40, pinned: false })
+    const res = await client.getAccountStatuses(account.id, { limit: 40, pinned: false, exclude_replies: true })
     commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false, { root: true })
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
@@ -113,7 +113,8 @@ const actions: ActionTree<PostsState, RootState> = {
       const res = await client.getAccountStatuses(loadPosition.account.id, {
         max_id: loadPosition.status.id,
         limit: 40,
-        pinned: false
+        pinned: false,
+        exclude_replies: true
       })
       commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
     } finally {
