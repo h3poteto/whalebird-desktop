@@ -8530,10 +8530,10 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-megalodon@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-3.3.0.tgz#d8b6aef2858c26196fec9bc8d8e8ee976d5e944a"
-  integrity sha512-YDspzWuJ6lqsxaCoEaE4bILNrK8nuk+7rDd+ythNoBcVksJ/2SFqSIeRdkIGPchc7VfKpCn1vpe8URx9FrPnuw==
+megalodon@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-3.3.1.tgz#0e62c006049790269b0d6ab6ea8f6ca919b4a447"
+  integrity sha512-vdCW6xCc0yp47eZ8SLrTzQKACoIzd3LnYEk62NSyHUzTzpMP6N5s0BuTfBAWnSn8m6Zx1q6865rNp/tBrKTpww==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^7.2.0"
