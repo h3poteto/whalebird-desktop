@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
       <el-tab-pane label="Posts" name="posts"><Posts :account="account" /></el-tab-pane>
       <el-tab-pane label="Posts and replies" name="posts_and_replies"><PostsAndReplies :account="account" /></el-tab-pane>
-      <el-tab-pane label="Media" name="media">Media</el-tab-pane>
+      <el-tab-pane label="Media" name="media"><Media :account="account" /></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -11,13 +11,15 @@
 <script>
 import Posts from './Timeline/Posts'
 import PostsAndReplies from './Timeline/PostsAndReplies'
+import Media from './Timeline/Media'
 
 export default {
   name: 'timeline',
   props: ['account'],
   components: {
     Posts,
-    PostsAndReplies
+    PostsAndReplies,
+    Media
   },
   data() {
     return {

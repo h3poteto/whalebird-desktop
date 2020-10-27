@@ -2297,6 +2297,13 @@ axios@^0.20.0:
   dependencies:
     follow-redirects "^1.10.0"
 
+axios@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.0.tgz#26df088803a2350dff2c27f96fef99fe49442aca"
+  integrity sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==
+  dependencies:
+    follow-redirects "^1.10.0"
+
 babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -8530,14 +8537,14 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-megalodon@3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-3.3.1.tgz#0e62c006049790269b0d6ab6ea8f6ca919b4a447"
-  integrity sha512-vdCW6xCc0yp47eZ8SLrTzQKACoIzd3LnYEk62NSyHUzTzpMP6N5s0BuTfBAWnSn8m6Zx1q6865rNp/tBrKTpww==
+megalodon@3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-3.3.2.tgz#20737f47589feb8209f8129a921c3308be10d7b0"
+  integrity sha512-lmqkwEL4Yrb459gL2SUM7mFpdzZDxmXMG8xb7RWNeo93OuVY+jukqI8mZI/g4v4WoVHYfSaVlB7Tqm0DwuqXIw==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^7.2.0"
-    axios "^0.20.0"
+    axios "^0.21.0"
     https-proxy-agent "^5.0.0"
     moment "^2.24.0"
     oauth "^0.9.15"
