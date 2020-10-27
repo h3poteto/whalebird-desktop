@@ -1,6 +1,6 @@
 <template>
   <div id="timeline">
-    <DynamicScroller :items="timeline" :min-item-size="60" class="scroller" page-mode>
+    <DynamicScroller :items="timeline" :min-item-size="60" class="scroller" :buffer="buffer" page-mode>
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index">
           <toot
@@ -30,7 +30,7 @@ import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'media',
-  props: ['account'],
+  props: ['account', 'buffer'],
   components: { Toot },
   data() {
     return {

@@ -1,9 +1,9 @@
 <template>
-  <div class="tabs">
+  <div class="tabs" id="sidebar_tabs">
     <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
-      <el-tab-pane label="Posts" name="posts"><Posts :account="account" /></el-tab-pane>
-      <el-tab-pane label="Posts and replies" name="posts_and_replies"><PostsAndReplies :account="account" /></el-tab-pane>
-      <el-tab-pane label="Media" name="media"><Media :account="account" /></el-tab-pane>
+      <el-tab-pane label="Posts" name="posts"><Posts :account="account" :buffer="buffer" /></el-tab-pane>
+      <el-tab-pane label="Posts and replies" name="posts_and_replies"><PostsAndReplies :account="account" :buffer="buffer" /></el-tab-pane>
+      <el-tab-pane label="Media" name="media"><Media :account="account" :buffer="buffer" /></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -23,7 +23,15 @@ export default {
   },
   data() {
     return {
-      activeName: 'posts'
+      activeName: 'posts',
+      defaultBuffer: 200,
+      buffer: 200
+    }
+  },
+  mounted() {
+    const timeline = document.getElementById('sidebar_tabs')
+    if (timeline !== undefined && timeline !== null) {
+      this.buffer = this.defaultBuffer + timeline.getBoundingClientRect().top
     }
   },
   methods: {
