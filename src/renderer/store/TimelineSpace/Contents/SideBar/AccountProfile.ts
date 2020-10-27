@@ -127,7 +127,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     Promise.all([
       dispatch('fetchRelationship', state.account),
-      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/fetchTimeline', state.account, { root: true }),
+      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts/fetchTimeline', state.account, { root: true }),
+      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/PostsAndReplies/fetchTimeline', state.account, { root: true }),
+      dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Media/fetchTimeline', state.account, { root: true }),
       dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchFollowers', state.account, { root: true }),
       dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/fetchFollows', state.account, { root: true })
     ]).finally(() => {
@@ -227,9 +229,9 @@ const getters: GetterTree<AccountProfileState, RootState> = {
 const AccountProfile: Module<AccountProfileState, RootState> = {
   namespaced: true,
   modules: {
-    Timeline,
     Follows,
-    Followers
+    Followers,
+    Timeline
   },
   state: state,
   mutations: mutations,
