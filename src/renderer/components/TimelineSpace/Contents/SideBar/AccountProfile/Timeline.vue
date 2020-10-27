@@ -44,6 +44,10 @@ export default {
 
 <style lang="scss" scoped>
 .tabs /deep/ {
+  .el-tabs__header {
+    background-color: var(--theme-selected-background-color);
+  }
+
   .el-tabs__item {
     color: unset;
   }
