@@ -4698,10 +4698,10 @@ element-matches@^0.1.2:
   resolved "https://registry.yarnpkg.com/element-matches/-/element-matches-0.1.2.tgz#7345cb71e965bd2b12f725e524591c102198361a"
   integrity sha512-yWh1otcs3OKUWDvu/IxyI36ZI3WNaRZlI0uG/DK6fu0pap0VYZ0J5pEGTk1zakme+hT0OKHwhlHc0N5TJhY6yQ==
 
-element-ui@2.13.2:
-  version "2.13.2"
-  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.13.2.tgz#582bf47aaaaaafe23ea1958fae217a687ad06447"
-  integrity sha512-r761DRPssMPKDiJZWFlG+4e4vr0cRG/atKr3Eqr8Xi0tQMNbtmYU1QXvFnKiFPFFGkgJ6zS6ASkG+sellcoHlQ==
+element-ui@2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.14.0.tgz#dcff2718fb485542ea5b5a1f5c0daf1113477b24"
+  integrity sha512-dda4xw40HT7Xcx/7aV5METvGjwMumdd5D1B7vjhDkmqvJP/9IEqgL5VsYA4YXz+RUVqyxMByRwf1WedrICJTTQ==
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
