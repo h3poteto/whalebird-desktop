@@ -30,9 +30,9 @@
     },
     "window": {
       "always_show_menu_bar": "Smal awerra n waddad abda",
-      "name": "Asatem",
-      "close": "Rgel Asatem",
-      "open": "Ṛẓem Asatem",
+      "name": "Asatm",
+      "close": "Rgel Asatm",
+      "open": "Ṛẓem Asatm",
       "minimize": "Semẓi",
       "jump_to": "Ddu ɣer"
     }
@@ -43,22 +43,22 @@
   "side_menu": {
     "profile": "Ifres",
     "show_profile": "Sken ifres",
-    "edit_profile": "Senfel ifres",
+    "edit_profile": "Ssenfel ifres",
     "settings": "Tisɣal",
-    "collapse": "Smun",
+    "collapse": "Ssemun",
     "expand": "Expand",
-    "home": "Asenubeg",
+    "home": "Asnubg",
     "notification": "Tineɣmisin",
     "mention": "Mention",
     "direct": "Tuzinin tusridin",
-    "follow_requests": "Ḍfeṛ tutrawin",
+    "follow_requests": "Tutrawin n uḍfaṛ",
     "favourite": "Tismal",
     "bookmark": "Asɣal",
     "local": "Ifili n uzmez adɣran",
     "public": "Ifili n uzmez agdudan",
     "hashtag": "Hacṭag",
     "search": "Rzu",
-    "lists": "Isedditen"
+    "lists": "Tilgamin"
   },
   "header_menu": {
     "home": "Asenubeg",
@@ -72,15 +72,15 @@
     "public": "Ifili n uzmez agdudan",
     "hashtag": "Hacṭag",
     "search": "Rzu",
-    "lists": "Isedditen",
-    "members": "Agmamen",
+    "lists": "Tilgamin",
+    "members": "Agmamn",
     "filter": {
       "title": "Sty",
       "placeholder": "Filter out by regular expressions",
-      "show_dms": "Smal tuzinin tusridin",
+      "show_dms": "Sken tuzinin tusridin",
       "show_reblogs": "Show reblogs",
-      "show_replies": "Smal iratiten",
-      "apply": "Seɣzen"
+      "show_replies": "Sken iratiten",
+      "apply": "Ssentem"
     },
     "new_toot": "Ansaɣ",
     "reload": "Ales",
