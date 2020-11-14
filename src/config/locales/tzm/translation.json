@@ -30,9 +30,9 @@
     },
     "window": {
       "always_show_menu_bar": "Smal awerra n waddad abda",
-      "name": "Asatem",
-      "close": "Rgel Asatem",
-      "open": "Ṛẓem Asatem",
+      "name": "Asatm",
+      "close": "Rgel Asatm",
+      "open": "Ṛẓem Asatm",
       "minimize": "Semẓi",
       "jump_to": "Ddu ɣer"
     }
@@ -43,22 +43,22 @@
   "side_menu": {
     "profile": "Ifres",
     "show_profile": "Sken ifres",
-    "edit_profile": "Senfel ifres",
+    "edit_profile": "Ssenfel ifres",
     "settings": "Tisɣal",
-    "collapse": "Smun",
+    "collapse": "Ssemun",
     "expand": "Expand",
-    "home": "Asenubeg",
+    "home": "Asnubg",
     "notification": "Tineɣmisin",
     "mention": "Mention",
     "direct": "Tuzinin tusridin",
-    "follow_requests": "Ḍfeṛ tutrawin",
+    "follow_requests": "Tutrawin n uḍfaṛ",
     "favourite": "Tismal",
     "bookmark": "Asɣal",
     "local": "Ifili n uzmez adɣran",
     "public": "Ifili n uzmez agdudan",
     "hashtag": "Hacṭag",
     "search": "Rzu",
-    "lists": "Isedditen"
+    "lists": "Tilgamin"
   },
   "header_menu": {
     "home": "Asenubeg",
@@ -72,18 +72,18 @@
     "public": "Ifili n uzmez agdudan",
     "hashtag": "Hacṭag",
     "search": "Rzu",
-    "lists": "Isedditen",
-    "members": "Agmamen",
+    "lists": "Tilgamin",
+    "members": "Agmamn",
     "filter": {
       "title": "Sty",
       "placeholder": "Filter out by regular expressions",
-      "show_dms": "Smal tuzinin tusridin",
+      "show_dms": "Sken tuzinin tusridin",
       "show_reblogs": "Show reblogs",
-      "show_replies": "Smal iratiten",
-      "apply": "Seɣzen"
+      "show_replies": "Sken iratiten",
+      "apply": "Ssentem"
     },
-    "new_toot": "Ansaɣ",
-    "reload": "Ales",
+    "new_toot": "Taẓṛigt",
+    "reload": "Als",
     "settings": "Tisɣal"
   },
   "settings": {
@@ -91,13 +91,13 @@
     "general": {
       "title": "Amatay",
       "toot": {
-        "title": "Ansaɣ",
+        "title": "Taẓṛigt",
         "visibility": {
           "description": "Customize default visibility of toot.",
-          "public": "Agdudan",
+          "public": "Tagdudant",
           "unlisted": "Unlisted",
-          "private": "Uslig",
-          "direct": "Usrid"
+          "private": "Tusligt",
+          "direct": "Tusridt"
         },
         "sensitive": {
           "description": "Mark media as sensitive by default"
@@ -120,17 +120,17 @@
     "general": {
       "title": "Amatay",
       "sounds": {
-        "title": "Imsliten",
+        "title": "Imeslitn",
         "description": "Imesli n tneɣmisin.",
         "fav_rb": "When you favorite or boost the toot",
-        "toot": "Adday tfserd yan n unsaɣ"
+        "toot": "Adday tfsserd yan n teẓṛigt"
       },
       "timeline": {
         "title": "Ifili n uzmez",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nfsw": "Nxxel abda tumayin n NFSW",
-        "hideAllAttachments": "Ffer isenɣmisen maṛṛa"
+        "hideAllAttachments": "Ffer isneɣmisen maṛṛa"
       },
       "other": {
         "title": "Tideɣrin yaḍnin",
@@ -142,7 +142,7 @@
       "theme_color": "Aklu n usgum",
       "theme": {
         "light": "Anafaw",
-        "dark": "Adɣmum",
+        "dark": "Adeɣmum",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
@@ -151,7 +151,7 @@
       "custom_theme": {
         "background_color": "Agilal n tsila",
         "selected_background_color": "Agilal asmssi",
-        "global_header_color": "Talgamt n umiḍan",
+        "global_header_color": "Umuɣ n umiḍan",
         "side_menu_color": "Umuɣ n tama",
         "primary_color": "Aklu n uḍṛiṣ amenzu",
         "regular_color": "Aklu n uḍṛiṣ anaway",
