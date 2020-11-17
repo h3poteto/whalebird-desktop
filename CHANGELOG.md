@@ -1,5 +1,49 @@
 # Change Log
 
+## [4.3.0] - 2020-10-31
+### Added
+- [#1858](https://github.com/h3poteto/whalebird-desktop/pull/1858) closes #1804 Add columns under Toots in side menu
+- [#1852](https://github.com/h3poteto/whalebird-desktop/pull/1852) closes #1845 Add Central Atlas Tamazight in i18n
+- [#1842](https://github.com/h3poteto/whalebird-desktop/pull/1842) closes #1766 Introduce vue-virtual-scroll for all timelines
+
+### Changed
+- [#1893](https://github.com/h3poteto/whalebird-desktop/pull/1893) Bump eslint-config-prettier from 6.14.0 to 6.15.0
+- [#1888](https://github.com/h3poteto/whalebird-desktop/pull/1888) Bump axios from 0.20.0 to 0.21.0
+- [#1886](https://github.com/h3poteto/whalebird-desktop/pull/1886) Bump webpack-merge from 5.1.4 to 5.2.0
+- [#1884](https://github.com/h3poteto/whalebird-desktop/pull/1884) Bump @babel/plugin-proposal-object-rest-spread from 7.11.0 to 7.12.1
+- [#1882](https://github.com/h3poteto/whalebird-desktop/pull/1882) Bump ajv from 6.12.5 to 6.12.6
+- [#1880](https://github.com/h3poteto/whalebird-desktop/pull/1880) Bump css-loader from 4.3.0 to 5.0.0
+- [#1879](https://github.com/h3poteto/whalebird-desktop/pull/1879) Bump mini-css-extract-plugin from 1.2.0 to 1.2.1
+- [#1878](https://github.com/h3poteto/whalebird-desktop/pull/1878) Bump typescript from 4.0.3 to 4.0.5
+- [#1876](https://github.com/h3poteto/whalebird-desktop/pull/1876) Bump @types/lodash from 4.14.161 to 4.14.162
+- [#1865](https://github.com/h3poteto/whalebird-desktop/pull/1865) Bump jest from 26.4.2 to 26.6.1
+- [#1875](https://github.com/h3poteto/whalebird-desktop/pull/1875) Bump @types/node from 14.11.1 to 14.14.5
+- [#1874](https://github.com/h3poteto/whalebird-desktop/pull/1874) Bump eslint from 7.9.0 to 7.12.1
+- [#1873](https://github.com/h3poteto/whalebird-desktop/pull/1873) Bump ts-jest from 26.4.0 to 26.4.3
+- [#1868](https://github.com/h3poteto/whalebird-desktop/pull/1868) Bump i18next from 19.7.0 to 19.8.3
+- [#1867](https://github.com/h3poteto/whalebird-desktop/pull/1867) Bump electron from 10.1.2 to 10.1.5
+- [#1872](https://github.com/h3poteto/whalebird-desktop/pull/1872) Bump vue-router from 3.4.3 to 3.4.8
+- [#1871](https://github.com/h3poteto/whalebird-desktop/pull/1871) Bump @typescript-eslint/typescript-estree from 4.1.1 to 4.6.0
+- [#1866](https://github.com/h3poteto/whalebird-desktop/pull/1866) Bump babel-jest from 26.3.0 to 26.6.1
+- [#1864](https://github.com/h3poteto/whalebird-desktop/pull/1864) Bump mini-css-extract-plugin from 0.11.2 to 1.2.0
+- [#1862](https://github.com/h3poteto/whalebird-desktop/pull/1862) Bump sanitize-html from 1.27.4 to 2.1.1
+- [#1859](https://github.com/h3poteto/whalebird-desktop/pull/1859) Bump eslint-config-prettier from 6.11.0 to 6.14.0
+- [#1848](https://github.com/h3poteto/whalebird-desktop/pull/1848) Bump eslint-plugin-vue from 6.2.2 to 7.1.0
+- [#1836](https://github.com/h3poteto/whalebird-desktop/pull/1836) Bump style-loader from 1.2.1 to 2.0.0
+- [#1827](https://github.com/h3poteto/whalebird-desktop/pull/1827) Bump moment from 2.28.0 to 2.29.1
+- [#1839](https://github.com/h3poteto/whalebird-desktop/pull/1839) Bump copy-webpack-plugin from 6.1.1 to 6.2.1
+- [#1806](https://github.com/h3poteto/whalebird-desktop/pull/1806) Bump del from 5.1.0 to 6.0.0
+- [#1805](https://github.com/h3poteto/whalebird-desktop/pull/1805) Bump eslint-plugin-import from 2.22.0 to 2.22.1
+- [#1803](https://github.com/h3poteto/whalebird-desktop/pull/1803) Bump stylelint from 13.7.1 to 13.7.2
+- [#1853](https://github.com/h3poteto/whalebird-desktop/pull/1853) New Crowdin updates
+- [#1851](https://github.com/h3poteto/whalebird-desktop/pull/1851) New Crowdin updates
+- [#1820](https://github.com/h3poteto/whalebird-desktop/pull/1820) Clean up unused method calling
+- [#1813](https://github.com/h3poteto/whalebird-desktop/pull/1813) Fix changelog
+- [#1812](https://github.com/h3poteto/whalebird-desktop/pull/1812) Update changelog
+
+### Fixed
+- [#1819](https://github.com/h3poteto/whalebird-desktop/pull/1819) closes #1818 Change nodeIntegration to fix aboutWindow
+
 ## [4.2.3] - 2020-09-25
 ### Added
 - [#1780](https://github.com/h3poteto/whalebird-desktop/pull/1780) closes #1351 Add theme color in new toot window
