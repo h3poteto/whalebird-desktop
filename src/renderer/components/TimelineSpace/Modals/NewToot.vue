@@ -45,8 +45,7 @@
           :placeholder="$t('modals.new_toot.description')"
           :value="mediaDescriptions[media.id]"
           @input="updateDescription(media.id, $event.target.value)"
-          v-shortkey="{ left: ['arrowleft'], right: ['arrowright'] }"
-          @shortkey="handleDescriptionKey"
+          v-shortkey.avoid
           role="textbox"
           contenteditable="true"
           aria-multiline="true"
@@ -386,19 +385,6 @@ export default {
             done()
           })
           .catch(_ => {})
-      }
-    },
-    handleDescriptionKey(event) {
-      const current = event.target.selectionStart
-      switch (event.srcKey) {
-        case 'left':
-          event.target.setSelectionRange(current - 1, current - 1)
-          break
-        case 'right':
-          event.target.setSelectionRange(current + 1, current + 1)
-          break
-        default:
-          return true
       }
     },
     updateDescription(id, value) {
