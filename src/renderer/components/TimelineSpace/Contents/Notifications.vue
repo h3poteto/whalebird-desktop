@@ -4,7 +4,7 @@
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
     <DynamicScroller :items="notifications" :min-item-size="20" class="scroller" page-mode>
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
           <notification
             :message="item"
             :filter="filter"
