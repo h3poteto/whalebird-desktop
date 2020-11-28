@@ -216,7 +216,7 @@
     "@types/electron-json-storage": "^4.0.0",
     "@types/i18next": "^13.0.0",
     "@types/jest": "26.0.15",
-    "@types/lodash": "^4.14.162",
+    "@types/lodash": "^4.14.165",
     "@types/nedb": "^1.8.10",
     "@types/node": "^14.14.5",
     "@types/parse-link-header": "^1.0.0",
