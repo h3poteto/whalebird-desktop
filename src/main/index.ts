@@ -437,16 +437,10 @@ ipcMain.handle('get-local-account', async (_: IpcMainInvokeEvent, id: string) =>
   return account
 })
 
-ipcMain.on('update-account', async (event: IpcMainEvent, acct: LocalAccount) => {
+ipcMain.handle('update-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
   const proxy = await proxyConfiguration.forMastodon()
-  accountManager
-    .refresh(acct, proxy)
-    .then(ac => {
-      event.sender.send('response-update-account', ac)
-    })
-    .catch(err => {
-      event.sender.send('error-update-account', err)
-    })
+  const ac: LocalAccount = await accountManager.refresh(acct, proxy)
+  return ac
 })
 
 ipcMain.on('remove-account', (event: IpcMainEvent, id: string) => {

@@ -132,18 +132,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       return account
     }
   },
-  fetchAccount: (_, account: LocalAccount): Promise<LocalAccount> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('update-account', account)
-      win.ipcRenderer.once('error-update-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-account', (_, account: LocalAccount) => {
-        win.ipcRenderer.removeAllListeners('error-update-account')
-        resolve(account)
-      })
-    })
+  fetchAccount: async (_, account: LocalAccount): Promise<LocalAccount> => {
+    const acct: LocalAccount = await win.ipcRenderer.invoke('update-account', account)
+    return acct
   },
   clearAccount: async ({ commit }) => {
     commit(MUTATION_TYPES.UPDATE_ACCOUNT, blankAccount)
