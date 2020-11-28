@@ -198,36 +198,34 @@
           <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
             <icon name="thumbtack" scale="0.9"></icon>
           </el-button>
-          <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
-            <div class="popper toot-menu">
-              <ul class="menu-list">
-                <li role="button" @click="openDetail(message)" v-show="!detailed">
-                  {{ $t('cards.toot.view_toot_detail') }}
-                </li>
-                <li role="button" @click="openBrowser(originalMessage)">
-                  {{ $t('cards.toot.open_in_browser') }}
-                </li>
-                <li role="button" @click="copyLink(originalMessage)">
-                  {{ $t('cards.toot.copy_link_to_toot') }}
-                </li>
-                <li role="button" class="separate" @click="confirmMute()">
-                  {{ $t('cards.toot.mute') }}
-                </li>
-                <li role="button" @click="block()">
-                  {{ $t('cards.toot.block') }}
-                </li>
-                <li role="button" @click="reportUser()" v-if="!isMyMessage">
-                  {{ $t('cards.toot.report') }}
-                </li>
-                <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
-                  {{ $t('cards.toot.delete') }}
-                </li>
-              </ul>
-            </div>
+          <el-popover placement="bottom" width="200" trigger="click" popper-class="status-menu-popper" ref="popper">
+            <ul class="menu-list">
+              <li role="button" @click="openDetail(message)" v-show="!detailed">
+                {{ $t('cards.toot.view_toot_detail') }}
+              </li>
+              <li role="button" @click="openBrowser(originalMessage)">
+                {{ $t('cards.toot.open_in_browser') }}
+              </li>
+              <li role="button" @click="copyLink(originalMessage)">
+                {{ $t('cards.toot.copy_link_to_toot') }}
+              </li>
+              <li role="button" class="separate" @click="confirmMute()">
+                {{ $t('cards.toot.mute') }}
+              </li>
+              <li role="button" @click="block()">
+                {{ $t('cards.toot.block') }}
+              </li>
+              <li role="button" @click="reportUser()" v-if="!isMyMessage">
+                {{ $t('cards.toot.report') }}
+              </li>
+              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
+                {{ $t('cards.toot.delete') }}
+              </li>
+            </ul>
             <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
               <icon name="ellipsis-h" scale="0.9"></icon>
             </el-button>
-          </popper>
+          </el-popover>
         </div>
         <div class="application" v-show="application !== null">
           {{ $t('cards.toot.via', { application: application }) }}
@@ -949,38 +947,6 @@ export default {
       .pinned {
         color: gold;
       }
-
-      .toot-menu {
-        padding: 2px 0;
-        border-color: #909399;
-
-        .menu-list {
-          padding: 0;
-          margin: 4px 0;
-          font-size: 0.9rem;
-          list-style-type: none;
-          line-height: 32px;
-          text-align: left;
-          color: #303133;
-
-          li {
-            box-sizing: border-box;
-            padding: 0 32px 0 16px;
-
-            &:hover {
-              background-color: #409eff;
-              color: #fff;
-              cursor: pointer;
-            }
-
-            &.separate {
-              border-top: 1px solid var(--theme-border-color);
-              padding-top: 4px;
-              margin-top: 2px;
-            }
-          }
-        }
-      }
     }
 
     .application {
@@ -1022,5 +988,39 @@ export default {
   height: 1px;
   background-color: var(--theme-border-color);
   margin: 4px 0 0;
+}
+</style>
+
+<style lang="scss">
+.status-menu-popper {
+  padding: 2px 0;
+  border-color: #909399;
+
+  .menu-list {
+    padding: 0;
+    margin: 4px 0;
+    font-size: 0.9rem;
+    list-style-type: none;
+    line-height: 32px;
+    text-align: left;
+    color: #303133;
+
+    li {
+      box-sizing: border-box;
+      padding: 0 32px 0 16px;
+
+      &:hover {
+        background-color: #409eff;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      &.separate {
+        border-top: 1px solid var(--theme-border-color);
+        padding-top: 4px;
+        margin-top: 2px;
+      }
+    }
+  }
 }
 </style>
