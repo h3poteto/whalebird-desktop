@@ -68,19 +68,10 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     return accounts
   },
   // Fetch account informations and save current state when GlobalHeader is displayed
-  refreshAccounts: ({ commit }): Promise<Array<LocalAccount>> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('refresh-accounts')
-      win.ipcRenderer.once('error-refresh-accounts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-refresh-accounts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-refresh-accounts', (_, accounts: Array<LocalAccount>) => {
-        win.ipcRenderer.removeAllListeners('error-refresh-accounts')
-        commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
-        resolve(accounts)
-      })
-    })
+  refreshAccounts: async ({ commit }): Promise<Array<LocalAccount>> => {
+    const accounts: Array<LocalAccount> = await win.ipcRenderer.invoke('refresh-accounts')
+    commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
+    return accounts
   },
   watchShortcutEvents: ({ state, commit, rootState, rootGetters }) => {
     win.ipcRenderer.on('change-account', (_, account: LocalAccount) => {

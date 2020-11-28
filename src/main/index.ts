@@ -456,16 +456,11 @@ ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAcco
   await accountManager.backwardAccount(acct)
 })
 
-ipcMain.on('refresh-accounts', async (event: IpcMainEvent) => {
+ipcMain.handle('refresh-accounts', async (_: IpcMainInvokeEvent) => {
   const proxy = await proxyConfiguration.forMastodon()
-  accountManager
-    .refreshAccounts(proxy)
-    .then(accounts => {
-      event.sender.send('response-refresh-accounts', accounts)
-    })
-    .catch(err => {
-      event.sender.send('error-refresh-accounts', err)
-    })
+  const accounts = await accountManager.refreshAccounts(proxy)
+
+  return accounts
 })
 
 ipcMain.on('remove-all-accounts', (event: IpcMainEvent) => {
