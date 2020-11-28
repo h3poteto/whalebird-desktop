@@ -448,16 +448,8 @@ ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: string) => {
   stopUserStreaming(accountId)
 })
 
-ipcMain.on('forward-account', (event: IpcMainEvent, acct: LocalAccount) => {
-  accountManager
-    .forwardAccount(acct)
-    .then(() => {
-      event.sender.send('response-forward-account')
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-forward-account', err)
-    })
+ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
+  await accountManager.forwardAccount(acct)
 })
 
 ipcMain.on('backward-account', (event: IpcMainEvent, acct: LocalAccount) => {
