@@ -409,26 +409,21 @@ type TokenRequest = {
   sns: 'mastodon' | 'pleroma' | 'misskey'
 }
 
-ipcMain.on('get-access-token', async (event: IpcMainEvent, request: TokenRequest) => {
+ipcMain.handle('get-access-token', async (_: IpcMainInvokeEvent, request: TokenRequest) => {
   const proxy = await proxyConfiguration.forMastodon()
-  auth
-    .getAccessToken(request.sns, request.code, proxy)
-    .then(token => {
-      accountDB.findOne(
-        {
-          accessToken: token
-        },
-        (err, doc: any) => {
-          if (err) return event.sender.send('error-get-access-token', err)
-          if (isEmpty(doc)) return event.sender.send('error-get-access-token', 'error document is empty')
-          event.sender.send('response-get-access-token', doc._id)
-        }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-get-access-token', err)
-    })
+  const token = await auth.getAccessToken(request.sns, request.code, proxy)
+  return new Promise((resolve, reject) => {
+    accountDB.findOne(
+      {
+        accessToken: token
+      },
+      (err, doc: any) => {
+        if (err) return reject(err)
+        if (isEmpty(doc)) return reject(err)
+        resolve(doc._id)
+      }
+    )
+  })
 })
 
 // environments
