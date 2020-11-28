@@ -2,7 +2,7 @@
   <div id="search_account">
     <DynamicScroller :items="results" :min-item-size="20" class="scroller" page-mode>
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.acct]" :data-index="index">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.acct]" :data-index="index" :watchData="true">
           <user :user="item"></user>
         </DynamicScrollerItem>
       </template>

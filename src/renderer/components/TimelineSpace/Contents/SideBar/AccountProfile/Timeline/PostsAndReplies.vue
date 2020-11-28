@@ -2,7 +2,7 @@
   <div id="timeline">
     <DynamicScroller :items="timeline" :min-item-size="60" class="scroller" :buffer="buffer" page-mode>
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             :message="item"
             :key="item.id"

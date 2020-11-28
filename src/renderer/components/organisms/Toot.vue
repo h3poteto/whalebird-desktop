@@ -25,9 +25,7 @@
     role="article"
     aria-label="toot"
   >
-    <div v-show="filtered" class="filtered">
-      Filtered
-    </div>
+    <div v-show="filtered" class="filtered">Filtered</div>
     <div v-show="!filtered" class="toot">
       <div class="icon" role="presentation">
         <FailoverImg
@@ -275,7 +273,6 @@ export default {
       showAttachments: this.$store.state.App.ignoreNFSW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now(),
-      pollResponse: null,
       openEmojiPicker: false
     }
   },
@@ -367,11 +364,7 @@ export default {
       return !this.spoilered || this.showContent
     },
     poll: function () {
-      if (this.pollResponse) {
-        return this.pollResponse
-      } else {
-        return this.originalMessage.poll
-      }
+      return this.originalMessage.poll
     },
     sensitive: function () {
       return (this.hideAllAttachments || this.originalMessage.sensitive) && this.mediaAttachments.length > 0
@@ -684,11 +677,17 @@ export default {
         id: this.poll.id,
         choices: choices
       })
-      this.pollResponse = res
+      const status = Object.assign({}, this.originalMessage, {
+        poll: res
+      })
+      this.$emit('update', status)
     },
     async refresh(id) {
       const res = await this.$store.dispatch('organisms/Toot/refresh', id)
-      this.pollResponse = res
+      const status = Object.assign({}, this.originalMessage, {
+        poll: res
+      })
+      this.$emit('update', status)
     },
     toggleEmojiPicker() {
       this.openEmojiPicker = !this.openEmojiPicker

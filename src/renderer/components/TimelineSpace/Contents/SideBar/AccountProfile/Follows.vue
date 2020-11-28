@@ -2,7 +2,7 @@
   <div id="follows">
     <DynamicScroller :items="follows" :min-item-size="53" class="scroller" page-mode>
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.item]" :data-index="index">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.item]" :data-index="index" :watchData="true">
           <user
             :user="item"
             v-bind:key="item.id"
