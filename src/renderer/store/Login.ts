@@ -36,21 +36,12 @@ const mutations: MutationTree<LoginState> = {
 }
 
 const actions: ActionTree<LoginState, RootState> = {
-  fetchLogin: ({ state }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('get-auth-url', {
-        instance: state.selectedInstance,
-        sns: state.sns
-      })
-      win.ipcRenderer.once('error-get-auth-url', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-auth-url')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-auth-url', (_, url: string) => {
-        win.ipcRenderer.removeAllListeners('response-get-auth-url')
-        resolve(url)
-      })
+  fetchLogin: async ({ state }): Promise<string> => {
+    const url = await win.ipcRenderer.invoke('get-auth-url', {
+      instance: state.selectedInstance,
+      sns: state.sns
     })
+    return url
   },
   pageBack: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_INSTANCE, null)

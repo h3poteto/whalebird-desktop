@@ -395,20 +395,13 @@ type AuthRequest = {
   sns: 'mastodon' | 'pleroma' | 'misskey'
 }
 
-ipcMain.on('get-auth-url', async (event: IpcMainEvent, request: AuthRequest) => {
+ipcMain.handle('get-auth-url', async (_: IpcMainInvokeEvent, request: AuthRequest) => {
   const proxy = await proxyConfiguration.forMastodon()
-  auth
-    .getAuthorizationUrl(request.sns, request.instance, proxy)
-    .then(url => {
-      log.debug(url)
-      event.sender.send('response-get-auth-url', url)
-      // Open authorize url in default browser.
-      shell.openExternal(url)
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-get-auth-url', err)
-    })
+  const url = await auth.getAuthorizationUrl(request.sns, request.instance, proxy)
+  log.debug(url)
+  // Open authorize url in default browser.
+  shell.openExternal(url)
+  return url
 })
 
 type TokenRequest = {
