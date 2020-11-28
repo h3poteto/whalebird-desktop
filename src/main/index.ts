@@ -426,15 +426,6 @@ ipcMain.handle('get-access-token', async (_: IpcMainInvokeEvent, request: TokenR
   })
 })
 
-// environments
-ipcMain.on('get-social-token', (event: IpcMainEvent) => {
-  const token = process.env.SOCIAL_TOKEN
-  if (isEmpty(token)) {
-    return event.sender.send('error-get-social-token', new EmptyTokenError())
-  }
-  event.sender.send('response-get-social-token', token)
-})
-
 // nedb
 ipcMain.on('list-accounts', (event: IpcMainEvent) => {
   accountManager
