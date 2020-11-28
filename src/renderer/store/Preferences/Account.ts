@@ -30,19 +30,10 @@ const mutations: MutationTree<AccountState> = {
 }
 
 const actions: ActionTree<AccountState, RootState> = {
-  loadAccounts: ({ commit }): Promise<Array<LocalAccount>> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('list-accounts', 'list')
-      win.ipcRenderer.once('error-list-accounts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-accounts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-list-accounts', (_, accounts: Array<LocalAccount>) => {
-        win.ipcRenderer.removeAllListeners('error-list-accounts')
-        commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
-        resolve(accounts)
-      })
-    })
+  loadAccounts: async ({ commit }): Promise<Array<LocalAccount>> => {
+    const accounts = await win.ipcRenderer.invoke('list-accounts')
+    commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
+    return accounts
   },
   removeAccount: (_, account: LocalAccount) => {
     return new Promise((resolve, reject) => {

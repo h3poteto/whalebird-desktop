@@ -427,16 +427,9 @@ ipcMain.handle('get-access-token', async (_: IpcMainInvokeEvent, request: TokenR
 })
 
 // nedb
-ipcMain.on('list-accounts', (event: IpcMainEvent) => {
-  accountManager
-    .listAccounts()
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-list-accounts', err)
-    })
-    .then(accounts => {
-      event.sender.send('response-list-accounts', accounts)
-    })
+ipcMain.handle('list-accounts', async (_: IpcMainInvokeEvent) => {
+  const accounts = await accountManager.listAccounts()
+  return accounts
 })
 
 ipcMain.on('get-local-account', (event: IpcMainEvent, id: string) => {
@@ -1190,8 +1183,6 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
  */
-
-class EmptyTokenError {}
 
 /**
  * Genrate application menu

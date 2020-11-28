@@ -61,20 +61,11 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     dispatch('bindNotification')
     dispatch('startUserStreamings')
   },
-  listAccounts: ({ dispatch, commit }): Promise<Array<LocalAccount>> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('list-accounts', 'list')
-      win.ipcRenderer.once('error-list-accounts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-accounts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-list-accounts', (_, accounts: Array<LocalAccount>) => {
-        win.ipcRenderer.removeAllListeners('error-list-accounts')
-        commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
-        dispatch('refreshAccounts')
-        resolve(accounts)
-      })
-    })
+  listAccounts: async ({ dispatch, commit }): Promise<Array<LocalAccount>> => {
+    const accounts = await win.ipcRenderer.invoke('list-accounts')
+    commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
+    dispatch('refreshAccounts')
+    return accounts
   },
   // Fetch account informations and save current state when GlobalHeader is displayed
   refreshAccounts: ({ commit }): Promise<Array<LocalAccount>> => {
