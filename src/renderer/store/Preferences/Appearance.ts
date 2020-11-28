@@ -72,91 +72,51 @@ const actions: ActionTree<AppearanceState, RootState> = {
       win.ipcRenderer.send('list-fonts')
     })
   },
-  updateTheme: ({ dispatch, commit, state }, themeKey: string) => {
+  updateTheme: async ({ dispatch, commit, state }, themeKey: string) => {
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       theme: themeKey
     })
     const config = {
       appearance: newAppearance
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf.appearance)
-      })
-      win.ipcRenderer.send('update-preferences', config)
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
+    dispatch('App/loadPreferences', null, { root: true })
   },
-  updateFontSize: ({ dispatch, commit, state }, fontSize: number) => {
+  updateFontSize: async ({ dispatch, commit, state }, fontSize: number) => {
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       fontSize: fontSize
     })
     const config = {
       appearance: newAppearance
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf.appearance)
-      })
-      win.ipcRenderer.send('update-preferences', config)
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
+    dispatch('App/loadPreferences', null, { root: true })
   },
-  updateDisplayNameStyle: ({ dispatch, commit, state }, value: number) => {
+  updateDisplayNameStyle: async ({ dispatch, commit, state }, value: number) => {
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       displayNameStyle: value
     })
     const config = {
       appearance: newAppearance
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        dispatch('App/loadPreferences', null, { root: true })
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
-        resolve(conf.appearance)
-      })
-      win.ipcRenderer.send('update-preferences', config)
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    dispatch('App/loadPreferences', null, { root: true })
+    commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
   },
-  updateTimeFormat: ({ dispatch, commit, state }, value: number) => {
+  updateTimeFormat: async ({ dispatch, commit, state }, value: number) => {
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       timeFormat: value
     })
     const config = {
       appearance: newAppearance
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        dispatch('App/loadPreferences', null, { root: true })
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
-        resolve(conf.appearance)
-      })
-      win.ipcRenderer.send('update-preferences', config)
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    dispatch('App/loadPreferences', null, { root: true })
+    commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
   },
-  updateCustomThemeColor: ({ dispatch, state, commit }, value: object) => {
+  updateCustomThemeColor: async ({ dispatch, state, commit }, value: object) => {
     const newCustom: ThemeColorType = Object.assign({}, state.appearance.customThemeColor, value)
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       customThemeColor: newCustom
@@ -164,61 +124,31 @@ const actions: ActionTree<AppearanceState, RootState> = {
     const config = {
       appearance: newAppearance
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf.appearance)
-      })
-      win.ipcRenderer.send('update-preferences', config)
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
+    dispatch('App/loadPreferences', null, { root: true })
   },
-  updateFont: ({ dispatch, state, commit }, value: string) => {
+  updateFont: async ({ dispatch, state, commit }, value: string) => {
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       font: value
     })
     const config = {
       appearance: newAppearance
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf.appearance)
-      })
-      win.ipcRenderer.send('update-preferences', config)
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
+    dispatch('App/loadPreferences', null, { root: true })
   },
-  updateTootPadding: ({ dispatch, state, commit }, value: number) => {
+  updateTootPadding: async ({ dispatch, state, commit }, value: number) => {
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       tootPadding: value
     })
     const config = {
       appearance: newAppearance
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf.appearance)
-      })
-      win.ipcRenderer.send('update-preferences', config)
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
+    dispatch('App/loadPreferences', null, { root: true })
   }
 }
 

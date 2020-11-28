@@ -467,18 +467,17 @@ ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
   await accountManager.removeAll()
 })
 
-ipcMain.on('change-auto-launch', (event: IpcMainEvent, enable: boolean) => {
+ipcMain.handle('change-auto-launch', async (_: IpcMainInvokeEvent, enable: boolean) => {
   if (launcher) {
-    launcher.isEnabled().then(enabled => {
-      if (!enabled && enable && launcher) {
-        launcher.enable()
-      } else if (enabled && !enable && launcher) {
-        launcher.disable()
-      }
-      event.sender.send('response-change-auto-launch', enable)
-    })
+    const enabled = await launcher.isEnabled()
+    if (!enabled && enable && launcher) {
+      launcher.enable()
+    } else if (enabled && !enable && launcher) {
+      launcher.disable()
+    }
+    return enable
   } else {
-    event.sender.send('response-change-auto-launch', false)
+    return false
   }
 })
 
@@ -918,16 +917,10 @@ ipcMain.on('get-preferences', async (event: IpcMainEvent) => {
   event.sender.send('response-get-preferences', conf)
 })
 
-ipcMain.on('update-preferences', (event: IpcMainEvent, data: any) => {
+ipcMain.handle('update-preferences', async (_: IpcMainInvokeEvent, data: any) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .update(data)
-    .then(conf => {
-      event.sender.send('response-update-preferences', conf)
-    })
-    .catch(err => {
-      event.sender.send('error-update-preferences', err)
-    })
+  const conf = await preferences.update(data)
+  return conf
 })
 
 ipcMain.on('change-collapse', (_event: IpcMainEvent, value: boolean) => {

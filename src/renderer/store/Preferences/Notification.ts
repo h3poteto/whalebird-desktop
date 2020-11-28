@@ -48,7 +48,7 @@ const actions: ActionTree<NotificationState, RootState> = {
       })
     })
   },
-  updateNotify: ({ commit, state, dispatch }, notify: object) => {
+  updateNotify: async ({ commit, state, dispatch }, notify: object) => {
     const newNotify: Notify = Object.assign({}, state.notification.notify, notify)
     const newNotification: Notification = Object.assign({}, state.notification, {
       notify: newNotify
@@ -56,14 +56,9 @@ const actions: ActionTree<NotificationState, RootState> = {
     const config = {
       notification: newNotification
     }
-    return new Promise(resolve => {
-      win.ipcRenderer.send('update-preferences', config)
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf.notification)
-      })
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
+    dispatch('App/loadPreferences', null, { root: true })
   }
 }
 
