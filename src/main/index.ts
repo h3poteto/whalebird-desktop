@@ -443,16 +443,9 @@ ipcMain.handle('update-account', async (_: IpcMainInvokeEvent, acct: LocalAccoun
   return ac
 })
 
-ipcMain.on('remove-account', (event: IpcMainEvent, id: string) => {
-  accountManager
-    .removeAccount(id)
-    .then(id => {
-      stopUserStreaming(id)
-      event.sender.send('response-remove-account', id)
-    })
-    .catch(err => {
-      event.sender.send('error-remove-account', err)
-    })
+ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: string) => {
+  const accountId = await accountManager.removeAccount(id)
+  stopUserStreaming(accountId)
 })
 
 ipcMain.on('forward-account', (event: IpcMainEvent, acct: LocalAccount) => {

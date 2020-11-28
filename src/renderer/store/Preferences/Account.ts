@@ -35,18 +35,8 @@ const actions: ActionTree<AccountState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
     return accounts
   },
-  removeAccount: (_, account: LocalAccount) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('remove-account', account._id)
-      win.ipcRenderer.once('error-remove-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-remove-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-remove-account', (_, _id: string) => {
-        win.ipcRenderer.removeAllListeners('error-remove-account')
-        resolve()
-      })
-    })
+  removeAccount: async (_, account: LocalAccount) => {
+    await win.ipcRenderer.invoke('remove-account', account._id)
   },
   forwardAccount: (_, account: LocalAccount) => {
     return new Promise((resolve, reject) => {
