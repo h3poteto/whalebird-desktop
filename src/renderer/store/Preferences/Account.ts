@@ -41,18 +41,8 @@ const actions: ActionTree<AccountState, RootState> = {
   forwardAccount: async (_, account: LocalAccount) => {
     await win.ipcRenderer.invoke('forward-account', account)
   },
-  backwardAccount: (_, account: LocalAccount) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('backward-account', account)
-      win.ipcRenderer.once('error-backward-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-forward-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-backward-account', () => {
-        win.ipcRenderer.removeAllListeners('error-backward-account')
-        resolve()
-      })
-    })
+  backwardAccount: async (_, account: LocalAccount) => {
+    await win.ipcRenderer.invoke('backward-account', account)
   },
   removeAllAccounts: () => {
     return new Promise((resolve, reject) => {

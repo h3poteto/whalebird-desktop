@@ -452,15 +452,8 @@ ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccou
   await accountManager.forwardAccount(acct)
 })
 
-ipcMain.on('backward-account', (event: IpcMainEvent, acct: LocalAccount) => {
-  accountManager
-    .backwardAccount(acct)
-    .then(() => {
-      event.sender.send('response-backward-account')
-    })
-    .catch(err => {
-      event.sender.send('error-backward-account', err)
-    })
+ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
+  await accountManager.backwardAccount(acct)
 })
 
 ipcMain.on('refresh-accounts', async (event: IpcMainEvent) => {
