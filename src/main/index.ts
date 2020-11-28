@@ -463,16 +463,8 @@ ipcMain.handle('refresh-accounts', async (_: IpcMainInvokeEvent) => {
   return accounts
 })
 
-ipcMain.on('remove-all-accounts', (event: IpcMainEvent) => {
-  accountManager
-    .removeAll()
-    .then(() => {
-      event.sender.send('response-remove-all-accounts')
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-remove-all-accounts', err)
-    })
+ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
+  await accountManager.removeAll()
 })
 
 ipcMain.on('change-auto-launch', (event: IpcMainEvent, enable: boolean) => {

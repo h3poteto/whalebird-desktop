@@ -44,18 +44,8 @@ const actions: ActionTree<AccountState, RootState> = {
   backwardAccount: async (_, account: LocalAccount) => {
     await win.ipcRenderer.invoke('backward-account', account)
   },
-  removeAllAccounts: () => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('remove-all-accounts')
-      win.ipcRenderer.once('error-remove-all-accounts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-remove-all-accounts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-remove-all-accounts', () => {
-        win.ipcRenderer.removeAllListeners('error-remove-all-accounts')
-        resolve()
-      })
-    })
+  removeAllAccounts: async () => {
+    await win.ipcRenderer.invoke('remove-all-accounts')
   }
 }
 
