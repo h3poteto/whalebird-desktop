@@ -131,7 +131,7 @@
             >
           </template>
         </div>
-        <div class="tool-box" v-click-outside="hideEmojiPicker">
+        <div class="tool-box">
           <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
             <icon name="reply" scale="0.9"></icon>
           </el-button>
@@ -179,10 +179,7 @@
             <icon name="quote-right" scale="0.9"></icon>
           </el-button>
           <template v-if="sns !== 'mastodon'">
-            <el-button class="emoji" type="text" @click="toggleEmojiPicker">
-              <icon name="regular/smile" scale="0.9"></icon>
-            </el-button>
-            <div v-if="openEmojiPicker" class="emoji-picker">
+            <el-popover placement="bottom" width="281" trigger="click" popper-class="status-emoji-picker" ref="status_emoji_picker">
               <picker
                 set="emojione"
                 :autoFocus="true"
@@ -193,12 +190,15 @@
                 :showPreview="false"
                 :emojiTooltip="true"
               />
-            </div>
+              <el-button slot="reference" class="emoji" type="text">
+                <icon name="regular/smile" scale="0.9"></icon>
+              </el-button>
+            </el-popover>
           </template>
           <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
             <icon name="thumbtack" scale="0.9"></icon>
           </el-button>
-          <el-popover placement="bottom" width="200" trigger="click" popper-class="status-menu-popper" ref="popper">
+          <el-popover placement="bottom" width="200" trigger="click" popper-class="status-menu-popper" ref="status_menu_popper">
             <ul class="menu-list">
               <li role="button" @click="openDetail(message)" v-show="!detailed">
                 {{ $t('cards.toot.view_toot_detail') }}
@@ -485,28 +485,28 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-      this.$refs.popper.doClose()
+      this.$refs.status_menu_popper.doClose()
     },
     openBrowser(message) {
       window.shell.openExternal(message.url)
-      this.$refs.popper.doClose()
+      this.$refs.status_menu_popper.doClose()
     },
     copyLink(message) {
       window.clipboard.writeText(message.url, 'toot-link')
-      this.$refs.popper.doClose()
+      this.$refs.status_menu_popper.doClose()
     },
     reportUser() {
       this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage)
-      this.$refs.popper.doClose()
+      this.$refs.status_menu_popper.doClose()
     },
     confirmMute() {
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage.account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
-      this.$refs.popper.doClose()
+      this.$refs.status_menu_popper.doClose()
     },
     block() {
       this.$store.dispatch('organisms/Toot/block', this.originalMessage.account)
-      this.$refs.popper.doClose()
+      this.$refs.status_menu_popper.doClose()
     },
     changeReblog(message) {
       if (message.reblogged) {
@@ -687,19 +687,13 @@ export default {
       })
       this.$emit('update', status)
     },
-    toggleEmojiPicker() {
-      this.openEmojiPicker = !this.openEmojiPicker
-    },
-    hideEmojiPicker() {
-      this.openEmojiPicker = false
-    },
     async selectEmoji(emoji) {
       const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
         status_id: this.originalMessage.id,
         native: emoji.native
       })
       this.$emit('update', status)
-      this.hideEmojiPicker()
+      this.$refs.status_emoji_picker.doClose()
     },
     async addReaction(native) {
       const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
@@ -1022,5 +1016,10 @@ export default {
       }
     }
   }
+}
+
+.status-emoji-picker {
+  padding: 0;
+  border: none;
 }
 </style>
