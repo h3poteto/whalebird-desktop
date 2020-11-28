@@ -432,16 +432,9 @@ ipcMain.handle('list-accounts', async (_: IpcMainInvokeEvent) => {
   return accounts
 })
 
-ipcMain.on('get-local-account', (event: IpcMainEvent, id: string) => {
-  accountManager
-    .getAccount(id)
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-get-local-account', err)
-    })
-    .then(account => {
-      event.sender.send('response-get-local-account', account)
-    })
+ipcMain.handle('get-local-account', async (_: IpcMainInvokeEvent, id: string) => {
+  const account = await accountManager.getAccount(id)
+  return account
 })
 
 ipcMain.on('update-account', async (event: IpcMainEvent, acct: LocalAccount) => {

@@ -122,30 +122,15 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // Accounts
   // -------------------------------------------------
   localAccount: async ({ dispatch, commit }, id: string): Promise<LocalAccount> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('get-local-account', id)
-      win.ipcRenderer.once('error-get-local-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-local-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-local-account', (_, account: LocalAccount) => {
-        win.ipcRenderer.removeAllListeners('error-get-local-account')
-
-        if (account.username === undefined || account.username === null || account.username === '') {
-          dispatch('fetchAccount', account)
-            .then((acct: LocalAccount) => {
-              commit(MUTATION_TYPES.UPDATE_ACCOUNT, acct)
-              resolve(acct)
-            })
-            .catch(err => {
-              reject(err)
-            })
-        } else {
-          commit(MUTATION_TYPES.UPDATE_ACCOUNT, account)
-          resolve(account)
-        }
-      })
-    })
+    const account: LocalAccount = await win.ipcRenderer.invoke('get-local-account', id)
+    if (account.username === undefined || account.username === null || account.username === '') {
+      const acct: LocalAccount = await dispatch('fetchAccount', account)
+      commit(MUTATION_TYPES.UPDATE_ACCOUNT, acct)
+      return acct
+    } else {
+      commit(MUTATION_TYPES.UPDATE_ACCOUNT, account)
+      return account
+    }
   },
   fetchAccount: (_, account: LocalAccount): Promise<LocalAccount> => {
     return new Promise((resolve, reject) => {
