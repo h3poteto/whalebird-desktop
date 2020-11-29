@@ -44,22 +44,13 @@ const actions: ActionTree<TimelineState, RootState> = {
       return false
     }
   },
-  changeUnreadNotification: ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
+  changeUnreadNotification: async ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
     const settings: UnreadNotification = Object.assign({}, state.unreadNotification, timeline, {
       accountID: rootState.Settings.accountID
     })
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('response-update-unread-notification', () => {
-        win.ipcRenderer.removeAllListeners('error-update-unread-notification')
-        dispatch('loadUnreadNotification')
-        resolve(true)
-      })
-      win.ipcRenderer.once('error-update-unread-notification', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-unread-notification')
-        reject(err)
-      })
-      win.ipcRenderer.send('update-unread-notification', settings)
-    })
+    await win.ipcRenderer.invoke('update-unread-notification', settings)
+    dispatch('loadUnreadNotification')
+    return true
   }
 }
 

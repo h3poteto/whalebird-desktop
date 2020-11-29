@@ -1019,17 +1019,9 @@ ipcMain.handle('get-unread-notification', async (_: IpcMainInvokeEvent, accountI
   return doc
 })
 
-ipcMain.on('update-unread-notification', (event: IpcMainEvent, config: UnreadNotificationConfig) => {
+ipcMain.handle('update-unread-notification', async (_: IpcMainInvokeEvent, config: UnreadNotificationConfig) => {
   const { accountID } = config
-  unreadNotification
-    .insertOrUpdate(accountID!, config)
-    .then(_ => {
-      event.sender.send('response-update-unread-notification', true)
-    })
-    .catch(err => {
-      console.error(err)
-      event.sender.send('error-update-unread-notification', err)
-    })
+  await unreadNotification.insertOrUpdate(accountID!, config)
 })
 
 // Cache
