@@ -940,20 +940,14 @@ ipcMain.handle('get-collapse', async (_: IpcMainInvokeEvent) => {
   return conf.state.collapse
 })
 
-ipcMain.on('change-global-header', (event: IpcMainEvent, value: boolean) => {
+ipcMain.handle('change-global-header', async (_: IpcMainInvokeEvent, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .update({
-      state: {
-        hideGlobalHeader: value
-      }
-    })
-    .then(conf => {
-      event.sender.send('response-change-global-header', conf)
-    })
-    .catch(err => {
-      log.error(err)
-    })
+  const conf = await preferences.update({
+    state: {
+      hideGlobalHeader: value
+    }
+  })
+  return conf
 })
 
 ipcMain.on('get-global-header', (event: IpcMainEvent) => {

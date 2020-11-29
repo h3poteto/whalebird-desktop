@@ -104,14 +104,10 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       })
     })
   },
-  switchHide: ({ dispatch }, hide: boolean): Promise<boolean> => {
-    return new Promise(resolve => {
-      win.ipcRenderer.send('change-global-header', hide)
-      win.ipcRenderer.once('response-change-global-header', () => {
-        dispatch('loadHide')
-        resolve(true)
-      })
-    })
+  switchHide: async ({ dispatch }, hide: boolean): Promise<boolean> => {
+    await win.ipcRenderer.invoke('change-global-header', hide)
+    dispatch('loadHide')
+    return true
   },
   startUserStreamings: ({ state }): Promise<{}> => {
     // @ts-ignore
