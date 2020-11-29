@@ -1006,14 +1006,9 @@ ipcMain.handle('remove-hashtag', async (_: IpcMainInvokeEvent, tag: LocalTag) =>
 })
 
 // Fonts
-ipcMain.on('list-fonts', (event: IpcMainEvent) => {
-  Fonts()
-    .then(list => {
-      event.sender.send('response-list-fonts', list)
-    })
-    .catch(err => {
-      event.sender.send('error-list-fonts', err)
-    })
+ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
+  const list = await Fonts()
+  return list
 })
 
 // Unread notifications

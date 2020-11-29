@@ -49,19 +49,10 @@ const actions: ActionTree<AppearanceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
     return conf
   },
-  loadFonts: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-list-fonts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-fonts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-list-fonts', (_, fonts: Array<string>) => {
-        win.ipcRenderer.removeAllListeners('error-list-fonts')
-        commit(MUTATION_TYPES.UPDATE_FONTS, [DefaultFonts[0]].concat(fonts))
-        resolve(fonts)
-      })
-      win.ipcRenderer.send('list-fonts')
-    })
+  loadFonts: async ({ commit }) => {
+    const fonts: Array<string> = await win.ipcRenderer.invoke('list-fonts')
+    commit(MUTATION_TYPES.UPDATE_FONTS, [DefaultFonts[0]].concat(fonts))
+    return fonts
   },
   updateTheme: async ({ dispatch, commit, state }, themeKey: string) => {
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
