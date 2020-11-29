@@ -95,14 +95,10 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     win.ipcRenderer.removeAllListeners('change-account')
     return true
   },
-  loadHide: ({ commit }): Promise<boolean> => {
-    return new Promise(resolve => {
-      win.ipcRenderer.send('get-global-header')
-      win.ipcRenderer.once('response-get-global-header', (_, hide: boolean) => {
-        commit(MUTATION_TYPES.CHANGE_HIDE, hide)
-        resolve(hide)
-      })
-    })
+  loadHide: async ({ commit }): Promise<boolean> => {
+    const hide: boolean = await win.ipcRenderer.invoke('get-global-header')
+    commit(MUTATION_TYPES.CHANGE_HIDE, hide)
+    return hide
   },
   switchHide: async ({ dispatch }, hide: boolean): Promise<boolean> => {
     await win.ipcRenderer.invoke('change-global-header', hide)

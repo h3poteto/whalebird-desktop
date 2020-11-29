@@ -950,11 +950,10 @@ ipcMain.handle('change-global-header', async (_: IpcMainInvokeEvent, value: bool
   return conf
 })
 
-ipcMain.on('get-global-header', (event: IpcMainEvent) => {
+ipcMain.handle('get-global-header', async (_: IpcMainInvokeEvent) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences.load().then(conf => {
-    event.sender.send('response-get-global-header', conf.state.hideGlobalHeader)
-  })
+  const conf = await preferences.load()
+  return conf.state.hideGlobalHeader
 })
 
 // proxy
