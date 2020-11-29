@@ -1043,12 +1043,13 @@ ipcMain.handle('get-cache-accounts', async (_: IpcMainInvokeEvent, ownerID: stri
   return accounts
 })
 
-ipcMain.on('insert-cache-accounts', (event: IpcMainEvent, obj: InsertAccountCache) => {
+ipcMain.handle('insert-cache-accounts', async (_: IpcMainInvokeEvent, obj: InsertAccountCache) => {
   const { ownerID, accts } = obj
-  accts.map(async acct => {
-    await accountCache.insertAccount(ownerID, acct).catch(err => console.error(err))
-  })
-  event.sender.send('response-insert-cache-accounts')
+  Promise.all(
+    accts.map(async acct => {
+      await accountCache.insertAccount(ownerID, acct).catch(err => console.error(err))
+    })
+  )
 })
 
 // Application control

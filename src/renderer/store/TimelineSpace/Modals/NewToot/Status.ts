@@ -176,7 +176,7 @@ const actions: ActionTree<StatusState, RootState> = {
         MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS,
         res.data.map(account => account.acct)
       )
-      win.ipcRenderer.send('insert-cache-accounts', {
+      await win.ipcRenderer.invoke('insert-cache-accounts', {
         ownerID: rootState.TimelineSpace.account._id!,
         accts: res.data.map(a => a.acct)
       } as InsertAccountCache)
