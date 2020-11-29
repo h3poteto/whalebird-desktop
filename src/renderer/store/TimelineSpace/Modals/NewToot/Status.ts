@@ -197,21 +197,17 @@ const actions: ActionTree<StatusState, RootState> = {
     commit(MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
     const { word, start } = wordStart
-    const searchCache = () => {
-      return new Promise(resolve => {
-        const target = word.replace('#', '')
-        win.ipcRenderer.once('response-get-cache-hashtags', (_, tags: Array<LocalTag>) => {
-          const matched = tags.map(tag => tag.tagName).filter(tag => tag.includes(target))
-          if (matched.length === 0) throw new Error('Empty')
-          commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, matched)
-          commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
-          commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
-          commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
-          commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
-          resolve(matched)
-        })
-        win.ipcRenderer.send('get-cache-hashtags')
-      })
+    const searchCache = async () => {
+      const target = word.replace('#', '')
+      const tags: Array<LocalTag> = await win.ipcRenderer.invoke('get-cache-hashtags')
+      const matched = tags.map(tag => tag.tagName).filter(tag => tag.includes(target))
+      if (matched.length === 0) throw new Error('Empty')
+      commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, matched)
+      commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
+      commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
+      commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
+      commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
+      return matched
     }
     const searchAPI = async () => {
       const client = generator(

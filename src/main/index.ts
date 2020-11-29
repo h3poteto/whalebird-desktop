@@ -1025,9 +1025,9 @@ ipcMain.handle('update-unread-notification', async (_: IpcMainInvokeEvent, confi
 })
 
 // Cache
-ipcMain.on('get-cache-hashtags', async (event: IpcMainEvent) => {
+ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
   const tags = await hashtagCache.listTags()
-  event.sender.send('response-get-cache-hashtags', tags)
+  return tags
 })
 
 ipcMain.on('insert-cache-hashtags', (event: IpcMainEvent, tags: Array<string>) => {
