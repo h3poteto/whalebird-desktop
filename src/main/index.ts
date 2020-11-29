@@ -977,18 +977,15 @@ ipcMain.handle('update-proxy-config', async (_event: IpcMainInvokeEvent, proxy: 
 })
 
 // language
-ipcMain.on('change-language', (event: IpcMainEvent, value: string) => {
+ipcMain.handle('change-language', async (_: IpcMainInvokeEvent, value: string) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .update({
-      language: {
-        language: value
-      }
-    })
-    .then(conf => {
-      i18next.changeLanguage(conf.language.language)
-      event.sender.send('response-change-language', conf.language.language)
-    })
+  const conf = await preferences.update({
+    language: {
+      language: value
+    }
+  })
+  i18next.changeLanguage(conf.language.language)
+  return conf.language.language
 })
 
 // hashtag

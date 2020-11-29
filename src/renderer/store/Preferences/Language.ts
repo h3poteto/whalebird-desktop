@@ -37,14 +37,10 @@ const actions: ActionTree<LanguageState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language as LanguageSet)
     return conf
   },
-  changeLanguage: ({ commit }, key: string) => {
-    return new Promise(resolve => {
-      win.ipcRenderer.send('change-language', key)
-      win.ipcRenderer.once('response-change-language', (_, value: string) => {
-        commit(MUTATION_TYPES.CHANGE_LANGUAGE, value)
-        resolve(value)
-      })
-    })
+  changeLanguage: async ({ commit }, key: string) => {
+    const value: string = await win.ipcRenderer.invoke('change-language', key)
+    commit(MUTATION_TYPES.CHANGE_LANGUAGE, value)
+    return value
   },
   relaunch: () => {
     win.ipcRenderer.send('relaunch')
