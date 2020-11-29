@@ -29,20 +29,11 @@ const actions: ActionTree<ListState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TAGS, tags)
     return tags
   },
-  removeTag: ({ dispatch }, tag: LocalTag) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('response-remove-hashtag', () => {
-        win.ipcRenderer.removeAllListeners('error-remove-hashtag')
-        dispatch('listTags')
-        dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
-        resolve('deleted')
-      })
-      win.ipcRenderer.once('error-remove-hashtag', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-remove-hashtag')
-        reject(err)
-      })
-      win.ipcRenderer.send('remove-hashtag', tag)
-    })
+  removeTag: async ({ dispatch }, tag: LocalTag) => {
+    await win.ipcRenderer.invoke('remove-hashtag', tag)
+    dispatch('listTags')
+    dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
+    return 'deleted'
   }
 }
 

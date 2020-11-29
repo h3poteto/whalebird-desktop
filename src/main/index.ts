@@ -1000,16 +1000,9 @@ ipcMain.handle('list-hashtags', async (_: IpcMainInvokeEvent) => {
   return tags
 })
 
-ipcMain.on('remove-hashtag', (event: IpcMainEvent, tag: LocalTag) => {
+ipcMain.handle('remove-hashtag', async (_: IpcMainInvokeEvent, tag: LocalTag) => {
   const hashtags = new Hashtags(hashtagsDB)
-  hashtags
-    .removeTag(tag)
-    .then(() => {
-      event.sender.send('response-remove-hashtag')
-    })
-    .catch(err => {
-      event.sender.send('error-remove-hashtag', err)
-    })
+  await hashtags.removeTag(tag)
 })
 
 // Fonts
