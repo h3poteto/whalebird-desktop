@@ -149,19 +149,10 @@ const actions: ActionTree<SideMenuState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
     return value
   },
-  listTags: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
-        win.ipcRenderer.removeAllListeners('error-list-hashtags')
-        commit(MUTATION_TYPES.UPDATE_TAGS, tags)
-        resolve(tags)
-      })
-      win.ipcRenderer.once('error-list-hashtags', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-hashtags')
-        reject(err)
-      })
-      win.ipcRenderer.send('list-hashtags')
-    })
+  listTags: async ({ commit }) => {
+    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags')
+    commit(MUTATION_TYPES.UPDATE_TAGS, tags)
+    return tags
   }
 }
 

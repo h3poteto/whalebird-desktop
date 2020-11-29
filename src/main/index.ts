@@ -994,16 +994,10 @@ ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
   await hashtags.insertTag(tag)
 })
 
-ipcMain.on('list-hashtags', (event: IpcMainEvent) => {
+ipcMain.handle('list-hashtags', async (_: IpcMainInvokeEvent) => {
   const hashtags = new Hashtags(hashtagsDB)
-  hashtags
-    .listTags()
-    .then(tags => {
-      event.sender.send('response-list-hashtags', tags)
-    })
-    .catch(err => {
-      event.sender.send('error-list-hashtags', err)
-    })
+  const tags = await hashtags.listTags()
+  return tags
 })
 
 ipcMain.on('remove-hashtag', (event: IpcMainEvent, tag: LocalTag) => {

@@ -24,19 +24,10 @@ const mutations: MutationTree<ListState> = {
 }
 
 const actions: ActionTree<ListState, RootState> = {
-  listTags: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
-        win.ipcRenderer.removeAllListeners('error-list-hashtags')
-        commit(MUTATION_TYPES.UPDATE_TAGS, tags)
-        resolve(tags)
-      })
-      win.ipcRenderer.once('error-list-hashtags', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-hashtags')
-        reject(err)
-      })
-      win.ipcRenderer.send('list-hashtags')
-    })
+  listTags: async ({ commit }) => {
+    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags')
+    commit(MUTATION_TYPES.UPDATE_TAGS, tags)
+    return tags
   },
   removeTag: ({ dispatch }, tag: LocalTag) => {
     return new Promise((resolve, reject) => {
