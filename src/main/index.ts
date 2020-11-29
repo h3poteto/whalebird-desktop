@@ -1030,11 +1030,12 @@ ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
   return tags
 })
 
-ipcMain.on('insert-cache-hashtags', (event: IpcMainEvent, tags: Array<string>) => {
-  tags.map(async name => {
-    await hashtagCache.insertHashtag(name).catch(err => console.error(err))
-  })
-  event.sender.send('response-insert-cache-hashtags')
+ipcMain.handle('insert-cache-hashtags', async (_: IpcMainInvokeEvent, tags: Array<string>) => {
+  await Promise.all(
+    tags.map(async name => {
+      await hashtagCache.insertHashtag(name).catch(err => console.error(err))
+    })
+  )
 })
 
 ipcMain.on('get-cache-accounts', async (event: IpcMainEvent, ownerID: string) => {

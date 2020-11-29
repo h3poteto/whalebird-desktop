@@ -223,7 +223,7 @@ const actions: ActionTree<StatusState, RootState> = {
         MUTATION_TYPES.APPEND_FILTERED_HASHTAGS,
         res.data.hashtags.map(tag => tag.name)
       )
-      win.ipcRenderer.send(
+      await win.ipcRenderer.invoke(
         'insert-cache-hashtags',
         res.data.hashtags.map(tag => tag.name)
       )
