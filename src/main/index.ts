@@ -989,16 +989,9 @@ ipcMain.handle('change-language', async (_: IpcMainInvokeEvent, value: string) =
 })
 
 // hashtag
-ipcMain.on('save-hashtag', (event: IpcMainEvent, tag: string) => {
+ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
   const hashtags = new Hashtags(hashtagsDB)
-  hashtags
-    .insertTag(tag)
-    .then(() => {
-      event.sender.send('response-save-hashtag')
-    })
-    .catch(err => {
-      log.error(err)
-    })
+  await hashtags.insertTag(tag)
 })
 
 ipcMain.on('list-hashtags', (event: IpcMainEvent) => {

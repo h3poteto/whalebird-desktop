@@ -18,11 +18,9 @@ export type HashtagModuleState = HashtagModule & HashtagState
 const state = (): HashtagState => ({})
 
 const actions: ActionTree<HashtagState, RootState> = {
-  saveTag: ({ dispatch }, tag: string) => {
-    win.ipcRenderer.once('response-save-hashtag', () => {
-      dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
-    })
-    win.ipcRenderer.send('save-hashtag', tag)
+  saveTag: async ({ dispatch }, tag: string) => {
+    await win.ipcRenderer.invoke('save-hashtag', tag)
+    dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
   }
 }
 
