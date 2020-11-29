@@ -1038,9 +1038,9 @@ ipcMain.handle('insert-cache-hashtags', async (_: IpcMainInvokeEvent, tags: Arra
   )
 })
 
-ipcMain.on('get-cache-accounts', async (event: IpcMainEvent, ownerID: string) => {
+ipcMain.handle('get-cache-accounts', async (_: IpcMainInvokeEvent, ownerID: string) => {
   const accounts = await accountCache.listAccounts(ownerID)
-  event.sender.send('response-get-cache-accounts', accounts)
+  return accounts
 })
 
 ipcMain.on('insert-cache-accounts', (event: IpcMainEvent, obj: InsertAccountCache) => {
