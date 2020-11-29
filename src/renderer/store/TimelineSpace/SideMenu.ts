@@ -144,14 +144,10 @@ const actions: ActionTree<SideMenuState, RootState> = {
     win.ipcRenderer.send('change-collapse', value)
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
   },
-  readCollapse: ({ commit }) => {
-    return new Promise(resolve => {
-      win.ipcRenderer.send('get-collapse')
-      win.ipcRenderer.once('response-get-collapse', (_, value: boolean) => {
-        commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
-        resolve(value)
-      })
-    })
+  readCollapse: async ({ commit }) => {
+    const value: boolean = await win.ipcRenderer.invoke('get-collapse')
+    commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
+    return value
   },
   listTags: ({ commit }) => {
     return new Promise((resolve, reject) => {

@@ -934,11 +934,10 @@ ipcMain.on('change-collapse', (_event: IpcMainEvent, value: boolean) => {
     })
 })
 
-ipcMain.on('get-collapse', (event: IpcMainEvent) => {
+ipcMain.handle('get-collapse', async (_: IpcMainInvokeEvent) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences.load().then(conf => {
-    event.sender.send('response-get-collapse', conf.state.collapse)
-  })
+  const conf = await preferences.load()
+  return conf.state.collapse
 })
 
 ipcMain.on('change-global-header', (event: IpcMainEvent, value: boolean) => {
