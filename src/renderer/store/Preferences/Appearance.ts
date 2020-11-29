@@ -44,19 +44,10 @@ const mutations: MutationTree<AppearanceState> = {
 }
 
 const actions: ActionTree<AppearanceState, RootState> = {
-  loadAppearance: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
-        resolve(conf)
-      })
-      win.ipcRenderer.send('get-preferences')
-    })
+  loadAppearance: async ({ commit }) => {
+    const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
+    commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
+    return conf
   },
   loadFonts: ({ commit }) => {
     return new Promise((resolve, reject) => {

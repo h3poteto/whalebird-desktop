@@ -898,7 +898,7 @@ ipcMain.on('toot-action-sound', () => {
 })
 
 // preferences
-ipcMain.on('get-preferences', async (event: IpcMainEvent) => {
+ipcMain.handle('get-preferences', async (_: IpcMainInvokeEvent) => {
   const preferences = new Preferences(preferencesDBPath)
   let enabled = false
   if (launcher) {
@@ -911,10 +911,8 @@ ipcMain.on('get-preferences', async (event: IpcMainEvent) => {
       }
     })
     .catch(err => console.error(err))
-  const conf = await preferences.load().catch(err => {
-    event.sender.send('error-get-preferences', err)
-  })
-  event.sender.send('response-get-preferences', conf)
+  const conf = await preferences.load()
+  return conf
 })
 
 ipcMain.handle('update-preferences', async (_: IpcMainInvokeEvent, data: any) => {

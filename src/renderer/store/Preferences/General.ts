@@ -45,22 +45,12 @@ const mutations: MutationTree<GeneralState> = {
 }
 
 const actions: ActionTree<GeneralState, RootState> = {
-  loadGeneral: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      commit(MUTATION_TYPES.CHANGE_LOADING, true)
-      win.ipcRenderer.send('get-preferences')
-      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-preferences')
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        resolve(conf)
-      })
+  loadGeneral: async ({ commit }) => {
+    const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences').finally(() => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
     })
+    commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
+    return conf
   },
   updateSound: async ({ commit, state }, sound: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)

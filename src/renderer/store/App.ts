@@ -111,29 +111,20 @@ const actions: ActionTree<AppState, RootState> = {
   removeShortcutsEvents: () => {
     win.ipcRenderer.removeAllListeners('open-preferences')
   },
-  loadPreferences: ({ commit, dispatch }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('get-preferences')
-      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-get-preferences')
-        dispatch('updateTheme', conf.appearance)
-        commit(MUTATION_TYPES.UPDATE_DISPLAY_NAME_STYLE, conf.appearance.displayNameStyle)
-        commit(MUTATION_TYPES.UPDATE_FONT_SIZE, conf.appearance.fontSize)
-        commit(MUTATION_TYPES.UPDATE_NOTIFY, conf.notification.notify)
-        commit(MUTATION_TYPES.UPDATE_TIME_FORMAT, conf.appearance.timeFormat)
-        commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language.language)
-        commit(MUTATION_TYPES.UPDATE_TOOT_PADDING, conf.appearance.tootPadding)
-        commit(MUTATION_TYPES.ADD_FONT, conf.appearance.font)
-        commit(MUTATION_TYPES.UPDATE_IGNORE_CW, conf.general.timeline.cw)
-        commit(MUTATION_TYPES.UPDATE_IGNORE_NFSW, conf.general.timeline.nfsw)
-        commit(MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS, conf.general.timeline.hideAllAttachments)
-        resolve(conf)
-      })
-    })
+  loadPreferences: async ({ commit, dispatch }) => {
+    const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
+    dispatch('updateTheme', conf.appearance)
+    commit(MUTATION_TYPES.UPDATE_DISPLAY_NAME_STYLE, conf.appearance.displayNameStyle)
+    commit(MUTATION_TYPES.UPDATE_FONT_SIZE, conf.appearance.fontSize)
+    commit(MUTATION_TYPES.UPDATE_NOTIFY, conf.notification.notify)
+    commit(MUTATION_TYPES.UPDATE_TIME_FORMAT, conf.appearance.timeFormat)
+    commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language.language)
+    commit(MUTATION_TYPES.UPDATE_TOOT_PADDING, conf.appearance.tootPadding)
+    commit(MUTATION_TYPES.ADD_FONT, conf.appearance.font)
+    commit(MUTATION_TYPES.UPDATE_IGNORE_CW, conf.general.timeline.cw)
+    commit(MUTATION_TYPES.UPDATE_IGNORE_NFSW, conf.general.timeline.nfsw)
+    commit(MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS, conf.general.timeline.hideAllAttachments)
+    return conf
   },
   updateTheme: ({ commit }, appearance: Appearance) => {
     const themeKey: string = appearance.theme
