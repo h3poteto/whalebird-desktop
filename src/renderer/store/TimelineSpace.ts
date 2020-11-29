@@ -184,24 +184,17 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
     return true
   },
-  loadUnreadNotification: ({ commit }, accountID: string) => {
-    return new Promise(resolve => {
-      win.ipcRenderer.once('response-get-unread-notification', (_, settings: UnreadNotification) => {
-        win.ipcRenderer.removeAllListeners('error-get-unread-notification')
-        commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
-        resolve(settings)
-      })
-      win.ipcRenderer.once('error-get-unread-notification', () => {
-        win.ipcRenderer.removeAllListeners('response-get-unread-notification')
-        commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, {
-          direct: unreadSettings.Direct.default,
-          local: unreadSettings.Local.default,
-          public: unreadSettings.Public.default
-        } as UnreadNotification)
-        resolve({})
-      })
-      win.ipcRenderer.send('get-unread-notification', accountID)
-    })
+  loadUnreadNotification: async ({ commit }, accountID: string) => {
+    try {
+      const settings: UnreadNotification = await win.ipcRenderer.invoke('get-unread-notification', accountID)
+      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
+    } catch (err) {
+      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, {
+        direct: unreadSettings.Direct.default,
+        local: unreadSettings.Local.default,
+        public: unreadSettings.Public.default
+      } as UnreadNotification)
+    }
   },
   fetchContentsTimelines: async ({ dispatch, state }) => {
     dispatch('TimelineSpace/Contents/changeLoading', true, { root: true })

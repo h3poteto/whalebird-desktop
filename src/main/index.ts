@@ -1012,18 +1012,11 @@ ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
 })
 
 // Unread notifications
-ipcMain.on('get-unread-notification', (event: IpcMainEvent, accountID: string) => {
-  unreadNotification
-    .findOne({
-      accountID: accountID
-    })
-    .then(doc => {
-      event.sender.send('response-get-unread-notification', doc)
-    })
-    .catch(err => {
-      console.warn(err)
-      event.sender.send('error-get-unread-notification', err)
-    })
+ipcMain.handle('get-unread-notification', async (_: IpcMainInvokeEvent, accountID: string) => {
+  const doc = await unreadNotification.findOne({
+    accountID: accountID
+  })
+  return doc
 })
 
 ipcMain.on('update-unread-notification', (event: IpcMainEvent, config: UnreadNotificationConfig) => {

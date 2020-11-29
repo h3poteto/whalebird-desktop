@@ -29,25 +29,20 @@ const mutations: MutationTree<TimelineState> = {
 }
 
 const actions: ActionTree<TimelineState, RootState> = {
-  loadUnreadNotification: ({ commit, rootState }): Promise<boolean> => {
-    return new Promise(resolve => {
-      win.ipcRenderer.once('response-get-unread-notification', (_, settings: UnreadNotification) => {
-        win.ipcRenderer.removeAllListeners('error-get-unread-notification')
-        commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
-        resolve(true)
-      })
-      win.ipcRenderer.once('error-get-unread-notification', () => {
-        win.ipcRenderer.removeAllListeners('response-get-unread-notification')
-        const settings: UnreadNotification = {
-          direct: unreadSettings.Direct.default,
-          local: unreadSettings.Local.default,
-          public: unreadSettings.Public.default
-        }
-        commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
-        resolve(false)
-      })
-      win.ipcRenderer.send('get-unread-notification', rootState.Settings.accountID)
-    })
+  loadUnreadNotification: async ({ commit, rootState }): Promise<boolean> => {
+    try {
+      const settings: UnreadNotification = await win.ipcRenderer.invoke('get-unread-notification', rootState.Settings.accountID)
+      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
+      return true
+    } catch (err) {
+      const settings: UnreadNotification = {
+        direct: unreadSettings.Direct.default,
+        local: unreadSettings.Local.default,
+        public: unreadSettings.Public.default
+      }
+      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
+      return false
+    }
   },
   changeUnreadNotification: ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
     const settings: UnreadNotification = Object.assign({}, state.unreadNotification, timeline, {
