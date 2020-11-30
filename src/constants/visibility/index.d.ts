@@ -11,6 +11,6 @@ export type VisibilityList = {
   Direct: VisibilityType
 }
 
-declare var v: VisibilityList
+declare let v: VisibilityList
 
 export default v

@@ -9,6 +9,6 @@ export type DisplayStyleList = {
   Username: DisplayStyleType
 }
 
-declare var d: DisplayStyleList
+declare let d: DisplayStyleList
 
 export default d

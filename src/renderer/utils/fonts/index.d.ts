@@ -1,3 +1,3 @@
-declare var f: Array<string>
+declare let f: Array<string>
 
 export default f
