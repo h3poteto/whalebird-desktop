@@ -407,11 +407,17 @@ export default {
         this.statusHeight = this.statusHeight + previousHeight
       }
     },
-    addPoll() {
-      this.polls.push('')
+    async addPoll() {
+      const previousPollHeight = this.$refs.poll.$el.offsetHeight
+      await this.polls.push('')
+      const diff = this.$refs.poll.$el.offsetHeight - previousPollHeight
+      this.statusHeight = this.statusHeight - diff
     },
-    removePoll(id) {
-      this.polls.splice(id, 1)
+    async removePoll(id) {
+      const previousPollHeight = this.$refs.poll.$el.offsetHeight
+      await this.polls.splice(id, 1)
+      const diff = previousPollHeight - this.$refs.poll.$el.offsetHeight
+      this.statusHeight = this.statusHeight + diff
     },
     changeExpire(obj) {
       this.pollExpire = obj
