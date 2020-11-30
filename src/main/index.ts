@@ -82,7 +82,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow: BrowserWindow | null
 let tray: Tray | null
-const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
+const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : path.join('file://', __dirname, '/index.html')
 
 // MAS build is not allowed requestSingleInstanceLock.
 // ref: https://github.com/h3poteto/whalebird-desktop/issues/1030
@@ -113,7 +113,7 @@ const appId = pkg.build.appId
 const splashURL =
   process.env.NODE_ENV === 'development'
     ? path.resolve(__dirname, '../../static/splash-screen.html')
-    : `${__dirname}/static/splash-screen.html`
+    : path.join(__dirname, '/static/splash-screen.html')
 
 // https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
@@ -586,7 +586,7 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
 })
 
 ipcMain.on('stop-all-user-streamings', () => {
-  Object.keys(userStreamings).map((key: string) => {
+  Object.keys(userStreamings).forEach((key: string) => {
     if (userStreamings[key]) {
       userStreamings[key]!.stop()
       userStreamings[key] = null
@@ -599,7 +599,7 @@ ipcMain.on('stop-all-user-streamings', () => {
  * @param id specified user id in nedb.
  */
 const stopUserStreaming = (id: string) => {
-  Object.keys(userStreamings).map((key: string) => {
+  Object.keys(userStreamings).forEach((key: string) => {
     if (key === id && userStreamings[id]) {
       userStreamings[id]!.stop()
       userStreamings[id] = null
