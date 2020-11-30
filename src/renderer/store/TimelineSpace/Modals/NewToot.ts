@@ -234,7 +234,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     }
 
     if (params.polls.length > 1) {
-      params.polls.map(poll => {
+      params.polls.forEach(poll => {
         if (poll.length < 1) {
           throw new NewTootPollInvalid()
         }
@@ -297,7 +297,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_INITIAL_SPOILER, message.spoiler_text)
     commit(MUTATION_TYPES.CHANGE_MODAL, true)
     let value: number = Visibility.Public.value
-    Object.keys(Visibility).map(key => {
+    Object.keys(Visibility).forEach(key => {
       const target = Visibility[key]
       if (target.key === message.visibility) {
         value = target.value

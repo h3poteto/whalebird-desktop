@@ -663,7 +663,7 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
 })
 
 ipcMain.on('stop-all-user-streamings', () => {
-  Object.keys(userStreamings).map((key: string) => {
+  Object.keys(userStreamings).forEach((key: string) => {
     if (userStreamings[key]) {
       userStreamings[key]!.stop()
       userStreamings[key] = null
@@ -676,7 +676,7 @@ ipcMain.on('stop-all-user-streamings', () => {
  * @param id specified user id in nedb.
  */
 const stopUserStreaming = (id: string) => {
-  Object.keys(userStreamings).map((key: string) => {
+  Object.keys(userStreamings).forEach((key: string) => {
     if (key === id && userStreamings[id]) {
       userStreamings[id]!.stop()
       userStreamings[id] = null

@@ -6,7 +6,7 @@ const locales = ['de', 'fr', 'it', 'ja', 'ko', 'pl', 'zh_cn']
 
 describe('i18n', () => {
   describe('should not define duplicate keys', () => {
-    locales.map(locale => {
+    locales.forEach(locale => {
       it(`${locale} translation`, () => {
         const targetJson = JSON.parse(
           fs.readFileSync(path.resolve(__dirname, `../../src/config/locales/${locale}/translation.json`), 'utf8')
