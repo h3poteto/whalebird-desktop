@@ -1,4 +1,4 @@
-import { IpcMainEvent } from 'electron'
+import { IpcMainInvokeEvent } from 'electron'
 import { createLocalVue } from '@vue/test-utils'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import Vuex from 'vuex'
@@ -48,8 +48,11 @@ describe('Hashtag/List', () => {
 
   describe('listTags', () => {
     it('should be updated', async () => {
-      ipcMain.once('list-hashtags', (event: IpcMainEvent) => {
-        event.sender.send('response-list-hashtags', [tag1, tag2])
+      ipcMain.handle('list-hashtags', () => {
+        return [tag1, tag2]
+      })
+      afterEach(() => {
+        ipcMain.removeHandler('list-hashtags')
       })
       await store.dispatch('List/listTags')
       expect(store.state.List.tags).toEqual([tag1, tag2])
@@ -58,13 +61,10 @@ describe('Hashtag/List', () => {
 
   describe('removeTag', () => {
     it('should be updated', async () => {
-      ipcMain.once('remove-hashtag', async () => {
-        ipcMain.once('remove-hashtag', (event: IpcMainEvent, tag: LocalTag) => {
-          expect(tag).toEqual(tag1)
-          event.sender.send('response-remove-hashtag')
-        })
-        await store.dispatch('List/removeTag', tag1)
+      ipcMain.handle('remove-hashtag', (_: IpcMainInvokeEvent, tag: LocalTag) => {
+        expect(tag).toEqual(tag1)
       })
+      await store.dispatch('List/removeTag', tag1)
     })
   })
 })

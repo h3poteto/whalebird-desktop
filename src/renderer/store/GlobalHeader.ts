@@ -61,35 +61,17 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     dispatch('bindNotification')
     dispatch('startUserStreamings')
   },
-  listAccounts: ({ dispatch, commit }): Promise<Array<LocalAccount>> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('list-accounts', 'list')
-      win.ipcRenderer.once('error-list-accounts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-accounts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-list-accounts', (_, accounts: Array<LocalAccount>) => {
-        win.ipcRenderer.removeAllListeners('error-list-accounts')
-        commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
-        dispatch('refreshAccounts')
-        resolve(accounts)
-      })
-    })
+  listAccounts: async ({ dispatch, commit }): Promise<Array<LocalAccount>> => {
+    const accounts = await win.ipcRenderer.invoke('list-accounts')
+    commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
+    dispatch('refreshAccounts')
+    return accounts
   },
   // Fetch account informations and save current state when GlobalHeader is displayed
-  refreshAccounts: ({ commit }): Promise<Array<LocalAccount>> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('refresh-accounts')
-      win.ipcRenderer.once('error-refresh-accounts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-refresh-accounts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-refresh-accounts', (_, accounts: Array<LocalAccount>) => {
-        win.ipcRenderer.removeAllListeners('error-refresh-accounts')
-        commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
-        resolve(accounts)
-      })
-    })
+  refreshAccounts: async ({ commit }): Promise<Array<LocalAccount>> => {
+    const accounts: Array<LocalAccount> = await win.ipcRenderer.invoke('refresh-accounts')
+    commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
+    return accounts
   },
   watchShortcutEvents: ({ state, commit, rootState, rootGetters }) => {
     win.ipcRenderer.on('change-account', (_, account: LocalAccount) => {
@@ -113,23 +95,15 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     win.ipcRenderer.removeAllListeners('change-account')
     return true
   },
-  loadHide: ({ commit }): Promise<boolean> => {
-    return new Promise(resolve => {
-      win.ipcRenderer.send('get-global-header')
-      win.ipcRenderer.once('response-get-global-header', (_, hide: boolean) => {
-        commit(MUTATION_TYPES.CHANGE_HIDE, hide)
-        resolve(hide)
-      })
-    })
+  loadHide: async ({ commit }): Promise<boolean> => {
+    const hide: boolean = await win.ipcRenderer.invoke('get-global-header')
+    commit(MUTATION_TYPES.CHANGE_HIDE, hide)
+    return hide
   },
-  switchHide: ({ dispatch }, hide: boolean): Promise<boolean> => {
-    return new Promise(resolve => {
-      win.ipcRenderer.send('change-global-header', hide)
-      win.ipcRenderer.once('response-change-global-header', () => {
-        dispatch('loadHide')
-        resolve(true)
-      })
-    })
+  switchHide: async ({ dispatch }, hide: boolean): Promise<boolean> => {
+    await win.ipcRenderer.invoke('change-global-header', hide)
+    dispatch('loadHide')
+    return true
   },
   startUserStreamings: ({ state }): Promise<{}> => {
     // @ts-ignore

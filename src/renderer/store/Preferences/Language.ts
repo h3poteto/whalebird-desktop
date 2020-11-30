@@ -32,28 +32,15 @@ const mutations: MutationTree<LanguageState> = {
 }
 
 const actions: ActionTree<LanguageState, RootState> = {
-  loadLanguage: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('get-preferences')
-      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language as LanguageSet)
-        resolve(conf)
-      })
-    })
+  loadLanguage: async ({ commit }) => {
+    const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
+    commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language as LanguageSet)
+    return conf
   },
-  changeLanguage: ({ commit }, key: string) => {
-    return new Promise(resolve => {
-      win.ipcRenderer.send('change-language', key)
-      win.ipcRenderer.once('response-change-language', (_, value: string) => {
-        commit(MUTATION_TYPES.CHANGE_LANGUAGE, value)
-        resolve(value)
-      })
-    })
+  changeLanguage: async ({ commit }, key: string) => {
+    const value: string = await win.ipcRenderer.invoke('change-language', key)
+    commit(MUTATION_TYPES.CHANGE_LANGUAGE, value)
+    return value
   },
   relaunch: () => {
     win.ipcRenderer.send('relaunch')

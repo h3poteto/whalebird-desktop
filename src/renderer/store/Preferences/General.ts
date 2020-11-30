@@ -45,24 +45,14 @@ const mutations: MutationTree<GeneralState> = {
 }
 
 const actions: ActionTree<GeneralState, RootState> = {
-  loadGeneral: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      commit(MUTATION_TYPES.CHANGE_LOADING, true)
-      win.ipcRenderer.send('get-preferences')
-      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-preferences')
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        resolve(conf)
-      })
+  loadGeneral: async ({ commit }) => {
+    const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences').finally(() => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
     })
+    commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
+    return conf
   },
-  updateSound: ({ commit, state }, sound: object) => {
+  updateSound: async ({ commit, state }, sound: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newSound: Sound = Object.assign({}, state.general.sound, sound)
     const newGeneral: General = Object.assign({}, state.general, {
@@ -71,22 +61,12 @@ const actions: ActionTree<GeneralState, RootState> = {
     const config = {
       general: newGeneral
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('update-preferences', config)
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        resolve(conf)
-      })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config).finally(() => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
     })
+    commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
   },
-  updateTimeline: ({ commit, state, dispatch }, timeline: object) => {
+  updateTimeline: async ({ commit, state, dispatch }, timeline: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newTimeline: Timeline = Object.assign({}, state.general.timeline, timeline)
     const newGeneral: General = Object.assign({}, state.general, {
@@ -95,23 +75,13 @@ const actions: ActionTree<GeneralState, RootState> = {
     const config = {
       general: newGeneral
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-preferences')
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-update-preferences')
-        commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
-        commit(MUTATION_TYPES.CHANGE_LOADING, false)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf)
-      })
-      win.ipcRenderer.send('update-preferences', config)
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config).finally(() => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
     })
+    commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
+    dispatch('App/loadPreferences', null, { root: true })
   },
-  updateOther: ({ commit, state, dispatch }, other: {}) => {
+  updateOther: async ({ commit, state, dispatch }, other: {}) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newOther: Other = Object.assign({}, state.general.other, other)
     const newGeneral: General = Object.assign({}, state.general, {
@@ -120,24 +90,12 @@ const actions: ActionTree<GeneralState, RootState> = {
     const config = {
       general: newGeneral
     }
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('response-change-auto-launch', () => {
-        win.ipcRenderer.once('error-update-preferences', (_, err: Error) => {
-          win.ipcRenderer.removeAllListeners('response-update-preferences')
-          commit(MUTATION_TYPES.CHANGE_LOADING, false)
-          reject(err)
-        })
-        win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-          win.ipcRenderer.removeAllListeners('error-update-preferences')
-          commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
-          commit(MUTATION_TYPES.CHANGE_LOADING, false)
-          dispatch('App/loadPreferences', null, { root: true })
-          resolve(conf)
-        })
-        win.ipcRenderer.send('update-preferences', config)
-      })
-      win.ipcRenderer.send('change-auto-launch', newOther.launch)
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config).finally(() => {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
     })
+    commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
+    dispatch('App/loadPreferences', null, { root: true })
+    await win.ipcRenderer.invoke('change-auto-launch', newOther.launch)
   }
 }
 

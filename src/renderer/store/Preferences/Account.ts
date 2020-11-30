@@ -30,71 +30,22 @@ const mutations: MutationTree<AccountState> = {
 }
 
 const actions: ActionTree<AccountState, RootState> = {
-  loadAccounts: ({ commit }): Promise<Array<LocalAccount>> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('list-accounts', 'list')
-      win.ipcRenderer.once('error-list-accounts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-accounts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-list-accounts', (_, accounts: Array<LocalAccount>) => {
-        win.ipcRenderer.removeAllListeners('error-list-accounts')
-        commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
-        resolve(accounts)
-      })
-    })
+  loadAccounts: async ({ commit }): Promise<Array<LocalAccount>> => {
+    const accounts = await win.ipcRenderer.invoke('list-accounts')
+    commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
+    return accounts
   },
-  removeAccount: (_, account: LocalAccount) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('remove-account', account._id)
-      win.ipcRenderer.once('error-remove-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-remove-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-remove-account', (_, _id: string) => {
-        win.ipcRenderer.removeAllListeners('error-remove-account')
-        resolve()
-      })
-    })
+  removeAccount: async (_, account: LocalAccount) => {
+    await win.ipcRenderer.invoke('remove-account', account._id)
   },
-  forwardAccount: (_, account: LocalAccount) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('forward-account', account)
-      win.ipcRenderer.once('error-forward-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-forward-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-forward-account', () => {
-        win.ipcRenderer.removeAllListeners('error-forward-account')
-        resolve()
-      })
-    })
+  forwardAccount: async (_, account: LocalAccount) => {
+    await win.ipcRenderer.invoke('forward-account', account)
   },
-  backwardAccount: (_, account: LocalAccount) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('backward-account', account)
-      win.ipcRenderer.once('error-backward-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-forward-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-backward-account', () => {
-        win.ipcRenderer.removeAllListeners('error-backward-account')
-        resolve()
-      })
-    })
+  backwardAccount: async (_, account: LocalAccount) => {
+    await win.ipcRenderer.invoke('backward-account', account)
   },
-  removeAllAccounts: () => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('remove-all-accounts')
-      win.ipcRenderer.once('error-remove-all-accounts', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-remove-all-accounts')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-remove-all-accounts', () => {
-        win.ipcRenderer.removeAllListeners('error-remove-all-accounts')
-        resolve()
-      })
-    })
+  removeAllAccounts: async () => {
+    await win.ipcRenderer.invoke('remove-all-accounts')
   }
 }
 

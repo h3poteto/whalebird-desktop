@@ -1,4 +1,4 @@
-import { IpcMainEvent } from 'electron'
+import { IpcMainInvokeEvent } from 'electron'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Theme from '~/src/constants/theme'
@@ -60,14 +60,17 @@ describe('Preferences/Appearance', () => {
   describe('load', () => {
     describe('loadAppearance', () => {
       beforeEach(() => {
-        ipcMain.once('get-preferences', (event: IpcMainEvent, _) => {
-          event.sender.send('response-get-preferences', {
+        ipcMain.handle('get-preferences', () => {
+          return {
             appearance: {
               theme: Theme.Dark.key,
               fontSize: 15
             }
-          })
+          }
         })
+      })
+      afterEach(() => {
+        ipcMain.removeHandler('get-preferences')
       })
       it('should be loaded', async () => {
         await store.dispatch('Preferences/loadAppearance')
@@ -77,9 +80,12 @@ describe('Preferences/Appearance', () => {
     })
     describe('loadFonts', () => {
       beforeEach(() => {
-        ipcMain.once('list-fonts', (event: IpcMainEvent, _) => {
-          event.sender.send('response-list-fonts', ['my-font'])
+        ipcMain.handle('list-fonts', () => {
+          return ['my-font']
         })
+      })
+      afterEach(() => {
+        ipcMain.removeHandler('list-fonts')
       })
       it('should be loaded', async () => {
         await store.dispatch('Preferences/loadFonts')
@@ -90,9 +96,12 @@ describe('Preferences/Appearance', () => {
 
   describe('update', () => {
     beforeEach(() => {
-      ipcMain.once('update-preferences', (event: IpcMainEvent, config: any) => {
-        event.sender.send('response-update-preferences', config)
+      ipcMain.handle('update-preferences', (_: IpcMainInvokeEvent, config: any) => {
+        return config
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('update-preferences')
     })
     it('updateTheme', async () => {
       await store.dispatch('Preferences/updateTheme', Theme.Dark.key)

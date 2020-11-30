@@ -48,9 +48,12 @@ describe('GlobalHeader', () => {
 
   describe('listAccounts', () => {
     beforeEach(() => {
-      ipcMain.once('list-accounts', (event, _) => {
-        event.sender.send('response-list-accounts', ['account'])
+      ipcMain.handle('list-accounts', () => {
+        return ['account']
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('list-accounts')
     })
     it('should be updated', async () => {
       await store.dispatch('GlobalHeader/listAccounts')
@@ -60,9 +63,12 @@ describe('GlobalHeader', () => {
 
   describe('refreshAccounts', () => {
     beforeEach(() => {
-      ipcMain.once('refresh-accounts', (event, _) => {
-        event.sender.send('response-refresh-accounts', ['accounts'])
+      ipcMain.handle('refresh-accounts', () => {
+        return ['accounts']
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('refresh-accounts')
     })
     it('should be refreshed', async () => {
       await store.dispatch('GlobalHeader/refreshAccounts')
@@ -79,9 +85,12 @@ describe('GlobalHeader', () => {
 
   describe('loadHide', () => {
     beforeEach(() => {
-      ipcMain.once('get-global-header', (event, _) => {
-        event.sender.send('response-get-global-header', true)
+      ipcMain.handle('get-global-header', () => {
+        return true
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('get-global-header')
     })
     it('should be changed', async () => {
       await store.dispatch('GlobalHeader/loadHide')
@@ -91,9 +100,12 @@ describe('GlobalHeader', () => {
 
   describe('switchHide', () => {
     beforeEach(() => {
-      ipcMain.once('change-global-header', (event, value) => {
-        event.sender.send('response-change-global-header', value)
+      ipcMain.handle('change-global-header', (_, value) => {
+        return value
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('change-global-header')
     })
     it('should be switched', async () => {
       const hide = await store.dispatch('GlobalHeader/switchHide', true)

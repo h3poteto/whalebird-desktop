@@ -34,21 +34,12 @@ const mutations: MutationTree<NotificationState> = {
 }
 
 const actions: ActionTree<NotificationState, RootState> = {
-  loadNotification: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('get-preferences')
-      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
-        resolve(conf)
-      })
-    })
+  loadNotification: async ({ commit }) => {
+    const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
+    commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
+    return conf
   },
-  updateNotify: ({ commit, state, dispatch }, notify: object) => {
+  updateNotify: async ({ commit, state, dispatch }, notify: object) => {
     const newNotify: Notify = Object.assign({}, state.notification.notify, notify)
     const newNotification: Notification = Object.assign({}, state.notification, {
       notify: newNotify
@@ -56,14 +47,9 @@ const actions: ActionTree<NotificationState, RootState> = {
     const config = {
       notification: newNotification
     }
-    return new Promise(resolve => {
-      win.ipcRenderer.send('update-preferences', config)
-      win.ipcRenderer.once('response-update-preferences', (_, conf: BaseConfig) => {
-        commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
-        dispatch('App/loadPreferences', null, { root: true })
-        resolve(conf.notification)
-      })
-    })
+    const conf: BaseConfig = await win.ipcRenderer.invoke('update-preferences', config)
+    commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
+    dispatch('App/loadPreferences', null, { root: true })
   }
 }
 

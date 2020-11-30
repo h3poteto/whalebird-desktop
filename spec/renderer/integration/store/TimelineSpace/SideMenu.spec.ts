@@ -139,8 +139,8 @@ describe('SideMenu', () => {
 
   describe('readCollapse', () => {
     it('should be read', async () => {
-      ipcMain.once('get-collapse', (event: any, _) => {
-        event.sender.send('response-get-collapse', true)
+      ipcMain.handle('get-collapse', () => {
+        return true
       })
       await store.dispatch('SideMenu/readCollapse')
       expect(store.state.SideMenu.collapse).toEqual(true)
@@ -155,8 +155,8 @@ describe('SideMenu', () => {
       const tag2: LocalTag = {
         tagName: 'tag2'
       }
-      ipcMain.once('list-hashtags', (event: any, _) => {
-        event.sender.send('response-list-hashtags', [tag1, tag2])
+      ipcMain.handle('list-hashtags', () => {
+        return [tag1, tag2]
       })
       await store.dispatch('SideMenu/listTags')
       expect(store.state.SideMenu.tags).toEqual([tag1, tag2])

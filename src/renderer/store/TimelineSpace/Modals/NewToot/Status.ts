@@ -150,21 +150,17 @@ const actions: ActionTree<StatusState, RootState> = {
     commit(MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
     const { word, start } = wordStart
-    const searchCache = () => {
-      return new Promise(resolve => {
-        const target = word.replace('@', '')
-        win.ipcRenderer.once('response-get-cache-accounts', (_, accounts: Array<CachedAccount>) => {
-          const matched = accounts.map(account => account.acct).filter(acct => acct.includes(target))
-          if (matched.length === 0) throw new Error('Empty')
-          commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, matched)
-          commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
-          commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
-          commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
-          commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
-          resolve(matched)
-        })
-        win.ipcRenderer.send('get-cache-accounts', rootState.TimelineSpace.account._id)
-      })
+    const searchCache = async () => {
+      const target = word.replace('@', '')
+      const accounts: Array<CachedAccount> = await win.ipcRenderer.invoke('get-cache-accounts', rootState.TimelineSpace.account._id)
+      const matched = accounts.map(account => account.acct).filter(acct => acct.includes(target))
+      if (matched.length === 0) throw new Error('Empty')
+      commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, matched)
+      commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
+      commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
+      commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
+      commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
+      return matched
     }
     const searchAPI = async () => {
       const client = generator(
@@ -180,7 +176,7 @@ const actions: ActionTree<StatusState, RootState> = {
         MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS,
         res.data.map(account => account.acct)
       )
-      win.ipcRenderer.send('insert-cache-accounts', {
+      await win.ipcRenderer.invoke('insert-cache-accounts', {
         ownerID: rootState.TimelineSpace.account._id!,
         accts: res.data.map(a => a.acct)
       } as InsertAccountCache)
@@ -197,21 +193,17 @@ const actions: ActionTree<StatusState, RootState> = {
     commit(MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
     const { word, start } = wordStart
-    const searchCache = () => {
-      return new Promise(resolve => {
-        const target = word.replace('#', '')
-        win.ipcRenderer.once('response-get-cache-hashtags', (_, tags: Array<LocalTag>) => {
-          const matched = tags.map(tag => tag.tagName).filter(tag => tag.includes(target))
-          if (matched.length === 0) throw new Error('Empty')
-          commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, matched)
-          commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
-          commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
-          commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
-          commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
-          resolve(matched)
-        })
-        win.ipcRenderer.send('get-cache-hashtags')
-      })
+    const searchCache = async () => {
+      const target = word.replace('#', '')
+      const tags: Array<LocalTag> = await win.ipcRenderer.invoke('get-cache-hashtags')
+      const matched = tags.map(tag => tag.tagName).filter(tag => tag.includes(target))
+      if (matched.length === 0) throw new Error('Empty')
+      commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, matched)
+      commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
+      commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
+      commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
+      commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
+      return matched
     }
     const searchAPI = async () => {
       const client = generator(
@@ -227,7 +219,7 @@ const actions: ActionTree<StatusState, RootState> = {
         MUTATION_TYPES.APPEND_FILTERED_HASHTAGS,
         res.data.hashtags.map(tag => tag.name)
       )
-      win.ipcRenderer.send(
+      await win.ipcRenderer.invoke(
         'insert-cache-hashtags',
         res.data.hashtags.map(tag => tag.name)
       )

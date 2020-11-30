@@ -53,21 +53,23 @@ describe('Login', () => {
   describe('fetchLogin', () => {
     describe('error', () => {
       it('should return error', async () => {
-        ipcMain.once('get-auth-url', event => {
-          event.sender.send('error-get-auth-url', new Error())
+        ipcMain.handle('get-auth-url', () => {
+          throw new Error()
         })
         await store.dispatch('Login/fetchLogin', 'pleroma.io').catch((err: Error) => {
           expect(err instanceof Error).toEqual(true)
         })
+        ipcMain.removeHandler('get-auth-url')
       })
     })
     describe('success', () => {
       it('should return url', async () => {
-        ipcMain.once('get-auth-url', event => {
-          event.sender.send('response-get-auth-url', 'http://example.com/auth')
+        ipcMain.handle('get-auth-url', () => {
+          return 'http://example.com/auth'
         })
         const url = await store.dispatch('Login/fetchLogin', 'pleroma.io')
         expect(url).toEqual('http://example.com/auth')
+        ipcMain.removeHandler('get-auth-url')
       })
     })
   })

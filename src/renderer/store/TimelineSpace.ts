@@ -122,43 +122,19 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // Accounts
   // -------------------------------------------------
   localAccount: async ({ dispatch, commit }, id: string): Promise<LocalAccount> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('get-local-account', id)
-      win.ipcRenderer.once('error-get-local-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-local-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-local-account', (_, account: LocalAccount) => {
-        win.ipcRenderer.removeAllListeners('error-get-local-account')
-
-        if (account.username === undefined || account.username === null || account.username === '') {
-          dispatch('fetchAccount', account)
-            .then((acct: LocalAccount) => {
-              commit(MUTATION_TYPES.UPDATE_ACCOUNT, acct)
-              resolve(acct)
-            })
-            .catch(err => {
-              reject(err)
-            })
-        } else {
-          commit(MUTATION_TYPES.UPDATE_ACCOUNT, account)
-          resolve(account)
-        }
-      })
-    })
+    const account: LocalAccount = await win.ipcRenderer.invoke('get-local-account', id)
+    if (account.username === undefined || account.username === null || account.username === '') {
+      const acct: LocalAccount = await dispatch('fetchAccount', account)
+      commit(MUTATION_TYPES.UPDATE_ACCOUNT, acct)
+      return acct
+    } else {
+      commit(MUTATION_TYPES.UPDATE_ACCOUNT, account)
+      return account
+    }
   },
-  fetchAccount: (_, account: LocalAccount): Promise<LocalAccount> => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('update-account', account)
-      win.ipcRenderer.once('error-update-account', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-update-account')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-update-account', (_, account: LocalAccount) => {
-        win.ipcRenderer.removeAllListeners('error-update-account')
-        resolve(account)
-      })
-    })
+  fetchAccount: async (_, account: LocalAccount): Promise<LocalAccount> => {
+    const acct: LocalAccount = await win.ipcRenderer.invoke('update-account', account)
+    return acct
   },
   clearAccount: async ({ commit }) => {
     commit(MUTATION_TYPES.UPDATE_ACCOUNT, blankAccount)
@@ -208,24 +184,17 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
     return true
   },
-  loadUnreadNotification: ({ commit }, accountID: string) => {
-    return new Promise(resolve => {
-      win.ipcRenderer.once('response-get-unread-notification', (_, settings: UnreadNotification) => {
-        win.ipcRenderer.removeAllListeners('error-get-unread-notification')
-        commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
-        resolve(settings)
-      })
-      win.ipcRenderer.once('error-get-unread-notification', () => {
-        win.ipcRenderer.removeAllListeners('response-get-unread-notification')
-        commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, {
-          direct: unreadSettings.Direct.default,
-          local: unreadSettings.Local.default,
-          public: unreadSettings.Public.default
-        } as UnreadNotification)
-        resolve({})
-      })
-      win.ipcRenderer.send('get-unread-notification', accountID)
-    })
+  loadUnreadNotification: async ({ commit }, accountID: string) => {
+    try {
+      const settings: UnreadNotification = await win.ipcRenderer.invoke('get-unread-notification', accountID)
+      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
+    } catch (err) {
+      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, {
+        direct: unreadSettings.Direct.default,
+        local: unreadSettings.Local.default,
+        public: unreadSettings.Public.default
+      } as UnreadNotification)
+    }
   },
   fetchContentsTimelines: async ({ dispatch, state }) => {
     dispatch('TimelineSpace/Contents/changeLoading', true, { root: true })

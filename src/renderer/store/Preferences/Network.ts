@@ -92,19 +92,10 @@ const mutations: MutationTree<NetworkState> = {
 }
 
 const actions: ActionTree<NetworkState, RootState> = {
-  loadProxy: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.send('get-preferences')
-      win.ipcRenderer.once('error-get-preferences', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-get-preferences')
-        reject(err)
-      })
-      win.ipcRenderer.once('response-get-preferences', (_, conf: BaseConfig) => {
-        win.ipcRenderer.removeAllListeners('error-get-preferences')
-        commit(MUTATION_TYPES.UPDATE_PROXY, conf.proxy as Proxy)
-        resolve(conf)
-      })
-    })
+  loadProxy: async ({ commit }) => {
+    const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
+    commit(MUTATION_TYPES.UPDATE_PROXY, conf.proxy as Proxy)
+    return conf
   },
   changeSource: ({ commit }, source: string) => {
     commit(MUTATION_TYPES.CHANGE_SOURCE, source)

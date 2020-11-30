@@ -395,20 +395,13 @@ type AuthRequest = {
   sns: 'mastodon' | 'pleroma' | 'misskey'
 }
 
-ipcMain.on('get-auth-url', async (event: IpcMainEvent, request: AuthRequest) => {
+ipcMain.handle('get-auth-url', async (_: IpcMainInvokeEvent, request: AuthRequest) => {
   const proxy = await proxyConfiguration.forMastodon()
-  auth
-    .getAuthorizationUrl(request.sns, request.instance, proxy)
-    .then(url => {
-      log.debug(url)
-      event.sender.send('response-get-auth-url', url)
-      // Open authorize url in default browser.
-      shell.openExternal(url)
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-get-auth-url', err)
-    })
+  const url = await auth.getAuthorizationUrl(request.sns, request.instance, proxy)
+  log.debug(url)
+  // Open authorize url in default browser.
+  shell.openExternal(url)
+  return url
 })
 
 type TokenRequest = {
@@ -416,145 +409,75 @@ type TokenRequest = {
   sns: 'mastodon' | 'pleroma' | 'misskey'
 }
 
-ipcMain.on('get-access-token', async (event: IpcMainEvent, request: TokenRequest) => {
+ipcMain.handle('get-access-token', async (_: IpcMainInvokeEvent, request: TokenRequest) => {
   const proxy = await proxyConfiguration.forMastodon()
-  auth
-    .getAccessToken(request.sns, request.code, proxy)
-    .then(token => {
-      accountDB.findOne(
-        {
-          accessToken: token
-        },
-        (err, doc: any) => {
-          if (err) return event.sender.send('error-get-access-token', err)
-          if (isEmpty(doc)) return event.sender.send('error-get-access-token', 'error document is empty')
-          event.sender.send('response-get-access-token', doc._id)
-        }
-      )
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-get-access-token', err)
-    })
-})
-
-// environments
-ipcMain.on('get-social-token', (event: IpcMainEvent) => {
-  const token = process.env.SOCIAL_TOKEN
-  if (isEmpty(token)) {
-    return event.sender.send('error-get-social-token', new EmptyTokenError())
-  }
-  event.sender.send('response-get-social-token', token)
+  const token = await auth.getAccessToken(request.sns, request.code, proxy)
+  return new Promise((resolve, reject) => {
+    accountDB.findOne(
+      {
+        accessToken: token
+      },
+      (err, doc: any) => {
+        if (err) return reject(err)
+        if (isEmpty(doc)) return reject(err)
+        resolve(doc._id)
+      }
+    )
+  })
 })
 
 // nedb
-ipcMain.on('list-accounts', (event: IpcMainEvent) => {
-  accountManager
-    .listAccounts()
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-list-accounts', err)
-    })
-    .then(accounts => {
-      event.sender.send('response-list-accounts', accounts)
-    })
+ipcMain.handle('list-accounts', async (_: IpcMainInvokeEvent) => {
+  const accounts = await accountManager.listAccounts()
+  return accounts
 })
 
-ipcMain.on('get-local-account', (event: IpcMainEvent, id: string) => {
-  accountManager
-    .getAccount(id)
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-get-local-account', err)
-    })
-    .then(account => {
-      event.sender.send('response-get-local-account', account)
-    })
+ipcMain.handle('get-local-account', async (_: IpcMainInvokeEvent, id: string) => {
+  const account = await accountManager.getAccount(id)
+  return account
 })
 
-ipcMain.on('update-account', async (event: IpcMainEvent, acct: LocalAccount) => {
+ipcMain.handle('update-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
   const proxy = await proxyConfiguration.forMastodon()
-  accountManager
-    .refresh(acct, proxy)
-    .then(ac => {
-      event.sender.send('response-update-account', ac)
-    })
-    .catch(err => {
-      event.sender.send('error-update-account', err)
-    })
+  const ac: LocalAccount = await accountManager.refresh(acct, proxy)
+  return ac
 })
 
-ipcMain.on('remove-account', (event: IpcMainEvent, id: string) => {
-  accountManager
-    .removeAccount(id)
-    .then(id => {
-      stopUserStreaming(id)
-      event.sender.send('response-remove-account', id)
-    })
-    .catch(err => {
-      event.sender.send('error-remove-account', err)
-    })
+ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: string) => {
+  const accountId = await accountManager.removeAccount(id)
+  stopUserStreaming(accountId)
 })
 
-ipcMain.on('forward-account', (event: IpcMainEvent, acct: LocalAccount) => {
-  accountManager
-    .forwardAccount(acct)
-    .then(() => {
-      event.sender.send('response-forward-account')
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-forward-account', err)
-    })
+ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
+  await accountManager.forwardAccount(acct)
 })
 
-ipcMain.on('backward-account', (event: IpcMainEvent, acct: LocalAccount) => {
-  accountManager
-    .backwardAccount(acct)
-    .then(() => {
-      event.sender.send('response-backward-account')
-    })
-    .catch(err => {
-      event.sender.send('error-backward-account', err)
-    })
+ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
+  await accountManager.backwardAccount(acct)
 })
 
-ipcMain.on('refresh-accounts', async (event: IpcMainEvent) => {
+ipcMain.handle('refresh-accounts', async (_: IpcMainInvokeEvent) => {
   const proxy = await proxyConfiguration.forMastodon()
-  accountManager
-    .refreshAccounts(proxy)
-    .then(accounts => {
-      event.sender.send('response-refresh-accounts', accounts)
-    })
-    .catch(err => {
-      event.sender.send('error-refresh-accounts', err)
-    })
+  const accounts = await accountManager.refreshAccounts(proxy)
+
+  return accounts
 })
 
-ipcMain.on('remove-all-accounts', (event: IpcMainEvent) => {
-  accountManager
-    .removeAll()
-    .then(() => {
-      event.sender.send('response-remove-all-accounts')
-    })
-    .catch(err => {
-      log.error(err)
-      event.sender.send('error-remove-all-accounts', err)
-    })
+ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
+  await accountManager.removeAll()
 })
 
-ipcMain.on('change-auto-launch', (event: IpcMainEvent, enable: boolean) => {
+ipcMain.handle('change-auto-launch', async (_: IpcMainInvokeEvent, enable: boolean) => {
   if (launcher) {
-    launcher.isEnabled().then(enabled => {
-      if (!enabled && enable && launcher) {
-        launcher.enable()
-      } else if (enabled && !enable && launcher) {
-        launcher.disable()
-      }
-      event.sender.send('response-change-auto-launch', enable)
-    })
+    const enabled = await launcher.isEnabled()
+    if (!enabled && enable && launcher) {
+      launcher.enable()
+    } else if (enabled && !enable && launcher) {
+      launcher.disable()
+    }
+    return enable
   } else {
-    event.sender.send('response-change-auto-launch', false)
+    return false
   }
 })
 
@@ -975,7 +898,7 @@ ipcMain.on('toot-action-sound', () => {
 })
 
 // preferences
-ipcMain.on('get-preferences', async (event: IpcMainEvent) => {
+ipcMain.handle('get-preferences', async (_: IpcMainInvokeEvent) => {
   const preferences = new Preferences(preferencesDBPath)
   let enabled = false
   if (launcher) {
@@ -988,22 +911,14 @@ ipcMain.on('get-preferences', async (event: IpcMainEvent) => {
       }
     })
     .catch(err => console.error(err))
-  const conf = await preferences.load().catch(err => {
-    event.sender.send('error-get-preferences', err)
-  })
-  event.sender.send('response-get-preferences', conf)
+  const conf = await preferences.load()
+  return conf
 })
 
-ipcMain.on('update-preferences', (event: IpcMainEvent, data: any) => {
+ipcMain.handle('update-preferences', async (_: IpcMainInvokeEvent, data: any) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .update(data)
-    .then(conf => {
-      event.sender.send('response-update-preferences', conf)
-    })
-    .catch(err => {
-      event.sender.send('error-update-preferences', err)
-    })
+  const conf = await preferences.update(data)
+  return conf
 })
 
 ipcMain.on('change-collapse', (_event: IpcMainEvent, value: boolean) => {
@@ -1019,34 +934,26 @@ ipcMain.on('change-collapse', (_event: IpcMainEvent, value: boolean) => {
     })
 })
 
-ipcMain.on('get-collapse', (event: IpcMainEvent) => {
+ipcMain.handle('get-collapse', async (_: IpcMainInvokeEvent) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences.load().then(conf => {
-    event.sender.send('response-get-collapse', conf.state.collapse)
-  })
+  const conf = await preferences.load()
+  return conf.state.collapse
 })
 
-ipcMain.on('change-global-header', (event: IpcMainEvent, value: boolean) => {
+ipcMain.handle('change-global-header', async (_: IpcMainInvokeEvent, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .update({
-      state: {
-        hideGlobalHeader: value
-      }
-    })
-    .then(conf => {
-      event.sender.send('response-change-global-header', conf)
-    })
-    .catch(err => {
-      log.error(err)
-    })
+  const conf = await preferences.update({
+    state: {
+      hideGlobalHeader: value
+    }
+  })
+  return conf
 })
 
-ipcMain.on('get-global-header', (event: IpcMainEvent) => {
+ipcMain.handle('get-global-header', async (_: IpcMainInvokeEvent) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences.load().then(conf => {
-    event.sender.send('response-get-global-header', conf.state.hideGlobalHeader)
-  })
+  const conf = await preferences.load()
+  return conf.state.hideGlobalHeader
 })
 
 // proxy
@@ -1070,120 +977,79 @@ ipcMain.handle('update-proxy-config', async (_event: IpcMainInvokeEvent, proxy: 
 })
 
 // language
-ipcMain.on('change-language', (event: IpcMainEvent, value: string) => {
+ipcMain.handle('change-language', async (_: IpcMainInvokeEvent, value: string) => {
   const preferences = new Preferences(preferencesDBPath)
-  preferences
-    .update({
-      language: {
-        language: value
-      }
-    })
-    .then(conf => {
-      i18next.changeLanguage(conf.language.language)
-      event.sender.send('response-change-language', conf.language.language)
-    })
+  const conf = await preferences.update({
+    language: {
+      language: value
+    }
+  })
+  i18next.changeLanguage(conf.language.language)
+  return conf.language.language
 })
 
 // hashtag
-ipcMain.on('save-hashtag', (event: IpcMainEvent, tag: string) => {
+ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
   const hashtags = new Hashtags(hashtagsDB)
-  hashtags
-    .insertTag(tag)
-    .then(() => {
-      event.sender.send('response-save-hashtag')
-    })
-    .catch(err => {
-      log.error(err)
-    })
+  await hashtags.insertTag(tag)
 })
 
-ipcMain.on('list-hashtags', (event: IpcMainEvent) => {
+ipcMain.handle('list-hashtags', async (_: IpcMainInvokeEvent) => {
   const hashtags = new Hashtags(hashtagsDB)
-  hashtags
-    .listTags()
-    .then(tags => {
-      event.sender.send('response-list-hashtags', tags)
-    })
-    .catch(err => {
-      event.sender.send('error-list-hashtags', err)
-    })
+  const tags = await hashtags.listTags()
+  return tags
 })
 
-ipcMain.on('remove-hashtag', (event: IpcMainEvent, tag: LocalTag) => {
+ipcMain.handle('remove-hashtag', async (_: IpcMainInvokeEvent, tag: LocalTag) => {
   const hashtags = new Hashtags(hashtagsDB)
-  hashtags
-    .removeTag(tag)
-    .then(() => {
-      event.sender.send('response-remove-hashtag')
-    })
-    .catch(err => {
-      event.sender.send('error-remove-hashtag', err)
-    })
+  await hashtags.removeTag(tag)
 })
 
 // Fonts
-ipcMain.on('list-fonts', (event: IpcMainEvent) => {
-  Fonts()
-    .then(list => {
-      event.sender.send('response-list-fonts', list)
-    })
-    .catch(err => {
-      event.sender.send('error-list-fonts', err)
-    })
+ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
+  const list = await Fonts()
+  return list
 })
 
 // Unread notifications
-ipcMain.on('get-unread-notification', (event: IpcMainEvent, accountID: string) => {
-  unreadNotification
-    .findOne({
-      accountID: accountID
-    })
-    .then(doc => {
-      event.sender.send('response-get-unread-notification', doc)
-    })
-    .catch(err => {
-      console.warn(err)
-      event.sender.send('error-get-unread-notification', err)
-    })
+ipcMain.handle('get-unread-notification', async (_: IpcMainInvokeEvent, accountID: string) => {
+  const doc = await unreadNotification.findOne({
+    accountID: accountID
+  })
+  return doc
 })
 
-ipcMain.on('update-unread-notification', (event: IpcMainEvent, config: UnreadNotificationConfig) => {
+ipcMain.handle('update-unread-notification', async (_: IpcMainInvokeEvent, config: UnreadNotificationConfig) => {
   const { accountID } = config
-  unreadNotification
-    .insertOrUpdate(accountID!, config)
-    .then(_ => {
-      event.sender.send('response-update-unread-notification', true)
-    })
-    .catch(err => {
-      console.error(err)
-      event.sender.send('error-update-unread-notification', err)
-    })
+  await unreadNotification.insertOrUpdate(accountID!, config)
 })
 
 // Cache
-ipcMain.on('get-cache-hashtags', async (event: IpcMainEvent) => {
+ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
   const tags = await hashtagCache.listTags()
-  event.sender.send('response-get-cache-hashtags', tags)
+  return tags
 })
 
-ipcMain.on('insert-cache-hashtags', (event: IpcMainEvent, tags: Array<string>) => {
-  tags.map(async name => {
-    await hashtagCache.insertHashtag(name).catch(err => console.error(err))
-  })
-  event.sender.send('response-insert-cache-hashtags')
+ipcMain.handle('insert-cache-hashtags', async (_: IpcMainInvokeEvent, tags: Array<string>) => {
+  await Promise.all(
+    tags.map(async name => {
+      await hashtagCache.insertHashtag(name).catch(err => console.error(err))
+    })
+  )
 })
 
-ipcMain.on('get-cache-accounts', async (event: IpcMainEvent, ownerID: string) => {
+ipcMain.handle('get-cache-accounts', async (_: IpcMainInvokeEvent, ownerID: string) => {
   const accounts = await accountCache.listAccounts(ownerID)
-  event.sender.send('response-get-cache-accounts', accounts)
+  return accounts
 })
 
-ipcMain.on('insert-cache-accounts', (event: IpcMainEvent, obj: InsertAccountCache) => {
+ipcMain.handle('insert-cache-accounts', async (_: IpcMainInvokeEvent, obj: InsertAccountCache) => {
   const { ownerID, accts } = obj
-  accts.map(async acct => {
-    await accountCache.insertAccount(ownerID, acct).catch(err => console.error(err))
-  })
-  event.sender.send('response-insert-cache-accounts')
+  Promise.all(
+    accts.map(async acct => {
+      await accountCache.insertAccount(ownerID, acct).catch(err => console.error(err))
+    })
+  )
 })
 
 // Application control
@@ -1211,8 +1077,6 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
  */
-
-class EmptyTokenError {}
 
 /**
  * Genrate application menu

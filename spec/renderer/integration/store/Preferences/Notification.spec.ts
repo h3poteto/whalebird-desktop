@@ -53,8 +53,8 @@ describe('Preferences/Notification', () => {
 
   describe('loadNotification', () => {
     beforeEach(() => {
-      ipcMain.once('get-preferences', (event: any, _) => {
-        event.sender.send('response-get-preferences', {
+      ipcMain.handle('get-preferences', () => {
+        return {
           notification: {
             notify: {
               reply: false,
@@ -65,7 +65,10 @@ describe('Preferences/Notification', () => {
               reaction: false
             }
           }
-        })
+        }
+      })
+      afterEach(() => {
+        ipcMain.removeHandler('get-preferences')
       })
       it('should be updated', async () => {
         await store.dispatch('Notification/loadNotification')
@@ -85,9 +88,12 @@ describe('Preferences/Notification', () => {
 
   describe('updateNotify', () => {
     beforeEach(() => {
-      ipcMain.once('update-preferences', (event: any, conf: object) => {
-        event.sender.send('response-update-preferences', conf)
+      ipcMain.handle('update-preferences', (_, conf: object) => {
+        return conf
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('update-preferences')
     })
     it('should be updated', async () => {
       await store.dispatch('Notification/updateNotify', {

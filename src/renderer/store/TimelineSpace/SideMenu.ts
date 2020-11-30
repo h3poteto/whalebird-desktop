@@ -144,28 +144,15 @@ const actions: ActionTree<SideMenuState, RootState> = {
     win.ipcRenderer.send('change-collapse', value)
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
   },
-  readCollapse: ({ commit }) => {
-    return new Promise(resolve => {
-      win.ipcRenderer.send('get-collapse')
-      win.ipcRenderer.once('response-get-collapse', (_, value: boolean) => {
-        commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
-        resolve(value)
-      })
-    })
+  readCollapse: async ({ commit }) => {
+    const value: boolean = await win.ipcRenderer.invoke('get-collapse')
+    commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
+    return value
   },
-  listTags: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
-        win.ipcRenderer.removeAllListeners('error-list-hashtags')
-        commit(MUTATION_TYPES.UPDATE_TAGS, tags)
-        resolve(tags)
-      })
-      win.ipcRenderer.once('error-list-hashtags', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-hashtags')
-        reject(err)
-      })
-      win.ipcRenderer.send('list-hashtags')
-    })
+  listTags: async ({ commit }) => {
+    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags')
+    commit(MUTATION_TYPES.UPDATE_TAGS, tags)
+    return tags
   }
 }
 

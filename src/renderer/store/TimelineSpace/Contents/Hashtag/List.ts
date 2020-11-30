@@ -24,34 +24,16 @@ const mutations: MutationTree<ListState> = {
 }
 
 const actions: ActionTree<ListState, RootState> = {
-  listTags: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('response-list-hashtags', (_, tags: Array<LocalTag>) => {
-        win.ipcRenderer.removeAllListeners('error-list-hashtags')
-        commit(MUTATION_TYPES.UPDATE_TAGS, tags)
-        resolve(tags)
-      })
-      win.ipcRenderer.once('error-list-hashtags', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-list-hashtags')
-        reject(err)
-      })
-      win.ipcRenderer.send('list-hashtags')
-    })
+  listTags: async ({ commit }) => {
+    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags')
+    commit(MUTATION_TYPES.UPDATE_TAGS, tags)
+    return tags
   },
-  removeTag: ({ dispatch }, tag: LocalTag) => {
-    return new Promise((resolve, reject) => {
-      win.ipcRenderer.once('response-remove-hashtag', () => {
-        win.ipcRenderer.removeAllListeners('error-remove-hashtag')
-        dispatch('listTags')
-        dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
-        resolve('deleted')
-      })
-      win.ipcRenderer.once('error-remove-hashtag', (_, err: Error) => {
-        win.ipcRenderer.removeAllListeners('response-remove-hashtag')
-        reject(err)
-      })
-      win.ipcRenderer.send('remove-hashtag', tag)
-    })
+  removeTag: async ({ dispatch }, tag: LocalTag) => {
+    await win.ipcRenderer.invoke('remove-hashtag', tag)
+    dispatch('listTags')
+    dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
+    return 'deleted'
   }
 }
 

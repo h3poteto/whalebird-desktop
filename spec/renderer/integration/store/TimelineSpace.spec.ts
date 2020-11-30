@@ -182,11 +182,14 @@ describe('TimelineSpace', () => {
   describe('localAccount', () => {
     describe('account already exists', () => {
       beforeEach(() => {
-        ipcMain.once('get-local-account', (event: any) => {
-          event.sender.send('response-get-local-account', {
+        ipcMain.handle('get-local-account', () => {
+          return {
             username: 'test'
-          })
+          }
         })
+      })
+      afterEach(() => {
+        ipcMain.removeHandler('get-local-account')
       })
       it('should be updated', async () => {
         await store.dispatch('TimelineSpace/localAccount', 1)
@@ -196,14 +199,18 @@ describe('TimelineSpace', () => {
 
     describe('account does not exist', () => {
       beforeEach(() => {
-        ipcMain.once('get-local-account', (event: any) => {
-          event.sender.send('response-get-local-account', {})
+        ipcMain.handle('get-local-account', () => {
+          return {}
         })
-        ipcMain.once('update-account', (event: any) => {
-          event.sender.send('response-update-account', {
+        ipcMain.handle('update-account', () => {
+          return {
             username: 'fetched'
-          })
+          }
         })
+      })
+      afterEach(() => {
+        ipcMain.removeHandler('get-local-account')
+        ipcMain.removeHandler('update-account')
       })
       it('should be fetched', async () => {
         await store.dispatch('TimelineSpace/localAccount', 1)
@@ -238,12 +245,12 @@ describe('TimelineSpace', () => {
   describe('loadUnreadNotification', () => {
     describe('success', () => {
       it('should be updated', async () => {
-        ipcMain.once('get-unread-notification', (event: any) => {
-          event.sender.send('response-get-unread-notification', {
+        ipcMain.handle('get-unread-notification', () => {
+          return {
             direct: false,
             local: false,
             public: false
-          })
+          }
         })
         await store.dispatch('TimelineSpace/loadUnreadNotification')
         expect(store.state.TimelineSpace.unreadNotification).toEqual({
@@ -251,12 +258,13 @@ describe('TimelineSpace', () => {
           local: false,
           public: false
         })
+        ipcMain.removeHandler('get-unread-notification')
       })
     })
     describe('error', () => {
       it('should be set default', async () => {
-        ipcMain.once('get-unread-notification', (event: any) => {
-          event.sender.send('error-get-unread-notification', new Error())
+        ipcMain.handle('get-unread-notification', async () => {
+          throw new Error()
         })
         await store.dispatch('TimelineSpace/loadUnreadNotification')
         expect(store.state.TimelineSpace.unreadNotification).toEqual({
@@ -264,6 +272,7 @@ describe('TimelineSpace', () => {
           local: unreadSettings.Local.default,
           public: unreadSettings.Public.default
         })
+        ipcMain.removeHandler('get-unread-notification')
       })
     })
   })
