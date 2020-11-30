@@ -57,19 +57,20 @@ describe('App', () => {
   describe('loadPreferences', () => {
     describe('error', () => {
       it('should not change', async () => {
-        ipcMain.once('get-preferences', (event: any, _) => {
-          event.sender.send('error-get-preferences', new Error())
+        ipcMain.handle('get-preferences', async () => {
+          throw new Error()
         })
         await store.dispatch('App/loadPreferences').catch(err => {
           expect(err instanceof Error).toEqual(true)
           expect(store.state.App.theme).toEqual(LightTheme)
         })
+        ipcMain.removeHandler('get-preferences')
       })
     })
     describe('success', () => {
       it('should be changed', async () => {
-        ipcMain.once('get-preferences', (event: any, _) => {
-          event.sender.send('response-get-preferences', {
+        ipcMain.handle('get-preferences', () => {
+          return {
             general: {
               timeline: {
                 cw: true,
@@ -95,13 +96,14 @@ describe('App', () => {
               customThemeColor: LightTheme,
               font: DefaultFonts[0]
             }
-          })
+          }
         })
         await store.dispatch('App/loadPreferences')
         expect(store.state.App.fontSize).toEqual(13)
         expect(store.state.App.theme).toEqual(DarkTheme)
         expect(store.state.App.ignoreCW).toEqual(true)
         expect(store.state.App.ignoreNFSW).toEqual(true)
+        ipcMain.removeHandler('get-preferences')
       })
     })
   })

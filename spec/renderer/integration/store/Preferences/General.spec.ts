@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import General, { GeneralState } from '@/store/Preferences/General'
 import { MyWindow } from '~/src/types/global'
+import { IpcMainInvokeEvent } from 'electron'
 ;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): GeneralState => {
@@ -59,16 +60,19 @@ describe('Preferences/General', () => {
 
   describe('loadGeneral', () => {
     beforeEach(() => {
-      ipcMain.once('get-preferences', (event, _) => {
-        event.sender.send('response-get-preferences', {
+      ipcMain.handle('get-preferences', () => {
+        return {
           general: {
             sound: {
               fav_rb: false,
               toot: false
             }
           }
-        })
+        }
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('get-preferences')
     })
     it('should be updated', async () => {
       await store.dispatch('Preferences/loadGeneral')
@@ -80,9 +84,12 @@ describe('Preferences/General', () => {
 
   describe('updateSound', () => {
     beforeEach(() => {
-      ipcMain.once('update-preferences', (event, config) => {
-        event.sender.send('response-update-preferences', config)
+      ipcMain.handle('update-preferences', (_: IpcMainInvokeEvent, config: any) => {
+        return config
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('update-preferences')
     })
     it('should be updated', async () => {
       await store.dispatch('Preferences/updateSound', {
@@ -97,9 +104,12 @@ describe('Preferences/General', () => {
 
   describe('updateTimeline', () => {
     beforeEach(() => {
-      ipcMain.once('update-preferences', (event, config) => {
-        event.sender.send('response-update-preferences', config)
+      ipcMain.handle('update-preferences', (_: IpcMainInvokeEvent, config: any) => {
+        return config
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('update-preferences')
     })
     it('should be updated', async () => {
       await store.dispatch('Preferences/updateTimeline', {

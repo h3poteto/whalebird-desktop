@@ -39,13 +39,16 @@ describe('Preferences/Language', () => {
 
   describe('loadLanguage', () => {
     beforeEach(() => {
-      ipcMain.once('get-preferences', (event: any, _) => {
-        event.sender.send('response-get-preferences', {
+      ipcMain.handle('get-preferences', () => {
+        return {
           language: {
             language: DefaultLanguage.ja.key
           }
-        })
+        }
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('get-preferences')
     })
     it('should be updated', async () => {
       await store.dispatch('Language/loadLanguage')
@@ -55,9 +58,12 @@ describe('Preferences/Language', () => {
 
   describe('changeLanguage', () => {
     beforeEach(() => {
-      ipcMain.once('change-language', (event: any, key: string) => {
-        event.sender.send('response-change-language', key)
+      ipcMain.handle('change-language', (_, key: string) => {
+        return key
       })
+    })
+    afterEach(() => {
+      ipcMain.removeHandler('change-language')
     })
     it('should be changed', async () => {
       await store.dispatch('Language/changeLanguage', DefaultLanguage.ja.key)
