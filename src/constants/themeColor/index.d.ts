@@ -12,10 +12,10 @@ export type ThemeColorType = {
   scrollbar_color: string
 }
 
-declare var LightTheme: ThemeColorType
-declare var DarkTheme: ThemeColorType
-declare var SolarizedLightTheme: ThemeColorType
-declare var SolarizedDarkTheme: ThemeColorType
-declare var KimbieDarkTheme: ThemeColorType
+declare let LightTheme: ThemeColorType
+declare let DarkTheme: ThemeColorType
+declare let SolarizedLightTheme: ThemeColorType
+declare let SolarizedDarkTheme: ThemeColorType
+declare let KimbieDarkTheme: ThemeColorType
 
 export { LightTheme, DarkTheme, SolarizedLightTheme, SolarizedDarkTheme, KimbieDarkTheme }

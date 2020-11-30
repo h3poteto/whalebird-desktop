@@ -12,6 +12,6 @@ export type ThemeList = {
   Custom: ThemeType
 }
 
-declare var t: ThemeList
+declare let t: ThemeList
 
 export default t

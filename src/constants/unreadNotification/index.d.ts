@@ -8,6 +8,6 @@ export type UnreadNotificationList = {
   Public: UnreadNotificationType
 }
 
-declare var u: UnreadNotificationList
+declare let u: UnreadNotificationList
 
 export default u

@@ -13,6 +13,6 @@ export type LanguageList = {
   it: LanguageType
 }
 
-declare var l: LanguageList
+declare let l: LanguageList
 
 export default l

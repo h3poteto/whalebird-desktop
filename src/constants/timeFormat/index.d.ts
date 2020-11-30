@@ -8,6 +8,6 @@ export type TimeFormatList = {
   Relative: TimeFormatType
 }
 
-declare var t: TimeFormatList
+declare let t: TimeFormatList
 
 export default t
