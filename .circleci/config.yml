@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:12.13.1-buster-slim
+      - image: node:14.15.1-buster-slim
     working_directory: /var/opt/app
     steps:
       - checkout
@@ -14,13 +14,13 @@ jobs:
       - restore_cache:
           name: Restoring cache - node_modules
           keys:
-            - node_modules-{{ arch }}-node12.13.1-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+            - node_modules-{{ arch }}-node14.15.1-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install packages
           command: yarn install
       - save_cache:
           name: Saving cache - node_modules
-          key: node_modules-{{ arch }}-node12.13.1-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+          key: node_modules-{{ arch }}-node14.15.1-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
       - run:
