@@ -179,8 +179,18 @@
             <icon name="quote-right" scale="0.9"></icon>
           </el-button>
           <template v-if="sns !== 'mastodon'">
-            <el-popover placement="bottom" width="281" trigger="click" popper-class="status-emoji-picker" ref="status_emoji_picker">
+            <el-popover
+              placement="bottom"
+              width="281"
+              trigger="click"
+              popper-class="status-emoji-picker"
+              ref="status_emoji_picker"
+              @show="openPicker"
+              @hide="hidePicker"
+            >
+              <!-- TODO: これすべてのコンポーネントでレンダリングすると負荷が高すぎる v-ifしたい -->
               <picker
+                v-if="openEmojiPicker"
                 set="emojione"
                 :autoFocus="true"
                 @select="selectEmoji"
@@ -198,8 +208,16 @@
           <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
             <icon name="thumbtack" scale="0.9"></icon>
           </el-button>
-          <el-popover placement="bottom" width="200" trigger="click" popper-class="status-menu-popper" ref="status_menu_popper">
-            <ul class="menu-list">
+          <el-popover
+            placement="bottom"
+            width="200"
+            trigger="click"
+            popper-class="status-menu-popper"
+            ref="status_menu_popper"
+            @show="openMenu"
+            @hide="hideMenu"
+          >
+            <ul class="menu-list" v-if="openToolMenu">
               <li role="button" @click="openDetail(message)" v-show="!detailed">
                 {{ $t('cards.toot.view_toot_detail') }}
               </li>
@@ -271,7 +289,8 @@ export default {
       showAttachments: this.$store.state.App.ignoreNFSW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now(),
-      openEmojiPicker: false
+      openEmojiPicker: false,
+      openToolMenu: false
     }
   },
   props: {
@@ -711,6 +730,18 @@ export default {
     },
     openQuote() {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openQuote', this.originalMessage)
+    },
+    openPicker() {
+      this.openEmojiPicker = true
+    },
+    hidePicker() {
+      this.openEmojiPicker = false
+    },
+    openMenu() {
+      this.openToolMenu = true
+    },
+    hideMenu() {
+      this.openToolMenu = false
     }
   }
 }
