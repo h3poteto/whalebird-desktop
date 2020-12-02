@@ -188,7 +188,6 @@
               @show="openPicker"
               @hide="hidePicker"
             >
-              <!-- TODO: これすべてのコンポーネントでレンダリングすると負荷が高すぎる v-ifしたい -->
               <picker
                 v-if="openEmojiPicker"
                 set="emojione"
