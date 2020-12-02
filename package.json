@@ -37,8 +37,8 @@
     "package:win32": "electron-builder --win --ia32",
     "package:win64": "electron-builder --win --x64",
     "pack": "yarn run pack:main && yarn run pack:renderer",
-    "pack:main": "cross-env NODE_ENV=production webpack --mode production --progress --colors --config .electron-vue/webpack.main.config.js",
-    "pack:renderer": "cross-env NODE_ENV=production webpack --mode production --progress --colors --config .electron-vue/webpack.renderer.config.js",
+    "pack:main": "cross-env NODE_ENV=production webpack --mode production --progress --config .electron-vue/webpack.main.config.js",
+    "pack:renderer": "cross-env NODE_ENV=production webpack --mode production --progress --config .electron-vue/webpack.renderer.config.js",
     "postinstall": "yarn run lint:fix",
     "spec": "NODE_ENV=test jest -u --maxWorkers=3"
   },
