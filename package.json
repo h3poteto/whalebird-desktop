@@ -235,7 +235,7 @@
     "chai": "^4.2.0",
     "chalk": "^4.1.0",
     "copy-webpack-plugin": "^6.3.2",
-    "core-js": "^3.8.0",
+    "core-js": "^3.8.1",
     "cross-env": "^7.0.2",
     "css-loader": "^5.0.0",
     "del": "^6.0.0",
