@@ -1,11 +1,11 @@
 {
   "main_menu": {
     "application": {
-      "name": "Whalebird",
-      "about": "关于 Whalebird",
+      "name": "鲸鸟",
+      "about": "关于鲸鸟",
       "preferences": "首选项...",
       "services": "服务",
-      "hide": "隐藏 Whalebird",
+      "hide": "隐藏鲸鸟",
       "hide_others": "隐藏其它窗口",
       "show_all": "全部显示",
       "open": "打开窗口",
@@ -29,7 +29,7 @@
       "toggle_full_screen": "切换全屏"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
+      "always_show_menu_bar": "总是显示菜单栏",
       "name": "窗口",
       "close": "关闭窗口",
       "open": "打开窗口",
@@ -53,7 +53,7 @@
     "direct": "私信",
     "follow_requests": "关注请求",
     "favourite": "收藏的内容",
-    "bookmark": "Bookmark",
+    "bookmark": "书签",
     "local": "本站",
     "public": "跨站",
     "hashtag": "话题",
@@ -65,7 +65,7 @@
     "notification": "通知",
     "mention": "提到我的",
     "favourite": "收藏的内容",
-    "bookmark": "Bookmark",
+    "bookmark": "书签",
     "follow_requests": "关注请求",
     "direct_messages": "私信",
     "local": "本站",
@@ -108,7 +108,7 @@
       "title": "时间线",
       "unread_notification": {
         "title": "未读通知",
-        "description": "单独设定各时间线的未读通知。",
+        "description": "单独设置各时间线的未读通知。",
         "direct": "私信",
         "local": "本站",
         "public": "跨站"
@@ -121,13 +121,13 @@
       "title": "一般",
       "sounds": {
         "title": "音效",
-        "description": "设定反馈音效。",
+        "description": "设置反馈音效。",
         "fav_rb": "收藏或转发嘟文时",
         "toot": "发布嘟文时"
       },
       "timeline": {
         "title": "时间线",
-        "description": "设定查看时间线的方式。",
+        "description": "设置查看时间线的方式。",
         "cw": "始终展开具有内容警告的嘟文",
         "nfsw": "总是显示被标记为敏感内容的媒体",
         "hideAllAttachments": "总是隐藏所有媒体"
@@ -158,7 +158,7 @@
         "secondary_color": "次要文字",
         "border_color": "边界",
         "header_menu_color": "标题菜单",
-        "wrapper_mask_color": "Modal 封装"
+        "wrapper_mask_color": "封装颜色"
       },
       "font_size": "字体大小",
       "font_family": "字体族",
@@ -178,12 +178,12 @@
     "notification": {
       "title": "通知",
       "enable": {
-        "description": "设定通知事件。",
+        "description": "设置通知事件。",
         "reply": "有用户回复我的嘟文时通知我",
         "reblog": "有用户转发我的嘟文时通知我",
         "favourite": "有用户收藏我的嘟文时通知我",
         "follow": "有用户关注我时通知我",
-        "reaction": "Notify me when I receive a emoji reaction"
+        "reaction": "有用户回复 emoji 时通知我"
       }
     },
     "account": {
@@ -202,10 +202,10 @@
     "network": {
       "title": "网络",
       "proxy": {
-        "title": "代理配置",
+        "title": "代理设置",
         "no": "不使用代理",
         "system": "使用系统代理",
-        "manual": "手动配置代理",
+        "manual": "手动设置代理",
         "protocol": "协议",
         "host": "代理主机",
         "port": "代理端口",
@@ -224,7 +224,7 @@
     },
     "language": {
       "title": "语言",
-      "language_description": "设定 Whalebird 的界面语言。",
+      "language_description": "设置鲸鸟的界面语言。",
       "notice": "需要重启",
       "confirm": {
         "title": "警告",
@@ -254,7 +254,7 @@
         "pined_hashtag": "保留话题标签"
       },
       "poll": {
-        "add_choice": "添加一个选项",
+        "add_choice": "添加选项",
         "expires": {
           "5_minutes": "5 分钟",
           "30_minutes": "30 分钟",
@@ -381,8 +381,8 @@
   },
   "login": {
     "domain_name_label": "首先让我们登入一个 Mastodon 实例。请输入实例的域名：",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
+    "proxy_info": "如果想使用代理服务器，请在这里设置：",
+    "proxy_here": "代理",
     "search": "搜索",
     "login": "登录"
   },
@@ -390,7 +390,7 @@
     "manually_1": "一个认证页面已经在浏览器中打开。",
     "manually_2": "如果页面没有打开，请手动进入下列 URL：",
     "code_label": "请粘贴浏览器中显示的授权码：",
-    "misskey_label": "Please submit after you authorize in your browser.",
+    "misskey_label": "请先在浏览器中授权后再提交。",
     "submit": "提交"
   },
   "receive_drop": {
@@ -424,8 +424,8 @@
     "unreblog_error": "取消转嘟失败",
     "favourite_error": "收藏失败",
     "unfavourite_error": "取消收藏失败",
-    "bookmark_error": "Failed to bookmark",
-    "unbookmark_error": "Failed to remove bookmark",
+    "bookmark_error": "添加书签失败",
+    "unbookmark_error": "移除书签失败",
     "delete_error": "删除嘟文失败",
     "search_error": "搜索失败",
     "toot_error": "发嘟失败",
@@ -458,8 +458,8 @@
       "body": "{{username}} 正在关注你"
     },
     "follow_request": {
-      "title": "FollowRequest",
-      "body": "Receive a follow request from {{username}}"
+      "title": "关注请求",
+      "body": "{{username}} 请求关注你"
     },
     "reblog": {
       "title": "转嘟",
@@ -467,11 +467,11 @@
     },
     "quote": {
       "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "body": "{{username}} 引用了你的状态"
     },
     "reaction": {
       "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "body": "{{username}} 回复了你的状态"
     }
   }
 }
