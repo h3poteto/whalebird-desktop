@@ -283,7 +283,7 @@
     "vue-loader": "^15.9.5",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.44.2",
+    "webpack": "^5.10.1",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0",
     "webpack-hot-middleware": "^2.25.0",
