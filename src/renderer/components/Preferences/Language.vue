@@ -34,7 +34,8 @@ export default {
         Language.ru,
         Language.sv_se,
         Language.tzm,
-        Language.zh_cn
+        Language.zh_cn,
+        Language.zh_tw
       ]
     }
   },
