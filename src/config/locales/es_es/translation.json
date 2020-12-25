@@ -129,7 +129,7 @@
         "title": "Línea de tiempo",
         "description": "Personaliza la vista en tus líneas de tiempo.",
         "cw": "Ignorar siempre las advertencias de contenidos",
-        "nsfw": "Ignorar siempre NSFW de medios",
+        "nsfw": "Always ignore NSFW of medias",
         "hideAllAttachments": "Ocultar todos los medios"
       },
       "other": {
@@ -193,7 +193,7 @@
       "domain": "Dominio",
       "association": "Asociación",
       "order": "Orden",
-      "remove_association": "Eliminar asociación",
+      "remove_association": "Remove association",
       "remove_all_associations": "Eliminar todas las asociaciones",
       "confirm": "Confirmar",
       "cancel": "Cancelar",
@@ -404,7 +404,7 @@
     "notification_fetch_error": "Error al obtener la notificación",
     "favourite_fetch_error": "No se ha podido obtener el favorecido",
     "follow_request_accept_error": "Error al aceptar la solicitud",
-    "follow_request_reject_error": "no se pudo rechazar la solicitud",
+    "follow_request_reject_error": "failed to reject the request",
     "start_streaming_error": "Error al iniciar la transmisión",
     "start_all_streamings_error": "Error al iniciar la transmisión de {{domain}}",
     "attach_error": "No se pudo adjuntar el archivo",
