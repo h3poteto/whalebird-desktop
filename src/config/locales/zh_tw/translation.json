@@ -2,71 +2,71 @@
   "main_menu": {
     "application": {
       "name": "Whalebird (鯨鳥)",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "about": "關於 Whalebird",
+      "preferences": "偏好設定...",
+      "services": "服務",
+      "hide": "隱藏 Whalebird",
+      "hide_others": "隱藏其他",
+      "show_all": "顯示全部",
+      "open": "打開視窗",
+      "quit": "離開"
     },
     "toot": {
-      "name": "Toot",
-      "new": "New Toot"
+      "name": "嘟文",
+      "new": "新嘟文"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "編輯",
+      "undo": "復原",
+      "redo": "重做",
+      "cut": "剪下",
+      "copy": "複製",
+      "paste": "貼上",
+      "select_all": "全選"
     },
     "view": {
-      "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "name": "檢視",
+      "toggle_full_screen": "切換全螢幕"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
-      "jump_to": "Jump to"
+      "always_show_menu_bar": "總是顯示功能選單",
+      "name": "視窗",
+      "close": "關閉視窗",
+      "open": "打開視窗",
+      "minimize": "最小化",
+      "jump_to": "跳至"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "新增帳號"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
-    "collapse": "Collapse",
-    "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists"
+    "profile": "個人檔案",
+    "show_profile": "顯示個人檔案",
+    "edit_profile": "編輯個人檔案",
+    "settings": "設定",
+    "collapse": "收合",
+    "expand": "展開",
+    "home": "首頁",
+    "notification": "通知",
+    "mention": "提及",
+    "direct": "私訊",
+    "follow_requests": "跟隨請求",
+    "favourite": "最愛",
+    "bookmark": "書籤",
+    "local": "本機時間軸",
+    "public": "公開時間軸",
+    "hashtag": "主題標籤",
+    "search": "搜尋",
+    "lists": "列表"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "follow_requests": "Follow Requests",
+    "home": "首頁",
+    "notification": "通知",
+    "mention": "提及",
+    "favourite": "最愛",
+    "bookmark": "書籤",
+    "follow_requests": "跟隨請求",
     "direct_messages": "Direct Messages",
     "local": "Local timeline",
     "public": "Public timeline",
@@ -146,15 +146,15 @@
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "自訂"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
+        "background_color": "基礎背景",
+        "selected_background_color": "焦點背景",
+        "global_header_color": "帳號選單",
+        "side_menu_color": "側邊選單",
+        "primary_color": "主要字型",
+        "regular_color": "一般字型",
         "secondary_color": "Secondary font",
         "border_color": "Border",
         "header_menu_color": "Header menu",
