@@ -129,7 +129,7 @@
         "title": "時間軸",
         "description": "自訂時間軸外觀",
         "cw": "永遠忽略內容警告",
-        "nsfw": "Always ignore NSFW of medias",
+        "nsfw": "永遠忽略 NSFW 媒體標記",
         "hideAllAttachments": "隱藏所有媒體"
       },
       "other": {
@@ -193,7 +193,7 @@
       "domain": "網域",
       "association": "配對",
       "order": "順序",
-      "remove_association": "Remove association",
+      "remove_association": "移除帳號配對",
       "remove_all_associations": "移除所有配對",
       "confirm": "確認",
       "cancel": "取消",
@@ -404,7 +404,7 @@
     "notification_fetch_error": "無法載入通知",
     "favourite_fetch_error": "無法載入最愛",
     "follow_request_accept_error": "無法接受請求",
-    "follow_request_reject_error": "failed to reject the request",
+    "follow_request_reject_error": "無法拒絕請求",
     "start_streaming_error": "無法開始串流",
     "start_all_streamings_error": "無法開始 {{domain}} 之串流",
     "attach_error": "無法附加檔案",
