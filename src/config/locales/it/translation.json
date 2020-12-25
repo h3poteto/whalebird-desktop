@@ -129,7 +129,7 @@
         "title": "Cronologia",
         "description": "Personalizza la visualizzazione nelle tue timeline.",
         "cw": "Ignora sempre gli avvisi sui contenuti",
-        "nsfw": "Always ignore NSFW of medias",
+        "nsfw": "Ignora sempre contenuti multimediali inappropriati",
         "hideAllAttachments": "Nascondi tutti i contenuti multimediali"
       },
       "other": {
@@ -193,7 +193,7 @@
       "domain": "Dominio",
       "association": "Associazione",
       "order": "Ordina",
-      "remove_association": "Remove association",
+      "remove_association": "Rimuovi associazione",
       "remove_all_associations": "Rimuovi tutte le associazioni",
       "confirm": "Conferma",
       "cancel": "Annulla",
@@ -404,7 +404,7 @@
     "notification_fetch_error": "Impossibile recuperare le notifiche",
     "favourite_fetch_error": "Impossibile recuperare i preferiti",
     "follow_request_accept_error": "Impossibile accettare la richiesta",
-    "follow_request_reject_error": "failed to reject the request",
+    "follow_request_reject_error": "Impossibile rifiutare la richiesta",
     "start_streaming_error": "Impossibile avviare lo streaming",
     "start_all_streamings_error": "Impossibile avviare lo streaming di {{domain}}",
     "attach_error": "Non è stato possibile allegare il file",
