@@ -133,16 +133,16 @@
         "hideAllAttachments": "隱藏所有媒體"
       },
       "other": {
-        "title": "Other options",
-        "launch": "Launch app on login"
+        "title": "其他選項",
+        "launch": "登入時啟動 app"
       }
     },
     "appearance": {
-      "title": "Appearance",
-      "theme_color": "Theme color",
+      "title": "外觀設定",
+      "theme_color": "佈景顏色",
       "theme": {
-        "light": "Light",
-        "dark": "Dark",
+        "light": "淺色主題",
+        "dark": "深色主題",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
@@ -220,15 +220,15 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "儲存"
     },
     "language": {
-      "title": "Language",
-      "language_description": "Choose the language you would like to use with Whalebird.",
-      "notice": "Requires relaunch",
+      "title": "語言",
+      "language_description": "請選擇您欲使用於 Whalebird 之語言。",
+      "notice": "需要重新啟動",
       "confirm": {
-        "title": "Warning",
-        "message": "You have to restart this application. Continue?",
+        "title": "警告",
+        "message": "您需要重新啟動本應用程式，確定要繼續嗎？",
         "ok": "Restart Now",
         "cancel": "Cancel"
       }
