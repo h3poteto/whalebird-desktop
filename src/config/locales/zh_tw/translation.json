@@ -108,26 +108,26 @@
       "title": "時間軸",
       "unread_notification": {
         "title": "未讀通知",
-        "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "description": "自訂每一個時間軸之未讀通知",
+        "direct": "私訊",
+        "local": "本機時間軸",
+        "public": "公開時間軸"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "偏好設定",
     "general": {
-      "title": "General",
+      "title": "一般",
       "sounds": {
-        "title": "Sounds",
-        "description": "Please set feedback sounds.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "title": "聲音",
+        "description": "請設定回饋音效",
+        "fav_rb": "當您最愛或轉嘟嘟文時",
+        "toot": "當您發嘟文時"
       },
       "timeline": {
-        "title": "Timeline",
-        "description": "Customize view in your timelines.",
+        "title": "時間軸",
+        "description": "自訂時間軸外觀",
         "cw": "Always ignore contents warnings",
         "nfsw": "Always ignore NFSW of medias",
         "hideAllAttachments": "Hide all medias"
