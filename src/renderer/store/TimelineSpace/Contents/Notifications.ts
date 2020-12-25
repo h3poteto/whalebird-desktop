@@ -1,5 +1,5 @@
 import generator, { Entity } from 'megalodon'
-import { Module, MutationTree, ActionTree } from 'vuex'
+import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
@@ -144,11 +144,30 @@ const actions: ActionTree<NotificationsState, RootState> = {
   }
 }
 
+const getters: GetterTree<NotificationsState, RootState> = {
+  handledNotifications: state => {
+    return state.notifications.filter(n => {
+      switch (n.type) {
+        case 'favourite':
+        case 'follow':
+        case 'follow_request':
+        case 'mention':
+        case 'reblog':
+        case 'emoji_reaction':
+          return true
+        default:
+          return false
+      }
+    })
+  }
+}
+
 const Notifications: Module<NotificationsState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
-  actions: actions
+  actions: actions,
+  getters: getters
 }
 
 export default Notifications
