@@ -67,47 +67,47 @@
     "favourite": "最愛",
     "bookmark": "書籤",
     "follow_requests": "跟隨請求",
-    "direct_messages": "Direct Messages",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists",
-    "members": "Members",
+    "direct_messages": "私訊",
+    "local": "本機時間軸",
+    "public": "公開時間軸",
+    "hashtag": "主題標籤",
+    "search": "搜尋",
+    "lists": "列表",
+    "members": "成員",
     "filter": {
-      "title": "Filter",
-      "placeholder": "Filter out by regular expressions",
-      "show_dms": "Show direct messages",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "過濾器",
+      "placeholder": "按照正規表達式過濾",
+      "show_dms": "顯示私訊",
+      "show_reblogs": "顯示轉嘟",
+      "show_replies": "顯示回覆",
+      "apply": "套用"
     },
-    "new_toot": "Toot",
-    "reload": "Reload",
-    "settings": "Settings"
+    "new_toot": "嘟文",
+    "reload": "重新整理",
+    "settings": "設定"
   },
   "settings": {
-    "title": "Settings",
+    "title": "設定",
     "general": {
-      "title": "General",
+      "title": "一般",
       "toot": {
-        "title": "Toot",
+        "title": "嘟文",
         "visibility": {
-          "description": "Customize default visibility of toot.",
-          "public": "Public",
-          "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "description": "自訂預設嘟文公開性",
+          "public": "公開",
+          "unlisted": "不列出",
+          "private": "私密",
+          "direct": "直接"
         },
         "sensitive": {
-          "description": "Mark media as sensitive by default"
+          "description": "預設標記媒體為敏感"
         }
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "時間軸",
       "unread_notification": {
-        "title": "Unread Notification",
+        "title": "未讀通知",
         "description": "Customize unread notifications for each timeline.",
         "direct": "Direct Messages",
         "local": "Local Timeline",
@@ -155,62 +155,62 @@
         "side_menu_color": "側邊選單",
         "primary_color": "主要字型",
         "regular_color": "一般字型",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
-        "wrapper_mask_color": "Modal wrapper"
+        "secondary_color": "次要字型",
+        "border_color": "邊框",
+        "header_menu_color": "頁頂選單",
+        "wrapper_mask_color": "對話方塊邊框"
       },
-      "font_size": "Font size",
-      "font_family": "Font family",
-      "toot_padding": "Padding around toots",
+      "font_size": "字型大小",
+      "font_family": "字型家族",
+      "toot_padding": "嘟文間距",
       "display_style": {
-        "title": "Display style of username",
-        "display_name_and_username": "Display name and username",
-        "display_name": "Display name",
-        "username": "Username"
+        "title": "帳號名稱顯示風格",
+        "display_name_and_username": "顯示名稱及帳號",
+        "display_name": "顯示名稱",
+        "username": "帳號"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "title": "時間格式",
+        "absolute": "絕對",
+        "relative": "相對"
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "通知",
       "enable": {
-        "description": "Please set notification events.",
-        "reply": "Notify me when I receive a reply",
-        "reblog": "Notify me when I receive a reblog",
-        "favourite": "Notify me when I receive a favourite",
-        "follow": "Notify me when I receive a follow",
-        "reaction": "Notify me when I receive a emoji reaction"
+        "description": "請設定通知事件。",
+        "reply": "當我收到回覆時通知我",
+        "reblog": "當我收到轉嘟時通知我",
+        "favourite": "當我收到最愛時通知我",
+        "follow": "當我收到跟隨時通知我",
+        "reaction": "當我收到 emoji 表情符號時通知我"
       }
     },
     "account": {
-      "title": "Account",
-      "connected": "Connected Account",
-      "username": "Username",
-      "domain": "Domain",
-      "association": "Association",
-      "order": "Order",
-      "remove_association": "Remove assocication",
-      "remove_all_associations": "Remove all associations",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "confirm_message": "Are you sure to remove all associations?"
+      "title": "帳號",
+      "connected": "連接帳號",
+      "username": "帳號",
+      "domain": "網域",
+      "association": "配對",
+      "order": "順序",
+      "remove_association": "移除帳號配對",
+      "remove_all_associations": "移除所有配對",
+      "confirm": "確認",
+      "cancel": "取消",
+      "confirm_message": "您確定要移除所有配對嗎？"
     },
     "network": {
-      "title": "Network",
+      "title": "網路",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
-        "host": "Proxy host",
-        "port": "Proxy port",
-        "username": "Proxy username",
-        "password": "Proxy password",
+        "title": "代理伺服器設定",
+        "no": "不使用代理伺服器",
+        "system": "使用系統代理伺服器",
+        "manual": "手動設定代理伺服器",
+        "protocol": "協定",
+        "host": "代理伺服器位址",
+        "port": "代理伺服器連接埠",
+        "username": "代理伺服器使用者名稱",
+        "password": "代理伺服器密碼",
         "protocol_list": {
           "http": "http",
           "https": "https",
