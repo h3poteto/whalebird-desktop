@@ -229,32 +229,32 @@
       "confirm": {
         "title": "警告",
         "message": "您需要重新啟動本應用程式，確定要繼續嗎？",
-        "ok": "Restart Now",
-        "cancel": "Cancel"
+        "ok": "立即重新啟動",
+        "cancel": "取消"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
-      "cw": "Write your warning here",
-      "status": "What is on your mind?",
-      "cancel": "Cancel",
-      "toot": "Toot",
-      "close_confirm": "Are you sure you want to cancel the new toot?",
+      "title": "新嘟文",
+      "cw": "請在此填入警告訊息",
+      "status": "正在想些什麼嗎？",
+      "cancel": "取消",
+      "toot": "嘟文",
+      "close_confirm": "您確定要取消這個新嘟文嗎？",
       "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Cancel",
-      "description": "Describe for the visually impaired",
+      "close_confirm_cancel": "取消",
+      "description": "為視障人士增加文字說明",
       "footer": {
-        "add_image": "Add images",
-        "poll": "Add a poll",
-        "change_visibility": "Change visibility",
-        "change_sensitive": "Change sensitive",
-        "add_cw": "Add content warning",
-        "pined_hashtag": "Pin the hashtag"
+        "add_image": "新增圖片",
+        "poll": "新增投票",
+        "change_visibility": "變更可見度",
+        "change_sensitive": "變更敏感設定",
+        "add_cw": "新增內容警告",
+        "pined_hashtag": "釘選主題標籤"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "新增選項",
         "expires": {
           "5_minutes": "5 minutes",
           "30_minutes": "30 minutes",
@@ -324,81 +324,81 @@
       "delete": "Delete",
       "via": "via {{application}}",
       "reply": "Reply",
-      "reblog": "Reblog",
-      "fav": "Favourite",
-      "detail": "Toot details",
-      "bookmark": "Bookmark",
-      "pinned": "Pinned toot",
+      "reblog": "轉嘟",
+      "fav": "最愛",
+      "detail": "嘟文細節",
+      "bookmark": "書籤",
+      "pinned": "釘選的嘟文",
       "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
-        "until": "until {{datetime}}",
-        "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "vote": "投票",
+        "votes_count": "投票數",
+        "until": "直到 {{datetime}}",
+        "left": "還剩下 {{datetime}}",
+        "refresh": "重新整理"
       }
     }
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
-      "doesnt_follow_you": "Doesn't follow you",
-      "detail": "Detail",
-      "follow": "Follow",
-      "unfollow": "Unfollow",
-      "follow_requested": "Follow requested",
-      "open_in_browser": "Open in Browser",
-      "manage_list_memberships": "Manage List Memberships",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
-      "toots": "Toots",
-      "follows": "Follows",
-      "followers": "Followers"
+      "follows_you": "跟隨了您",
+      "doesnt_follow_you": "沒有跟隨您",
+      "detail": "詳細資料",
+      "follow": "跟隨",
+      "unfollow": "取消跟隨",
+      "follow_requested": "跟隨請求",
+      "open_in_browser": "在瀏覽器中開啟",
+      "manage_list_memberships": "管理列表成員",
+      "mute": "靜音",
+      "unmute": "取消靜音",
+      "unblock": "解除封鎖",
+      "block": "封鎖",
+      "toots": "嘟文",
+      "follows": "跟隨",
+      "followers": "跟隨者"
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "接受",
+    "reject": "拒絕"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "主題標籤名稱",
+    "delete_tag": "刪除主題標籤",
+    "save_tag": "儲存主題標籤"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
-    "toot": "Toot"
+    "search": "搜尋",
+    "account": "帳號",
+    "tag": "主題標籤",
+    "keyword": "關鍵字",
+    "toot": "嘟文"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
-      "edit": "Edit"
+      "new_list": "新列表",
+      "edit": "編輯"
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "domain_name_label": "首先，請登入一台 Mastodon 伺服器。請輸入伺服器網址。",
+    "proxy_info": "如果您欲設定代理伺服器，請於此設定代理伺服器",
+    "proxy_here": " 這裡",
+    "search": "搜尋",
+    "login": "登入"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
-    "misskey_label": "Please submit after you authorize in your browser.",
-    "submit": "Submit"
+    "manually_1": "授權頁面已於瀏覽器中開啟",
+    "manually_2": "如果沒有成功開啟，請手動前往以下 URL 網址",
+    "code_label": "請於此貼上瀏覽器中的授權碼",
+    "misskey_label": "請於瀏覽器授權後再送出",
+    "submit": "送出"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "拖曳上傳至 Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
+    "account_load_error": "載入帳號失敗",
+    "account_remove_error": "刪除帳號失敗",
     "preferences_load_error": "Failed to load preferences",
     "timeline_fetch_error": "Failed to fetch timeline",
     "notification_fetch_error": "Failed to fetch notification",
@@ -466,12 +466,12 @@
       "body": "{{username}} boosted your status"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "引用嘟文",
+      "body": "{{username}} 引用了您的狀態"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "回應",
+      "body": "{{username}} 回應了您的狀態"
     }
   }
 }
