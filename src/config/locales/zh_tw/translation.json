@@ -256,74 +256,74 @@
       "poll": {
         "add_choice": "新增選項",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 分鐘",
+          "30_minutes": "30 分鐘",
+          "1_hour": "1 小時",
+          "6_hours": "6 小時",
+          "1_day": "1 天",
+          "3_days": "3 天",
+          "7_days": "7 天"
         }
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "跳至..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "新增成員至列表",
+      "account_name": "帳號名稱"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "列表成員"
     },
     "mute_confirm": {
-      "title": "Are you sure you want to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "您確定要靜音嗎？",
+      "body": "隱藏來自這位使用者的通知？",
+      "cancel": "取消",
+      "ok": "靜音"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "ctrl_r": "Reload current timeline",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
-      "?": "Show this help",
-      "esc": "Close current page"
+      "title": "鍵盤快速鍵",
+      "ctrl_number": "切換帳號",
+      "ctrl_k": "跳至其他時間軸",
+      "ctrl_n": "開啟新嘟文對話視窗",
+      "ctrl_enter": "貼出嘟文",
+      "ctrl_r": "重新整理目前的時間軸",
+      "j": "選擇下一嘟文",
+      "k": "選擇前一嘟文",
+      "h": "切換焦點至左方欄",
+      "l": "切換焦點至右方欄",
+      "r": "回覆嘟文",
+      "b": "轉嘟",
+      "f": "最愛嘟文",
+      "o": "打開嘟文細節",
+      "p": "開啟此嘟文的使用者個人頁面",
+      "i": "開啟圖片",
+      "x": "顯示/隱藏 CW 與 NSFW",
+      "?": "顯示此說明",
+      "esc": "關閉目前頁面"
     },
     "report": {
-      "title": "Reporting this user",
-      "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
+      "title": "檢舉此使用者",
+      "comment": "其他備註",
+      "cancel": "取消",
+      "ok": "檢舉"
     }
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
-      "sensitive": "Show sensitive content",
-      "view_toot_detail": "View Toot Detail",
-      "open_in_browser": "Open in Browser",
-      "copy_link_to_toot": "Copy Link to Toot",
-      "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
-      "delete": "Delete",
+      "show_more": "顯示更多",
+      "hide": "隱藏",
+      "sensitive": "顯示敏感內容",
+      "view_toot_detail": "檢視嘟文細節",
+      "open_in_browser": "在瀏覽器中開啟",
+      "copy_link_to_toot": "複製嘟文連結",
+      "mute": "靜音",
+      "block": "封鎖",
+      "report": "檢舉",
+      "delete": "刪除",
       "via": "via {{application}}",
-      "reply": "Reply",
+      "reply": "回覆",
       "reblog": "轉嘟",
       "fav": "最愛",
       "detail": "嘟文細節",
@@ -399,17 +399,17 @@
   "message": {
     "account_load_error": "載入帳號失敗",
     "account_remove_error": "刪除帳號失敗",
-    "preferences_load_error": "Failed to load preferences",
-    "timeline_fetch_error": "Failed to fetch timeline",
-    "notification_fetch_error": "Failed to fetch notification",
-    "favourite_fetch_error": "Failed to fetch favorite",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_reuqest_reject_error": "failed to reject the request",
-    "start_streaming_error": "Failed to start streaming",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
-    "attach_error": "Could not attach the file",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
-    "authorize_error": "Failed to authorize",
+    "preferences_load_error": "無法載入偏好設定",
+    "timeline_fetch_error": "無法載入時間軸",
+    "notification_fetch_error": "無法載入通知",
+    "favourite_fetch_error": "無法載入最愛",
+    "follow_request_accept_error": "無法接受請求",
+    "follow_reuqest_reject_error": "無法拒絕請求",
+    "start_streaming_error": "無法開始串流",
+    "start_all_streamings_error": "無法開始 {{domain}} 之串流",
+    "attach_error": "無法附加檔案",
+    "authorize_duplicate_error": "無法以相同帳號登入同一網域",
+    "authorize_error": "授權失敗",
     "followers_fetch_error": "Failed to fetch followers",
     "follows_fetch_error": "Failed to fetch follows",
     "toot_fetch_error": "Failed to fetch the toot detail",
