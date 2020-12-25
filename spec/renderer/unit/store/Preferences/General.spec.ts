@@ -11,7 +11,7 @@ describe('Preferences/General', () => {
         },
         timeline: {
           cw: false,
-          nfsw: false,
+          nsfw: false,
           hideAllAttachments: false
         },
         other: {

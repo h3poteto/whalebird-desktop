@@ -1,5 +1,5 @@
 export type Timeline = {
   cw: boolean,
-  nfsw: boolean,
+  nsfw: boolean,
   hideAllAttachments: boolean
 }

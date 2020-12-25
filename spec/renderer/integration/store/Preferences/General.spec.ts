@@ -15,7 +15,7 @@ const state = (): GeneralState => {
       },
       timeline: {
         cw: false,
-        nfsw: false,
+        nsfw: false,
         hideAllAttachments: false
       },
       other: {
@@ -114,11 +114,11 @@ describe('Preferences/General', () => {
     it('should be updated', async () => {
       await store.dispatch('Preferences/updateTimeline', {
         cw: true,
-        nfsw: true,
+        nsfw: true,
         hideAllAttachments: true
       })
       expect(store.state.Preferences.general.timeline.cw).toEqual(true)
-      expect(store.state.Preferences.general.timeline.nfsw).toEqual(true)
+      expect(store.state.Preferences.general.timeline.nsfw).toEqual(true)
       expect(store.state.Preferences.general.timeline.hideAllAttachments).toEqual(true)
       expect(store.state.Preferences.loading).toEqual(false)
     })

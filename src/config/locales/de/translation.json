@@ -129,7 +129,7 @@
         "title": "Zeitleiste",
         "description": "Passen Sie die Ansicht in Ihren Zeitleisten an.",
         "cw": "Ignoriere immer Content Warnungen",
-        "nfsw": "Ignogiere immer NFSW Medien",
+        "nsfw": "Ignogiere immer NSFW Medien",
         "hideAllAttachments": "Verstecke alle Medien"
       },
       "other": {
@@ -404,7 +404,7 @@
     "notification_fetch_error": "Benachrichtigung konnte nicht abgerufen werden",
     "favourite_fetch_error": "Favorit konnte nicht abgerufen werden",
     "follow_request_accept_error": "Anfrage konnte nicht angenommen werden",
-    "follow_reuqest_reject_error": "konnte die Anfrage nicht ablehnen",
+    "follow_request_reject_error": "konnte die Anfrage nicht ablehnen",
     "start_streaming_error": "Streaming konnte nicht gestartet werden",
     "start_all_streamings_error": "Fehler beim Starten des Streamings von {{domain}}",
     "attach_error": "Kontte Datei nicht anhängen",

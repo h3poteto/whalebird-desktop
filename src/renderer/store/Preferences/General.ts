@@ -20,7 +20,7 @@ const state = (): GeneralState => ({
     },
     timeline: {
       cw: false,
-      nfsw: false,
+      nsfw: false,
       hideAllAttachments: false
     },
     other: {

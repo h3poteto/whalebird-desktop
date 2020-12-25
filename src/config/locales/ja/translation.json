@@ -129,7 +129,7 @@
         "title": "タイムライン",
         "description": "タイムラインをカスタマイズ",
         "cw": "常にCWを表示する",
-        "nfsw": "常にNFSWを表示する",
+        "nsfw": "常にNSFWを表示する",
         "hideAllAttachments": "すべてのメディアを非表示にする"
       },
       "other": {
@@ -404,7 +404,7 @@
     "notification_fetch_error": "通知の読み込みに失敗しました",
     "favourite_fetch_error": "お気に入りの読み込みに失敗しました",
     "follow_request_accept_error": "フォロー申請の承認に失敗しました",
-    "follow_reuqest_reject_error": "フォロー申請の却下に失敗しました",
+    "follow_request_reject_error": "フォロー申請の却下に失敗しました",
     "start_streaming_error": "ストリーミングを開始できませんでした",
     "start_all_streamings_error": "{{domain}} のストリーミングを開始できませんでした",
     "attach_error": "ファイルを添付できませんでした",

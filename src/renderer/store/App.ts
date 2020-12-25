@@ -23,7 +23,7 @@ export type AppState = {
   language: string
   defaultFonts: Array<string>
   ignoreCW: boolean
-  ignoreNFSW: boolean
+  ignoreNSFW: boolean
   hideAllAttachments: boolean
   tootPadding: number
   userAgent: string
@@ -46,7 +46,7 @@ const state = (): AppState => ({
   language: Language.en.key,
   defaultFonts: DefaultFonts,
   ignoreCW: false,
-  ignoreNFSW: false,
+  ignoreNSFW: false,
   hideAllAttachments: false,
   userAgent: 'Whalebird'
 })
@@ -61,7 +61,7 @@ const MUTATION_TYPES = {
   UPDATE_LANGUAGE: 'updateLanguage',
   ADD_FONT: 'addFont',
   UPDATE_IGNORE_CW: 'updateIgnoreCW',
-  UPDATE_IGNORE_NFSW: 'updateIgnoreNFSW',
+  UPDATE_IGNORE_NSFW: 'updateIgnoreNSFW',
   UPDATE_HIDE_ALL_ATTACHMENTS: 'updateHideAllAttachments'
 }
 
@@ -94,8 +94,8 @@ const mutations: MutationTree<AppState> = {
   [MUTATION_TYPES.UPDATE_IGNORE_CW]: (state: AppState, cw: boolean) => {
     state.ignoreCW = cw
   },
-  [MUTATION_TYPES.UPDATE_IGNORE_NFSW]: (state: AppState, nfsw: boolean) => {
-    state.ignoreNFSW = nfsw
+  [MUTATION_TYPES.UPDATE_IGNORE_NSFW]: (state: AppState, nsfw: boolean) => {
+    state.ignoreNSFW = nsfw
   },
   [MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS]: (state: AppState, hideAllAttachments: boolean) => {
     state.hideAllAttachments = hideAllAttachments
@@ -122,7 +122,7 @@ const actions: ActionTree<AppState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TOOT_PADDING, conf.appearance.tootPadding)
     commit(MUTATION_TYPES.ADD_FONT, conf.appearance.font)
     commit(MUTATION_TYPES.UPDATE_IGNORE_CW, conf.general.timeline.cw)
-    commit(MUTATION_TYPES.UPDATE_IGNORE_NFSW, conf.general.timeline.nfsw)
+    commit(MUTATION_TYPES.UPDATE_IGNORE_NSFW, conf.general.timeline.nsfw)
     commit(MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS, conf.general.timeline.hideAllAttachments)
     return conf
   },

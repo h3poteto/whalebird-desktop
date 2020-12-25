@@ -17,8 +17,8 @@
       <el-form-item for="cw" :label="$t('preferences.general.timeline.cw')">
         <el-switch id="cw" v-model="timeline_cw" active-color="#13ce66"> </el-switch>
       </el-form-item>
-      <el-form-item for="nfsw" :label="$t('preferences.general.timeline.nfsw')">
-        <el-switch id="nfsw" v-model="timeline_nfsw" active-color="#13ce66"> </el-switch>
+      <el-form-item for="nsfw" :label="$t('preferences.general.timeline.nsfw')">
+        <el-switch id="nsfw" v-model="timeline_nsfw" active-color="#13ce66"> </el-switch>
       </el-form-item>
       <el-form-item for="hideAllAttachments" :label="$t('preferences.general.timeline.hideAllAttachments')">
         <el-switch id="hideAllAttachments" v-model="timeline_hide_attachments" active-color="#13ce66"> </el-switch>
@@ -76,13 +76,13 @@ export default {
         })
       }
     },
-    timeline_nfsw: {
+    timeline_nsfw: {
       get() {
-        return this.$store.state.Preferences.General.general.timeline.nfsw
+        return this.$store.state.Preferences.General.general.timeline.nsfw
       },
       set(value) {
         this.$store.dispatch('Preferences/General/updateTimeline', {
-          nfsw: value
+          nsfw: value
         })
       }
     },

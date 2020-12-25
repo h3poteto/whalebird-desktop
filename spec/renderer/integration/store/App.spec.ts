@@ -26,7 +26,7 @@ const state = () => {
     language: Language.en.key,
     defaultFonts: DefaultFonts,
     ignoreCW: false,
-    ignoreNFSW: false,
+    ignoreNSFW: false,
     hideAllAttachments: false
   }
 }
@@ -74,7 +74,7 @@ describe('App', () => {
             general: {
               timeline: {
                 cw: true,
-                nfsw: true
+                nsfw: true
               }
             },
             language: {
@@ -102,7 +102,7 @@ describe('App', () => {
         expect(store.state.App.fontSize).toEqual(13)
         expect(store.state.App.theme).toEqual(DarkTheme)
         expect(store.state.App.ignoreCW).toEqual(true)
-        expect(store.state.App.ignoreNFSW).toEqual(true)
+        expect(store.state.App.ignoreNSFW).toEqual(true)
         ipcMain.removeHandler('get-preferences')
       })
     })

@@ -129,7 +129,7 @@
         "title": "Timeline",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
-        "nfsw": "Always ignore NFSW of medias",
+        "nsfw": "Always ignore NSFW of medias",
         "hideAllAttachments": "Hide all medias"
       },
       "other": {
@@ -404,7 +404,7 @@
     "notification_fetch_error": "알림을 가져올 수 없습니다",
     "favourite_fetch_error": "즐겨찾기를 가져올 수 없습니다",
     "follow_request_accept_error": "Failed to accept the request",
-    "follow_reuqest_reject_error": "failed to reject the request",
+    "follow_request_reject_error": "failed to reject the request",
     "start_streaming_error": "스트리밍을 시작할 수 없습니다",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}",
     "attach_error": "파일을 첨부할 수 없습니다",
