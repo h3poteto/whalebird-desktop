@@ -14,6 +14,7 @@ import ru from '~/src/config/locales/ru/translation.json'
 import sv_se from '~/src/config/locales/sv_se/translation.json'
 import tzm from '~/src/config/locales/tzm/translation.json'
 import zh_cn from '~/src/config/locales/zh_cn/translation.json'
+import zh_tw from '~/src/config/locales/zh_tw/translation.json'
 
 const options: InitOptions = {
   initImmediate: false,
@@ -65,6 +66,9 @@ const options: InitOptions = {
     },
     zh_cn: {
       translation: zh_cn
+    },
+    zh_tw: {
+      translation: zh_tw
     }
   }
 }
