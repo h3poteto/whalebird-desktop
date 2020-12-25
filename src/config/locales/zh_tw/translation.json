@@ -158,7 +158,7 @@
         "secondary_color": "次要字型",
         "border_color": "邊框",
         "header_menu_color": "頁頂選單",
-        "wrapper_mask_color": "對話方塊邊框"
+        "wrapper_mask_color": "對話方塊邊框顏色"
       },
       "font_size": "字型大小",
       "font_family": "字型家族",
@@ -286,7 +286,7 @@
       "title": "鍵盤快速鍵",
       "ctrl_number": "切換帳號",
       "ctrl_k": "跳至其他時間軸",
-      "ctrl_n": "開啟新嘟文對話視窗",
+      "ctrl_n": "開啟新嘟文對話方塊",
       "ctrl_enter": "貼出嘟文",
       "ctrl_r": "重新整理目前的時間軸",
       "j": "選擇下一嘟文",
