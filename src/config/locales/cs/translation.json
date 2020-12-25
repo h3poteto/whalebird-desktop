@@ -129,7 +129,7 @@
         "title": "Timeline",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
-        "nfsw": "Always ignore NFSW of medias",
+        "nsfw": "Always ignore NSFW of medias",
         "hideAllAttachments": "Hide all medias"
       },
       "other": {
@@ -193,7 +193,7 @@
       "domain": "Domain",
       "association": "Association",
       "order": "Order",
-      "remove_association": "Remove assocication",
+      "remove_association": "Remove association",
       "remove_all_associations": "Remove all associations",
       "confirm": "Confirm",
       "cancel": "Cancel",
@@ -404,7 +404,7 @@
     "notification_fetch_error": "Failed to fetch notification",
     "favourite_fetch_error": "Failed to fetch favorite",
     "follow_request_accept_error": "Failed to accept the request",
-    "follow_reuqest_reject_error": "failed to reject the request",
+    "follow_request_reject_error": "failed to reject the request",
     "start_streaming_error": "Failed to start streaming",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}",
     "attach_error": "Could not attach the file",

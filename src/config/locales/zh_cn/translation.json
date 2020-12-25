@@ -129,7 +129,7 @@
         "title": "时间线",
         "description": "设定查看时间线的方式。",
         "cw": "始终展开具有内容警告的嘟文",
-        "nfsw": "总是显示被标记为敏感内容的媒体",
+        "nsfw": "总是显示被标记为敏感内容的媒体",
         "hideAllAttachments": "总是隐藏所有媒体"
       },
       "other": {
@@ -404,7 +404,7 @@
     "notification_fetch_error": "获取通知失败",
     "favourite_fetch_error": "获取收藏失败",
     "follow_request_accept_error": "接受请求失败",
-    "follow_reuqest_reject_error": "拒绝请求失败",
+    "follow_request_reject_error": "拒绝请求失败",
     "start_streaming_error": "打开流媒体失败",
     "start_all_streamings_error": "打开 {{domain}} 的流媒体失败",
     "attach_error": "附加文件失败",

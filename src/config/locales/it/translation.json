@@ -129,7 +129,7 @@
         "title": "Cronologia",
         "description": "Personalizza la visualizzazione nelle tue timeline.",
         "cw": "Ignora sempre gli avvisi sui contenuti",
-        "nfsw": "Ignora sempre contenuti multimediali inappropriati",
+        "nsfw": "Ignora sempre contenuti multimediali inappropriati",
         "hideAllAttachments": "Nascondi tutti i contenuti multimediali"
       },
       "other": {
@@ -404,7 +404,7 @@
     "notification_fetch_error": "Impossibile recuperare le notifiche",
     "favourite_fetch_error": "Impossibile recuperare i preferiti",
     "follow_request_accept_error": "Impossibile accettare la richiesta",
-    "follow_reuqest_reject_error": "Impossibile rifiutare la richiesta",
+    "follow_request_reject_error": "Impossibile rifiutare la richiesta",
     "start_streaming_error": "Impossibile avviare lo streaming",
     "start_all_streamings_error": "Impossibile avviare lo streaming di {{domain}}",
     "attach_error": "Non è stato possibile allegare il file",

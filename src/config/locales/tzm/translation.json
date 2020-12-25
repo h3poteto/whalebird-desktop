@@ -129,7 +129,7 @@
         "title": "Ifili n uzmez",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
-        "nfsw": "Nxxel abda tumayin n NFSW",
+        "nsfw": "Nxxel abda tumayin n NSFW",
         "hideAllAttachments": "Ffer isneɣmisen maṛṛa"
       },
       "other": {
@@ -404,7 +404,7 @@
     "notification_fetch_error": "Failed to fetch notification",
     "favourite_fetch_error": "Failed to fetch favorite",
     "follow_request_accept_error": "Azgel n udggi n tutrawin",
-    "follow_reuqest_reject_error": "azgel g waggeyn tutrawin",
+    "follow_request_reject_error": "azgel g waggeyn tutrawin",
     "start_streaming_error": "Failed to start streaming",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}",
     "attach_error": "Could not attach the file",

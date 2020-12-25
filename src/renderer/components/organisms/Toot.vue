@@ -285,7 +285,7 @@ export default {
   data() {
     return {
       showContent: this.$store.state.App.ignoreCW,
-      showAttachments: this.$store.state.App.ignoreNFSW,
+      showAttachments: this.$store.state.App.ignoreNSFW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now(),
       openEmojiPicker: false,

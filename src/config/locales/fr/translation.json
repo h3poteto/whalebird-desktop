@@ -129,7 +129,7 @@
         "title": "Fil d'actualité",
         "description": "Customisez l'apparence du fil d'actualité",
         "cw": "Toujours ignorer les avertissements relatifs au contenu",
-        "nfsw": "Toujours ignorer le contenu NSFW",
+        "nsfw": "Toujours ignorer le contenu NSFW",
         "hideAllAttachments": "Cacher tous les médias"
       },
       "other": {
@@ -193,7 +193,7 @@
       "domain": "Domaine",
       "association": "Association",
       "order": "Ordre",
-      "remove_association": "Supprimer l'assocication",
+      "remove_association": "Supprimer l'association",
       "remove_all_associations": "Supprimer toutes les associations",
       "confirm": "Confirmer",
       "cancel": "Annuler",
@@ -404,7 +404,7 @@
     "notification_fetch_error": "Erreur au chargement des notifications",
     "favourite_fetch_error": "Erreur au chargement des favoris",
     "follow_request_accept_error": "Impossible d'accepter la demande",
-    "follow_reuqest_reject_error": "Impossible de refuser la demande",
+    "follow_request_reject_error": "Impossible de refuser la demande",
     "start_streaming_error": "Erreur au démarrage du flux",
     "start_all_streamings_error": "Impossible de démarrer la diffusion de {{domain}}",
     "attach_error": "Impossible de joindre le fichier",

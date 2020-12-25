@@ -946,7 +946,7 @@
 ### Added
 - [#836](https://github.com/h3poteto/whalebird-desktop/pull/836) Add option to hide all attachments
 - [#833](https://github.com/h3poteto/whalebird-desktop/pull/833) Add tests for Jump modal
-- [#827](https://github.com/h3poteto/whalebird-desktop/pull/827) Add option to ignore CW and NFSW
+- [#827](https://github.com/h3poteto/whalebird-desktop/pull/827) Add option to ignore CW and NSFW
 - [#824](https://github.com/h3poteto/whalebird-desktop/pull/824) Add unit/integration tests for TimelineSpace
 - [#823](https://github.com/h3poteto/whalebird-desktop/pull/823) Add unit tests for Home
 - [#820](https://github.com/h3poteto/whalebird-desktop/pull/820) Add intergation tests for Contents/Home
