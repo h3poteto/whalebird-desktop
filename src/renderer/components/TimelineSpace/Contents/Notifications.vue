@@ -2,7 +2,7 @@
   <div id="notifications" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="notifications" :min-item-size="20" class="scroller" page-mode>
+    <DynamicScroller :items="handledNotifications" :min-item-size="20" class="scroller" page-mode>
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
           <notification
@@ -48,12 +48,12 @@ export default {
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
       backgroundColor: state => state.App.theme.background_color,
-      notifications: state => state.TimelineSpace.Contents.Notifications.notifications,
       lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
       heading: state => state.TimelineSpace.Contents.Notifications.heading,
       unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications,
       filter: state => state.TimelineSpace.Contents.Notifications.filter
     }),
+    ...mapGetters('TimelineSpace/Contents/Notifications', ['handledNotifications']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
       if (this.modalOpened) {
@@ -63,7 +63,7 @@ export default {
         return true
       }
       // Sometimes notifications are deleted, so perhaps focused notification don't exist.
-      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      const currentIndex = this.handledNotifications.findIndex(notification => this.focusedId === notification.id)
       return currentIndex === -1
     }
   },
@@ -123,7 +123,10 @@ export default {
         !this.lazyloading
       ) {
         this.$store
-          .dispatch('TimelineSpace/Contents/Notifications/lazyFetchNotifications', this.notifications[this.notifications.length - 1])
+          .dispatch(
+            'TimelineSpace/Contents/Notifications/lazyFetchNotifications',
+            this.handledNotifications[this.handledNotifications.length - 1]
+          )
           .catch(() => {
             this.$message({
               message: this.$t('message.notification_fetch_error'),
@@ -157,19 +160,19 @@ export default {
       this.focusedId = null
     },
     focusNext() {
-      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      const currentIndex = this.handledNotifications.findIndex(notification => this.focusedId === notification.id)
       if (currentIndex === -1) {
-        this.focusedId = this.notifications[0].id
-      } else if (currentIndex < this.notifications.length) {
-        this.focusedId = this.notifications[currentIndex + 1].id
+        this.focusedId = this.handledNotifications[0].id
+      } else if (currentIndex < this.handledNotifications.length) {
+        this.focusedId = this.handledNotifications[currentIndex + 1].id
       }
     },
     focusPrev() {
-      const currentIndex = this.notifications.findIndex(notification => this.focusedId === notification.id)
+      const currentIndex = this.handledNotifications.findIndex(notification => this.focusedId === notification.id)
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
-        this.focusedId = this.notifications[currentIndex - 1].id
+        this.focusedId = this.handledNotifications[currentIndex - 1].id
       }
     },
     focusNotification(notification) {
@@ -181,7 +184,7 @@ export default {
     handleKey(event) {
       switch (event.srcKey) {
         case 'next':
-          this.focusedId = this.notifications[0].id
+          this.focusedId = this.handledNotifications[0].id
           break
       }
     }
