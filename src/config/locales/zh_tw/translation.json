@@ -380,7 +380,7 @@
     }
   },
   "login": {
-    "domain_name_label": "首先，請登入一台 Mastodon 伺服器。請輸入伺服器網址。",
+    "domain_name_label": "首先，請登入一台 Mastodon 伺服器。請輸入伺服器網域名稱 (無前綴 https://)。",
     "proxy_info": "如果您欲設定代理伺服器，請於此設定代理伺服器",
     "proxy_here": " 這裡",
     "search": "搜尋",
@@ -438,8 +438,8 @@
   },
   "validation": {
     "login": {
-      "require_domain_name": "請填入網址",
-      "domain_format": "請僅輸入網址"
+      "require_domain_name": "請填入網域名稱",
+      "domain_format": "請僅輸入網域名稱 (無前綴 https://)"
     },
     "new_toot": {
       "toot_length": "嘟文長度必須介於 {{min}} 至 {{max}} 之間",
