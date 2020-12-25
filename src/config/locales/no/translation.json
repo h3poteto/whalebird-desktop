@@ -193,7 +193,7 @@
       "domain": "Domain",
       "association": "Association",
       "order": "Order",
-      "remove_association": "Remove association",
+      "remove_association": "Remove associations",
       "remove_all_associations": "Remove all associations",
       "confirm": "Confirm",
       "cancel": "Cancel",
