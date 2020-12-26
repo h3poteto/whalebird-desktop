@@ -65,7 +65,7 @@ export default {
         .then(() => {
           this.$store.dispatch('Preferences/Language/relaunch')
         })
-        .cancel(() => {})
+        .catch(() => {})
     }
   }
 }
