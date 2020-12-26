@@ -55,6 +55,10 @@ export default {
     name: 'русский',
     key: 'ru'
   },
+  si: {
+    name: 'සිංහල',
+    key: 'si'
+  },
   sv_se: {
     name: 'svenska',
     key: 'sv_se'
