@@ -12,6 +12,7 @@ import pl from '~/src/config/locales/pl/translation.json'
 import pt_pt from '~/src/config/locales/pt_pt/translation.json'
 import ru from '~/src/config/locales/ru/translation.json'
 import sv_se from '~/src/config/locales/sv_se/translation.json'
+import si from '~/src/config/locales/si/translation.json'
 import tzm from '~/src/config/locales/tzm/translation.json'
 import zh_cn from '~/src/config/locales/zh_cn/translation.json'
 import zh_tw from '~/src/config/locales/zh_tw/translation.json'
@@ -57,6 +58,9 @@ const options: InitOptions = {
     },
     ru: {
       translation: ru
+    },
+    si: {
+      translation: si
     },
     sv_se: {
       translation: sv_se

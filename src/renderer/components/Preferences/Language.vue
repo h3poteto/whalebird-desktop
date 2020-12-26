@@ -32,6 +32,7 @@ export default {
         Language.pl,
         Language.pt_pt,
         Language.ru,
+        Language.si,
         Language.sv_se,
         Language.tzm,
         Language.zh_cn,
