@@ -4,24 +4,24 @@
       "name": "Whalebird",
       "about": "About Whalebird",
       "preferences": "Preferences...",
-      "services": "Services",
+      "services": "සේවාවන්",
       "hide": "Hide Whalebird",
       "hide_others": "Hide Others",
       "show_all": "Show All",
       "open": "Open Window",
-      "quit": "Quit"
+      "quit": "ඉවත් වන්න"
     },
     "toot": {
       "name": "Toot",
       "new": "New Toot"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
+      "name": "සංස්කරණය",
+      "undo": "පෙර සේ",
+      "redo": "පසු සේ",
       "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
+      "copy": "පිටපත්",
+      "paste": "අලවන්න",
       "select_all": "Select All"
     },
     "view": {
