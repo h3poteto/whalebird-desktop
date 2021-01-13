@@ -140,7 +140,7 @@ const actions: ActionTree<TagState, RootState> = {
       win.ipcRenderer.removeAllListeners('update-start-tag-streaming')
       win.ipcRenderer.removeAllListeners('delete-start-tag-streaming')
       win.ipcRenderer.send('stop-tag-streaming')
-      resolve()
+      resolve(null)
     })
   },
   lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPositionWithTag) => {

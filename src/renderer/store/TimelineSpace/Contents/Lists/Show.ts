@@ -140,7 +140,7 @@ const actions: ActionTree<ShowState, RootState> = {
       win.ipcRenderer.removeAllListeners('update-start-list-streaming')
       win.ipcRenderer.removeAllListeners('delete-start-list-streaming')
       win.ipcRenderer.send('stop-list-streaming')
-      resolve()
+      resolve(null)
     })
   },
   lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPositionWithList): Promise<Array<Entity.Status> | null> => {
