@@ -280,7 +280,7 @@
     "typescript": "^4.1.3",
     "url-loader": "^4.1.1",
     "vue-html-loader": "^1.2.4",
-    "vue-loader": "^15.9.5",
+    "vue-loader": "^15.9.6",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.44.2",
