@@ -93,7 +93,8 @@
       "toot": {
         "title": "Wpisy",
         "visibility": {
-          "description": "Customize default visibility of toot.",
+          "description": "Customize default visibility of toot",
+          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
           "public": "Publiczne",
           "unlisted": "Niewidoczne",
           "private": "Prywatne",
