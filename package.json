@@ -182,6 +182,7 @@
     "i18next": "^19.8.4",
     "lodash": "^4.17.20",
     "megalodon": "3.3.2",
+    "minimist": "^1.2.5",
     "moment": "^2.29.1",
     "mousetrap": "^1.6.5",
     "nedb": "^1.8.0",

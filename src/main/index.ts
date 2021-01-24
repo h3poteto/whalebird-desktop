@@ -28,6 +28,7 @@ import openAboutWindow from 'about-window'
 import { Entity, detector } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
+import minimist from 'minimist'
 
 import pkg from '~/package.json'
 import Authentication from './auth'
@@ -363,6 +364,21 @@ async function createWindow() {
       event.preventDefault()
     })
   }
+}
+
+// Parse command line arguments and show help command.
+const args = minimist(process.argv.slice(process.env.NODE_ENV === 'development' ? 2 : 1))
+if (args.help) {
+  console.log(`
+Whalebird is Mastodon, Pleroma and Misskey client for desktop.
+
+Usage
+ $ whalebird
+
+Options
+ --help    show help
+`)
+  process.exit(0)
 }
 
 // Do not lower the rendering priority of Chromium when background
