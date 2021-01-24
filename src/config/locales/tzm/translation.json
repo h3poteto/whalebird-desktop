@@ -387,7 +387,15 @@
   "lists": {
     "index": {
       "new_list": "Aseddi amaynu",
-      "edit": "Senfel"
+      "edit": "Senfel",
+      "delete": {
+        "confirm": {
+          "title": "Confirm",
+          "message": "This operation can not be undone, this list will be permanently deleted",
+          "ok": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "login": {
