@@ -16,6 +16,9 @@
         <el-button type="text" @click="edit(list)">
           <icon name="regular/edit"></icon>
         </el-button>
+        <el-button type="text" @click="del(list)">
+          <icon name="regular/trash-alt"></icon>
+        </el-button>
       </div>
     </div>
   </div>
@@ -73,6 +76,17 @@ export default {
     },
     edit(list) {
       return this.$router.push(`/${this.id()}/lists/${list.id}/edit`)
+    },
+    del(list) {
+      this.$confirm(this.$t('lists.index.delete.confirm.message'), this.$t('lists.index.delete.confirm.title'), {
+        confirmButtonText: this.$t('lists.index.delete.confirm.ok'),
+        cancelButtonText: this.$t('lists.index.delete.confirm.cancel'),
+        type: 'warning'
+      })
+        .then(() => {
+          this.$store.dispatch('TimelineSpace/Contents/Lists/Index/deleteList', list)
+        })
+        .catch(() => {})
     }
   }
 }
