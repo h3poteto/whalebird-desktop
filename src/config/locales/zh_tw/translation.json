@@ -135,7 +135,17 @@
       },
       "other": {
         "title": "其他選項",
-        "launch": "登入時啟動 app"
+        "launch": "登入時啟動 app",
+        "spellcheck": {
+          "description": "Enable spellchecker",
+          "notice": "Requires relaunch",
+          "confirm": {
+            "title": "Warning",
+            "message": "You have to restart this application. Continue?",
+            "ok": "Restart Now",
+            "cancel": "Cancel"
+          }
+        }
       }
     },
     "appearance": {
