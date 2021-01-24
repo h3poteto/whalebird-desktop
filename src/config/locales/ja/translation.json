@@ -140,7 +140,7 @@
           "description": "スペルチェッカーを有効にする",
           "notice": "再起動が必要です",
           "confirm": {
-            "title": "Confirm",
+            "title": "確認",
             "message": "設定を有効化するために再起動する必要があります",
             "ok": "再起動する",
             "cancel": "キャンセル"
@@ -238,7 +238,7 @@
       "language_description": "Whalebirdの表示言語を選択",
       "notice": "再起動が必要です",
       "confirm": {
-        "title": "Confirm",
+        "title": "確認",
         "message": "設定を有効化するために再起動する必要があります",
         "ok": "再起動する",
         "cancel": "キャンセル"
@@ -390,10 +390,10 @@
       "edit": "編集",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "確認",
+          "message": "この操作は元に戻すことができません。このリストを完全に削除しますか？",
+          "ok": "削除する",
+          "cancel": "キャンセル"
         }
       }
     }
