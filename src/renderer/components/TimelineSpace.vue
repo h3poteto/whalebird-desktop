@@ -30,6 +30,7 @@ import Mousetrap from 'mousetrap'
 import ReceiveDrop from './TimelineSpace/ReceiveDrop'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
+import { NewTootAttachLength } from '@/errors/validations'
 import { Event } from '~/src/renderer/components/event'
 
 export default {
@@ -126,11 +127,18 @@ export default {
         .then(() => {
           Event.$emit('image-uploaded')
         })
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.attach_error'),
-            type: 'error'
-          })
+        .catch(err => {
+          if (err instanceof NewTootAttachLength) {
+            this.$message({
+              message: this.$t('validation.new_toot.attach_length', { max: 4 }),
+              type: 'error'
+            })
+          } else {
+            this.$message({
+              message: this.$t('message.attach_error'),
+              type: 'error'
+            })
+          }
         })
       return false
     },

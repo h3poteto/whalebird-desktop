@@ -328,7 +328,10 @@ const actions: ActionTree<NewTootState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_SENSITIVE, false)
     commit(MUTATION_TYPES.CHANGE_VISIBILITY_VALUE, Visibility.Public.value)
   },
-  uploadImage: async ({ commit, rootState }, image: any) => {
+  uploadImage: async ({ commit, state, rootState }, image: any) => {
+    if (state.attachedMedias.length > 3) {
+      throw new NewTootAttachLength()
+    }
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, true)
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
       throw new AuthenticationError()
