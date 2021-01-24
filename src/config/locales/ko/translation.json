@@ -140,7 +140,7 @@
           "description": "Enable spellchecker",
           "notice": "Requires relaunch",
           "confirm": {
-            "title": "Warning",
+            "title": "Confirm",
             "message": "You have to restart this application. Continue?",
             "ok": "Restart Now",
             "cancel": "Cancel"
@@ -238,7 +238,7 @@
       "language_description": "Whalebird에서 사용할 언어를 선택해 주세요.",
       "notice": "재실행이 필요합니다",
       "confirm": {
-        "title": "알림",
+        "title": "Confirm",
         "message": "어플리케이션을 재실행해야 합니다. 계속할까요?",
         "ok": "지금 재실행",
         "cancel": "취소"
