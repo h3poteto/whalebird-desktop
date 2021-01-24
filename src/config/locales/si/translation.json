@@ -135,7 +135,17 @@
       },
       "other": {
         "title": "Other options",
-        "launch": "Launch app on login"
+        "launch": "Launch app on login",
+        "spellcheck": {
+          "description": "Enable spellchecker",
+          "notice": "Requires relaunch",
+          "confirm": {
+            "title": "Confirm",
+            "message": "You have to restart this application. Continue?",
+            "ok": "Restart Now",
+            "cancel": "Cancel"
+          }
+        }
       }
     },
     "appearance": {
@@ -228,7 +238,7 @@
       "language_description": "Choose the language you would like to use with Whalebird.",
       "notice": "Requires relaunch",
       "confirm": {
-        "title": "Warning",
+        "title": "Confirm",
         "message": "You have to restart this application. Continue?",
         "ok": "Restart Now",
         "cancel": "Cancel"
@@ -377,7 +387,15 @@
   "lists": {
     "index": {
       "new_list": "New List",
-      "edit": "Edit"
+      "edit": "Edit",
+      "delete": {
+        "confirm": {
+          "title": "Confirm",
+          "message": "This operation can not be undone, this list will be permanently deleted",
+          "ok": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "login": {

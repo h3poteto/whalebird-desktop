@@ -135,7 +135,17 @@
       },
       "other": {
         "title": "其他選項",
-        "launch": "登入時啟動 app"
+        "launch": "登入時啟動 app",
+        "spellcheck": {
+          "description": "Enable spellchecker",
+          "notice": "Requires relaunch",
+          "confirm": {
+            "title": "Confirm",
+            "message": "You have to restart this application. Continue?",
+            "ok": "Restart Now",
+            "cancel": "Cancel"
+          }
+        }
       }
     },
     "appearance": {
@@ -228,7 +238,7 @@
       "language_description": "請選擇您欲使用於 Whalebird 之語言。",
       "notice": "需要重新啟動",
       "confirm": {
-        "title": "警告",
+        "title": "Confirm",
         "message": "您需要重新啟動本應用程式，確定要繼續嗎？",
         "ok": "立即重新啟動",
         "cancel": "取消"
@@ -377,7 +387,15 @@
   "lists": {
     "index": {
       "new_list": "新列表",
-      "edit": "編輯"
+      "edit": "編輯",
+      "delete": {
+        "confirm": {
+          "title": "Confirm",
+          "message": "This operation can not be undone, this list will be permanently deleted",
+          "ok": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "login": {

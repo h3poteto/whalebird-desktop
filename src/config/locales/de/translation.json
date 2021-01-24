@@ -135,7 +135,17 @@
       },
       "other": {
         "title": "Andere Optionen",
-        "launch": "App beim Login starten"
+        "launch": "App beim Login starten",
+        "spellcheck": {
+          "description": "Enable spellchecker",
+          "notice": "Requires relaunch",
+          "confirm": {
+            "title": "Confirm",
+            "message": "You have to restart this application. Continue?",
+            "ok": "Restart Now",
+            "cancel": "Cancel"
+          }
+        }
       }
     },
     "appearance": {
@@ -228,7 +238,7 @@
       "language_description": "Wählen Sie die Sprache, die Sie mit Whalebird verwenden möchten.",
       "notice": "Erfordert Neustart",
       "confirm": {
-        "title": "Warnung",
+        "title": "Confirm",
         "message": "Du musst diese Anwendung neu starten. Fortfahren?",
         "ok": "Jetzt neu starten",
         "cancel": "Abbrechen"
@@ -377,7 +387,15 @@
   "lists": {
     "index": {
       "new_list": "Neue Liste",
-      "edit": "Bearbeiten"
+      "edit": "Bearbeiten",
+      "delete": {
+        "confirm": {
+          "title": "Confirm",
+          "message": "This operation can not be undone, this list will be permanently deleted",
+          "ok": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "login": {

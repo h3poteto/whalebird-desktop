@@ -135,7 +135,17 @@
       },
       "other": {
         "title": "Tideɣrin yaḍnin",
-        "launch": "Ṛẓem tisensi akd ukcam"
+        "launch": "Ṛẓem tisensi akd ukcam",
+        "spellcheck": {
+          "description": "Enable spellchecker",
+          "notice": "Requires relaunch",
+          "confirm": {
+            "title": "Confirm",
+            "message": "You have to restart this application. Continue?",
+            "ok": "Restart Now",
+            "cancel": "Cancel"
+          }
+        }
       }
     },
     "appearance": {
@@ -228,7 +238,7 @@
       "language_description": "Dɣer tutlayt nna txsed ad-sis tssmrsed Whalebird.",
       "notice": "Issutur allas usenti",
       "confirm": {
-        "title": "Warning",
+        "title": "Confirm",
         "message": "Ixṣ as talsed tsentid tisensi-a. ad tsmded?",
         "ok": "Als-senti dɣi",
         "cancel": "Ser"
@@ -377,7 +387,15 @@
   "lists": {
     "index": {
       "new_list": "Aseddi amaynu",
-      "edit": "Senfel"
+      "edit": "Senfel",
+      "delete": {
+        "confirm": {
+          "title": "Confirm",
+          "message": "This operation can not be undone, this list will be permanently deleted",
+          "ok": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "login": {
