@@ -387,7 +387,15 @@
   "lists": {
     "index": {
       "new_list": "新列表的标题",
-      "edit": "编辑"
+      "edit": "编辑",
+      "delete": {
+        "confirm": {
+          "title": "Confirm",
+          "message": "This operation can not be undone, this list will be permanently deleted",
+          "ok": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "login": {
