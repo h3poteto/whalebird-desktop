@@ -93,8 +93,8 @@
       "toot": {
         "title": "トゥート",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "description": "トゥートの公開設定を変更する",
+          "notice": "この設定は新しいトゥートのみに適用され、返信は元のトゥートの公開設定に従います",
           "public": "公開",
           "unlisted": "未収載",
           "private": "フォロワー限定",
