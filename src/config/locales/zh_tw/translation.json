@@ -93,7 +93,8 @@
       "toot": {
         "title": "嘟文",
         "visibility": {
-          "description": "自訂預設嘟文公開性",
+          "description": "Customize default visibility of toot",
+          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
           "public": "公開",
           "unlisted": "不列出",
           "private": "私密",
