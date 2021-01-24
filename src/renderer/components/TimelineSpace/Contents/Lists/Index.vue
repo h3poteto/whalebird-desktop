@@ -1,24 +1,24 @@
 <template>
-<div id="lists">
-  <div class="new-list" v-loading="creating" :element-loading-background="loadingBackground">
-    <el-form :inline="true">
-      <input v-model="title" :placeholder="$t('lists.index.new_list')" class="list-title"></input>
-      <el-button type="text" class="create" @click="createList">
-        <icon name="plus"></icon>
-      </el-button>
-    </el-form>
-  </div>
-  <div class="list" v-for="list in lists" :key="list.id">
-    <router-link tag="div" class="title" :to="`/${id()}/lists/${list.id}`">
-      {{ list.title }}
-    </router-link>
-    <div class="tools">
-      <el-button type="text" @click="edit(list)">
-        {{ $t('lists.index.edit') }}
-      </el-button>
+  <div id="lists">
+    <div class="new-list" v-loading="creating" :element-loading-background="loadingBackground">
+      <el-form :inline="true">
+        <input v-model="title" :placeholder="$t('lists.index.new_list')" class="list-title" />
+        <el-button type="text" class="create" @click="createList">
+          <icon name="plus"></icon>
+        </el-button>
+      </el-form>
+    </div>
+    <div class="list" v-for="list in lists" :key="list.id">
+      <router-link tag="div" class="title" :to="`/${id()}/lists/${list.id}`">
+        {{ list.title }}
+      </router-link>
+      <div class="tools">
+        <el-button type="text" @click="edit(list)">
+          <icon name="regular/edit"></icon>
+        </el-button>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -26,7 +26,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'lists',
-  data () {
+  data() {
     return {
       title: '',
       creating: false
@@ -38,27 +38,25 @@ export default {
       loadingBackground: state => state.App.theme.wrapper_mask_color
     })
   },
-  created () {
+  created() {
     this.$store.commit('TimelineSpace/changeLoading', true)
-    this.fetch()
-      .finally(() => {
-        this.$store.commit('TimelineSpace/changeLoading', false)
-      })
+    this.fetch().finally(() => {
+      this.$store.commit('TimelineSpace/changeLoading', false)
+    })
   },
   methods: {
-    id () {
+    id() {
       return this.$route.params.id
     },
-    fetch () {
-      return this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists')
-        .catch(() => {
-          this.$message({
-            message: this.$t('message.lists_fetch_error'),
-            type: 'error'
-          })
+    fetch() {
+      return this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists').catch(() => {
+        this.$message({
+          message: this.$t('message.lists_fetch_error'),
+          type: 'error'
         })
+      })
     },
-    async createList () {
+    async createList() {
       this.creating = true
       try {
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Index/createList', this.title)
@@ -73,7 +71,7 @@ export default {
       }
       await this.$store.dispatch('TimelineSpace/SideMenu/fetchLists')
     },
-    edit (list) {
+    edit(list) {
       return this.$router.push(`/${this.id()}/lists/${list.id}/edit`)
     }
   }
