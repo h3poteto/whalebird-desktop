@@ -93,7 +93,8 @@
       "toot": {
         "title": "툿",
         "visibility": {
-          "description": "툿의 기본 공개범위를 변경합니다.",
+          "description": "Customize default visibility of toot",
+          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
           "public": "공개",
           "unlisted": "미등록",
           "private": "비공개",

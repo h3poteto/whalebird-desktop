@@ -93,7 +93,8 @@
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Standardsichtbarkeit von Toots anpassen.",
+          "description": "Customize default visibility of toot",
+          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
           "public": "Öffenlich",
           "unlisted": "Nicht gelistet",
           "private": "Privat",

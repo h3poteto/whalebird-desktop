@@ -93,7 +93,8 @@
       "toot": {
         "title": "Pouet",
         "visibility": {
-          "description": "Personnaliser la visibilité par défaut du pouet.",
+          "description": "Customize default visibility of toot",
+          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
           "public": "Public",
           "unlisted": "Public sans être affiché sur le fil public",
           "private": "Abonné⋅e⋅s uniquement",
