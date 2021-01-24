@@ -41,6 +41,17 @@ const actions: ActionTree<IndexState, RootState> = {
     )
     const res = await client.createList(title)
     return res.data
+  },
+  deleteList: async ({ dispatch, rootState }, list: Entity.List) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    const res = await client.deleteList(list.id)
+    dispatch('fetchLists')
+    return res.data
   }
 }
 
