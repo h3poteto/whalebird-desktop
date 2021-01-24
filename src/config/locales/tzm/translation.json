@@ -140,7 +140,7 @@
           "description": "Enable spellchecker",
           "notice": "Requires relaunch",
           "confirm": {
-            "title": "Warning",
+            "title": "Confirm",
             "message": "You have to restart this application. Continue?",
             "ok": "Restart Now",
             "cancel": "Cancel"
@@ -238,7 +238,7 @@
       "language_description": "Dɣer tutlayt nna txsed ad-sis tssmrsed Whalebird.",
       "notice": "Issutur allas usenti",
       "confirm": {
-        "title": "Warning",
+        "title": "Confirm",
         "message": "Ixṣ as talsed tsentid tisensi-a. ad tsmded?",
         "ok": "Als-senti dɣi",
         "cancel": "Ser"
