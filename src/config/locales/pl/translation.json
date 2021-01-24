@@ -135,7 +135,17 @@
       },
       "other": {
         "title": "Other options",
-        "launch": "Launch app on login"
+        "launch": "Launch app on login",
+        "spellcheck": {
+          "description": "Enable spellchecker",
+          "notice": "Requires relaunch",
+          "confirm": {
+            "title": "Warning",
+            "message": "You have to restart this application. Continue?",
+            "ok": "Restart Now",
+            "cancel": "Cancel"
+          }
+        }
       }
     },
     "appearance": {
