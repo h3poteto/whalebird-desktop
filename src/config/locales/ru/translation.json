@@ -140,7 +140,7 @@
           "description": "Enable spellchecker",
           "notice": "Requires relaunch",
           "confirm": {
-            "title": "Warning",
+            "title": "Confirm",
             "message": "You have to restart this application. Continue?",
             "ok": "Restart Now",
             "cancel": "Cancel"
@@ -238,7 +238,7 @@
       "language_description": "Choose the language you would like to use with Whalebird.",
       "notice": "Requires relaunch",
       "confirm": {
-        "title": "Warning",
+        "title": "Confirm",
         "message": "You have to restart this application. Continue?",
         "ok": "Restart Now",
         "cancel": "Cancel"
