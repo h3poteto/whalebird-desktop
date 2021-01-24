@@ -387,7 +387,15 @@
   "lists": {
     "index": {
       "new_list": "Nouvelle liste",
-      "edit": "Éditer"
+      "edit": "Éditer",
+      "delete": {
+        "confirm": {
+          "title": "Confirm",
+          "message": "This operation can not be undone, this list will be permanently deleted",
+          "ok": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "login": {
