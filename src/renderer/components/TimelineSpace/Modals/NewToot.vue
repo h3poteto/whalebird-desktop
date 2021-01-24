@@ -520,7 +520,7 @@ export default {
       .image-wrapper {
         position: relative;
         flex: 1 1 0;
-        min-width: 40%;
+        min-width: 10%;
         height: 150px;
         margin: 4px;
 
