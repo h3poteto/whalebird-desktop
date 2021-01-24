@@ -15,7 +15,8 @@ describe('Preferences/General', () => {
           hideAllAttachments: false
         },
         other: {
-          launch: false
+          launch: false,
+          spellcheck: true
         }
       },
       loading: false

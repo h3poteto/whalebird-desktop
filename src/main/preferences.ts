@@ -27,7 +27,8 @@ const timeline: Timeline = {
 }
 
 const other: Other = {
-  launch: false
+  launch: false,
+  spellcheck: true
 }
 
 const general: General = {

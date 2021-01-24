@@ -29,6 +29,10 @@
       <el-form-item for="launch" :label="$t('preferences.general.other.launch')">
         <el-switch id="launch" v-model="other_launch" active-color="#13ce66"> </el-switch>
       </el-form-item>
+      <el-form-item for="spellcheck" :label="$t('preferences.general.other.spellcheck.description')">
+        <el-switch id="spellcheck" v-model="other_spellcheck" active-color="#13ce66"> </el-switch>
+        <p class="notice">{{ $t('preferences.general.other.spellcheck.notice') }}</p>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -105,6 +109,20 @@ export default {
           launch: value
         })
       }
+    },
+    other_spellcheck: {
+      get() {
+        return this.$store.state.Preferences.General.general.other.spellcheck
+      },
+      set(value) {
+        this.$store
+          .dispatch('Preferences/General/updateOther', {
+            spellcheck: value
+          })
+          .then(() => {
+            this.confirm()
+          })
+      }
     }
   },
   created() {
@@ -114,6 +132,23 @@ export default {
         type: 'error'
       })
     })
+  },
+  methods: {
+    confirm() {
+      this.$confirm(
+        this.$t('preferences.general.other.spellcheck.confirm.message'),
+        this.$t('preferences.general.other.spellcheck.confirm.title'),
+        {
+          confirmButtonText: this.$t('preferences.general.other.spellcheck.confirm.ok'),
+          cancelButtonText: this.$t('preferences.general.other.spellcheck.confirm.cancel'),
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          this.$store.dispatch('Preferences/General/relaunch')
+        })
+        .catch(() => {})
+    }
   }
 }
 </script>
@@ -139,6 +174,11 @@ export default {
       margin-left: 12px;
       font-weight: 800;
     }
+  }
+
+  .notice {
+    color: #c0c4cc;
+    font-size: 12px;
   }
 }
 </style>

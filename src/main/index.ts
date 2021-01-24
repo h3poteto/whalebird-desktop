@@ -200,6 +200,16 @@ async function getLanguage() {
   }
 }
 
+const getSpellChecker = async (): Promise<boolean> => {
+  try {
+    const preferences = new Preferences(preferencesDBPath)
+    const conf = await preferences.load()
+    return conf.general.other.spellcheck
+  } catch (err) {
+    return true
+  }
+}
+
 const getMenuPreferences = async (): Promise<MenuPreferences> => {
   const preferences = new Preferences(preferencesDBPath)
   const conf = await preferences.load()
@@ -224,6 +234,11 @@ async function createWindow() {
    */
   const language = await getLanguage()
   i18next.changeLanguage(language)
+
+  /**
+   * Get spellcheck
+   */
+  const spellcheck = await getSpellChecker()
 
   /**
    * Load system theme color for dark mode
@@ -283,7 +298,7 @@ async function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       preload: path.resolve(__dirname, './preload.js'),
-      spellcheck: true
+      spellcheck: spellcheck
     }
   }
   const config: Config = {
@@ -907,7 +922,9 @@ ipcMain.handle('get-preferences', async (_: IpcMainInvokeEvent) => {
   await preferences
     .update({
       general: {
-        other: enabled
+        other: {
+          launch: enabled
+        }
       }
     })
     .catch(err => console.error(err))
