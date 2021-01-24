@@ -141,9 +141,9 @@
           "notice": "再起動が必要です",
           "confirm": {
             "title": "Warning",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
+            "message": "設定を有効化するために再起動する必要があります",
+            "ok": "再起動する",
+            "cancel": "キャンセル"
           }
         }
       }
