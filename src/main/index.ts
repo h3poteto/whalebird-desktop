@@ -1196,7 +1196,9 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
         {
           label: i18n.t('main_menu.application.quit'),
           accelerator: 'CmdOrCtrl+Q',
-          role: 'quit'
+          click: () => {
+            mainWindow!.destroy()
+          }
         }
       ]
     },
