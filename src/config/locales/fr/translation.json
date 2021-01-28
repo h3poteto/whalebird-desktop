@@ -29,7 +29,7 @@
       "toggle_full_screen": "Basculer en mode plein écran"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
+      "always_show_menu_bar": "Toujours afficher la barre de titre",
       "name": "Fenêtre",
       "close": "Fermer la fenêtre",
       "open": "Ouvrir la fenêtre",
@@ -53,7 +53,7 @@
     "direct": "Messages directs",
     "follow_requests": "Demandes d’abonnement",
     "favourite": "Favoris",
-    "bookmark": "Bookmark",
+    "bookmark": "Favori",
     "local": "Fil public local",
     "public": "Fil public global",
     "hashtag": "Hashtag",
@@ -65,7 +65,7 @@
     "notification": "Notifications",
     "mention": "Mention",
     "favourite": "Favoris",
-    "bookmark": "Bookmark",
+    "bookmark": "Favori",
     "follow_requests": "Demandes d’abonnement",
     "direct_messages": "Messages directs",
     "local": "Fil public local",
@@ -93,8 +93,8 @@
       "toot": {
         "title": "Pouet",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "description": "Personnaliser la visibilité par défaut du toot",
+          "notice": "Ce paramètre s'applique uniquement aux nouveaux toots, les réponses suivent la visibilité des toots originaux",
           "public": "Public",
           "unlisted": "Public sans être affiché sur le fil public",
           "private": "Abonné⋅e⋅s uniquement",
@@ -137,13 +137,13 @@
         "title": "Autres options",
         "launch": "Lancer l'application dès la connexion",
         "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
+          "description": "Activer le correcteur orthographique",
+          "notice": "Nécessite une relance",
           "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
+            "title": "Confirmer",
+            "message": "Vous devez redémarrer l'application pour appliquer les modifications, continuer ?",
+            "ok": "Redémarrer maintenant",
+            "cancel": "Annuler"
           }
         }
       }
@@ -154,8 +154,8 @@
       "theme": {
         "light": "Clair",
         "dark": "Foncé",
-        "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
+        "solarized_light": "Lumière solaire",
+        "solarized_dark": "Solarisé Sombre",
         "kimbie_dark": "KimbieDark",
         "custom": "Personalisée"
       },
@@ -172,7 +172,7 @@
         "wrapper_mask_color": "Masque modal"
       },
       "font_size": "Taille des caractères",
-      "font_family": "Font family",
+      "font_family": "Famille de polices",
       "toot_padding": "Agrandissement du message",
       "display_style": {
         "title": "Format d'affichage",
@@ -194,7 +194,7 @@
         "reblog": "Notifiez-moi quand je reçois un reblog",
         "favourite": "Notifiez-moi quand je reçois un favoris",
         "follow": "Notifiez-moi quand je reçois un follow",
-        "reaction": "Notify me when I receive a emoji reaction"
+        "reaction": "Notifiez-moi quand je reçois un emoji"
       }
     },
     "account": {
@@ -238,7 +238,7 @@
       "language_description": "Choisissez la langue que vous souhaitez utiliser sur Whalebird.",
       "notice": "Nécessite un redémarrage",
       "confirm": {
-        "title": "Confirm",
+        "title": "Confirmer",
         "message": "Vous devez redémarrer l'application pour appliquer les modifications, continuer ?",
         "ok": "Redémarrer maintenant",
         "cancel": "Annuler"
@@ -338,7 +338,7 @@
       "reblog": "Repouet",
       "fav": "Préféré",
       "detail": "Détails",
-      "bookmark": "Bookmark",
+      "bookmark": "Favori",
       "pinned": "Pouet épinglé",
       "poll": {
         "vote": "Vote",
@@ -390,17 +390,17 @@
       "edit": "Éditer",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "Confirmer",
+          "message": "Cette opération ne peut pas être annulée, cette liste sera définitivement supprimée",
+          "ok": "Supprimer",
+          "cancel": "Annuler"
         }
       }
     }
   },
   "login": {
     "domain_name_label": "Tout d'abord, connectons-nous à votre serveur Mastodon.  Entez votre nom de domaine :",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
+    "proxy_info": "Si vous souhaitez utiliser le serveur proxy, veuillez configurer votre proxy dans",
     "proxy_here": " ici",
     "search": "Rechercher",
     "login": "Connexion"
@@ -409,7 +409,7 @@
     "manually_1": "La page d'autorisation est à présent affichée dans votre navigateur.",
     "manually_2": "Si ce n'était pas le cas, veuillez ouvrir le lien suivant manuellement.",
     "code_label": "Recopier le code d'autorisation depuis votre navigateur:",
-    "misskey_label": "Please submit after you authorize in your browser.",
+    "misskey_label": "Veuillez soumettre une fois que vous avez autorisé dans votre navigateur.",
     "submit": "Envoyer"
   },
   "receive_drop": {
@@ -443,8 +443,8 @@
     "unreblog_error": "Erreur lors de la suppression du partage du pouet",
     "favourite_error": "Erreur à la création d'un favori",
     "unfavourite_error": "Erreur à la suprression d'un favori",
-    "bookmark_error": "Failed to bookmark",
-    "unbookmark_error": "Failed to remove bookmark",
+    "bookmark_error": "Échec de l'ajout du favoris",
+    "unbookmark_error": "Échec de la suppression du favoris",
     "delete_error": "Erreur lors de la suppression d'un pouet",
     "search_error": "Erreur lors de la recherche",
     "toot_error": "Erreur à l'envoie du pouet",
@@ -452,7 +452,7 @@
     "add_user_error": "Erreur lors de l'ajout d'un utilisateur⋅trice",
     "authorize_url_error": "Erreur à la récupération de l'URL d'autorisation",
     "domain_confirmed": "{{domain}} est confirmé, veuillez à présent vous connecter",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
+    "domain_doesnt_exist": "Impossible de se connecter à {{domain}}, vérifier l'URL du serveur",
     "loading": "Chargement..."
   },
   "validation": {
@@ -477,8 +477,8 @@
       "body": "{{username}} vous suit"
     },
     "follow_request": {
-      "title": "FollowRequest",
-      "body": "Receive a follow request from {{username}}"
+      "title": "Suivre la demande",
+      "body": "Recevoir une demande de suivi de {{username}}"
     },
     "reblog": {
       "title": "Partage",
@@ -486,11 +486,11 @@
     },
     "quote": {
       "title": "Citation",
-      "body": "{{username}} quoted your status"
+      "body": "{{username}} a cité votre statut"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "Réaction",
+      "body": "{{username}} a réagi à votre statut"
     }
   }
 }
