@@ -137,13 +137,13 @@
         "title": "Otras opciones",
         "launch": "Iniciar aplicación al iniciar sesión",
         "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
+          "description": "Activar corrector ortográfico",
+          "notice": "Requiere reiniciar",
           "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
+            "title": "Confirmar",
+            "message": "Tienes que reiniciar esta aplicación. ¿Continuar?",
+            "ok": "Reiniciar Ahora",
+            "cancel": "Cancelar"
           }
         }
       }
@@ -238,7 +238,7 @@
       "language_description": "Elige el idioma que te gustaría usar con Whalebird.",
       "notice": "Requiere reiniciar",
       "confirm": {
-        "title": "Confirm",
+        "title": "Confirmar",
         "message": "Tienes que reiniciar esta aplicación. ¿Continuar?",
         "ok": "Reiniciar ahora",
         "cancel": "Cancelar"
@@ -390,10 +390,10 @@
       "edit": "Editar",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "Confirmar",
+          "message": "Esta operación no se puede deshacer, esta lista se eliminará permanentemente",
+          "ok": "Eliminar",
+          "cancel": "Cancelar"
         }
       }
     }
