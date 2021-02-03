@@ -286,7 +286,7 @@
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.44.2",
     "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0",
+    "webpack-dev-server": "^3.11.2",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^5.7.3"
   }
