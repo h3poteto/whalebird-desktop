@@ -1834,10 +1834,12 @@ align-text@^0.1.1, align-text@^0.1.3:
     longest "^1.0.1"
     repeat-string "^1.5.2"
 
-all-object-keys@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/all-object-keys/-/all-object-keys-2.1.1.tgz#f0693e8031f9d88bf804649a7ed421794f26b4ca"
-  integrity sha512-gE7sVZoFCJR5I5ijxXQos5XDkc6bHheBj9cwvb9aEfTdrjerWXdBf8Ci3yGy9wVi/Ys6TKwZhJCZ8q0e2Gp+4g==
+all-object-keys@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/all-object-keys/-/all-object-keys-2.2.0.tgz#4e0cd06357eefc006741f6bb8a47dde500dbe01c"
+  integrity sha512-x8eEZ/ZhC6OjCKanec3y7DpCj/Kymife0yVkq56XDWUwZcZotzC0ejgO5/dbgRiBVMRb09dY+JP9dySCHysl9A==
+  dependencies:
+    try-catch "^3.0.0"
 
 amdefine@>=0.0.4:
   version "1.0.1"
@@ -12577,6 +12579,11 @@ truncate-utf8-bytes@^1.0.0:
   integrity sha1-QFkjkJWS1W94pYGENLC3hInKXys=
   dependencies:
     utf8-byte-length "^1.0.1"
+
+try-catch@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/try-catch/-/try-catch-3.0.0.tgz#7996d8b89895e2e8ae62cbdbeb4fe17470f8131b"
+  integrity sha512-3uAqUnoemzca1ENvZ72EVimR+E8lqBbzwZ9v4CEbLjkaV3Q+FtdmPUt7jRtoSoTiYjyIMxEkf6YgUpe/voJ1ng==
 
 ts-jest@^26.5.0:
   version "26.5.0"
