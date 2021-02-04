@@ -60,7 +60,7 @@ const mutations: MutationTree<PostsAndRepliesState> = {
 }
 
 const actions: ActionTree<PostsAndRepliesState, RootState> = {
-  fetchTimeline: async ({ commit, rootState }, account: Account) => {
+  fetchTimeline: async ({ commit, rootState }, account: Entity.Account) => {
     commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
     const client = generator(
       rootState.TimelineSpace.sns,
