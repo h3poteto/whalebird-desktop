@@ -232,7 +232,7 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-istanbul": "^6.0.0",
     "babel-register": "^6.26.0",
-    "cfonts": "^2.8.6",
+    "cfonts": "^2.9.1",
     "chai": "^4.2.0",
     "chalk": "^4.1.0",
     "copy-webpack-plugin": "^6.4.1",
