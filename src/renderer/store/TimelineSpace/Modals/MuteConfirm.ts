@@ -1,10 +1,10 @@
-import generator from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type MuteConfirmState = {
   modalOpen: boolean
-  account: Account | null
+  account: Entity.Account | null
 }
 
 const state = (): MuteConfirmState => ({
@@ -21,7 +21,7 @@ const mutations: MutationTree<MuteConfirmState> = {
   [MUTATION_TYPES.CHANGE_MODAL]: (state, value: boolean) => {
     state.modalOpen = value
   },
-  [MUTATION_TYPES.CHANGE_ACCOUNT]: (state, account: Account) => {
+  [MUTATION_TYPES.CHANGE_ACCOUNT]: (state, account: Entity.Account) => {
     state.account = account
   }
 }
@@ -30,7 +30,7 @@ const actions: ActionTree<MuteConfirmState, RootState> = {
   changeModal: ({ commit }, value: boolean) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, value)
   },
-  changeAccount: ({ commit }, account: Account) => {
+  changeAccount: ({ commit }, account: Entity.Account) => {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
   submit: async ({ state, rootState, dispatch }, notify: boolean) => {
