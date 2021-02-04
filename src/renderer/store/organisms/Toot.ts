@@ -102,7 +102,7 @@ const actions: ActionTree<TootState, RootState> = {
     await client.deleteStatus(message.id)
     return message
   },
-  block: async ({ rootState }, account: Account) => {
+  block: async ({ rootState }, account: Entity.Account) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
