@@ -27,7 +27,7 @@ const mutations: MutationTree<FollowsState> = {
 }
 
 const actions: ActionTree<FollowsState, RootState> = {
-  fetchFollows: async ({ commit, rootState }, account: Account) => {
+  fetchFollows: async ({ commit, rootState }, account: Entity.Account) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
