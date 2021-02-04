@@ -3,7 +3,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type AccountState = {
-  results: Array<Account>
+  results: Array<Entity.Account>
 }
 
 const state = (): AccountState => ({
@@ -15,7 +15,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<AccountState> = {
-  [MUTATION_TYPES.UPDATE_RESULTS]: (state, results: Array<Account>) => {
+  [MUTATION_TYPES.UPDATE_RESULTS]: (state, results: Array<Entity.Account>) => {
     state.results = results
   }
 }
