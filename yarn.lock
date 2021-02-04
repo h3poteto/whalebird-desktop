@@ -3996,6 +3996,11 @@ date-fns@^1.27.2:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
 
+dayjs@^1.10.4:
+  version "1.10.4"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.4.tgz#8e544a9b8683f61783f570980a8a80eaf54ab1e2"
+  integrity sha512-RI/Hh4kqRc1UKLOAf/T5zdMMX5DQIlDxwUe3wSyMMnEbGunnpENCdbUgM+dW7kXidZqCttBrmw7BhN4TMddkCw==
+
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
@@ -8560,16 +8565,16 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-megalodon@3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-3.3.2.tgz#20737f47589feb8209f8129a921c3308be10d7b0"
-  integrity sha512-lmqkwEL4Yrb459gL2SUM7mFpdzZDxmXMG8xb7RWNeo93OuVY+jukqI8mZI/g4v4WoVHYfSaVlB7Tqm0DwuqXIw==
+megalodon@3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-3.3.3.tgz#e15fc5bac4c7306ccdbc8313aaa0ceaf8040e7be"
+  integrity sha512-rX7bpjKc6ZlyjjANmym9bTOBRxjePnWOJnkVdl2F7sXJp8NYX7NQopOlmoQIqAY46Js+Ay1/TNtVaL5oGdHHpA==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^7.2.0"
     axios "^0.21.0"
+    dayjs "^1.10.4"
     https-proxy-agent "^5.0.0"
-    moment "^2.24.0"
     oauth "^0.9.15"
     socks-proxy-agent "^5.0.0"
     typescript "3.9.7"
@@ -8896,7 +8901,7 @@ modify-filename@^1.1.0:
   resolved "https://registry.yarnpkg.com/modify-filename/-/modify-filename-1.1.0.tgz#9a2dec83806fbb2d975f22beec859ca26b393aa1"
   integrity sha1-mi3sg4Bvuy2XXyK+7IWcoms5OqE=
 
-moment@^2.24.0, moment@^2.29.1:
+moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
