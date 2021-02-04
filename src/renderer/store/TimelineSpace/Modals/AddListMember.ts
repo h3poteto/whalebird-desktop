@@ -47,7 +47,7 @@ const actions: ActionTree<AddListMemberState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_ACCOUNTS, res.data)
     return res.data
   },
-  add: async ({ state, rootState }, account: Account): Promise<{}> => {
+  add: async ({ state, rootState }, account: Entity.Account): Promise<{}> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
