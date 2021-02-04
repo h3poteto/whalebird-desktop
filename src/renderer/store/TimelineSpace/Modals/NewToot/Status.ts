@@ -1,4 +1,4 @@
-import emojilib from 'emojilib'
+import emojidata from 'unicode-emoji-json/data-by-emoji.json'
 import generator, { MegalodonInterface } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
@@ -234,11 +234,11 @@ const actions: ActionTree<StatusState, RootState> = {
   suggestEmoji: ({ commit, rootState }, wordStart: WordStart) => {
     const { word, start } = wordStart
     // Find native emojis
-    const filteredEmojiName: Array<string> = emojilib.ordered.filter((emoji: string) => `:${emoji}:`.includes(word))
-    const filteredNativeEmoji: Array<SuggestEmoji> = filteredEmojiName.map((name: string) => {
+    const filteredEmojiName: Array<string> = Object.keys(emojidata).filter((emoji: string) => `:${emojidata[emoji].name}:`.includes(word))
+    const filteredNativeEmoji: Array<SuggestEmoji> = filteredEmojiName.map((emoji: string) => {
       return {
-        name: `:${name}:`,
-        code: emojilib.lib[name].char
+        name: `:${emojidata[emoji].name}:`,
+        code: emoji
       }
     })
     // Find custom emojis
