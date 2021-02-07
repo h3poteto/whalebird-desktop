@@ -1,5 +1,44 @@
 # Change Log
 
+## [4.3.2] - 2021-01-20
+### Changed
+- [#2062](https://github.com/h3poteto/whalebird-desktop/pull/2062) New Crowdin updates
+- [#2041](https://github.com/h3poteto/whalebird-desktop/pull/2041) build(deps-dev): Bump electron from 11.0.3 to 11.2.0
+- [#1996](https://github.com/h3poteto/whalebird-desktop/pull/1996) build(deps-dev): Bump typescript from 4.0.5 to 4.1.3
+- [#2031](https://github.com/h3poteto/whalebird-desktop/pull/2031) build(deps-dev): Bump eslint-plugin-prettier from 3.1.4 to 3.3.1
+- [#2027](https://github.com/h3poteto/whalebird-desktop/pull/2027) build(deps-dev): Bump eslint from 7.14.0 to 7.17.0
+- [#2026](https://github.com/h3poteto/whalebird-desktop/pull/2026) build(deps-dev): Bump core-js from 3.8.0 to 3.8.2
+- [#2040](https://github.com/h3poteto/whalebird-desktop/pull/2040) build(deps-dev): Bump @typescript-eslint/typescript-estree from 4.6.0 to 4.13.0
+- [#2034](https://github.com/h3poteto/whalebird-desktop/pull/2034) build(deps-dev): Bump @types/jest from 26.0.15 to 26.0.20
+- [#2004](https://github.com/h3poteto/whalebird-desktop/pull/2004) build(deps-dev): Bump eslint-config-prettier from 6.15.0 to 7.1.0
+- [#1969](https://github.com/h3poteto/whalebird-desktop/pull/1969) build(deps-dev): Bump cross-env from 7.0.2 to 7.0.3
+- [#2030](https://github.com/h3poteto/whalebird-desktop/pull/2030) build(deps-dev): Bump eslint-plugin-vue from 7.1.0 to 7.4.1
+- [#2029](https://github.com/h3poteto/whalebird-desktop/pull/2029) build(deps): [Security] Bump axios from 0.21.0 to 0.21.1
+- [#2001](https://github.com/h3poteto/whalebird-desktop/pull/2001) build(deps-dev): Bump copy-webpack-plugin from 6.3.2 to 6.4.1
+- [#2002](https://github.com/h3poteto/whalebird-desktop/pull/2002) build(deps): Bump sanitize-html from 2.1.2 to 2.3.0
+- [#1966](https://github.com/h3poteto/whalebird-desktop/pull/1966) build(deps-dev): Bump babel-jest from 26.6.1 to 26.6.3
+- [#2038](https://github.com/h3poteto/whalebird-desktop/pull/2038) New Crowdin updates
+- [#1990](https://github.com/h3poteto/whalebird-desktop/pull/1990) build(deps-dev): Bump mini-css-extract-plugin from 1.2.1 to 1.3.3
+- [#1980](https://github.com/h3poteto/whalebird-desktop/pull/1980) build(deps-dev): Bump electron-packager from 15.1.0 to 15.2.0
+- [#1964](https://github.com/h3poteto/whalebird-desktop/pull/1964) build(deps-dev): Bump css-loader from 5.0.0 to 5.0.1
+- [#1961](https://github.com/h3poteto/whalebird-desktop/pull/1961) build(deps-dev): Bump jest from 26.6.1 to 26.6.3
+- [#1960](https://github.com/h3poteto/whalebird-desktop/pull/1960) build(deps-dev): Bump eslint-plugin-html from 6.1.0 to 6.1.1
+- [#2006](https://github.com/h3poteto/whalebird-desktop/pull/2006) build(deps): [Security] Bump node-notifier from 8.0.0 to 8.0.1
+- [#1992](https://github.com/h3poteto/whalebird-desktop/pull/1992) build(deps): [Security] Bump ini from 1.3.5 to 1.3.8
+- [#2019](https://github.com/h3poteto/whalebird-desktop/pull/2019) closes #1997 Add Sinhala in i18n
+- [#2015](https://github.com/h3poteto/whalebird-desktop/pull/2015) New Crowdin updates
+- [#2012](https://github.com/h3poteto/whalebird-desktop/pull/2012) New Crowdin updates
+- [#2009](https://github.com/h3poteto/whalebird-desktop/pull/2009) Add Traditional Chinese in i18n
+- [#2010](https://github.com/h3poteto/whalebird-desktop/pull/2010) New Crowdin updates
+- [#2011](https://github.com/h3poteto/whalebird-desktop/pull/2011) Update crowdin config for zh-TW
+
+### Fixed
+- [#2037](https://github.com/h3poteto/whalebird-desktop/pull/2037) Fix icon for mac app
+- [#2020](https://github.com/h3poteto/whalebird-desktop/pull/2020) Fix cancel action for confirm in element-ui
+- [#2016](https://github.com/h3poteto/whalebird-desktop/pull/2016) closes #2014 Display only predefined notification type in notifications
+- [#2018](https://github.com/h3poteto/whalebird-desktop/pull/2018) refs #1997 Fix Sinhala language code for crowdin
+- [#2013](https://github.com/h3poteto/whalebird-desktop/pull/2013) Fix typos
+
 ## [4.3.1] - 2020-12-03
 ### Changed
 - [#1967](https://github.com/h3poteto/whalebird-desktop/pull/1967) Update node version to 14.15.1
