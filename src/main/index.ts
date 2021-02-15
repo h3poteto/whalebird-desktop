@@ -334,10 +334,6 @@ async function createWindow() {
 
   mainWindow.webContents.on('will-navigate', event => event.preventDefault())
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-
   // Show tray icon only linux and windows.
   if (process.platform !== 'darwin') {
     // Show tray icon
@@ -358,10 +354,14 @@ async function createWindow() {
     })
 
     // Minimize to tray
-    mainWindow!.on('close', event => {
+    mainWindow.on('close', event => {
       mainWindow!.hide()
       mainWindow!.setSkipTaskbar(true)
       event.preventDefault()
+    })
+  } else {
+    mainWindow.on('closed', () => {
+      mainWindow = null
     })
   }
 }
@@ -1163,6 +1163,25 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
           }
         ]
 
+  const applicationQuitMenu: Array<MenuItemConstructorOptions> =
+    process.platform === 'darwin'
+      ? [
+          {
+            label: i18n.t('main_menu.application.quit'),
+            accelerator: 'CmdOrCtrl+Q',
+            role: 'quit'
+          }
+        ]
+      : [
+          {
+            label: i18n.t('main_menu.application.quit'),
+            accelerator: 'CmdOrCtrl+Q',
+            click: () => {
+              mainWindow!.destroy()
+            }
+          }
+        ]
+
   const template: Array<MenuItemConstructorOptions> = [
     {
       label: i18n.t('main_menu.application.name'),
@@ -1193,13 +1212,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
         {
           type: 'separator'
         },
-        {
-          label: i18n.t('main_menu.application.quit'),
-          accelerator: 'CmdOrCtrl+Q',
-          click: () => {
-            mainWindow!.destroy()
-          }
-        }
+        ...applicationQuitMenu
       ]
     },
     {
