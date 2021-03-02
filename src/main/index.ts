@@ -25,7 +25,7 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import { Entity, detector } from 'megalodon'
+import { Entity, detector, NotificationType } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
@@ -1365,7 +1365,7 @@ async function reopenWindow() {
 
 const createNotification = (notification: Entity.Notification, notifyConfig: Notify): NotificationConstructorOptions | null => {
   switch (notification.type) {
-    case 'favourite':
+    case NotificationType.Favourite:
       if (notifyConfig.favourite) {
         return {
           title: i18next.t('notification.favourite.title'),
@@ -1374,7 +1374,7 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         } as NotificationConstructorOptions
       }
       break
-    case 'follow':
+    case NotificationType.Follow:
       if (notifyConfig.follow) {
         return {
           title: i18next.t('notification.follow.title'),
@@ -1383,7 +1383,7 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         } as NotificationConstructorOptions
       }
       break
-    case 'follow_request':
+    case NotificationType.FollowRequest:
       if (notifyConfig.follow_request) {
         return {
           title: i18next.t('notification.follow_request.title'),
@@ -1392,7 +1392,7 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         } as NotificationConstructorOptions
       }
       break
-    case 'mention':
+    case NotificationType.Mention:
       if (notifyConfig.reply) {
         return {
           title: `${username(notification.status!.account)}`,
@@ -1404,7 +1404,7 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         } as NotificationConstructorOptions
       }
       break
-    case 'reblog':
+    case NotificationType.Reblog:
       if (notifyConfig.reblog) {
         if (notification.status && notification.status.quote) {
           return {
@@ -1421,11 +1421,20 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         }
       }
       break
-    case 'emoji_reaction':
+    case NotificationType.EmojiReaction:
       if (notifyConfig.reaction) {
         return {
           title: i18next.t('notification.reaction.title'),
           body: i18next.t('notification.reaction.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
+    case NotificationType.Status:
+      if (notifyConfig.status) {
+        return {
+          title: i18next.t('notification.status.title'),
+          body: i18next.t('notification.status.body', { username: username(notification.account) }),
           silent: false
         } as NotificationConstructorOptions
       }
