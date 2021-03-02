@@ -491,6 +491,10 @@
     "reaction": {
       "title": "Amyagga",
       "body": "Imyagga {{username}} ɣef waddad-nnek"
+    },
+    "status": {
+      "title": "Status",
+      "body": "{{username}} just posted"
     }
   }
 }
