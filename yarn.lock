@@ -1347,15 +1347,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^14.14.28":
-  version "14.14.28"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.28.tgz#cade4b64f8438f588951a6b35843ce536853f25b"
-  integrity sha512-lg55ArB+ZiHHbBBttLpzD07akz0QPrZgUODNakeC09i62dnrywr9mFErHuaPlB6I7z+sEbK+IYmplahvplCj2g==
-
-"@types/node@^12.0.12":
-  version "12.12.58"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.58.tgz#46dae9b2b9ee5992818c8f7cee01ff4ce03ab44c"
-  integrity sha512-Be46CNIHWAagEfINOjmriSxuv7IVcqbGe+sDSg2SYCEz/0CRBy7LRASGfRbD8KZkqoePU73Wsx3UvOSFcq/9hA==
+"@types/node@*", "@types/node@^14.14.28", "@types/node@^14.6.2":
+  version "14.14.31"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.31.tgz#72286bd33d137aa0d152d47ec7c1762563d34055"
+  integrity sha512-vFHy/ezP5qI0rFgJ7aQnjDXwAMrG0KqqIH7tQG5PPv3BWBayOPIQNBjVc/P6hhdZfMx51REc6tfDNXHUio893g==
 
 "@types/node@^8.0.24":
   version "8.10.63"
@@ -4706,13 +4701,13 @@ electron-window-state@^5.0.3:
     jsonfile "^4.0.0"
     mkdirp "^0.5.1"
 
-electron@11.2.3:
-  version "11.2.3"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-11.2.3.tgz#8ad1d9858436cfca0e2e5ea7fea326794ae58ebb"
-  integrity sha512-6yxOc42nDAptHKNlUG/vcOh2GI9x2fqp2nQbZO0/3sz2CrwsJkwR3i3oMN9XhVJaqI7GK1vSCJz0verOkWlXcQ==
+electron@12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-12.0.0.tgz#b3b1d88cc64622e59c637521da5a6b6ab4df4eb5"
+  integrity sha512-p6oxZ4LG82hopPGAsIMOjyoL49fr6cexyFNH0kADA9Yf+mJ72DN7bjvBG+6V7r6QKhwYgsSsW8RpxBeVOUbxVQ==
   dependencies:
     "@electron/get" "^1.0.1"
-    "@types/node" "^12.0.12"
+    "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
 electron@^1.7.5:
