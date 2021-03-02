@@ -195,8 +195,8 @@
         "favourite": "お気に入りされた時",
         "follow": "フォローされた時",
         "reaction": "絵文字リアクションを受け取ったとき",
-        "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification"
+        "follow_request": "フォローリクエストを受け取った時",
+        "status": "トゥートの通知を受け取った時"
       }
     },
     "account": {
@@ -495,8 +495,8 @@
       "body": "{{username}} さんがリアクションをつけました"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} just posted"
+      "title": "トゥート",
+      "body": "{{username}} さんが投稿しました"
     }
   }
 }
