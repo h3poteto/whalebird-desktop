@@ -21,6 +21,9 @@
       <el-form-item for="notifyFollowRequest" :label="$t('preferences.notification.enable.follow_request')">
         <el-switch v-model="notifyFollowRequest" active-color="#13ce66"> </el-switch>
       </el-form-item>
+      <el-form-item for="notifyStatus" :label="$t('preferences.notification.enable.status')">
+        <el-switch v-model="notifyStatus" active-color="#13ce66"> </el-switch>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -86,6 +89,16 @@ export default {
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
           reaction: value
+        })
+      }
+    },
+    notifyStatus: {
+      get() {
+        return this.$store.state.Preferences.Notification.notification.notify.status
+      },
+      set(value) {
+        this.$store.dispatch('Preferences/Notification/updateNotify', {
+          status: value
         })
       }
     }

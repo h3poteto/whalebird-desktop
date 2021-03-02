@@ -48,7 +48,8 @@ const notify: Notify = {
   favourite: true,
   follow: true,
   follow_request: true,
-  reaction: true
+  reaction: true,
+  status: true
 }
 
 const language: LanguageSet = {
