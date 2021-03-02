@@ -491,6 +491,10 @@
     "reaction": {
       "title": "回應",
       "body": "{{username}} 回應了您的嘟文"
+    },
+    "status": {
+      "title": "Status",
+      "body": "{{username}} just posted"
     }
   }
 }
