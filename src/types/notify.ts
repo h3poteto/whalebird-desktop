@@ -5,4 +5,5 @@ export type Notify = {
   follow: boolean
   follow_request: boolean
   reaction: boolean
+  status: boolean
 }

@@ -14,7 +14,8 @@ const state = (): NotificationState => {
         favourite: true,
         follow: true,
         follow_request: true,
-        reaction: true
+        reaction: true,
+        status: true
       }
     }
   }
@@ -62,7 +63,8 @@ describe('Preferences/Notification', () => {
               favourite: false,
               follow: false,
               follow_request: false,
-              reaction: false
+              reaction: false,
+              status: false
             }
           }
         }
@@ -79,7 +81,8 @@ describe('Preferences/Notification', () => {
             favourite: false,
             follow: false,
             follow_request: false,
-            reaction: false
+            reaction: false,
+            status: false
           }
         })
       })
@@ -107,7 +110,8 @@ describe('Preferences/Notification', () => {
           favourite: true,
           follow: true,
           follow_request: true,
-          reaction: true
+          reaction: true,
+          status: true
         }
       })
       expect(App.actions.loadPreferences).toBeCalled()

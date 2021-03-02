@@ -11,7 +11,8 @@ describe('Preferences/Notification', () => {
           favourite: true,
           follow: true,
           follow_request: true,
-          reaction: true
+          reaction: true,
+          status: true
         }
       }
     }
@@ -23,14 +24,20 @@ describe('Preferences/Notification', () => {
           reply: false,
           reblog: false,
           favourite: false,
-          follow: false
+          follow: false,
+          follow_request: false,
+          reaction: false,
+          status: false
         }
       })
       expect(state.notification.notify).toEqual({
         reply: false,
         reblog: false,
         favourite: false,
-        follow: false
+        follow: false,
+        follow_request: false,
+        reaction: false,
+        status: false
       })
     })
   })

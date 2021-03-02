@@ -18,7 +18,8 @@ const state: NotificationState = {
       favourite: true,
       follow: true,
       follow_request: true,
-      reaction: true
+      reaction: true,
+      status: true
     }
   }
 }
