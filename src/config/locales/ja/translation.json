@@ -194,7 +194,9 @@
         "reblog": "ブーストされた時",
         "favourite": "お気に入りされた時",
         "follow": "フォローされた時",
-        "reaction": "絵文字リアクションを受け取ったとき"
+        "reaction": "絵文字リアクションを受け取ったとき",
+        "follow_request": "Notify me when I receive a follow request",
+        "status": "Notify me when I receive a status notification"
       }
     },
     "account": {
