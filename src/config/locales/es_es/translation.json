@@ -491,6 +491,10 @@
     "reaction": {
       "title": "Reacción",
       "body": "{{username}} reaccionó a tu estado"
+    },
+    "status": {
+      "title": "Status",
+      "body": "{{username}} just posted"
     }
   }
 }
