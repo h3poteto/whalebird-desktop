@@ -84,6 +84,18 @@
       @select="$emit('selectNotification')"
     >
     </reaction>
+    <status
+      v-else-if="message.type === 'status'"
+      :message="message"
+      :filter="filter"
+      :focused="focused"
+      :overlaid="overlaid"
+      @focusNext="$emit('focusNext')"
+      @focusPrev="$emit('focusPrev')"
+      @focusRight="$emit('focusRight')"
+      @select="$emit('selectNotification')"
+    >
+    </status>
   </div>
 </template>
 
@@ -95,6 +107,7 @@ import Mention from './Notification/Mention'
 import Quote from './Notification/Quote'
 import Reblog from './Notification/Reblog'
 import Reaction from './Notification/Reaction'
+import Status from './Notification/Status'
 
 export default {
   name: 'notification',
@@ -116,7 +129,7 @@ export default {
       default: false
     }
   },
-  components: { Favourite, Follow, FollowRequest, Mention, Quote, Reblog, Reaction },
+  components: { Favourite, Follow, FollowRequest, Mention, Quote, Reblog, Reaction, Status },
   methods: {
     updateToot(message) {
       return this.$emit('update', message)

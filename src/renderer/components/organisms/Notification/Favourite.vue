@@ -9,9 +9,7 @@
     role="article"
     aria-label="favourited toot"
   >
-    <div v-show="filtered(message)" class="filtered">
-      Filtered
-    </div>
+    <div v-show="filtered(message)" class="filtered">Filtered</div>
     <div v-show="!filtered(message)" class="favourite">
       <div class="action">
         <div class="action-mark">

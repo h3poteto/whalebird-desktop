@@ -152,9 +152,9 @@ const getters: GetterTree<NotificationsState, RootState> = {
         case NotificationType.Favourite:
         case NotificationType.Reblog:
         case NotificationType.Mention:
-        case NotificationType.Poll:
         case NotificationType.EmojiReaction:
         case NotificationType.FollowRequest:
+        case NotificationType.Status:
           return true
         default:
           return false
