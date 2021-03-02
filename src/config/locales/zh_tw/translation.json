@@ -194,7 +194,9 @@
         "reblog": "當我收到轉嘟時通知我",
         "favourite": "當我收到最愛時通知我",
         "follow": "當我收到跟隨時通知我",
-        "reaction": "當我收到 emoji 表情符號時通知我"
+        "reaction": "當我收到 emoji 表情符號時通知我",
+        "follow_request": "Notify me when I receive a follow request",
+        "status": "Notify me when I receive a status notification"
       }
     },
     "account": {
