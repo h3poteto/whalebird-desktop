@@ -194,7 +194,9 @@
         "reblog": "Notify me when I receive reblog",
         "favourite": "Notify me when I receive favourite",
         "follow": "Notify me when I receive follow",
-        "reaction": "Notify me when I receive a emoji reaction"
+        "reaction": "Notify me when I receive a emoji reaction",
+        "follow_request": "Notify me when I receive a follow request",
+        "status": "Notify me when I receive a status notification"
       }
     },
     "account": {
