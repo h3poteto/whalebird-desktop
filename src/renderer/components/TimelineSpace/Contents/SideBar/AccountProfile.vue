@@ -10,12 +10,26 @@
   >
     <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
       <div class="header">
-        <div class="follow-follower" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+        <div class="relationship" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
           <div class="follower-status">
             <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
             <el-tag class="status" size="medium" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
           </div>
+          <div class="notify" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+            <div
+              v-if="relationship.notifying"
+              class="unsubscribe"
+              @click="unsubscribe(account)"
+              :title="$t('side_bar.account_profile.unsubscribe')"
+            >
+              <icon name="bell" scale="1.3"></icon>
+            </div>
+            <div v-else class="subscribe" @click="subscribe(account)" :title="$t('side_bar.account_profile.subscribe')">
+              <icon name="regular/bell" scale="1.3"></icon>
+            </div>
+          </div>
         </div>
+
         <div class="user-info">
           <div class="more" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
             <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
@@ -243,6 +257,32 @@ export default {
     },
     identityOpen(link) {
       return window.shell.openExternal(link)
+    },
+    subscribe(account) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/subscribe', account)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.subscribe_error'),
+          type: 'error'
+        })
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
+    },
+    unsubscribe(account) {
+      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      try {
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unsubscribe', account)
+      } catch (err) {
+        this.$message({
+          message: this.$t('message.unsubscribe_error'),
+          type: 'error'
+        })
+      } finally {
+        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
     }
   }
 }
@@ -263,14 +303,23 @@ export default {
     word-wrap: break-word;
     font-size: var(--base-font-size);
 
-    .follow-follower {
-      text-align: left;
+    .relationship {
+      display: flex;
+      justify-content: space-between;
 
       .follower-status {
         .status {
           color: #fff;
           background-color: rgba(0, 0, 0, 0.3);
           font-size: 1rem;
+        }
+      }
+
+      .notify {
+        cursor: pointer;
+
+        .unsubscribe {
+          color: #409eff;
         }
       }
     }
