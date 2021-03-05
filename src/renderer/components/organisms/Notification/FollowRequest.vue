@@ -1,6 +1,6 @@
 <template>
   <div
-    class="follow-request"
+    class="relationship"
     tabIndex="0"
     v-shortkey="shortcutEnabled ? { next: ['j'], prev: ['k'], right: ['l'], profile: ['p'] } : {}"
     @shortkey="handleStatusControl"
@@ -9,21 +9,23 @@
     role="article"
     aria-label="follow event"
   >
-    <div class="action">
-      <div class="action-mark">
-        <icon name="user-plus" scale="0.7"></icon>
+    <div class="follow-request">
+      <div class="action">
+        <div class="action-mark">
+          <icon name="user-plus" scale="0.8"></icon>
+        </div>
+        <div class="action-detail">
+          {{ $t('notification.follow_request.body') }}
+          <span class="bold" @click="openUser(message.account)">
+            <bdi v-html="username(message.account)"></bdi>
+          </span>
+        </div>
+        <div class="action-icon" role="presentation">
+          <FailoverImg :src="message.account.avatar" />
+        </div>
       </div>
-      <div class="action-detail">
-        {{ $t('notification.follow_request.body') }}
-        <span class="bold" @click="openUser(message.account)">
-          <bdi v-html="username(message.account)"></bdi>
-        </span>
-      </div>
-      <div class="action-icon" role="presentation">
-        <FailoverImg :src="message.account.avatar" />
-      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
     <div class="fill-line"></div>
   </div>
 </template>
@@ -155,16 +157,16 @@ export default {
       }
     }
   }
-
-  .fill-line {
-    height: 1px;
-    background-color: var(--theme-border-color);
-    margin: 4px 0 0;
-  }
 }
 
-.follow-request:focus {
+.relationship:focus {
   background-color: var(--theme-selected-background-color);
   outline: 0;
+}
+
+.fill-line {
+  height: 1px;
+  background-color: var(--theme-border-color);
+  margin: 4px 0 0;
 }
 </style>
