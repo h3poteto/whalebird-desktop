@@ -208,6 +208,26 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     )
     const res = await client.getIdentityProof(account.id)
     commit(MUTATION_TYPES.CHANGE_IDENTITY_PROOFS, res.data)
+  },
+  subscribe: async ({ rootState, commit }, account: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    const res = await client.subscribeAccount(account.id)
+    commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
+  },
+  unsubscribe: async ({ rootState, commit }, account: Entity.Account) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    const res = await client.unsubscribeAccount(account.id)
+    commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, res.data)
   }
 }
 
