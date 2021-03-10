@@ -358,8 +358,8 @@
       "detail": "Detalle",
       "follow": "Seguir a este usuario",
       "unfollow": "Dejar de seguir este usuario",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
+      "subscribe": "Suscribirse a este usuario",
+      "unsubscribe": "Darse de baja de este usuario",
       "follow_requested": "Solicitudes de seguimiento",
       "open_in_browser": "Abrir en el navegador",
       "manage_list_memberships": "Administrar lista de membresía",
@@ -438,8 +438,8 @@
     "toot_fetch_error": "No se pudo obtener el detalle del toot",
     "follow_error": "Error al seguir el usuario",
     "unfollow_error": "Error al dejar de seguir al usuario",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
+    "subscribe_error": "Error al suscribir el usuario",
+    "unsubscribe_error": "Error al darse de baja el usuario",
     "lists_fetch_error": "No se pudo obtener listas",
     "list_create_error": "Error al crear una lista",
     "members_fetch_error": "No se pudo obtener miembros",
@@ -499,8 +499,8 @@
       "body": "{{username}} reaccionó a tu estado"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} just posted"
+      "title": "Estatus",
+      "body": "{{username}} acaba de publicar"
     }
   }
 }
