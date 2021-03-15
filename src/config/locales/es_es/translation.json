@@ -53,7 +53,7 @@
     "direct": "Mensajes directos",
     "follow_requests": "Solicitudes de seguimiento",
     "favourite": "Favorito",
-    "bookmark": "Bookmark",
+    "bookmark": "Favorito",
     "local": "Línea de tiempo local",
     "public": "Línea de tiempo pública",
     "hashtag": "Etiqueta",
@@ -65,7 +65,7 @@
     "notification": "Notificación",
     "mention": "Mención",
     "favourite": "Favorito",
-    "bookmark": "Bookmark",
+    "bookmark": "Favorito",
     "follow_requests": "Solicitudes de seguimiento",
     "direct_messages": "Mensajes directos",
     "local": "Línea de tiempo local",
@@ -93,8 +93,8 @@
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "description": "Personalizar la visibilidad predeterminada del toot",
+          "notice": "Esta configuración se aplica sólo a nuevos toots, respuestas siguen la visibilidad de toots originales",
           "public": "Público",
           "unlisted": "Sin listar",
           "private": "Privado",
@@ -195,8 +195,8 @@
         "favourite": "Notificarme cuando reciba un favorecido",
         "follow": "Notificarme cuando reciba un seguimiento",
         "reaction": "Notificarme cuando reciba una reacción de emoji",
-        "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification"
+        "follow_request": "Notificarme cuando reciba una solicitud de seguimiento",
+        "status": "Notificarme cuando reciba una notificación de estatus"
       }
     },
     "account": {
@@ -340,7 +340,7 @@
       "reblog": "Publicar de nuevo",
       "fav": "Favorito",
       "detail": "Detalles del Toot",
-      "bookmark": "Bookmark",
+      "bookmark": "Favorito",
       "pinned": "Toot fijado",
       "poll": {
         "vote": "Voto",
@@ -356,10 +356,10 @@
       "follows_you": "Te sigue",
       "doesnt_follow_you": "No te sigue",
       "detail": "Detalle",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
+      "follow": "Seguir a este usuario",
+      "unfollow": "Dejar de seguir este usuario",
+      "subscribe": "Suscribirse a este usuario",
+      "unsubscribe": "Darse de baja de este usuario",
       "follow_requested": "Solicitudes de seguimiento",
       "open_in_browser": "Abrir en el navegador",
       "manage_list_memberships": "Administrar lista de membresía",
@@ -438,8 +438,8 @@
     "toot_fetch_error": "No se pudo obtener el detalle del toot",
     "follow_error": "Error al seguir el usuario",
     "unfollow_error": "Error al dejar de seguir al usuario",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
+    "subscribe_error": "Error al suscribir el usuario",
+    "unsubscribe_error": "Error al darse de baja el usuario",
     "lists_fetch_error": "No se pudo obtener listas",
     "list_create_error": "Error al crear una lista",
     "members_fetch_error": "No se pudo obtener miembros",
@@ -499,8 +499,8 @@
       "body": "{{username}} reaccionó a tu estado"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} just posted"
+      "title": "Estatus",
+      "body": "{{username}} acaba de publicar"
     }
   }
 }
