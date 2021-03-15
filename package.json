@@ -32,7 +32,7 @@
     "build:win32": "yarn run build && yarn run package:win32",
     "build:win64": "yarn run build && yarn run package:win64",
     "build:mas": "yarn run build:clean && yarn run pack && electron-packager ./ 'Whalebird' --platform=mas --arch=x64 --electron-version=11.2.3 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/whalebird.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=org.whalebird.desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --osx-sign --app-category-type=public.app-category.social-networking",
-    "package:mac": "electron-builder --mac --x64",
+    "package:mac": "electron-builder --mac",
     "package:linux": "electron-builder --linux",
     "package:win32": "electron-builder --win --ia32",
     "package:win64": "electron-builder --win --x64",
@@ -74,7 +74,13 @@
     "mac": {
       "icon": "build/icons/icon.icns",
       "target": [
-        "dmg"
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
       ],
       "category": "public.app-category.social-networking"
     },
