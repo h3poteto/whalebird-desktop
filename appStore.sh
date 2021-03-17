@@ -3,7 +3,7 @@
 # Name of your app.
 APP="Whalebird"
 # The path of your app to sign.
-APP_PATH="./packages/Whalebird-mas-x64/Whalebird.app"
+APP_PATH="./packages/Whalebird-mas-universal/Whalebird.app"
 # The path to the location you want to put the signed package.
 RESULT_PATH="./packages/$APP.pkg"
 # The name of certificates you requested.
