@@ -155,6 +155,7 @@ const getters: GetterTree<NotificationsState, RootState> = {
         case NotificationType.EmojiReaction:
         case NotificationType.FollowRequest:
         case NotificationType.Status:
+        case NotificationType.Poll:
           return true
         default:
           return false
