@@ -56,7 +56,9 @@
       "dist/electron/**/*",
       "build/icons/*"
     ],
+    "afterSign": "build/notarize.js",
     "dmg": {
+      "sign": false,
       "contents": [
         {
           "x": 410,
@@ -81,7 +83,11 @@
           ]
         }
       ],
-      "category": "public.app-category.social-networking"
+      "category": "public.app-category.social-networking",
+      "entitlements": "plist/entitlements.mac.plist",
+      "entitlementsInherit": "plist/entitlements.mac.plist",
+      "hardenedRuntime" : true,
+      "gatekeeperAssess": false
     },
     "win": {
       "icon": "build/icons/icon.ico",
