@@ -19,7 +19,8 @@ const state: NotificationState = {
       follow: true,
       follow_request: true,
       reaction: true,
-      status: true
+      status: true,
+      poll: true
     }
   }
 }

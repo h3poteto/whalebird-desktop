@@ -49,7 +49,8 @@ const notify: Notify = {
   follow: true,
   follow_request: true,
   reaction: true,
-  status: true
+  status: true,
+  poll: true
 }
 
 const language: LanguageSet = {

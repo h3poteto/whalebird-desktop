@@ -6,4 +6,5 @@ export type Notify = {
   follow_request: boolean
   reaction: boolean
   status: boolean
+  poll: boolean
 }
