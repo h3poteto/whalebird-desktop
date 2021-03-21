@@ -190,7 +190,7 @@
     "element-ui": "2.15.0",
     "emoji-mart-vue": "^2.6.6",
     "i18next": "^19.8.8",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "megalodon": "3.5.1",
     "minimist": "^1.2.5",
     "moment": "^2.29.1",
