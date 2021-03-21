@@ -196,7 +196,8 @@
         "follow": "フォローされた時",
         "reaction": "絵文字リアクションを受け取ったとき",
         "follow_request": "フォローリクエストを受け取った時",
-        "status": "トゥートの通知を受け取った時"
+        "status": "トゥートの通知を受け取った時",
+        "poll": "Notify me when I receive a vote of poll"
       }
     },
     "account": {

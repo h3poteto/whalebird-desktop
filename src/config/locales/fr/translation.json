@@ -196,7 +196,8 @@
         "follow": "Notifiez-moi quand je reçois un follow",
         "reaction": "Notifiez-moi quand je reçois un emoji",
         "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification"
+        "status": "Notify me when I receive a status notification",
+        "poll": "Notify me when I receive a vote of poll"
       }
     },
     "account": {
