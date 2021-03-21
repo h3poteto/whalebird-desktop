@@ -19,14 +19,14 @@
       "name": "編集",
       "undo": "取り消す",
       "redo": "やり直す",
-      "cut": "カット",
+      "cut": "切り取り",
       "copy": "コピー",
       "paste": "ペースト",
       "select_all": "すべてを選択"
     },
     "view": {
       "name": "表示",
-      "toggle_full_screen": "フルスクリーンにする"
+      "toggle_full_screen": "フルスクリーンの切り替え"
     },
     "window": {
       "always_show_menu_bar": "メニューバーを常に表示",
@@ -34,7 +34,7 @@
       "close": "ウィンドウを閉じる",
       "open": "ウィンドウを表示",
       "minimize": "縮小",
-      "jump_to": "ジャンプ"
+      "jump_to": "移動"
     }
   },
   "global_header": {
@@ -50,7 +50,7 @@
     "home": "ホーム",
     "notification": "通知",
     "mention": "返信",
-    "direct": "DM",
+    "direct": "ダイレクトメッセージ",
     "follow_requests": "フォロー申請",
     "favourite": "お気に入り",
     "bookmark": "ブックマーク",
@@ -197,7 +197,7 @@
         "reaction": "絵文字リアクションを受け取ったとき",
         "follow_request": "フォローリクエストを受け取った時",
         "status": "トゥートの通知を受け取った時",
-        "poll": "Notify me when I receive a vote of poll"
+        "poll": "アンケートに投票された時"
       }
     },
     "account": {
@@ -328,7 +328,7 @@
     "toot": {
       "show_more": "続きを見る",
       "hide": "隠す",
-      "sensitive": "表示する",
+      "sensitive": "閲覧注意コンテンツを表示する",
       "view_toot_detail": "詳細",
       "open_in_browser": "ブラウザで開く",
       "copy_link_to_toot": "コピー",
@@ -504,8 +504,8 @@
       "body": "{{username}} さんが投稿しました"
     },
     "poll_vote": {
-      "title": "PollVote",
-      "body": "{{username}} voted your poll"
+      "title": "アンケート投票",
+      "body": "{{username}} さんがあなたのアンケートに投票しました"
     }
   }
 }
