@@ -501,6 +501,10 @@
     "status": {
       "title": "Status",
       "body": "{{username}} just posted"
+    },
+    "poll_vote": {
+      "title": "PollVote",
+      "body": "{{username}} voted your poll"
     }
   }
 }

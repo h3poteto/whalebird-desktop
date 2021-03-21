@@ -501,6 +501,10 @@
     "status": {
       "title": "Estatus",
       "body": "{{username}} acaba de publicar"
+    },
+    "poll_vote": {
+      "title": "PollVote",
+      "body": "{{username}} voted your poll"
     }
   }
 }

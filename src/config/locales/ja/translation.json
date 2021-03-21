@@ -501,6 +501,10 @@
     "status": {
       "title": "トゥート",
       "body": "{{username}} さんが投稿しました"
+    },
+    "poll_vote": {
+      "title": "PollVote",
+      "body": "{{username}} voted your poll"
     }
   }
 }
