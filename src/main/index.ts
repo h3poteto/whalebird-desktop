@@ -1439,6 +1439,15 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         } as NotificationConstructorOptions
       }
       break
+    case NotificationType.Poll:
+      if (notifyConfig.poll) {
+        return {
+          title: i18next.t('notification.poll_vote.title'),
+          body: i18next.t('notification.poll_vote.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
     default:
       break
   }

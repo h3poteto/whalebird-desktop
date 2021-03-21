@@ -32,6 +32,20 @@ const initStore = () => {
   }
 }
 
+const sideMenuStore = {
+  namespaced: true,
+  actions: {
+    listTags: jest.fn()
+  }
+}
+
+const timelineState = {
+  namespaced: true,
+  modules: {
+    SideMenu: sideMenuStore
+  }
+}
+
 describe('Hashtag/List', () => {
   let store
   let localVue
@@ -41,7 +55,8 @@ describe('Hashtag/List', () => {
     localVue.use(Vuex)
     store = new Vuex.Store({
       modules: {
-        List: initStore()
+        List: initStore(),
+        TimelineSpace: timelineState
       }
     })
   })
