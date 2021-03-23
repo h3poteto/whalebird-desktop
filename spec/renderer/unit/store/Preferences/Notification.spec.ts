@@ -13,7 +13,7 @@ describe('Preferences/Notification', () => {
           follow_request: true,
           reaction: true,
           status: true,
-          poll: true
+          poll_vote: true
         }
       }
     }
@@ -28,7 +28,8 @@ describe('Preferences/Notification', () => {
           follow: false,
           follow_request: false,
           reaction: false,
-          status: false
+          status: false,
+          poll_vote: false
         }
       })
       expect(state.notification.notify).toEqual({
@@ -38,7 +39,8 @@ describe('Preferences/Notification', () => {
         follow: false,
         follow_request: false,
         reaction: false,
-        status: false
+        status: false,
+        poll_vote: false
       })
     })
   })
