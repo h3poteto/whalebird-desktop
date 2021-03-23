@@ -197,7 +197,8 @@
         "reaction": "絵文字リアクションを受け取ったとき",
         "follow_request": "フォローリクエストを受け取った時",
         "status": "トゥートの通知を受け取った時",
-        "poll_vote": "Notify me when I receive a vote of poll"
+        "poll_vote": "Notify me when I receive a vote of poll",
+        "poll_expired": "Notify me when I receive a poll expired event"
       }
     },
     "account": {
@@ -506,6 +507,10 @@
     "poll_vote": {
       "title": "アンケート投票",
       "body": "{{username}} さんがあなたのアンケートに投票しました"
+    },
+    "poll_expired": {
+      "title": "PollExpired",
+      "body": "{{username}}'s poll is expired"
     }
   }
 }
