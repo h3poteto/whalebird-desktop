@@ -156,6 +156,7 @@ const getters: GetterTree<NotificationsState, RootState> = {
         case NotificationType.FollowRequest:
         case NotificationType.Status:
         case NotificationType.PollVote:
+        case NotificationType.PollExpired:
           return true
         default:
           return false

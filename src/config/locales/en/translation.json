@@ -506,6 +506,10 @@
     "poll_vote": {
       "title": "PollVote",
       "body": "{{username}} voted your poll"
+    },
+    "poll_expired": {
+      "title": "PollExpired",
+      "body": "{{username}}'s poll is expired"
     }
   }
 }
