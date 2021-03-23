@@ -97,7 +97,7 @@
     >
     </status>
     <PollVote
-      v-else-if="message.type === 'poll'"
+      v-else-if="message.type === 'poll_vote'"
       :message="message"
       :filter="filter"
       :focused="focused"

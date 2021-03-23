@@ -106,7 +106,13 @@ const actions: ActionTree<MentionsState, RootState> = {
     )
     const res = await client.getNotifications({
       limit: 30,
-      exclude_types: [NotificationType.Follow, NotificationType.Favourite, NotificationType.Reblog, NotificationType.Poll]
+      exclude_types: [
+        NotificationType.Follow,
+        NotificationType.Favourite,
+        NotificationType.Reblog,
+        NotificationType.PollVote,
+        NotificationType.PollExpired
+      ]
     })
     commit(MUTATION_TYPES.UPDATE_MENTIONS, res.data)
     return res.data
@@ -126,7 +132,13 @@ const actions: ActionTree<MentionsState, RootState> = {
       .getNotifications({
         max_id: lastMention.id,
         limit: 30,
-        exclude_types: [NotificationType.Follow, NotificationType.Favourite, NotificationType.Reblog, NotificationType.Poll]
+        exclude_types: [
+          NotificationType.Follow,
+          NotificationType.Favourite,
+          NotificationType.Reblog,
+          NotificationType.PollVote,
+          NotificationType.PollExpired
+        ]
       })
       .then(res => {
         commit(MUTATION_TYPES.INSERT_MENTIONS, res.data)

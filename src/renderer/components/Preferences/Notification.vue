@@ -24,8 +24,8 @@
       <el-form-item for="notifyStatus" :label="$t('preferences.notification.enable.status')">
         <el-switch v-model="notifyStatus" active-color="#13ce66"> </el-switch>
       </el-form-item>
-      <el-form-item from="notifyPoll" :label="$t('preferences.notification.enable.poll')">
-        <el-switch v-model="notifyPoll" active-color="#13ce66"> </el-switch>
+      <el-form-item from="notifyPollVote" :label="$t('preferences.notification.enable.poll_vote')">
+        <el-switch v-model="notifyPollVote" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
   </div>
@@ -105,13 +105,13 @@ export default {
         })
       }
     },
-    notifyPoll: {
+    notifyPollVote: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.poll
+        return this.$store.state.Preferences.Notification.notification.notify.poll_vote
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          poll: value
+          poll_vote: value
         })
       }
     }
