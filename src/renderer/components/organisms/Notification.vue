@@ -108,6 +108,18 @@
       @select="$emit('selectNotification')"
     >
     </PollVote>
+    <PollExpired
+      v-else-if="message.type === 'poll_expired'"
+      :message="message"
+      :filter="filter"
+      :focused="focused"
+      :overlaid="overlaid"
+      @focusNext="$emit('focusNext')"
+      @focusPrev="$emit('focusPrev')"
+      @focusRight="$emit('focusRight')"
+      @select="$emit('selectNotification')"
+    >
+    </PollExpired>
   </div>
 </template>
 
@@ -121,6 +133,7 @@ import Reblog from './Notification/Reblog'
 import Reaction from './Notification/Reaction'
 import Status from './Notification/Status'
 import PollVote from './Notification/PollVote'
+import PollExpired from './Notification/PollExpired'
 
 export default {
   name: 'notification',
@@ -142,7 +155,7 @@ export default {
       default: false
     }
   },
-  components: { Favourite, Follow, FollowRequest, Mention, Quote, Reblog, Reaction, Status, PollVote },
+  components: { Favourite, Follow, FollowRequest, Mention, Quote, Reblog, Reaction, Status, PollVote, PollExpired },
   methods: {
     updateToot(message) {
       return this.$emit('update', message)

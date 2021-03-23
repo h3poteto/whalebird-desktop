@@ -7,4 +7,5 @@ export type Notify = {
   reaction: boolean
   status: boolean
   poll_vote: boolean
+  poll_expired: boolean
 }

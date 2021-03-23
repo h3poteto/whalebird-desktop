@@ -50,7 +50,8 @@ const notify: Notify = {
   follow_request: true,
   reaction: true,
   status: true,
-  poll_vote: true
+  poll_vote: true,
+  poll_expired: true
 }
 
 const language: LanguageSet = {

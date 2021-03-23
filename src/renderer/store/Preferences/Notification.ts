@@ -20,7 +20,8 @@ const state: NotificationState = {
       follow_request: true,
       reaction: true,
       status: true,
-      poll_vote: true
+      poll_vote: true,
+      poll_expired: true
     }
   }
 }

@@ -7,17 +7,17 @@
     ref="status"
     @click="$emit('select')"
     role="article"
-    aria-label="poll vote"
+    aria-label="poll expired"
   >
     <div v-show="filtered(message)" class="filtered">Filtered</div>
-    <div v-show="!filtered(message)" class="poll-vote">
+    <div v-show="!filtered(message)" class="poll-expired">
       <div class="action">
         <div class="action-mark">
           <icon name="poll-h" scale="0.9"></icon>
         </div>
         <div class="action-detail">
           <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span
-          >{{ $t('notification.poll_vote.body') }}
+          >{{ $t('notification.poll_expired.body') }}
         </div>
         <div class="action-icon" role="presentation">
           <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
@@ -114,7 +114,7 @@ import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
 
 export default {
-  name: 'poll-vote',
+  name: 'poll-expired',
   components: {
     FailoverImg,
     LinkPreview
@@ -189,13 +189,13 @@ export default {
       }
     },
     tootClick(e) {
-      const parsedTag = findTag(e.target, 'poll-vote')
+      const parsedTag = findTag(e.target, 'poll-expired')
       if (parsedTag !== null) {
         const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
         this.$router.push({ path: tag })
         return tag
       }
-      const parsedAccount = findAccount(e.target, 'poll-vote')
+      const parsedAccount = findAccount(e.target, 'poll-expired')
       if (parsedAccount !== null) {
         this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
         this.$store
@@ -214,7 +214,7 @@ export default {
       this.openLink(e)
     },
     openLink(e) {
-      const link = findLink(e.target, 'poll-vote')
+      const link = findLink(e.target, 'poll-expired')
       if (link !== null) {
         return window.shell.openExternal(link)
       }
@@ -284,7 +284,7 @@ export default {
   font-weight: bold;
 }
 
-.poll-vote {
+.poll-expired {
   padding: 8px 0 0 16px;
 
   .fa-icon {
@@ -299,7 +299,7 @@ export default {
     margin-right: 8px;
 
     .action-mark {
-      color: #67c23a;
+      color: #409eff;
       float: left;
       width: 32px;
       text-align: right;
