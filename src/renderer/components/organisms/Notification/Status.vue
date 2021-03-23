@@ -86,6 +86,7 @@ export default {
 
 .notified-status {
   padding-top: 8px;
+
   .action {
     padding: 0 0 0 16px;
     margin-right: 8px;

@@ -41,7 +41,8 @@ const state = (): AppState => ({
     follow_request: true,
     reaction: true,
     status: true,
-    poll_vote: true
+    poll_vote: true,
+    poll_expired: true
   },
   tootPadding: 8,
   timeFormat: TimeFormat.Absolute.value,

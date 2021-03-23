@@ -1448,6 +1448,15 @@ const createNotification = (notification: Entity.Notification, notifyConfig: Not
         } as NotificationConstructorOptions
       }
       break
+    case NotificationType.PollExpired:
+      if (notifyConfig.poll_expired) {
+        return {
+          title: i18next.t('notification.poll_expired.title'),
+          body: i18next.t('notification.poll_expired.body', { username: username(notification.account) }),
+          silent: false
+        } as NotificationConstructorOptions
+      }
+      break
     default:
       break
   }

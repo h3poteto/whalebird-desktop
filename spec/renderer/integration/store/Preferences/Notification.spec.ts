@@ -16,7 +16,8 @@ const state = (): NotificationState => {
         follow_request: true,
         reaction: true,
         status: true,
-        poll_vote: true
+        poll_vote: true,
+        poll_expired: true
       }
     }
   }
@@ -66,7 +67,8 @@ describe('Preferences/Notification', () => {
               follow_request: false,
               reaction: false,
               status: false,
-              poll_vote: false
+              poll_vote: false,
+              poll_expired: false
             }
           }
         }
@@ -85,7 +87,8 @@ describe('Preferences/Notification', () => {
             follow_request: false,
             reaction: false,
             status: false,
-            poll_vote: false
+            poll_vote: false,
+            poll_expired: false
           }
         })
       })
@@ -115,7 +118,8 @@ describe('Preferences/Notification', () => {
           follow_request: true,
           reaction: true,
           status: true,
-          poll_vote: true
+          poll_vote: true,
+          poll_expired: true
         }
       })
       expect(App.actions.loadPreferences).toBeCalled()

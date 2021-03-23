@@ -197,7 +197,8 @@
         "reaction": "Notify me when I receive a emoji reaction",
         "follow_request": "Notify me when I receive a follow request",
         "status": "Notify me when I receive a status notification",
-        "poll_vote": "Notify me when I receive a vote of poll"
+        "poll_vote": "Notify me when I receive a vote of poll",
+        "poll_expired": "Notify me when I receive a poll expired event"
       }
     },
     "account": {
