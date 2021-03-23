@@ -197,7 +197,7 @@
         "reaction": "Notificarme cuando reciba una reacción de emoji",
         "follow_request": "Notificarme cuando reciba una solicitud de seguimiento",
         "status": "Notificarme cuando reciba una notificación de estatus",
-        "poll": "Notify me when I receive a vote of poll"
+        "poll_vote": "Notify me when I receive a vote of poll"
       }
     },
     "account": {
