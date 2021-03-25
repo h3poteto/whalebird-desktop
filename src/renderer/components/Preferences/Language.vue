@@ -86,7 +86,12 @@ export default {
         return this.$store.state.Preferences.Language.language.spellchecker.languages
       },
       set(value) {
-        this.$store.dispatch('Preferences/Language/updateSpellcheckerLanguages', value)
+        this.$store.dispatch('Preferences/Language/updateSpellcheckerLanguages', value).catch(() => {
+          this.$message({
+            message: this.$t('message.language_not_support_spellchecker_error'),
+            type: 'error'
+          })
+        })
       }
     }
   },

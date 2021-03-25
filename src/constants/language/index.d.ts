@@ -1,6 +1,7 @@
 export type LanguageType = {
   name: string
   key: string
+  rfc4646: string
 }
 
 export type LanguageList = {
