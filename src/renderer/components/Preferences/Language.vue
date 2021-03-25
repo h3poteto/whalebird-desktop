@@ -26,7 +26,6 @@
             >{{ language.name }}</el-checkbox
           >
         </el-checkbox-group>
-        <p class="notice">{{ $t('preferences.language.notice') }}</p>
       </el-form-item>
     </el-form>
   </div>
@@ -76,9 +75,7 @@ export default {
         return this.$store.state.Preferences.Language.language.spellchecker.enabled
       },
       set(value) {
-        this.$store.dispatch('Preferences/Language/toggleSpellchecker', value).then(() => {
-          this.confirm()
-        })
+        this.$store.dispatch('Preferences/Language/toggleSpellchecker', value)
       }
     },
     spellcheckLanguages: {
