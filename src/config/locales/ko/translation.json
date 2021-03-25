@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "Other options",
-        "launch": "Launch app on login",
-        "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
-          "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
-          }
-        }
+        "launch": "Launch app on login"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "언어",
-      "language_description": "Whalebird에서 사용할 언어를 선택해 주세요.",
       "notice": "재실행이 필요합니다",
       "confirm": {
         "title": "Confirm",
         "message": "어플리케이션을 재실행해야 합니다. 계속할까요?",
         "ok": "지금 재실행",
         "cancel": "취소"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
