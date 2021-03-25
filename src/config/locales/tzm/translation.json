@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "Tideɣrin yaḍnin",
-        "launch": "Ṛẓem tisensi akd ukcam",
-        "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
-          "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
-          }
-        }
+        "launch": "Ṛẓem tisensi akd ukcam"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "Tutlayt",
-      "language_description": "Dɣer tutlayt nna txsed ad-sis tssmrsed Whalebird.",
       "notice": "Issutur allas usenti",
       "confirm": {
         "title": "Confirm",
         "message": "Ixṣ as talsed tsentid tisensi-a. ad tsmded?",
         "ok": "Als-senti dɣi",
         "cancel": "Ser"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
