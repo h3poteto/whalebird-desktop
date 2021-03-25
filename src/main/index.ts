@@ -1033,6 +1033,18 @@ ipcMain.handle('toggle-spellchecker', async (_: IpcMainInvokeEvent, value: boole
   return conf.language.spellchecker.enabled
 })
 
+ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, languages: Array<string>) => {
+  const preferences = new Preferences(preferencesDBPath)
+  const conf = await preferences.update({
+    language: {
+      spellchecker: {
+        languages: languages
+      }
+    }
+  })
+  return conf.language.spellchecker.languages
+})
+
 // hashtag
 ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
   const hashtags = new Hashtags(hashtagsDB)

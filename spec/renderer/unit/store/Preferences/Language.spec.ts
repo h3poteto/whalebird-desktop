@@ -8,7 +8,8 @@ describe('Preferences/Language', () => {
       language: {
         language: DefaultLanguage.en.key,
         spellchecker: {
-          enabled: true
+          enabled: true,
+          languages: []
         }
       }
     }

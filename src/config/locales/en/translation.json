@@ -229,7 +229,7 @@
     },
     "language": {
       "title": "Language",
-      "notice": "Requires relaunch",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirm",
         "message": "You have to restart this application. Continue?",
