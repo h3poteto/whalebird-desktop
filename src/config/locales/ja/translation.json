@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "その他",
-        "launch": "ログイン時にアプリを起動する",
-        "spellcheck": {
-          "description": "スペルチェッカーを有効にする",
-          "notice": "再起動が必要です",
-          "confirm": {
-            "title": "確認",
-            "message": "設定を有効化するために再起動する必要があります",
-            "ok": "再起動する",
-            "cancel": "キャンセル"
-          }
-        }
+        "launch": "ログイン時にアプリを起動する"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "言語",
-      "language_description": "Whalebirdの表示言語を選択",
       "notice": "再起動が必要です",
       "confirm": {
         "title": "確認",
         "message": "設定を有効化するために再起動する必要があります",
         "ok": "再起動する",
         "cancel": "キャンセル"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
