@@ -229,7 +229,7 @@
     },
     "language": {
       "title": "Language",
-      "notice": "Requires relaunch",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirm",
         "message": "You have to restart this application. Continue?",
@@ -458,7 +458,8 @@
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
     "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {
