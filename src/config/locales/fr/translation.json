@@ -229,7 +229,7 @@
     },
     "language": {
       "title": "Langue",
-      "notice": "Nécessite un redémarrage",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirmer",
         "message": "Vous devez redémarrer l'application pour appliquer les modifications, continuer ?",
@@ -458,7 +458,8 @@
     "authorize_url_error": "Erreur à la récupération de l'URL d'autorisation",
     "domain_confirmed": "{{domain}} est confirmé, veuillez à présent vous connecter",
     "domain_doesnt_exist": "Impossible de se connecter à {{domain}}, vérifier l'URL du serveur",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {
