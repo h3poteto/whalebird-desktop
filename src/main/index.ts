@@ -1022,6 +1022,8 @@ ipcMain.handle('change-language', async (_: IpcMainInvokeEvent, value: string) =
 })
 
 ipcMain.handle('toggle-spellchecker', async (_: IpcMainInvokeEvent, value: boolean) => {
+  mainWindow?.webContents.session.setSpellCheckerEnabled(value)
+
   const preferences = new Preferences(preferencesDBPath)
   const conf = await preferences.update({
     language: {
