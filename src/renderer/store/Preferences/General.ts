@@ -24,8 +24,7 @@ const state = (): GeneralState => ({
       hideAllAttachments: false
     },
     other: {
-      launch: false,
-      spellcheck: true
+      launch: false
     }
   },
   loading: false

@@ -9,7 +9,10 @@ import { MyWindow } from '~/src/types/global'
 const state = (): LanguageState => {
   return {
     language: {
-      language: DefaultLanguage.en.key
+      language: DefaultLanguage.en.key,
+      spellchecker: {
+        enabled: true
+      }
     }
   }
 }
@@ -42,7 +45,10 @@ describe('Preferences/Language', () => {
       ipcMain.handle('get-preferences', () => {
         return {
           language: {
-            language: DefaultLanguage.ja.key
+            language: DefaultLanguage.ja.key,
+            spellchecker: {
+              enabled: true
+            }
           }
         }
       })

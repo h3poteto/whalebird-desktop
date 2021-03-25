@@ -13,13 +13,17 @@ export type LanguageState = {
 
 const state: LanguageState = {
   language: {
-    language: Language.en.key
+    language: Language.en.key,
+    spellchecker: {
+      enabled: true
+    }
   }
 }
 
 export const MUTATION_TYPES = {
   UPDATE_LANGUAGE: 'updateLanguage',
-  CHANGE_LANGUAGE: 'changeLanguage'
+  CHANGE_LANGUAGE: 'changeLanguage',
+  TOGGLE_SPELLCHECKER: 'toggleSpellchecker'
 }
 
 const mutations: MutationTree<LanguageState> = {
@@ -28,6 +32,9 @@ const mutations: MutationTree<LanguageState> = {
   },
   [MUTATION_TYPES.CHANGE_LANGUAGE]: (state, key: string) => {
     state.language.language = key
+  },
+  [MUTATION_TYPES.TOGGLE_SPELLCHECKER]: (state, enabled: boolean) => {
+    state.language.spellchecker.enabled = enabled
   }
 }
 
@@ -40,6 +47,11 @@ const actions: ActionTree<LanguageState, RootState> = {
   changeLanguage: async ({ commit }, key: string) => {
     const value: string = await win.ipcRenderer.invoke('change-language', key)
     commit(MUTATION_TYPES.CHANGE_LANGUAGE, value)
+    return value
+  },
+  toggleSpellchecker: async ({ commit }, enabled: boolean) => {
+    const value: boolean = await win.ipcRenderer.invoke('toggle-spellchecker', enabled)
+    commit(MUTATION_TYPES.TOGGLE_SPELLCHECKER, value)
     return value
   },
   relaunch: () => {

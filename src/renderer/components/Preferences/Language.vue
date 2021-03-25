@@ -2,10 +2,18 @@
   <div id="language">
     <h2>{{ $t('preferences.language.title') }}</h2>
     <el-form class="display-language section" label-position="top" size="small">
-      <el-form-item for="language" :label="$t('preferences.language.language_description')">
+      <h3>{{ $t('preferences.language.language.title') }}</h3>
+      <el-form-item for="language" :label="$t('preferences.language.language.description')">
         <el-select id="language" v-model="displayLanguage" placeholder="style">
           <el-option v-for="lang in languages" :key="lang.key" :label="lang.name" :value="lang.key"> </el-option>
         </el-select>
+        <p class="notice">{{ $t('preferences.language.notice') }}</p>
+      </el-form-item>
+    </el-form>
+    <el-form class="spellchecker section" label-position="left" size="small">
+      <h3>{{ $t('preferences.language.spellchecker.title') }}</h3>
+      <el-form-item for="spellcheck" :label="$t('preferences.language.spellchecker.enabled')">
+        <el-switch id="spellcheck" v-model="spellcheck" active-color="#13ce66"> </el-switch>
         <p class="notice">{{ $t('preferences.language.notice') }}</p>
       </el-form-item>
     </el-form>
@@ -50,6 +58,16 @@ export default {
           this.confirm()
         })
       }
+    },
+    spellcheck: {
+      get() {
+        return this.$store.state.Preferences.Language.language.spellchecker.enabled
+      },
+      set(value) {
+        this.$store.dispatch('Preferences/Language/toggleSpellchecker', value).then(() => {
+          this.confirm()
+        })
+      }
     }
   },
   created() {
@@ -73,11 +91,24 @@ export default {
 
 <style lang="scss" scoped>
 #language {
+  .description {
+    margin: 24px 0 20px;
+  }
+
   .section /deep/ {
     margin-bottom: 40px;
 
     .el-form-item__label {
       color: var(--theme-primary-color);
+    }
+  }
+
+  .selection {
+    margin: 12px 0;
+
+    .title {
+      margin-left: 12px;
+      font-weight: 800;
     }
   }
 

@@ -205,7 +205,7 @@ const getSpellChecker = async (): Promise<boolean> => {
   try {
     const preferences = new Preferences(preferencesDBPath)
     const conf = await preferences.load()
-    return conf.general.other.spellcheck
+    return conf.language.spellchecker.enabled
   } catch (err) {
     return true
   }
@@ -1019,6 +1019,18 @@ ipcMain.handle('change-language', async (_: IpcMainInvokeEvent, value: string) =
   })
   i18next.changeLanguage(conf.language.language)
   return conf.language.language
+})
+
+ipcMain.handle('toggle-spellchecker', async (_: IpcMainInvokeEvent, value: boolean) => {
+  const preferences = new Preferences(preferencesDBPath)
+  const conf = await preferences.update({
+    language: {
+      spellchecker: {
+        enabled: value
+      }
+    }
+  })
+  return conf.language.spellchecker.enabled
 })
 
 // hashtag
