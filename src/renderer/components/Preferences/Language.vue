@@ -10,10 +10,22 @@
         <p class="notice">{{ $t('preferences.language.notice') }}</p>
       </el-form-item>
     </el-form>
-    <el-form class="spellchecker section" label-position="left" size="small">
+    <el-form class="spellchecker section" label-position="top" size="small">
       <h3>{{ $t('preferences.language.spellchecker.title') }}</h3>
       <el-form-item for="spellcheck" :label="$t('preferences.language.spellchecker.enabled')">
         <el-switch id="spellcheck" v-model="spellcheck" active-color="#13ce66"> </el-switch>
+      </el-form-item>
+      <el-form-item for="spellcheck_languages">
+        <el-checkbox-group id="spellcheck_languages" v-model="spellcheckLanguages">
+          <el-checkbox
+            v-for="language in languages"
+            :label="language.key"
+            :key="language.key"
+            :name="language.name"
+            :disabled="!spellcheck"
+            >{{ language.name }}</el-checkbox
+          >
+        </el-checkbox-group>
         <p class="notice">{{ $t('preferences.language.notice') }}</p>
       </el-form-item>
     </el-form>
@@ -66,6 +78,19 @@ export default {
       set(value) {
         this.$store.dispatch('Preferences/Language/toggleSpellchecker', value).then(() => {
           this.confirm()
+        })
+      }
+    },
+    spellcheckLanguages: {
+      get() {
+        return this.$store.state.Preferences.Language.language.spellchecker.languages
+      },
+      set(value) {
+        this.$store.dispatch('Preferences/Language/updateSpellcheckerLanguages', value).catch(() => {
+          this.$message({
+            message: this.$t('message.language_not_support_spellchecker_error'),
+            type: 'error'
+          })
         })
       }
     }

@@ -56,7 +56,8 @@ const notify: Notify = {
 const language: LanguageSet = {
   language: Language.en.key,
   spellchecker: {
-    enabled: true
+    enabled: true,
+    languages: [Language.en.key]
   }
 }
 

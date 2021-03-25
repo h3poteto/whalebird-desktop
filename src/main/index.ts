@@ -40,7 +40,7 @@ import Hashtags from './hashtags'
 import UnreadNotification from './unreadNotification'
 import i18next from '~/src/config/i18n'
 import { i18n as I18n } from 'i18next'
-import Language from '../constants/language'
+import Language, { LanguageType } from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
 import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
@@ -1033,6 +1033,24 @@ ipcMain.handle('toggle-spellchecker', async (_: IpcMainInvokeEvent, value: boole
   return conf.language.spellchecker.enabled
 })
 
+ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, languages: Array<string>) => {
+  const decoded: Array<string> = languages.map(l => {
+    const d = decodeLanguage(l)
+    return d.rfc4646
+  })
+  mainWindow?.webContents.session.setSpellCheckerLanguages(decoded)
+
+  const preferences = new Preferences(preferencesDBPath)
+  const conf = await preferences.update({
+    language: {
+      spellchecker: {
+        languages: languages
+      }
+    }
+  })
+  return conf.language.spellchecker.languages
+})
+
 // hashtag
 ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
   const hashtags = new Hashtags(hashtagsDB)
@@ -1480,5 +1498,14 @@ const username = (account: Entity.Account): string => {
     return account.display_name
   } else {
     return account.username
+  }
+}
+
+const decodeLanguage = (lang: string): LanguageType => {
+  const l = Object.keys(Language).find(k => Language[k].key === lang)
+  if (l === undefined) {
+    return Language.en
+  } else {
+    return Language[l]
   }
 }

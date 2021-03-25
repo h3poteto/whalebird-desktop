@@ -11,7 +11,8 @@ const state = (): LanguageState => {
     language: {
       language: DefaultLanguage.en.key,
       spellchecker: {
-        enabled: true
+        enabled: true,
+        languages: []
       }
     }
   }
@@ -47,7 +48,8 @@ describe('Preferences/Language', () => {
           language: {
             language: DefaultLanguage.ja.key,
             spellchecker: {
-              enabled: true
+              enabled: true,
+              languages: []
             }
           }
         }
