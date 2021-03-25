@@ -229,7 +229,7 @@
     },
     "language": {
       "title": "言語",
-      "notice": "再起動が必要です",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "確認",
         "message": "設定を有効化するために再起動する必要があります",
@@ -458,7 +458,8 @@
     "authorize_url_error": "認証用URLの取得に失敗しました",
     "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
     "domain_doesnt_exist": "{{domain}} に接続できません，URLを確認してください",
-    "loading": "読み込み中..."
+    "loading": "読み込み中...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {
