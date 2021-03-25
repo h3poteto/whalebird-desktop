@@ -229,7 +229,7 @@
     },
     "language": {
       "title": "Idioma",
-      "notice": "Requiere reiniciar",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirmar",
         "message": "Tienes que reiniciar esta aplicación. ¿Continuar?",
@@ -458,7 +458,8 @@
     "authorize_url_error": "Error al obtener la url autorizada",
     "domain_confirmed": "{{domain}} está confirmado, por favor inicia sesión",
     "domain_doesnt_exist": "Error al conectar {{domain}}, confirme la URL del servidor",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {
