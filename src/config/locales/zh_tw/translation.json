@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "其他選項",
-        "launch": "登入時啟動 app",
-        "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
-          "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
-          }
-        }
+        "launch": "登入時啟動 app"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "語言",
-      "language_description": "請選擇您欲使用於 Whalebird 之語言。",
       "notice": "需要重新啟動",
       "confirm": {
         "title": "Confirm",
         "message": "您需要重新啟動本應用程式，確定要繼續嗎？",
         "ok": "立即重新啟動",
         "cancel": "取消"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
