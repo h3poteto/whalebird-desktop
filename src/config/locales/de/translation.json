@@ -229,7 +229,7 @@
     },
     "language": {
       "title": "Sprache",
-      "notice": "Erfordert Neustart",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirm",
         "message": "Du musst diese Anwendung neu starten. Fortfahren?",
@@ -458,7 +458,8 @@
     "authorize_url_error": "Konnte Zugrifss-URL nicht laden",
     "domain_confirmed": "{{domain}} ist bestätigt, bitte einloggen",
     "domain_doesnt_exist": "Verbindung mit {{domain}} fehlgeschlagen, stellen Sie sicher, dass die Server-URL",
-    "loading": "Laden..."
+    "loading": "Laden...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {
