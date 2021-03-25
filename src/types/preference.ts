@@ -7,7 +7,6 @@ import { Proxy } from '~/src/types/proxy'
 
 export type Other = {
   launch: boolean
-  spellcheck: boolean
 }
 
 export type General = {

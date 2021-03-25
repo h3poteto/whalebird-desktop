@@ -6,7 +6,10 @@ describe('Preferences/Language', () => {
   beforeEach(() => {
     state = {
       language: {
-        language: DefaultLanguage.en.key
+        language: DefaultLanguage.en.key,
+        spellchecker: {
+          enabled: true
+        }
       }
     }
   })

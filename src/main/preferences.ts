@@ -27,8 +27,7 @@ const timeline: Timeline = {
 }
 
 const other: Other = {
-  launch: false,
-  spellcheck: true
+  launch: false
 }
 
 const general: General = {
@@ -55,7 +54,10 @@ const notify: Notify = {
 }
 
 const language: LanguageSet = {
-  language: Language.en.key
+  language: Language.en.key,
+  spellchecker: {
+    enabled: true
+  }
 }
 
 const notification: Notification = {
