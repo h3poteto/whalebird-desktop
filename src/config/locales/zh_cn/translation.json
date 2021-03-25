@@ -229,7 +229,7 @@
     },
     "language": {
       "title": "语言",
-      "notice": "需要重启",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirm",
         "message": "程序需要重新启动。继续吗？",
@@ -458,7 +458,8 @@
     "authorize_url_error": "无法获取认证 URL",
     "domain_confirmed": "{{domain}} 已确认，请登录",
     "domain_doesnt_exist": "连接 {{domain}} 失败，请确认服务器 URL",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {
