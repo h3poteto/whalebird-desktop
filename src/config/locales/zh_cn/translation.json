@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "其它选项",
-        "launch": "登录时启动程序",
-        "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
-          "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
-          }
-        }
+        "launch": "登录时启动程序"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "语言",
-      "language_description": "设定 Whalebird 的界面语言。",
       "notice": "需要重启",
       "confirm": {
         "title": "Confirm",
         "message": "程序需要重新启动。继续吗？",
         "ok": "重启",
         "cancel": "取消"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
