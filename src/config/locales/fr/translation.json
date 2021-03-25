@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "Autres options",
-        "launch": "Lancer l'application dès la connexion",
-        "spellcheck": {
-          "description": "Activer le correcteur orthographique",
-          "notice": "Nécessite une relance",
-          "confirm": {
-            "title": "Confirmer",
-            "message": "Vous devez redémarrer l'application pour appliquer les modifications, continuer ?",
-            "ok": "Redémarrer maintenant",
-            "cancel": "Annuler"
-          }
-        }
+        "launch": "Lancer l'application dès la connexion"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "Langue",
-      "language_description": "Choisissez la langue que vous souhaitez utiliser sur Whalebird.",
       "notice": "Nécessite un redémarrage",
       "confirm": {
         "title": "Confirmer",
         "message": "Vous devez redémarrer l'application pour appliquer les modifications, continuer ?",
         "ok": "Redémarrer maintenant",
         "cancel": "Annuler"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
