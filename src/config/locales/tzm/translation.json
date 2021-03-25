@@ -229,7 +229,7 @@
     },
     "language": {
       "title": "Tutlayt",
-      "notice": "Issutur allas usenti",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirm",
         "message": "Ixṣ as talsed tsentid tisensi-a. ad tsmded?",
@@ -458,7 +458,8 @@
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
     "domain_doesnt_exist": "Azgel g uzday ɣer {{domain}}, sɣzen URL n umkkay",
-    "loading": "Azdam..."
+    "loading": "Azdam...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {
