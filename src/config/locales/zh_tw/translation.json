@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "其他選項",
-        "launch": "登入時啟動 app",
-        "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
-          "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
-          }
-        }
+        "launch": "登入時啟動 app"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "語言",
-      "language_description": "請選擇您欲使用於 Whalebird 之語言。",
-      "notice": "需要重新啟動",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirm",
         "message": "您需要重新啟動本應用程式，確定要繼續嗎？",
         "ok": "立即重新啟動",
         "cancel": "取消"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
@@ -461,7 +458,8 @@
     "authorize_url_error": "無法取得授權 URL",
     "domain_confirmed": "{{domain}} 已確認，請登入",
     "domain_doesnt_exist": "無法連線到 {{domain}}，請確認伺服器 URL",
-    "loading": "載入中..."
+    "loading": "載入中...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {

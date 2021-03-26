@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "其它选项",
-        "launch": "登录时启动程序",
-        "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
-          "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
-          }
-        }
+        "launch": "登录时启动程序"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "语言",
-      "language_description": "设定 Whalebird 的界面语言。",
-      "notice": "需要重启",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirm",
         "message": "程序需要重新启动。继续吗？",
         "ok": "重启",
         "cancel": "取消"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
@@ -461,7 +458,8 @@
     "authorize_url_error": "无法获取认证 URL",
     "domain_confirmed": "{{domain}} 已确认，请登录",
     "domain_doesnt_exist": "连接 {{domain}} 失败，请确认服务器 URL",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {

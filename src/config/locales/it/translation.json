@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "Altre opzioni",
-        "launch": "Avvia l'app al login",
-        "spellcheck": {
-          "description": "Enable spellchecker",
-          "notice": "Requires relaunch",
-          "confirm": {
-            "title": "Confirm",
-            "message": "You have to restart this application. Continue?",
-            "ok": "Restart Now",
-            "cancel": "Cancel"
-          }
-        }
+        "launch": "Avvia l'app al login"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "Lingua",
-      "language_description": "Scegli la lingua che desideri utilizzare con Whalebird.",
-      "notice": "Richiede il riavvio",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirm",
         "message": "Devi riavviare questa applicazione. Continua?",
         "ok": "Riavvia Adesso",
         "cancel": "Annulla"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
@@ -461,7 +458,8 @@
     "authorize_url_error": "Impossibile ottenere l'URL di autorizzazione",
     "domain_confirmed": "{{domain}} è confermato, per favore accedi",
     "domain_doesnt_exist": "Impossibile connettersi a {{domain}}, assicurarsi che l'URL del server sia corretto",
-    "loading": "Caricamento..."
+    "loading": "Caricamento...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {

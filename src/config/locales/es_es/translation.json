@@ -135,17 +135,7 @@
       },
       "other": {
         "title": "Otras opciones",
-        "launch": "Iniciar aplicación al iniciar sesión",
-        "spellcheck": {
-          "description": "Activar corrector ortográfico",
-          "notice": "Requiere reiniciar",
-          "confirm": {
-            "title": "Confirmar",
-            "message": "Tienes que reiniciar esta aplicación. ¿Continuar?",
-            "ok": "Reiniciar Ahora",
-            "cancel": "Cancelar"
-          }
-        }
+        "launch": "Iniciar aplicación al iniciar sesión"
       }
     },
     "appearance": {
@@ -239,13 +229,20 @@
     },
     "language": {
       "title": "Idioma",
-      "language_description": "Elige el idioma que te gustaría usar con Whalebird.",
-      "notice": "Requiere reiniciar",
+      "notice": "These settings will take effect after a relaunch",
       "confirm": {
         "title": "Confirmar",
         "message": "Tienes que reiniciar esta aplicación. ¿Continuar?",
         "ok": "Reiniciar ahora",
         "cancel": "Cancelar"
+      },
+      "language": {
+        "title": "Language",
+        "description": "Choose the language you would like to use with Whalebird."
+      },
+      "spellchecker": {
+        "title": "Spellcheck",
+        "enabled": "Enable spellchecker"
       }
     }
   },
@@ -461,7 +458,8 @@
     "authorize_url_error": "Error al obtener la url autorizada",
     "domain_confirmed": "{{domain}} está confirmado, por favor inicia sesión",
     "domain_doesnt_exist": "Error al conectar {{domain}}, confirme la URL del servidor",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
   },
   "validation": {
     "login": {
