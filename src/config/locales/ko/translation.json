@@ -229,13 +229,6 @@
     },
     "language": {
       "title": "언어",
-      "notice": "These settings will take effect after a relaunch",
-      "confirm": {
-        "title": "Confirm",
-        "message": "어플리케이션을 재실행해야 합니다. 계속할까요?",
-        "ok": "지금 재실행",
-        "cancel": "취소"
-      },
       "language": {
         "title": "Language",
         "description": "Choose the language you would like to use with Whalebird."
