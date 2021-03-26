@@ -7,7 +7,6 @@
         <el-select id="language" v-model="displayLanguage" placeholder="style">
           <el-option v-for="lang in languages" :key="lang.key" :label="lang.name" :value="lang.key"> </el-option>
         </el-select>
-        <p class="notice">{{ $t('preferences.language.notice') }}</p>
       </el-form-item>
     </el-form>
     <el-form class="spellchecker section" label-position="top" size="small">
@@ -94,19 +93,6 @@ export default {
   },
   created() {
     this.$store.dispatch('Preferences/Language/loadLanguage')
-  },
-  methods: {
-    confirm() {
-      this.$confirm(this.$t('preferences.language.confirm.message'), this.$t('preferences.language.confirm.title'), {
-        confirmButtonText: this.$t('preferences.language.confirm.ok'),
-        cancelButtonText: this.$t('preferences.language.confirm.cancel'),
-        type: 'warning'
-      })
-        .then(() => {
-          this.$store.dispatch('Preferences/Language/relaunch')
-        })
-        .catch(() => {})
-    }
   }
 }
 </script>

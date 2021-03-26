@@ -96,9 +96,6 @@ const actions: ActionTree<GeneralState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
     dispatch('App/loadPreferences', null, { root: true })
     await win.ipcRenderer.invoke('change-auto-launch', newOther.launch)
-  },
-  relaunch: () => {
-    win.ipcRenderer.send('relaunch')
   }
 }
 
