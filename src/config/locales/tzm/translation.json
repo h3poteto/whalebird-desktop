@@ -229,13 +229,6 @@
     },
     "language": {
       "title": "Tutlayt",
-      "notice": "These settings will take effect after a relaunch",
-      "confirm": {
-        "title": "Confirm",
-        "message": "Ixṣ as talsed tsentid tisensi-a. ad tsmded?",
-        "ok": "Als-senti dɣi",
-        "cancel": "Ser"
-      },
       "language": {
         "title": "Language",
         "description": "Choose the language you would like to use with Whalebird."
