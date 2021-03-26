@@ -1,6 +1,6 @@
 <template>
   <div id="side_menu">
-    <div :class="collapse ? 'profile-wrapper narrow-menu' : 'profile-wrapper'" style="-webkit-app-region: drag;">
+    <div :class="collapse ? 'profile-wrapper narrow-menu' : 'profile-wrapper'" style="-webkit-app-region: drag">
       <div :class="collapse ? 'profile-narrow' : 'profile-wide'">
         <div class="account">
           <div class="avatar" v-if="collapse">
@@ -309,7 +309,7 @@ export default {
     height: calc(100% - 82px);
     width: 180px;
     border: none;
-    overflow-y: hidden;
+    overflow: hidden;
 
     .el-badge__content {
       background-color: #409eff;
