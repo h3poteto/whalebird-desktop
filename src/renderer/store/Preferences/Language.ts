@@ -44,12 +44,12 @@ const mutations: MutationTree<LanguageState> = {
 }
 
 const actions: ActionTree<LanguageState, RootState> = {
-  loadLanguage: async ({ commit }) => {
+  loadLanguage: async ({ commit }): Promise<string> => {
     const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
     commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language as LanguageSet)
-    return conf
+    return conf.language.language
   },
-  changeLanguage: async ({ commit }, key: string) => {
+  changeLanguage: async ({ commit }, key: string): Promise<string> => {
     const value: string = await win.ipcRenderer.invoke('change-language', key)
     commit(MUTATION_TYPES.CHANGE_LANGUAGE, value)
     return value

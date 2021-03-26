@@ -65,8 +65,8 @@ export default {
         return this.$store.state.Preferences.Language.language.language
       },
       set(value) {
-        this.$store.dispatch('Preferences/Language/changeLanguage', value).then(() => {
-          this.confirm()
+        this.$store.dispatch('Preferences/Language/changeLanguage', value).then(key => {
+          this.$i18n.i18next.changeLanguage(key)
         })
       }
     },

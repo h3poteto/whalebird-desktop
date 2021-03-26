@@ -217,6 +217,33 @@ const getMenuPreferences = async (): Promise<MenuPreferences> => {
   return conf.menu
 }
 
+/**
+ * Set application menu
+ * @return Whether the menu bar is auto hide.
+ */
+const updateApplicationMenu = async (accountsChange: Array<MenuItemConstructorOptions>): Promise<boolean> => {
+  const menuPreferences = await getMenuPreferences()
+  const menu = ApplicationMenu(accountsChange, menuPreferences, i18next)
+  Menu.setApplicationMenu(menu)
+  let autoHideMenuBar = false
+  if (menuPreferences.autoHideMenu) {
+    autoHideMenuBar = true
+  }
+  return autoHideMenuBar
+}
+
+/**
+ * Set dock menu for mac
+ */
+const updateDockMenu = async (accountsChange: Array<MenuItemConstructorOptions>) => {
+  if (process.platform !== 'darwin') {
+    return
+  }
+
+  const dockMenu = Menu.buildFromTemplate(accountsChange)
+  app.dock.setMenu(dockMenu)
+}
+
 async function createWindow() {
   /**
    * List accounts
@@ -247,23 +274,14 @@ async function createWindow() {
   nativeTheme.themeSource = 'system'
 
   /**
-   * Set application menu
+   * Set Application Menu
    */
-  const menuPreferences = await getMenuPreferences()
-  const menu = ApplicationMenu(accountsChange, menuPreferences, i18next)
-  Menu.setApplicationMenu(menu)
-  let autoHideMenuBar = false
-  if (menuPreferences.autoHideMenu) {
-    autoHideMenuBar = true
-  }
+  const autoHideMenuBar = await updateApplicationMenu(accountsChange)
 
   /**
    * Set dock menu for mac
    */
-  if (process.platform === 'darwin') {
-    const dockMenu = Menu.buildFromTemplate(accountsChange)
-    app.dock.setMenu(dockMenu)
-  }
+  await updateDockMenu(accountsChange)
 
   /**
    * Windows10 don't notify, so we have to set appId
@@ -1018,6 +1036,21 @@ ipcMain.handle('change-language', async (_: IpcMainInvokeEvent, value: string) =
     }
   })
   i18next.changeLanguage(conf.language.language)
+
+  const accounts = await listAccounts()
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
+    return {
+      label: a.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(a, index)
+    }
+  })
+
+  await updateApplicationMenu(accountsChange)
+  await updateDockMenu(accountsChange)
+  if (process.platform !== 'darwin' && tray !== null) {
+    tray.setContextMenu(TrayMenu(accountsChange, i18next))
+  }
   return conf.language.language
 })
 
