@@ -50,7 +50,7 @@
     "home": "ホーム",
     "notification": "通知",
     "mention": "返信",
-    "direct": "ダイレクトメッセージ",
+    "direct": "DM",
     "follow_requests": "フォロー申請",
     "favourite": "お気に入り",
     "bookmark": "ブックマーク",
@@ -187,8 +187,8 @@
         "reaction": "絵文字リアクションを受け取ったとき",
         "follow_request": "フォローリクエストを受け取った時",
         "status": "トゥートの通知を受け取った時",
-        "poll_vote": "Notify me when I receive a vote of poll",
-        "poll_expired": "Notify me when I receive a poll expired event"
+        "poll_vote": "アンケートに投票された時",
+        "poll_expired": "アンケートが終了したとき"
       }
     },
     "account": {
@@ -230,12 +230,12 @@
     "language": {
       "title": "言語",
       "language": {
-        "title": "Language",
-        "description": "Choose the language you would like to use with Whalebird."
+        "title": "言語",
+        "description": "Whalebirdの表示言語を選択"
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "スペルチェック",
+        "enabled": "スペルチェッカーを有効にする"
       }
     }
   },
@@ -452,7 +452,7 @@
     "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
     "domain_doesnt_exist": "{{domain}} に接続できません，URLを確認してください",
     "loading": "読み込み中...",
-    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
+    "language_not_support_spellchecker_error": "この言語はスペルチェッカーではサポートされていません"
   },
   "validation": {
     "login": {
@@ -500,8 +500,8 @@
       "body": "{{username}} さんがあなたのアンケートに投票しました"
     },
     "poll_expired": {
-      "title": "PollExpired",
-      "body": "{{username}}'s poll is expired"
+      "title": "アンケート終了",
+      "body": "{{username}} さんのアンケートが終了しました"
     }
   }
 }
