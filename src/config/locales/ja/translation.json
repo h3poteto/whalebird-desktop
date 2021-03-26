@@ -229,13 +229,6 @@
     },
     "language": {
       "title": "言語",
-      "notice": "These settings will take effect after a relaunch",
-      "confirm": {
-        "title": "確認",
-        "message": "設定を有効化するために再起動する必要があります",
-        "ok": "再起動する",
-        "cancel": "キャンセル"
-      },
       "language": {
         "title": "Language",
         "description": "Choose the language you would like to use with Whalebird."

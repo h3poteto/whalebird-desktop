@@ -229,13 +229,6 @@
     },
     "language": {
       "title": "語言",
-      "notice": "These settings will take effect after a relaunch",
-      "confirm": {
-        "title": "Confirm",
-        "message": "您需要重新啟動本應用程式，確定要繼續嗎？",
-        "ok": "立即重新啟動",
-        "cancel": "取消"
-      },
       "language": {
         "title": "Language",
         "description": "Choose the language you would like to use with Whalebird."

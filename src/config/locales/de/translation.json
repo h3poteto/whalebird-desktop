@@ -229,13 +229,6 @@
     },
     "language": {
       "title": "Sprache",
-      "notice": "These settings will take effect after a relaunch",
-      "confirm": {
-        "title": "Confirm",
-        "message": "Du musst diese Anwendung neu starten. Fortfahren?",
-        "ok": "Jetzt neu starten",
-        "cancel": "Abbrechen"
-      },
       "language": {
         "title": "Language",
         "description": "Choose the language you would like to use with Whalebird."
