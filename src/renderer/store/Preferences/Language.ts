@@ -63,9 +63,6 @@ const actions: ActionTree<LanguageState, RootState> = {
     const langs: Array<string> = await win.ipcRenderer.invoke('update-spellchecker-languages', languages)
     commit(MUTATION_TYPES.UPDATE_SPELLCHECKER_LANGUAGES, langs)
     return langs
-  },
-  relaunch: () => {
-    win.ipcRenderer.send('relaunch')
   }
 }
 
