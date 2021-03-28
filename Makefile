@@ -16,6 +16,7 @@ mac:
 	cd build; shasum -a 256 Whalebird-${VERSION}-darwin-universal.dmg >> sha256sum.txt
 
 mas:
+	yarn run build:clean
 	yarn run build:mas
 	./appStore.sh
 
