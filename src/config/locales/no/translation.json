@@ -2,49 +2,49 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "about": "Om Whalebird",
+      "preferences": "Innstillinger...",
+      "services": "Tjenester",
+      "hide": "Skjul Whalebird",
+      "hide_others": "Skjul andre",
+      "show_all": "Vis alle",
+      "open": "Åpne vindu",
+      "quit": "Avslutt"
     },
     "toot": {
       "name": "Toot",
-      "new": "New Toot"
+      "new": "Ny toot"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "Rediger",
+      "undo": "Angre",
+      "redo": "Gjør om",
+      "cut": "Klipp ut",
+      "copy": "Kopier",
+      "paste": "Lim inn",
+      "select_all": "Velg alle"
     },
     "view": {
-      "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "name": "Vis",
+      "toggle_full_screen": "Aktiverer/deaktiverer fullskjermvisning"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
-      "jump_to": "Jump to"
+      "always_show_menu_bar": "Vis alltid menylinjen",
+      "name": "Vindu",
+      "close": "Lukk vindu",
+      "open": "Åpne vindu",
+      "minimize": "Minimer",
+      "jump_to": "Gå til"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "Legg til ny konto"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
+    "profile": "Profil",
+    "show_profile": "Vis profil",
+    "edit_profile": "Rediger profil",
+    "settings": "Innstillinger",
     "collapse": "Collapse",
     "expand": "Expand",
     "home": "Home",
