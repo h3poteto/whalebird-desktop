@@ -24,6 +24,7 @@ else build()
 
 function clean() {
   del.sync(['build/*', '!build/icons', '!build/icons/icon.*', '!build/sounds', '!build/sounds/*', '!build/notarize.js'])
+  del.sync(['packages/*', '!packages/universal.js'])
   console.log(`\n${doneLog}\n`)
   process.exit()
 }
