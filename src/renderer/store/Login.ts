@@ -49,10 +49,15 @@ const actions: ActionTree<LoginState, RootState> = {
   confirmInstance: async ({ commit }, domain: string): Promise<boolean> => {
     commit(MUTATION_TYPES.CHANGE_SEARCHING, true)
     const cleanDomain = domain.trim()
-    const sns = await detector(`https://${cleanDomain}`)
-    commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
-    commit(MUTATION_TYPES.CHANGE_INSTANCE, cleanDomain)
-    commit(MUTATION_TYPES.CHANGE_SNS, sns)
+    try {
+      const sns = await detector(`https://${cleanDomain}`)
+      commit(MUTATION_TYPES.CHANGE_INSTANCE, cleanDomain)
+      commit(MUTATION_TYPES.CHANGE_SNS, sns)
+    } catch {
+      return false
+    } finally {
+      commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
+    }
     return true
   }
 }

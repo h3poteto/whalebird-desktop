@@ -18,7 +18,7 @@ const actions: ActionTree<AuthorizeState, RootState> = {
         code: request.code.trim()
       })
     }
-    const id = await win.ipcRenderer.invoke('get-access-token', req)
+    const id = await win.ipcRenderer.invoke('get-and-update-access-token', req)
     return id
   }
 }

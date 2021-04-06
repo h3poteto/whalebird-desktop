@@ -458,9 +458,25 @@ type TokenRequest = {
   sns: 'mastodon' | 'pleroma' | 'misskey'
 }
 
-ipcMain.handle('get-access-token', async (_: IpcMainInvokeEvent, request: TokenRequest) => {
+ipcMain.handle('get-and-update-access-token', async (_: IpcMainInvokeEvent, request: TokenRequest) => {
   const proxy = await proxyConfiguration.forMastodon()
-  const token = await auth.getAccessToken(request.sns, request.code, proxy)
+  const token = await auth.getAndUpdateAccessToken(request.sns, request.code, proxy)
+  // Update instance menu
+  const accounts = await listAccounts()
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
+    return {
+      label: a.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(a, index)
+    }
+  })
+
+  await updateApplicationMenu(accountsChange)
+  await updateDockMenu(accountsChange)
+  if (process.platform !== 'darwin' && tray !== null) {
+    tray.setContextMenu(TrayMenu(accountsChange, i18next))
+  }
+
   return new Promise((resolve, reject) => {
     accountDB.findOne(
       {
