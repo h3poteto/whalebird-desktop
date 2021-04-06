@@ -70,7 +70,7 @@ export default class Authentication {
     return res.url
   }
 
-  async getAccessToken(sns: 'mastodon' | 'pleroma' | 'misskey', code: string | null, proxy: ProxyConfig | false): Promise<string> {
+  async getAndUpdateAccessToken(sns: 'mastodon' | 'pleroma' | 'misskey', code: string | null, proxy: ProxyConfig | false): Promise<string> {
     if (!this.baseURL) {
       throw new Error('domain is required')
     }
