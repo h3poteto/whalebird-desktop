@@ -510,6 +510,22 @@ ipcMain.handle('update-account', async (_: IpcMainInvokeEvent, acct: LocalAccoun
 
 ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: string) => {
   const accountId = await accountManager.removeAccount(id)
+
+  const accounts = await listAccounts()
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
+    return {
+      label: a.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(a, index)
+    }
+  })
+
+  await updateApplicationMenu(accountsChange)
+  await updateDockMenu(accountsChange)
+  if (process.platform !== 'darwin' && tray !== null) {
+    tray.setContextMenu(TrayMenu(accountsChange, i18next))
+  }
+
   stopUserStreaming(accountId)
 })
 
@@ -530,6 +546,21 @@ ipcMain.handle('refresh-accounts', async (_: IpcMainInvokeEvent) => {
 
 ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
   await accountManager.removeAll()
+
+  const accounts = await listAccounts()
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
+    return {
+      label: a.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(a, index)
+    }
+  })
+
+  await updateApplicationMenu(accountsChange)
+  await updateDockMenu(accountsChange)
+  if (process.platform !== 'darwin' && tray !== null) {
+    tray.setContextMenu(TrayMenu(accountsChange, i18next))
+  }
 })
 
 ipcMain.handle('change-auto-launch', async (_: IpcMainInvokeEvent, enable: boolean) => {
