@@ -46,7 +46,7 @@
     "edit_profile": "Ssenfel ifres",
     "settings": "Tisɣal",
     "collapse": "Ssemun",
-    "expand": "Expand",
+    "expand": "Semɣer",
     "home": "Asnubg",
     "notification": "Tineɣmisin",
     "mention": "Mention",
@@ -230,7 +230,7 @@
     "language": {
       "title": "Tutlayt",
       "language": {
-        "title": "Language",
+        "title": "Tutlayt",
         "description": "Choose the language you would like to use with Whalebird."
       },
       "spellchecker": {
@@ -348,7 +348,7 @@
       "follows_you": "Iḍffer-k",
       "doesnt_follow_you": "Ur-k iḍffeṛ",
       "detail": "Detail",
-      "follow": "Follow this user",
+      "follow": "Ḍfeṛ anessmres-a",
       "unfollow": "Unfollow this user",
       "subscribe": "Subscribe this user",
       "unsubscribe": "Unsubscribe this user",
@@ -386,10 +386,10 @@
       "edit": "Senfel",
       "delete": {
         "confirm": {
-          "title": "Confirm",
+          "title": "Seddid",
           "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "ok": "Kkes",
+          "cancel": "Ser"
         }
       }
     }
@@ -492,7 +492,7 @@
       "body": "Imyagga {{username}} ɣef waddad-nnek"
     },
     "status": {
-      "title": "Status",
+      "title": "Addaden",
       "body": "{{username}} just posted"
     },
     "poll_vote": {
