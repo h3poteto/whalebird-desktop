@@ -93,8 +93,8 @@
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "description": "Personalizza la visibilità predefinita del toot",
+          "notice": "Questa impostazione si applica solo ai nuovi post, le risposte seguono la visibilità dei post originale",
           "public": "Pubblico",
           "unlisted": "Non elencato",
           "private": "Privato",
