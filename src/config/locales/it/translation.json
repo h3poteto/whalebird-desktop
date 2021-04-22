@@ -12,7 +12,7 @@
       "quit": "Esci"
     },
     "toot": {
-      "name": "Toot",
+      "name": "Post",
       "new": "Nuovo Toot"
     },
     "edit": {
@@ -82,7 +82,7 @@
       "show_replies": "Mostra risposte",
       "apply": "Applica"
     },
-    "new_toot": "Toot",
+    "new_toot": "Post",
     "reload": "Ricarica",
     "settings": "Impostazioni"
   },
@@ -91,9 +91,9 @@
     "general": {
       "title": "Generali",
       "toot": {
-        "title": "Toot",
+        "title": "Post",
         "visibility": {
-          "description": "Personalizza la visibilità predefinita del toot",
+          "description": "Personalizza la visibilità predefinita del post",
           "notice": "Questa impostazione si applica solo ai nuovi post, le risposte seguono la visibilità dei post originale",
           "public": "Pubblico",
           "unlisted": "Non elencato",
@@ -124,7 +124,7 @@
         "title": "Audio",
         "description": "Imposta suoni di feedback.",
         "fav_rb": "Quando aggiungi ai preferiti o condividi il toot",
-        "toot": "Quando posti un toot"
+        "toot": "Quando pubblichi un post"
       },
       "timeline": {
         "title": "Cronologia",
@@ -163,7 +163,7 @@
       },
       "font_size": "Dimensione carattere",
       "font_family": "Tipo di carattere",
-      "toot_padding": "Spaziatura intorno ai toots",
+      "toot_padding": "Spaziatura intorno ai post",
       "display_style": {
         "title": "Visualizza lo stile del nome utente",
         "display_name_and_username": "Visualizza nome e nome utente",
@@ -231,7 +231,7 @@
       "title": "Lingua",
       "language": {
         "title": "Lingua",
-        "description": "Scegli la lingua che vuoi usare con Whalebird."
+        "description": "Scegli la lingua che vuoi utilizzare con Whalebird."
       },
       "spellchecker": {
         "title": "Controllo ortografico",
@@ -241,12 +241,12 @@
   },
   "modals": {
     "new_toot": {
-      "title": "Nuovo Toot",
+      "title": "Nuovo Post",
       "cw": "Scrivi il tuo avviso qui",
       "status": "Cosa ti passa per la testa?",
       "cancel": "Annulla",
-      "toot": "Toot",
-      "close_confirm": "Sei sicuro di voler cancellare il nuovo toot?",
+      "toot": "Post",
+      "close_confirm": "Sei sicuro di voler cancellare il nuovo post?",
       "close_confirm_ok": "OK",
       "close_confirm_cancel": "Annulla",
       "description": "Descrivi per i non vedenti",
@@ -291,18 +291,18 @@
       "title": "Scorciatoie da Tastiera",
       "ctrl_number": "Passa ad un altro account",
       "ctrl_k": "Salta ad altre cronologie",
-      "ctrl_n": "Apri una finestra modale per pubblicare un nuovo toot",
-      "ctrl_enter": "Posta un toot",
+      "ctrl_n": "Apri una finestra modale per pubblicare un nuovo post",
+      "ctrl_enter": "Pubblica un post",
       "ctrl_r": "Ricarica la timeline corrente",
-      "j": "Seleziona il prossimo toot",
-      "k": "Seleziona il toot precedente",
+      "j": "Seleziona il prossimo post",
+      "k": "Seleziona il post precedente",
       "h": "Abilita focalizzazione sulla colonna sinistra",
       "l": "Abilita focalizzazione sulla colonna destra",
-      "r": "Rispondi al toot",
-      "b": "Condividi il toot",
-      "f": "Preferisci il toot",
-      "o": "Apri dettagli del toot",
-      "p": "Apri il profilo dell'account dell'autore del toot",
+      "r": "Rispondi al post",
+      "b": "Condividi il post",
+      "f": "Preferisci il post",
+      "o": "Apri dettagli del post",
+      "p": "Apri il profilo dell'account dell'autore del post",
       "i": "Apri le immagini",
       "x": "Mostra/Nascondi avvisi e contenuti inappropriati",
       "?": "Mostra questa finestra di aiuto",
@@ -320,9 +320,9 @@
       "show_more": "Mostra tutto",
       "hide": "Nascondi",
       "sensitive": "Mostra contenuti sensibili",
-      "view_toot_detail": "Visualizza Dettagli del Toot",
+      "view_toot_detail": "Visualizza Dettagli del Post",
       "open_in_browser": "Apri nel Browser",
-      "copy_link_to_toot": "Copia il link del Toot",
+      "copy_link_to_toot": "Copia il link del Post",
       "mute": "Silenzia",
       "block": "Blocca",
       "report": "Segnala",
@@ -331,9 +331,9 @@
       "reply": "Rispondi",
       "reblog": "Condividi",
       "fav": "Preferisci",
-      "detail": "Dettagli del Toot",
+      "detail": "Dettagli del Post",
       "bookmark": "Segnalibro",
-      "pinned": "Toot Fissati",
+      "pinned": "Post Fissati",
       "poll": {
         "vote": "Vota",
         "votes_count": "voti",
@@ -359,7 +359,7 @@
       "unmute": "Non silenziare",
       "unblock": "Sblocca",
       "block": "Blocca",
-      "toots": "Toot",
+      "toots": "Post",
       "follows": "Seguiti",
       "followers": "Seguaci"
     }
@@ -378,7 +378,7 @@
     "account": "Account",
     "tag": "Hashtag",
     "keyword": "parola chiave",
-    "toot": "Toot"
+    "toot": "Post"
   },
   "lists": {
     "index": {
@@ -427,7 +427,7 @@
     "authorize_error": "Autorizzazione fallita",
     "followers_fetch_error": "Impossibile recuperare l'elenco dei seguaci",
     "follows_fetch_error": "Impossibile recuperare l'elenco dei seguiti",
-    "toot_fetch_error": "Impossibile recuperare dettagli sul toot",
+    "toot_fetch_error": "Impossibile recuperare dettagli sul post",
     "follow_error": "Impossibile seguire l'utente",
     "unfollow_error": "Impossibile smettere di seguire l'utente",
     "subscribe_error": "Impossibile iscriversi all'utente",
@@ -443,9 +443,9 @@
     "unfavourite_error": "Impossibile rimuovere dai preferiti",
     "bookmark_error": "Aggiunta del segnalibro fallita",
     "unbookmark_error": "Rimozione del segnalibro fallita",
-    "delete_error": "Impossibile cancellare il toot",
+    "delete_error": "Impossibile cancellare il post",
     "search_error": "Impossibile eseguire la ricerca",
-    "toot_error": "Impossibile pubblicare il toot",
+    "toot_error": "Impossibile pubblicare il post",
     "update_list_memberships_error": "Impossibile aggiornare le iscrizioni alla lista",
     "add_user_error": "Impossibile aggiungere un utente",
     "authorize_url_error": "Impossibile ottenere l'URL di autorizzazione",
@@ -460,7 +460,7 @@
       "domain_format": "Per fovore, inserire solo il nome dominio"
     },
     "new_toot": {
-      "toot_length": "La lunghezza del toot deve essere da {{min}} a {{max}}",
+      "toot_length": "La lunghezza del post deve essere da {{min}} a {{max}}",
       "attach_length": "È possibile allegare fino a {{max}} immagini",
       "attach_image": "È possibile allegare solo immagini o video",
       "poll_invalid": "Scelte del sondaggio non valide"
@@ -496,12 +496,12 @@
       "body": "{{username}} ha appena pubblicato"
     },
     "poll_vote": {
-      "title": "PollVote",
-      "body": "{{username}} voted your poll"
+      "title": "Voto del Sondaggio",
+      "body": "{{username}} ha votato il tuo sondaggio"
     },
     "poll_expired": {
-      "title": "PollExpired",
-      "body": "{{username}}'s poll is expired"
+      "title": "Sondaggio Scaduto",
+      "body": "Il sondaggio di {{username}} è scaduto"
     }
   }
 }
