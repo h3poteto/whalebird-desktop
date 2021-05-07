@@ -29,7 +29,7 @@
       "toggle_full_screen": "Vollbildmodus umschalten"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
+      "always_show_menu_bar": "Menüleiste immer anzeigen",
       "name": "Fenster",
       "close": "Fenster schließen",
       "open": "Fenster öffnen",
@@ -53,7 +53,7 @@
     "direct": "Direktnachrichten",
     "follow_requests": "Follower-Anfragen",
     "favourite": "Favorit",
-    "bookmark": "Bookmark",
+    "bookmark": "Lesezeichen",
     "local": "Lokale Timeline",
     "public": "Öffenliche Timeline",
     "hashtag": "Hashtag",
@@ -65,7 +65,7 @@
     "notification": "Benachrichtigung",
     "mention": "Erwähnung",
     "favourite": "Favorit",
-    "bookmark": "Bookmark",
+    "bookmark": "Lesezeichen",
     "follow_requests": "Follower-Anfragen",
     "direct_messages": "Direktnachrichten",
     "local": "Lokale Timeline",
@@ -93,8 +93,8 @@
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "description": "Standardsichtbarkeit von Toots anpassen",
+          "notice": "Diese Einstellung gilt nur für neue Toots, Antworten folgen der Sichtbarkeit der ursprünglichen Toots",
           "public": "Öffenlich",
           "unlisted": "Nicht gelistet",
           "private": "Privat",
@@ -184,9 +184,9 @@
         "reblog": "Wenn einer meiner Toots geteilt wird",
         "favourite": "Wenn einer meiner Toots favorisiert wird",
         "follow": "Wenn mir ein anderer Benutzer folgt",
-        "reaction": "Notify me when I receive a emoji reaction",
-        "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification",
+        "reaction": "Benachrichtige mich, wenn ich eine Emoji-Reaktion erhalte",
+        "follow_request": "Benachrichtige mich, wenn ich eine Folge-Anfrage empfange",
+        "status": "Benachrichtige mich, wenn ich eine Statusbenachrichtigung empfange",
         "poll_vote": "Notify me when I receive a vote of poll",
         "poll_expired": "Notify me when I receive a poll expired event"
       }
