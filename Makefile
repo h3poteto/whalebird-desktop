@@ -12,6 +12,8 @@ build: install
 
 mac:
 	yarn run package:mac
+	mv build/Whalebird-${VERSION}-mac.dmg build/Whalebird-${VERSION}-darwin-x64.dmg
+	mv build/Whalebird-${VERSION}-mac-arm64.dmg build/Whalebird-${VERSION}-darwin-arm64.dmg
 	mv build/Whalebird-${VERSION}-mac-universal.dmg build/Whalebird-${VERSION}-darwin-universal.dmg
 	cd build; shasum -a 256 Whalebird-${VERSION}-darwin-universal.dmg >> sha256sum.txt
 
