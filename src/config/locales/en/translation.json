@@ -114,6 +114,9 @@
         "local": "Local Timeline",
         "public": "Public Timeline"
       }
+    },
+    "filters": {
+      "title": "Filters"
     }
   },
   "preferences": {

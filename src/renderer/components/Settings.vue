@@ -28,6 +28,10 @@
             <icon name="align-left" class="icon" scale="1.3"></icon>
             <span>{{ $t('settings.timeline.title') }}</span>
           </el-menu-item>
+          <el-menu-item :index="`/${id()}/settings/filters`">
+            <icon name="filter" class="icon" scale="1.3"></icon>
+            <span>{{ $t('settings.filters.title') }}</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>
