@@ -116,7 +116,31 @@
       }
     },
     "filters": {
-      "title": "Filters"
+      "title": "Filters",
+      "edit": {
+        "title": "Edit",
+        "form": {
+          "phrase": "Keyword or phrase",
+          "expire": "Expire after",
+          "context": "Filter contexts",
+          "irreversible": "Drop instead of hide",
+          "whole_word": "Whole word",
+          "submit": "Update",
+          "cancel": "Cancel"
+        },
+        "expires": {
+          "never": "Never",
+          "30_minutes": "30 minutes",
+          "1_hour": "1 hour",
+          "6_hours": "6 hours",
+          "12_hours": "12 hours",
+          "1_day": "1 day",
+          "1_week": "1 week"
+        }
+      },
+      "delete": {
+        "title": "Delete"
+      }
     }
   },
   "preferences": {
@@ -455,7 +479,8 @@
     "domain_confirmed": "{{domain}} is confirmed, please login",
     "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
     "loading": "Loading...",
-    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker"
+    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
+    "update_filter_error": "Failed to update the filter"
   },
   "validation": {
     "login": {

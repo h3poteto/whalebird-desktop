@@ -1,6 +1,7 @@
 import { Module, MutationTree, ActionTree } from 'vuex'
 import generator, { Entity } from 'megalodon'
 import { RootState } from '@/store'
+import EditFilters, { EditFiltersState } from './Filters/Edit'
 
 export type FiltersState = {
   filters: Array<Entity.Filter>
@@ -44,11 +45,20 @@ export const actions: ActionTree<FiltersState, RootState> = {
   }
 }
 
+type FiltersModule = {
+  Edit: EditFiltersState
+}
+
+export type FiltersModuleState = FiltersModule & FiltersState
+
 const Filters: Module<FiltersState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
-  actions: actions
+  actions: actions,
+  modules: {
+    Edit: EditFilters
+  }
 }
 
 export default Filters

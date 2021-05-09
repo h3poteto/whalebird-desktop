@@ -1,6 +1,6 @@
 import General, { GeneralState } from './Settings/General'
 import Timeline, { TimelineState } from './Settings/Timeline'
-import Filters, { FiltersState } from './Settings/Filters'
+import Filters, { FiltersModuleState } from './Settings/Filters'
 import { Module, MutationTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -25,7 +25,7 @@ const mutations: MutationTree<SettingsState> = {
 type SettingsModule = {
   General: GeneralState
   Timeline: TimelineState
-  Filter: FiltersState
+  Filter: FiltersModuleState
 }
 
 export type SettingsModuleState = SettingsModule & SettingsState

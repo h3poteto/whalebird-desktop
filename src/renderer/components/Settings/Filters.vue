@@ -17,6 +17,22 @@
           </template>
         </el-table-column>
         <el-table-column prop="expires_at" label="Expires" width="180"> </el-table-column>
+        <el-table-column width="80">
+          <template slot-scope="scope">
+            <el-button type="text">
+              <router-link tag="span" :to="`/${id()}/settings/filters/${filters[scope.$index].id}/edit`">
+                {{ $t('settings.filters.edit.title') }}
+              </router-link>
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column width="80">
+          <template slot-scope="scope">
+            <el-button type="text" @click="deleteFilter(filters[scope.$index].id)">
+              {{ $t('settings.filters.delete.title') }}
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </template>
   </div>
@@ -38,6 +54,14 @@ export default {
   },
   async created() {
     await this.$store.dispatch('Settings/Filters/fetchFilters')
+  },
+  methods: {
+    id() {
+      return this.$route.params.id
+    },
+    deleteFilter(id) {
+      console.log(id)
+    }
   }
 }
 </script>
