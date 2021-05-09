@@ -139,7 +139,10 @@
         }
       },
       "delete": {
-        "title": "Delete"
+        "title": "Delete",
+        "confirm": "Are you sure to delete this filter?",
+        "confirm_ok": "Delete",
+        "confirm_cancel": "Cancel"
       }
     }
   },

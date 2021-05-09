@@ -60,7 +60,13 @@ export default {
       return this.$route.params.id
     },
     deleteFilter(id) {
-      console.log(id)
+      this.$confirm(this.$t('settings.filters.delete.confirm'), 'Warning', {
+        confirmButtonText: this.$t('settings.filters.delete.confirm_ok'),
+        cancelButtonText: this.$t('settings.filters.delete.confirm_cancel'),
+        type: 'warning'
+      }).then(() => {
+        return this.$store.dispatch('Settings/Filters/deleteFilter', id)
+      })
     }
   }
 }

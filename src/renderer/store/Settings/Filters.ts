@@ -42,6 +42,21 @@ export const actions: ActionTree<FiltersState, RootState> = {
     } finally {
       commit(MUTATION_TYPES.CHANGE_LOADING, false)
     }
+  },
+  deleteFilter: async ({ commit, dispatch, rootState }, id: string) => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    try {
+      commit(MUTATION_TYPES.CHANGE_LOADING, true)
+      await client.deleteFilter(id)
+      await dispatch('fetchFilters')
+    } finally {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
+    }
   }
 }
 
