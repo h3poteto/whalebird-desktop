@@ -3,12 +3,19 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type EditFiltersState = {
-  filter: Entity.Filter | null
+  filter: Entity.Filter
   loading: boolean
 }
 
 const state = (): EditFiltersState => ({
-  filter: null,
+  filter: {
+    id: '',
+    phrase: '',
+    expires_at: null,
+    context: [],
+    irreversible: false,
+    whole_word: true
+  } as Entity.Filter,
   loading: false
 })
 
