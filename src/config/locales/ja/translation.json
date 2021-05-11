@@ -114,6 +114,39 @@
         "local": "ローカル",
         "public": "連合"
       }
+    },
+    "filters": {
+      "title": "Filters",
+      "form": {
+        "phrase": "Keyword or phrase",
+        "expire": "Expire after",
+        "context": "Filter contexts",
+        "irreversible": "Drop instead of hide",
+        "whole_word": "Whole word",
+        "submit": "Submit",
+        "cancel": "Cancel"
+      },
+      "expires": {
+        "never": "Never",
+        "30_minutes": "30 minutes",
+        "1_hour": "1 hour",
+        "6_hours": "6 hours",
+        "12_hours": "12 hours",
+        "1_day": "1 day",
+        "1_week": "1 week"
+      },
+      "new": {
+        "title": "New"
+      },
+      "edit": {
+        "title": "Edit"
+      },
+      "delete": {
+        "title": "Delete",
+        "confirm": "Are you sure to delete this filter?",
+        "confirm_ok": "Delete",
+        "confirm_cancel": "Cancel"
+      }
     }
   },
   "preferences": {
@@ -452,7 +485,8 @@
     "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
     "domain_doesnt_exist": "{{domain}} に接続できません，URLを確認してください",
     "loading": "読み込み中...",
-    "language_not_support_spellchecker_error": "この言語はスペルチェッカーではサポートされていません"
+    "language_not_support_spellchecker_error": "この言語はスペルチェッカーではサポートされていません",
+    "update_filter_error": "Failed to update the filter"
   },
   "validation": {
     "login": {
