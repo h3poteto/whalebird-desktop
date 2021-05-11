@@ -14,6 +14,9 @@ import GlobalHeader from '@/components/GlobalHeader.vue'
 import Settings from '@/components/Settings.vue'
 import SettingsGeneral from '@/components/Settings/General.vue'
 import SettingsTimeline from '@/components/Settings/Timeline.vue'
+import SettingsFilters from '@/components/Settings/Filters.vue'
+import SettingsFiltersEdit from '@/components/Settings/Filters/Edit.vue'
+import SettingsFiltersNew from '@/components/Settings/Filters/New.vue'
 import TimelineSpace from '@/components/TimelineSpace.vue'
 import TimelineSpaceContentsHome from '@/components/TimelineSpace/Contents/Home.vue'
 import TimelineSpaceContentsNotifications from '@/components/TimelineSpace/Contents/Notifications.vue'
@@ -100,6 +103,19 @@ const router = new Router({
             {
               path: 'timeline',
               component: SettingsTimeline
+            },
+            {
+              path: 'filters',
+              component: SettingsFilters
+            },
+            {
+              path: 'filters/new',
+              component: SettingsFiltersNew
+            },
+            {
+              path: 'filters/:filter_id/edit',
+              component: SettingsFiltersEdit,
+              props: true
             }
           ]
         },
