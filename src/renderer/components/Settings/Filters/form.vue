@@ -149,4 +149,16 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.section /deep/ {
+  margin-bottom: 40px;
+
+  .el-form-item__label {
+    color: var(--theme-primary-color);
+  }
+
+  .el-checkbox__label {
+    color: var(--theme-primary-color);
+  }
+}
+</style>

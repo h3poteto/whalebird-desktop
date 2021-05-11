@@ -123,7 +123,7 @@
         "context": "Filter contexts",
         "irreversible": "Drop instead of hide",
         "whole_word": "Whole word",
-        "submit": "Update",
+        "submit": "Submit",
         "cancel": "Cancel"
       },
       "expires": {
@@ -134,6 +134,9 @@
         "12_hours": "12 hours",
         "1_day": "1 day",
         "1_week": "1 week"
+      },
+      "new": {
+        "title": "New"
       },
       "edit": {
         "title": "Edit"

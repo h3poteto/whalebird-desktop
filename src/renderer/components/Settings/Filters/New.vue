@@ -1,6 +1,6 @@
 <template>
-  <div id="edit_filter">
-    <h2>{{ $t('settings.filters.edit.title') }}</h2>
+  <div id="new_filter">
+    <h2>{{ $t('settings.filters.new.title') }}</h2>
     <FilterForm v-model="filter" @cancel="cancel" @onSubmit="onSubmit" :loading="loading"> </FilterForm>
   </div>
 </template>
@@ -10,24 +10,20 @@ import { mapState } from 'vuex'
 import FilterForm from './form'
 
 export default {
-  name: 'EditFilter',
-  props: ['filter_id'],
+  name: 'NewFilter',
   components: { FilterForm },
   computed: {
-    ...mapState('Settings/Filters/Edit', {
+    ...mapState('Settings/Filters/New', {
       loading: state => state.loading
     }),
     filter: {
       get() {
-        return this.$store.state.Settings.Filters.Edit.filter
+        return this.$store.state.Settings.Filters.New.filter
       },
       set(value) {
-        this.$store.dispatch('Settings/Filters/Edit/editFilter', value)
+        this.$store.dispatch('Settings/Filters/New/editFilter', value)
       }
     }
-  },
-  async created() {
-    await this.$store.dispatch('Settings/Filters/Edit/fetchFilter', this.filter_id)
   },
   methods: {
     cancel() {
@@ -35,14 +31,14 @@ export default {
     },
     onSubmit() {
       this.$store
-        .dispatch('Settings/Filters/Edit/updateFilter')
+        .dispatch('Settings/Filters/New/createFilter')
         .then(() => {
           this.$router.go(-1)
         })
         .catch(err => {
           console.error(err)
           this.$message({
-            message: this.$t('message.update_filter_error'),
+            message: this.$t('message.create_filter_error'),
             type: 'error'
           })
         })

@@ -1,6 +1,13 @@
 <template>
   <div id="filters">
     <h2>{{ $t('settings.filters.title') }}</h2>
+    <div class="new-filter">
+      <el-button type="primary">
+        <router-link tag="span" :to="`/${id()}/settings/filters/new`">
+          {{ $t('settings.filters.new.title') }}
+        </router-link>
+      </el-button>
+    </div>
     <template>
       <el-table
         :data="filters"
@@ -74,6 +81,11 @@ export default {
 
 <style lang="scss" scoped>
 #filters {
+  .new-filter {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .el-table /deep/ {
     tr,
     th,
