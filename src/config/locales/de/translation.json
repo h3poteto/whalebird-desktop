@@ -486,7 +486,8 @@
     "domain_doesnt_exist": "Verbindung mit {{domain}} fehlgeschlagen, stellen Sie sicher, dass die Server-URL",
     "loading": "Laden...",
     "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
-    "update_filter_error": "Failed to update the filter"
+    "update_filter_error": "Failed to update the filter",
+    "create_filter_error": "Failed to create the filter"
   },
   "validation": {
     "login": {

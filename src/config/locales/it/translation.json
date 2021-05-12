@@ -486,7 +486,8 @@
     "domain_doesnt_exist": "Impossibile connettersi a {{domain}}, assicurarsi che l'URL del server sia corretto",
     "loading": "Caricamento...",
     "language_not_support_spellchecker_error": "Questa lingua non è supportata dal controllore ortografico",
-    "update_filter_error": "Failed to update the filter"
+    "update_filter_error": "Failed to update the filter",
+    "create_filter_error": "Failed to create the filter"
   },
   "validation": {
     "login": {
