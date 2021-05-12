@@ -486,7 +486,8 @@
     "domain_doesnt_exist": "無法連線到 {{domain}}，請確認伺服器 URL",
     "loading": "載入中...",
     "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
-    "update_filter_error": "Failed to update the filter"
+    "update_filter_error": "Failed to update the filter",
+    "create_filter_error": "Failed to create the filter"
   },
   "validation": {
     "login": {
