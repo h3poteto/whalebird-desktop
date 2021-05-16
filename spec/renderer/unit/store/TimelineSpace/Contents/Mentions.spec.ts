@@ -174,8 +174,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
         lazyLoading: false,
         heading: true,
         mentions: [],
-        unreadMentions: [],
-        filter: ''
+        unreadMentions: []
       }
     })
 
@@ -187,8 +186,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
               lazyLoading: false,
               heading: true,
               mentions: [notification1],
-              unreadMentions: [],
-              filter: ''
+              unreadMentions: []
             }
           })
           it('should update mentions', () => {
@@ -204,8 +202,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
               lazyLoading: false,
               heading: true,
               mentions: [notification2, notification1],
-              unreadMentions: [],
-              filter: ''
+              unreadMentions: []
             }
           })
           it('should not be updated mentions', () => {
@@ -223,8 +220,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
               lazyLoading: false,
               heading: false,
               mentions: [notification1],
-              unreadMentions: [],
-              filter: ''
+              unreadMentions: []
             }
           })
           it('should update mentions', () => {
@@ -240,8 +236,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
               lazyLoading: false,
               heading: false,
               mentions: [notification1],
-              unreadMentions: [notification2],
-              filter: ''
+              unreadMentions: [notification2]
             }
           })
           it('should not be updated mentions', () => {
@@ -259,8 +254,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
           lazyLoading: false,
           heading: false,
           mentions: [notification1],
-          unreadMentions: [notification2],
-          filter: ''
+          unreadMentions: [notification2]
         }
       })
       it('should be merged', () => {
@@ -276,8 +270,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
           lazyLoading: false,
           heading: false,
           mentions: [notification2],
-          unreadMentions: [],
-          filter: ''
+          unreadMentions: []
         }
       })
       it('should be inserted', () => {
@@ -292,8 +285,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
           lazyLoading: false,
           heading: false,
           mentions: [notification2, notification1],
-          unreadMentions: [],
-          filter: ''
+          unreadMentions: []
         }
       })
       it('should be updated', () => {
@@ -313,8 +305,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
             lazyLoading: false,
             heading: true,
             mentions: [notification2, notification1],
-            unreadMentions: [],
-            filter: ''
+            unreadMentions: []
           }
         })
         it('should be deleted', () => {
@@ -328,8 +319,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
             lazyLoading: false,
             heading: true,
             mentions: [notification2, notification1],
-            unreadMentions: [],
-            filter: ''
+            unreadMentions: []
           }
         })
         it('should be deleted', () => {

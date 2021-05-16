@@ -7,7 +7,6 @@
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
           <notification
             :message="item"
-            :filter="filter"
             :focused="item.id === focusedId"
             :overlaid="modalOpened"
             v-on:update="updateToot"
@@ -50,8 +49,7 @@ export default {
       backgroundColor: state => state.App.theme.background_color,
       lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
       heading: state => state.TimelineSpace.Contents.Notifications.heading,
-      unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications,
-      filter: state => state.TimelineSpace.Contents.Notifications.filter
+      unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications
     }),
     ...mapGetters('TimelineSpace/Contents/Notifications', ['handledNotifications']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),

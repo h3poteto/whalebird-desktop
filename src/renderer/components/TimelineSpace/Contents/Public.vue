@@ -7,7 +7,6 @@
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             :message="item"
-            :filter="filter"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
             v-on:update="updateToot"
@@ -49,8 +48,7 @@ export default {
       timeline: state => state.timeline,
       lazyLoading: state => state.lazyLoading,
       heading: state => state.heading,
-      unread: state => state.unreadTimeline,
-      filter: state => state.filter
+      unread: state => state.unreadTimeline
     }),
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,

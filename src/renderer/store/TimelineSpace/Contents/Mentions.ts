@@ -7,15 +7,13 @@ export type MentionsState = {
   heading: boolean
   mentions: Array<Entity.Notification>
   unreadMentions: Array<Entity.Notification>
-  filter: string
 }
 
 const state = (): MentionsState => ({
   lazyLoading: false,
   heading: true,
   mentions: [],
-  unreadMentions: [],
-  filter: ''
+  unreadMentions: []
 })
 
 export const MUTATION_TYPES = {
@@ -28,8 +26,7 @@ export const MUTATION_TYPES = {
   ARCHIVE_MENTIONS: 'archiveMentions',
   CLEAR_MENTIONS: 'clearMentions',
   UPDATE_TOOT: 'updateToot',
-  DELETE_TOOT: 'deleteToot',
-  CHANGE_FILTER: 'changeFilter'
+  DELETE_TOOT: 'deleteToot'
 }
 
 const mutations: MutationTree<MentionsState> = {
@@ -90,9 +87,6 @@ const mutations: MutationTree<MentionsState> = {
         return true
       }
     })
-  },
-  [MUTATION_TYPES.CHANGE_FILTER]: (state, filter: string) => {
-    state.filter = filter
   }
 }
 

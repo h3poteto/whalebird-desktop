@@ -7,14 +7,12 @@ import { LocalAccount } from '~/src/types/localAccount'
 export type FavouritesState = {
   favourites: Array<Entity.Status>
   lazyLoading: boolean
-  filter: string
   maxId: string | null
 }
 
 const state = (): FavouritesState => ({
   favourites: [],
   lazyLoading: false,
-  filter: '',
   maxId: null
 })
 
@@ -24,7 +22,6 @@ export const MUTATION_TYPES = {
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
   CHANGE_LAZY_LOADING: 'changeLazyLoading',
-  CHANGE_FILTER: 'changeFilter',
   CHANGE_MAX_ID: 'changeMaxId'
 }
 
@@ -62,9 +59,6 @@ const mutations: MutationTree<FavouritesState> = {
   },
   [MUTATION_TYPES.CHANGE_LAZY_LOADING]: (state, value: boolean) => {
     state.lazyLoading = value
-  },
-  [MUTATION_TYPES.CHANGE_FILTER]: (state, filter: string) => {
-    state.filter = filter
   },
   [MUTATION_TYPES.CHANGE_MAX_ID]: (state, id: string | null) => {
     state.maxId = id

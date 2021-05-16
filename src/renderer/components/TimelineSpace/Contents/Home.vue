@@ -7,7 +7,6 @@
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             :message="item"
-            :filter="filter"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
             v-on:update="updateToot"
@@ -53,7 +52,6 @@ export default {
       lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
       heading: state => state.TimelineSpace.Contents.Home.heading,
       unread: state => state.TimelineSpace.Contents.Home.unreadTimeline,
-      filter: state => state.TimelineSpace.Contents.Home.filter,
       showReblogs: state => state.TimelineSpace.Contents.Home.showReblogs,
       showReplies: state => state.TimelineSpace.Contents.Home.showReplies
     }),

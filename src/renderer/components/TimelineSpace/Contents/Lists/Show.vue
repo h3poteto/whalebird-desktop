@@ -7,7 +7,6 @@
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             :message="item"
-            :filter="filter"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
             v-on:update="updateToot"
@@ -53,8 +52,7 @@ export default {
       timeline: state => state.TimelineSpace.Contents.Lists.Show.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Lists.Show.lazyLoading,
       heading: state => state.TimelineSpace.Contents.Lists.Show.heading,
-      unread: state => state.TimelineSpace.Contents.Lists.Show.unreadTimeline,
-      filter: state => state.TimelineSpace.Contents.Lists.Show.filter
+      unread: state => state.TimelineSpace.Contents.Lists.Show.unreadTimeline
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {

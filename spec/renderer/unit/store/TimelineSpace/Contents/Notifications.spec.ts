@@ -176,8 +176,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
           lazyLoading: false,
           heading: true,
           notifications: [notification2, notification1],
-          unreadNotifications: [],
-          filter: ''
+          unreadNotifications: []
         }
       })
       describe('message is not reblogged', () => {
@@ -202,8 +201,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
               lazyLoading: false,
               heading: true,
               notifications: [notification1],
-              unreadNotifications: [],
-              filter: ''
+              unreadNotifications: []
             }
           })
           it('should update timeline', () => {
@@ -219,8 +217,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
               lazyLoading: false,
               heading: true,
               notifications: [notification2, notification1],
-              unreadNotifications: [],
-              filter: ''
+              unreadNotifications: []
             }
           })
           it('should not update timeline', () => {
@@ -238,8 +235,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
               lazyLoading: false,
               heading: false,
               notifications: [notification1],
-              unreadNotifications: [],
-              filter: ''
+              unreadNotifications: []
             }
           })
           it('should update unreadTimeline', () => {
@@ -254,8 +250,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
               lazyLoading: false,
               heading: false,
               notifications: [notification1],
-              unreadNotifications: [notification2],
-              filter: ''
+              unreadNotifications: [notification2]
             }
           })
           it('should not update unreadTimeline', () => {

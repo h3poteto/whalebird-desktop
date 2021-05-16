@@ -121,8 +121,7 @@ let state = (): ShowState => {
     lazyLoading: false,
     heading: true,
     timeline: [],
-    unreadTimeline: [],
-    filter: ''
+    unreadTimeline: []
   }
 }
 
@@ -182,8 +181,7 @@ describe('Lists/Show', () => {
           lazyLoading: false,
           heading: true,
           timeline: [status1],
-          unreadTimeline: [],
-          filter: ''
+          unreadTimeline: []
         }
       }
     })

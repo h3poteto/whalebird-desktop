@@ -57,8 +57,7 @@ export default {
     }),
     ...mapState('TimelineSpace/Contents/Bookmarks', {
       bookmarks: state => state.bookmarks,
-      lazyLoading: state => state.lazyLoading,
-      filter: state => state.filter
+      lazyLoading: state => state.lazyLoading
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {

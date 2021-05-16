@@ -7,15 +7,13 @@ export type DirectMessagesState = {
   heading: boolean
   timeline: Array<Entity.Status>
   unreadTimeline: Array<Entity.Status>
-  filter: string
 }
 
 const state = (): DirectMessagesState => ({
   lazyLoading: false,
   heading: true,
   timeline: [],
-  unreadTimeline: [],
-  filter: ''
+  unreadTimeline: []
 })
 
 export const MUTATION_TYPES = {
@@ -28,8 +26,7 @@ export const MUTATION_TYPES = {
   ARCHIVE_TIMELINE: 'archiveTimeline',
   CLEAR_TIMELINE: 'clearTimeline',
   UPDATE_TOOT: 'updateToot',
-  DELETE_TOOT: 'deleteToot',
-  CHANGE_FILTER: 'changeFilter'
+  DELETE_TOOT: 'deleteToot'
 }
 
 const mutations: MutationTree<DirectMessagesState> = {
@@ -91,9 +88,6 @@ const mutations: MutationTree<DirectMessagesState> = {
         return toot.id !== id
       }
     })
-  },
-  [MUTATION_TYPES.CHANGE_FILTER]: (state, filter: string) => {
-    state.filter = filter
   }
 }
 
