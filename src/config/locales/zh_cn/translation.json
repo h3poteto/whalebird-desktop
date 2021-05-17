@@ -29,7 +29,7 @@
       "toggle_full_screen": "切换全屏"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
+      "always_show_menu_bar": "始终显示菜单栏",
       "name": "窗口",
       "close": "关闭窗口",
       "open": "打开窗口",
@@ -53,7 +53,7 @@
     "direct": "私信",
     "follow_requests": "关注请求",
     "favourite": "收藏的内容",
-    "bookmark": "Bookmark",
+    "bookmark": "书签",
     "local": "本站",
     "public": "跨站",
     "hashtag": "话题",
@@ -65,7 +65,7 @@
     "notification": "通知",
     "mention": "提到我的",
     "favourite": "收藏的内容",
-    "bookmark": "Bookmark",
+    "bookmark": "书签",
     "follow_requests": "关注请求",
     "direct_messages": "私信",
     "local": "本站",
@@ -75,10 +75,10 @@
     "lists": "列表",
     "members": "成员",
     "option": {
-      "title": "Option",
+      "title": "选项",
       "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "show_replies": "显示回复",
+      "apply": "应用"
     },
     "new_toot": "发嘟",
     "reload": "刷新",
