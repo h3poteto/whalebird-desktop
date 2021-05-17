@@ -74,13 +74,11 @@
     "search": "搜尋",
     "lists": "列表",
     "members": "成員",
-    "filter": {
-      "title": "過濾器",
-      "placeholder": "按照正規表達式過濾",
-      "show_dms": "顯示私訊",
-      "show_reblogs": "顯示轉嘟",
-      "show_replies": "顯示回覆",
-      "apply": "套用"
+    "option": {
+      "title": "Option",
+      "show_reblogs": "Show reblogs",
+      "show_replies": "Show replies",
+      "apply": "Apply"
     },
     "new_toot": "嘟文",
     "reload": "重新整理",

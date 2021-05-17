@@ -74,13 +74,11 @@
     "search": "검색",
     "lists": "리스트",
     "members": "멤버",
-    "filter": {
-      "title": "필터",
-      "placeholder": "정규식으로 필터링",
-      "show_dms": "Show direct messages",
-      "show_reblogs": "부스트 표시",
-      "show_replies": "답글 표시",
-      "apply": "적용"
+    "option": {
+      "title": "Option",
+      "show_reblogs": "Show reblogs",
+      "show_replies": "Show replies",
+      "apply": "Apply"
     },
     "new_toot": "툿",
     "reload": "새로고침",

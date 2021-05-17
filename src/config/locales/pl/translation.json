@@ -74,13 +74,11 @@
     "search": "Wyszukiwanie",
     "lists": "Listy",
     "members": "Użytkownicy",
-    "filter": {
-      "title": "Filtruj",
-      "placeholder": "Filtruj z użyciem wyrażeń regularnych",
-      "show_dms": "Show direct messages",
-      "show_reblogs": "Pokazuj podbicia",
-      "show_replies": "Pokazuj odpowiedzi",
-      "apply": "Zastosuj"
+    "option": {
+      "title": "Option",
+      "show_reblogs": "Show reblogs",
+      "show_replies": "Show replies",
+      "apply": "Apply"
     },
     "new_toot": "Wpisy",
     "reload": "Przeładować",

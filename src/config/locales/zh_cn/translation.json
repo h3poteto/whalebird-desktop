@@ -74,13 +74,11 @@
     "search": "搜索",
     "lists": "列表",
     "members": "成员",
-    "filter": {
-      "title": "筛选",
-      "placeholder": "正则表达式",
-      "show_dms": "显示私信",
-      "show_reblogs": "显示转嘟",
-      "show_replies": "显示评论",
-      "apply": "应用"
+    "option": {
+      "title": "Option",
+      "show_reblogs": "Show reblogs",
+      "show_replies": "Show replies",
+      "apply": "Apply"
     },
     "new_toot": "发嘟",
     "reload": "刷新",

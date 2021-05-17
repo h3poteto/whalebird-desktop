@@ -74,13 +74,11 @@
     "search": "Rechercher",
     "lists": "Listes",
     "members": "Membres",
-    "filter": {
-      "title": "Filtrer",
-      "placeholder": "Filtrer par une expression régulière",
-      "show_dms": "Afficher les messages privés",
-      "show_reblogs": "Afficher les partages",
-      "show_replies": "Afficher les réponses",
-      "apply": "Appliquer"
+    "option": {
+      "title": "Option",
+      "show_reblogs": "Show reblogs",
+      "show_replies": "Show replies",
+      "apply": "Apply"
     },
     "new_toot": "Pouet",
     "reload": "Recharger",
