@@ -11,34 +11,19 @@
       <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
         <icon name="sync-alt"></icon>
       </el-button>
-      <el-popover placement="left-start" width="320" popper-class="theme-popover" trigger="click" v-model="filterVisible">
+      <el-popover placement="left-start" width="180" popper-class="theme-popover" trigger="click" v-model="TLOptionVisible">
         <div>
           <el-form role="form" label-position="left" label-width="125px" size="medium">
-            <el-form-item for="filter" :label="$t('header_menu.filter.title')">
-              <div class="el-input">
-                <input
-                  id="filter"
-                  class="el-input__inner"
-                  v-model="filter"
-                  :placeholder="$t('header_menu.filter.placeholder')"
-                  v-shortkey.avoid
-                  :aria-label="$t('header_menu.filter.placeholder')"
-                  :title="$t('header_menu.filter.placeholder')"
-                />
-              </div>
-            </el-form-item>
-            <el-form-item for="show-reblogs" :label="$t('header_menu.filter.show_reblogs')" v-if="extrasFilterable()">
+            <el-form-item for="show-reblogs" :label="$t('header_menu.option.show_reblogs')">
               <el-checkbox id="show-reblogs" v-model="showReblogs"></el-checkbox>
             </el-form-item>
-            <el-form-item for="show-replies" :label="$t('header_menu.filter.show_replies')" v-if="extrasFilterable()">
+            <el-form-item for="show-replies" :label="$t('header_menu.option.show_replies')">
               <el-checkbox id="show-replies" v-model="showReplies"></el-checkbox>
             </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="applyFilter(filter)">{{ $t('header_menu.filter.apply') }}</el-button>
-            </el-form-item>
+            <el-button type="primary" @click="applyTLOption">{{ $t('header_menu.option.apply') }}</el-button>
           </el-form>
         </div>
-        <el-button v-show="filterable()" slot="reference" type="text" class="action" :title="$t('header_menu.filter.title')">
+        <el-button v-show="TLOption()" slot="reference" type="text" class="action" :title="$t('header_menu.option.title')">
           <icon name="sliders-h"></icon>
         </el-button>
       </el-popover>
@@ -56,8 +41,7 @@ export default {
   name: 'header-menu',
   data() {
     return {
-      filter: '',
-      filterVisible: false,
+      TLOptionVisible: false,
       showReblogs: true,
       showReplies: true
     }
@@ -70,13 +54,13 @@ export default {
   },
   created() {
     this.channelName()
-    this.loadFilter()
+    this.loadTLOption()
     this.$store.dispatch('TimelineSpace/HeaderMenu/setupLoading')
   },
   watch: {
     $route: function () {
       this.channelName()
-      this.loadFilter()
+      this.loadTLOption()
     }
   },
   methods: {
@@ -174,94 +158,28 @@ export default {
           return false
       }
     },
-    loadFilter() {
+    loadTLOption() {
       switch (this.$route.name) {
         case 'home':
-          this.filter = this.$store.state.TimelineSpace.Contents.Home.filter
           this.showReblogs = this.$store.state.TimelineSpace.Contents.Home.showReblogs
           this.showReplies = this.$store.state.TimelineSpace.Contents.Home.showReplies
           break
-        case 'notifications':
-          this.filter = this.$store.state.TimelineSpace.Contents.Notifications.filter
-          break
-        case 'mentions':
-          this.filter = this.$store.state.TimelineSpace.Contents.Mentions.filter
-          break
-        case 'favourites':
-          this.filter = this.$store.state.TimelineSpace.Contents.Favourites.filter
-          break
-        case 'local':
-          this.filter = this.$store.state.TimelineSpace.Contents.Local.filter
-          break
-        case 'public':
-          this.filter = this.$store.state.TimelineSpace.Contents.Public.filter
-          break
-        case 'tag':
-          this.filter = this.$store.state.TimelineSpace.Contents.Hashtag.Tag.filter
-          break
-        case 'list':
-          this.filter = this.$store.state.TimelineSpace.Contents.Lists.Show.filter
-          break
-        case 'direct-messages':
-          this.filter = this.$store.state.TimelineSpace.Contents.DirectMessages.filter
-          break
         default:
           console.log('Not implemented')
       }
     },
-    applyFilter(filter) {
+    applyTLOption() {
       switch (this.$route.name) {
         case 'home':
-          this.$store.commit('TimelineSpace/Contents/Home/changeFilter', filter)
           this.$store.commit('TimelineSpace/Contents/Home/showReblogs', this.showReblogs)
           this.$store.commit('TimelineSpace/Contents/Home/showReplies', this.showReplies)
           break
-        case 'notifications':
-          this.$store.commit('TimelineSpace/Contents/Notifications/changeFilter', filter)
-          break
-        case 'mentions':
-          this.$store.commit('TimelineSpace/Contents/Mentions/changeFilter', filter)
-          break
-        case 'favourites':
-          this.$store.commit('TimelineSpace/Contents/Favourites/changeFilter', filter)
-          break
-        case 'local':
-          this.$store.commit('TimelineSpace/Contents/Local/changeFilter', filter)
-          break
-        case 'public':
-          this.$store.commit('TimelineSpace/Contents/Public/changeFilter', filter)
-          break
-        case 'tag':
-          this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeFilter', filter)
-          break
-        case 'list':
-          this.$store.commit('TimelineSpace/Contents/Lists/Show/changeFilter', filter)
-          break
-        case 'direct-messages':
-          this.$store.commit('TimelineSpace/Contents/DirectMessages/changeFilter', filter)
-          break
         default:
           console.log('Not implemented')
       }
-      this.filterVisible = false
+      this.TLOptionVisible = false
     },
-    filterable() {
-      switch (this.$route.name) {
-        case 'home':
-        case 'notifications':
-        case 'mentions':
-        case 'favourites':
-        case 'local':
-        case 'public':
-        case 'tag':
-        case 'list':
-        case 'direct-messages':
-          return true
-        default:
-          return false
-      }
-    },
-    extrasFilterable() {
+    TLOption() {
       switch (this.$route.name) {
         case 'home':
           return true

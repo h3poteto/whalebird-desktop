@@ -7,7 +7,6 @@
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
           <notification
             :message="item"
-            :filter="filter"
             :focused="item.id === focusedId"
             :overlaid="modalOpened"
             v-on:update="updateToot"
@@ -56,8 +55,7 @@ export default {
     ...mapState('TimelineSpace/Contents/Mentions', {
       lazyLoading: state => state.lazyLoading,
       heading: state => state.heading,
-      unread: state => state.unreadMentions,
-      filter: state => state.filter
+      unread: state => state.unreadMentions
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     ...mapGetters('TimelineSpace/Contents/Mentions', ['mentions']),

@@ -132,7 +132,6 @@ let state = (): FavouritesState => {
   return {
     favourites: [],
     lazyLoading: false,
-    filter: '',
     maxId: null
   }
 }
@@ -234,7 +233,6 @@ describe('Favourites', () => {
           return {
             favourites: [],
             lazyLoading: true,
-            filter: '',
             maxId: null
           }
         }
@@ -251,7 +249,6 @@ describe('Favourites', () => {
           return {
             favourites: [],
             lazyLoading: false,
-            filter: '',
             maxId: null
           }
         }
@@ -268,7 +265,6 @@ describe('Favourites', () => {
           return {
             favourites: [status1],
             lazyLoading: false,
-            filter: '',
             maxId: '2'
           }
         }

@@ -9,7 +9,6 @@ export type HomeState = {
   showReplies: boolean
   timeline: Array<Entity.Status>
   unreadTimeline: Array<Entity.Status>
-  filter: string
 }
 
 const state = (): HomeState => ({
@@ -17,7 +16,6 @@ const state = (): HomeState => ({
   heading: true,
   timeline: [],
   unreadTimeline: [],
-  filter: '',
   showReblogs: true,
   showReplies: true
 })
@@ -33,7 +31,6 @@ export const MUTATION_TYPES = {
   CLEAR_TIMELINE: 'clearTimeline',
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
-  CHANGE_FILTER: 'changeFilter',
   SHOW_REBLOGS: 'showReblogs',
   SHOW_REPLIES: 'showReplies'
 }
@@ -97,9 +94,6 @@ const mutations: MutationTree<HomeState> = {
         return toot.id !== messageId
       }
     })
-  },
-  [MUTATION_TYPES.CHANGE_FILTER]: (state, filter: string) => {
-    state.filter = filter
   },
   [MUTATION_TYPES.SHOW_REBLOGS]: (state, visible: boolean) => {
     state.showReblogs = visible

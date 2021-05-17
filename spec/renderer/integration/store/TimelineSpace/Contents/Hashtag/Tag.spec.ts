@@ -119,8 +119,7 @@ let state = (): TagState => {
     lazyLoading: false,
     heading: true,
     timeline: [],
-    unreadTimeline: [],
-    filter: ''
+    unreadTimeline: []
   }
 }
 
@@ -182,8 +181,7 @@ describe('Home', () => {
             lazyLoading: false,
             heading: true,
             timeline: [status1],
-            unreadTimeline: [],
-            filter: ''
+            unreadTimeline: []
           }
         }
       })

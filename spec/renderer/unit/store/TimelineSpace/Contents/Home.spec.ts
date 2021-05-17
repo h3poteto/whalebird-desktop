@@ -100,7 +100,6 @@ describe('TimelineSpace/Contents/Home', () => {
         heading: true,
         timeline: [],
         unreadTimeline: [],
-        filter: '',
         showReblogs: true,
         showReplies: true
       }
@@ -129,7 +128,6 @@ describe('TimelineSpace/Contents/Home', () => {
               heading: true,
               timeline: [status1],
               unreadTimeline: [],
-              filter: '',
               showReblogs: true,
               showReplies: true
             }
@@ -148,7 +146,6 @@ describe('TimelineSpace/Contents/Home', () => {
               heading: true,
               timeline: [status2, status1],
               unreadTimeline: [],
-              filter: '',
               showReblogs: true,
               showReplies: true
             }
@@ -169,7 +166,6 @@ describe('TimelineSpace/Contents/Home', () => {
               heading: false,
               timeline: [status1],
               unreadTimeline: [],
-              filter: '',
               showReblogs: true,
               showReplies: true
             }
@@ -187,7 +183,6 @@ describe('TimelineSpace/Contents/Home', () => {
               heading: false,
               timeline: [],
               unreadTimeline: [status2, status1],
-              filter: '',
               showReblogs: true,
               showReplies: true
             }
@@ -208,7 +203,6 @@ describe('TimelineSpace/Contents/Home', () => {
           heading: true,
           timeline: [status1],
           unreadTimeline: [status2],
-          filter: '',
           showReblogs: true,
           showReplies: true
         }
@@ -227,7 +221,6 @@ describe('TimelineSpace/Contents/Home', () => {
           heading: true,
           timeline: [status1],
           unreadTimeline: [],
-          filter: '',
           showReblogs: true,
           showReplies: true
         }
@@ -246,7 +239,6 @@ describe('TimelineSpace/Contents/Home', () => {
             heading: true,
             timeline: [status1, status2],
             unreadTimeline: [],
-            filter: '',
             showReblogs: true,
             showReplies: true
           }
@@ -303,7 +295,6 @@ describe('TimelineSpace/Contents/Home', () => {
             heading: true,
             timeline: [rebloggedStatus, status2],
             unreadTimeline: [],
-            filter: '',
             showReblogs: true,
             showReplies: true
           }
@@ -324,7 +315,6 @@ describe('TimelineSpace/Contents/Home', () => {
             heading: true,
             timeline: [status1, status2],
             unreadTimeline: [],
-            filter: '',
             showReblogs: true,
             showReplies: true
           }
@@ -376,7 +366,6 @@ describe('TimelineSpace/Contents/Home', () => {
             heading: true,
             timeline: [rebloggedStatus, status2],
             unreadTimeline: [],
-            filter: '',
             showReblogs: true,
             showReplies: true
           }

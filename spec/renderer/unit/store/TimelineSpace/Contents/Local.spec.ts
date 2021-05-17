@@ -137,8 +137,7 @@ describe('TimelineSpace/Contents/Local', () => {
             lazyLoading: false,
             heading: true,
             timeline: [status2, status1],
-            unreadTimeline: [],
-            filter: ''
+            unreadTimeline: []
           }
         })
         it('should be deleted', () => {
@@ -153,8 +152,7 @@ describe('TimelineSpace/Contents/Local', () => {
             lazyLoading: false,
             heading: true,
             timeline: [status2, rebloggedStatus],
-            unreadTimeline: [],
-            filter: ''
+            unreadTimeline: []
           }
         })
         it('should be deleted', () => {
@@ -171,8 +169,7 @@ describe('TimelineSpace/Contents/Local', () => {
               lazyLoading: false,
               heading: true,
               timeline: [status2, status1],
-              unreadTimeline: [],
-              filter: ''
+              unreadTimeline: []
             }
           })
           it('should be updated timeline', () => {
@@ -188,8 +185,7 @@ describe('TimelineSpace/Contents/Local', () => {
               lazyLoading: false,
               heading: true,
               timeline: [rebloggedStatus, status2, status1],
-              unreadTimeline: [],
-              filter: ''
+              unreadTimeline: []
             }
           })
           it('should not be updated timeline', () => {
@@ -207,8 +203,7 @@ describe('TimelineSpace/Contents/Local', () => {
               lazyLoading: false,
               heading: false,
               timeline: [status2, status1],
-              unreadTimeline: [],
-              filter: ''
+              unreadTimeline: []
             }
           })
           it('should be updated timeline', () => {
@@ -224,8 +219,7 @@ describe('TimelineSpace/Contents/Local', () => {
               lazyLoading: false,
               heading: false,
               timeline: [rebloggedStatus, status2, status1],
-              unreadTimeline: [],
-              filter: ''
+              unreadTimeline: []
             }
           })
           it('should not be updated timeline', () => {

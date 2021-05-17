@@ -118,8 +118,7 @@ let state = (): PublicState => {
     lazyLoading: false,
     heading: true,
     timeline: [],
-    unreadTimeline: [],
-    filter: ''
+    unreadTimeline: []
   }
 }
 
@@ -182,7 +181,6 @@ describe('Home', () => {
             heading: true,
             timeline: [status1],
             unreadTimeline: [],
-            filter: '',
             showReblogs: true,
             showReplies: true
           }

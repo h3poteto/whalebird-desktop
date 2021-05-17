@@ -7,15 +7,13 @@ export type LocalState = {
   unreadTimeline: Array<Entity.Status>
   lazyLoading: boolean
   heading: boolean
-  filter: string
 }
 
 const state = (): LocalState => ({
   timeline: [],
   unreadTimeline: [],
   lazyLoading: false,
-  heading: true,
-  filter: ''
+  heading: true
 })
 
 export const MUTATION_TYPES = {
@@ -28,8 +26,7 @@ export const MUTATION_TYPES = {
   CLEAR_TIMELINE: 'clearTimeline',
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
-  CHANGE_LAZY_LOADING: 'changeLazyLoading',
-  CHANGE_FILTER: 'changeFilter'
+  CHANGE_LAZY_LOADING: 'changeLazyLoading'
 }
 
 const mutations: MutationTree<LocalState> = {
@@ -90,9 +87,6 @@ const mutations: MutationTree<LocalState> = {
   },
   [MUTATION_TYPES.CHANGE_LAZY_LOADING]: (state, value: boolean) => {
     state.lazyLoading = value
-  },
-  [MUTATION_TYPES.CHANGE_FILTER]: (state, filter: string) => {
-    state.filter = filter
   }
 }
 

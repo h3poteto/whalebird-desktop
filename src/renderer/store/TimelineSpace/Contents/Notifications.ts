@@ -10,15 +10,13 @@ export type NotificationsState = {
   heading: boolean
   notifications: Array<Entity.Notification>
   unreadNotifications: Array<Entity.Notification>
-  filter: string
 }
 
 const state = (): NotificationsState => ({
   lazyLoading: false,
   heading: true,
   notifications: [],
-  unreadNotifications: [],
-  filter: ''
+  unreadNotifications: []
 })
 
 export const MUTATION_TYPES = {
@@ -31,8 +29,7 @@ export const MUTATION_TYPES = {
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
   CLEAR_NOTIFICATIONS: 'clearNotifications',
-  ARCHIVE_NOTIFICATIONS: 'archiveNotifications',
-  CHANGE_FILTER: 'changeFilter'
+  ARCHIVE_NOTIFICATIONS: 'archiveNotifications'
 }
 
 const mutations: MutationTree<NotificationsState> = {
@@ -97,9 +94,6 @@ const mutations: MutationTree<NotificationsState> = {
   },
   [MUTATION_TYPES.ARCHIVE_NOTIFICATIONS]: state => {
     state.notifications = state.notifications.slice(0, 30)
-  },
-  [MUTATION_TYPES.CHANGE_FILTER]: (state, filter: string) => {
-    state.filter = filter
   }
 }
 
