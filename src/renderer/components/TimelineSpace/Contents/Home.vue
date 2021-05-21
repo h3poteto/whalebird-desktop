@@ -9,6 +9,7 @@
             :message="item"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
+            :filters="filters"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusNext="focusNext"
@@ -44,18 +45,21 @@ export default {
     }
   },
   computed: {
+    ...mapState('TimelineSpace/Contents/Home', {
+      timeline: state => state.timeline,
+      lazyLoading: state => state.lazyLoading,
+      heading: state => state.heading,
+      unread: state => state.unreadTimeline,
+      showReblogs: state => state.showReblogs,
+      showReplies: state => state.showReplies
+    }),
     ...mapState({
-      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      timeline: state => state.TimelineSpace.Contents.Home.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.Home.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Home.heading,
-      unread: state => state.TimelineSpace.Contents.Home.unreadTimeline,
-      showReblogs: state => state.TimelineSpace.Contents.Home.showReblogs,
-      showReplies: state => state.TimelineSpace.Contents.Home.showReplies
+      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
+    ...mapGetters('TimelineSpace/Contents/Home', ['filters']),
     shortcutEnabled: function () {
       if (this.modalOpened) {
         return false
