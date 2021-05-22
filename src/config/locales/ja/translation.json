@@ -76,9 +76,9 @@
     "members": "メンバー",
     "option": {
       "title": "設定",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "show_reblogs": "ブースト表示",
+      "show_replies": "返信表示",
+      "apply": "適用"
     },
     "new_toot": "トゥート",
     "reload": "再読み込み",
@@ -114,36 +114,36 @@
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "フィルター",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "キーワードまたはフレーズ",
+        "expire": "有効期限",
+        "context": "除外対象",
+        "irreversible": "非表示ではなく除外",
+        "whole_word": "単語全体にマッチ",
+        "submit": "送信",
+        "cancel": "キャンセル"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "なし",
+        "30_minutes": "30分後",
+        "1_hour": "1時間後",
+        "6_hours": "6時間後",
+        "12_hours": "12時間後",
+        "1_day": "1日後",
+        "1_week": "1週間後"
       },
       "new": {
-        "title": "New"
+        "title": "新規作成"
       },
       "edit": {
-        "title": "Edit"
+        "title": "編集"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "title": "削除",
+        "confirm": "このフィルターを本当に削除しますか？",
+        "confirm_ok": "削除する",
+        "confirm_cancel": "キャンセル"
       }
     }
   },
@@ -484,8 +484,8 @@
     "domain_doesnt_exist": "{{domain}} に接続できません，URLを確認してください",
     "loading": "読み込み中...",
     "language_not_support_spellchecker_error": "この言語はスペルチェッカーではサポートされていません",
-    "update_filter_error": "Failed to update the filter",
-    "create_filter_error": "Failed to create the filter"
+    "update_filter_error": "フィルターの更新に失敗しました",
+    "create_filter_error": "フィルターの作成に失敗しました"
   },
   "validation": {
     "login": {
