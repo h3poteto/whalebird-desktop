@@ -262,7 +262,7 @@
     "electron-mock-ipc": "^0.3.9",
     "electron-packager": "^15.2.0",
     "eslint": "^7.22.0",
-    "eslint-config-prettier": "^8.1.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^4.0.2",
