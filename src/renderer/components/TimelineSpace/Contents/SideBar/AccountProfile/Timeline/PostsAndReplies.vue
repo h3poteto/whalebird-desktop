@@ -8,6 +8,7 @@
             :key="item.id"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
+            :filters="filters"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusNext="focusNext"
@@ -30,7 +31,7 @@ import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'posts-and-replies',
-  props: ['account', 'buffer'],
+  props: ['account', 'buffer', 'filters'],
   components: { Toot },
   data() {
     return {

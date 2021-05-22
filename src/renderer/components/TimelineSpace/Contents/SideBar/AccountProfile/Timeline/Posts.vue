@@ -7,6 +7,7 @@
         :focused="message.uri + message.id === focusedId"
         :pinned="true"
         :overlaid="modalOpened"
+        :filters="filters"
         v-on:update="updatePinnedToot"
         v-on:delete="deleteToot"
         @focusNext="focusNext"
@@ -24,6 +25,7 @@
             :key="item.id"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
+            :filters="filters"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusNext="focusNext"
@@ -46,7 +48,7 @@ import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'posts',
-  props: ['account', 'buffer'],
+  props: ['account', 'buffer', 'filters'],
   components: { Toot },
   data() {
     return {
