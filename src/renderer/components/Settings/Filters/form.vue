@@ -15,7 +15,7 @@
           <el-checkbox label="notifications"></el-checkbox>
           <el-checkbox label="public"></el-checkbox>
           <el-checkbox label="thread"></el-checkbox>
-          <el-checkbox label="account"></el-checkbox>
+          <el-checkbox label="account" :disabled="accountDisabled()"></el-checkbox>
         </el-checkbox-group>
       </template>
     </el-form-item>
@@ -42,6 +42,10 @@ export default {
     },
     value: {
       type: Object
+    },
+    sns: {
+      type: String,
+      default: 'mastodon'
     }
   },
   data() {
@@ -144,6 +148,9 @@ export default {
     },
     onSubmit() {
       this.$emit('onSubmit')
+    },
+    accountDisabled() {
+      return this.sns === 'pleroma'
     }
   }
 }

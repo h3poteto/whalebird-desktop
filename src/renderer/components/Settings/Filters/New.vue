@@ -1,7 +1,7 @@
 <template>
   <div id="new_filter">
     <h2>{{ $t('settings.filters.new.title') }}</h2>
-    <FilterForm v-model="filter" @cancel="cancel" @onSubmit="onSubmit" :loading="loading"> </FilterForm>
+    <FilterForm v-model="filter" @cancel="cancel" @onSubmit="onSubmit" :loading="loading" :sns="sns"> </FilterForm>
   </div>
 </template>
 
@@ -15,6 +15,9 @@ export default {
   computed: {
     ...mapState('Settings/Filters/New', {
       loading: state => state.loading
+    }),
+    ...mapState('TimelineSpace', {
+      sns: state => state.sns
     }),
     filter: {
       get() {
