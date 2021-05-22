@@ -43,6 +43,7 @@ export default {
         Language.en,
         Language.es_es,
         Language.fr,
+        Language.id,
         Language.it,
         Language.ja,
         Language.ko,
