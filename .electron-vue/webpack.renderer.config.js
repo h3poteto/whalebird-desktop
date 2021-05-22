@@ -12,7 +12,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
 let rendererConfig = {
-  devtool: 'eval-cheap-module-source-map',
   entry: {
     renderer: path.join(__dirname, '../src/renderer/main.ts')
   },
@@ -211,13 +210,13 @@ if (process.env.NODE_ENV !== 'production') {
       __static: `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
     })
   )
+  rendererConfig.devtool = 'eval-cheap-module-source-map'
 }
 
 /**
  * Adjust rendererConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
   rendererConfig.mode = 'production'
   rendererConfig.plugins.push(
     new CopyWebpackPlugin({

@@ -151,6 +151,10 @@ const accountCache = new AccountCache(accountCachePath)
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
+const iconBasePath =
+  process.env.NODE_ENV === 'development'
+    ? path.resolve(__dirname, '../../build/icons/')
+    : path.resolve(process.resourcesPath!, 'build/icons/')
 
 let launcher: AutoLaunch | null = null
 const proxyConfiguration = new ProxyConfiguration(preferencesDBPath)
@@ -309,7 +313,7 @@ async function createWindow() {
     height: mainWindowState.height,
     backgroundColor: '#fff',
     useContentSize: true,
-    icon: path.resolve(__dirname, '../../build/icons/256x256.png'),
+    icon: path.join(iconBasePath, '256x256.png'),
     autoHideMenuBar: autoHideMenuBar,
     webPreferences: {
       // It is required to use ipcRenderer in renderer process.
@@ -355,7 +359,7 @@ async function createWindow() {
   // Show tray icon only linux and windows.
   if (process.platform !== 'darwin') {
     // Show tray icon
-    tray = new Tray(path.join(__dirname, '../../build/icons/tray_icon.png'))
+    tray = new Tray(path.join(iconBasePath, 'tray_icon.png'))
     const trayMenu = TrayMenu(accountsChange, i18next)
     tray.setContextMenu(trayMenu)
 
@@ -1303,7 +1307,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
           role: 'about',
           click: () => {
             openAboutWindow({
-              icon_path: path.resolve(__dirname, '../../build/icons/256x256.png'),
+              icon_path: path.join(iconBasePath, '256x256.png'),
               copyright: 'Copyright (c) 2020 AkiraFukushima',
               package_json_dir: path.resolve(__dirname, '../../'),
               open_devtools: process.env.NODE_ENV !== 'production'
