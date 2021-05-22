@@ -282,7 +282,7 @@
     "mini-css-extract-plugin": "^1.6.0",
     "node-loader": "^1.0.2",
     "node-sass": "^5.0.0",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.0",
     "prettier-stylelint": "^0.4.2",
     "regenerator-runtime": "^0.13.7",
     "sass-loader": "^10.1.1",
