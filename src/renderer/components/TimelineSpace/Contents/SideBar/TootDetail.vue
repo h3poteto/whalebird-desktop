@@ -5,6 +5,7 @@
         :message="message"
         :focused="message.uri + message.id === focusedId"
         :overlaid="modalOpened"
+        :filters="filters"
         v-on:update="updateAncestorsToot"
         v-on:delete="deleteAncestorsToot"
         @focusNext="focusNext"
@@ -19,6 +20,7 @@
         :message="message"
         :focused="message.uri + message.id === focusedId"
         :overlaid="modalOpened"
+        :filters="filters"
         :detailed="true"
         v-on:update="updateToot"
         v-on:delete="deleteToot"
@@ -34,6 +36,7 @@
         :message="message"
         :focused="message.uri + message.id === focusedId"
         :overlaid="modalOpened"
+        :filters="filters"
         v-on:update="updateDescendantsToot"
         v-on:delete="deleteDescendantsToot"
         @focusNext="focusNext"
@@ -66,6 +69,7 @@ export default {
       descendants: state => state.descendants,
       timeline: state => state.ancestors.concat([state.message]).concat(state.descendants)
     }),
+    ...mapGetters('TimelineSpace/Contents/SideBar/TootDetail', ['filters']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened'])
   },
   created() {
@@ -74,13 +78,13 @@ export default {
   mounted() {
     Event.$on('focus-sidebar', () => {
       this.focusedId = 0
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
       })
     })
   },
   watch: {
-    message: function() {
+    message: function () {
       this.load()
     }
   },

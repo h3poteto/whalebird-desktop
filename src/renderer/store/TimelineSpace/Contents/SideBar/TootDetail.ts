@@ -1,5 +1,5 @@
-import generator, { Entity } from 'megalodon'
-import { Module, MutationTree, ActionTree } from 'vuex'
+import generator, { Entity, FilterContext } from 'megalodon'
+import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type TootDetailState = {
@@ -136,11 +136,18 @@ const actions: ActionTree<TootDetailState, RootState> = {
   }
 }
 
+const getters: GetterTree<TootDetailState, RootState> = {
+  filters: (_state, _getters, rootState) => {
+    return rootState.TimelineSpace.filters.filter(f => f.context.includes(FilterContext.Thread) && !f.irreversible)
+  }
+}
+
 const TootDetail: Module<TootDetailState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
-  actions: actions
+  actions: actions,
+  getters: getters
 }
 
 export default TootDetail
