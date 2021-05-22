@@ -2,7 +2,7 @@
   <div class="mention">
     <toot
       :message="message.status"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       v-on:update="updateToot"
@@ -11,7 +11,7 @@
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @selectToot="$emit('select')"
-      >
+    >
     </toot>
   </div>
 </template>
@@ -26,9 +26,9 @@ export default {
       type: Object,
       default: {}
     },
-    filter: {
-      type: String,
-      default: ''
+    filters: {
+      type: Array,
+      default: []
     },
     focused: {
       type: Boolean,
@@ -41,10 +41,10 @@ export default {
   },
   components: { Toot },
   methods: {
-    updateToot (message) {
+    updateToot(message) {
       return this.$emit('update', message)
     },
-    deleteToot (message) {
+    deleteToot(message) {
       return this.$emit('delete', message)
     }
   }

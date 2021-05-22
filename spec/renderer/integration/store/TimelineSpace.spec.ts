@@ -84,7 +84,8 @@ const state = (): TimelineSpaceState => {
       local: true,
       public: true
     },
-    sns: 'mastodon'
+    sns: 'mastodon',
+    filters: []
   }
 }
 

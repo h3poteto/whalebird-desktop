@@ -1,14 +1,17 @@
 <template>
   <div class="tabs" id="sidebar_tabs">
     <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
-      <el-tab-pane label="Posts" name="posts"><Posts :account="account" :buffer="buffer" /></el-tab-pane>
-      <el-tab-pane label="Posts and replies" name="posts_and_replies"><PostsAndReplies :account="account" :buffer="buffer" /></el-tab-pane>
-      <el-tab-pane label="Media" name="media"><Media :account="account" :buffer="buffer" /></el-tab-pane>
+      <el-tab-pane label="Posts" name="posts"><Posts :account="account" :buffer="buffer" :filters="filters" /></el-tab-pane>
+      <el-tab-pane label="Posts and replies" name="posts_and_replies"
+        ><PostsAndReplies :account="account" :buffer="buffer" :filters="filters"
+      /></el-tab-pane>
+      <el-tab-pane label="Media" name="media"><Media :account="account" :buffer="buffer" :filters="filters" /></el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Posts from './Timeline/Posts'
 import PostsAndReplies from './Timeline/PostsAndReplies'
 import Media from './Timeline/Media'
@@ -27,6 +30,9 @@ export default {
       defaultBuffer: 200,
       buffer: 200
     }
+  },
+  computed: {
+    ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile/Timeline', ['filters'])
   },
   mounted() {
     const timeline = document.getElementById('sidebar_tabs')

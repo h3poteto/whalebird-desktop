@@ -269,6 +269,7 @@ import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
 import Quote from '@/components/molecules/Toot/Quote'
 import { setInterval, clearInterval } from 'timers'
 import QuoteSupported from '@/utils/quoteSupported'
+import Filtered from '@/utils/filter'
 
 export default {
   name: 'toot',
@@ -297,9 +298,9 @@ export default {
       type: Object,
       default: {}
     },
-    filter: {
-      type: String,
-      default: ''
+    filters: {
+      type: Array,
+      default: []
     },
     focused: {
       type: Boolean,
@@ -389,7 +390,7 @@ export default {
       return !this.sensitive || this.showAttachments
     },
     filtered: function () {
-      return this.filter.length > 0 && this.originalMessage.content.search(this.filter) >= 0
+      return Filtered(this.originalMessage.content, this.filters)
     },
     locked: function () {
       return this.message.visibility === 'private'

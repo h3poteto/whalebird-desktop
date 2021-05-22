@@ -22,6 +22,7 @@ export type TimelineSpaceState = {
   tootMax: number
   unreadNotification: UnreadNotification
   sns: 'mastodon' | 'pleroma' | 'misskey'
+  filters: Array<Entity.Filter>
 }
 
 export const blankAccount: LocalAccount = {
@@ -49,7 +50,8 @@ const state = (): TimelineSpaceState => ({
     local: unreadSettings.Local.default,
     public: unreadSettings.Public.default
   },
-  sns: 'mastodon'
+  sns: 'mastodon',
+  filters: []
 })
 
 export const MUTATION_TYPES = {
@@ -59,7 +61,8 @@ export const MUTATION_TYPES = {
   UPDATE_EMOJIS: 'updateEmojis',
   UPDATE_TOOT_MAX: 'updateTootMax',
   UPDATE_UNREAD_NOTIFICATION: 'updateUnreadNotification',
-  CHANGE_SNS: 'changeSNS'
+  CHANGE_SNS: 'changeSNS',
+  UPDATE_FILTERS: 'updateFilters'
 }
 
 const mutations: MutationTree<TimelineSpaceState> = {
@@ -87,6 +90,9 @@ const mutations: MutationTree<TimelineSpaceState> = {
   },
   [MUTATION_TYPES.CHANGE_SNS]: (state, sns: 'mastodon' | 'pleroma' | 'misskey') => {
     state.sns = sns
+  },
+  [MUTATION_TYPES.UPDATE_FILTERS]: (state, filters: Array<Entity.Filter>) => {
+    state.filters = filters
   }
 }
 
@@ -104,6 +110,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account, { root: true })
     dispatch('TimelineSpace/SideMenu/confirmTimelines', account, { root: true })
     await dispatch('loadUnreadNotification', accountId)
+    await dispatch('fetchFilters')
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
     await dispatch('fetchContentsTimelines').catch(_ => {
       throw new TimelineFetchError()
@@ -173,6 +180,15 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     const client = generator(state.sns, account.baseURL, null, 'Whalebird')
     const res = await client.getInstanceCustomEmojis()
     commit(MUTATION_TYPES.UPDATE_EMOJIS, res.data)
+    return res.data
+  },
+  /**
+   * fetchFilters
+   */
+  fetchFilters: async ({ commit, state, rootState }): Promise<Array<Entity.Filter>> => {
+    const client = generator(state.sns, state.account.baseURL, state.account.accessToken, rootState.App.userAgent)
+    const res = await client.getFilters()
+    commit(MUTATION_TYPES.UPDATE_FILTERS, res.data)
     return res.data
   },
   /**

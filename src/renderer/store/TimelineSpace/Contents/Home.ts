@@ -1,5 +1,5 @@
-import generator, { Entity } from 'megalodon'
-import { Module, MutationTree, ActionTree } from 'vuex'
+import generator, { Entity, FilterContext } from 'megalodon'
+import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type HomeState = {
@@ -138,11 +138,18 @@ const actions: ActionTree<HomeState, RootState> = {
   }
 }
 
+const getters: GetterTree<HomeState, RootState> = {
+  filters: (_state, _getters, rootState) => {
+    return rootState.TimelineSpace.filters.filter(f => f.context.includes(FilterContext.Home) && !f.irreversible)
+  }
+}
+
 const Home: Module<HomeState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
-  actions: actions
+  actions: actions,
+  getters: getters
 }
 
 export default Home

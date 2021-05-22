@@ -9,6 +9,7 @@
             :message="item"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
+            :filters="filters"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusNext="focusNext"
@@ -56,6 +57,7 @@ export default {
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
       unreadNotification: state => state.TimelineSpace.unreadNotification
     }),
+    ...mapGetters('TimelineSpace/Contents/Public', ['filters']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
       if (this.modalOpened) {

@@ -1,4 +1,4 @@
-import generator, { Entity, NotificationType } from 'megalodon'
+import generator, { Entity, FilterContext, NotificationType } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
@@ -156,6 +156,9 @@ const getters: GetterTree<NotificationsState, RootState> = {
           return false
       }
     })
+  },
+  filters: (_state, _getters, rootState) => {
+    return rootState.TimelineSpace.filters.filter(f => f.context.includes(FilterContext.Notifications) && !f.irreversible)
   }
 }
 

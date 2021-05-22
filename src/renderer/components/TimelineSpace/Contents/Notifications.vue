@@ -9,6 +9,7 @@
             :message="item"
             :focused="item.id === focusedId"
             :overlaid="modalOpened"
+            :filters="filters"
             v-on:update="updateToot"
             @focusNext="focusNext"
             @focusPrev="focusPrev"
@@ -51,7 +52,7 @@ export default {
       heading: state => state.TimelineSpace.Contents.Notifications.heading,
       unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications
     }),
-    ...mapGetters('TimelineSpace/Contents/Notifications', ['handledNotifications']),
+    ...mapGetters('TimelineSpace/Contents/Notifications', ['handledNotifications', 'filters']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
       if (this.modalOpened) {

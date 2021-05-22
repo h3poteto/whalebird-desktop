@@ -9,9 +9,7 @@
     role="article"
     aria-label="quoted toot"
   >
-    <div v-show="filtered(message)" class="filtered">
-      Filtered
-    </div>
+    <div v-show="filtered(message)" class="filtered">Filtered</div>
     <div v-show="!filtered(message)" class="quoted">
       <div class="action">
         <div class="action-mark">
@@ -125,6 +123,7 @@ import TimeFormat from '~/src/constants/timeFormat'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
 import Quote from '@/components/molecules/Toot/Quote'
+import Filtered from '@/utils/filter'
 
 export default {
   name: 'quote',
@@ -138,9 +137,9 @@ export default {
       type: Object,
       default: {}
     },
-    filter: {
-      type: String,
-      default: ''
+    filters: {
+      type: Array,
+      default: []
     },
     focused: {
       type: Boolean,
@@ -245,7 +244,7 @@ export default {
       return message.media_attachments
     },
     filtered(message) {
-      return this.filter.length > 0 && message.status.content.search(this.filter) >= 0
+      return Filtered(message.status.content, this.filters)
     },
     spoilered(message) {
       return message.spoiler_text.length > 0

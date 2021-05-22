@@ -9,9 +9,7 @@
     role="article"
     aria-label="reacted toot"
   >
-    <div v-show="filtered(message)" class="filtered">
-      Filtered
-    </div>
+    <div v-show="filtered(message)" class="filtered">Filtered</div>
     <div v-show="!filtered(message)" class="favourite">
       <div class="action">
         <div class="action-mark">
@@ -114,6 +112,7 @@ import emojify from '~/src/renderer/utils/emojify'
 import TimeFormat from '~/src/constants/timeFormat'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
+import Filtered from '@/utils/filter'
 
 export default {
   name: 'reaction',
@@ -126,9 +125,9 @@ export default {
       type: Object,
       default: {}
     },
-    filter: {
-      type: String,
-      default: ''
+    filters: {
+      type: Array,
+      default: []
     },
     focused: {
       type: Boolean,
@@ -235,7 +234,7 @@ export default {
       return message.media_attachments
     },
     filtered(message) {
-      return this.filter.length > 0 && message.status.content.search(this.filter) >= 0
+      return Filtered(message.status.content, this.filters)
     },
     spoilered(message) {
       return message.spoiler_text.length > 0

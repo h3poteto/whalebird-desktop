@@ -1,5 +1,5 @@
-import generator, { Entity } from 'megalodon'
-import { Module, MutationTree, ActionTree } from 'vuex'
+import generator, { Entity, FilterContext } from 'megalodon'
+import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type PublicState = {
@@ -131,11 +131,18 @@ const actions: ActionTree<PublicState, RootState> = {
   }
 }
 
+const getters: GetterTree<PublicState, RootState> = {
+  filters: (_state, _getters, rootState) => {
+    return rootState.TimelineSpace.filters.filter(f => f.context.includes(FilterContext.Public) && !f.irreversible)
+  }
+}
+
 const Public: Module<PublicState, RootState> = {
   namespaced: true,
   state: state,
   mutations: mutations,
-  actions: actions
+  actions: actions,
+  getters: getters
 }
 
 export default Public
