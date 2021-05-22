@@ -9427,10 +9427,10 @@ node-libs-browser@^2.2.1:
     util "^0.11.0"
     vm-browserify "^1.0.1"
 
-node-loader@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/node-loader/-/node-loader-1.0.2.tgz#f8a8f117844652642df1f2abb13ca46242643800"
-  integrity sha512-myxAxpyMR7knjA4Uzwf3gjxaMtxSWj2vpm9o6AYWWxQ1S3XMBNeG2vzYcp/5eW03cBGfgSxyP+wntP8qhBJNhQ==
+node-loader@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/node-loader/-/node-loader-1.0.3.tgz#ed8f4a8a75928575a5a2dab0e73c9f6386b2353e"
+  integrity sha512-8c9ef5q24F0AjrPxUjdX7qdTlsU1zZCPeqYvSBCH1TJko3QW4qu1uA1C9KbOPdaRQwREDdbSYZgltBAlbV7l5g==
   dependencies:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"

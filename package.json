@@ -280,7 +280,7 @@
     "json-loader": "^0.5.7",
     "listr": "^0.14.3",
     "mini-css-extract-plugin": "^1.6.0",
-    "node-loader": "^1.0.2",
+    "node-loader": "^1.0.3",
     "node-sass": "^6.0.0",
     "prettier": "^2.3.0",
     "prettier-stylelint": "^0.4.2",
