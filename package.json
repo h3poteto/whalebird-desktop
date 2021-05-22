@@ -228,7 +228,7 @@
     "@electron/universal": "^1.0.4",
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.4.0",
     "@types/auto-launch": "^5.0.1",
-    "@types/electron-json-storage": "^4.0.0",
+    "@types/electron-json-storage": "^4.5.0",
     "@types/i18next": "^13.0.0",
     "@types/jest": "26.0.20",
     "@types/lodash": "^4.14.168",
