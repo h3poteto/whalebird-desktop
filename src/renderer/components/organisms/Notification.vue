@@ -3,7 +3,7 @@
     <favourite
       v-if="message.type === 'favourite'"
       :message="message"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       @focusNext="$emit('focusNext')"
@@ -37,7 +37,7 @@
     <mention
       v-else-if="message.type === 'mention'"
       :message="message"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       v-on:update="updateToot"
@@ -51,7 +51,7 @@
     <quote
       v-else-if="message.type === 'reblog' && message.status.quote"
       :message="message"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       @focusNext="$emit('focusNext')"
@@ -63,7 +63,7 @@
     <reblog
       v-else-if="message.type === 'reblog' && !message.status.quote"
       :message="message"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       @focusNext="$emit('focusNext')"
@@ -75,7 +75,7 @@
     <reaction
       v-else-if="message.type === 'emoji_reaction'"
       :message="message"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       @focusNext="$emit('focusNext')"
@@ -87,7 +87,7 @@
     <status
       v-else-if="message.type === 'status'"
       :message="message"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       @focusNext="$emit('focusNext')"
@@ -99,7 +99,7 @@
     <PollVote
       v-else-if="message.type === 'poll_vote'"
       :message="message"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       @focusNext="$emit('focusNext')"
@@ -111,7 +111,7 @@
     <PollExpired
       v-else-if="message.type === 'poll_expired'"
       :message="message"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       @focusNext="$emit('focusNext')"
@@ -142,9 +142,9 @@ export default {
       type: Object,
       default: {}
     },
-    filter: {
-      type: String,
-      default: ''
+    filters: {
+      type: Array,
+      default: []
     },
     focused: {
       type: Boolean,

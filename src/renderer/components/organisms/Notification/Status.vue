@@ -15,7 +15,7 @@
     <div class="clearfix"></div>
     <toot
       :message="message.status"
-      :filter="filter"
+      :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
       v-on:update="updateToot"
@@ -42,9 +42,9 @@ export default {
       type: Object,
       default: {}
     },
-    filter: {
-      type: String,
-      default: ''
+    filters: {
+      type: Array,
+      default: []
     },
     focused: {
       type: Boolean,
