@@ -29,6 +29,11 @@ export default {
     key: 'pl',
     rfc4646: 'pl'
   },
+  id: {
+    name: 'Indonesian',
+    key: 'id',
+    rfc4646: 'id'
+  },
   it: {
     name: 'Italiano',
     key: 'it',
