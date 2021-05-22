@@ -2,7 +2,7 @@
   <div id="filters">
     <h2>{{ $t('settings.filters.title') }}</h2>
     <div class="new-filter">
-      <el-button type="primary">
+      <el-button type="primary" :disabled="sns === 'misskey'">
         <router-link tag="span" :to="`/${id()}/settings/filters/new`">
           {{ $t('settings.filters.new.title') }}
         </router-link>
@@ -57,6 +57,9 @@ export default {
     }),
     ...mapState({
       backgroundColor: state => state.App.theme.background_color
+    }),
+    ...mapState('TimelineSpace', {
+      sns: state => state.sns
     })
   },
   async created() {
