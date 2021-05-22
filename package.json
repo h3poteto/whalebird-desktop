@@ -226,7 +226,7 @@
     "@babel/preset-env": "^7.13.10",
     "@babel/runtime": "7.13.10",
     "@electron/universal": "^1.0.4",
-    "@mapbox/stylelint-processor-arbitrary-tags": "^0.3.0",
+    "@mapbox/stylelint-processor-arbitrary-tags": "^0.4.0",
     "@types/auto-launch": "^5.0.1",
     "@types/electron-json-storage": "^4.0.0",
     "@types/i18next": "^13.0.0",
