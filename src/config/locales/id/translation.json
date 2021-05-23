@@ -2,9 +2,9 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "services": "Services",
+      "about": "Tentang Whalebird",
+      "preferences": "Preferensi...",
+      "services": "Layanan",
       "hide": "Hide Whalebird",
       "hide_others": "Hide Others",
       "show_all": "Show All",
