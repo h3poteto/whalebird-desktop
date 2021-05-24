@@ -2,70 +2,70 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "about": "Tentang Whalebird",
+      "preferences": "Preferensi...",
+      "services": "Layanan",
+      "hide": "Sembunyikan Whalebird",
+      "hide_others": "Sembunyikan lainnya",
+      "show_all": "Lihat semua",
+      "open": "Buka jendela",
+      "quit": "Keluar"
     },
     "toot": {
       "name": "Toot",
-      "new": "New Toot"
+      "new": "Toot baru"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "Sunting",
+      "undo": "Urungkan",
+      "redo": "Ulangi",
+      "cut": "Potong",
+      "copy": "Salin",
+      "paste": "Tempel",
+      "select_all": "Pilih semua"
     },
     "view": {
-      "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "name": "Tampilan",
+      "toggle_full_screen": "Layar Penuh"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
-      "jump_to": "Jump to"
+      "always_show_menu_bar": "Selalu tampilkan bilah menu",
+      "name": "Jendela",
+      "close": "Tutup jendela",
+      "open": "Buka jendela",
+      "minimize": "Perkecil",
+      "jump_to": "Lompat ke"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "Tambahkan akun baru"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
-    "collapse": "Collapse",
-    "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists"
+    "profile": "Profil",
+    "show_profile": "Lihat profil",
+    "edit_profile": "Sunting profil",
+    "settings": "Pengaturan",
+    "collapse": "Ciutkan",
+    "expand": "Perluas",
+    "home": "Beranda",
+    "notification": "Pemberitahuan",
+    "mention": "Sebutan",
+    "direct": "Pesan langsung",
+    "follow_requests": "Permintaan Mengikuti",
+    "favourite": "Favorit",
+    "bookmark": "Markah",
+    "local": "Linimasa lokal",
+    "public": "Linimasa publik",
+    "hashtag": "Tagar",
+    "search": "Cari",
+    "lists": "Daftar"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
+    "home": "Beranda",
+    "notification": "Pemberitahuan",
+    "mention": "Sebutan",
+    "favourite": "Favorit",
+    "bookmark": "Markah",
     "follow_requests": "Follow Requests",
     "direct_messages": "Direct Messages",
     "local": "Local timeline",
@@ -134,14 +134,14 @@
         "1_week": "1 week"
       },
       "new": {
-        "title": "New"
+        "title": "Baru"
       },
       "edit": {
-        "title": "Edit"
+        "title": "Sunting"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
+        "title": "Hapus",
+        "confirm": "Anda yakin ingin menghapus filter ini?",
         "confirm_ok": "Delete",
         "confirm_cancel": "Cancel"
       }
@@ -152,44 +152,44 @@
     "general": {
       "title": "General",
       "sounds": {
-        "title": "Sounds",
-        "description": "Please set feedback sounds.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "title": "Bunyi",
+        "description": "Mohon setel bunyi timpal balik.",
+        "fav_rb": "Ketika memfavorit atau memboostihg toot",
+        "toot": "Ketika memposting toot"
       },
       "timeline": {
-        "title": "Timeline",
-        "description": "Customize view in your timelines.",
-        "cw": "Always ignore contents warnings",
-        "nsfw": "Always ignore NSFW of medias",
-        "hideAllAttachments": "Hide all medias"
+        "title": "Linimasa",
+        "description": "Kustomisasi tampilan linimasa anda.",
+        "cw": "Selalu abaikan peringatan konten",
+        "nsfw": "Selalu abaikan media NSFW",
+        "hideAllAttachments": "Sembunyikan semua media"
       },
       "other": {
-        "title": "Other options",
-        "launch": "Launch app on login"
+        "title": "Pilihan lainnya",
+        "launch": "Luncurkan aplikasi saat login"
       }
     },
     "appearance": {
-      "title": "Appearance",
-      "theme_color": "Theme color",
+      "title": "Penampilan",
+      "theme_color": "Warna tema",
       "theme": {
-        "light": "Light",
-        "dark": "Dark",
-        "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
-        "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "light": "Terang",
+        "dark": "Gelap",
+        "solarized_light": "Solarized Light",
+        "solarized_dark": "Solarized Dark",
+        "kimbie_dark": "Kimbie Dark",
+        "custom": "Kustom"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
+        "background_color": "Latar belakang dasar",
+        "selected_background_color": "Latar belakang fokus",
+        "global_header_color": "Menu akun",
+        "side_menu_color": "Menu samping",
+        "primary_color": "Font utama",
+        "regular_color": "Font reguler",
+        "secondary_color": "Font sekunder",
+        "border_color": "Tepian",
+        "header_menu_color": "Menu header",
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Font size",
