@@ -186,10 +186,14 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
    * fetchFilters
    */
   fetchFilters: async ({ commit, state, rootState }): Promise<Array<Entity.Filter>> => {
-    const client = generator(state.sns, state.account.baseURL, state.account.accessToken, rootState.App.userAgent)
-    const res = await client.getFilters()
-    commit(MUTATION_TYPES.UPDATE_FILTERS, res.data)
-    return res.data
+    try {
+      const client = generator(state.sns, state.account.baseURL, state.account.accessToken, rootState.App.userAgent)
+      const res = await client.getFilters()
+      commit(MUTATION_TYPES.UPDATE_FILTERS, res.data)
+      return res.data
+    } catch {
+      return []
+    }
   },
   /**
    * fetchInstance
