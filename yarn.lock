@@ -3285,12 +3285,12 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-cfonts@^2.9.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-2.9.1.tgz#90befec39cf0c779cbf82859c342aad44df1bc06"
-  integrity sha512-POZzm27BA8J/fgTeTpfKMmZKdij6L+8k2JsYJsrM5V7+HSFy0I03IEysng/IxGnzhteM7+PyH0rmZx+NeNMR2Q==
+cfonts@^2.9.2:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-2.9.2.tgz#bfffa07ec1d24d4f62d8d0f39e7ac2cdb1f23094"
+  integrity sha512-TdqmOFEs5mx4S/ypJAXVsM7vaWFAsdEnrGUahPLQpzjI5SRBpoU4azF/BGzwEV0sFnJmbC4tT/Y7jp8LyZSfAA==
   dependencies:
-    chalk "^4.1.0"
+    chalk "^4.1.1"
     window-size "^1.1.1"
 
 chai@^4.3.4:
