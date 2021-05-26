@@ -277,9 +277,9 @@
       "status": "Qu’avez-vous en tête ?",
       "cancel": "Annuler",
       "toot": "Pouet!",
-      "close_confirm": "Êtes-vous sûr de vouloir annuler ce nouveau pouet ?",
-      "close_confirm_ok": "Oui",
-      "close_confirm_cancel": "Annuler",
+      "close_confirm": "Are you sure you want to discard this toot?",
+      "close_confirm_ok": "Discard",
+      "close_confirm_cancel": "Continue Editing",
       "description": "Décrire pour les malvoyant·e·s",
       "footer": {
         "add_image": "Ajouter une image",

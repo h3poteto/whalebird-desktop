@@ -277,9 +277,9 @@
       "status": "Cosa ti passa per la testa?",
       "cancel": "Annulla",
       "toot": "Post",
-      "close_confirm": "Sei sicuro di voler cancellare il nuovo post?",
-      "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Annulla",
+      "close_confirm": "Are you sure you want to discard this toot?",
+      "close_confirm_ok": "Discard",
+      "close_confirm_cancel": "Continue Editing",
       "description": "Descrivi per i non vedenti",
       "footer": {
         "add_image": "Aggiungi immagini",

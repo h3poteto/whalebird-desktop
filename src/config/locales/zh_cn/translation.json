@@ -277,9 +277,9 @@
       "status": "在想啥？",
       "cancel": "取消",
       "toot": "嘟嘟！",
-      "close_confirm": "确定取消发嘟吗？",
-      "close_confirm_ok": "确定",
-      "close_confirm_cancel": "取消",
+      "close_confirm": "Are you sure you want to discard this toot?",
+      "close_confirm_ok": "Discard",
+      "close_confirm_cancel": "Continue Editing",
       "description": "为视觉障碍人士提供描述",
       "footer": {
         "add_image": "上传图片",

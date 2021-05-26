@@ -277,9 +277,9 @@
       "status": "¿En qué estás pensando?",
       "cancel": "Cancelar",
       "toot": "Toot",
-      "close_confirm": "¿Está seguro que desea cancelar el nuevo toot?",
-      "close_confirm_ok": "Aceptar",
-      "close_confirm_cancel": "Cancelar",
+      "close_confirm": "Are you sure you want to discard this toot?",
+      "close_confirm_ok": "Discard",
+      "close_confirm_cancel": "Continue Editing",
       "description": "Describir para los discapacitados visuales",
       "footer": {
         "add_image": "Añadir imágenes",
