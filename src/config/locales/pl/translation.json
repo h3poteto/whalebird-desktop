@@ -277,9 +277,9 @@
       "status": "Co Ci chodzi po głowie?",
       "cancel": "Anuluj",
       "toot": "Wyślij",
-      "close_confirm": "Czy na pewno chcesz porzucić tworzenie wpisu?",
-      "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Anuluj",
+      "close_confirm": "Are you sure you want to discard this toot?",
+      "close_confirm_ok": "Discard",
+      "close_confirm_cancel": "Continue Editing",
       "description": "Wprowadź opis dla niewidomych i niedowidzących",
       "footer": {
         "add_image": "Dodaj obraz",
