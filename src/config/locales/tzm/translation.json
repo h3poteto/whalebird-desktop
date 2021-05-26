@@ -277,9 +277,9 @@
       "status": "Ma'yd illan g ixef-nnek?",
       "cancel": "Sser",
       "toot": "Ansaɣ",
-      "close_confirm": "Is nit txsed ad tssred Ansaɣ Amaynu?",
-      "close_confirm_ok": "WAX",
-      "close_confirm_cancel": "Sser",
+      "close_confirm": "Are you sure you want to discard this toot?",
+      "close_confirm_ok": "Discard",
+      "close_confirm_cancel": "Continue Editing",
       "description": "Describe for the visually impaired",
       "footer": {
         "add_image": "Rnu yat n twlafet",
