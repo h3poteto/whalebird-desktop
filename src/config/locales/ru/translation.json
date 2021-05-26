@@ -277,9 +277,9 @@
       "status": "О чём вы думаете?",
       "cancel": "Отменить",
       "toot": "Запостить",
-      "close_confirm": "Вы уверены, что хотите отменить пост?",
-      "close_confirm_ok": "OK",
-      "close_confirm_cancel": "Отменить",
+      "close_confirm": "Are you sure you want to discard this toot?",
+      "close_confirm_ok": "Discard",
+      "close_confirm_cancel": "Continue Editing",
       "description": "Опишите для слабовидящих",
       "footer": {
         "add_image": "Добавить изображения",
