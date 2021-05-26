@@ -277,9 +277,9 @@
       "status": "무슨 생각을 하고 있나요?",
       "cancel": "취소",
       "toot": "툿",
-      "close_confirm": "툿 작성을 그만둘까요?",
-      "close_confirm_ok": "예",
-      "close_confirm_cancel": "취소",
+      "close_confirm": "Are you sure you want to discard this toot?",
+      "close_confirm_ok": "Discard",
+      "close_confirm_cancel": "Continue Editing",
       "description": "시각장애인을 위한 설명",
       "footer": {
         "add_image": "이미지 추가",
