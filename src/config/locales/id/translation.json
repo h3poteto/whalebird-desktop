@@ -320,19 +320,19 @@
     },
     "shortcut": {
       "title": "Pintasan keyboard",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "ctrl_r": "Reload current timeline",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
+      "ctrl_number": "Ganti akun",
+      "ctrl_k": "Lompat ke linimasa lain",
+      "ctrl_n": "Buka modal toot baru",
+      "ctrl_enter": "Posting toot",
+      "ctrl_r": "Muat ulang linimasa saat ini",
+      "j": "Pilih toot selanjutnya",
+      "k": "Pilih toot sebelumnya",
+      "h": "Ubah fokus ke kolom kiri",
+      "l": "Ubah fokus ke kolom kanan",
+      "r": "Balas toot",
+      "b": "Reblog toot",
+      "f": "Favoritkan toot",
+      "o": "Buka toot selengkapnya",
       "p": "Open account profile of the toot",
       "i": "Open the images",
       "x": "Show/hide CW and NSFW",
@@ -400,64 +400,64 @@
     "reject": "Reject"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "Nama tag",
+    "delete_tag": "Hapus tag",
+    "save_tag": "Simpan tag"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
+    "search": "Pencarian",
+    "account": "Akun",
+    "tag": "Tagar",
+    "keyword": "kata kunci",
     "toot": "Toot"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
-      "edit": "Edit",
+      "new_list": "Daftar Baru",
+      "edit": "Sunting",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "Konfirmasi",
+          "message": "Operasi ini tidak dapat dikembalikan, daftar ini akan dihapus permanen",
+          "ok": "Hapus",
+          "cancel": "Batal"
         }
       }
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "domain_name_label": "Pertama, masuk ke server Mastodon.\nMohon masukkan nama domain server.",
+    "proxy_info": "Jika kamu ingin menggunakan server proksi, mohon atur proksi kamu di",
+    "proxy_here": " sini",
+    "search": "Cari",
+    "login": "Masuk"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
-    "misskey_label": "Please submit after you authorize in your browser.",
-    "submit": "Submit"
+    "manually_1": "Halaman otorisasi telah dibuka di perambanmu.",
+    "manually_2": "Jika masih belum terbuka, mohon pergi ke URL yang disebut secara manual.",
+    "code_label": "Mohon tempelkan kode otorisasi dari perambanmu:",
+    "misskey_label": "Mohon masukkan setelah kamu mengotorisasi di perambanmu.",
+    "submit": "Otorisasi"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Jatuhkan untuk mengunggah ke Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
-    "preferences_load_error": "Failed to load preferences",
-    "timeline_fetch_error": "Failed to fetch timeline",
-    "notification_fetch_error": "Failed to fetch notification",
-    "favourite_fetch_error": "Failed to fetch favorite",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_request_reject_error": "failed to reject the request",
-    "start_streaming_error": "Failed to start streaming",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
-    "attach_error": "Could not attach the file",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
-    "authorize_error": "Failed to authorize",
-    "followers_fetch_error": "Failed to fetch followers",
-    "follows_fetch_error": "Failed to fetch follows",
+    "account_load_error": "Gagal memuat akun",
+    "account_remove_error": "Gagal menghapus akun",
+    "preferences_load_error": "Gagal memuat preferensi",
+    "timeline_fetch_error": "Gagal memuat linimasa",
+    "notification_fetch_error": "Gagal memuat pemberitahuan",
+    "favourite_fetch_error": "Gagal memuat favorit",
+    "follow_request_accept_error": "Gagal menerima permintaan mengikuti",
+    "follow_request_reject_error": "Gagal menolak permintaan mengikuti",
+    "start_streaming_error": "Gagal memulai streaming",
+    "start_all_streamings_error": "Gagal memuat streaming {{domain}}",
+    "attach_error": "Tidak dapat melampirkan berkas",
+    "authorize_duplicate_error": "Tidak dapat masuk di akun yang sama dari domain yang sama",
+    "authorize_error": "Gagal otorisasi",
+    "followers_fetch_error": "Gagal memuat pengikut",
+    "follows_fetch_error": "Gagal memuat mengikuti",
     "toot_fetch_error": "Failed to fetch the toot detail",
     "follow_error": "Failed to follow the user",
     "unfollow_error": "Failed to unfollow the user",
