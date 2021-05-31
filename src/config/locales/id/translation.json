@@ -72,66 +72,66 @@
     "public": "Linimasa publik",
     "hashtag": "Tagar",
     "search": "Cari",
-    "lists": "Lists",
-    "members": "Members",
+    "lists": "Daftar",
+    "members": "Anggota",
     "option": {
-      "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "Opsi",
+      "show_reblogs": "Tampilkan reblog",
+      "show_replies": "Tampilkan balasan",
+      "apply": "Terapkan"
     },
     "new_toot": "Toot",
-    "reload": "Reload",
-    "settings": "Settings"
+    "reload": "Muat Ulang",
+    "settings": "Pengaturan"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Pengaturan",
     "general": {
-      "title": "General",
+      "title": "Umum",
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
-          "public": "Public",
-          "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "description": "Sesuaikan visibilitas bawaan toot",
+          "notice": "Pengaturan ini hanya diterapkan pada toot baru, balasan mengikuti visibilitas dari toot asal",
+          "public": "Publik",
+          "unlisted": "Tidak terdaftar",
+          "private": "Privat",
+          "direct": "Langsung"
         },
         "sensitive": {
-          "description": "Mark media as sensitive by default"
+          "description": "Tandai sebagai media sensitif secara bawaan"
         }
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Linimasa",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "title": "Notifikasi yang belum dibaca",
+        "description": "Sesuaikan notifikasi belum terbaca untuk setiap linimasa.",
+        "direct": "Pesan Langsung",
+        "local": "Linimasa lokal",
+        "public": "Linimasa publik"
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Filter",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "Kata kunci atau frasa",
+        "expire": "Kedaluwarsa setelah",
+        "context": "Konteks filter",
+        "irreversible": "Hapus alih-alih sembunyikan",
+        "whole_word": "Seluruh kata",
+        "submit": "Kirim",
+        "cancel": "Batal"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Tidak Pernah",
+        "30_minutes": "30 menit",
+        "1_hour": "1 jam",
+        "6_hours": "6 jam",
+        "12_hours": "12 jam",
+        "1_day": "1 hari",
+        "1_week": "1 minggu"
       },
       "new": {
         "title": "Baru"
@@ -142,8 +142,8 @@
       "delete": {
         "title": "Hapus",
         "confirm": "Anda yakin ingin menghapus filter ini?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "confirm_ok": "Hapus",
+        "confirm_cancel": "Batal"
       }
     }
   },
