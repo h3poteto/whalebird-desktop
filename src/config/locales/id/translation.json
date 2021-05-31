@@ -148,9 +148,9 @@
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Preferensi",
     "general": {
-      "title": "General",
+      "title": "Umum",
       "sounds": {
         "title": "Bunyi",
         "description": "Mohon setel bunyi timpal balik.",
@@ -259,67 +259,67 @@
       "save": "Save"
     },
     "language": {
-      "title": "Language",
+      "title": "Bahasa",
       "language": {
-        "title": "Language",
-        "description": "Choose the language you would like to use with Whalebird."
+        "title": "Bahasa",
+        "description": "Pilih bahasa yang ingin kamu gunakan di Whalebird."
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "Periksa Ejaan",
+        "enabled": "Nyalakan pemeriksa ejaan"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
-      "cw": "Write your warning here",
-      "status": "What is on your mind?",
-      "cancel": "Cancel",
+      "title": "Toot baru",
+      "cw": "Tulis peringatanmu disini",
+      "status": "Apa yang kamu pikirkan?",
+      "cancel": "Batal",
       "toot": "Toot",
-      "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
-      "close_confirm_cancel": "Continue Editing",
-      "description": "Describe for the visually impaired",
+      "close_confirm": "Apa Kamu yakin ingin membuang toot ini?",
+      "close_confirm_ok": "Buang",
+      "close_confirm_cancel": "Lanjutkan Menyunting",
+      "description": "Jelaskan untuk tuna netra",
       "footer": {
-        "add_image": "Add images",
-        "poll": "Add a poll",
-        "change_visibility": "Change visibility",
-        "change_sensitive": "Change sensitive",
-        "add_cw": "Add content warning",
-        "pined_hashtag": "Pin the hashtag"
+        "add_image": "Tambahkan gambar",
+        "poll": "Tambahkan polling",
+        "change_visibility": "Atur Visibilitas",
+        "change_sensitive": "Ubah sebagai media sensitif",
+        "add_cw": "Tambahkan peringatan konten",
+        "pined_hashtag": "Sematkan tagar"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Tambahkan pilihan",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 menit",
+          "30_minutes": "30 menit",
+          "1_hour": "1 jam",
+          "6_hours": "6 jam",
+          "1_day": "1 hari",
+          "3_days": "3 hari",
+          "7_days": "7 hari"
         }
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "Lompat ke..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "Tambahkan Anggota ke Daftar",
+      "account_name": "Nama akun"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "Daftar keanggotaan"
     },
     "mute_confirm": {
-      "title": "Are you sure you want to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "Apakah Kamu yakin Kamu ingin membisukan?",
+      "body": "Sembunyikan pemberitahuan dari pengguna ini?",
+      "cancel": "Batal",
+      "ok": "Bisu"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
+      "title": "Pintasan keyboard",
       "ctrl_number": "Switch accounts",
       "ctrl_k": "Jump to other timelines",
       "ctrl_n": "Open the new toot modal",
