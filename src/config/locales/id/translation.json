@@ -66,72 +66,72 @@
     "mention": "Sebutan",
     "favourite": "Favorit",
     "bookmark": "Markah",
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists",
-    "members": "Members",
+    "follow_requests": "Permintaan Mengikuti",
+    "direct_messages": "Pesan Langsung",
+    "local": "Linimasa lokal",
+    "public": "Linimasa publik",
+    "hashtag": "Tagar",
+    "search": "Cari",
+    "lists": "Daftar",
+    "members": "Anggota",
     "option": {
-      "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "Opsi",
+      "show_reblogs": "Tampilkan reblog",
+      "show_replies": "Tampilkan balasan",
+      "apply": "Terapkan"
     },
     "new_toot": "Toot",
-    "reload": "Reload",
-    "settings": "Settings"
+    "reload": "Muat Ulang",
+    "settings": "Pengaturan"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Pengaturan",
     "general": {
-      "title": "General",
+      "title": "Umum",
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
-          "public": "Public",
-          "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "description": "Sesuaikan visibilitas bawaan toot",
+          "notice": "Pengaturan ini hanya diterapkan pada toot baru, balasan mengikuti visibilitas dari toot asal",
+          "public": "Publik",
+          "unlisted": "Tidak terdaftar",
+          "private": "Privat",
+          "direct": "Langsung"
         },
         "sensitive": {
-          "description": "Mark media as sensitive by default"
+          "description": "Tandai sebagai media sensitif secara bawaan"
         }
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Linimasa",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "title": "Notifikasi yang belum dibaca",
+        "description": "Sesuaikan notifikasi belum terbaca untuk setiap linimasa.",
+        "direct": "Pesan Langsung",
+        "local": "Linimasa lokal",
+        "public": "Linimasa publik"
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Filter",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "Kata kunci atau frasa",
+        "expire": "Kedaluwarsa setelah",
+        "context": "Konteks filter",
+        "irreversible": "Hapus alih-alih sembunyikan",
+        "whole_word": "Seluruh kata",
+        "submit": "Kirim",
+        "cancel": "Batal"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Tidak Pernah",
+        "30_minutes": "30 menit",
+        "1_hour": "1 jam",
+        "6_hours": "6 jam",
+        "12_hours": "12 jam",
+        "1_day": "1 hari",
+        "1_week": "1 minggu"
       },
       "new": {
         "title": "Baru"
@@ -142,15 +142,15 @@
       "delete": {
         "title": "Hapus",
         "confirm": "Anda yakin ingin menghapus filter ini?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "confirm_ok": "Hapus",
+        "confirm_cancel": "Batal"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Preferensi",
     "general": {
-      "title": "General",
+      "title": "Umum",
       "sounds": {
         "title": "Bunyi",
         "description": "Mohon setel bunyi timpal balik.",
@@ -259,80 +259,80 @@
       "save": "Save"
     },
     "language": {
-      "title": "Language",
+      "title": "Bahasa",
       "language": {
-        "title": "Language",
-        "description": "Choose the language you would like to use with Whalebird."
+        "title": "Bahasa",
+        "description": "Pilih bahasa yang ingin kamu gunakan di Whalebird."
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "Periksa Ejaan",
+        "enabled": "Nyalakan pemeriksa ejaan"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
-      "cw": "Write your warning here",
-      "status": "What is on your mind?",
-      "cancel": "Cancel",
+      "title": "Toot baru",
+      "cw": "Tulis peringatanmu disini",
+      "status": "Apa yang kamu pikirkan?",
+      "cancel": "Batal",
       "toot": "Toot",
-      "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
-      "close_confirm_cancel": "Continue Editing",
-      "description": "Describe for the visually impaired",
+      "close_confirm": "Apa Kamu yakin ingin membuang toot ini?",
+      "close_confirm_ok": "Buang",
+      "close_confirm_cancel": "Lanjutkan Menyunting",
+      "description": "Jelaskan untuk tuna netra",
       "footer": {
-        "add_image": "Add images",
-        "poll": "Add a poll",
-        "change_visibility": "Change visibility",
-        "change_sensitive": "Change sensitive",
-        "add_cw": "Add content warning",
-        "pined_hashtag": "Pin the hashtag"
+        "add_image": "Tambahkan gambar",
+        "poll": "Tambahkan polling",
+        "change_visibility": "Atur Visibilitas",
+        "change_sensitive": "Ubah sebagai media sensitif",
+        "add_cw": "Tambahkan peringatan konten",
+        "pined_hashtag": "Sematkan tagar"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Tambahkan pilihan",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 menit",
+          "30_minutes": "30 menit",
+          "1_hour": "1 jam",
+          "6_hours": "6 jam",
+          "1_day": "1 hari",
+          "3_days": "3 hari",
+          "7_days": "7 hari"
         }
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "Lompat ke..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "Tambahkan Anggota ke Daftar",
+      "account_name": "Nama akun"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "Daftar keanggotaan"
     },
     "mute_confirm": {
-      "title": "Are you sure you want to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "Apakah Kamu yakin Kamu ingin membisukan?",
+      "body": "Sembunyikan pemberitahuan dari pengguna ini?",
+      "cancel": "Batal",
+      "ok": "Bisu"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "ctrl_r": "Reload current timeline",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
+      "title": "Pintasan keyboard",
+      "ctrl_number": "Ganti akun",
+      "ctrl_k": "Lompat ke linimasa lain",
+      "ctrl_n": "Buka modal toot baru",
+      "ctrl_enter": "Posting toot",
+      "ctrl_r": "Muat ulang linimasa saat ini",
+      "j": "Pilih toot selanjutnya",
+      "k": "Pilih toot sebelumnya",
+      "h": "Ubah fokus ke kolom kiri",
+      "l": "Ubah fokus ke kolom kanan",
+      "r": "Balas toot",
+      "b": "Reblog toot",
+      "f": "Favoritkan toot",
+      "o": "Buka toot selengkapnya",
       "p": "Open account profile of the toot",
       "i": "Open the images",
       "x": "Show/hide CW and NSFW",
@@ -400,74 +400,74 @@
     "reject": "Reject"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "Nama tag",
+    "delete_tag": "Hapus tag",
+    "save_tag": "Simpan tag"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
+    "search": "Pencarian",
+    "account": "Akun",
+    "tag": "Tagar",
+    "keyword": "kata kunci",
     "toot": "Toot"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
-      "edit": "Edit",
+      "new_list": "Daftar Baru",
+      "edit": "Sunting",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "Konfirmasi",
+          "message": "Operasi ini tidak dapat dikembalikan, daftar ini akan dihapus permanen",
+          "ok": "Hapus",
+          "cancel": "Batal"
         }
       }
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "domain_name_label": "Pertama, masuk ke server Mastodon.\nMohon masukkan nama domain server.",
+    "proxy_info": "Jika kamu ingin menggunakan server proksi, mohon atur proksi kamu di",
+    "proxy_here": " sini",
+    "search": "Cari",
+    "login": "Masuk"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
-    "misskey_label": "Please submit after you authorize in your browser.",
-    "submit": "Submit"
+    "manually_1": "Halaman otorisasi telah dibuka di perambanmu.",
+    "manually_2": "Jika masih belum terbuka, mohon pergi ke URL yang disebut secara manual.",
+    "code_label": "Mohon tempelkan kode otorisasi dari perambanmu:",
+    "misskey_label": "Mohon masukkan setelah kamu mengotorisasi di perambanmu.",
+    "submit": "Otorisasi"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Jatuhkan untuk mengunggah ke Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
-    "preferences_load_error": "Failed to load preferences",
-    "timeline_fetch_error": "Failed to fetch timeline",
-    "notification_fetch_error": "Failed to fetch notification",
-    "favourite_fetch_error": "Failed to fetch favorite",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_request_reject_error": "failed to reject the request",
-    "start_streaming_error": "Failed to start streaming",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
-    "attach_error": "Could not attach the file",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
-    "authorize_error": "Failed to authorize",
-    "followers_fetch_error": "Failed to fetch followers",
-    "follows_fetch_error": "Failed to fetch follows",
-    "toot_fetch_error": "Failed to fetch the toot detail",
-    "follow_error": "Failed to follow the user",
-    "unfollow_error": "Failed to unfollow the user",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
-    "lists_fetch_error": "Failed to fetch lists",
-    "list_create_error": "Failed to create a list",
-    "members_fetch_error": "Failed to fetch members",
-    "remove_user_error": "Failed to remove the user",
-    "find_account_error": "Account not found",
+    "account_load_error": "Gagal memuat akun",
+    "account_remove_error": "Gagal menghapus akun",
+    "preferences_load_error": "Gagal memuat preferensi",
+    "timeline_fetch_error": "Gagal memuat linimasa",
+    "notification_fetch_error": "Gagal memuat pemberitahuan",
+    "favourite_fetch_error": "Gagal memuat favorit",
+    "follow_request_accept_error": "Gagal menerima permintaan mengikuti",
+    "follow_request_reject_error": "Gagal menolak permintaan mengikuti",
+    "start_streaming_error": "Gagal memulai streaming",
+    "start_all_streamings_error": "Gagal memuat streaming {{domain}}",
+    "attach_error": "Tidak dapat melampirkan berkas",
+    "authorize_duplicate_error": "Tidak dapat masuk di akun yang sama dari domain yang sama",
+    "authorize_error": "Gagal otorisasi",
+    "followers_fetch_error": "Gagal memuat pengikut",
+    "follows_fetch_error": "Gagal memuat mengikuti",
+    "toot_fetch_error": "Gagal memuat toot selengkapnya",
+    "follow_error": "Gagal memuat pengguna",
+    "unfollow_error": "Gagal tidak mengikuti pengguna",
+    "subscribe_error": "Gagal berlangganan ke pengguna",
+    "unsubscribe_error": "Gagal tidak berlangganan ke pengguna",
+    "lists_fetch_error": "Gagal memuat daftar",
+    "list_create_error": "Gagal membuat daftar",
+    "members_fetch_error": "Gagal memuat anggota",
+    "remove_user_error": "Gagal menghapus pengguna",
+    "find_account_error": "Akun tidak ditemukan",
     "reblog_error": "Failed to reblog",
     "unreblog_error": "Failed to unreblog",
     "favourite_error": "Failed to favourite",
