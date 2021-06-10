@@ -47,10 +47,12 @@ export default {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      backgroundColor: state => state.App.theme.background_color,
-      lazyLoading: state => state.TimelineSpace.Contents.Notifications.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Notifications.heading,
-      unread: state => state.TimelineSpace.Contents.Notifications.unreadNotifications
+      backgroundColor: state => state.App.theme.background_color
+    }),
+    ...mapState('TimelineSpace/Contents/Notifications', {
+      lazyLoading: state => state.lazyLoading,
+      heading: state => state.heading,
+      unread: state => state.unreadNotifications
     }),
     ...mapGetters('TimelineSpace/Contents/Notifications', ['handledNotifications', 'filters']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
@@ -79,6 +81,10 @@ export default {
         this.focusedId = previousFocusedId
       })
     })
+
+    if (this.heading && this.handledNotifications.length > 0) {
+      this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker', this.handledNotifications[0].id)
+    }
   },
   beforeUpdate() {
     if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications) {
@@ -112,6 +118,11 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
+      }
+    },
+    handledNotifications: function (newState, _oldState) {
+      if (this.heading && newState.length > 0) {
+        this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker', newState[0].id)
       }
     }
   },

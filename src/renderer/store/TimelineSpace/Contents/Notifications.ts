@@ -1,6 +1,7 @@
 import generator, { Entity, FilterContext, NotificationType } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
+import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
 
 const win = (window as any) as MyWindow
@@ -135,6 +136,13 @@ const actions: ActionTree<NotificationsState, RootState> = {
   },
   resetBadge: () => {
     win.ipcRenderer.send('reset-badge')
+  },
+  saveMarker: async ({ rootState }, id: string) => {
+    await win.ipcRenderer.invoke('save-marker', {
+      owner_id: rootState.TimelineSpace.account._id,
+      timeline: 'notifications',
+      last_read_id: id
+    } as LocalMarker)
   }
 }
 

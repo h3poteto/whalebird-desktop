@@ -147,6 +147,7 @@ const markerDB = new Datastore({
   filename: markerDBPath,
   autoload: true
 })
+const markerRepo = new Marker(markerDB)
 
 /**
  * Cache path
@@ -1147,8 +1148,7 @@ ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, la
 
 // marker
 ipcMain.handle('save-marker', async (_: IpcMainInvokeEvent, marker: LocalMarker) => {
-  const repo = new Marker(markerDB)
-  await repo.save(marker)
+  await markerRepo.save(marker)
 })
 
 // hashtag

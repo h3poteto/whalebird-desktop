@@ -141,11 +141,10 @@ const actions: ActionTree<HomeState, RootState> = {
       })
   },
   saveMarker: async ({ rootState }, id: string) => {
-    const acct = `@${rootState.TimelineSpace.account.username}@${rootState.TimelineSpace.account.domain}`
     await win.ipcRenderer.invoke('save-marker', {
-      acct: acct,
+      owner_id: rootState.TimelineSpace.account._id,
       timeline: 'home',
-      lastReadID: id
+      last_read_id: id
     } as LocalMarker)
   }
 }

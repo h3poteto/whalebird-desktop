@@ -25,39 +25,39 @@ export default class Marker {
       // eslint-disable-line no-unused-vars
       this.db.update(
         {
-          acct: marker.acct,
+          owner_id: marker.owner_id,
           timeline: marker.timeline
         },
         { $set: marker },
         { multi: false },
         err => {
           if (err) return reject(err)
-          return this.get(marker.acct, marker.timeline)
+          return this.get(marker.owner_id, marker.timeline)
         }
       )
     })
   }
 
   public async save(marker: LocalMarker): Promise<LocalMarker> {
-    return this.get(marker.acct, marker.timeline).then(l => {
+    return this.get(marker.owner_id, marker.timeline).then(l => {
       if (isEmpty(l)) return this.insert(marker)
       return this.update(marker)
     })
   }
 
-  public async get(acct: string, timeline: 'home' | 'notifications'): Promise<LocalMarker> {
+  public async get(owner_id: string, timeline: 'home' | 'notifications'): Promise<LocalMarker> {
     return new Promise((resolve, reject) => {
-      this.db.findOne<LocalMarker>({ acct: acct, timeline: timeline }, (err, doc) => {
+      this.db.findOne<LocalMarker>({ owner_id: owner_id, timeline: timeline }, (err, doc) => {
         if (err) return reject(err)
         resolve(doc)
       })
     })
   }
 
-  public async list(acct: string): Promise<Array<LocalMarker>> {
+  public async list(owner_id: string): Promise<Array<LocalMarker>> {
     return new Promise((resolve, reject) => {
       this.db
-        .find<LocalMarker>({ acct: acct })
+        .find<LocalMarker>({ owner_id: owner_id })
         .exec((err, docs) => {
           if (err) return reject(err)
           resolve(docs)

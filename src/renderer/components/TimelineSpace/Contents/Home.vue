@@ -94,6 +94,10 @@ export default {
         this.focusedId = previousFocusedId
       })
     })
+
+    if (this.heading && this.timeline.length > 0) {
+      this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', this.timeline[0].id)
+    }
   },
   beforeUpdate() {
     if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline && this.heading) {

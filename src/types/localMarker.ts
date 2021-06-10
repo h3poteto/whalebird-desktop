@@ -1,5 +1,5 @@
 export type LocalMarker = {
-  acct: string
+  owner_id: string
   timeline: 'home' | 'notifications'
-  lastReadID: string
+  last_read_id: string
 }
