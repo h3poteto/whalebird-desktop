@@ -25,7 +25,7 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import { Entity, detector, NotificationType } from 'megalodon'
+import generator, { Entity, detector, NotificationType } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
@@ -54,6 +54,8 @@ import ProxyConfiguration from './proxy'
 import confirm from './timelines'
 import { EnabledTimelines } from '~/src/types/enabledTimelines'
 import { Menu as MenuPreferences } from '~/src/types/preference'
+import { LocalMarker } from '~/src/types/localMarker'
+import Marker from './marker'
 
 /**
  * Context menu
@@ -125,8 +127,8 @@ const accountDB = new Datastore({
   filename: accountDBPath,
   autoload: true
 })
-const accountManager = new Account(accountDB)
-accountManager.initialize().catch((err: Error) => log.error(err))
+const accountRepo = new Account(accountDB)
+accountRepo.initialize().catch((err: Error) => log.error(err))
 
 const hashtagsDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/hashtags.db' : 'hashtags.db'
 const hashtagsDB = new Datastore({
@@ -139,6 +141,13 @@ const unreadNotification = new UnreadNotification(unreadNotificationDBPath)
 unreadNotification.initialize().catch((err: Error) => log.error(err))
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
+
+const markerDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/marker.db' : 'marker.db'
+const markerDB = new Datastore({
+  filename: markerDBPath,
+  autoload: true
+})
+const markerRepo = new Marker(markerDB)
 
 /**
  * Cache path
@@ -172,7 +181,7 @@ if (process.platform !== 'darwin') {
 
 async function listAccounts(): Promise<Array<LocalAccount>> {
   try {
-    const accounts = await accountManager.listAccounts()
+    const accounts = await accountRepo.listAccounts()
     return accounts
   } catch (err) {
     return []
@@ -441,7 +450,7 @@ app.on('activate', () => {
   }
 })
 
-const auth = new Authentication(accountManager)
+const auth = new Authentication(accountRepo)
 
 type AuthRequest = {
   instance: string
@@ -497,23 +506,23 @@ ipcMain.handle('get-and-update-access-token', async (_: IpcMainInvokeEvent, requ
 
 // nedb
 ipcMain.handle('list-accounts', async (_: IpcMainInvokeEvent) => {
-  const accounts = await accountManager.listAccounts()
+  const accounts = await accountRepo.listAccounts()
   return accounts
 })
 
 ipcMain.handle('get-local-account', async (_: IpcMainInvokeEvent, id: string) => {
-  const account = await accountManager.getAccount(id)
+  const account = await accountRepo.getAccount(id)
   return account
 })
 
 ipcMain.handle('update-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
   const proxy = await proxyConfiguration.forMastodon()
-  const ac: LocalAccount = await accountManager.refresh(acct, proxy)
+  const ac: LocalAccount = await accountRepo.refresh(acct, proxy)
   return ac
 })
 
 ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: string) => {
-  const accountId = await accountManager.removeAccount(id)
+  const accountId = await accountRepo.removeAccount(id)
 
   const accounts = await listAccounts()
   const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
@@ -534,22 +543,22 @@ ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: string) => {
 })
 
 ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-  await accountManager.forwardAccount(acct)
+  await accountRepo.forwardAccount(acct)
 })
 
 ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-  await accountManager.backwardAccount(acct)
+  await accountRepo.backwardAccount(acct)
 })
 
 ipcMain.handle('refresh-accounts', async (_: IpcMainInvokeEvent) => {
   const proxy = await proxyConfiguration.forMastodon()
-  const accounts = await accountManager.refreshAccounts(proxy)
+  const accounts = await accountRepo.refreshAccounts(proxy)
 
   return accounts
 })
 
 ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
-  await accountManager.removeAll()
+  await accountRepo.removeAll()
 
   const accounts = await listAccounts()
   const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
@@ -605,7 +614,7 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
   accounts.map(async account => {
     const id: string = account._id!
     try {
-      const acct = await accountManager.getAccount(id)
+      const acct = await accountRepo.getAccount(id)
       // Stop old user streaming
       if (userStreamings[id]) {
         userStreamings[id]!.stop()
@@ -716,7 +725,7 @@ let directMessagesStreaming: DirectStreaming | null = null
 ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
   try {
-    const acct = await accountManager.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(account._id!)
 
     // Stop old directmessages streaming
     if (directMessagesStreaming !== null) {
@@ -765,7 +774,7 @@ let localStreaming: LocalStreaming | null = null
 ipcMain.on('start-local-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
   try {
-    const acct = await accountManager.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(account._id!)
 
     // Stop old local streaming
     if (localStreaming !== null) {
@@ -814,7 +823,7 @@ let publicStreaming: PublicStreaming | null = null
 ipcMain.on('start-public-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
   const { account } = obj
   try {
-    const acct = await accountManager.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(account._id!)
 
     // Stop old public streaming
     if (publicStreaming !== null) {
@@ -867,7 +876,7 @@ type ListID = {
 ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListID & StreamingSetting) => {
   const { listID, account } = obj
   try {
-    const acct = await accountManager.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(account._id!)
 
     // Stop old list streaming
     if (listStreaming !== null) {
@@ -921,7 +930,7 @@ type Tag = {
 ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: Tag & StreamingSetting) => {
   const { tag, account } = obj
   try {
-    const acct = await accountManager.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(account._id!)
 
     // Stop old tag streaming
     if (tagStreaming !== null) {
@@ -1136,6 +1145,51 @@ ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, la
   })
   return conf.language.spellchecker.languages
 })
+
+// marker
+ipcMain.handle('save-marker', async (_: IpcMainInvokeEvent, marker: LocalMarker) => {
+  if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
+    return
+  }
+  await markerRepo.save(marker)
+})
+
+setTimeout(async () => {
+  try {
+    const accounts = await accountRepo.listAccounts()
+    accounts.map(async acct => {
+      const proxy = await proxyConfiguration.forMastodon()
+      const sns = await detector(acct.baseURL, proxy)
+      if (sns === 'misskey') {
+        return
+      }
+      const client = generator(sns, acct.baseURL, acct.accessToken, 'Whalebird', proxy)
+      const home = await markerRepo.get(acct._id!, 'home')
+      const notifications = await markerRepo.get(acct._id!, 'notifications')
+      let params = {}
+      if (home !== null && home !== undefined) {
+        params = Object.assign({}, params, {
+          home: {
+            last_read_id: home.last_read_id
+          }
+        })
+      }
+      if (notifications !== null && notifications !== undefined) {
+        params = Object.assign({}, params, {
+          notifications: {
+            last_read_id: notifications.last_read_id
+          }
+        })
+      }
+      if (isEmpty(params)) {
+        return
+      }
+      await client.saveMarkers(params)
+    })
+  } catch (err) {
+    console.error(err)
+  }
+}, 120000)
 
 // hashtag
 ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {

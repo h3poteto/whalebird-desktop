@@ -94,6 +94,10 @@ export default {
         this.focusedId = previousFocusedId
       })
     })
+
+    if (this.heading && this.timeline.length > 0) {
+      this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', this.timeline[0].id)
+    }
   },
   beforeUpdate() {
     if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline && this.heading) {
@@ -126,6 +130,11 @@ export default {
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
+      }
+    },
+    timeline: function (newState, _oldState) {
+      if (this.heading && newState.length > 0) {
+        this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', newState[0].id)
       }
     }
   },
