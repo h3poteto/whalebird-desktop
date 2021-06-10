@@ -45,7 +45,7 @@ export default class Marker {
     })
   }
 
-  public async get(owner_id: string, timeline: 'home' | 'notifications'): Promise<LocalMarker> {
+  public async get(owner_id: string, timeline: 'home' | 'notifications'): Promise<LocalMarker | null> {
     return new Promise((resolve, reject) => {
       this.db.findOne<LocalMarker>({ owner_id: owner_id, timeline: timeline }, (err, doc) => {
         if (err) return reject(err)
