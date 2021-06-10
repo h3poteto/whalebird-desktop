@@ -11,7 +11,7 @@
         <el-switch id="sound_toot" v-model="sound_toot" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
-    <el-form class="timeline section" label-potision="right" label-width="250px" size="samll">
+    <el-form class="timeline section" label-potision="right" label-width="302px" size="samll">
       <h3>{{ $t('preferences.general.timeline.title') }}</h3>
       <p class="description">{{ $t('preferences.general.timeline.description') }}</p>
       <el-form-item for="cw" :label="$t('preferences.general.timeline.cw')">
@@ -23,6 +23,12 @@
       <el-form-item for="hideAllAttachments" :label="$t('preferences.general.timeline.hideAllAttachments')">
         <el-switch id="hideAllAttachments" v-model="timeline_hide_attachments" active-color="#13ce66"> </el-switch>
       </el-form-item>
+      <el-form-item for="useMarker" :label="$t('preferences.general.timeline.useMarker')">
+        <el-switch id="useMarker" v-model="timeline_use_marker" active-color="#13ce66"> </el-switch>
+      </el-form-item>
+      <p class="notice">
+        {{ $t('preferences.general.timeline.useMarkerNotice') }}
+      </p>
     </el-form>
     <el-form class="other section" label-position="right" label-width="250px" size="small" v-if="notDarwin">
       <h3>{{ $t('preferences.general.other.title') }}</h3>
@@ -93,6 +99,16 @@ export default {
       set(value) {
         this.$store.dispatch('Preferences/General/updateTimeline', {
           hideAllAttachments: value
+        })
+      }
+    },
+    timeline_use_marker: {
+      get() {
+        return this.$store.state.Preferences.General.general.timeline.useMarker
+      },
+      set(value) {
+        this.$store.dispatch('Preferences/General/updateTimeline', {
+          useMarker: value
         })
       }
     },

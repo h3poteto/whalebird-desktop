@@ -1147,6 +1147,16 @@ ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, la
 })
 
 // marker
+ipcMain.handle('get-home-marker', async (_: IpcMainInvokeEvent, ownerID: string) => {
+  const marker = await markerRepo.get(ownerID, 'home')
+  return marker
+})
+
+ipcMain.handle('get-notifications-marker', async (_: IpcMainInvokeEvent, ownerID: string) => {
+  const marker = await markerRepo.get(ownerID, 'notifications')
+  return marker
+})
+
 ipcMain.handle('save-marker', async (_: IpcMainInvokeEvent, marker: LocalMarker) => {
   if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
     return

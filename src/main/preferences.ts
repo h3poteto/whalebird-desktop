@@ -23,7 +23,8 @@ const sound: Sound = {
 const timeline: Timeline = {
   cw: false,
   nsfw: false,
-  hideAllAttachments: false
+  hideAllAttachments: false,
+  useMarker: false
 }
 
 const other: Other = {
