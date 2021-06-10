@@ -1,6 +1,10 @@
 import generator, { Entity, FilterContext } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
+import { LocalMarker } from '~/src/types/localMarker'
+import { MyWindow } from '~/src/types/global'
+
+const win = (window as any) as MyWindow
 
 export type HomeState = {
   lazyLoading: boolean
@@ -135,6 +139,14 @@ const actions: ActionTree<HomeState, RootState> = {
       .finally(() => {
         commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
       })
+  },
+  saveMarker: async ({ rootState }, id: string) => {
+    const acct = `@${rootState.TimelineSpace.account.username}@${rootState.TimelineSpace.account.domain}`
+    await win.ipcRenderer.invoke('save-marker', {
+      acct: acct,
+      timeline: 'home',
+      lastReadID: id
+    } as LocalMarker)
   }
 }
 

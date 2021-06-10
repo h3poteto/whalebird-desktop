@@ -54,6 +54,8 @@ import ProxyConfiguration from './proxy'
 import confirm from './timelines'
 import { EnabledTimelines } from '~/src/types/enabledTimelines'
 import { Menu as MenuPreferences } from '~/src/types/preference'
+import { LocalMarker } from '~/src/types/localMarker'
+import Marker from './marker'
 
 /**
  * Context menu
@@ -139,6 +141,12 @@ const unreadNotification = new UnreadNotification(unreadNotificationDBPath)
 unreadNotification.initialize().catch((err: Error) => log.error(err))
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
+
+const markerDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/marker.db' : 'marker.db'
+const markerDB = new Datastore({
+  filename: markerDBPath,
+  autoload: true
+})
 
 /**
  * Cache path
@@ -1135,6 +1143,12 @@ ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, la
     }
   })
   return conf.language.spellchecker.languages
+})
+
+// marker
+ipcMain.handle('save-marker', async (_: IpcMainInvokeEvent, marker: LocalMarker) => {
+  const repo = new Marker(markerDB)
+  await repo.save(marker)
 })
 
 // hashtag

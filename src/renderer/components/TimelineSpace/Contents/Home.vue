@@ -127,6 +127,11 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
         this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
       }
+    },
+    timeline: function (newState, _oldState) {
+      if (this.heading && newState.length > 0) {
+        this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', newState[0].id)
+      }
     }
   },
   methods: {
