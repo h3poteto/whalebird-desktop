@@ -162,7 +162,9 @@
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nsfw": "Always ignore NSFW of medias",
-        "hideAllAttachments": "Hide all medias"
+        "hideAllAttachments": "Hide all medias",
+        "useMarker": "Load timeline from the last reading position",
+        "useMarkerNotice": "This feature only supports home and notifications"
       },
       "other": {
         "title": "Other options",
