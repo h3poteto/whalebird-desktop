@@ -162,7 +162,9 @@
         "description": "Passen Sie die Ansicht in Ihren Zeitleisten an.",
         "cw": "Ignoriere immer Content Warnungen",
         "nsfw": "Ignogiere immer NSFW Medien",
-        "hideAllAttachments": "Verstecke alle Medien"
+        "hideAllAttachments": "Verstecke alle Medien",
+        "useMarker": "Load timeline from the last reading position",
+        "useMarkerNotice": "This feature only supports home and notifications"
       },
       "other": {
         "title": "Andere Optionen",

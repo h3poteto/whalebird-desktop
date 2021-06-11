@@ -162,7 +162,9 @@
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nsfw": "Nxxel abda tumayin n NSFW",
-        "hideAllAttachments": "Ffer isneɣmisen maṛṛa"
+        "hideAllAttachments": "Ffer isneɣmisen maṛṛa",
+        "useMarker": "Load timeline from the last reading position",
+        "useMarkerNotice": "This feature only supports home and notifications"
       },
       "other": {
         "title": "Tideɣrin yaḍnin",
