@@ -1,5 +1,6 @@
 export type Timeline = {
-  cw: boolean,
-  nsfw: boolean,
+  cw: boolean
+  nsfw: boolean
   hideAllAttachments: boolean
+  useMarker: boolean
 }
