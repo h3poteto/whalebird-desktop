@@ -162,7 +162,9 @@
         "description": "Kustomisasi tampilan linimasa anda.",
         "cw": "Selalu abaikan peringatan konten",
         "nsfw": "Selalu abaikan media NSFW",
-        "hideAllAttachments": "Sembunyikan semua media"
+        "hideAllAttachments": "Sembunyikan semua media",
+        "useMarker": "Load timeline from the last reading position",
+        "useMarkerNotice": "This feature only supports home and notifications"
       },
       "other": {
         "title": "Pilihan lainnya",
