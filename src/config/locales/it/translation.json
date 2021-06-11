@@ -162,7 +162,9 @@
         "description": "Personalizza la visualizzazione nelle tue timeline.",
         "cw": "Ignora sempre gli avvisi sui contenuti",
         "nsfw": "Ignora sempre contenuti multimediali inappropriati",
-        "hideAllAttachments": "Nascondi tutti i contenuti multimediali"
+        "hideAllAttachments": "Nascondi tutti i contenuti multimediali",
+        "useMarker": "Load timeline from the last reading position",
+        "useMarkerNotice": "This feature only supports home and notifications"
       },
       "other": {
         "title": "Altre opzioni",
