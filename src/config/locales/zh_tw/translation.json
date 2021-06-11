@@ -162,7 +162,9 @@
         "description": "自訂時間軸外觀",
         "cw": "永遠忽略內容警告",
         "nsfw": "永遠忽略 NSFW 媒體標記",
-        "hideAllAttachments": "隱藏所有媒體"
+        "hideAllAttachments": "隱藏所有媒體",
+        "useMarker": "Load timeline from the last reading position",
+        "useMarkerNotice": "This feature only supports home and notifications"
       },
       "other": {
         "title": "其他選項",
