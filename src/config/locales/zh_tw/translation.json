@@ -2,13 +2,13 @@
   "main_menu": {
     "application": {
       "name": "Whalebird (鯨鳥)",
-      "about": "關於 Whalebird",
+      "about": "關於 Whalebird (鯨鳥)",
       "preferences": "偏好設定...",
       "services": "服務",
-      "hide": "隱藏 Whalebird",
+      "hide": "隱藏 Whalebird (鯨鳥)",
       "hide_others": "隱藏其他",
       "show_all": "顯示全部",
-      "open": "打開視窗",
+      "open": "開啟視窗",
       "quit": "離開"
     },
     "toot": {
@@ -32,7 +32,7 @@
       "always_show_menu_bar": "總是顯示功能選單",
       "name": "視窗",
       "close": "關閉視窗",
-      "open": "打開視窗",
+      "open": "開啟視窗",
       "minimize": "最小化",
       "jump_to": "跳至"
     }
@@ -218,10 +218,10 @@
         "favourite": "當我收到最愛時通知我",
         "follow": "當我收到跟隨時通知我",
         "reaction": "當我收到 emoji 表情符號時通知我",
-        "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification",
-        "poll_vote": "Notify me when I receive a vote of poll",
-        "poll_expired": "Notify me when I receive a poll expired event"
+        "follow_request": "當我收到跟隨請求時通知我",
+        "status": "當我收到狀態通知時通知我",
+        "poll_vote": "當我收到投票時通知我",
+        "poll_expired": "當我收到投票截止時通知我"
       }
     },
     "account": {
@@ -263,12 +263,12 @@
     "language": {
       "title": "語言",
       "language": {
-        "title": "Language",
-        "description": "Choose the language you would like to use with Whalebird."
+        "title": "語言",
+        "description": "請選擇您欲使用於 Whalebird 之語言。"
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "拼字檢查",
+        "enabled": "啟用拼字檢查器"
       }
     }
   },
@@ -279,9 +279,9 @@
       "status": "正在想些什麼嗎？",
       "cancel": "取消",
       "toot": "嘟文",
-      "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
-      "close_confirm_cancel": "Continue Editing",
+      "close_confirm": "是否確定要捨棄此嘟文？",
+      "close_confirm_ok": "捨棄",
+      "close_confirm_cancel": "繼續編輯",
       "description": "為視障人士增加文字說明",
       "footer": {
         "add_image": "新增圖片",
@@ -381,10 +381,10 @@
       "follows_you": "跟隨了您",
       "doesnt_follow_you": "沒有跟隨您",
       "detail": "詳細資料",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
+      "follow": "跟隨此使用者",
+      "unfollow": "取消跟隨此使用者",
+      "subscribe": "訂閱此使用者",
+      "unsubscribe": "取消訂閱此使用者",
       "follow_requested": "跟隨請求",
       "open_in_browser": "在瀏覽器中開啟",
       "manage_list_memberships": "管理列表成員",
@@ -419,10 +419,10 @@
       "edit": "編輯",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "確認",
+          "message": "這個步驟將無法被復原，列表將會被永久刪除",
+          "ok": "刪除",
+          "cancel": "取消"
         }
       }
     }
@@ -463,8 +463,8 @@
     "toot_fetch_error": "無法載入嘟文細節",
     "follow_error": "無法跟隨此使用者",
     "unfollow_error": "無法取消跟隨此使用者",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
+    "subscribe_error": "無法訂閱此使用者",
+    "unsubscribe_error": "無法取消訂閱此使用者",
     "lists_fetch_error": "無法載入列表",
     "list_create_error": "無法新增列表",
     "members_fetch_error": "無法載入成員",
@@ -485,9 +485,9 @@
     "domain_confirmed": "{{domain}} 已確認，請登入",
     "domain_doesnt_exist": "無法連線到 {{domain}}，請確認伺服器 URL",
     "loading": "載入中...",
-    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
-    "update_filter_error": "Failed to update the filter",
-    "create_filter_error": "Failed to create the filter"
+    "language_not_support_spellchecker_error": "拼字檢查器不支援該語言",
+    "update_filter_error": "無法更新過濾器",
+    "create_filter_error": "無法新增過濾器"
   },
   "validation": {
     "login": {
@@ -527,16 +527,16 @@
       "body": "{{username}} 回應了您的嘟文"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} just posted"
+      "title": "狀態",
+      "body": "{{username}} 剛剛嘟文"
     },
     "poll_vote": {
-      "title": "PollVote",
-      "body": "{{username}} voted your poll"
+      "title": "投票",
+      "body": "{{username}} 參與了您的投票"
     },
     "poll_expired": {
-      "title": "PollExpired",
-      "body": "{{username}}'s poll is expired"
+      "title": "投票截止",
+      "body": "{{username}} 的投票已截止"
     }
   }
 }
