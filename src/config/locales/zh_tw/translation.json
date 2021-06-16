@@ -75,10 +75,10 @@
     "lists": "列表",
     "members": "成員",
     "option": {
-      "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "選項",
+      "show_reblogs": "顯示轉嘟",
+      "show_replies": "顯示回覆",
+      "apply": "套用"
     },
     "new_toot": "嘟文",
     "reload": "重新整理",
@@ -91,8 +91,8 @@
       "toot": {
         "title": "嘟文",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "description": "自訂預設嘟文公開性",
+          "notice": "這項設定僅適用於新嘟文，嘟文回覆將會遵照原嘟文的公開性",
           "public": "公開",
           "unlisted": "不列出",
           "private": "私密",
@@ -114,36 +114,36 @@
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "過濾器",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "關鍵字或片語",
+        "expire": "多久後過期",
+        "context": "過濾內容",
+        "irreversible": "丟棄而非隱藏",
+        "whole_word": "整個單字",
+        "submit": "送出",
+        "cancel": "取消"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "從不",
+        "30_minutes": "30 分鐘",
+        "1_hour": "1 小時",
+        "6_hours": "6 小時",
+        "12_hours": "12 小時",
+        "1_day": "1 天",
+        "1_week": "1 週"
       },
       "new": {
-        "title": "New"
+        "title": "新增"
       },
       "edit": {
-        "title": "Edit"
+        "title": "編輯"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "title": "刪除",
+        "confirm": "您確定要刪除此過濾器嗎?",
+        "confirm_ok": "刪除",
+        "confirm_cancel": "取消"
       }
     }
   },
@@ -163,8 +163,8 @@
         "cw": "永遠忽略內容警告",
         "nsfw": "永遠忽略 NSFW 媒體標記",
         "hideAllAttachments": "隱藏所有媒體",
-        "useMarker": "Load timeline from the last reading position",
-        "useMarkerNotice": "This feature only supports home and notifications"
+        "useMarker": "從上次閱讀位置讀取時間軸",
+        "useMarkerNotice": "這項功能只支援 home 及通知"
       },
       "other": {
         "title": "其他選項",
