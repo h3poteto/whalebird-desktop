@@ -163,8 +163,8 @@
         "cw": "常にCWを表示する",
         "nsfw": "常にNSFWを表示する",
         "hideAllAttachments": "すべてのメディアを非表示にする",
-        "useMarker": "Load timeline from the last reading position",
-        "useMarkerNotice": "This feature only supports home and notifications"
+        "useMarker": "最後に読んだ位置からタイムラインを読み込む",
+        "useMarkerNotice": "この機能はホームと通知のみをサポートしています"
       },
       "other": {
         "title": "その他",
@@ -279,9 +279,9 @@
       "status": "今なにしてる?",
       "cancel": "キャンセル",
       "toot": "トゥート！",
-      "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
-      "close_confirm_cancel": "Continue Editing",
+      "close_confirm": "この下書きを破棄してよろしいですか？",
+      "close_confirm_ok": "破棄",
+      "close_confirm_cancel": "編集を継続",
       "description": "メディアの説明を追加",
       "footer": {
         "add_image": "画像を添付",
