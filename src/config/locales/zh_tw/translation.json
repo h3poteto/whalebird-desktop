@@ -2,13 +2,13 @@
   "main_menu": {
     "application": {
       "name": "Whalebird (鯨鳥)",
-      "about": "關於 Whalebird",
+      "about": "關於 Whalebird (鯨鳥)",
       "preferences": "偏好設定...",
       "services": "服務",
-      "hide": "隱藏 Whalebird",
+      "hide": "隱藏 Whalebird (鯨鳥)",
       "hide_others": "隱藏其他",
       "show_all": "顯示全部",
-      "open": "打開視窗",
+      "open": "開啟視窗",
       "quit": "離開"
     },
     "toot": {
@@ -32,7 +32,7 @@
       "always_show_menu_bar": "總是顯示功能選單",
       "name": "視窗",
       "close": "關閉視窗",
-      "open": "打開視窗",
+      "open": "開啟視窗",
       "minimize": "最小化",
       "jump_to": "跳至"
     }
@@ -75,10 +75,10 @@
     "lists": "列表",
     "members": "成員",
     "option": {
-      "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "選項",
+      "show_reblogs": "顯示轉嘟",
+      "show_replies": "顯示回覆",
+      "apply": "套用"
     },
     "new_toot": "嘟文",
     "reload": "重新整理",
@@ -91,8 +91,8 @@
       "toot": {
         "title": "嘟文",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "description": "自訂預設嘟文公開性",
+          "notice": "這項設定僅適用於新嘟文，嘟文回覆將會遵照原嘟文的公開性",
           "public": "公開",
           "unlisted": "不列出",
           "private": "私密",
@@ -114,36 +114,36 @@
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "過濾器",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "關鍵字或片語",
+        "expire": "多久後過期",
+        "context": "過濾內容",
+        "irreversible": "丟棄而非隱藏",
+        "whole_word": "整個單字",
+        "submit": "送出",
+        "cancel": "取消"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "從不",
+        "30_minutes": "30 分鐘",
+        "1_hour": "1 小時",
+        "6_hours": "6 小時",
+        "12_hours": "12 小時",
+        "1_day": "1 天",
+        "1_week": "1 週"
       },
       "new": {
-        "title": "New"
+        "title": "新增"
       },
       "edit": {
-        "title": "Edit"
+        "title": "編輯"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "title": "刪除",
+        "confirm": "您確定要刪除此過濾器嗎?",
+        "confirm_ok": "刪除",
+        "confirm_cancel": "取消"
       }
     }
   },
@@ -163,8 +163,8 @@
         "cw": "永遠忽略內容警告",
         "nsfw": "永遠忽略 NSFW 媒體標記",
         "hideAllAttachments": "隱藏所有媒體",
-        "useMarker": "Load timeline from the last reading position",
-        "useMarkerNotice": "This feature only supports home and notifications"
+        "useMarker": "從上次閱讀位置讀取時間軸",
+        "useMarkerNotice": "這項功能只支援 home 及通知"
       },
       "other": {
         "title": "其他選項",
@@ -218,10 +218,10 @@
         "favourite": "當我收到最愛時通知我",
         "follow": "當我收到跟隨時通知我",
         "reaction": "當我收到 emoji 表情符號時通知我",
-        "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification",
-        "poll_vote": "Notify me when I receive a vote of poll",
-        "poll_expired": "Notify me when I receive a poll expired event"
+        "follow_request": "當我收到跟隨請求時通知我",
+        "status": "當我收到狀態通知時通知我",
+        "poll_vote": "當我收到投票時通知我",
+        "poll_expired": "當我收到投票截止時通知我"
       }
     },
     "account": {
@@ -263,12 +263,12 @@
     "language": {
       "title": "語言",
       "language": {
-        "title": "Language",
-        "description": "Choose the language you would like to use with Whalebird."
+        "title": "語言",
+        "description": "請選擇您欲使用於 Whalebird 之語言。"
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "拼字檢查",
+        "enabled": "啟用拼字檢查器"
       }
     }
   },
@@ -279,9 +279,9 @@
       "status": "正在想些什麼嗎？",
       "cancel": "取消",
       "toot": "嘟文",
-      "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
-      "close_confirm_cancel": "Continue Editing",
+      "close_confirm": "是否確定要捨棄此嘟文？",
+      "close_confirm_ok": "捨棄",
+      "close_confirm_cancel": "繼續編輯",
       "description": "為視障人士增加文字說明",
       "footer": {
         "add_image": "新增圖片",
@@ -381,10 +381,10 @@
       "follows_you": "跟隨了您",
       "doesnt_follow_you": "沒有跟隨您",
       "detail": "詳細資料",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
+      "follow": "跟隨此使用者",
+      "unfollow": "取消跟隨此使用者",
+      "subscribe": "訂閱此使用者",
+      "unsubscribe": "取消訂閱此使用者",
       "follow_requested": "跟隨請求",
       "open_in_browser": "在瀏覽器中開啟",
       "manage_list_memberships": "管理列表成員",
@@ -419,10 +419,10 @@
       "edit": "編輯",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "確認",
+          "message": "這個步驟將無法被復原，列表將會被永久刪除",
+          "ok": "刪除",
+          "cancel": "取消"
         }
       }
     }
@@ -463,8 +463,8 @@
     "toot_fetch_error": "無法載入嘟文細節",
     "follow_error": "無法跟隨此使用者",
     "unfollow_error": "無法取消跟隨此使用者",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
+    "subscribe_error": "無法訂閱此使用者",
+    "unsubscribe_error": "無法取消訂閱此使用者",
     "lists_fetch_error": "無法載入列表",
     "list_create_error": "無法新增列表",
     "members_fetch_error": "無法載入成員",
@@ -485,9 +485,9 @@
     "domain_confirmed": "{{domain}} 已確認，請登入",
     "domain_doesnt_exist": "無法連線到 {{domain}}，請確認伺服器 URL",
     "loading": "載入中...",
-    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
-    "update_filter_error": "Failed to update the filter",
-    "create_filter_error": "Failed to create the filter"
+    "language_not_support_spellchecker_error": "拼字檢查器不支援該語言",
+    "update_filter_error": "無法更新過濾器",
+    "create_filter_error": "無法新增過濾器"
   },
   "validation": {
     "login": {
@@ -527,16 +527,16 @@
       "body": "{{username}} 回應了您的嘟文"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} just posted"
+      "title": "狀態",
+      "body": "{{username}} 剛剛嘟文"
     },
     "poll_vote": {
-      "title": "PollVote",
-      "body": "{{username}} voted your poll"
+      "title": "投票",
+      "body": "{{username}} 參與了您的投票"
     },
     "poll_expired": {
-      "title": "PollExpired",
-      "body": "{{username}}'s poll is expired"
+      "title": "投票截止",
+      "body": "{{username}} 的投票已截止"
     }
   }
 }
