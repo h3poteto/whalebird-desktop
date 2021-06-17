@@ -163,8 +163,8 @@
         "cw": "Selalu abaikan peringatan konten",
         "nsfw": "Selalu abaikan media NSFW",
         "hideAllAttachments": "Sembunyikan semua media",
-        "useMarker": "Load timeline from the last reading position",
-        "useMarkerNotice": "This feature only supports home and notifications"
+        "useMarker": "Muat linimasa dari posisi baca terakhir",
+        "useMarkerNotice": "Fitur ini hanya mendukung beranda dan pemberitahuan"
       },
       "other": {
         "title": "Pilihan lainnya",
@@ -194,33 +194,33 @@
         "header_menu_color": "Menu header",
         "wrapper_mask_color": "Modal wrapper"
       },
-      "font_size": "Font size",
-      "font_family": "Font family",
+      "font_size": "Ukuran font",
+      "font_family": "Jenis font",
       "toot_padding": "Padding around toots",
       "display_style": {
-        "title": "Display style of username",
-        "display_name_and_username": "Display name and username",
-        "display_name": "Display name",
-        "username": "Username"
+        "title": "Gaya tampilan nama pengguna",
+        "display_name_and_username": "Tampilan nama dan nama pengguna",
+        "display_name": "Nama tampilan",
+        "username": "Nama pengguna"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "title": "Format waktu",
+        "absolute": "Absolut",
+        "relative": "Relatif"
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "Pemberitahuan",
       "enable": {
-        "description": "Please set notification events.",
-        "reply": "Notify me when I receive a reply",
-        "reblog": "Notify me when I receive a reblog",
-        "favourite": "Notify me when I receive a favourite",
-        "follow": "Notify me when I receive a follow",
-        "reaction": "Notify me when I receive a emoji reaction",
-        "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification",
-        "poll_vote": "Notify me when I receive a vote of poll",
+        "description": "Mohon set event pemberitahuan.",
+        "reply": "Beritahu saya ketika menerima balasan",
+        "reblog": "Beritahu saya ketika menerima reblog",
+        "favourite": "Beritahu saya ketika menerima favorit",
+        "follow": "Beritahu saya ketika menerima ikuti",
+        "reaction": "Beritahu saya ketika menerima reaksi emoji",
+        "follow_request": "Beritahu saya ketika menerima permintaan mengikuti",
+        "status": "Beritahu saya ketika menerima pemberitahuan status",
+        "poll_vote": "Beritahu saya ketika menerima suara dari angket",
         "poll_expired": "Notify me when I receive a poll expired event"
       }
     },
