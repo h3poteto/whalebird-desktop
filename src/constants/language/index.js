@@ -14,6 +14,11 @@ export default {
     key: 'fr',
     rfc4646: 'fr'
   },
+  gd: {
+    name: 'Gàidhlig',
+    key: 'gd',
+    rfc4646: 'gd'
+  },
   ja: {
     name: '日本語',
     key: 'ja',
