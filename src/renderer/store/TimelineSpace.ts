@@ -112,8 +112,8 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     await dispatch('loadUnreadNotification', accountId)
     await dispatch('fetchFilters')
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
-    await dispatch('fetchContentsTimelines').catch(_ => {
-      throw new TimelineFetchError()
+    await dispatch('fetchContentsTimelines').catch((err: Error) => {
+      throw new TimelineFetchError(err.message)
     })
     return account
   },
@@ -288,7 +288,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
 
     commit(MUTATION_TYPES.UPDATE_BINDING_ACCOUNT, state.account)
     win.ipcRenderer.on(`update-start-all-user-streamings-${state.account._id!}`, (_, update: Entity.Status) => {
-      commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
+      commit('TimelineSpace/Contents/Home/appendStatus', update, { root: true })
       // Sometimes archive old statuses
       if (rootState.TimelineSpace.Contents.Home.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Home/archiveTimeline', null, { root: true })

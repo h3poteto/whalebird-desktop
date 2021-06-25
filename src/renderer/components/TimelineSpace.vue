@@ -96,6 +96,7 @@ export default {
             type: 'error'
           })
         } else if (err instanceof TimelineFetchError) {
+          console.error(err)
           this.$message({
             message: this.$t('message.timeline_fetch_error'),
             type: 'error'

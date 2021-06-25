@@ -4,21 +4,28 @@
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
     <DynamicScroller :items="filteredTimeline" :min-item-size="60" class="scroller" page-mode>
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
-          <toot
-            :message="item"
-            :focused="item.uri + item.id === focusedId"
-            :overlaid="modalOpened"
-            :filters="filters"
-            v-on:update="updateToot"
-            v-on:delete="deleteToot"
-            @focusNext="focusNext"
-            @focusPrev="focusPrev"
-            @focusRight="focusSidebar"
-            @selectToot="focusToot(item)"
-          >
-          </toot>
-        </DynamicScrollerItem>
+        <template v-if="item.id === 'loading-card'">
+          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.id]" :data-index="index" :watchData="true">
+            <MiddleLoading :since_id="item.since_id" :max_id="item.max_id" @load_since="fetchTimelineSince" />
+          </DynamicScrollerItem>
+        </template>
+        <template v-else>
+          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
+            <toot
+              :message="item"
+              :focused="item.uri + item.id === focusedId"
+              :overlaid="modalOpened"
+              :filters="filters"
+              v-on:update="updateToot"
+              v-on:delete="deleteToot"
+              @focusNext="focusNext"
+              @focusPrev="focusPrev"
+              @focusRight="focusSidebar"
+              @selectToot="focusToot(item)"
+            >
+            </toot>
+          </DynamicScrollerItem>
+        </template>
       </template>
     </DynamicScroller>
     <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
@@ -31,13 +38,14 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
+import MiddleLoading from '~/src/renderer/components/organisms/MiddleLoading'
 import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
 export default {
   name: 'home',
-  components: { Toot },
+  components: { Toot, MiddleLoading },
   mixins: [reloadable],
   data() {
     return {
@@ -95,9 +103,7 @@ export default {
       })
     })
 
-    if (this.heading && this.timeline.length > 0) {
-      this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', this.timeline[0].id)
-    }
+    this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker')
   },
   beforeUpdate() {
     if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline && this.heading) {
@@ -132,9 +138,9 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
       }
     },
-    timeline: function (newState, _oldState) {
-      if (this.heading && newState.length > 0) {
-        this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', newState[0].id)
+    timeline: function (_newState, _oldState) {
+      if (this.heading) {
+        this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker')
       }
     }
   },
@@ -162,6 +168,9 @@ export default {
     },
     deleteToot(message) {
       this.$store.commit('TimelineSpace/Contents/Home/deleteToot', message.id)
+    },
+    fetchTimelineSince(since_id) {
+      this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimelineSince', since_id)
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)

@@ -119,7 +119,7 @@ describe('TimelineSpace/Contents/Home', () => {
       })
     })
 
-    describe('appendTimeline', () => {
+    describe('appendStatus', () => {
       describe('heading', () => {
         describe('normal', () => {
           beforeEach(() => {
@@ -133,7 +133,7 @@ describe('TimelineSpace/Contents/Home', () => {
             }
           })
           it('should update timeline', () => {
-            Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+            Home.mutations![MUTATION_TYPES.APPEND_STATUS](state, status2)
             expect(state.timeline).toEqual([status2, status1])
             expect(state.unreadTimeline).toEqual([])
           })
@@ -151,7 +151,7 @@ describe('TimelineSpace/Contents/Home', () => {
             }
           })
           it('should not update timeline', () => {
-            Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+            Home.mutations![MUTATION_TYPES.APPEND_STATUS](state, status2)
             expect(state.timeline).toEqual([status2, status1])
             expect(state.unreadTimeline).toEqual([])
           })
@@ -171,7 +171,7 @@ describe('TimelineSpace/Contents/Home', () => {
             }
           })
           it('should update unreadTimeline', () => {
-            Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+            Home.mutations![MUTATION_TYPES.APPEND_STATUS](state, status2)
             expect(state.timeline).toEqual([status1])
             expect(state.unreadTimeline).toEqual([status2])
           })
@@ -188,7 +188,7 @@ describe('TimelineSpace/Contents/Home', () => {
             }
           })
           it('should not update unreadTimeline', () => {
-            Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
+            Home.mutations![MUTATION_TYPES.APPEND_STATUS](state, status2)
             expect(state.timeline).toEqual([])
             expect(state.unreadTimeline).toEqual([status2, status1])
           })
@@ -301,8 +301,8 @@ describe('TimelineSpace/Contents/Home', () => {
         })
         it('should be updated', () => {
           Home.mutations![MUTATION_TYPES.UPDATE_TOOT](state, favouritedStatus)
-          expect(state.timeline[0].reblog).not.toBeNull()
-          expect(state.timeline[0].reblog!.favourited).toEqual(true)
+          expect((state.timeline[0] as Entity.Status).reblog).not.toBeNull()
+          expect((state.timeline[0] as Entity.Status).reblog!.favourited).toEqual(true)
         })
       })
     })

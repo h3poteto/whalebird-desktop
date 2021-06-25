@@ -3,6 +3,7 @@ import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
+import { LoadingCard } from '~/src/types/loadingCard'
 
 const win = (window as any) as MyWindow
 
@@ -11,7 +12,7 @@ export type HomeState = {
   heading: boolean
   showReblogs: boolean
   showReplies: boolean
-  timeline: Array<Entity.Status>
+  timeline: Array<Entity.Status | LoadingCard>
   unreadTimeline: Array<Entity.Status>
 }
 
@@ -27,7 +28,7 @@ const state = (): HomeState => ({
 export const MUTATION_TYPES = {
   CHANGE_LAZY_LOADING: 'changeLazyLoading',
   CHANGE_HEADING: 'changeHeading',
-  APPEND_TIMELINE: 'appendTimeline',
+  APPEND_STATUS: 'appendStatus',
   UPDATE_TIMELINE: 'updateTimeline',
   MERGE_TIMELINE: 'mergeTimeline',
   INSERT_TIMELINE: 'insertTimeline',
@@ -46,11 +47,11 @@ const mutations: MutationTree<HomeState> = {
   [MUTATION_TYPES.CHANGE_HEADING]: (state, value: boolean) => {
     state.heading = value
   },
-  [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Entity.Status) => {
+  [MUTATION_TYPES.APPEND_STATUS]: (state, update: Entity.Status) => {
     // Reject duplicated status in timeline
     if (!state.timeline.find(item => item.id === update.id) && !state.unreadTimeline.find(item => item.id === update.id)) {
       if (state.heading) {
-        state.timeline = [update].concat(state.timeline)
+        state.timeline = ([update] as Array<Entity.Status | LoadingCard>).concat(state.timeline)
       } else {
         state.unreadTimeline = [update].concat(state.unreadTimeline)
       }
@@ -60,7 +61,7 @@ const mutations: MutationTree<HomeState> = {
     state.timeline = messages
   },
   [MUTATION_TYPES.MERGE_TIMELINE]: state => {
-    state.timeline = state.unreadTimeline.slice(0, 80).concat(state.timeline)
+    state.timeline = (state.unreadTimeline.slice(0, 80) as Array<Entity.Status | LoadingCard>).concat(state.timeline)
     state.unreadTimeline = []
   },
   [MUTATION_TYPES.INSERT_TIMELINE]: (state, messages: Array<Entity.Status>) => {
@@ -75,7 +76,11 @@ const mutations: MutationTree<HomeState> = {
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Status) => {
     // Replace target message in homeTimeline and notifications
-    state.timeline = state.timeline.map(toot => {
+    state.timeline = state.timeline.map(status => {
+      if (status.id === 'loading-card') {
+        return status
+      }
+      const toot = status as Entity.Status
       if (toot.id === message.id) {
         return message
       } else if (toot.reblog !== null && toot.reblog.id === message.id) {
@@ -91,7 +96,11 @@ const mutations: MutationTree<HomeState> = {
     })
   },
   [MUTATION_TYPES.DELETE_TOOT]: (state, messageId: string) => {
-    state.timeline = state.timeline.filter(toot => {
+    state.timeline = state.timeline.filter(status => {
+      if (status.id === 'loading-card') {
+        return false
+      }
+      const toot = status as Entity.Status
       if (toot.reblog !== null && toot.reblog.id === messageId) {
         return false
       } else {
@@ -108,15 +117,36 @@ const mutations: MutationTree<HomeState> = {
 }
 
 const actions: ActionTree<HomeState, RootState> = {
-  fetchTimeline: async ({ commit, rootState }) => {
+  fetchTimeline: async ({ commit, rootState, dispatch }) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent
     )
-    const res = await client.getHomeTimeline({ limit: 40 })
-    commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
+    const localMarker: LocalMarker | null = await dispatch('getMarker').catch(err => {
+      console.error(err)
+    })
+    let params = { limit: 40 }
+    if (localMarker !== null) {
+      params = Object.assign({}, params, {
+        max_id: localMarker.last_read_id
+      })
+    }
+
+    const res = await client.getHomeTimeline(params)
+    let timeline: Array<Entity.Status | LoadingCard> = []
+    if (res.data.length > 0) {
+      const card: LoadingCard = {
+        type: 'middle-load',
+        since_id: res.data[0].id,
+        max_id: null,
+        id: 'loading-card'
+      }
+      timeline = timeline.concat([card])
+    }
+    timeline = timeline.concat(res.data)
+    commit(MUTATION_TYPES.UPDATE_TIMELINE, timeline)
     return res.data
   },
   lazyFetchTimeline: async ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
@@ -140,11 +170,60 @@ const actions: ActionTree<HomeState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
       })
   },
-  saveMarker: async ({ rootState }, id: string) => {
+  fetchTimelineSince: async ({ commit, rootState }, since_id: string): Promise<Array<Entity.Status> | null> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+
+    // TODO: commit
+    const res = await client.getHomeTimeline({ since_id: since_id, limit: 40 })
+    // limitに達しない場合はloadingCardを削除する
+    // limitに達する場合，loadingCardを削除した上で
+    // res.dataの先頭にloadingCardを追加
+    // した上でtimelineをマージする
+    return res.data
+  },
+  getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
+    if (!rootState.App.useMarker) {
+      return null
+    }
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    let serverMarker: Entity.Marker | {} = {}
+    try {
+      const res = await client.getMarkers(['home'])
+      serverMarker = res.data
+    } catch (err) {
+      console.warn(err)
+    }
+    if ((serverMarker as Entity.Marker).home !== undefined) {
+      return {
+        timeline: 'home',
+        last_read_id: (serverMarker as Entity.Marker).home.last_read_id
+      } as LocalMarker
+    }
+    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-home-marker', rootState.TimelineSpace.account._id)
+    return localMarker
+  },
+  saveMarker: async ({ state, rootState }) => {
+    if (!state.heading) {
+      return
+    }
+    const timeline = state.timeline.filter(status => status.id !== 'loading-card')
+    if (timeline.length === 0) {
+      return
+    }
     await win.ipcRenderer.invoke('save-marker', {
       owner_id: rootState.TimelineSpace.account._id,
       timeline: 'home',
-      last_read_id: id
+      last_read_id: timeline[0].id
     } as LocalMarker)
   }
 }

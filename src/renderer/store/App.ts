@@ -27,6 +27,7 @@ export type AppState = {
   hideAllAttachments: boolean
   tootPadding: number
   userAgent: string
+  useMarker: boolean
 }
 
 const state = (): AppState => ({
@@ -51,7 +52,8 @@ const state = (): AppState => ({
   ignoreCW: false,
   ignoreNSFW: false,
   hideAllAttachments: false,
-  userAgent: 'Whalebird'
+  userAgent: 'Whalebird',
+  useMarker: false
 })
 
 const MUTATION_TYPES = {
@@ -65,7 +67,8 @@ const MUTATION_TYPES = {
   ADD_FONT: 'addFont',
   UPDATE_IGNORE_CW: 'updateIgnoreCW',
   UPDATE_IGNORE_NSFW: 'updateIgnoreNSFW',
-  UPDATE_HIDE_ALL_ATTACHMENTS: 'updateHideAllAttachments'
+  UPDATE_HIDE_ALL_ATTACHMENTS: 'updateHideAllAttachments',
+  UPDATE_USE_MARKER: 'updateUseMarker'
 }
 
 const mutations: MutationTree<AppState> = {
@@ -102,6 +105,9 @@ const mutations: MutationTree<AppState> = {
   },
   [MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS]: (state: AppState, hideAllAttachments: boolean) => {
     state.hideAllAttachments = hideAllAttachments
+  },
+  [MUTATION_TYPES.UPDATE_USE_MARKER]: (state: AppState, useMarker: boolean) => {
+    state.useMarker = useMarker
   }
 }
 
@@ -127,6 +133,7 @@ const actions: ActionTree<AppState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_IGNORE_CW, conf.general.timeline.cw)
     commit(MUTATION_TYPES.UPDATE_IGNORE_NSFW, conf.general.timeline.nsfw)
     commit(MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS, conf.general.timeline.hideAllAttachments)
+    commit(MUTATION_TYPES.UPDATE_USE_MARKER, conf.general.timeline.useMarker)
     return conf
   },
   updateTheme: ({ commit }, appearance: Appearance) => {
