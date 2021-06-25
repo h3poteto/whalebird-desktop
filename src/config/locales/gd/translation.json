@@ -1,0 +1,542 @@
+﻿{
+  "main_menu": {
+    "application": {
+      "name": "Whalebird",
+      "about": "Mu Whalebird",
+      "preferences": "Roghainnean…",
+      "services": "Seirbheisean",
+      "hide": "Cuir Whalebird am falach",
+      "hide_others": "Cuir càch am falach",
+      "show_all": "Seall na h-uile",
+      "open": "Fosgail ann an uinneag",
+      "quit": "Fàg an-seo"
+    },
+    "toot": {
+      "name": "Postaich",
+      "new": "Post ùr"
+    },
+    "edit": {
+      "name": "Deasaich",
+      "undo": "Neo-dhèan",
+      "redo": "Ath-dhèan",
+      "cut": "Geàrr às",
+      "copy": "Dèan lethbhreac",
+      "paste": "Cuir ann",
+      "select_all": "Tagh na h-uile"
+    },
+    "view": {
+      "name": "Seall",
+      "toggle_full_screen": "Toglaich an làn-sgrìn"
+    },
+    "window": {
+      "always_show_menu_bar": "Seall bàr a’ chlàir-thaice an-còmhnaidh",
+      "name": "Uinneag",
+      "close": "Dùin an uinneag",
+      "open": "Fosgail ann an uinneag",
+      "minimize": "Fìor-lùghdaich",
+      "jump_to": "Leum gu"
+    }
+  },
+  "global_header": {
+    "add_new_account": "Cuir cunntas ùr ris"
+  },
+  "side_menu": {
+    "profile": "Pròifil",
+    "show_profile": "Seall a’ phròifil",
+    "edit_profile": "Deasaich a’ phròifil",
+    "settings": "Roghainnean",
+    "collapse": "Co-theannaich",
+    "expand": "Leudaich",
+    "home": "Dachaigh",
+    "notification": "Brathan",
+    "mention": "Iomraidhean",
+    "direct": "Teachdaireachdan dìreach",
+    "follow_requests": "Iarrtasan leantainn",
+    "favourite": "Annsachdan",
+    "bookmark": "Comharran-lìn",
+    "local": "Loidhne-ama ionadail",
+    "public": "Loidhne-ama phoblach",
+    "hashtag": "Tagaichean hais",
+    "search": "Lorg",
+    "lists": "Liostaichean"
+  },
+  "header_menu": {
+    "home": "Dachaigh",
+    "notification": "Brathan",
+    "mention": "Iomraidhean",
+    "favourite": "Annsachdan",
+    "bookmark": "Comharran-lìn",
+    "follow_requests": "Iarrtasan leantainn",
+    "direct_messages": "Teachdaireachdan dìreach",
+    "local": "Loidhne-ama ionadail",
+    "public": "Loidhne-ama phoblach",
+    "hashtag": "Tagaichean hais",
+    "search": "Lorg",
+    "lists": "Liostaichean",
+    "members": "Buill",
+    "option": {
+      "title": "Roghainnean",
+      "show_reblogs": "Seall na brosnachaidhean",
+      "show_replies": "Seall na freagairtean",
+      "apply": "Cuir an sàs"
+    },
+    "new_toot": "Postaich",
+    "reload": "Ath-luchdaich",
+    "settings": "Roghainnean"
+  },
+  "settings": {
+    "title": "Roghainnean",
+    "general": {
+      "title": "Coitcheann",
+      "toot": {
+        "title": "Postaichean",
+        "visibility": {
+          "description": "Gnàthaich faicsinneachd thùsail nam postaichean",
+          "notice": "Cha bhi an roghainn seo an sàs ach air postaichean ùra ⁊ cleachdaidh freagairtean faicsinneachd nam postaichean tùsail",
+          "public": "Poblach",
+          "unlisted": "Falaichte o liostaichean",
+          "private": "Prìobhaideach",
+          "direct": "Dìreach"
+        },
+        "sensitive": {
+          "description": "Cuir comharra gu bheil meadhanan frionasach mar bhun-roghainn"
+        }
+      }
+    },
+    "timeline": {
+      "title": "Loidhne-ama",
+      "unread_notification": {
+        "title": "Brathan nach deach a leughadh",
+        "description": "Gnàthaich na brathan nach deach a leughadh do gach loidhne-ama.",
+        "direct": "Teachdaireachdan dìreach",
+        "local": "Loidhne-ama ionadail",
+        "public": "Loidhne-ama phoblach"
+      }
+    },
+    "filters": {
+      "title": "Criathragan",
+      "form": {
+        "phrase": "Facal no abairt-luirg",
+        "expire": "Thig e gu crìoch às dèidh",
+        "context": "Co-theacsaichean na criathraige",
+        "irreversible": "Leig seachad seach falach",
+        "whole_word": "Facal slàn",
+        "submit": "Cuir a-null",
+        "cancel": "Sguir dheth"
+      },
+      "expires": {
+        "never": "Buan",
+        "30_minutes": "Leth-uair a thìde",
+        "1_hour": "Uair a thìde",
+        "6_hours": "6 uairean a thìde",
+        "12_hours": "12 uair a thìde",
+        "1_day": "Latha",
+        "1_week": "Seachdain"
+      },
+      "new": {
+        "title": "Ùr"
+      },
+      "edit": {
+        "title": "Deasaich"
+      },
+      "delete": {
+        "title": "Sguab às",
+        "confirm": "A bheil thu cinnteach gu bheil thu airson a’ chriathrag seo a sguabadh às?",
+        "confirm_ok": "Sguab às",
+        "confirm_cancel": "Sguir dheth"
+      }
+    }
+  },
+  "preferences": {
+    "title": "Roghainnean",
+    "general": {
+      "title": "Coitcheann",
+      "sounds": {
+        "title": "Fuaimean",
+        "description": "Suidhich fuaimean freagairte.",
+        "fav_rb": "Nuair chruthaicheas tu annsachd no brosnachadh puist",
+        "toot": "Nuair a chruthaicheas tu post"
+      },
+      "timeline": {
+        "title": "Loidhne-ama",
+        "description": "Gnàthaich an sealladh air na loidhnichean-ama agad.",
+        "cw": "Leig seachad rabhaidhean susbainte an-còmhnaidh",
+        "nsfw": "Leig seachad rabhadh inbhich air meadhanan an-còmhnaidh",
+        "hideAllAttachments": "Cuir a h-uile meadhan am falach",
+        "useMarker": "Luchdaich an loidhne-ama on ionad-leughaidh mu dheireadh",
+        "useMarkerNotice": "Cha chuir an gleus seo taic ach ris an dachaigh ’s na brathan"
+      },
+      "other": {
+        "title": "Roghainnean eile",
+        "launch": "Cuir an aplacaid gu dol leis a’ chlàradh a-steach"
+      }
+    },
+    "appearance": {
+      "title": "Coltas",
+      "theme_color": "Dath an ùrlair",
+      "theme": {
+        "light": "Soilleir",
+        "dark": "Dorcha",
+        "solarized_light": "Grianach soilleir",
+        "solarized_dark": "Grianach dorcha",
+        "kimbie_dark": "Kimbie Dorcha",
+        "custom": "Gnàthaichte"
+      },
+      "custom_theme": {
+        "background_color": "An cùlaibh bunaiteach",
+        "selected_background_color": "An cùlaibh fòcasaichte",
+        "global_header_color": "Clàr-taice a’ chunntais",
+        "side_menu_color": "Clàr-taice an taoibh",
+        "primary_color": "Am prìomh chruth-chlò",
+        "regular_color": "An cruth-clò àbhaisteach",
+        "secondary_color": "An cruth-clò dàrnach",
+        "border_color": "Iomallan",
+        "header_menu_color": "Clàr-taice a’ bhanna-chinn",
+        "wrapper_mask_color": "Paisgear nan còmhraidhean mòdach"
+      },
+      "font_size": "Meud a’ chrutha-chlò",
+      "font_family": "Teaghlach a’ chrutha-chlò",
+      "toot_padding": "Am padadh timcheall air na postaichean",
+      "display_style": {
+        "title": "Stoidhle taisbeanaidh an ainm-chleachdaiche",
+        "display_name_and_username": "Ainm-taisbeanaidh ’s ainm-cleachdaiche",
+        "display_name": "Ainm-taisbeanaidh",
+        "username": "Ainm-cleachdaiche"
+      },
+      "time_format": {
+        "title": "Fòrmat an ama",
+        "absolute": "Absaloideach",
+        "relative": "Dàimheach"
+      }
+    },
+    "notification": {
+      "title": "Brathan",
+      "enable": {
+        "description": "Suidhich tachartasan nam brathan.",
+        "reply": "Thoir brath dhomh nuair a gheibh mi freagairt",
+        "reblog": "Thoir brath dhomh nuair a gheibh mi brosnachadh",
+        "favourite": "Thoir brath dhomh nuair a gheibh mi annsachd",
+        "follow": "Thoir brath dhomh nuair a gheibh mi leantainn",
+        "reaction": "Thoir brath dhomh nuair a gheibh mi freagairt Emoji",
+        "follow_request": "Thoir brath dhomh nuair a gheibh mi iarrtas leantainn",
+        "status": "Thoir brath dhomh nuair a gheibh mi brath puist",
+        "poll_vote": "Thoir brath dhomh nuair a gheibh mi bhòt cunntais-bheachd",
+        "poll_expired": "Thoir brath dhomh nuair a thig cunntas-bheachd gu crìoch"
+      }
+    },
+    "account": {
+      "title": "Cunntas",
+      "connected": "Cunntas ceangailte",
+      "username": "Ainm-cleachdaiche",
+      "domain": "Àrainn",
+      "association": "Co-cheangal",
+      "order": "Òrdugh",
+      "remove_association": "Thoir air falbh an co-cheangal",
+      "remove_all_associations": "Thoir air falbh a h-uile co-cheangal",
+      "confirm": "Dearbh",
+      "cancel": "Sguir dheth",
+      "confirm_message": "A bheil thu airson a h-uile co-cheangal a thoirt air falbh?"
+    },
+    "network": {
+      "title": "Lìonra",
+      "proxy": {
+        "title": "Rèiteachadh a’ phrogsaidh",
+        "no": "Gun phrosgsaidh",
+        "system": "Cleachd progsaidh an t-siostaim",
+        "manual": "Rèiteachadh progsaidh a làimh",
+        "protocol": "Pròtacal",
+        "host": "Òstair a’ phrogsaidh",
+        "port": "Port a’ phrogsaidh",
+        "username": "Ainm-cleachdaiche a’ phrogsaidh",
+        "password": "Facal-faire a’ phrogsaidh",
+        "protocol_list": {
+          "http": "http",
+          "https": "https",
+          "socks4": "socks4",
+          "socks4a": "socks4a",
+          "socks5": "socks5",
+          "socks5h": "socks5h"
+        }
+      },
+      "save": "Sàbhail"
+    },
+    "language": {
+      "title": "Cànan",
+      "language": {
+        "title": "Cànan",
+        "description": "Tagh an cànan a bu toigh leat cleachdadh le Whalebird."
+      },
+      "spellchecker": {
+        "title": "Dearbhair-litreachaidh",
+        "enabled": "Cuir an dearbhair-litreachaidh an comas"
+      }
+    }
+  },
+  "modals": {
+    "new_toot": {
+      "title": "Post ùr",
+      "cw": "Sgrìobh an rabhadh agad an-seo",
+      "status": "Dè tha air d’ aire?",
+      "cancel": "Sguir dheth",
+      "toot": "Postaich",
+      "close_confirm": "A bheil thu cinnteach gu bheil thu airson am post seo a thilgeil air falbh?",
+      "close_confirm_ok": "Tilg air falbh",
+      "close_confirm_cancel": "Lean air an deasachadh",
+      "description": "Mìnich e dhan fheadhainn le cion-lèirsinne",
+      "footer": {
+        "add_image": "Cuir dealbhan ris",
+        "poll": "Cuir cunntas-bheachd ris",
+        "change_visibility": "Atharraich an fhaicsinneachd",
+        "change_sensitive": "Atharraich a bheil e frionasach",
+        "add_cw": "Cuir rabhadh susbainte ris",
+        "pined_hashtag": "Prìnich an taga hais"
+      },
+      "poll": {
+        "add_choice": "Cuir roghainn ris",
+        "expires": {
+          "5_minutes": "5 mionaidean",
+          "30_minutes": "Leth-uair a thìde",
+          "1_hour": "Uair a thìde",
+          "6_hours": "6 uairean a thìde",
+          "1_day": "Latha",
+          "3_days": "3 làithean",
+          "7_days": "Seachdain"
+        }
+      }
+    },
+    "jump": {
+      "jump_to": "Leum gu…"
+    },
+    "add_list_member": {
+      "title": "Cuir ball ris an liosta",
+      "account_name": "Ainm a’ chunntais"
+    },
+    "list_membership": {
+      "title": "Ballrachdan liosta"
+    },
+    "mute_confirm": {
+      "title": "A bheil thu cinnteach gu bheil thu airson a mhùchadh?",
+      "body": "A bheil thu airson na brathan on chleachdaiche seo fhalach?",
+      "cancel": "Sguir dheth",
+      "ok": "Mùch"
+    },
+    "shortcut": {
+      "title": "Ath-ghoiridean a’ mheur-chlàir",
+      "ctrl_number": "Thoir leum gu cunntas eile",
+      "ctrl_k": "Thoir leum gu loidhne-ama eile",
+      "ctrl_n": "Fosgail còmhradh a’ phuist ùir",
+      "ctrl_enter": "Postaich",
+      "ctrl_r": "Ath-luchdaich an loidhne-ama làithreach",
+      "j": "Tagh an t-ath-phost",
+      "k": "Tagh am post roimhe",
+      "h": "Cuir am fòcas air a’ cholbh taobh clì",
+      "l": "Cuir am fòcas air a’ cholbh taobh deas",
+      "r": "Freagair dhan phost",
+      "b": "Brosnaich am post",
+      "f": "Cuir am post ris na h-annsachdan",
+      "o": "Fosgail mion-fhiosrachadh a’ phuist",
+      "p": "Fosgail pròifil cunntas a’ phuist",
+      "i": "Fosgail na dealbhan",
+      "x": "Seall/Falaich rabhadh susbainte ’s inbhich",
+      "?": "Seall a’ chobhair seo",
+      "esc": "Dùin an duilleag làithreach"
+    },
+    "report": {
+      "title": "A’ dèanamh gearan mun chleachdaiche seo",
+      "comment": "Beachdan a bharrachd",
+      "cancel": "Sguir dheth",
+      "ok": "Dèan gearan"
+    }
+  },
+  "cards": {
+    "toot": {
+      "show_more": "Seall barrachd dheth",
+      "hide": "Cuir am falach",
+      "sensitive": "Seall an t-susbaint fhrionasach",
+      "view_toot_detail": "Seall mion-fhiosrachaidh a’ phuist",
+      "open_in_browser": "Fosgail ann am brabhsair",
+      "copy_link_to_toot": "Dèan lethbhreac dhen cheangal dhan phost",
+      "mute": "Mùch",
+      "block": "Bac",
+      "report": "Dèan gearan",
+      "delete": "Sguab às",
+      "via": "le {{application}}",
+      "reply": "Freagair",
+      "reblog": "Brosnaich",
+      "fav": "Cuir ris na h-annsachdan",
+      "detail": "Mion-fhiosrachadh a’ phuist",
+      "bookmark": "Cuir ris na comharran-lìn",
+      "pinned": "Post prìnichte",
+      "poll": {
+        "vote": "Cuir bhòt",
+        "votes_count": "bhòt(aichean)",
+        "until": "gu ruige {{datetime}}",
+        "left": "Tha {{datetime}} air fhàgail",
+        "refresh": "Ath-nuadhaich"
+      }
+    }
+  },
+  "side_bar": {
+    "account_profile": {
+      "follows_you": "’Gad leantainn",
+      "doesnt_follow_you": "Gun leantainn ort",
+      "detail": "Mion-fiosrachadh",
+      "follow": "Lean air a’ chleachdaiche seo",
+      "unfollow": "Na lean air a’ chleachdaiche seo tuilleadh",
+      "subscribe": "Fo-sgrìobh dhan chleachdaiche seo",
+      "unsubscribe": "Na fo-sgrìobh dhan chleachdaiche seo tuilleadh",
+      "follow_requested": "Iarrar leantainn orm",
+      "open_in_browser": "Fosgail ann am brabhsair",
+      "manage_list_memberships": "Stiùir ballrachdan liosta",
+      "mute": "Mùch",
+      "unmute": "Dì-mhùch",
+      "unblock": "Dì-bhac",
+      "block": "Bac",
+      "toots": "Postaichean",
+      "follows": "A’ leantainn air",
+      "followers": "Luchd-leantainn"
+    }
+  },
+  "follow_requests": {
+    "accept": "Gabh ris",
+    "reject": "Diùlt"
+  },
+  "hashtag": {
+    "tag_name": "Ainm an taga",
+    "delete_tag": "Sguab às an taga",
+    "save_tag": "Sàbhail an taga"
+  },
+  "search": {
+    "search": "Lorg",
+    "account": "Cunntas",
+    "tag": "Taga hais",
+    "keyword": "facal-luirg",
+    "toot": "Postaich"
+  },
+  "lists": {
+    "index": {
+      "new_list": "Liosta ùr",
+      "edit": "Deasaich",
+      "delete": {
+        "confirm": {
+          "title": "Dearbh",
+          "message": "Cha ghabh seo a neo-dhèanamh is thèid an liosta seo a sguabadh às gu buan.",
+          "ok": "Sguab às",
+          "cancel": "Sguir dheth"
+        }
+      }
+    }
+  },
+  "login": {
+    "domain_name_label": "Nì sinn clàradh a-steach air frithealaiche Mastodon an toiseach. Cuir a-steach ainm àrainne an fhrithealaiche.",
+    "proxy_info": "Ma tha thu airson frithealaiche progsaidh a chleachdadh, suidhich am progsaidh agad an-seo:",
+    "proxy_here": " an-seo",
+    "search": "Lorg",
+    "login": "Clàraich a-steach"
+  },
+  "authorize": {
+    "manually_1": "Chaidh duilleag ùghdarrachaidh fhosgladh sa bhrabhsair agad.",
+    "manually_2": "Mura deach a fosgladh, tadhail air an URL seo a làimh.",
+    "code_label": "Cuir a-steach an còd ùghdarrachaidh on bhrabhsair agad:",
+    "misskey_label": "Cuir a-null e nuair a bhios tu air ùghdarrachadh sa bhrabhsair agad.",
+    "submit": "Cuir a-null"
+  },
+  "receive_drop": {
+    "drop_message": "Leig às gus a luchdadh suas gu Mastodon"
+  },
+  "message": {
+    "account_load_error": "Dh’fhàillig le luchdadh nan cunntasan",
+    "account_remove_error": "Cha deach leinn an cunntas a thoirt air falbh",
+    "preferences_load_error": "Dh’fhàillig le luchdadh nan roghainnean",
+    "timeline_fetch_error": "Cha b’ urrainn dhuinn an loidhne-ama fhaighinn",
+    "notification_fetch_error": "Cha b’ urrainn dhuinn am brath fhaighinn",
+    "favourite_fetch_error": "Cha b’ urrainn dhuinn an annsachd fhaighinn",
+    "follow_request_accept_error": "Dh'fhàillig le gabhail ris an t-iarrtas",
+    "follow_request_reject_error": "Dh’fhàillig le diùltadh an iarrtais",
+    "start_streaming_error": "Cha deach leinn tòiseachadh air an t-sruthadh",
+    "start_all_streamings_error": "Cha deach leinn tòiseachadh air sruthadh {{domain}}",
+    "attach_error": "Cha b’ urrainn dhuinn am faidhle a cheangal ris",
+    "authorize_duplicate_error": "Chan urrainn dhuinn clàradh a-steach dhan aon chunntas dhen aon àrainn",
+    "authorize_error": "Dh’fhàillig leis an ùghdarrachadh",
+    "followers_fetch_error": "Cha b’ urrainn dhuinn an luchd-leantainn fhaighinn",
+    "follows_fetch_error": "Cha b’ urrainn dhuinn fiosrachadh do leantainn fhaighinn",
+    "toot_fetch_error": "Cha b’ urrainn dhuinn mion-fhiosrachadh a’ phuist fhaighinn",
+    "follow_error": "Dh’fhàillig le leantainn air a’ chleachdaiche",
+    "unfollow_error": "Dh’fhàillig le sgur de leantainn air a’ chleachdaiche",
+    "subscribe_error": "Dh’fhàillig leis an fho-sgrìobhadh air a’ chleachdaiche",
+    "unsubscribe_error": "Cha deach leinn crìoch a chur air an fho-sgrìobhadh air a’ chleachdaiche",
+    "lists_fetch_error": "Cha b’ urrainn dhuinn na liostaichean fhaighinn",
+    "list_create_error": "Cha b’ urrainn dhuinn liosta a chruthachadh",
+    "members_fetch_error": "Cha b’ urrainn dhuinn na buill fhaighinn",
+    "remove_user_error": "Cha deach leinn an cleachdaiche a thoirt air falbh",
+    "find_account_error": "Cha deach an cunntas a lorg",
+    "reblog_error": "Cha deach leis a’ bhrosnachadh",
+    "unreblog_error": "Cha b’ urrainn dhuinn am brosnachadh a thoirt air falbh",
+    "favourite_error": "Cha b’ urrainn dhuinn a chur ris na h-annsachdan",
+    "unfavourite_error": "Cha b’ urrainn dhuinn a thoirt air falbh o na h-annsachdan",
+    "bookmark_error": "Chaidh a chur ris na comharran-lìn",
+    "unbookmark_error": "Cha deach leinn an comharra-lìn a thoirt air falbh",
+    "delete_error": "Cha b’ urrainn dhuinn am post a sguabadh às",
+    "search_error": "Dh’fhàillig leis an lorg",
+    "toot_error": "Dh’fhàillig leis a’ phostadh",
+    "update_list_memberships_error": "Cha b’ urrainn dhuinn na ballrachdan liosta ùrachadh",
+    "add_user_error": "Cha b’ urrainn dhuinn an cleachdaiche a chur ris",
+    "authorize_url_error": "Cha b’ urrainn dhuinn an t-URL ùghdarrachaidh fhaighinn",
+    "domain_confirmed": "Chaidh {{domain}} a dhearbhadh, clàraich a-steach a-nis",
+    "domain_doesnt_exist": "Cha deach leinn ceangal a dhèanamh le {{domain}}, dearbh URL an fhrithealaiche",
+    "loading": "’Ga luchdadh…",
+    "language_not_support_spellchecker_error": "Cha chuir an dearbhair-litreachaidh taic ris a’ chànan seo",
+    "update_filter_error": "Cha b’ urrainn dhuinn a’ chriathrag ùrachadh",
+    "create_filter_error": "Dh’fhàillig le cruthachadh na criathraige"
+  },
+  "validation": {
+    "login": {
+      "require_domain_name": "Tha feum air ainm àrainne",
+      "domain_format": "Na cuir a-steach ach ainm na h-àrainne"
+    },
+    "new_toot": {
+      "toot_length": "Bu chòir dhan phost a bhith eadar {{min}} is {{max}} a dh’fhaid",
+      "attach_length": "Chan urrainn dhut barrachd air {{max}} dealbh(an) a cheangal ris",
+      "attach_image": "Chan urrainn dhut ach dealbhan no videothan a cheangal ris",
+      "poll_invalid": "Roghainnean mì-dhligheach sa chunntas-bheachd"
+    }
+  },
+  "notification": {
+    "favourite": {
+      "title": "Annsachd",
+      "body": "Is annsa le {{username}} am post agad"
+    },
+    "follow": {
+      "title": "Leantainn ort",
+      "body": "Tha {{username}} a’ leantainn ort a-nis"
+    },
+    "follow_request": {
+      "title": "Iarrtas leantainn",
+      "body": "Fhuair thu iarrtas leantainn o {{username}}"
+    },
+    "reblog": {
+      "title": "Brosnachadh",
+      "body": "Bhrosnaich {{username}} am post agad"
+    },
+    "quote": {
+      "title": "Iomradh",
+      "body": "Thug {{username}} iomradh air a’ phost agad"
+    },
+    "reaction": {
+      "title": "Freagairt",
+      "body": "Fhreagair {{username}} dhan phost agad"
+    },
+    "status": {
+      "title": "Post",
+      "body": "Tha {{username}} air rud a phostadh"
+    },
+    "poll_vote": {
+      "title": "Bhòt cunntais-bheachd",
+      "body": "Cuir {{username}} bhòt ris a’ chunntas-bheachd agad"
+    },
+    "poll_expired": {
+      "title": "Crìoch cunntais-bheachd",
+      "body": "Thàinig an cunntas-bheachd aig {{username}} gu crìoch"
+    }
+  }
+}
