@@ -452,7 +452,7 @@
     "notification_fetch_error": "Error al obtener la notificación",
     "favourite_fetch_error": "No se ha podido obtener el favorecido",
     "follow_request_accept_error": "Error al aceptar la solicitud",
-    "follow_request_reject_error": "no se pudo rechazar la solicitud",
+    "follow_request_reject_error": "Failed to reject the request",
     "start_streaming_error": "Error al iniciar la transmisión",
     "start_all_streamings_error": "Error al iniciar la transmisión de {{domain}}",
     "attach_error": "No se pudo adjuntar el archivo",
