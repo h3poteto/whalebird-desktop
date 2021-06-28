@@ -452,7 +452,7 @@
     "notification_fetch_error": "Impossibile recuperare le notifiche",
     "favourite_fetch_error": "Impossibile recuperare i preferiti",
     "follow_request_accept_error": "Impossibile accettare la richiesta",
-    "follow_request_reject_error": "Impossibile rifiutare la richiesta",
+    "follow_request_reject_error": "Failed to reject the request",
     "start_streaming_error": "Impossibile avviare lo streaming",
     "start_all_streamings_error": "Impossibile avviare lo streaming di {{domain}}",
     "attach_error": "Non è stato possibile allegare il file",
