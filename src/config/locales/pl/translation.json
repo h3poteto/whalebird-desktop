@@ -452,7 +452,7 @@
     "notification_fetch_error": "Nie udało się załadować powiadomień",
     "favourite_fetch_error": "Nie udało się załadować ulubionych",
     "follow_request_accept_error": "Failed to accept the request",
-    "follow_request_reject_error": "failed to reject the request",
+    "follow_request_reject_error": "Failed to reject the request",
     "start_streaming_error": "Nie udało się rozpocząć strumieniowania",
     "start_all_streamings_error": "Failed to start streaming of {{domain}}",
     "attach_error": "Nie udało się załączyć pliku",
