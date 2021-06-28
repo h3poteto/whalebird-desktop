@@ -452,7 +452,7 @@
     "notification_fetch_error": "Benachrichtigung konnte nicht abgerufen werden",
     "favourite_fetch_error": "Favorit konnte nicht abgerufen werden",
     "follow_request_accept_error": "Anfrage konnte nicht angenommen werden",
-    "follow_request_reject_error": "konnte die Anfrage nicht ablehnen",
+    "follow_request_reject_error": "Failed to reject the request",
     "start_streaming_error": "Streaming konnte nicht gestartet werden",
     "start_all_streamings_error": "Fehler beim Starten des Streamings von {{domain}}",
     "attach_error": "Kontte Datei nicht anhängen",
