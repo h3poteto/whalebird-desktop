@@ -452,7 +452,7 @@
     "notification_fetch_error": "获取通知失败",
     "favourite_fetch_error": "获取收藏失败",
     "follow_request_accept_error": "接受请求失败",
-    "follow_request_reject_error": "拒绝请求失败",
+    "follow_request_reject_error": "Failed to reject the request",
     "start_streaming_error": "打开流媒体失败",
     "start_all_streamings_error": "打开 {{domain}} 的流媒体失败",
     "attach_error": "附加文件失败",
