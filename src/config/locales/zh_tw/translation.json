@@ -96,7 +96,7 @@
           "public": "公開",
           "unlisted": "不列出",
           "private": "私密",
-          "direct": "直接"
+          "direct": "私訊"
         },
         "sensitive": {
           "description": "預設標記媒體為敏感"
@@ -452,7 +452,7 @@
     "notification_fetch_error": "無法載入通知",
     "favourite_fetch_error": "無法載入最愛",
     "follow_request_accept_error": "無法接受請求",
-    "follow_request_reject_error": "Failed to reject the request",
+    "follow_request_reject_error": "無法拒絕請求",
     "start_streaming_error": "無法開始串流",
     "start_all_streamings_error": "無法開始 {{domain}} 之串流",
     "attach_error": "無法附加檔案",
