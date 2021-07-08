@@ -96,7 +96,7 @@
           "public": "公開",
           "unlisted": "不列出",
           "private": "私密",
-          "direct": "直接"
+          "direct": "私訊"
         },
         "sensitive": {
           "description": "預設標記媒體為敏感"
