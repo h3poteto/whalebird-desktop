@@ -250,7 +250,7 @@
     "cfonts": "^2.9.1",
     "chai": "^4.3.4",
     "chalk": "^4.1.1",
-    "copy-webpack-plugin": "^6.4.1",
+    "copy-webpack-plugin": "^9.0.1",
     "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.5",
