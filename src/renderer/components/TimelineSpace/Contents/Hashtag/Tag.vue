@@ -1,14 +1,15 @@
 <template>
-  <div name="tag" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
+  <div name="tag" class="tag-timeline" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="timeline" :min-item-size="60" class="scroller" page-mode>
+    <DynamicScroller :items="timeline" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             :message="item"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
+            :filters="[]"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusNext="focusNext"
@@ -20,7 +21,6 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
     </div>
@@ -30,7 +30,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import scrollTop from '../../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
@@ -72,7 +71,7 @@ export default {
     this.load(this.tag).finally(() => {
       this.$store.commit('TimelineSpace/Contents/changeLoading', false)
     })
-    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
 
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
@@ -133,9 +132,9 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/archiveTimeline')
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/clearTimeline')
-      if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
-        document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
-        document.getElementById('scrollable').scrollTop = 0
+      if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+        document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+        document.getElementById('scroller').scrollTop = 0
       }
     },
     updateToot(toot) {
@@ -146,7 +145,7 @@ export default {
     },
     onScroll(event) {
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementsByName('tag')[0].clientHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/lazyFetchTimeline', {
@@ -155,11 +154,15 @@ export default {
         })
       }
       // for unread control
-      if (event.target.scrollTop > 10 && this.heading) {
+      if (event.target.scrollTop > 5 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', false)
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
+      } else if (event.target.scrollTop <= 5 && !this.heading) {
+        const currentPos = this.unread.length
+        if (currentPos === 0) {
+          this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
+        }
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
+        this.$refs.scroller.scrollToItem(currentPos)
       }
     },
     async reload() {
@@ -185,7 +188,7 @@ export default {
       }
     },
     upper() {
-      scrollTop(document.getElementById('scrollable'), 0)
+      this.$refs.scroller.scrollToItem(0)
       this.focusedId = null
     },
     focusNext() {
@@ -222,39 +225,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.unread {
-  position: fixed;
-  right: 24px;
-  top: 48px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #ffffff;
-  padding: 4px 8px;
-  border-radius: 0 0 2px 2px;
+.tag-timeline {
+  height: 100%;
+  overflow: auto;
+  scroll-behavior: auto;
 
-  &:empty {
-    display: none;
+  .scroller {
+    height: 100%;
   }
-}
 
-.loading-card {
-  height: 60px;
-}
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 48px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
+    z-index: 1;
 
-.loading-card:empty {
-  height: 0;
-}
+    &:empty {
+      display: none;
+    }
+  }
 
-.upper {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
+  .upper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
 
-.upper-with-side-bar {
-  position: fixed;
-  bottom: 20px;
-  right: calc(20px + var(--current-sidebar-width));
-  transition: all 0.5s;
+  .upper-with-side-bar {
+    position: fixed;
+    bottom: 20px;
+    right: calc(20px + var(--current-sidebar-width));
+    transition: all 0.5s;
+  }
 }
 </style>
 <style lang="scss" src="@/assets/timeline-transition.scss"></style>
