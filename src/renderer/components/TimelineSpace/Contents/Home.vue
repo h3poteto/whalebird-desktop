@@ -2,7 +2,7 @@
   <div id="home" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="filteredTimeline" :min-item-size="60" class="scroller" page-mode>
+    <DynamicScroller :items="filteredTimeline" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
@@ -21,7 +21,7 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
+
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
     </div>
@@ -31,7 +31,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
@@ -85,7 +84,7 @@ export default {
   },
   mounted() {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
-    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
@@ -111,9 +110,9 @@ export default {
     this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
     this.$store.commit('TimelineSpace/Contents/Home/archiveTimeline')
-    if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
-      document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scrollable').scrollTop = 0
+    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scroller').scrollTop = 0
     }
   },
   watch: {
@@ -141,7 +140,10 @@ export default {
   methods: {
     onScroll(event) {
       // for lazyLoading
-      if (event.target.clientHeight + event.target.scrollTop >= document.getElementById('home').clientHeight - 10 && !this.lazyloading) {
+      if (
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
+        !this.lazyloading
+      ) {
         this.$store.dispatch('TimelineSpace/Contents/Home/lazyFetchTimeline', this.timeline[this.timeline.length - 1]).catch(() => {
           this.$message({
             message: this.$t('message.timeline_fetch_error'),
@@ -152,9 +154,13 @@ export default {
       // for unread control
       if (event.target.scrollTop > 10 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
+      } else if (event.target.scrollTop <= 5 && !this.heading) {
+        const currentPos = this.unread.length
+        if (currentPos === 0) {
+          this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
+        }
         this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
+        this.$refs.scroller.scrollToItem(currentPos)
       }
     },
     updateToot(message) {
@@ -172,7 +178,7 @@ export default {
       }
     },
     upper() {
-      scrollTop(document.getElementById('scrollable'), 0)
+      this.$refs.scroller.scrollToItem(0)
       this.focusedId = null
     },
     focusNext() {
@@ -210,6 +216,14 @@ export default {
 
 <style lang="scss" scoped>
 #home {
+  height: 100%;
+  overflow: auto;
+  scroll-behavior: auto;
+
+  .scroller {
+    height: 100%;
+  }
+
   .unread {
     position: fixed;
     right: 24px;
@@ -218,6 +232,7 @@ export default {
     color: #ffffff;
     padding: 4px 8px;
     border-radius: 0 0 2px 2px;
+    z-index: 1;
 
     &:empty {
       display: none;

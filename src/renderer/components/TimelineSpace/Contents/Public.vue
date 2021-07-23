@@ -2,7 +2,7 @@
   <div id="public" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="timeline" :min-item-size="60" class="scroller" page-mode>
+    <DynamicScroller :items="timeline" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
@@ -21,7 +21,6 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
     </div>
@@ -31,7 +30,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
@@ -73,7 +71,7 @@ export default {
   },
   async mounted() {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', false)
-    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
     if (!this.unreadNotification.public) {
       this.$store.commit('TimelineSpace/Contents/changeLoading', true)
       await this.initialize().finally(_ => {
@@ -109,9 +107,9 @@ export default {
     if (!this.unreadNotification.public) {
       this.$store.commit('TimelineSpace/Contents/Public/clearTimeline')
     }
-    if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
-      document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scrollable').scrollTop = 0
+    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scroller').scrollTop = 0
     }
   },
   watch: {
@@ -149,7 +147,10 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Public/deleteToot', message.id)
     },
     onScroll(event) {
-      if (event.target.clientHeight + event.target.scrollTop >= document.getElementById('public').clientHeight - 10 && !this.lazyloading) {
+      if (
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
+        !this.lazyloading
+      ) {
         this.$store.dispatch('TimelineSpace/Contents/Public/lazyFetchTimeline', this.timeline[this.timeline.length - 1]).catch(() => {
           this.$message({
             message: this.$t('message.timeline_fetch_error'),
@@ -158,11 +159,15 @@ export default {
         })
       }
       // for unread control
-      if (event.target.scrollTop > 10 && this.heading) {
+      if (event.target.scrollTop > 5 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Public/changeHeading', false)
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Public/changeHeading', true)
+      } else if (event.target.scrollTop <= 5 && !this.heading) {
+        const currentPos = this.unread.length
+        if (currentPos === 0) {
+          this.$store.commit('TimelineSpace/Contents/Public/changeHeading', true)
+        }
         this.$store.commit('TimelineSpace/Contents/Public/mergeTimeline')
+        this.$refs.scroller.scrollToItem(currentPos)
       }
     },
     async reload() {
@@ -174,7 +179,7 @@ export default {
       }
     },
     upper() {
-      scrollTop(document.getElementById('scrollable'), 0)
+      this.$refs.scroller.scrollToItem(0)
       this.focusedId = null
     },
     focusNext() {
@@ -212,6 +217,14 @@ export default {
 
 <style lang="scss" scoped>
 #public {
+  height: 100%;
+  overflow: auto;
+  scroll-behavior: auto;
+
+  .scroller {
+    height: 100%;
+  }
+
   .unread {
     position: fixed;
     right: 24px;
@@ -220,6 +233,7 @@ export default {
     color: #ffffff;
     padding: 4px 8px;
     border-radius: 0 0 2px 2px;
+    z-index: 1;
 
     &:empty {
       display: none;

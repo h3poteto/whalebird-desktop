@@ -2,7 +2,7 @@
   <div id="notifications" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="handledNotifications" :min-item-size="20" class="scroller" page-mode>
+    <DynamicScroller :items="handledNotifications" :min-item-size="20" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
           <notification
@@ -20,7 +20,6 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
     </div>
@@ -30,7 +29,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Notification from '~/src/renderer/components/organisms/Notification'
-import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
@@ -71,7 +69,7 @@ export default {
   mounted() {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
     this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
-    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
 
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
@@ -98,9 +96,9 @@ export default {
     this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
     this.$store.commit('TimelineSpace/Contents/Notifications/archiveNotifications')
-    if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
-      document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scrollable').scrollTop = 0
+    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scroller').scrollTop = 0
     }
   },
   watch: {
@@ -129,7 +127,7 @@ export default {
   methods: {
     onScroll(event) {
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('notifications').clientHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store
@@ -145,11 +143,15 @@ export default {
           })
       }
       // for unread control
-      if (event.target.scrollTop > 10 && this.heading) {
+      if (event.target.scrollTop > 5 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
+      } else if (event.target.scrollTop <= 5 && !this.heading) {
+        const currentPos = this.unread.length
+        if (currentPos === 0) {
+          this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
+        }
         this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
+        this.$refs.scroller.scrollToItem(currentPos)
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       }
     },
@@ -166,7 +168,7 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Notifications/updateToot', message)
     },
     upper() {
-      scrollTop(document.getElementById('scrollable'), 0)
+      this.$refs.scroller.scrollToItem(0)
       this.focusedId = null
     },
     focusNext() {
@@ -204,6 +206,14 @@ export default {
 
 <style lang="scss" scoped>
 #notifications {
+  height: 100%;
+  overflow: auto;
+  scroll-behavior: auto;
+
+  .scroller {
+    height: 100%;
+  }
+
   .unread {
     position: fixed;
     right: 24px;
@@ -212,6 +222,7 @@ export default {
     color: #ffffff;
     padding: 4px 8px;
     border-radius: 0 0 2px 2px;
+    z-index: 1;
 
     &:empty {
       display: none;

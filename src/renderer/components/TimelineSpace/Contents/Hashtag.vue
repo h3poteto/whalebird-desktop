@@ -1,62 +1,69 @@
 <template>
-<div id="hashtag">
-  <div class="search-header" v-loading="false">
-    <el-form>
-      <div class="form-wrapper">
-        <div class="form-item" v-show="tagPage()">
-          <el-button type="text" @click="back">
-            <icon name="chevron-left"></icon>
-          </el-button>
+  <div id="hashtag">
+    <div class="search-header" v-loading="false">
+      <el-form>
+        <div class="form-wrapper">
+          <div class="form-item" v-show="tagPage()">
+            <el-button type="text" @click="back">
+              <icon name="chevron-left"></icon>
+            </el-button>
+          </div>
+          <div class="form-item input">
+            <input
+              v-model="tag"
+              :placeholder="$t('hashtag.tag_name')"
+              class="search-keyword"
+              v-shortkey.avoid
+              v-on:keyup.enter="search"
+              autofocus
+            />
+          </div>
+          <div class="form-item" v-show="tagPage()">
+            <el-button type="text" @click="save" :title="$t('hashtag.save_tag')">
+              <icon name="thumbtack"></icon>
+            </el-button>
+          </div>
         </div>
-        <div class="form-item input">
-          <input v-model="tag" :placeholder="$t('hashtag.tag_name')" class="search-keyword" v-shortkey.avoid v-on:keyup.enter="search" autofocus></input>
-        </div>
-        <div class="form-item" v-show="tagPage()">
-          <el-button type="text" @click="save" :title="$t('hashtag.save_tag')">
-            <icon name="thumbtack"></icon>
-          </el-button>
-        </div>
-      </div>
-    </el-form>
+      </el-form>
+    </div>
+    <router-view></router-view>
   </div>
-  <router-view></router-view>
-</div>
 </template>
 
 <script>
 export default {
   name: 'hashtag',
-  data () {
+  data() {
     return {
       tag: ''
     }
   },
-  mounted () {
+  mounted() {
     if (this.$route.name === 'tag') {
       this.tag = this.$route.params.tag
     }
   },
   watch: {
-    '$route': function (route) {
+    $route: function (route) {
       if (route.name === 'tag') {
         this.tag = route.params.tag
       }
     }
   },
   methods: {
-    id () {
+    id() {
       return this.$route.params.id
     },
-    search () {
+    search() {
       this.$router.push({ path: `/${this.id()}/hashtag/${this.tag}` })
     },
-    tagPage () {
+    tagPage() {
       return this.$route.name === 'tag'
     },
-    back () {
+    back() {
       this.$router.push({ path: `/${this.id()}/hashtag` })
     },
-    save () {
+    save() {
       this.$store.dispatch('TimelineSpace/Contents/Hashtag/saveTag', this.tag)
     }
   }
@@ -66,6 +73,8 @@ export default {
 <style lang="scss" scoped>
 #hashtag {
   border-top: 1px solid var(--theme-border-color);
+  height: calc(100% - 1px);
+  overflow: hidden;
 
   .search-header {
     background-color: var(--theme-selected-background-color);
