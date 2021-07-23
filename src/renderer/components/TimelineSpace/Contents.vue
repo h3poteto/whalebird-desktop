@@ -1,7 +1,6 @@
 <template>
   <div id="contents" ref="contents" :style="customWidth" @mouseup="dragEnd" @mousemove="resize">
     <div
-      id="scrollable"
       :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'"
       v-loading="loading"
       :element-loading-text="$t('message.loading')"
@@ -85,17 +84,11 @@ export default {
   .timeline-wrapper {
     height: 100%;
     width: 100%;
-    /* overflow: auto; */
-    /* transition: all 0.5s; */
-    /* scroll-behavior: auto; */
   }
 
   .timeline-wrapper-with-side-bar {
     height: 100%;
     width: calc(100% - var(--current-sidebar-width));
-    /* overflow: auto; */
-    /* transition: all 0.5s; */
-    /* scroll-behavior: auto; */
   }
 
   #resizer {

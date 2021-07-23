@@ -156,7 +156,6 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
       } else if (event.target.scrollTop <= 5 && !this.heading) {
         const currentPos = this.unread.length
-        console.log(currentPos)
         if (currentPos === 0) {
           this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
         }
