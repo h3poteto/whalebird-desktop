@@ -2,13 +2,14 @@
   <div id="mentions" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="mentions" :min-item-size="60" class="scroller" page-mode>
+    <DynamicScroller :items="mentions" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
           <notification
             :message="item"
             :focused="item.id === focusedId"
             :overlaid="modalOpened"
+            :filters="[]"
             v-on:update="updateToot"
             @focusNext="focusNext"
             @focusPrev="focusPrev"
@@ -19,7 +20,6 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
     </div>
@@ -29,7 +29,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Notification from '~/src/renderer/components/organisms/Notification'
-import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
@@ -73,7 +72,7 @@ export default {
   },
   mounted() {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
-    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
@@ -95,9 +94,9 @@ export default {
     this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
     this.$store.commit('TimelineSpace/Contents/Mentions/archiveMentions')
-    if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
-      document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scrollable').scrollTop = 0
+    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scroller').scrollTop = 0
     }
   },
   watch: {
@@ -121,7 +120,7 @@ export default {
     onScroll(event) {
       // for lazyLoading
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('mentions').clientHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store.dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', this.mentions[this.mentions.length - 1]).catch(() => {
@@ -132,11 +131,15 @@ export default {
         })
       }
       // for unread control
-      if (event.target.scrollTop > 10 && this.heading) {
+      if (event.target.scrollTop > 5 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
+      } else if (event.target.scrollTop <= 5 && !this.heading) {
+        const currentPos = this.unread.length
+        if (currentPos === 0) {
+          this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
+        }
         this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
+        this.$refs.scroller.scrollToItem(currentPos)
       }
     },
     async reload() {
@@ -151,7 +154,7 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Mentions/updateToot', message)
     },
     upper() {
-      scrollTop(document.getElementById('scrollable'), 0)
+      this.$refs.scroller.scrollToItem(0)
       this.focusedId = null
     },
     focusNext() {
@@ -189,6 +192,14 @@ export default {
 
 <style lang="scss" scoped>
 #mentions {
+  height: 100%;
+  overflow: auto;
+  scroll-behavior: auto;
+
+  .scroller {
+    height: 100%;
+  }
+
   .unread {
     position: fixed;
     right: 24px;
@@ -197,6 +208,7 @@ export default {
     color: #fff;
     padding: 4px 8px;
     border-radius: 0 0 2px 2px;
+    z-index: 1;
 
     &:empty {
       display: none;
