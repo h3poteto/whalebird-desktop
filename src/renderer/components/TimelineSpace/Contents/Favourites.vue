@@ -1,13 +1,14 @@
 <template>
   <div id="favourites" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="favourites" :min-item-size="60" class="scroller" page-mode>
+    <DynamicScroller :items="favourites" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             :message="item"
             :focused="item.uri === focusedId"
             :overlaid="modalOpened"
+            :filters="[]"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusNext="focusNext"
@@ -19,7 +20,6 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
     </div>
@@ -29,7 +29,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import scrollTop from '../../utils/scroll'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
@@ -72,7 +71,7 @@ export default {
       })
   },
   mounted() {
-    document.getElementById('scrollable').addEventListener('scroll', this.onScroll)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
@@ -87,9 +86,9 @@ export default {
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Favourites/updateFavourites', [])
-    if (document.getElementById('scrollable') !== undefined && document.getElementById('scrollable') !== null) {
-      document.getElementById('scrollable').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scrollable').scrollTop = 0
+    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+      document.getElementById('scroller').scrollTop = 0
     }
   },
   watch: {
@@ -117,7 +116,7 @@ export default {
     },
     onScroll(event) {
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('favourites').clientHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store
@@ -151,7 +150,7 @@ export default {
       }
     },
     upper() {
-      scrollTop(document.getElementById('scrollable'), 0)
+      this.$refs.scroller.scrollToItem(0)
       this.focusedId = null
     },
     focusNext() {
@@ -188,24 +187,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loading-card {
-  height: 60px;
-}
+#favourites {
+  height: 100%;
+  overflow: auto;
+  scroll-behavior: auto;
+  .scroller {
+    height: 100%;
+  }
 
-.loading-card:empty {
-  height: 0;
-}
+  .upper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
 
-.upper {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-.upper-with-side-bar {
-  position: fixed;
-  bottom: 20px;
-  right: calc(20px + var(--current-sidebar-width));
-  transition: all 0.5s;
+  .upper-with-side-bar {
+    position: fixed;
+    bottom: 20px;
+    right: calc(20px + var(--current-sidebar-width));
+    transition: all 0.5s;
+  }
 }
 </style>
