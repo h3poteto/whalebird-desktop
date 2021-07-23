@@ -1597,10 +1597,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/nedb@^1.8.10":
-  version "1.8.11"
-  resolved "https://registry.yarnpkg.com/@types/nedb/-/nedb-1.8.11.tgz#a8f9d9c8d43d12e98df7cbcfeb5f107bbb0971c0"
-  integrity sha512-qHQRLZ0e6l/XK/2Qb2v5N1ujmdttYkUvnRI4nPIifMy6vYwoAnER10xhX13isWjjQtNsrjNLinZgDDguzPmEKw==
+"@types/nedb@^1.8.12":
+  version "1.8.12"
+  resolved "https://registry.yarnpkg.com/@types/nedb/-/nedb-1.8.12.tgz#597bb124ddaf16039c6d478f4abc0a8f2006b134"
+  integrity sha512-ICDoQMORMjOSqfNFXT4ENXfwwCir1BPblXNm0SPH7C4Q10ou+pvVagcFAJ+rrzf3A47tGU4K/KbzKu7wO9j45Q==
   dependencies:
     "@types/node" "*"
 
