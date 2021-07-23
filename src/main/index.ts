@@ -1161,7 +1161,8 @@ ipcMain.handle('save-marker', async (_: IpcMainInvokeEvent, marker: LocalMarker)
   if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
     return
   }
-  await markerRepo.save(marker)
+  const res = await markerRepo.save(marker)
+  return res
 })
 
 setTimeout(async () => {

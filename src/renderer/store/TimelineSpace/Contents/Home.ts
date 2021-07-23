@@ -37,7 +37,8 @@ export const MUTATION_TYPES = {
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
   SHOW_REBLOGS: 'showReblogs',
-  SHOW_REPLIES: 'showReplies'
+  SHOW_REPLIES: 'showReplies',
+  APPEND_TIMELINE_AFTER_LOADING_CARD: 'appendTimelineAfterLoadingCard'
 }
 
 const mutations: MutationTree<HomeState> = {
@@ -50,14 +51,15 @@ const mutations: MutationTree<HomeState> = {
   [MUTATION_TYPES.APPEND_STATUS]: (state, update: Entity.Status) => {
     // Reject duplicated status in timeline
     if (!state.timeline.find(item => item.id === update.id) && !state.unreadTimeline.find(item => item.id === update.id)) {
-      if (state.heading) {
+      if (state.heading && state.timeline[0].id !== 'loading-card') {
+        // TODO: これをやるならheadに戻ってきたときのmergeもloading-card条件を付けたい
         state.timeline = ([update] as Array<Entity.Status | LoadingCard>).concat(state.timeline)
       } else {
         state.unreadTimeline = [update].concat(state.unreadTimeline)
       }
     }
   },
-  [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Entity.Status>) => {
+  [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Entity.Status | LoadingCard>) => {
     state.timeline = messages
   },
   [MUTATION_TYPES.MERGE_TIMELINE]: state => {
@@ -98,7 +100,7 @@ const mutations: MutationTree<HomeState> = {
   [MUTATION_TYPES.DELETE_TOOT]: (state, messageId: string) => {
     state.timeline = state.timeline.filter(status => {
       if (status.id === 'loading-card') {
-        return false
+        return true
       }
       const toot = status as Entity.Status
       if (toot.reblog !== null && toot.reblog.id === messageId) {
@@ -113,6 +115,17 @@ const mutations: MutationTree<HomeState> = {
   },
   [MUTATION_TYPES.SHOW_REPLIES]: (state, visible: boolean) => {
     state.showReplies = visible
+  },
+  [MUTATION_TYPES.APPEND_TIMELINE_AFTER_LOADING_CARD]: (state, timeline: Array<Entity.Status | LoadingCard>) => {
+    const statuses = state.timeline.filter(status => status.id !== 'loading-card')
+    state.timeline = timeline.concat(statuses)
+    // const loadingCardIndex = state.timeline.findIndex(status => status.id === 'loading-card')
+    // if (loadingCardIndex === -1) {
+    //   return
+    // }
+    // const latest = state.timeline.slice(0, loadingCardIndex)
+    // const old = state.timeline.slice(loadingCardIndex + 1)
+    // state.timeline = latest.concat(timeline).concat(old)
   }
 }
 
@@ -178,12 +191,26 @@ const actions: ActionTree<HomeState, RootState> = {
       rootState.App.userAgent
     )
 
-    // TODO: commit
-    const res = await client.getHomeTimeline({ since_id: since_id, limit: 40 })
-    // limitに達しない場合はloadingCardを削除する
-    // limitに達する場合，loadingCardを削除した上で
-    // res.dataの先頭にloadingCardを追加
-    // した上でtimelineをマージする
+    // TODO: これのappendは上手く行ってるっぽく見えるのだが，問題は表示だ
+    // dynamic scrollerに噛ませると，かつてloadingcardがあった部分に無駄なスペースが発生している
+    // しかも，そこには本来statusが表示されているっぽいので，完全になにかレンダリング上の問題が発生している
+    // あとscroll positionを変えずにやりたい
+    // TODO: fedibirdでロードできてないんだけど？ <- saveされてるmarkerに問題がありそう
+    //
+    const res = await client.getHomeTimeline({ min_id: since_id, limit: 40 })
+    if (res.data.length >= 40) {
+      const card: LoadingCard = {
+        type: 'middle-load',
+        since_id: res.data[0].id,
+        max_id: null,
+        id: 'loading-card'
+      }
+      let timeline: Array<Entity.Status | LoadingCard> = [card]
+      timeline = timeline.concat(res.data)
+      commit(MUTATION_TYPES.APPEND_TIMELINE_AFTER_LOADING_CARD, timeline)
+    } else {
+      commit(MUTATION_TYPES.APPEND_TIMELINE_AFTER_LOADING_CARD, res.data)
+    }
     return res.data
   },
   getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
@@ -213,9 +240,9 @@ const actions: ActionTree<HomeState, RootState> = {
     return localMarker
   },
   saveMarker: async ({ state, rootState }) => {
-    if (!state.heading) {
-      return
-    }
+    // if (!state.heading) {
+    //   return
+    // }
     const timeline = state.timeline.filter(status => status.id !== 'loading-card')
     if (timeline.length === 0) {
       return

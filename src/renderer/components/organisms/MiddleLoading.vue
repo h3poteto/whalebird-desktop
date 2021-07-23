@@ -21,9 +21,9 @@ export default {
   methods: {
     onClick() {
       if (this.since_id !== '') {
-        this.emit('load_since', this.since_id)
+        this.$emit('load_since', this.since_id)
       } else if (this.max_id !== '') {
-        this.emit('load_max', this.max_id)
+        this.$emit('load_max', this.max_id)
       }
     }
   }

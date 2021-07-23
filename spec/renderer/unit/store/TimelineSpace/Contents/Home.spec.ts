@@ -1,5 +1,6 @@
 import { Entity } from 'megalodon'
 import Home, { HomeState, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Home'
+import { LoadingCard } from '~/src/types/loadingCard'
 
 const account: Entity.Account = {
   id: '1',
@@ -373,6 +374,118 @@ describe('TimelineSpace/Contents/Home', () => {
         it('should be deleted', () => {
           Home.mutations![MUTATION_TYPES.DELETE_TOOT](state, status1.id)
           expect(state.timeline).toEqual([status2])
+        })
+      })
+    })
+
+    describe('appendTimelineAfterLoadingCard', () => {
+      const loadingCard: LoadingCard = {
+        type: 'middle-load',
+        since_id: '1',
+        max_id: null,
+        id: 'loading-card'
+      }
+      const status3: Entity.Status = {
+        id: '3',
+        uri: 'http://example.com',
+        url: 'http://example.com',
+        account: account,
+        in_reply_to_id: null,
+        in_reply_to_account_id: null,
+        reblog: null,
+        content: 'hoge',
+        created_at: '2019-03-26T21:40:32',
+        emojis: [],
+        replies_count: 0,
+        reblogs_count: 0,
+        favourites_count: 0,
+        reblogged: null,
+        favourited: null,
+        muted: null,
+        sensitive: false,
+        spoiler_text: '',
+        visibility: 'public',
+        media_attachments: [],
+        mentions: [],
+        tags: [],
+        card: null,
+        poll: null,
+        application: {
+          name: 'Web'
+        } as Entity.Application,
+        language: null,
+        pinned: null,
+        emoji_reactions: [],
+        bookmarked: false,
+        quote: false
+      }
+      const status4: Entity.Status = {
+        id: '4',
+        uri: 'http://example.com',
+        url: 'http://example.com',
+        account: account,
+        in_reply_to_id: null,
+        in_reply_to_account_id: null,
+        reblog: null,
+        content: 'hoge',
+        created_at: '2019-03-26T21:40:32',
+        emojis: [],
+        replies_count: 0,
+        reblogs_count: 0,
+        favourites_count: 0,
+        reblogged: null,
+        favourited: null,
+        muted: null,
+        sensitive: false,
+        spoiler_text: '',
+        visibility: 'public',
+        media_attachments: [],
+        mentions: [],
+        tags: [],
+        card: null,
+        poll: null,
+        application: {
+          name: 'Web'
+        } as Entity.Application,
+        language: null,
+        pinned: null,
+        emoji_reactions: [],
+        bookmarked: false,
+        quote: false
+      }
+      beforeEach(() => {
+        state = {
+          lazyLoading: false,
+          heading: true,
+          timeline: [status4, loadingCard, status1],
+          unreadTimeline: [],
+          showReblogs: true,
+          showReplies: true
+        }
+      })
+      describe('without loading card', () => {
+        it('timeline is appended, and loading card is removed', () => {
+          Home.mutations![MUTATION_TYPES.APPEND_TIMELINE_AFTER_LOADING_CARD](state, [status3, status2])
+          expect(state.timeline[0]).toEqual(status4)
+          expect(state.timeline[1]).toEqual(status3)
+          expect(state.timeline[2]).toEqual(status2)
+          expect(state.timeline[3]).toEqual(status1)
+        })
+      })
+      describe('with lading card', () => {
+        it('timeline is appended, and new loading card is injected', () => {
+          const newCard: LoadingCard = {
+            type: 'middle-load',
+            since_id: '3',
+            max_id: null,
+            id: 'loading-card'
+          }
+          Home.mutations![MUTATION_TYPES.APPEND_TIMELINE_AFTER_LOADING_CARD](state, [newCard, status3, status2])
+          expect(state.timeline[0]).toEqual(status4)
+          expect(state.timeline[1]).toEqual(newCard)
+          expect(state.timeline[2]).toEqual(status3)
+          expect(state.timeline[3]).toEqual(status2)
+          expect(state.timeline[4]).toEqual(status1)
         })
       })
     })
