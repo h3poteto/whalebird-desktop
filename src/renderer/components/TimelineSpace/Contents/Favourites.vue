@@ -191,6 +191,7 @@ export default {
   height: 100%;
   overflow: auto;
   scroll-behavior: auto;
+
   .scroller {
     height: 100%;
   }
