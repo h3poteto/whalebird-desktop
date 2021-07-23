@@ -85,17 +85,17 @@ export default {
   .timeline-wrapper {
     height: 100%;
     width: 100%;
-    overflow: auto;
-    transition: all 0.5s;
-    scroll-behavior: auto;
+    /* overflow: auto; */
+    /* transition: all 0.5s; */
+    /* scroll-behavior: auto; */
   }
 
   .timeline-wrapper-with-side-bar {
     height: 100%;
     width: calc(100% - var(--current-sidebar-width));
-    overflow: auto;
-    transition: all 0.5s;
-    scroll-behavior: auto;
+    /* overflow: auto; */
+    /* transition: all 0.5s; */
+    /* scroll-behavior: auto; */
   }
 
   #resizer {
