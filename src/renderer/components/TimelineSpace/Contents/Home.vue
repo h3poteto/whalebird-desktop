@@ -218,6 +218,7 @@ export default {
     color: #ffffff;
     padding: 4px 8px;
     border-radius: 0 0 2px 2px;
+    z-index: 1;
 
     &:empty {
       display: none;
