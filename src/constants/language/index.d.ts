@@ -8,6 +8,7 @@ export type LanguageList = {
   de: LanguageType
   en: LanguageType
   fr: LanguageType
+  gd: LanguageType
   ja: LanguageType
   ko: LanguageType
   pl: LanguageType

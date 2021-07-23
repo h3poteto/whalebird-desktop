@@ -2,7 +2,7 @@ import * as path from 'path'
 import fs from 'fs'
 import keys from 'all-object-keys'
 
-const locales = ['de', 'fr', 'it', 'ja', 'ko', 'pl', 'it', 'zh_cn', 'zh_tw', 'cs', 'es_es', 'no', 'pt_pt', 'ru', 'si', 'sv_se', 'tzm']
+const locales = ['de', 'fr', 'gd', 'it', 'ja', 'ko', 'pl', 'it', 'zh_cn', 'zh_tw', 'cs', 'es_es', 'no', 'pt_pt', 'ru', 'si', 'sv_se', 'tzm']
 
 describe('i18n', () => {
   describe('should not define duplicate keys', () => {
