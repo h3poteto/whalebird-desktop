@@ -282,7 +282,7 @@
     "listr": "^0.14.3",
     "mini-css-extract-plugin": "^2.1.0",
     "node-loader": "^2.0.0",
-    "node-sass": "^6.0.0",
+    "node-sass": "^6.0.1",
     "prettier": "^2.3.0",
     "prettier-stylelint": "^0.4.2",
     "regenerator-runtime": "^0.13.7",
