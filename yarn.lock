@@ -4553,10 +4553,10 @@ electron-log@^4.4.0:
   resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-4.4.0.tgz#0f350004565bb246e58e7b4af0b320c9f7aef3e8"
   integrity sha512-LOp3elm5mOAAoQmvK8ZOaD75m6DvybWNMkwd8ZtZm23bymbxI///bZ42r/XvqKgmFCnv32/L+fz0mkDE4DMA/g==
 
-electron-mock-ipc@^0.3.9:
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/electron-mock-ipc/-/electron-mock-ipc-0.3.9.tgz#aae1adbc94f7d95a4c6534f7a0497904a338dd5d"
-  integrity sha512-KLcIfdDfA+DnK29/269zfBF4UxpIpkwj2ZVXdOtMvkPRutlpQZqa+hs24wXc/0DHiTKSKlapGHfPTlcZKGSh6A==
+electron-mock-ipc@^0.3.11:
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/electron-mock-ipc/-/electron-mock-ipc-0.3.11.tgz#b9ffefad13bb01f9e98a791b1a4f4b73abf7befc"
+  integrity sha512-cL+MX7Rx27Q8v11zwbivj/TcWYYiSZcYydtpkBhl+C6o5yKQu/E9kzqQR3mvrF9t1QyWekp+6AxcQtCl7sOOOQ==
 
 electron-notarize@^1.0.0:
   version "1.0.0"
