@@ -228,7 +228,7 @@
     "@babel/runtime": "7.14.8",
     "@electron/universal": "^1.0.5",
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.4.0",
-    "@types/auto-launch": "^5.0.1",
+    "@types/auto-launch": "^5.0.2",
     "@types/electron-json-storage": "^4.5.0",
     "@types/i18next": "^13.0.0",
     "@types/jest": "26.0.24",
