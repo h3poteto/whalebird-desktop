@@ -1,8 +1,7 @@
 <template>
   <div id="mentions" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="mentions" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
+    <DynamicScroller :items="mentions" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
           <notification
@@ -31,6 +30,7 @@ import { mapState, mapGetters } from 'vuex'
 import Notification from '~/src/renderer/components/organisms/Notification'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
+import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
   name: 'mentions',
@@ -38,7 +38,8 @@ export default {
   mixins: [reloadable],
   data() {
     return {
-      focusedId: null
+      focusedId: null,
+      scroll: null
     }
   },
   computed: {
@@ -53,8 +54,7 @@ export default {
     }),
     ...mapState('TimelineSpace/Contents/Mentions', {
       lazyLoading: state => state.lazyLoading,
-      heading: state => state.heading,
-      unread: state => state.unreadMentions
+      heading: state => state.heading
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     ...mapGetters('TimelineSpace/Contents/Mentions', ['mentions']),
@@ -81,10 +81,23 @@ export default {
         this.focusedId = previousFocusedId
       })
     })
+    const el = document.getElementById('scroller')
+    this.scroll = new ScrollPosition(el)
+    this.scroll.prepare()
   },
   beforeUpdate() {
     if (this.$store.state.TimelineSpace.SideMenu.unreadMentions && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
+    }
+    if (!this.heading) {
+      const el = document.getElementById('scroller')
+      this.scroll = new ScrollPosition(el)
+      this.scroll.prepare()
+    }
+  },
+  updated() {
+    if (this.scroll && !this.heading) {
+      this.scroll.restore()
     }
   },
   beforeDestroy() {
@@ -92,7 +105,6 @@ export default {
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
-    this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
     this.$store.commit('TimelineSpace/Contents/Mentions/archiveMentions')
     if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
       document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
@@ -112,7 +124,6 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
       }
     }
   },
@@ -130,16 +141,11 @@ export default {
           })
         })
       }
-      // for unread control
-      if (event.target.scrollTop > 5 && this.heading) {
+
+      if (event.target.scrollTop > 10 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
-      } else if (event.target.scrollTop <= 5 && !this.heading) {
-        const currentPos = this.unread.length
-        if (currentPos === 0) {
-          this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
-        }
-        this.$store.commit('TimelineSpace/Contents/Mentions/mergeMentions')
-        this.$refs.scroller.scrollToItem(currentPos)
+      } else if (event.target.scrollTop <= 10 && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
       }
     },
     async reload() {
@@ -198,21 +204,6 @@ export default {
 
   .scroller {
     height: 100%;
-  }
-
-  .unread {
-    position: fixed;
-    right: 24px;
-    top: 48px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 0 0 2px 2px;
-    z-index: 1;
-
-    &:empty {
-      display: none;
-    }
   }
 
   .loading-card {

@@ -6,14 +6,12 @@ export type MentionsState = {
   lazyLoading: boolean
   heading: boolean
   mentions: Array<Entity.Notification>
-  unreadMentions: Array<Entity.Notification>
 }
 
 const state = (): MentionsState => ({
   lazyLoading: false,
   heading: true,
-  mentions: [],
-  unreadMentions: []
+  mentions: []
 })
 
 export const MUTATION_TYPES = {
@@ -21,7 +19,6 @@ export const MUTATION_TYPES = {
   CHANGE_HEADING: 'changeHeading',
   APPEND_MENTIONS: 'appendMentions',
   UPDATE_MENTIONS: 'updateMentions',
-  MERGE_MENTIONS: 'mergeMentions',
   INSERT_MENTIONS: 'insertMentions',
   ARCHIVE_MENTIONS: 'archiveMentions',
   CLEAR_MENTIONS: 'clearMentions',
@@ -38,20 +35,12 @@ const mutations: MutationTree<MentionsState> = {
   },
   [MUTATION_TYPES.APPEND_MENTIONS]: (state, update: Entity.Notification) => {
     // Reject duplicated status in timeline
-    if (!state.mentions.find(item => item.id === update.id) && !state.unreadMentions.find(item => item.id === update.id)) {
-      if (state.heading) {
-        state.mentions = [update].concat(state.mentions)
-      } else {
-        state.unreadMentions = [update].concat(state.unreadMentions)
-      }
+    if (!state.mentions.find(item => item.id === update.id)) {
+      state.mentions = [update].concat(state.mentions)
     }
   },
   [MUTATION_TYPES.UPDATE_MENTIONS]: (state, messages: Array<Entity.Notification>) => {
     state.mentions = messages
-  },
-  [MUTATION_TYPES.MERGE_MENTIONS]: state => {
-    state.mentions = state.unreadMentions.slice(0, 80).concat(state.mentions)
-    state.unreadMentions = []
   },
   [MUTATION_TYPES.INSERT_MENTIONS]: (state, messages: Array<Entity.Notification>) => {
     state.mentions = state.mentions.concat(messages)
@@ -61,7 +50,6 @@ const mutations: MutationTree<MentionsState> = {
   },
   [MUTATION_TYPES.CLEAR_MENTIONS]: state => {
     state.mentions = []
-    state.unreadMentions = []
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Notification) => {
     state.mentions = state.mentions.map(mention => {

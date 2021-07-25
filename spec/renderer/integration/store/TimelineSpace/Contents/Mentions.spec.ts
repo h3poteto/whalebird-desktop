@@ -115,8 +115,7 @@ let state: Function = () => {
   return {
     lazyLoading: false,
     heading: true,
-    mentions: [],
-    unreadMentions: []
+    mentions: []
   }
 }
 
@@ -176,8 +175,7 @@ describe('Mentions', () => {
           return {
             lazyLoading: true,
             heading: true,
-            mentions: [],
-            unreadMentions: []
+            mentions: []
           }
         }
       })
@@ -193,8 +191,7 @@ describe('Mentions', () => {
           return {
             lazyLoading: false,
             heading: true,
-            mentions: [mention, reblog],
-            unreadMentions: []
+            mentions: [mention, reblog]
           }
         }
       })
@@ -224,8 +221,7 @@ describe('Mentions', () => {
         return {
           lazyLoading: false,
           heading: true,
-          mentions: [mention, favourite, reblog, follow],
-          unreadMentions: []
+          mentions: [mention, favourite, reblog, follow]
         }
       }
     })
