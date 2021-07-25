@@ -120,8 +120,7 @@ let state = (): ShowState => {
   return {
     lazyLoading: false,
     heading: true,
-    timeline: [],
-    unreadTimeline: []
+    timeline: []
   }
 }
 
@@ -180,8 +179,7 @@ describe('Lists/Show', () => {
         return {
           lazyLoading: false,
           heading: true,
-          timeline: [status1],
-          unreadTimeline: []
+          timeline: [status1]
         }
       }
     })
