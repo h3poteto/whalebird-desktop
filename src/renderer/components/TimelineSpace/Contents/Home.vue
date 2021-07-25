@@ -1,8 +1,7 @@
 <template>
   <div id="home" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="filteredTimeline" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
+    <DynamicScroller :items="filteredTimeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
@@ -33,6 +32,7 @@ import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
+import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
   name: 'home',
@@ -40,7 +40,8 @@ export default {
   mixins: [reloadable],
   data() {
     return {
-      focusedId: null
+      focusedId: null,
+      scroll: null
     }
   },
   computed: {
@@ -48,7 +49,6 @@ export default {
       timeline: state => state.timeline,
       lazyLoading: state => state.lazyLoading,
       heading: state => state.heading,
-      unread: state => state.unreadTimeline,
       showReblogs: state => state.showReblogs,
       showReplies: state => state.showReplies
     }),
@@ -97,10 +97,23 @@ export default {
     if (this.heading && this.timeline.length > 0) {
       this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', this.timeline[0].id)
     }
+    const el = document.getElementById('scroller')
+    this.scroll = new ScrollPosition(el)
+    this.scroll.prepare()
   },
   beforeUpdate() {
     if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
+    }
+    if (!this.heading) {
+      const el = document.getElementById('scroller')
+      this.scroll = new ScrollPosition(el)
+      this.scroll.prepare()
+    }
+  },
+  updated() {
+    if (this.scroll && !this.heading) {
+      this.scroll.restore()
     }
   },
   beforeDestroy() {
@@ -108,7 +121,6 @@ export default {
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
-    this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
     this.$store.commit('TimelineSpace/Contents/Home/archiveTimeline')
     if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
       document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
@@ -128,7 +140,6 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
       }
     },
     timeline: function (newState, _oldState) {
@@ -151,16 +162,11 @@ export default {
           })
         })
       }
-      // for unread control
+
       if (event.target.scrollTop > 10 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', false)
       } else if (event.target.scrollTop <= 5 && !this.heading) {
-        const currentPos = this.unread.length
-        if (currentPos === 0) {
-          this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
-        }
-        this.$store.commit('TimelineSpace/Contents/Home/mergeTimeline')
-        this.$refs.scroller.scrollToItem(currentPos)
+        this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
       }
     },
     updateToot(message) {
@@ -222,21 +228,6 @@ export default {
 
   .scroller {
     height: 100%;
-  }
-
-  .unread {
-    position: fixed;
-    right: 24px;
-    top: 48px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 0 0 2px 2px;
-    z-index: 1;
-
-    &:empty {
-      display: none;
-    }
   }
 
   .loading-card {

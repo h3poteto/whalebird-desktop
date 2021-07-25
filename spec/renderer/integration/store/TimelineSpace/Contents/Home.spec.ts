@@ -118,7 +118,6 @@ let state = (): HomeState => {
     lazyLoading: false,
     heading: true,
     timeline: [],
-    unreadTimeline: [],
     showReblogs: true,
     showReplies: true
   }

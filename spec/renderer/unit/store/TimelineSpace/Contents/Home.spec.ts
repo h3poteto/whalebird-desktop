@@ -99,7 +99,6 @@ describe('TimelineSpace/Contents/Home', () => {
         lazyLoading: false,
         heading: true,
         timeline: [],
-        unreadTimeline: [],
         showReblogs: true,
         showReplies: true
       }
@@ -127,7 +126,6 @@ describe('TimelineSpace/Contents/Home', () => {
               lazyLoading: false,
               heading: true,
               timeline: [status1],
-              unreadTimeline: [],
               showReblogs: true,
               showReplies: true
             }
@@ -135,7 +133,6 @@ describe('TimelineSpace/Contents/Home', () => {
           it('should update timeline', () => {
             Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
             expect(state.timeline).toEqual([status2, status1])
-            expect(state.unreadTimeline).toEqual([])
           })
         })
 
@@ -145,7 +142,6 @@ describe('TimelineSpace/Contents/Home', () => {
               lazyLoading: false,
               heading: true,
               timeline: [status2, status1],
-              unreadTimeline: [],
               showReblogs: true,
               showReplies: true
             }
@@ -153,7 +149,6 @@ describe('TimelineSpace/Contents/Home', () => {
           it('should not update timeline', () => {
             Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
             expect(state.timeline).toEqual([status2, status1])
-            expect(state.unreadTimeline).toEqual([])
           })
         })
       })
@@ -165,15 +160,13 @@ describe('TimelineSpace/Contents/Home', () => {
               lazyLoading: false,
               heading: false,
               timeline: [status1],
-              unreadTimeline: [],
               showReblogs: true,
               showReplies: true
             }
           })
-          it('should update unreadTimeline', () => {
+          it('should update timeline', () => {
             Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
-            expect(state.timeline).toEqual([status1])
-            expect(state.unreadTimeline).toEqual([status2])
+            expect(state.timeline).toEqual([status2, status1])
           })
         })
         describe('duplicated status', () => {
@@ -181,36 +174,16 @@ describe('TimelineSpace/Contents/Home', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              timeline: [],
-              unreadTimeline: [status2, status1],
+              timeline: [status2, status1],
               showReblogs: true,
               showReplies: true
             }
           })
           it('should not update unreadTimeline', () => {
             Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
-            expect(state.timeline).toEqual([])
-            expect(state.unreadTimeline).toEqual([status2, status1])
+            expect(state.timeline).toEqual([status2, status1])
           })
         })
-      })
-    })
-
-    describe('mergeTimeline', () => {
-      beforeEach(() => {
-        state = {
-          lazyLoading: false,
-          heading: true,
-          timeline: [status1],
-          unreadTimeline: [status2],
-          showReblogs: true,
-          showReplies: true
-        }
-      })
-      it('should be merged', () => {
-        Home.mutations![MUTATION_TYPES.MERGE_TIMELINE](state, null)
-        expect(state.timeline).toEqual([status2, status1])
-        expect(state.unreadTimeline).toEqual([])
       })
     })
 
@@ -220,7 +193,6 @@ describe('TimelineSpace/Contents/Home', () => {
           lazyLoading: false,
           heading: true,
           timeline: [status1],
-          unreadTimeline: [],
           showReblogs: true,
           showReplies: true
         }
@@ -238,7 +210,6 @@ describe('TimelineSpace/Contents/Home', () => {
             lazyLoading: false,
             heading: true,
             timeline: [status1, status2],
-            unreadTimeline: [],
             showReblogs: true,
             showReplies: true
           }
@@ -294,7 +265,6 @@ describe('TimelineSpace/Contents/Home', () => {
             lazyLoading: false,
             heading: true,
             timeline: [rebloggedStatus, status2],
-            unreadTimeline: [],
             showReblogs: true,
             showReplies: true
           }
@@ -314,7 +284,6 @@ describe('TimelineSpace/Contents/Home', () => {
             lazyLoading: false,
             heading: true,
             timeline: [status1, status2],
-            unreadTimeline: [],
             showReblogs: true,
             showReplies: true
           }
@@ -365,7 +334,6 @@ describe('TimelineSpace/Contents/Home', () => {
             lazyLoading: false,
             heading: true,
             timeline: [rebloggedStatus, status2],
-            unreadTimeline: [],
             showReblogs: true,
             showReplies: true
           }
