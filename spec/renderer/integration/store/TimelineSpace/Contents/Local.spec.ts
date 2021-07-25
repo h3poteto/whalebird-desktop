@@ -117,8 +117,7 @@ let state = (): LocalState => {
   return {
     lazyLoading: false,
     heading: true,
-    timeline: [],
-    unreadTimeline: []
+    timeline: []
   }
 }
 
