@@ -94,14 +94,14 @@ export default {
     if (this.$store.state.TimelineSpace.SideMenu.unreadLocalTimeline && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
     }
-    if (!this.heading) {
+    if (!this.heading && !this.lazyLoading) {
       const el = document.getElementById('scroller')
       this.scroll = new ScrollPosition(el)
       this.scroll.prepare()
     }
   },
   updated() {
-    if (this.scroll && !this.heading) {
+    if (this.scroll && !this.heading && !this.lazyLoading) {
       this.scroll.restore()
     }
   },
