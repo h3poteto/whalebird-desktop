@@ -179,7 +179,7 @@ describe('TimelineSpace/Contents/Home', () => {
               showReplies: true
             }
           })
-          it('should not update unreadTimeline', () => {
+          it('should not update timeline', () => {
             Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
             expect(state.timeline).toEqual([status2, status1])
           })

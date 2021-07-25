@@ -1,6 +1,5 @@
 <template>
   <div id="notifications" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
     <DynamicScroller :items="handledNotifications" :min-item-size="20" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
@@ -31,6 +30,7 @@ import { mapState, mapGetters } from 'vuex'
 import Notification from '~/src/renderer/components/organisms/Notification'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
+import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
   name: 'notifications',
@@ -38,7 +38,8 @@ export default {
   mixins: [reloadable],
   data() {
     return {
-      focusedId: null
+      focusedId: null,
+      scroll: null
     }
   },
   computed: {
@@ -49,8 +50,7 @@ export default {
     }),
     ...mapState('TimelineSpace/Contents/Notifications', {
       lazyLoading: state => state.lazyLoading,
-      heading: state => state.heading,
-      unread: state => state.unreadNotifications
+      heading: state => state.heading
     }),
     ...mapGetters('TimelineSpace/Contents/Notifications', ['handledNotifications', 'filters']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
@@ -83,10 +83,23 @@ export default {
     if (this.heading && this.handledNotifications.length > 0) {
       this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker', this.handledNotifications[0].id)
     }
+    const el = document.getElementById('scroller')
+    this.scroll = new ScrollPosition(el)
+    this.scroll.prepare()
   },
   beforeUpdate() {
-    if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications) {
+    if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
+    }
+    if (!this.heading) {
+      const el = document.getElementById('scroller')
+      this.scroll = new ScrollPosition(el)
+      this.scroll.prepare()
+    }
+  },
+  updated() {
+    if (this.scroll && !this.heading) {
+      this.scroll.restore()
     }
   },
   beforeDestroy() {
@@ -94,7 +107,6 @@ export default {
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
-    this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
     this.$store.commit('TimelineSpace/Contents/Notifications/archiveNotifications')
     if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
       document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
@@ -114,7 +126,6 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       }
     },
@@ -142,16 +153,11 @@ export default {
             })
           })
       }
-      // for unread control
-      if (event.target.scrollTop > 5 && this.heading) {
+
+      if (event.target.scrollTop > 10 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
-      } else if (event.target.scrollTop <= 5 && !this.heading) {
-        const currentPos = this.unread.length
-        if (currentPos === 0) {
-          this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
-        }
-        this.$store.commit('TimelineSpace/Contents/Notifications/mergeNotifications')
-        this.$refs.scroller.scrollToItem(currentPos)
+      } else if (event.target.scrollTop <= 10 && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       }
     },
@@ -212,21 +218,6 @@ export default {
 
   .scroller {
     height: 100%;
-  }
-
-  .unread {
-    position: fixed;
-    right: 24px;
-    top: 48px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 0 0 2px 2px;
-    z-index: 1;
-
-    &:empty {
-      display: none;
-    }
   }
 
   .loading-card {

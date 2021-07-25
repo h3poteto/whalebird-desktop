@@ -10,14 +10,12 @@ export type NotificationsState = {
   lazyLoading: boolean
   heading: boolean
   notifications: Array<Entity.Notification>
-  unreadNotifications: Array<Entity.Notification>
 }
 
 const state = (): NotificationsState => ({
   lazyLoading: false,
   heading: true,
-  notifications: [],
-  unreadNotifications: []
+  notifications: []
 })
 
 export const MUTATION_TYPES = {
@@ -25,7 +23,6 @@ export const MUTATION_TYPES = {
   CHANGE_HEADING: 'changeHeading',
   APPEND_NOTIFICATIONS: 'appendNotifications',
   UPDATE_NOTIFICATIONS: 'updateNotifications',
-  MERGE_NOTIFICATIONS: 'mergeNotifications',
   INSERT_NOTIFICATIONS: 'insertNotifications',
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
@@ -42,23 +39,12 @@ const mutations: MutationTree<NotificationsState> = {
   },
   [MUTATION_TYPES.APPEND_NOTIFICATIONS]: (state, notification: Entity.Notification) => {
     // Reject duplicated status in timeline
-    if (
-      !state.notifications.find(item => item.id === notification.id) &&
-      !state.unreadNotifications.find(item => item.id === notification.id)
-    ) {
-      if (state.heading) {
-        state.notifications = [notification].concat(state.notifications)
-      } else {
-        state.unreadNotifications = [notification].concat(state.unreadNotifications)
-      }
+    if (!state.notifications.find(item => item.id === notification.id)) {
+      state.notifications = [notification].concat(state.notifications)
     }
   },
   [MUTATION_TYPES.UPDATE_NOTIFICATIONS]: (state, notifications: Array<Entity.Notification>) => {
     state.notifications = notifications
-  },
-  [MUTATION_TYPES.MERGE_NOTIFICATIONS]: state => {
-    state.notifications = state.unreadNotifications.slice(0, 80).concat(state.notifications)
-    state.unreadNotifications = []
   },
   [MUTATION_TYPES.INSERT_NOTIFICATIONS]: (state, notifications: Array<Entity.Notification>) => {
     state.notifications = state.notifications.concat(notifications)
