@@ -175,8 +175,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
         state = {
           lazyLoading: false,
           heading: true,
-          notifications: [notification2, notification1],
-          unreadNotifications: []
+          notifications: [notification2, notification1]
         }
       })
       describe('message is not reblogged', () => {
@@ -200,14 +199,12 @@ describe('TimelineSpace/Contents/Notifications', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              notifications: [notification1],
-              unreadNotifications: []
+              notifications: [notification1]
             }
           })
           it('should update timeline', () => {
             Notifications.mutations![MUTATION_TYPES.APPEND_NOTIFICATIONS](state, notification2)
             expect(state.notifications).toEqual([notification2, notification1])
-            expect(state.unreadNotifications).toEqual([])
           })
         })
 
@@ -216,14 +213,12 @@ describe('TimelineSpace/Contents/Notifications', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              notifications: [notification2, notification1],
-              unreadNotifications: []
+              notifications: [notification2, notification1]
             }
           })
           it('should not update timeline', () => {
             Notifications.mutations![MUTATION_TYPES.APPEND_NOTIFICATIONS](state, notification2)
             expect(state.notifications).toEqual([notification2, notification1])
-            expect(state.unreadNotifications).toEqual([])
           })
         })
       })
@@ -234,14 +229,12 @@ describe('TimelineSpace/Contents/Notifications', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              notifications: [notification1],
-              unreadNotifications: []
+              notifications: [notification1]
             }
           })
-          it('should update unreadTimeline', () => {
+          it('should update timeline', () => {
             Notifications.mutations![MUTATION_TYPES.APPEND_NOTIFICATIONS](state, notification2)
-            expect(state.notifications).toEqual([notification1])
-            expect(state.unreadNotifications).toEqual([notification2])
+            expect(state.notifications).toEqual([notification2, notification1])
           })
         })
         describe('duplicated status', () => {
@@ -249,14 +242,12 @@ describe('TimelineSpace/Contents/Notifications', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              notifications: [notification1],
-              unreadNotifications: [notification2]
+              notifications: [notification2, notification1]
             }
           })
-          it('should not update unreadTimeline', () => {
+          it('should not update timeline', () => {
             Notifications.mutations![MUTATION_TYPES.APPEND_NOTIFICATIONS](state, notification2)
-            expect(state.notifications).toEqual([notification1])
-            expect(state.unreadNotifications).toEqual([notification2])
+            expect(state.notifications).toEqual([notification2, notification1])
           })
         })
       })

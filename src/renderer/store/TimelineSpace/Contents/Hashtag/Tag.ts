@@ -8,14 +8,12 @@ const win = (window as any) as MyWindow
 
 export type TagState = {
   timeline: Array<Entity.Status>
-  unreadTimeline: Array<Entity.Status>
   lazyLoading: boolean
   heading: boolean
 }
 
 const state = (): TagState => ({
   timeline: [],
-  unreadTimeline: [],
   lazyLoading: false,
   heading: true
 })
@@ -24,7 +22,6 @@ export const MUTATION_TYPES = {
   CHANGE_HEADING: 'changeHeading',
   APPEND_TIMELINE: 'appendTimeline',
   UPDATE_TIMELINE: 'updateTimeline',
-  MERGE_TIMELINE: 'mergeTimeline',
   INSERT_TIMELINE: 'insertTimeline',
   ARCHIVE_TIMELINE: 'archiveTimeline',
   CLEAR_TIMELINE: 'clearTimeline',
@@ -39,20 +36,12 @@ const mutations: MutationTree<TagState> = {
   },
   [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Entity.Status) => {
     // Reject duplicated status in timeline
-    if (!state.timeline.find(item => item.id === update.id) && !state.unreadTimeline.find(item => item.id === update.id)) {
-      if (state.heading) {
-        state.timeline = [update].concat(state.timeline)
-      } else {
-        state.unreadTimeline = [update].concat(state.unreadTimeline)
-      }
+    if (!state.timeline.find(item => item.id === update.id)) {
+      state.timeline = [update].concat(state.timeline)
     }
   },
   [MUTATION_TYPES.UPDATE_TIMELINE]: (state, timeline: Array<Entity.Status>) => {
     state.timeline = timeline
-  },
-  [MUTATION_TYPES.MERGE_TIMELINE]: state => {
-    state.timeline = state.unreadTimeline.slice(0, 80).concat(state.timeline)
-    state.unreadTimeline = []
   },
   [MUTATION_TYPES.INSERT_TIMELINE]: (state, messages: Array<Entity.Status>) => {
     state.timeline = state.timeline.concat(messages)
@@ -62,7 +51,6 @@ const mutations: MutationTree<TagState> = {
   },
   [MUTATION_TYPES.CLEAR_TIMELINE]: state => {
     state.timeline = []
-    state.unreadTimeline = []
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Status) => {
     state.timeline = state.timeline.map(toot => {

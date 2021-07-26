@@ -136,8 +136,7 @@ describe('TimelineSpace/Contents/Local', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [status2, status1],
-            unreadTimeline: []
+            timeline: [status2, status1]
           }
         })
         it('should be deleted', () => {
@@ -151,8 +150,7 @@ describe('TimelineSpace/Contents/Local', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [status2, rebloggedStatus],
-            unreadTimeline: []
+            timeline: [status2, rebloggedStatus]
           }
         })
         it('should be deleted', () => {
@@ -169,14 +167,12 @@ describe('TimelineSpace/Contents/Local', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              timeline: [status2, status1],
-              unreadTimeline: []
+              timeline: [status2, status1]
             }
           })
           it('should be updated timeline', () => {
             Public.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
             expect(state.timeline).toEqual([rebloggedStatus, status2, status1])
-            expect(state.unreadTimeline).toEqual([])
           })
         })
 
@@ -185,14 +181,12 @@ describe('TimelineSpace/Contents/Local', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              timeline: [rebloggedStatus, status2, status1],
-              unreadTimeline: []
+              timeline: [rebloggedStatus, status2, status1]
             }
           })
           it('should not be updated timeline', () => {
             Public.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
             expect(state.timeline).toEqual([rebloggedStatus, status2, status1])
-            expect(state.unreadTimeline).toEqual([])
           })
         })
       })
@@ -203,14 +197,12 @@ describe('TimelineSpace/Contents/Local', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              timeline: [status2, status1],
-              unreadTimeline: []
+              timeline: [status2, status1]
             }
           })
           it('should be updated timeline', () => {
             Public.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
-            expect(state.timeline).toEqual([status2, status1])
-            expect(state.unreadTimeline).toEqual([rebloggedStatus])
+            expect(state.timeline).toEqual([rebloggedStatus, status2, status1])
           })
         })
 
@@ -219,14 +211,12 @@ describe('TimelineSpace/Contents/Local', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              timeline: [rebloggedStatus, status2, status1],
-              unreadTimeline: []
+              timeline: [rebloggedStatus, status2, status1]
             }
           })
           it('should not be updated timeline', () => {
             Public.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
             expect(state.timeline).toEqual([rebloggedStatus, status2, status1])
-            expect(state.unreadTimeline).toEqual([])
           })
         })
       })

@@ -1,8 +1,7 @@
 <template>
   <div name="tag" class="tag-timeline" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div class="unread">{{ unread.length > 0 ? unread.length : '' }}</div>
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="timeline" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
+    <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
@@ -32,6 +31,7 @@ import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
+import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
   name: 'tag',
@@ -40,7 +40,8 @@ export default {
   props: ['tag'],
   data() {
     return {
-      focusedId: null
+      focusedId: null,
+      scroll: null
     }
   },
   computed: {
@@ -50,8 +51,7 @@ export default {
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
       timeline: state => state.TimelineSpace.Contents.Hashtag.Tag.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Hashtag.Tag.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Hashtag.Tag.heading,
-      unread: state => state.TimelineSpace.Contents.Hashtag.Tag.unreadTimeline
+      heading: state => state.TimelineSpace.Contents.Hashtag.Tag.heading
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
@@ -81,6 +81,21 @@ export default {
         this.focusedId = previousFocusedId
       })
     })
+    const el = document.getElementById('scroller')
+    this.scroll = new ScrollPosition(el)
+    this.scroll.prepare()
+  },
+  beforeUpdate() {
+    if (!this.heading && !this.lazyLoading) {
+      const el = document.getElementById('scroller')
+      this.scroll = new ScrollPosition(el)
+      this.scroll.prepare()
+    }
+  },
+  updated() {
+    if (this.scroll && !this.heading && !this.lazyLoading) {
+      this.scroll.restore()
+    }
   },
   watch: {
     tag: function (newTag, _oldTag) {
@@ -102,7 +117,6 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', false)
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
       }
     }
   },
@@ -129,7 +143,6 @@ export default {
     },
     reset() {
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
-      this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/archiveTimeline')
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/clearTimeline')
       if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
@@ -153,16 +166,11 @@ export default {
           status: this.timeline[this.timeline.length - 1]
         })
       }
-      // for unread control
-      if (event.target.scrollTop > 5 && this.heading) {
+
+      if (event.target.scrollTop > 10 && this.heading) {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', false)
-      } else if (event.target.scrollTop <= 5 && !this.heading) {
-        const currentPos = this.unread.length
-        if (currentPos === 0) {
-          this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
-        }
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/mergeTimeline')
-        this.$refs.scroller.scrollToItem(currentPos)
+      } else if (event.target.scrollTop <= 10 && !this.heading) {
+        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
       }
     },
     async reload() {
@@ -232,21 +240,6 @@ export default {
 
   .scroller {
     height: 100%;
-  }
-
-  .unread {
-    position: fixed;
-    right: 24px;
-    top: 48px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 0 0 2px 2px;
-    z-index: 1;
-
-    &:empty {
-      display: none;
-    }
   }
 
   .upper {

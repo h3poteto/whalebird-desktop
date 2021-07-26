@@ -192,8 +192,7 @@ let state = (): NotificationsState => {
   return {
     lazyLoading: false,
     heading: true,
-    notifications: [],
-    unreadNotifications: []
+    notifications: []
   }
 }
 
@@ -253,8 +252,7 @@ describe('Notifications', () => {
         return {
           lazyLoading: false,
           heading: true,
-          notifications: [notification1],
-          unreadNotifications: []
+          notifications: [notification1]
         }
       }
     })

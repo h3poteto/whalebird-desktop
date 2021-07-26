@@ -173,8 +173,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
       state = {
         lazyLoading: false,
         heading: true,
-        mentions: [],
-        unreadMentions: []
+        mentions: []
       }
     })
 
@@ -185,14 +184,12 @@ describe('TimelineSpace/Contents/Mentions', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              mentions: [notification1],
-              unreadMentions: []
+              mentions: [notification1]
             }
           })
           it('should update mentions', () => {
             Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
             expect(state.mentions).toEqual([notification2, notification1])
-            expect(state.unreadMentions).toEqual([])
           })
         })
 
@@ -201,14 +198,12 @@ describe('TimelineSpace/Contents/Mentions', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              mentions: [notification2, notification1],
-              unreadMentions: []
+              mentions: [notification2, notification1]
             }
           })
           it('should not be updated mentions', () => {
             Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
             expect(state.mentions).toEqual([notification2, notification1])
-            expect(state.unreadMentions).toEqual([])
           })
         })
       })
@@ -219,14 +214,12 @@ describe('TimelineSpace/Contents/Mentions', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              mentions: [notification1],
-              unreadMentions: []
+              mentions: [notification1]
             }
           })
           it('should update mentions', () => {
             Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
-            expect(state.mentions).toEqual([notification1])
-            expect(state.unreadMentions).toEqual([notification2])
+            expect(state.mentions).toEqual([notification2, notification1])
           })
         })
 
@@ -235,32 +228,14 @@ describe('TimelineSpace/Contents/Mentions', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              mentions: [notification1],
-              unreadMentions: [notification2]
+              mentions: [notification2, notification1]
             }
           })
           it('should not be updated mentions', () => {
             Mentions.mutations![MUTATION_TYPES.APPEND_MENTIONS](state, notification2)
-            expect(state.mentions).toEqual([notification1])
-            expect(state.unreadMentions).toEqual([notification2])
+            expect(state.mentions).toEqual([notification2, notification1])
           })
         })
-      })
-    })
-
-    describe('mergeMentions', () => {
-      beforeEach(() => {
-        state = {
-          lazyLoading: false,
-          heading: false,
-          mentions: [notification1],
-          unreadMentions: [notification2]
-        }
-      })
-      it('should be merged', () => {
-        Mentions.mutations![MUTATION_TYPES.MERGE_MENTIONS](state, null)
-        expect(state.mentions).toEqual([notification2, notification1])
-        expect(state.unreadMentions).toEqual([])
       })
     })
 
@@ -269,8 +244,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
         state = {
           lazyLoading: false,
           heading: false,
-          mentions: [notification2],
-          unreadMentions: []
+          mentions: [notification2]
         }
       })
       it('should be inserted', () => {
@@ -284,8 +258,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
         state = {
           lazyLoading: false,
           heading: false,
-          mentions: [notification2, notification1],
-          unreadMentions: []
+          mentions: [notification2, notification1]
         }
       })
       it('should be updated', () => {
@@ -304,8 +277,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            mentions: [notification2, notification1],
-            unreadMentions: []
+            mentions: [notification2, notification1]
           }
         })
         it('should be deleted', () => {
@@ -318,8 +290,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            mentions: [notification2, notification1],
-            unreadMentions: []
+            mentions: [notification2, notification1]
           }
         })
         it('should be deleted', () => {
