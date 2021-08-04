@@ -42,12 +42,12 @@ linux:
 
 win32:
 	yarn run package:win32
-	mv build/Whalebird-${VERSION}-win.exe build/Whalebird-${VERSION}-windows-ia32.exe
+	mv build/Whalebird-${VERSION}-win-ia32.exe build/Whalebird-${VERSION}-windows-ia32.exe
 	cd build; shasum -a 256 Whalebird-${VERSION}-windows-ia32.exe >> sha256sum.txt
 
 win64:
 	yarn run package:win64
-	mv build/Whalebird-${VERSION}-win.exe build/Whalebird-${VERSION}-windows-x64.exe
+	mv build/Whalebird-${VERSION}-win-x64.exe build/Whalebird-${VERSION}-windows-x64.exe
 	cd build; shasum -a 256 Whalebird-${VERSION}-windows-x64.exe >> sha256sum.txt
 
 clean:
