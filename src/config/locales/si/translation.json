@@ -277,7 +277,7 @@
       "title": "New Toot",
       "cw": "Write your warning here",
       "status": "What is on your mind?",
-      "cancel": "Cancel",
+      "cancel": "අවලංගු",
       "toot": "Toot",
       "close_confirm": "Are you sure you want to discard this toot?",
       "close_confirm_ok": "Discard",
@@ -294,12 +294,12 @@
       "poll": {
         "add_choice": "Add a choice",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
+          "5_minutes": "විනාඩි 5",
+          "30_minutes": "විනාඩි 30",
+          "1_hour": "පැය 1",
+          "6_hours": "පැය 6",
+          "1_day": "දවස් 1",
+          "3_days": "දවස් 3",
           "7_days": "7 days"
         }
       }
