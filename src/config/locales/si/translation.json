@@ -7,7 +7,7 @@
       "services": "සේවාවන්",
       "hide": "Hide Whalebird",
       "hide_others": "Hide Others",
-      "show_all": "Show All",
+      "show_all": "සියල්ල පෙන්වන්න",
       "open": "Open Window",
       "quit": "ඉවත් වන්න"
     },
@@ -81,7 +81,7 @@
       "apply": "යොදන්න"
     },
     "new_toot": "Toot",
-    "reload": "Reload",
+    "reload": "නැවත පූරණය",
     "settings": "සැකසුම්"
   },
   "settings": {
@@ -95,7 +95,7 @@
           "notice": "This setting applies to only new toots, replies follow visibility of original toots",
           "public": "Public",
           "unlisted": "Unlisted",
-          "private": "Private",
+          "private": "පුද්ගලික",
           "direct": "Direct"
         },
         "sensitive": {
@@ -106,9 +106,9 @@
     "timeline": {
       "title": "Timeline",
       "unread_notification": {
-        "title": "Unread Notification",
+        "title": "නොකියවූ දැනුම්දීම",
         "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
+        "direct": "සෘජු පණිවිඩ",
         "local": "Local Timeline",
         "public": "Public Timeline"
       }
@@ -127,23 +127,23 @@
       "expires": {
         "never": "Never",
         "30_minutes": "විනාඩි 30",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "1_hour": "පැය 1",
+        "6_hours": "පැය 6",
+        "12_hours": "පැය 12",
+        "1_day": "දවස් 1",
+        "1_week": "සති 1"
       },
       "new": {
-        "title": "New"
+        "title": "නව"
       },
       "edit": {
-        "title": "Edit"
+        "title": "සංස්කරණය"
       },
       "delete": {
         "title": "Delete",
         "confirm": "Are you sure to delete this filter?",
         "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "confirm_cancel": "අවලංගු"
       }
     }
   },
@@ -152,7 +152,7 @@
     "general": {
       "title": "General",
       "sounds": {
-        "title": "Sounds",
+        "title": "ශබ්ද",
         "description": "Please set feedback sounds.",
         "fav_rb": "When you favorite or boost the toot",
         "toot": "When you post toot"
@@ -162,12 +162,12 @@
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nsfw": "Always ignore NSFW of medias",
-        "hideAllAttachments": "Hide all medias",
+        "hideAllAttachments": "සියලුම මාධ්‍ය සඟවන්න",
         "useMarker": "Load timeline from the last reading position",
         "useMarkerNotice": "This feature only supports home and notifications"
       },
       "other": {
-        "title": "Other options",
+        "title": "වෙනත් විකල්ප",
         "launch": "Launch app on login"
       }
     },
@@ -176,11 +176,11 @@
       "theme_color": "Theme color",
       "theme": {
         "light": "Light",
-        "dark": "Dark",
+        "dark": "අඳුරු",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "අභිරුචි"
       },
       "custom_theme": {
         "background_color": "Base background",
@@ -201,7 +201,7 @@
         "title": "Display style of username",
         "display_name_and_username": "Display name and username",
         "display_name": "Display name",
-        "username": "Username"
+        "username": "පරිශීලක නාමය"
       },
       "time_format": {
         "title": "Time format",
@@ -210,7 +210,7 @@
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "දැනුම්දීම",
       "enable": {
         "description": "Please set notification events.",
         "reply": "Notify me when I receive a reply",
@@ -225,26 +225,26 @@
       }
     },
     "account": {
-      "title": "Account",
-      "connected": "Connected Account",
-      "username": "Username",
-      "domain": "Domain",
+      "title": "ගිණුම",
+      "connected": "සම්බන්ධිත ගිණුම",
+      "username": "පරිශීලක නාමය",
+      "domain": "වසම",
       "association": "Association",
       "order": "Order",
       "remove_association": "Remove association",
       "remove_all_associations": "Remove all associations",
       "confirm": "Confirm",
-      "cancel": "Cancel",
+      "cancel": "අවලංගු",
       "confirm_message": "Are you sure to remove all associations?"
     },
     "network": {
-      "title": "Network",
+      "title": "ජාලය",
       "proxy": {
         "title": "Proxy Configuration",
         "no": "No proxy",
         "system": "Use system proxy",
         "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
+        "protocol": "කෙටුම්පත",
         "host": "Proxy host",
         "port": "Proxy port",
         "username": "Proxy username",
@@ -258,12 +258,12 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "සුරකින්න"
     },
     "language": {
-      "title": "Language",
+      "title": "භාෂාව",
       "language": {
-        "title": "Language",
+        "title": "භාෂාව",
         "description": "Choose the language you would like to use with Whalebird."
       },
       "spellchecker": {
@@ -300,7 +300,7 @@
           "6_hours": "පැය 6",
           "1_day": "දවස් 1",
           "3_days": "දවස් 3",
-          "7_days": "7 days"
+          "7_days": "දවස් 7"
         }
       }
     },
@@ -309,7 +309,7 @@
     },
     "add_list_member": {
       "title": "Add Member to List",
-      "account_name": "Account name"
+      "account_name": "ගිණුමේ නම"
     },
     "list_membership": {
       "title": "List Memberships"
@@ -317,11 +317,11 @@
     "mute_confirm": {
       "title": "Are you sure you want to mute?",
       "body": "Hide notification from this user?",
-      "cancel": "Cancel",
+      "cancel": "අවලංගු",
       "ok": "Mute"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
+      "title": "යතුරුපුවරුවේ කෙටිමං",
       "ctrl_number": "Switch accounts",
       "ctrl_k": "Jump to other timelines",
       "ctrl_n": "Open the new toot modal",
@@ -344,28 +344,28 @@
     "report": {
       "title": "Reporting this user",
       "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
+      "cancel": "අවලංගු",
+      "ok": "වාර්තා කරන්න"
     }
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
+      "show_more": "තව පෙන්වන්න",
+      "hide": "සඟවන්න",
       "sensitive": "Show sensitive content",
       "view_toot_detail": "View Toot Detail",
       "open_in_browser": "Open in Browser",
       "copy_link_to_toot": "Copy Link to Toot",
       "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
+      "block": "අවහිර",
+      "report": "වාර්තා කරන්න",
       "delete": "Delete",
       "via": "via {{application}}",
-      "reply": "Reply",
+      "reply": "පිළිතුරු",
       "reblog": "Reblog",
-      "fav": "Favourite",
+      "fav": "ප්‍රියතම",
       "detail": "Toot details",
-      "bookmark": "Bookmark",
+      "bookmark": "පොත්යොමුව",
       "pinned": "Pinned toot",
       "poll": {
         "vote": "Vote",
@@ -380,7 +380,7 @@
     "account_profile": {
       "follows_you": "Follows you",
       "doesnt_follow_you": "Doesn't follow you",
-      "detail": "Detail",
+      "detail": "විස්තරය",
       "follow": "Follow this user",
       "unfollow": "Unfollow this user",
       "subscribe": "Subscribe this user",
@@ -390,8 +390,8 @@
       "manage_list_memberships": "Manage List Memberships",
       "mute": "Mute",
       "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
+      "unblock": "අනවහිර",
+      "block": "අවහිර",
       "toots": "Toots",
       "follows": "Follows",
       "followers": "Followers"
@@ -407,8 +407,8 @@
     "save_tag": "Save tag"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
+    "search": "සොයන්න",
+    "account": "ගිණුම",
     "tag": "Hashtag",
     "keyword": "keyword",
     "toot": "Toot"
@@ -477,14 +477,14 @@
     "bookmark_error": "Failed to bookmark",
     "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Failed to delete the toot",
-    "search_error": "Failed to search",
+    "search_error": "සෙවීමට අසමත්විය",
     "toot_error": "Failed to toot",
     "update_list_memberships_error": "Failed to update the list memberships",
     "add_user_error": "Failed to add user",
     "authorize_url_error": "Failed to get authorize url",
     "domain_confirmed": "{{domain}} is confirmed, please login",
     "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
-    "loading": "Loading...",
+    "loading": "පූරණය වෙමින්…",
     "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
     "update_filter_error": "Failed to update the filter",
     "create_filter_error": "Failed to create the filter"
