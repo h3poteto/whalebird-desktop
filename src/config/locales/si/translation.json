@@ -30,8 +30,8 @@
     },
     "window": {
       "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
+      "name": "කවුළුව",
+      "close": "කවුළුව වසන්න",
       "open": "Open Window",
       "minimize": "Minimize",
       "jump_to": "Jump to"
@@ -41,51 +41,51 @@
     "add_new_account": "Add new account"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
+    "profile": "පැතිකඩ",
+    "show_profile": "පැතිකඩ පෙන්වන්න",
+    "edit_profile": "පැතිකඩ සංස්කරණය",
+    "settings": "සැකසුම්",
     "collapse": "Collapse",
     "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
+    "home": "මුල",
+    "notification": "දැනුම්දීම",
     "mention": "Mention",
     "direct": "Direct messages",
     "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
+    "favourite": "ප්‍රියතම",
+    "bookmark": "පොත්යොමුව",
     "local": "Local timeline",
     "public": "Public timeline",
     "hashtag": "Hashtag",
-    "search": "Search",
+    "search": "සොයන්න",
     "lists": "Lists"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
+    "home": "මුල",
+    "notification": "දැනුම්දීම",
     "mention": "Mention",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
+    "favourite": "ප්‍රියතම",
+    "bookmark": "පොත්යොමුව",
     "follow_requests": "Follow Requests",
     "direct_messages": "Direct Messages",
     "local": "Local timeline",
     "public": "Public timeline",
     "hashtag": "Hashtag",
-    "search": "Search",
+    "search": "සොයන්න",
     "lists": "Lists",
-    "members": "Members",
+    "members": "සාමාජිකයින්",
     "option": {
       "title": "Option",
       "show_reblogs": "Show reblogs",
       "show_replies": "Show replies",
-      "apply": "Apply"
+      "apply": "යොදන්න"
     },
     "new_toot": "Toot",
     "reload": "Reload",
-    "settings": "Settings"
+    "settings": "සැකසුම්"
   },
   "settings": {
-    "title": "Settings",
+    "title": "සැකසුම්",
     "general": {
       "title": "General",
       "toot": {
@@ -114,7 +114,7 @@
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "පෙරහන්",
       "form": {
         "phrase": "Keyword or phrase",
         "expire": "Expire after",
@@ -122,11 +122,11 @@
         "irreversible": "Drop instead of hide",
         "whole_word": "Whole word",
         "submit": "Submit",
-        "cancel": "Cancel"
+        "cancel": "අවලංගු"
       },
       "expires": {
         "never": "Never",
-        "30_minutes": "30 minutes",
+        "30_minutes": "විනාඩි 30",
         "1_hour": "1 hour",
         "6_hours": "6 hours",
         "12_hours": "12 hours",
