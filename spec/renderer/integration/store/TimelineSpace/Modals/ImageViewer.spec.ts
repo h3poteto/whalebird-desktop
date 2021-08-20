@@ -89,17 +89,17 @@ describe('ImageViewer', () => {
           currentIndex: 0,
           mediaList: [
             {
-              url: 'http://github.com'
+              url: 'http://joinmastodon.org'
             },
             {
-              url: 'http://google.com'
+              url: 'http://fuckoffgoogle.de'
             }
           ]
         })
       })
       it('should return url', () => {
         const url = store.getters['ImageViewer/imageURL']
-        expect(url).toEqual('http://github.com')
+        expect(url).toEqual('http://joinmastodon.org')
       })
     })
   })
