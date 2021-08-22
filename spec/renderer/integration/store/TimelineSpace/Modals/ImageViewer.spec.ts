@@ -92,7 +92,7 @@ describe('ImageViewer', () => {
               url: 'http://joinmastodon.org'
             },
             {
-              url: 'http://fuckoffgoogle.de'
+              url: 'https://docs-develop.pleroma.social'
             }
           ]
         })
