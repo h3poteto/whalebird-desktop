@@ -53,8 +53,6 @@ const actions: ActionTree<LoginState, RootState> = {
       const sns = await detector(`https://${cleanDomain}`)
       commit(MUTATION_TYPES.CHANGE_INSTANCE, cleanDomain)
       commit(MUTATION_TYPES.CHANGE_SNS, sns)
-    } catch {
-      return false
     } finally {
       commit(MUTATION_TYPES.CHANGE_SEARCHING, false)
     }
