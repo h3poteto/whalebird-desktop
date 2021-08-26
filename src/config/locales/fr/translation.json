@@ -496,7 +496,8 @@
     },
     "new_toot": {
       "toot_length": "Le nombre de caractères d'un pouet doit être compris entre {{min}} et {{max}}",
-      "attach_length": "Nous ne pouvez joindre qu'un maximum de {{max}} images à votre pouet",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
       "attach_image": "Vous ne pouvez attacher que des images ou des vidéos",
       "poll_invalid": "Choix de sondage invalides"
     }
