@@ -496,7 +496,8 @@
     },
     "new_toot": {
       "toot_length": "Bu chòir dhan phost a bhith eadar {{min}} is {{max}} a dh’fhaid",
-      "attach_length": "Chan urrainn dhut barrachd air {{max}} dealbh(an) a cheangal ris",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
       "attach_image": "Chan urrainn dhut ach dealbhan no videothan a cheangal ris",
       "poll_invalid": "Roghainnean mì-dhligheach sa chunntas-bheachd"
     }

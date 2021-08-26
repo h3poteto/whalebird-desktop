@@ -496,7 +496,8 @@
     },
     "new_toot": {
       "toot_length": "La lunghezza del post deve essere da {{min}} a {{max}}",
-      "attach_length": "È possibile allegare fino a {{max}} immagini",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
       "attach_image": "È possibile allegare solo immagini o video",
       "poll_invalid": "Scelte del sondaggio non valide"
     }

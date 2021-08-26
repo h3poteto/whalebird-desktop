@@ -496,7 +496,8 @@
     },
     "new_toot": {
       "toot_length": "嘟文长度应在 {{min}} 到 {{max}} 字之间",
-      "attach_length": "最多上传 {{max}} 张图片",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
       "attach_image": "只能上传图片或视频",
       "poll_invalid": "投票选项无效"
     }

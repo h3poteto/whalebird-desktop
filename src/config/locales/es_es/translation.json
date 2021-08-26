@@ -496,7 +496,8 @@
     },
     "new_toot": {
       "toot_length": "La longitud del Toot debe ser de {{min}} a {{max}}",
-      "attach_length": "Solo puede adjuntar hasta {{max}} imágenes",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
       "attach_image": "Sólo puede adjuntar imágenes o vídeos",
       "poll_invalid": "Opciones de encuestas inválidas"
     }

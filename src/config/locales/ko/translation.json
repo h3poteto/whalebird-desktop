@@ -496,7 +496,8 @@
     },
     "new_toot": {
       "toot_length": "툿 글자수는 최소 {{min}} 자 에서 최대 {{max}} 자 입니다",
-      "attach_length": "사진은 최대 {{max}} 장 까지 첨부할 수 있습니다",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
       "attach_image": "이미지나 비디오만 첨부할 수 있습니다",
       "poll_invalid": "Invalid poll choices"
     }

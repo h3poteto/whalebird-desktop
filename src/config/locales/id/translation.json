@@ -496,7 +496,8 @@
     },
     "new_toot": {
       "toot_length": "Panjang toot harus {{min}} hingga {{max}}",
-      "attach_length": "Anda dapat melampirkan hingga {{max}} gambar",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
       "attach_image": "Anda hanya dapat melampirkan gambar atau video",
       "poll_invalid": "Pilihan angket invalid"
     }
