@@ -262,7 +262,7 @@
     "electron-devtools-installer": "^3.2.0",
     "electron-mock-ipc": "^0.3.11",
     "electron-packager": "^15.3.0",
-    "eslint": "^7.31.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-friendly-formatter": "^4.0.1",
