@@ -40,7 +40,8 @@ export default {
   data() {
     return {
       focusedId: null,
-      scroll: null
+      scroll: null,
+      observer: null
     }
   },
   computed: {
@@ -89,21 +90,21 @@ export default {
     const el = document.getElementById('scroller')
     this.scroll = new ScrollPosition(el)
     this.scroll.prepare()
+
+    this.observer = new ResizeObserver(() => {
+      if (this.scroll && !this.heading && !this.lazyLoading) {
+        this.scroll.restore()
+      }
+    })
+
+    const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
+    this.observer.observe(scrollWrapper)
   },
   beforeUpdate() {
     if (this.$store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', false)
     }
-    if (!this.heading && !this.lazyLoading) {
-      const el = document.getElementById('scroller')
-      this.scroll = new ScrollPosition(el)
-      this.scroll.prepare()
-    }
-  },
-  updated() {
-    if (this.scroll && !this.heading && !this.lazyLoading) {
-      this.scroll.restore()
-    }
+    this.scroll.prepare()
   },
   beforeDestroy() {
     if (!this.unreadNotification.direct) {
@@ -111,6 +112,7 @@ export default {
       this.$store.dispatch('TimelineSpace/unbindDirectMessagesStreaming')
     }
     Event.$off('focus-timeline')
+    this.observer.disconnect()
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
