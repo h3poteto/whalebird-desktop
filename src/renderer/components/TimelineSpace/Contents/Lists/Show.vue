@@ -41,7 +41,8 @@ export default {
   data() {
     return {
       focusedId: null,
-      scroll: null
+      scroll: null,
+      observer: null
     }
   },
   computed: {
@@ -85,18 +86,18 @@ export default {
     const el = document.getElementById('scroller')
     this.scroll = new ScrollPosition(el)
     this.scroll.prepare()
+
+    this.observer = new ResizeObserver(() => {
+      if (this.scroll && !this.heading && !this.lazyLoading) {
+        this.scroll.restore()
+      }
+    })
+
+    const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
+    this.observer.observe(scrollWrapper)
   },
   beforeUpdate() {
-    if (!this.heading && !this.lazyLoading) {
-      const el = document.getElementById('scroller')
-      this.scroll = new ScrollPosition(el)
-      this.scroll.prepare()
-    }
-  },
-  updated() {
-    if (this.scroll && !this.heading && !this.lazyLoading) {
-      this.scroll.restore()
-    }
+    this.scroll.prepare()
   },
   watch: {
     list_id: function () {
@@ -122,6 +123,7 @@ export default {
   },
   beforeDestroy() {
     this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
+    this.observer.disconnect()
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
