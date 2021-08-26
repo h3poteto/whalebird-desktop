@@ -496,7 +496,8 @@
     },
     "new_toot": {
       "toot_length": "Ixeṣ ad tili tiɣzi seg {{min}} ar {{max}}",
-      "attach_length": "Tzmred ɣas ad teqqned ar {{max}} twelafin",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
       "attach_image": "Tzmerd ɣas ad teqqned tiwlafin neɣ ividyuten",
       "poll_invalid": "Invalid poll choices"
     }
