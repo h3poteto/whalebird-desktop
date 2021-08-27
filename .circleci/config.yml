@@ -26,3 +26,9 @@ jobs:
       - run:
           name: spec
           command: yarn run spec
+      - run:
+          name: compile main
+          command: yarn run pack:main
+      - run:
+          name: compile renderer
+          command: yarn run pack:renderer
