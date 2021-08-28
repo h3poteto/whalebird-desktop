@@ -28,6 +28,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
@@ -40,15 +41,18 @@ export default {
   data() {
     return {
       focusedId: null,
-      scroll: null,
-      observer: null
+      scrollPosition: null,
+      observer: null,
+      scrollTime: null,
+      resizeTime: null
     }
   },
   computed: {
     ...mapState('TimelineSpace/Contents/Local', {
       timeline: state => state.timeline,
       lazyLoading: state => state.lazyLoading,
-      heading: state => state.heading
+      heading: state => state.heading,
+      scrolling: state => state.scrolling
     }),
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
@@ -88,12 +92,13 @@ export default {
       })
     })
     const el = document.getElementById('scroller')
-    this.scroll = new ScrollPosition(el)
-    this.scroll.prepare()
+    this.scrollPosition = new ScrollPosition(el)
+    this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (this.scroll && !this.heading && !this.lazyLoading) {
-        this.scroll.restore()
+      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
+        this.resizeTime = moment()
+        this.scrollPosition.restore()
       }
     })
 
@@ -104,7 +109,9 @@ export default {
     if (this.$store.state.TimelineSpace.SideMenu.unreadLocalTimeline && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
     }
-    this.scroll.prepare()
+    if (this.scrollPosition) {
+      this.scrollPosition.prepare()
+    }
   },
   beforeDestroy() {
     if (!this.unreadNotification.local) {
@@ -159,6 +166,14 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Local/deleteToot', message.id)
     },
     onScroll(event) {
+      if (moment().diff(this.resizeTime) < 500) {
+        return
+      }
+      this.scrollTime = moment()
+      if (!this.scrolling) {
+        this.$store.commit('TimelineSpace/Contents/Local/changeScrolling', true)
+      }
+
       if (
         event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
@@ -175,6 +190,14 @@ export default {
       } else if (event.target.scrollTop <= 10 && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
       }
+
+      setTimeout(() => {
+        const now = moment()
+        if (now.diff(this.scrollTime) >= 150) {
+          this.scrollTime = null
+          this.$store.commit('TimelineSpace/Contents/Local/changeScrolling', false)
+        }
+      }, 150)
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)

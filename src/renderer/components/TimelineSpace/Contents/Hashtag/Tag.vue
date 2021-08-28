@@ -28,6 +28,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
@@ -41,8 +42,10 @@ export default {
   data() {
     return {
       focusedId: null,
-      scroll: null,
-      observer: null
+      scrollPosition: null,
+      observer: null,
+      scrollTime: null,
+      resizeTime: null
     }
   },
   computed: {
@@ -52,7 +55,8 @@ export default {
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
       timeline: state => state.TimelineSpace.Contents.Hashtag.Tag.timeline,
       lazyLoading: state => state.TimelineSpace.Contents.Hashtag.Tag.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Hashtag.Tag.heading
+      heading: state => state.TimelineSpace.Contents.Hashtag.Tag.heading,
+      scrolling: state => state.TimelineSpace.Contents.Hashtag.Tag.scrolling
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
@@ -83,12 +87,13 @@ export default {
       })
     })
     const el = document.getElementById('scroller')
-    this.scroll = new ScrollPosition(el)
-    this.scroll.prepare()
+    this.scrollPosition = new ScrollPosition(el)
+    this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (this.scroll && !this.heading && !this.lazyLoading) {
-        this.scroll.restore()
+      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
+        this.resizeTime = moment()
+        this.scrollPosition.restore()
       }
     })
 
@@ -96,7 +101,9 @@ export default {
     this.observer.observe(scrollWrapper)
   },
   beforeUpdate() {
-    this.scroll.prepare()
+    if (this.scrollPosition) {
+      this.scrollPosition.prepare()
+    }
   },
   watch: {
     tag: function (newTag, _oldTag) {
@@ -159,6 +166,14 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/deleteToot', toot.id)
     },
     onScroll(event) {
+      if (moment().diff(this.resizeTime) < 500) {
+        return
+      }
+      this.scrollTime = moment()
+      if (!this.scrolling) {
+        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeScrolling', true)
+      }
+
       if (
         event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
@@ -174,6 +189,14 @@ export default {
       } else if (event.target.scrollTop <= 10 && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
       }
+
+      setTimeout(() => {
+        const now = moment()
+        if (now.diff(this.scrollTime) >= 150) {
+          this.scrollTime = null
+          this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeScrolling', false)
+        }
+      }, 150)
     },
     async reload() {
       const tag = this.tag

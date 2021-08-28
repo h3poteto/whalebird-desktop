@@ -29,6 +29,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
@@ -41,8 +42,10 @@ export default {
   data() {
     return {
       focusedId: null,
-      scroll: null,
-      observer: null
+      scrollPosition: null,
+      observer: null,
+      scrollTime: null,
+      resizeTime: null
     }
   },
   computed: {
@@ -51,7 +54,8 @@ export default {
       lazyLoading: state => state.lazyLoading,
       heading: state => state.heading,
       showReblogs: state => state.showReblogs,
-      showReplies: state => state.showReplies
+      showReplies: state => state.showReplies,
+      scrolling: state => state.scrolling
     }),
     ...mapState({
       backgroundColor: state => state.App.theme.background_color,
@@ -99,12 +103,13 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', this.timeline[0].id)
     }
     const el = document.getElementById('scroller')
-    this.scroll = new ScrollPosition(el)
-    this.scroll.prepare()
+    this.scrollPosition = new ScrollPosition(el)
+    this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (this.scroll && !this.heading && !this.lazyLoading) {
-        this.scroll.restore()
+      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
+        this.resizeTime = moment()
+        this.scrollPosition.restore()
       }
     })
 
@@ -115,7 +120,9 @@ export default {
     if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
     }
-    this.scroll.prepare()
+    if (this.scrollPosition) {
+      this.scrollPosition.prepare()
+    }
   },
   beforeDestroy() {
     Event.$off('focus-timeline')
@@ -152,6 +159,14 @@ export default {
   },
   methods: {
     onScroll(event) {
+      if (moment().diff(this.resizeTime) < 500) {
+        return
+      }
+      this.scrollTime = moment()
+      if (!this.scrolling) {
+        this.$store.commit('TimelineSpace/Contents/Home/changeScrolling', true)
+      }
+
       // for lazyLoading
       if (
         event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
@@ -170,6 +185,14 @@ export default {
       } else if (event.target.scrollTop <= 5 && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
       }
+
+      setTimeout(() => {
+        const now = moment()
+        if (now.diff(this.scrollTime) >= 150) {
+          this.scrollTime = null
+          this.$store.commit('TimelineSpace/Contents/Home/changeScrolling', false)
+        }
+      }, 150)
     },
     updateToot(message) {
       this.$store.commit('TimelineSpace/Contents/Home/updateToot', message)

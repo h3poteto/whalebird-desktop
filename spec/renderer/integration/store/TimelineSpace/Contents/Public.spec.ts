@@ -117,7 +117,8 @@ let state = (): PublicState => {
   return {
     lazyLoading: false,
     heading: true,
-    timeline: []
+    timeline: [],
+    scrolling: false
   }
 }
 
@@ -179,8 +180,7 @@ describe('Home', () => {
             lazyLoading: false,
             heading: true,
             timeline: [status1],
-            showReblogs: true,
-            showReplies: true
+            scrolling: false
           }
         }
       })

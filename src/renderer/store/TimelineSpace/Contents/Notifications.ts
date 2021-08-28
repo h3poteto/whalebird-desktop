@@ -10,12 +10,14 @@ export type NotificationsState = {
   lazyLoading: boolean
   heading: boolean
   notifications: Array<Entity.Notification>
+  scrolling: boolean
 }
 
 const state = (): NotificationsState => ({
   lazyLoading: false,
   heading: true,
-  notifications: []
+  notifications: [],
+  scrolling: false
 })
 
 export const MUTATION_TYPES = {
@@ -27,7 +29,8 @@ export const MUTATION_TYPES = {
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
   CLEAR_NOTIFICATIONS: 'clearNotifications',
-  ARCHIVE_NOTIFICATIONS: 'archiveNotifications'
+  ARCHIVE_NOTIFICATIONS: 'archiveNotifications',
+  CHANGE_SCROLLING: 'changeScrolling'
 }
 
 const mutations: MutationTree<NotificationsState> = {
@@ -81,6 +84,9 @@ const mutations: MutationTree<NotificationsState> = {
   },
   [MUTATION_TYPES.ARCHIVE_NOTIFICATIONS]: state => {
     state.notifications = state.notifications.slice(0, 30)
+  },
+  [MUTATION_TYPES.CHANGE_SCROLLING]: (state, value: boolean) => {
+    state.scrolling = value
   }
 }
 

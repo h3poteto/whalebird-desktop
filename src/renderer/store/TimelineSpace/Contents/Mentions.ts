@@ -6,12 +6,14 @@ export type MentionsState = {
   lazyLoading: boolean
   heading: boolean
   mentions: Array<Entity.Notification>
+  scrolling: boolean
 }
 
 const state = (): MentionsState => ({
   lazyLoading: false,
   heading: true,
-  mentions: []
+  mentions: [],
+  scrolling: false
 })
 
 export const MUTATION_TYPES = {
@@ -23,7 +25,8 @@ export const MUTATION_TYPES = {
   ARCHIVE_MENTIONS: 'archiveMentions',
   CLEAR_MENTIONS: 'clearMentions',
   UPDATE_TOOT: 'updateToot',
-  DELETE_TOOT: 'deleteToot'
+  DELETE_TOOT: 'deleteToot',
+  CHANGE_SCROLLING: 'changeScrolling'
 }
 
 const mutations: MutationTree<MentionsState> = {
@@ -75,6 +78,9 @@ const mutations: MutationTree<MentionsState> = {
         return true
       }
     })
+  },
+  [MUTATION_TYPES.CHANGE_SCROLLING]: (state, value: boolean) => {
+    state.scrolling = value
   }
 }
 

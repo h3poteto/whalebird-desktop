@@ -133,6 +133,7 @@ let state = (): DirectMessagesState => {
   return {
     lazyLoading: false,
     heading: true,
+    scrolling: false,
     timeline: []
   }
 }
@@ -195,9 +196,8 @@ describe('Home', () => {
           return {
             lazyLoading: false,
             heading: true,
-            timeline: [status1],
-            showReblogs: true,
-            showReplies: true
+            scrolling: false,
+            timeline: [status1]
           }
         }
       })
