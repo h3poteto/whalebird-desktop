@@ -27,6 +27,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import moment from 'moment'
 import Notification from '~/src/renderer/components/organisms/Notification'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
@@ -39,8 +40,10 @@ export default {
   data() {
     return {
       focusedId: null,
-      scroll: null,
-      observer: null
+      scrollPosition: null,
+      observer: null,
+      scrollTime: null,
+      resizeTime: null
     }
   },
   computed: {
@@ -55,7 +58,8 @@ export default {
     }),
     ...mapState('TimelineSpace/Contents/Mentions', {
       lazyLoading: state => state.lazyLoading,
-      heading: state => state.heading
+      heading: state => state.heading,
+      scrolling: state => state.scrolling
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     ...mapGetters('TimelineSpace/Contents/Mentions', ['mentions']),
@@ -83,12 +87,13 @@ export default {
       })
     })
     const el = document.getElementById('scroller')
-    this.scroll = new ScrollPosition(el)
-    this.scroll.prepare()
+    this.scrollPosition = new ScrollPosition(el)
+    this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (this.scroll && !this.heading && !this.lazyLoading) {
-        this.scroll.restore()
+      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
+        this.resizeTime = moment()
+        this.scrollPosition.restore()
       }
     })
 
@@ -99,7 +104,9 @@ export default {
     if (this.$store.state.TimelineSpace.SideMenu.unreadMentions && this.heading) {
       this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
     }
-    this.scroll.prepare()
+    if (this.scrollPosition) {
+      this.scrollPosition.prepare()
+    }
   },
   beforeDestroy() {
     Event.$off('focus-timeline')
@@ -131,6 +138,14 @@ export default {
   },
   methods: {
     onScroll(event) {
+      if (moment().diff(this.resizeTime) < 500) {
+        return
+      }
+      this.scrollTime = moment()
+      if (!this.scrolling) {
+        this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', true)
+      }
+
       // for lazyLoading
       if (
         event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
@@ -149,6 +164,14 @@ export default {
       } else if (event.target.scrollTop <= 10 && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
       }
+
+      setTimeout(() => {
+        const now = moment()
+        if (now.diff(this.scrollTime) >= 150) {
+          this.scrollTime = null
+          this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', false)
+        }
+      }, 150)
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)

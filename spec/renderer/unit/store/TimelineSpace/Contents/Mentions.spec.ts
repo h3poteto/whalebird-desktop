@@ -173,6 +173,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
       state = {
         lazyLoading: false,
         heading: true,
+        scrolling: false,
         mentions: []
       }
     })
@@ -184,6 +185,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
             state = {
               lazyLoading: false,
               heading: true,
+              scrolling: false,
               mentions: [notification1]
             }
           })
@@ -198,6 +200,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
             state = {
               lazyLoading: false,
               heading: true,
+              scrolling: false,
               mentions: [notification2, notification1]
             }
           })
@@ -214,6 +217,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
             state = {
               lazyLoading: false,
               heading: false,
+              scrolling: false,
               mentions: [notification1]
             }
           })
@@ -228,6 +232,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
             state = {
               lazyLoading: false,
               heading: false,
+              scrolling: false,
               mentions: [notification2, notification1]
             }
           })
@@ -244,6 +249,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
         state = {
           lazyLoading: false,
           heading: false,
+          scrolling: false,
           mentions: [notification2]
         }
       })
@@ -258,6 +264,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
         state = {
           lazyLoading: false,
           heading: false,
+          scrolling: false,
           mentions: [notification2, notification1]
         }
       })
@@ -277,6 +284,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
           state = {
             lazyLoading: false,
             heading: true,
+            scrolling: false,
             mentions: [notification2, notification1]
           }
         })
@@ -290,6 +298,7 @@ describe('TimelineSpace/Contents/Mentions', () => {
           state = {
             lazyLoading: false,
             heading: true,
+            scrolling: false,
             mentions: [notification2, notification1]
           }
         })

@@ -12,6 +12,7 @@ export type HomeState = {
   showReblogs: boolean
   showReplies: boolean
   timeline: Array<Entity.Status>
+  scrolling: boolean
 }
 
 const state = (): HomeState => ({
@@ -19,7 +20,8 @@ const state = (): HomeState => ({
   heading: true,
   timeline: [],
   showReblogs: true,
-  showReplies: true
+  showReplies: true,
+  scrolling: false
 })
 
 export const MUTATION_TYPES = {
@@ -33,7 +35,8 @@ export const MUTATION_TYPES = {
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
   SHOW_REBLOGS: 'showReblogs',
-  SHOW_REPLIES: 'showReplies'
+  SHOW_REPLIES: 'showReplies',
+  CHANGE_SCROLLING: 'changeScrolling'
 }
 
 const mutations: MutationTree<HomeState> = {
@@ -92,6 +95,9 @@ const mutations: MutationTree<HomeState> = {
   },
   [MUTATION_TYPES.SHOW_REPLIES]: (state, visible: boolean) => {
     state.showReplies = visible
+  },
+  [MUTATION_TYPES.CHANGE_SCROLLING]: (state, value: boolean) => {
+    state.scrolling = value
   }
 }
 

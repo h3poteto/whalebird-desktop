@@ -175,6 +175,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
         state = {
           lazyLoading: false,
           heading: true,
+          scrolling: false,
           notifications: [notification2, notification1]
         }
       })
@@ -199,6 +200,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
             state = {
               lazyLoading: false,
               heading: true,
+              scrolling: false,
               notifications: [notification1]
             }
           })
@@ -213,6 +215,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
             state = {
               lazyLoading: false,
               heading: true,
+              scrolling: false,
               notifications: [notification2, notification1]
             }
           })
@@ -229,6 +232,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
             state = {
               lazyLoading: false,
               heading: false,
+              scrolling: false,
               notifications: [notification1]
             }
           })
@@ -242,6 +246,7 @@ describe('TimelineSpace/Contents/Notifications', () => {
             state = {
               lazyLoading: false,
               heading: false,
+              scrolling: false,
               notifications: [notification2, notification1]
             }
           })
