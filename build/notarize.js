@@ -9,9 +9,11 @@ exports.default = async function notarizing(context) {
   const appName = context.packager.appInfo.productFilename
 
   return await notarize({
+    tool: 'legacy',
     appBundleId: 'org.whalebird.desktop',
     appPath: `${appOutDir}/${appName}.app`,
     appleId: process.env.APPLE_ID,
-    appleIdPassword: process.env.APPLE_PASSWORD
+    appleIdPassword: process.env.APPLE_PASSWORD,
+    teamId: 'HB4N6B2YVM'
   })
 }
