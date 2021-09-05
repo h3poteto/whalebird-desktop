@@ -30,7 +30,6 @@ import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
 
-import pkg from '~/package.json'
 import Authentication from './auth'
 import Account from './account'
 import { StreamingURL, UserStreaming, DirectStreaming, LocalStreaming, PublicStreaming, ListStreaming, TagStreaming } from './websocket'
@@ -111,7 +110,7 @@ if (process.platform !== 'darwin') {
   }
 }
 
-const appId = pkg.build.appId
+const appId = 'org.whalebird.desktop'
 
 const splashURL =
   process.env.NODE_ENV === 'development'
