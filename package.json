@@ -32,122 +32,15 @@
     "build:win32": "yarn run build && yarn run package:win32",
     "build:win64": "yarn run build && yarn run package:win64",
     "build:mas": "yarn run build:clean && yarn run pack && electron-packager ./ 'Whalebird' --platform=mas --arch=x64 --arch=arm64 --electron-version=13.2.2 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/whalebird.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=org.whalebird.desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --app-category-type=public.app-category.social-networking && node ./packages/universal.js",
-    "package:mac": "electron-builder --mac",
-    "package:linux": "electron-builder --linux",
-    "package:win32": "electron-builder --win --ia32",
-    "package:win64": "electron-builder --win --x64",
+    "package:mac": "electron-builder --mac --config electron-builder.json",
+    "package:linux": "electron-builder --linux --config electron-builder.json",
+    "package:win32": "electron-builder --win --ia32 --config electron-builder.json",
+    "package:win64": "electron-builder --win --x64 --config electron-builder.json",
     "pack": "yarn run pack:main && yarn run pack:renderer",
     "pack:main": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.renderer.config.js",
     "postinstall": "yarn run lint:fix",
     "spec": "NODE_ENV=test jest -u --maxWorkers=3"
-  },
-  "build": {
-    "productName": "Whalebird",
-    "appId": "org.whalebird.desktop",
-    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
-    "directories": {
-      "output": "build"
-    },
-    "extraResources": [
-      "build/sounds/*",
-      "build/icons/*"
-    ],
-    "files": [
-      "dist/electron/**/*",
-      "build/icons/*"
-    ],
-    "afterSign": "build/notarize.js",
-    "dmg": {
-      "sign": false,
-      "contents": [
-        {
-          "x": 410,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        },
-        {
-          "x": 130,
-          "y": 150,
-          "type": "file"
-        }
-      ]
-    },
-    "mac": {
-      "icon": "build/icons/icon.icns",
-      "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64",
-            "universal"
-          ]
-        }
-      ],
-      "category": "public.app-category.social-networking",
-      "entitlements": "plist/entitlements.mac.plist",
-      "entitlementsInherit": "plist/entitlements.mac.plist",
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false
-    },
-    "win": {
-      "icon": "build/icons/icon.ico",
-      "target": "nsis"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
-    },
-    "linux": {
-      "icon": "build/icons",
-      "target": [
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "deb",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        },
-        {
-          "target": "rpm",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        },
-        {
-          "target": "tar.bz2",
-          "arch": [
-            "x64",
-            "ia32",
-            "armv7l",
-            "arm64"
-          ]
-        },
-        {
-          "target": "pacman",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        },
-        {
-          "target": "snap",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "category": "Network"
-    }
   },
   "jest": {
     "moduleFileExtensions": [
