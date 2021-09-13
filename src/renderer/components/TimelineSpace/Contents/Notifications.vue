@@ -163,6 +163,17 @@ export default {
             'TimelineSpace/Contents/Notifications/lazyFetchNotifications',
             this.handledNotifications[this.handledNotifications.length - 1]
           )
+          .then(statuses => {
+            if (statuses === null) {
+              return
+            }
+            if (statuses.length > 0) {
+              this.$store.commit('TimelineSpace/Contents/Notifications/changeScrolling', true)
+              setTimeout(() => {
+                this.$store.commit('TimelineSpace/Contents/Notifications/changeScrolling', false)
+              }, 500)
+            }
+          })
           .catch(() => {
             this.$message({
               message: this.$t('message.notification_fetch_error'),

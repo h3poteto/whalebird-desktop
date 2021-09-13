@@ -131,7 +131,7 @@ const actions: ActionTree<TagState, RootState> = {
       resolve(null)
     })
   },
-  lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPositionWithTag) => {
+  lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPositionWithTag): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }

@@ -151,12 +151,25 @@ export default {
         event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
-        this.$store.dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', this.mentions[this.mentions.length - 1]).catch(() => {
-          this.$message({
-            message: this.$t('message.timeline_fetch_error'),
-            type: 'error'
+        this.$store
+          .dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', this.mentions[this.mentions.length - 1])
+          .then(statuses => {
+            if (statuses === null) {
+              return
+            }
+            if (statuses.length > 0) {
+              this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', true)
+              setTimeout(() => {
+                this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', false)
+              }, 500)
+            }
           })
-        })
+          .catch(() => {
+            this.$message({
+              message: this.$t('message.timeline_fetch_error'),
+              type: 'error'
+            })
+          })
       }
 
       if (event.target.scrollTop > 10 && this.heading) {
