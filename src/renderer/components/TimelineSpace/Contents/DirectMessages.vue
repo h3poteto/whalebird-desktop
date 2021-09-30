@@ -175,6 +175,17 @@ export default {
       ) {
         this.$store
           .dispatch('TimelineSpace/Contents/DirectMessages/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
+          .then(statuses => {
+            if (statuses === null) {
+              return
+            }
+            if (statuses.length > 0) {
+              this.$store.commit('TimelineSpace/Contents/DirectMessages/changeScrolling', true)
+              setTimeout(() => {
+                this.$store.commit('TimelineSpace/Contents/DirectMessages/changeScrolling', false)
+              }, 500)
+            }
+          })
           .catch(() => {
             this.$message({
               message: this.$t('message.timeline_fetch_error'),
