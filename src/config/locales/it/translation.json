@@ -75,10 +75,10 @@
     "lists": "Liste",
     "members": "Membri",
     "option": {
-      "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "Opzioni",
+      "show_reblogs": "Mostra condivisioni",
+      "show_replies": "Mostra risposte",
+      "apply": "Applica"
     },
     "new_toot": "Post",
     "reload": "Ricarica",
@@ -114,36 +114,36 @@
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Filtri",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "Parola chiave o frase",
+        "expire": "Scade dopo",
+        "context": "Contesti del filtro",
+        "irreversible": "Ignorare invece di nascondere",
+        "whole_word": "Parola intera",
+        "submit": "Invia",
+        "cancel": "Annulla"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Mai",
+        "30_minutes": "30 minuti",
+        "1_hour": "1 ora",
+        "6_hours": "6 ore",
+        "12_hours": "12 ore",
+        "1_day": "1 giorno",
+        "1_week": "1 settimana"
       },
       "new": {
-        "title": "New"
+        "title": "Nuovo"
       },
       "edit": {
-        "title": "Edit"
+        "title": "Modifica"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "title": "Cancella",
+        "confirm": "Sei sicuro di voler eliminare questo filtro?",
+        "confirm_ok": "Cancella",
+        "confirm_cancel": "Annulla"
       }
     }
   },
@@ -163,8 +163,8 @@
         "cw": "Ignora sempre gli avvisi sui contenuti",
         "nsfw": "Ignora sempre contenuti multimediali inappropriati",
         "hideAllAttachments": "Nascondi tutti i contenuti multimediali",
-        "useMarker": "Load timeline from the last reading position",
-        "useMarkerNotice": "This feature only supports home and notifications"
+        "useMarker": "Carica la timeline dall'ultima posizione di lettura",
+        "useMarkerNotice": "Questa caratteristica supporta solo la pagina iniziale e le notifiche"
       },
       "other": {
         "title": "Altre opzioni",
