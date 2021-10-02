@@ -167,7 +167,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
-    "eslint-plugin-vue": "^7.17.0",
+    "eslint-plugin-vue": "^7.18.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
     "jest": "^26.6.3",
