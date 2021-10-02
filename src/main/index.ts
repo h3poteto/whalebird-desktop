@@ -313,8 +313,11 @@ async function createWindow() {
     defaultWidth: 1000,
     defaultHeight: 563
   })
+
+  const titleBarStyle = process.platform === 'win32' ? 'default' : 'hidden'
+
   const mainOpts: BrowserWindowConstructorOptions = {
-    titleBarStyle: 'hidden',
+    titleBarStyle: titleBarStyle,
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,
