@@ -27,6 +27,20 @@
   >
     <div v-show="filtered" class="filtered">Filtered</div>
     <div v-show="!filtered" class="toot">
+      <div class="reblogger" v-show="message.reblog && !message.quote">
+        <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
+          <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
+        </span>
+        <icon name="retweet"></icon>
+        <span
+          class="reblogger-name"
+          @click="openUser(message.account)"
+          :title="`Reblogged by ${message.account.username}`"
+          :aria-label="`Reblogged by ${message.account.username}`"
+        >
+          <bdi v-html="username(message.account)"></bdi>
+        </span>
+      </div>
       <div class="icon" role="presentation">
         <FailoverImg
           :src="originalMessage.account.avatar"
@@ -107,20 +121,6 @@
           :description="originalMessage.card.description"
           :url="originalMessage.card.url"
         />
-        <div class="reblogger" v-show="message.reblog && !message.quote">
-          <icon name="retweet"></icon>
-          <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
-            <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
-          </span>
-          <span
-            class="reblogger-name"
-            @click="openUser(message.account)"
-            :title="`Reblogged by ${message.account.username}`"
-            :aria-label="`Reblogged by ${message.account.username}`"
-          >
-            <bdi v-html="username(message.account)"></bdi>
-          </span>
-        </div>
         <div class="emoji-reactions">
           <template v-for="reaction in originalMessage.emoji_reactions">
             <el-button v-if="reaction.me" type="success" size="medium" class="reaction" @click="removeReaction(reaction.name)"
@@ -776,6 +776,37 @@ export default {
     }
   }
 
+  .reblogger {
+    color: #909399;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+
+    .reblogger-icon {
+      width: 16px;
+      height: 16px;
+      margin: 0 4px;
+
+      img {
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+    }
+
+    .reblogger-name /deep/ {
+      font-size: calc(var(--base-font-size) * 0.86);
+      cursor: pointer;
+      margin: 0 4px;
+
+      .emojione {
+        max-width: 10px;
+        max-height: 10px;
+      }
+    }
+  }
+
   .detail {
     margin: 0 8px 0 8px;
     float: left;
@@ -808,29 +839,6 @@ export default {
       .emojione {
         width: 20px;
         height: 20px;
-      }
-    }
-
-    .reblogger {
-      color: #909399;
-
-      .reblogger-icon {
-        img {
-          width: 16px;
-          height: 16px;
-          border-radius: 2px;
-          cursor: pointer;
-        }
-      }
-
-      .reblogger-name /deep/ {
-        font-size: calc(var(--base-font-size) * 0.86);
-        cursor: pointer;
-
-        .emojione {
-          max-width: 10px;
-          max-height: 10px;
-        }
       }
     }
 
