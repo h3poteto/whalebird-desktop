@@ -1687,10 +1687,10 @@
   resolved "https://registry.yarnpkg.com/@types/verror/-/verror-1.10.4.tgz#805c0612b3a0c124cf99f517364142946b74ba3b"
   integrity sha512-OjJdqx6QlbyZw9LShPwRW+Kmiegeg3eWNI41MQQKaG3vjdU2L9SRElntM51HmHBY1cu7izxQJ1lMYioQh3XMBg==
 
-"@types/ws@^7.2.0":
-  version "7.2.6"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.2.6.tgz#516cbfb818310f87b43940460e065eb912a4178d"
-  integrity sha512-Q07IrQUSNpr+cXU4E4LtkSIBPie5GLZyyMC1QtQYRLWz701+XcoVygGUZgvLqElq1nU4ICldMYPnexlBsg3dqQ==
+"@types/ws@^8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.2.0.tgz#75faefbe2328f3b833cb8dc640658328990d04f3"
+  integrity sha512-cyeefcUCgJlEk+hk2h3N+MqKKsPViQgF5boi9TTHSK+PoR9KWBb/C5ccPcDyAqgsbAYHTwulch725DV84+pSpg==
   dependencies:
     "@types/node" "*"
 
@@ -2062,6 +2062,13 @@ agent-base@6:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-6.0.1.tgz#808007e4e5867decb0ab6ab2f928fbdb5a596db4"
   integrity sha512-01q25QQDwLSsyfhrKbn8yuur+JNw0H+0Y4JiGIKd3z9aYk/w/2kxD/Upc+t2ZBBSUNff50VjPsSW2YxM8QYKVg==
+  dependencies:
+    debug "4"
+
+agent-base@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-6.0.2.tgz#49fff58577cfee3f37176feab4c22e00f86d7f77"
+  integrity sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==
   dependencies:
     debug "4"
 
@@ -3126,6 +3133,13 @@ buffer@^5.1.0:
   dependencies:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
+
+bufferutil@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/bufferutil/-/bufferutil-4.0.4.tgz#ab81373d313a6ead0d734e98c448c722734ae7bb"
+  integrity sha512-VNxjXUCrF3LvbLgwfkTb5LsFvk6pGIn7OBb9x+3o+iJ6mKw0JTUp4chBFc88hi1aspeZGeZG9jAIbpFYPQSLZw==
+  dependencies:
+    node-gyp-build "^4.2.0"
 
 builder-util-runtime@8.7.6:
   version "8.7.6"
@@ -8755,23 +8769,23 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-megalodon@3.6.5:
-  version "3.6.5"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-3.6.5.tgz#331f4520ee7b454350db8f7e7b0788229e7e5704"
-  integrity sha512-2zLbtlSrS43EYr/8MHyhTRe+41ftUF3gwfKOWcQ6st45wtHuKdjULl1dpOSaAow3SWavjZLW+PvECxa7o6g7Jg==
+megalodon@3.6.6:
+  version "3.6.6"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-3.6.6.tgz#657da42e42777f619482c48c35e424525ec33427"
+  integrity sha512-jlpKF+bR7Jh1441iidWyqH98vULCUxDS2BLSPGCvySAKzP/+aUnXv57IC/CLMyfuYvleos8lhK7eL4eesh+huA==
   dependencies:
     "@types/oauth" "^0.9.0"
-    "@types/ws" "^7.2.0"
+    "@types/ws" "^8.2.0"
     axios "^0.21.0"
     dayjs "^1.10.4"
     form-data "^4.0.0"
     https-proxy-agent "^5.0.0"
     oauth "^0.9.15"
     object-assign-deep "^0.4.0"
-    socks-proxy-agent "^5.0.0"
+    socks-proxy-agent "^6.1.0"
     typescript "4.2.4"
     uuid "^8.0.0"
-    ws "^7.2.1"
+    ws "^8.2.2"
 
 memory-fs@^0.4.1:
   version "0.4.1"
@@ -9166,6 +9180,11 @@ node-forge@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.10.0.tgz#32dea2afb3e9926f02ee5ce8794902691a676bf3"
   integrity sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==
+
+node-gyp-build@^4.2.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.3.0.tgz#9f256b03e5826150be39c764bf51e993946d71a3"
+  integrity sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q==
 
 node-gyp@^7.1.0:
   version "7.1.2"
@@ -11472,19 +11491,19 @@ sockjs@^0.3.21:
     uuid "^3.4.0"
     websocket-driver "^0.7.4"
 
-socks-proxy-agent@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/socks-proxy-agent/-/socks-proxy-agent-5.0.0.tgz#7c0f364e7b1cf4a7a437e71253bed72e9004be60"
-  integrity sha512-lEpa1zsWCChxiynk+lCycKuC502RxDWLKJZoIhnxrWNjLSDGYRFflHA1/228VkRcnv9TIb8w98derGbpKxJRgA==
+socks-proxy-agent@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/socks-proxy-agent/-/socks-proxy-agent-6.1.0.tgz#869cf2d7bd10fea96c7ad3111e81726855e285c3"
+  integrity sha512-57e7lwCN4Tzt3mXz25VxOErJKXlPfXmkMLnk310v/jwW20jWRVcgsOit+xNkN3eIEdB47GwnfAEBLacZ/wVIKg==
   dependencies:
-    agent-base "6"
-    debug "4"
-    socks "^2.3.3"
+    agent-base "^6.0.2"
+    debug "^4.3.1"
+    socks "^2.6.1"
 
-socks@^2.3.3:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/socks/-/socks-2.4.4.tgz#f1a3382e7814ae28c97bb82a38bc1ac24b21cca2"
-  integrity sha512-7LmHN4IHj1Vpd/k8D872VGCHJ6yIVyeFkfIBExRmGPYQ/kdUkpdg9eKh9oOzYYYKQhuxavayJHTnmBG+EzluUA==
+socks@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/socks/-/socks-2.6.1.tgz#989e6534a07cf337deb1b1c94aaa44296520d30e"
+  integrity sha512-kLQ9N5ucj8uIcxrDwjm0Jsqk06xdpBjGNQtpXy4Q8/QY2k+fY7nZH8CARy+hkbG+SGAovmzzuauCpBlb8FrnBA==
   dependencies:
     ip "^1.1.5"
     smart-buffer "^4.1.0"
@@ -12920,6 +12939,13 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
+utf-8-validate@^5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-5.0.6.tgz#e1b3e0a5cc8648a3b44c1799fbb170d1aaaffe80"
+  integrity sha512-hoY0gOf9EkCw+nimK21FVKHUIG1BMqSiRwxB/q3A9yKZOrOI99PP77BxmarDqWz6rG3vVYiBWfhG8z2Tl+7fZA==
+  dependencies:
+    node-gyp-build "^4.2.0"
+
 utf8-byte-length@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/utf8-byte-length/-/utf8-byte-length-1.0.4.tgz#f45f150c4c66eee968186505ab93fcbb8ad6bf61"
@@ -13533,10 +13559,15 @@ ws@^6.2.1:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.2.1, ws@^7.4.5:
+ws@^7.4.5:
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.5.tgz#a484dd851e9beb6fdb420027e3885e8ce48986c1"
   integrity sha512-xzyu3hFvomRfXKH8vOFMU3OguG6oOvhXMo3xsGy3xWExqaM2dxBbVxuD99O7m3ZUFMvvscsZDqxfgMaRr/Nr1g==
+
+ws@^8.2.2:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.2.2.tgz#ca684330c6dd6076a737250ed81ac1606cb0a63e"
+  integrity sha512-Q6B6H2oc8QY3llc3cB8kVmQ6pnJWVQbP7Q5algTcIxx7YEpc0oU4NBVHlztA7Ekzfhw2r0rPducMUiCGWKQRzw==
 
 x-is-string@^0.1.0:
   version "0.1.0"
