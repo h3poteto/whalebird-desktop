@@ -2906,10 +2906,10 @@ bluebird@^3.1.1, bluebird@^3.5.0, bluebird@^3.5.5:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
-blueimp-load-image@^5.14.0:
-  version "5.14.0"
-  resolved "https://registry.yarnpkg.com/blueimp-load-image/-/blueimp-load-image-5.14.0.tgz#e8086415e580df802c33ff0da6b37a8d20205cc6"
-  integrity sha512-g5l+4dCOESBG8HkPLdGnBx8dhEwpQHaOZ0en623sl54o3bGhGMLYGc54L5cWfGmPvfKUjbsY7LOAmcW/xlkBSA==
+blueimp-load-image@^5.15.0:
+  version "5.15.0"
+  resolved "https://registry.yarnpkg.com/blueimp-load-image/-/blueimp-load-image-5.15.0.tgz#5a1c42e53bf3adac27fbb08faf46bd1c1c304c82"
+  integrity sha512-sjaRkHPTLPcz1NIilZu2w6C2WiZBqCQ4QIAfcO+PFS9duAOomPUpnMwfGpiHQW3MUREZZ/0pEgjlrl6wQB5bAg==
 
 body-parser@1.19.0:
   version "1.19.0"
