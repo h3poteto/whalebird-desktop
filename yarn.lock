@@ -12602,10 +12602,10 @@ unicode-canonical-property-names-ecmascript@^1.0.4:
   resolved "https://registry.yarnpkg.com/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-1.0.4.tgz#2619800c4c825800efdd8343af7dd9933cbe2818"
   integrity sha512-jDrNnXWHd4oHiTZnx/ZG7gtUTVp+gCcTTKr8L0HjlwphROEW3+Him+IpvC+xcJEFegapiMZyZe02CyuOnRmbnQ==
 
-unicode-emoji-json@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/unicode-emoji-json/-/unicode-emoji-json-0.2.1.tgz#ebe57f39ecbc8cc3508063e5c03a20e1096fa234"
-  integrity sha512-4X736t5oVw33kPIPo9F0UUQqUY2gEtAwVFFnE7LXfExhPeWO64FahKw6yFb6gps7Ex7cat5LJPemVEzdk8pWug==
+unicode-emoji-json@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/unicode-emoji-json/-/unicode-emoji-json-0.3.0.tgz#965e097ef8a367081c5036f81873015a95a5c1ad"
+  integrity sha512-yImheILedqhZtVEEenRELu9AnX347ZTA3bVMWAU5WMUv7pdU2hcfpwo2mKN8Rns9uHLmOZP90/4B4SPS5aF/iw==
 
 unicode-match-property-ecmascript@^1.0.4:
   version "1.0.4"
