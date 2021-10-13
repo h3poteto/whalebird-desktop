@@ -16,8 +16,16 @@
           <icon name="poll-h" scale="0.9"></icon>
         </div>
         <div class="action-detail">
-          <span class="bold" @click="openUser(message.account)"><bdi v-html="username(message.account)"></bdi></span
-          >{{ $t('notification.poll_vote.body') }}
+          <span class="bold" @click="openUser(message.account)">
+            <bdi
+              v-html="
+                $t('notification.poll_vote.body', {
+                  username: username(message.account),
+                  interpolation: { escapeValue: false }
+                })
+              "
+            ></bdi>
+          </span>
         </div>
         <div class="action-icon" role="presentation">
           <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
