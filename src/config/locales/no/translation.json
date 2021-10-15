@@ -45,72 +45,72 @@
     "show_profile": "Vis profil",
     "edit_profile": "Rediger profil",
     "settings": "Innstillinger",
-    "collapse": "Collapse",
-    "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists"
+    "collapse": "Skjul",
+    "expand": "Utvid",
+    "home": "Hjem",
+    "notification": "Varsling",
+    "mention": "Nevnelse",
+    "direct": "Direktemeldinger",
+    "follow_requests": "Følgerforespørsler",
+    "favourite": "Favoritt",
+    "bookmark": "Bokmerke",
+    "local": "Lokal tidslinje",
+    "public": "Offentlig tidslinje",
+    "hashtag": "Emneknagg",
+    "search": "Søk",
+    "lists": "Lister"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists",
-    "members": "Members",
+    "home": "Hjem",
+    "notification": "Varsling",
+    "mention": "Nevnelse",
+    "favourite": "Favoritt",
+    "bookmark": "Bokmerke",
+    "follow_requests": "Følgerforespørsler",
+    "direct_messages": "Direktemeldinger",
+    "local": "Lokal tidslinje",
+    "public": "Offentlig tidslinje",
+    "hashtag": "Emneknagg",
+    "search": "Søk",
+    "lists": "Lister",
+    "members": "Medlemmer",
     "option": {
-      "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "Alternativer",
+      "show_reblogs": "Vis reblogger",
+      "show_replies": "Vis svar",
+      "apply": "Bruk"
     },
     "new_toot": "Toot",
-    "reload": "Reload",
-    "settings": "Settings"
+    "reload": "Last inn på nytt",
+    "settings": "Innstillinger"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Innstillinger",
     "general": {
-      "title": "General",
+      "title": "Generelt",
       "toot": {
         "title": "Toot",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
-          "public": "Public",
-          "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "description": "Tilpass standardsynlighet for toot",
+          "notice": "Denne innstillingen gjelder bare nye toots, svar følger synligheten til originale toots",
+          "public": "Offentlig",
+          "unlisted": "Uoppført",
+          "private": "Privat",
+          "direct": "Direkte"
         },
         "sensitive": {
-          "description": "Mark media as sensitive by default"
+          "description": "Merk medier som sensitiv som standard"
         }
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Tidslinje",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "title": "Ulest varsel",
+        "description": "Tilpass uleste varsler for hver tidslinje.",
+        "direct": "Direktemeldinger",
+        "local": "Lokal tidslinje",
+        "public": "Offentlig tidslinje"
       }
     },
     "filters": {
@@ -189,13 +189,13 @@
         "side_menu_color": "Side menu",
         "primary_color": "Primary font",
         "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
+        "secondary_color": "Sekundær skrifttype",
+        "border_color": "Kantlinje",
+        "header_menu_color": "Topplinje meny",
         "wrapper_mask_color": "Modal wrapper"
       },
-      "font_size": "Font size",
-      "font_family": "Font family",
+      "font_size": "Skriftstørrelse",
+      "font_family": "Skrifttypefamilie",
       "toot_padding": "Padding around toots",
       "display_style": {
         "title": "Display style of username",
