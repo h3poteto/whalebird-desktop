@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       nameStyles: [DisplayStyle.DisplayNameAndUsername, DisplayStyle.DisplayName, DisplayStyle.Username],
-      themes: [Theme.Light, Theme.Dark, Theme.SolarizedLight, Theme.SolarizedDark, Theme.KimbieDark, Theme.Custom],
+      themes: [Theme.System, Theme.Light, Theme.Dark, Theme.SolarizedLight, Theme.SolarizedDark, Theme.KimbieDark, Theme.Custom],
       timeFormats: [TimeFormat.Absolute, TimeFormat.Relative]
     }
   },

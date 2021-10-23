@@ -18,7 +18,7 @@ export type AppearanceState = {
 
 const state = (): AppearanceState => ({
   appearance: {
-    theme: Theme.Light.key,
+    theme: Theme.System.key,
     fontSize: 14,
     displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
     timeFormat: TimeFormat.Absolute.value,
