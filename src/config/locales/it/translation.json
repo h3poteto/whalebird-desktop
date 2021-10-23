@@ -175,6 +175,7 @@
       "title": "Aspetto",
       "theme_color": "Tema",
       "theme": {
+        "system": "System",
         "light": "Chiaro",
         "dark": "Scuro",
         "solarized_light": "Chiaro Solarizzato",
