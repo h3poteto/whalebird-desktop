@@ -175,6 +175,7 @@
       "title": "外觀設定",
       "theme_color": "佈景顏色",
       "theme": {
+        "system": "System",
         "light": "淺色主題",
         "dark": "深色主題",
         "solarized_light": "SolarizedLight",
