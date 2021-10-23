@@ -1,14 +1,15 @@
 export type ThemeType = {
-  name: string,
+  name: string
   key: string
 }
 
 export type ThemeList = {
-  Light: ThemeType,
-  Dark: ThemeType,
-  SolarizedLight: ThemeType,
-  SolarizedDark: ThemeType,
-  KimbieDark: ThemeType,
+  System: ThemeType
+  Light: ThemeType
+  Dark: ThemeType
+  SolarizedLight: ThemeType
+  SolarizedDark: ThemeType
+  KimbieDark: ThemeType
   Custom: ThemeType
 }
 

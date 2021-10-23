@@ -1034,6 +1034,10 @@ ipcMain.handle('update-preferences', async (_: IpcMainInvokeEvent, data: any) =>
   return conf
 })
 
+ipcMain.handle('system-use-dark-theme', async (_: IpcMainInvokeEvent) => {
+  return nativeTheme.shouldUseDarkColors
+})
+
 ipcMain.on('change-collapse', (_event: IpcMainEvent, value: boolean) => {
   const preferences = new Preferences(preferencesDBPath)
   preferences

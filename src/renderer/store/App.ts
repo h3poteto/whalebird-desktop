@@ -116,7 +116,7 @@ const actions: ActionTree<AppState, RootState> = {
   },
   loadPreferences: async ({ commit, dispatch }) => {
     const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
-    dispatch('updateTheme', conf.appearance)
+    await dispatch('updateTheme', conf.appearance)
     commit(MUTATION_TYPES.UPDATE_DISPLAY_NAME_STYLE, conf.appearance.displayNameStyle)
     commit(MUTATION_TYPES.UPDATE_FONT_SIZE, conf.appearance.fontSize)
     commit(MUTATION_TYPES.UPDATE_NOTIFY, conf.notification.notify)
@@ -129,9 +129,18 @@ const actions: ActionTree<AppState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS, conf.general.timeline.hideAllAttachments)
     return conf
   },
-  updateTheme: ({ commit }, appearance: Appearance) => {
+  updateTheme: async ({ commit }, appearance: Appearance) => {
     const themeKey: string = appearance.theme
     switch (themeKey) {
+      case Theme.System.key: {
+        const dark: boolean = await win.ipcRenderer.invoke('system-use-dark-theme')
+        if (dark) {
+          commit(MUTATION_TYPES.UPDATE_THEME, DarkTheme)
+        } else {
+          commit(MUTATION_TYPES.UPDATE_THEME, LightTheme)
+        }
+        break
+      }
       case Theme.Light.key:
         commit(MUTATION_TYPES.UPDATE_THEME, LightTheme)
         break

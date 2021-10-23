@@ -67,7 +67,7 @@ const notification: Notification = {
 }
 
 const appearance: Appearance = {
-  theme: Theme.Light.key,
+  theme: Theme.System.key,
   fontSize: 14,
   displayNameStyle: DisplayStyle.DisplayNameAndUsername.value,
   timeFormat: TimeFormat.Absolute.value,

@@ -1,4 +1,8 @@
 export default {
+  System: {
+    name: 'preferences.appearance.theme.system',
+    key: 'system'
+  },
   Light: {
     name: 'preferences.appearance.theme.light',
     key: 'light'
