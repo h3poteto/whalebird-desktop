@@ -14,6 +14,7 @@
             @focusPrev="focusPrev"
             @focusRight="focusSidebar"
             @selectNotification="focusNotification(item)"
+            @sizeChanged="sizeChanged"
           >
           </notification>
         </DynamicScrollerItem>
@@ -229,6 +230,12 @@ export default {
           this.focusedId = this.mentions[0].id
           break
       }
+    },
+    sizeChanged() {
+      this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', true)
+      setTimeout(() => {
+        this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', false)
+      }, 500)
     }
   }
 }

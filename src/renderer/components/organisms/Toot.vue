@@ -64,10 +64,10 @@
         <div class="content-wrapper">
           <div class="spoiler" v-show="spoilered">
             <span v-html="emojiText(originalMessage.spoiler_text, originalMessage.emojis)"></span>
-            <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="showContent = true">
+            <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.show_more') }}
             </el-button>
-            <el-button v-else type="primary" size="medium" class="spoil-button" @click="showContent = false">
+            <el-button v-else type="primary" size="medium" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.hide') }}
             </el-button>
           </div>
@@ -80,7 +80,7 @@
           <Poll v-show="isShowContent" v-if="poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
         </div>
         <div class="attachments">
-          <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
+          <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="toggleCW()">
             {{ $t('cards.toot.sensitive') }}
           </el-button>
           <div v-show="isShowAttachments">
@@ -88,7 +88,7 @@
               v-show="sensitive && isShowAttachments"
               class="hide-sensitive"
               type="text"
-              @click="showAttachments = false"
+              @click="toggleCW()"
               :title="$t('cards.toot.hide')"
             >
               <icon name="eye" class="hide"></icon>
@@ -684,8 +684,8 @@ export default {
           break
         }
         case 'cw':
-          this.showContent = !this.showContent
-          this.showAttachments = !this.showAttachments
+          this.toggleSpoiler()
+          this.toggleCW()
           break
       }
     },
@@ -742,6 +742,14 @@ export default {
     },
     hideMenu() {
       this.openToolMenu = false
+    },
+    toggleSpoiler() {
+      this.showContent = !this.showContent
+      this.$emit('sizeChanged', true)
+    },
+    toggleCW() {
+      this.showAttachments = !this.showAttachments
+      this.$emit('sizeChanged', true)
     }
   }
 }

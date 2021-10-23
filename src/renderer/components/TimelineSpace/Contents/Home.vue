@@ -15,6 +15,7 @@
             @focusPrev="focusPrev"
             @focusRight="focusSidebar"
             @selectToot="focusToot(item)"
+            @sizeChanged="sizeChanged"
           >
           </toot>
         </DynamicScrollerItem>
@@ -253,6 +254,12 @@ export default {
           this.focusedId = this.timeline[0].uri + this.timeline[0].id
           break
       }
+    },
+    sizeChanged() {
+      this.$store.commit('TimelineSpace/Contents/Home/changeScrolling', true)
+      setTimeout(() => {
+        this.$store.commit('TimelineSpace/Contents/Home/changeScrolling', false)
+      }, 500)
     }
   }
 }
