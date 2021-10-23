@@ -175,6 +175,7 @@
       "title": "Coltas",
       "theme_color": "Dath an ùrlair",
       "theme": {
+        "system": "System",
         "light": "Soilleir",
         "dark": "Dorcha",
         "solarized_light": "Grianach soilleir",
