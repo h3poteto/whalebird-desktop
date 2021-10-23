@@ -175,6 +175,7 @@
       "title": "Appearance",
       "theme_color": "Theme color",
       "theme": {
+        "system": "System",
         "light": "Light",
         "dark": "අඳුරු",
         "solarized_light": "SolarizedLight",
