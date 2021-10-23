@@ -175,6 +175,7 @@
       "title": "Wygląd",
       "theme_color": "Kolor motywu",
       "theme": {
+        "system": "System",
         "light": "Jasny",
         "dark": "Ciemny",
         "solarized_light": "SolarizedLight",
