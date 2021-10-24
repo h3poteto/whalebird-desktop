@@ -169,6 +169,9 @@
       "other": {
         "title": "වෙනත් විකල්ප",
         "launch": "Launch app on login"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {
