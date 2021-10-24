@@ -169,6 +169,9 @@
       "other": {
         "title": "Tideɣrin yaḍnin",
         "launch": "Ṛẓem tisensi akd ukcam"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {

@@ -169,6 +169,9 @@
       "other": {
         "title": "其他選項",
         "launch": "登入時啟動 app"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {

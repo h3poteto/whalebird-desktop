@@ -169,6 +169,9 @@
       "other": {
         "title": "Autres options",
         "launch": "Lancer l'application dès la connexion"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {

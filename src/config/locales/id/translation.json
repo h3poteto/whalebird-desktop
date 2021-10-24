@@ -169,6 +169,9 @@
       "other": {
         "title": "Pilihan lainnya",
         "launch": "Luncurkan aplikasi saat login"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {

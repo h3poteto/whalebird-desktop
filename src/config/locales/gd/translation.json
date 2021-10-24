@@ -169,6 +169,9 @@
       "other": {
         "title": "Roghainnean eile",
         "launch": "Cuir an aplacaid gu dol leis a’ chlàradh a-steach"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {
