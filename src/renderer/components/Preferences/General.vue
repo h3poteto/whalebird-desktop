@@ -36,6 +36,9 @@
         <el-switch id="launch" v-model="other_launch" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
+    <el-form class="reset section">
+      <el-button type="info" @click="reset">{{ $t('preferences.general.reset.button') }}</el-button>
+    </el-form>
   </div>
 </template>
 
@@ -130,6 +133,21 @@ export default {
         type: 'error'
       })
     })
+  },
+  methods: {
+    reset() {
+      this.$store
+        .dispatch('Preferences/General/reset')
+        .then(language => {
+          this.$i18n.i18next.changeLanguage(language)
+        })
+        .catch(() => {
+          this.$message({
+            message: this.$t('message.preferences_load_error'),
+            type: 'error'
+          })
+        })
+    }
   }
 }
 </script>

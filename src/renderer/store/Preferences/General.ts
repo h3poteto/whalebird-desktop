@@ -97,6 +97,18 @@ const actions: ActionTree<GeneralState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
     dispatch('App/loadPreferences', null, { root: true })
     await win.ipcRenderer.invoke('change-auto-launch', newOther.launch)
+  },
+  reset: async ({ commit, dispatch }): Promise<string> => {
+    commit(MUTATION_TYPES.CHANGE_LOADING, true)
+    try {
+      const conf: BaseConfig = await win.ipcRenderer.invoke('reset-preferences')
+      await dispatch('Preferences/Language/changeLanguage', conf.language.language, { root: true })
+      await dispatch('App/loadPreferences', null, { root: true })
+      commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
+      return conf.language.language
+    } finally {
+      commit(MUTATION_TYPES.CHANGE_LOADING, false)
+    }
   }
 }
 
