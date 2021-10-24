@@ -169,6 +169,9 @@
       "other": {
         "title": "其它选项",
         "launch": "登录时启动程序"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {
