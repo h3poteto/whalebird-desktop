@@ -169,6 +169,9 @@
       "other": {
         "title": "その他",
         "launch": "ログイン時にアプリを起動する"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {
