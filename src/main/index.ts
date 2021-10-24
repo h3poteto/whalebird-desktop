@@ -1384,7 +1384,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
           click: () => {
             openAboutWindow({
               icon_path: path.join(iconBasePath, '256x256.png'),
-              copyright: 'Copyright (c) 2020 AkiraFukushima',
+              copyright: 'Copyright (c) 2021 AkiraFukushima',
               package_json_dir: path.resolve(__dirname, '../../'),
               open_devtools: process.env.NODE_ENV !== 'production'
             })
