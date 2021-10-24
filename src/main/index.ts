@@ -1034,6 +1034,12 @@ ipcMain.handle('update-preferences', async (_: IpcMainInvokeEvent, data: any) =>
   return conf
 })
 
+ipcMain.handle('reset-preferences', async (_: IpcMainInvokeEvent) => {
+  const preferences = new Preferences(preferencesDBPath)
+  const conf = await preferences.reset()
+  return conf
+})
+
 ipcMain.handle('system-use-dark-theme', async (_: IpcMainInvokeEvent) => {
   return nativeTheme.shouldUseDarkColors
 })
