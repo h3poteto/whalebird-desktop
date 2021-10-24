@@ -175,6 +175,7 @@
       "title": "외관",
       "theme_color": "테마 색상",
       "theme": {
+        "system": "System",
         "light": "밝은 테마",
         "dark": "어두운 테마",
         "solarized_light": "SolarizedLight",

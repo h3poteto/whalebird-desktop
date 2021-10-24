@@ -175,6 +175,7 @@
       "title": "Appearance",
       "theme_color": "Aklu n usgum",
       "theme": {
+        "system": "System",
         "light": "Anafaw",
         "dark": "Adeɣmum",
         "solarized_light": "SolarizedLight",

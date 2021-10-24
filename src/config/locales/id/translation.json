@@ -175,6 +175,7 @@
       "title": "Penampilan",
       "theme_color": "Warna tema",
       "theme": {
+        "system": "System",
         "light": "Terang",
         "dark": "Gelap",
         "solarized_light": "Solarized Light",

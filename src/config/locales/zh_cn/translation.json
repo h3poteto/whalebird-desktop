@@ -175,6 +175,7 @@
       "title": "外观",
       "theme_color": "颜色主题",
       "theme": {
+        "system": "System",
         "light": "明亮",
         "dark": "深暗",
         "solarized_light": "Solarized Light",

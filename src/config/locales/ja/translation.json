@@ -175,6 +175,7 @@
       "title": "外観",
       "theme_color": "テーマカラー",
       "theme": {
+        "system": "System",
         "light": "標準",
         "dark": "ダーク",
         "solarized_light": "SolarizedLight",

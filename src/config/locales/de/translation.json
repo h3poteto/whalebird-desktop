@@ -175,6 +175,7 @@
       "title": "Anzeige",
       "theme_color": "Themenfarbe",
       "theme": {
+        "system": "System",
         "light": "Hell",
         "dark": "Dunkel",
         "solarized_light": "SolarizedLight",

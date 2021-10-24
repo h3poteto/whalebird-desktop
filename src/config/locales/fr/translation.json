@@ -175,6 +175,7 @@
       "title": "Apparence",
       "theme_color": "Couleur du thème",
       "theme": {
+        "system": "System",
         "light": "Clair",
         "dark": "Foncé",
         "solarized_light": "Lumière solaire",
