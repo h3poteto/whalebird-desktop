@@ -169,6 +169,9 @@
       "other": {
         "title": "Andere Optionen",
         "launch": "App beim Login starten"
+      },
+      "reset": {
+        "button": "Reset preferences"
       }
     },
     "appearance": {
