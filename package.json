@@ -136,7 +136,7 @@
     "ajv": "^8.6.3",
     "all-object-keys": "^2.2.0",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^27.2.4",
+    "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-istanbul": "^6.0.0",
     "babel-register": "^6.26.0",
