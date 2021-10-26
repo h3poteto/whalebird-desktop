@@ -5690,6 +5690,11 @@ file-loader@^6.2.0:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
+file-type@^10.11.0:
+  version "10.11.0"
+  resolved "https://registry.yarnpkg.com/file-type/-/file-type-10.11.0.tgz#2961d09e4675b9fb9a3ee6b69e9cd23f43fd1890"
+  integrity sha512-uzk64HRpUZyTGZtVuvrjP0FYxzQrBf4rojot6J65YMEbwBLB0CWm0CLojVpwpmFmxcE/lkvYICgfcGozbBq6rw==
+
 file-uri-to-path@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
@@ -9627,7 +9632,7 @@ p-try@^1.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
   integrity sha1-y8ec26+P1CKOE/Yh8rGiN8GyB7M=
 
-p-try@^2.0.0:
+p-try@^2.0.0, p-try@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
@@ -10474,6 +10479,14 @@ react-is@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
+
+read-chunk@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/read-chunk/-/read-chunk-3.2.0.tgz#2984afe78ca9bfbbdb74b19387bf9e86289c16ca"
+  integrity sha512-CEjy9LCzhmD7nUpJ1oVOE6s/hBkejlcJEgLQHVnQznOSilOPb+kpKktlLfFDK3/WP43+F80xkUTM2VOkYoSYvQ==
+  dependencies:
+    pify "^4.0.1"
+    with-open-file "^0.1.6"
 
 read-config-file@6.2.0:
   version "6.2.0"
@@ -12112,13 +12125,15 @@ symbol-tree@^3.2.4:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
 
-system-font-families@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/system-font-families/-/system-font-families-0.4.1.tgz#ea35b06989629603010c0ed02d4ba264bfa3e374"
-  integrity sha512-XQK5qAYsbEI6SkCEwezRDsPV44T2G4NNQ/xcx7D/8XM3S+rqYlNxsGcLT7vO6vdT4hc/mlRef7S6+KGIetTwdg==
+system-font-families@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/system-font-families/-/system-font-families-0.6.0.tgz#62c47538aefc9917ae52279203f5ed1f5493e542"
+  integrity sha512-rdKImco0blun3k+KD7iKPwrQEwDWPna1eEof0Y+eaebVxp02g6RWYLENYZzG09lsQd0rjG+l+TAK7wSaNMXoYA==
   dependencies:
     babel-polyfill "^6.23.0"
-    ttfinfo "https://github.com/rBurgett/ttfinfo.git"
+    file-type "^10.11.0"
+    read-chunk "^3.2.0"
+    ttfinfo "git+https://github.com/rBurgett/ttfinfo.git"
 
 table@^4.0.1:
   version "4.0.3"
@@ -12500,9 +12515,10 @@ tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
-ttfinfo@^0.2.0, "ttfinfo@https://github.com/rBurgett/ttfinfo.git":
+ttfinfo@^0.2.0, "ttfinfo@git+https://github.com/rBurgett/ttfinfo.git":
   version "0.2.0"
-  resolved "https://github.com/rBurgett/ttfinfo.git#f00e43e2a6d4c8a12a677df20b7804492d50863c"
+  uid f00e43e2a6d4c8a12a677df20b7804492d50863c
+  resolved "git+https://github.com/rBurgett/ttfinfo.git#f00e43e2a6d4c8a12a677df20b7804492d50863c"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
@@ -13468,6 +13484,15 @@ winreg@1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/winreg/-/winreg-1.2.4.tgz#ba065629b7a925130e15779108cf540990e98d1b"
   integrity sha1-ugZWKbepJRMOFXeRCM9UCZDpjRs=
+
+with-open-file@^0.1.6:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/with-open-file/-/with-open-file-0.1.7.tgz#e2de8d974e8a8ae6e58886be4fe8e7465b58a729"
+  integrity sha512-ecJS2/oHtESJ1t3ZfMI3B7KIDKyfN0O16miWxdn30zdh66Yd3LsRFebXZXq6GU4xfxLf6nVxp9kIqElb5fqczA==
+  dependencies:
+    p-finally "^1.0.0"
+    p-try "^2.1.0"
+    pify "^4.0.1"
 
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"
