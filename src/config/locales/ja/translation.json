@@ -171,14 +171,14 @@
         "launch": "ログイン時にアプリを起動する"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "設定をリセット"
       }
     },
     "appearance": {
       "title": "外観",
       "theme_color": "テーマカラー",
       "theme": {
-        "system": "System",
+        "system": "システム",
         "light": "標準",
         "dark": "ダーク",
         "solarized_light": "SolarizedLight",
@@ -456,7 +456,7 @@
     "notification_fetch_error": "通知の読み込みに失敗しました",
     "favourite_fetch_error": "お気に入りの読み込みに失敗しました",
     "follow_request_accept_error": "フォロー申請の承認に失敗しました",
-    "follow_request_reject_error": "Failed to reject the request",
+    "follow_request_reject_error": "フォロー申請の却下に失敗しました",
     "start_streaming_error": "ストリーミングを開始できませんでした",
     "start_all_streamings_error": "{{domain}} のストリーミングを開始できませんでした",
     "attach_error": "ファイルを添付できませんでした",
@@ -500,8 +500,8 @@
     },
     "new_toot": {
       "toot_length": "トゥートの長さは {{min}} から {{max}} 文字である必要があります",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_length": "添付ファイルは {{max}} つまでです",
+      "attach_length_plural": "添付ファイルは {{max}} つまでです",
       "attach_image": "画像かビデオしか添付できません",
       "poll_invalid": "アンケートに不正な選択肢が含まれています"
     }
