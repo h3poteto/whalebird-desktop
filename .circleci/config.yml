@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:14.15.1-buster-slim
+      - image: node:14.18.1-buster-slim
     working_directory: /var/opt/app
     steps:
       - checkout
