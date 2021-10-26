@@ -138,7 +138,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.3",
-    "babel-plugin-istanbul": "^6.0.0",
+    "babel-plugin-istanbul": "^6.1.1",
     "babel-register": "^6.26.0",
     "cfonts": "^2.10.0",
     "chai": "^4.3.4",
