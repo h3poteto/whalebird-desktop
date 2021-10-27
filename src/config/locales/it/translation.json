@@ -12,7 +12,7 @@
       "quit": "Esci"
     },
     "toot": {
-      "name": "Post",
+      "name": "Pubblica",
       "new": "Nuovo Toot"
     },
     "edit": {
@@ -53,7 +53,7 @@
     "direct": "Messaggi diretti",
     "follow_requests": "Richieste di seguirti",
     "favourite": "Preferiti",
-    "bookmark": "Segnalibro",
+    "bookmark": "Segnalibri",
     "local": "Timeline locale",
     "public": "Timeline pubblica",
     "hashtag": "Hashtag",
@@ -171,14 +171,14 @@
         "launch": "Avvia l'app al login"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "Ripristina preferenze"
       }
     },
     "appearance": {
       "title": "Aspetto",
       "theme_color": "Tema",
       "theme": {
-        "system": "System",
+        "system": "Sistema",
         "light": "Chiaro",
         "dark": "Scuro",
         "solarized_light": "Chiaro Solarizzato",
