@@ -171,14 +171,14 @@
         "launch": "Avvia l'app al login"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "Ripristina preferenze"
       }
     },
     "appearance": {
       "title": "Aspetto",
       "theme_color": "Tema",
       "theme": {
-        "system": "System",
+        "system": "Sistema",
         "light": "Chiaro",
         "dark": "Scuro",
         "solarized_light": "Chiaro Solarizzato",
