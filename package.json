@@ -180,7 +180,7 @@
     "prettier": "^2.4.1",
     "prettier-stylelint": "^0.4.2",
     "regenerator-runtime": "^0.13.9",
-    "sass-loader": "^12.2.0",
+    "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
     "stylelint": "^14.0.0",
     "stylelint-config-standard": "^23.0.0",
