@@ -1996,10 +1996,10 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-about-window@^1.15.1:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/about-window/-/about-window-1.15.1.tgz#cb0fc1cbc7bb30334f463983d2304c3b3f5ee1ce"
-  integrity sha512-4506saufN6eNAjBr3V2snJcMJOUuT8zPou5UL1MUekn+P1YHEKKeJRQ5tcPUSgc0z2mO6enFtyYxzDLKmhdoLg==
+about-window@^1.15.2:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/about-window/-/about-window-1.15.2.tgz#0397216ce0cb6e8a4fa9ba12941e56d481d712b5"
+  integrity sha512-31mDAnLUfKm4uShfMzeEoS6a3nEto2tUt4zZn7qyAKedaTV4p0dGiW1n+YG8vtRh78mZiewghWJmoxDY+lHyYg==
 
 accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
