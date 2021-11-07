@@ -3,24 +3,24 @@
     "application": {
       "name": "Whalebird",
       "about": "About Whalebird",
-      "preferences": "Preferences...",
+      "preferences": "Předvolby...",
       "services": "Services",
       "hide": "Hide Whalebird",
       "hide_others": "Hide Others",
       "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "open": "Otevřít okno",
+      "quit": "Ukončit"
     },
     "toot": {
       "name": "Toot",
-      "new": "New Toot"
+      "new": "Nový toot"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
+      "name": "Upravit",
+      "undo": "Vrátit zpět",
+      "redo": "Vykonat znovu",
+      "cut": "Vyjmout",
+      "copy": "Kopírovat",
       "paste": "Paste",
       "select_all": "Select All"
     },
