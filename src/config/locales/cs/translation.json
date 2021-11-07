@@ -300,20 +300,20 @@
         "expires": {
           "5_minutes": "5 minut",
           "30_minutes": "30 minut",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "1_hour": "1 hodina",
+          "6_hours": "6 hodin",
+          "1_day": "1 den",
+          "3_days": "3 dny",
+          "7_days": "7 dnů"
         }
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "Přejít na..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "Přidat člena do seznamu",
+      "account_name": "Název účtu"
     },
     "list_membership": {
       "title": "List Memberships"
@@ -321,7 +321,7 @@
     "mute_confirm": {
       "title": "Are you sure you want to mute?",
       "body": "Hide notification from this user?",
-      "cancel": "Cancel",
+      "cancel": "Zrušit",
       "ok": "Mute"
     },
     "shortcut": {
@@ -354,72 +354,72 @@
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
-      "sensitive": "Show sensitive content",
+      "show_more": "Ukázat více",
+      "hide": "Skrýt",
+      "sensitive": "Zobrazit citlivý obsah",
       "view_toot_detail": "View Toot Detail",
-      "open_in_browser": "Open in Browser",
+      "open_in_browser": "Otevřít v prohlížeči",
       "copy_link_to_toot": "Copy Link to Toot",
-      "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
-      "delete": "Delete",
-      "via": "via {{application}}",
-      "reply": "Reply",
+      "mute": "Ignorovat",
+      "block": "Blokovat",
+      "report": "Nahlásit",
+      "delete": "Smazat",
+      "via": "přes {{application}}",
+      "reply": "Odpovědět",
       "reblog": "Reblog",
-      "fav": "Favourite",
-      "detail": "Toot details",
-      "bookmark": "Bookmark",
-      "pinned": "Pinned toot",
+      "fav": "Oblíbit",
+      "detail": "Podrobnosti tootu",
+      "bookmark": "Záložka",
+      "pinned": "Připnutý toot",
       "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
+        "vote": "Hlasovat",
+        "votes_count": "hlasů",
         "until": "until {{datetime}}",
         "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "refresh": "Obnovit"
       }
     }
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
-      "doesnt_follow_you": "Doesn't follow you",
-      "detail": "Detail",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
+      "follows_you": "Následuje vás",
+      "doesnt_follow_you": "Nesleduje vás",
+      "detail": "Podrobnosti",
+      "follow": "Sledujte tohoto uživatele",
+      "unfollow": "Přestat sledovat tohoto uživatele",
       "subscribe": "Subscribe this user",
       "unsubscribe": "Unsubscribe this user",
       "follow_requested": "Follow requested",
-      "open_in_browser": "Open in Browser",
+      "open_in_browser": "Otevřít v prohlížeči",
       "manage_list_memberships": "Manage List Memberships",
-      "mute": "Mute",
+      "mute": "Ignorovat",
       "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
-      "toots": "Toots",
-      "follows": "Follows",
-      "followers": "Followers"
+      "unblock": "Odblokovat",
+      "block": "Blokovat",
+      "toots": "Tooty",
+      "follows": "Sledovaní",
+      "followers": "Sledující"
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "Přijmout",
+    "reject": "Odmítnout"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "Název štítku",
+    "delete_tag": "Smazat štítek",
+    "save_tag": "Uložit štítek"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
+    "search": "Vyhledat",
+    "account": "Účet",
+    "tag": "Štítek",
+    "keyword": "klíčové slovo",
     "toot": "Toot"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
+      "new_list": "Nový seznam",
       "edit": "Edit",
       "delete": {
         "confirm": {
