@@ -3,37 +3,37 @@
     "application": {
       "name": "Whalebird",
       "about": "About Whalebird",
-      "preferences": "Preferences...",
+      "preferences": "Předvolby...",
       "services": "Services",
       "hide": "Hide Whalebird",
       "hide_others": "Hide Others",
       "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "open": "Otevřít okno",
+      "quit": "Ukončit"
     },
     "toot": {
       "name": "Toot",
-      "new": "New Toot"
+      "new": "Nový toot"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "Upravit",
+      "undo": "Vrátit zpět",
+      "redo": "Vykonat znovu",
+      "cut": "Vyjmout",
+      "copy": "Kopírovat",
+      "paste": "Vložit",
+      "select_all": "Vybrat vše"
     },
     "view": {
-      "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "name": "Zobrazit",
+      "toggle_full_screen": "Přepnout na režim celé obrazovky"
     },
     "window": {
       "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
+      "name": "Okno",
+      "close": "Zavřít okno",
+      "open": "Otevřít okno",
+      "minimize": "Minimalizovat",
       "jump_to": "Jump to"
     }
   },
@@ -41,31 +41,31 @@
     "add_new_account": "Add new account"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
-    "collapse": "Collapse",
-    "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
+    "profile": "Profil",
+    "show_profile": "Zobrazit profil",
+    "edit_profile": "Upravit profil",
+    "settings": "Nastavení",
+    "collapse": "Sbalit",
+    "expand": "Rozbalit",
+    "home": "Domů",
+    "notification": "Oznámení",
+    "mention": "Zmínka",
+    "direct": "Soukromé zprávy",
+    "follow_requests": "Žádosti o sledování",
+    "favourite": "Oblíbené",
+    "bookmark": "Záložka",
+    "local": "Místní časová osa",
+    "public": "Veřejná časová osa",
     "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists"
+    "search": "Vyhledat",
+    "lists": "Seznamy"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
+    "home": "Domů",
+    "notification": "Oznámení",
+    "mention": "Zmínka",
+    "favourite": "Oblíbené",
+    "bookmark": "Záložka",
     "follow_requests": "Follow Requests",
     "direct_messages": "Direct Messages",
     "local": "Local timeline",
@@ -125,40 +125,40 @@
         "cancel": "Cancel"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Nikdy",
+        "30_minutes": "30 minut",
+        "1_hour": "1 hodina",
+        "6_hours": "6 hodin",
+        "12_hours": "12 hodin",
+        "1_day": "1 den",
+        "1_week": "1 týden"
       },
       "new": {
-        "title": "New"
+        "title": "Nový"
       },
       "edit": {
-        "title": "Edit"
+        "title": "Upravit"
       },
       "delete": {
-        "title": "Delete",
+        "title": "Vymazat",
         "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "confirm_ok": "Vymazat",
+        "confirm_cancel": "Zrušit"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Předvolby",
     "general": {
-      "title": "General",
+      "title": "Všeobecné",
       "sounds": {
-        "title": "Sounds",
+        "title": "Zvuky",
         "description": "Please set feedback sounds.",
         "fav_rb": "When you favorite or boost the toot",
         "toot": "When you post toot"
       },
       "timeline": {
-        "title": "Timeline",
+        "title": "Časová osa",
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nsfw": "Always ignore NSFW of medias",
@@ -167,20 +167,20 @@
         "useMarkerNotice": "This feature only supports home and notifications"
       },
       "other": {
-        "title": "Other options",
+        "title": "Ostatní možnosti",
         "launch": "Launch app on login"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "Obnovit výchozí nastavení"
       }
     },
     "appearance": {
-      "title": "Appearance",
-      "theme_color": "Theme color",
+      "title": "Vzhled",
+      "theme_color": "Barva motivu",
       "theme": {
-        "system": "System",
-        "light": "Light",
-        "dark": "Dark",
+        "system": "Systémový",
+        "light": "Světlý",
+        "dark": "Tmavý",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
@@ -194,11 +194,11 @@
         "primary_color": "Primary font",
         "regular_color": "Regular font",
         "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
+        "border_color": "Okraj",
+        "header_menu_color": "Záhlavní menu",
         "wrapper_mask_color": "Modal wrapper"
       },
-      "font_size": "Font size",
+      "font_size": "Velikost písma",
       "font_family": "Font family",
       "toot_padding": "Padding around toots",
       "display_style": {
@@ -237,18 +237,18 @@
       "order": "Order",
       "remove_association": "Remove association",
       "remove_all_associations": "Remove all associations",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
+      "confirm": "Potvrdit",
+      "cancel": "Zrušit",
       "confirm_message": "Are you sure to remove all associations?"
     },
     "network": {
-      "title": "Network",
+      "title": "Síť",
       "proxy": {
         "title": "Proxy Configuration",
         "no": "No proxy",
         "system": "Use system proxy",
         "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
+        "protocol": "Protokol",
         "host": "Proxy host",
         "port": "Proxy port",
         "username": "Proxy username",
@@ -271,14 +271,14 @@
         "description": "Choose the language you would like to use with Whalebird."
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "Kontrola pravopisu",
+        "enabled": "Povolit kontrolu pravopisu"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
+      "title": "Nový toot",
       "cw": "Write your warning here",
       "status": "What is on your mind?",
       "cancel": "Cancel",
@@ -289,31 +289,31 @@
       "description": "Describe for the visually impaired",
       "footer": {
         "add_image": "Add images",
-        "poll": "Add a poll",
-        "change_visibility": "Change visibility",
-        "change_sensitive": "Change sensitive",
-        "add_cw": "Add content warning",
-        "pined_hashtag": "Pin the hashtag"
+        "poll": "Přidat anketu",
+        "change_visibility": "Změnit viditelnost",
+        "change_sensitive": "Změnit chúlostivost",
+        "add_cw": "Přidat varování o obsahu",
+        "pined_hashtag": "Připnout hashtag"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Přidat volbu",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 minut",
+          "30_minutes": "30 minut",
+          "1_hour": "1 hodina",
+          "6_hours": "6 hodin",
+          "1_day": "1 den",
+          "3_days": "3 dny",
+          "7_days": "7 dnů"
         }
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "Přejít na..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "Přidat člena do seznamu",
+      "account_name": "Název účtu"
     },
     "list_membership": {
       "title": "List Memberships"
@@ -321,7 +321,7 @@
     "mute_confirm": {
       "title": "Are you sure you want to mute?",
       "body": "Hide notification from this user?",
-      "cancel": "Cancel",
+      "cancel": "Zrušit",
       "ok": "Mute"
     },
     "shortcut": {
@@ -354,72 +354,72 @@
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
-      "sensitive": "Show sensitive content",
+      "show_more": "Ukázat více",
+      "hide": "Skrýt",
+      "sensitive": "Zobrazit citlivý obsah",
       "view_toot_detail": "View Toot Detail",
-      "open_in_browser": "Open in Browser",
+      "open_in_browser": "Otevřít v prohlížeči",
       "copy_link_to_toot": "Copy Link to Toot",
-      "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
-      "delete": "Delete",
-      "via": "via {{application}}",
-      "reply": "Reply",
+      "mute": "Ignorovat",
+      "block": "Blokovat",
+      "report": "Nahlásit",
+      "delete": "Smazat",
+      "via": "přes {{application}}",
+      "reply": "Odpovědět",
       "reblog": "Reblog",
-      "fav": "Favourite",
-      "detail": "Toot details",
-      "bookmark": "Bookmark",
-      "pinned": "Pinned toot",
+      "fav": "Oblíbit",
+      "detail": "Podrobnosti tootu",
+      "bookmark": "Záložka",
+      "pinned": "Připnutý toot",
       "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
+        "vote": "Hlasovat",
+        "votes_count": "hlasů",
         "until": "until {{datetime}}",
         "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "refresh": "Obnovit"
       }
     }
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
-      "doesnt_follow_you": "Doesn't follow you",
-      "detail": "Detail",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
+      "follows_you": "Následuje vás",
+      "doesnt_follow_you": "Nesleduje vás",
+      "detail": "Podrobnosti",
+      "follow": "Sledujte tohoto uživatele",
+      "unfollow": "Přestat sledovat tohoto uživatele",
       "subscribe": "Subscribe this user",
       "unsubscribe": "Unsubscribe this user",
       "follow_requested": "Follow requested",
-      "open_in_browser": "Open in Browser",
+      "open_in_browser": "Otevřít v prohlížeči",
       "manage_list_memberships": "Manage List Memberships",
-      "mute": "Mute",
+      "mute": "Ignorovat",
       "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
-      "toots": "Toots",
-      "follows": "Follows",
-      "followers": "Followers"
+      "unblock": "Odblokovat",
+      "block": "Blokovat",
+      "toots": "Tooty",
+      "follows": "Sledovaní",
+      "followers": "Sledující"
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "Přijmout",
+    "reject": "Odmítnout"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "Název štítku",
+    "delete_tag": "Smazat štítek",
+    "save_tag": "Uložit štítek"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
+    "search": "Vyhledat",
+    "account": "Účet",
+    "tag": "Štítek",
+    "keyword": "klíčové slovo",
     "toot": "Toot"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
+      "new_list": "Nový seznam",
       "edit": "Edit",
       "delete": {
         "confirm": {
