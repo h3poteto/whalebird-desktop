@@ -6729,10 +6729,10 @@ humanize-plus@^1.8.1:
   resolved "https://registry.yarnpkg.com/humanize-plus/-/humanize-plus-1.8.2.tgz#a65b34459ad6367adbb3707a82a3c9f916167030"
   integrity sha1-pls0RZrWNnrbs3B6gqPJ+RYWcDA=
 
-i18next@*, i18next@^21.3.3:
-  version "21.3.3"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.3.3.tgz#1065d557328db29a2e1f33526ed37608cdb0242c"
-  integrity sha512-Wv5arCT9pK35nfhOzTdS64T7JpPcoqnkOEidxc4zF0DZ8KetpvmnkO+uWkXy+DFz6zWzPX7U9bIemwBqpFRprw==
+i18next@*, i18next@^21.5.3:
+  version "21.5.3"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-21.5.3.tgz#b2d4fd24bef7ea4ec4eba2ed3cadc0c28c0e3b4c"
+  integrity sha512-9R8127a0/N5okiD7eeo6XBPQsHgHsLr1GdQEa35Pcw305ArC9KZDLs9kbgdn3xuVUNYlVu8+gWzz73eVkna0gA==
   dependencies:
     "@babel/runtime" "^7.12.0"
 
