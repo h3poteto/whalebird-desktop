@@ -78,7 +78,7 @@
       "title": "Option",
       "show_reblogs": "Show reblogs",
       "show_replies": "Show replies",
-      "apply": "Apply"
+      "apply": "Anwenden"
     },
     "new_toot": "Toot",
     "reload": "Neu laden",
@@ -114,10 +114,10 @@
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Filter",
       "form": {
         "phrase": "Keyword or phrase",
-        "expire": "Expire after",
+        "expire": "Verfällt nach",
         "context": "Filter contexts",
         "irreversible": "Drop instead of hide",
         "whole_word": "Whole word",
@@ -142,8 +142,8 @@
       "delete": {
         "title": "Delete",
         "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "confirm_ok": "Löschen",
+        "confirm_cancel": "Abbrechen"
       }
     }
   },
@@ -267,12 +267,12 @@
     "language": {
       "title": "Sprache",
       "language": {
-        "title": "Language",
+        "title": "Sprache",
         "description": "Choose the language you would like to use with Whalebird."
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "Rechtschreibprüfung",
+        "enabled": "Rechtschreibprüfung aktivieren"
       }
     }
   },
@@ -284,7 +284,7 @@
       "cancel": "Abbrechen",
       "toot": "Toot",
       "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
+      "close_confirm_ok": "Verwerfen",
       "close_confirm_cancel": "Continue Editing",
       "description": "Für Menschen mit Sehbehinderung beschreiben",
       "footer": {
@@ -369,7 +369,7 @@
       "reblog": "Teilen",
       "fav": "Favorit",
       "detail": "Details des Toot",
-      "bookmark": "Bookmark",
+      "bookmark": "Lesezeichen",
       "pinned": "Angehefteter Beitrag",
       "poll": {
         "vote": "Abstimmen",
@@ -385,8 +385,8 @@
       "follows_you": "Folgt dir",
       "doesnt_follow_you": "Folgt dir nicht",
       "detail": "Detail",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
+      "follow": "Diesem Benutzer folgen",
+      "unfollow": "Diesem Benutzer nicht mehr folgen",
       "subscribe": "Subscribe this user",
       "unsubscribe": "Unsubscribe this user",
       "follow_requested": "Folgen Sie angefordert",
@@ -425,8 +425,8 @@
         "confirm": {
           "title": "Confirm",
           "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "ok": "Löschen",
+          "cancel": "Abbrechen"
         }
       }
     }
