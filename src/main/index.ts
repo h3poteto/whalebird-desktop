@@ -1169,12 +1169,16 @@ ipcMain.handle('get-notifications-marker', async (_: IpcMainInvokeEvent, ownerID
   return marker
 })
 
-ipcMain.handle('save-marker', async (_: IpcMainInvokeEvent, marker: LocalMarker) => {
-  if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
-    return
+ipcMain.handle(
+  'save-marker',
+  async (_: IpcMainInvokeEvent, marker: LocalMarker): Promise<LocalMarker | null> => {
+    if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
+      return null
+    }
+    const res = await markerRepo.save(marker)
+    return res
   }
-  await markerRepo.save(marker)
-})
+)
 
 setTimeout(async () => {
   try {
