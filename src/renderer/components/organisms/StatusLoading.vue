@@ -1,6 +1,7 @@
 <template>
   <div class="status-loading" tabIndex="0" @click="onClick">
-    <p class="load-text">{{ $t('cards.status_loading.message') }}</p>
+    <img v-if="loading" src="../../assets/images/loading-spinner-wide.svg" class="load-icon" />
+    <p v-else class="load-text">{{ $t('cards.status_loading.message') }}</p>
     <div class="fill-line"></div>
   </div>
 </template>
@@ -16,10 +17,17 @@ export default {
     since_id: {
       type: String,
       default: ''
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     onClick() {
+      if (this.loading) {
+        return
+      }
       if (this.since_id !== '') {
         this.$emit('load_since', this.since_id)
       } else if (this.max_id !== '') {
@@ -37,6 +45,11 @@ export default {
   padding: 12px 0;
   height: 36px;
   border-bottom: 1px solid var(--theme-border-color);
+
+  .load-icon {
+    width: 36px;
+  }
+
   .load-text {
     cursor: pointer;
   }
