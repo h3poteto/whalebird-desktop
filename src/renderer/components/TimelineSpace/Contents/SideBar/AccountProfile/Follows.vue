@@ -14,6 +14,7 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
+    <div class="loading-card" v-loading="lazyLoading" :element-loading-background="backgroundColor"></div>
   </div>
 </template>
 
@@ -28,11 +29,23 @@ export default {
   computed: {
     ...mapState('TimelineSpace/Contents/SideBar/AccountProfile/Follows', {
       follows: state => state.follows,
-      relationships: state => state.relationships
+      relationships: state => state.relationships,
+      lazyLoading: state => state.lazyLoading
+    }),
+    ...mapState('App', {
+      backgroundColor: state => state.theme.background_color
     })
   },
   created() {
     this.load()
+  },
+  mounted() {
+    document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
+  },
+  destroyed() {
+    if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
+      document.getElementById('sidebar_scrollable').removeEventListener('scroll', this.onScroll)
+    }
   },
   watch: {
     account: function (_newAccount, _oldAccount) {
@@ -53,6 +66,21 @@ export default {
         })
       } finally {
         this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+      }
+    },
+    onScroll(event) {
+      // for lazyLoading
+      if (
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('account_profile').clientHeight - 10 &&
+        !this.lazyloading
+      ) {
+        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Follows/lazyFetchFollows', this.account).catch(err => {
+          console.error(err)
+          this.$message({
+            message: this.$t('message.timeline_fetch_error'),
+            type: 'error'
+          })
+        })
       }
     },
     targetRelation(id) {
@@ -90,4 +118,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.loading-card {
+  height: 60px;
+}
+
+.loading-card:empty {
+  height: 0;
+}
+</style>
