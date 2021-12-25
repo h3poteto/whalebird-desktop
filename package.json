@@ -23,7 +23,7 @@
     "dev": "node .electron-vue/dev-runner.js",
     "lint": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter src spec",
     "lint:fix": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter --fix src spec",
-    "stylelint": "stylelint '**/*.vue' --syntax scss",
+    "stylelint": "stylelint '**/*.vue'",
     "build": "node .electron-vue/build.js",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
