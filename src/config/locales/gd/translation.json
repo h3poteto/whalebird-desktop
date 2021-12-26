@@ -378,6 +378,9 @@
         "left": "Tha {{datetime}} air fhàgail",
         "refresh": "Ath-nuadhaich"
       }
+    },
+    "status_loading": {
+      "message": "Load more status"
     }
   },
   "side_bar": {
