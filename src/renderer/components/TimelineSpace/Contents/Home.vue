@@ -3,22 +3,29 @@
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
     <DynamicScroller :items="filteredTimeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
-          <toot
-            :message="item"
-            :focused="item.uri + item.id === focusedId"
-            :overlaid="modalOpened"
-            :filters="filters"
-            v-on:update="updateToot"
-            v-on:delete="deleteToot"
-            @focusNext="focusNext"
-            @focusPrev="focusPrev"
-            @focusRight="focusSidebar"
-            @selectToot="focusToot(item)"
-            @sizeChanged="sizeChanged"
-          >
-          </toot>
-        </DynamicScrollerItem>
+        <template v-if="item.id === 'loading-card'">
+          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.id]" :data-index="index" :watchData="true">
+            <StatusLoading :since_id="item.since_id" :max_id="item.max_id" :loading="loadingMore" @load_since="fetchTimelineSince" />
+          </DynamicScrollerItem>
+        </template>
+        <template v-else>
+          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
+            <toot
+              :message="item"
+              :focused="item.uri + item.id === focusedId"
+              :overlaid="modalOpened"
+              :filters="filters"
+              v-on:update="updateToot"
+              v-on:delete="deleteToot"
+              @focusNext="focusNext"
+              @focusPrev="focusPrev"
+              @focusRight="focusSidebar"
+              @selectToot="focusToot(item)"
+              @sizeChanged="sizeChanged"
+            >
+            </toot>
+          </DynamicScrollerItem>
+        </template>
       </template>
     </DynamicScroller>
 
@@ -32,13 +39,14 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
+import StatusLoading from '~/src/renderer/components/organisms/StatusLoading'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
   name: 'home',
-  components: { Toot },
+  components: { Toot, StatusLoading },
   mixins: [reloadable],
   data() {
     return {
@@ -46,7 +54,8 @@ export default {
       scrollPosition: null,
       observer: null,
       scrollTime: null,
-      resizeTime: null
+      resizeTime: null,
+      loadingMore: false
     }
   },
   computed: {
@@ -101,14 +110,14 @@ export default {
     })
 
     if (this.heading && this.timeline.length > 0) {
-      this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', this.timeline[0].id)
+      this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker')
     }
     const el = document.getElementById('scroller')
     this.scrollPosition = new ScrollPosition(el)
     this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
+      if (this.loadingMore || (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling)) {
         this.resizeTime = moment()
         this.scrollPosition.restore()
       }
@@ -154,7 +163,7 @@ export default {
     },
     timeline: function (newState, _oldState) {
       if (this.heading && newState.length > 0) {
-        this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker', newState[0].id)
+        this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker')
       }
     }
   },
@@ -213,6 +222,14 @@ export default {
     },
     deleteToot(message) {
       this.$store.commit('TimelineSpace/Contents/Home/deleteToot', message.id)
+    },
+    fetchTimelineSince(since_id) {
+      this.loadingMore = true
+      this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimelineSince', since_id).finally(() => {
+        setTimeout(() => {
+          this.loadingMore = false
+        }, 500)
+      })
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)

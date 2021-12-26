@@ -282,8 +282,8 @@ describe('TimelineSpace/Contents/Home', () => {
         })
         it('should be updated', () => {
           Home.mutations![MUTATION_TYPES.UPDATE_TOOT](state, favouritedStatus)
-          expect(state.timeline[0].reblog).not.toBeNull()
-          expect(state.timeline[0].reblog!.favourited).toEqual(true)
+          expect((state.timeline[0] as Entity.Status).reblog).not.toBeNull()
+          expect((state.timeline[0] as Entity.Status).reblog!.favourited).toEqual(true)
         })
       })
     })

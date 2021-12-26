@@ -25,7 +25,7 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import generator, { Entity, detector, NotificationType } from 'megalodon'
+import { Entity, detector, NotificationType } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
@@ -1169,49 +1169,16 @@ ipcMain.handle('get-notifications-marker', async (_: IpcMainInvokeEvent, ownerID
   return marker
 })
 
-ipcMain.handle('save-marker', async (_: IpcMainInvokeEvent, marker: LocalMarker) => {
-  if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
-    return
+ipcMain.on(
+  'save-marker',
+  async (_: IpcMainEvent, marker: LocalMarker): Promise<LocalMarker | null> => {
+    if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
+      return null
+    }
+    const res = await markerRepo.save(marker)
+    return res
   }
-  await markerRepo.save(marker)
-})
-
-setTimeout(async () => {
-  try {
-    const accounts = await accountRepo.listAccounts()
-    accounts.map(async acct => {
-      const proxy = await proxyConfiguration.forMastodon()
-      const sns = await detector(acct.baseURL, proxy)
-      if (sns === 'misskey') {
-        return
-      }
-      const client = generator(sns, acct.baseURL, acct.accessToken, 'Whalebird', proxy)
-      const home = await markerRepo.get(acct._id!, 'home')
-      const notifications = await markerRepo.get(acct._id!, 'notifications')
-      let params = {}
-      if (home !== null && home !== undefined) {
-        params = Object.assign({}, params, {
-          home: {
-            last_read_id: home.last_read_id
-          }
-        })
-      }
-      if (notifications !== null && notifications !== undefined) {
-        params = Object.assign({}, params, {
-          notifications: {
-            last_read_id: notifications.last_read_id
-          }
-        })
-      }
-      if (isEmpty(params)) {
-        return
-      }
-      await client.saveMarkers(params)
-    })
-  } catch (err) {
-    console.error(err)
-  }
-}, 120000)
+)
 
 // hashtag
 ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {

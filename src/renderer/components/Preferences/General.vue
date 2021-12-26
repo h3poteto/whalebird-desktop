@@ -24,7 +24,7 @@
         <el-switch id="hideAllAttachments" v-model="timeline_hide_attachments" active-color="#13ce66"> </el-switch>
       </el-form-item>
       <el-form-item for="useMarker" :label="$t('preferences.general.timeline.useMarker')">
-        <el-switch id="useMarker" v-model="timeline_use_marker" active-color="#13ce66" disabled> </el-switch>
+        <el-switch id="useMarker" v-model="timeline_use_marker" active-color="#13ce66"> </el-switch>
       </el-form-item>
       <p class="notice">
         {{ $t('preferences.general.timeline.useMarkerNotice') }}
