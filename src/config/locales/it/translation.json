@@ -163,8 +163,7 @@
         "cw": "Ignora sempre gli avvisi sui contenuti",
         "nsfw": "Ignora sempre contenuti multimediali inappropriati",
         "hideAllAttachments": "Nascondi tutti i contenuti multimediali",
-        "useMarker": "Carica la timeline dall'ultima posizione di lettura",
-        "useMarkerNotice": "Questa caratteristica supporta solo la pagina iniziale e le notifiche"
+        "useMarker": "Carica la timeline dall'ultima posizione di lettura"
       },
       "other": {
         "title": "Altre opzioni",
