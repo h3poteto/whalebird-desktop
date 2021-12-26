@@ -378,6 +378,9 @@
         "left": "Quedan {{datetime}}",
         "refresh": "Actualizar"
       }
+    },
+    "status_loading": {
+      "message": "Load more status"
     }
   },
   "side_bar": {
