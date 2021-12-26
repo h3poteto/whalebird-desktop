@@ -197,8 +197,14 @@ const actions: ActionTree<NotificationsState, RootState> = {
     if (cardIndex > 0) {
       maxID = state.notifications[cardIndex - 1].id
     }
+    let params = { min_id: since_id, limit: 30 }
+    if (maxID !== null) {
+      params = Object.assign({}, params, {
+        max_id: maxID
+      })
+    }
 
-    const res = await client.getNotifications({ min_id: since_id, limit: 30 })
+    const res = await client.getNotifications(params)
     if (res.data.length >= 30) {
       const card: LoadingCard = {
         type: 'middle-load',

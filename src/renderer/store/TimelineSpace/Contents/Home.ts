@@ -206,8 +206,24 @@ const actions: ActionTree<HomeState, RootState> = {
     if (cardIndex > 0) {
       maxID = state.timeline[cardIndex - 1].id
     }
+    // Memo: What happens when we specify both of max_id and min_id?
+    // What is the difference between max_id & since_id and max_id & min_id?
+    // The max_id & since_id:
+    // We can get statuses which are older than max_id and newer than since_id.
+    // If the number of statuses exceeds the limit, it truncates older statuses.
+    // That means, the status immediately after since_id is not included in the response.
+    // The max_id & min_id:
+    // Also, we can get statuses which are older than max_id and newer than min_id.
+    // If the number of statuses exceeds the limit, it truncates newer statuses.
+    // That means, the status immediately before max_id is not included in the response.
+    let params = { min_id: since_id, limit: 40 }
+    if (maxID !== null) {
+      params = Object.assign({}, params, {
+        max_id: maxID
+      })
+    }
 
-    const res = await client.getHomeTimeline({ min_id: since_id, limit: 40 })
+    const res = await client.getHomeTimeline(params)
     if (res.data.length >= 40) {
       const card: LoadingCard = {
         type: 'middle-load',
