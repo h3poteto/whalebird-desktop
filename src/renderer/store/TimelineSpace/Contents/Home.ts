@@ -133,19 +133,15 @@ const actions: ActionTree<HomeState, RootState> = {
     const localMarker: LocalMarker | null = await dispatch('getMarker').catch(err => {
       console.error(err)
     })
-    let params = { limit: 40 }
-    if (localMarker !== null) {
-      params = Object.assign({}, params, {
-        max_id: localMarker.last_read_id
-      })
-    }
 
-    const res = await client.getHomeTimeline(params)
-    let timeline: Array<Entity.Status | LoadingCard> = []
-    if (res.data.length > 0 && rootState.App.useMarker) {
+    if (rootState.App.useMarker && localMarker !== null) {
+      const last = await client.getStatus(localMarker.last_read_id)
+      const lastReadStatus = last.data
+
+      let timeline: Array<Entity.Status | LoadingCard> = [lastReadStatus]
       const card: LoadingCard = {
         type: 'middle-load',
-        since_id: res.data[0].id,
+        since_id: lastReadStatus.id,
         // We don't need to fill this field in the first fetcing.
         // Because in most cases there is no new statuses at the first fetching.
         // After new statuses are received, if the number of unread statuses is more than 40, max_id is not necessary.
@@ -155,11 +151,22 @@ const actions: ActionTree<HomeState, RootState> = {
         max_id: null,
         id: 'loading-card'
       }
-      timeline = timeline.concat([card])
+
+      const res = await client.getHomeTimeline({ limit: 40, max_id: lastReadStatus.id })
+      // Make sure whether new statuses exist or not.
+      const nextResponse = await client.getHomeTimeline({ limit: 1, min_id: lastReadStatus.id })
+      if (nextResponse.data.length > 0) {
+        timeline = ([card] as Array<Entity.Status | LoadingCard>).concat(timeline).concat(res.data)
+      } else {
+        timeline = timeline.concat(res.data)
+      }
+      commit(MUTATION_TYPES.UPDATE_TIMELINE, timeline)
+      return res.data
+    } else {
+      const res = await client.getHomeTimeline({ limit: 40 })
+      commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
+      return res.data
     }
-    timeline = timeline.concat(res.data)
-    commit(MUTATION_TYPES.UPDATE_TIMELINE, timeline)
-    return res.data
   },
   lazyFetchTimeline: async ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
@@ -243,15 +250,27 @@ const actions: ActionTree<HomeState, RootState> = {
     return localMarker
   },
   saveMarker: async ({ state, rootState }) => {
-    const timeline = state.timeline.filter(status => status.id !== 'loading-card')
-    if (timeline.length === 0) {
+    const timeline = state.timeline
+    if (timeline.length === 0 || timeline[0].id === 'loading-card') {
       return
     }
-    await win.ipcRenderer.invoke('save-marker', {
+    win.ipcRenderer.send('save-marker', {
       owner_id: rootState.TimelineSpace.account._id,
       timeline: 'home',
       last_read_id: timeline[0].id
     } as LocalMarker)
+
+    if (rootState.TimelineSpace.sns === 'misskey') {
+      return
+    }
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    const res = await client.saveMarkers({ home: { last_read_id: timeline[0].id } })
+    return res.data
   }
 }
 

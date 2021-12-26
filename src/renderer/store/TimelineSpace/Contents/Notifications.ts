@@ -3,13 +3,14 @@ import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
 import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
+import { LoadingCard } from '@/types/loading-card'
 
 const win = (window as any) as MyWindow
 
 export type NotificationsState = {
   lazyLoading: boolean
   heading: boolean
-  notifications: Array<Entity.Notification>
+  notifications: Array<Entity.Notification | LoadingCard>
   scrolling: boolean
 }
 
@@ -30,7 +31,8 @@ export const MUTATION_TYPES = {
   DELETE_TOOT: 'deleteToot',
   CLEAR_NOTIFICATIONS: 'clearNotifications',
   ARCHIVE_NOTIFICATIONS: 'archiveNotifications',
-  CHANGE_SCROLLING: 'changeScrolling'
+  CHANGE_SCROLLING: 'changeScrolling',
+  APPEND_NOTIFICATIONS_AFTER_LOADING_CARD: 'appendNotificationsAfterLoadingCard'
 }
 
 const mutations: MutationTree<NotificationsState> = {
@@ -43,13 +45,13 @@ const mutations: MutationTree<NotificationsState> = {
   [MUTATION_TYPES.APPEND_NOTIFICATIONS]: (state, notification: Entity.Notification) => {
     // Reject duplicated status in timeline
     if (!state.notifications.find(item => item.id === notification.id)) {
-      state.notifications = [notification].concat(state.notifications)
+      state.notifications = ([notification] as Array<Entity.Notification | LoadingCard>).concat(state.notifications)
     }
   },
-  [MUTATION_TYPES.UPDATE_NOTIFICATIONS]: (state, notifications: Array<Entity.Notification>) => {
+  [MUTATION_TYPES.UPDATE_NOTIFICATIONS]: (state, notifications: Array<Entity.Notification | LoadingCard>) => {
     state.notifications = notifications
   },
-  [MUTATION_TYPES.INSERT_NOTIFICATIONS]: (state, notifications: Array<Entity.Notification>) => {
+  [MUTATION_TYPES.INSERT_NOTIFICATIONS]: (state, notifications: Array<Entity.Notification | LoadingCard>) => {
     state.notifications = state.notifications.concat(notifications)
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Status) => {
@@ -67,7 +69,11 @@ const mutations: MutationTree<NotificationsState> = {
     })
   },
   [MUTATION_TYPES.DELETE_TOOT]: (state, id: string) => {
-    state.notifications = state.notifications.filter(notification => {
+    state.notifications = state.notifications.filter(notify => {
+      if (notify.id === 'loading-card') {
+        return true
+      }
+      const notification = notify as Entity.Notification
       if (notification.status) {
         if (notification.status.reblog && notification.status.reblog.id === id) {
           return false
@@ -87,20 +93,68 @@ const mutations: MutationTree<NotificationsState> = {
   },
   [MUTATION_TYPES.CHANGE_SCROLLING]: (state, value: boolean) => {
     state.scrolling = value
+  },
+  [MUTATION_TYPES.APPEND_NOTIFICATIONS_AFTER_LOADING_CARD]: (state, notifications: Array<Entity.Notification | LoadingCard>) => {
+    const n = state.notifications.flatMap(notify => {
+      if (notify.id !== 'loading-card') {
+        return notify
+      } else {
+        return notifications
+      }
+    })
+    // Reject duplicated status in timeline
+    state.notifications = Array.from(new Set(n))
   }
 }
 
 const actions: ActionTree<NotificationsState, RootState> = {
-  fetchNotifications: async ({ commit, rootState }): Promise<Array<Entity.Notification>> => {
+  fetchNotifications: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Notification>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent
     )
-    const res = await client.getNotifications({ limit: 30 })
-    commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, res.data)
-    return res.data
+
+    const localMarker: LocalMarker | null = await dispatch('getMarker').catch(err => {
+      console.error(err)
+    })
+
+    if (rootState.App.useMarker && localMarker !== null) {
+      // The result does not contain max_id's notification, when we specify max_id parameter in get notifications.
+      // So we need to get max_id's notification.
+      const last = await client.getNotification(localMarker.last_read_id)
+      const lastReadNotification = last.data
+
+      let notifications: Array<Entity.Notification | LoadingCard> = [lastReadNotification]
+      const card: LoadingCard = {
+        type: 'middle-load',
+        since_id: lastReadNotification.id,
+        // We don't need to fill this field in the first fetcing.
+        // Because in most cases there is no new statuses at the first fetching.
+        // After new statuses are received, if the number of unread statuses is more than 30, max_id is not necessary.
+        // We can fill max_id when calling fetchTimelineSince.
+        // If the number of unread statuses is less than 30, max_id is necessary, but it is enough to reject duplicated statuses.
+        // So we do it in mutation.
+        max_id: null,
+        id: 'loading-card'
+      }
+
+      const res = await client.getNotifications({ limit: 30, max_id: localMarker.last_read_id })
+      // Make sure whether new notifications exist or not
+      const nextResponse = await client.getNotifications({ limit: 1, min_id: lastReadNotification.id })
+      if (nextResponse.data.length > 0) {
+        notifications = ([card] as Array<Entity.Notification | LoadingCard>).concat(notifications).concat(res.data)
+      } else {
+        notifications = notifications.concat(res.data)
+      }
+      commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, notifications)
+      return res.data
+    } else {
+      const res = await client.getNotifications({ limit: 30 })
+      commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, res.data)
+      return res.data
+    }
   },
   lazyFetchNotifications: (
     { state, commit, rootState },
@@ -126,15 +180,91 @@ const actions: ActionTree<NotificationsState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
       })
   },
+  fetchNotificationsSince: async ({ state, rootState, commit }, since_id: string): Promise<Array<Entity.Notification> | null> => {
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    const cardIndex = state.notifications.findIndex(s => {
+      if (s.id === 'loading-card') {
+        return true
+      }
+      return false
+    })
+    let maxID: string | null = null
+    if (cardIndex > 0) {
+      maxID = state.notifications[cardIndex - 1].id
+    }
+
+    const res = await client.getNotifications({ min_id: since_id, limit: 30 })
+    if (res.data.length >= 30) {
+      const card: LoadingCard = {
+        type: 'middle-load',
+        since_id: res.data[0].id,
+        max_id: maxID,
+        id: 'loading-card'
+      }
+      let notifications: Array<Entity.Notification | LoadingCard> = [card]
+      notifications = notifications.concat(res.data)
+      commit(MUTATION_TYPES.APPEND_NOTIFICATIONS_AFTER_LOADING_CARD, notifications)
+    } else {
+      commit(MUTATION_TYPES.APPEND_NOTIFICATIONS_AFTER_LOADING_CARD, res.data)
+    }
+    return res.data
+  },
   resetBadge: () => {
     win.ipcRenderer.send('reset-badge')
   },
-  saveMarker: async ({ rootState }, id: string) => {
-    await win.ipcRenderer.invoke('save-marker', {
+  getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
+    if (!rootState.App.useMarker) {
+      return null
+    }
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    let serverMarker: Entity.Marker | {} = {}
+    try {
+      const res = await client.getMarkers(['notifications'])
+      serverMarker = res.data
+    } catch (err) {
+      console.warn(err)
+    }
+    if ((serverMarker as Entity.Marker).notifications !== undefined) {
+      return {
+        timeline: 'notifications',
+        last_read_id: (serverMarker as Entity.Marker).notifications.last_read_id
+      } as LocalMarker
+    }
+    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-notifications-marker', rootState.TimelineSpace.account._id)
+    return localMarker
+  },
+  saveMarker: async ({ state, rootState }) => {
+    const notifications = state.notifications
+    if (notifications.length === 0 || notifications[0].id === 'loading-card') {
+      return
+    }
+    win.ipcRenderer.send('save-marker', {
       owner_id: rootState.TimelineSpace.account._id,
       timeline: 'notifications',
-      last_read_id: id
+      last_read_id: notifications[0].id
     } as LocalMarker)
+
+    if (rootState.TimelineSpace.sns === 'misskey') {
+      return
+    }
+    const client = generator(
+      rootState.TimelineSpace.sns,
+      rootState.TimelineSpace.account.baseURL,
+      rootState.TimelineSpace.account.accessToken,
+      rootState.App.userAgent
+    )
+    const res = await client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
+    return res.data
   }
 }
 
@@ -142,6 +272,7 @@ const getters: GetterTree<NotificationsState, RootState> = {
   handledNotifications: state => {
     return state.notifications.filter(n => {
       switch (n.type) {
+        case 'middle-load':
         case NotificationType.Follow:
         case NotificationType.Favourite:
         case NotificationType.Reblog:
