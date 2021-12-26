@@ -1,12 +1,15 @@
 {
-  "processors": ["@mapbox/stylelint-processor-arbitrary-tags"],
   "extends": [
+    "stylelint-config-html/vue",
     "stylelint-config-standard",
-    "./node_modules/prettier-stylelint/config.js"
+    "stylelint-config-prettier"
   ],
   "rules": {
-    "no-empty-source": null,
-    "no-empty-first-line": null,
-    "custom-property-no-missing-var-function": null
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.scss"],
+      "customSyntax": "postcss-scss"
+    }
+  ]
 }
