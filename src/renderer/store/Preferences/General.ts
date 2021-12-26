@@ -22,7 +22,7 @@ const state = (): GeneralState => ({
       cw: false,
       nsfw: false,
       hideAllAttachments: false,
-      useMarker: false
+      useMarkerTimeline: ['notifications']
     },
     other: {
       launch: false

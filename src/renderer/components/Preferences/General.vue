@@ -24,11 +24,11 @@
         <el-switch id="hideAllAttachments" v-model="timeline_hide_attachments" active-color="#13ce66"> </el-switch>
       </el-form-item>
       <el-form-item for="useMarker" :label="$t('preferences.general.timeline.useMarker')">
-        <el-switch id="useMarker" v-model="timeline_use_marker" active-color="#13ce66"> </el-switch>
+        <el-checkbox-group v-model="timeline_use_marker">
+          <el-checkbox label="home" name="type"></el-checkbox>
+          <el-checkbox label="notifications" name="type"></el-checkbox>
+        </el-checkbox-group>
       </el-form-item>
-      <p class="notice">
-        {{ $t('preferences.general.timeline.useMarkerNotice') }}
-      </p>
     </el-form>
     <el-form class="other section" label-position="right" label-width="250px" size="small" v-if="notDarwin">
       <h3>{{ $t('preferences.general.other.title') }}</h3>
@@ -107,11 +107,12 @@ export default {
     },
     timeline_use_marker: {
       get() {
-        return this.$store.state.Preferences.General.general.timeline.useMarker
+        return this.$store.state.Preferences.General.general.timeline.useMarkerTimeline
       },
       set(value) {
+        console.log(value)
         this.$store.dispatch('Preferences/General/updateTimeline', {
-          useMarker: value
+          useMarkerTimeline: value
         })
       }
     },

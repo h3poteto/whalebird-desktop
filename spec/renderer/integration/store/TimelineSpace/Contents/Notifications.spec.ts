@@ -222,7 +222,8 @@ const timelineState = {
 const appState = {
   namespaced: true,
   state: {
-    proxyConfiguration: false
+    proxyConfiguration: false,
+    useMarkerTimeline: []
   }
 }
 

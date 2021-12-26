@@ -21,7 +21,7 @@ const timeline: Timeline = {
   cw: false,
   nsfw: false,
   hideAllAttachments: false,
-  useMarker: false
+  useMarkerTimeline: ['notifications']
 }
 
 const other: Other = {
