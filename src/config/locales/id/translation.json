@@ -163,8 +163,7 @@
         "cw": "Selalu abaikan peringatan konten",
         "nsfw": "Selalu abaikan media NSFW",
         "hideAllAttachments": "Sembunyikan semua media",
-        "useMarker": "Muat linimasa dari posisi baca terakhir",
-        "useMarkerNotice": "Fitur ini hanya mendukung beranda dan pemberitahuan"
+        "useMarker": "Muat linimasa dari posisi baca terakhir"
       },
       "other": {
         "title": "Pilihan lainnya",
