@@ -378,6 +378,9 @@
         "left": "剩余 {{datetime}}",
         "refresh": "刷新"
       }
+    },
+    "status_loading": {
+      "message": "Load more status"
     }
   },
   "side_bar": {

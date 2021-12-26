@@ -378,6 +378,9 @@
         "left": "{{datetime}} まで",
         "refresh": "更新"
       }
+    },
+    "status_loading": {
+      "message": "Load more status"
     }
   },
   "side_bar": {

@@ -378,6 +378,9 @@
         "left": "{{datetime}} ag qimen",
         "refresh": "Zzuzwu"
       }
+    },
+    "status_loading": {
+      "message": "Load more status"
     }
   },
   "side_bar": {

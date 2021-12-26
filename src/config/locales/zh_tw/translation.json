@@ -378,6 +378,9 @@
         "left": "還剩下 {{datetime}}",
         "refresh": "重新整理"
       }
+    },
+    "status_loading": {
+      "message": "Load more status"
     }
   },
   "side_bar": {
