@@ -378,6 +378,9 @@
         "left": "{{datetime}} restant",
         "refresh": "Actualiser"
       }
+    },
+    "status_loading": {
+      "message": "Load more status"
     }
   },
   "side_bar": {
