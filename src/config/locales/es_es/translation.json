@@ -163,8 +163,7 @@
         "cw": "Ignorar siempre las advertencias de contenidos",
         "nsfw": "Ignorar siempre NSFW de medios",
         "hideAllAttachments": "Ocultar todos los medios",
-        "useMarker": "Load timeline from the last reading position",
-        "useMarkerNotice": "This feature only supports home and notifications"
+        "useMarker": "Load timeline from the last reading position"
       },
       "other": {
         "title": "Otras opciones",

@@ -163,8 +163,7 @@
         "cw": "永遠忽略內容警告",
         "nsfw": "永遠忽略 NSFW 媒體標記",
         "hideAllAttachments": "隱藏所有媒體",
-        "useMarker": "從上次閱讀位置讀取時間軸",
-        "useMarkerNotice": "這項功能只支援 home 及通知"
+        "useMarker": "從上次閱讀位置讀取時間軸"
       },
       "other": {
         "title": "其他選項",
