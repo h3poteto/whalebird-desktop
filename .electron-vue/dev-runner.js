@@ -63,16 +63,20 @@ function startRenderer() {
       logStats('Renderer', stats)
     })
 
-    const server = new WebpackDevServer(compiler, {
-      contentBase: path.join(__dirname, '../'),
-      quiet: true,
-      before(app, ctx) {
-        app.use(hotMiddleware)
-        ctx.middleware.waitUntilValid(() => {
-          resolve()
-        })
-      }
-    })
+    const server = new WebpackDevServer(
+      {
+        static: {
+          directory: path.resolve(__dirname, '../')
+        },
+        onBeforeSetupMiddleware: function (devServer) {
+          devServer.app.use(hotMiddleware)
+          devServer.middleware.waitUntilValid(() => {
+            resolve()
+          })
+        }
+      },
+      compiler
+    )
 
     server.listen(9080)
   })
