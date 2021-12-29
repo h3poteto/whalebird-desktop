@@ -1,21 +1,22 @@
 import { isEmpty } from 'lodash'
-import Datastore from 'nedb'
+import Loki, { Collection } from 'lokijs'
 import { LocalMarker } from '~/src/types/localMarker'
 
 export default class Marker {
-  private db: Datastore
+  private markers: Collection<any>
 
-  constructor(db: Datastore) {
-    this.db = db
-    this.db.persistence.setAutocompactionInterval(60000) // milliseconds
+  constructor(db: Loki) {
+    this.markers = db.getCollection('markers')
   }
 
   private insert(marker: LocalMarker): Promise<LocalMarker> {
     return new Promise((resolve, reject) => {
-      this.db.insert(marker, (err, doc) => {
-        if (err) return reject(err)
+      try {
+        const doc: LocalMarker = this.markers.insert(marker)
         resolve(doc)
-      })
+      } catch (err) {
+        reject(err)
+      }
     })
   }
 
@@ -23,18 +24,20 @@ export default class Marker {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      this.db.update(
-        {
-          owner_id: marker.owner_id,
-          timeline: marker.timeline
-        },
-        { $set: marker },
-        { multi: false },
-        err => {
-          if (err) return reject(err)
-          return this.get(marker.owner_id, marker.timeline)
-        }
-      )
+      try {
+        this.markers.findAndUpdate(
+          {
+            owner_id: { $eq: marker.owner_id },
+            timeline: { $eq: marker.timeline }
+          },
+          (item: LocalMarker) => {
+            item.last_read_id = marker.last_read_id
+          }
+        )
+        return this.get(marker.owner_id, marker.timeline)
+      } catch (err) {
+        reject(err)
+      }
     })
   }
 
@@ -47,21 +50,28 @@ export default class Marker {
 
   public async get(owner_id: string, timeline: 'home' | 'notifications'): Promise<LocalMarker | null> {
     return new Promise((resolve, reject) => {
-      this.db.findOne<LocalMarker>({ owner_id: owner_id, timeline: timeline }, (err, doc) => {
-        if (err) return reject(err)
+      try {
+        const doc: LocalMarker | null = this.markers.findOne({
+          owner_id: { $eq: owner_id },
+          timeline: { $eq: timeline }
+        })
         resolve(doc)
-      })
+      } catch (err) {
+        reject(err)
+      }
     })
   }
 
   public async list(owner_id: string): Promise<Array<LocalMarker>> {
     return new Promise((resolve, reject) => {
-      this.db
-        .find<LocalMarker>({ owner_id: owner_id })
-        .exec((err, docs) => {
-          if (err) return reject(err)
-          resolve(docs)
+      try {
+        const docs: Array<LocalMarker> = this.markers.find({
+          owner_id: { $eq: owner_id }
         })
+        resolve(docs)
+      } catch (err) {
+        reject(err)
+      }
     })
   }
 }
