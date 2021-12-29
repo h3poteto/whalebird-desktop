@@ -165,9 +165,10 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      timeFormat: state => state.App.timeFormat,
-      language: state => state.App.language
+    ...mapState('App', {
+      timeFormat: state => state.timeFormat,
+      language: state => state.language,
+      hideAllAttachments: state => state.hideAllAttachments
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid
@@ -261,7 +262,7 @@ export default {
       return !this.spoilered(message) || this.showContent
     },
     sensitive(message) {
-      return message.sensitive && this.mediaAttachments(message).length > 0
+      return (this.hideAllAttachments || message.sensitive) && this.mediaAttachments(message).length > 0
     },
     isShowAttachments(message) {
       return !this.sensitive(message) || this.showAttachments
