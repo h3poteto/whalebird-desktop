@@ -127,7 +127,7 @@
     "@types/i18next": "^13.0.0",
     "@types/jest": "27.0.2",
     "@types/jsdom": "^16.2.14",
-    "@types/lodash": "^4.14.176",
+    "@types/lodash": "^4.14.178",
     "@types/lokijs": "^1.5.7",
     "@types/nedb": "^1.8.12",
     "@types/node": "^16.11.6",
