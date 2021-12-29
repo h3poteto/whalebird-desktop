@@ -55,6 +55,7 @@ import { EnabledTimelines } from '~/src/types/enabledTimelines'
 import { Menu as MenuPreferences } from '~/src/types/preference'
 import { LocalMarker } from '~/src/types/localMarker'
 import Marker from './marker'
+import newDB from './database'
 
 /**
  * Context menu
@@ -141,12 +142,9 @@ unreadNotification.initialize().catch((err: Error) => log.error(err))
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
 
-const markerDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/marker.db' : 'marker.db'
-const markerDB = new Datastore({
-  filename: markerDBPath,
-  autoload: true
-})
-const markerRepo = new Marker(markerDB)
+const lokiDatabasePath = process.env.NODE_ENV === 'production' ? userData + '/db/lokiDatabase.db' : 'lokiDatabase.db'
+
+let markerRepo: Marker | null = null
 
 /**
  * Cache path
@@ -257,6 +255,11 @@ const updateDockMenu = async (accountsChange: Array<MenuItemConstructorOptions>)
 }
 
 async function createWindow() {
+  /**
+     DB
+  */
+  const lokiDB = await newDB(lokiDatabasePath)
+  markerRepo = new Marker(lokiDB)
   /**
    * List accounts
    */
@@ -1160,11 +1163,17 @@ ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, la
 
 // marker
 ipcMain.handle('get-home-marker', async (_: IpcMainInvokeEvent, ownerID: string) => {
+  if (markerRepo === null) {
+    return null
+  }
   const marker = await markerRepo.get(ownerID, 'home')
   return marker
 })
 
 ipcMain.handle('get-notifications-marker', async (_: IpcMainInvokeEvent, ownerID: string) => {
+  if (markerRepo === null) {
+    return null
+  }
   const marker = await markerRepo.get(ownerID, 'notifications')
   return marker
 })
@@ -1173,6 +1182,9 @@ ipcMain.on(
   'save-marker',
   async (_: IpcMainEvent, marker: LocalMarker): Promise<LocalMarker | null> => {
     if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
+      return null
+    }
+    if (markerRepo === null) {
       return null
     }
     const res = await markerRepo.save(marker)
