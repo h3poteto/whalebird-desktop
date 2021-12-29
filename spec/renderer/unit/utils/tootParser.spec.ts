@@ -66,8 +66,9 @@ describe('findAccount', () => {
       const target = doc.getElementById('user')
       it('should find', () => {
         const res = findAccount(target)
-        expect(res.username).toEqual('@h3_poteto')
-        expect(res.acct).toEqual('@h3_poteto@social.mikutter.hachune.net')
+        expect(res).not.toBeNull()
+        expect(res!.username).toEqual('@h3_poteto')
+        expect(res!.acct).toEqual('@h3_poteto@social.mikutter.hachune.net')
       })
     })
 
@@ -81,8 +82,9 @@ describe('findAccount', () => {
       const target = doc.getElementById('user')
       it('should find', () => {
         const res = findAccount(target)
-        expect(res.username).toEqual('@h3poteto')
-        expect(res.acct).toEqual('@h3poteto@pleroma.io')
+        expect(res).not.toBeNull()
+        expect(res!.username).toEqual('@h3poteto')
+        expect(res!.acct).toEqual('@h3poteto@pleroma.io')
       })
     })
 
