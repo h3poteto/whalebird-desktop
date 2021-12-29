@@ -1919,10 +1919,10 @@
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-4.33.0.tgz#a1e59036a3b53ae8430ceebf2a919dc7f9af6d72"
   integrity sha512-zKp7CjQzLQImXEpLt2BUw1tvOMPfNoTAfb8l51evhYbOEEzdWyQNmHWWGPR6hwKJDAi+1VXSBmnhL9kyVTTOuQ==
 
-"@typescript-eslint/types@5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-5.2.0.tgz#7ad32d15abddb0ee968a330f0ea182ea544ef7cf"
-  integrity sha512-cTk6x08qqosps6sPyP2j7NxyFPlCNsJwSDasqPNjEQ8JMD5xxj2NHxcLin5AJQ8pAVwpQ8BMI3bTxR0zxmK9qQ==
+"@typescript-eslint/types@5.8.1":
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-5.8.1.tgz#04c6b49ebc8c99238238a6b8b43f2fc613983b5a"
+  integrity sha512-L/FlWCCgnjKOLefdok90/pqInkomLnAcF9UAzNr+DSqMC3IffzumHTQTrINXhP1gVp9zlHiYYjvozVZDPleLcA==
 
 "@typescript-eslint/typescript-estree@4.33.0":
   version "4.33.0"
@@ -1937,13 +1937,13 @@
     semver "^7.3.5"
     tsutils "^3.21.0"
 
-"@typescript-eslint/typescript-estree@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-5.2.0.tgz#c22e0ff6f8a4a3f78504a80ebd686fe2870a68ae"
-  integrity sha512-RsdXq2XmVgKbm9nLsE3mjNUM7BTr/K4DYR9WfFVMUuozHWtH5gMpiNZmtrMG8GR385EOSQ3kC9HiEMJWimxd/g==
+"@typescript-eslint/typescript-estree@^5.8.1":
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-5.8.1.tgz#a592855be688e7b729a1e9411d7d74ec992ed6ef"
+  integrity sha512-26lQ8l8tTbG7ri7xEcCFT9ijU5Fk+sx/KRRyyzCv7MQ+rZZlqiDPtMKWLC8P7o+dtCnby4c+OlxuX1tp8WfafQ==
   dependencies:
-    "@typescript-eslint/types" "5.2.0"
-    "@typescript-eslint/visitor-keys" "5.2.0"
+    "@typescript-eslint/types" "5.8.1"
+    "@typescript-eslint/visitor-keys" "5.8.1"
     debug "^4.3.2"
     globby "^11.0.4"
     is-glob "^4.0.3"
@@ -1958,12 +1958,12 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
-"@typescript-eslint/visitor-keys@5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-5.2.0.tgz#03522d35df98474f08e0357171a7d1b259a88f55"
-  integrity sha512-Nk7HizaXWWCUBfLA/rPNKMzXzWS8Wg9qHMuGtT+v2/YpPij4nVXrVJc24N/r5WrrmqK31jCrZxeHqIgqRzs0Xg==
+"@typescript-eslint/visitor-keys@5.8.1":
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-5.8.1.tgz#58a2c566265d5511224bc316149890451c1bbab0"
+  integrity sha512-SWgiWIwocK6NralrJarPZlWdr0hZnj5GXHIgfdm8hNkyKvpeQuFyLP6YjSIe9kf3YBIfU6OHSZLYkQ+smZwtNg==
   dependencies:
-    "@typescript-eslint/types" "5.2.0"
+    "@typescript-eslint/types" "5.8.1"
     eslint-visitor-keys "^3.0.0"
 
 "@vue/component-compiler-utils@^3.1.0":
