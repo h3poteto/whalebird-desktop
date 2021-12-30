@@ -689,7 +689,7 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
           }
         }
       )
-    } catch (err) {
+    } catch (err: any) {
       log.error(err)
       const streamingError = new StreamingError(err.message, account.domain)
       if (!event.sender.isDestroyed()) {
