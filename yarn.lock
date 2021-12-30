@@ -11717,10 +11717,10 @@ verror@1.10.0, verror@^1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vue-awesome@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/vue-awesome/-/vue-awesome-4.5.0.tgz#d42179335de20b53fee9bdb090498aeee1074f78"
-  integrity sha512-pbtZkRecXLm3fg0eVkwObDRM9YNU1BW5wDsL4mMoSvUXZbTnS+N2E4CahAwKJL5OPbqmhJQgZPekQoJrID7dcQ==
+vue-awesome@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/vue-awesome/-/vue-awesome-4.3.1.tgz#3d5684a931714277c3015e024f35e231e4265fa3"
+  integrity sha512-8FRCtO12pNDp2o2XKVIc7HApMFrws42rR9+AiDYjW6lsHbhMy0ygvhaByNEGlQSbp2gb3ZZkeV0UJxKdur5c1Q==
 
 vue-click-outside@^1.1.0:
   version "1.1.0"
