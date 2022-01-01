@@ -21,8 +21,7 @@ const state = (): GeneralState => ({
     timeline: {
       cw: false,
       nsfw: false,
-      hideAllAttachments: false,
-      useMarkerTimeline: ['notifications']
+      hideAllAttachments: false
     },
     other: {
       launch: false

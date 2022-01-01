@@ -2,7 +2,7 @@ import storage from 'electron-json-storage'
 import log from 'electron-log'
 import objectAssignDeep from 'object-assign-deep'
 import { BaseSettings, Setting } from '~/src/types/setting'
-import { Base } from '~/src/constants/initializer/setting'
+import { DefaultSetting } from '~/src/constants/initializer/setting'
 import { isEmpty } from 'lodash'
 
 export default class Settings {
@@ -12,7 +12,7 @@ export default class Settings {
     this.path = path
   }
 
-  public async load(): Promise<BaseSettings> {
+  public async _load(): Promise<BaseSettings> {
     try {
       const settings = await this._get()
       if (isEmpty(settings)) {
@@ -26,17 +26,16 @@ export default class Settings {
   }
 
   public async get(accountID: string): Promise<Setting> {
-    const current = await this.load()
+    const current = await this._load()
     const find: Setting | undefined = current.find(d => {
       return d.accountID === accountID
     })
     if (find) {
-      return find
+      return objectAssignDeep({}, DefaultSetting, find)
     }
-    const base = objectAssignDeep({}, Base, {
+    return objectAssignDeep({}, DefaultSetting, {
       accountID: accountID
     })
-    return base
   }
 
   private _get(): Promise<BaseSettings> {
@@ -58,7 +57,7 @@ export default class Settings {
   }
 
   public async update(obj: Setting): Promise<BaseSettings> {
-    const current = await this.load()
+    const current = await this._load()
     const find = current.find(d => {
       return d.accountID === obj.accountID
     })

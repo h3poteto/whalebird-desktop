@@ -141,6 +141,12 @@ const timelineState = {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
+    },
+    timelineSetting: {
+      useMarker: {
+        home: false,
+        notifications: false
+      }
     }
   }
 }
@@ -148,8 +154,7 @@ const timelineState = {
 const appState = {
   namespaced: true,
   state: {
-    proxyConfiguration: false,
-    useMarkerTimeline: []
+    proxyConfiguration: false
   }
 }
 

@@ -10,7 +10,7 @@ import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 import { MyWindow } from '~/src/types/global'
 import { Timeline, Setting } from '~src/types/setting'
-import { Base } from '~/src/constants/initializer/setting'
+import { DefaultSetting } from '~/src/constants/initializer/setting'
 
 const win = (window as any) as MyWindow
 
@@ -45,7 +45,7 @@ const state = (): TimelineSpaceState => ({
   loading: false,
   emojis: [],
   tootMax: 500,
-  timelineSetting: Base.timeline,
+  timelineSetting: DefaultSetting.timeline,
   sns: 'mastodon',
   filters: []
 })

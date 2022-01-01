@@ -15,6 +15,16 @@
         <el-switch v-model="public" id="public" />
       </el-form-item>
     </el-form>
+
+    <el-form class="use-marker section" size="medium" label-position="right" label-width="250px">
+      <h3>{{ $t('settings.timeline.use_marker.title') }}</h3>
+      <el-form-item for="marker_home" :label="$t('settings.timeline.use_marker.home')">
+        <el-switch v-model="marker_home" id="marker_home" />
+      </el-form-item>
+      <el-form-item for="marker_notifications" :label="$t('settings.timeline.use_marker.notifications')">
+        <el-switch v-model="marker_notifications" id="marker_notifications" />
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -49,6 +59,26 @@ export default {
       set(value) {
         this.$store.dispatch('Settings/Timeline/changeUnreadNotification', {
           public: value
+        })
+      }
+    },
+    marker_home: {
+      get() {
+        return this.$store.state.Settings.Timeline.setting.useMarker.home
+      },
+      set(value) {
+        this.$store.dispatch('Settings/Timeline/changeUseMarker', {
+          home: value
+        })
+      }
+    },
+    marker_notifications: {
+      get() {
+        return this.$store.state.Settings.Timeline.setting.useMarker.notifications
+      },
+      set(value) {
+        this.$store.dispatch('Settings/Timeline/changeUseMarker', {
+          notifications: value
         })
       }
     }
