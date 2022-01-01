@@ -1,55 +1,46 @@
-import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import { UnreadNotification } from '~/src/types/unreadNotification'
 import { MyWindow } from '~/src/types/global'
+import { Setting, UnreadNotification, Timeline as TimelineSetting } from '~src/types/setting'
+import { Base } from '~/src/constants/initializer/setting'
 
 const win = (window as any) as MyWindow
 
 export type TimelineState = {
-  unreadNotification: UnreadNotification
+  setting: TimelineSetting
 }
 
 const state = (): TimelineState => ({
-  unreadNotification: {
-    direct: unreadSettings.Direct.default,
-    local: unreadSettings.Local.default,
-    public: unreadSettings.Public.default
-  }
+  setting: Base.timeline
 })
 
 export const MUTATION_TYPES = {
-  UPDATE_UNREAD_NOTIFICATION: 'updateUnreadNotification'
+  UPDATE_TIMELINE_SETTING: 'updateTimelineSetting'
 }
 
 const mutations: MutationTree<TimelineState> = {
-  [MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION]: (state, settings: UnreadNotification) => {
-    state.unreadNotification = settings
+  [MUTATION_TYPES.UPDATE_TIMELINE_SETTING]: (state, setting: TimelineSetting) => {
+    state.setting = setting
   }
 }
 
 const actions: ActionTree<TimelineState, RootState> = {
-  loadUnreadNotification: async ({ commit, rootState }): Promise<boolean> => {
-    try {
-      const settings: UnreadNotification = await win.ipcRenderer.invoke('get-unread-notification', rootState.Settings.accountID)
-      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
-      return true
-    } catch (err) {
-      const settings: UnreadNotification = {
-        direct: unreadSettings.Direct.default,
-        local: unreadSettings.Local.default,
-        public: unreadSettings.Public.default
-      }
-      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
-      return false
-    }
+  loadTimelineSetting: async ({ commit, rootState }): Promise<boolean> => {
+    const setting: Setting = await win.ipcRenderer.invoke('get-account-setting', rootState.Settings.accountID)
+    commit(MUTATION_TYPES.UPDATE_TIMELINE_SETTING, setting.timeline)
+    return true
   },
   changeUnreadNotification: async ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
-    const settings: UnreadNotification = Object.assign({}, state.unreadNotification, timeline, {
-      accountID: rootState.Settings.accountID
+    const unread: UnreadNotification = Object.assign({}, state.setting.unreadNotification, timeline)
+    const tl: TimelineSetting = Object.assign({}, state.setting, {
+      unreadNotification: unread
     })
-    await win.ipcRenderer.invoke('update-unread-notification', settings)
-    dispatch('loadUnreadNotification')
+    const setting: Setting = {
+      accountID: rootState.Settings.accountID!,
+      timeline: tl
+    }
+    await win.ipcRenderer.invoke('update-account-setting', setting)
+    dispatch('loadTimelineSetting')
     return true
   }
 }

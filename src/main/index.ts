@@ -36,13 +36,11 @@ import { StreamingURL, UserStreaming, DirectStreaming, LocalStreaming, PublicStr
 import Preferences from './preferences'
 import Fonts from './fonts'
 import Hashtags from './hashtags'
-import UnreadNotification from './unreadNotification'
 import i18next from '~/src/config/i18n'
 import { i18n as I18n } from 'i18next'
 import Language, { LanguageType } from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
-import { UnreadNotification as UnreadNotificationConfig } from '~/src/types/unreadNotification'
 import { Notify } from '~/src/types/notify'
 import { StreamingError } from '~/src/errors/streamingError'
 import HashtagCache from './cache/hashtag'
@@ -56,6 +54,8 @@ import { Menu as MenuPreferences } from '~/src/types/preference'
 import { LocalMarker } from '~/src/types/localMarker'
 import Marker from './marker'
 import newDB from './database'
+import Settings from './settings'
+import { BaseSettings, Setting } from '~/src/types/setting'
 
 /**
  * Context menu
@@ -136,9 +136,7 @@ const hashtagsDB = new Datastore({
   autoload: true
 })
 
-const unreadNotificationDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/unread_notification.db' : 'unread_notification.db'
-const unreadNotification = new UnreadNotification(unreadNotificationDBPath)
-unreadNotification.initialize().catch((err: Error) => log.error(err))
+const settingsDBPath = process.env.NODE_ENV === 'production' ? userData + './db/settings.json' : 'settings.json'
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
 
@@ -1215,18 +1213,24 @@ ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
   return list
 })
 
-// Unread notifications
-ipcMain.handle('get-unread-notification', async (_: IpcMainInvokeEvent, accountID: string) => {
-  const doc = await unreadNotification.findOne({
-    accountID: accountID
-  })
-  return doc
-})
+// Settings
+ipcMain.handle(
+  'get-account-setting',
+  async (_: IpcMainInvokeEvent, accountID: string): Promise<Setting> => {
+    const settings = new Settings(settingsDBPath)
+    const setting = await settings.get(accountID)
+    return setting
+  }
+)
 
-ipcMain.handle('update-unread-notification', async (_: IpcMainInvokeEvent, config: UnreadNotificationConfig) => {
-  const { accountID } = config
-  await unreadNotification.insertOrUpdate(accountID!, config)
-})
+ipcMain.handle(
+  'update-account-setting',
+  async (_: IpcMainInvokeEvent, setting: Setting): Promise<BaseSettings> => {
+    const settings = new Settings(settingsDBPath)
+    const res = await settings.update(setting)
+    return res
+  }
+)
 
 // Cache
 ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
