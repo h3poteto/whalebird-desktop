@@ -120,7 +120,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
       console.error(err)
     })
 
-    if (rootState.App.useMarkerTimeline.includes('notifications') && localMarker !== null) {
+    if (rootState.TimelineSpace.timelineSetting.useMarker.notifications && localMarker !== null) {
       // The result does not contain max_id's notification, when we specify max_id parameter in get notifications.
       // So we need to get max_id's notification.
       const last = await client.getNotification(localMarker.last_read_id)
@@ -224,7 +224,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
     win.ipcRenderer.send('reset-badge')
   },
   getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
-    if (!rootState.App.useMarkerTimeline.includes('notifications')) {
+    if (!rootState.TimelineSpace.timelineSetting.useMarker.notifications) {
       return null
     }
     const client = generator(

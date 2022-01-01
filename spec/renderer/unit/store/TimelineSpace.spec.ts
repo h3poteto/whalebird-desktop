@@ -1,5 +1,5 @@
 import TimelineSpace, { TimelineSpaceState, blankAccount, MUTATION_TYPES } from '~/src/renderer/store/TimelineSpace'
-import { Base } from '~/src/constants/initializer/setting'
+import { DefaultSetting } from '~/src/constants/initializer/setting'
 
 describe('TimelineSpace', () => {
   describe('mutations', () => {
@@ -11,7 +11,7 @@ describe('TimelineSpace', () => {
         loading: false,
         emojis: [],
         tootMax: 500,
-        timelineSetting: Base.timeline,
+        timelineSetting: DefaultSetting.timeline,
         sns: 'mastodon',
         filters: []
       }

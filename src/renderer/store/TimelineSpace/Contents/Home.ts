@@ -134,7 +134,7 @@ const actions: ActionTree<HomeState, RootState> = {
       console.error(err)
     })
 
-    if (rootState.App.useMarkerTimeline.includes('home') && localMarker !== null) {
+    if (rootState.TimelineSpace.timelineSetting.useMarker.home && localMarker !== null) {
       const last = await client.getStatus(localMarker.last_read_id)
       const lastReadStatus = last.data
 
@@ -240,7 +240,7 @@ const actions: ActionTree<HomeState, RootState> = {
     return res.data
   },
   getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
-    if (!rootState.App.useMarkerTimeline.includes('home')) {
+    if (!rootState.TimelineSpace.timelineSetting.useMarker.home) {
       return null
     }
     const client = generator(

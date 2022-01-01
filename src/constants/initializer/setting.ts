@@ -1,4 +1,4 @@
-import { Setting, Timeline, UnreadNotification } from '~/src/types/setting'
+import { Setting, Timeline, UnreadNotification, UseMarker } from '~/src/types/setting'
 
 const unreadNotification: UnreadNotification = {
   direct: false,
@@ -6,11 +6,17 @@ const unreadNotification: UnreadNotification = {
   public: false
 }
 
-const timeline: Timeline = {
-  unreadNotification: unreadNotification
+const useMarker: UseMarker = {
+  home: false,
+  notifications: true
 }
 
-export const Base: Setting = {
+const timeline: Timeline = {
+  unreadNotification: unreadNotification,
+  useMarker: useMarker
+}
+
+export const DefaultSetting: Setting = {
   accountID: '',
   timeline: timeline
 }

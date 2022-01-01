@@ -12,8 +12,7 @@ describe('Preferences/General', () => {
         timeline: {
           cw: false,
           nsfw: false,
-          hideAllAttachments: false,
-          useMarkerTimeline: []
+          hideAllAttachments: false
         },
         other: {
           launch: false

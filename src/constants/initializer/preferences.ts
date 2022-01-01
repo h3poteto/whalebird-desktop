@@ -20,8 +20,7 @@ const sound: Sound = {
 const timeline: Timeline = {
   cw: false,
   nsfw: false,
-  hideAllAttachments: false,
-  useMarkerTimeline: ['notifications']
+  hideAllAttachments: false
 }
 
 const other: Other = {

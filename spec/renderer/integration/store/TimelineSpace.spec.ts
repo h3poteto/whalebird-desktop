@@ -83,6 +83,10 @@ const state = (): TimelineSpaceState => {
         direct: true,
         local: true,
         public: true
+      },
+      useMarker: {
+        home: false,
+        notifications: true
       }
     },
     sns: 'mastodon',

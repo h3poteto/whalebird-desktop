@@ -215,6 +215,12 @@ const timelineState = {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
+    },
+    timelineSetting: {
+      useMarker: {
+        home: false,
+        notifications: false
+      }
     }
   }
 }

@@ -1,8 +1,8 @@
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
-import { Setting, UnreadNotification, Timeline as TimelineSetting } from '~src/types/setting'
-import { Base } from '~/src/constants/initializer/setting'
+import { Setting, UnreadNotification, Timeline as TimelineSetting, UseMarker } from '~src/types/setting'
+import { DefaultSetting } from '~/src/constants/initializer/setting'
 
 const win = (window as any) as MyWindow
 
@@ -11,7 +11,7 @@ export type TimelineState = {
 }
 
 const state = (): TimelineState => ({
-  setting: Base.timeline
+  setting: DefaultSetting.timeline
 })
 
 export const MUTATION_TYPES = {
@@ -34,6 +34,19 @@ const actions: ActionTree<TimelineState, RootState> = {
     const unread: UnreadNotification = Object.assign({}, state.setting.unreadNotification, timeline)
     const tl: TimelineSetting = Object.assign({}, state.setting, {
       unreadNotification: unread
+    })
+    const setting: Setting = {
+      accountID: rootState.Settings.accountID!,
+      timeline: tl
+    }
+    await win.ipcRenderer.invoke('update-account-setting', setting)
+    dispatch('loadTimelineSetting')
+    return true
+  },
+  changeUseMarker: async ({ dispatch, state, rootState }, timeline: { key: boolean }) => {
+    const marker: UseMarker = Object.assign({}, state.setting.useMarker, timeline)
+    const tl: TimelineSetting = Object.assign({}, state.setting, {
+      useMarker: marker
     })
     const setting: Setting = {
       accountID: rootState.Settings.accountID!,
