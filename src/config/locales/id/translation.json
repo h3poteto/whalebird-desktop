@@ -111,6 +111,11 @@
         "direct": "Pesan Langsung",
         "local": "Linimasa lokal",
         "public": "Linimasa publik"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "Kustomisasi tampilan linimasa anda.",
         "cw": "Selalu abaikan peringatan konten",
         "nsfw": "Selalu abaikan media NSFW",
-        "hideAllAttachments": "Sembunyikan semua media",
-        "useMarker": "Muat linimasa dari posisi baca terakhir"
+        "hideAllAttachments": "Sembunyikan semua media"
       },
       "other": {
         "title": "Pilihan lainnya",
