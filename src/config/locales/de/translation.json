@@ -111,6 +111,11 @@
         "direct": "Direkt Nachrichten",
         "local": "Lokale Zeitleiste",
         "public": "Öffentliche Zeitleiste"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "Passen Sie die Ansicht in Ihren Zeitleisten an.",
         "cw": "Ignoriere immer Content Warnungen",
         "nsfw": "Ignogiere immer NSFW Medien",
-        "hideAllAttachments": "Verstecke alle Medien",
-        "useMarker": "Load timeline from the last reading position"
+        "hideAllAttachments": "Verstecke alle Medien"
       },
       "other": {
         "title": "Andere Optionen",
