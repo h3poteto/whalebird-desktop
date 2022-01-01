@@ -111,6 +111,11 @@
         "direct": "Messages directs",
         "local": "Fil public local",
         "public": "Fil public global"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "Customisez l'apparence du fil d'actualité",
         "cw": "Toujours ignorer les avertissements relatifs au contenu",
         "nsfw": "Toujours ignorer le contenu NSFW",
-        "hideAllAttachments": "Cacher tous les médias",
-        "useMarker": "Load timeline from the last reading position"
+        "hideAllAttachments": "Cacher tous les médias"
       },
       "other": {
         "title": "Autres options",
