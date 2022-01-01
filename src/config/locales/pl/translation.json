@@ -111,6 +111,11 @@
         "direct": "Direct Messages",
         "local": "Lokalna oś czasu",
         "public": "Publiczna oś czasu"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nsfw": "Always ignore NSFW of medias",
-        "hideAllAttachments": "Hide all medias",
-        "useMarker": "Load timeline from the last reading position"
+        "hideAllAttachments": "Hide all medias"
       },
       "other": {
         "title": "Other options",
