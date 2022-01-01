@@ -111,6 +111,11 @@
         "direct": "ダイレクトメッセージ",
         "local": "ローカル",
         "public": "連合"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "タイムラインをカスタマイズ",
         "cw": "常にCWを表示する",
         "nsfw": "常にNSFWを表示する",
-        "hideAllAttachments": "すべてのメディアを非表示にする",
-        "useMarker": "最後に読んだ位置からタイムラインを読み込む"
+        "hideAllAttachments": "すべてのメディアを非表示にする"
       },
       "other": {
         "title": "その他",
