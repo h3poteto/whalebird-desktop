@@ -3,14 +3,14 @@ import SideMenu, { SideMenuState } from './TimelineSpace/SideMenu'
 import HeaderMenu, { HeaderMenuState } from './TimelineSpace/HeaderMenu'
 import Modals, { ModalsModuleState } from './TimelineSpace/Modals'
 import Contents, { ContentsModuleState } from './TimelineSpace/Contents'
-import unreadSettings from '~/src/constants/unreadNotification'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
-import { UnreadNotification } from '~/src/types/unreadNotification'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 import { MyWindow } from '~/src/types/global'
+import { Timeline, Setting } from '~src/types/setting'
+import { Base } from '~/src/constants/initializer/setting'
 
 const win = (window as any) as MyWindow
 
@@ -20,7 +20,7 @@ export type TimelineSpaceState = {
   loading: boolean
   emojis: Array<Entity.Emoji>
   tootMax: number
-  unreadNotification: UnreadNotification
+  timelineSetting: Timeline
   sns: 'mastodon' | 'pleroma' | 'misskey'
   filters: Array<Entity.Filter>
 }
@@ -45,11 +45,7 @@ const state = (): TimelineSpaceState => ({
   loading: false,
   emojis: [],
   tootMax: 500,
-  unreadNotification: {
-    direct: unreadSettings.Direct.default,
-    local: unreadSettings.Local.default,
-    public: unreadSettings.Public.default
-  },
+  timelineSetting: Base.timeline,
   sns: 'mastodon',
   filters: []
 })
@@ -60,7 +56,7 @@ export const MUTATION_TYPES = {
   CHANGE_LOADING: 'changeLoading',
   UPDATE_EMOJIS: 'updateEmojis',
   UPDATE_TOOT_MAX: 'updateTootMax',
-  UPDATE_UNREAD_NOTIFICATION: 'updateUnreadNotification',
+  UPDATE_TIMELINE_SETTING: 'updateTimelineSetting',
   CHANGE_SNS: 'changeSNS',
   UPDATE_FILTERS: 'updateFilters'
 }
@@ -85,8 +81,8 @@ const mutations: MutationTree<TimelineSpaceState> = {
       state.tootMax = 500
     }
   },
-  [MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION]: (state, settings: UnreadNotification) => {
-    state.unreadNotification = settings
+  [MUTATION_TYPES.UPDATE_TIMELINE_SETTING]: (state, setting: Timeline) => {
+    state.timelineSetting = setting
   },
   [MUTATION_TYPES.CHANGE_SNS]: (state, sns: 'mastodon' | 'pleroma' | 'misskey') => {
     state.sns = sns
@@ -109,7 +105,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     dispatch('TimelineSpace/SideMenu/fetchLists', account, { root: true })
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', account, { root: true })
     dispatch('TimelineSpace/SideMenu/confirmTimelines', account, { root: true })
-    await dispatch('loadUnreadNotification', accountId)
+    await dispatch('loadTimelineSetting', accountId)
     await dispatch('fetchFilters')
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
     await dispatch('fetchContentsTimelines').catch(_ => {
@@ -204,17 +200,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
     return true
   },
-  loadUnreadNotification: async ({ commit }, accountID: string) => {
-    try {
-      const settings: UnreadNotification = await win.ipcRenderer.invoke('get-unread-notification', accountID)
-      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, settings)
-    } catch (err) {
-      commit(MUTATION_TYPES.UPDATE_UNREAD_NOTIFICATION, {
-        direct: unreadSettings.Direct.default,
-        local: unreadSettings.Local.default,
-        public: unreadSettings.Public.default
-      } as UnreadNotification)
-    }
+  loadTimelineSetting: async ({ commit }, accountID: string) => {
+    const setting: Setting = await win.ipcRenderer.invoke('get-account-setting', accountID)
+    commit(MUTATION_TYPES.UPDATE_TIMELINE_SETTING, setting.timeline)
   },
   fetchContentsTimelines: async ({ dispatch, state }) => {
     dispatch('TimelineSpace/Contents/changeLoading', true, { root: true })
@@ -224,13 +212,13 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
 
     await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', {}, { root: true })
     await dispatch('TimelineSpace/Contents/Mentions/fetchMentions', {}, { root: true })
-    if (state.unreadNotification.direct) {
+    if (state.timelineSetting.unreadNotification.direct) {
       await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
     }
-    if (state.unreadNotification.local) {
+    if (state.timelineSetting.unreadNotification.local) {
       await dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', {}, { root: true })
     }
-    if (state.unreadNotification.public) {
+    if (state.timelineSetting.unreadNotification.public) {
       await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
     }
   },
@@ -244,24 +232,24 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   bindStreamings: ({ dispatch, state }) => {
     dispatch('bindUserStreaming')
-    if (state.unreadNotification.direct) {
+    if (state.timelineSetting.unreadNotification.direct) {
       dispatch('bindDirectMessagesStreaming')
     }
-    if (state.unreadNotification.local) {
+    if (state.timelineSetting.unreadNotification.local) {
       dispatch('bindLocalStreaming')
     }
-    if (state.unreadNotification.public) {
+    if (state.timelineSetting.unreadNotification.public) {
       dispatch('bindPublicStreaming')
     }
   },
   startStreamings: ({ dispatch, state }) => {
-    if (state.unreadNotification.direct) {
+    if (state.timelineSetting.unreadNotification.direct) {
       dispatch('startDirectMessagesStreaming')
     }
-    if (state.unreadNotification.local) {
+    if (state.timelineSetting.unreadNotification.local) {
       dispatch('startLocalStreaming')
     }
-    if (state.unreadNotification.public) {
+    if (state.timelineSetting.unreadNotification.public) {
       dispatch('startPublicStreaming')
     }
   },
@@ -429,13 +417,13 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Notifications/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Mentions/updateToot', status, { root: true })
-    if (state.unreadNotification.direct) {
+    if (state.timelineSetting.unreadNotification.direct) {
       commit('TimelineSpace/Contents/DirectMessages/updateToot', status, { root: true })
     }
-    if (state.unreadNotification.local) {
+    if (state.timelineSetting.unreadNotification.local) {
       commit('TimelineSpace/Contents/Local/updateToot', status, { root: true })
     }
-    if (state.unreadNotification.public) {
+    if (state.timelineSetting.unreadNotification.public) {
       commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
     }
     return true

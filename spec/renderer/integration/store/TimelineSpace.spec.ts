@@ -3,7 +3,6 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import TimelineSpace, { TimelineSpaceState, blankAccount } from '~/src/renderer/store/TimelineSpace'
-import unreadSettings from '~/src/constants/unreadNotification'
 import { MyWindow } from '~/src/types/global'
 ;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
@@ -79,10 +78,12 @@ const state = (): TimelineSpaceState => {
     loading: false,
     emojis: [],
     tootMax: 500,
-    unreadNotification: {
-      direct: true,
-      local: true,
-      public: true
+    timelineSetting: {
+      unreadNotification: {
+        direct: true,
+        local: true,
+        public: true
+      }
     },
     sns: 'mastodon',
     filters: []
@@ -246,34 +247,27 @@ describe('TimelineSpace', () => {
   describe('loadUnreadNotification', () => {
     describe('success', () => {
       it('should be updated', async () => {
-        ipcMain.handle('get-unread-notification', () => {
+        ipcMain.handle('get-account-setting', () => {
           return {
+            accountID: 'sample',
+            timeline: {
+              unreadNotification: {
+                direct: false,
+                local: false,
+                public: false
+              }
+            }
+          }
+        })
+        await store.dispatch('TimelineSpace/loadTimelineSetting')
+        expect(store.state.TimelineSpace.timelineSetting).toEqual({
+          unreadNotification: {
             direct: false,
             local: false,
             public: false
           }
         })
-        await store.dispatch('TimelineSpace/loadUnreadNotification')
-        expect(store.state.TimelineSpace.unreadNotification).toEqual({
-          direct: false,
-          local: false,
-          public: false
-        })
-        ipcMain.removeHandler('get-unread-notification')
-      })
-    })
-    describe('error', () => {
-      it('should be set default', async () => {
-        ipcMain.handle('get-unread-notification', async () => {
-          throw new Error()
-        })
-        await store.dispatch('TimelineSpace/loadUnreadNotification')
-        expect(store.state.TimelineSpace.unreadNotification).toEqual({
-          direct: unreadSettings.Direct.default,
-          local: unreadSettings.Local.default,
-          public: unreadSettings.Public.default
-        })
-        ipcMain.removeHandler('get-unread-notification')
+        ipcMain.removeHandler('get-account-setting')
       })
     })
   })

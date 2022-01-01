@@ -1,5 +1,5 @@
 import TimelineSpace, { TimelineSpaceState, blankAccount, MUTATION_TYPES } from '~/src/renderer/store/TimelineSpace'
-import unreadSettings from '~/src/constants/unreadNotification'
+import { Base } from '~/src/constants/initializer/setting'
 
 describe('TimelineSpace', () => {
   describe('mutations', () => {
@@ -11,11 +11,7 @@ describe('TimelineSpace', () => {
         loading: false,
         emojis: [],
         tootMax: 500,
-        unreadNotification: {
-          direct: unreadSettings.Direct.default,
-          local: unreadSettings.Local.default,
-          public: unreadSettings.Public.default
-        },
+        timelineSetting: Base.timeline,
         sns: 'mastodon',
         filters: []
       }

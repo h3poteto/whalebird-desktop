@@ -59,7 +59,7 @@ export default {
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      unreadNotification: state => state.TimelineSpace.unreadNotification
+      unreadNotification: state => state.TimelineSpace.timelineSetting.unreadNotification
     }),
     ...mapGetters('TimelineSpace/Contents/Public', ['filters']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
