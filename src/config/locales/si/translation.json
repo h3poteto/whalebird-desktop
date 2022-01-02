@@ -111,6 +111,11 @@
         "direct": "සෘජු පණිවිඩ",
         "local": "Local Timeline",
         "public": "Public Timeline"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nsfw": "Always ignore NSFW of medias",
-        "hideAllAttachments": "සියලුම මාධ්‍ය සඟවන්න",
-        "useMarker": "Load timeline from the last reading position"
+        "hideAllAttachments": "සියලුම මාධ්‍ය සඟවන්න"
       },
       "other": {
         "title": "වෙනත් විකල්ප",

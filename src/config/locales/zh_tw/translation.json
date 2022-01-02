@@ -111,6 +111,11 @@
         "direct": "私訊",
         "local": "本機時間軸",
         "public": "公開時間軸"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "自訂時間軸外觀",
         "cw": "永遠忽略內容警告",
         "nsfw": "永遠忽略 NSFW 媒體標記",
-        "hideAllAttachments": "隱藏所有媒體",
-        "useMarker": "從上次閱讀位置讀取時間軸"
+        "hideAllAttachments": "隱藏所有媒體"
       },
       "other": {
         "title": "其他選項",

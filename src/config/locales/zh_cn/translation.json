@@ -111,6 +111,11 @@
         "direct": "私信",
         "local": "本站",
         "public": "跨站"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "设定查看时间线的方式。",
         "cw": "始终展开具有内容警告的嘟文",
         "nsfw": "总是显示被标记为敏感内容的媒体",
-        "hideAllAttachments": "总是隐藏所有媒体",
-        "useMarker": "Load timeline from the last reading position"
+        "hideAllAttachments": "总是隐藏所有媒体"
       },
       "other": {
         "title": "其它选项",

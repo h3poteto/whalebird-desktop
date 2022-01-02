@@ -111,6 +111,11 @@
         "direct": "Tuzinin tusridin",
         "local": "Ifili n uzmez adɣran",
         "public": "Ifili n uzmez agdudan"
+      },
+      "use_marker": {
+        "title": "Load the timeline from the last reading position",
+        "home": "Home",
+        "notifications": "Notifications"
       }
     },
     "filters": {
@@ -162,8 +167,7 @@
         "description": "Customize view in your timelines.",
         "cw": "Always ignore contents warnings",
         "nsfw": "Nxxel abda tumayin n NSFW",
-        "hideAllAttachments": "Ffer isneɣmisen maṛṛa",
-        "useMarker": "Load timeline from the last reading position"
+        "hideAllAttachments": "Ffer isneɣmisen maṛṛa"
       },
       "other": {
         "title": "Tideɣrin yaḍnin",
