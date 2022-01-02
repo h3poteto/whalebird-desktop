@@ -156,7 +156,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
       return res.data
     }
   },
-  lazyFetchNotifications: (
+  lazyFetchNotifications: async (
     { state, commit, rootState },
     lastNotification: Entity.Notification
   ): Promise<Array<Entity.Notification> | null> => {
@@ -270,6 +270,9 @@ const actions: ActionTree<NotificationsState, RootState> = {
       rootState.App.userAgent
     )
     const res = await client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
+    if (rootState.TimelineSpace.sns === 'pleroma') {
+      await client.readNotifications({ max_id: notifications[0].id })
+    }
     return res.data
   }
 }
