@@ -1,0 +1,88 @@
+name: Release
+
+on:
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  release-linux:
+    name: Release for Linux
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: yarn
+      - name: Build
+        run: |
+          make install
+          make clean
+          make build
+      - name: Package
+        env:
+          # VERSION: ${{ github.event.release.name }}
+          VERSION: 4.5.0
+        run: |
+          make -e linux
+
+  release-windows:
+    name: Release for Windows
+
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: yarn
+      - name: Build
+        run: |
+          make install
+          make clean
+          make build
+      - name: Package
+        env:
+          # VERSION: ${{ github.event.release.name }}
+          VERSION: 4.5.0
+        run: |
+          make -e win32
+          make -e win64
+
+  release-darwin:
+    name: Release for MacOS
+
+    runs-on: macos-11
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: yarn
+      - name: Apple Codesigning
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+      - name: Build
+        run: |
+          make install
+          make clean
+          make build
+      - name: Package
+        env:
+          # VERSION: ${{ github.event.release.name }}
+          VERSION: 4.5.0
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          ASC_PROVIDER: ${{ secrets.ASC_PROVIDER }}
+          TEAM_ID: ${{ secrets.ASC_PROVIDER }}
+        run: |
+          make -e mac
