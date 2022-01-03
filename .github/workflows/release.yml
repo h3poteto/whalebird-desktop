@@ -1,7 +1,6 @@
 name: Release
 
 on:
-  pull_request:
   release:
     types: [published]
 
@@ -24,10 +23,29 @@ jobs:
           make build
       - name: Package
         env:
-          # VERSION: ${{ github.event.release.name }}
-          VERSION: 4.5.0
+          VERSION: ${{ github.event.release.name }}
         run: |
           make -e linux
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.tar.bz2"
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.AppImage"
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.deb"
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.rpm"
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.shasum"
 
   release-windows:
     name: Release for Windows
@@ -47,11 +65,18 @@ jobs:
           make build
       - name: Package
         env:
-          # VERSION: ${{ github.event.release.name }}
-          VERSION: 4.5.0
+          VERSION: ${{ github.event.release.name }}
         run: |
           make -e win32
           make -e win64
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.exe"
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.shasum"
 
   release-darwin:
     name: Release for MacOS
@@ -78,11 +103,18 @@ jobs:
           make build
       - name: Package
         env:
-          # VERSION: ${{ github.event.release.name }}
-          VERSION: 4.5.0
+          VERSION: ${{ github.event.release.name }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           ASC_PROVIDER: ${{ secrets.ASC_PROVIDER }}
           TEAM_ID: ${{ secrets.ASC_PROVIDER }}
         run: |
           make -e mac
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.dmg"
+      - uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/Whalebird-*.shasum"
