@@ -15,7 +15,7 @@ mac:
 	mv build/Whalebird-${VERSION}-mac-x64.dmg build/Whalebird-${VERSION}-darwin-x64.dmg
 	mv build/Whalebird-${VERSION}-mac-arm64.dmg build/Whalebird-${VERSION}-darwin-arm64.dmg
 	mv build/Whalebird-${VERSION}-mac-universal.dmg build/Whalebird-${VERSION}-darwin-universal.dmg
-	cd build; sha256sum Whalebird-${VERSION}-darwin-universal.dmg | awk '{ print $1 }' > Whalebird-${VERSION}-darwin-universal.dmg.shasum
+	cd build; shasum -a 256 Whalebird-${VERSION}-darwin-universal.dmg | awk '{ print $1 }' > Whalebird-${VERSION}-darwin-universal.dmg.shasum
 
 mas:
 	yarn run build:clean
@@ -31,7 +31,6 @@ linux:
 	cd build; sha256sum Whalebird-${VERSION}-linux-armv7l.tar.bz2 | awk '{ print $1 }' > Whalebird-${VERSION}-linux-armv7l.tar.bz2.shasum
 	cd build; sha256sum Whalebird-${VERSION}-linux-x64.AppImage | awk '{ print $1 }' > Whalebird-${VERSION}-linux-x64.AppImage.shasum
 	cd build; sha256sum Whalebird-${VERSION}-linux-x64.deb | awk '{ print $1 }' > Whalebird-${VERSION}-linux-x64.deb.shasum
-	cd build; sha256sum Whalebird-${VERSION}-linux-x64.pacman | awk '{ print $1 }' > Whalebird-${VERSION}-linux-x64.pacman.shasum
 	cd build; sha256sum Whalebird-${VERSION}-linux-x64.rpm | awk '{ print $1 }' > Whalebird-${VERSION}-linux-x64.rpm.shasum
 	cd build; sha256sum Whalebird-${VERSION}-linux-x64.tar.bz2 | awk '{ print $1 }' > Whalebird-${VERSION}-linux-x64.tar.bz2.shasum
 
