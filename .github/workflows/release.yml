@@ -87,8 +87,6 @@ jobs:
     name: Release for MacOS
 
     runs-on: macos-11
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
