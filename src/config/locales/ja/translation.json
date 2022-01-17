@@ -113,9 +113,9 @@
         "public": "連合"
       },
       "use_marker": {
-        "title": "Load the timeline from the last reading position",
-        "home": "Home",
-        "notifications": "Notifications"
+        "title": "前回読んだ位置からタイムラインを読み込む",
+        "home": "ホーム",
+        "notifications": "通知"
       }
     },
     "filters": {
@@ -383,7 +383,7 @@
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "さらにステータスを読み込む"
     }
   },
   "side_bar": {
