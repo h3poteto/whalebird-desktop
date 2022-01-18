@@ -113,9 +113,9 @@
         "public": "公開時間軸"
       },
       "use_marker": {
-        "title": "Load the timeline from the last reading position",
-        "home": "Home",
-        "notifications": "Notifications"
+        "title": "從上次閱讀位置讀取時間軸",
+        "home": "首頁",
+        "notifications": "通知"
       }
     },
     "filters": {
@@ -174,14 +174,14 @@
         "launch": "登入時啟動 app"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "重置偏好設定"
       }
     },
     "appearance": {
       "title": "外觀設定",
       "theme_color": "佈景顏色",
       "theme": {
-        "system": "System",
+        "system": "系統",
         "light": "淺色主題",
         "dark": "深色主題",
         "solarized_light": "SolarizedLight",
@@ -383,7 +383,7 @@
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "讀取更多狀態"
     }
   },
   "side_bar": {
@@ -506,8 +506,8 @@
     },
     "new_toot": {
       "toot_length": "嘟文長度必須介於 {{min}} 至 {{max}} 之間",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_length": "您只能附加最多 {{max}} 個圖片。",
+      "attach_length_plural": "您只能附加最多 {{max}} 個圖片。",
       "attach_image": "只能附加圖片或影片",
       "poll_invalid": "無效的投票選項"
     }
