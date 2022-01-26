@@ -175,7 +175,7 @@
     "jsdom": "^19.0.0",
     "json-loader": "^0.5.7",
     "listr": "^0.14.3",
-    "mini-css-extract-plugin": "^2.4.5",
+    "mini-css-extract-plugin": "^2.5.3",
     "node-loader": "^2.0.0",
     "node-sass": "^7.0.1",
     "postcss": "^8.4.5",
