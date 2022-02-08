@@ -160,7 +160,7 @@
         "title": "Audio",
         "description": "Imposta suoni di feedback.",
         "fav_rb": "Quando aggiungi ai preferiti o condividi il toot",
-        "toot": "Quando pubblichi un toot"
+        "toot": "Quando posti un toot"
       },
       "timeline": {
         "title": "Cronologia",
@@ -331,18 +331,18 @@
       "title": "Scorciatoie da Tastiera",
       "ctrl_number": "Passa ad un altro account",
       "ctrl_k": "Salta ad altre cronologie",
-      "ctrl_n": "Apri una finestra modale per pubblicare un nuovo post",
+      "ctrl_n": "Apri una finestra modale per pubblicare un nuovo toot",
       "ctrl_enter": "Pubblica un toot",
       "ctrl_r": "Ricarica la timeline corrente",
-      "j": "Seleziona il prossimo post",
-      "k": "Seleziona il post precedente",
+      "j": "Seleziona il prossimo toot",
+      "k": "Seleziona il toot precedente",
       "h": "Abilita focalizzazione sulla colonna sinistra",
       "l": "Abilita focalizzazione sulla colonna destra",
-      "r": "Rispondi al post",
-      "b": "Condividi il post",
-      "f": "Preferisci il post",
-      "o": "Apri dettagli del post",
-      "p": "Apri il profilo dell'account dell'autore del post",
+      "r": "Rispondi al toot",
+      "b": "Condividi il toot",
+      "f": "Preferisci il toot",
+      "o": "Apri dettagli del toot",
+      "p": "Apri il profilo dell'account dell'autore del toot",
       "i": "Apri le immagini",
       "x": "Mostra/Nascondi avvisi e contenuti inappropriati",
       "?": "Mostra questa finestra di aiuto",
@@ -360,7 +360,7 @@
       "show_more": "Mostra tutto",
       "hide": "Nascondi",
       "sensitive": "Mostra contenuti sensibili",
-      "view_toot_detail": "Visualizza Dettagli del Post",
+      "view_toot_detail": "Visualizza Dettagli del Toot",
       "open_in_browser": "Apri nel Browser",
       "copy_link_to_toot": "Copia il link del Toot",
       "mute": "Silenzia",
@@ -383,7 +383,7 @@
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "Carica più stati"
     }
   },
   "side_bar": {
