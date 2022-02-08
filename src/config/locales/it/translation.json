@@ -80,7 +80,7 @@
       "show_replies": "Mostra risposte",
       "apply": "Applica"
     },
-    "new_toot": "Post",
+    "new_toot": "Toot",
     "reload": "Ricarica",
     "settings": "Impostazioni"
   },
@@ -89,10 +89,10 @@
     "general": {
       "title": "Generali",
       "toot": {
-        "title": "Post",
+        "title": "Toot",
         "visibility": {
-          "description": "Personalizza la visibilità predefinita del post",
-          "notice": "Questa impostazione si applica solo ai nuovi post, le risposte seguono la visibilità dei post originale",
+          "description": "Personalizza la visibilità predefinita del toot",
+          "notice": "Questa impostazione si applica solo ai nuovi toot, le risposte seguono la visibilità dei toot originale",
           "public": "Pubblico",
           "unlisted": "Non elencato",
           "private": "Privato",
@@ -113,9 +113,9 @@
         "public": "Timeline Pubblica"
       },
       "use_marker": {
-        "title": "Load the timeline from the last reading position",
-        "home": "Home",
-        "notifications": "Notifications"
+        "title": "Carica la timeline dall'ultima posizione di lettura",
+        "home": "Pagina Iniziale",
+        "notifications": "Notifiche"
       }
     },
     "filters": {
@@ -160,7 +160,7 @@
         "title": "Audio",
         "description": "Imposta suoni di feedback.",
         "fav_rb": "Quando aggiungi ai preferiti o condividi il toot",
-        "toot": "Quando pubblichi un post"
+        "toot": "Quando posti un toot"
       },
       "timeline": {
         "title": "Cronologia",
@@ -203,7 +203,7 @@
       },
       "font_size": "Dimensione carattere",
       "font_family": "Tipo di carattere",
-      "toot_padding": "Spaziatura intorno ai post",
+      "toot_padding": "Spaziatura intorno ai toots",
       "display_style": {
         "title": "Visualizza lo stile del nome utente",
         "display_name_and_username": "Visualizza nome e nome utente",
@@ -281,11 +281,11 @@
   },
   "modals": {
     "new_toot": {
-      "title": "Nuovo Post",
+      "title": "Nuovo Toot",
       "cw": "Scrivi il tuo avviso qui",
       "status": "Cosa ti passa per la testa?",
       "cancel": "Annulla",
-      "toot": "Post",
+      "toot": "Toot",
       "close_confirm": "Sei sicuro di voler scartare questo toot?",
       "close_confirm_ok": "Scarta",
       "close_confirm_cancel": "Continuare la modifica",
@@ -331,18 +331,18 @@
       "title": "Scorciatoie da Tastiera",
       "ctrl_number": "Passa ad un altro account",
       "ctrl_k": "Salta ad altre cronologie",
-      "ctrl_n": "Apri una finestra modale per pubblicare un nuovo post",
-      "ctrl_enter": "Pubblica un post",
+      "ctrl_n": "Apri una finestra modale per pubblicare un nuovo toot",
+      "ctrl_enter": "Pubblica un toot",
       "ctrl_r": "Ricarica la timeline corrente",
-      "j": "Seleziona il prossimo post",
-      "k": "Seleziona il post precedente",
+      "j": "Seleziona il prossimo toot",
+      "k": "Seleziona il toot precedente",
       "h": "Abilita focalizzazione sulla colonna sinistra",
       "l": "Abilita focalizzazione sulla colonna destra",
-      "r": "Rispondi al post",
-      "b": "Condividi il post",
-      "f": "Preferisci il post",
-      "o": "Apri dettagli del post",
-      "p": "Apri il profilo dell'account dell'autore del post",
+      "r": "Rispondi al toot",
+      "b": "Condividi il toot",
+      "f": "Preferisci il toot",
+      "o": "Apri dettagli del toot",
+      "p": "Apri il profilo dell'account dell'autore del toot",
       "i": "Apri le immagini",
       "x": "Mostra/Nascondi avvisi e contenuti inappropriati",
       "?": "Mostra questa finestra di aiuto",
@@ -360,9 +360,9 @@
       "show_more": "Mostra tutto",
       "hide": "Nascondi",
       "sensitive": "Mostra contenuti sensibili",
-      "view_toot_detail": "Visualizza Dettagli del Post",
+      "view_toot_detail": "Visualizza Dettagli del Toot",
       "open_in_browser": "Apri nel Browser",
-      "copy_link_to_toot": "Copia il link del Post",
+      "copy_link_to_toot": "Copia il link del Toot",
       "mute": "Silenzia",
       "block": "Blocca",
       "report": "Segnala",
@@ -371,9 +371,9 @@
       "reply": "Rispondi",
       "reblog": "Condividi",
       "fav": "Preferisci",
-      "detail": "Dettagli del Post",
+      "detail": "Dettagli del Toot",
       "bookmark": "Segnalibro",
-      "pinned": "Post Fissati",
+      "pinned": "Toot Fissati",
       "poll": {
         "vote": "Vota",
         "votes_count": "voti",
@@ -383,7 +383,7 @@
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "Carica più stati"
     }
   },
   "side_bar": {
@@ -402,7 +402,7 @@
       "unmute": "Non silenziare",
       "unblock": "Sblocca",
       "block": "Blocca",
-      "toots": "Post",
+      "toots": "Toots",
       "follows": "Seguiti",
       "followers": "Seguaci"
     }
@@ -421,7 +421,7 @@
     "account": "Account",
     "tag": "Hashtag",
     "keyword": "parola chiave",
-    "toot": "Post"
+    "toot": "Toot"
   },
   "lists": {
     "index": {
@@ -486,9 +486,9 @@
     "unfavourite_error": "Impossibile rimuovere dai preferiti",
     "bookmark_error": "Aggiunta del segnalibro fallita",
     "unbookmark_error": "Rimozione del segnalibro fallita",
-    "delete_error": "Impossibile cancellare il post",
+    "delete_error": "Impossibile cancellare il toot",
     "search_error": "Impossibile eseguire la ricerca",
-    "toot_error": "Impossibile pubblicare il post",
+    "toot_error": "Impossibile pubblicare il toot",
     "update_list_memberships_error": "Impossibile aggiornare le iscrizioni alla lista",
     "add_user_error": "Impossibile aggiungere un utente",
     "authorize_url_error": "Impossibile ottenere l'URL di autorizzazione",
@@ -505,7 +505,7 @@
       "domain_format": "Per fovore, inserire solo il nome dominio"
     },
     "new_toot": {
-      "toot_length": "La lunghezza del post deve essere da {{min}} a {{max}}",
+      "toot_length": "La lunghezza del toot deve essere da {{min}} a {{max}}",
       "attach_length": "È possibile allegare solo fino a {{max}} immagine",
       "attach_length_plural": "È possibile allegare solo fino a {{max}} immagini",
       "attach_image": "È possibile allegare solo immagini o video",
