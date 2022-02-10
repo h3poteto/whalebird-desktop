@@ -127,7 +127,7 @@
     "@types/lodash": "^4.14.178",
     "@types/lokijs": "^1.5.7",
     "@types/nedb": "^1.8.12",
-    "@types/node": "^17.0.5",
+    "@types/node": "^17.0.17",
     "@types/parse-link-header": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
