@@ -95,13 +95,14 @@
             </el-button>
             <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
               <FailoverImg
-                :src="media.preview_url"
+                :src="media.preview_url ? media.preview_url : originalMessage.account.avatar"
                 @click="openImage(media.url, mediaAttachments)"
                 :title="media.description"
                 :readExif="true"
               />
-              <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
-              <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
+              <el-tag class="media-label" size="mini" v-if="media.type === 'gifv'">GIF</el-tag>
+              <el-tag class="media-label" size="mini" v-else-if="media.type === 'video'">VIDEO</el-tag>
+              <el-tag class="media-label" size="mini" v-else-if="media.type === 'audio'">AUDIO</el-tag>
             </div>
           </div>
           <div class="clearfix"></div>
