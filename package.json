@@ -142,7 +142,7 @@
     "babel-register": "^6.26.0",
     "bufferutil": "^4.0.6",
     "cfonts": "^2.10.0",
-    "chai": "^4.3.4",
+    "chai": "^4.3.6",
     "chalk": "^4.1.2",
     "copy-webpack-plugin": "^10.2.4",
     "core-js": "^3.21.0",
