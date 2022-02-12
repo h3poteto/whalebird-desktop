@@ -2,6 +2,7 @@
   <div id="current-media" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
     <video :src="src" v-if="isMovieFile()" autoplay loop controls v-on:loadstart="loaded()"></video>
     <video :src="src" v-else-if="isGIF()" autoplay loop v-on:loadstart="loaded()"></video>
+    <video :src="src" v-else-if="isAudio()" autoplay loop controls v-on:loadstart="loaded()"></video>
     <img :src="imageSrc" v-else v-on:load="loaded()" />
   </div>
 </template>
@@ -27,7 +28,7 @@ export default {
     }
   },
   watch: {
-    src: async function(newSrc, _oldSrc) {
+    src: async function (newSrc, _oldSrc) {
       this.imageSrc = newSrc
       if (newSrc && !this.isMovieFile() && !this.isGIF()) {
         try {
@@ -50,6 +51,9 @@ export default {
     },
     isGIF() {
       return ['gifv'].includes(this.type)
+    },
+    isAudio() {
+      return ['audio'].includes(this.type)
     },
     async loaded() {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/loaded')
