@@ -639,23 +639,8 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
           // Cache account
           await accountCache.insertAccount(id, update.account.acct).catch(err => console.error(err))
         },
-        (notification: Entity.Notification) => {
-          const preferences = new Preferences(preferencesDBPath)
-          preferences.load().then(conf => {
-            const options = createNotification(notification, conf.notification.notify)
-            if (options !== null) {
-              const notify = new Notification(options)
-              notify.on('click', _ => {
-                if (!event.sender.isDestroyed()) {
-                  event.sender.send('open-notification-tab', id)
-                }
-              })
-              notify.show()
-            }
-          })
-          if (process.platform === 'darwin') {
-            app.dock.setBadge('•')
-          }
+        async (notification: Entity.Notification) => {
+          await publishNotification(notification, event, id)
 
           // In macOS and Windows, sometimes window is closed (not quit).
           // But streamings are always running.
@@ -977,6 +962,13 @@ ipcMain.on('stop-tag-streaming', () => {
     tagStreaming = null
   }
 })
+
+ipcMain.handle(
+  'publish-notification',
+  async (event: IpcMainInvokeEvent, notification: { notification: Entity.Notification; id: string }) => {
+    await publishNotification(notification.notification, event, notification.id)
+  }
+)
 
 // sounds
 ipcMain.on('fav-rt-action-sound', () => {
@@ -1535,6 +1527,24 @@ async function reopenWindow() {
     return null
   } else {
     return null
+  }
+}
+
+const publishNotification = async (notification: Entity.Notification, event: IpcMainEvent | IpcMainInvokeEvent, id: string) => {
+  const preferences = new Preferences(preferencesDBPath)
+  const conf = await preferences.load()
+  const options = createNotification(notification, conf.notification.notify)
+  if (options !== null) {
+    const notify = new Notification(options)
+    notify.on('click', _ => {
+      if (!event.sender.isDestroyed()) {
+        event.sender.send('open-notification-tab', id)
+      }
+    })
+    notify.show()
+  }
+  if (process.platform === 'darwin') {
+    app.dock.setBadge('•')
   }
 }
 

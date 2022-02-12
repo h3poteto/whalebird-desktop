@@ -142,9 +142,17 @@ const actions: ActionTree<NotificationsState, RootState> = {
 
       const res = await client.getNotifications({ limit: 30, max_id: localMarker.last_read_id })
       // Make sure whether new notifications exist or not
-      const nextResponse = await client.getNotifications({ limit: 1, min_id: lastReadNotification.id })
+      const nextResponse = await client.getNotifications({ min_id: lastReadNotification.id })
       if (nextResponse.data.length > 0) {
         notifications = ([card] as Array<Entity.Notification | LoadingCard>).concat(notifications).concat(res.data)
+        // Generate notifications received while the app was not running
+        commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
+        nextResponse.data.forEach(n => {
+          win.ipcRenderer.invoke('publish-notification', {
+            notification: n,
+            id: rootState.TimelineSpace.account._id
+          })
+        })
       } else {
         notifications = notifications.concat(res.data)
       }
