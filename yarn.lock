@@ -1129,16 +1129,17 @@
     dir-compare "^2.4.0"
     fs-extra "^9.0.1"
 
-"@electron/universal@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@electron/universal/-/universal-1.1.0.tgz#9c4da8bf59437393fdf1bbb1eb4e55d7ee5baac7"
-  integrity sha512-ioyZAGdrDeR1R3XD3XxEdMrAq373lkEjP6gVTBeLSBq3fztfQU7gdrA7jL1KzSz8tbA1lS16D+IsP8we4DuAEg==
+"@electron/universal@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@electron/universal/-/universal-1.2.0.tgz#518cac72bccd79c00bf41345119e6fdbabdb871d"
+  integrity sha512-eu20BwNsrMPKoe2bZ3/l9c78LclDvxg3PlVXrQf3L50NaUuW5M59gbPytI+V4z7/QMrohUHetQaU0ou+p1UG9Q==
   dependencies:
     "@malept/cross-spawn-promise" "^1.1.0"
     asar "^3.1.0"
     debug "^4.3.1"
     dir-compare "^2.4.0"
     fs-extra "^9.0.1"
+    minimatch "^3.0.4"
     plist "^3.0.4"
 
 "@eslint/eslintrc@^0.4.3":
