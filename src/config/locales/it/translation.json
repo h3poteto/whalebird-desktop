@@ -92,7 +92,7 @@
         "title": "Toot",
         "visibility": {
           "description": "Personalizza la visibilità predefinita del toot",
-          "notice": "Questa impostazione si applica solo ai nuovi toot, le risposte seguono la visibilità dei toot originale",
+          "notice": "Questa impostazione si applica solo ai nuovi toots, le risposte seguono la visibilità dei toots originali",
           "public": "Pubblico",
           "unlisted": "Non elencato",
           "private": "Privato",
