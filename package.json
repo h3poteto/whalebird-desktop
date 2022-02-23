@@ -122,7 +122,7 @@
     "@types/auto-launch": "^5.0.2",
     "@types/electron-json-storage": "^4.5.0",
     "@types/i18next": "^13.0.0",
-    "@types/jest": "27.4.0",
+    "@types/jest": "27.4.1",
     "@types/jsdom": "^16.2.14",
     "@types/lodash": "^4.14.178",
     "@types/lokijs": "^1.5.7",
