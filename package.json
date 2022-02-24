@@ -1,6 +1,6 @@
 {
   "name": "Whalebird",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
   "description": "An Electron based Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
@@ -15,8 +15,8 @@
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
   },
   "config": {
-    "buildVersion": "117",
-    "appVersion": "4.5.1"
+    "buildVersion": "118",
+    "appVersion": "4.5.2"
   },
   "main": "./dist/electron/main.js",
   "scripts": {
