@@ -25,7 +25,7 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import { Entity, detector, NotificationType } from 'megalodon'
+import generator, { Entity, detector, NotificationType, MegalodonInterface } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
@@ -672,6 +672,15 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
           }
         }
       )
+      // Generate notifications received while the app was not running
+      const client = generator(sns, acct.baseURL, acct.accessToken, 'Whalebird', proxy)
+      const marker = await getMarker(client, id)
+      if (marker !== null) {
+        const unreadResponse = await client.getNotifications({ min_id: marker.last_read_id })
+        unreadResponse.data.map(async notification => {
+          await publishNotification(notification, event, id)
+        })
+      }
     } catch (err: any) {
       log.error(err)
       const streamingError = new StreamingError(err.message, account.domain)
@@ -962,13 +971,6 @@ ipcMain.on('stop-tag-streaming', () => {
     tagStreaming = null
   }
 })
-
-ipcMain.handle(
-  'publish-notification',
-  async (event: IpcMainInvokeEvent, notification: { notification: Entity.Notification; id: string }) => {
-    await publishNotification(notification.notification, event, notification.id)
-  }
-)
 
 // sounds
 ipcMain.on('fav-rt-action-sound', () => {
@@ -1663,4 +1665,25 @@ const decodeLanguage = (lang: string): LanguageType => {
   } else {
     return Language[l]
   }
+}
+
+const getMarker = async (client: MegalodonInterface, accountID: string): Promise<LocalMarker | null> => {
+  let serverMarker: Entity.Marker | {} = {}
+  try {
+    const res = await client.getMarkers(['notifications'])
+    serverMarker = res.data
+  } catch (err) {
+    console.warn(err)
+  }
+  if ((serverMarker as Entity.Marker).notifications !== undefined) {
+    return {
+      timeline: 'notifications',
+      last_read_id: (serverMarker as Entity.Marker).notifications.last_read_id
+    } as LocalMarker
+  }
+  if (markerRepo === null) {
+    return null
+  }
+  const marker = await markerRepo.get(accountID, 'notifications')
+  return marker
 }
