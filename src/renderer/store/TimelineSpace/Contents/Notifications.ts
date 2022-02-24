@@ -123,40 +123,31 @@ const actions: ActionTree<NotificationsState, RootState> = {
     if (rootState.TimelineSpace.timelineSetting.useMarker.notifications && localMarker !== null) {
       // The result does not contain max_id's notification, when we specify max_id parameter in get notifications.
       // So we need to get max_id's notification.
-      const last = await client.getNotification(localMarker.last_read_id)
-      const lastReadNotification = last.data
-
-      let notifications: Array<Entity.Notification | LoadingCard> = [lastReadNotification]
-      const card: LoadingCard = {
-        type: 'middle-load',
-        since_id: lastReadNotification.id,
-        // We don't need to fill this field in the first fetcing.
-        // Because in most cases there is no new statuses at the first fetching.
-        // After new statuses are received, if the number of unread statuses is more than 30, max_id is not necessary.
-        // We can fill max_id when calling fetchTimelineSince.
-        // If the number of unread statuses is less than 30, max_id is necessary, but it is enough to reject duplicated statuses.
-        // So we do it in mutation.
-        max_id: null,
-        id: 'loading-card'
-      }
-
-      const res = await client.getNotifications({ limit: 30, max_id: localMarker.last_read_id })
-      // Make sure whether new notifications exist or not
-      const nextResponse = await client.getNotifications({ limit: 1, min_id: lastReadNotification.id })
+      const nextResponse = await client.getNotifications({ limit: 1, min_id: localMarker.last_read_id })
       if (nextResponse.data.length > 0) {
-        notifications = ([card] as Array<Entity.Notification | LoadingCard>).concat(notifications).concat(res.data)
-        // Generate notifications received while the app was not running
-        commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
-      } else {
+        const card: LoadingCard = {
+          type: 'middle-load',
+          since_id: localMarker.last_read_id,
+          // We don't need to fill this field in the first fetcing.
+          // Because in most cases there is no new statuses at the first fetching.
+          // After new statuses are received, if the number of unread statuses is more than 30, max_id is not necessary.
+          // We can fill max_id when calling fetchTimelineSince.
+          // If the number of unread statuses is less than 30, max_id is necessary, but it is enough to reject duplicated statuses.
+          // So we do it in mutation.
+          max_id: null,
+          id: 'loading-card'
+        }
+        let notifications: Array<Entity.Notification | LoadingCard> = [card]
+        const res = await client.getNotifications({ limit: 30, max_id: nextResponse.data[0].id })
         notifications = notifications.concat(res.data)
+        commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, notifications)
+        commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
+        return res.data
       }
-      commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, notifications)
-      return res.data
-    } else {
-      const res = await client.getNotifications({ limit: 30 })
-      commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, res.data)
-      return res.data
     }
+    const res = await client.getNotifications({ limit: 30 })
+    commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, res.data)
+    return res.data
   },
   lazyFetchNotifications: async (
     { state, commit, rootState },
