@@ -4,7 +4,7 @@ import Account from './account'
 import { LocalAccount } from '~/src/types/localAccount'
 
 const appName = 'Whalebird'
-const appURL = 'https://whalebird.org'
+const appURL = 'https://whalebird.social'
 
 export default class Authentication {
   private db: Account
