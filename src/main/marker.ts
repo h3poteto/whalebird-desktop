@@ -48,7 +48,7 @@ export default class Marker {
     })
   }
 
-  public async get(owner_id: string, timeline: 'home' | 'notifications'): Promise<LocalMarker | null> {
+  public async get(owner_id: string, timeline: 'home' | 'notifications' | 'mentions'): Promise<LocalMarker | null> {
     return new Promise((resolve, reject) => {
       try {
         const doc: LocalMarker | null = this.markers.findOne({

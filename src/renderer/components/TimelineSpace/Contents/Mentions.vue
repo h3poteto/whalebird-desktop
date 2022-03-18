@@ -3,21 +3,28 @@
     <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
     <DynamicScroller :items="mentions" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
-          <notification
-            :message="item"
-            :focused="item.id === focusedId"
-            :overlaid="modalOpened"
-            :filters="[]"
-            v-on:update="updateToot"
-            @focusNext="focusNext"
-            @focusPrev="focusPrev"
-            @focusRight="focusSidebar"
-            @selectNotification="focusNotification(item)"
-            @sizeChanged="sizeChanged"
-          >
-          </notification>
-        </DynamicScrollerItem>
+        <template v-if="item.id === 'loading-card'">
+          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.id]" :data-index="index" :watchData="true">
+            <StatusLoading :since_id="item.since_id" :max_id="item.max_id" :loading="loadingMore" @load_since="fetchMentionsSince" />
+          </DynamicScrollerItem>
+        </template>
+        <template v-else>
+          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
+            <notification
+              :message="item"
+              :focused="item.id === focusedId"
+              :overlaid="modalOpened"
+              :filters="[]"
+              v-on:update="updateToot"
+              @focusNext="focusNext"
+              @focusPrev="focusPrev"
+              @focusRight="focusSidebar"
+              @selectNotification="focusNotification(item)"
+              @sizeChanged="sizeChanged"
+            >
+            </notification>
+          </DynamicScrollerItem>
+        </template>
       </template>
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
@@ -30,13 +37,14 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Notification from '~/src/renderer/components/organisms/Notification'
+import StatusLoading from '~/src/renderer/components/organisms/StatusLoading'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
   name: 'mentions',
-  components: { Notification },
+  components: { Notification, StatusLoading },
   mixins: [reloadable],
   data() {
     return {
@@ -44,7 +52,8 @@ export default {
       scrollPosition: null,
       observer: null,
       scrollTime: null,
-      resizeTime: null
+      resizeTime: null,
+      loadingMore: false
     }
   },
   computed: {
@@ -87,12 +96,16 @@ export default {
         this.focusedId = previousFocusedId
       })
     })
+
+    if (this.heading && this.mentions.length > 0) {
+      this.$store.dispatch('TimelineSpace/Contents/Mentions/saveMarker')
+    }
     const el = document.getElementById('scroller')
     this.scrollPosition = new ScrollPosition(el)
     this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
+      if (this.loadingMore || (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling)) {
         this.resizeTime = moment()
         this.scrollPosition.restore()
       }
@@ -134,6 +147,11 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
       } else if (newState === null && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
+      }
+    },
+    mentions: function (newState, _oldState) {
+      if (this.heading && newState.length > 0) {
+        this.$store.dispatch('TimelineSpace/Contents/Mentions/saveMarker')
       }
     }
   },
@@ -177,6 +195,7 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
       } else if (event.target.scrollTop <= 10 && !this.heading) {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
+        this.$store.dispatch('TimelineSpace/Contents/Mentions/saveMarker')
       }
 
       setTimeout(() => {
@@ -186,6 +205,14 @@ export default {
           this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', false)
         }
       }, 150)
+    },
+    fetchMentionsSince(since_id) {
+      this.loadingMore = true
+      this.$store.dispatch('TimelineSpace/Contents/Mentions/fetchMentionsSince', since_id).finally(() => {
+        setTimeout(() => {
+          this.loadingMore = false
+        }, 500)
+      })
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)

@@ -1170,6 +1170,14 @@ ipcMain.handle('get-notifications-marker', async (_: IpcMainInvokeEvent, ownerID
   return marker
 })
 
+ipcMain.handle('get-mentions-marker', async (_: IpcMainInvokeEvent, ownerID: string) => {
+  if (markerRepo === null) {
+    return null
+  }
+  const marker = await markerRepo.get(ownerID, 'mentions')
+  return marker
+})
+
 ipcMain.on(
   'save-marker',
   async (_: IpcMainEvent, marker: LocalMarker): Promise<LocalMarker | null> => {
