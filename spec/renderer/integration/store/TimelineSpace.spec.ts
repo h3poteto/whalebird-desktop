@@ -86,7 +86,8 @@ const state = (): TimelineSpaceState => {
       },
       useMarker: {
         home: false,
-        notifications: true
+        notifications: true,
+        mentions: false
       }
     },
     sns: 'mastodon',

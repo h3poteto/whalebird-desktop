@@ -219,7 +219,8 @@ const timelineState = {
     timelineSetting: {
       useMarker: {
         home: false,
-        notifications: false
+        notifications: false,
+        mentions: false
       }
     }
   }

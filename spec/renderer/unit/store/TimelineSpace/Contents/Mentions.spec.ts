@@ -276,8 +276,8 @@ describe('TimelineSpace/Contents/Mentions', () => {
           favourited: true
         })
         Mentions.mutations![MUTATION_TYPES.UPDATE_TOOT](state, favourited)
-        expect(state.mentions[0].status!.favourited).toEqual(null)
-        expect(state.mentions[1].status!.favourited).toEqual(true)
+        expect((state.mentions[0] as Entity.Notification).status!.favourited).toEqual(null)
+        expect((state.mentions[1] as Entity.Notification).status!.favourited).toEqual(true)
       })
     })
 
