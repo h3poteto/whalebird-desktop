@@ -24,10 +24,10 @@
       </div>
       <div class="collapse">
         <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse" :title="$t('side_menu.expand')">
-          <icon name="angle-double-right"></icon>
+          <font-awesome-icon :icon="['fa', 'angles-right']"></font-awesome-icon>
         </el-button>
         <el-button type="text" class="do-collapse" @click="doCollapse" v-else :title="$t('side_menu.collapse')">
-          <icon name="angle-double-left"></icon>
+          <font-awesome-icon :icon="['fa', 'angles-left']"></font-awesome-icon>
         </el-button>
       </div>
     </div>

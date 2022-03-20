@@ -69,6 +69,9 @@
     }
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.0",
+    "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@fortawesome/vue-fontawesome": "^2.0.6",
     "@panter/vue-i18next": "^0.15.2",
     "@trodi/electron-splashscreen": "^1.0.2",
     "about-window": "^1.15.2",

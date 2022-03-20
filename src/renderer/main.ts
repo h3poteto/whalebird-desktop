@@ -2,6 +2,9 @@ import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faAnglesRight, faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import Popper from 'vue-popperjs'
@@ -20,13 +23,16 @@ import router from '@/router'
 import store from './store'
 import i18next from '~/src/config/i18n'
 
+library.add(faAnglesRight, faAnglesLeft)
+
 Vue.use(ElementUI, { locale })
 Vue.use(shortkey)
 Vue.use(VueI18Next)
 Vue.use(VueResize)
 Vue.use(VueVirtualScroller)
-Vue.component('icon', Icon)
 Vue.component('popper', Popper)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('icon', Icon)
 
 sync(store, router)
 
