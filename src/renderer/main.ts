@@ -16,7 +16,14 @@ import {
   faGlobe,
   faSearch,
   faHashtag,
-  faListUl
+  faListUl,
+  faTimesCircle,
+  faCamera,
+  faPoll,
+  faUnlock,
+  faLock,
+  faEyeSlash,
+  faEye
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'vue-awesome/icons'
@@ -50,7 +57,14 @@ library.add(
   faGlobe,
   faSearch,
   faHashtag,
-  faListUl
+  faListUl,
+  faTimesCircle,
+  faCamera,
+  faPoll,
+  faUnlock,
+  faLock,
+  faEyeSlash,
+  faEye
 )
 
 Vue.use(ElementUI, { locale })
