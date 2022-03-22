@@ -20,16 +20,16 @@
         </div>
         <div class="tool-box">
           <el-button type="text" class="reply" :title="$t('cards.toot.reply')">
-            <icon name="reply" scale="0.9"></icon>
+            <font-awesome-icon icon="reply" size="sm" />
           </el-button>
           <el-button type="text" class="reblog" :title="$t('cards.toot.reblog')">
-            <icon name="retweet" scale="0.9"></icon>
+            <font-awesome-icon icon="retweet" size="sm" />
           </el-button>
           <span class="count">
             {{ reblogsCount }}
           </span>
           <el-button type="text" class="favourite" :title="$t('cards.toot.fav')">
-            <icon name="star" scale="0.9"></icon>
+            <font-awesome-icon icon="star" size="sm" />
           </el-button>
           <span class="count">
             {{ favouritesCount }}
@@ -52,7 +52,7 @@
               </ul>
             </div>
             <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
-              <icon name="ellipsis-h" scale="0.9"></icon>
+              <font-awesome-icon icon="ellipsis" size="sm" />
             </el-button>
           </popper>
         </div>

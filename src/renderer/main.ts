@@ -27,7 +27,9 @@ import {
   faXmark,
   faSquarePollHorizontal,
   faRetweet,
-  faUserPlus
+  faUserPlus,
+  faReply,
+  faEllipsis
 } from '@fortawesome/free-solid-svg-icons'
 import { faFaceSmile } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -74,7 +76,9 @@ library.add(
   faXmark,
   faSquarePollHorizontal,
   faRetweet,
-  faUserPlus
+  faUserPlus,
+  faReply,
+  faEllipsis
 )
 
 Vue.use(ElementUI, { locale })
