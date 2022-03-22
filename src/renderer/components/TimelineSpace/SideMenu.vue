@@ -24,10 +24,10 @@
       </div>
       <div class="collapse">
         <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse" :title="$t('side_menu.expand')">
-          <font-awesome-icon :icon="['fa', 'angles-right']"></font-awesome-icon>
+          <font-awesome-icon :icon="['fa', 'angles-right']" />
         </el-button>
         <el-button type="text" class="do-collapse" @click="doCollapse" v-else :title="$t('side_menu.collapse')">
-          <font-awesome-icon :icon="['fa', 'angles-left']"></font-awesome-icon>
+          <font-awesome-icon :icon="['fa', 'angles-left']" />
         </el-button>
       </div>
     </div>
@@ -42,7 +42,7 @@
       role="menu"
     >
       <el-menu-item :index="`/${id()}/home`" role="menuitem" :title="$t('side_menu.home')">
-        <icon name="home"></icon>
+        <font-awesome-icon icon="home" />
         <span>{{ $t('side_menu.home') }}</span>
         <el-badge is-dot :hidden="!unreadHomeTimeline"> </el-badge>
       </el-menu-item>
@@ -52,17 +52,17 @@
         :title="$t('side_menu.notification')"
         v-if="enabledTimelines.notification"
       >
-        <icon name="bell"></icon>
+        <font-awesome-icon icon="bell" />
         <span>{{ $t('side_menu.notification') }}</span>
         <el-badge is-dot :hidden="!unreadNotifications"> </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/mentions`" role="menuitem" :title="$t('side_menu.mention')" v-if="enabledTimelines.mention">
-        <icon name="at"></icon>
+        <font-awesome-icon icon="at" />
         <span>{{ $t('side_menu.mention') }}</span>
         <el-badge is-dot :hidden="!unreadMentions"> </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/direct-messages`" role="menuitem" :title="$t('side_menu.direct')" v-if="enabledTimelines.direct">
-        <icon name="envelope"></icon>
+        <font-awesome-icon icon="envelope" />
         <span>{{ $t('side_menu.direct') }}</span>
         <el-badge is-dot :hidden="!unreadDirectMessagesTimeline"> </el-badge>
       </el-menu-item>
@@ -72,34 +72,34 @@
         role="menuitem"
         :title="$t('side_menu.follow_requests')"
       >
-        <icon name="users"></icon>
+        <font-awesome-icon icon="users" />
         <span>{{ $t('side_menu.follow_requests') }}</span>
         <el-badge is-dot></el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/favourites`" role="menuitem" :title="$t('side_menu.favourite')" v-if="enabledTimelines.favourite">
-        <icon name="star"></icon>
+        <font-awesome-icon icon="star" />
         <span>{{ $t('side_menu.favourite') }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/bookmarks`" role="menuitem" :title="$t('side_menu.bookmark')" v-if="enabledTimelines.bookmark">
-        <icon name="bookmark"></icon>
+        <font-awesome-icon icon="bookmark" />
         <span>{{ $t('side_menu.bookmark') }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/local`" role="menuitem" :title="$t('side_menu.local')" v-if="enabledTimelines.local">
-        <icon name="users"></icon>
+        <font-awesome-icon icon="users" />
         <span>{{ $t('side_menu.local') }}</span>
         <el-badge is-dot :hidden="!unreadLocalTimeline"> </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/public`" role="menuitem" :title="$t('side_menu.public')" v-if="enabledTimelines.public">
-        <icon name="globe"></icon>
+        <font-awesome-icon icon="globe" />
         <span>{{ $t('side_menu.public') }}</span>
         <el-badge is-dot :hidden="!unreadPublicTimeline"> </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/search`" role="menuitem" :title="$t('side_menu.search')">
-        <icon name="search"></icon>
+        <font-awesome-icon icon="search" />
         <span>{{ $t('side_menu.search') }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/hashtag`" role="menuitem" :title="$t('side_menu.hashtag')">
-        <icon name="hashtag"></icon>
+        <font-awesome-icon icon="hashtag" />
         <span>{{ $t('side_menu.hashtag') }}</span>
       </el-menu-item>
       <template v-for="tag in tags" v-if="enabledTimelines.tag">
@@ -110,12 +110,12 @@
           role="menuitem"
           :title="tag.tagName"
         >
-          <icon name="hashtag" scale="0.8"></icon>
+          <font-awesome-icon icon="hashtag" size="sm" />
           <span>{{ tag.tagName }}</span>
         </el-menu-item>
       </template>
       <el-menu-item :index="`/${id()}/lists`" role="menuitem" :title="$t('side_menu.lists')">
-        <icon name="list-ul"></icon>
+        <font-awesome-icon icon="list-ul" />
         <span>{{ $t('side_menu.lists') }}</span>
       </el-menu-item>
       <template v-for="list in lists" v-if="enabledTimelines.list">
@@ -126,16 +126,16 @@
           role="menuitem"
           :title="list.title"
         >
-          <icon name="list-ul" scale="0.8"></icon>
+          <font-awesome-icon icon="list-ul" size="sm" />
           <span>{{ list.title }}</span>
         </el-menu-item>
       </template>
     </el-menu>
     <el-button v-if="hideGlobalHeader" class="global-header-control" type="text" @click="changeGlobalHeader(false)">
-      <icon name="angle-double-right"></icon>
+      <font-awesome-icon icon="angles-right" />
     </el-button>
     <el-button v-else class="global-header-control" type="text" @click="changeGlobalHeader(true)">
-      <icon name="angle-double-left"></icon>
+      <font-awesome-icon icon="angles-left" />
     </el-button>
   </div>
 </template>

@@ -3,7 +3,21 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faAnglesRight, faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faAnglesRight,
+  faAnglesLeft,
+  faHome,
+  faBell,
+  faAt,
+  faEnvelope,
+  faUsers,
+  faStar,
+  faBookmark,
+  faGlobe,
+  faSearch,
+  faHashtag,
+  faListUl
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -23,7 +37,21 @@ import router from '@/router'
 import store from './store'
 import i18next from '~/src/config/i18n'
 
-library.add(faAnglesRight, faAnglesLeft)
+library.add(
+  faAnglesRight,
+  faAnglesLeft,
+  faHome,
+  faBell,
+  faAt,
+  faEnvelope,
+  faUsers,
+  faStar,
+  faBookmark,
+  faGlobe,
+  faSearch,
+  faHashtag,
+  faListUl
+)
 
 Vue.use(ElementUI, { locale })
 Vue.use(shortkey)
