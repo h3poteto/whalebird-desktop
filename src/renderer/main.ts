@@ -23,7 +23,8 @@ import {
   faUnlock,
   faLock,
   faEyeSlash,
-  faEye
+  faEye,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'vue-awesome/icons'
@@ -64,7 +65,8 @@ library.add(
   faUnlock,
   faLock,
   faEyeSlash,
-  faEye
+  faEye,
+  faPlus
 )
 
 Vue.use(ElementUI, { locale })
