@@ -62,7 +62,7 @@
       </div>
       <div class="poll">
         <el-button size="default" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
-          <font-awesome-icon icon="poll" />
+          <font-awesome-icon icon="square-poll-horizontal" />
         </el-button>
       </div>
       <div class="privacy">

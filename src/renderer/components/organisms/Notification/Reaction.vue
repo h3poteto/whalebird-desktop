@@ -87,7 +87,7 @@
                 @click="showAttachments = false"
                 :title="$t('cards.toot.hide')"
               >
-                <icon name="eye" class="hide"></icon>
+                <font-awesome-icon icon="eye" class="hide" />
               </el-button>
               <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message.status)">
                 <FailoverImg :src="media.preview_url" :title="media.description" :readExif="true" />

@@ -19,13 +19,15 @@ import {
   faListUl,
   faTimesCircle,
   faCamera,
-  faPoll,
   faUnlock,
   faLock,
   faEyeSlash,
   faEye,
   faPlus,
-  faXmark
+  faXmark,
+  faSquarePollHorizontal,
+  faRetweet,
+  faUserPlus
 } from '@fortawesome/free-solid-svg-icons'
 import { faFaceSmile } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -63,14 +65,16 @@ library.add(
   faListUl,
   faTimesCircle,
   faCamera,
-  faPoll,
   faUnlock,
   faLock,
   faEyeSlash,
   faEye,
   faPlus,
   faFaceSmile,
-  faXmark
+  faXmark,
+  faSquarePollHorizontal,
+  faRetweet,
+  faUserPlus
 )
 
 Vue.use(ElementUI, { locale })
