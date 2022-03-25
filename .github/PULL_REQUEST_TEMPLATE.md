@@ -1,8 +1,8 @@
 ## Description
-<!-- Please write description. For example, why you change this? -->
+<!-- Please write a description. For example, why did you change this? -->
 
 ## Related Issues
-<!-- If there are related issues, please write issue number. -->
+<!-- If there are related issues, please write the issue number. -->
 
 ## Appearance
-<!-- If you change the appearance, please paste the screen shots. -->
+<!-- If you change the appearance, please paste the screenshots. -->
