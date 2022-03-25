@@ -9,6 +9,7 @@ assignees: ''
 
 ## Description
 <!-- A clear and concise description of what the bug is. -->
+<!-- Please paste screenshots of the bug if you have. -->
 
 ## How To Reproduce
 1.
