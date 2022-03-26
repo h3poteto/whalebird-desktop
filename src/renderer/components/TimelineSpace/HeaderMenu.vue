@@ -6,10 +6,10 @@
     <div class="tools">
       <img src="../../assets/images/loading-spinner-wide.svg" v-show="loading" class="header-loading" />
       <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
-        <icon name="regular/edit" scale="1.1"></icon>
+        <font-awesome-icon :icon="['far', 'pen-to-square']" />
       </el-button>
       <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
-        <icon name="sync-alt"></icon>
+        <font-awesome-icon icon="rotate" />
       </el-button>
       <el-popover placement="left-start" width="180" popper-class="theme-popover" trigger="click" v-model="TLOptionVisible">
         <div>
@@ -24,11 +24,11 @@
           </el-form>
         </div>
         <el-button v-show="TLOption()" slot="reference" type="text" class="action" :title="$t('header_menu.option.title')">
-          <icon name="sliders-h"></icon>
+          <font-awesome-icon icon="sliders" />
         </el-button>
       </el-popover>
       <el-button type="text" class="action" @click="settings" :title="$t('header_menu.settings')">
-        <icon name="cog" scale="1.1"></icon>
+        <font-awesome-icon icon="gear" />
       </el-button>
     </div>
   </nav>
