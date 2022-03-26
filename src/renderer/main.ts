@@ -34,7 +34,9 @@ import {
   faPalette,
   faUser,
   faNetworkWired,
-  faLanguage
+  faLanguage,
+  faAlignLeft,
+  faFilter
 } from '@fortawesome/free-solid-svg-icons'
 import { faFaceSmile } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -88,7 +90,9 @@ library.add(
   faPalette,
   faUser,
   faNetworkWired,
-  faLanguage
+  faLanguage,
+  faAlignLeft,
+  faFilter
 )
 
 Vue.use(ElementUI, { locale })
