@@ -29,7 +29,12 @@ import {
   faRetweet,
   faUserPlus,
   faReply,
-  faEllipsis
+  faEllipsis,
+  faGear,
+  faPalette,
+  faUser,
+  faNetworkWired,
+  faLanguage
 } from '@fortawesome/free-solid-svg-icons'
 import { faFaceSmile } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -78,7 +83,12 @@ library.add(
   faRetweet,
   faUserPlus,
   faReply,
-  faEllipsis
+  faEllipsis,
+  faGear,
+  faPalette,
+  faUser,
+  faNetworkWired,
+  faLanguage
 )
 
 Vue.use(ElementUI, { locale })

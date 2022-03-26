@@ -21,27 +21,27 @@
           :router="true"
         >
           <el-menu-item index="/preferences/general">
-            <icon name="cog" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="gear" class="icon" size="lg" />
             <span>{{ $t('preferences.general.title') }}</span>
           </el-menu-item>
           <el-menu-item index="/preferences/appearance">
-            <icon name="palette" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="palette" class="icon" size="lg" />
             <span>{{ $t('preferences.appearance.title') }}</span>
           </el-menu-item>
           <el-menu-item index="/preferences/notification">
-            <icon name="bell" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="bell" class="icon" size="lg" />
             <span>{{ $t('preferences.notification.title') }}</span>
           </el-menu-item>
           <el-menu-item index="/preferences/account">
-            <icon name="user" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="user" class="icon" size="lg" />
             <span>{{ $t('preferences.account.title') }}</span>
           </el-menu-item>
           <el-menu-item index="/preferences/network">
-            <icon name="network-wired" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="network-wired" class="icon" size="lg" />
             <span>{{ $t('preferences.network.title') }}</span>
           </el-menu-item>
           <el-menu-item index="/preferences/language">
-            <icon name="language" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="language" class="icon" size="lg" />
             <span>{{ $t('preferences.language.title') }}</span>
           </el-menu-item>
         </el-menu>
