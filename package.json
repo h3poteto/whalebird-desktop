@@ -197,7 +197,7 @@
     "ttfinfo": "^0.2.0",
     "typescript": "^4.5.5",
     "url-loader": "^4.1.1",
-    "utf-8-validate": "^5.0.8",
+    "utf-8-validate": "^5.0.9",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^15.9.8",
     "vue-style-loader": "^4.1.3",
