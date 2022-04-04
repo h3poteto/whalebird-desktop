@@ -115,7 +115,8 @@
       "use_marker": {
         "title": "Muat linimasa dari posisi baca terakhir",
         "home": "Beranda",
-        "notifications": "Pemberitahuan"
+        "notifications": "Pemberitahuan",
+        "mentions": "Mentions"
       }
     },
     "filters": {
