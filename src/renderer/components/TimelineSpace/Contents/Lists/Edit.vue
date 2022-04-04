@@ -2,7 +2,7 @@
   <div class="members">
     <div class="add-account">
       <el-button type="text" class="add-button" @click="addAccount">
-        <icon name="plus"></icon>
+        <font-awesome-icon icon="plus" />
       </el-button>
     </div>
     <template v-for="account in members">
