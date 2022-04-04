@@ -55,8 +55,6 @@ import {
   faBell as farBell
 } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
 import Popper from 'vue-popperjs'
 import 'vue-popperjs/dist/vue-popper.css'
 import { sync } from 'vuex-router-sync'
@@ -132,7 +130,6 @@ Vue.use(VueResize)
 Vue.use(VueVirtualScroller)
 Vue.component('popper', Popper)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('icon', Icon)
 
 sync(store, router)
 
