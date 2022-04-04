@@ -43,7 +43,9 @@ import {
   faHourglass,
   faCheck,
   faQuoteRight,
-  faThumbTack
+  faThumbTack,
+  faChevronLeft,
+  faEllipsisVertical
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFaceSmile as farFaceSmile,
@@ -118,7 +120,9 @@ library.add(
   faThumbTack,
   farEdit,
   farTrashCan,
-  farBell
+  farBell,
+  faChevronLeft,
+  faEllipsisVertical
 )
 
 Vue.use(ElementUI, { locale })

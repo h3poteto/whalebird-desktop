@@ -1,20 +1,20 @@
 <template>
-<div id="list">
-  <table class="tag-list">
-    <tbody>
-      <tr v-for="tag in tags" v-bind:key="tag._id" @click.stop.prevent="openTimeline(tag.tagName)">
-        <td>
-          {{ tag.tagName }}
-        </td>
-        <td class="action">
-          <el-button type="text" @click.stop="deleteTag(tag)" :title="$t('hashtag.delete_tag')">
-            <icon name="regular/trash-alt"></icon>
-          </el-button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div id="list">
+    <table class="tag-list">
+      <tbody>
+        <tr v-for="tag in tags" v-bind:key="tag._id" @click.stop.prevent="openTimeline(tag.tagName)">
+          <td>
+            {{ tag.tagName }}
+          </td>
+          <td class="action">
+            <el-button type="text" @click.stop="deleteTag(tag)" :title="$t('hashtag.delete_tag')">
+              <font-awesome-icon :icon="['far', 'trash-can']" />
+            </el-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -27,14 +27,14 @@ export default {
       tags: state => state.TimelineSpace.Contents.Hashtag.List.tags
     })
   },
-  created () {
+  created() {
     this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/listTags')
   },
   methods: {
-    openTimeline (tagName) {
+    openTimeline(tagName) {
       this.$router.push({ path: `/${this.$route.params.id}/hashtag/${tagName}` })
     },
-    deleteTag (tag) {
+    deleteTag(tag) {
       this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/removeTag', tag)
     }
   }
