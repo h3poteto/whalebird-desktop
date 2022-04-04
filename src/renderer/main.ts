@@ -45,7 +45,13 @@ import {
   faQuoteRight,
   faThumbTack
 } from '@fortawesome/free-solid-svg-icons'
-import { faFaceSmile, faPenToSquare, faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import {
+  faFaceSmile as farFaceSmile,
+  faPenToSquare as farPenToSquare,
+  faEdit as farEdit,
+  faTrashCan as farTrashCan,
+  faBell as farBell
+} from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -86,7 +92,7 @@ library.add(
   faEyeSlash,
   faEye,
   faPlus,
-  faFaceSmile,
+  farFaceSmile,
   faXmark,
   faSquarePollHorizontal,
   faRetweet,
@@ -100,7 +106,7 @@ library.add(
   faLanguage,
   faAlignLeft,
   faFilter,
-  faPenToSquare,
+  farPenToSquare,
   faRotate,
   faSliders,
   faXmark,
@@ -110,8 +116,9 @@ library.add(
   faCheck,
   faQuoteRight,
   faThumbTack,
-  faEdit,
-  faTrashCan
+  farEdit,
+  farTrashCan,
+  farBell
 )
 
 Vue.use(ElementUI, { locale })

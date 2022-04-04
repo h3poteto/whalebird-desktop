@@ -17,7 +17,7 @@
           <font-awesome-icon :icon="['far', 'edit']" />
         </el-button>
         <el-button type="text" @click="del(list)">
-          <font-awesome-icon icon="['far', 'trash-can']" />
+          <font-awesome-icon :icon="['far', 'trash-can']" />
         </el-button>
       </div>
     </div>
