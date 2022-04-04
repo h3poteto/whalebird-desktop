@@ -4,7 +4,7 @@ import { MyWindow } from '~/src/types/global'
 import { Setting, UnreadNotification, Timeline as TimelineSetting, UseMarker } from '~src/types/setting'
 import { DefaultSetting } from '~/src/constants/initializer/setting'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type TimelineState = {
   setting: TimelineSetting
