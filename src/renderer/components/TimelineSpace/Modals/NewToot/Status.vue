@@ -41,7 +41,7 @@
     </el-popover>
     <div v-click-outside="hideEmojiPicker">
       <el-button type="text" class="emoji-selector" @click="toggleEmojiPicker">
-        <icon name="regular/smile" scale="1.2"></icon>
+        <font-awesome-icon :icon="['far', 'face-smile']" size="lg" />
       </el-button>
       <div v-if="openEmojiPicker" class="emoji-picker">
         <picker set="emojione" :autoFocus="true" :custom="pickerEmojis" @select="selectEmoji" />

@@ -21,15 +21,15 @@
           :router="true"
         >
           <el-menu-item :index="`/${id()}/settings/general`">
-            <icon name="cog" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="gear" class="icon" size="lg" />
             <span>{{ $t('settings.general.title') }}</span>
           </el-menu-item>
           <el-menu-item :index="`/${id()}/settings/timeline`">
-            <icon name="align-left" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="align-left" class="icon" size="lg" />
             <span>{{ $t('settings.timeline.title') }}</span>
           </el-menu-item>
           <el-menu-item :index="`/${id()}/settings/filters`">
-            <icon name="filter" class="icon" scale="1.3"></icon>
+            <font-awesome-icon icon="filter" class="icon" size="lg" />
             <span>{{ $t('settings.filters.title') }}</span>
           </el-menu-item>
         </el-menu>

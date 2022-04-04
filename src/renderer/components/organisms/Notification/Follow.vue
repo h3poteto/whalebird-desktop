@@ -12,7 +12,7 @@
     <div class="follow">
       <div class="action">
         <div class="action-mark">
-          <icon name="user-plus" scale="0.8"></icon>
+          <font-awesome-icon icon="user-plus" size="sm" />
         </div>
         <div class="action-detail">
           <span class="bold" @click="openUser(message.account)">

@@ -4,7 +4,7 @@
       <el-form :inline="true">
         <input v-model="title" :placeholder="$t('lists.index.new_list')" class="list-title" />
         <el-button type="text" class="create" @click="createList">
-          <icon name="plus"></icon>
+          <font-awesome-icon icon="plus" />
         </el-button>
       </el-form>
     </div>
@@ -14,10 +14,10 @@
       </router-link>
       <div class="tools">
         <el-button type="text" @click="edit(list)">
-          <icon name="regular/edit"></icon>
+          <font-awesome-icon :icon="['far', 'pen-to-square']" />
         </el-button>
         <el-button type="text" @click="del(list)">
-          <icon name="regular/trash-alt"></icon>
+          <font-awesome-icon :icon="['far', 'trash-can']" />
         </el-button>
       </div>
     </div>

@@ -5,7 +5,7 @@
         <div class="form-wrapper">
           <div class="form-item" v-show="tagPage()">
             <el-button type="text" @click="back">
-              <icon name="chevron-left"></icon>
+              <font-awesome-icon icon="chevron-left" />
             </el-button>
           </div>
           <div class="form-item input">
@@ -20,7 +20,7 @@
           </div>
           <div class="form-item" v-show="tagPage()">
             <el-button type="text" @click="save" :title="$t('hashtag.save_tag')">
-              <icon name="thumbtack"></icon>
+              <font-awesome-icon icon="thumbtack" />
             </el-button>
           </div>
         </div>

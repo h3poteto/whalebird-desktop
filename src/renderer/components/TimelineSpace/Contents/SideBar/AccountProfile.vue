@@ -22,10 +22,10 @@
               @click="unsubscribe(account)"
               :title="$t('side_bar.account_profile.unsubscribe')"
             >
-              <icon name="bell" scale="1.3"></icon>
+              <font-awesome-icon icon="bell" size="xl" />
             </div>
             <div v-else class="subscribe" @click="subscribe(account)" :title="$t('side_bar.account_profile.subscribe')">
-              <icon name="regular/bell" scale="1.3"></icon>
+              <font-awesome-icon :icon="['far', 'bell']" size="xl" />
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
               </div>
 
               <el-button slot="reference" type="text" :title="$t('side_bar.account_profile.detail')">
-                <icon name="cog" scale="1.4"></icon>
+                <font-awesome-icon icon="gear" size="xl" />
               </el-button>
             </popper>
           </div>
@@ -66,13 +66,13 @@
           </div>
           <div class="follow-status" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
             <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
-              <icon name="user-times" scale="1.5"></icon>
+              <font-awesome-icon icon="user-xmark" size="xl" />
             </div>
             <div v-else-if="relationship.requested" :title="$t('side_bar.account_profile.follow_requested')">
-              <icon name="hourglass" scale="1.5"></icon>
+              <font-awesome-icon icon="hourglass" size="xl" />
             </div>
             <div v-else class="follow" @click="follow(account)" :title="$t('side_bar.account_profile.follow')">
-              <icon name="user-plus" scale="1.5"></icon>
+              <font-awesome-icon icon="user-plus" size="xl" />
             </div>
           </div>
         </div>

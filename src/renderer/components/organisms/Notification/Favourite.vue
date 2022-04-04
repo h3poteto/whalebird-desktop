@@ -13,7 +13,7 @@
     <div v-show="!filtered(message)" class="favourite">
       <div class="action">
         <div class="action-mark">
-          <icon name="star" scale="0.7"></icon>
+          <font-awesome-icon icon="star" size="sm" />
         </div>
         <div class="action-detail">
           <span class="bold" @click="openUser(message.account)">
@@ -87,7 +87,7 @@
                 @click="showAttachments = false"
                 :title="$t('cards.toot.hide')"
               >
-                <icon name="eye" class="hide"></icon>
+                <font-awesome-icon icon="eye" class="hide" />
               </el-button>
               <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message.status)">
                 <FailoverImg :src="media.preview_url" :title="media.description" :readExif="true" />

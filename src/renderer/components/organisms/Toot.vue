@@ -31,7 +31,7 @@
         <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
           <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
         </span>
-        <icon name="retweet"></icon>
+        <font-awesome-icon icon="retweet" />
         <span
           class="reblogger-name"
           @click="openUser(message.account)"
@@ -91,7 +91,7 @@
               @click="toggleCW()"
               :title="$t('cards.toot.hide')"
             >
-              <icon name="eye" class="hide"></icon>
+              <font-awesome-icon icon="eye" class="hide" />
             </el-button>
             <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
               <FailoverImg
@@ -134,13 +134,13 @@
         </div>
         <div class="tool-box">
           <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
-            <icon name="reply" scale="0.9"></icon>
+            <font-awesome-icon icon="reply" size="sm" />
           </el-button>
           <el-button v-show="locked" type="text" class="locked">
-            <icon name="lock" scale="0.9"></icon>
+            <font-awesome-icon icon="lock" size="sm" />
           </el-button>
           <el-button v-show="directed" type="text" class="directed">
-            <icon name="envelope" scale="0.9"></icon>
+            <font-awesome-icon icon="envelope" size="sm" />
           </el-button>
           <el-button
             v-show="!locked && !directed"
@@ -149,7 +149,7 @@
             :class="originalMessage.reblogged ? 'reblogged' : 'reblog'"
             :title="$t('cards.toot.reblog')"
           >
-            <icon name="retweet" scale="0.9"></icon>
+            <font-awesome-icon icon="retweet" size="sm" />
           </el-button>
           <span class="count">
             {{ reblogsCount }}
@@ -161,7 +161,7 @@
             :title="$t('cards.toot.fav')"
             :aria-label="$t('cards.toot.fav')"
           >
-            <icon name="star" scale="0.9"></icon>
+            <font-awesome-icon icon="star" size="sm" />
           </el-button>
           <span class="count">
             {{ favouritesCount }}
@@ -174,10 +174,10 @@
             :aria-label="$t('cards.toot.bookmark')"
             v-if="bookmarkSupported"
           >
-            <icon name="bookmark" scale="0.9"></icon>
+            <font-awesome-icon icon="bookmark" size="sm" />
           </el-button>
           <el-button type="text" class="quote-btn" v-if="quoteSupported" @click="openQuote()">
-            <icon name="quote-right" scale="0.9"></icon>
+            <font-awesome-icon icon="quote-right" size="sm" />
           </el-button>
           <template v-if="sns !== 'mastodon'">
             <el-popover
@@ -201,12 +201,12 @@
                 :emojiTooltip="true"
               />
               <el-button slot="reference" class="emoji" type="text">
-                <icon name="regular/smile" scale="0.9"></icon>
+                <font-awesome-icon :icon="['far', 'face-smile']" size="sm" />
               </el-button>
             </el-popover>
           </template>
           <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
-            <icon name="thumbtack" scale="0.9"></icon>
+            <font-awesome-icon icon="thumbtack" size="sm" />
           </el-button>
           <el-popover
             placement="bottom"
@@ -241,7 +241,7 @@
               </li>
             </ul>
             <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
-              <icon name="ellipsis-h" scale="0.9"></icon>
+              <font-awesome-icon icon="ellipsis" size="sm" />
             </el-button>
           </el-popover>
         </div>

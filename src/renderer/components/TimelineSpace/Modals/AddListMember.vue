@@ -1,14 +1,10 @@
 <template>
-  <el-dialog
-    :title="$t('modals.add_list_member.title')"
-    :visible.sync="addListMemberModal"
-    width="400px"
-    class="add-member">
+  <el-dialog :title="$t('modals.add_list_member.title')" :visible.sync="addListMemberModal" width="400px" class="add-member">
     <div class="search-account" :element-loading-background="loadingBackground">
       <el-form :inline="true">
-        <input v-model="name" placeholder="Account name" class="account-name" v-shortkey="['enter']" @shortkey="search" autofocus></input>
+        <input v-model="name" placeholder="Account name" class="account-name" v-shortkey="['enter']" @shortkey="search" autofocus />
         <el-button type="text" class="search" @click="search">
-          <icon name="search"></icon>
+          <font-awesome-icon icon="magnifying-glass" />
         </el-button>
       </el-form>
       <div class="search-results">
@@ -21,13 +17,11 @@
               <div class="username">
                 {{ username(user) }}
               </div>
-              <div class="acct">
-                @{{ user.acct }}
-              </div>
+              <div class="acct">@{{ user.acct }}</div>
             </div>
             <div class="add">
               <el-button type="text" @click="add(user)">
-                <icon name="plus"></icon>
+                <font-awesome-icon icon="plus" />
               </el-button>
             </div>
           </div>
@@ -42,7 +36,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'add-list-member',
-  data () {
+  data() {
     return {
       name: ''
     }
@@ -54,27 +48,28 @@ export default {
       listId: state => state.TimelineSpace.Modals.AddListMember.targetListId
     }),
     addListMemberModal: {
-      get () {
+      get() {
         return this.$store.state.TimelineSpace.Modals.AddListMember.modalOpen
       },
-      set (value) {
+      set(value) {
         this.$store.dispatch('TimelineSpace/Modals/AddListMember/changeModal', value)
       }
     }
   },
   methods: {
-    username (account) {
+    username(account) {
       if (account.display_name !== '') {
         return account.display_name
       } else {
         return account.username
       }
     },
-    search () {
+    search() {
       this.$store.dispatch('TimelineSpace/Modals/AddListMember/search', this.name)
     },
-    add (user) {
-      this.$store.dispatch('TimelineSpace/Modals/AddListMember/add', user)
+    add(user) {
+      this.$store
+        .dispatch('TimelineSpace/Modals/AddListMember/add', user)
         .then(() => {
           this.addListMemberModal = false
           this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', this.listId)

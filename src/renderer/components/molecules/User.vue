@@ -11,7 +11,7 @@
     </div>
     <div class="tool" v-if="remove">
       <el-button type="text" @click.stop.prevent="removeAccount(user)">
-        <icon name="times"></icon>
+        <font-awesome-icon icon="xmark" />
       </el-button>
     </div>
     <div class="tool" v-if="relationship">
@@ -22,10 +22,10 @@
         @click.stop.prevent="unfollowAccount(user)"
         :title="$t('side_bar.account_profile.unfollow')"
       >
-        <icon name="user-times"></icon>
+        <font-awesome-icon icon="user-xmark" />
       </el-button>
       <el-button v-else-if="relationship.requested" class="requested" type="text" :title="$t('side_bar.account_profile.follow_requested')">
-        <icon name="hourglass"></icon>
+        <font-awesome-icon icon="hourglass" />
       </el-button>
       <el-button
         v-else-if="!relationship.following"
@@ -34,15 +34,15 @@
         @click.stop.prevent="followAccount(user)"
         :title="$t('side_bar.account_profile.follow')"
       >
-        <icon name="user-plus"></icon>
+        <font-awesome-icon icon="user-plus" />
       </el-button>
     </div>
     <div class="tool" v-else-if="request">
       <el-button class="accept" type="text" @click.stop.prevent="acceptRequest(user)" :title="$t('follow_requests.accept')">
-        <icon name="check"></icon>
+        <font-awesome-icon icon="check" />
       </el-button>
       <el-button class="reject" type="text" @click.stop.prevent="rejectRequest(user)" :tilte="$t('follow_requests.reject')">
-        <icon name="times"></icon>
+        <font-awesome-icon icon="xmark" />
       </el-button>
     </div>
   </div>

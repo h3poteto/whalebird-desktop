@@ -15,7 +15,7 @@
           <div id="resizer">
             <div class="border"></div>
             <div class="knob" @mousedown="dragStart">
-              <icon name="ellipsis-v" class="icon"></icon>
+              <font-awesome-icon icon="ellipsis-vertical" class="icon" />
             </div>
           </div>
           <side-bar id="side_bar" :overlaid="modalOpened"></side-bar>

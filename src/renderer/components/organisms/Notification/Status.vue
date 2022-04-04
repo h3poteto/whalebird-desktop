@@ -2,7 +2,7 @@
   <div class="notified-status">
     <div class="action">
       <div class="action-mark">
-        <icon name="home" scale="0.9"></icon>
+        <font-awesome-icon name="home" size="sm" />
       </div>
       <div class="action-detail">
         <span class="bold" @click="openUser(message.account)">

@@ -38,7 +38,7 @@
     <div class="preview" ref="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
-        <el-button type="text" @click="removeAttachment(media)" class="remove-image"><icon name="times-circle"></icon></el-button>
+        <el-button type="text" @click="removeAttachment(media)" class="remove-image"><font-awesome-icon icon="circle-xmark" /></el-button>
         <textarea
           maxlength="420"
           class="image-description"
@@ -55,36 +55,36 @@
     </div>
     <div slot="footer" class="dialog-footer">
       <div class="upload-image">
-        <el-button size="small" type="text" @click="selectImage" :title="$t('modals.new_toot.footer.add_image')">
-          <icon name="camera"></icon>
+        <el-button size="default" type="text" @click="selectImage" :title="$t('modals.new_toot.footer.add_image')">
+          <font-awesome-icon icon="camera" />
         </el-button>
         <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId" />
       </div>
       <div class="poll">
-        <el-button size="small" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
-          <icon name="poll"></icon>
+        <el-button size="default" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
+          <font-awesome-icon icon="square-poll-horizontal" />
         </el-button>
       </div>
       <div class="privacy">
         <el-dropdown trigger="click" @command="changeVisibility">
-          <el-button size="small" type="text" :title="$t('modals.new_toot.footer.change_visibility')">
-            <icon :name="visibilityIcon"></icon>
+          <el-button size="default" type="text" :title="$t('modals.new_toot.footer.change_visibility')">
+            <font-awesome-icon :icon="visibilityIcon" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item :command="visibilityList.Public.value">
-              <icon name="globe" class="privacy-icon"></icon>
+              <font-awesome-icon icon="globe" class="privacy-icon" />
               {{ $t(visibilityList.Public.name) }}
             </el-dropdown-item>
             <el-dropdown-item :command="visibilityList.Unlisted.value">
-              <icon name="unlock" class="privacy-icon"></icon>
+              <font-awesome-icon icon="unlock" class="privacy-icon" />
               {{ $t(visibilityList.Unlisted.name) }}
             </el-dropdown-item>
             <el-dropdown-item :command="visibilityList.Private.value">
-              <icon name="lock" class="privacy-icon"></icon>
+              <font-awesome-icon icon="lock" class="privacy-icon" />
               {{ $t(visibilityList.Private.name) }}
             </el-dropdown-item>
             <el-dropdown-item :command="visibilityList.Direct.value">
-              <icon name="envelope" class="privacy-icon" scale="0.8"></icon>
+              <font-awesome-icon icon="envelope" class="privacy-icon" size="sm" />
               {{ $t(visibilityList.Direct.name) }}
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -92,38 +92,38 @@
       </div>
       <div class="sensitive" v-show="attachedMedias.length > 0">
         <el-button
-          size="small"
+          size="default"
           type="text"
           @click="changeSensitive"
           :title="$t('modals.new_toot.footer.change_sensitive')"
           :aria-pressed="sensitive"
         >
-          <icon name="eye-slash" v-show="!sensitive"></icon>
-          <icon name="eye" v-show="sensitive"></icon>
+          <font-awesome-icon icon="eye-slash" v-show="!sensitive" />
+          <font-awesome-icon icon="eye" v-show="sensitive" />
         </el-button>
       </div>
       <div class="content-warning">
         <el-button
-          size="small"
+          size="default"
           type="text"
           @click="toggleContentWarning()"
           :title="$t('modals.new_toot.footer.add_cw')"
           :class="showContentWarning ? '' : 'clickable'"
           :aria-pressed="showContentWarning"
         >
-          <span class="cw-text">CW</span>
+          <font-awesome-icon icon="eye-slash" />
         </el-button>
       </div>
       <div class="pined-hashtag">
         <el-button
-          size="small"
+          size="default"
           type="text"
           @click="pinedHashtag = !pinedHashtag"
           :title="$t('modals.new_toot.footer.pined_hashtag')"
           :class="pinedHashtag ? '' : 'clickable'"
           :aria-pressed="pinedHashtag"
         >
-          <icon name="hashtag"></icon>
+          <font-awesome-icon icon="hashtag" />
         </el-button>
       </div>
       <div class="info">
