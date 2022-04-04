@@ -115,7 +115,8 @@
       "use_marker": {
         "title": "Carica la timeline dall'ultima posizione di lettura",
         "home": "Pagina Iniziale",
-        "notifications": "Notifiche"
+        "notifications": "Notifiche",
+        "mentions": "Mentions"
       }
     },
     "filters": {
