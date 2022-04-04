@@ -24,6 +24,9 @@
       <el-form-item for="marker_notifications" :label="$t('settings.timeline.use_marker.notifications')">
         <el-switch v-model="marker_notifications" id="marker_notifications" />
       </el-form-item>
+      <el-form-item for="marker_mentions" :label="$t('settings.timeline.use_marker.mentions')">
+        <el-switch v-model="marker_mentions" id="marker_mentions" />
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -79,6 +82,16 @@ export default {
       set(value) {
         this.$store.dispatch('Settings/Timeline/changeUseMarker', {
           notifications: value
+        })
+      }
+    },
+    marker_mentions: {
+      get() {
+        return this.$store.state.Settings.Timeline.setting.useMarker.mentions
+      },
+      set(value) {
+        this.$store.dispatch('Settings/Timeline/changeUseMarker', {
+          mentions: value
         })
       }
     }
