@@ -91,7 +91,7 @@
     "lodash": "^4.17.21",
     "lokijs": "^1.5.12",
     "megalodon": "4.0.1",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "moment": "^2.29.1",
     "mousetrap": "^1.6.5",
     "nedb": "^1.8.0",
