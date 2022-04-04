@@ -38,7 +38,10 @@ import {
   faAlignLeft,
   faFilter,
   faRotate,
-  faSliders
+  faSliders,
+  faUserXmark,
+  faHourglass,
+  faCheck
 } from '@fortawesome/free-solid-svg-icons'
 import { faFaceSmile, faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -97,7 +100,12 @@ library.add(
   faFilter,
   faPenToSquare,
   faRotate,
-  faSliders
+  faSliders,
+  faXmark,
+  faUserXmark,
+  faHourglass,
+  faUserPlus,
+  faCheck
 )
 
 Vue.use(ElementUI, { locale })

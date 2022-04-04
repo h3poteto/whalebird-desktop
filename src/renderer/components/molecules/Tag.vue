@@ -1,12 +1,12 @@
 <template>
-<div class="tag" @click="openTag(tag)">
-  <div class="icon">
-    <icon name="hashtag"></icon>
+  <div class="tag" @click="openTag(tag)">
+    <div class="icon">
+      <font-awesome-icon icon="hashtag" />
+    </div>
+    <div class="name">
+      {{ tag.name }}
+    </div>
   </div>
-  <div class="name">
-    {{ tag.name }}
-  </div>
-</div>
 </template>
 
 <script>
@@ -19,10 +19,10 @@ export default {
     }
   },
   methods: {
-    openTag (tag) {
+    openTag(tag) {
       this.$router.push(`/${this.id()}/hashtag/${tag.name}`)
     },
-    id () {
+    id() {
       return this.$route.params.id
     }
   }
