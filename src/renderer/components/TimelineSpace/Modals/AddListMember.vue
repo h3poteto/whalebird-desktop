@@ -4,7 +4,7 @@
       <el-form :inline="true">
         <input v-model="name" placeholder="Account name" class="account-name" v-shortkey="['enter']" @shortkey="search" autofocus />
         <el-button type="text" class="search" @click="search">
-          <font-awesome-icon icon="search" />
+          <font-awesome-icon icon="magnifying-glass" />
         </el-button>
       </el-form>
       <div class="search-results">

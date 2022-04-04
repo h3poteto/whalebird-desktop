@@ -38,7 +38,7 @@
     <div class="preview" ref="preview">
       <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
         <img :src="media.preview_url" class="preview-image" />
-        <el-button type="text" @click="removeAttachment(media)" class="remove-image"><font-awesome-icon icon="times-circle" /></el-button>
+        <el-button type="text" @click="removeAttachment(media)" class="remove-image"><font-awesome-icon icon="circle-xmark" /></el-button>
         <textarea
           maxlength="420"
           class="image-description"

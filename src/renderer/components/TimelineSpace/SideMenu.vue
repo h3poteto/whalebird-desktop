@@ -95,7 +95,7 @@
         <el-badge is-dot :hidden="!unreadPublicTimeline"> </el-badge>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/search`" role="menuitem" :title="$t('side_menu.search')">
-        <font-awesome-icon icon="search" />
+        <font-awesome-icon icon="magnifying-glass" />
         <span>{{ $t('side_menu.search') }}</span>
       </el-menu-item>
       <el-menu-item :index="`/${id()}/hashtag`" role="menuitem" :title="$t('side_menu.hashtag')">

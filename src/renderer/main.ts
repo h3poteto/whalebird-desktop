@@ -14,10 +14,8 @@ import {
   faStar,
   faBookmark,
   faGlobe,
-  faSearch,
   faHashtag,
   faListUl,
-  faTimesCircle,
   faCamera,
   faUnlock,
   faLock,
@@ -45,12 +43,13 @@ import {
   faQuoteRight,
   faThumbTack,
   faChevronLeft,
-  faEllipsisVertical
+  faEllipsisVertical,
+  faCircleXmark,
+  faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFaceSmile as farFaceSmile,
   faPenToSquare as farPenToSquare,
-  faEdit as farEdit,
   faTrashCan as farTrashCan,
   faBell as farBell
 } from '@fortawesome/free-regular-svg-icons'
@@ -82,10 +81,10 @@ library.add(
   faStar,
   faBookmark,
   faGlobe,
-  faSearch,
+  faMagnifyingGlass,
   faHashtag,
   faListUl,
-  faTimesCircle,
+  faCircleXmark,
   faCamera,
   faUnlock,
   faLock,
@@ -116,7 +115,6 @@ library.add(
   faCheck,
   faQuoteRight,
   faThumbTack,
-  farEdit,
   farTrashCan,
   farBell,
   faChevronLeft,

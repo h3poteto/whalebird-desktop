@@ -14,7 +14,7 @@
       </router-link>
       <div class="tools">
         <el-button type="text" @click="edit(list)">
-          <font-awesome-icon :icon="['far', 'edit']" />
+          <font-awesome-icon :icon="['far', 'pen-to-square']" />
         </el-button>
         <el-button type="text" @click="del(list)">
           <font-awesome-icon :icon="['far', 'trash-can']" />
