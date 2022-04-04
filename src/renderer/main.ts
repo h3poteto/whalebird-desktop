@@ -41,7 +41,9 @@ import {
   faSliders,
   faUserXmark,
   faHourglass,
-  faCheck
+  faCheck,
+  faQuoteRight,
+  faThumbTack
 } from '@fortawesome/free-solid-svg-icons'
 import { faFaceSmile, faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -105,7 +107,9 @@ library.add(
   faUserXmark,
   faHourglass,
   faUserPlus,
-  faCheck
+  faCheck,
+  faQuoteRight,
+  faThumbTack
 )
 
 Vue.use(ElementUI, { locale })
