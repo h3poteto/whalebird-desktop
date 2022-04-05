@@ -41,66 +41,148 @@
       :class="collapse ? 'el-menu-vertical timeline-menu narrow-menu' : 'el-menu-vertical timeline-menu'"
       role="menu"
     >
-      <el-menu-item :index="`/${id()}/home`" role="menuitem" :title="$t('side_menu.home')">
-        <font-awesome-icon icon="home" />
-        <span>{{ $t('side_menu.home') }}</span>
-        <el-badge is-dot :hidden="!unreadHomeTimeline"> </el-badge>
+      <el-menu-item :index="`/${id()}/home`" role="menuitem" :title="$t('side_menu.home')" class="menu-item">
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="home" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.home') }}</span>
+          <el-badge is-dot :hidden="!unreadHomeTimeline"> </el-badge>
+        </div>
       </el-menu-item>
       <el-menu-item
         :index="`/${id()}/notifications`"
         role="menuitem"
         :title="$t('side_menu.notification')"
+        class="menu-item"
         v-if="enabledTimelines.notification"
       >
-        <font-awesome-icon icon="bell" />
-        <span>{{ $t('side_menu.notification') }}</span>
-        <el-badge is-dot :hidden="!unreadNotifications"> </el-badge>
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="bell" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.notification') }}</span>
+          <el-badge is-dot :hidden="!unreadNotifications"> </el-badge>
+        </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/mentions`" role="menuitem" :title="$t('side_menu.mention')" v-if="enabledTimelines.mention">
-        <font-awesome-icon icon="at" />
-        <span>{{ $t('side_menu.mention') }}</span>
-        <el-badge is-dot :hidden="!unreadMentions"> </el-badge>
+      <el-menu-item
+        :index="`/${id()}/mentions`"
+        role="menuitem"
+        :title="$t('side_menu.mention')"
+        class="menu-item"
+        v-if="enabledTimelines.mention"
+      >
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="at" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.mention') }}</span>
+          <el-badge is-dot :hidden="!unreadMentions"> </el-badge>
+        </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/direct-messages`" role="menuitem" :title="$t('side_menu.direct')" v-if="enabledTimelines.direct">
-        <font-awesome-icon icon="envelope" />
-        <span>{{ $t('side_menu.direct') }}</span>
-        <el-badge is-dot :hidden="!unreadDirectMessagesTimeline"> </el-badge>
+      <el-menu-item
+        :index="`/${id()}/direct-messages`"
+        role="menuitem"
+        :title="$t('side_menu.direct')"
+        class="menu-item"
+        v-if="enabledTimelines.direct"
+      >
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="envelope" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.direct') }}</span>
+          <el-badge is-dot :hidden="!unreadDirectMessagesTimeline"> </el-badge>
+        </div>
       </el-menu-item>
       <el-menu-item
         v-if="unreadFollowRequests"
         :index="`/${id()}/follow-requests`"
         role="menuitem"
         :title="$t('side_menu.follow_requests')"
+        class="menu-item"
       >
-        <font-awesome-icon icon="users" />
-        <span>{{ $t('side_menu.follow_requests') }}</span>
-        <el-badge is-dot></el-badge>
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="users" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.follow_requests') }}</span>
+          <el-badge is-dot></el-badge>
+        </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/favourites`" role="menuitem" :title="$t('side_menu.favourite')" v-if="enabledTimelines.favourite">
-        <font-awesome-icon icon="star" />
-        <span>{{ $t('side_menu.favourite') }}</span>
+      <el-menu-item
+        :index="`/${id()}/favourites`"
+        role="menuitem"
+        :title="$t('side_menu.favourite')"
+        class="menu-item"
+        v-if="enabledTimelines.favourite"
+      >
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="star" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.favourite') }}</span>
+        </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/bookmarks`" role="menuitem" :title="$t('side_menu.bookmark')" v-if="enabledTimelines.bookmark">
-        <font-awesome-icon icon="bookmark" />
-        <span>{{ $t('side_menu.bookmark') }}</span>
+      <el-menu-item
+        :index="`/${id()}/bookmarks`"
+        role="menuitem"
+        :title="$t('side_menu.bookmark')"
+        class="menu-item"
+        v-if="enabledTimelines.bookmark"
+      >
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="bookmark" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.bookmark') }}</span>
+        </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/local`" role="menuitem" :title="$t('side_menu.local')" v-if="enabledTimelines.local">
-        <font-awesome-icon icon="users" />
-        <span>{{ $t('side_menu.local') }}</span>
-        <el-badge is-dot :hidden="!unreadLocalTimeline"> </el-badge>
+      <el-menu-item
+        :index="`/${id()}/local`"
+        role="menuitem"
+        :title="$t('side_menu.local')"
+        class="menu-item"
+        v-if="enabledTimelines.local"
+      >
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="users" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.local') }}</span>
+          <el-badge is-dot :hidden="!unreadLocalTimeline"> </el-badge>
+        </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/public`" role="menuitem" :title="$t('side_menu.public')" v-if="enabledTimelines.public">
-        <font-awesome-icon icon="globe" />
-        <span>{{ $t('side_menu.public') }}</span>
-        <el-badge is-dot :hidden="!unreadPublicTimeline"> </el-badge>
+      <el-menu-item
+        :index="`/${id()}/public`"
+        role="menuitem"
+        :title="$t('side_menu.public')"
+        class="menu-item"
+        v-if="enabledTimelines.public"
+      >
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="globe" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.public') }}</span>
+          <el-badge is-dot :hidden="!unreadPublicTimeline"> </el-badge>
+        </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/search`" role="menuitem" :title="$t('side_menu.search')">
-        <font-awesome-icon icon="magnifying-glass" />
-        <span>{{ $t('side_menu.search') }}</span>
+      <el-menu-item :index="`/${id()}/search`" role="menuitem" :title="$t('side_menu.search')" class="menu-item">
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="magnifying-glass" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.search') }}</span>
+        </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/hashtag`" role="menuitem" :title="$t('side_menu.hashtag')">
-        <font-awesome-icon icon="hashtag" />
-        <span>{{ $t('side_menu.hashtag') }}</span>
+      <el-menu-item :index="`/${id()}/hashtag`" role="menuitem" :title="$t('side_menu.hashtag')" class="menu-item">
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="hashtag" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.hashtag') }}</span>
+        </div>
       </el-menu-item>
       <template v-for="tag in tags" v-if="enabledTimelines.tag">
         <el-menu-item
@@ -109,14 +191,23 @@
           :key="tag.tagName"
           role="menuitem"
           :title="tag.tagName"
+          class="menu-item"
         >
-          <font-awesome-icon icon="hashtag" size="sm" />
-          <span>{{ tag.tagName }}</span>
+          <div class="menu-item-icon">
+            <font-awesome-icon icon="hashtag" size="sm" />
+          </div>
+          <div>
+            <span>{{ tag.tagName }}</span>
+          </div>
         </el-menu-item>
       </template>
-      <el-menu-item :index="`/${id()}/lists`" role="menuitem" :title="$t('side_menu.lists')">
-        <font-awesome-icon icon="list-ul" />
-        <span>{{ $t('side_menu.lists') }}</span>
+      <el-menu-item :index="`/${id()}/lists`" role="menuitem" :title="$t('side_menu.lists')" class="menu-item">
+        <div class="menu-item-icon">
+          <font-awesome-icon icon="list-ul" />
+        </div>
+        <div>
+          <span>{{ $t('side_menu.lists') }}</span>
+        </div>
       </el-menu-item>
       <template v-for="list in lists" v-if="enabledTimelines.list">
         <el-menu-item
@@ -125,9 +216,14 @@
           :key="list.id"
           role="menuitem"
           :title="list.title"
+          class="menu-item"
         >
-          <font-awesome-icon icon="list-ul" size="sm" />
-          <span>{{ list.title }}</span>
+          <div class="menu-item-icon">
+            <font-awesome-icon icon="list-ul" size="sm" />
+          </div>
+          <div>
+            <span>{{ list.title }}</span>
+          </div>
         </el-menu-item>
       </template>
     </el-menu>
@@ -331,6 +427,16 @@ export default {
       height: 32px;
       line-height: 32px;
       font-size: 14px;
+    }
+
+    .menu-item {
+      display: flex;
+
+      .menu-item-icon {
+        text-align: center;
+        padding-right: 2px;
+        width: 18px;
+      }
     }
   }
 
