@@ -143,7 +143,7 @@
     "babel-plugin-istanbul": "^6.1.1",
     "babel-register": "^6.26.0",
     "bufferutil": "^4.0.6",
-    "cfonts": "^2.10.0",
+    "cfonts": "^2.10.1",
     "chai": "^4.3.6",
     "chalk": "^4.1.2",
     "copy-webpack-plugin": "^10.2.4",
