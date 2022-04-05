@@ -151,9 +151,9 @@
           >
             <font-awesome-icon icon="retweet" size="sm" />
           </el-button>
-          <span class="count">
+          <div class="count" v-if="reblogsCount">
             {{ reblogsCount }}
-          </span>
+          </div>
           <el-button
             type="text"
             @click="changeFavourite(originalMessage)"
@@ -163,9 +163,9 @@
           >
             <font-awesome-icon icon="star" size="sm" />
           </el-button>
-          <span class="count">
+          <div class="count" v-if="favouritesCount">
             {{ favouritesCount }}
-          </span>
+          </div>
           <el-button
             @click="changeBookmark(originalMessage)"
             :class="originalMessage.bookmarked ? 'bookmarked' : 'bookmark'"
@@ -357,13 +357,13 @@ export default {
       if (this.originalMessage.reblogs_count > 0) {
         return this.originalMessage.reblogs_count
       }
-      return ''
+      return null
     },
     favouritesCount: function () {
       if (this.originalMessage.favourites_count > 0) {
         return this.originalMessage.favourites_count
       }
-      return ''
+      return null
     },
     isMyMessage: function () {
       return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
@@ -951,15 +951,16 @@ export default {
     }
 
     .tool-box {
-      float: left;
+      display: flex;
 
       .fa-icon {
         vertical-align: bottom;
       }
 
       button {
-        margin: 0 8px;
-        padding: 0;
+        display: block;
+        padding: 0 8px;
+        margin: 0;
         color: #909399;
       }
 
@@ -974,15 +975,14 @@ export default {
       .count {
         font-size: 0.8em;
         color: #909399;
-        margin: 0 0 4px -8px;
-      }
+        margin: 0 0 0 -4px;
 
-      .bookmark {
-        margin: 0 0 0 8px;
+        &:blank {
+          display: none;
+        }
       }
 
       .bookmarked {
-        margin: 0 0 0 8px;
         color: #ff5050;
       }
 

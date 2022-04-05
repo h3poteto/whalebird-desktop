@@ -215,7 +215,6 @@ export default {
   }
 
   .tools {
-    font-size: 18px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
