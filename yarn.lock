@@ -11587,10 +11587,10 @@ unicode-canonical-property-names-ecmascript@^2.0.0:
   resolved "https://registry.yarnpkg.com/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-2.0.0.tgz#301acdc525631670d39f6146e0e77ff6bbdebddc"
   integrity sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==
 
-unicode-emoji-json@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/unicode-emoji-json/-/unicode-emoji-json-0.3.0.tgz#965e097ef8a367081c5036f81873015a95a5c1ad"
-  integrity sha512-yImheILedqhZtVEEenRELu9AnX347ZTA3bVMWAU5WMUv7pdU2hcfpwo2mKN8Rns9uHLmOZP90/4B4SPS5aF/iw==
+unicode-emoji-json@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/unicode-emoji-json/-/unicode-emoji-json-0.3.1.tgz#495ddf9a3483da91d25a1a4817249f4b3a5ab03f"
+  integrity sha512-qA76zUIfOMSj+rdd8XAz/SpuubjTqoy2uW+dHrUVZivIvzMYzs7lNlbLMG4R32KB8SFwtVUJYQzbAafjBYDSuw==
 
 unicode-match-property-ecmascript@^2.0.0:
   version "2.0.0"
