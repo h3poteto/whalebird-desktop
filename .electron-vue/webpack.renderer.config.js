@@ -185,7 +185,17 @@ let rendererConfig = {
       },
       nodeModules: process.env.NODE_ENV !== 'production' ? path.resolve(__dirname, '../node_modules') : false
     }),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.browser': true,
+      'process.env.NODE_DEBUG': false
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer']
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser'
+    })
   ],
   output: {
     filename: '[name].js',
@@ -198,9 +208,26 @@ let rendererConfig = {
       '~': path.join(__dirname, '../'),
       vue$: 'vue/dist/vue.esm.js'
     },
-    extensions: ['.ts', '.js', '.vue', '.json', '.css', '.node']
+    extensions: ['.ts', '.js', '.vue', '.json', '.css', '.node'],
+    fallback: {
+      timers: require.resolve('timers-browserify'),
+      url: require.resolve('url/'),
+      assert: require.resolve('assert/'),
+      buffer: require.resolve('buffer/'),
+      os: require.resolve('os-browserify/browser'),
+      path: require.resolve('path-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
+      stream: require.resolve('stream-browserify'),
+      zlib: require.resolve('browserify-zlib'),
+      net: false,
+      tls: false,
+      fs: false,
+      dns: false
+    }
   },
-  target: 'electron-renderer'
+  target: 'web'
 }
 
 /**
