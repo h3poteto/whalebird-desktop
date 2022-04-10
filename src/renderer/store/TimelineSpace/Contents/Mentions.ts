@@ -5,14 +5,15 @@ import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
 import { LocalMarker } from '~/src/types/localMarker'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 const excludes: Array<string> = [
   NotificationType.Follow,
   NotificationType.Favourite,
   NotificationType.Reblog,
   NotificationType.PollVote,
-  NotificationType.PollExpired
+  NotificationType.PollExpired,
+  NotificationType.EmojiReaction
 ]
 
 export type MentionsState = {
@@ -197,7 +198,7 @@ const actions: ActionTree<MentionsState, RootState> = {
     if (cardIndex > 0) {
       maxID = state.mentions[cardIndex - 1].id
     }
-    let params = { min_id: since_id, limit: 30, exlude_types: excludes }
+    let params = { min_id: since_id, limit: 30, exclude_types: excludes }
     if (maxID !== null) {
       params = Object.assign({}, params, {
         max_id: maxID
