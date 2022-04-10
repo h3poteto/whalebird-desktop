@@ -328,9 +328,7 @@ async function createWindow() {
     icon: path.join(iconBasePath, '256x256.png'),
     autoHideMenuBar: autoHideMenuBar,
     webPreferences: {
-      // It is required to use ipcRenderer in renderer process.
-      // But it is not secure, so if you want to disable this option, please use preload script.
-      nodeIntegration: true,
+      nodeIntegration: false,
       contextIsolation: false,
       preload: path.resolve(__dirname, './preload.js'),
       spellcheck: spellcheck
@@ -600,15 +598,12 @@ ipcMain.on('reset-badge', () => {
   }
 })
 
-ipcMain.handle(
-  'confirm-timelines',
-  async (_event: IpcMainInvokeEvent, account: LocalAccount): Promise<EnabledTimelines> => {
-    const proxy = await proxyConfiguration.forMastodon()
-    const timelines = await confirm(account, proxy)
+ipcMain.handle('confirm-timelines', async (_event: IpcMainInvokeEvent, account: LocalAccount): Promise<EnabledTimelines> => {
+  const proxy = await proxyConfiguration.forMastodon()
+  const timelines = await confirm(account, proxy)
 
-    return timelines
-  }
-)
+  return timelines
+})
 
 // user streaming
 const userStreamings: { [key: string]: UserStreaming | null } = {}
@@ -1178,19 +1173,16 @@ ipcMain.handle('get-mentions-marker', async (_: IpcMainInvokeEvent, ownerID: str
   return marker
 })
 
-ipcMain.on(
-  'save-marker',
-  async (_: IpcMainEvent, marker: LocalMarker): Promise<LocalMarker | null> => {
-    if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
-      return null
-    }
-    if (markerRepo === null) {
-      return null
-    }
-    const res = await markerRepo.save(marker)
-    return res
+ipcMain.on('save-marker', async (_: IpcMainEvent, marker: LocalMarker): Promise<LocalMarker | null> => {
+  if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
+    return null
   }
-)
+  if (markerRepo === null) {
+    return null
+  }
+  const res = await markerRepo.save(marker)
+  return res
+})
 
 // hashtag
 ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
@@ -1216,23 +1208,17 @@ ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
 })
 
 // Settings
-ipcMain.handle(
-  'get-account-setting',
-  async (_: IpcMainInvokeEvent, accountID: string): Promise<Setting> => {
-    const settings = new Settings(settingsDBPath)
-    const setting = await settings.get(accountID)
-    return setting
-  }
-)
+ipcMain.handle('get-account-setting', async (_: IpcMainInvokeEvent, accountID: string): Promise<Setting> => {
+  const settings = new Settings(settingsDBPath)
+  const setting = await settings.get(accountID)
+  return setting
+})
 
-ipcMain.handle(
-  'update-account-setting',
-  async (_: IpcMainInvokeEvent, setting: Setting): Promise<BaseSettings> => {
-    const settings = new Settings(settingsDBPath)
-    const res = await settings.update(setting)
-    return res
-  }
-)
+ipcMain.handle('update-account-setting', async (_: IpcMainInvokeEvent, setting: Setting): Promise<BaseSettings> => {
+  const settings = new Settings(settingsDBPath)
+  const res = await settings.update(setting)
+  return res
+})
 
 // Cache
 ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
