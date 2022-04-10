@@ -68,17 +68,19 @@ function startRenderer() {
         static: {
           directory: path.resolve(__dirname, '../')
         },
-        onBeforeSetupMiddleware: function (devServer) {
-          devServer.app.use(hotMiddleware)
+        setupMiddlewares: function (middlewares, devServer) {
+          middlewares.unshift(hotMiddleware)
           devServer.middleware.waitUntilValid(() => {
             resolve()
           })
-        }
+          return middlewares
+        },
+        port: 9080
       },
       compiler
     )
 
-    server.listen(9080)
+    server.start()
   })
 }
 
