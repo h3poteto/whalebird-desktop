@@ -132,121 +132,123 @@
             >
           </template>
         </div>
-        <div class="tool-box">
-          <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
-            <font-awesome-icon icon="reply" size="sm" />
-          </el-button>
-          <el-button v-show="locked" type="text" class="locked">
-            <font-awesome-icon icon="lock" size="sm" />
-          </el-button>
-          <el-button v-show="directed" type="text" class="directed">
-            <font-awesome-icon icon="envelope" size="sm" />
-          </el-button>
-          <el-button
-            v-show="!locked && !directed"
-            type="text"
-            @click="changeReblog(originalMessage)"
-            :class="originalMessage.reblogged ? 'reblogged' : 'reblog'"
-            :title="$t('cards.toot.reblog')"
-          >
-            <font-awesome-icon icon="retweet" size="sm" />
-          </el-button>
-          <div class="count" v-if="reblogsCount">
-            {{ reblogsCount }}
-          </div>
-          <el-button
-            type="text"
-            @click="changeFavourite(originalMessage)"
-            :class="originalMessage.favourited ? 'favourited animated bounceIn' : 'favourite'"
-            :title="$t('cards.toot.fav')"
-            :aria-label="$t('cards.toot.fav')"
-          >
-            <font-awesome-icon icon="star" size="sm" />
-          </el-button>
-          <div class="count" v-if="favouritesCount">
-            {{ favouritesCount }}
-          </div>
-          <el-button
-            @click="changeBookmark(originalMessage)"
-            :class="originalMessage.bookmarked ? 'bookmarked' : 'bookmark'"
-            type="text"
-            :text="$t('cards.toot.bookmark')"
-            :aria-label="$t('cards.toot.bookmark')"
-            v-if="bookmarkSupported"
-          >
-            <font-awesome-icon icon="bookmark" size="sm" />
-          </el-button>
-          <el-button type="text" class="quote-btn" v-if="quoteSupported" @click="openQuote()">
-            <font-awesome-icon icon="quote-right" size="sm" />
-          </el-button>
-          <template v-if="sns !== 'mastodon'">
+        <div class="toot-footer">
+          <div class="tool-box">
+            <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
+              <font-awesome-icon icon="reply" size="sm" />
+            </el-button>
+            <el-button v-show="locked" type="text" class="locked">
+              <font-awesome-icon icon="lock" size="sm" />
+            </el-button>
+            <el-button v-show="directed" type="text" class="directed">
+              <font-awesome-icon icon="envelope" size="sm" />
+            </el-button>
+            <el-button
+              v-show="!locked && !directed"
+              type="text"
+              @click="changeReblog(originalMessage)"
+              :class="originalMessage.reblogged ? 'reblogged' : 'reblog'"
+              :title="$t('cards.toot.reblog')"
+            >
+              <font-awesome-icon icon="retweet" size="sm" />
+            </el-button>
+            <div class="count" v-if="reblogsCount">
+              {{ reblogsCount }}
+            </div>
+            <el-button
+              type="text"
+              @click="changeFavourite(originalMessage)"
+              :class="originalMessage.favourited ? 'favourited animated bounceIn' : 'favourite'"
+              :title="$t('cards.toot.fav')"
+              :aria-label="$t('cards.toot.fav')"
+            >
+              <font-awesome-icon icon="star" size="sm" />
+            </el-button>
+            <div class="count" v-if="favouritesCount">
+              {{ favouritesCount }}
+            </div>
+            <el-button
+              @click="changeBookmark(originalMessage)"
+              :class="originalMessage.bookmarked ? 'bookmarked' : 'bookmark'"
+              type="text"
+              :text="$t('cards.toot.bookmark')"
+              :aria-label="$t('cards.toot.bookmark')"
+              v-if="bookmarkSupported"
+            >
+              <font-awesome-icon icon="bookmark" size="sm" />
+            </el-button>
+            <el-button type="text" class="quote-btn" v-if="quoteSupported" @click="openQuote()">
+              <font-awesome-icon icon="quote-right" size="sm" />
+            </el-button>
+            <template v-if="sns !== 'mastodon'">
+              <el-popover
+                placement="bottom"
+                width="281"
+                trigger="click"
+                popper-class="status-emoji-picker"
+                ref="status_emoji_picker"
+                @show="openPicker"
+                @hide="hidePicker"
+              >
+                <picker
+                  v-if="openEmojiPicker"
+                  set="emojione"
+                  :autoFocus="true"
+                  @select="selectEmoji"
+                  :sheetSize="32"
+                  :perLine="7"
+                  :emojiSize="24"
+                  :showPreview="false"
+                  :emojiTooltip="true"
+                />
+                <el-button slot="reference" class="emoji" type="text">
+                  <font-awesome-icon :icon="['far', 'face-smile']" size="sm" />
+                </el-button>
+              </el-popover>
+            </template>
+            <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
+              <font-awesome-icon icon="thumbtack" size="sm" />
+            </el-button>
             <el-popover
               placement="bottom"
-              width="281"
+              width="200"
               trigger="click"
-              popper-class="status-emoji-picker"
-              ref="status_emoji_picker"
-              @show="openPicker"
-              @hide="hidePicker"
+              popper-class="status-menu-popper"
+              ref="status_menu_popper"
+              @show="openMenu"
+              @hide="hideMenu"
             >
-              <picker
-                v-if="openEmojiPicker"
-                set="emojione"
-                :autoFocus="true"
-                @select="selectEmoji"
-                :sheetSize="32"
-                :perLine="7"
-                :emojiSize="24"
-                :showPreview="false"
-                :emojiTooltip="true"
-              />
-              <el-button slot="reference" class="emoji" type="text">
-                <font-awesome-icon :icon="['far', 'face-smile']" size="sm" />
+              <ul class="menu-list" v-if="openToolMenu">
+                <li role="button" @click="openDetail(message)" v-show="!detailed">
+                  {{ $t('cards.toot.view_toot_detail') }}
+                </li>
+                <li role="button" @click="openBrowser(originalMessage)">
+                  {{ $t('cards.toot.open_in_browser') }}
+                </li>
+                <li role="button" @click="copyLink(originalMessage)">
+                  {{ $t('cards.toot.copy_link_to_toot') }}
+                </li>
+                <li role="button" class="separate" @click="confirmMute()">
+                  {{ $t('cards.toot.mute') }}
+                </li>
+                <li role="button" @click="block()">
+                  {{ $t('cards.toot.block') }}
+                </li>
+                <li role="button" @click="reportUser()" v-if="!isMyMessage">
+                  {{ $t('cards.toot.report') }}
+                </li>
+                <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
+                  {{ $t('cards.toot.delete') }}
+                </li>
+              </ul>
+              <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
+                <font-awesome-icon icon="ellipsis" size="sm" />
               </el-button>
             </el-popover>
-          </template>
-          <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
-            <font-awesome-icon icon="thumbtack" size="sm" />
-          </el-button>
-          <el-popover
-            placement="bottom"
-            width="200"
-            trigger="click"
-            popper-class="status-menu-popper"
-            ref="status_menu_popper"
-            @show="openMenu"
-            @hide="hideMenu"
-          >
-            <ul class="menu-list" v-if="openToolMenu">
-              <li role="button" @click="openDetail(message)" v-show="!detailed">
-                {{ $t('cards.toot.view_toot_detail') }}
-              </li>
-              <li role="button" @click="openBrowser(originalMessage)">
-                {{ $t('cards.toot.open_in_browser') }}
-              </li>
-              <li role="button" @click="copyLink(originalMessage)">
-                {{ $t('cards.toot.copy_link_to_toot') }}
-              </li>
-              <li role="button" class="separate" @click="confirmMute()">
-                {{ $t('cards.toot.mute') }}
-              </li>
-              <li role="button" @click="block()">
-                {{ $t('cards.toot.block') }}
-              </li>
-              <li role="button" @click="reportUser()" v-if="!isMyMessage">
-                {{ $t('cards.toot.report') }}
-              </li>
-              <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
-                {{ $t('cards.toot.delete') }}
-              </li>
-            </ul>
-            <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
-              <font-awesome-icon icon="ellipsis" size="sm" />
-            </el-button>
-          </el-popover>
-        </div>
-        <div class="application" v-show="application !== null">
-          {{ $t('cards.toot.via', { application: application }) }}
+          </div>
+          <div class="application" v-show="application !== null">
+            {{ $t('cards.toot.via', { application: application }) }}
+          </div>
         </div>
       </div>
       <div class="clearfix"></div>
@@ -950,6 +952,11 @@ export default {
       }
     }
 
+    .toot-footer {
+      display: flex;
+      justify-content: space-between;
+    }
+
     .tool-box {
       display: flex;
 
@@ -992,7 +999,6 @@ export default {
     }
 
     .application {
-      float: right;
       color: #909399;
     }
 
