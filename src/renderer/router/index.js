@@ -1,4 +1,4 @@
-import { createRouter, RouteRecordRaw } from 'vue-router'
+import { createRouter } from 'vue-router'
 
 import Login from '@/components/Login.vue'
 import Authorize from '@/components/Authorize.vue'
@@ -34,7 +34,7 @@ import TimelineSpaceContentsListsShow from '@/components/TimelineSpace/Contents/
 import TimelineSpaceContentsFollowRequests from '@/components/TimelineSpace/Contents/FollowRequests.vue'
 import TimelineSpaceContentsBookmarks from '@/components/TimelineSpace/Contents/Bookmarks.vue'
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: '/login',
     name: 'login',

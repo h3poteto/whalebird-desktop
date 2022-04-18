@@ -1,5 +1,5 @@
 import { createStore, createLogger } from 'vuex'
-// import { Route } from 'vue-router'
+import { RouteLocationNormalized } from 'vue-router'
 
 import App, { AppState } from './App'
 import GlobalHeader, { GlobalHeaderState } from './GlobalHeader'
@@ -22,7 +22,7 @@ export interface RootState {
   Preferences: PreferencesModuleState
   Settings: SettingsModuleState
   molecules: OrganismsModuleState
-  // route: Route
+  route: RouteLocationNormalized
 }
 
 export default createStore({

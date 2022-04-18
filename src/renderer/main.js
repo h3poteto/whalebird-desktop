@@ -61,10 +61,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { sync } from 'vuex-router-sync'
 // import shortkey from 'vue-shortkey'
 // import VueI18Next from '@panter/vue-i18next'
-// import 'vue-resize/dist/vue-resize.css'
-// import VueResize from 'vue-resize'
-// import VueVirtualScroller from 'vue-virtual-scroller'
-// import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import 'vue-resize/dist/vue-resize.css'
+import VueResize from 'vue-resize'
+import VueVirtualScroller from 'vue-virtual-scroller'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 import './assets/fonts/fonts.css'
 import App from './App.vue'
@@ -128,14 +128,12 @@ app.use(store)
 app.use(router)
 app.use(ElementPlus)
 app.component('font-awesome-icon', FontAwesomeIcon)
+app.use(VueVirtualScroller)
+app.use(VueResize)
 
-// Vue.use(ElementUI, { locale })
 // Vue.use(shortkey)
 // Vue.use(VueI18Next)
-// Vue.use(VueResize)
-// Vue.use(VueVirtualScroller)
 // Vue.component('popper', Popper)
-// Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 sync(store, router)
 

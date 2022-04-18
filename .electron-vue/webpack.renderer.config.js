@@ -13,7 +13,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 let rendererConfig = {
   entry: {
-    renderer: path.join(__dirname, '../src/renderer/main.ts')
+    renderer: path.join(__dirname, '../src/renderer/main.js')
   },
   module: {
     rules: [

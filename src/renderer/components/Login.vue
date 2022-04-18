@@ -3,13 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="24" class="close">
-          <el-button
-            type="text"
-            :icon="ElIconClose"
-            @click="close"
-            class="close-button"
-          >
-          </el-button>
+          <el-button type="text" :icon="ElIconClose" @click="close" class="close-button"> </el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -28,22 +22,22 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      ElIconClose,
+      ElIconClose
     }
   },
   name: 'login',
   components: { LoginForm },
   computed: {
     ...mapState({
-      page: (state) => state.Login.page,
-    }),
+      page: state => state.Login.page
+    })
   },
   methods: {
     close() {
       this.$store.dispatch('Login/pageBack')
       return this.$router.push({ path: '/', query: { redirect: 'home' } })
-    },
-  },
+    }
+  }
 }
 </script>
 
