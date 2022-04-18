@@ -24,7 +24,12 @@
       >
         <font-awesome-icon icon="user-xmark" />
       </el-button>
-      <el-button v-else-if="relationship.requested" class="requested" type="text" :title="$t('side_bar.account_profile.follow_requested')">
+      <el-button
+        v-else-if="relationship.requested"
+        class="requested"
+        type="text"
+        :title="$t('side_bar.account_profile.follow_requested')"
+      >
         <font-awesome-icon icon="hourglass" />
       </el-button>
       <el-button
@@ -38,10 +43,20 @@
       </el-button>
     </div>
     <div class="tool" v-else-if="request">
-      <el-button class="accept" type="text" @click.stop.prevent="acceptRequest(user)" :title="$t('follow_requests.accept')">
+      <el-button
+        class="accept"
+        type="text"
+        @click.stop.prevent="acceptRequest(user)"
+        :title="$t('follow_requests.accept')"
+      >
         <font-awesome-icon icon="check" />
       </el-button>
-      <el-button class="reject" type="text" @click.stop.prevent="rejectRequest(user)" :tilte="$t('follow_requests.reject')">
+      <el-button
+        class="reject"
+        type="text"
+        @click.stop.prevent="rejectRequest(user)"
+        :tilte="$t('follow_requests.reject')"
+      >
         <font-awesome-icon icon="xmark" />
       </el-button>
     </div>
@@ -55,25 +70,25 @@ import emojify from '~/src/renderer/utils/emojify'
 export default {
   name: 'user',
   components: {
-    FailoverImg
+    FailoverImg,
   },
   props: {
     user: {
       type: Object,
-      default: {}
+      default: {},
     },
     remove: {
       type: Boolean,
-      default: false
+      default: false,
     },
     relationship: {
       type: Object,
-      default: null
+      default: null,
     },
     request: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     username(account) {
@@ -84,9 +99,17 @@ export default {
       }
     },
     openUser(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+      this.$store.dispatch(
+        'TimelineSpace/Contents/SideBar/openAccountComponent'
+      )
+      this.$store.dispatch(
+        'TimelineSpace/Contents/SideBar/AccountProfile/changeAccount',
+        account
+      )
+      this.$store.commit(
+        'TimelineSpace/Contents/SideBar/changeOpenSideBar',
+        true
+      )
     },
     removeAccount(account) {
       this.$emit('removeAccount', account)
@@ -102,8 +125,8 @@ export default {
     },
     rejectRequest(account) {
       this.$emit('rejectRequest', account)
-    }
-  }
+    },
+  },
 }
 </script>
 

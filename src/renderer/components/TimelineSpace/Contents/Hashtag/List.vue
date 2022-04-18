@@ -2,12 +2,20 @@
   <div id="list">
     <table class="tag-list">
       <tbody>
-        <tr v-for="tag in tags" v-bind:key="tag._id" @click.stop.prevent="openTimeline(tag.tagName)">
+        <tr
+          v-for="tag in tags"
+          v-bind:key="tag._id"
+          @click.stop.prevent="openTimeline(tag.tagName)"
+        >
           <td>
             {{ tag.tagName }}
           </td>
           <td class="action">
-            <el-button type="text" @click.stop="deleteTag(tag)" :title="$t('hashtag.delete_tag')">
+            <el-button
+              type="text"
+              @click.stop="deleteTag(tag)"
+              :title="$t('hashtag.delete_tag')"
+            >
               <font-awesome-icon :icon="['far', 'trash-can']" />
             </el-button>
           </td>
@@ -24,20 +32,22 @@ export default {
   name: 'list',
   computed: {
     ...mapState({
-      tags: state => state.TimelineSpace.Contents.Hashtag.List.tags
-    })
+      tags: (state) => state.TimelineSpace.Contents.Hashtag.List.tags,
+    }),
   },
   created() {
     this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/listTags')
   },
   methods: {
     openTimeline(tagName) {
-      this.$router.push({ path: `/${this.$route.params.id}/hashtag/${tagName}` })
+      this.$router.push({
+        path: `/${this.$route.params.id}/hashtag/${tagName}`,
+      })
     },
     deleteTag(tag) {
       this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/removeTag', tag)
-    }
-  }
+    },
+  },
 }
 </script>
 

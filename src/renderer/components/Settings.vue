@@ -6,7 +6,13 @@
           <h1>{{ $t('settings.title') }}</h1>
         </el-col>
         <el-col :span="1">
-          <el-button type="text" icon="el-icon-close" @click="close" class="close-button" role="button"></el-button>
+          <el-button
+            type="text"
+            :icon="ElIconClose"
+            @click="close"
+            class="close-button"
+            role="button"
+          ></el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -42,15 +48,21 @@
 </template>
 
 <script>
+import { Close as ElIconClose } from '@element-plus/icons'
 import { mapState } from 'vuex'
 
 export default {
+  data() {
+    return {
+      ElIconClose,
+    }
+  },
   name: 'Settings',
   computed: {
     ...mapState({
-      primaryColor: state => state.App.theme.primary_color,
-      backgroundColor: state => state.App.theme.background_color
-    })
+      primaryColor: (state) => state.App.theme.primary_color,
+      backgroundColor: (state) => state.App.theme.background_color,
+    }),
   },
   created() {
     this.$store.commit('Settings/changeAccountID', this.id())
@@ -65,8 +77,8 @@ export default {
     },
     activeRoute() {
       return this.$route.path
-    }
-  }
+    },
+  },
 }
 </script>
 

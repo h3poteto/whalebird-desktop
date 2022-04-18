@@ -1,9 +1,29 @@
 <template>
-  <div name="tag" class="tag-timeline" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
+  <div
+    name="tag"
+    class="tag-timeline"
+    v-shortkey="shortcutEnabled ? { next: ['j'] } : {}"
+    @shortkey="handleKey"
+  >
+    <div
+      v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }"
+      @shortkey="reload()"
+    ></div>
+    <DynamicScroller
+      :items="timeline"
+      :min-item-size="86"
+      id="scroller"
+      class="scroller"
+      ref="scroller"
+    >
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
+        <DynamicScrollerItem
+          :item="item"
+          :active="active"
+          :size-dependencies="[item.uri]"
+          :data-index="index"
+          :watchData="true"
+        >
           <toot
             :message="item"
             :focused="item.uri + item.id === focusedId"
@@ -21,13 +41,18 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
+    <div
+      :class="openSideBar ? 'upper-with-side-bar' : 'upper'"
+      v-show="!heading"
+    >
+      <el-button type="primary" :icon="ElIconArrowUp" @click="upper" circle>
+      </el-button>
     </div>
   </div>
 </template>
 
 <script>
+import { ArrowUp as ElIconArrowUp } from '@element-plus/icons'
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
@@ -36,28 +61,30 @@ import { Event } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
-  name: 'tag',
-  components: { Toot },
-  mixins: [reloadable],
-  props: ['tag'],
   data() {
     return {
       focusedId: null,
       scrollPosition: null,
       observer: null,
       scrollTime: null,
-      resizeTime: null
+      resizeTime: null,
+      ElIconArrowUp,
     }
   },
+  name: 'tag',
+  components: { Toot },
+  mixins: [reloadable],
+  props: ['tag'],
   computed: {
     ...mapState({
-      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
-      backgroundColor: state => state.App.theme.background_color,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      timeline: state => state.TimelineSpace.Contents.Hashtag.Tag.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.Hashtag.Tag.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Hashtag.Tag.heading,
-      scrolling: state => state.TimelineSpace.Contents.Hashtag.Tag.scrolling
+      openSideBar: (state) => state.TimelineSpace.Contents.SideBar.openSideBar,
+      backgroundColor: (state) => state.App.theme.background_color,
+      startReload: (state) => state.TimelineSpace.HeaderMenu.reload,
+      timeline: (state) => state.TimelineSpace.Contents.Hashtag.Tag.timeline,
+      lazyLoading: (state) =>
+        state.TimelineSpace.Contents.Hashtag.Tag.lazyLoading,
+      heading: (state) => state.TimelineSpace.Contents.Hashtag.Tag.heading,
+      scrolling: (state) => state.TimelineSpace.Contents.Hashtag.Tag.scrolling,
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
@@ -68,16 +95,20 @@ export default {
         return true
       }
       // Sometimes toots are deleted, so perhaps focused toot don't exist.
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
+      const currentIndex = this.timeline.findIndex(
+        (toot) => this.focusedId === toot.uri + toot.id
+      )
       return currentIndex === -1
-    }
+    },
   },
   mounted() {
     this.$store.commit('TimelineSpace/Contents/changeLoading', true)
     this.load(this.tag).finally(() => {
       this.$store.commit('TimelineSpace/Contents/changeLoading', false)
     })
-    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
+    document
+      .getElementById('scroller')
+      .addEventListener('scroll', this.onScroll)
 
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
@@ -92,13 +123,20 @@ export default {
     this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
+      if (
+        this.scrollPosition &&
+        !this.heading &&
+        !this.lazyLoading &&
+        !this.scrolling
+      ) {
         this.resizeTime = moment()
         this.scrollPosition.restore()
       }
     })
 
-    const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
+    const scrollWrapper = el.getElementsByClassName(
+      'vue-recycle-scroller__item-wrapper'
+    )[0]
     this.observer.observe(scrollWrapper)
   },
   beforeUpdate() {
@@ -123,11 +161,17 @@ export default {
     },
     focusedId: function (newState, _oldState) {
       if (newState && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', false)
+        this.$store.commit(
+          'TimelineSpace/Contents/Hashtag/Tag/changeHeading',
+          false
+        )
       } else if (newState === null && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
+        this.$store.commit(
+          'TimelineSpace/Contents/Hashtag/Tag/changeHeading',
+          true
+        )
       }
-    }
+    },
   },
   beforeDestroy() {
     this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/stopStreaming')
@@ -137,26 +181,38 @@ export default {
   },
   methods: {
     async load(tag) {
-      await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag).catch(() => {
-        this.$message({
-          message: this.$t('message.timeline_fetch_error'),
-          type: 'error'
+      await this.$store
+        .dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag)
+        .catch(() => {
+          this.$message({
+            message: this.$t('message.timeline_fetch_error'),
+            type: 'error',
+          })
         })
-      })
-      this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/startStreaming', tag).catch(() => {
-        this.$message({
-          message: this.$t('message.start_streaming_error'),
-          type: 'error'
+      this.$store
+        .dispatch('TimelineSpace/Contents/Hashtag/Tag/startStreaming', tag)
+        .catch(() => {
+          this.$message({
+            message: this.$t('message.start_streaming_error'),
+            type: 'error',
+          })
         })
-      })
       return true
     },
     reset() {
-      this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
+      this.$store.commit(
+        'TimelineSpace/Contents/Hashtag/Tag/changeHeading',
+        true
+      )
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/archiveTimeline')
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/clearTimeline')
-      if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
-        document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+      if (
+        document.getElementById('scroller') !== undefined &&
+        document.getElementById('scroller') !== null
+      ) {
+        document
+          .getElementById('scroller')
+          .removeEventListener('scroll', this.onScroll)
         document.getElementById('scroller').scrollTop = 0
       }
     },
@@ -164,7 +220,10 @@ export default {
       this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/updateToot', toot)
     },
     deleteToot(toot) {
-      this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/deleteToot', toot.id)
+      this.$store.commit(
+        'TimelineSpace/Contents/Hashtag/Tag/deleteToot',
+        toot.id
+      )
     },
     onScroll(event) {
       if (moment().diff(this.resizeTime) < 500) {
@@ -172,48 +231,67 @@ export default {
       }
       this.scrollTime = moment()
       if (!this.scrolling) {
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeScrolling', true)
+        this.$store.commit(
+          'TimelineSpace/Contents/Hashtag/Tag/changeScrolling',
+          true
+        )
       }
 
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >=
+          document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store
           .dispatch('TimelineSpace/Contents/Hashtag/Tag/lazyFetchTimeline', {
             tag: this.tag,
-            status: this.timeline[this.timeline.length - 1]
+            status: this.timeline[this.timeline.length - 1],
           })
-          .then(statuses => {
+          .then((statuses) => {
             if (statuses === null) {
               return
             }
             if (statuses.length > 0) {
-              this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeScrolling', true)
+              this.$store.commit(
+                'TimelineSpace/Contents/Hashtag/Tag/changeScrolling',
+                true
+              )
               setTimeout(() => {
-                this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeScrolling', false)
+                this.$store.commit(
+                  'TimelineSpace/Contents/Hashtag/Tag/changeScrolling',
+                  false
+                )
               }, 500)
             }
           })
           .catch(() => {
             this.$message({
               message: this.$t('message.timeline_fetch_error'),
-              type: 'error'
+              type: 'error',
             })
           })
       }
 
       if (event.target.scrollTop > 10 && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', false)
+        this.$store.commit(
+          'TimelineSpace/Contents/Hashtag/Tag/changeHeading',
+          false
+        )
       } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeHeading', true)
+        this.$store.commit(
+          'TimelineSpace/Contents/Hashtag/Tag/changeHeading',
+          true
+        )
       }
 
       setTimeout(() => {
         const now = moment()
         if (now.diff(this.scrollTime) >= 150) {
           this.scrollTime = null
-          this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeScrolling', false)
+          this.$store.commit(
+            'TimelineSpace/Contents/Hashtag/Tag/changeScrolling',
+            false
+          )
         }
       }, 150)
     },
@@ -222,19 +300,25 @@ export default {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
         await this.reloadable()
-        await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/stopStreaming')
-        await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag).catch(() => {
-          this.$message({
-            message: this.$t('message.timeline_fetch_error'),
-            type: 'error'
+        await this.$store.dispatch(
+          'TimelineSpace/Contents/Hashtag/Tag/stopStreaming'
+        )
+        await this.$store
+          .dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag)
+          .catch(() => {
+            this.$message({
+              message: this.$t('message.timeline_fetch_error'),
+              type: 'error',
+            })
           })
-        })
-        this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/startStreaming', tag).catch(() => {
-          this.$message({
-            message: this.$t('message.start_streaming_error'),
-            type: 'error'
+        this.$store
+          .dispatch('TimelineSpace/Contents/Hashtag/Tag/startStreaming', tag)
+          .catch(() => {
+            this.$message({
+              message: this.$t('message.start_streaming_error'),
+              type: 'error',
+            })
           })
-        })
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
@@ -244,19 +328,27 @@ export default {
       this.focusedId = null
     },
     focusNext() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
+      const currentIndex = this.timeline.findIndex(
+        (toot) => this.focusedId === toot.uri + toot.id
+      )
       if (currentIndex === -1) {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
       } else if (currentIndex < this.timeline.length) {
-        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
+        this.focusedId =
+          this.timeline[currentIndex + 1].uri +
+          this.timeline[currentIndex + 1].id
       }
     },
     focusPrev() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
+      const currentIndex = this.timeline.findIndex(
+        (toot) => this.focusedId === toot.uri + toot.id
+      )
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
-        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
+        this.focusedId =
+          this.timeline[currentIndex - 1].uri +
+          this.timeline[currentIndex - 1].id
       }
     },
     focusToot(message) {
@@ -273,12 +365,18 @@ export default {
       }
     },
     sizeChanged() {
-      this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeScrolling', true)
+      this.$store.commit(
+        'TimelineSpace/Contents/Hashtag/Tag/changeScrolling',
+        true
+      )
       setTimeout(() => {
-        this.$store.commit('TimelineSpace/Contents/Hashtag/Tag/changeScrolling', false)
+        this.$store.commit(
+          'TimelineSpace/Contents/Hashtag/Tag/changeScrolling',
+          false
+        )
       }, 500)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -306,4 +404,5 @@ export default {
   }
 }
 </style>
+
 <style lang="scss" src="@/assets/timeline-transition.scss"></style>

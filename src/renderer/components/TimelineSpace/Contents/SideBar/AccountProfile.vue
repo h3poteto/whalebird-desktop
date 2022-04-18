@@ -8,14 +8,30 @@
     role="article"
     aria-label="account profile"
   >
-    <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
+    <div
+      class="header-background"
+      v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }"
+    >
       <div class="header">
-        <div class="relationship" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+        <div
+          class="relationship"
+          v-if="relationship !== null && relationship !== '' && !isOwnProfile"
+        >
           <div class="follower-status">
-            <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
-            <el-tag class="status" size="medium" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
+            <el-tag
+              class="status"
+              size="small"
+              v-if="relationship.followed_by"
+              >{{ $t('side_bar.account_profile.follows_you') }}</el-tag
+            >
+            <el-tag class="status" size="medium" v-else>{{
+              $t('side_bar.account_profile.doesnt_follow_you')
+            }}</el-tag>
           </div>
-          <div class="notify" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+          <div
+            class="notify"
+            v-if="relationship !== null && relationship !== '' && !isOwnProfile"
+          >
             <div
               v-if="relationship.notifying"
               class="unsubscribe"
@@ -24,15 +40,27 @@
             >
               <font-awesome-icon icon="bell" size="xl" />
             </div>
-            <div v-else class="subscribe" @click="subscribe(account)" :title="$t('side_bar.account_profile.subscribe')">
+            <div
+              v-else
+              class="subscribe"
+              @click="subscribe(account)"
+              :title="$t('side_bar.account_profile.subscribe')"
+            >
               <font-awesome-icon :icon="['far', 'bell']" size="xl" />
             </div>
           </div>
         </div>
 
         <div class="user-info">
-          <div class="more" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
-            <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
+          <div
+            class="more"
+            v-if="relationship !== null && relationship !== '' && !isOwnProfile"
+          >
+            <popper
+              trigger="click"
+              :options="{ placement: 'bottom' }"
+              ref="popper"
+            >
               <div class="popper">
                 <ul class="menu-list">
                   <li role="button" @click="openBrowser(account)">
@@ -56,22 +84,45 @@
                 </ul>
               </div>
 
-              <el-button slot="reference" type="text" :title="$t('side_bar.account_profile.detail')">
+              <el-button
+                slot="reference"
+                type="text"
+                :title="$t('side_bar.account_profile.detail')"
+              >
                 <font-awesome-icon icon="gear" size="xl" />
               </el-button>
             </popper>
           </div>
           <div class="icon" role="presentation">
-            <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
+            <FailoverImg
+              :src="account.avatar"
+              :alt="`Avatar of ${account.username}`"
+            />
           </div>
-          <div class="follow-status" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
-            <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
+          <div
+            class="follow-status"
+            v-if="relationship !== null && relationship !== '' && !isOwnProfile"
+          >
+            <div
+              v-if="relationship.following"
+              class="unfollow"
+              @click="unfollow(account)"
+              :title="$t('side_bar.account_profile.unfollow')"
+            >
               <font-awesome-icon icon="user-xmark" size="xl" />
             </div>
-            <div v-else-if="relationship.requested" :title="$t('side_bar.account_profile.follow_requested')">
+            <div
+              v-else-if="relationship.requested"
+              :title="$t('side_bar.account_profile.follow_requested')"
+            >
               <font-awesome-icon icon="hourglass" size="xl" />
             </div>
-            <div v-else class="follow" @click="follow(account)" :title="$t('side_bar.account_profile.follow')">
+            <div
+              v-else
+              class="follow"
+              @click="follow(account)"
+              :title="$t('side_bar.account_profile.follow')"
+            >
               <font-awesome-icon icon="user-plus" size="xl" />
             </div>
           </div>
@@ -80,7 +131,11 @@
           <bdi v-html="username(account)"></bdi>
         </div>
         <div class="account">@{{ account.acct }}</div>
-        <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
+        <div
+          class="note"
+          v-html="note(account)"
+          @click.capture.prevent="noteClick"
+        ></div>
       </div>
     </div>
     <div class="identity">
@@ -88,7 +143,9 @@
         <dt>
           {{ identity.provider }}
         </dt>
-        <dd @click.capture.prevent="identityOpen(identity.profile_url)">{{ identity.provider_username }}</dd>
+        <dd @click.capture.prevent="identityOpen(identity.profile_url)">
+          {{ identity.provider_username }}
+        </dd>
       </dl>
     </div>
     <div class="metadata">
@@ -100,7 +157,11 @@
       </dl>
     </div>
     <el-row class="basic-info">
-      <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
+      <el-col
+        :span="8"
+        :class="activeTab === 1 ? 'info info-active' : 'info'"
+        @click="changeTab"
+      >
         <el-button type="text" class="tab" @click="changeTab(1)">
           <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
           <div class="count">{{ account.statuses_count }}</div>
@@ -114,7 +175,9 @@
       </el-col>
       <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
         <el-button type="text" class="tab" @click="changeTab(3)">
-          <div class="title">{{ $t('side_bar.account_profile.followers') }}</div>
+          <div class="title">
+            {{ $t('side_bar.account_profile.followers') }}
+          </div>
           <div class="count">{{ account.followers_count }}</div>
         </el-button>
       </el-col>
@@ -142,32 +205,34 @@ export default {
     Timeline,
     Follows,
     Followers,
-    FailoverImg
+    FailoverImg,
   },
   data() {
     return {
-      activeTab: 1
+      activeTab: 1,
     }
   },
   computed: {
     ...mapState({
-      theme: state => {
+      theme: (state) => {
         return {
           '--theme-mask-color': state.App.theme.wrapper_mask_color,
           '--theme-border-color': state.App.theme.border_color,
-          '--theme-primary-color': state.App.theme.primary_color
+          '--theme-primary-color': state.App.theme.primary_color,
         }
-      }
+      },
     }),
     ...mapState('TimelineSpace/Contents/SideBar/AccountProfile', {
-      account: state => state.account,
-      identityProofs: state => state.identityProofs,
-      relationship: state => state.relationship,
-      loading: state => state.loading,
-      muting: state => state.relationship && state.relationship.muting,
-      blocking: state => state.relationship && state.relationship.blocking
+      account: (state) => state.account,
+      identityProofs: (state) => state.identityProofs,
+      relationship: (state) => state.relationship,
+      loading: (state) => state.loading,
+      muting: (state) => state.relationship && state.relationship.muting,
+      blocking: (state) => state.relationship && state.relationship.blocking,
     }),
-    ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile', ['isOwnProfile'])
+    ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile', [
+      'isOwnProfile',
+    ]),
   },
   watch: {
     account: function () {
@@ -175,7 +240,7 @@ export default {
     },
     loading: function (newState, _oldState) {
       this.$emit('change-loading', newState)
-    }
+    },
   },
   methods: {
     username(account) {
@@ -195,29 +260,47 @@ export default {
       }
     },
     follow(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      this.$store.commit(
+        'TimelineSpace/Contents/SideBar/AccountProfile/changeLoading',
+        true
+      )
       try {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
+        this.$store.dispatch(
+          'TimelineSpace/Contents/SideBar/AccountProfile/follow',
+          account
+        )
       } catch (err) {
         this.$message({
           message: this.$t('message.follow_error'),
-          type: 'error'
+          type: 'error',
         })
       } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+        this.$store.commit(
+          'TimelineSpace/Contents/SideBar/AccountProfile/changeLoading',
+          false
+        )
       }
     },
     unfollow(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      this.$store.commit(
+        'TimelineSpace/Contents/SideBar/AccountProfile/changeLoading',
+        true
+      )
       try {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
+        this.$store.dispatch(
+          'TimelineSpace/Contents/SideBar/AccountProfile/unfollow',
+          account
+        )
       } catch (err) {
         this.$message({
           message: this.$t('message.unfollow_error'),
-          type: 'error'
+          type: 'error',
         })
       } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+        this.$store.commit(
+          'TimelineSpace/Contents/SideBar/AccountProfile/changeLoading',
+          false
+        )
       }
     },
     changeTab(index) {
@@ -228,25 +311,43 @@ export default {
       this.$refs.popper.doClose()
     },
     addToList(account) {
-      this.$store.dispatch('TimelineSpace/Modals/ListMembership/setAccount', account)
-      this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', true)
+      this.$store.dispatch(
+        'TimelineSpace/Modals/ListMembership/setAccount',
+        account
+      )
+      this.$store.dispatch(
+        'TimelineSpace/Modals/ListMembership/changeModal',
+        true
+      )
       this.$refs.popper.doClose()
     },
     confirmMute(account) {
-      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', account)
+      this.$store.dispatch(
+        'TimelineSpace/Modals/MuteConfirm/changeAccount',
+        account
+      )
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
       this.$refs.popper.doClose()
     },
     unmute(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unmute', account)
+      this.$store.dispatch(
+        'TimelineSpace/Contents/SideBar/AccountProfile/unmute',
+        account
+      )
       this.$refs.popper.doClose()
     },
     block(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/block', account)
+      this.$store.dispatch(
+        'TimelineSpace/Contents/SideBar/AccountProfile/block',
+        account
+      )
       this.$refs.popper.doClose()
     },
     unblock(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unblock', account)
+      this.$store.dispatch(
+        'TimelineSpace/Contents/SideBar/AccountProfile/unblock',
+        account
+      )
       this.$refs.popper.doClose()
     },
     metadataClick(e) {
@@ -259,32 +360,50 @@ export default {
       return window.shell.openExternal(link)
     },
     subscribe(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      this.$store.commit(
+        'TimelineSpace/Contents/SideBar/AccountProfile/changeLoading',
+        true
+      )
       try {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/subscribe', account)
+        this.$store.dispatch(
+          'TimelineSpace/Contents/SideBar/AccountProfile/subscribe',
+          account
+        )
       } catch (err) {
         this.$message({
           message: this.$t('message.subscribe_error'),
-          type: 'error'
+          type: 'error',
         })
       } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+        this.$store.commit(
+          'TimelineSpace/Contents/SideBar/AccountProfile/changeLoading',
+          false
+        )
       }
     },
     unsubscribe(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+      this.$store.commit(
+        'TimelineSpace/Contents/SideBar/AccountProfile/changeLoading',
+        true
+      )
       try {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unsubscribe', account)
+        this.$store.dispatch(
+          'TimelineSpace/Contents/SideBar/AccountProfile/unsubscribe',
+          account
+        )
       } catch (err) {
         this.$message({
           message: this.$t('message.unsubscribe_error'),
-          type: 'error'
+          type: 'error',
         })
       } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+        this.$store.commit(
+          'TimelineSpace/Contents/SideBar/AccountProfile/changeLoading',
+          false
+        )
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

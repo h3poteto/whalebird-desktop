@@ -1,8 +1,19 @@
 <template>
   <div id="search_account">
-    <DynamicScroller :items="results" :min-item-size="60" class="scroller" page-mode>
+    <DynamicScroller
+      :items="results"
+      :min-item-size="60"
+      class="scroller"
+      page-mode
+    >
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
+        <DynamicScrollerItem
+          :item="item"
+          :active="active"
+          :size-dependencies="[item.uri]"
+          :data-index="index"
+          :watchData="true"
+        >
           <toot :message="item"></toot>
         </DynamicScrollerItem>
       </template>
@@ -19,13 +30,11 @@ export default {
   components: { Toot },
   computed: {
     ...mapState({
-      results: state => state.TimelineSpace.Contents.Search.Toots.results
-    })
+      results: (state) => state.TimelineSpace.Contents.Search.Toots.results,
+    }),
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Search/Toots/updateResults', [])
-  }
+  },
 }
 </script>
-
-<style lang="scss" scoped></style>

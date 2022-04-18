@@ -1,7 +1,14 @@
 <template>
   <div id="new_filter">
     <h2>{{ $t('settings.filters.new.title') }}</h2>
-    <FilterForm v-model="filter" @cancel="cancel" @onSubmit="onSubmit" :loading="loading" :sns="sns"> </FilterForm>
+    <FilterForm
+      v-model="filter"
+      @cancel="cancel"
+      @onSubmit="onSubmit"
+      :loading="loading"
+      :sns="sns"
+    >
+    </FilterForm>
   </div>
 </template>
 
@@ -14,10 +21,10 @@ export default {
   components: { FilterForm },
   computed: {
     ...mapState('Settings/Filters/New', {
-      loading: state => state.loading
+      loading: (state) => state.loading,
     }),
     ...mapState('TimelineSpace', {
-      sns: state => state.sns
+      sns: (state) => state.sns,
     }),
     filter: {
       get() {
@@ -25,8 +32,8 @@ export default {
       },
       set(value) {
         this.$store.dispatch('Settings/Filters/New/editFilter', value)
-      }
-    }
+      },
+    },
   },
   methods: {
     cancel() {
@@ -38,14 +45,14 @@ export default {
         .then(() => {
           this.$router.go(-1)
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err)
           this.$message({
             message: this.$t('message.create_filter_error'),
-            type: 'error'
+            type: 'error',
           })
         })
-    }
-  }
+    },
+  },
 }
 </script>

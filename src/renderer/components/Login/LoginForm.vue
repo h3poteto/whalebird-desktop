@@ -9,10 +9,18 @@
     :model="form"
   >
     <el-form-item :label="$t('login.domain_name_label')" prop="domainName">
-      <el-input v-model="form.domainName" placeholder="mastodon.social" v-shortkey="['enter']" @shortkey.native="handleKey"></el-input>
+      <el-input
+        v-model="form.domainName"
+        placeholder="mastodon.social"
+        v-shortkey="['enter']"
+        @shortkey.native="handleKey"
+      ></el-input>
     </el-form-item>
     <p class="proxy-info">
-      {{ $t('login.proxy_info') }}<router-link to="/preferences/network">{{ $t('login.proxy_here') }}</router-link>
+      {{ $t('login.proxy_info')
+      }}<router-link to="/preferences/network">{{
+        $t('login.proxy_here')
+      }}</router-link>
     </p>
     <!-- Dummy form to guard submitting with enter -->
     <el-form-item class="hidden">
@@ -22,7 +30,13 @@
       <el-button type="primary" class="login" @click="login" v-if="allowLogin">
         {{ $t('login.login') }}
       </el-button>
-      <el-button type="primary" v-else @click="confirm('loginForm')" v-loading="searching" element-loading-background="rgba(0, 0, 0, 0.8)">
+      <el-button
+        type="primary"
+        v-else
+        @click="confirm('loginForm')"
+        v-loading="searching"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
         {{ $t('login.search') }}
       </el-button>
     </el-form-item>
@@ -38,18 +52,20 @@ export default {
   data() {
     return {
       form: {
-        domainName: ''
-      }
+        domainName: '',
+      },
     }
   },
   computed: {
     ...mapState({
-      selectedInstance: state => state.Login.selectedInstance,
-      searching: state => state.Login.searching,
-      sns: state => state.Login.sns
+      selectedInstance: (state) => state.Login.selectedInstance,
+      searching: (state) => state.Login.searching,
+      sns: (state) => state.Login.sns,
     }),
-    allowLogin: function() {
-      return this.selectedInstance && this.form.domainName === this.selectedInstance
+    allowLogin: function () {
+      return (
+        this.selectedInstance && this.form.domainName === this.selectedInstance
+      )
     },
     rules: {
       get() {
@@ -58,17 +74,17 @@ export default {
             {
               type: 'string',
               required: true,
-              message: this.$t('validation.login.require_domain_name')
+              message: this.$t('validation.login.require_domain_name'),
             },
             {
               pattern: domainFormat,
               trigger: 'change',
-              message: this.$t('validation.login.domain_format')
-            }
-          ]
+              message: this.$t('validation.login.domain_format'),
+            },
+          ],
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     login() {
@@ -76,44 +92,51 @@ export default {
         lock: true,
         text: this.$t('message.loading'),
         spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
+        background: 'rgba(0, 0, 0, 0.7)',
       })
       this.$store
         .dispatch('Login/fetchLogin')
-        .then(url => {
+        .then((url) => {
           loading.close()
           this.$store.dispatch('Login/pageBack')
-          this.$router.push({ path: '/authorize', query: { url: url, sns: this.sns } })
+          this.$router.push({
+            path: '/authorize',
+            query: { url: url, sns: this.sns },
+          })
         })
         .catch(() => {
           loading.close()
           this.$message({
             message: this.$t('message.authorize_url_error'),
-            type: 'error'
+            type: 'error',
           })
         })
     },
     confirm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$store
             .dispatch('Login/confirmInstance', this.form.domainName)
             .then(() => {
               this.$message({
-                message: this.$t('message.domain_confirmed', { domain: this.form.domainName }),
-                type: 'success'
+                message: this.$t('message.domain_confirmed', {
+                  domain: this.form.domainName,
+                }),
+                type: 'success',
               })
             })
             .catch(() => {
               this.$message({
-                message: this.$t('message.domain_doesnt_exist', { domain: this.form.domainName }),
-                type: 'error'
+                message: this.$t('message.domain_doesnt_exist', {
+                  domain: this.form.domainName,
+                }),
+                type: 'error',
               })
             })
         } else {
           this.$message({
             message: this.$t('validation.login.domain_format'),
-            type: 'error'
+            type: 'error',
           })
           return false
         }
@@ -125,8 +148,8 @@ export default {
       } else {
         this.login()
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

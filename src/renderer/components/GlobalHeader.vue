@@ -18,13 +18,26 @@
         v-bind:key="account._id"
         role="menuitem"
       >
-        <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
-        <FailoverImg v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
-        <FailoverImg :src="`${account.baseURL}/favicon.ico`" :failoverSrc="`${account.baseURL}/favicon.png`" class="instance-icon" />
+        <el-icon><el-icon-menu /></el-icon>
+        <FailoverImg
+          v-else
+          :src="account.avatar"
+          class="avatar"
+          :title="account.username + '@' + account.domain"
+        />
+        <FailoverImg
+          :src="`${account.baseURL}/favicon.ico`"
+          :failoverSrc="`${account.baseURL}/favicon.png`"
+          class="instance-icon"
+        />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
-      <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem">
-        <i class="el-icon-plus"></i>
+      <el-menu-item
+        index="/login"
+        :title="$t('global_header.add_new_account')"
+        role="menuitem"
+      >
+        <el-icon><el-icon-plus /></el-icon>
         <span slot="new">New</span>
       </el-menu-item>
     </el-menu>
@@ -35,23 +48,26 @@
 </template>
 
 <script>
+import { Menu as ElIconMenu, Plus as ElIconPlus } from '@element-plus/icons'
 import { mapState } from 'vuex'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 import { StreamingError } from '~/src/errors/streamingError'
 
 export default {
-  name: 'global-header',
   components: {
-    FailoverImg
+    FailoverImg,
+    ElIconMenu,
+    ElIconPlus,
   },
+  name: 'global-header',
   computed: {
     ...mapState('GlobalHeader', {
-      accounts: state => state.accounts,
-      hide: state => state.hide
+      accounts: (state) => state.accounts,
+      hide: (state) => state.hide,
     }),
     ...mapState({
-      themeColor: state => state.App.theme.global_header_color
-    })
+      themeColor: (state) => state.App.theme.global_header_color,
+    }),
   },
   created() {
     this.initialize()
@@ -63,12 +79,14 @@ export default {
     async initialize() {
       await this.$store
         .dispatch('GlobalHeader/initLoad')
-        .then(accounts => {
-          this.$store.dispatch('GlobalHeader/startStreamings').catch(err => {
+        .then((accounts) => {
+          this.$store.dispatch('GlobalHeader/startStreamings').catch((err) => {
             if (err instanceof StreamingError) {
               this.$message({
-                message: this.$t('message.start_all_streamings_error', { domain: err.domain }),
-                type: 'error'
+                message: this.$t('message.start_all_streamings_error', {
+                  domain: err.domain,
+                }),
+                type: 'error',
               })
             }
           })
@@ -76,11 +94,11 @@ export default {
             this.$router.push({ path: `/${accounts[0]._id}/home` })
           }
         })
-        .catch(_ => {
+        .catch((_) => {
           return this.$router.push({ path: '/login' })
         })
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -12,12 +12,25 @@
           v-loading="accountLoading"
           :element-loading-background="backgroundColor"
         >
-          <el-table-column prop="username" :label="$t('preferences.account.username')"> </el-table-column>
-          <el-table-column prop="domain" :label="$t('preferences.account.domain')"> </el-table-column>
+          <el-table-column
+            prop="username"
+            :label="$t('preferences.account.username')"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="domain"
+            :label="$t('preferences.account.domain')"
+          >
+          </el-table-column>
           <el-table-column :label="$t('preferences.account.association')">
             <template slot-scope="scope">
-              <el-button @click.native.prevent="removeAccount(scope.$index, accounts)" type="text" class="action">
-                <i class="el-icon-close"></i> {{ $t('preferences.account.remove_association') }}
+              <el-button
+                @click.native.prevent="removeAccount(scope.$index, accounts)"
+                type="text"
+                class="action"
+              >
+                <el-icon><el-icon-close /></el-icon>
+                {{ $t('preferences.account.remove_association') }}
               </el-button>
             </template>
           </el-table-column>
@@ -27,7 +40,7 @@
                 <el-button
                   class="arrow-up action"
                   type="text"
-                  icon="el-icon-arrow-up"
+                  :icon="ElIconArrowUp"
                   @click.native.prevent="forward(scope.$index, accounts)"
                 ></el-button>
               </div>
@@ -35,7 +48,7 @@
                 <el-button
                   class="arrow-down action"
                   type="text"
-                  icon="el-icon-arrow-down"
+                  :icon="ElIconArrowDown"
                   @click.native.prevent="backward(scope.$index, accounts)"
                 ></el-button>
               </div>
@@ -47,10 +60,22 @@
         <el-popover placement="top" width="160" v-model="deletePopoverVisible">
           <p>{{ $t('preferences.account.confirm_message') }}</p>
           <div style="text-align: right; margin: 0">
-            <el-button size="mini" type="text" @click="deletePopoverVisible = false">{{ $t('preferences.account.cancel') }}</el-button>
-            <el-button type="danger" size="mini" @click="removeAllAssociations">{{ $t('preferences.account.confirm') }}</el-button>
+            <el-button
+              size="mini"
+              type="text"
+              @click="deletePopoverVisible = false"
+              >{{ $t('preferences.account.cancel') }}</el-button
+            >
+            <el-button
+              type="danger"
+              size="mini"
+              @click="removeAllAssociations"
+              >{{ $t('preferences.account.confirm') }}</el-button
+            >
           </div>
-          <el-button slot="reference" type="danger">{{ $t('preferences.account.remove_all_associations') }}</el-button>
+          <el-button slot="reference" type="danger">{{
+            $t('preferences.account.remove_all_associations')
+          }}</el-button>
         </el-popover>
       </el-form-item>
     </el-form>
@@ -58,24 +83,34 @@
 </template>
 
 <script>
+import {
+  Close as ElIconClose,
+  ArrowUp as ElIconArrowUp,
+  ArrowDown as ElIconArrowDown,
+} from '@element-plus/icons'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'account',
   data() {
     return {
       openRemoveDialog: false,
-      deletePopoverVisible: false
+      deletePopoverVisible: false,
+      ElIconArrowUp,
+      ElIconArrowDown,
     }
   },
+  components: {
+    ElIconClose,
+  },
+  name: 'account',
   computed: {
     ...mapState({
-      accounts: state => state.Preferences.Account.accounts,
-      accountLoading: state => state.Preferences.Account.accountLoading
+      accounts: (state) => state.Preferences.Account.accounts,
+      accountLoading: (state) => state.Preferences.Account.accountLoading,
     }),
     ...mapState({
-      backgroundColor: state => state.App.theme.background_color
-    })
+      backgroundColor: (state) => state.App.theme.background_color,
+    }),
   },
   created() {
     this.loadAccounts()
@@ -88,7 +123,7 @@ export default {
       } catch (err) {
         return this.$message({
           message: this.$t('message.account_load_error'),
-          type: 'error'
+          type: 'error',
         })
       } finally {
         this.$store.commit('Preferences/Account/updateAccountLoading', false)
@@ -103,27 +138,31 @@ export default {
         .catch(() => {
           this.$message({
             message: this.$t('message.account_remove_error'),
-            type: 'error'
+            type: 'error',
           })
         })
     },
     forward(index, accounts) {
-      this.$store.dispatch('Preferences/Account/forwardAccount', accounts[index]).then(() => {
-        this.loadAccounts()
-      })
+      this.$store
+        .dispatch('Preferences/Account/forwardAccount', accounts[index])
+        .then(() => {
+          this.loadAccounts()
+        })
     },
     backward(index, accounts) {
-      this.$store.dispatch('Preferences/Account/backwardAccount', accounts[index]).then(() => {
-        this.loadAccounts()
-      })
+      this.$store
+        .dispatch('Preferences/Account/backwardAccount', accounts[index])
+        .then(() => {
+          this.loadAccounts()
+        })
     },
     removeAllAssociations() {
       this.deletePopoverVisible = false
       this.$store.dispatch('Preferences/Account/removeAllAccounts').then(() => {
         this.$router.push('/login')
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

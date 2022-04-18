@@ -6,14 +6,22 @@
     <div class="detail">
       <div class="toot-header">
         <div class="user">
-          <span class="display-name"><bdi v-html="username(message.account)"></bdi></span>
+          <span class="display-name"
+            ><bdi v-html="username(message.account)"></bdi
+          ></span>
           <span class="acct">{{ accountName(message.account) }}</span>
         </div>
         <div class="clearfix"></div>
       </div>
       <div class="content-wrapper">
-        <div class="spoiler" v-html="emojiText(message.spoiler_text, message.emojis)"></div>
-        <div class="content" v-html="emojiText(message.content, message.emojis)"></div>
+        <div
+          class="spoiler"
+          v-html="emojiText(message.spoiler_text, message.emojis)"
+        ></div>
+        <div
+          class="content"
+          v-html="emojiText(message.content, message.emojis)"
+        ></div>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -28,17 +36,17 @@ import emojify from '@/utils/emojify'
 export default {
   new: 'quote-target',
   components: {
-    FailoverImg
+    FailoverImg,
   },
   props: {
     message: {
       type: Object,
-      default: {}
+      default: {},
     },
     displayNameStyle: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   methods: {
     username(account) {
@@ -70,8 +78,8 @@ export default {
     },
     emojiText(content, emojis) {
       return emojify(content, emojis)
-    }
-  }
+    },
+  },
 }
 </script>
 

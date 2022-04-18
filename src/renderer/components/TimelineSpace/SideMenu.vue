@@ -1,6 +1,9 @@
 <template>
   <div id="side_menu">
-    <div :class="collapse ? 'profile-wrapper narrow-menu' : 'profile-wrapper'" style="-webkit-app-region: drag">
+    <div
+      :class="collapse ? 'profile-wrapper narrow-menu' : 'profile-wrapper'"
+      style="-webkit-app-region: drag"
+    >
       <div :class="collapse ? 'profile-narrow' : 'profile-wide'">
         <div class="account">
           <div class="avatar" v-if="collapse">
@@ -10,23 +13,45 @@
             @{{ account.username }}
             <span class="domain-name">{{ account.domain }}</span>
           </div>
-          <el-dropdown trigger="click" @command="handleProfile" :title="$t('side_menu.profile')">
+          <el-dropdown
+            trigger="click"
+            @command="handleProfile"
+            :title="$t('side_menu.profile')"
+          >
             <span class="el-dropdown-link">
-              <i class="el-icon-arrow-down el-icon--right"></i>
+              <el-icon class="el-icon--right"><el-icon-arrow-down /></el-icon>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="show">{{ $t('side_menu.show_profile') }}</el-dropdown-item>
-              <el-dropdown-item command="edit">{{ $t('side_menu.edit_profile') }}</el-dropdown-item>
-              <el-dropdown-item command="settings">{{ $t('side_menu.settings') }}</el-dropdown-item>
+              <el-dropdown-item command="show">{{
+                $t('side_menu.show_profile')
+              }}</el-dropdown-item>
+              <el-dropdown-item command="edit">{{
+                $t('side_menu.edit_profile')
+              }}</el-dropdown-item>
+              <el-dropdown-item command="settings">{{
+                $t('side_menu.settings')
+              }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
       </div>
       <div class="collapse">
-        <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse" :title="$t('side_menu.expand')">
+        <el-button
+          type="text"
+          class="release-collapse"
+          @click="releaseCollapse"
+          v-if="collapse"
+          :title="$t('side_menu.expand')"
+        >
           <font-awesome-icon :icon="['fa', 'angles-right']" />
         </el-button>
-        <el-button type="text" class="do-collapse" @click="doCollapse" v-else :title="$t('side_menu.collapse')">
+        <el-button
+          type="text"
+          class="do-collapse"
+          @click="doCollapse"
+          v-else
+          :title="$t('side_menu.collapse')"
+        >
           <font-awesome-icon :icon="['fa', 'angles-left']" />
         </el-button>
       </div>
@@ -38,10 +63,19 @@
       :collapse="collapse"
       active-text-color="#ffffff"
       :router="true"
-      :class="collapse ? 'el-menu-vertical timeline-menu narrow-menu' : 'el-menu-vertical timeline-menu'"
+      :class="
+        collapse
+          ? 'el-menu-vertical timeline-menu narrow-menu'
+          : 'el-menu-vertical timeline-menu'
+      "
       role="menu"
     >
-      <el-menu-item :index="`/${id()}/home`" role="menuitem" :title="$t('side_menu.home')" class="menu-item">
+      <el-menu-item
+        :index="`/${id()}/home`"
+        role="menuitem"
+        :title="$t('side_menu.home')"
+        class="menu-item"
+      >
         <div class="menu-item-icon">
           <font-awesome-icon icon="home" />
         </div>
@@ -168,7 +202,12 @@
           <el-badge is-dot :hidden="!unreadPublicTimeline"> </el-badge>
         </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/search`" role="menuitem" :title="$t('side_menu.search')" class="menu-item">
+      <el-menu-item
+        :index="`/${id()}/search`"
+        role="menuitem"
+        :title="$t('side_menu.search')"
+        class="menu-item"
+      >
         <div class="menu-item-icon">
           <font-awesome-icon icon="magnifying-glass" />
         </div>
@@ -176,7 +215,12 @@
           <span>{{ $t('side_menu.search') }}</span>
         </div>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/hashtag`" role="menuitem" :title="$t('side_menu.hashtag')" class="menu-item">
+      <el-menu-item
+        :index="`/${id()}/hashtag`"
+        role="menuitem"
+        :title="$t('side_menu.hashtag')"
+        class="menu-item"
+      >
         <div class="menu-item-icon">
           <font-awesome-icon icon="hashtag" />
         </div>
@@ -201,7 +245,12 @@
           </div>
         </el-menu-item>
       </template>
-      <el-menu-item :index="`/${id()}/lists`" role="menuitem" :title="$t('side_menu.lists')" class="menu-item">
+      <el-menu-item
+        :index="`/${id()}/lists`"
+        role="menuitem"
+        :title="$t('side_menu.lists')"
+        class="menu-item"
+      >
         <div class="menu-item-icon">
           <font-awesome-icon icon="list-ul" />
         </div>
@@ -227,39 +276,54 @@
         </el-menu-item>
       </template>
     </el-menu>
-    <el-button v-if="hideGlobalHeader" class="global-header-control" type="text" @click="changeGlobalHeader(false)">
+    <el-button
+      v-if="hideGlobalHeader"
+      class="global-header-control"
+      type="text"
+      @click="changeGlobalHeader(false)"
+    >
       <font-awesome-icon icon="angles-right" />
     </el-button>
-    <el-button v-else class="global-header-control" type="text" @click="changeGlobalHeader(true)">
+    <el-button
+      v-else
+      class="global-header-control"
+      type="text"
+      @click="changeGlobalHeader(true)"
+    >
       <font-awesome-icon icon="angles-left" />
     </el-button>
   </div>
 </template>
 
 <script>
+import { ArrowDown as ElIconArrowDown } from '@element-plus/icons'
 import { mapState } from 'vuex'
 
 export default {
+  components: {
+    ElIconArrowDown,
+  },
   name: 'side-menu',
   computed: {
     ...mapState('TimelineSpace/SideMenu', {
-      unreadHomeTimeline: state => state.unreadHomeTimeline,
-      unreadNotifications: state => state.unreadNotifications,
-      unreadMentions: state => state.unreadMentions,
-      unreadLocalTimeline: state => state.unreadLocalTimeline,
-      unreadDirectMessagesTimeline: state => state.unreadDirectMessagesTimeline,
-      unreadPublicTimeline: state => state.unreadPublicTimeline,
-      unreadFollowRequests: state => state.unreadFollowRequests,
-      lists: state => state.lists,
-      tags: state => state.tags,
-      collapse: state => state.collapse,
-      enabledTimelines: state => state.enabledTimelines
+      unreadHomeTimeline: (state) => state.unreadHomeTimeline,
+      unreadNotifications: (state) => state.unreadNotifications,
+      unreadMentions: (state) => state.unreadMentions,
+      unreadLocalTimeline: (state) => state.unreadLocalTimeline,
+      unreadDirectMessagesTimeline: (state) =>
+        state.unreadDirectMessagesTimeline,
+      unreadPublicTimeline: (state) => state.unreadPublicTimeline,
+      unreadFollowRequests: (state) => state.unreadFollowRequests,
+      lists: (state) => state.lists,
+      tags: (state) => state.tags,
+      collapse: (state) => state.collapse,
+      enabledTimelines: (state) => state.enabledTimelines,
     }),
     ...mapState({
-      account: state => state.TimelineSpace.account,
-      themeColor: state => state.App.theme.side_menu_color,
-      hideGlobalHeader: state => state.GlobalHeader.hide
-    })
+      account: (state) => state.TimelineSpace.account,
+      themeColor: (state) => state.App.theme.side_menu_color,
+      hideGlobalHeader: (state) => state.GlobalHeader.hide,
+    }),
   },
   created() {
     this.$store.dispatch('TimelineSpace/SideMenu/readCollapse')
@@ -275,12 +339,25 @@ export default {
     handleProfile(command) {
       switch (command) {
         case 'show':
-          this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/fetchAccount', this.account.accountId).then(account => {
-            this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-            this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-          })
+          this.$store
+            .dispatch(
+              'TimelineSpace/Contents/SideBar/AccountProfile/fetchAccount',
+              this.account.accountId
+            )
+            .then((account) => {
+              this.$store.dispatch(
+                'TimelineSpace/Contents/SideBar/AccountProfile/changeAccount',
+                account
+              )
+              this.$store.commit(
+                'TimelineSpace/Contents/SideBar/changeOpenSideBar',
+                true
+              )
+            })
 
-          this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+          this.$store.dispatch(
+            'TimelineSpace/Contents/SideBar/openAccountComponent'
+          )
           break
         case 'edit':
           window.shell.openExternal(this.account.baseURL + '/settings/profile')
@@ -300,8 +377,8 @@ export default {
     },
     async changeGlobalHeader(value) {
       await this.$store.dispatch('GlobalHeader/switchHide', value)
-    }
-  }
+    },
+  },
 }
 </script>
 

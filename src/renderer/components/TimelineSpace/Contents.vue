@@ -1,7 +1,15 @@
 <template>
-  <div id="contents" ref="contents" :style="customWidth" @mouseup="dragEnd" @mousemove="resize">
+  <div
+    id="contents"
+    ref="contents"
+    :style="customWidth"
+    @mouseup="dragEnd"
+    @mousemove="resize"
+  >
     <div
-      :class="openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'"
+      :class="
+        openSideBar ? 'timeline-wrapper-with-side-bar' : 'timeline-wrapper'
+      "
       v-loading="loading"
       :element-loading-text="$t('message.loading')"
       element-loading-spinner="el-icon-loading"
@@ -34,25 +42,25 @@ export default {
   data() {
     return {
       sidebarWidth: 360,
-      dragging: false
+      dragging: false,
     }
   },
   components: {
-    SideBar
+    SideBar,
   },
   computed: {
     ...mapState('TimelineSpace/Contents', {
-      loading: state => state.loading
+      loading: (state) => state.loading,
     }),
     ...mapState('TimelineSpace/Contents/SideBar', {
-      openSideBar: state => state.openSideBar
+      openSideBar: (state) => state.openSideBar,
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     customWidth: function () {
       return {
-        '--current-sidebar-width': `${this.sidebarWidth}px`
+        '--current-sidebar-width': `${this.sidebarWidth}px`,
       }
-    }
+    },
   },
   methods: {
     resize(event) {
@@ -67,8 +75,8 @@ export default {
     dragEnd() {
       this.dragging = false
       this.$refs.contents.style.setProperty('user-select', 'text')
-    }
-  }
+    },
+  },
 }
 </script>
 

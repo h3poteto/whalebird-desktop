@@ -2,8 +2,18 @@
   <div id="search">
     <div class="search-header">
       <el-form :inline="true">
-        <el-select v-model="target" :placeholder="$t('search.search')" class="search-target">
-          <el-option v-for="item in searchTargets" :key="item.target" :label="item.label" :value="item.target"> </el-option>
+        <el-select
+          v-model="target"
+          :placeholder="$t('search.search')"
+          class="search-target"
+        >
+          <el-option
+            v-for="item in searchTargets"
+            :key="item.target"
+            :label="item.label"
+            :value="item.target"
+          >
+          </el-option>
         </el-select>
         <input
           v-model="query"
@@ -35,7 +45,7 @@ export default {
   data() {
     return {
       target: 'account',
-      query: ''
+      query: '',
     }
   },
   computed: {
@@ -44,52 +54,64 @@ export default {
         return [
           {
             target: 'account',
-            label: this.$t('search.account')
+            label: this.$t('search.account'),
           },
           {
             target: 'tag',
-            label: this.$t('search.tag')
+            label: this.$t('search.tag'),
           },
           {
             target: 'toot',
-            label: this.$t('search.toot')
-          }
+            label: this.$t('search.toot'),
+          },
         ]
-      }
-    }
+      },
+    },
   },
   methods: {
     search() {
       switch (this.target) {
         case 'account':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Account/search', this.query).catch(() => {
-            this.$message({
-              message: this.$t('message.search_error'),
-              type: 'error'
+          this.$store
+            .dispatch(
+              'TimelineSpace/Contents/Search/Account/search',
+              this.query
+            )
+            .catch(() => {
+              this.$message({
+                message: this.$t('message.search_error'),
+                type: 'error',
+              })
             })
-          })
           break
         case 'tag':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Tag/search', `#${this.query}`).catch(() => {
-            this.$message({
-              message: this.$t('message.search_error'),
-              type: 'error'
+          this.$store
+            .dispatch(
+              'TimelineSpace/Contents/Search/Tag/search',
+              `#${this.query}`
+            )
+            .catch(() => {
+              this.$message({
+                message: this.$t('message.search_error'),
+                type: 'error',
+              })
             })
-          })
           break
         case 'toot':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Toots/search', this.query).catch(() => {
-            this.$message({
-              message: this.$t('message.search_error'),
-              type: 'error'
+          this.$store
+            .dispatch('TimelineSpace/Contents/Search/Toots/search', this.query)
+            .catch(() => {
+              this.$message({
+                message: this.$t('message.search_error'),
+                type: 'error',
+              })
             })
-          })
           break
         default:
           break
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

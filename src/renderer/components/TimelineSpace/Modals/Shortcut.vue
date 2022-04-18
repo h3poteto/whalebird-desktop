@@ -1,5 +1,10 @@
 <template>
-  <el-dialog :title="$t('modals.shortcut.title')" :visible.sync="shortcutModal" width="500px" class="shortcut-modal">
+  <el-dialog
+    :title="$t('modals.shortcut.title')"
+    :visible.sync="shortcutModal"
+    width="500px"
+    class="shortcut-modal"
+  >
     <table class="shortcuts">
       <tbody>
         <tr>
@@ -89,9 +94,9 @@ export default {
       },
       set(value) {
         this.$store.commit('TimelineSpace/Modals/Shortcut/changeModal', value)
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>
 

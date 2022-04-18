@@ -1,8 +1,32 @@
 <template>
-  <div id="current-media" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
-    <video :src="src" v-if="isMovieFile()" autoplay loop controls v-on:loadstart="loaded()"></video>
-    <video :src="src" v-else-if="isGIF()" autoplay loop v-on:loadstart="loaded()"></video>
-    <video :src="src" v-else-if="isAudio()" autoplay loop controls v-on:loadstart="loaded()"></video>
+  <div
+    id="current-media"
+    v-loading="loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+  >
+    <video
+      :src="src"
+      v-if="isMovieFile()"
+      autoplay
+      loop
+      controls
+      v-on:loadstart="loaded()"
+    ></video>
+    <video
+      :src="src"
+      v-else-if="isGIF()"
+      autoplay
+      loop
+      v-on:loadstart="loaded()"
+    ></video>
+    <video
+      :src="src"
+      v-else-if="isAudio()"
+      autoplay
+      loop
+      controls
+      v-on:loadstart="loaded()"
+    ></video>
     <img :src="imageSrc" v-else v-on:load="loaded()" />
   </div>
 </template>
@@ -15,16 +39,16 @@ export default {
   props: {
     src: {
       type: String,
-      default: ''
+      default: '',
     },
     type: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
-      imageSrc: this.src
+      imageSrc: this.src,
     }
   },
   watch: {
@@ -38,12 +62,12 @@ export default {
           console.error(err)
         }
       }
-    }
+    },
   },
   computed: {
     ...mapState({
-      loading: state => state.TimelineSpace.Modals.ImageViewer.loading
-    })
+      loading: (state) => state.TimelineSpace.Modals.ImageViewer.loading,
+    }),
   },
   methods: {
     isMovieFile() {
@@ -57,8 +81,8 @@ export default {
     },
     async loaded() {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/loaded')
-    }
-  }
+    },
+  },
 }
 </script>
 

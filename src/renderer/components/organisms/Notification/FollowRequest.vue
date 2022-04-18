@@ -2,7 +2,11 @@
   <div
     class="relationship"
     tabIndex="0"
-    v-shortkey="shortcutEnabled ? { next: ['j'], prev: ['k'], right: ['l'], profile: ['p'] } : {}"
+    v-shortkey="
+      shortcutEnabled
+        ? { next: ['j'], prev: ['k'], right: ['l'], profile: ['p'] }
+        : {}
+    "
     @shortkey="handleStatusControl"
     ref="status"
     @click="$emit('select')"
@@ -20,7 +24,7 @@
               v-html="
                 $t('notification.follow_request.body', {
                   username: username(message.account),
-                  interpolation: { escapeValue: false }
+                  interpolation: { escapeValue: false },
                 })
               "
             ></bdi>
@@ -43,26 +47,26 @@ import emojify from '~/src/renderer/utils/emojify'
 export default {
   name: 'follow-request',
   components: {
-    FailoverImg
+    FailoverImg,
   },
   props: {
     message: {
       type: Object,
-      default: {}
+      default: {},
     },
     focused: {
       type: Boolean,
-      default: false
+      default: false,
     },
     overlaid: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     shortcutEnabled: function () {
       return this.focused && !this.overlaid
-    }
+    },
   },
   mounted() {
     if (this.focused) {
@@ -80,7 +84,7 @@ export default {
           this.$refs.status.blur()
         })
       }
-    }
+    },
   },
   methods: {
     username(account) {
@@ -91,9 +95,17 @@ export default {
       }
     },
     openUser(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+      this.$store.dispatch(
+        'TimelineSpace/Contents/SideBar/openAccountComponent'
+      )
+      this.$store.dispatch(
+        'TimelineSpace/Contents/SideBar/AccountProfile/changeAccount',
+        account
+      )
+      this.$store.commit(
+        'TimelineSpace/Contents/SideBar/changeOpenSideBar',
+        true
+      )
     },
     handleStatusControl(event) {
       switch (event.srcKey) {
@@ -110,8 +122,8 @@ export default {
           this.openUser(this.message.account)
           break
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

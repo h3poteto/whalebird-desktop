@@ -1,15 +1,45 @@
 <template>
-  <div id="home" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="filteredTimeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
+  <div
+    id="home"
+    v-shortkey="shortcutEnabled ? { next: ['j'] } : {}"
+    @shortkey="handleKey"
+  >
+    <div
+      v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }"
+      @shortkey="reload()"
+    ></div>
+    <DynamicScroller
+      :items="filteredTimeline"
+      :min-item-size="86"
+      id="scroller"
+      class="scroller"
+      ref="scroller"
+    >
       <template v-slot="{ item, index, active }">
         <template v-if="item.id === 'loading-card'">
-          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.id]" :data-index="index" :watchData="true">
-            <StatusLoading :since_id="item.since_id" :max_id="item.max_id" :loading="loadingMore" @load_since="fetchTimelineSince" />
+          <DynamicScrollerItem
+            :item="item"
+            :active="active"
+            :size-dependencies="[item.id]"
+            :data-index="index"
+            :watchData="true"
+          >
+            <StatusLoading
+              :since_id="item.since_id"
+              :max_id="item.max_id"
+              :loading="loadingMore"
+              @load_since="fetchTimelineSince"
+            />
           </DynamicScrollerItem>
         </template>
         <template v-else>
-          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
+          <DynamicScrollerItem
+            :item="item"
+            :active="active"
+            :size-dependencies="[item.uri]"
+            :data-index="index"
+            :watchData="true"
+          >
             <toot
               :message="item"
               :focused="item.uri + item.id === focusedId"
@@ -29,13 +59,18 @@
       </template>
     </DynamicScroller>
 
-    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
+    <div
+      :class="openSideBar ? 'upper-with-side-bar' : 'upper'"
+      v-show="!heading"
+    >
+      <el-button type="primary" :icon="ElIconArrowUp" @click="upper" circle>
+      </el-button>
     </div>
   </div>
 </template>
 
 <script>
+import { ArrowUp as ElIconArrowUp } from '@element-plus/icons'
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
@@ -45,9 +80,6 @@ import { Event } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
-  name: 'home',
-  components: { Toot, StatusLoading },
-  mixins: [reloadable],
   data() {
     return {
       focusedId: null,
@@ -55,22 +87,26 @@ export default {
       observer: null,
       scrollTime: null,
       resizeTime: null,
-      loadingMore: false
+      loadingMore: false,
+      ElIconArrowUp,
     }
   },
+  name: 'home',
+  components: { Toot, StatusLoading },
+  mixins: [reloadable],
   computed: {
     ...mapState('TimelineSpace/Contents/Home', {
-      timeline: state => state.timeline,
-      lazyLoading: state => state.lazyLoading,
-      heading: state => state.heading,
-      showReblogs: state => state.showReblogs,
-      showReplies: state => state.showReplies,
-      scrolling: state => state.scrolling
+      timeline: (state) => state.timeline,
+      lazyLoading: (state) => state.lazyLoading,
+      heading: (state) => state.heading,
+      showReblogs: (state) => state.showReblogs,
+      showReplies: (state) => state.showReplies,
+      scrolling: (state) => state.scrolling,
     }),
     ...mapState({
-      backgroundColor: state => state.App.theme.background_color,
-      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload
+      backgroundColor: (state) => state.App.theme.background_color,
+      openSideBar: (state) => state.TimelineSpace.Contents.SideBar.openSideBar,
+      startReload: (state) => state.TimelineSpace.HeaderMenu.reload,
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     ...mapGetters('TimelineSpace/Contents/Home', ['filters']),
@@ -82,11 +118,13 @@ export default {
         return true
       }
       // Sometimes toots are deleted, so perhaps focused toot don't exist.
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
+      const currentIndex = this.timeline.findIndex(
+        (toot) => this.focusedId === toot.uri + toot.id
+      )
       return currentIndex === -1
     },
     filteredTimeline() {
-      return this.timeline.filter(toot => {
+      return this.timeline.filter((toot) => {
         if (toot.in_reply_to_id) {
           return this.showReplies
         } else if (toot.reblog) {
@@ -95,11 +133,13 @@ export default {
           return true
         }
       })
-    }
+    },
   },
   mounted() {
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
-    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
+    document
+      .getElementById('scroller')
+      .addEventListener('scroll', this.onScroll)
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
@@ -117,18 +157,32 @@ export default {
     this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (this.loadingMore || (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling)) {
+      if (
+        this.loadingMore ||
+        (this.scrollPosition &&
+          !this.heading &&
+          !this.lazyLoading &&
+          !this.scrolling)
+      ) {
         this.resizeTime = moment()
         this.scrollPosition.restore()
       }
     })
 
-    const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
+    const scrollWrapper = el.getElementsByClassName(
+      'vue-recycle-scroller__item-wrapper'
+    )[0]
     this.observer.observe(scrollWrapper)
   },
   beforeUpdate() {
-    if (this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline && this.heading) {
-      this.$store.commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', false)
+    if (
+      this.$store.state.TimelineSpace.SideMenu.unreadHomeTimeline &&
+      this.heading
+    ) {
+      this.$store.commit(
+        'TimelineSpace/SideMenu/changeUnreadHomeTimeline',
+        false
+      )
     }
     if (this.scrollPosition) {
       this.scrollPosition.prepare()
@@ -141,8 +195,13 @@ export default {
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Home/archiveTimeline')
-    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
-      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+    if (
+      document.getElementById('scroller') !== undefined &&
+      document.getElementById('scroller') !== null
+    ) {
+      document
+        .getElementById('scroller')
+        .removeEventListener('scroll', this.onScroll)
       document.getElementById('scroller').scrollTop = 0
     }
   },
@@ -165,7 +224,7 @@ export default {
       if (this.heading && newState.length > 0) {
         this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker')
       }
-    }
+    },
   },
   methods: {
     onScroll(event) {
@@ -179,26 +238,36 @@ export default {
 
       // for lazyLoading
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >=
+          document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store
-          .dispatch('TimelineSpace/Contents/Home/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
-          .then(statuses => {
+          .dispatch(
+            'TimelineSpace/Contents/Home/lazyFetchTimeline',
+            this.timeline[this.timeline.length - 1]
+          )
+          .then((statuses) => {
             if (statuses === null) {
               return
             }
             if (statuses.length > 0) {
-              this.$store.commit('TimelineSpace/Contents/Home/changeScrolling', true)
+              this.$store.commit(
+                'TimelineSpace/Contents/Home/changeScrolling',
+                true
+              )
               setTimeout(() => {
-                this.$store.commit('TimelineSpace/Contents/Home/changeScrolling', false)
+                this.$store.commit(
+                  'TimelineSpace/Contents/Home/changeScrolling',
+                  false
+                )
               }, 500)
             }
           })
           .catch(() => {
             this.$message({
               message: this.$t('message.timeline_fetch_error'),
-              type: 'error'
+              type: 'error',
             })
           })
       }
@@ -213,7 +282,10 @@ export default {
         const now = moment()
         if (now.diff(this.scrollTime) >= 150) {
           this.scrollTime = null
-          this.$store.commit('TimelineSpace/Contents/Home/changeScrolling', false)
+          this.$store.commit(
+            'TimelineSpace/Contents/Home/changeScrolling',
+            false
+          )
         }
       }, 150)
     },
@@ -225,11 +297,13 @@ export default {
     },
     fetchTimelineSince(since_id) {
       this.loadingMore = true
-      this.$store.dispatch('TimelineSpace/Contents/Home/fetchTimelineSince', since_id).finally(() => {
-        setTimeout(() => {
-          this.loadingMore = false
-        }, 500)
-      })
+      this.$store
+        .dispatch('TimelineSpace/Contents/Home/fetchTimelineSince', since_id)
+        .finally(() => {
+          setTimeout(() => {
+            this.loadingMore = false
+          }, 500)
+        })
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
@@ -244,19 +318,27 @@ export default {
       this.focusedId = null
     },
     focusNext() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
+      const currentIndex = this.timeline.findIndex(
+        (toot) => this.focusedId === toot.uri + toot.id
+      )
       if (currentIndex === -1) {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
       } else if (currentIndex < this.timeline.length) {
-        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
+        this.focusedId =
+          this.timeline[currentIndex + 1].uri +
+          this.timeline[currentIndex + 1].id
       }
     },
     focusPrev() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
+      const currentIndex = this.timeline.findIndex(
+        (toot) => this.focusedId === toot.uri + toot.id
+      )
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
-        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
+        this.focusedId =
+          this.timeline[currentIndex - 1].uri +
+          this.timeline[currentIndex - 1].id
       }
     },
     focusToot(message) {
@@ -277,8 +359,8 @@ export default {
       setTimeout(() => {
         this.$store.commit('TimelineSpace/Contents/Home/changeScrolling', false)
       }, 500)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -315,4 +397,5 @@ export default {
   }
 }
 </style>
+
 <style lang="scss" src="@/assets/timeline-transition.scss"></style>

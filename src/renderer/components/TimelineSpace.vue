@@ -39,18 +39,18 @@ export default {
   data() {
     return {
       dropTarget: null,
-      droppableVisible: false
+      droppableVisible: false,
     }
   },
   computed: {
     ...mapState({
-      loading: state => state.TimelineSpace.loading,
-      collapse: state => state.TimelineSpace.SideMenu.collapse
+      loading: (state) => state.TimelineSpace.loading,
+      collapse: (state) => state.TimelineSpace.SideMenu.collapse,
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
       return !this.modalOpened
-    }
+    },
   },
   async created() {
     this.$store.dispatch('TimelineSpace/Contents/SideBar/close')
@@ -88,17 +88,20 @@ export default {
       await this.clear()
 
       try {
-        await this.$store.dispatch('TimelineSpace/initLoad', this.$route.params.id)
+        await this.$store.dispatch(
+          'TimelineSpace/initLoad',
+          this.$route.params.id
+        )
       } catch (err) {
         if (err instanceof AccountLoadError) {
           this.$message({
             message: this.$t('message.account_load_error'),
-            type: 'error'
+            type: 'error',
           })
         } else if (err instanceof TimelineFetchError) {
           this.$message({
             message: this.$t('message.timeline_fetch_error'),
-            type: 'error'
+            type: 'error',
           })
         }
       }
@@ -109,14 +112,17 @@ export default {
       e.preventDefault()
       e.stopPropagation()
       this.droppableVisible = false
-      if (e.dataTransfer.files.item(0) === null || e.dataTransfer.files.item(0) === undefined) {
+      if (
+        e.dataTransfer.files.item(0) === null ||
+        e.dataTransfer.files.item(0) === undefined
+      ) {
         return false
       }
       const file = e.dataTransfer.files.item(0)
       if (!file.type.includes('image') && !file.type.includes('video')) {
         this.$message({
           message: this.$t('validation.new_toot.attach_image'),
-          type: 'error'
+          type: 'error',
         })
         return false
       }
@@ -127,16 +133,16 @@ export default {
         .then(() => {
           Event.$emit('image-uploaded')
         })
-        .catch(err => {
+        .catch((err) => {
           if (err instanceof NewTootAttachLength) {
             this.$message({
               message: this.$t('validation.new_toot.attach_length', { max: 4 }),
-              type: 'error'
+              type: 'error',
             })
           } else {
             this.$message({
               message: this.$t('message.attach_error'),
-              type: 'error'
+              type: 'error',
             })
           }
         })
@@ -162,8 +168,8 @@ export default {
           this.$store.commit('TimelineSpace/Modals/Shortcut/changeModal', true)
           break
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

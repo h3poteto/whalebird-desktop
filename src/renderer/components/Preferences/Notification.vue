@@ -1,34 +1,90 @@
 <template>
   <div id="notification">
     <h2>{{ $t('preferences.notification.title') }}</h2>
-    <el-form class="section" label-position="right" label-width="360px" size="small">
-      <p class="description">{{ $t('preferences.notification.enable.description') }}</p>
-      <el-form-item for="notifyReply" :label="$t('preferences.notification.enable.reply')">
-        <el-switch id="notifyReply" v-model="notifyReply" active-color="#13ce66"> </el-switch>
+    <el-form
+      class="section"
+      label-position="right"
+      label-width="360px"
+      size="small"
+    >
+      <p class="description">
+        {{ $t('preferences.notification.enable.description') }}
+      </p>
+      <el-form-item
+        for="notifyReply"
+        :label="$t('preferences.notification.enable.reply')"
+      >
+        <el-switch
+          id="notifyReply"
+          v-model="notifyReply"
+          active-color="#13ce66"
+        >
+        </el-switch>
       </el-form-item>
-      <el-form-item for="notifyReblog" :label="$t('preferences.notification.enable.reblog')">
-        <el-switch id="notifyReblog" v-model="notifyReblog" active-color="#13ce66"> </el-switch>
+      <el-form-item
+        for="notifyReblog"
+        :label="$t('preferences.notification.enable.reblog')"
+      >
+        <el-switch
+          id="notifyReblog"
+          v-model="notifyReblog"
+          active-color="#13ce66"
+        >
+        </el-switch>
       </el-form-item>
-      <el-form-item for="notifyReaction" :label="$t('preferences.notification.enable.reaction')">
-        <el-switch id="notifyReaction" v-model="notifyReaction" active-color="#13ce66"> </el-switch>
+      <el-form-item
+        for="notifyReaction"
+        :label="$t('preferences.notification.enable.reaction')"
+      >
+        <el-switch
+          id="notifyReaction"
+          v-model="notifyReaction"
+          active-color="#13ce66"
+        >
+        </el-switch>
       </el-form-item>
-      <el-form-item for="notifyFavourite" :label="$t('preferences.notification.enable.favourite')">
-        <el-switch id="notifyFavourite" v-model="notifyFavourite" active-color="#13ce66"> </el-switch>
+      <el-form-item
+        for="notifyFavourite"
+        :label="$t('preferences.notification.enable.favourite')"
+      >
+        <el-switch
+          id="notifyFavourite"
+          v-model="notifyFavourite"
+          active-color="#13ce66"
+        >
+        </el-switch>
       </el-form-item>
-      <el-form-item for="notifyFollow" :label="$t('preferences.notification.enable.follow')">
+      <el-form-item
+        for="notifyFollow"
+        :label="$t('preferences.notification.enable.follow')"
+      >
         <el-switch v-model="notifyFollow" active-color="#13ce66"> </el-switch>
       </el-form-item>
-      <el-form-item for="notifyFollowRequest" :label="$t('preferences.notification.enable.follow_request')">
-        <el-switch v-model="notifyFollowRequest" active-color="#13ce66"> </el-switch>
+      <el-form-item
+        for="notifyFollowRequest"
+        :label="$t('preferences.notification.enable.follow_request')"
+      >
+        <el-switch v-model="notifyFollowRequest" active-color="#13ce66">
+        </el-switch>
       </el-form-item>
-      <el-form-item for="notifyStatus" :label="$t('preferences.notification.enable.status')">
+      <el-form-item
+        for="notifyStatus"
+        :label="$t('preferences.notification.enable.status')"
+      >
         <el-switch v-model="notifyStatus" active-color="#13ce66"> </el-switch>
       </el-form-item>
-      <el-form-item for="notifyPollVote" :label="$t('preferences.notification.enable.poll_vote')">
+      <el-form-item
+        for="notifyPollVote"
+        :label="$t('preferences.notification.enable.poll_vote')"
+      >
         <el-switch v-model="notifyPollVote" active-color="#13ce66"> </el-switch>
       </el-form-item>
-      <el-form-item for="notifyPollExpired" :label="$t('preferences.notification.enable.poll_expired')">
-        <el-switch v-model="notifyPollExpired" active-color="#13ce66"> </el-switch>
+      <el-form-item
+        for="notifyPollExpired"
+        :label="$t('preferences.notification.enable.poll_expired')"
+      >
+        <el-switch v-model="notifyPollExpired" active-color="#13ce66">
+        </el-switch>
       </el-form-item>
     </el-form>
   </div>
@@ -40,103 +96,114 @@ export default {
   computed: {
     notifyReply: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.reply
+        return this.$store.state.Preferences.Notification.notification.notify
+          .reply
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          reply: value
+          reply: value,
         })
-      }
+      },
     },
     notifyReblog: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.reblog
+        return this.$store.state.Preferences.Notification.notification.notify
+          .reblog
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          reblog: value
+          reblog: value,
         })
-      }
+      },
     },
     notifyFavourite: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.favourite
+        return this.$store.state.Preferences.Notification.notification.notify
+          .favourite
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          favourite: value
+          favourite: value,
         })
-      }
+      },
     },
     notifyFollow: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.follow
+        return this.$store.state.Preferences.Notification.notification.notify
+          .follow
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          follow: value
+          follow: value,
         })
-      }
+      },
     },
     notifyFollowRequest: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.follow_request
+        return this.$store.state.Preferences.Notification.notification.notify
+          .follow_request
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          follow_request: value
+          follow_request: value,
         })
-      }
+      },
     },
     notifyReaction: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.reaction
+        return this.$store.state.Preferences.Notification.notification.notify
+          .reaction
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          reaction: value
+          reaction: value,
         })
-      }
+      },
     },
     notifyStatus: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.status
+        return this.$store.state.Preferences.Notification.notification.notify
+          .status
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          status: value
+          status: value,
         })
-      }
+      },
     },
     notifyPollVote: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.poll_vote
+        return this.$store.state.Preferences.Notification.notification.notify
+          .poll_vote
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          poll_vote: value
+          poll_vote: value,
         })
-      }
+      },
     },
     notifyPollExpired: {
       get() {
-        return this.$store.state.Preferences.Notification.notification.notify.poll_expired
+        return this.$store.state.Preferences.Notification.notification.notify
+          .poll_expired
       },
       set(value) {
         this.$store.dispatch('Preferences/Notification/updateNotify', {
-          poll_expired: value
+          poll_expired: value,
         })
-      }
-    }
+      },
+    },
   },
   created() {
-    this.$store.dispatch('Preferences/Notification/loadNotification').catch(() => {
-      this.$message({
-        message: this.$t('message.preferences_load_error'),
-        type: 'error'
+    this.$store
+      .dispatch('Preferences/Notification/loadNotification')
+      .catch(() => {
+        this.$message({
+          message: this.$t('message.preferences_load_error'),
+          type: 'error',
+        })
       })
-    })
-  }
+  },
 }
 </script>
 

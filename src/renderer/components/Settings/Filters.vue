@@ -17,17 +17,24 @@
         v-loading="filtersLoading"
         :element-loading-background="backgroundColor"
       >
-        <el-table-column prop="phrase" label="Keyword" width="180"> </el-table-column>
+        <el-table-column prop="phrase" label="Keyword" width="180">
+        </el-table-column>
         <el-table-column label="Context">
           <template slot-scope="scope">
             <span>{{ filters[scope.$index].context.join(',') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="expires_at" label="Expires" width="180"> </el-table-column>
+        <el-table-column prop="expires_at" label="Expires" width="180">
+        </el-table-column>
         <el-table-column width="80">
           <template slot-scope="scope">
             <el-button type="text">
-              <router-link tag="span" :to="`/${id()}/settings/filters/${filters[scope.$index].id}/edit`">
+              <router-link
+                tag="span"
+                :to="`/${id()}/settings/filters/${
+                  filters[scope.$index].id
+                }/edit`"
+              >
                 {{ $t('settings.filters.edit.title') }}
               </router-link>
             </el-button>
@@ -35,7 +42,10 @@
         </el-table-column>
         <el-table-column width="80">
           <template slot-scope="scope">
-            <el-button type="text" @click="deleteFilter(filters[scope.$index].id)">
+            <el-button
+              type="text"
+              @click="deleteFilter(filters[scope.$index].id)"
+            >
               {{ $t('settings.filters.delete.title') }}
             </el-button>
           </template>
@@ -52,15 +62,15 @@ export default {
   name: 'Filters',
   computed: {
     ...mapState('Settings/Filters', {
-      filters: state => state.filters,
-      filtersLoading: state => state.filtersLoading
+      filters: (state) => state.filters,
+      filtersLoading: (state) => state.filtersLoading,
     }),
     ...mapState({
-      backgroundColor: state => state.App.theme.background_color
+      backgroundColor: (state) => state.App.theme.background_color,
     }),
     ...mapState('TimelineSpace', {
-      sns: state => state.sns
-    })
+      sns: (state) => state.sns,
+    }),
   },
   async created() {
     await this.$store.dispatch('Settings/Filters/fetchFilters')
@@ -73,12 +83,12 @@ export default {
       this.$confirm(this.$t('settings.filters.delete.confirm'), 'Warning', {
         confirmButtonText: this.$t('settings.filters.delete.confirm_ok'),
         cancelButtonText: this.$t('settings.filters.delete.confirm_cancel'),
-        type: 'warning'
+        type: 'warning',
       }).then(() => {
         return this.$store.dispatch('Settings/Filters/deleteFilter', id)
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

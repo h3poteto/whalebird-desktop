@@ -15,8 +15,8 @@ export default {
   props: {
     tag: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   methods: {
     openTag(tag) {
@@ -24,8 +24,8 @@ export default {
     },
     id() {
       return this.$route.params.id
-    }
-  }
+    },
+  },
 }
 </script>
 

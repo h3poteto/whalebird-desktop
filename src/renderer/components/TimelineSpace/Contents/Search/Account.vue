@@ -1,8 +1,19 @@
 <template>
   <div id="search_account">
-    <DynamicScroller :items="results" :min-item-size="20" class="scroller" page-mode>
+    <DynamicScroller
+      :items="results"
+      :min-item-size="20"
+      class="scroller"
+      page-mode
+    >
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.acct]" :data-index="index" :watchData="true">
+        <DynamicScrollerItem
+          :item="item"
+          :active="active"
+          :size-dependencies="[item.acct]"
+          :data-index="index"
+          :watchData="true"
+        >
           <user :user="item"></user>
         </DynamicScrollerItem>
       </template>
@@ -19,13 +30,14 @@ export default {
   components: { User },
   computed: {
     ...mapState({
-      results: state => state.TimelineSpace.Contents.Search.Account.results
-    })
+      results: (state) => state.TimelineSpace.Contents.Search.Account.results,
+    }),
   },
   destroyed() {
-    this.$store.commit('TimelineSpace/Contents/Search/Account/updateResults', [])
-  }
+    this.$store.commit(
+      'TimelineSpace/Contents/Search/Account/updateResults',
+      []
+    )
+  },
 }
 </script>
-
-<style lang="scss" scoped></style>

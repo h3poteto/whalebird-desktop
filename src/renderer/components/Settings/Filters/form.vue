@@ -1,11 +1,23 @@
 <template>
-  <el-form ref="form" class="section" label-width="200px" label-position="right" size="medium">
+  <el-form
+    ref="form"
+    class="section"
+    label-width="200px"
+    label-position="right"
+    size="medium"
+  >
     <el-form-item :label="$t('settings.filters.form.phrase')">
       <el-input v-model="filterPhrase"></el-input>
     </el-form-item>
     <el-form-item :label="$t('settings.filters.form.expire')">
       <el-select v-model="filterExpire" value-key="value">
-        <el-option v-for="exp in expires" :key="exp.value" :label="exp.label" :value="exp"> </el-option>
+        <el-option
+          v-for="exp in expires"
+          :key="exp.value"
+          :label="exp.label"
+          :value="exp"
+        >
+        </el-option>
       </el-select>
     </el-form-item>
     <el-form-item :label="$t('settings.filters.form.context')">
@@ -15,19 +27,30 @@
           <el-checkbox label="notifications"></el-checkbox>
           <el-checkbox label="public"></el-checkbox>
           <el-checkbox label="thread"></el-checkbox>
-          <el-checkbox label="account" :disabled="accountDisabled()"></el-checkbox>
+          <el-checkbox
+            label="account"
+            :disabled="accountDisabled()"
+          ></el-checkbox>
         </el-checkbox-group>
       </template>
     </el-form-item>
     <el-form-item>
-      <el-checkbox v-model="filterIrreversible">{{ $t('settings.filters.form.irreversible') }}</el-checkbox>
+      <el-checkbox v-model="filterIrreversible">{{
+        $t('settings.filters.form.irreversible')
+      }}</el-checkbox>
     </el-form-item>
     <el-form-item>
-      <el-checkbox v-model="filterWholeWord">{{ $t('settings.filters.form.whole_word') }}</el-checkbox>
+      <el-checkbox v-model="filterWholeWord">{{
+        $t('settings.filters.form.whole_word')
+      }}</el-checkbox>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit" v-loading="loading">{{ $t('settings.filters.form.submit') }}</el-button>
-      <el-button @click="cancel">{{ $t('settings.filters.form.cancel') }}</el-button>
+      <el-button type="primary" @click="onSubmit" v-loading="loading">{{
+        $t('settings.filters.form.submit')
+      }}</el-button>
+      <el-button @click="cancel">{{
+        $t('settings.filters.form.cancel')
+      }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -38,48 +61,48 @@ export default {
   props: {
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     value: {
-      type: Object
+      type: Object,
     },
     sns: {
       type: String,
-      default: 'mastodon'
-    }
+      default: 'mastodon',
+    },
   },
   data() {
     return {
       expires: [
         {
           label: this.$t('settings.filters.expires.never'),
-          value: null
+          value: null,
         },
         {
           label: this.$t('settings.filters.expires.30_minutes'),
-          value: 60 * 30
+          value: 60 * 30,
         },
         {
           label: this.$t('settings.filters.expires.1_hour'),
-          value: 3600
+          value: 3600,
         },
         {
           label: this.$t('settings.filters.expires.6_hours'),
-          value: 3600 * 6
+          value: 3600 * 6,
         },
         {
           label: this.$t('settings.filters.expires.12_hours'),
-          value: 3600 * 12
+          value: 3600 * 12,
         },
         {
           label: this.$t('settings.filters.expires.1_day'),
-          value: 3600 * 24
+          value: 3600 * 24,
         },
         {
           label: this.$t('settings.filters.expires.1_week'),
-          value: 3600 * 24 * 7
-        }
-      ]
+          value: 3600 * 24 * 7,
+        },
+      ],
     }
   },
   computed: {
@@ -89,7 +112,7 @@ export default {
       },
       set(value) {
         this.$emit('input', value)
-      }
+      },
     },
     filterPhrase: {
       get() {
@@ -97,9 +120,9 @@ export default {
       },
       set(value) {
         this.filter = Object.assign({}, this.filter, {
-          phrase: value
+          phrase: value,
         })
-      }
+      },
     },
     filterExpire: {
       get() {
@@ -107,9 +130,9 @@ export default {
       },
       set(value) {
         this.filter = Object.assign({}, this.filter, {
-          expires_at: value
+          expires_at: value,
         })
-      }
+      },
     },
     filterContext: {
       get() {
@@ -117,9 +140,9 @@ export default {
       },
       set(value) {
         this.filter = Object.assign({}, this.filter, {
-          context: value
+          context: value,
         })
-      }
+      },
     },
     filterIrreversible: {
       get() {
@@ -127,9 +150,9 @@ export default {
       },
       set(value) {
         this.filter = Object.assign({}, this.filter, {
-          irreversible: value
+          irreversible: value,
         })
-      }
+      },
     },
     filterWholeWord: {
       get() {
@@ -137,10 +160,10 @@ export default {
       },
       set(value) {
         this.filter = Object.assign({}, this.filter, {
-          whole_word: value
+          whole_word: value,
         })
-      }
-    }
+      },
+    },
   },
   methods: {
     cancel() {
@@ -151,8 +174,8 @@ export default {
     },
     accountDisabled() {
       return this.sns === 'pleroma'
-    }
-  }
+    },
+  },
 }
 </script>
 

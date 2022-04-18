@@ -31,7 +31,7 @@ export default {
     AddListMember,
     MuteConfirm,
     Shortcut,
-    Report
-  }
+    Report,
+  },
 }
 </script>

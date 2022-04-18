@@ -22,19 +22,31 @@
           <el-button type="text" class="reply" :title="$t('cards.toot.reply')">
             <font-awesome-icon icon="reply" size="sm" />
           </el-button>
-          <el-button type="text" class="reblog" :title="$t('cards.toot.reblog')">
+          <el-button
+            type="text"
+            class="reblog"
+            :title="$t('cards.toot.reblog')"
+          >
             <font-awesome-icon icon="retweet" size="sm" />
           </el-button>
           <span class="count">
             {{ reblogsCount }}
           </span>
-          <el-button type="text" class="favourite" :title="$t('cards.toot.fav')">
+          <el-button
+            type="text"
+            class="favourite"
+            :title="$t('cards.toot.fav')"
+          >
             <font-awesome-icon icon="star" size="sm" />
           </el-button>
           <span class="count">
             {{ favouritesCount }}
           </span>
-          <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
+          <popper
+            trigger="click"
+            :options="{ placement: 'bottom' }"
+            ref="popper"
+          >
             <div class="popper toot-menu">
               <ul class="menu-list">
                 <li role="button">
@@ -51,7 +63,11 @@
                 </li>
               </ul>
             </div>
-            <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
+            <el-button
+              slot="reference"
+              type="text"
+              :title="$t('cards.toot.detail')"
+            >
               <font-awesome-icon icon="ellipsis" size="sm" />
             </el-button>
           </popper>
@@ -75,12 +91,12 @@ export default {
   props: {
     displayNameStyle: {
       type: Number,
-      default: DisplayStyle.DisplayNameAndUsername.value
+      default: DisplayStyle.DisplayNameAndUsername.value,
     },
     timeFormat: {
       type: Number,
-      default: TimeFormat.Absolute.value
-    }
+      default: TimeFormat.Absolute.value,
+    },
   },
   computed: {
     sampleIcon() {
@@ -119,8 +135,8 @@ export default {
     },
     favouritesCount() {
       return 5
-    }
-  }
+    },
+  },
 }
 </script>
 

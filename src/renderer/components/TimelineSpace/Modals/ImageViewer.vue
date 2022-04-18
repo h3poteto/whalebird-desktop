@@ -1,64 +1,108 @@
 <template>
-<transition name="image-viewer">
-  <div id="image" v-show="modalOpen" @click="close" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
-    <div class="image-wrapper" v-shortkey="modalOpen ? {close: ['esc']} : {}" @shortkey="closeHandle">
-      <div class="image-header">
-        <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
-      </div>
-      <div class="image-content" role="presentation">
-        <span class="button-area"><el-button type="text" v-show="showLeft" v-shortkey="['arrowleft']" @shortkey.native="decrementIndex()"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
-        <Media :src="imageURL" :type="imageType"></Media>
-        <span class="button-area"><el-button type="text" v-show="showRight" v-shortkey="['arrowright']" @shortkey.native="incrementIndex()"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
+  <transition name="image-viewer">
+    <div
+      id="image"
+      v-show="modalOpen"
+      @click="close"
+      :aria-hidden="!modalOpen"
+      aria-modal="true"
+      role="dialog"
+    >
+      <div
+        class="image-wrapper"
+        v-shortkey="modalOpen ? { close: ['esc'] } : {}"
+        @shortkey="closeHandle"
+      >
+        <div class="image-header">
+          <el-button
+            type="text"
+            :icon="ElIconClose"
+            @click="close"
+            class="close-button"
+          ></el-button>
+        </div>
+        <div class="image-content" role="presentation">
+          <span class="button-area"
+            ><el-button
+              type="text"
+              v-show="showLeft"
+              v-shortkey="['arrowleft']"
+              @shortkey.native="decrementIndex()"
+              ><el-icon><el-icon-arrow-left /></el-icon></el-button
+          ></span>
+          <Media :src="imageURL" :type="imageType"></Media>
+          <span class="button-area"
+            ><el-button
+              type="text"
+              v-show="showRight"
+              v-shortkey="['arrowright']"
+              @shortkey.native="incrementIndex()"
+              ><el-icon><el-icon-arrow-right /></el-icon></el-button
+          ></span>
+        </div>
       </div>
     </div>
-  </div>
-</transition>
+  </transition>
 </template>
 
 <script>
+import {
+  ArrowLeft as ElIconArrowLeft,
+  ArrowRight as ElIconArrowRight,
+  Close as ElIconClose,
+} from '@element-plus/icons'
 import Media from './Media'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'image-viewer',
-  components: {
-    Media
-  },
-  computed: {
-    ...mapState({
-      modalOpen: state => state.TimelineSpace.Modals.ImageViewer.modalOpen
-    }),
-    imageURL () {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
-    },
-    imageType () {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageType']
-    },
-    showLeft () {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/showLeft']
-    },
-    showRight () {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/showRight']
+  data() {
+    return {
+      ElIconClose,
     }
   },
+  components: {
+    Media,
+    ElIconArrowLeft,
+    ElIconArrowRight,
+  },
+  name: 'image-viewer',
+  computed: {
+    ...mapState({
+      modalOpen: (state) => state.TimelineSpace.Modals.ImageViewer.modalOpen,
+    }),
+    imageURL() {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
+    },
+    imageType() {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageType']
+    },
+    showLeft() {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/showLeft']
+    },
+    showRight() {
+      return this.$store.getters['TimelineSpace/Modals/ImageViewer/showRight']
+    },
+  },
   methods: {
-    close () {
+    close() {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
     },
-    decrementIndex () {
-      if (this.showLeft) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
+    decrementIndex() {
+      if (this.showLeft)
+        this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
     },
-    incrementIndex () {
-      if (this.showRight) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
+    incrementIndex() {
+      if (this.showRight)
+        this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
     },
-    closeHandle (event) {
+    closeHandle(event) {
       switch (event.srcKey) {
         case 'close':
           this.close()
           break
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -75,7 +119,7 @@ export default {
   .image-header {
     width: 100%;
     text-align: right;
-    padding: 8px 8px 0 0 ;
+    padding: 8px 8px 0 0;
     color: #409eff;
     box-sizing: border-box;
     position: fixed;
@@ -93,10 +137,12 @@ export default {
   }
 }
 
-.image-viewer-enter-active, .image-viewer-leave-active {
+.image-viewer-enter-active,
+.image-viewer-leave-active {
   transition: opacity 0.5s;
 }
-.image-viewer-enter, .image-viewer-leave-to {
+.image-viewer-enter,
+.image-viewer-leave-to {
   opacity: 0;
 }
 .button-area {

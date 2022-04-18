@@ -19,7 +19,11 @@
             />
           </div>
           <div class="form-item" v-show="tagPage()">
-            <el-button type="text" @click="save" :title="$t('hashtag.save_tag')">
+            <el-button
+              type="text"
+              @click="save"
+              :title="$t('hashtag.save_tag')"
+            >
               <font-awesome-icon icon="thumbtack" />
             </el-button>
           </div>
@@ -35,7 +39,7 @@ export default {
   name: 'hashtag',
   data() {
     return {
-      tag: ''
+      tag: '',
     }
   },
   mounted() {
@@ -48,7 +52,7 @@ export default {
       if (route.name === 'tag') {
         this.tag = route.params.tag
       }
-    }
+    },
   },
   methods: {
     id() {
@@ -65,8 +69,8 @@ export default {
     },
     save() {
       this.$store.dispatch('TimelineSpace/Contents/Hashtag/saveTag', this.tag)
-    }
-  }
+    },
+  },
 }
 </script>
 

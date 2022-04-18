@@ -4,7 +4,13 @@
       <el-header>
         <el-row>
           <el-col :span="24" class="close">
-            <el-button type="text" icon="el-icon-close" @click="close" class="close-button"> </el-button>
+            <el-button
+              type="text"
+              :icon="ElIconClose"
+              @click="close"
+              class="close-button"
+            >
+            </el-button>
           </el-col>
         </el-row>
       </el-header>
@@ -31,7 +37,12 @@
             <el-input></el-input>
           </el-form-item>
           <el-form-item class="submit">
-            <el-button type="primary" @click="authorizeSubmit" v-loading="submitting" element-loading-background="rgba(0, 0, 0, 0.8)">
+            <el-button
+              type="primary"
+              @click="authorizeSubmit"
+              v-loading="submitting"
+              element-loading-background="rgba(0, 0, 0, 0.8)"
+            >
               {{ $t('authorize.submit') }}
             </el-button>
           </el-form-item>
@@ -42,25 +53,27 @@
 </template>
 
 <script>
+import { Close as ElIconClose } from '@element-plus/icons'
 export default {
+  data() {
+    return {
+      authorizeForm: {
+        code: null,
+      },
+      submitting: false,
+      ElIconClose,
+    }
+  },
   name: 'authorize',
   props: {
     url: {
       type: String,
-      default: ''
+      default: '',
     },
     sns: {
       type: String,
-      default: 'mastodon'
-    }
-  },
-  data() {
-    return {
-      authorizeForm: {
-        code: null
-      },
-      submitting: false
-    }
+      default: 'mastodon',
+    },
   },
   mounted() {
     console.log(this.url)
@@ -71,32 +84,32 @@ export default {
       this.$store
         .dispatch('Authorize/submit', {
           code: this.authorizeForm.code,
-          sns: this.sns
+          sns: this.sns,
         })
         .finally(() => {
           this.submitting = false
         })
-        .then(id => {
+        .then((id) => {
           this.$router.push({ path: `/${id}/home` })
         })
-        .catch(err => {
+        .catch((err) => {
           if (err.name === 'DuplicateRecordError') {
             this.$message({
               message: this.$t('message.authorize_duplicate_error'),
-              type: 'error'
+              type: 'error',
             })
           } else {
             this.$message({
               message: this.$t('message.authorize_error'),
-              type: 'error'
+              type: 'error',
             })
           }
         })
     },
     close() {
       return this.$router.push({ path: '/', query: { redirect: 'home' } })
-    }
-  }
+    },
+  },
 }
 </script>
 

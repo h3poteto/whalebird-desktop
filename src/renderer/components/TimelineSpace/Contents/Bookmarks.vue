@@ -1,9 +1,28 @@
 <template>
-  <div id="bookmarks" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
-    <DynamicScroller :items="bookmarks" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
+  <div
+    id="bookmarks"
+    v-shortkey="shortcutEnabled ? { next: ['j'] } : {}"
+    @shortkey="handleKey"
+  >
+    <div
+      v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }"
+      @shortkey="reload()"
+    ></div>
+    <DynamicScroller
+      :items="bookmarks"
+      :min-item-size="60"
+      id="scroller"
+      class="scroller"
+      ref="scroller"
+    >
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
+        <DynamicScrollerItem
+          :item="item"
+          :active="active"
+          :size-dependencies="[item.uri]"
+          :data-index="index"
+          :watchData="true"
+        >
           <toot
             :message="item"
             :focused="item.uri === focusedId"
@@ -19,49 +38,55 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
+    <div
+      :class="openSideBar ? 'upper-with-side-bar' : 'upper'"
+      v-show="!heading"
+    >
+      <el-button type="primary" :icon="ElIconArrowUp" @click="upper" circle>
+      </el-button>
     </div>
   </div>
 </template>
 
 <script>
+import { ArrowUp as ElIconArrowUp } from '@element-plus/icons'
 import { mapState, mapGetters } from 'vuex'
 import Toot from '@/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { Event } from '~/src/renderer/components/event'
 
 export default {
-  name: 'bookmarks',
-  components: { Toot },
-  mixins: [reloadable],
   data() {
     return {
       heading: true,
-      focusedId: null
+      focusedId: null,
+      ElIconArrowUp,
     }
   },
+  name: 'bookmarks',
+  components: { Toot },
+  mixins: [reloadable],
   computed: {
     ...mapState('TimelineSpace', {
-      account: state => state.account
+      account: (state) => state.account,
     }),
     ...mapState('App', {
-      backgroundColor: state => state.theme.background_color
+      backgroundColor: (state) => state.theme.background_color,
     }),
     ...mapState('TimelineSpace/HeaderMenu', {
-      startReload: state => state.reload
+      startReload: (state) => state.reload,
     }),
     ...mapState('TimelineSpace/Contents/SideBar', {
-      openSideBar: state => state.openSideBar
+      openSideBar: (state) => state.openSideBar,
     }),
     ...mapState('TimelineSpace/Contents/Bookmarks', {
-      bookmarks: state => state.bookmarks,
-      lazyLoading: state => state.lazyLoading
+      bookmarks: (state) => state.bookmarks,
+      lazyLoading: (state) => state.lazyLoading,
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
       return !this.focusedId && !this.modalOpened
-    }
+    },
   },
   created() {
     this.$store.commit('TimelineSpace/Contents/changeLoading', true)
@@ -70,7 +95,7 @@ export default {
       .catch(() => {
         this.$message({
           message: this.$t('message.bookmark_fetch_error'),
-          type: 'error'
+          type: 'error',
         })
       })
       .finally(() => {
@@ -78,7 +103,9 @@ export default {
       })
   },
   mounted() {
-    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
+    document
+      .getElementById('scroller')
+      .addEventListener('scroll', this.onScroll)
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
@@ -93,8 +120,13 @@ export default {
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Bookmarks/updateBookmarks', [])
-    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
-      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
+    if (
+      document.getElementById('scroller') !== undefined &&
+      document.getElementById('scroller') !== null
+    ) {
+      document
+        .getElementById('scroller')
+        .removeEventListener('scroll', this.onScroll)
       document.getElementById('scroller').scrollTop = 0
     }
   },
@@ -112,7 +144,7 @@ export default {
       } else if (newState === null && !this.heading) {
         this.heading = true
       }
-    }
+    },
   },
   methods: {
     updateToot(message) {
@@ -123,15 +155,21 @@ export default {
     },
     onScroll(event) {
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >=
+          document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
-        this.$store.dispatch('TimelineSpace/Contents/Bookmarks/lazyFetchBookmarks', this.bookmarks[this.bookmarks.length - 1]).catch(() => {
-          this.$message({
-            message: this.$t('message.bookmark_fetch_error'),
-            type: 'error'
+        this.$store
+          .dispatch(
+            'TimelineSpace/Contents/Bookmarks/lazyFetchBookmarks',
+            this.bookmarks[this.bookmarks.length - 1]
+          )
+          .catch(() => {
+            this.$message({
+              message: this.$t('message.bookmark_fetch_error'),
+              type: 'error',
+            })
           })
-        })
       }
       // for upper
       if (event.target.scrollTop > 10 && this.heading) {
@@ -144,12 +182,14 @@ export default {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
         const account = await this.reloadable()
-        await this.$store.dispatch('TimelineSpace/Contents/Bookmarks/fetchBookmarks', account).catch(() => {
-          this.$message({
-            message: this.$t('message.bookmark_fetch_error'),
-            type: 'error'
+        await this.$store
+          .dispatch('TimelineSpace/Contents/Bookmarks/fetchBookmarks', account)
+          .catch(() => {
+            this.$message({
+              message: this.$t('message.bookmark_fetch_error'),
+              type: 'error',
+            })
           })
-        })
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
@@ -159,7 +199,9 @@ export default {
       this.focusedId = null
     },
     focusNext() {
-      const currentIndex = this.bookmarks.findIndex(toot => this.focusedId === toot.uri)
+      const currentIndex = this.bookmarks.findIndex(
+        (toot) => this.focusedId === toot.uri
+      )
       if (currentIndex === -1) {
         this.focusedId = this.bookmarks[0].uri
       } else if (currentIndex < this.bookmarks.length) {
@@ -167,7 +209,9 @@ export default {
       }
     },
     focusPrev() {
-      const currentIndex = this.bookmarks.findIndex(toot => this.focusedId === toot.uri)
+      const currentIndex = this.bookmarks.findIndex(
+        (toot) => this.focusedId === toot.uri
+      )
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
@@ -186,8 +230,8 @@ export default {
           this.focusedId = this.bookmarks[0].uri
           break
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
