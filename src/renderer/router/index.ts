@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, RouteRecordRaw } from 'vue-router'
 
 import Login from '@/components/Login.vue'
 import Authorize from '@/components/Authorize.vue'
@@ -35,188 +34,188 @@ import TimelineSpaceContentsListsShow from '@/components/TimelineSpace/Contents/
 import TimelineSpaceContentsFollowRequests from '@/components/TimelineSpace/Contents/FollowRequests.vue'
 import TimelineSpaceContentsBookmarks from '@/components/TimelineSpace/Contents/Bookmarks.vue'
 
-Vue.use(Router)
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
+    path: '/authorize',
+    name: 'authorize',
+    component: Authorize,
+    props: route => ({ url: route.query.url, sns: route.query.sns })
+  },
+  {
+    path: '/preferences/',
+    name: 'preferences',
+    component: Preferences,
+    children: [
+      {
+        path: 'general',
+        name: 'general',
+        component: PreferencesGeneral
+      },
+      {
+        path: 'appearance',
+        name: 'appearance',
+        component: PreferencesAppearance
+      },
+      {
+        path: 'notification',
+        name: 'notification',
+        component: PreferencesNotification
+      },
+      {
+        path: 'account',
+        name: 'account',
+        component: PreferencesAccount
+      },
+      {
+        path: 'network',
+        name: 'network',
+        component: PreferencesNetwork
+      },
+      {
+        path: 'language',
+        name: 'language',
+        component: PreferencesLanguage
+      }
+    ]
+  },
+  {
+    path: '/',
+    name: 'global-header',
+    component: GlobalHeader,
+    children: [
+      {
+        path: ':id/settings/',
+        component: Settings,
+        children: [
+          {
+            path: 'general',
+            component: SettingsGeneral
+          },
+          {
+            path: 'timeline',
+            component: SettingsTimeline
+          },
+          {
+            path: 'filters',
+            component: SettingsFilters
+          },
+          {
+            path: 'filters/new',
+            component: SettingsFiltersNew
+          },
+          {
+            path: 'filters/:filter_id/edit',
+            component: SettingsFiltersEdit,
+            props: true
+          }
+        ]
+      },
+      {
+        path: ':id/',
+        name: 'timeline-space',
+        component: TimelineSpace,
+        children: [
+          {
+            path: 'home',
+            name: 'home',
+            component: TimelineSpaceContentsHome
+          },
+          {
+            path: 'notifications',
+            name: 'notifications',
+            component: TimelineSpaceContentsNotifications
+          },
+          {
+            path: 'mentions',
+            name: 'mentions',
+            component: TimelineSpaceContentsMentions
+          },
+          {
+            path: 'follow-requests',
+            name: 'follow-requests',
+            component: TimelineSpaceContentsFollowRequests
+          },
+          {
+            path: 'favourites',
+            name: 'favourites',
+            component: TimelineSpaceContentsFavourites
+          },
+          {
+            path: 'bookmarks',
+            name: 'bookmarks',
+            component: TimelineSpaceContentsBookmarks
+          },
+          {
+            path: 'local',
+            name: 'local',
+            component: TimelineSpaceContentsLocal
+          },
+          {
+            path: 'public',
+            name: 'public',
+            component: TimelineSpaceContentsPublic
+          },
+          {
+            path: 'hashtag/',
+            component: TimelineSpaceContentsHashtag,
+            children: [
+              {
+                path: '',
+                name: 'hashtag-list',
+                component: TimelineSpaceContentsHashtagList
+              },
+              {
+                path: ':tag',
+                name: 'tag',
+                component: TimelineSpaceContentsHashtagTag,
+                props: true
+              }
+            ]
+          },
+          {
+            path: 'search',
+            name: 'search',
+            component: TimelineSpaceContentsSearch
+          },
+          {
+            path: 'direct-messages',
+            name: 'direct-messages',
+            component: TimelineSpaceContentsDirectMessages
+          },
+          {
+            path: 'lists',
+            name: 'lists',
+            component: TimelineSpaceContentsListsIndex
+          },
+          {
+            path: 'lists/:list_id/edit',
+            name: 'edit-list',
+            component: TimelineSpaceContentsListsEdit,
+            props: true
+          },
+          {
+            path: 'lists/:list_id',
+            name: 'list',
+            component: TimelineSpaceContentsListsShow,
+            props: true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
+  }
+]
 
-const router = new Router({
-  routes: [
-    {
-      path: '/login',
-      name: 'login',
-      component: Login
-    },
-    {
-      path: '/authorize',
-      name: 'authorize',
-      component: Authorize,
-      props: route => ({ url: route.query.url, sns: route.query.sns })
-    },
-    {
-      path: '/preferences/',
-      name: 'preferences',
-      component: Preferences,
-      children: [
-        {
-          path: 'general',
-          name: 'general',
-          component: PreferencesGeneral
-        },
-        {
-          path: 'appearance',
-          name: 'appearance',
-          component: PreferencesAppearance
-        },
-        {
-          path: 'notification',
-          name: 'notification',
-          component: PreferencesNotification
-        },
-        {
-          path: 'account',
-          name: 'account',
-          component: PreferencesAccount
-        },
-        {
-          path: 'network',
-          name: 'network',
-          component: PreferencesNetwork
-        },
-        {
-          path: 'language',
-          name: 'language',
-          component: PreferencesLanguage
-        }
-      ]
-    },
-    {
-      path: '/',
-      name: 'global-header',
-      component: GlobalHeader,
-      children: [
-        {
-          path: ':id/settings/',
-          component: Settings,
-          children: [
-            {
-              path: 'general',
-              component: SettingsGeneral
-            },
-            {
-              path: 'timeline',
-              component: SettingsTimeline
-            },
-            {
-              path: 'filters',
-              component: SettingsFilters
-            },
-            {
-              path: 'filters/new',
-              component: SettingsFiltersNew
-            },
-            {
-              path: 'filters/:filter_id/edit',
-              component: SettingsFiltersEdit,
-              props: true
-            }
-          ]
-        },
-        {
-          path: ':id/',
-          name: 'timeline-space',
-          component: TimelineSpace,
-          children: [
-            {
-              path: 'home',
-              name: 'home',
-              component: TimelineSpaceContentsHome
-            },
-            {
-              path: 'notifications',
-              name: 'notifications',
-              component: TimelineSpaceContentsNotifications
-            },
-            {
-              path: 'mentions',
-              name: 'mentions',
-              component: TimelineSpaceContentsMentions
-            },
-            {
-              path: 'follow-requests',
-              name: 'follow-requests',
-              component: TimelineSpaceContentsFollowRequests
-            },
-            {
-              path: 'favourites',
-              name: 'favourites',
-              component: TimelineSpaceContentsFavourites
-            },
-            {
-              path: 'bookmarks',
-              name: 'bookmarks',
-              component: TimelineSpaceContentsBookmarks
-            },
-            {
-              path: 'local',
-              name: 'local',
-              component: TimelineSpaceContentsLocal
-            },
-            {
-              path: 'public',
-              name: 'public',
-              component: TimelineSpaceContentsPublic
-            },
-            {
-              path: 'hashtag/',
-              component: TimelineSpaceContentsHashtag,
-              children: [
-                {
-                  path: '',
-                  name: 'hashtag-list',
-                  component: TimelineSpaceContentsHashtagList
-                },
-                {
-                  path: ':tag',
-                  name: 'tag',
-                  component: TimelineSpaceContentsHashtagTag,
-                  props: true
-                }
-              ]
-            },
-            {
-              path: 'search',
-              name: 'search',
-              component: TimelineSpaceContentsSearch
-            },
-            {
-              path: 'direct-messages',
-              name: 'direct-messages',
-              component: TimelineSpaceContentsDirectMessages
-            },
-            {
-              path: 'lists',
-              name: 'lists',
-              component: TimelineSpaceContentsListsIndex
-            },
-            {
-              path: 'lists/:list_id/edit',
-              name: 'edit-list',
-              component: TimelineSpaceContentsListsEdit,
-              props: true
-            },
-            {
-              path: 'lists/:list_id',
-              name: 'list',
-              component: TimelineSpaceContentsListsShow,
-              props: true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      path: '*',
-      redirect: '/'
-    }
-  ]
+const router = createRouter({
+  routes
 })
 
 export default router

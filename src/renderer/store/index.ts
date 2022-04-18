@@ -1,7 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import createLogger from 'vuex/dist/logger'
-import { Route } from 'vue-router'
+import { createStore, createLogger } from 'vuex'
+// import { Route } from 'vue-router'
 
 import App, { AppState } from './App'
 import GlobalHeader, { GlobalHeaderState } from './GlobalHeader'
@@ -13,9 +11,7 @@ import Settings, { SettingsModuleState } from './Settings'
 import organisms, { OrganismsModuleState } from './organisms'
 import { MyWindow } from '~/src/types/global'
 
-Vue.use(Vuex)
-
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export interface RootState {
   App: AppState
@@ -26,10 +22,10 @@ export interface RootState {
   Preferences: PreferencesModuleState
   Settings: SettingsModuleState
   molecules: OrganismsModuleState
-  route: Route
+  // route: Route
 }
 
-export default new Vuex.Store({
+export default createStore({
   strict: win.node_env !== 'production',
   plugins: win.node_env !== 'production' ? [createLogger({})] : [],
   modules: {
