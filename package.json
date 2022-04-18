@@ -72,6 +72,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.0",
     "@fortawesome/free-regular-svg-icons": "^6.1.0",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@panter/vue-i18next": "^0.15.2",
     "@trodi/electron-splashscreen": "^1.0.2",
     "@vue/compat": "^3.2.31",
