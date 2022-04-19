@@ -1,42 +1,18 @@
 <template>
   <transition name="image-viewer">
-    <div
-      id="image"
-      v-show="modalOpen"
-      @click="close"
-      :aria-hidden="!modalOpen"
-      aria-modal="true"
-      role="dialog"
-    >
-      <div
-        class="image-wrapper"
-        v-shortkey="modalOpen ? { close: ['esc'] } : {}"
-        @shortkey="closeHandle"
-      >
+    <div id="image" v-show="modalOpen" @click="close" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
+      <div class="image-wrapper" v-shortkey="modalOpen ? { close: ['esc'] } : {}" @shortkey="closeHandle">
         <div class="image-header">
-          <el-button
-            type="text"
-            :icon="ElIconClose"
-            @click="close"
-            class="close-button"
-          ></el-button>
+          <el-button type="text" :icon="ElIconClose" @click="close" class="close-button"></el-button>
         </div>
         <div class="image-content" role="presentation">
           <span class="button-area"
-            ><el-button
-              type="text"
-              v-show="showLeft"
-              v-shortkey="['arrowleft']"
-              @shortkey.native="decrementIndex()"
+            ><el-button type="text" v-show="showLeft" v-shortkey="['arrowleft']" @shortkey="decrementIndex()"
               ><el-icon><el-icon-arrow-left /></el-icon></el-button
           ></span>
           <Media :src="imageURL" :type="imageType"></Media>
           <span class="button-area"
-            ><el-button
-              type="text"
-              v-show="showRight"
-              v-shortkey="['arrowright']"
-              @shortkey.native="incrementIndex()"
+            ><el-button type="text" v-show="showRight" v-shortkey="['arrowright']" @shortkey="incrementIndex()"
               ><el-icon><el-icon-arrow-right /></el-icon></el-button
           ></span>
         </div>
@@ -46,29 +22,25 @@
 </template>
 
 <script>
-import {
-  ArrowLeft as ElIconArrowLeft,
-  ArrowRight as ElIconArrowRight,
-  Close as ElIconClose,
-} from '@element-plus/icons'
+import { ArrowLeft as ElIconArrowLeft, ArrowRight as ElIconArrowRight, Close as ElIconClose } from '@element-plus/icons'
 import Media from './Media'
 import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
-      ElIconClose,
+      ElIconClose
     }
   },
   components: {
     Media,
     ElIconArrowLeft,
-    ElIconArrowRight,
+    ElIconArrowRight
   },
   name: 'image-viewer',
   computed: {
     ...mapState({
-      modalOpen: (state) => state.TimelineSpace.Modals.ImageViewer.modalOpen,
+      modalOpen: state => state.TimelineSpace.Modals.ImageViewer.modalOpen
     }),
     imageURL() {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
@@ -81,19 +53,17 @@ export default {
     },
     showRight() {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/showRight']
-    },
+    }
   },
   methods: {
     close() {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
     },
     decrementIndex() {
-      if (this.showLeft)
-        this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
+      if (this.showLeft) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
     },
     incrementIndex() {
-      if (this.showRight)
-        this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
+      if (this.showRight) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
     },
     closeHandle(event) {
       switch (event.srcKey) {
@@ -101,8 +71,8 @@ export default {
           this.close()
           break
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

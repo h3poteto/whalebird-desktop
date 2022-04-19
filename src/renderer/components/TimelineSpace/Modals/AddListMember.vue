@@ -1,20 +1,8 @@
 <template>
-  <el-dialog
-    :title="$t('modals.add_list_member.title')"
-    :visible.sync="addListMemberModal"
-    width="400px"
-    class="add-member"
-  >
+  <el-dialog :title="$t('modals.add_list_member.title')" v-model="addListMemberModal" width="400px" class="add-member">
     <div class="search-account" :element-loading-background="loadingBackground">
       <el-form :inline="true">
-        <input
-          v-model="name"
-          placeholder="Account name"
-          class="account-name"
-          v-shortkey="['enter']"
-          @shortkey="search"
-          autofocus
-        />
+        <input v-model="name" placeholder="Account name" class="account-name" v-shortkey="['enter']" @shortkey="search" autofocus />
         <el-button type="text" class="search" @click="search">
           <font-awesome-icon icon="magnifying-glass" />
         </el-button>
@@ -50,26 +38,23 @@ export default {
   name: 'add-list-member',
   data() {
     return {
-      name: '',
+      name: ''
     }
   },
   computed: {
     ...mapState({
-      loadingBackground: (state) => state.App.theme.wrapper_mask_color,
-      accounts: (state) => state.TimelineSpace.Modals.AddListMember.accounts,
-      listId: (state) => state.TimelineSpace.Modals.AddListMember.targetListId,
+      loadingBackground: state => state.App.theme.wrapper_mask_color,
+      accounts: state => state.TimelineSpace.Modals.AddListMember.accounts,
+      listId: state => state.TimelineSpace.Modals.AddListMember.targetListId
     }),
     addListMemberModal: {
       get() {
         return this.$store.state.TimelineSpace.Modals.AddListMember.modalOpen
       },
       set(value) {
-        this.$store.dispatch(
-          'TimelineSpace/Modals/AddListMember/changeModal',
-          value
-        )
-      },
-    },
+        this.$store.dispatch('TimelineSpace/Modals/AddListMember/changeModal', value)
+      }
+    }
   },
   methods: {
     username(account) {
@@ -80,29 +65,23 @@ export default {
       }
     },
     search() {
-      this.$store.dispatch(
-        'TimelineSpace/Modals/AddListMember/search',
-        this.name
-      )
+      this.$store.dispatch('TimelineSpace/Modals/AddListMember/search', this.name)
     },
     add(user) {
       this.$store
         .dispatch('TimelineSpace/Modals/AddListMember/add', user)
         .then(() => {
           this.addListMemberModal = false
-          this.$store.dispatch(
-            'TimelineSpace/Contents/Lists/Edit/fetchMembers',
-            this.listId
-          )
+          this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', this.listId)
         })
         .catch(() => {
           this.$message({
             message: this.$t('message.add_user_error'),
-            type: 'error',
+            type: 'error'
           })
         })
-    },
-  },
+    }
+  }
 }
 </script>
 
