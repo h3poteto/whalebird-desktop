@@ -1,30 +1,5 @@
 <template>
-  <div
-    class="status"
-    tabIndex="0"
-    v-shortkey="
-      shortcutEnabled
-        ? {
-            next: ['j'],
-            prev: ['k'],
-            right: ['l'],
-            left: ['h'],
-            reply: ['r'],
-            boost: ['b'],
-            fav: ['f'],
-            open: ['o'],
-            profile: ['p'],
-            image: ['i'],
-            cw: ['x']
-          }
-        : {}
-    "
-    @shortkey="handleTootControl"
-    ref="status"
-    @click="$emit('selectToot', message)"
-    role="article"
-    aria-label="toot"
-  >
+  <div class="status" tabIndex="0" ref="status" @click="$emit('selectToot', message)" role="article" aria-label="toot">
     <div v-show="filtered" class="filtered">Filtered</div>
     <div v-show="!filtered" class="toot">
       <div class="reblogger" v-show="message.reblog && !message.quote">

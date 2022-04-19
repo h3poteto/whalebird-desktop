@@ -67,7 +67,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import 'vue-popperjs/dist/vue-popper.css'
 import { sync } from 'vuex-router-sync'
 // import shortkey from 'vue-shortkey'
-// import VueI18Next from '@panter/vue-i18next'
+import { createI18n } from 'vue-i18n'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
 import VueVirtualScroller from 'vue-virtual-scroller'
@@ -77,7 +77,7 @@ import './assets/fonts/fonts.css'
 import App from './App.vue'
 import router from '@/router'
 import store from './store'
-// import i18next from '~/src/config/i18n'
+import { translations } from '~/src/config/i18n'
 
 library.add(
   faAnglesRight,
@@ -137,6 +137,12 @@ library.add(
   faLink
 )
 
+const i18n = createI18n({
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: translations
+})
+
 const app = createApp(App)
 app.use(store)
 app.use(router)
@@ -144,13 +150,10 @@ app.use(ElementPlus)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueVirtualScroller)
 app.use(VueResize)
-
+app.use(i18n)
 // Vue.use(shortkey)
-// Vue.use(VueI18Next)
 // Vue.component('popper', Popper)
 
 sync(store, router)
-
-// const i18n: VueI18Next = new VueI18Next(i18next)
 
 app.mount('#app')

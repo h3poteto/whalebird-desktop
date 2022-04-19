@@ -3,35 +3,19 @@
     <h2>{{ $t('preferences.language.title') }}</h2>
     <el-form class="display-language section" label-position="top" size="small">
       <h3>{{ $t('preferences.language.language.title') }}</h3>
-      <el-form-item
-        for="language"
-        :label="$t('preferences.language.language.description')"
-      >
+      <el-form-item for="language" :label="$t('preferences.language.language.description')">
         <el-select id="language" v-model="displayLanguage" placeholder="style">
-          <el-option
-            v-for="lang in languages"
-            :key="lang.key"
-            :label="lang.name"
-            :value="lang.key"
-          >
-          </el-option>
+          <el-option v-for="lang in languages" :key="lang.key" :label="lang.name" :value="lang.key"> </el-option>
         </el-select>
       </el-form-item>
     </el-form>
     <el-form class="spellchecker section" label-position="top" size="small">
       <h3>{{ $t('preferences.language.spellchecker.title') }}</h3>
-      <el-form-item
-        for="spellcheck"
-        :label="$t('preferences.language.spellchecker.enabled')"
-      >
-        <el-switch id="spellcheck" v-model="spellcheck" active-color="#13ce66">
-        </el-switch>
+      <el-form-item for="spellcheck" :label="$t('preferences.language.spellchecker.enabled')">
+        <el-switch id="spellcheck" v-model="spellcheck" active-color="#13ce66"> </el-switch>
       </el-form-item>
       <el-form-item for="spellcheck_languages">
-        <el-checkbox-group
-          id="spellcheck_languages"
-          v-model="spellcheckLanguages"
-        >
+        <el-checkbox-group id="spellcheck_languages" v-model="spellcheckLanguages">
           <el-checkbox
             v-for="language in languages"
             :label="language.key"
@@ -72,8 +56,8 @@ export default {
         Language.sv_se,
         Language.tzm,
         Language.zh_cn,
-        Language.zh_tw,
-      ],
+        Language.zh_tw
+      ]
     }
   },
   computed: {
@@ -82,44 +66,36 @@ export default {
         return this.$store.state.Preferences.Language.language.language
       },
       set(value) {
-        this.$store
-          .dispatch('Preferences/Language/changeLanguage', value)
-          .then((key) => {
-            this.$i18n.i18next.changeLanguage(key)
-          })
-      },
+        this.$store.dispatch('Preferences/Language/changeLanguage', value).then(key => {
+          this.$i18n.locale = key
+        })
+      }
     },
     spellcheck: {
       get() {
-        return this.$store.state.Preferences.Language.language.spellchecker
-          .enabled
+        return this.$store.state.Preferences.Language.language.spellchecker.enabled
       },
       set(value) {
         this.$store.dispatch('Preferences/Language/toggleSpellchecker', value)
-      },
+      }
     },
     spellcheckLanguages: {
       get() {
-        return this.$store.state.Preferences.Language.language.spellchecker
-          .languages
+        return this.$store.state.Preferences.Language.language.spellchecker.languages
       },
       set(value) {
-        this.$store
-          .dispatch('Preferences/Language/updateSpellcheckerLanguages', value)
-          .catch(() => {
-            this.$message({
-              message: this.$t(
-                'message.language_not_support_spellchecker_error'
-              ),
-              type: 'error',
-            })
+        this.$store.dispatch('Preferences/Language/updateSpellcheckerLanguages', value).catch(() => {
+          this.$message({
+            message: this.$t('message.language_not_support_spellchecker_error'),
+            type: 'error'
           })
-      },
-    },
+        })
+      }
+    }
   },
   created() {
     this.$store.dispatch('Preferences/Language/loadLanguage')
-  },
+  }
 }
 </script>
 
