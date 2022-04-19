@@ -1,5 +1,5 @@
 <template>
-  <div class="side-bar" v-if="openSideBar" v-shortkey="shortcutEnabled ? { close: ['esc'] } : {}" @shortkey="handleKey">
+  <div class="side-bar" v-if="openSideBar">
     <div class="header">
       <font-awesome-icon icon="spinner" />
       <font-awesome-icon icon="rotate" />

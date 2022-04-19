@@ -14,11 +14,13 @@
             <span class="el-dropdown-link">
               <font-awesome-icon icon="arrow-up" class="el-icon--right" />
             </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="show">{{ $t('side_menu.show_profile') }}</el-dropdown-item>
-              <el-dropdown-item command="edit">{{ $t('side_menu.edit_profile') }}</el-dropdown-item>
-              <el-dropdown-item command="settings">{{ $t('side_menu.settings') }}</el-dropdown-item>
-            </el-dropdown-menu>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="show">{{ $t('side_menu.show_profile') }}</el-dropdown-item>
+                <el-dropdown-item command="edit">{{ $t('side_menu.edit_profile') }}</el-dropdown-item>
+                <el-dropdown-item command="settings">{{ $t('side_menu.settings') }}</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
           </el-dropdown>
         </div>
       </div>
@@ -184,7 +186,7 @@
           <span>{{ $t('side_menu.hashtag') }}</span>
         </div>
       </el-menu-item>
-      <template v-if="enabledTemplates.tag">
+      <template v-if="enabledTimelines.tag">
         <template v-for="tag in tags" :key="tag.tagName">
           <el-menu-item
             :index="`/${id()}/hashtag/${tag.tagName}`"

@@ -1,7 +1,7 @@
 <template>
   <transition name="image-viewer">
     <div id="image" v-show="modalOpen" @click="close" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
-      <div class="image-wrapper" v-shortkey="modalOpen ? { close: ['esc'] } : {}" @shortkey="closeHandle">
+      <div class="image-wrapper">
         <div class="image-header">
           <el-button type="text" @click="close" class="close-button">
             <font-awesome-icon icon="xmark" />
@@ -9,13 +9,11 @@
         </div>
         <div class="image-content" role="presentation">
           <span class="button-area"
-            ><el-button type="text" v-show="showLeft" v-shortkey="['arrowleft']" @shortkey="decrementIndex()">
-              <font-awesome-icon icon="arrow-left" /> </el-button
+            ><el-button type="text"> <font-awesome-icon icon="arrow-left" /> </el-button
           ></span>
           <Media :src="imageURL" :type="imageType"></Media>
           <span class="button-area"
-            ><el-button type="text" v-show="showRight" v-shortkey="['arrowright']" @shortkey="incrementIndex()">
-              <font-awesome-icon icon="arrow-right" /> </el-button
+            ><el-button type="text"> <font-awesome-icon icon="arrow-right" /> </el-button
           ></span>
         </div>
       </div>

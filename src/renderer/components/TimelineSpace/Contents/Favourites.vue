@@ -1,6 +1,6 @@
 <template>
-  <div id="favourites" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+  <div id="favourites">
+    <div></div>
     <DynamicScroller :items="favourites" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">

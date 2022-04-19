@@ -1,6 +1,6 @@
 <template>
-  <div id="mentions" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+  <div id="mentions">
+    <div></div>
     <DynamicScroller :items="mentions" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <template v-if="item.id === 'loading-card'">

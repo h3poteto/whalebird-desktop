@@ -1,25 +1,5 @@
 <template>
-  <div
-    class="status"
-    tabIndex="0"
-    v-shortkey="
-      shortcutEnabled
-        ? {
-            next: ['j'],
-            prev: ['k'],
-            right: ['l'],
-            left: ['h'],
-            open: ['o'],
-            profile: ['p'],
-          }
-        : {}
-    "
-    @shortkey="handleStatusControl"
-    ref="status"
-    @click="$emit('select')"
-    role="article"
-    aria-label="reblogged toot"
-  >
+  <div class="status" tabIndex="0" ref="status" @click="$emit('select')" role="article" aria-label="reblogged toot">
     <div v-show="filtered(message)" class="filtered">Filtered</div>
     <div v-show="!filtered(message)" class="reblog">
       <div class="action">
@@ -32,30 +12,20 @@
               v-html="
                 $t('notification.reblog.body', {
                   username: username(message.account),
-                  interpolation: { escapeValue: false },
+                  interpolation: { escapeValue: false }
                 })
               "
             ></bdi>
           </span>
         </div>
         <div class="action-icon" role="presentation">
-          <FailoverImg
-            :src="message.account.avatar"
-            :alt="`Avatar of ${message.account.username}`"
-          />
+          <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
         </div>
       </div>
       <div class="clearfix"></div>
       <div class="target" v-on:dblclick="openDetail(message.status)">
-        <div
-          class="icon"
-          @click="openUser(message.status.account)"
-          role="presentation"
-        >
-          <FailoverImg
-            :src="message.status.account.avatar"
-            :alt="`Avatar of ${message.status.account.username}`"
-          />
+        <div class="icon" @click="openUser(message.status.account)" role="presentation">
+          <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" />
         </div>
         <div class="detail">
           <div class="toot-header">
@@ -82,14 +52,7 @@
               >
                 {{ $t('cards.toot.show_more') }}
               </el-button>
-              <el-button
-                v-else
-                plain
-                type="primary"
-                size="medium"
-                class="spoil-button"
-                @click="showContent = false"
-              >
+              <el-button v-else plain type="primary" size="medium" class="spoil-button" @click="showContent = false">
                 {{ $t('cards.toot.hide') }}
               </el-button>
             </div>
@@ -102,9 +65,7 @@
           </div>
           <div class="attachments">
             <el-button
-              v-show="
-                sensitive(message.status) && !isShowAttachments(message.status)
-              "
+              v-show="sensitive(message.status) && !isShowAttachments(message.status)"
               class="show-sensitive"
               type="info"
               @click="showAttachments = true"
@@ -113,9 +74,7 @@
             </el-button>
             <div v-show="isShowAttachments(message.status)">
               <el-button
-                v-show="
-                  sensitive(message.status) && isShowAttachments(message.status)
-                "
+                v-show="sensitive(message.status) && isShowAttachments(message.status)"
                 class="hide-sensitive"
                 type="text"
                 @click="showAttachments = false"
@@ -123,28 +82,10 @@
               >
                 <font-awesome-icon icon="eye" class="hide" />
               </el-button>
-              <div
-                class="media"
-                v-bind:key="media.preview_url"
-                v-for="media in mediaAttachments(message.status)"
-              >
-                <FailoverImg
-                  :src="media.preview_url"
-                  :title="media.description"
-                  :readExif="true"
-                />
-                <el-tag
-                  class="media-label"
-                  size="mini"
-                  v-if="media.type == 'gifv'"
-                  >GIF</el-tag
-                >
-                <el-tag
-                  class="media-label"
-                  size="mini"
-                  v-else-if="media.type == 'video'"
-                  >VIDEO</el-tag
-                >
+              <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message.status)">
+                <FailoverImg :src="media.preview_url" :title="media.description" :readExif="true" />
+                <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
+                <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -178,41 +119,41 @@ export default {
   name: 'reblog',
   components: {
     FailoverImg,
-    LinkPreview,
+    LinkPreview
   },
   props: {
     message: {
       type: Object,
-      default: {},
+      default: {}
     },
     filters: {
       type: Array,
-      default: [],
+      default: []
     },
     focused: {
       type: Boolean,
-      default: false,
+      default: false
     },
     overlaid: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       showContent: false,
-      showAttachments: false,
+      showAttachments: false
     }
   },
   computed: {
     ...mapState('App', {
-      timeFormat: (state) => state.timeFormat,
-      language: (state) => state.language,
-      hideAllAttachments: (state) => state.hideAllAttachments,
+      timeFormat: state => state.timeFormat,
+      language: state => state.language,
+      hideAllAttachments: state => state.hideAllAttachments
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid
-    },
+    }
   },
   mounted() {
     if (this.focused) {
@@ -230,7 +171,7 @@ export default {
           this.$refs.status.blur()
         })
       }
-    },
+    }
   },
   methods: {
     username(account) {
@@ -258,30 +199,16 @@ export default {
       }
       const parsedAccount = findAccount(e.target, 'reblog')
       if (parsedAccount !== null) {
-        this.$store.commit(
-          'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-          true
-        )
+        this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
         this.$store
-          .dispatch(
-            'TimelineSpace/Contents/SideBar/AccountProfile/searchAccount',
-            parsedAccount
-          )
-          .then((account) => {
-            this.$store.dispatch(
-              'TimelineSpace/Contents/SideBar/openAccountComponent'
-            )
-            this.$store.dispatch(
-              'TimelineSpace/Contents/SideBar/AccountProfile/changeAccount',
-              account
-            )
+          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
+          .then(account => {
+            this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+            this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
           })
           .catch(() => {
             this.openLink(e)
-            this.$store.commit(
-              'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-              false
-            )
+            this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
           })
         return parsedAccount
       }
@@ -294,28 +221,14 @@ export default {
       }
     },
     openUser(account) {
-      this.$store.dispatch(
-        'TimelineSpace/Contents/SideBar/openAccountComponent'
-      )
-      this.$store.dispatch(
-        'TimelineSpace/Contents/SideBar/AccountProfile/changeAccount',
-        account
-      )
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-        true
-      )
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
     openDetail(message) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
-      this.$store.dispatch(
-        'TimelineSpace/Contents/SideBar/TootDetail/changeToot',
-        message
-      )
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-        true
-      )
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
     mediaAttachments(message) {
       return message.media_attachments
@@ -330,10 +243,7 @@ export default {
       return !this.spoilered(message) || this.showContent
     },
     sensitive(message) {
-      return (
-        (this.hideAllAttachments || message.sensitive) &&
-        this.mediaAttachments(message).length > 0
-      )
+      return (this.hideAllAttachments || message.sensitive) && this.mediaAttachments(message).length > 0
     },
     isShowAttachments(message) {
       return !this.sensitive(message) || this.showAttachments
@@ -365,8 +275,8 @@ export default {
           this.openUser(this.message.account)
           break
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

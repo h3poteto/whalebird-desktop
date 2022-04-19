@@ -9,7 +9,7 @@
     :model="form"
   >
     <el-form-item :label="$t('login.domain_name_label')" prop="domainName">
-      <el-input v-model="form.domainName" placeholder="mastodon.social" v-shortkey="['enter']" @shortkey="handleKey"></el-input>
+      <el-input v-model="form.domainName" placeholder="mastodon.social"></el-input>
     </el-form-item>
     <p class="proxy-info">
       {{ $t('login.proxy_info') }}<router-link to="/preferences/network">{{ $t('login.proxy_here') }}</router-link>

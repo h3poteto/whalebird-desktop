@@ -3,22 +3,6 @@
     <textarea
       v-model="status"
       ref="status"
-      v-shortkey="
-        openSuggest
-          ? {
-              up: ['arrowup'],
-              down: ['arrowdown'],
-              enter: ['enter'],
-              esc: ['esc']
-            }
-          : {
-              linux: ['ctrl', 'enter'],
-              mac: ['meta', 'enter'],
-              left: ['arrowleft'],
-              right: ['arrowright']
-            }
-      "
-      @shortkey="handleKey"
       @paste="onPaste"
       v-on:input="startSuggest"
       :placeholder="$t('modals.new_toot.status')"
@@ -35,7 +19,6 @@
           v-for="(item, index) in filteredSuggestion"
           :key="index"
           @click="insertItem(item)"
-          @shortkey="insertItem(item)"
           @mouseover="highlightedIndex = index"
           :class="{ highlighted: highlightedIndex === index }"
         >

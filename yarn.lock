@@ -1143,6 +1143,15 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
+"@h3poteto/vue-virtual-scroller@2.0.0-alpha.1":
+  version "2.0.0-alpha.1"
+  resolved "https://npm.pkg.github.com/download/@h3poteto/vue-virtual-scroller/2.0.0-alpha.1/202991053ed05fd7f919ac4451e35a6e8a8f2d5297f042c3f2a7c5de34b05288#793c1b17f3515cd29dc267e67d1a61a90aeec9f1"
+  integrity sha512-gfSCGPGAEBuk6znAsFb/0vj6FiCbvEPXhipAojWECyFPtnFF3XH36So37CfHT7i7+96Mq+e1GfV8HfO6SQaaVg==
+  dependencies:
+    mitt "^2.1.0"
+    vue-observe-visibility "^2.0.0-alpha.1"
+    vue-resize "^2.0.0-alpha.1"
+
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -4391,11 +4400,6 @@ csstype@^2.6.8:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.20.tgz#9229c65ea0b260cf4d3d997cb06288e36a8d6dda"
   integrity sha512-/WwNkdXfckNgw6S5R125rrW8ez139lBHWouiBvX8dfMFtcn6V81REDqnH7+CRpRipfYlyU1CmOnOxrmGcFOjeA==
 
-custom-event-polyfill@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/custom-event-polyfill/-/custom-event-polyfill-1.0.7.tgz#9bc993ddda937c1a30ccd335614c6c58c4f87aee"
-  integrity sha512-TDDkd5DkaZxZFM8p+1I3yAlvM3rSr1wbrOliG4yJiwinMZN8z/iGL7BTlDkrJcYTmgUSb4ywVCc3ZaUtOtC76w==
-
 dashdash@^1.12.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
@@ -5072,11 +5076,6 @@ elegant-spinner@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/elegant-spinner/-/elegant-spinner-1.0.1.tgz#db043521c95d7e303fd8f345bedc3349cfb0729e"
   integrity sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=
-
-element-matches@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/element-matches/-/element-matches-0.1.2.tgz#7345cb71e965bd2b12f725e524591c102198361a"
-  integrity sha512-yWh1otcs3OKUWDvu/IxyI36ZI3WNaRZlI0uG/DK6fu0pap0VYZ0J5pEGTk1zakme+hT0OKHwhlHc0N5TJhY6yQ==
 
 element-plus@^2.1.9:
   version "2.1.9"
@@ -12420,14 +12419,6 @@ vue-router@^4.0.14:
   dependencies:
     "@vue/devtools-api" "^6.0.0"
 
-vue-shortkey@^3.1.7:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/vue-shortkey/-/vue-shortkey-3.1.7.tgz#31c09a99ed597331a6a49a45eeff894a78a19eef"
-  integrity sha512-Wm/vPXXS+4Wl/LoYpD+cZc0J0HIoVlY8Ep0JLIqqswmAya3XUBtsqKbhzEf9sXo+3rZ5p1YsUyZfXas8XD7YjQ==
-  dependencies:
-    custom-event-polyfill "^1.0.7"
-    element-matches "^0.1.2"
-
 vue-style-loader@^4.1.3:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.3.tgz#6d55863a51fa757ab24e89d9371465072aa7bc35"
@@ -12444,15 +12435,6 @@ vue-virtual-scroller@^1.0.10:
     scrollparent "^2.0.1"
     vue-observe-visibility "^0.4.4"
     vue-resize "^0.4.5"
-
-vue-virtual-scroller@^2.0.0-alpha.1:
-  version "2.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/vue-virtual-scroller/-/vue-virtual-scroller-2.0.0-alpha.1.tgz#5b5410105b8e60ca57bbd5f2faf5ad1d8108d046"
-  integrity sha512-Mn5w3Qe06t7c3Imm2RHD43RACab1CCWplpdgzq+/FWJcpQtcGKd5vDep8i+nIwFtzFLsWAqEK0RzM7KrfAcBng==
-  dependencies:
-    mitt "^2.1.0"
-    vue-observe-visibility "^2.0.0-alpha.1"
-    vue-resize "^2.0.0-alpha.1"
 
 vue@^3.2.31:
   version "3.2.33"

@@ -2,7 +2,7 @@
   <el-dialog :title="$t('modals.add_list_member.title')" v-model="addListMemberModal" width="400px" class="add-member">
     <div class="search-account" :element-loading-background="loadingBackground">
       <el-form :inline="true">
-        <input v-model="name" placeholder="Account name" class="account-name" v-shortkey="['enter']" @shortkey="search" autofocus />
+        <input v-model="name" placeholder="Account name" class="account-name" autofocus />
         <el-button type="text" class="search" @click="search">
           <font-awesome-icon icon="magnifying-glass" />
         </el-button>

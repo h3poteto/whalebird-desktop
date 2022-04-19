@@ -10,7 +10,7 @@
       </el-row>
     </el-header>
     <el-container>
-      <div v-shortkey="['esc']" @shortkey="close"></div>
+      <div></div>
       <login-form></login-form>
     </el-container>
   </el-container>

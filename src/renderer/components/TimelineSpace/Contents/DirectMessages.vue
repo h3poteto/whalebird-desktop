@@ -1,6 +1,6 @@
 <template>
-  <div id="directmessages" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+  <div id="directmessages">
+    <div></div>
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">

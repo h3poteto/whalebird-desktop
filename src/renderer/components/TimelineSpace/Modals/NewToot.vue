@@ -12,7 +12,7 @@
       <Quote :message="quoteToMessage" :displayNameStyle="displayNameStyle" v-if="quoteToMessage !== null" ref="quote"></Quote>
       <div class="spoiler" v-if="showContentWarning" ref="spoiler">
         <div class="el-input">
-          <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" v-shortkey.avoid />
+          <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" />
         </div>
       </div>
       <Status
@@ -45,7 +45,6 @@
           :placeholder="$t('modals.new_toot.description')"
           :value="mediaDescriptions[media.id]"
           @input="updateDescription(media.id, $event.target.value)"
-          v-shortkey.avoid
           role="textbox"
           contenteditable="true"
           aria-multiline="true"

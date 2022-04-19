@@ -2,14 +2,7 @@
   <el-dialog v-model="jumpModal" width="440px" class="jump-modal">
     <el-form class="jump-form" v-on:submit.prevent="jump">
       <div class="channel">
-        <input
-          type="text"
-          v-model="channel"
-          :placeholder="$t('modals.jump.jump_to')"
-          ref="channel"
-          v-shortkey="shortcutEnabled ? { next: ['arrowdown'], prev: ['arrowup'], select: ['enter'] } : {}"
-          @shortkey="handleKey"
-        />
+        <input type="text" v-model="channel" :placeholder="$t('modals.jump.jump_to')" ref="channel" />
         <ul class="channel-list">
           <li
             v-for="c in filterdChannel"
