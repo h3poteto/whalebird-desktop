@@ -17,7 +17,7 @@
           <el-table-column :label="$t('preferences.account.association')">
             <template #default="scope">
               <el-button @click.prevent="removeAccount(scope.$index, accounts)" type="text" class="action">
-                <el-icon><el-icon-close /></el-icon>
+                <font-awesome-icon icon="xmark" />
                 {{ $t('preferences.account.remove_association') }}
               </el-button>
             </template>
@@ -25,20 +25,14 @@
           <el-table-column :label="$t('preferences.account.order')" width="60">
             <template #default="scope">
               <div class="allow-up">
-                <el-button
-                  class="arrow-up action"
-                  type="text"
-                  :icon="ElIconArrowUp"
-                  @click.prevent="forward(scope.$index, accounts)"
-                ></el-button>
+                <el-button class="arrow-up action" type="text" @click.prevent="forward(scope.$index, accounts)">
+                  <font-awesome-icon icon="arrow-up" />
+                </el-button>
               </div>
               <div class="allow-down">
-                <el-button
-                  class="arrow-down action"
-                  type="text"
-                  :icon="ElIconArrowDown"
-                  @click.prevent="backward(scope.$index, accounts)"
-                ></el-button>
+                <el-button class="arrow-down action" type="text" @click.prevent="backward(scope.$index, accounts)">
+                  <font-awesome-icon icon="arrow-down" />
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -59,20 +53,14 @@
 </template>
 
 <script>
-import { Close as ElIconClose, ArrowUp as ElIconArrowUp, ArrowDown as ElIconArrowDown } from '@element-plus/icons'
 import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
       openRemoveDialog: false,
-      deletePopoverVisible: false,
-      ElIconArrowUp,
-      ElIconArrowDown
+      deletePopoverVisible: false
     }
-  },
-  components: {
-    ElIconClose
   },
   name: 'account',
   computed: {

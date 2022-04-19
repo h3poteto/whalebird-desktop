@@ -2,7 +2,7 @@
   <div class="link" @click="openLink(url)">
     <el-image :src="icon" class="icon" fit="cover" lazy>
       <div class="image-slot" slot="error">
-        <el-icon><el-icon-link /></el-icon>
+        <font-awesome-icon icon="link" />
       </div>
     </el-image>
     <div class="contents">
@@ -13,37 +13,33 @@
 </template>
 
 <script>
-import { Link as ElIconLink } from '@element-plus/icons'
 export default {
-  components: {
-    ElIconLink,
-  },
   name: 'link-preview',
   props: {
     icon: {
       type: String,
-      default: '',
+      default: ''
     },
     title: {
       type: String,
-      default: '',
+      default: ''
     },
     description: {
       type: String,
-      default: '',
+      default: ''
     },
     url: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
   methods: {
     openLink(link) {
       if (link) {
         return window.shell.openExternal(link)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

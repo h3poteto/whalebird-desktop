@@ -1,45 +1,15 @@
 <template>
-  <div
-    id="notifications"
-    v-shortkey="shortcutEnabled ? { next: ['j'] } : {}"
-    @shortkey="handleKey"
-  >
-    <div
-      v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }"
-      @shortkey="reload()"
-    ></div>
-    <DynamicScroller
-      :items="handledNotifications"
-      :min-item-size="20"
-      id="scroller"
-      class="scroller"
-      ref="scroller"
-    >
+  <div id="notifications" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
+    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+    <DynamicScroller :items="handledNotifications" :min-item-size="20" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <template v-if="item.id === 'loading-card'">
-          <DynamicScrollerItem
-            :item="item"
-            :active="active"
-            :size-dependencies="[item.id]"
-            :data-index="index"
-            :watchData="true"
-          >
-            <StatusLoading
-              :since_id="item.since_id"
-              :max_id="item.max_id"
-              :loading="loadingMore"
-              @load_since="fetchNotificationsSince"
-            />
+          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.id]" :data-index="index" :watchData="true">
+            <StatusLoading :since_id="item.since_id" :max_id="item.max_id" :loading="loadingMore" @load_since="fetchNotificationsSince" />
           </DynamicScrollerItem>
         </template>
         <template v-else>
-          <DynamicScrollerItem
-            :item="item"
-            :active="active"
-            :size-dependencies="[item.url]"
-            :data-index="index"
-            :watchData="true"
-          >
+          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
             <notification
               :message="item"
               :focused="item.id === focusedId"
@@ -56,18 +26,15 @@
         </template>
       </template>
     </DynamicScroller>
-    <div
-      :class="openSideBar ? 'upper-with-side-bar' : 'upper'"
-      v-show="!heading"
-    >
-      <el-button type="primary" :icon="ElIconArrowUp" @click="upper" circle>
+    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
+      <el-button type="primary" @click="upper" circle>
+        <font-awesome-icon icon="arrow-up" />
       </el-button>
     </div>
   </div>
 </template>
 
 <script>
-import { ArrowUp as ElIconArrowUp } from '@element-plus/icons'
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Notification from '~/src/renderer/components/organisms/Notification'
@@ -84,8 +51,7 @@ export default {
       observer: null,
       scrollTime: null,
       resizeTime: null,
-      loadingMore: false,
-      ElIconArrowUp,
+      loadingMore: false
     }
   },
   name: 'notifications',
@@ -93,20 +59,17 @@ export default {
   mixins: [reloadable],
   computed: {
     ...mapState({
-      openSideBar: (state) => state.TimelineSpace.Contents.SideBar.openSideBar,
-      startReload: (state) => state.TimelineSpace.HeaderMenu.reload,
-      backgroundColor: (state) => state.App.theme.background_color,
+      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
+      backgroundColor: state => state.App.theme.background_color
     }),
     ...mapState('TimelineSpace/Contents/Notifications', {
-      notifications: (state) => state.notifications,
-      lazyLoading: (state) => state.lazyLoading,
-      heading: (state) => state.heading,
-      scrolling: (state) => state.scrolling,
+      notifications: state => state.notifications,
+      lazyLoading: state => state.lazyLoading,
+      heading: state => state.heading,
+      scrolling: state => state.scrolling
     }),
-    ...mapGetters('TimelineSpace/Contents/Notifications', [
-      'handledNotifications',
-      'filters',
-    ]),
+    ...mapGetters('TimelineSpace/Contents/Notifications', ['handledNotifications', 'filters']),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
       if (this.modalOpened) {
@@ -116,21 +79,14 @@ export default {
         return true
       }
       // Sometimes notifications are deleted, so perhaps focused notification don't exist.
-      const currentIndex = this.handledNotifications.findIndex(
-        (notification) => this.focusedId === notification.id
-      )
+      const currentIndex = this.handledNotifications.findIndex(notification => this.focusedId === notification.id)
       return currentIndex === -1
-    },
+    }
   },
   mounted() {
-    this.$store.commit(
-      'TimelineSpace/SideMenu/changeUnreadNotifications',
-      false
-    )
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
     this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
-    document
-      .getElementById('scroller')
-      .addEventListener('scroll', this.onScroll)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
 
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
@@ -149,32 +105,18 @@ export default {
     this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (
-        this.loadingMore ||
-        (this.scrollPosition &&
-          !this.heading &&
-          !this.lazyLoading &&
-          !this.scrolling)
-      ) {
+      if (this.loadingMore || (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling)) {
         this.resizeTime = moment()
         this.scrollPosition.restore()
       }
     })
 
-    const scrollWrapper = el.getElementsByClassName(
-      'vue-recycle-scroller__item-wrapper'
-    )[0]
+    const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
     this.observer.observe(scrollWrapper)
   },
   beforeUpdate() {
-    if (
-      this.$store.state.TimelineSpace.SideMenu.unreadNotifications &&
-      this.heading
-    ) {
-      this.$store.commit(
-        'TimelineSpace/SideMenu/changeUnreadNotifications',
-        false
-      )
+    if (this.$store.state.TimelineSpace.SideMenu.unreadNotifications && this.heading) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadNotifications', false)
     }
     if (this.scrollPosition) {
       this.scrollPosition.prepare()
@@ -185,20 +127,10 @@ export default {
     this.observer.disconnect()
   },
   destroyed() {
-    this.$store.commit(
-      'TimelineSpace/Contents/Notifications/changeHeading',
-      true
-    )
-    this.$store.commit(
-      'TimelineSpace/Contents/Notifications/archiveNotifications'
-    )
-    if (
-      document.getElementById('scroller') !== undefined &&
-      document.getElementById('scroller') !== null
-    ) {
-      document
-        .getElementById('scroller')
-        .removeEventListener('scroll', this.onScroll)
+    this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
+    this.$store.commit('TimelineSpace/Contents/Notifications/archiveNotifications')
+    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
       document.getElementById('scroller').scrollTop = 0
     }
   },
@@ -212,15 +144,9 @@ export default {
     },
     focusedId: function (newState, _oldState) {
       if (newState >= 0 && this.heading) {
-        this.$store.commit(
-          'TimelineSpace/Contents/Notifications/changeHeading',
-          false
-        )
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
       } else if (newState === null && !this.heading) {
-        this.$store.commit(
-          'TimelineSpace/Contents/Notifications/changeHeading',
-          true
-        )
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       }
     },
@@ -228,7 +154,7 @@ export default {
       if (this.heading && newState.length > 0) {
         this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker')
       }
-    },
+    }
   },
   methods: {
     onScroll(event) {
@@ -237,15 +163,11 @@ export default {
       }
       this.scrollTime = moment()
       if (!this.scrolling) {
-        this.$store.commit(
-          'TimelineSpace/Contents/Notifications/changeScrolling',
-          true
-        )
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeScrolling', true)
       }
 
       if (
-        event.target.clientHeight + event.target.scrollTop >=
-          document.getElementById('scroller').scrollHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store
@@ -253,41 +175,29 @@ export default {
             'TimelineSpace/Contents/Notifications/lazyFetchNotifications',
             this.handledNotifications[this.handledNotifications.length - 1]
           )
-          .then((statuses) => {
+          .then(statuses => {
             if (statuses === null) {
               return
             }
             if (statuses.length > 0) {
-              this.$store.commit(
-                'TimelineSpace/Contents/Notifications/changeScrolling',
-                true
-              )
+              this.$store.commit('TimelineSpace/Contents/Notifications/changeScrolling', true)
               setTimeout(() => {
-                this.$store.commit(
-                  'TimelineSpace/Contents/Notifications/changeScrolling',
-                  false
-                )
+                this.$store.commit('TimelineSpace/Contents/Notifications/changeScrolling', false)
               }, 500)
             }
           })
           .catch(() => {
             this.$message({
               message: this.$t('message.notification_fetch_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       }
 
       if (event.target.scrollTop > 10 && this.heading) {
-        this.$store.commit(
-          'TimelineSpace/Contents/Notifications/changeHeading',
-          false
-        )
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', false)
       } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit(
-          'TimelineSpace/Contents/Notifications/changeHeading',
-          true
-        )
+        this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
         this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker')
       }
@@ -296,25 +206,17 @@ export default {
         const now = moment()
         if (now.diff(this.scrollTime) >= 150) {
           this.scrollTime = null
-          this.$store.commit(
-            'TimelineSpace/Contents/Notifications/changeScrolling',
-            false
-          )
+          this.$store.commit('TimelineSpace/Contents/Notifications/changeScrolling', false)
         }
       }, 150)
     },
     fetchNotificationsSince(since_id) {
       this.loadingMore = true
-      this.$store
-        .dispatch(
-          'TimelineSpace/Contents/Notifications/fetchNotificationsSince',
-          since_id
-        )
-        .finally(() => {
-          setTimeout(() => {
-            this.loadingMore = false
-          }, 500)
-        })
+      this.$store.dispatch('TimelineSpace/Contents/Notifications/fetchNotificationsSince', since_id).finally(() => {
+        setTimeout(() => {
+          this.loadingMore = false
+        }, 500)
+      })
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
@@ -326,19 +228,14 @@ export default {
       }
     },
     updateToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/Notifications/updateToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/Notifications/updateToot', message)
     },
     upper() {
       this.$refs.scroller.scrollToItem(0)
       this.focusedId = null
     },
     focusNext() {
-      const currentIndex = this.handledNotifications.findIndex(
-        (notification) => this.focusedId === notification.id
-      )
+      const currentIndex = this.handledNotifications.findIndex(notification => this.focusedId === notification.id)
       if (currentIndex === -1) {
         this.focusedId = this.handledNotifications[0].id
       } else if (currentIndex < this.handledNotifications.length) {
@@ -346,9 +243,7 @@ export default {
       }
     },
     focusPrev() {
-      const currentIndex = this.handledNotifications.findIndex(
-        (notification) => this.focusedId === notification.id
-      )
+      const currentIndex = this.handledNotifications.findIndex(notification => this.focusedId === notification.id)
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
@@ -367,8 +262,8 @@ export default {
           this.focusedId = this.handledNotifications[0].id
           break
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -1,28 +1,9 @@
 <template>
-  <div
-    id="favourites"
-    v-shortkey="shortcutEnabled ? { next: ['j'] } : {}"
-    @shortkey="handleKey"
-  >
-    <div
-      v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }"
-      @shortkey="reload()"
-    ></div>
-    <DynamicScroller
-      :items="favourites"
-      :min-item-size="60"
-      id="scroller"
-      class="scroller"
-      ref="scroller"
-    >
+  <div id="favourites" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
+    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+    <DynamicScroller :items="favourites" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem
-          :item="item"
-          :active="active"
-          :size-dependencies="[item.uri]"
-          :data-index="index"
-          :watchData="true"
-        >
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             :message="item"
             :focused="item.uri === focusedId"
@@ -39,18 +20,15 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div
-      :class="openSideBar ? 'upper-with-side-bar' : 'upper'"
-      v-show="!heading"
-    >
+    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" :icon="ElIconArrowUp" @click="upper" circle>
+        <font-awesome-icon icon="arrow-up" />
       </el-button>
     </div>
   </div>
 </template>
 
 <script>
-import { ArrowUp as ElIconArrowUp } from '@element-plus/icons'
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
@@ -60,8 +38,7 @@ export default {
   data() {
     return {
       heading: true,
-      focusedId: null,
-      ElIconArrowUp,
+      focusedId: null
     }
   },
   name: 'favourites',
@@ -69,30 +46,26 @@ export default {
   mixins: [reloadable],
   computed: {
     ...mapState({
-      openSideBar: (state) => state.TimelineSpace.Contents.SideBar.openSideBar,
-      backgroundColor: (state) => state.App.theme.background_color,
-      startReload: (state) => state.TimelineSpace.HeaderMenu.reload,
-      account: (state) => state.TimelineSpace.account,
-      favourites: (state) => state.TimelineSpace.Contents.Favourites.favourites,
-      lazyLoading: (state) =>
-        state.TimelineSpace.Contents.Favourites.lazyLoading,
+      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
+      backgroundColor: state => state.App.theme.background_color,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
+      account: state => state.TimelineSpace.account,
+      favourites: state => state.TimelineSpace.Contents.Favourites.favourites,
+      lazyLoading: state => state.TimelineSpace.Contents.Favourites.lazyLoading
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
       return !this.focusedId && !this.modalOpened
-    },
+    }
   },
   created() {
     this.$store.commit('TimelineSpace/Contents/changeLoading', true)
     this.$store
-      .dispatch(
-        'TimelineSpace/Contents/Favourites/fetchFavourites',
-        this.account
-      )
+      .dispatch('TimelineSpace/Contents/Favourites/fetchFavourites', this.account)
       .catch(() => {
         this.$message({
           message: this.$t('message.favourite_fetch_error'),
-          type: 'error',
+          type: 'error'
         })
       })
       .finally(() => {
@@ -100,9 +73,7 @@ export default {
       })
   },
   mounted() {
-    document
-      .getElementById('scroller')
-      .addEventListener('scroll', this.onScroll)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
     Event.$on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
@@ -117,13 +88,8 @@ export default {
   },
   destroyed() {
     this.$store.commit('TimelineSpace/Contents/Favourites/updateFavourites', [])
-    if (
-      document.getElementById('scroller') !== undefined &&
-      document.getElementById('scroller') !== null
-    ) {
-      document
-        .getElementById('scroller')
-        .removeEventListener('scroll', this.onScroll)
+    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
       document.getElementById('scroller').scrollTop = 0
     }
   },
@@ -141,36 +107,26 @@ export default {
       } else if (newState === null && !this.heading) {
         this.heading = true
       }
-    },
+    }
   },
   methods: {
     updateToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/Favourites/updateToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/Favourites/updateToot', message)
     },
     deleteToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/Favourites/deleteToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/Favourites/deleteToot', message)
     },
     onScroll(event) {
       if (
-        event.target.clientHeight + event.target.scrollTop >=
-          document.getElementById('scroller').scrollHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store
-          .dispatch(
-            'TimelineSpace/Contents/Favourites/lazyFetchFavourites',
-            this.favourites[this.favourites.length - 1]
-          )
+          .dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites', this.favourites[this.favourites.length - 1])
           .catch(() => {
             this.$message({
               message: this.$t('message.favourite_fetch_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       }
@@ -185,17 +141,12 @@ export default {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
         const account = await this.reloadable()
-        await this.$store
-          .dispatch(
-            'TimelineSpace/Contents/Favourites/fetchFavourites',
-            account
-          )
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.favourite_fetch_error'),
-              type: 'error',
-            })
+        await this.$store.dispatch('TimelineSpace/Contents/Favourites/fetchFavourites', account).catch(() => {
+          this.$message({
+            message: this.$t('message.favourite_fetch_error'),
+            type: 'error'
           })
+        })
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }
@@ -205,9 +156,7 @@ export default {
       this.focusedId = null
     },
     focusNext() {
-      const currentIndex = this.favourites.findIndex(
-        (toot) => this.focusedId === toot.uri
-      )
+      const currentIndex = this.favourites.findIndex(toot => this.focusedId === toot.uri)
       if (currentIndex === -1) {
         this.focusedId = this.favourites[0].uri
       } else if (currentIndex < this.favourites.length) {
@@ -215,9 +164,7 @@ export default {
       }
     },
     focusPrev() {
-      const currentIndex = this.favourites.findIndex(
-        (toot) => this.focusedId === toot.uri
-      )
+      const currentIndex = this.favourites.findIndex(toot => this.focusedId === toot.uri)
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
@@ -236,8 +183,8 @@ export default {
           this.focusedId = this.favourites[0].uri
           break
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

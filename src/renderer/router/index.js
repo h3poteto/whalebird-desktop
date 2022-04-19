@@ -1,4 +1,4 @@
-import { createRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import Login from '@/components/Login.vue'
 import Authorize from '@/components/Authorize.vue'
@@ -215,7 +215,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  routes
+  history: createWebHistory(),
+  routes: routes
 })
 
 export default router

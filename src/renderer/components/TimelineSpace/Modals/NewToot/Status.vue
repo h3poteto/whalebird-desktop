@@ -9,13 +9,13 @@
               up: ['arrowup'],
               down: ['arrowdown'],
               enter: ['enter'],
-              esc: ['esc'],
+              esc: ['esc']
             }
           : {
               linux: ['ctrl', 'enter'],
               mac: ['meta', 'enter'],
               left: ['arrowleft'],
-              right: ['arrowright'],
+              right: ['arrowright']
             }
       "
       @shortkey="handleKey"
@@ -29,13 +29,7 @@
       autofocus
     >
     </textarea>
-    <el-popover
-      placement="bottom-start"
-      width="300"
-      trigger="manual"
-      :model-value="openSuggest"
-      popper-class="suggest-popper"
-    >
+    <el-popover placement="bottom-start" width="300" trigger="manual" :model-value="openSuggest" popper-class="suggest-popper">
       <ul class="suggest-list">
         <li
           v-for="(item, index) in filteredSuggestion"
@@ -60,62 +54,58 @@
         <font-awesome-icon :icon="['far', 'face-smile']" size="lg" />
       </el-button>
       <div v-if="openEmojiPicker" class="emoji-picker">
-        <picker
-          set="emojione"
-          :autoFocus="true"
-          :custom="pickerEmojis"
-          @select="selectEmoji"
-        />
+        <picker set="emojione" :autoFocus="true" :custom="pickerEmojis" @select="selectEmoji" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import { mapState, mapGetters } from 'vuex'
-import { Picker } from 'emoji-mart-vue'
+import { Picker } from 'emoji-mart-vue-fast/src'
 import ClickOutside from 'vue-click-outside'
 import suggestText from '@/utils/suggestText'
 
 export default {
   name: 'status',
   directives: {
-    ClickOutside,
+    ClickOutside
   },
   components: {
-    Picker,
+    Picker
   },
   props: {
     value: {
-      type: String,
+      type: String
     },
     opened: {
       type: Boolean,
-      default: false,
+      default: false
     },
     fixCursorPos: {
       type: Boolean,
-      default: false,
+      default: false
     },
     height: {
       type: Number,
-      default: 120,
-    },
+      default: 120
+    }
   },
   data() {
     return {
       highlightedIndex: 0,
-      openEmojiPicker: false,
+      openEmojiPicker: false
     }
   },
   computed: {
     ...mapState('TimelineSpace/Modals/NewToot/Status', {
-      filteredAccounts: (state) => state.filteredAccounts,
-      filteredHashtags: (state) => state.filteredHashtags,
-      openSuggest: (state) => state.openSuggest,
-      startIndex: (state) => state.startIndex,
-      matchWord: (state) => state.matchWord,
-      filteredSuggestion: (state) => state.filteredSuggestion,
+      filteredAccounts: state => state.filteredAccounts,
+      filteredHashtags: state => state.filteredHashtags,
+      openSuggest: state => state.openSuggest,
+      startIndex: state => state.startIndex,
+      matchWord: state => state.matchWord,
+      filteredSuggestion: state => state.filteredSuggestion
     }),
     ...mapGetters('TimelineSpace/Modals/NewToot/Status', ['pickerEmojis']),
     status: {
@@ -124,8 +114,8 @@ export default {
       },
       set: function (value) {
         this.$emit('input', value)
-      },
-    },
+      }
+    }
   },
   mounted() {
     // When change account, the new toot modal is recreated.
@@ -148,7 +138,7 @@ export default {
         this.closeSuggest()
         this.hideEmojiPicker()
       }
-    },
+    }
   },
   methods: {
     async startSuggest(e) {
@@ -184,10 +174,7 @@ export default {
     },
     async suggestAccount(start, word) {
       try {
-        await this.$store.dispatch(
-          'TimelineSpace/Modals/NewToot/Status/suggestAccount',
-          { word: word, start: start }
-        )
+        await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestAccount', { word: word, start: start })
         this.$emit('suggestOpened', true)
         return true
       } catch (err) {
@@ -197,10 +184,7 @@ export default {
     },
     async suggestHashtag(start, word) {
       try {
-        await this.$store.dispatch(
-          'TimelineSpace/Modals/NewToot/Status/suggestHashtag',
-          { word: word, start: start }
-        )
+        await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestHashtag', { word: word, start: start })
         this.$emit('suggestOpened', true)
         return true
       } catch (err) {
@@ -210,10 +194,7 @@ export default {
     },
     suggestEmoji(start, word) {
       try {
-        this.$store.dispatch(
-          'TimelineSpace/Modals/NewToot/Status/suggestEmoji',
-          { word: word, start: start }
-        )
+        this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestEmoji', { word: word, start: start })
         this.$emit('suggestOpened', true)
         return true
       } catch (err) {
@@ -239,14 +220,10 @@ export default {
     },
     insertItem(item) {
       if (item.code) {
-        const str = `${this.status.slice(0, this.startIndex - 1)}${
-          item.code
-        } ${this.status.slice(this.startIndex + this.matchWord.length)}`
+        const str = `${this.status.slice(0, this.startIndex - 1)}${item.code} ${this.status.slice(this.startIndex + this.matchWord.length)}`
         this.status = str
       } else {
-        const str = `${this.status.slice(0, this.startIndex - 1)}${
-          item.name
-        } ${this.status.slice(this.startIndex + this.matchWord.length)}`
+        const str = `${this.status.slice(0, this.startIndex - 1)}${item.name} ${this.status.slice(this.startIndex + this.matchWord.length)}`
         this.status = str
       }
       this.closeSuggest()
@@ -300,18 +277,14 @@ export default {
     selectEmoji(emoji) {
       const current = this.$refs.status.selectionStart
       if (emoji.native) {
-        this.status = `${this.status.slice(0, current)}${
-          emoji.native
-        } ${this.status.slice(current)}`
+        this.status = `${this.status.slice(0, current)}${emoji.native} ${this.status.slice(current)}`
       } else {
         // Custom emoji don't have natvie code
-        this.status = `${this.status.slice(0, current)}${
-          emoji.name
-        } ${this.status.slice(current)}`
+        this.status = `${this.status.slice(0, current)}${emoji.name} ${this.status.slice(current)}`
       }
       this.hideEmojiPicker()
-    },
-  },
+    }
+  }
 }
 </script>
 

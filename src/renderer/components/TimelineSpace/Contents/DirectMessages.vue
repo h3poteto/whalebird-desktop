@@ -1,28 +1,9 @@
 <template>
-  <div
-    id="directmessages"
-    v-shortkey="shortcutEnabled ? { next: ['j'] } : {}"
-    @shortkey="handleKey"
-  >
-    <div
-      v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }"
-      @shortkey="reload()"
-    ></div>
-    <DynamicScroller
-      :items="timeline"
-      :min-item-size="86"
-      id="scroller"
-      class="scroller"
-      ref="scroller"
-    >
+  <div id="directmessages" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
+    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+    <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem
-          :item="item"
-          :active="active"
-          :size-dependencies="[item.uri]"
-          :data-index="index"
-          :watchData="true"
-        >
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             :message="item"
             :focused="item.uri + item.id === focusedId"
@@ -40,18 +21,15 @@
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div
-      :class="openSideBar ? 'upper-with-side-bar' : 'upper'"
-      v-show="!heading"
-    >
-      <el-button type="primary" :icon="ElIconArrowUp" @click="upper" circle>
+    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
+      <el-button type="primary" @click="upper" circle>
+        <font-awesome-icon icon="arrow-up" />
       </el-button>
     </div>
   </div>
 </template>
 
 <script>
-import { ArrowUp as ElIconArrowUp } from '@element-plus/icons'
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
@@ -66,8 +44,7 @@ export default {
       scrollPosition: null,
       observer: null,
       scrollTime: null,
-      resizeTime: null,
-      ElIconArrowUp,
+      resizeTime: null
     }
   },
   name: 'directmessages',
@@ -75,17 +52,16 @@ export default {
   mixins: [reloadable],
   computed: {
     ...mapState('TimelineSpace/Contents/DirectMessages', {
-      timeline: (state) => state.timeline,
-      lazyLoading: (state) => state.lazyLoading,
-      heading: (state) => state.heading,
-      scrolling: (state) => state.scrolling,
+      timeline: state => state.timeline,
+      lazyLoading: state => state.lazyLoading,
+      heading: state => state.heading,
+      scrolling: state => state.scrolling
     }),
     ...mapState({
-      openSideBar: (state) => state.TimelineSpace.Contents.SideBar.openSideBar,
-      backgroundColor: (state) => state.App.theme.background_color,
-      startReload: (state) => state.TimelineSpace.HeaderMenu.reload,
-      unreadNotification: (state) =>
-        state.TimelineSpace.timelineSetting.unreadNotification,
+      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
+      backgroundColor: state => state.App.theme.background_color,
+      startReload: state => state.TimelineSpace.HeaderMenu.reload,
+      unreadNotification: state => state.TimelineSpace.timelineSetting.unreadNotification
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
@@ -96,23 +72,16 @@ export default {
         return true
       }
       // Sometimes toots are deleted, so perhaps focused toot don't exist.
-      const currentIndex = this.timeline.findIndex(
-        (toot) => this.focusedId === toot.uri + toot.id
-      )
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       return currentIndex === -1
-    },
+    }
   },
   async mounted() {
-    this.$store.commit(
-      'TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline',
-      false
-    )
-    document
-      .getElementById('scroller')
-      .addEventListener('scroll', this.onScroll)
+    this.$store.commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', false)
+    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
     if (!this.unreadNotification.direct) {
       this.$store.commit('TimelineSpace/Contents/changeLoading', true)
-      await this.initialize().finally((_) => {
+      await this.initialize().finally(_ => {
         this.$store.commit('TimelineSpace/Contents/changeLoading', false)
       })
     }
@@ -130,31 +99,18 @@ export default {
     this.scrollPosition.prepare()
 
     this.observer = new ResizeObserver(() => {
-      if (
-        this.scrollPosition &&
-        !this.heading &&
-        !this.lazyLoading &&
-        !this.scrolling
-      ) {
+      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
         this.resizeTime = moment()
         this.scrollPosition.restore()
       }
     })
 
-    const scrollWrapper = el.getElementsByClassName(
-      'vue-recycle-scroller__item-wrapper'
-    )[0]
+    const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
     this.observer.observe(scrollWrapper)
   },
   beforeUpdate() {
-    if (
-      this.$store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline &&
-      this.heading
-    ) {
-      this.$store.commit(
-        'TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline',
-        false
-      )
+    if (this.$store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline && this.heading) {
+      this.$store.commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', false)
     }
     if (this.scrollPosition) {
       this.scrollPosition.prepare()
@@ -169,21 +125,13 @@ export default {
     this.observer.disconnect()
   },
   destroyed() {
-    this.$store.commit(
-      'TimelineSpace/Contents/DirectMessages/changeHeading',
-      true
-    )
+    this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/DirectMessages/archiveTimeline')
     if (!this.unreadNotification.direct) {
       this.$store.commit('TimelineSpace/Contents/DirectMessages/clearTimeline')
     }
-    if (
-      document.getElementById('scroller') !== undefined &&
-      document.getElementById('scroller') !== null
-    ) {
-      document
-        .getElementById('scroller')
-        .removeEventListener('scroll', this.onScroll)
+    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
+      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
       document.getElementById('scroller').scrollTop = 0
     }
   },
@@ -197,28 +145,20 @@ export default {
     },
     focusedId: function (newState, _oldState) {
       if (newState && this.heading) {
-        this.$store.commit(
-          'TimelineSpace/Contents/DirectMessages/changeHeading',
-          false
-        )
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', false)
       } else if (newState === null && !this.heading) {
-        this.$store.commit(
-          'TimelineSpace/Contents/DirectMessages/changeHeading',
-          true
-        )
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
       }
-    },
+    }
   },
   methods: {
     async initialize() {
-      await this.$store
-        .dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline')
-        .catch((_) => {
-          this.$message({
-            message: this.$t('message.timeline_fetch_error'),
-            type: 'error',
-          })
+      await this.$store.dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline').catch(_ => {
+        this.$message({
+          message: this.$t('message.timeline_fetch_error'),
+          type: 'error'
         })
+      })
       await this.$store.dispatch('TimelineSpace/bindDirectMessagesStreaming')
       this.$store.dispatch('TimelineSpace/startDirectMessagesStreaming')
     },
@@ -228,82 +168,54 @@ export default {
       }
       this.scrollTime = moment()
       if (!this.scrolling) {
-        this.$store.commit(
-          'TimelineSpace/Contents/DirectMessages/changeScrolling',
-          true
-        )
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeScrolling', true)
       }
 
       // for lazyLoading
       if (
-        event.target.clientHeight + event.target.scrollTop >=
-          document.getElementById('scroller').scrollHeight - 10 &&
+        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
         !this.lazyloading
       ) {
         this.$store
-          .dispatch(
-            'TimelineSpace/Contents/DirectMessages/lazyFetchTimeline',
-            this.timeline[this.timeline.length - 1]
-          )
-          .then((statuses) => {
+          .dispatch('TimelineSpace/Contents/DirectMessages/lazyFetchTimeline', this.timeline[this.timeline.length - 1])
+          .then(statuses => {
             if (statuses === null) {
               return
             }
             if (statuses.length > 0) {
-              this.$store.commit(
-                'TimelineSpace/Contents/DirectMessages/changeScrolling',
-                true
-              )
+              this.$store.commit('TimelineSpace/Contents/DirectMessages/changeScrolling', true)
               setTimeout(() => {
-                this.$store.commit(
-                  'TimelineSpace/Contents/DirectMessages/changeScrolling',
-                  false
-                )
+                this.$store.commit('TimelineSpace/Contents/DirectMessages/changeScrolling', false)
               }, 500)
             }
           })
           .catch(() => {
             this.$message({
               message: this.$t('message.timeline_fetch_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       }
 
       if (event.target.scrollTop > 10 && this.heading) {
-        this.$store.commit(
-          'TimelineSpace/Contents/DirectMessages/changeHeading',
-          false
-        )
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', false)
       } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit(
-          'TimelineSpace/Contents/DirectMessages/changeHeading',
-          true
-        )
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
       }
 
       setTimeout(() => {
         const now = moment()
         if (now.diff(this.scrollTime) >= 150) {
           this.scrollTime = null
-          this.$store.commit(
-            'TimelineSpace/Contents/DirectMessages/changeScrolling',
-            false
-          )
+          this.$store.commit('TimelineSpace/Contents/DirectMessages/changeScrolling', false)
         }
       }, 150)
     },
     updateToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/DirectMessages/updateToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/DirectMessages/updateToot', message)
     },
     deleteToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/DirectMessages/deleteToot',
-        message.id
-      )
+      this.$store.commit('TimelineSpace/Contents/DirectMessages/deleteToot', message.id)
     },
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
@@ -318,27 +230,19 @@ export default {
       this.focusedId = null
     },
     focusNext() {
-      const currentIndex = this.timeline.findIndex(
-        (toot) => this.focusedId === toot.uri + toot.id
-      )
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       if (currentIndex === -1) {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
       } else if (currentIndex < this.timeline.length) {
-        this.focusedId =
-          this.timeline[currentIndex + 1].uri +
-          this.timeline[currentIndex + 1].id
+        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
       }
     },
     focusPrev() {
-      const currentIndex = this.timeline.findIndex(
-        (toot) => this.focusedId === toot.uri + toot.id
-      )
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       if (currentIndex === 0) {
         this.focusedId = null
       } else if (currentIndex > 0) {
-        this.focusedId =
-          this.timeline[currentIndex - 1].uri +
-          this.timeline[currentIndex - 1].id
+        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
       }
     },
     focusToot(message) {
@@ -355,18 +259,12 @@ export default {
       }
     },
     sizeChanged() {
-      this.$store.commit(
-        'TimelineSpace/Contents/DirectMessages/changeScrolling',
-        true
-      )
+      this.$store.commit('TimelineSpace/Contents/DirectMessages/changeScrolling', true)
       setTimeout(() => {
-        this.$store.commit(
-          'TimelineSpace/Contents/DirectMessages/changeScrolling',
-          false
-        )
+        this.$store.commit('TimelineSpace/Contents/DirectMessages/changeScrolling', false)
       }, 500)
-    },
-  },
+    }
+  }
 }
 </script>
 

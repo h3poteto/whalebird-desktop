@@ -3,7 +3,9 @@
     <el-header>
       <el-row>
         <el-col :span="24" class="close">
-          <el-button type="text" :icon="ElIconClose" @click="close" class="close-button"> </el-button>
+          <el-button type="text" @click="close" class="close-button">
+            <font-awesome-icon icon="xmark" />
+          </el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -15,16 +17,10 @@
 </template>
 
 <script>
-import { Close as ElIconClose } from '@element-plus/icons'
 import LoginForm from './Login/LoginForm'
 import { mapState } from 'vuex'
 
 export default {
-  data() {
-    return {
-      ElIconClose
-    }
-  },
   name: 'login',
   components: { LoginForm },
   computed: {

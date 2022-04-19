@@ -47,7 +47,14 @@ import {
   faChevronLeft,
   faEllipsisVertical,
   faCircleXmark,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faCircleUser,
+  faArrowUp,
+  faArrowDown,
+  faArrowLeft,
+  faArrowRight,
+  faSpinner,
+  faLink
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFaceSmile as farFaceSmile,
@@ -120,7 +127,14 @@ library.add(
   farTrashCan,
   farBell,
   faChevronLeft,
-  faEllipsisVertical
+  faEllipsisVertical,
+  faCircleUser,
+  faArrowUp,
+  faArrowDown,
+  faArrowLeft,
+  faArrowRight,
+  faSpinner,
+  faLink
 )
 
 const app = createApp(App)

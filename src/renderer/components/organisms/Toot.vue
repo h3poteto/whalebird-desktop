@@ -15,7 +15,7 @@
             open: ['o'],
             profile: ['p'],
             image: ['i'],
-            cw: ['x'],
+            cw: ['x']
           }
         : {}
     "
@@ -28,15 +28,8 @@
     <div v-show="filtered" class="filtered">Filtered</div>
     <div v-show="!filtered" class="toot">
       <div class="reblogger" v-show="message.reblog && !message.quote">
-        <span
-          class="reblogger-icon"
-          @click="openUser(message.account)"
-          role="presentation"
-        >
-          <FailoverImg
-            :src="message.account.avatar"
-            :alt="`Avatar of ${message.account.username}`"
-          />
+        <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
+          <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
         </span>
         <font-awesome-icon icon="retweet" />
         <span
@@ -58,17 +51,11 @@
       <div class="detail" v-on:dblclick="openDetail(message)">
         <div class="toot-header">
           <div class="user" @click="openUser(originalMessage.account)">
-            <span class="display-name"
-              ><bdi v-html="username(originalMessage.account)"></bdi
-            ></span>
+            <span class="display-name"><bdi v-html="username(originalMessage.account)"></bdi></span>
             <span class="acct">{{ accountName(originalMessage.account) }}</span>
           </div>
           <div class="timestamp">
-            <time
-              :datetime="originalMessage.created_at"
-              :title="readableTimestamp"
-              @click="openDetail(message)"
-            >
+            <time :datetime="originalMessage.created_at" :title="readableTimestamp" @click="openDetail(message)">
               {{ timestamp }}
             </time>
           </div>
@@ -76,28 +63,11 @@
         </div>
         <div class="content-wrapper">
           <div class="spoiler" v-show="spoilered">
-            <span
-              v-html="
-                emojiText(originalMessage.spoiler_text, originalMessage.emojis)
-              "
-            ></span>
-            <el-button
-              v-if="!isShowContent"
-              plain
-              type="primary"
-              size="medium"
-              class="spoil-button"
-              @click="toggleSpoiler"
-            >
+            <span v-html="emojiText(originalMessage.spoiler_text, originalMessage.emojis)"></span>
+            <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.show_more') }}
             </el-button>
-            <el-button
-              v-else
-              type="primary"
-              size="medium"
-              class="spoil-button"
-              @click="toggleSpoiler"
-            >
+            <el-button v-else type="primary" size="medium" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.hide') }}
             </el-button>
           </div>
@@ -107,21 +77,10 @@
             v-html="emojiText(originalMessage.content, originalMessage.emojis)"
             @click.capture.prevent="tootClick"
           ></div>
-          <Poll
-            v-show="isShowContent"
-            v-if="poll"
-            :poll="poll"
-            @vote="vote"
-            @refresh="refresh"
-          ></Poll>
+          <Poll v-show="isShowContent" v-if="poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
         </div>
         <div class="attachments">
-          <el-button
-            v-show="sensitive && !isShowAttachments"
-            class="show-sensitive"
-            type="info"
-            @click="toggleCW()"
-          >
+          <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="toggleCW()">
             {{ $t('cards.toot.sensitive') }}
           </el-button>
           <div v-show="isShowAttachments">
@@ -134,39 +93,16 @@
             >
               <font-awesome-icon icon="eye" class="hide" />
             </el-button>
-            <div
-              class="media"
-              v-bind:key="media.preview_url"
-              v-for="media in mediaAttachments"
-            >
+            <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
               <FailoverImg
-                :src="
-                  media.preview_url
-                    ? media.preview_url
-                    : originalMessage.account.avatar
-                "
+                :src="media.preview_url ? media.preview_url : originalMessage.account.avatar"
                 @click="openImage(media.url, mediaAttachments)"
                 :title="media.description"
                 :readExif="true"
               />
-              <el-tag
-                class="media-label"
-                size="mini"
-                v-if="media.type === 'gifv'"
-                >GIF</el-tag
-              >
-              <el-tag
-                class="media-label"
-                size="mini"
-                v-else-if="media.type === 'video'"
-                >VIDEO</el-tag
-              >
-              <el-tag
-                class="media-label"
-                size="mini"
-                v-else-if="media.type === 'audio'"
-                >AUDIO</el-tag
-              >
+              <el-tag class="media-label" size="mini" v-if="media.type === 'gifv'">GIF</el-tag>
+              <el-tag class="media-label" size="mini" v-else-if="media.type === 'video'">VIDEO</el-tag>
+              <el-tag class="media-label" size="mini" v-else-if="media.type === 'audio'">AUDIO</el-tag>
             </div>
           </div>
           <div class="clearfix"></div>
@@ -188,33 +124,17 @@
         />
         <div class="emoji-reactions">
           <template v-for="reaction in originalMessage.emoji_reactions">
-            <el-button
-              v-if="reaction.me"
-              type="success"
-              size="medium"
-              class="reaction"
-              @click="removeReaction(reaction.name)"
+            <el-button v-if="reaction.me" type="success" size="medium" class="reaction" @click="removeReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
-            <el-button
-              v-else
-              type="text"
-              size="medium"
-              class="reaction"
-              @click="addReaction(reaction.name)"
+            <el-button v-else type="text" size="medium" class="reaction" @click="addReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
           </template>
         </div>
         <div class="toot-footer">
           <div class="tool-box">
-            <el-button
-              type="text"
-              @click="openReply()"
-              class="reply"
-              :title="$t('cards.toot.reply')"
-              :aria-label="$t('cards.toot.reply')"
-            >
+            <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
               <font-awesome-icon icon="reply" size="sm" />
             </el-button>
             <el-button v-show="locked" type="text" class="locked">
@@ -238,11 +158,7 @@
             <el-button
               type="text"
               @click="changeFavourite(originalMessage)"
-              :class="
-                originalMessage.favourited
-                  ? 'favourited animated bounceIn'
-                  : 'favourite'
-              "
+              :class="originalMessage.favourited ? 'favourited animated bounceIn' : 'favourite'"
               :title="$t('cards.toot.fav')"
               :aria-label="$t('cards.toot.fav')"
             >
@@ -261,12 +177,7 @@
             >
               <font-awesome-icon icon="bookmark" size="sm" />
             </el-button>
-            <el-button
-              type="text"
-              class="quote-btn"
-              v-if="quoteSupported"
-              @click="openQuote()"
-            >
+            <el-button type="text" class="quote-btn" v-if="quoteSupported" @click="openQuote()">
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
             <template v-if="sns !== 'mastodon'">
@@ -295,13 +206,7 @@
                 </el-button>
               </el-popover>
             </template>
-            <el-button
-              class="pinned"
-              type="text"
-              :title="$t('cards.toot.pinned')"
-              :aria-label="$t('cards.toot.pinned')"
-              v-show="pinned"
-            >
+            <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
               <font-awesome-icon icon="thumbtack" size="sm" />
             </el-button>
             <el-popover
@@ -314,11 +219,7 @@
               @hide="hideMenu"
             >
               <ul class="menu-list" v-if="openToolMenu">
-                <li
-                  role="button"
-                  @click="openDetail(message)"
-                  v-show="!detailed"
-                >
+                <li role="button" @click="openDetail(message)" v-show="!detailed">
                   {{ $t('cards.toot.view_toot_detail') }}
                 </li>
                 <li role="button" @click="openBrowser(originalMessage)">
@@ -336,20 +237,11 @@
                 <li role="button" @click="reportUser()" v-if="!isMyMessage">
                   {{ $t('cards.toot.report') }}
                 </li>
-                <li
-                  role="button"
-                  class="separate"
-                  @click="deleteToot(message)"
-                  v-if="isMyMessage"
-                >
+                <li role="button" class="separate" @click="deleteToot(message)" v-if="isMyMessage">
                   {{ $t('cards.toot.delete') }}
                 </li>
               </ul>
-              <el-button
-                slot="reference"
-                type="text"
-                :title="$t('cards.toot.detail')"
-              >
+              <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
                 <font-awesome-icon icon="ellipsis" size="sm" />
               </el-button>
             </el-popover>
@@ -366,9 +258,10 @@
 </template>
 
 <script>
+import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import moment from 'moment'
 import { mapState } from 'vuex'
-import { Picker } from 'emoji-mart-vue'
+import { Picker } from 'emoji-mart-vue-fast/src'
 import ClickOutside from 'vue-click-outside'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import DisplayStyle from '~/src/constants/displayStyle'
@@ -385,14 +278,14 @@ import Filtered from '@/utils/filter'
 export default {
   name: 'toot',
   directives: {
-    ClickOutside,
+    ClickOutside
   },
   components: {
     FailoverImg,
     Poll,
     Picker,
     LinkPreview,
-    Quote,
+    Quote
   },
   data() {
     return {
@@ -401,47 +294,47 @@ export default {
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now(),
       openEmojiPicker: false,
-      openToolMenu: false,
+      openToolMenu: false
     }
   },
   props: {
     message: {
       type: Object,
-      default: {},
+      default: {}
     },
     filters: {
       type: Array,
-      default: [],
+      default: []
     },
     focused: {
       type: Boolean,
-      default: false,
+      default: false
     },
     overlaid: {
       type: Boolean,
-      default: false,
+      default: false
     },
     pinned: {
       type: Boolean,
-      default: false,
+      default: false
     },
     detailed: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     ...mapState('App', {
-      displayNameStyle: (state) => state.displayNameStyle,
-      timeFormat: (state) => state.timeFormat,
-      language: (state) => state.language,
+      displayNameStyle: state => state.displayNameStyle,
+      timeFormat: state => state.timeFormat,
+      language: state => state.language
     }),
     ...mapState('TimelineSpace', {
-      sns: (state) => state.sns,
-      account: (state) => state.account,
+      sns: state => state.sns,
+      account: state => state.account
     }),
     ...mapState('TimelineSpace/SideMenu', {
-      bookmarkSupported: (state) => state.enabledTimelines.bookmark,
+      bookmarkSupported: state => state.enabledTimelines.bookmark
     }),
     shortcutEnabled: function () {
       return this.focused && !this.overlaid && !this.openEmojiPicker
@@ -476,10 +369,7 @@ export default {
       return null
     },
     isMyMessage: function () {
-      return (
-        this.$store.state.TimelineSpace.account.accountId ===
-        this.originalMessage.account.id
-      )
+      return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
     },
     application: function () {
       const msg = this.originalMessage
@@ -498,10 +388,7 @@ export default {
       return this.originalMessage.poll
     },
     sensitive: function () {
-      return (
-        (this.hideAllAttachments || this.originalMessage.sensitive) &&
-        this.mediaAttachments.length > 0
-      )
+      return (this.hideAllAttachments || this.originalMessage.sensitive) && this.mediaAttachments.length > 0
     },
     isShowAttachments: function () {
       return !this.sensitive || this.showAttachments
@@ -517,7 +404,7 @@ export default {
     },
     quoteSupported: function () {
       return QuoteSupported(this.sns, this.account.domain)
-    },
+    }
   },
   mounted() {
     if (this.focused) {
@@ -541,7 +428,7 @@ export default {
           this.$refs.status.blur()
         })
       }
-    },
+    }
   },
   methods: {
     username(account) {
@@ -589,34 +476,20 @@ export default {
       }
       const parsedAccount = findAccount(e.target, 'toot')
       if (parsedAccount !== null) {
-        this.$store.commit(
-          'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-          true
-        )
+        this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
         this.$store
-          .dispatch(
-            'TimelineSpace/Contents/SideBar/AccountProfile/searchAccount',
-            {
-              parsedAccount: parsedAccount,
-              status: this.originalMessage,
-            }
-          )
-          .then((account) => {
-            this.$store.dispatch(
-              'TimelineSpace/Contents/SideBar/openAccountComponent'
-            )
-            this.$store.dispatch(
-              'TimelineSpace/Contents/SideBar/AccountProfile/changeAccount',
-              account
-            )
+          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', {
+            parsedAccount: parsedAccount,
+            status: this.originalMessage
           })
-          .catch((err) => {
+          .then(account => {
+            this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+            this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+          })
+          .catch(err => {
             console.error(err)
             this.openLink(e)
-            this.$store.commit(
-              'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-              false
-            )
+            this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
           })
         return parsedAccount.acct
       }
@@ -629,21 +502,12 @@ export default {
       }
     },
     openReply() {
-      this.$store.dispatch(
-        'TimelineSpace/Modals/NewToot/openReply',
-        this.originalMessage
-      )
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', this.originalMessage)
     },
     openDetail(message) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
-      this.$store.dispatch(
-        'TimelineSpace/Contents/SideBar/TootDetail/changeToot',
-        message
-      )
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-        true
-      )
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
       this.$refs.status_menu_popper.doClose()
     },
     openBrowser(message) {
@@ -655,17 +519,11 @@ export default {
       this.$refs.status_menu_popper.doClose()
     },
     reportUser() {
-      this.$store.dispatch(
-        'TimelineSpace/Modals/Report/openReport',
-        this.originalMessage
-      )
+      this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage)
       this.$refs.status_menu_popper.doClose()
     },
     confirmMute() {
-      this.$store.dispatch(
-        'TimelineSpace/Modals/MuteConfirm/changeAccount',
-        this.originalMessage.account
-      )
+      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage.account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
       this.$refs.status_menu_popper.doClose()
     },
@@ -677,27 +535,27 @@ export default {
       if (message.reblogged) {
         this.$store
           .dispatch('organisms/Toot/unreblog', message)
-          .then((data) => {
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err)
             this.$message({
               message: this.$t('message.unreblog_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       } else {
         this.$store
           .dispatch('organisms/Toot/reblog', message)
-          .then((data) => {
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err)
             this.$message({
               message: this.$t('message.reblog_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       }
@@ -706,27 +564,27 @@ export default {
       if (message.favourited) {
         this.$store
           .dispatch('organisms/Toot/removeFavourite', message)
-          .then((data) => {
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err)
             this.$message({
               message: this.$t('message.unfavourite_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       } else {
         this.$store
           .dispatch('organisms/Toot/addFavourite', message)
-          .then((data) => {
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err)
             this.$message({
               message: this.$t('message.favourite_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       }
@@ -735,65 +593,57 @@ export default {
       if (message.bookmarked) {
         this.$store
           .dispatch('organisms/Toot/removeBookmark', message)
-          .then((data) => {
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err)
             this.$message({
               message: this.$t('message.unbookmark_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       } else {
         this.$store
           .dispatch('organisms/Toot/addBookmark', message)
-          .then((data) => {
+          .then(data => {
             this.$emit('update', data)
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err)
             this.$message({
               message: this.$t('message.bookmark_error'),
-              type: 'error',
+              type: 'error'
             })
           })
       }
     },
     openImage(url, rawMediaList) {
-      const mediaList = rawMediaList.map((media) => {
+      const mediaList = rawMediaList.map(media => {
         return media.url
       })
       const currentIndex = mediaList.indexOf(url)
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
         currentIndex: currentIndex,
-        mediaList: rawMediaList,
+        mediaList: rawMediaList
       })
     },
     openUser(account) {
       console.log(account)
-      this.$store.dispatch(
-        'TimelineSpace/Contents/SideBar/openAccountComponent'
-      )
-      this.$store.dispatch(
-        'TimelineSpace/Contents/SideBar/AccountProfile/changeAccount',
-        account
-      )
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-        true
-      )
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
     },
     deleteToot(message) {
       this.$store
         .dispatch('organisms/Toot/deleteToot', message)
-        .then((message) => {
+        .then(message => {
           this.$emit('delete', message)
         })
         .catch(() => {
           this.$message({
             message: this.$t('message.delete_error'),
-            type: 'error',
+            type: 'error'
           })
         })
     },
@@ -846,24 +696,24 @@ export default {
     async vote(choices) {
       const res = await this.$store.dispatch('organisms/Toot/vote', {
         id: this.poll.id,
-        choices: choices,
+        choices: choices
       })
       const status = Object.assign({}, this.originalMessage, {
-        poll: res,
+        poll: res
       })
       this.$emit('update', status)
     },
     async refresh(id) {
       const res = await this.$store.dispatch('organisms/Toot/refresh', id)
       const status = Object.assign({}, this.originalMessage, {
-        poll: res,
+        poll: res
       })
       this.$emit('update', status)
     },
     async selectEmoji(emoji) {
       const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
         status_id: this.originalMessage.id,
-        native: emoji.native,
+        native: emoji.native
       })
       this.$emit('update', status)
       this.$refs.status_emoji_picker.doClose()
@@ -871,25 +721,19 @@ export default {
     async addReaction(native) {
       const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
         status_id: this.originalMessage.id,
-        native: native,
+        native: native
       })
       this.$emit('update', status)
     },
     async removeReaction(native) {
-      const status = await this.$store.dispatch(
-        'organisms/Toot/deleteReaction',
-        {
-          status_id: this.originalMessage.id,
-          native: native,
-        }
-      )
+      const status = await this.$store.dispatch('organisms/Toot/deleteReaction', {
+        status_id: this.originalMessage.id,
+        native: native
+      })
       this.$emit('update', status)
     },
     openQuote() {
-      this.$store.dispatch(
-        'TimelineSpace/Modals/NewToot/openQuote',
-        this.originalMessage
-      )
+      this.$store.dispatch('TimelineSpace/Modals/NewToot/openQuote', this.originalMessage)
     },
     openPicker() {
       this.openEmojiPicker = true
@@ -910,8 +754,8 @@ export default {
     toggleCW() {
       this.showAttachments = !this.showAttachments
       this.$emit('sizeChanged', true)
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -18,13 +18,13 @@
         v-bind:key="account._id"
         role="menuitem"
       >
-        <el-icon v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''"><el-icon-menu /></el-icon>
+        <font-awesome-icon icon="circle-user" v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" />
         <FailoverImg v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
         <FailoverImg :src="`${account.baseURL}/favicon.ico`" :failoverSrc="`${account.baseURL}/favicon.png`" class="instance-icon" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
       <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem">
-        <el-icon><el-icon-plus /></el-icon>
+        <font-awesome-icon icon="plus" />
         <span slot="new">New</span>
       </el-menu-item>
     </el-menu>
@@ -35,16 +35,13 @@
 </template>
 
 <script>
-import { Menu as ElIconMenu, Plus as ElIconPlus } from '@element-plus/icons'
 import { mapState } from 'vuex'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 import { StreamingError } from '~/src/errors/streamingError'
 
 export default {
   components: {
-    FailoverImg,
-    ElIconMenu,
-    ElIconPlus
+    FailoverImg
   },
   name: 'global-header',
   computed: {

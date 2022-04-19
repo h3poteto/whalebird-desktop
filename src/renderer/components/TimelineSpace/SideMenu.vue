@@ -12,7 +12,7 @@
           </div>
           <el-dropdown trigger="click" @command="handleProfile" :title="$t('side_menu.profile')">
             <span class="el-dropdown-link">
-              <el-icon class="el-icon--right"><el-icon-arrow-down /></el-icon>
+              <font-awesome-icon icon="arrow-up" class="el-icon--right" />
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="show">{{ $t('side_menu.show_profile') }}</el-dropdown-item>
@@ -239,13 +239,9 @@
 </template>
 
 <script>
-import { ArrowDown as ElIconArrowDown } from '@element-plus/icons'
 import { mapState } from 'vuex'
 
 export default {
-  components: {
-    ElIconArrowDown
-  },
   name: 'side-menu',
   computed: {
     ...mapState('TimelineSpace/SideMenu', {

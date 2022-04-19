@@ -1,20 +1,12 @@
 <template>
-  <div
-    class="side-bar"
-    v-if="openSideBar"
-    v-shortkey="shortcutEnabled ? { close: ['esc'] } : {}"
-    @shortkey="handleKey"
-  >
+  <div class="side-bar" v-if="openSideBar" v-shortkey="shortcutEnabled ? { close: ['esc'] } : {}" @shortkey="handleKey">
     <div class="header">
-      <el-icon><el-icon-loading /></el-icon>
-      <el-icon><el-icon-refresh /></el-icon>
-      <el-icon><el-icon-close /></el-icon>
+      <font-awesome-icon icon="spinner" />
+      <font-awesome-icon icon="rotate" />
+      <font-awesome-icon icon="xmark" />
     </div>
     <div id="sidebar_scrollable">
-      <account-profile
-        v-if="component === 1"
-        v-on:change-loading="changeLoading"
-      ></account-profile>
+      <account-profile v-if="component === 1" v-on:change-loading="changeLoading"></account-profile>
       <toot-detail v-else-if="component === 2"></toot-detail>
       <div
         class="loading"
@@ -29,11 +21,6 @@
 </template>
 
 <script>
-import {
-  Loading as ElIconLoading,
-  Refresh as ElIconRefresh,
-  Close as ElIconClose,
-} from '@element-plus/icons'
 import { mapState } from 'vuex'
 import TootDetail from './SideBar/TootDetail'
 import AccountProfile from './SideBar/AccountProfile'
@@ -41,32 +28,29 @@ import AccountProfile from './SideBar/AccountProfile'
 export default {
   components: {
     TootDetail,
-    AccountProfile,
-    ElIconLoading,
-    ElIconRefresh,
-    ElIconClose,
+    AccountProfile
   },
   name: 'side-bar',
   props: {
     overlaid: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
-      loading: false,
+      loading: false
     }
   },
   computed: {
     ...mapState({
-      openSideBar: (state) => state.TimelineSpace.Contents.SideBar.openSideBar,
-      component: (state) => state.TimelineSpace.Contents.SideBar.component,
-      backgroundColor: (state) => state.App.theme.background_color,
+      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
+      component: state => state.TimelineSpace.Contents.SideBar.component,
+      backgroundColor: state => state.App.theme.background_color
     }),
     shortcutEnabled: function () {
       return !this.overlaid
-    },
+    }
   },
   beforeDestroy() {
     this.close()
@@ -87,8 +71,8 @@ export default {
           this.close()
           break
       }
-    },
-  },
+    }
+  }
 }
 </script>
 
