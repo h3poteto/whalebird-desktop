@@ -5,7 +5,7 @@
       class="toot section"
       label-width="250px"
       label-position="right"
-      size="medium"
+      size="default"
     >
       <h3>{{ $t('settings.general.toot.title') }}</h3>
       <el-form-item

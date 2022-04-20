@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" class="section" label-width="200px" label-position="right" size="medium">
+  <el-form ref="form" class="section" label-width="200px" label-position="right" size="default">
     <el-form-item :label="$t('settings.filters.form.phrase')">
       <el-input v-model="filterPhrase"></el-input>
     </el-form-item>

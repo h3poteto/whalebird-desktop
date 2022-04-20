@@ -46,13 +46,13 @@
                 v-if="!isShowContent(message.status)"
                 plain
                 type="primary"
-                size="medium"
+                size="default"
                 class="spoil-button"
                 @click="showContent = true"
               >
                 {{ $t('cards.toot.show_more') }}
               </el-button>
-              <el-button v-else plain type="primary" size="medium" class="spoil-button" @click="showContent = false">
+              <el-button v-else plain type="primary" size="default" class="spoil-button" @click="showContent = false">
                 {{ $t('cards.toot.hide') }}
               </el-button>
             </div>

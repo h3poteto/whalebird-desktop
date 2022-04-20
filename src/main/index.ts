@@ -608,11 +608,10 @@ ipcMain.handle('confirm-timelines', async (_event: IpcMainInvokeEvent, account: 
 // user streaming
 const userStreamings: { [key: string]: UserStreaming | null } = {}
 
-ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<LocalAccount>) => {
-  accounts.map(async account => {
-    const id: string = account._id!
+ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<string>) => {
+  accounts.map(async id => {
+    const acct = await accountRepo.getAccount(id)
     try {
-      const acct = await accountRepo.getAccount(id)
       // Stop old user streaming
       if (userStreamings[id]) {
         userStreamings[id]!.stop()
@@ -678,7 +677,7 @@ ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<Lo
       }
     } catch (err: any) {
       log.error(err)
-      const streamingError = new StreamingError(err.message, account.domain)
+      const streamingError = new StreamingError(err.message, acct.domain)
       if (!event.sender.isDestroyed()) {
         event.sender.send('error-start-all-user-streamings', streamingError)
       }
@@ -708,16 +707,11 @@ const stopUserStreaming = (id: string) => {
   })
 }
 
-type StreamingSetting = {
-  account: LocalAccount
-}
-
 let directMessagesStreaming: DirectStreaming | null = null
 
-ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
-  const { account } = obj
+ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, id: string) => {
   try {
-    const acct = await accountRepo.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(id)
 
     // Stop old directmessages streaming
     if (directMessagesStreaming !== null) {
@@ -763,10 +757,9 @@ ipcMain.on('stop-directmessages-streaming', () => {
 
 let localStreaming: LocalStreaming | null = null
 
-ipcMain.on('start-local-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
-  const { account } = obj
+ipcMain.on('start-local-streaming', async (event: IpcMainEvent, id: string) => {
   try {
-    const acct = await accountRepo.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(id)
 
     // Stop old local streaming
     if (localStreaming !== null) {
@@ -812,10 +805,9 @@ ipcMain.on('stop-local-streaming', () => {
 
 let publicStreaming: PublicStreaming | null = null
 
-ipcMain.on('start-public-streaming', async (event: IpcMainEvent, obj: StreamingSetting) => {
-  const { account } = obj
+ipcMain.on('start-public-streaming', async (event: IpcMainEvent, id: string) => {
   try {
-    const acct = await accountRepo.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(id)
 
     // Stop old public streaming
     if (publicStreaming !== null) {
@@ -861,14 +853,15 @@ ipcMain.on('stop-public-streaming', () => {
 
 let listStreaming: ListStreaming | null = null
 
-type ListID = {
+type ListStreamingOpts = {
   listID: string
+  accountID: string
 }
 
-ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListID & StreamingSetting) => {
-  const { listID, account } = obj
+ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListStreamingOpts) => {
+  const { listID, accountID } = obj
   try {
-    const acct = await accountRepo.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(accountID)
 
     // Stop old list streaming
     if (listStreaming !== null) {
@@ -915,14 +908,15 @@ ipcMain.on('stop-list-streaming', () => {
 
 let tagStreaming: TagStreaming | null = null
 
-type Tag = {
+type TagStreamingOpts = {
   tag: string
+  accountID: string
 }
 
-ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: Tag & StreamingSetting) => {
-  const { tag, account } = obj
+ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: TagStreamingOpts) => {
+  const { tag, accountID } = obj
   try {
-    const acct = await accountRepo.getAccount(account._id!)
+    const acct = await accountRepo.getAccount(accountID)
 
     // Stop old tag streaming
     if (tagStreaming !== null) {

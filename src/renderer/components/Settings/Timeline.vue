@@ -3,7 +3,7 @@
     <h2>{{ $t('settings.timeline.title') }}</h2>
     <el-form
       class="unread-notification section"
-      size="medium"
+      size="default"
       label-position="right"
       label-width="250px"
     >
@@ -34,7 +34,7 @@
 
     <el-form
       class="use-marker section"
-      size="medium"
+      size="default"
       label-position="right"
       label-width="250px"
     >

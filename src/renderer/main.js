@@ -63,8 +63,6 @@ import {
   faBell as farBell
 } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import Popper from 'vue-popperjs'
-// import 'vue-popperjs/dist/vue-popper.css'
 import { sync } from 'vuex-router-sync'
 // import shortkey from 'vue-shortkey'
 import { createI18n } from 'vue-i18n'
@@ -152,7 +150,6 @@ app.use(VueVirtualScroller)
 app.use(VueResize)
 app.use(i18n)
 // Vue.use(shortkey)
-// Vue.component('popper', Popper)
 
 sync(store, router)
 

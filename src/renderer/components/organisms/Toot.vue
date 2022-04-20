@@ -39,10 +39,10 @@
         <div class="content-wrapper">
           <div class="spoiler" v-show="spoilered">
             <span v-html="emojiText(originalMessage.spoiler_text, originalMessage.emojis)"></span>
-            <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="toggleSpoiler">
+            <el-button v-if="!isShowContent" plain type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.show_more') }}
             </el-button>
-            <el-button v-else type="primary" size="medium" class="spoil-button" @click="toggleSpoiler">
+            <el-button v-else type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.hide') }}
             </el-button>
           </div>
@@ -99,10 +99,10 @@
         />
         <div class="emoji-reactions">
           <template v-for="reaction in originalMessage.emoji_reactions">
-            <el-button v-if="reaction.me" type="success" size="medium" class="reaction" @click="removeReaction(reaction.name)"
+            <el-button v-if="reaction.me" type="success" size="default" class="reaction" @click="removeReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
-            <el-button v-else type="text" size="medium" class="reaction" @click="addReaction(reaction.name)"
+            <el-button v-else type="text" size="default" class="reaction" @click="addReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
           </template>
@@ -156,44 +156,29 @@
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
             <template v-if="sns !== 'mastodon'">
-              <el-popover
-                placement="bottom"
-                width="281"
-                trigger="click"
-                popper-class="status-emoji-picker"
-                ref="status_emoji_picker"
-                @show="openPicker"
-                @hide="hidePicker"
-              >
+              <el-popover placement="bottom" width="281" trigger="click" popper-class="status-emoji-picker" ref="status_emoji_picker">
                 <picker
-                  v-if="openEmojiPicker"
-                  set="emojione"
+                  :data="emojiIndex"
+                  set="twitter"
                   :autoFocus="true"
                   @select="selectEmoji"
-                  :sheetSize="32"
                   :perLine="7"
                   :emojiSize="24"
                   :showPreview="false"
                   :emojiTooltip="true"
                 />
-                <el-button slot="reference" class="emoji" type="text">
-                  <font-awesome-icon :icon="['far', 'face-smile']" size="sm" />
-                </el-button>
+                <template #reference>
+                  <el-button class="emoji" type="text">
+                    <font-awesome-icon :icon="['far', 'face-smile']" size="sm" />
+                  </el-button>
+                </template>
               </el-popover>
             </template>
             <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
               <font-awesome-icon icon="thumbtack" size="sm" />
             </el-button>
-            <el-popover
-              placement="bottom"
-              width="200"
-              trigger="click"
-              popper-class="status-menu-popper"
-              ref="status_menu_popper"
-              @show="openMenu"
-              @hide="hideMenu"
-            >
-              <ul class="menu-list" v-if="openToolMenu">
+            <el-popover placement="bottom" width="200" trigger="click" popper-class="status-menu-popper" ref="status_menu_popper">
+              <ul class="menu-list">
                 <li role="button" @click="openDetail(message)" v-show="!detailed">
                   {{ $t('cards.toot.view_toot_detail') }}
                 </li>
@@ -216,9 +201,11 @@
                   {{ $t('cards.toot.delete') }}
                 </li>
               </ul>
-              <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
-                <font-awesome-icon icon="ellipsis" size="sm" />
-              </el-button>
+              <template #reference>
+                <el-button type="text" :title="$t('cards.toot.detail')">
+                  <font-awesome-icon icon="ellipsis" size="sm" />
+                </el-button>
+              </template>
             </el-popover>
           </div>
           <div class="application" v-show="application !== null">
@@ -234,9 +221,10 @@
 
 <script>
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
+import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
 import { mapState } from 'vuex'
-import { Picker } from 'emoji-mart-vue-fast/src'
+import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import ClickOutside from 'vue-click-outside'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import DisplayStyle from '~/src/constants/displayStyle'
@@ -249,6 +237,8 @@ import Quote from '@/components/molecules/Toot/Quote'
 import { setInterval, clearInterval } from 'timers'
 import QuoteSupported from '@/utils/quoteSupported'
 import Filtered from '@/utils/filter'
+
+const emojiIndex = new EmojiIndex(data)
 
 export default {
   name: 'toot',
@@ -268,8 +258,7 @@ export default {
       showAttachments: this.$store.state.App.ignoreNSFW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now(),
-      openEmojiPicker: false,
-      openToolMenu: false
+      emojiIndex: emojiIndex
     }
   },
   props: {
@@ -312,7 +301,7 @@ export default {
       bookmarkSupported: state => state.enabledTimelines.bookmark
     }),
     shortcutEnabled: function () {
-      return this.focused && !this.overlaid && !this.openEmojiPicker
+      return this.focused && !this.overlaid
     },
     timestamp: function () {
       return this.parseDatetime(this.originalMessage.created_at, this.now)
@@ -389,7 +378,7 @@ export default {
       this.$data.now = Date.now()
     }, 60000)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.updateInterval)
   },
   watch: {
@@ -709,18 +698,6 @@ export default {
     },
     openQuote() {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openQuote', this.originalMessage)
-    },
-    openPicker() {
-      this.openEmojiPicker = true
-    },
-    hidePicker() {
-      this.openEmojiPicker = false
-    },
-    openMenu() {
-      this.openToolMenu = true
-    },
-    hideMenu() {
-      this.openToolMenu = false
     },
     toggleSpoiler() {
       this.showContent = !this.showContent

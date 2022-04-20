@@ -65,7 +65,7 @@ export default {
       this.$store.commit('TimelineSpace/Modals/Jump/changeModal', true)
     })
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('dragenter', this.onDragEnter)
     window.removeEventListener('dragleave', this.onDragLeave)
     window.removeEventListener('dragover', this.onDragOver)
