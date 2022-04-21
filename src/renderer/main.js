@@ -65,7 +65,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { sync } from 'vuex-router-sync'
 // import shortkey from 'vue-shortkey'
-import { createI18n } from 'vue-i18n'
+import { createI18n } from 'vue3-i18next'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
 import VueVirtualScroller from '@h3poteto/vue-virtual-scroller'
@@ -75,7 +75,7 @@ import './assets/fonts/fonts.css'
 import App from './App.vue'
 import router from '@/router'
 import store from './store'
-import { translations } from '~/src/config/i18n'
+import i18next from '~/src/config/i18n'
 
 library.add(
   faAnglesRight,
@@ -135,11 +135,7 @@ library.add(
   faLink
 )
 
-const i18n = createI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: translations
-})
+const i18n = createI18n(i18next)
 
 const app = createApp(App)
 app.use(store)

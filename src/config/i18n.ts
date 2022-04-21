@@ -87,26 +87,4 @@ const options: InitOptions = {
 
 i18next.init(options)
 
-export const translations = {
-  cs: cs,
-  de: de,
-  en: en,
-  es_es: es_es,
-  fr: fr,
-  gd: gd,
-  id: id,
-  it: it,
-  ja: ja,
-  ko: ko,
-  no: no,
-  pl: pl,
-  pt_pt: pt_pt,
-  ru: ru,
-  si: si,
-  sv_se: sv_se,
-  tzm: tzm,
-  zh_cn: zh_cn,
-  zh_tw: zh_tw
-}
-
 export default i18next

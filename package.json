@@ -105,7 +105,7 @@
     "unicode-emoji-json": "^0.3.1",
     "vue": "^3.2.31",
     "vue-click-outside": "^1.1.0",
-    "vue-i18n": "9",
+    "vue3-i18next": "^0.1.0",
     "vue-popperjs": "^2.3.0",
     "vue-resize": "^2.0.0-alpha.1",
     "vue-router": "^4.0.14",
