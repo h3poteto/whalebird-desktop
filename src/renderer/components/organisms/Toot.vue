@@ -225,7 +225,6 @@ import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
 import { mapState } from 'vuex'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
-import ClickOutside from 'vue-click-outside'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -242,9 +241,6 @@ const emojiIndex = new EmojiIndex(data)
 
 export default {
   name: 'toot',
-  directives: {
-    ClickOutside
-  },
   components: {
     FailoverImg,
     Poll,

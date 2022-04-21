@@ -83,10 +83,10 @@ export default {
       })
     })
   },
-  beforeDestroy() {
+  beforeUnmount() {
     Event.$off('focus-timeline')
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Favourites/updateFavourites', [])
     if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
       document.getElementById('scroller').removeEventListener('scroll', this.onScroll)

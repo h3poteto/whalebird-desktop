@@ -78,11 +78,11 @@ export default {
       })
     })
   },
-  beforeDestroy() {
+  beforeUnmount() {
     Event.$emit('focus-timeline')
     Event.$off('focus-sidebar')
   },
-  destroyed() {
+  unmounted() {
     if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
       document.getElementById('sidebar_scrollable').removeEventListener('scroll', this.onScroll)
     }

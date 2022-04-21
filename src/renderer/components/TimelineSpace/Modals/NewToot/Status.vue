@@ -32,29 +32,40 @@
         </li>
       </ul>
     </el-popover>
-    <div v-click-outside="hideEmojiPicker">
-      <el-button type="text" class="emoji-selector" @click="toggleEmojiPicker">
-        <font-awesome-icon :icon="['far', 'face-smile']" size="lg" />
-      </el-button>
-      <div v-if="openEmojiPicker" class="emoji-picker">
-        <picker set="emojione" :autoFocus="true" :custom="pickerEmojis" @select="selectEmoji" />
-      </div>
+    <div>
+      <el-popover placement="bottom" width="281" trigger="click" popper-class="status-emoji-picker" ref="status_emoji_picker">
+        <picker
+          :data="emojiIndex"
+          set="twitter"
+          :autoFocus="true"
+          @select="selectEmoji"
+          :custom="pickerEmojis"
+          :perLine="7"
+          :emojiSize="24"
+          :showPreview="false"
+          :emojiTooltip="true"
+        />
+        <template #reference>
+          <el-button class="emoji-selector" type="text">
+            <font-awesome-icon :icon="['far', 'face-smile']" size="lg" />
+          </el-button>
+        </template>
+      </el-popover>
     </div>
   </div>
 </template>
 
 <script>
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
+import data from 'emoji-mart-vue-fast/data/all.json'
 import { mapState, mapGetters } from 'vuex'
-import { Picker } from 'emoji-mart-vue-fast/src'
-import ClickOutside from 'vue-click-outside'
+import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import suggestText from '@/utils/suggestText'
+
+const emojiIndex = new EmojiIndex(data)
 
 export default {
   name: 'status',
-  directives: {
-    ClickOutside
-  },
   components: {
     Picker
   },
@@ -78,7 +89,8 @@ export default {
   data() {
     return {
       highlightedIndex: 0,
-      openEmojiPicker: false
+      openEmojiPicker: false,
+      emojiIndex: emojiIndex
     }
   },
   computed: {
@@ -119,7 +131,6 @@ export default {
         })
       } else if (oldState && !newState) {
         this.closeSuggest()
-        this.hideEmojiPicker()
       }
     }
   },
@@ -250,12 +261,6 @@ export default {
     toggleEmojiPicker() {
       this.openEmojiPicker = !this.openEmojiPicker
       this.$emit('pickerOpened', this.openEmojiPicker)
-    },
-    hideEmojiPicker() {
-      if (this.openEmojiPicker) {
-        this.$emit('pickerOpened', false)
-      }
-      this.openEmojiPicker = false
     },
     selectEmoji(emoji) {
       const current = this.$refs.status.selectionStart

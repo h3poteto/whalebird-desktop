@@ -1,10 +1,6 @@
 <template>
   <div class="toot-detail" ref="detail">
-    <div
-      class="toot-ancestors"
-      v-for="(message, index) in ancestors"
-      v-bind:key="'ancestors-' + index"
-    >
+    <div class="toot-ancestors" v-for="(message, index) in ancestors" v-bind:key="'ancestors-' + index">
       <toot
         :message="message"
         :focused="message.uri + message.id === focusedId"
@@ -35,11 +31,7 @@
       >
       </toot>
     </div>
-    <div
-      class="toot-descendants"
-      v-for="(message, index) in descendants"
-      v-bind:key="'descendants' + index"
-    >
+    <div class="toot-descendants" v-for="(message, index) in descendants" v-bind:key="'descendants' + index">
       <toot
         :message="message"
         :focused="message.uri + message.id === focusedId"
@@ -67,19 +59,18 @@ export default {
   components: { Toot },
   data() {
     return {
-      focusedId: null,
+      focusedId: null
     }
   },
   computed: {
     ...mapState('TimelineSpace/Contents/SideBar/TootDetail', {
-      message: (state) => state.message,
-      ancestors: (state) => state.ancestors,
-      descendants: (state) => state.descendants,
-      timeline: (state) =>
-        state.ancestors.concat([state.message]).concat(state.descendants),
+      message: state => state.message,
+      ancestors: state => state.ancestors,
+      descendants: state => state.descendants,
+      timeline: state => state.ancestors.concat([state.message]).concat(state.descendants)
     }),
     ...mapGetters('TimelineSpace/Contents/SideBar/TootDetail', ['filters']),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
+    ...mapGetters('TimelineSpace/Modals', ['modalOpened'])
   },
   created() {
     this.load()
@@ -95,9 +86,9 @@ export default {
   watch: {
     message: function () {
       this.load()
-    },
+    }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     Event.$emit('focus-timeline')
     Event.$off('focus-sidebar')
   },
@@ -111,10 +102,7 @@ export default {
     },
     load() {
       this.$store
-        .dispatch(
-          'TimelineSpace/Contents/SideBar/TootDetail/fetchToot',
-          this.originalMessage(this.message)
-        )
+        .dispatch('TimelineSpace/Contents/SideBar/TootDetail/fetchToot', this.originalMessage(this.message))
         .then(() => {
           const toot = this.$refs.original
           toot.scrollIntoView()
@@ -122,66 +110,40 @@ export default {
         .catch(() => {
           this.$message({
             message: this.$t('message.toot_fetch_error'),
-            type: 'error',
+            type: 'error'
           })
         })
     },
     updateAncestorsToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/TootDetail/updateAncestorsToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateAncestorsToot', message)
     },
     deleteAncestorsToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/TootDetail/deleteAncestorsToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteAncestorsToot', message)
     },
     updateToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/TootDetail/updateToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateToot', message)
     },
     deleteToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/TootDetail/deleteToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteToot', message)
     },
     updateDescendantsToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/TootDetail/updateDescendantsToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateDescendantsToot', message)
     },
     deleteDescendantsToot(message) {
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/TootDetail/deleteDescendantsToot',
-        message
-      )
+      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteDescendantsToot', message)
     },
     focusNext() {
-      const currentIndex = this.timeline.findIndex(
-        (toot) => this.focusedId === toot.uri + toot.id
-      )
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       if (currentIndex === -1) {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
       } else if (currentIndex < this.timeline.length - 1) {
-        this.focusedId =
-          this.timeline[currentIndex + 1].uri +
-          this.timeline[currentIndex + 1].id
+        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
       }
     },
     focusPrev() {
-      const currentIndex = this.timeline.findIndex(
-        (toot) => this.focusedId === toot.uri + toot.id
-      )
+      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
       if (currentIndex > 0) {
-        this.focusedId =
-          this.timeline[currentIndex - 1].uri +
-          this.timeline[currentIndex - 1].id
+        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
       }
     },
     focusToot(message) {
@@ -190,8 +152,8 @@ export default {
     focusTimeline() {
       this.focusedId = 0
       Event.$emit('focus-timeline')
-    },
-  },
+    }
+  }
 }
 </script>
 

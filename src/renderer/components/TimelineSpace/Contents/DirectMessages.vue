@@ -116,7 +116,7 @@ export default {
       this.scrollPosition.prepare()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (!this.unreadNotification.direct) {
       this.$store.dispatch('TimelineSpace/stopDirectMessagesStreaming')
       this.$store.dispatch('TimelineSpace/unbindDirectMessagesStreaming')
@@ -124,7 +124,7 @@ export default {
     Event.$off('focus-timeline')
     this.observer.disconnect()
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/DirectMessages/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/DirectMessages/archiveTimeline')
     if (!this.unreadNotification.direct) {

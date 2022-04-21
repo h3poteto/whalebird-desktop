@@ -122,11 +122,11 @@ export default {
       this.scrollPosition.prepare()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     Event.$off('focus-timeline')
     this.observer.disconnect()
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Notifications/archiveNotifications')
     if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {

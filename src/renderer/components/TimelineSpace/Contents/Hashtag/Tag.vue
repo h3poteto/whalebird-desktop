@@ -131,7 +131,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/stopStreaming')
     this.reset()
     Event.$off('focus-timeline')

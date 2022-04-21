@@ -124,11 +124,11 @@ export default {
       this.scrollPosition.prepare()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     Event.$off('focus-timeline')
     this.observer.disconnect()
   },
-  destroyed() {
+  unounted() {
     this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Mentions/archiveMentions')
     if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {

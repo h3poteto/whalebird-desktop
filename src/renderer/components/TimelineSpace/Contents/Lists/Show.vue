@@ -131,11 +131,11 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
     this.observer.disconnect()
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Lists/Show/archiveTimeline')
     this.$store.commit('TimelineSpace/Contents/Lists/Show/clearTimeline')

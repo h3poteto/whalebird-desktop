@@ -52,7 +52,7 @@ export default {
       return !this.overlaid
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.close()
   },
   methods: {

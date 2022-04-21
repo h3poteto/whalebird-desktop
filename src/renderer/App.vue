@@ -37,7 +37,7 @@ export default {
       this.$i18n.locale = conf.language.language
     })
   },
-  destroyed() {
+  unmounted() {
     this.$store.dispatch('App/removeShortcutsEvents')
   }
 }

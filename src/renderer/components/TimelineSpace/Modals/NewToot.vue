@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :title="$t('modals.new_toot.title')"
-    v-model="newTootModal"
+    :model-value="newTootModal"
     v-if="newTootModal"
     :before-close="closeConfirm"
     width="600px"
@@ -69,24 +69,26 @@
           <el-button size="default" type="text" :title="$t('modals.new_toot.footer.change_visibility')">
             <font-awesome-icon :icon="visibilityIcon" />
           </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="visibilityList.Public.value">
-              <font-awesome-icon icon="globe" class="privacy-icon" />
-              {{ $t(visibilityList.Public.name) }}
-            </el-dropdown-item>
-            <el-dropdown-item :command="visibilityList.Unlisted.value">
-              <font-awesome-icon icon="unlock" class="privacy-icon" />
-              {{ $t(visibilityList.Unlisted.name) }}
-            </el-dropdown-item>
-            <el-dropdown-item :command="visibilityList.Private.value">
-              <font-awesome-icon icon="lock" class="privacy-icon" />
-              {{ $t(visibilityList.Private.name) }}
-            </el-dropdown-item>
-            <el-dropdown-item :command="visibilityList.Direct.value">
-              <font-awesome-icon icon="envelope" class="privacy-icon" size="sm" />
-              {{ $t(visibilityList.Direct.name) }}
-            </el-dropdown-item>
-          </el-dropdown-menu>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item :command="visibilityList.Public.value">
+                <font-awesome-icon icon="globe" class="privacy-icon" />
+                {{ $t(visibilityList.Public.name) }}
+              </el-dropdown-item>
+              <el-dropdown-item :command="visibilityList.Unlisted.value">
+                <font-awesome-icon icon="unlock" class="privacy-icon" />
+                {{ $t(visibilityList.Unlisted.name) }}
+              </el-dropdown-item>
+              <el-dropdown-item :command="visibilityList.Private.value">
+                <font-awesome-icon icon="lock" class="privacy-icon" />
+                {{ $t(visibilityList.Private.name) }}
+              </el-dropdown-item>
+              <el-dropdown-item :command="visibilityList.Direct.value">
+                <font-awesome-icon icon="envelope" class="privacy-icon" size="sm" />
+                {{ $t(visibilityList.Direct.name) }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
         </el-dropdown>
       </div>
       <div class="sensitive" v-show="attachedMedias.length > 0">

@@ -11,14 +11,14 @@
       <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
         <font-awesome-icon icon="rotate" />
       </el-button>
-      <el-popover placement="left-start" width="180" popper-class="theme-popover" trigger="click" v-model="TLOptionVisible">
+      <el-popover placement="left-start" width="180" popper-class="theme-popover" trigger="click" v-model:visible="TLOptionVisible">
         <div>
           <el-form role="form" label-position="left" label-width="125px" size="default">
             <el-form-item for="show-reblogs" :label="$t('header_menu.option.show_reblogs')">
-              <el-checkbox id="show-reblogs" v-model="showReblogs"></el-checkbox>
+              <el-checkbox id="show-reblogs" :model-value="showReblogs"></el-checkbox>
             </el-form-item>
             <el-form-item for="show-replies" :label="$t('header_menu.option.show_replies')">
-              <el-checkbox id="show-replies" v-model="showReplies"></el-checkbox>
+              <el-checkbox id="show-replies" :model-value="showReplies"></el-checkbox>
             </el-form-item>
             <el-button type="primary" @click="applyTLOption">{{ $t('header_menu.option.apply') }}</el-button>
           </el-form>

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="$t('modals.add_list_member.title')" v-model="addListMemberModal" width="400px" class="add-member">
+  <el-dialog :title="$t('modals.add_list_member.title')" :model-value="addListMemberModal" width="400px" class="add-member">
     <div class="search-account" :element-loading-background="loadingBackground">
       <el-form :inline="true">
         <input v-model="name" placeholder="Account name" class="account-name" autofocus />

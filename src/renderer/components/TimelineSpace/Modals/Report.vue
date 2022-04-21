@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="$t('modals.report.title')" v-model="reportModal" width="400px" custom-class="report">
+  <el-dialog :title="$t('modals.report.title')" :model-value="reportModal" width="400px" custom-class="report">
     <el-input type="textarea" v-model="comment" :placeholder="$t('modals.report.comment')"></el-input>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeModal">{{ $t('modals.report.cancel') }}</el-button>

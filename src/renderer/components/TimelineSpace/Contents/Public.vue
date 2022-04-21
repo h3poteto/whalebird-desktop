@@ -117,7 +117,7 @@ export default {
       this.scrollPosition.prepare()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (!this.unreadNotification.public) {
       this.$store.dispatch('TimelineSpace/stopPublicStreaming')
       this.$store.dispatch('TimelineSpace/unbindPublicStreaming')
@@ -125,7 +125,7 @@ export default {
     Event.$off('focus-timeline')
     this.observer.disconnect()
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Public/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Public/archiveTimeline')
     if (!this.unreadNotification.public) {

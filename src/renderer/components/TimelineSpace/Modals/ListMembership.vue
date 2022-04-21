@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="$t('modals.list_membership.title')" v-model="listMembershipModal" width="400px" class="list-membership-modal">
+  <el-dialog :title="$t('modals.list_membership.title')" :model-value="listMembershipModal" width="400px" class="list-membership-modal">
     <el-checkbox-group v-model="belongToLists" v-loading="loading">
       <table class="lists">
         <tbody>
