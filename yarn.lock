@@ -4889,12 +4889,13 @@ electron-osx-sign@^0.6.0:
     minimist "^1.2.0"
     plist "^3.0.1"
 
-electron-packager@^15.4.0:
-  version "15.4.0"
-  resolved "https://registry.yarnpkg.com/electron-packager/-/electron-packager-15.4.0.tgz#07ea036b70cde2062d4c8dce4d907d793b303998"
-  integrity sha512-JrrLcBP15KGrPj0cZ/ALKGmaQ4gJkn3mocf0E3bRKdR3kxKWYcDRpCvdhksYDXw/r3I6tMEcZ7XzyApWFXdVpw==
+electron-packager@^15.5.1:
+  version "15.5.1"
+  resolved "https://registry.yarnpkg.com/electron-packager/-/electron-packager-15.5.1.tgz#8f0a1ff557a9bfa31c4b0e251ffd0df209b7dd23"
+  integrity sha512-9/fqF64GACZsLYLuFJ8vCqItMXbvsD0NMDLNfFmAv9mSqkqKWSZb5V3VE9CxT6CeXwZ6wN3YowEQuqBNyShEVg==
   dependencies:
     "@electron/get" "^1.6.0"
+    "@electron/universal" "^1.2.1"
     asar "^3.1.0"
     cross-spawn-windows-exe "^1.2.0"
     debug "^4.0.1"
