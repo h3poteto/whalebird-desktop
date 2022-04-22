@@ -755,15 +755,15 @@ export default {
       }
     }
 
-    .reblogger-name /deep/ {
+    .reblogger-name {
       font-size: calc(var(--base-font-size) * 0.86);
       cursor: pointer;
       margin: 0 4px;
+    }
 
-      .emojione {
-        max-width: 10px;
-        max-height: 10px;
-      }
+    .reblogger-name :deep(.emojione) {
+      max-width: 10px;
+      max-height: 10px;
     }
   }
 
@@ -772,7 +772,7 @@ export default {
     float: left;
     width: calc(100% - 52px);
 
-    .content-wrapper /deep/ {
+    .content-wrapper {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
@@ -795,11 +795,11 @@ export default {
       .content p {
         unicode-bidi: plaintext;
       }
+    }
 
-      .emojione {
-        width: 20px;
-        height: 20px;
-      }
+    .content-wrapper :deep(.emojione) {
+      width: 20px;
+      height: 20px;
     }
 
     .toot-header {
@@ -812,14 +812,14 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
 
-        .display-name /deep/ {
+        .display-name {
           font-weight: 800;
           color: var(--theme-primary-color);
+        }
 
-          .emojione {
-            max-width: 14px;
-            max-height: 14px;
-          }
+        .display-name :deep(.emojione) {
+          max-width: 14px;
+          max-height: 14px;
         }
 
         .acct {
@@ -908,6 +908,8 @@ export default {
 
     .tool-box {
       display: flex;
+      align-items: center;
+      margin: -6px 0 -6px 0;
 
       .fa-icon {
         vertical-align: bottom;

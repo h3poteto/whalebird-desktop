@@ -87,7 +87,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#global_header /deep/ {
+.account-menu :deep(.el-menu-item) {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0 !important;
+}
+
+#global_header {
   .account-menu {
     height: 100%;
     position: fixed;
@@ -96,12 +103,6 @@ export default {
     width: 65px;
     padding-top: 24px;
     border: 0;
-
-    .el-tooltip {
-      outline: 0;
-      text-align: center;
-      padding: 0 !important;
-    }
 
     .avatar {
       width: 42px;

@@ -11,7 +11,7 @@
       <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
         <font-awesome-icon icon="rotate" />
       </el-button>
-      <el-popover placement="left-start" width="180" popper-class="theme-popover" trigger="click" v-model:visible="TLOptionVisible">
+      <el-popover v-if="TLOption()" placement="left-start" width="180" popper-class="theme-popover" trigger="click">
         <div>
           <el-form role="form" label-position="left" label-width="125px" size="default">
             <el-form-item for="show-reblogs" :label="$t('header_menu.option.show_reblogs')">
@@ -23,9 +23,11 @@
             <el-button type="primary" @click="applyTLOption">{{ $t('header_menu.option.apply') }}</el-button>
           </el-form>
         </div>
-        <el-button v-show="TLOption()" slot="reference" type="text" class="action" :title="$t('header_menu.option.title')">
-          <font-awesome-icon icon="sliders" />
-        </el-button>
+        <template #reference>
+          <el-button type="text" class="action" :title="$t('header_menu.option.title')">
+            <font-awesome-icon icon="sliders" />
+          </el-button>
+        </template>
       </el-popover>
       <el-button type="text" class="action" @click="settings" :title="$t('header_menu.settings')">
         <font-awesome-icon icon="gear" />
@@ -41,7 +43,6 @@ export default {
   name: 'header-menu',
   data() {
     return {
-      TLOptionVisible: false,
       showReblogs: true,
       showReplies: true
     }
@@ -177,7 +178,6 @@ export default {
         default:
           console.log('Not implemented')
       }
-      this.TLOptionVisible = false
     },
     TLOption() {
       switch (this.$route.name) {
@@ -211,6 +211,7 @@ export default {
 
     h1 {
       margin: 0;
+      line-height: 32px;
     }
   }
 

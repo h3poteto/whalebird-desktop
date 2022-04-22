@@ -6,6 +6,8 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
+  faAngleDown,
+  faAngleUp,
   faAnglesRight,
   faAnglesLeft,
   faHome,
@@ -78,6 +80,8 @@ import store from './store'
 import i18next from '~/src/config/i18n'
 
 library.add(
+  faAngleDown,
+  faAngleUp,
   faAnglesRight,
   faAnglesLeft,
   faHome,

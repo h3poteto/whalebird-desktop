@@ -178,7 +178,6 @@ export default {
     width: calc(100% - 180px);
     position: fixed;
     top: 0;
-    height: 48px;
     border-bottom: solid 1px var(--theme-border-color);
   }
 }
