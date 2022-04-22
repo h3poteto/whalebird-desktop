@@ -31,7 +31,7 @@
 
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" @click="upper" circle>
-        <font-awesome-icon icon="angle-up" class="icon" />
+        <font-awesome-icon icon="angle-up" class="upper-icon" />
       </el-button>
     </div>
   </div>
@@ -307,10 +307,6 @@ export default {
     bottom: 20px;
     right: 20px;
     transition: all 0.5s;
-
-    .icon {
-      padding: 3px;
-    }
   }
 
   .upper-with-side-bar {
@@ -318,6 +314,10 @@ export default {
     bottom: 20px;
     right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
+  }
+
+  .upper-icon {
+    padding: 3px;
   }
 }
 </style>

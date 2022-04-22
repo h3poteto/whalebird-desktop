@@ -992,7 +992,7 @@ export default {
 
 <style lang="scss">
 .status-menu-popper {
-  padding: 2px 0;
+  padding: 2px 0 !important;
   border-color: #909399;
 
   .menu-list {

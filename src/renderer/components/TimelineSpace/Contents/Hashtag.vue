@@ -65,7 +65,6 @@ export default {
 
 <style lang="scss" scoped>
 #hashtag {
-  border-top: 1px solid var(--theme-border-color);
   height: calc(100% - 1px);
   overflow: hidden;
 

@@ -22,7 +22,7 @@
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" :icon="ElIconArrowUp" @click="upper" circle>
-        <font-awesome-icon icon="arrow-up" />
+        <font-awesome-icon icon="angle-up" class="upper-icon" />
       </el-button>
     </div>
   </div>
@@ -209,6 +209,10 @@ export default {
     bottom: 20px;
     right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
+  }
+
+  .upper-icon {
+    padding: 3px;
   }
 }
 </style>

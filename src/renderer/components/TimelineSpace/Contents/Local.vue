@@ -23,7 +23,7 @@
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
       <el-button type="primary" @click="upper" circle>
-        <font-awesome-icon icon="arrow-up" />
+        <font-awesome-icon icon="angle-up" class="upper-icon" />
       </el-button>
     </div>
   </div>
@@ -61,7 +61,7 @@ export default {
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      unreadNotification: state => state.TimelineSpace.unreadNotification
+      unreadNotification: state => state.TimelineSpace.timelineSetting.unreadNotification
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
@@ -77,6 +77,7 @@ export default {
     }
   },
   async mounted() {
+    console.log(this.unreadNotification)
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
     document.getElementById('scroller').addEventListener('scroll', this.onScroll)
     if (!this.unreadNotification.local) {
@@ -295,6 +296,10 @@ export default {
     bottom: 20px;
     right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
+  }
+
+  .upper-icon {
+    padding: 3px;
   }
 }
 </style>
