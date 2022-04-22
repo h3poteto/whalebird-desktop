@@ -1,39 +1,18 @@
 <template>
   <div id="general">
     <h2>{{ $t('settings.general.title') }}</h2>
-    <el-form
-      class="toot section"
-      label-width="250px"
-      label-position="right"
-      size="default"
-    >
+    <el-form class="toot section" label-width="250px" label-position="right" size="default">
       <h3>{{ $t('settings.general.toot.title') }}</h3>
-      <el-form-item
-        for="visibility"
-        :label="$t('settings.general.toot.visibility.description')"
-      >
-        <el-select
-          id="visibility"
-          v-model="tootVisibility"
-          placeholder="visibility"
-        >
-          <el-option
-            v-for="v in visibilities"
-            :key="v.value"
-            :label="$t(v.name)"
-            :value="v.value"
-          >
-          </el-option>
+      <el-form-item for="visibility" :label="$t('settings.general.toot.visibility.description')">
+        <el-select id="visibility" :model-value="tootVisibility" placeholder="visibility" @change="changeVisibility">
+          <el-option v-for="v in visibilities" :key="v.value" :label="$t(v.name)" :value="v.value"> </el-option>
         </el-select>
         <p class="notice">
           {{ $t('settings.general.toot.visibility.notice') }}
         </p>
       </el-form-item>
-      <el-form-item
-        for="sensitive"
-        :label="$t('settings.general.toot.sensitive.description')"
-      >
-        <el-switch id="sensitive" v-model="tootSensitive"></el-switch>
+      <el-form-item for="sensitive" :label="$t('settings.general.toot.sensitive.description')">
+        <el-switch id="sensitive" :model-value="tootSensitive" @change="changeSensitive"></el-switch>
       </el-form-item>
     </el-form>
   </div>
@@ -46,11 +25,7 @@ export default {
   name: 'General',
   data() {
     return {
-      visibilities: [
-        Visibility.Public,
-        Visibility.Unlisted,
-        Visibility.Private,
-      ],
+      visibilities: [Visibility.Public, Visibility.Unlisted, Visibility.Private]
     }
   },
   computed: {
@@ -60,7 +35,7 @@ export default {
       },
       set(value) {
         this.$store.dispatch('Settings/General/setVisibility', value)
-      },
+      }
     },
     tootSensitive: {
       get() {
@@ -68,12 +43,20 @@ export default {
       },
       set(value) {
         this.$store.dispatch('Settings/General/setSensitive', value)
-      },
-    },
+      }
+    }
   },
   created() {
     this.$store.dispatch('Settings/General/fetchSettings')
   },
+  methods: {
+    changeVisibility(value) {
+      this.tootVisibility = value
+    },
+    changeSensitive(value) {
+      this.tootSensitive = value
+    }
+  }
 }
 </script>
 

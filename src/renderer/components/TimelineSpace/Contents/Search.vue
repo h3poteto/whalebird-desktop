@@ -2,7 +2,7 @@
   <div id="search">
     <div class="search-header">
       <el-form :inline="true">
-        <el-select :model-value="target" :placeholder="$t('search.search')" class="search-target" size="large">
+        <el-select v-model="target" :placeholder="$t('search.search')" class="search-target" size="large">
           <el-option v-for="item in searchTargets" :key="item.target" :label="item.label" :value="item.target"> </el-option>
         </el-select>
         <input v-model="query" :placeholder="$t('search.keyword')" class="search-keyword" v-on:keyup.enter="search" autofocus />

@@ -1,4 +1,5 @@
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { toRaw } from 'vue'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 import { Setting, UnreadNotification, Timeline as TimelineSetting, UseMarker } from '~src/types/setting'
@@ -32,7 +33,7 @@ const actions: ActionTree<TimelineState, RootState> = {
   },
   changeUnreadNotification: async ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
     const unread: UnreadNotification = Object.assign({}, state.setting.unreadNotification, timeline)
-    const tl: TimelineSetting = Object.assign({}, state.setting, {
+    const tl: TimelineSetting = Object.assign({}, toRaw(state.setting), {
       unreadNotification: unread
     })
     const setting: Setting = {
@@ -45,7 +46,7 @@ const actions: ActionTree<TimelineState, RootState> = {
   },
   changeUseMarker: async ({ dispatch, state, rootState }, timeline: { key: boolean }) => {
     const marker: UseMarker = Object.assign({}, state.setting.useMarker, timeline)
-    const tl: TimelineSetting = Object.assign({}, state.setting, {
+    const tl: TimelineSetting = Object.assign({}, toRaw(state.setting), {
       useMarker: marker
     })
     const setting: Setting = {

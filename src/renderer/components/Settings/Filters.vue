@@ -3,7 +3,7 @@
     <h2>{{ $t('settings.filters.title') }}</h2>
     <div class="new-filter">
       <el-button type="primary" :disabled="sns === 'misskey'">
-        <router-link tag="span" :to="`/${id()}/settings/filters/new`">
+        <router-link :to="`/${id()}/settings/filters/new`">
           {{ $t('settings.filters.new.title') }}
         </router-link>
       </el-button>
@@ -85,9 +85,14 @@ export default {
   .new-filter {
     display: flex;
     justify-content: flex-end;
+
+    a {
+      color: var(--theme-primary-color);
+      text-decoration: none;
+    }
   }
 
-  .el-table /deep/ {
+  .el-table :deep() {
     tr,
     th,
     td,
