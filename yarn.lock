@@ -5349,13 +5349,15 @@ eslint-plugin-standard@^5.0.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-5.0.0.tgz#c43f6925d669f177db46f095ea30be95476b1ee4"
   integrity sha512-eSIXPc9wBM4BrniMzJRBm2uoVuXz2EPa+NXPk2+itrVt+r5SbKFERx/IgrK/HmfjddyKVz2f+j+7gBRvu19xLg==
 
-eslint-plugin-vue@^8.6.0:
-  version "8.6.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-8.6.0.tgz#fbdf0f13f8d208a4cba752bf54042661a1aec5c3"
-  integrity sha512-abXiF2J18n/7ZPy9foSlJyouKf54IqpKlNvNmzhM93N0zs3QUxZG/oBd3tVPOJTKg7SlhBUtPxugpqzNbgGpQQ==
+eslint-plugin-vue@^8.7.0:
+  version "8.7.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-8.7.0.tgz#d7adb556ba763e6df5447a3775491d0ae40f4dd7"
+  integrity sha512-0Heo1gHDTjU8+5WvfBPEyNqQpzuynbLLebwxh2/xPK0FkEOJlRCwuf1MjGmkidacF2735u5ApRhse18CWTt9Wg==
   dependencies:
     eslint-utils "^3.0.0"
     natural-compare "^1.4.0"
+    nth-check "^2.0.1"
+    postcss-selector-parser "^6.0.9"
     semver "^7.3.5"
     vue-eslint-parser "^8.0.1"
 
@@ -9216,7 +9218,7 @@ npmlog@^6.0.0:
     gauge "^4.0.0"
     set-blocking "^2.0.0"
 
-nth-check@^2.0.0:
+nth-check@^2.0.0, nth-check@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/nth-check/-/nth-check-2.0.1.tgz#2efe162f5c3da06a28959fbd3db75dbeea9f0fc2"
   integrity sha512-it1vE95zF6dTT9lBsYbxvqh0Soy4SPowchj0UBGj/V6cTPnXXtQOPUbhZ6CmGzAD/rW22LQK6E96pcdJXk4A4w==
