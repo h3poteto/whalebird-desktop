@@ -382,27 +382,15 @@ export default {
       }
     }
 
-    .username /deep/ {
+    .username {
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: calc(var(--base-font-size) * 1.71);
       margin: 0 auto 12px auto;
-
-      .emojione {
-        max-width: 1em;
-        max-height: 1em;
-      }
     }
 
     .account {
       color: #409eff;
-    }
-
-    .note {
-      & /deep/ .emojione {
-        max-width: 1.2em;
-        height: 1.2em;
-      }
     }
   }
 
@@ -481,6 +469,12 @@ export default {
         width: 100%;
         text-align: left;
         line-height: 20px;
+        height: auto;
+        display: block;
+      }
+
+      .tab :deep(span) {
+        display: block;
       }
 
       .title {

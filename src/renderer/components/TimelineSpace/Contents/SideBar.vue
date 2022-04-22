@@ -1,9 +1,12 @@
 <template>
   <div class="side-bar" v-if="openSideBar">
     <div class="header">
-      <font-awesome-icon icon="spinner" />
-      <font-awesome-icon icon="rotate" />
-      <font-awesome-icon icon="xmark" />
+      <el-button type="text" @click="reload" class="action">
+        <font-awesome-icon icon="rotate" />
+      </el-button>
+      <el-button type="text" @click="close" class="action">
+        <font-awesome-icon icon="xmark" />
+      </el-button>
     </div>
     <div id="sidebar_scrollable">
       <account-profile v-if="component === 1" v-on:change-loading="changeLoading"></account-profile>
@@ -88,12 +91,14 @@ export default {
     box-sizing: border-box;
     font-size: 18px;
 
-    .el-icon-close {
-      cursor: pointer;
-    }
+    .action {
+      color: var(--theme-secondary-color);
+      padding: 0;
+      margin-left: 8px;
 
-    .el-icon-refresh {
-      cursor: pointer;
+      &:hover {
+        color: #409eff;
+      }
     }
   }
 

@@ -1,18 +1,11 @@
 <template>
-  <div class="tabs" id="sidebar_tabs">
-    <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
-      <el-tab-pane label="Posts" name="posts"
-        ><Posts :account="account" :buffer="buffer" :filters="filters"
-      /></el-tab-pane>
+  <div id="sidebar_tabs">
+    <el-tabs :model-value="activeName" @tab-click="handleClick" class="tabs">
+      <el-tab-pane label="Posts" name="posts"><Posts :account="account" :buffer="buffer" :filters="filters" /></el-tab-pane>
       <el-tab-pane label="Posts and replies" name="posts_and_replies"
-        ><PostsAndReplies
-          :account="account"
-          :buffer="buffer"
-          :filters="filters"
+        ><PostsAndReplies :account="account" :buffer="buffer" :filters="filters"
       /></el-tab-pane>
-      <el-tab-pane label="Media" name="media"
-        ><Media :account="account" :buffer="buffer" :filters="filters"
-      /></el-tab-pane>
+      <el-tab-pane label="Media" name="media"><Media :account="account" :buffer="buffer" :filters="filters" /></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -29,19 +22,17 @@ export default {
   components: {
     Posts,
     PostsAndReplies,
-    Media,
+    Media
   },
   data() {
     return {
       activeName: 'posts',
       defaultBuffer: 200,
-      buffer: 200,
+      buffer: 200
     }
   },
   computed: {
-    ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile/Timeline', [
-      'filters',
-    ]),
+    ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile/Timeline', ['filters'])
   },
   mounted() {
     const timeline = document.getElementById('sidebar_tabs')
@@ -52,13 +43,13 @@ export default {
   methods: {
     handleClick(tab, event) {
       console.log(tab, event)
-    },
-  },
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.tabs /deep/ {
+.tabs :deep() {
   .el-tabs__header {
     background-color: var(--theme-selected-background-color);
   }
