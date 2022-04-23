@@ -75,9 +75,9 @@
                 :title="media.description"
                 :readExif="true"
               />
-              <el-tag class="media-label" size="mini" v-if="media.type === 'gifv'">GIF</el-tag>
-              <el-tag class="media-label" size="mini" v-else-if="media.type === 'video'">VIDEO</el-tag>
-              <el-tag class="media-label" size="mini" v-else-if="media.type === 'audio'">AUDIO</el-tag>
+              <el-tag class="media-label" size="small" v-if="media.type === 'gifv'">GIF</el-tag>
+              <el-tag class="media-label" size="small" v-else-if="media.type === 'video'">VIDEO</el-tag>
+              <el-tag class="media-label" size="small" v-else-if="media.type === 'audio'">AUDIO</el-tag>
             </div>
           </div>
           <div class="clearfix"></div>

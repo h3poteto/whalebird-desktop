@@ -1,7 +1,7 @@
 <template>
   <div id="language">
     <h2>{{ $t('preferences.language.title') }}</h2>
-    <el-form class="display-language section" label-position="top" size="small">
+    <el-form class="display-language section" label-position="top">
       <h3>{{ $t('preferences.language.language.title') }}</h3>
       <el-form-item for="language" :label="$t('preferences.language.language.description')">
         <el-select id="language" v-model="displayLanguage" placeholder="style">
@@ -9,7 +9,7 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <el-form class="spellchecker section" label-position="top" size="small">
+    <el-form class="spellchecker section" label-position="top">
       <h3>{{ $t('preferences.language.spellchecker.title') }}</h3>
       <el-form-item for="spellcheck" :label="$t('preferences.language.spellchecker.enabled')">
         <el-switch id="spellcheck" v-model="spellcheck" active-color="#13ce66"> </el-switch>

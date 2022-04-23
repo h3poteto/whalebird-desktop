@@ -153,18 +153,13 @@ export default {
       }
     }
 
-    .content-wrapper /deep/ {
+    .content-wrapper {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
       .content {
         margin: var(--toot-padding) 0;
         word-wrap: break-word;
-      }
-
-      .emojione {
-        width: 20px;
-        height: 20px;
       }
     }
 

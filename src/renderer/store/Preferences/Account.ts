@@ -1,9 +1,10 @@
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { toRaw } from 'vue'
 import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type AccountState = {
   accounts: Array<LocalAccount>
@@ -39,10 +40,10 @@ const actions: ActionTree<AccountState, RootState> = {
     await win.ipcRenderer.invoke('remove-account', account._id)
   },
   forwardAccount: async (_, account: LocalAccount) => {
-    await win.ipcRenderer.invoke('forward-account', account)
+    await win.ipcRenderer.invoke('forward-account', toRaw(account))
   },
   backwardAccount: async (_, account: LocalAccount) => {
-    await win.ipcRenderer.invoke('backward-account', account)
+    await win.ipcRenderer.invoke('backward-account', toRaw(account))
   },
   removeAllAccounts: async () => {
     await win.ipcRenderer.invoke('remove-all-accounts')

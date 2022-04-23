@@ -5,7 +5,7 @@
         <el-col :span="23">
           <h1>{{ $t('preferences.title') }}</h1>
         </el-col>
-        <el-col :span="1">
+        <el-col :span="1" class="close-area">
           <el-button type="text" @click="close" class="close-button" role="button">
             <font-awesome-icon icon="xmark" />
           </el-button>
@@ -87,8 +87,13 @@ export default {
     border-bottom: 1px solid var(--theme-border-color);
     user-select: none;
 
-    .close-button {
-      font-size: 28px;
+    .close-area {
+      display: flex;
+      align-items: center;
+
+      .close-button {
+        font-size: 28px;
+      }
     }
   }
 
@@ -100,13 +105,13 @@ export default {
       border-right: solid 1px var(--theme-border-color);
     }
 
-    .setting-menu /deep/ {
+    .setting-menu {
       height: 100%;
       user-select: none;
+    }
 
-      .icon {
-        margin-right: 9px;
-      }
+    .setting-menu :deep(.icon) {
+      margin-right: 9px;
     }
   }
 }

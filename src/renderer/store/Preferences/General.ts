@@ -1,11 +1,12 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
+import { toRaw } from 'vue'
 import { RootState } from '@/store'
 import { Sound } from '~/src/types/sound'
 import { Timeline } from '~/src/types/timeline'
 import { BaseConfig, General, Other } from '~/src/types/preference'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type GeneralState = {
   general: General
@@ -55,7 +56,7 @@ const actions: ActionTree<GeneralState, RootState> = {
   updateSound: async ({ commit, state }, sound: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newSound: Sound = Object.assign({}, state.general.sound, sound)
-    const newGeneral: General = Object.assign({}, state.general, {
+    const newGeneral: General = Object.assign({}, toRaw(state.general), {
       sound: newSound
     })
     const config = {
@@ -69,7 +70,7 @@ const actions: ActionTree<GeneralState, RootState> = {
   updateTimeline: async ({ commit, state, dispatch }, timeline: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newTimeline: Timeline = Object.assign({}, state.general.timeline, timeline)
-    const newGeneral: General = Object.assign({}, state.general, {
+    const newGeneral: General = Object.assign({}, toRaw(state.general), {
       timeline: newTimeline
     })
     const config = {
@@ -84,7 +85,7 @@ const actions: ActionTree<GeneralState, RootState> = {
   updateOther: async ({ commit, state, dispatch }, other: {}) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newOther: Other = Object.assign({}, state.general.other, other)
-    const newGeneral: General = Object.assign({}, state.general, {
+    const newGeneral: General = Object.assign({}, toRaw(state.general), {
       other: newOther
     })
     const config = {

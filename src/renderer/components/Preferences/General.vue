@@ -1,7 +1,7 @@
 <template>
   <div id="general" v-loading="loading" :element-loading-background="backgroundColor">
     <h2>{{ $t('preferences.general.title') }}</h2>
-    <el-form class="sounds section" label-position="right" label-width="250px" size="small">
+    <el-form class="sounds section" label-position="right" label-width="250px">
       <h3>{{ $t('preferences.general.sounds.title') }}</h3>
       <p class="description">
         {{ $t('preferences.general.sounds.description') }}
@@ -13,7 +13,7 @@
         <el-switch id="sound_toot" v-model="sound_toot" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
-    <el-form class="timeline section" label-potision="right" label-width="302px" size="samll">
+    <el-form class="timeline section" label-potision="right" label-width="302px">
       <h3>{{ $t('preferences.general.timeline.title') }}</h3>
       <p class="description">
         {{ $t('preferences.general.timeline.description') }}
@@ -28,7 +28,7 @@
         <el-switch id="hideAllAttachments" v-model="timeline_hide_attachments" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
-    <el-form class="other section" label-position="right" label-width="250px" size="small" v-if="notDarwin">
+    <el-form class="other section" label-position="right" label-width="250px" v-if="notDarwin">
       <h3>{{ $t('preferences.general.other.title') }}</h3>
       <el-form-item for="launch" :label="$t('preferences.general.other.launch')">
         <el-switch id="launch" v-model="other_launch" active-color="#13ce66"> </el-switch>

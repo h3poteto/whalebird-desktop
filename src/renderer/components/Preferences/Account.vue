@@ -1,7 +1,7 @@
 <template>
   <div id="account">
     <h2>{{ $t('preferences.account.title') }}</h2>
-    <el-form class="connected-account section" size="small">
+    <el-form class="connected-account section">
       <h3>{{ $t('preferences.account.connected') }}</h3>
       <el-form-item>
         <el-table
@@ -42,10 +42,12 @@
         <el-popover placement="top" width="160" v-model="deletePopoverVisible">
           <p>{{ $t('preferences.account.confirm_message') }}</p>
           <div style="text-align: right; margin: 0">
-            <el-button size="mini" type="text" @click="deletePopoverVisible = false">{{ $t('preferences.account.cancel') }}</el-button>
-            <el-button type="danger" size="mini" @click="removeAllAssociations">{{ $t('preferences.account.confirm') }}</el-button>
+            <el-button size="small" type="text" @click="deletePopoverVisible = false">{{ $t('preferences.account.cancel') }}</el-button>
+            <el-button type="danger" size="small" @click="removeAllAssociations">{{ $t('preferences.account.confirm') }}</el-button>
           </div>
-          <el-button slot="reference" type="danger">{{ $t('preferences.account.remove_all_associations') }}</el-button>
+          <template #reference>
+            <el-button type="danger">{{ $t('preferences.account.remove_all_associations') }}</el-button>
+          </template>
         </el-popover>
       </el-form-item>
     </el-form>
@@ -124,16 +126,16 @@ export default {
 
 <style lang="scss" scoped>
 #account {
-  .section /deep/ {
+  .section {
     margin-bottom: 40px;
+  }
 
-    .el-form-item__label {
-      color: var(--theme-primary-color);
-    }
+  .section :deep(.el-form-item__label) {
+    color: var(--theme-primary-color);
   }
 
   .connected-account {
-    .el-table /deep/ {
+    .el-table :deep() {
       tr,
       th,
       td {
@@ -155,6 +157,10 @@ export default {
     .action {
       font-size: var(--base-font-size);
     }
+  }
+
+  .action :deep(.svg-inline--fa) {
+    padding-right: 4px;
   }
 }
 </style>
