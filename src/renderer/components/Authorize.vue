@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#authorize /deep/ {
+#authorize {
   background-color: #292f3f;
   color: #ffffff;
   text-align: center;
@@ -132,14 +132,16 @@ export default {
     margin: 0 auto;
   }
 
-  .el-form-item__label {
-    color: #f0f3f9;
-  }
+  .authorize-form :deep() {
+    .el-form-item__label {
+      color: #f0f3f9;
+    }
 
-  .el-input__inner {
-    background-color: #373d48;
-    color: #ffffff;
-    border: 0;
+    .el-input__inner {
+      background-color: #373d48;
+      color: #ffffff;
+      border: 0;
+    }
   }
 
   .hidden {

@@ -133,13 +133,13 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      .bold /deep/ {
+      .bold {
         cursor: pointer;
+      }
 
-        .emojione {
-          max-width: 14px;
-          max-height: 14px;
-        }
+      .bold :deep(.emojione) {
+        max-width: 14px;
+        max-height: 14px;
       }
     }
 

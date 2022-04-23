@@ -10,17 +10,14 @@
             v-html="
               $t('notification.status.body', {
                 username: username(message.account),
-                interpolation: { escapeValue: false },
+                interpolation: { escapeValue: false }
               })
             "
           ></bdi>
         </span>
       </div>
       <div class="action-icon" role="presentation">
-        <FailoverImg
-          :src="message.account.avatar"
-          :alt="`Avatar of ${message.account.username}`"
-        />
+        <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
       </div>
     </div>
     <div class="clearfix"></div>
@@ -51,20 +48,20 @@ export default {
   props: {
     message: {
       type: Object,
-      default: {},
+      default: {}
     },
     filters: {
       type: Array,
-      default: [],
+      default: []
     },
     focused: {
       type: Boolean,
-      default: false,
+      default: false
     },
     overlaid: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   components: { Toot, FailoverImg },
   methods: {
@@ -82,19 +79,11 @@ export default {
       }
     },
     openUser(account) {
-      this.$store.dispatch(
-        'TimelineSpace/Contents/SideBar/openAccountComponent'
-      )
-      this.$store.dispatch(
-        'TimelineSpace/Contents/SideBar/AccountProfile/changeAccount',
-        account
-      )
-      this.$store.commit(
-        'TimelineSpace/Contents/SideBar/changeOpenSideBar',
-        true
-      )
-    },
-  },
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+    }
+  }
 }
 </script>
 
@@ -123,13 +112,13 @@ export default {
       float: left;
       max-width: 80%;
 
-      .bold /deep/ {
+      .bold {
         cursor: pointer;
+      }
 
-        .emojione {
-          max-width: 14px;
-          max-height: 14px;
-        }
+      .bold :deep(.emojione) {
+        max-width: 14px;
+        max-height: 14px;
       }
     }
 

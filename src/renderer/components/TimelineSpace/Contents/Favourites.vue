@@ -21,7 +21,7 @@
       </template>
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" :icon="ElIconArrowUp" @click="upper" circle>
+      <el-button type="primary" @click="upper" circle>
         <font-awesome-icon icon="angle-up" class="upper-icon" />
       </el-button>
     </div>

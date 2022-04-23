@@ -62,12 +62,12 @@ export default {
 
 <style lang="scss" scoped>
 #general {
-  .section /deep/ {
+  .section {
     margin-bottom: 40px;
+  }
 
-    .el-form-item__label {
-      color: var(--theme-primary-color);
-    }
+  .section :deep(.el-form-item__label) {
+    color: var(--theme-primary-color);
   }
 
   .notice {

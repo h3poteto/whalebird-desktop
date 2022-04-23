@@ -389,8 +389,18 @@ export default {
       margin: 0 auto 12px auto;
     }
 
+    .username :deep(.emojione) {
+      max-width: 1em;
+      max-height: 1em;
+    }
+
     .account {
       color: #409eff;
+    }
+
+    .note :deep(.emojione) {
+      max-width: 1.2em;
+      height: 1.2em;
     }
   }
 

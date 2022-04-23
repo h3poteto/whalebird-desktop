@@ -23,7 +23,7 @@
         <FailoverImg :src="`${account.baseURL}/favicon.ico`" :failoverSrc="`${account.baseURL}/favicon.png`" class="instance-icon" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
-      <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem">
+      <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem" class="add-new-account">
         <font-awesome-icon icon="plus" />
         <span slot="new">New</span>
       </el-menu-item>
@@ -140,6 +140,10 @@ export default {
 
   .with-global-header {
     margin-left: 65px;
+  }
+
+  .add-new-account {
+    align-items: center;
   }
 }
 </style>
