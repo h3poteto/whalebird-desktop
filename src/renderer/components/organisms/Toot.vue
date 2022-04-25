@@ -468,28 +468,22 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-      this.$refs.status_menu_popper.doClose()
     },
     openBrowser(message) {
       window.shell.openExternal(message.url)
-      this.$refs.status_menu_popper.doClose()
     },
     copyLink(message) {
       window.clipboard.writeText(message.url, 'toot-link')
-      this.$refs.status_menu_popper.doClose()
     },
     reportUser() {
       this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage)
-      this.$refs.status_menu_popper.doClose()
     },
     confirmMute() {
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage.account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
-      this.$refs.status_menu_popper.doClose()
     },
     block() {
       this.$store.dispatch('organisms/Toot/block', this.originalMessage.account)
-      this.$refs.status_menu_popper.doClose()
     },
     changeReblog(message) {
       if (message.reblogged) {
@@ -676,7 +670,6 @@ export default {
         native: emoji.native
       })
       this.$emit('update', status)
-      this.$refs.status_emoji_picker.doClose()
     },
     async addReaction(native) {
       const status = await this.$store.dispatch('organisms/Toot/sendReaction', {

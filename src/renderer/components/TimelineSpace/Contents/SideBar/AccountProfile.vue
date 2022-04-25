@@ -22,17 +22,17 @@
               @click="unsubscribe(account)"
               :title="$t('side_bar.account_profile.unsubscribe')"
             >
-              <font-awesome-icon icon="bell" size="xl" />
+              <font-awesome-icon icon="bell" size="lg" />
             </div>
             <div v-else class="subscribe" @click="subscribe(account)" :title="$t('side_bar.account_profile.subscribe')">
-              <font-awesome-icon :icon="['far', 'bell']" size="xl" />
+              <font-awesome-icon :icon="['far', 'bell']" size="lg" />
             </div>
           </div>
         </div>
 
         <div class="user-info">
           <div class="more" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
-            <el-popover placement="bottom" width="200" trigger="click" ref="popper">
+            <el-popover placement="bottom" width="200" trigger="click" popper-class="account-menu-popper">
               <ul class="menu-list">
                 <li role="button" @click="openBrowser(account)">
                   {{ $t('side_bar.account_profile.open_in_browser') }}
@@ -229,29 +229,23 @@ export default {
     },
     openBrowser(account) {
       window.shell.openExternal(account.url)
-      this.$refs.popper.doClose()
     },
     addToList(account) {
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/setAccount', account)
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', true)
-      this.$refs.popper.doClose()
     },
     confirmMute(account) {
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
-      this.$refs.popper.doClose()
     },
     unmute(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unmute', account)
-      this.$refs.popper.doClose()
     },
     block(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/block', account)
-      this.$refs.popper.doClose()
     },
     unblock(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unblock', account)
-      this.$refs.popper.doClose()
     },
     metadataClick(e) {
       const link = findLink(e.target, 'metadata')
@@ -341,34 +335,6 @@ export default {
         .unfollow {
           color: #409eff;
           cursor: pointer;
-        }
-      }
-
-      .more {
-        .popper {
-          padding: 2px 0;
-          border-color: #909399;
-        }
-
-        .menu-list {
-          padding: 0;
-          font-size: calc(var(--base-font-size) * 0.9);
-          list-style-type: none;
-          line-height: 32px;
-          text-align: left;
-          color: #303133;
-          margin: 4px 0;
-
-          li {
-            box-sizing: border-box;
-            padding: 0 32px 0 16px;
-
-            &:hover {
-              background-color: #409eff;
-              color: #fff;
-              cursor: pointer;
-            }
-          }
         }
       }
 
@@ -514,6 +480,34 @@ export default {
 
   .timeline {
     font-size: calc(var(--base-font-size) * 0.85);
+  }
+}
+</style>
+
+<style lang="scss">
+.account-menu-popper {
+  padding: 2px 0 !important;
+  border-color: #909399;
+
+  .menu-list {
+    padding: 0;
+    font-size: calc(var(--base-font-size) * 0.9);
+    list-style-type: none;
+    line-height: 32px;
+    text-align: left;
+    color: #303133;
+    margin: 4px 0;
+
+    li {
+      box-sizing: border-box;
+      padding: 0 32px 0 16px;
+
+      &:hover {
+        background-color: #409eff;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>

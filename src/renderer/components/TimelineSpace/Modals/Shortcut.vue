@@ -1,82 +1,84 @@
 <template>
-  <el-dialog :title="$t('modals.shortcut.title')" :model-value="shortcutModal" width="500px" class="shortcut-modal">
-    <table class="shortcuts">
-      <tbody>
-        <tr>
-          <td><kbd>Ctrl(Cmd) + 1, 2, 3...</kbd></td>
-          <td>{{ $t('modals.shortcut.ctrl_number') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>Ctrl(Cmd) + k</kbd></td>
-          <td>{{ $t('modals.shortcut.ctrl_k') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>Ctrl(Cmd) + n</kbd></td>
-          <td>{{ $t('modals.shortcut.ctrl_n') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>Ctrl(Cmd) + Enter</kbd></td>
-          <td>{{ $t('modals.shortcut.ctrl_enter') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>Ctrl(Cmd) + r</kbd></td>
-          <td>{{ $t('modals.shortcut.ctrl_r') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>j</kbd></td>
-          <td>{{ $t('modals.shortcut.j') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>k</kbd></td>
-          <td>{{ $t('modals.shortcut.k') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>h</kbd></td>
-          <td>{{ $t('modals.shortcut.h') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>l</kbd></td>
-          <td>{{ $t('modals.shortcut.l') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>r</kbd></td>
-          <td>{{ $t('modals.shortcut.r') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>b</kbd></td>
-          <td>{{ $t('modals.shortcut.b') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>f</kbd></td>
-          <td>{{ $t('modals.shortcut.f') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>o</kbd></td>
-          <td>{{ $t('modals.shortcut.o') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>p</kbd></td>
-          <td>{{ $t('modals.shortcut.p') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>i</kbd></td>
-          <td>{{ $t('modals.shortcut.i') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>x</kbd></td>
-          <td>{{ $t('modals.shortcut.x') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>?</kbd></td>
-          <td>{{ $t('modals.shortcut.?') }}</td>
-        </tr>
-        <tr>
-          <td><kbd>esc</kbd></td>
-          <td>{{ $t('modals.shortcut.esc') }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </el-dialog>
+  <div class="shortcut">
+    <el-dialog :title="$t('modals.shortcut.title')" :model-value="shortcutModal" width="500px" class="shortcut-modal">
+      <table class="shortcuts">
+        <tbody>
+          <tr>
+            <td><kbd>Ctrl(Cmd) + 1, 2, 3...</kbd></td>
+            <td>{{ $t('modals.shortcut.ctrl_number') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>Ctrl(Cmd) + k</kbd></td>
+            <td>{{ $t('modals.shortcut.ctrl_k') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>Ctrl(Cmd) + n</kbd></td>
+            <td>{{ $t('modals.shortcut.ctrl_n') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>Ctrl(Cmd) + Enter</kbd></td>
+            <td>{{ $t('modals.shortcut.ctrl_enter') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>Ctrl(Cmd) + r</kbd></td>
+            <td>{{ $t('modals.shortcut.ctrl_r') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>j</kbd></td>
+            <td>{{ $t('modals.shortcut.j') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>k</kbd></td>
+            <td>{{ $t('modals.shortcut.k') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>h</kbd></td>
+            <td>{{ $t('modals.shortcut.h') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>l</kbd></td>
+            <td>{{ $t('modals.shortcut.l') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>r</kbd></td>
+            <td>{{ $t('modals.shortcut.r') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>b</kbd></td>
+            <td>{{ $t('modals.shortcut.b') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>f</kbd></td>
+            <td>{{ $t('modals.shortcut.f') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>o</kbd></td>
+            <td>{{ $t('modals.shortcut.o') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>p</kbd></td>
+            <td>{{ $t('modals.shortcut.p') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>i</kbd></td>
+            <td>{{ $t('modals.shortcut.i') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>x</kbd></td>
+            <td>{{ $t('modals.shortcut.x') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>?</kbd></td>
+            <td>{{ $t('modals.shortcut.?') }}</td>
+          </tr>
+          <tr>
+            <td><kbd>esc</kbd></td>
+            <td>{{ $t('modals.shortcut.esc') }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -96,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.shortcut-modal /deep/ {
+.shortcut :deep() {
   .el-dialog__header {
     background-color: #4a5664;
 
@@ -104,7 +106,9 @@ export default {
       color: #ebeef5;
     }
   }
+}
 
+.shortcut-modal {
   .shortcuts {
     text-align: left;
     border-collapse: collapse;

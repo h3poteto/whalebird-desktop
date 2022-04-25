@@ -13,7 +13,7 @@
       autofocus
     >
     </textarea>
-    <el-popover placement="bottom-start" width="300" trigger="manual" :model-value="openSuggest" popper-class="suggest-popper">
+    <el-popover placement="bottom-start" width="300" trigger="manual" v-model:visible="openSuggest" popper-class="suggest-popper">
       <ul class="suggest-list">
         <li
           v-for="(item, index) in filteredSuggestion"
@@ -31,9 +31,13 @@
           {{ item.name }}
         </li>
       </ul>
+      <!-- dummy object to open suggest popper -->
+      <template #reference>
+        <span></span>
+      </template>
     </el-popover>
     <div>
-      <el-popover placement="bottom" width="281" trigger="click" popper-class="status-emoji-picker" ref="status_emoji_picker">
+      <el-popover placement="bottom" width="281" trigger="click" popper-class="new-toot-emoji-picker" ref="new_toot_emoji_picker">
         <picker
           :data="emojiIndex"
           set="twitter"
@@ -280,6 +284,37 @@ export default {
 .suggest-popper {
   background-color: var(--theme-background-color);
   border: 1px solid var(--theme-header-menu-color);
+
+  .suggest-list {
+    list-style: none;
+    padding: 6px 0;
+    margin: 0;
+    box-sizing: border-box;
+
+    li {
+      font-size: var(--base-font-size);
+      padding: 0 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 34px;
+      line-height: 34px;
+      box-sizing: border-box;
+      cursor: pointer;
+      color: var(--theme-regular-color);
+
+      .icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .highlighted {
+      background-color: var(--theme-selected-background-color);
+    }
+  }
 }
 </style>
 
@@ -314,37 +349,6 @@ export default {
 
     &:focus {
       outline: 0;
-    }
-  }
-
-  .suggest-list {
-    list-style: none;
-    padding: 6px 0;
-    margin: 0;
-    box-sizing: border-box;
-
-    li {
-      font-size: var(--base-font-size);
-      padding: 0 20px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      height: 34px;
-      line-height: 34px;
-      box-sizing: border-box;
-      cursor: pointer;
-      color: var(--theme-regular-color);
-
-      .icon {
-        display: inline-block;
-        vertical-align: middle;
-        width: 20px;
-        height: 20px;
-      }
-    }
-
-    .highlighted {
-      background-color: var(--theme-selected-background-color);
     }
   }
 

@@ -8,6 +8,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faAngleDown,
   faAngleUp,
+  faAngleRight,
+  faAngleLeft,
   faAnglesRight,
   faAnglesLeft,
   faHome,
@@ -82,6 +84,8 @@ import i18next from '~/src/config/i18n'
 library.add(
   faAngleDown,
   faAngleUp,
+  faAngleRight,
+  faAngleLeft,
   faAnglesRight,
   faAnglesLeft,
   faHome,

@@ -1,6 +1,6 @@
 <template>
   <transition name="image-viewer">
-    <div id="image" v-show="modalOpen" @click="close" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
+    <div id="image" v-show="modalOpen" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
       <div class="image-wrapper">
         <div class="image-header">
           <el-button type="text" @click="close" class="close-button">
@@ -9,11 +9,11 @@
         </div>
         <div class="image-content" role="presentation">
           <span class="button-area"
-            ><el-button type="text"> <font-awesome-icon icon="arrow-left" /> </el-button
+            ><el-button type="text" v-show="showLeft" @click="decrementIndex()"> <font-awesome-icon icon="angle-left" /> </el-button
           ></span>
           <Media :src="imageURL" :type="imageType"></Media>
           <span class="button-area"
-            ><el-button type="text"> <font-awesome-icon icon="arrow-right" /> </el-button
+            ><el-button type="text" v-show="showRight" @click="incrementIndex()"> <font-awesome-icon icon="angle-right" /> </el-button
           ></span>
         </div>
       </div>
@@ -107,11 +107,13 @@ export default {
 .image-viewer-leave-to {
   opacity: 0;
 }
+
 .button-area {
   display: inline-block;
-  width: 52px;
-  height: 77px;
-  i {
+  width: 27px;
+  margin: 0 12px;
+
+  svg {
     font-size: 50px;
   }
 }

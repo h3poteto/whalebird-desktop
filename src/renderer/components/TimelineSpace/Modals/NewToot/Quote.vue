@@ -6,22 +6,14 @@
     <div class="detail">
       <div class="toot-header">
         <div class="user">
-          <span class="display-name"
-            ><bdi v-html="username(message.account)"></bdi
-          ></span>
+          <span class="display-name"><bdi v-html="username(message.account)"></bdi></span>
           <span class="acct">{{ accountName(message.account) }}</span>
         </div>
         <div class="clearfix"></div>
       </div>
       <div class="content-wrapper">
-        <div
-          class="spoiler"
-          v-html="emojiText(message.spoiler_text, message.emojis)"
-        ></div>
-        <div
-          class="content"
-          v-html="emojiText(message.content, message.emojis)"
-        ></div>
+        <div class="spoiler" v-html="emojiText(message.spoiler_text, message.emojis)"></div>
+        <div class="content" v-html="emojiText(message.content, message.emojis)"></div>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -36,17 +28,17 @@ import emojify from '@/utils/emojify'
 export default {
   new: 'quote-target',
   components: {
-    FailoverImg,
+    FailoverImg
   },
   props: {
     message: {
       type: Object,
-      default: {},
+      default: {}
     },
     displayNameStyle: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
   methods: {
     username(account) {
@@ -78,8 +70,8 @@ export default {
     },
     emojiText(content, emojis) {
       return emojify(content, emojis)
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -104,7 +96,7 @@ export default {
     float: left;
     width: calc(100% - 52px);
 
-    .content-wrapper /deep/ {
+    .content-wrapper {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
@@ -127,11 +119,11 @@ export default {
       .content p {
         unicode-bidi: plaintext;
       }
+    }
 
-      .emojione {
-        width: 20px;
-        height: 20px;
-      }
+    .content-wrapper :deep(.emojione) {
+      width: 20px;
+      height: 20px;
     }
 
     .toot-header {
@@ -143,14 +135,14 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
 
-        .display-name /deep/ {
+        .display-name {
           font-weight: 800;
           color: var(--theme-primary-color);
+        }
 
-          .emojione {
-            max-width: 14px;
-            max-height: 14px;
-          }
+        .display-name :deep(.emojione) {
+          max-width: 14px;
+          max-height: 14px;
         }
 
         .acct {
