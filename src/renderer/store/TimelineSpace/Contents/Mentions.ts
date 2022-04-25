@@ -222,6 +222,9 @@ const actions: ActionTree<MentionsState, RootState> = {
     return res.data
   },
   getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
+    if (!rootState.TimelineSpace.timelineSetting.useMarker.mentions) {
+      return null
+    }
     const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-mentions-marker', rootState.TimelineSpace.account._id)
     return localMarker
   },

@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Index, { IndexState } from '@/store/TimelineSpace/Contents/Lists/Index'
+import { RootState } from '@/store'
 
 const mockClient = {
   getLists: () => {
@@ -54,7 +54,21 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const listsStore = () => ({
+  namespaced: true,
+  modules: {
+    Index: initStore()
+  }
+})
+
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Lists: listsStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
@@ -62,8 +76,11 @@ const timelineState = {
       baseURL: 'http://localhost'
     },
     sns: 'mastodon'
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -73,16 +90,12 @@ const appState = {
 }
 
 describe('Lists/Index', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Index: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -90,14 +103,14 @@ describe('Lists/Index', () => {
 
   describe('fetchLists', () => {
     it('should be updated', async () => {
-      await store.dispatch('Index/fetchLists')
-      expect(store.state.Index.lists).toEqual([list])
+      await store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists')
+      expect(store.state.TimelineSpace.Contents.Lists.Index.lists).toEqual([list])
     })
   })
 
   describe('createList', () => {
     it('should be created', async () => {
-      const res: Entity.List = await store.dispatch('Index/createList', 'list1')
+      const res: Entity.List = await store.dispatch('TimelineSpace/Contents/Lists/Index/createList', 'list1')
       expect(res.title).toEqual('list1')
     })
   })

@@ -1,6 +1,6 @@
+import { RootState } from '@/store'
 import { Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import AccountProfile, { AccountProfileState } from '~/src/renderer/store/TimelineSpace/Contents/SideBar/AccountProfile'
 
 const state = (account: Entity.Account | null): AccountProfileState => {
@@ -12,7 +12,31 @@ const state = (account: Entity.Account | null): AccountProfileState => {
   }
 }
 
-const timelineSpace = {
+const initStore = (account: Entity.Account | null) => {
+  return {
+    namespaced: true,
+    state: state(account),
+    actions: AccountProfile.actions,
+    mutations: AccountProfile.mutations,
+    getters: AccountProfile.getters
+  }
+}
+
+const sidebarStore = (account: Entity.Account | null) => ({
+  namespaced: true,
+  modules: {
+    AccountProfile: initStore(account)
+  }
+})
+
+const contentsStore = (account: Entity.Account | null) => ({
+  namespaced: true,
+  modules: {
+    SideBar: sidebarStore(account)
+  }
+})
+
+const timelineStore = (account: Entity.Account | null) => ({
   namespaced: true,
   state: {
     account: {
@@ -27,30 +51,19 @@ const timelineSpace = {
       avatar: null,
       order: 1
     }
+  },
+  modules: {
+    Contents: contentsStore(account)
   }
-}
-
-const initStore = (account: Entity.Account | null) => {
-  return {
-    namespaced: true,
-    state: state(account),
-    actions: AccountProfile.actions,
-    mutations: AccountProfile.mutations,
-    getters: AccountProfile.getters
-  }
-}
+})
 
 describe('AccountProfile', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        AccountProfile: initStore(null),
-        TimelineSpace: timelineSpace
+        TimelineSpace: timelineStore(null)
       }
     })
   })
@@ -79,15 +92,14 @@ describe('AccountProfile', () => {
         bot: false
       }
       beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
           modules: {
-            AccountProfile: initStore(account),
-            TimelineSpace: timelineSpace
+            TimelineSpace: timelineStore(account)
           }
         })
       })
       it('should be matched', () => {
-        expect(store.getters['AccountProfile/isOwnProfile']).toBeTruthy()
+        expect(store.getters['TimelineSpace/Contents/SideBar/AccountProfile/isOwnProfile']).toBeTruthy()
       })
     })
 
@@ -114,15 +126,14 @@ describe('AccountProfile', () => {
         bot: false
       }
       beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
           modules: {
-            AccountProfile: initStore(account),
-            TimelineSpace: timelineSpace
+            TimelineSpace: timelineStore(account)
           }
         })
       })
       it('should be matched', () => {
-        expect(store.getters['AccountProfile/isOwnProfile']).toBeFalsy()
+        expect(store.getters['TimelineSpace/Contents/SideBar/AccountProfile/isOwnProfile']).toBeFalsy()
       })
     })
 
@@ -149,15 +160,14 @@ describe('AccountProfile', () => {
         bot: false
       }
       beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
           modules: {
-            AccountProfile: initStore(account),
-            TimelineSpace: timelineSpace
+            TimelineSpace: timelineStore(account)
           }
         })
       })
       it('should be matched', () => {
-        expect(store.getters['AccountProfile/isOwnProfile']).toBeTruthy()
+        expect(store.getters['TimelineSpace/Contents/SideBar/AccountProfile/isOwnProfile']).toBeTruthy()
       })
     })
 
@@ -184,15 +194,14 @@ describe('AccountProfile', () => {
         bot: false
       }
       beforeEach(() => {
-        store = new Vuex.Store({
+        store = createStore({
           modules: {
-            AccountProfile: initStore(account),
-            TimelineSpace: timelineSpace
+            TimelineSpace: timelineStore(account)
           }
         })
       })
       it('should be matched', () => {
-        expect(store.getters['AccountProfile/isOwnProfile']).toBeFalsy()
+        expect(store.getters['TimelineSpace/Contents/SideBar/AccountProfile/isOwnProfile']).toBeFalsy()
       })
     })
   })

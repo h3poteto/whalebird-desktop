@@ -1,10 +1,10 @@
+import { RootState } from '@/store'
 import { Entity, Response } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import TimelineSpace, { TimelineSpaceState, blankAccount } from '~/src/renderer/store/TimelineSpace'
 import { MyWindow } from '~/src/types/global'
-;((window as any) as MyWindow).ipcRenderer = ipcRenderer
+;(window as any as MyWindow).ipcRenderer = ipcRenderer
 
 const emacsEmoji: Entity.Emoji = {
   shortcode: 'emacs',
@@ -172,13 +172,10 @@ const appState = {
 }
 
 describe('TimelineSpace', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
         TimelineSpace: initStore(),
         App: appState

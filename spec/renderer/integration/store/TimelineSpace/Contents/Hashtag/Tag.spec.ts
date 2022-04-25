@@ -1,8 +1,8 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Tag, { TagState } from '@/store/TimelineSpace/Contents/Hashtag/Tag'
 import { LoadPositionWithTag } from '@/types/loadPosition'
+import { RootState } from '@/store'
 
 const mockClient = {
   getTagTimeline: () => {
@@ -134,15 +134,32 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const hashtagStore = () => ({
+  namespaced: true,
+  modules: {
+    Tag: initStore()
+  }
+})
+
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Hashtag: hashtagStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
     }
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -152,16 +169,12 @@ const appState = {
 }
 
 describe('Home', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Tag: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -169,9 +182,9 @@ describe('Home', () => {
 
   describe('fetch', () => {
     it('should be updated', async () => {
-      const statuses = await store.dispatch('Tag/fetch', 'tag')
+      const statuses = await store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', 'tag')
       expect(statuses).toEqual([status1])
-      expect(store.state.Tag.timeline).toEqual([status1])
+      expect(store.state.TimelineSpace.Contents.Hashtag.Tag.timeline).toEqual([status1])
     })
   })
 
@@ -203,9 +216,9 @@ describe('Home', () => {
           status: status1,
           tag: 'tag'
         }
-        await store.dispatch('Tag/lazyFetchTimeline', loadPositionWithTag)
-        expect(store.state.Tag.lazyLoading).toEqual(false)
-        expect(store.state.Tag.timeline).toEqual([status1, status2])
+        await store.dispatch('TimelineSpace/Contents/Hashtag/Tag/lazyFetchTimeline', loadPositionWithTag)
+        expect(store.state.TimelineSpace.Contents.Hashtag.Tag.lazyLoading).toEqual(false)
+        expect(store.state.TimelineSpace.Contents.Hashtag.Tag.timeline).toEqual([status1, status2])
       })
     })
   })

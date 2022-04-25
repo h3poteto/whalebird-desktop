@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Notifications, { NotificationsState } from '@/store/TimelineSpace/Contents/Notifications'
+import { RootState } from '@/store'
 
 const mockClient = {
   getNotifications: () => {
@@ -209,7 +209,14 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Notifications: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
@@ -223,8 +230,11 @@ const timelineState = {
         mentions: false
       }
     }
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -235,16 +245,12 @@ const appState = {
 }
 
 describe('Notifications', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Notifications: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -252,9 +258,9 @@ describe('Notifications', () => {
 
   describe('fetchNotifications', () => {
     it('should be updated', async () => {
-      const response = await store.dispatch('Notifications/fetchNotifications')
+      const response = await store.dispatch('TimelineSpace/Contents/Notifications/fetchNotifications')
       expect(response).toEqual([notification1])
-      expect(store.state.Notifications.notifications).toEqual([notification1])
+      expect(store.state.TimelineSpace.Contents.Notifications.notifications).toEqual([notification1])
     })
   })
 
@@ -281,9 +287,9 @@ describe('Notifications', () => {
           resolve(res)
         })
       }
-      await store.dispatch('Notifications/lazyFetchNotifications', notification1)
-      expect(store.state.Notifications.lazyLoading).toEqual(false)
-      expect(store.state.Notifications.notifications).toEqual([notification1, notification2])
+      await store.dispatch('TimelineSpace/Contents/Notifications/lazyFetchNotifications', notification1)
+      expect(store.state.TimelineSpace.Contents.Notifications.lazyLoading).toEqual(false)
+      expect(store.state.TimelineSpace.Contents.Notifications.notifications).toEqual([notification1, notification2])
     })
   })
 })

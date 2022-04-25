@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import AccountStore, { AccountState } from '@/store/TimelineSpace/Contents/Search/Account'
+import { RootState } from '@/store'
 
 const account: Entity.Account = {
   id: '1',
@@ -60,19 +60,29 @@ const initStore = () => {
   }
 }
 
-const contentsStore = {
+const searchStore = () => ({
+  namespaced: true,
+  modules: {
+    Account: initStore()
+  }
+})
+
+const contentsStore = () => ({
   namespaced: true,
   state: {},
   mutations: {
     changeLoading: jest.fn()
   },
-  actions: {}
-}
+  actions: {},
+  modules: {
+    Search: searchStore()
+  }
+})
 
-const timelineState = {
+const timelineStore = () => ({
   namespaced: true,
   modules: {
-    Contents: contentsStore
+    Contents: contentsStore()
   },
   state: {
     account: {
@@ -81,7 +91,7 @@ const timelineState = {
     },
     sns: 'mastodon'
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -91,16 +101,12 @@ const appState = {
 }
 
 describe('Search/Account', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Account: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -108,8 +114,8 @@ describe('Search/Account', () => {
 
   describe('search', () => {
     it('should be updated', async () => {
-      await store.dispatch('Account/search', 'query')
-      expect(store.state.Account.results).toEqual([account])
+      await store.dispatch('TimelineSpace/Contents/Search/Account/search', 'query')
+      expect(store.state.TimelineSpace.Contents.Search.Account.results).toEqual([account])
     })
   })
 })

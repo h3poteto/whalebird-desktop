@@ -1,9 +1,9 @@
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import Login, { LoginState } from '@/store/Login'
 import { MyWindow } from '~/src/types/global'
-;((window as any) as MyWindow).ipcRenderer = ipcRenderer
+import { RootState } from '@/store'
+;(window as any as MyWindow).ipcRenderer = ipcRenderer
 
 jest.mock('megalodon', () => ({
   ...jest.requireActual<object>('megalodon'),
@@ -36,13 +36,10 @@ const appState = {
 }
 
 describe('Login', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
         Login: initStore(),
         App: appState

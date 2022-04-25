@@ -1,11 +1,11 @@
 import { IpcMainInvokeEvent } from 'electron'
-import { createLocalVue } from '@vue/test-utils'
+import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
-import Vuex from 'vuex'
 import { LocalTag } from '~/src/types/localTag'
 import List, { ListState } from '@/store/TimelineSpace/Contents/Hashtag/List'
 import { MyWindow } from '~/src/types/global'
-;((window as any) as MyWindow).ipcRenderer = ipcRenderer
+import { RootState } from '@/store'
+;(window as any as MyWindow).ipcRenderer = ipcRenderer
 
 const tag1: LocalTag = {
   tagName: 'tag1',
@@ -32,6 +32,20 @@ const initStore = () => {
   }
 }
 
+const hashtagStore = () => ({
+  namespaced: true,
+  modules: {
+    List: initStore()
+  }
+})
+
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Hashtag: hashtagStore()
+  }
+})
+
 const sideMenuStore = {
   namespaced: true,
   actions: {
@@ -39,24 +53,21 @@ const sideMenuStore = {
   }
 }
 
-const timelineState = {
+const timelineStore = () => ({
   namespaced: true,
   modules: {
-    SideMenu: sideMenuStore
+    SideMenu: sideMenuStore,
+    Contents: contentsStore()
   }
-}
+})
 
 describe('Hashtag/List', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        List: initStore(),
-        TimelineSpace: timelineState
+        TimelineSpace: timelineStore()
       }
     })
   })
@@ -69,8 +80,8 @@ describe('Hashtag/List', () => {
       afterEach(() => {
         ipcMain.removeHandler('list-hashtags')
       })
-      await store.dispatch('List/listTags')
-      expect(store.state.List.tags).toEqual([tag1, tag2])
+      await store.dispatch('TimelineSpace/Contents/Hashtag/List/listTags')
+      expect(store.state.TimelineSpace.Contents.Hashtag.List.tags).toEqual([tag1, tag2])
     })
   })
 
@@ -79,7 +90,7 @@ describe('Hashtag/List', () => {
       ipcMain.handle('remove-hashtag', (_: IpcMainInvokeEvent, tag: LocalTag) => {
         expect(tag).toEqual(tag1)
       })
-      await store.dispatch('List/removeTag', tag1)
+      await store.dispatch('TimelineSpace/Contents/Hashtag/List/removeTag', tag1)
     })
   })
 })

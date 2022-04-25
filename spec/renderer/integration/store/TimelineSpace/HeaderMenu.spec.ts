@@ -1,6 +1,6 @@
+import { RootState } from '@/store'
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import HeaderMenu, { HeaderMenuState } from '~/src/renderer/store/TimelineSpace/HeaderMenu'
 
 const list: Entity.List = {
@@ -45,7 +45,7 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
@@ -53,8 +53,11 @@ const timelineState = {
       baseURL: 'http://localhost'
     },
     sns: 'mastodon'
+  },
+  modules: {
+    HeaderMenu: initStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -64,16 +67,12 @@ const appState = {
 }
 
 describe('HeaderMenu', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        HeaderMenu: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -81,9 +80,9 @@ describe('HeaderMenu', () => {
 
   describe('fetchLists', () => {
     it('should be updated', async () => {
-      const l = await store.dispatch('HeaderMenu/fetchList', list.id)
+      const l = await store.dispatch('TimelineSpace/HeaderMenu/fetchList', list.id)
       expect(l).toEqual(list)
-      expect(store.state.HeaderMenu.title).toEqual(`#${list.title}`)
+      expect(store.state.TimelineSpace.HeaderMenu.title).toEqual(`#${list.title}`)
     })
   })
 })

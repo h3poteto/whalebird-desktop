@@ -1,8 +1,8 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Show, { ShowState } from '@/store/TimelineSpace/Contents/Lists/Show'
 import { LoadPositionWithList } from '@/types/loadPosition'
+import { RootState } from '@/store'
 
 const mockClient = {
   getListTimeline: () => {
@@ -136,15 +136,32 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const listsStore = () => ({
+  namespaced: true,
+  modules: {
+    Show: initStore()
+  }
+})
+
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Lists: listsStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
     }
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -154,16 +171,12 @@ const appState = {
 }
 
 describe('Lists/Show', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Show: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -171,8 +184,8 @@ describe('Lists/Show', () => {
 
   describe('fetchTimeline', () => {
     it('should be updated', async () => {
-      await store.dispatch('Show/fetchTimeline', '1')
-      expect(store.state.Show.timeline).toEqual([status1])
+      await store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', '1')
+      expect(store.state.TimelineSpace.Contents.Lists.Show.timeline).toEqual([status1])
     })
   })
 
@@ -204,9 +217,9 @@ describe('Lists/Show', () => {
         status: status1,
         list_id: '1'
       }
-      await store.dispatch('Show/lazyFetchTimeline', loadPosition)
-      expect(store.state.Show.timeline).toEqual([status1, status2])
-      expect(store.state.Show.lazyLoading).toEqual(false)
+      await store.dispatch('TimelineSpace/Contents/Lists/Show/lazyFetchTimeline', loadPosition)
+      expect(store.state.TimelineSpace.Contents.Lists.Show.timeline).toEqual([status1, status2])
+      expect(store.state.TimelineSpace.Contents.Lists.Show.lazyLoading).toEqual(false)
     })
   })
 })

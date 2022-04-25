@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Public, { PublicState } from '@/store/TimelineSpace/Contents/Public'
+import { RootState } from '@/store'
 
 const mockClient = {
   getPublicTimeline: () => {
@@ -133,15 +133,25 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Public: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
     }
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -151,16 +161,12 @@ const appState = {
 }
 
 describe('Home', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Public: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -168,9 +174,9 @@ describe('Home', () => {
 
   describe('fetchPublicTimeline', () => {
     it('should be updated', async () => {
-      const statuses = await store.dispatch('Public/fetchPublicTimeline')
+      const statuses = await store.dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline')
       expect(statuses).toEqual([status1])
-      expect(store.state.Public.timeline).toEqual([status1])
+      expect(store.state.TimelineSpace.Contents.Public.timeline).toEqual([status1])
     })
   })
 
@@ -198,9 +204,9 @@ describe('Home', () => {
             resolve(res)
           })
         }
-        await store.dispatch('Public/lazyFetchTimeline', status1)
-        expect(store.state.Public.lazyLoading).toEqual(false)
-        expect(store.state.Public.timeline).toEqual([status1, status2])
+        await store.dispatch('TimelineSpace/Contents/Public/lazyFetchTimeline', status1)
+        expect(store.state.TimelineSpace.Contents.Public.lazyLoading).toEqual(false)
+        expect(store.state.TimelineSpace.Contents.Public.timeline).toEqual([status1, status2])
       })
     })
   })

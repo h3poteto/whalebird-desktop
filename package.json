@@ -134,7 +134,6 @@
     "@typescript-eslint/parser": "^4.33.0",
     "@typescript-eslint/typescript-estree": "^5.19.0",
     "@vue/compiler-sfc": "^3.2.31",
-    "@vue/test-utils": "^2.0.0-rc.20",
     "ajv": "^8.11.0",
     "all-object-keys": "^2.2.0",
     "assert": "^2.0.0",

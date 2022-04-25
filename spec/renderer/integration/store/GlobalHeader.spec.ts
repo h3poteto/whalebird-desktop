@@ -1,9 +1,9 @@
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { RootState } from '@/store'
+import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import GlobalHeader, { GlobalHeaderState } from '~/src/renderer/store/GlobalHeader'
 import { MyWindow } from '~/src/types/global'
-;((window as any) as MyWindow).ipcRenderer = ipcRenderer
+;(window as any as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): GlobalHeaderState => {
   return {
@@ -32,13 +32,10 @@ const routerState = {
 }
 
 describe('GlobalHeader', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
         GlobalHeader: initStore(),
         route: routerState

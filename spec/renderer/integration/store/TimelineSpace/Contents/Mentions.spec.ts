@@ -1,6 +1,6 @@
+import { RootState } from '@/store'
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Mentions from '~/src/renderer/store/TimelineSpace/Contents/Mentions'
 
 const mockClient = {
@@ -129,7 +129,15 @@ const initStore = () => {
     getters: Mentions.getters
   }
 }
-const timelineState = {
+
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Mentions: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
@@ -143,8 +151,11 @@ const timelineState = {
         mentions: false
       }
     }
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -154,16 +165,12 @@ const appState = {
 }
 
 describe('Mentions', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Mentions: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -171,8 +178,8 @@ describe('Mentions', () => {
 
   describe('fetchMentions', () => {
     it('should be updated', async () => {
-      await store.dispatch('Mentions/fetchMentions')
-      expect(store.state.Mentions.mentions).toEqual([mention, reblog, favourite, follow])
+      await store.dispatch('TimelineSpace/Contents/Mentions/fetchMentions')
+      expect(store.state.TimelineSpace.Contents.Mentions.mentions).toEqual([mention, reblog, favourite, follow])
     })
   })
 
@@ -189,7 +196,7 @@ describe('Mentions', () => {
         }
       })
       it('should not be updated', async () => {
-        const result = await store.dispatch('Mentions/lazyFetchMentions', {})
+        const result = await store.dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', {})
         expect(result).toEqual(null)
       })
     })
@@ -218,9 +225,9 @@ describe('Mentions', () => {
           })
         }
 
-        await store.dispatch('Mentions/lazyFetchMentions', { id: 1 })
-        expect(store.state.Mentions.mentions).toEqual([mention, reblog, favourite, follow])
-        expect(store.state.Mentions.lazyLoading).toEqual(false)
+        await store.dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', { id: 1 })
+        expect(store.state.TimelineSpace.Contents.Mentions.mentions).toEqual([mention, reblog, favourite, follow])
+        expect(store.state.TimelineSpace.Contents.Mentions.lazyLoading).toEqual(false)
       })
     })
   })
@@ -237,7 +244,7 @@ describe('Mentions', () => {
       }
     })
     it('should return only mentions', () => {
-      const mentions = store.getters['Mentions/mentions']
+      const mentions = store.getters['TimelineSpace/Contents/Mentions/mentions']
       expect(mentions).toEqual([mention])
     })
   })

@@ -1,9 +1,9 @@
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import Notification, { NotificationState } from '@/store/Preferences/Notification'
 import { MyWindow } from '~/src/types/global'
-;((window as any) as MyWindow).ipcRenderer = ipcRenderer
+import { RootState } from '@/store'
+;(window as any as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): NotificationState => {
   return {
@@ -32,6 +32,13 @@ const initStore = () => {
   }
 }
 
+const preferencesStore = () => ({
+  namespaced: true,
+  modules: {
+    Notification: initStore()
+  }
+})
+
 const App = {
   namespaced: true,
   actions: {
@@ -40,15 +47,12 @@ const App = {
 }
 
 describe('Preferences/Notification', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Notification: initStore(),
+        Preferences: preferencesStore(),
         App: App
       }
     })
@@ -77,8 +81,8 @@ describe('Preferences/Notification', () => {
         ipcMain.removeHandler('get-preferences')
       })
       it('should be updated', async () => {
-        await store.dispatch('Notification/loadNotification')
-        expect(store.state.Notification.notification).toEqual({
+        await store.dispatch('Preferences/Notification/loadNotification')
+        expect(store.state.Preferences.Notification.notification).toEqual({
           notify: {
             reply: false,
             reblog: false,
@@ -105,11 +109,11 @@ describe('Preferences/Notification', () => {
       ipcMain.removeHandler('update-preferences')
     })
     it('should be updated', async () => {
-      await store.dispatch('Notification/updateNotify', {
+      await store.dispatch('Preferences/Notification/updateNotify', {
         reply: false,
         reblog: false
       })
-      expect(store.state.Notification.notification).toEqual({
+      expect(store.state.Preferences.Notification.notification).toEqual({
         notify: {
           reply: false,
           reblog: false,

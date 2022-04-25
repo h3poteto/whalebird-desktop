@@ -1,8 +1,8 @@
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import i18n from '~/src/config/i18n'
 import router from '@/router'
 import Jump, { JumpState, Channel } from '~/src/renderer/store/TimelineSpace/Modals/Jump'
+import { RootState } from '@/store'
 
 const state = (): JumpState => {
   return {
@@ -59,34 +59,40 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const modalsStore = () => ({
+  namespaced: true,
+  modules: {
+    Jump: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
       _id: '0'
     }
+  },
+  modules: {
+    Modals: modalsStore()
   }
-}
+})
 
 describe('Jump', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Jump: initStore(),
-        TimelineSpace: timelineState
+        TimelineSpace: timelineStore()
       }
     })
   })
 
   describe('jumpCurrentSelected', () => {
     it('should be changed', () => {
-      store.dispatch('Jump/jumpCurrentSelected')
-      expect(store.state.Jump.modalOpen).toEqual(false)
+      store.dispatch('TimelineSpace/Modals/Jump/jumpCurrentSelected')
+      expect(store.state.TimelineSpace.Modals.Jump.modalOpen).toEqual(false)
       expect(router.push).toHaveBeenCalledWith({ path: '/0/home' })
     })
   })
@@ -97,8 +103,8 @@ describe('Jump', () => {
         name: 'public',
         path: 'public'
       }
-      store.dispatch('Jump/jump', channel)
-      expect(store.state.Jump.modalOpen).toEqual(false)
+      store.dispatch('TimelineSpace/Modals/Jump/jump', channel)
+      expect(store.state.TimelineSpace.Modals.Jump.modalOpen).toEqual(false)
       expect(router.push).toHaveBeenCalledWith({ path: '/0/public' })
     })
   })

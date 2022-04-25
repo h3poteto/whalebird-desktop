@@ -1,5 +1,4 @@
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import App from '@/store/App'
 import DisplayStyle from '~/src/constants/displayStyle'
@@ -9,7 +8,8 @@ import TimeFormat from '~/src/constants/timeFormat'
 import Language from '~/src/constants/language'
 import DefaultFonts from '@/utils/fonts'
 import { MyWindow } from '~/src/types/global'
-;((window as any) as MyWindow).ipcRenderer = ipcRenderer
+import { RootState } from '@/store'
+;(window as any as MyWindow).ipcRenderer = ipcRenderer
 
 const state = () => {
   return {
@@ -41,13 +41,10 @@ const initStore = () => {
 }
 
 describe('App', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
         App: initStore()
       }

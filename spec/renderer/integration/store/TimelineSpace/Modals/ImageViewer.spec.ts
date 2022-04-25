@@ -1,5 +1,5 @@
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { RootState } from '@/store'
+import { createStore, Store } from 'vuex'
 import ImageViewer, { ImageViewerState } from '~/src/renderer/store/TimelineSpace/Modals/ImageViewer'
 
 const state = (): ImageViewerState => {
@@ -21,16 +21,27 @@ const initStore = () => {
   }
 }
 
+const modalsStore = () => ({
+  namespaced: true,
+  modules: {
+    ImageViewer: initStore()
+  }
+})
+
+const timelineStore = () => ({
+  namespaced: true,
+  modules: {
+    Modals: modalsStore()
+  }
+})
+
 describe('ImageViewer', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        ImageViewer: initStore()
+        TimelineSpace: timelineStore()
       }
     })
   })
@@ -38,46 +49,46 @@ describe('ImageViewer', () => {
   // Actions
   describe('openModal', () => {
     it('should be changed', () => {
-      store.dispatch('ImageViewer/openModal', {
+      store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
         currentIndex: 1,
         mediaList: ['media1', 'media2']
       })
-      expect(store.state.ImageViewer.modalOpen).toEqual(true)
-      expect(store.state.ImageViewer.currentIndex).toEqual(1)
-      expect(store.state.ImageViewer.mediaList).toEqual(['media1', 'media2'])
-      expect(store.state.ImageViewer.loading).toEqual(true)
+      expect(store.state.TimelineSpace.Modals.ImageViewer.modalOpen).toEqual(true)
+      expect(store.state.TimelineSpace.Modals.ImageViewer.currentIndex).toEqual(1)
+      expect(store.state.TimelineSpace.Modals.ImageViewer.mediaList).toEqual(['media1', 'media2'])
+      expect(store.state.TimelineSpace.Modals.ImageViewer.loading).toEqual(true)
     })
   })
 
   describe('closeModal', () => {
     beforeEach(() => {
-      store.dispatch('ImageViewer/openModal', {
+      store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
         currentIndex: 1,
         mediaList: ['media1', 'media2']
       })
     })
     it('should be changed', () => {
-      store.dispatch('ImageViewer/closeModal')
-      expect(store.state.ImageViewer.modalOpen).toEqual(false)
-      expect(store.state.ImageViewer.currentIndex).toEqual(-1)
-      expect(store.state.ImageViewer.mediaList).toEqual([])
-      expect(store.state.ImageViewer.loading).toEqual(false)
+      store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
+      expect(store.state.TimelineSpace.Modals.ImageViewer.modalOpen).toEqual(false)
+      expect(store.state.TimelineSpace.Modals.ImageViewer.currentIndex).toEqual(-1)
+      expect(store.state.TimelineSpace.Modals.ImageViewer.mediaList).toEqual([])
+      expect(store.state.TimelineSpace.Modals.ImageViewer.loading).toEqual(false)
     })
   })
 
   describe('incrementIndex', () => {
     it('should be changed', () => {
-      store.dispatch('ImageViewer/incrementIndex')
-      expect(store.state.ImageViewer.currentIndex).toEqual(0)
-      expect(store.state.ImageViewer.loading).toEqual(true)
+      store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
+      expect(store.state.TimelineSpace.Modals.ImageViewer.currentIndex).toEqual(0)
+      expect(store.state.TimelineSpace.Modals.ImageViewer.loading).toEqual(true)
     })
   })
 
   describe('decrementIndex', () => {
     it('should be changed', () => {
-      store.dispatch('ImageViewer/decrementIndex')
-      expect(store.state.ImageViewer.currentIndex).toEqual(-2)
-      expect(store.state.ImageViewer.loading).toEqual(true)
+      store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
+      expect(store.state.TimelineSpace.Modals.ImageViewer.currentIndex).toEqual(-2)
+      expect(store.state.TimelineSpace.Modals.ImageViewer.loading).toEqual(true)
     })
   })
 
@@ -85,7 +96,7 @@ describe('ImageViewer', () => {
   describe('imageURL', () => {
     describe('currentIndex exists', () => {
       beforeEach(() => {
-        store.dispatch('ImageViewer/openModal', {
+        store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
           currentIndex: 0,
           mediaList: [
             {
@@ -98,7 +109,7 @@ describe('ImageViewer', () => {
         })
       })
       it('should return url', () => {
-        const url = store.getters['ImageViewer/imageURL']
+        const url = store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
         expect(url).toEqual('http://joinmastodon.org')
       })
     })
@@ -107,7 +118,7 @@ describe('ImageViewer', () => {
   describe('imageType', () => {
     describe('currentIndex exists', () => {
       beforeEach(() => {
-        store.dispatch('ImageViewer/openModal', {
+        store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
           currentIndex: 0,
           mediaList: [
             {
@@ -120,7 +131,7 @@ describe('ImageViewer', () => {
         })
       })
       it('should return type', () => {
-        const type = store.getters['ImageViewer/imageType']
+        const type = store.getters['TimelineSpace/Modals/ImageViewer/imageType']
         expect(type).toEqual('image/png')
       })
     })
@@ -130,7 +141,7 @@ describe('ImageViewer', () => {
     describe('currentIndex > 0', () => {
       describe('mediaList > 1', () => {
         beforeEach(() => {
-          store.dispatch('ImageViewer/openModal', {
+          store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
             currentIndex: 1,
             mediaList: [
               {
@@ -143,13 +154,13 @@ describe('ImageViewer', () => {
           })
         })
         it('should return true', () => {
-          const left = store.getters['ImageViewer/showLeft']
+          const left = store.getters['TimelineSpace/Modals/ImageViewer/showLeft']
           expect(left).toEqual(true)
         })
       })
       describe('mediaList < 1', () => {
         beforeEach(() => {
-          store.dispatch('ImageViewer/openModal', {
+          store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
             currentIndex: 0,
             mediaList: [
               {
@@ -159,7 +170,7 @@ describe('ImageViewer', () => {
           })
         })
         it('should not return true', () => {
-          const left = store.getters['ImageViewer/showLeft']
+          const left = store.getters['TimelineSpace/Modals/ImageViewer/showLeft']
           expect(left).toEqual(false)
         })
       })
@@ -170,7 +181,7 @@ describe('ImageViewer', () => {
     describe('current index is lower than media list length', () => {
       describe('media list length > 1', () => {
         beforeEach(() => {
-          store.dispatch('ImageViewer/openModal', {
+          store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
             currentIndex: 0,
             mediaList: [
               {
@@ -183,13 +194,13 @@ describe('ImageViewer', () => {
           })
         })
         it('should return true', () => {
-          const right = store.getters['ImageViewer/showRight']
+          const right = store.getters['TimelineSpace/Modals/ImageViewer/showRight']
           expect(right).toEqual(true)
         })
       })
       describe('media list length <= 1', () => {
         beforeEach(() => {
-          store.dispatch('ImageViewer/openModal', {
+          store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
             currentIndex: 0,
             mediaList: [
               {
@@ -199,7 +210,7 @@ describe('ImageViewer', () => {
           })
         })
         it('should not return true', () => {
-          const right = store.getters['ImageViewer/showRight']
+          const right = store.getters['TimelineSpace/Modals/ImageViewer/showRight']
           expect(right).toEqual(false)
         })
       })
