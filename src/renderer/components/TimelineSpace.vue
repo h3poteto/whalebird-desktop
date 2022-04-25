@@ -29,7 +29,7 @@ import ReceiveDrop from './TimelineSpace/ReceiveDrop'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 import { NewTootAttachLength } from '@/errors/validations'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
   name: 'timeline-space',
@@ -123,7 +123,7 @@ export default {
       this.$store
         .dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
         .then(() => {
-          Event.$emit('image-uploaded')
+          EventEmitter.emit('image-uploaded')
         })
         .catch(err => {
           if (err instanceof NewTootAttachLength) {

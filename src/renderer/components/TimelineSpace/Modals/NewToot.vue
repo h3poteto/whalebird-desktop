@@ -151,7 +151,7 @@ import Status from './NewToot/Status'
 import Poll from './NewToot/Poll'
 import Quote from './NewToot/Quote'
 import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit, NewTootPollInvalid } from '@/errors/validations'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
   name: 'new-toot',
@@ -241,7 +241,7 @@ export default {
     this.$store.dispatch('TimelineSpace/Modals/NewToot/setupLoading')
   },
   mounted() {
-    Event.$on('image-uploaded', () => {
+    EventEmitter.on('image-uploaded', () => {
       if (this.$refs.preview) {
         this.statusHeight = this.statusHeight - this.$refs.preview.offsetHeight
       }

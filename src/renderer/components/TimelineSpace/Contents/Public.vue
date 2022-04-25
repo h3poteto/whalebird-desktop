@@ -34,7 +34,7 @@ import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
@@ -87,7 +87,7 @@ export default {
       })
     }
 
-    Event.$on('focus-timeline', () => {
+    EventEmitter.on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
@@ -122,7 +122,7 @@ export default {
       this.$store.dispatch('TimelineSpace/stopPublicStreaming')
       this.$store.dispatch('TimelineSpace/unbindPublicStreaming')
     }
-    Event.$off('focus-timeline')
+    EventEmitter.off('focus-timeline')
     this.observer.disconnect()
   },
   unmounted() {
@@ -250,7 +250,7 @@ export default {
       this.focusedId = message.uri + message.id
     },
     focusSidebar() {
-      Event.$emit('focus-sidebar')
+      EventEmitter.emit('focus-sidebar')
     },
     handleKey(event) {
       switch (event.srcKey) {

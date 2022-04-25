@@ -1,7 +1,4 @@
 import { createApp } from 'vue'
-// import ElementUI from 'element-ui'
-// import 'element-ui/lib/theme-chalk/index.css'
-// import locale from 'element-ui/lib/locale/lang/en'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -68,7 +65,6 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { sync } from 'vuex-router-sync'
-// import shortkey from 'vue-shortkey'
 import { createI18n } from 'vue3-i18next'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
@@ -153,7 +149,6 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueVirtualScroller)
 app.use(VueResize)
 app.use(i18n)
-// Vue.use(shortkey)
 
 sync(store, router)
 

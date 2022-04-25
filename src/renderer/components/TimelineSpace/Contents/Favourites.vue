@@ -32,7 +32,7 @@
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
   data() {
@@ -74,7 +74,7 @@ export default {
   },
   mounted() {
     document.getElementById('scroller').addEventListener('scroll', this.onScroll)
-    Event.$on('focus-timeline', () => {
+    EventEmitter.on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
@@ -84,7 +84,7 @@ export default {
     })
   },
   beforeUnmount() {
-    Event.$off('focus-timeline')
+    EventEmitter.off('focus-timeline')
   },
   unmounted() {
     this.$store.commit('TimelineSpace/Contents/Favourites/updateFavourites', [])
@@ -175,7 +175,7 @@ export default {
       this.focusedId = message.id
     },
     focusSidebar() {
-      Event.$emit('focus-sidebar')
+      EventEmitter.emit('focus-sidebar')
     },
     handleKey(event) {
       switch (event.srcKey) {

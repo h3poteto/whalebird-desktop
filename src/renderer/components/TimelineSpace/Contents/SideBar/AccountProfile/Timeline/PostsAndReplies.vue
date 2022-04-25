@@ -27,7 +27,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
   name: 'posts-and-replies',
@@ -54,7 +54,7 @@ export default {
   mounted() {
     this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/PostsAndReplies/clearTimeline')
     document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
-    Event.$on('focus-sidebar', () => {
+    EventEmitter.on('focus-sidebar', () => {
       this.focusedId = 0
       this.$nextTick(function () {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
@@ -62,8 +62,8 @@ export default {
     })
   },
   beforeUnmount() {
-    Event.$emit('focus-timeline')
-    Event.$off('focus-sidebar')
+    EventEmitter.emit('focus-timeline')
+    EventEmitter.off('focus-sidebar')
   },
   unmounted() {
     if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
@@ -132,7 +132,7 @@ export default {
     },
     focusTimeline() {
       this.focusedId = 0
-      Event.$emit('focus-timeline')
+      EventEmitter.emit('focus-timeline')
     }
   }
 }
