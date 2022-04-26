@@ -163,10 +163,13 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Home/changeHeading', true)
       }
     },
-    timeline: function (newState, _oldState) {
-      if (this.heading && newState.length > 0) {
-        this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker')
-      }
+    timeline: {
+      handler(newState, _oldState) {
+        if (this.heading && newState.length > 0) {
+          this.$store.dispatch('TimelineSpace/Contents/Home/saveMarker')
+        }
+      },
+      deep: true
     }
   },
   methods: {

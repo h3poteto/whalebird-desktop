@@ -151,10 +151,13 @@ export default {
         this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
       }
     },
-    mentions: function (newState, _oldState) {
-      if (this.heading && newState.length > 0) {
-        this.$store.dispatch('TimelineSpace/Contents/Mentions/saveMarker')
-      }
+    mentions: {
+      handler(newState, _oldState) {
+        if (this.heading && newState.length > 0) {
+          this.$store.dispatch('TimelineSpace/Contents/Mentions/saveMarker')
+        }
+      },
+      deep: true
     }
   },
   methods: {

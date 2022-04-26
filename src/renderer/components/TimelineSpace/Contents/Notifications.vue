@@ -150,10 +150,13 @@ export default {
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       }
     },
-    notifications: function (newState, _oldState) {
-      if (this.heading && newState.length > 0) {
-        this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker')
-      }
+    notifications: {
+      handler(newState, _oldState) {
+        if (this.heading && newState.length > 0) {
+          this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker')
+        }
+      },
+      deep: true
     }
   },
   methods: {
