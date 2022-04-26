@@ -1,9 +1,11 @@
 <template>
   <div id="general" v-loading="loading" :element-loading-background="backgroundColor">
     <h2>{{ $t('preferences.general.title') }}</h2>
-    <el-form class="sounds section" label-position="right" label-width="250px" size="small">
+    <el-form class="sounds section" label-position="right" label-width="250px">
       <h3>{{ $t('preferences.general.sounds.title') }}</h3>
-      <p class="description">{{ $t('preferences.general.sounds.description') }}</p>
+      <p class="description">
+        {{ $t('preferences.general.sounds.description') }}
+      </p>
       <el-form-item for="fav_rb" :label="$t('preferences.general.sounds.fav_rb')">
         <el-switch id="fav_rb" v-model="sound_fav_rb" active-color="#13ce66"> </el-switch>
       </el-form-item>
@@ -11,9 +13,11 @@
         <el-switch id="sound_toot" v-model="sound_toot" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
-    <el-form class="timeline section" label-potision="right" label-width="302px" size="samll">
+    <el-form class="timeline section" label-potision="right" label-width="302px">
       <h3>{{ $t('preferences.general.timeline.title') }}</h3>
-      <p class="description">{{ $t('preferences.general.timeline.description') }}</p>
+      <p class="description">
+        {{ $t('preferences.general.timeline.description') }}
+      </p>
       <el-form-item for="cw" :label="$t('preferences.general.timeline.cw')">
         <el-switch id="cw" v-model="timeline_cw" active-color="#13ce66"> </el-switch>
       </el-form-item>
@@ -24,7 +28,7 @@
         <el-switch id="hideAllAttachments" v-model="timeline_hide_attachments" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
-    <el-form class="other section" label-position="right" label-width="250px" size="small" v-if="notDarwin">
+    <el-form class="other section" label-position="right" label-width="250px" v-if="notDarwin">
       <h3>{{ $t('preferences.general.other.title') }}</h3>
       <el-form-item for="launch" :label="$t('preferences.general.other.launch')">
         <el-switch id="launch" v-model="other_launch" active-color="#13ce66"> </el-switch>
@@ -123,7 +127,7 @@ export default {
       this.$store
         .dispatch('Preferences/General/reset')
         .then(language => {
-          this.$i18n.i18next.changeLanguage(language)
+          this.$i18n.locale = language
         })
         .catch(() => {
           this.$message({
@@ -142,12 +146,12 @@ export default {
     margin: 24px 0 20px;
   }
 
-  .section /deep/ {
+  .section {
     margin-bottom: 40px;
+  }
 
-    .el-form-item__label {
-      color: var(--theme-primary-color);
-    }
+  .section :deep(.el-form-item__label) {
+    color: var(--theme-primary-color);
   }
 
   .selection {

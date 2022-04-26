@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Home, { HomeState } from '@/store/TimelineSpace/Contents/Home'
+import { RootState } from '@/store'
 
 const mockClient = {
   getHomeTimeline: () => {
@@ -126,7 +126,7 @@ let state = (): HomeState => {
   }
 }
 
-const initStore = () => {
+const homeStore = () => {
   return {
     namespaced: true,
     state: state(),
@@ -135,7 +135,14 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Home: homeStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
@@ -148,8 +155,11 @@ const timelineState = {
         notifications: false
       }
     }
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -159,16 +169,12 @@ const appState = {
 }
 
 describe('Home', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Home: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -176,9 +182,9 @@ describe('Home', () => {
 
   describe('fetchTimeline', () => {
     it('should be updated', async () => {
-      const statuses = await store.dispatch('Home/fetchTimeline')
+      const statuses = await store.dispatch('TimelineSpace/Contents/Home/fetchTimeline')
       expect(statuses).toEqual([status1])
-      expect(store.state.Home.timeline).toEqual([status1])
+      expect(store.state.TimelineSpace.Contents.Home.timeline).toEqual([status1])
     })
   })
 
@@ -210,9 +216,9 @@ describe('Home', () => {
           })
         }
 
-        await store.dispatch('Home/lazyFetchTimeline', status1)
-        expect(store.state.Home.lazyLoading).toEqual(false)
-        expect(store.state.Home.timeline).toEqual([status1, status2])
+        await store.dispatch('TimelineSpace/Contents/Home/lazyFetchTimeline', status1)
+        expect(store.state.TimelineSpace.Contents.Home.lazyLoading).toEqual(false)
+        expect(store.state.TimelineSpace.Contents.Home.timeline).toEqual([status1, status2])
       })
     })
   })

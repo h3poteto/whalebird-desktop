@@ -76,7 +76,7 @@ export default {
 #contents {
   --current-sidebar-width: 360px;
 
-  padding-top: 49px;
+  padding-top: 53px;
   height: 100%;
   box-sizing: border-box;
   user-select: text;
@@ -97,7 +97,7 @@ export default {
       background-color: var(--theme-border-color);
       height: calc(100% - 48px);
       position: fixed;
-      top: 48px;
+      top: 53px;
       right: var(--current-sidebar-width);
     }
 
@@ -124,7 +124,7 @@ export default {
 
   #side_bar {
     position: fixed;
-    top: 48px;
+    top: 52px;
     right: 0;
     width: var(--current-sidebar-width);
     height: calc(100% - 48px);

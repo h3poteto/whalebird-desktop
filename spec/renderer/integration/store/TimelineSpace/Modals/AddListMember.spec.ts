@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import AddListMember, { AddListMemberState } from '@/store/TimelineSpace/Modals/AddListMember'
+import { RootState } from '@/store'
 
 const mockClient = {
   searchAccount: () => {
@@ -73,15 +73,25 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const modalsStore = () => ({
+  namespaced: true,
+  modules: {
+    AddListMember: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
       _id: '0'
     },
     sns: 'mastodon'
+  },
+  modules: {
+    Modals: modalsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -91,16 +101,13 @@ const appState = {
 }
 
 describe('AddListMember', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
         AddListMember: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -108,21 +115,21 @@ describe('AddListMember', () => {
 
   describe('changeModal', () => {
     it('should change modal', () => {
-      store.dispatch('AddListMember/changeModal', true)
-      expect(store.state.AddListMember.modalOpen).toEqual(true)
+      store.dispatch('TimelineSpace/Modals/AddListMember/changeModal', true)
+      expect(store.state.TimelineSpace.Modals.AddListMember.modalOpen).toEqual(true)
     })
   })
 
   describe('search', () => {
     it('should be searched', async () => {
-      await store.dispatch('AddListMember/search', 'akira')
-      expect(store.state.AddListMember.accounts).toEqual([account])
+      await store.dispatch('TimelineSpace/Modals/AddListMember/search', 'akira')
+      expect(store.state.TimelineSpace.Modals.AddListMember.accounts).toEqual([account])
     })
   })
 
   describe('add', () => {
     it('should be added a member to the list', async () => {
-      const result = await store.dispatch('AddListMember/add', 'akira')
+      const result = await store.dispatch('TimelineSpace/Modals/AddListMember/add', 'akira')
       expect(result).toEqual({})
     })
   })

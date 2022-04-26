@@ -18,13 +18,13 @@
         v-bind:key="account._id"
         role="menuitem"
       >
-        <i v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" class="el-icon-menu"></i>
+        <font-awesome-icon icon="circle-user" v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" />
         <FailoverImg v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
         <FailoverImg :src="`${account.baseURL}/favicon.ico`" :failoverSrc="`${account.baseURL}/favicon.png`" class="instance-icon" />
         <span slot="title">{{ account.domain }}</span>
       </el-menu-item>
-      <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem">
-        <i class="el-icon-plus"></i>
+      <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem" class="add-new-account">
+        <font-awesome-icon icon="plus" />
         <span slot="new">New</span>
       </el-menu-item>
     </el-menu>
@@ -40,10 +40,10 @@ import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
 import { StreamingError } from '~/src/errors/streamingError'
 
 export default {
-  name: 'global-header',
   components: {
     FailoverImg
   },
+  name: 'global-header',
   computed: {
     ...mapState('GlobalHeader', {
       accounts: state => state.accounts,
@@ -67,7 +67,9 @@ export default {
           this.$store.dispatch('GlobalHeader/startStreamings').catch(err => {
             if (err instanceof StreamingError) {
               this.$message({
-                message: this.$t('message.start_all_streamings_error', { domain: err.domain }),
+                message: this.$t('message.start_all_streamings_error', {
+                  domain: err.domain
+                }),
                 type: 'error'
               })
             }
@@ -85,7 +87,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#global_header /deep/ {
+.account-menu :deep(.el-menu-item) {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0 !important;
+}
+
+#global_header {
   .account-menu {
     height: 100%;
     position: fixed;
@@ -94,12 +103,6 @@ export default {
     width: 65px;
     padding-top: 24px;
     border: 0;
-
-    .el-tooltip {
-      outline: 0;
-      text-align: center;
-      padding: 0 !important;
-    }
 
     .avatar {
       width: 42px;
@@ -137,6 +140,10 @@ export default {
 
   .with-global-header {
     margin-left: 65px;
+  }
+
+  .add-new-account {
+    align-items: center;
   }
 }
 </style>

@@ -1,8 +1,8 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Favourites, { FavouritesState } from '@/store/TimelineSpace/Contents/Favourites'
 import { LocalAccount } from '~/src/types/localAccount'
+import { RootState } from '@/store'
 
 const mockClient = {
   getFavourites: () => {
@@ -147,7 +147,14 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Favourites: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
@@ -155,8 +162,11 @@ const timelineState = {
       baseURL: 'http://localhost'
     },
     sns: 'mastodon'
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -166,16 +176,12 @@ const appState = {
 }
 
 describe('Favourites', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Favourites: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -183,9 +189,9 @@ describe('Favourites', () => {
 
   describe('fetchFavourites', () => {
     it('does not exist header', async () => {
-      await store.dispatch('Favourites/fetchFavourites', localAccount)
-      expect(store.state.Favourites.favourites).toEqual([status1])
-      expect(store.state.Favourites.maxId).toEqual(null)
+      await store.dispatch('TimelineSpace/Contents/Favourites/fetchFavourites', localAccount)
+      expect(store.state.TimelineSpace.Contents.Favourites.favourites).toEqual([status1])
+      expect(store.state.TimelineSpace.Contents.Favourites.maxId).toEqual(null)
     })
 
     it('link is null', async () => {
@@ -202,9 +208,9 @@ describe('Favourites', () => {
           resolve(res)
         })
       }
-      await store.dispatch('Favourites/fetchFavourites', localAccount)
-      expect(store.state.Favourites.favourites).toEqual([status1])
-      expect(store.state.Favourites.maxId).toEqual(null)
+      await store.dispatch('TimelineSpace/Contents/Favourites/fetchFavourites', localAccount)
+      expect(store.state.TimelineSpace.Contents.Favourites.favourites).toEqual([status1])
+      expect(store.state.TimelineSpace.Contents.Favourites.maxId).toEqual(null)
     })
 
     it('link exists in header', async () => {
@@ -222,9 +228,9 @@ describe('Favourites', () => {
         })
       }
 
-      await store.dispatch('Favourites/fetchFavourites', localAccount)
-      expect(store.state.Favourites.favourites).toEqual([status1])
-      expect(store.state.Favourites.maxId).toEqual('2')
+      await store.dispatch('TimelineSpace/Contents/Favourites/fetchFavourites', localAccount)
+      expect(store.state.TimelineSpace.Contents.Favourites.favourites).toEqual([status1])
+      expect(store.state.TimelineSpace.Contents.Favourites.maxId).toEqual('2')
     })
   })
 
@@ -240,7 +246,7 @@ describe('Favourites', () => {
         }
       })
       it('should not be updated', async () => {
-        const res = await store.dispatch('Favourites/lazyFetchFavourites')
+        const res = await store.dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites')
         expect(res).toEqual(null)
       })
     })
@@ -256,7 +262,7 @@ describe('Favourites', () => {
         }
       })
       it('should not be updated', async () => {
-        const res = await store.dispatch('Favourites/lazyFetchFavourites')
+        const res = await store.dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites')
         expect(res).toEqual(null)
       })
     })
@@ -286,9 +292,9 @@ describe('Favourites', () => {
           })
         }
 
-        await store.dispatch('Favourites/lazyFetchFavourites')
-        expect(store.state.Favourites.favourites).toEqual([status1, status2])
-        expect(store.state.Favourites.maxId).toEqual(null)
+        await store.dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites')
+        expect(store.state.TimelineSpace.Contents.Favourites.favourites).toEqual([status1, status2])
+        expect(store.state.TimelineSpace.Contents.Favourites.maxId).toEqual(null)
       })
 
       it('link exists in header', async () => {
@@ -306,9 +312,9 @@ describe('Favourites', () => {
           })
         }
 
-        await store.dispatch('Favourites/lazyFetchFavourites')
-        expect(store.state.Favourites.favourites).toEqual([status1, status2])
-        expect(store.state.Favourites.maxId).toEqual('3')
+        await store.dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites')
+        expect(store.state.TimelineSpace.Contents.Favourites.favourites).toEqual([status1, status2])
+        expect(store.state.TimelineSpace.Contents.Favourites.maxId).toEqual('3')
       })
     })
   })

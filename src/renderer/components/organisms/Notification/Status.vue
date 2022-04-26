@@ -112,13 +112,13 @@ export default {
       float: left;
       max-width: 80%;
 
-      .bold /deep/ {
+      .bold {
         cursor: pointer;
+      }
 
-        .emojione {
-          max-width: 14px;
-          max-height: 14px;
-        }
+      .bold :deep(.emojione) {
+        max-width: 14px;
+        max-height: 14px;
       }
     }
 

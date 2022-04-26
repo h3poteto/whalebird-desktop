@@ -1,14 +1,5 @@
 <template>
-  <div
-    class="status"
-    tabIndex="0"
-    v-shortkey="shortcutEnabled ? { next: ['j'], prev: ['k'], right: ['l'], left: ['h'], open: ['o'], profile: ['p'] } : {}"
-    @shortkey="handleStatusControl"
-    ref="status"
-    @click="$emit('select')"
-    role="article"
-    aria-label="poll expired"
-  >
+  <div class="status" tabIndex="0" ref="status" @click="$emit('select')" role="article" aria-label="poll expired">
     <div v-show="filtered(message)" class="filtered">Filtered</div>
     <div v-show="!filtered(message)" class="poll-expired">
       <div class="action">
@@ -53,13 +44,13 @@
                 v-if="!isShowContent(message.status)"
                 plain
                 type="primary"
-                size="medium"
+                size="default"
                 class="spoil-button"
                 @click="showContent = true"
               >
                 {{ $t('cards.toot.show_more') }}
               </el-button>
-              <el-button v-else plain type="primary" size="medium" class="spoil-button" @click="showContent = false">
+              <el-button v-else plain type="primary" size="default" class="spoil-button" @click="showContent = false">
                 {{ $t('cards.toot.hide') }}
               </el-button>
             </div>
@@ -91,8 +82,8 @@
               </el-button>
               <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message.status)">
                 <FailoverImg :src="media.preview_url" :title="media.description" :readExif="true" />
-                <el-tag class="media-label" size="mini" v-if="media.type == 'gifv'">GIF</el-tag>
-                <el-tag class="media-label" size="mini" v-else-if="media.type == 'video'">VIDEO</el-tag>
+                <el-tag class="media-label" size="small" v-if="media.type == 'gifv'">GIF</el-tag>
+                <el-tag class="media-label" size="small" v-else-if="media.type == 'video'">VIDEO</el-tag>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -321,13 +312,13 @@ export default {
       float: left;
       max-width: 80%;
 
-      .bold /deep/ {
+      .bold {
         cursor: pointer;
+      }
 
-        .emojione {
-          max-width: 14px;
-          max-height: 14px;
-        }
+      .bold :deep(.emojione) {
+        max-width: 14px;
+        max-height: 14px;
       }
     }
 
@@ -360,7 +351,7 @@ export default {
       margin: 8px 8px 0 42px;
       color: #909399;
 
-      .content-wrapper /deep/ {
+      .content-wrapper {
         font-size: var(--base-font-size);
         margin: 0;
 
@@ -372,11 +363,11 @@ export default {
         .content p {
           unicode-bidi: plaintext;
         }
+      }
 
-        .emojione {
-          width: 20px;
-          height: 20px;
-        }
+      .content-wrapper :deep(.emojione) {
+        width: 20px;
+        height: 20px;
       }
 
       .toot-header {
@@ -387,11 +378,9 @@ export default {
           font-size: var(--base-font-size);
           cursor: pointer;
 
-          .display-name /deep/ {
-            .emojione {
-              max-width: 14px;
-              max-height: 14px;
-            }
+          .display-name :deep(.emojione) {
+            max-width: 14px;
+            max-height: 14px;
           }
         }
 

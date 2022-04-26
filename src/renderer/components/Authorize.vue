@@ -4,7 +4,9 @@
       <el-header>
         <el-row>
           <el-col :span="24" class="close">
-            <el-button type="text" icon="el-icon-close" @click="close" class="close-button"> </el-button>
+            <el-button type="text" @click="close" class="close-button">
+              <font-awesome-icon icon="x-mark"></font-awesome-icon>
+            </el-button>
           </el-col>
         </el-row>
       </el-header>
@@ -43,6 +45,14 @@
 
 <script>
 export default {
+  data() {
+    return {
+      authorizeForm: {
+        code: null
+      },
+      submitting: false
+    }
+  },
   name: 'authorize',
   props: {
     url: {
@@ -52,14 +62,6 @@ export default {
     sns: {
       type: String,
       default: 'mastodon'
-    }
-  },
-  data() {
-    return {
-      authorizeForm: {
-        code: null
-      },
-      submitting: false
     }
   },
   mounted() {
@@ -101,7 +103,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#authorize /deep/ {
+#authorize {
   background-color: #292f3f;
   color: #ffffff;
   text-align: center;
@@ -130,14 +132,16 @@ export default {
     margin: 0 auto;
   }
 
-  .el-form-item__label {
-    color: #f0f3f9;
-  }
+  .authorize-form :deep() {
+    .el-form-item__label {
+      color: #f0f3f9;
+    }
 
-  .el-input__inner {
-    background-color: #373d48;
-    color: #ffffff;
-    border: 0;
+    .el-input__inner {
+      background-color: #373d48;
+      color: #ffffff;
+      border: 0;
+    }
   }
 
   .hidden {

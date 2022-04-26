@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import ListMembership, { ListMembershipState } from '@/store/TimelineSpace/Modals/ListMembership'
+import { RootState } from '@/store'
 
 const mockClient = {
   getAccountLists: () => {
@@ -119,14 +119,24 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const modalsStore = () => ({
+  namespaced: true,
+  modules: {
+    ListMembership: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
       _id: '0'
     }
+  },
+  modules: {
+    Modals: modalsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -136,16 +146,12 @@ const appState = {
 }
 
 describe('ListMembership', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        ListMembership: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -153,17 +159,17 @@ describe('ListMembership', () => {
 
   describe('fetchListMembership', () => {
     it('should get', async () => {
-      await store.dispatch('ListMembership/fetchListMembership', {
+      await store.dispatch('TimelineSpace/Modals/ListMembership/fetchListMembership', {
         id: '5'
       })
-      expect(store.state.ListMembership.belongToLists).toEqual([list1, list2])
+      expect(store.state.TimelineSpace.Modals.ListMembership.belongToLists).toEqual([list1, list2])
     })
   })
 
   describe('fetchLists', () => {
     it('should be changed', async () => {
-      await store.dispatch('ListMembership/fetchLists')
-      expect(store.state.ListMembership.lists).toEqual([list1, list2])
+      await store.dispatch('TimelineSpace/Modals/ListMembership/fetchLists')
+      expect(store.state.TimelineSpace.Modals.ListMembership.lists).toEqual([list1, list2])
     })
   })
 
@@ -179,8 +185,8 @@ describe('ListMembership', () => {
       }
     })
     it('should be changed', async () => {
-      await store.dispatch('ListMembership/changeBelongToLists', [list1.id, list2.id])
-      expect(store.state.ListMembership.belongToLists).toEqual([list1, list2])
+      await store.dispatch('TimelineSpace/Modals/ListMembership/changeBelongToLists', [list1.id, list2.id])
+      expect(store.state.TimelineSpace.Modals.ListMembership.belongToLists).toEqual([list1, list2])
     })
   })
 })

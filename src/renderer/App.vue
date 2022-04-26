@@ -34,10 +34,10 @@ export default {
   created() {
     this.$store.dispatch('App/watchShortcutsEvents')
     this.$store.dispatch('App/loadPreferences').then(conf => {
-      this.$i18n.i18next.changeLanguage(conf.language.language)
+      this.$i18n.locale = conf.language.language
     })
   },
-  destroyed() {
+  unmounted() {
     this.$store.dispatch('App/removeShortcutsEvents')
   }
 }

@@ -5,8 +5,6 @@
     :element-loading-text="$t('message.loading')"
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.8)"
-    v-shortkey="shortcutEnabled ? { help: ['shift', '?'] } : {}"
-    @shortkey="handleKey"
   >
     <side-menu></side-menu>
     <div :class="collapse ? 'page-narrow' : 'page'">
@@ -31,7 +29,7 @@ import ReceiveDrop from './TimelineSpace/ReceiveDrop'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 import { NewTootAttachLength } from '@/errors/validations'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
   name: 'timeline-space',
@@ -67,7 +65,7 @@ export default {
       this.$store.commit('TimelineSpace/Modals/Jump/changeModal', true)
     })
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('dragenter', this.onDragEnter)
     window.removeEventListener('dragleave', this.onDragLeave)
     window.removeEventListener('dragover', this.onDragOver)
@@ -125,7 +123,7 @@ export default {
       this.$store
         .dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
         .then(() => {
-          Event.$emit('image-uploaded')
+          EventEmitter.emit('image-uploaded')
         })
         .catch(err => {
           if (err instanceof NewTootAttachLength) {
@@ -180,7 +178,6 @@ export default {
     width: calc(100% - 180px);
     position: fixed;
     top: 0;
-    height: 48px;
     border-bottom: solid 1px var(--theme-border-color);
   }
 }

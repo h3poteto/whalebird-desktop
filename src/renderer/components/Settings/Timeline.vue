@@ -1,9 +1,11 @@
 <template>
   <div id="timeline">
     <h2>{{ $t('settings.timeline.title') }}</h2>
-    <el-form class="unread-notification section" size="medium" label-position="right" label-width="250px">
+    <el-form class="unread-notification section" size="default" label-position="right" label-width="250px">
       <h3>{{ $t('settings.timeline.unread_notification.title') }}</h3>
-      <p class="description">{{ $t('settings.timeline.unread_notification.description') }}</p>
+      <p class="description">
+        {{ $t('settings.timeline.unread_notification.description') }}
+      </p>
 
       <el-form-item for="direct" :label="$t('settings.timeline.unread_notification.direct')">
         <el-switch v-model="direct" id="direct" />
@@ -16,7 +18,7 @@
       </el-form-item>
     </el-form>
 
-    <el-form class="use-marker section" size="medium" label-position="right" label-width="250px">
+    <el-form class="use-marker section" size="default" label-position="right" label-width="250px">
       <h3>{{ $t('settings.timeline.use_marker.title') }}</h3>
       <el-form-item for="marker_home" :label="$t('settings.timeline.use_marker.home')">
         <el-switch v-model="marker_home" id="marker_home" />
@@ -108,12 +110,12 @@ export default {
     margin: 32px 0 20px;
   }
 
-  .section /deep/ {
+  .section {
     margin-bottom: 40px;
+  }
 
-    .el-form-item__label {
-      color: var(--theme-primary-color);
-    }
+  .section :deep(.el-form-item__label) {
+    color: var(--theme-primary-color);
   }
 }
 </style>

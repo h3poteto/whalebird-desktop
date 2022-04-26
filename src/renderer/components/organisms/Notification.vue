@@ -140,29 +140,40 @@ export default {
   props: {
     message: {
       type: Object,
-      default: {}
+      default: {},
     },
     filters: {
       type: Array,
-      default: []
+      default: [],
     },
     focused: {
       type: Boolean,
-      defalt: false
+      defalt: false,
     },
     overlaid: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  components: { Favourite, Follow, FollowRequest, Mention, Quote, Reblog, Reaction, Status, PollVote, PollExpired },
+  components: {
+    Favourite,
+    Follow,
+    FollowRequest,
+    Mention,
+    Quote,
+    Reblog,
+    Reaction,
+    Status,
+    PollVote,
+    PollExpired,
+  },
   methods: {
     updateToot(message) {
       return this.$emit('update', message)
     },
     deleteToot(message) {
       return this.$emit('delete', message)
-    }
-  }
+    },
+  },
 }
 </script>

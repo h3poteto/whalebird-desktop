@@ -1,16 +1,13 @@
 <template>
-<el-dialog
-  :title="$t('modals.report.title')"
-  :visible.sync="reportModal"
-  width="400px"
-  custom-class="report"
-  >
-  <el-input type="textarea" v-model="comment" :placeholder="$t('modals.report.comment')"></el-input>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="closeModal">{{ $t('modals.report.cancel') }}</el-button>
-    <el-button type="primary" @click="submit">{{ $t('modals.report.ok') }}</el-button>
-  </span>
-</el-dialog>
+  <el-dialog :title="$t('modals.report.title')" :model-value="reportModal" width="400px" custom-class="report">
+    <el-input type="textarea" v-model="comment" :placeholder="$t('modals.report.comment')"></el-input>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="closeModal">{{ $t('modals.report.cancel') }}</el-button>
+        <el-button type="primary" @click="submit">{{ $t('modals.report.ok') }}</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -18,7 +15,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Report',
-  data () {
+  data() {
     return {
       comment: ''
     }
@@ -28,19 +25,19 @@ export default {
       toot: state => state.message
     }),
     reportModal: {
-      get () {
+      get() {
         return this.$store.state.TimelineSpace.Modals.Report.modalOpen
       },
-      set (value) {
+      set(value) {
         this.$store.commit('TimelineSpace/Modals/Report/changeModalOpen', value)
       }
     }
   },
   methods: {
-    closeModal () {
+    closeModal() {
       this.reportModal = false
     },
-    async submit () {
+    async submit() {
       this.closeModal()
       await this.$store.dispatch('TimelineSpace/Modals/Report/submit', {
         account_id: this.toot.account.id,
@@ -52,5 +49,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

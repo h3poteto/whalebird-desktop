@@ -1,10 +1,15 @@
 import loadImage from 'blueimp-load-image'
 
-const parseExtension = url => {
+const parseExtension = (url) => {
   if (!url) {
     return null
   }
-  if (url.match(/\.jpg$/) || url.match(/\.jpeg$/) || url.match(/\.JPG$/) || url.match(/\.JPEG$/)) {
+  if (
+    url.match(/\.jpg$/) ||
+    url.match(/\.jpeg$/) ||
+    url.match(/\.JPG$/) ||
+    url.match(/\.JPEG$/)
+  ) {
     return 'image/jpeg'
   } else if (url.match(/\.png$/) || url.match(/\.PNG$/)) {
     return 'image/png'
@@ -18,7 +23,7 @@ const parseExtension = url => {
   return null
 }
 
-const exifImageUrl = url => {
+const exifImageUrl = (url) => {
   return new Promise((resolve, reject) => {
     const extension = parseExtension(url)
     if (!extension) {
@@ -26,7 +31,7 @@ const exifImageUrl = url => {
     }
     loadImage(
       url,
-      canvas => {
+      (canvas) => {
         if (canvas.type === 'error') {
           return reject(Error(`can not load image: ${url}`))
         }
@@ -36,7 +41,7 @@ const exifImageUrl = url => {
       {
         canvas: true,
         meta: true,
-        orientation: true
+        orientation: true,
       }
     )
   })

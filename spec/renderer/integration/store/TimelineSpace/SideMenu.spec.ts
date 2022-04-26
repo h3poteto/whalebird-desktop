@@ -1,11 +1,11 @@
 import { Entity, Response } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import SideMenu, { SideMenuState } from '~/src/renderer/store/TimelineSpace/SideMenu'
 import { LocalTag } from '~/src/types/localTag'
 import { MyWindow } from '~/src/types/global'
-;((window as any) as MyWindow).ipcRenderer = ipcRenderer
+import { RootState } from '@/store'
+;(window as any as MyWindow).ipcRenderer = ipcRenderer
 
 const mockClient = {
   getLists: () => {
@@ -82,25 +82,24 @@ const appStore = {
   }
 }
 
-const timelineStore = {
+const timelineStore = () => ({
   namespaced: true,
   state: {
     sns: 'mastodon'
+  },
+  modules: {
+    SideMenu: initStore()
   }
-}
+})
 
 describe('SideMenu', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        SideMenu: initStore(),
         App: appStore,
-        TimelineSpace: timelineStore
+        TimelineSpace: timelineStore()
       }
     })
     // mockedMegalodon.mockClear()
@@ -113,27 +112,27 @@ describe('SideMenu', () => {
         accessToken: 'token',
         baseURL: 'http://localhost'
       }
-      const lists = await store.dispatch('SideMenu/fetchLists', account)
-      expect(store.state.SideMenu.lists).toEqual([list1, list2])
+      const lists = await store.dispatch('TimelineSpace/SideMenu/fetchLists', account)
+      expect(store.state.TimelineSpace.SideMenu.lists).toEqual([list1, list2])
       expect(lists).toEqual([list1, list2])
     })
   })
 
   describe('clearUnread', () => {
     it('should be resetted', () => {
-      store.dispatch('SideMenu/clearUnread')
-      expect(store.state.SideMenu.unreadHomeTimeline).toEqual(false)
-      expect(store.state.SideMenu.unreadNotifications).toEqual(false)
-      expect(store.state.SideMenu.unreadLocalTimeline).toEqual(false)
-      expect(store.state.SideMenu.unreadDirectMessagesTimeline).toEqual(false)
-      expect(store.state.SideMenu.unreadPublicTimeline).toEqual(false)
+      store.dispatch('TimelineSpace/SideMenu/clearUnread')
+      expect(store.state.TimelineSpace.SideMenu.unreadHomeTimeline).toEqual(false)
+      expect(store.state.TimelineSpace.SideMenu.unreadNotifications).toEqual(false)
+      expect(store.state.TimelineSpace.SideMenu.unreadLocalTimeline).toEqual(false)
+      expect(store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline).toEqual(false)
+      expect(store.state.TimelineSpace.SideMenu.unreadPublicTimeline).toEqual(false)
     })
   })
 
   describe('changeCollapse', () => {
     it('should be changed', () => {
-      store.dispatch('SideMenu/changeCollapse', true)
-      expect(store.state.SideMenu.collapse).toEqual(true)
+      store.dispatch('TimelineSpace/SideMenu/changeCollapse', true)
+      expect(store.state.TimelineSpace.SideMenu.collapse).toEqual(true)
     })
   })
 
@@ -142,8 +141,8 @@ describe('SideMenu', () => {
       ipcMain.handle('get-collapse', () => {
         return true
       })
-      await store.dispatch('SideMenu/readCollapse')
-      expect(store.state.SideMenu.collapse).toEqual(true)
+      await store.dispatch('TimelineSpace/SideMenu/readCollapse')
+      expect(store.state.TimelineSpace.SideMenu.collapse).toEqual(true)
     })
   })
 
@@ -158,8 +157,8 @@ describe('SideMenu', () => {
       ipcMain.handle('list-hashtags', () => {
         return [tag1, tag2]
       })
-      await store.dispatch('SideMenu/listTags')
-      expect(store.state.SideMenu.tags).toEqual([tag1, tag2])
+      await store.dispatch('TimelineSpace/SideMenu/listTags')
+      expect(store.state.TimelineSpace.SideMenu.tags).toEqual([tag1, tag2])
     })
   })
 })

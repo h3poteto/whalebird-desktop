@@ -13,7 +13,7 @@
         <div class="relationship" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
           <div class="follower-status">
             <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
-            <el-tag class="status" size="medium" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
+            <el-tag class="status" size="default" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
           </div>
           <div class="notify" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
             <div
@@ -22,44 +22,44 @@
               @click="unsubscribe(account)"
               :title="$t('side_bar.account_profile.unsubscribe')"
             >
-              <font-awesome-icon icon="bell" size="xl" />
+              <font-awesome-icon icon="bell" size="lg" />
             </div>
             <div v-else class="subscribe" @click="subscribe(account)" :title="$t('side_bar.account_profile.subscribe')">
-              <font-awesome-icon :icon="['far', 'bell']" size="xl" />
+              <font-awesome-icon :icon="['far', 'bell']" size="lg" />
             </div>
           </div>
         </div>
 
         <div class="user-info">
           <div class="more" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
-            <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
-              <div class="popper">
-                <ul class="menu-list">
-                  <li role="button" @click="openBrowser(account)">
-                    {{ $t('side_bar.account_profile.open_in_browser') }}
-                  </li>
-                  <li role="button" @click="addToList(account)">
-                    {{ $t('side_bar.account_profile.manage_list_memberships') }}
-                  </li>
-                  <li role="button" @click="unmute(account)" v-if="muting">
-                    {{ $t('side_bar.account_profile.unmute') }}
-                  </li>
-                  <li role="button" @click="confirmMute(account)" v-else>
-                    {{ $t('side_bar.account_profile.mute') }}
-                  </li>
-                  <li role="button" @click="unblock(account)" v-if="blocking">
-                    {{ $t('side_bar.account_profile.unblock') }}
-                  </li>
-                  <li role="button" @click="block(account)" v-else>
-                    {{ $t('side_bar.account_profile.block') }}
-                  </li>
-                </ul>
-              </div>
+            <el-popover placement="bottom" width="200" trigger="click" popper-class="account-menu-popper">
+              <ul class="menu-list">
+                <li role="button" @click="openBrowser(account)">
+                  {{ $t('side_bar.account_profile.open_in_browser') }}
+                </li>
+                <li role="button" @click="addToList(account)">
+                  {{ $t('side_bar.account_profile.manage_list_memberships') }}
+                </li>
+                <li role="button" @click="unmute(account)" v-if="muting">
+                  {{ $t('side_bar.account_profile.unmute') }}
+                </li>
+                <li role="button" @click="confirmMute(account)" v-else>
+                  {{ $t('side_bar.account_profile.mute') }}
+                </li>
+                <li role="button" @click="unblock(account)" v-if="blocking">
+                  {{ $t('side_bar.account_profile.unblock') }}
+                </li>
+                <li role="button" @click="block(account)" v-else>
+                  {{ $t('side_bar.account_profile.block') }}
+                </li>
+              </ul>
 
-              <el-button slot="reference" type="text" :title="$t('side_bar.account_profile.detail')">
-                <font-awesome-icon icon="gear" size="xl" />
-              </el-button>
-            </popper>
+              <template #reference>
+                <el-button type="text" :title="$t('side_bar.account_profile.detail')">
+                  <font-awesome-icon icon="gear" size="xl" />
+                </el-button>
+              </template>
+            </el-popover>
           </div>
           <div class="icon" role="presentation">
             <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
@@ -88,7 +88,9 @@
         <dt>
           {{ identity.provider }}
         </dt>
-        <dd @click.capture.prevent="identityOpen(identity.profile_url)">{{ identity.provider_username }}</dd>
+        <dd @click.capture.prevent="identityOpen(identity.profile_url)">
+          {{ identity.provider_username }}
+        </dd>
       </dl>
     </div>
     <div class="metadata">
@@ -114,7 +116,9 @@
       </el-col>
       <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
         <el-button type="text" class="tab" @click="changeTab(3)">
-          <div class="title">{{ $t('side_bar.account_profile.followers') }}</div>
+          <div class="title">
+            {{ $t('side_bar.account_profile.followers') }}
+          </div>
           <div class="count">{{ account.followers_count }}</div>
         </el-button>
       </el-col>
@@ -225,29 +229,23 @@ export default {
     },
     openBrowser(account) {
       window.shell.openExternal(account.url)
-      this.$refs.popper.doClose()
     },
     addToList(account) {
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/setAccount', account)
       this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', true)
-      this.$refs.popper.doClose()
     },
     confirmMute(account) {
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
-      this.$refs.popper.doClose()
     },
     unmute(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unmute', account)
-      this.$refs.popper.doClose()
     },
     block(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/block', account)
-      this.$refs.popper.doClose()
     },
     unblock(account) {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unblock', account)
-      this.$refs.popper.doClose()
     },
     metadataClick(e) {
       const link = findLink(e.target, 'metadata')
@@ -340,34 +338,6 @@ export default {
         }
       }
 
-      .more {
-        .popper {
-          padding: 2px 0;
-          border-color: #909399;
-        }
-
-        .menu-list {
-          padding: 0;
-          font-size: calc(var(--base-font-size) * 0.9);
-          list-style-type: none;
-          line-height: 32px;
-          text-align: left;
-          color: #303133;
-          margin: 4px 0;
-
-          li {
-            box-sizing: border-box;
-            padding: 0 32px 0 16px;
-
-            &:hover {
-              background-color: #409eff;
-              color: #fff;
-              cursor: pointer;
-            }
-          }
-        }
-      }
-
       .icon {
         padding: 12px;
 
@@ -378,27 +348,25 @@ export default {
       }
     }
 
-    .username /deep/ {
+    .username {
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: calc(var(--base-font-size) * 1.71);
       margin: 0 auto 12px auto;
+    }
 
-      .emojione {
-        max-width: 1em;
-        max-height: 1em;
-      }
+    .username :deep(.emojione) {
+      max-width: 1em;
+      max-height: 1em;
     }
 
     .account {
       color: #409eff;
     }
 
-    .note {
-      & /deep/ .emojione {
-        max-width: 1.2em;
-        height: 1.2em;
-      }
+    .note :deep(.emojione) {
+      max-width: 1.2em;
+      height: 1.2em;
     }
   }
 
@@ -477,6 +445,12 @@ export default {
         width: 100%;
         text-align: left;
         line-height: 20px;
+        height: auto;
+        display: block;
+      }
+
+      .tab :deep(span) {
+        display: block;
       }
 
       .title {
@@ -506,6 +480,34 @@ export default {
 
   .timeline {
     font-size: calc(var(--base-font-size) * 0.85);
+  }
+}
+</style>
+
+<style lang="scss">
+.account-menu-popper {
+  padding: 2px 0 !important;
+  border-color: #909399;
+
+  .menu-list {
+    padding: 0;
+    font-size: calc(var(--base-font-size) * 0.9);
+    list-style-type: none;
+    line-height: 32px;
+    text-align: left;
+    color: #303133;
+    margin: 4px 0;
+
+    li {
+      box-sizing: border-box;
+      padding: 0 32px 0 16px;
+
+      &:hover {
+        background-color: #409eff;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>

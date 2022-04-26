@@ -22,7 +22,7 @@ export default {
       results: state => state.results
     })
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Search/Tag/updateResults', [])
   }
 }

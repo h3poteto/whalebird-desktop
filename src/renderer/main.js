@@ -1,9 +1,12 @@
-import Vue from 'vue'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en'
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
+  faAngleDown,
+  faAngleUp,
+  faAngleRight,
+  faAngleLeft,
   faAnglesRight,
   faAnglesLeft,
   faHome,
@@ -45,7 +48,14 @@ import {
   faChevronLeft,
   faEllipsisVertical,
   faCircleXmark,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faCircleUser,
+  faArrowUp,
+  faArrowDown,
+  faArrowLeft,
+  faArrowRight,
+  faSpinner,
+  faLink
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFaceSmile as farFaceSmile,
@@ -54,11 +64,8 @@ import {
   faBell as farBell
 } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import Popper from 'vue-popperjs'
-import 'vue-popperjs/dist/vue-popper.css'
 import { sync } from 'vuex-router-sync'
-import shortkey from 'vue-shortkey'
-import VueI18Next from '@panter/vue-i18next'
+import { createI18n } from 'vue3-i18next'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
 import VueVirtualScroller from 'vue-virtual-scroller'
@@ -71,6 +78,10 @@ import store from './store'
 import i18next from '~/src/config/i18n'
 
 library.add(
+  faAngleDown,
+  faAngleUp,
+  faAngleRight,
+  faAngleLeft,
   faAnglesRight,
   faAnglesLeft,
   faHome,
@@ -118,28 +129,27 @@ library.add(
   farTrashCan,
   farBell,
   faChevronLeft,
-  faEllipsisVertical
+  faEllipsisVertical,
+  faCircleUser,
+  faArrowUp,
+  faArrowDown,
+  faArrowLeft,
+  faArrowRight,
+  faSpinner,
+  faLink
 )
 
-Vue.use(ElementUI, { locale })
-Vue.use(shortkey)
-Vue.use(VueI18Next)
-Vue.use(VueResize)
-Vue.use(VueVirtualScroller)
-Vue.component('popper', Popper)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+const i18n = createI18n(i18next)
+
+const app = createApp(App)
+app.use(store)
+app.use(router)
+app.use(ElementPlus)
+app.component('font-awesome-icon', FontAwesomeIcon)
+app.use(VueVirtualScroller)
+app.use(VueResize)
+app.use(i18n)
 
 sync(store, router)
 
-Vue.config.productionTip = false
-
-const i18n: VueI18Next = new VueI18Next(i18next)
-
-/* eslint-disable no-new */
-new Vue({
-  components: { App },
-  i18n: i18n,
-  router,
-  store,
-  template: '<App/>'
-}).$mount('#app')
+app.mount('#app')

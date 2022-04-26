@@ -1,8 +1,10 @@
 <template>
   <div id="notification">
     <h2>{{ $t('preferences.notification.title') }}</h2>
-    <el-form class="section" label-position="right" label-width="360px" size="small">
-      <p class="description">{{ $t('preferences.notification.enable.description') }}</p>
+    <el-form class="section" label-position="right" label-width="360px">
+      <p class="description">
+        {{ $t('preferences.notification.enable.description') }}
+      </p>
       <el-form-item for="notifyReply" :label="$t('preferences.notification.enable.reply')">
         <el-switch id="notifyReply" v-model="notifyReply" active-color="#13ce66"> </el-switch>
       </el-form-item>
@@ -146,12 +148,12 @@ export default {
     margin: 24px 0 20px;
   }
 
-  .section /deep/ {
+  .section {
     margin-bottom: 40px;
+  }
 
-    .el-form-item__label {
-      color: var(--theme-primary-color);
-    }
+  .section :deep(.el-form-item__label) {
+    color: var(--theme-primary-color);
   }
 }
 </style>

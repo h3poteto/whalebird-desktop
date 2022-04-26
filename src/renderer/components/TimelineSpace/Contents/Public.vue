@@ -1,6 +1,6 @@
 <template>
-  <div id="public" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+  <div id="public">
+    <div></div>
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
@@ -22,7 +22,9 @@
       </template>
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
+      <el-button type="primary" @click="upper" circle>
+        <font-awesome-icon icon="angle-up" class="upper-icon" />
+      </el-button>
     </div>
   </div>
 </template>
@@ -32,13 +34,10 @@ import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
-  name: 'public',
-  components: { Toot },
-  mixins: [reloadable],
   data() {
     return {
       focusedId: null,
@@ -48,6 +47,9 @@ export default {
       resizeTime: null
     }
   },
+  name: 'public',
+  components: { Toot },
+  mixins: [reloadable],
   computed: {
     ...mapState('TimelineSpace/Contents/Public', {
       timeline: state => state.timeline,
@@ -85,7 +87,7 @@ export default {
       })
     }
 
-    Event.$on('focus-timeline', () => {
+    EventEmitter.on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
@@ -115,15 +117,15 @@ export default {
       this.scrollPosition.prepare()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (!this.unreadNotification.public) {
       this.$store.dispatch('TimelineSpace/stopPublicStreaming')
       this.$store.dispatch('TimelineSpace/unbindPublicStreaming')
     }
-    Event.$off('focus-timeline')
+    EventEmitter.off('focus-timeline')
     this.observer.disconnect()
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Public/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Public/archiveTimeline')
     if (!this.unreadNotification.public) {
@@ -248,7 +250,7 @@ export default {
       this.focusedId = message.uri + message.id
     },
     focusSidebar() {
-      Event.$emit('focus-sidebar')
+      EventEmitter.emit('focus-sidebar')
     },
     handleKey(event) {
       switch (event.srcKey) {
@@ -297,6 +299,11 @@ export default {
     right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
   }
+
+  .upper-icon {
+    padding: 3px;
+  }
 }
 </style>
+
 <style lang="scss" src="@/assets/timeline-transition.scss"></style>

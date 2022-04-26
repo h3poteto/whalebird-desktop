@@ -22,10 +22,8 @@ export default {
       results: state => state.TimelineSpace.Contents.Search.Toots.results
     })
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Search/Toots/updateResults', [])
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

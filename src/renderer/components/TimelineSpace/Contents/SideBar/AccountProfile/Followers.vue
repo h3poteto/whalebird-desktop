@@ -41,7 +41,7 @@ export default {
   mounted() {
     document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
   },
-  destroyed() {
+  unmounted() {
     if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
       document.getElementById('sidebar_scrollable').removeEventListener('scroll', this.onScroll)
     }

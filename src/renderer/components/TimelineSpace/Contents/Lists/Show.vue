@@ -1,6 +1,6 @@
 <template>
-  <div name="list" class="list-timeline" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+  <div name="list" class="list-timeline">
+    <div></div>
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
@@ -22,7 +22,9 @@
       </template>
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
+      <el-button type="primary" @click="upper" circle>
+        <font-awesome-icon icon="angle-up" class="upper-icon" />
+      </el-button>
     </div>
   </div>
 </template>
@@ -32,14 +34,10 @@ import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
-  name: 'list',
-  props: ['list_id'],
-  components: { Toot },
-  mixins: [reloadable],
   data() {
     return {
       focusedId: null,
@@ -49,6 +47,10 @@ export default {
       resizeTime: null
     }
   },
+  name: 'list',
+  props: ['list_id'],
+  components: { Toot },
+  mixins: [reloadable],
   computed: {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
@@ -80,7 +82,7 @@ export default {
   },
   mounted() {
     document.getElementById('scroller').addEventListener('scroll', this.onScroll)
-    Event.$on('focus-timeline', () => {
+    EventEmitter.on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
@@ -129,11 +131,11 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
     this.observer.disconnect()
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Lists/Show/archiveTimeline')
     this.$store.commit('TimelineSpace/Contents/Lists/Show/clearTimeline')
@@ -263,7 +265,7 @@ export default {
       this.focusedId = message.uri + message.id
     },
     focusSidebar() {
-      Event.$emit('focus-sidebar')
+      EventEmitter.emit('focus-sidebar')
     },
     handleKey(event) {
       switch (event.srcKey) {
@@ -304,6 +306,11 @@ export default {
     right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
   }
+
+  .upper-icon {
+    padding: 3px;
+  }
 }
 </style>
+
 <style lang="scss" src="@/assets/timeline-transition.scss"></style>

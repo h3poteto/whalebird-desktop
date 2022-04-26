@@ -1,10 +1,10 @@
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import General, { GeneralState } from '@/store/Preferences/General'
 import { MyWindow } from '~/src/types/global'
 import { IpcMainInvokeEvent } from 'electron'
-;((window as any) as MyWindow).ipcRenderer = ipcRenderer
+import { RootState } from '@/store'
+;(window as any as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): GeneralState => {
   return {
@@ -34,6 +34,13 @@ const initStore = () => {
   }
 }
 
+const preferencesStore = () => ({
+  namespaced: true,
+  modules: {
+    General: initStore()
+  }
+})
+
 const app = {
   namespaced: true,
   actions: {
@@ -44,15 +51,12 @@ const app = {
 }
 
 describe('Preferences/General', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Preferences: initStore(),
+        Preferences: preferencesStore(),
         App: app
       }
     })
@@ -75,10 +79,10 @@ describe('Preferences/General', () => {
       ipcMain.removeHandler('get-preferences')
     })
     it('should be updated', async () => {
-      await store.dispatch('Preferences/loadGeneral')
-      expect(store.state.Preferences.general.sound.fav_rb).toEqual(false)
-      expect(store.state.Preferences.general.sound.toot).toEqual(false)
-      expect(store.state.Preferences.loading).toEqual(false)
+      await store.dispatch('Preferences/General/loadGeneral')
+      expect(store.state.Preferences.General.general.sound.fav_rb).toEqual(false)
+      expect(store.state.Preferences.General.general.sound.toot).toEqual(false)
+      expect(store.state.Preferences.General.loading).toEqual(false)
     })
   })
 
@@ -92,13 +96,13 @@ describe('Preferences/General', () => {
       ipcMain.removeHandler('update-preferences')
     })
     it('should be updated', async () => {
-      await store.dispatch('Preferences/updateSound', {
+      await store.dispatch('Preferences/General/updateSound', {
         fav_rb: false,
         toot: false
       })
-      expect(store.state.Preferences.general.sound.fav_rb).toEqual(false)
-      expect(store.state.Preferences.general.sound.toot).toEqual(false)
-      expect(store.state.Preferences.loading).toEqual(false)
+      expect(store.state.Preferences.General.general.sound.fav_rb).toEqual(false)
+      expect(store.state.Preferences.General.general.sound.toot).toEqual(false)
+      expect(store.state.Preferences.General.loading).toEqual(false)
     })
   })
 
@@ -112,15 +116,15 @@ describe('Preferences/General', () => {
       ipcMain.removeHandler('update-preferences')
     })
     it('should be updated', async () => {
-      await store.dispatch('Preferences/updateTimeline', {
+      await store.dispatch('Preferences/General/updateTimeline', {
         cw: true,
         nsfw: true,
         hideAllAttachments: true
       })
-      expect(store.state.Preferences.general.timeline.cw).toEqual(true)
-      expect(store.state.Preferences.general.timeline.nsfw).toEqual(true)
-      expect(store.state.Preferences.general.timeline.hideAllAttachments).toEqual(true)
-      expect(store.state.Preferences.loading).toEqual(false)
+      expect(store.state.Preferences.General.general.timeline.cw).toEqual(true)
+      expect(store.state.Preferences.General.general.timeline.nsfw).toEqual(true)
+      expect(store.state.Preferences.General.general.timeline.hideAllAttachments).toEqual(true)
+      expect(store.state.Preferences.General.loading).toEqual(false)
     })
   })
 })

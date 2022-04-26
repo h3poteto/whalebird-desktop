@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import DirectMessages, { DirectMessagesState } from '@/store/TimelineSpace/Contents/DirectMessages'
+import { RootState } from '@/store'
 
 const mockClient = {
   getConversationTimeline: () => {
@@ -149,7 +149,14 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    DirectMessages: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
@@ -157,8 +164,11 @@ const timelineState = {
       baseURL: 'http://localhost'
     },
     sns: 'mastodon'
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -168,16 +178,12 @@ const appState = {
 }
 
 describe('Home', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        DirectMessages: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -185,9 +191,9 @@ describe('Home', () => {
 
   describe('fetchTimeline', () => {
     it('should be updated', async () => {
-      const statuses = await store.dispatch('DirectMessages/fetchTimeline')
+      const statuses = await store.dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline')
       expect(statuses).toEqual([status1])
-      expect(store.state.DirectMessages.timeline).toEqual([status1])
+      expect(store.state.TimelineSpace.Contents.DirectMessages.timeline).toEqual([status1])
     })
   })
 
@@ -215,9 +221,9 @@ describe('Home', () => {
             resolve(res)
           })
         }
-        await store.dispatch('DirectMessages/lazyFetchTimeline', status1)
-        expect(store.state.DirectMessages.lazyLoading).toEqual(false)
-        expect(store.state.DirectMessages.timeline).toEqual([status1, status2])
+        await store.dispatch('TimelineSpace/Contents/DirectMessages/lazyFetchTimeline', status1)
+        expect(store.state.TimelineSpace.Contents.DirectMessages.lazyLoading).toEqual(false)
+        expect(store.state.TimelineSpace.Contents.DirectMessages.timeline).toEqual([status1, status2])
       })
     })
   })

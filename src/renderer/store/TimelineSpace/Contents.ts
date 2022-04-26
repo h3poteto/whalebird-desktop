@@ -6,7 +6,7 @@ import Bookmarks, { BookmarksState } from './Contents/Bookmarks'
 import Local, { LocalState } from './Contents/Local'
 import Public, { PublicState } from './Contents/Public'
 import Search, { SearchModuleState } from './Contents/Search'
-import Lists from './Contents/Lists'
+import Lists, { ListsModuleState } from './Contents/Lists'
 import Hashtag, { HashtagModuleState } from './Contents/Hashtag'
 import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
 import FollowRequests, { FollowRequestsState } from './Contents/FollowRequests'
@@ -31,6 +31,7 @@ type ContentsModule = {
   Search: SearchModuleState
   Hashtag: HashtagModuleState
   FollowRequests: FollowRequestsState
+  Lists: ListsModuleState
 }
 
 export type ContentsModuleState = ContentsModule & ContentsState

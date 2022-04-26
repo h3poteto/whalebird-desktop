@@ -1,8 +1,8 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Edit, { EditState } from '@/store/TimelineSpace/Contents/Lists/Edit'
 import { RemoveAccountFromList } from '@/types/removeAccountFromList'
+import { RootState } from '@/store'
 
 const mockClient = {
   getAccountsInList: () => {
@@ -72,7 +72,21 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const listsStore = () => ({
+  namespaced: true,
+  modules: {
+    Edit: initStore()
+  }
+})
+
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Lists: listsStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
@@ -80,8 +94,11 @@ const timelineState = {
       baseURL: 'http://localhost'
     },
     sns: 'mastodon'
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -91,16 +108,12 @@ const appState = {
 }
 
 describe('Lists/Edit', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Edit: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -108,8 +121,8 @@ describe('Lists/Edit', () => {
 
   describe('fetchMembers', () => {
     it('should get', async () => {
-      await store.dispatch('Edit/fetchMembers', 'id')
-      expect(store.state.Edit.members).toEqual([account])
+      await store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', 'id')
+      expect(store.state.TimelineSpace.Contents.Lists.Edit.members).toEqual([account])
     })
   })
 
@@ -119,7 +132,7 @@ describe('Lists/Edit', () => {
         account: account,
         listId: 'id'
       }
-      const res = await store.dispatch('Edit/removeAccount', removeFromList)
+      const res = await store.dispatch('TimelineSpace/Contents/Lists/Edit/removeAccount', removeFromList)
       expect(res.data).toEqual({})
     })
   })

@@ -123,7 +123,7 @@ export default {
   .list {
     padding: 4px 24px;
     display: flex;
-    flex-dirrection: row;
+    flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
     border-bottom: 1px solid var(--theme-border-color);

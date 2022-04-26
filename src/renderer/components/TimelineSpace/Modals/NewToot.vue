@@ -1,144 +1,147 @@
 <template>
-  <el-dialog
-    :title="$t('modals.new_toot.title')"
-    :visible.sync="newTootModal"
-    v-if="newTootModal"
-    :before-close="closeConfirm"
-    width="600px"
-    class="new-toot-modal"
-    ref="dialog"
-  >
-    <el-form v-on:submit.prevent="toot" role="form">
-      <Quote :message="quoteToMessage" :displayNameStyle="displayNameStyle" v-if="quoteToMessage !== null" ref="quote"></Quote>
-      <div class="spoiler" v-if="showContentWarning" ref="spoiler">
-        <div class="el-input">
-          <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" v-shortkey.avoid />
+  <div class="new-toot">
+    <el-dialog
+      :title="$t('modals.new_toot.title')"
+      :model-value="newTootModal"
+      @update:model-value="newTootModal = $event"
+      :before-close="closeConfirm"
+      width="600px"
+      custom-class="new-toot-modal"
+      ref="dialog"
+    >
+      <el-form v-on:submit.prevent="toot" role="form">
+        <Quote :message="quoteToMessage" :displayNameStyle="displayNameStyle" v-if="quoteToMessage !== null" ref="quote"></Quote>
+        <div class="spoiler" v-if="showContentWarning" ref="spoiler">
+          <div class="el-input">
+            <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" />
+          </div>
+        </div>
+        <Status
+          v-model="status"
+          :opened="newTootModal"
+          :fixCursorPos="hashtagInserting"
+          :height="statusHeight"
+          @paste="onPaste"
+          @toot="toot"
+          @pickerOpened="innerElementOpened"
+          @suggestOpened="innerElementOpened"
+        />
+      </el-form>
+      <Poll
+        v-if="openPoll"
+        v-model="polls"
+        @addPoll="addPoll"
+        @removePoll="removePoll"
+        :defaultExpire="pollExpire"
+        @changeExpire="changeExpire"
+        ref="poll"
+      ></Poll>
+      <div class="preview" ref="preview">
+        <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
+          <img :src="media.preview_url" class="preview-image" />
+          <el-button type="text" @click="removeAttachment(media)" class="remove-image"><font-awesome-icon icon="circle-xmark" /></el-button>
+          <textarea
+            maxlength="420"
+            class="image-description"
+            :placeholder="$t('modals.new_toot.description')"
+            :value="mediaDescriptions[media.id]"
+            @input="updateDescription(media.id, $event.target.value)"
+            role="textbox"
+            contenteditable="true"
+            aria-multiline="true"
+          >
+          </textarea>
         </div>
       </div>
-      <Status
-        v-model="status"
-        :opened="newTootModal"
-        :fixCursorPos="hashtagInserting"
-        :height="statusHeight"
-        @paste="onPaste"
-        @toot="toot"
-        @pickerOpened="innerElementOpened"
-        @suggestOpened="innerElementOpened"
-      />
-    </el-form>
-    <Poll
-      v-if="openPoll"
-      v-model="polls"
-      @addPoll="addPoll"
-      @removePoll="removePoll"
-      :defaultExpire="pollExpire"
-      @changeExpire="changeExpire"
-      ref="poll"
-    ></Poll>
-    <div class="preview" ref="preview">
-      <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
-        <img :src="media.preview_url" class="preview-image" />
-        <el-button type="text" @click="removeAttachment(media)" class="remove-image"><font-awesome-icon icon="circle-xmark" /></el-button>
-        <textarea
-          maxlength="420"
-          class="image-description"
-          :placeholder="$t('modals.new_toot.description')"
-          :value="mediaDescriptions[media.id]"
-          @input="updateDescription(media.id, $event.target.value)"
-          v-shortkey.avoid
-          role="textbox"
-          contenteditable="true"
-          aria-multiline="true"
-        >
-        </textarea>
-      </div>
-    </div>
-    <div slot="footer" class="dialog-footer">
-      <div class="upload-image">
-        <el-button size="default" type="text" @click="selectImage" :title="$t('modals.new_toot.footer.add_image')">
-          <font-awesome-icon icon="camera" />
-        </el-button>
-        <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId" />
-      </div>
-      <div class="poll">
-        <el-button size="default" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
-          <font-awesome-icon icon="square-poll-horizontal" />
-        </el-button>
-      </div>
-      <div class="privacy">
-        <el-dropdown trigger="click" @command="changeVisibility">
-          <el-button size="default" type="text" :title="$t('modals.new_toot.footer.change_visibility')">
-            <font-awesome-icon :icon="visibilityIcon" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="visibilityList.Public.value">
-              <font-awesome-icon icon="globe" class="privacy-icon" />
-              {{ $t(visibilityList.Public.name) }}
-            </el-dropdown-item>
-            <el-dropdown-item :command="visibilityList.Unlisted.value">
-              <font-awesome-icon icon="unlock" class="privacy-icon" />
-              {{ $t(visibilityList.Unlisted.name) }}
-            </el-dropdown-item>
-            <el-dropdown-item :command="visibilityList.Private.value">
-              <font-awesome-icon icon="lock" class="privacy-icon" />
-              {{ $t(visibilityList.Private.name) }}
-            </el-dropdown-item>
-            <el-dropdown-item :command="visibilityList.Direct.value">
-              <font-awesome-icon icon="envelope" class="privacy-icon" size="sm" />
-              {{ $t(visibilityList.Direct.name) }}
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-      <div class="sensitive" v-show="attachedMedias.length > 0">
-        <el-button
-          size="default"
-          type="text"
-          @click="changeSensitive"
-          :title="$t('modals.new_toot.footer.change_sensitive')"
-          :aria-pressed="sensitive"
-        >
-          <font-awesome-icon icon="eye-slash" v-show="!sensitive" />
-          <font-awesome-icon icon="eye" v-show="sensitive" />
-        </el-button>
-      </div>
-      <div class="content-warning">
-        <el-button
-          size="default"
-          type="text"
-          @click="toggleContentWarning()"
-          :title="$t('modals.new_toot.footer.add_cw')"
-          :class="showContentWarning ? '' : 'clickable'"
-          :aria-pressed="showContentWarning"
-        >
-          <font-awesome-icon icon="eye-slash" />
-        </el-button>
-      </div>
-      <div class="pined-hashtag">
-        <el-button
-          size="default"
-          type="text"
-          @click="pinedHashtag = !pinedHashtag"
-          :title="$t('modals.new_toot.footer.pined_hashtag')"
-          :class="pinedHashtag ? '' : 'clickable'"
-          :aria-pressed="pinedHashtag"
-        >
-          <font-awesome-icon icon="hashtag" />
-        </el-button>
-      </div>
-      <div class="info">
-        <img src="../../../assets/images/loading-spinner-wide.svg" v-show="loading" class="loading" />
-        <span class="text-count">{{ tootMax - status.length }}</span>
+      <template #footer>
+        <div class="dialog-footer">
+          <div class="upload-image">
+            <el-button size="default" type="text" @click="selectImage" :title="$t('modals.new_toot.footer.add_image')">
+              <font-awesome-icon icon="camera" />
+            </el-button>
+            <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId" />
+          </div>
+          <div class="poll">
+            <el-button size="default" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
+              <font-awesome-icon icon="square-poll-horizontal" />
+            </el-button>
+          </div>
+          <div class="privacy">
+            <el-dropdown trigger="click" @command="changeVisibility">
+              <el-button size="default" type="text" :title="$t('modals.new_toot.footer.change_visibility')">
+                <font-awesome-icon :icon="visibilityIcon" />
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item :command="visibilityList.Public.value">
+                    <font-awesome-icon icon="globe" class="privacy-icon" />
+                    {{ $t(visibilityList.Public.name) }}
+                  </el-dropdown-item>
+                  <el-dropdown-item :command="visibilityList.Unlisted.value">
+                    <font-awesome-icon icon="unlock" class="privacy-icon" />
+                    {{ $t(visibilityList.Unlisted.name) }}
+                  </el-dropdown-item>
+                  <el-dropdown-item :command="visibilityList.Private.value">
+                    <font-awesome-icon icon="lock" class="privacy-icon" />
+                    {{ $t(visibilityList.Private.name) }}
+                  </el-dropdown-item>
+                  <el-dropdown-item :command="visibilityList.Direct.value">
+                    <font-awesome-icon icon="envelope" class="privacy-icon" size="sm" />
+                    {{ $t(visibilityList.Direct.name) }}
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+          <div class="sensitive" v-show="attachedMedias.length > 0">
+            <el-button
+              size="default"
+              type="text"
+              @click="changeSensitive"
+              :title="$t('modals.new_toot.footer.change_sensitive')"
+              :aria-pressed="sensitive"
+            >
+              <font-awesome-icon icon="eye-slash" v-show="!sensitive" />
+              <font-awesome-icon icon="eye" v-show="sensitive" />
+            </el-button>
+          </div>
+          <div class="content-warning">
+            <el-button
+              size="default"
+              type="text"
+              @click="toggleContentWarning()"
+              :title="$t('modals.new_toot.footer.add_cw')"
+              :class="showContentWarning ? '' : 'clickable'"
+              :aria-pressed="showContentWarning"
+            >
+              <font-awesome-icon icon="eye-slash" />
+            </el-button>
+          </div>
+          <div class="pined-hashtag">
+            <el-button
+              size="default"
+              type="text"
+              @click="pinedHashtag = !pinedHashtag"
+              :title="$t('modals.new_toot.footer.pined_hashtag')"
+              :class="pinedHashtag ? '' : 'clickable'"
+              :aria-pressed="pinedHashtag"
+            >
+              <font-awesome-icon icon="hashtag" />
+            </el-button>
+          </div>
+          <div class="info">
+            <img src="../../../assets/images/loading-spinner-wide.svg" v-show="loading" class="loading" />
+            <span class="text-count">{{ tootMax - status.length }}</span>
 
-        <el-button class="toot-action" size="small" @click="closeConfirm(close)">{{ $t('modals.new_toot.cancel') }}</el-button>
-        <el-button class="toot-action" size="small" type="primary" @click="toot" :loading="blockSubmit">{{
-          $t('modals.new_toot.toot')
-        }}</el-button>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-    <resize-observer @notify="handleResize" />
-  </el-dialog>
+            <el-button class="toot-action" @click="closeConfirm(close)">{{ $t('modals.new_toot.cancel') }}</el-button>
+            <el-button class="toot-action" type="primary" @click="toot" :loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </template>
+      <resize-observer @notify="handleResize" />
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -148,7 +151,7 @@ import Status from './NewToot/Status'
 import Poll from './NewToot/Poll'
 import Quote from './NewToot/Quote'
 import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit, NewTootPollInvalid } from '@/errors/validations'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
   name: 'new-toot',
@@ -238,7 +241,7 @@ export default {
     this.$store.dispatch('TimelineSpace/Modals/NewToot/setupLoading')
   },
   mounted() {
-    Event.$on('image-uploaded', () => {
+    EventEmitter.on('image-uploaded', () => {
       if (this.$refs.preview) {
         this.statusHeight = this.statusHeight - this.$refs.preview.offsetHeight
       }
@@ -291,7 +294,10 @@ export default {
         console.error(err)
         if (err instanceof NewTootTootLength) {
           this.$message({
-            message: this.$t('validation.new_toot.toot_length', { min: 1, max: this.tootMax }),
+            message: this.$t('validation.new_toot.toot_length', {
+              min: 1,
+              max: this.tootMax
+            }),
             type: 'error'
           })
         } else if (err instanceof NewTootAttachLength) {
@@ -458,189 +464,190 @@ export default {
           event.height - footerHeight - headerHeight - this.$refs.preview.offsetHeight - pollHeight - spoilerHeight - quoteHeight
       }
     },
-    innerElementOpened(open) {
-      if (open) {
-        this.$refs.dialog.$el.firstChild.style.overflow = 'visible'
-      } else {
-        this.$refs.dialog.$el.firstChild.style.overflow = 'hidden'
-      }
+    innerElementOpened() {
+      // if (open) {
+      //   this.$refs.dialog.$el.firstChild.style.overflow = 'visible'
+      // } else {
+      //   this.$refs.dialog.$el.firstChild.style.overflow = 'hidden'
+      // }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.new-toot-modal /deep/ {
-  .el-dialog {
+.new-toot :deep() {
+  .new-toot-modal {
     background-color: var(--theme-selected-background-color);
     overflow: hidden;
     resize: both;
     padding-bottom: 20px;
     max-height: calc(100% - 15vh - 80px);
     max-width: 95%;
-  }
 
-  .el-dialog__header {
-    background-color: #4a5664;
-
-    .el-dialog__title {
-      color: #ebeef5;
-    }
-  }
-
-  .el-dialog__body {
-    padding: 0;
-
-    .el-input__inner {
-      background-color: var(--theme-background-color);
-      color: var(--theme-primary-color);
-      border: 1px solid var(--theme-border-color);
-    }
-
-    .spoiler {
-      box-sizing: border-box;
-      padding: 4px 0;
+    .el-dialog__header {
       background-color: #4a5664;
+      margin-right: 0;
 
-      input {
-        border-radius: 0;
-
-        &::placeholder {
-          color: #c0c4cc;
-        }
+      .el-dialog__title {
+        color: #ebeef5;
       }
     }
 
-    .preview {
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+    .el-dialog__body {
+      padding: 0;
 
-      .image-wrapper {
-        position: relative;
-        flex: 1 1 0;
-        min-width: 10%;
-        height: 150px;
-        margin: 4px;
+      .el-input__inner {
+        background-color: var(--theme-background-color);
+        color: var(--theme-primary-color);
+        border: 1px solid var(--theme-border-color);
+      }
 
-        .preview-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border: 0;
-          border-radius: 8px;
-        }
+      .spoiler {
+        box-sizing: border-box;
+        padding: 4px 0;
+        background-color: #4a5664;
 
-        .image-description {
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          box-sizing: border-box;
-          border: 0;
-          border-bottom-left-radius: 8px;
-          border-bottom-right-radius: 8px;
-          background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0.35) 80%, transparent);
-          font-size: var(--font-base-size);
-          color: #fff;
-          opacity: 1;
-          resize: none;
-          overflow: scroll;
+        input {
+          border-radius: 0;
 
           &::placeholder {
             color: #c0c4cc;
           }
         }
+      }
 
-        .remove-image {
-          position: absolute;
-          top: 2px;
-          left: 2px;
-          padding: 0;
-          cursor: pointer;
-          font-size: 1.5rem;
+      .preview {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
 
-          .fa-icon {
-            font-size: 0.9rem;
-            width: auto;
-            height: 1em;
-            max-width: 100%;
-            max-height: 100%;
+        .image-wrapper {
+          position: relative;
+          flex: 1 1 0;
+          min-width: 10%;
+          height: 150px;
+          margin: 4px;
+
+          .preview-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 0;
+            border-radius: 8px;
+          }
+
+          .image-description {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            border: 0;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0.35) 80%, transparent);
+            font-size: var(--font-base-size);
+            color: #fff;
+            opacity: 1;
+            resize: none;
+            overflow: scroll;
+
+            &::placeholder {
+              color: #c0c4cc;
+            }
+          }
+
+          .remove-image {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            padding: 0;
+            cursor: pointer;
+            font-size: 1.5rem;
+
+            .fa-icon {
+              font-size: 0.9rem;
+              width: auto;
+              height: 1em;
+              max-width: 100%;
+              max-height: 100%;
+            }
           }
         }
       }
     }
-  }
 
-  .el-dialog__footer {
-    background-color: var(--theme-selected-background-color);
-    font-size: var(--base-font-size);
-    padding-bottom: 0;
+    .el-dialog__footer {
+      background-color: var(--theme-selected-background-color);
+      font-size: var(--base-font-size);
+      padding-bottom: 0;
 
-    .upload-image {
-      text-align: left;
-      float: left;
+      .upload-image {
+        text-align: left;
+        float: left;
 
-      .image-input {
-        display: none;
-      }
-    }
-
-    .poll {
-      float: left;
-      margin-left: 8px;
-    }
-
-    .privacy {
-      float: left;
-      margin-left: 8px;
-    }
-
-    .sensitive {
-      float: left;
-      margin-left: 8px;
-    }
-
-    .content-warning {
-      float: left;
-      margin-left: 8px;
-
-      .cw-text {
-        font-weight: 800;
-        line-height: 18px;
-      }
-    }
-
-    .pined-hashtag {
-      float: left;
-      margin-left: 8px;
-    }
-
-    .clickable {
-      color: #909399;
-    }
-
-    .info {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-
-      .loading {
-        width: 18px;
-        margin-right: 4px;
+        .image-input {
+          display: none;
+        }
       }
 
-      .text-count {
-        padding-right: 10px;
+      .poll {
+        float: left;
+        margin-left: 8px;
+      }
+
+      .privacy {
+        float: left;
+        margin-left: 8px;
+      }
+
+      .sensitive {
+        float: left;
+        margin-left: 8px;
+      }
+
+      .content-warning {
+        float: left;
+        margin-left: 8px;
+
+        .cw-text {
+          font-weight: 800;
+          line-height: 18px;
+        }
+      }
+
+      .pined-hashtag {
+        float: left;
+        margin-left: 8px;
+      }
+
+      .clickable {
         color: #909399;
       }
-    }
 
-    .toot-action {
-      font-size: var(--base-font-size);
-      margin-top: 2px;
-      margin-bottom: 2px;
+      .info {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .loading {
+          width: 18px;
+          margin-right: 4px;
+        }
+
+        .text-count {
+          padding-right: 10px;
+          color: #909399;
+        }
+      }
+
+      .toot-action {
+        font-size: var(--base-font-size);
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
     }
   }
 }

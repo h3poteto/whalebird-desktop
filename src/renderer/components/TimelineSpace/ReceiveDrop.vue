@@ -1,16 +1,16 @@
 <template>
-<div id="receive_drop">
-  <div class="drop-area">
-    <div class="drop-message">
-      <h1>{{ $t('receive_drop.drop_message') }}</h1>
+  <div id="receive_drop">
+    <div class="drop-area">
+      <div class="drop-message">
+        <h1>{{ $t('receive_drop.drop_message') }}</h1>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
 export default {
-  name: 'receive-drop'
+  name: 'receive-drop',
 }
 </script>
 

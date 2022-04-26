@@ -24,20 +24,20 @@ export default {
   props: {
     message: {
       type: Object,
-      default: {}
+      default: {},
     },
     filters: {
       type: Array,
-      default: []
+      default: [],
     },
     focused: {
       type: Boolean,
-      default: false
+      default: false,
     },
     overlaid: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: { Toot },
   methods: {
@@ -46,7 +46,7 @@ export default {
     },
     deleteToot(message) {
       return this.$emit('delete', message)
-    }
-  }
+    },
+  },
 }
 </script>

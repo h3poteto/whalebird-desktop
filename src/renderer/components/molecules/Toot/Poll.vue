@@ -55,10 +55,14 @@ export default {
     parseDatetime(datetime, epoch) {
       switch (this.timeFormat) {
         case TimeFormat.Absolute.value:
-          return this.$t('cards.toot.poll.until', { datetime: moment(datetime).format('YYYY-MM-DD HH:mm:ss') })
+          return this.$t('cards.toot.poll.until', {
+            datetime: moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+          })
         case TimeFormat.Relative.value:
           moment.locale(this.language)
-          return this.$t('cards.toot.poll.left', { datetime: moment(datetime).from(epoch) })
+          return this.$t('cards.toot.poll.left', {
+            datetime: moment(datetime).from(epoch)
+          })
       }
     },
     percentage(option_votes, poll_votes) {
@@ -93,7 +97,7 @@ export default {
       margin: 4px 0;
       line-height: 32px;
 
-      .el-radio /deep/ {
+      .el-radio {
         color: var(--theme-regular-color);
       }
     }

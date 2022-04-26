@@ -27,7 +27,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
   name: 'media',
@@ -54,18 +54,18 @@ export default {
   mounted() {
     this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Media/clearTimeline')
     document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
-    Event.$on('focus-sidebar', () => {
+    EventEmitter.on('focus-sidebar', () => {
       this.focusedId = 0
       this.$nextTick(function () {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
       })
     })
   },
-  beforeDestroy() {
-    Event.$emit('focus-timeline')
-    Event.$off('focus-sidebar')
+  beforeUnmount() {
+    EventEmitter.emit('focus-timeline')
+    EventEmitter.off('focus-sidebar')
   },
-  destroyed() {
+  unmounted() {
     if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
       document.getElementById('sidebar_scrollable').removeEventListener('scroll', this.onScroll)
     }
@@ -130,7 +130,7 @@ export default {
     },
     focusTimeline() {
       this.focusedId = 0
-      Event.$emit('focus-timeline')
+      EventEmitter.emit('focus-timeline')
     }
   }
 }

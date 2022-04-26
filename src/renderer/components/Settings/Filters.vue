@@ -3,45 +3,43 @@
     <h2>{{ $t('settings.filters.title') }}</h2>
     <div class="new-filter">
       <el-button type="primary" :disabled="sns === 'misskey'">
-        <router-link tag="span" :to="`/${id()}/settings/filters/new`">
+        <router-link :to="`/${id()}/settings/filters/new`">
           {{ $t('settings.filters.new.title') }}
         </router-link>
       </el-button>
     </div>
-    <template>
-      <el-table
-        :data="filters"
-        tooltip-effect="dark"
-        empty-text="No filters"
-        style="width: 100%"
-        v-loading="filtersLoading"
-        :element-loading-background="backgroundColor"
-      >
-        <el-table-column prop="phrase" label="Keyword" width="180"> </el-table-column>
-        <el-table-column label="Context">
-          <template slot-scope="scope">
-            <span>{{ filters[scope.$index].context.join(',') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="expires_at" label="Expires" width="180"> </el-table-column>
-        <el-table-column width="80">
-          <template slot-scope="scope">
-            <el-button type="text">
-              <router-link tag="span" :to="`/${id()}/settings/filters/${filters[scope.$index].id}/edit`">
-                {{ $t('settings.filters.edit.title') }}
-              </router-link>
-            </el-button>
-          </template>
-        </el-table-column>
-        <el-table-column width="80">
-          <template slot-scope="scope">
-            <el-button type="text" @click="deleteFilter(filters[scope.$index].id)">
-              {{ $t('settings.filters.delete.title') }}
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </template>
+    <el-table
+      :data="filters"
+      tooltip-effect="dark"
+      empty-text="No filters"
+      style="width: 100%"
+      v-loading="filtersLoading"
+      :element-loading-background="backgroundColor"
+    >
+      <el-table-column prop="phrase" label="Keyword" width="180"> </el-table-column>
+      <el-table-column label="Context">
+        <template #default="scope">
+          <span>{{ filters[scope.$index].context.join(',') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="expires_at" label="Expires" width="180"> </el-table-column>
+      <el-table-column width="80">
+        <template #default="scope">
+          <el-button type="text">
+            <router-link tag="span" :to="`/${id()}/settings/filters/${filters[scope.$index].id}/edit`">
+              {{ $t('settings.filters.edit.title') }}
+            </router-link>
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column width="80">
+        <template #default="scope">
+          <el-button type="text" @click="deleteFilter(filters[scope.$index].id)">
+            {{ $t('settings.filters.delete.title') }}
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -87,9 +85,14 @@ export default {
   .new-filter {
     display: flex;
     justify-content: flex-end;
+
+    a {
+      color: var(--theme-primary-color);
+      text-decoration: none;
+    }
   }
 
-  .el-table /deep/ {
+  .el-table :deep() {
     tr,
     th,
     td,

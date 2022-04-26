@@ -1,34 +1,36 @@
 <template>
-  <el-dialog :title="$t('modals.add_list_member.title')" :visible.sync="addListMemberModal" width="400px" class="add-member">
-    <div class="search-account" :element-loading-background="loadingBackground">
-      <el-form :inline="true">
-        <input v-model="name" placeholder="Account name" class="account-name" v-shortkey="['enter']" @shortkey="search" autofocus />
-        <el-button type="text" class="search" @click="search">
-          <font-awesome-icon icon="magnifying-glass" />
-        </el-button>
-      </el-form>
-      <div class="search-results">
-        <template v-for="user in accounts">
-          <div class="user">
-            <div class="icon">
-              <img :src="user.avatar" />
-            </div>
-            <div class="name">
-              <div class="username">
-                {{ username(user) }}
+  <div class="add-member">
+    <el-dialog :title="$t('modals.add_list_member.title')" :model-value="addListMemberModal" width="400px" custom-class="add-member-modal">
+      <div class="search-account" :element-loading-background="loadingBackground">
+        <el-form :inline="true">
+          <input v-model="name" placeholder="Account name" class="account-name" autofocus />
+          <el-button type="text" class="search" @click="search">
+            <font-awesome-icon icon="magnifying-glass" />
+          </el-button>
+        </el-form>
+        <div class="search-results">
+          <template v-for="user in accounts">
+            <div class="user">
+              <div class="icon">
+                <img :src="user.avatar" />
               </div>
-              <div class="acct">@{{ user.acct }}</div>
+              <div class="name">
+                <div class="username">
+                  {{ username(user) }}
+                </div>
+                <div class="acct">@{{ user.acct }}</div>
+              </div>
+              <div class="add">
+                <el-button type="text" @click="add(user)">
+                  <font-awesome-icon icon="plus" />
+                </el-button>
+              </div>
             </div>
-            <div class="add">
-              <el-button type="text" @click="add(user)">
-                <font-awesome-icon icon="plus" />
-              </el-button>
-            </div>
-          </div>
-        </template>
+          </template>
+        </div>
       </div>
-    </div>
-  </el-dialog>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -86,9 +88,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-member /deep/ {
+.add-member :deep() {
   .el-dialog__header {
     background-color: var(--theme-header-menu-color);
+    margin-right: 0;
 
     .el-dialog__title {
       color: var(--theme-secondary-color);
@@ -100,7 +103,9 @@ export default {
     color: var(--theme-secondary-color);
     padding: 8px 12px 30px;
   }
+}
 
+.add-member-modal {
   .search-account {
     background-color: var(--theme-selected-background-color);
 

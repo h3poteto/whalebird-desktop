@@ -1,6 +1,6 @@
 <template>
-  <div id="bookmarks" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+  <div id="bookmarks">
+    <div></div>
     <DynamicScroller :items="bookmarks" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
@@ -20,7 +20,9 @@
       </template>
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
+      <el-button type="primary" @click="upper" circle>
+        <font-awesome-icon icon="angle-up" class="upper-icon" />
+      </el-button>
     </div>
   </div>
 </template>
@@ -29,18 +31,18 @@
 import { mapState, mapGetters } from 'vuex'
 import Toot from '@/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
-  name: 'bookmarks',
-  components: { Toot },
-  mixins: [reloadable],
   data() {
     return {
       heading: true,
       focusedId: null
     }
   },
+  name: 'bookmarks',
+  components: { Toot },
+  mixins: [reloadable],
   computed: {
     ...mapState('TimelineSpace', {
       account: state => state.account
@@ -79,7 +81,7 @@ export default {
   },
   mounted() {
     document.getElementById('scroller').addEventListener('scroll', this.onScroll)
-    Event.$on('focus-timeline', () => {
+    EventEmitter.on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
@@ -88,10 +90,10 @@ export default {
       })
     })
   },
-  beforeDestroy() {
-    Event.$off('focus-timeline')
+  beforeUnmount() {
+    EventEmitter.off('focus-timeline')
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Bookmarks/updateBookmarks', [])
     if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
       document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
@@ -178,7 +180,7 @@ export default {
       this.focusedId = message.id
     },
     focusSidebar() {
-      Event.$emit('focus-sidebar')
+      EventEmitter.emit('focus-sidebar')
     },
     handleKey(event) {
       switch (event.srcKey) {
@@ -212,6 +214,10 @@ export default {
     bottom: 20px;
     right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
+  }
+
+  .upper-icon {
+    padding: 3px;
   }
 }
 </style>

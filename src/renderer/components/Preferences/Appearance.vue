@@ -1,7 +1,7 @@
 <template>
   <div id="appearance">
     <h2>{{ $t('preferences.appearance.title') }}</h2>
-    <el-form class="theme section" size="small" label-position="top">
+    <el-form class="theme section" label-position="top">
       <div class="left">
         <el-form-item for="theme" :label="$t('preferences.appearance.theme_color')">
           <el-select id="theme" v-model="theme" placeholder="theme">
@@ -16,29 +16,29 @@
     <div class="color-pallet section" v-if="customizeThemeColor">
       <color-pallet></color-pallet>
     </div>
-    <el-form class="font section" size="small" label-position="top">
+    <el-form class="font section" label-position="top">
       <el-form-item for="font-family" :label="$t('preferences.appearance.font_family')">
         <el-select id="font-family" v-model="font" placeholder="fonts">
           <el-option v-for="f in fontList" :key="f" :label="f" :value="f" />
         </el-select>
       </el-form-item>
       <el-form-item for="font-size" :label="$t('preferences.appearance.font_size')">
-        <el-input-number id="font-size" :value="fontSize" :min="9" :max="72" @change="updateFontSize"></el-input-number>
+        <el-input-number id="font-size" :model-value="fontSize" :min="9" :max="72" @change="updateFontSize"></el-input-number>
       </el-form-item>
     </el-form>
-    <el-form class="toot-padding section" size="small" label-position="top">
+    <el-form class="toot-padding section" label-position="top">
       <el-form-item for="toot-padding" :label="$t('preferences.appearance.toot_padding')">
-        <el-input-number id="toot-padding" :value="tootPadding" :min="0" :max="24" @change="updateTootPadding"></el-input-number>
+        <el-input-number id="toot-padding" :model-value="tootPadding" :min="0" :max="24" @change="updateTootPadding"></el-input-number>
       </el-form-item>
     </el-form>
-    <el-form class="display-style section" size="small" label-position="top">
+    <el-form class="display-style section" label-position="top">
       <el-form-item for="display-style" :label="$t('preferences.appearance.display_style.title')">
         <el-select id="display-style" v-model="displayNameStyle" placeholder="style">
           <el-option v-for="style in nameStyles" :key="style.value" :label="$t(style.name)" :value="style.value"> </el-option>
         </el-select>
       </el-form-item>
     </el-form>
-    <el-form class="time-format section" size="small" label-position="top">
+    <el-form class="time-format section" label-position="top">
       <el-form-item for="time-format" :label="$t('preferences.appearance.time_format.title')">
         <el-select id="time-format" v-model="timeFormat" placeholder="format">
           <el-option v-for="format in timeFormats" :key="format.value" :label="$t(format.name)" :value="format.value"> </el-option>
@@ -140,12 +140,12 @@ export default {
     }
   }
 
-  .section /deep/ {
+  .section {
     margin-bottom: 40px;
+  }
 
-    .el-form-item__label {
-      color: var(--theme-primary-color);
-    }
+  .section :deep(.el-form-item__label) {
+    color: var(--theme-primary-color);
   }
 }
 </style>

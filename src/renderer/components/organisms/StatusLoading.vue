@@ -1,6 +1,10 @@
 <template>
   <div class="status-loading" tabIndex="0" @click="onClick">
-    <img v-if="loading" src="../../assets/images/loading-spinner-wide.svg" class="load-icon" />
+    <img
+      v-if="loading"
+      src="../../assets/images/loading-spinner-wide.svg"
+      class="load-icon"
+    />
     <p v-else class="load-text">{{ $t('cards.status_loading.message') }}</p>
     <div class="fill-line"></div>
   </div>
@@ -12,16 +16,16 @@ export default {
   props: {
     max_id: {
       type: String,
-      default: ''
+      default: '',
     },
     since_id: {
       type: String,
-      default: ''
+      default: '',
     },
     loading: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     onClick() {
@@ -33,8 +37,8 @@ export default {
       } else if (this.max_id !== '') {
         this.$emit('load_max', this.max_id)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

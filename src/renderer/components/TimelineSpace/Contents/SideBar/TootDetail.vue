@@ -52,7 +52,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
   name: 'toot-detail',
@@ -76,7 +76,7 @@ export default {
     this.load()
   },
   mounted() {
-    Event.$on('focus-sidebar', () => {
+    EventEmitter.on('focus-sidebar', () => {
       this.focusedId = 0
       this.$nextTick(function () {
         this.focusedId = this.timeline[0].uri + this.timeline[0].id
@@ -88,9 +88,9 @@ export default {
       this.load()
     }
   },
-  beforeDestroy() {
-    Event.$emit('focus-timeline')
-    Event.$off('focus-sidebar')
+  beforeUnmount() {
+    EventEmitter.emit('focus-timeline')
+    EventEmitter.off('focus-sidebar')
   },
   methods: {
     originalMessage(message) {
@@ -151,7 +151,7 @@ export default {
     },
     focusTimeline() {
       this.focusedId = 0
-      Event.$emit('focus-timeline')
+      EventEmitter.emit('focus-timeline')
     }
   }
 }

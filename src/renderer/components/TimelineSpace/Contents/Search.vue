@@ -2,17 +2,10 @@
   <div id="search">
     <div class="search-header">
       <el-form :inline="true">
-        <el-select v-model="target" :placeholder="$t('search.search')" class="search-target">
+        <el-select v-model="target" :placeholder="$t('search.search')" class="search-target" size="large">
           <el-option v-for="item in searchTargets" :key="item.target" :label="item.label" :value="item.target"> </el-option>
         </el-select>
-        <input
-          v-model="query"
-          :placeholder="$t('search.keyword')"
-          class="search-keyword"
-          v-shortkey.avoid
-          v-on:keyup.enter="search"
-          autofocus
-        />
+        <input v-model="query" :placeholder="$t('search.keyword')" class="search-keyword" v-on:keyup.enter="search" autofocus />
         <div class="clearfix"></div>
       </el-form>
     </div>
@@ -25,6 +18,7 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import SearchAccount from './Search/Account'
 import SearchTag from './Search/Tag'
 import SearchToots from './Search/Toots'
@@ -34,28 +28,22 @@ export default {
   components: { SearchAccount, SearchTag, SearchToots },
   data() {
     return {
-      target: 'account',
-      query: ''
-    }
-  },
-  computed: {
-    searchTargets: {
-      get() {
-        return [
-          {
-            target: 'account',
-            label: this.$t('search.account')
-          },
-          {
-            target: 'tag',
-            label: this.$t('search.tag')
-          },
-          {
-            target: 'toot',
-            label: this.$t('search.toot')
-          }
-        ]
-      }
+      target: ref('account'),
+      query: '',
+      searchTargets: [
+        {
+          target: 'account',
+          label: this.$t('search.account')
+        },
+        {
+          target: 'tag',
+          label: this.$t('search.tag')
+        },
+        {
+          target: 'toot',
+          label: this.$t('search.toot')
+        }
+      ]
     }
   },
   methods: {
@@ -95,22 +83,21 @@ export default {
 
 <style lang="scss" scoped>
 #search {
-  border-top: 1px solid var(--theme-border-color);
-
   .search-header {
     background-color: var(--theme-selected-background-color);
     padding: 8px 12px;
 
-    .search-target /deep/ {
+    .search-target {
       float: left;
       width: 20%;
+    }
 
-      .el-input__inner {
-        background-color: var(--theme-background-color);
-        border: none;
-        border-radius: 4px 0 0 4px;
-        color: var(--theme-primary-color);
-      }
+    .search-target :deep(.el-input__inner) {
+      background-color: var(--theme-background-color);
+      border: none;
+      border-radius: 4px 0 0 4px;
+      color: var(--theme-primary-color);
+      box-shadow: none;
     }
 
     .search-keyword {

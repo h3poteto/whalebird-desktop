@@ -18,24 +18,24 @@ export default {
   props: {
     icon: {
       type: String,
-      default: ''
+      default: '',
     },
     username: {
       type: String,
-      default: ''
+      default: '',
     },
     accountName: {
       type: String,
-      default: ''
+      default: '',
     },
     body: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   components: {
-    FailoverImg
-  }
+    FailoverImg,
+  },
 }
 </script>
 

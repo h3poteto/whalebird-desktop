@@ -46,10 +46,12 @@ export class ScrollPosition {
   }
 
   prepare() {
-    this.previousScrollHeightMinusTop = this.node.scrollHeight - this.node.scrollTop
+    this.previousScrollHeightMinusTop =
+      this.node.scrollHeight - this.node.scrollTop
   }
 
   restore() {
-    this.node.scrollTop = this.node.scrollHeight - this.previousScrollHeightMinusTop
+    this.node.scrollTop =
+      this.node.scrollHeight - this.previousScrollHeightMinusTop
   }
 }

@@ -13,7 +13,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 let rendererConfig = {
   entry: {
-    renderer: path.join(__dirname, '../src/renderer/main.ts')
+    renderer: path.join(__dirname, '../src/renderer/main.js')
   },
   module: {
     rules: [
@@ -205,8 +205,7 @@ let rendererConfig = {
     alias: {
       // Same as tsconfig.json
       '@': path.join(__dirname, '../src/renderer'),
-      '~': path.join(__dirname, '../'),
-      vue$: 'vue/dist/vue.esm.js'
+      '~': path.join(__dirname, '../')
     },
     extensions: ['.ts', '.js', '.vue', '.json', '.css', '.node'],
     fallback: {

@@ -1,6 +1,6 @@
 <template>
-  <div id="notifications" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+  <div id="notifications">
+    <div></div>
     <DynamicScroller :items="handledNotifications" :min-item-size="20" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <template v-if="item.id === 'loading-card'">
@@ -27,7 +27,9 @@
       </template>
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
+      <el-button type="primary" @click="upper" circle>
+        <font-awesome-icon icon="angle-up" class="upper-icon" />
+      </el-button>
     </div>
   </div>
 </template>
@@ -38,13 +40,10 @@ import moment from 'moment'
 import Notification from '~/src/renderer/components/organisms/Notification'
 import StatusLoading from '~/src/renderer/components/organisms/StatusLoading'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
-  name: 'notifications',
-  components: { Notification, StatusLoading },
-  mixins: [reloadable],
   data() {
     return {
       focusedId: null,
@@ -55,6 +54,9 @@ export default {
       loadingMore: false
     }
   },
+  name: 'notifications',
+  components: { Notification, StatusLoading },
+  mixins: [reloadable],
   computed: {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
@@ -86,7 +88,7 @@ export default {
     this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
     document.getElementById('scroller').addEventListener('scroll', this.onScroll)
 
-    Event.$on('focus-timeline', () => {
+    EventEmitter.on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
@@ -120,11 +122,11 @@ export default {
       this.scrollPosition.prepare()
     }
   },
-  beforeDestroy() {
-    Event.$off('focus-timeline')
+  beforeUnmount() {
+    EventEmitter.off('focus-timeline')
     this.observer.disconnect()
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Notifications/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Notifications/archiveNotifications')
     if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
@@ -148,10 +150,13 @@ export default {
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       }
     },
-    notifications: function (newState, _oldState) {
-      if (this.heading && newState.length > 0) {
-        this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker')
-      }
+    notifications: {
+      handler(newState, _oldState) {
+        if (this.heading && newState.length > 0) {
+          this.$store.dispatch('TimelineSpace/Contents/Notifications/saveMarker')
+        }
+      },
+      deep: true
     }
   },
   methods: {
@@ -252,7 +257,7 @@ export default {
       this.focusedId = notification.id
     },
     focusSidebar() {
-      Event.$emit('focus-sidebar')
+      EventEmitter.emit('focus-sidebar')
     },
     handleKey(event) {
       switch (event.srcKey) {
@@ -295,6 +300,11 @@ export default {
     right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
   }
+
+  .upper-icon {
+    padding: 3px;
+  }
 }
 </style>
+
 <style lang="scss" src="@/assets/timeline-transition.scss"></style>

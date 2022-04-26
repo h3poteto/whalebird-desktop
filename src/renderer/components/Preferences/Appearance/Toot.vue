@@ -34,27 +34,6 @@
           <span class="count">
             {{ favouritesCount }}
           </span>
-          <popper trigger="click" :options="{ placement: 'bottom' }" ref="popper">
-            <div class="popper toot-menu">
-              <ul class="menu-list">
-                <li role="button">
-                  {{ $t('cards.toot.view_toot_detail') }}
-                </li>
-                <li role="button">
-                  {{ $t('cards.toot.open_in_browser') }}
-                </li>
-                <li role="button">
-                  {{ $t('cards.toot.copy_link_to_toot') }}
-                </li>
-                <li role="button" class="separate">
-                  {{ $t('cards.toot.delete') }}
-                </li>
-              </ul>
-            </div>
-            <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
-              <font-awesome-icon icon="ellipsis" size="sm" />
-            </el-button>
-          </popper>
         </div>
         <div class="application">
           {{ $t('cards.toot.via', { application: 'Whalebird' }) }}
@@ -174,18 +153,13 @@ export default {
       }
     }
 
-    .content-wrapper /deep/ {
+    .content-wrapper {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
       .content {
         margin: var(--toot-padding) 0;
         word-wrap: break-word;
-      }
-
-      .emojione {
-        width: 20px;
-        height: 20px;
       }
     }
 

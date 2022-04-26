@@ -9,14 +9,7 @@
             </el-button>
           </div>
           <div class="form-item input">
-            <input
-              v-model="tag"
-              :placeholder="$t('hashtag.tag_name')"
-              class="search-keyword"
-              v-shortkey.avoid
-              v-on:keyup.enter="search"
-              autofocus
-            />
+            <input v-model="tag" :placeholder="$t('hashtag.tag_name')" class="search-keyword" v-on:keyup.enter="search" autofocus />
           </div>
           <div class="form-item" v-show="tagPage()">
             <el-button type="text" @click="save" :title="$t('hashtag.save_tag')">
@@ -72,7 +65,6 @@ export default {
 
 <style lang="scss" scoped>
 #hashtag {
-  border-top: 1px solid var(--theme-border-color);
   height: calc(100% - 1px);
   overflow: hidden;
 

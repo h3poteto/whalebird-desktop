@@ -141,11 +141,9 @@ export default {
     padding-left: 8px;
     overflow: hidden;
 
-    .username /deep/ {
-      .emojione {
-        max-width: 1em;
-        max-height: 1em;
-      }
+    .username :deep(.emojione) {
+      max-width: 1em;
+      max-height: 1em;
     }
 
     .acct {

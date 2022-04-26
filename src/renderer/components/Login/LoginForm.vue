@@ -9,7 +9,7 @@
     :model="form"
   >
     <el-form-item :label="$t('login.domain_name_label')" prop="domainName">
-      <el-input v-model="form.domainName" placeholder="mastodon.social" v-shortkey="['enter']" @shortkey.native="handleKey"></el-input>
+      <el-input v-model="form.domainName" placeholder="mastodon.social"></el-input>
     </el-form-item>
     <p class="proxy-info">
       {{ $t('login.proxy_info') }}<router-link to="/preferences/network">{{ $t('login.proxy_here') }}</router-link>
@@ -22,7 +22,14 @@
       <el-button type="primary" class="login" @click="login" v-if="allowLogin">
         {{ $t('login.login') }}
       </el-button>
-      <el-button type="primary" v-else @click="confirm('loginForm')" v-loading="searching" element-loading-background="rgba(0, 0, 0, 0.8)">
+      <el-button
+        type="primary"
+        class="search"
+        v-else
+        @click="confirm('loginForm')"
+        v-loading="searching"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
         {{ $t('login.search') }}
       </el-button>
     </el-form-item>
@@ -48,7 +55,7 @@ export default {
       searching: state => state.Login.searching,
       sns: state => state.Login.sns
     }),
-    allowLogin: function() {
+    allowLogin: function () {
       return this.selectedInstance && this.form.domainName === this.selectedInstance
     },
     rules: {
@@ -83,7 +90,10 @@ export default {
         .then(url => {
           loading.close()
           this.$store.dispatch('Login/pageBack')
-          this.$router.push({ path: '/authorize', query: { url: url, sns: this.sns } })
+          this.$router.push({
+            path: '/authorize',
+            query: { url: url, sns: this.sns }
+          })
         })
         .catch(() => {
           loading.close()
@@ -100,13 +110,17 @@ export default {
             .dispatch('Login/confirmInstance', this.form.domainName)
             .then(() => {
               this.$message({
-                message: this.$t('message.domain_confirmed', { domain: this.form.domainName }),
+                message: this.$t('message.domain_confirmed', {
+                  domain: this.form.domainName
+                }),
                 type: 'success'
               })
             })
             .catch(() => {
               this.$message({
-                message: this.$t('message.domain_doesnt_exist', { domain: this.form.domainName }),
+                message: this.$t('message.domain_doesnt_exist', {
+                  domain: this.form.domainName
+                }),
                 type: 'error'
               })
             })
@@ -131,19 +145,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-form /deep/ {
+.login-form {
   margin: 0 auto;
   width: 300px;
-
-  .el-form-item__label {
-    color: #f0f3f9;
-  }
-
-  .el-input__inner {
-    background-color: #373d48;
-    color: #fff;
-    border: 0;
-  }
 
   .instance-group {
     text-align: left;
@@ -158,12 +162,12 @@ export default {
     margin-bottom: 10px;
   }
 
-  .submit {
-    margin: 0;
+  .search {
+    margin: 0 auto;
   }
 
-  .back {
-    margin-right: 20px;
+  .login {
+    margin: 0 auto;
   }
 
   .hidden {
@@ -173,6 +177,18 @@ export default {
   .proxy-info {
     color: #dcdfe6;
     margin-bottom: 24px;
+  }
+}
+
+.login-form :deep() {
+  .el-form-item__label {
+    color: #f0f3f9;
+  }
+
+  .el-input__inner {
+    background-color: #373d48;
+    color: #fff;
+    box-shadow: none;
   }
 }
 </style>

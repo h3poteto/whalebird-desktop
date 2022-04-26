@@ -4,7 +4,7 @@ import { RootState } from '@/store'
 import { LoadPositionWithList } from '@/types/loadPosition'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type ShowState = {
   timeline: Array<Entity.Status>
@@ -115,7 +115,7 @@ const actions: ActionTree<ShowState, RootState> = {
       // eslint-disable-line no-unused-vars
       win.ipcRenderer.send('start-list-streaming', {
         listID: listID,
-        account: rootState.TimelineSpace.account
+        accountID: rootState.TimelineSpace.account._id
       })
       win.ipcRenderer.once('error-start-list-streaming', (_, err: Error) => {
         reject(err)

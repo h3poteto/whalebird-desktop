@@ -5,7 +5,7 @@ import { RootState } from '@/store'
 import { StreamingError } from '~src/errors/streamingError'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type GlobalHeaderState = {
   accounts: Array<LocalAccount>
@@ -111,7 +111,10 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       win.ipcRenderer.once('error-start-all-user-streamings', (_, err: StreamingError) => {
         reject(err)
       })
-      win.ipcRenderer.send('start-all-user-streamings', state.accounts)
+      win.ipcRenderer.send(
+        'start-all-user-streamings',
+        state.accounts.map(a => a._id)
+      )
     })
   },
   stopUserStreamings: () => {

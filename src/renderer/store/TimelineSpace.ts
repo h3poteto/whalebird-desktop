@@ -12,7 +12,7 @@ import { MyWindow } from '~/src/types/global'
 import { Timeline, Setting } from '~src/types/setting'
 import { DefaultSetting } from '~/src/constants/initializer/setting'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type TimelineSpaceState = {
   account: LocalAccount
@@ -319,9 +319,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      win.ipcRenderer.send('start-local-streaming', {
-        account: state.account
-      })
+      win.ipcRenderer.send('start-local-streaming', state.account._id)
       win.ipcRenderer.once('error-start-local-streaming', (_, err: Error) => {
         reject(err)
       })
@@ -343,9 +341,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      win.ipcRenderer.send('start-public-streaming', {
-        account: state.account
-      })
+      win.ipcRenderer.send('start-public-streaming', state.account._id)
       win.ipcRenderer.once('error-start-public-streaming', (_, err: Error) => {
         reject(err)
       })
@@ -367,9 +363,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
-      win.ipcRenderer.send('start-directmessages-streaming', {
-        account: state.account
-      })
+      win.ipcRenderer.send('start-directmessages-streaming', state.account._id)
       win.ipcRenderer.once('error-start-directmessages-streaming', (_, err: Error) => {
         reject(err)
       })

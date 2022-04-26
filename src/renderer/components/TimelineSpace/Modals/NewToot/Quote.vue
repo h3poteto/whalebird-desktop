@@ -96,7 +96,7 @@ export default {
     float: left;
     width: calc(100% - 52px);
 
-    .content-wrapper /deep/ {
+    .content-wrapper {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
@@ -119,11 +119,11 @@ export default {
       .content p {
         unicode-bidi: plaintext;
       }
+    }
 
-      .emojione {
-        width: 20px;
-        height: 20px;
-      }
+    .content-wrapper :deep(.emojione) {
+      width: 20px;
+      height: 20px;
     }
 
     .toot-header {
@@ -135,14 +135,14 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
 
-        .display-name /deep/ {
+        .display-name {
           font-weight: 800;
           color: var(--theme-primary-color);
+        }
 
-          .emojione {
-            max-width: 14px;
-            max-height: 14px;
-          }
+        .display-name :deep(.emojione) {
+          max-width: 14px;
+          max-height: 14px;
         }
 
         .acct {

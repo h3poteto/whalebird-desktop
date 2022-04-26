@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" class="section" label-width="200px" label-position="right" size="medium">
+  <el-form ref="form" class="section" label-width="200px" label-position="right" size="default">
     <el-form-item :label="$t('settings.filters.form.phrase')">
       <el-input v-model="filterPhrase"></el-input>
     </el-form-item>
@@ -9,15 +9,13 @@
       </el-select>
     </el-form-item>
     <el-form-item :label="$t('settings.filters.form.context')">
-      <template>
-        <el-checkbox-group v-model="filterContext">
-          <el-checkbox label="home"></el-checkbox>
-          <el-checkbox label="notifications"></el-checkbox>
-          <el-checkbox label="public"></el-checkbox>
-          <el-checkbox label="thread"></el-checkbox>
-          <el-checkbox label="account" :disabled="accountDisabled()"></el-checkbox>
-        </el-checkbox-group>
-      </template>
+      <el-checkbox-group v-model="filterContext">
+        <el-checkbox label="home"></el-checkbox>
+        <el-checkbox label="notifications"></el-checkbox>
+        <el-checkbox label="public"></el-checkbox>
+        <el-checkbox label="thread"></el-checkbox>
+        <el-checkbox label="account" :disabled="accountDisabled()"></el-checkbox>
+      </el-checkbox-group>
     </el-form-item>
     <el-form-item>
       <el-checkbox v-model="filterIrreversible">{{ $t('settings.filters.form.irreversible') }}</el-checkbox>
@@ -157,9 +155,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.section /deep/ {
+.section {
   margin-bottom: 40px;
+}
 
+.section :deep() {
   .el-form-item__label {
     color: var(--theme-primary-color);
   }

@@ -1,7 +1,7 @@
 <template>
   <div id="network">
     <h2>{{ $t('preferences.network.proxy.title') }}</h2>
-    <el-form class="network section" size="small" label-width="120px">
+    <el-form class="network section" label-width="120px">
       <div class="proxy-source">
         <el-radio v-model="source" label="no">{{ $t('preferences.network.proxy.no') }}</el-radio>
       </div>
@@ -113,21 +113,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.network /deep/ {
+.network {
   max-width: 720px;
 
   .proxy-source {
     line-height: 32px;
     margin: 12px 8px;
     font-size: 14px;
-
-    .el-radio {
-      color: var(--theme-primary-color);
-    }
   }
 
-  .el-form-item__label {
+  .proxy-source :deep(.el-radio) {
     color: var(--theme-primary-color);
   }
+}
+
+.network :deep(.el-form-item__label) {
+  color: var(--theme-primary-color);
 }
 </style>

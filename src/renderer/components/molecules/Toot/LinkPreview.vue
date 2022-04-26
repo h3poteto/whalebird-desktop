@@ -2,7 +2,7 @@
   <div class="link" @click="openLink(url)">
     <el-image :src="icon" class="icon" fit="cover" lazy>
       <div class="image-slot" slot="error">
-        <i class="el-icon-link"></i>
+        <font-awesome-icon icon="link" />
       </div>
     </el-image>
     <div class="contents">

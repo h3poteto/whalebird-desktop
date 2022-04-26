@@ -32,7 +32,9 @@ export default {
   },
   methods: {
     openTimeline(tagName) {
-      this.$router.push({ path: `/${this.$route.params.id}/hashtag/${tagName}` })
+      this.$router.push({
+        path: `/${this.$route.params.id}/hashtag/${tagName}`
+      })
     },
     deleteTag(tag) {
       this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/removeTag', tag)
@@ -63,7 +65,7 @@ export default {
     .action {
       width: 20px;
 
-      .el-button /deep/ {
+      .el-button {
         padding: 0;
         color: var(--theme-secondary-color);
       }

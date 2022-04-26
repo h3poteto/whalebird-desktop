@@ -1,14 +1,5 @@
 <template>
-  <div
-    class="relationship"
-    tabIndex="0"
-    v-shortkey="shortcutEnabled ? { next: ['j'], prev: ['k'], right: ['l'], profile: ['p'] } : {}"
-    @shortkey="handleStatusControl"
-    ref="status"
-    @click="$emit('select')"
-    role="article"
-    aria-label="follow event"
-  >
+  <div class="relationship" tabIndex="0" ref="status" @click="$emit('select')" role="article" aria-label="follow event">
     <div class="follow">
       <div class="action">
         <div class="action-mark">
@@ -142,13 +133,13 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      .bold /deep/ {
+      .bold {
         cursor: pointer;
+      }
 
-        .emojione {
-          max-width: 14px;
-          max-height: 14px;
-        }
+      .bold :deep(.emojione) {
+        max-width: 14px;
+        max-height: 14px;
       }
     }
 

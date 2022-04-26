@@ -1,3 +1,3 @@
-import Vue from 'vue'
+import mitt from 'mitt'
 
-export const Event = new Vue()
+export const EventEmitter = mitt()

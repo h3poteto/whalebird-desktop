@@ -1,18 +1,24 @@
 <template>
-<transition name="image-viewer">
-  <div id="image" v-show="modalOpen" @click="close" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
-    <div class="image-wrapper" v-shortkey="modalOpen ? {close: ['esc']} : {}" @shortkey="closeHandle">
-      <div class="image-header">
-        <el-button type="text" icon="el-icon-close" @click="close" class="close-button"></el-button>
-      </div>
-      <div class="image-content" role="presentation">
-        <span class="button-area"><el-button type="text" v-show="showLeft" v-shortkey="['arrowleft']" @shortkey.native="decrementIndex()"><i class="el-icon-arrow-left" @click.stop="decrementIndex"></i></el-button></span>
-        <Media :src="imageURL" :type="imageType"></Media>
-        <span class="button-area"><el-button type="text" v-show="showRight" v-shortkey="['arrowright']" @shortkey.native="incrementIndex()"><i class="el-icon-arrow-right" @click.stop="incrementIndex"></i></el-button></span>
+  <transition name="image-viewer">
+    <div id="image" v-show="modalOpen" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
+      <div class="image-wrapper">
+        <div class="image-header">
+          <el-button type="text" @click="close" class="close-button">
+            <font-awesome-icon icon="xmark" />
+          </el-button>
+        </div>
+        <div class="image-content" role="presentation">
+          <span class="button-area"
+            ><el-button type="text" v-show="showLeft" @click="decrementIndex()"> <font-awesome-icon icon="angle-left" /> </el-button
+          ></span>
+          <Media :src="imageURL" :type="imageType"></Media>
+          <span class="button-area"
+            ><el-button type="text" v-show="showRight" @click="incrementIndex()"> <font-awesome-icon icon="angle-right" /> </el-button
+          ></span>
+        </div>
       </div>
     </div>
-  </div>
-</transition>
+  </transition>
 </template>
 
 <script>
@@ -20,38 +26,38 @@ import Media from './Media'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'image-viewer',
   components: {
     Media
   },
+  name: 'image-viewer',
   computed: {
     ...mapState({
       modalOpen: state => state.TimelineSpace.Modals.ImageViewer.modalOpen
     }),
-    imageURL () {
+    imageURL() {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
     },
-    imageType () {
+    imageType() {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageType']
     },
-    showLeft () {
+    showLeft() {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/showLeft']
     },
-    showRight () {
+    showRight() {
       return this.$store.getters['TimelineSpace/Modals/ImageViewer/showRight']
     }
   },
   methods: {
-    close () {
+    close() {
       this.$store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
     },
-    decrementIndex () {
+    decrementIndex() {
       if (this.showLeft) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
     },
-    incrementIndex () {
+    incrementIndex() {
       if (this.showRight) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
     },
-    closeHandle (event) {
+    closeHandle(event) {
       switch (event.srcKey) {
         case 'close':
           this.close()
@@ -75,7 +81,7 @@ export default {
   .image-header {
     width: 100%;
     text-align: right;
-    padding: 8px 8px 0 0 ;
+    padding: 8px 8px 0 0;
     color: #409eff;
     box-sizing: border-box;
     position: fixed;
@@ -93,17 +99,21 @@ export default {
   }
 }
 
-.image-viewer-enter-active, .image-viewer-leave-active {
+.image-viewer-enter-active,
+.image-viewer-leave-active {
   transition: opacity 0.5s;
 }
-.image-viewer-enter, .image-viewer-leave-to {
+.image-viewer-enter,
+.image-viewer-leave-to {
   opacity: 0;
 }
+
 .button-area {
   display: inline-block;
-  width: 52px;
-  height: 77px;
-  i {
+  width: 27px;
+  margin: 0 12px;
+
+  svg {
     font-size: 50px;
   }
 }

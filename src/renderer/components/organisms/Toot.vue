@@ -1,30 +1,5 @@
 <template>
-  <div
-    class="status"
-    tabIndex="0"
-    v-shortkey="
-      shortcutEnabled
-        ? {
-            next: ['j'],
-            prev: ['k'],
-            right: ['l'],
-            left: ['h'],
-            reply: ['r'],
-            boost: ['b'],
-            fav: ['f'],
-            open: ['o'],
-            profile: ['p'],
-            image: ['i'],
-            cw: ['x']
-          }
-        : {}
-    "
-    @shortkey="handleTootControl"
-    ref="status"
-    @click="$emit('selectToot', message)"
-    role="article"
-    aria-label="toot"
-  >
+  <div class="status" tabIndex="0" ref="status" @click="$emit('selectToot', message)" role="article" aria-label="toot">
     <div v-show="filtered" class="filtered">Filtered</div>
     <div v-show="!filtered" class="toot">
       <div class="reblogger" v-show="message.reblog && !message.quote">
@@ -64,10 +39,10 @@
         <div class="content-wrapper">
           <div class="spoiler" v-show="spoilered">
             <span v-html="emojiText(originalMessage.spoiler_text, originalMessage.emojis)"></span>
-            <el-button v-if="!isShowContent" plain type="primary" size="medium" class="spoil-button" @click="toggleSpoiler">
+            <el-button v-if="!isShowContent" plain type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.show_more') }}
             </el-button>
-            <el-button v-else type="primary" size="medium" class="spoil-button" @click="toggleSpoiler">
+            <el-button v-else type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.hide') }}
             </el-button>
           </div>
@@ -100,9 +75,9 @@
                 :title="media.description"
                 :readExif="true"
               />
-              <el-tag class="media-label" size="mini" v-if="media.type === 'gifv'">GIF</el-tag>
-              <el-tag class="media-label" size="mini" v-else-if="media.type === 'video'">VIDEO</el-tag>
-              <el-tag class="media-label" size="mini" v-else-if="media.type === 'audio'">AUDIO</el-tag>
+              <el-tag class="media-label" size="small" v-if="media.type === 'gifv'">GIF</el-tag>
+              <el-tag class="media-label" size="small" v-else-if="media.type === 'video'">VIDEO</el-tag>
+              <el-tag class="media-label" size="small" v-else-if="media.type === 'audio'">AUDIO</el-tag>
             </div>
           </div>
           <div class="clearfix"></div>
@@ -124,10 +99,10 @@
         />
         <div class="emoji-reactions">
           <template v-for="reaction in originalMessage.emoji_reactions">
-            <el-button v-if="reaction.me" type="success" size="medium" class="reaction" @click="removeReaction(reaction.name)"
+            <el-button v-if="reaction.me" type="success" size="default" class="reaction" @click="removeReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
-            <el-button v-else type="text" size="medium" class="reaction" @click="addReaction(reaction.name)"
+            <el-button v-else type="text" size="default" class="reaction" @click="addReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
           </template>
@@ -181,44 +156,29 @@
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
             <template v-if="sns !== 'mastodon'">
-              <el-popover
-                placement="bottom"
-                width="281"
-                trigger="click"
-                popper-class="status-emoji-picker"
-                ref="status_emoji_picker"
-                @show="openPicker"
-                @hide="hidePicker"
-              >
+              <el-popover placement="bottom" width="281" trigger="click" popper-class="status-emoji-picker" ref="status_emoji_picker">
                 <picker
-                  v-if="openEmojiPicker"
-                  set="emojione"
+                  :data="emojiIndex"
+                  set="twitter"
                   :autoFocus="true"
                   @select="selectEmoji"
-                  :sheetSize="32"
                   :perLine="7"
                   :emojiSize="24"
                   :showPreview="false"
                   :emojiTooltip="true"
                 />
-                <el-button slot="reference" class="emoji" type="text">
-                  <font-awesome-icon :icon="['far', 'face-smile']" size="sm" />
-                </el-button>
+                <template #reference>
+                  <el-button class="emoji" type="text">
+                    <font-awesome-icon :icon="['far', 'face-smile']" size="sm" />
+                  </el-button>
+                </template>
               </el-popover>
             </template>
             <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
               <font-awesome-icon icon="thumbtack" size="sm" />
             </el-button>
-            <el-popover
-              placement="bottom"
-              width="200"
-              trigger="click"
-              popper-class="status-menu-popper"
-              ref="status_menu_popper"
-              @show="openMenu"
-              @hide="hideMenu"
-            >
-              <ul class="menu-list" v-if="openToolMenu">
+            <el-popover placement="bottom" width="200" trigger="click" popper-class="status-menu-popper" ref="status_menu_popper">
+              <ul class="menu-list">
                 <li role="button" @click="openDetail(message)" v-show="!detailed">
                   {{ $t('cards.toot.view_toot_detail') }}
                 </li>
@@ -241,9 +201,11 @@
                   {{ $t('cards.toot.delete') }}
                 </li>
               </ul>
-              <el-button slot="reference" type="text" :title="$t('cards.toot.detail')">
-                <font-awesome-icon icon="ellipsis" size="sm" />
-              </el-button>
+              <template #reference>
+                <el-button type="text" :title="$t('cards.toot.detail')">
+                  <font-awesome-icon icon="ellipsis" size="sm" />
+                </el-button>
+              </template>
             </el-popover>
           </div>
           <div class="application" v-show="application !== null">
@@ -258,10 +220,11 @@
 </template>
 
 <script>
+import 'emoji-mart-vue-fast/css/emoji-mart.css'
+import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
 import { mapState } from 'vuex'
-import { Picker } from 'emoji-mart-vue'
-import ClickOutside from 'vue-click-outside'
+import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -274,11 +237,10 @@ import { setInterval, clearInterval } from 'timers'
 import QuoteSupported from '@/utils/quoteSupported'
 import Filtered from '@/utils/filter'
 
+const emojiIndex = new EmojiIndex(data)
+
 export default {
   name: 'toot',
-  directives: {
-    ClickOutside
-  },
   components: {
     FailoverImg,
     Poll,
@@ -292,8 +254,7 @@ export default {
       showAttachments: this.$store.state.App.ignoreNSFW,
       hideAllAttachments: this.$store.state.App.hideAllAttachments,
       now: Date.now(),
-      openEmojiPicker: false,
-      openToolMenu: false
+      emojiIndex: emojiIndex
     }
   },
   props: {
@@ -336,7 +297,7 @@ export default {
       bookmarkSupported: state => state.enabledTimelines.bookmark
     }),
     shortcutEnabled: function () {
-      return this.focused && !this.overlaid && !this.openEmojiPicker
+      return this.focused && !this.overlaid
     },
     timestamp: function () {
       return this.parseDatetime(this.originalMessage.created_at, this.now)
@@ -413,7 +374,7 @@ export default {
       this.$data.now = Date.now()
     }, 60000)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.updateInterval)
   },
   watch: {
@@ -507,28 +468,22 @@ export default {
       this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
       this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
       this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-      this.$refs.status_menu_popper.doClose()
     },
     openBrowser(message) {
       window.shell.openExternal(message.url)
-      this.$refs.status_menu_popper.doClose()
     },
     copyLink(message) {
       window.clipboard.writeText(message.url, 'toot-link')
-      this.$refs.status_menu_popper.doClose()
     },
     reportUser() {
       this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage)
-      this.$refs.status_menu_popper.doClose()
     },
     confirmMute() {
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage.account)
       this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
-      this.$refs.status_menu_popper.doClose()
     },
     block() {
       this.$store.dispatch('organisms/Toot/block', this.originalMessage.account)
-      this.$refs.status_menu_popper.doClose()
     },
     changeReblog(message) {
       if (message.reblogged) {
@@ -715,7 +670,6 @@ export default {
         native: emoji.native
       })
       this.$emit('update', status)
-      this.$refs.status_emoji_picker.doClose()
     },
     async addReaction(native) {
       const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
@@ -733,18 +687,6 @@ export default {
     },
     openQuote() {
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openQuote', this.originalMessage)
-    },
-    openPicker() {
-      this.openEmojiPicker = true
-    },
-    hidePicker() {
-      this.openEmojiPicker = false
-    },
-    openMenu() {
-      this.openToolMenu = true
-    },
-    hideMenu() {
-      this.openToolMenu = false
     },
     toggleSpoiler() {
       this.showContent = !this.showContent
@@ -806,15 +748,15 @@ export default {
       }
     }
 
-    .reblogger-name /deep/ {
+    .reblogger-name {
       font-size: calc(var(--base-font-size) * 0.86);
       cursor: pointer;
       margin: 0 4px;
+    }
 
-      .emojione {
-        max-width: 10px;
-        max-height: 10px;
-      }
+    .reblogger-name :deep(.emojione) {
+      max-width: 10px;
+      max-height: 10px;
     }
   }
 
@@ -823,7 +765,7 @@ export default {
     float: left;
     width: calc(100% - 52px);
 
-    .content-wrapper /deep/ {
+    .content-wrapper {
       font-size: var(--base-font-size);
       color: var(--theme-primary-color);
 
@@ -846,11 +788,11 @@ export default {
       .content p {
         unicode-bidi: plaintext;
       }
+    }
 
-      .emojione {
-        width: 20px;
-        height: 20px;
-      }
+    .content-wrapper :deep(.emojione) {
+      width: 20px;
+      height: 20px;
     }
 
     .toot-header {
@@ -863,14 +805,14 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
 
-        .display-name /deep/ {
+        .display-name {
           font-weight: 800;
           color: var(--theme-primary-color);
+        }
 
-          .emojione {
-            max-width: 14px;
-            max-height: 14px;
-          }
+        .display-name :deep(.emojione) {
+          max-width: 14px;
+          max-height: 14px;
         }
 
         .acct {
@@ -959,6 +901,8 @@ export default {
 
     .tool-box {
       display: flex;
+      align-items: center;
+      margin: -6px 0 -6px 0;
 
       .fa-icon {
         vertical-align: bottom;
@@ -1041,7 +985,7 @@ export default {
 
 <style lang="scss">
 .status-menu-popper {
-  padding: 2px 0;
+  padding: 2px 0 !important;
   border-color: #909399;
 
   .menu-list {

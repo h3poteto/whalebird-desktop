@@ -1,20 +1,17 @@
 <template>
-  <el-dialog
-    :visible.sync="jumpModal"
-    width="440px"
-    class="jump-modal">
+  <el-dialog :model-value="jumpModal" width="440px" class="jump-modal">
     <el-form class="jump-form" v-on:submit.prevent="jump">
       <div class="channel">
-        <input
-          type="text"
-          v-model="channel"
-          :placeholder="$t('modals.jump.jump_to')"
-          ref="channel"
-          v-shortkey="shortcutEnabled ? {next: ['arrowdown'], prev: ['arrowup'], select: ['enter']} : {}"
-          @shortkey="handleKey"
-          />
+        <input type="text" v-model="channel" :placeholder="$t('modals.jump.jump_to')" ref="channel" />
         <ul class="channel-list">
-          <li v-for="c in filterdChannel" :class="c.name === selectedChannel.name ? 'channel-list-item selected' : 'channel-list-item'" @click="jump(c)" @mouseover="changeSelected(c)">{{ c.name }}</li>
+          <li
+            v-for="c in filterdChannel"
+            :class="c.name === selectedChannel.name ? 'channel-list-item selected' : 'channel-list-item'"
+            @click="jump(c)"
+            @mouseover="changeSelected(c)"
+          >
+            {{ c.name }}
+          </li>
         </ul>
       </div>
       <!-- Dummy form to guard submitting with enter -->
@@ -36,21 +33,21 @@ export default {
       selectedChannel: state => state.selectedChannel
     }),
     channel: {
-      get () {
+      get() {
         return this.$store.state.TimelineSpace.Modals.Jump.channel
       },
-      set (value) {
+      set(value) {
         this.$store.commit('TimelineSpace/Modals/Jump/updateChannel', value)
       }
     },
-    filterdChannel () {
+    filterdChannel() {
       return this.filterChannelForm()
     },
     jumpModal: {
-      get () {
+      get() {
         return this.$store.state.TimelineSpace.Modals.Jump.modalOpen
       },
-      set (value) {
+      set(value) {
         this.$store.commit('TimelineSpace/Modals/Jump/changeModal', value)
       }
     },
@@ -75,41 +72,41 @@ export default {
     }
   },
   methods: {
-    filterChannelForm () {
-      return this.channelList.filter((c) => {
+    filterChannelForm() {
+      return this.channelList.filter(c => {
         return c.name.toLowerCase().indexOf(this.channel.toLowerCase()) !== -1
       })
     },
-    nextChannel () {
+    nextChannel() {
       const filterd = this.filterChannelForm()
-      const i = filterd.findIndex((e) => {
+      const i = filterd.findIndex(e => {
         return e.name === this.selectedChannel.name
       })
-      if (i !== undefined && i < (filterd.length - 1)) {
+      if (i !== undefined && i < filterd.length - 1) {
         this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', filterd[i + 1])
       }
     },
-    prevChannel () {
+    prevChannel() {
       const filterd = this.filterChannelForm()
-      const i = filterd.findIndex((e) => {
+      const i = filterd.findIndex(e => {
         return e.name === this.selectedChannel.name
       })
       if (i !== undefined && i > 0) {
         this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', filterd[i - 1])
       }
     },
-    changeSelected (channel) {
+    changeSelected(channel) {
       this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', channel)
     },
-    jumpCurrentSelected () {
+    jumpCurrentSelected() {
       if (this.jumpModal) {
         this.$store.dispatch('TimelineSpace/Modals/Jump/jumpCurrentSelected')
       }
     },
-    jump (channel) {
+    jump(channel) {
       this.$store.dispatch('TimelineSpace/Modals/Jump/jump', channel)
     },
-    handleKey (event) {
+    handleKey(event) {
       switch (event.srcKey) {
         case 'next':
           this.nextChannel()

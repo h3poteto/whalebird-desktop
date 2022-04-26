@@ -1,7 +1,7 @@
 import { Response, Entity } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import Local, { LocalState } from '@/store/TimelineSpace/Contents/Local'
+import { RootState } from '@/store'
 
 const mockClient = {
   getLocalTimeline: () => {
@@ -133,15 +133,25 @@ const initStore = () => {
   }
 }
 
-const timelineState = {
+const contentsStore = () => ({
+  namespaced: true,
+  modules: {
+    Local: initStore()
+  }
+})
+
+const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
       accessToken: 'token',
       baseURL: 'http://localhost'
     }
+  },
+  modules: {
+    Contents: contentsStore()
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -151,16 +161,12 @@ const appState = {
 }
 
 describe('Home', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        Local: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -168,9 +174,9 @@ describe('Home', () => {
 
   describe('fetchLocalTimeline', () => {
     it('should be updated', async () => {
-      const statuses = await store.dispatch('Local/fetchLocalTimeline')
+      const statuses = await store.dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline')
       expect(statuses).toEqual([status1])
-      expect(store.state.Local.timeline).toEqual([status1])
+      expect(store.state.TimelineSpace.Contents.Local.timeline).toEqual([status1])
     })
   })
 
@@ -199,9 +205,9 @@ describe('Home', () => {
           })
         }
 
-        await store.dispatch('Local/lazyFetchTimeline', status1)
-        expect(store.state.Local.lazyLoading).toEqual(false)
-        expect(store.state.Local.timeline).toEqual([status1, status2])
+        await store.dispatch('TimelineSpace/Contents/Local/lazyFetchTimeline', status1)
+        expect(store.state.TimelineSpace.Contents.Local.lazyLoading).toEqual(false)
+        expect(store.state.TimelineSpace.Contents.Local.timeline).toEqual([status1, status2])
       })
     })
   })

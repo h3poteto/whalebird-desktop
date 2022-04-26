@@ -1,9 +1,12 @@
 <template>
-  <div class="side-bar" v-if="openSideBar" v-shortkey="shortcutEnabled ? { close: ['esc'] } : {}" @shortkey="handleKey">
+  <div class="side-bar" v-if="openSideBar">
     <div class="header">
-      <i class="el-icon-loading" v-show="loading"></i>
-      <i class="el-icon-refresh" @click="reload"></i>
-      <i class="el-icon-close" @click="close"></i>
+      <el-button type="text" @click="reload" class="action">
+        <font-awesome-icon icon="rotate" />
+      </el-button>
+      <el-button type="text" @click="close" class="action">
+        <font-awesome-icon icon="xmark" />
+      </el-button>
     </div>
     <div id="sidebar_scrollable">
       <account-profile v-if="component === 1" v-on:change-loading="changeLoading"></account-profile>
@@ -26,11 +29,11 @@ import TootDetail from './SideBar/TootDetail'
 import AccountProfile from './SideBar/AccountProfile'
 
 export default {
-  name: 'side-bar',
   components: {
     TootDetail,
     AccountProfile
   },
+  name: 'side-bar',
   props: {
     overlaid: {
       type: Boolean,
@@ -48,11 +51,11 @@ export default {
       component: state => state.TimelineSpace.Contents.SideBar.component,
       backgroundColor: state => state.App.theme.background_color
     }),
-    shortcutEnabled: function() {
+    shortcutEnabled: function () {
       return !this.overlaid
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.close()
   },
   methods: {
@@ -88,12 +91,14 @@ export default {
     box-sizing: border-box;
     font-size: 18px;
 
-    .el-icon-close {
-      cursor: pointer;
-    }
+    .action {
+      color: var(--theme-secondary-color);
+      padding: 0;
+      margin-left: 8px;
 
-    .el-icon-refresh {
-      cursor: pointer;
+      &:hover {
+        color: #409eff;
+      }
     }
   }
 

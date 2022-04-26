@@ -1,6 +1,6 @@
 <template>
-  <div id="local" v-shortkey="shortcutEnabled ? { next: ['j'] } : {}" @shortkey="handleKey">
-    <div v-shortkey="{ linux: ['ctrl', 'r'], mac: ['meta', 'r'] }" @shortkey="reload()"></div>
+  <div id="local">
+    <div></div>
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
@@ -22,7 +22,9 @@
       </template>
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" icon="el-icon-arrow-up" @click="upper" circle> </el-button>
+      <el-button type="primary" @click="upper" circle>
+        <font-awesome-icon icon="angle-up" class="upper-icon" />
+      </el-button>
     </div>
   </div>
 </template>
@@ -32,13 +34,10 @@ import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
 import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { Event } from '~/src/renderer/components/event'
+import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
 export default {
-  name: 'local',
-  components: { Toot },
-  mixins: [reloadable],
   data() {
     return {
       focusedId: null,
@@ -48,6 +47,9 @@ export default {
       resizeTime: null
     }
   },
+  name: 'local',
+  components: { Toot },
+  mixins: [reloadable],
   computed: {
     ...mapState('TimelineSpace/Contents/Local', {
       timeline: state => state.timeline,
@@ -59,7 +61,7 @@ export default {
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
       backgroundColor: state => state.App.theme.background_color,
       startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      unreadNotification: state => state.TimelineSpace.unreadNotification
+      unreadNotification: state => state.TimelineSpace.timelineSetting.unreadNotification
     }),
     ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
     shortcutEnabled: function () {
@@ -75,6 +77,7 @@ export default {
     }
   },
   async mounted() {
+    console.log(this.unreadNotification)
     this.$store.commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', false)
     document.getElementById('scroller').addEventListener('scroll', this.onScroll)
     if (!this.unreadNotification.local) {
@@ -84,7 +87,7 @@ export default {
       })
     }
 
-    Event.$on('focus-timeline', () => {
+    EventEmitter.on('focus-timeline', () => {
       // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
       const previousFocusedId = this.focusedId
       this.focusedId = 0
@@ -114,15 +117,15 @@ export default {
       this.scrollPosition.prepare()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (!this.unreadNotification.local) {
       this.$store.dispatch('TimelineSpace/stopLocalStreaming')
       this.$store.dispatch('TimelineSpace/unbindLocalStreaming')
     }
-    Event.$off('focus-timeline')
+    EventEmitter.off('focus-timeline')
     this.observer.disconnect()
   },
-  destroyed() {
+  unmounted() {
     this.$store.commit('TimelineSpace/Contents/Local/changeHeading', true)
     this.$store.commit('TimelineSpace/Contents/Local/archiveTimeline')
     if (!this.unreadNotification.local) {
@@ -245,7 +248,7 @@ export default {
       this.focusedId = message.uri + message.id
     },
     focusSidebar() {
-      Event.$emit('focus-sidebar')
+      EventEmitter.emit('focus-sidebar')
     },
     handleKey(event) {
       switch (event.srcKey) {
@@ -294,6 +297,11 @@ export default {
     right: calc(20px + var(--current-sidebar-width));
     transition: all 0.5s;
   }
+
+  .upper-icon {
+    padding: 3px;
+  }
 }
 </style>
+
 <style lang="scss" src="@/assets/timeline-transition.scss"></style>

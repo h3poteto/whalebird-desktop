@@ -1,6 +1,6 @@
 <template>
-  <div class="tabs" id="sidebar_tabs">
-    <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
+  <div id="sidebar_tabs">
+    <el-tabs :model-value="activeName" @tab-click="handleClick" class="tabs">
       <el-tab-pane label="Posts" name="posts"><Posts :account="account" :buffer="buffer" :filters="filters" /></el-tab-pane>
       <el-tab-pane label="Posts and replies" name="posts_and_replies"
         ><PostsAndReplies :account="account" :buffer="buffer" :filters="filters"
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tabs /deep/ {
+.tabs :deep() {
   .el-tabs__header {
     background-color: var(--theme-selected-background-color);
   }

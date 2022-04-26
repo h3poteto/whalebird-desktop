@@ -1,8 +1,8 @@
 import { Entity, Response } from 'megalodon'
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { createStore, Store } from 'vuex'
 import FollowRequests, { FollowRequestsState } from '@/store/TimelineSpace/Contents/FollowRequests'
 import { SideMenuState } from '@/store/TimelineSpace/SideMenu'
+import { RootState } from '@/store'
 
 const mockClient = {
   getFollowRequests: () => {
@@ -110,19 +110,27 @@ const sideMenuState = (): SideMenuState => {
   }
 }
 
-const sideMenuStore = {
+const sideMenuStore = () => ({
   namespaced: true,
   state: sideMenuState(),
   actions: {
     fetchFollowRequests: jest.fn()
   },
   mutations: {}
-}
+})
 
-const timelineState = {
+const contentsStore = () => ({
   namespaced: true,
   modules: {
-    SideMenu: sideMenuStore
+    FollowRequests: initStore()
+  }
+})
+
+const timelineStore = () => ({
+  namespaced: true,
+  modules: {
+    SideMenu: sideMenuStore(),
+    Contents: contentsStore()
   },
   state: {
     account: {
@@ -131,7 +139,7 @@ const timelineState = {
     },
     sns: 'mastodon'
   }
-}
+})
 
 const appState = {
   namespaced: true,
@@ -141,16 +149,12 @@ const appState = {
 }
 
 describe('Home', () => {
-  let store
-  let localVue
+  let store: Store<RootState>
 
   beforeEach(() => {
-    localVue = createLocalVue()
-    localVue.use(Vuex)
-    store = new Vuex.Store({
+    store = createStore({
       modules: {
-        FollowRequests: initStore(),
-        TimelineSpace: timelineState,
+        TimelineSpace: timelineStore(),
         App: appState
       }
     })
@@ -158,8 +162,8 @@ describe('Home', () => {
 
   describe('fetchRequests', () => {
     it('should be updated', async () => {
-      await store.dispatch('FollowRequests/fetchRequests')
-      expect(store.state.FollowRequests.requests).toEqual([account])
+      await store.dispatch('TimelineSpace/Contents/FollowRequests/fetchRequests')
+      expect(store.state.TimelineSpace.Contents.FollowRequests.requests).toEqual([account])
     })
   })
 
@@ -184,8 +188,8 @@ describe('Home', () => {
         })
       }
 
-      await store.dispatch('FollowRequests/acceptRequest', account)
-      expect(store.state.FollowRequests.requests).toEqual([])
+      await store.dispatch('TimelineSpace/Contents/FollowRequests/acceptRequest', account)
+      expect(store.state.TimelineSpace.Contents.FollowRequests.requests).toEqual([])
     })
   })
 
@@ -210,8 +214,8 @@ describe('Home', () => {
         })
       }
 
-      await store.dispatch('FollowRequests/rejectRequest', account)
-      expect(store.state.FollowRequests.requests).toEqual([])
+      await store.dispatch('TimelineSpace/Contents/FollowRequests/rejectRequest', account)
+      expect(store.state.TimelineSpace.Contents.FollowRequests.requests).toEqual([])
     })
   })
 })
