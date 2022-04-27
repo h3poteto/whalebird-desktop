@@ -3,43 +3,14 @@
     <ul class="poll-list">
       <li class="poll-option" v-for="(option, id) in value" v-bind:key="id">
         <el-radio :disabled="true" :label="id">
-          <el-input
-            :placeholder="`choice ${id}`"
-            :model-value="value[id]"
-            @input="(value) => updateOption(value, id)"
-            size="small"
-          ></el-input>
-          <el-button
-            class="remove-poll"
-            type="text"
-            @click="removePoll(id)"
-            size="small"
-            ><font-awesome-icon icon="xmark"
-          /></el-button>
+          <el-input :placeholder="`choice ${id}`" v-model="value[id]" @input="value => updateOption(value, id)" size="small"></el-input>
+          <el-button class="remove-poll" type="text" @click="removePoll(id)" size="small"><font-awesome-icon icon="xmark" /></el-button>
         </el-radio>
       </li>
     </ul>
-    <el-button
-      class="add-poll"
-      type="info"
-      size="small"
-      @click="addPoll"
-      plain
-      >{{ $t('modals.new_toot.poll.add_choice') }}</el-button
-    >
-    <el-select
-      v-model="expiresIn"
-      size="small"
-      value-key="value"
-      @change="changeExpire"
-    >
-      <el-option
-        v-for="exp in expires"
-        :key="exp.value"
-        :label="exp.label"
-        :value="exp"
-      >
-      </el-option>
+    <el-button class="add-poll" type="info" size="small" @click="addPoll" plain>{{ $t('modals.new_toot.poll.add_choice') }}</el-button>
+    <el-select v-model="expiresIn" size="small" value-key="value" @change="changeExpire">
+      <el-option v-for="exp in expires" :key="exp.value" :label="exp.label" :value="exp"> </el-option>
     </el-select>
   </div>
 </template>
@@ -53,34 +24,34 @@ export default {
       expires: [
         {
           label: this.$t('modals.new_toot.poll.expires.5_minutes'),
-          value: 60 * 5,
+          value: 60 * 5
         },
         {
           label: this.$t('modals.new_toot.poll.expires.30_minutes'),
-          value: 60 * 30,
+          value: 60 * 30
         },
         {
           label: this.$t('modals.new_toot.poll.expires.1_hour'),
-          value: 3600,
+          value: 3600
         },
         {
           label: this.$t('modals.new_toot.poll.expires.6_hours'),
-          value: 3600 * 6,
+          value: 3600 * 6
         },
         {
           label: this.$t('modals.new_toot.poll.expires.1_day'),
-          value: 3600 * 24,
+          value: 3600 * 24
         },
         {
           label: this.$t('modals.new_toot.poll.expires.3_days'),
-          value: 3600 * 24 * 3,
+          value: 3600 * 24 * 3
         },
         {
           label: this.$t('modals.new_toot.poll.expires.7_days'),
-          value: 3600 * 24 * 7,
-        },
+          value: 3600 * 24 * 7
+        }
       ],
-      expiresIn: null,
+      expiresIn: null
     }
   },
   created() {
@@ -94,17 +65,13 @@ export default {
       this.$emit('removePoll', id)
     },
     updateOption(item, index) {
-      const newValue = [
-        ...this.value.slice(0, index),
-        item,
-        ...this.value.slice(index + 1),
-      ]
+      const newValue = [...this.value.slice(0, index), item, ...this.value.slice(index + 1)]
       this.$emit('input', newValue)
     },
     changeExpire(exp) {
       this.$emit('changeExpire', exp)
-    },
-  },
+    }
+  }
 }
 </script>
 

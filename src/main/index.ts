@@ -1365,6 +1365,12 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
             mainWindow!.webContents.send('open-preferences')
           }
         },
+        {
+          label: i18n.t('main_menu.application.shortcuts'),
+          click: () => {
+            mainWindow!.webContents.send('open-shortcuts-list')
+          }
+        },
         ...macGeneralMenu,
         {
           type: 'separator'

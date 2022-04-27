@@ -1,6 +1,6 @@
 <template>
   <div class="shortcut">
-    <el-dialog :title="$t('modals.shortcut.title')" :model-value="shortcutModal" width="500px" class="shortcut-modal">
+    <el-dialog :title="$t('modals.shortcut.title')" v-model="shortcutModal" width="500px" class="shortcut-modal">
       <table class="shortcuts">
         <tbody>
           <tr>
@@ -101,6 +101,7 @@ export default {
 .shortcut :deep() {
   .el-dialog__header {
     background-color: #4a5664;
+    margin-right: 0;
 
     .el-dialog__title {
       color: #ebeef5;
@@ -108,7 +109,7 @@ export default {
   }
 }
 
-.shortcut-modal {
+.shortcut {
   .shortcuts {
     text-align: left;
     border-collapse: collapse;

@@ -1,5 +1,6 @@
-import { createStore, createLogger } from 'vuex'
+import { createStore, createLogger, Store, useStore as baseUseStore } from 'vuex'
 import { RouteLocationNormalized } from 'vue-router'
+import { InjectionKey } from 'vue'
 
 import App, { AppState } from './App'
 import GlobalHeader, { GlobalHeaderState } from './GlobalHeader'
@@ -23,6 +24,12 @@ export interface RootState {
   Settings: SettingsModuleState
   molecules: OrganismsModuleState
   route: RouteLocationNormalized
+}
+
+export const key: InjectionKey<Store<RootState>> = Symbol('store')
+
+export function useStore() {
+  return baseUseStore(key)
 }
 
 export default createStore({

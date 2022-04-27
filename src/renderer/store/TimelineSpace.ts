@@ -157,6 +157,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     win.ipcRenderer.on('CmdOrCtrl+K', () => {
       commit('TimelineSpace/Modals/Jump/changeModal', true, { root: true })
     })
+    win.ipcRenderer.on('open-shortcuts-list', () => {
+      commit('TimelineSpace/Modals/Shortcut/changeModal', true, { root: true })
+    })
   },
   removeShortcutEvents: async () => {
     win.ipcRenderer.removeAllListeners('CmdOrCtrl+N')
