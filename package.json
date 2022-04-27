@@ -203,7 +203,7 @@
     "stylelint-scss": "^4.2.0",
     "timers-browserify": "^2.0.12",
     "ts-jest": "^26.5.6",
-    "ts-loader": "^9.2.8",
+    "ts-loader": "^9.2.9",
     "ttfinfo": "^0.2.0",
     "typescript": "^4.6.3",
     "url": "^0.11.0",
