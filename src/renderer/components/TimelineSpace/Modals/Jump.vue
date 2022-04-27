@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="jumpModal" width="440px" class="jump-modal">
+  <el-dialog v-model="jumpModal" width="440px" class="jump-modal">
     <el-form class="jump-form" v-on:submit.prevent="jump">
       <div class="channel">
         <input type="text" v-model="channel" :placeholder="$t('modals.jump.jump_to')" ref="channel" />

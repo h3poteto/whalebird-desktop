@@ -74,7 +74,7 @@ import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import './assets/fonts/fonts.css'
 import App from './App.vue'
 import router from '@/router'
-import store from './store'
+import store, { key } from './store'
 import i18next from '~/src/config/i18n'
 
 library.add(
@@ -142,7 +142,7 @@ library.add(
 const i18n = createI18n(i18next)
 
 const app = createApp(App)
-app.use(store)
+app.use(store, key)
 app.use(router)
 app.use(ElementPlus)
 app.component('font-awesome-icon', FontAwesomeIcon)

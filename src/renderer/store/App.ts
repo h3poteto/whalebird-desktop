@@ -12,7 +12,7 @@ import { BaseConfig } from '~/src/types/preference'
 import { Appearance } from '~/src/types/appearance'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type AppState = {
   theme: ThemeColorType
@@ -54,7 +54,7 @@ const state = (): AppState => ({
   userAgent: 'Whalebird'
 })
 
-const MUTATION_TYPES = {
+export const MUTATION_TYPES = {
   UPDATE_THEME: 'updateTheme',
   UPDATE_FONT_SIZE: 'updateFontSize',
   UPDATE_DISPLAY_NAME_STYLE: 'updateDisplayNameStyle',
@@ -105,16 +105,23 @@ const mutations: MutationTree<AppState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  WATCH_SHORTCUT_EVENTS: 'watchShortcutEvents',
+  REMOVE_SHORTCUT_EVENTS: 'removeShortcutEvents',
+  LOAD_PREFERENCES: 'loadPreferences',
+  UPDATE_THEME: 'updateTheme'
+}
+
 const actions: ActionTree<AppState, RootState> = {
-  watchShortcutsEvents: () => {
+  [ACTION_TYPES.WATCH_SHORTCUT_EVENTS]: () => {
     win.ipcRenderer.on('open-preferences', () => {
       router.push('/preferences/general')
     })
   },
-  removeShortcutsEvents: () => {
+  [ACTION_TYPES.REMOVE_SHORTCUT_EVENTS]: () => {
     win.ipcRenderer.removeAllListeners('open-preferences')
   },
-  loadPreferences: async ({ commit, dispatch }) => {
+  [ACTION_TYPES.LOAD_PREFERENCES]: async ({ commit, dispatch }) => {
     const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
     await dispatch('updateTheme', conf.appearance)
     commit(MUTATION_TYPES.UPDATE_DISPLAY_NAME_STYLE, conf.appearance.displayNameStyle)
@@ -129,7 +136,7 @@ const actions: ActionTree<AppState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_HIDE_ALL_ATTACHMENTS, conf.general.timeline.hideAllAttachments)
     return conf
   },
-  updateTheme: async ({ commit }, appearance: Appearance) => {
+  [ACTION_TYPES.UPDATE_THEME]: async ({ commit }, appearance: Appearance) => {
     const themeKey: string = appearance.theme
     switch (themeKey) {
       case Theme.System.key: {

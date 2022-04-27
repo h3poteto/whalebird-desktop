@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="$t('modals.mute_confirm.title')" :model-value="muteConfirmModal" width="400px" custom-class="mute-confirm">
+  <el-dialog :title="$t('modals.mute_confirm.title')" v-model="muteConfirmModal" width="400px" custom-class="mute-confirm">
     <el-form class="description">
       <el-form-item for="notify" :label="$t('modals.mute_confirm.body')">
         <el-switch id="notify" v-model="notify"></el-switch>
