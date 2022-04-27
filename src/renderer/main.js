@@ -150,6 +150,12 @@ app.use(VueVirtualScroller)
 app.use(VueResize)
 app.use(i18n)
 
+app.directive('focus', {
+  mounted(el) {
+    el.focus()
+  }
+})
+
 sync(store, router)
 
 app.mount('#app')

@@ -1,7 +1,7 @@
 <template>
   <div>
     <new-toot></new-toot>
-    <jump></jump>
+    <jump v-if="jumpModal"></jump>
     <image-viewer></image-viewer>
     <list-membership></list-membership>
     <add-list-member></add-list-member>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import NewToot from './Modals/NewToot'
 import Jump from './Modals/Jump'
 import ImageViewer from './Modals/ImageViewer'
@@ -31,7 +32,12 @@ export default {
     AddListMember,
     MuteConfirm,
     Shortcut,
-    Report,
+    Report
   },
+  computed: {
+    ...mapState({
+      jumpModal: state => state.TimelineSpace.Modals.Jump.modalOpen
+    })
+  }
 }
 </script>
