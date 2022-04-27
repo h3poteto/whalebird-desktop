@@ -81,20 +81,26 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import { useStore } from '@/store'
+import { MUTATION_TYPES } from '@/store/TimelineSpace/Modals/Shortcut'
+
+export default defineComponent({
   name: 'shortcut',
-  computed: {
-    shortcutModal: {
-      get() {
-        return this.$store.state.TimelineSpace.Modals.Shortcut.modalOpen
-      },
-      set(value) {
-        this.$store.commit('TimelineSpace/Modals/Shortcut/changeModal', value)
-      }
+  setup() {
+    const space = 'TimelineSpace/Modals/Shortcut'
+    const store = useStore()
+    const shortcutModal = computed({
+      get: () => store.state.TimelineSpace.Modals.Shortcut.modalOpen,
+      set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_MODAL}`, value)
+    })
+
+    return {
+      shortcutModal
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
