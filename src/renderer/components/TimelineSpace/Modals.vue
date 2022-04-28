@@ -4,8 +4,8 @@
     <jump v-if="jumpModal"></jump>
     <image-viewer></image-viewer>
     <list-membership></list-membership>
-    <add-list-member></add-list-member>
-    <mute-confirm></mute-confirm>
+    <add-list-member v-if="addListMemberModal"></add-list-member>
+    <mute-confirm v-if="muteConfirmModal"></mute-confirm>
     <shortcut></shortcut>
     <report v-if="reportModal"></report>
   </div>
@@ -37,7 +37,9 @@ export default {
   computed: {
     ...mapState({
       jumpModal: state => state.TimelineSpace.Modals.Jump.modalOpen,
-      reportModal: state => state.TimelineSpace.Modals.Report.modalOpen
+      reportModal: state => state.TimelineSpace.Modals.Report.modalOpen,
+      muteConfirmModal: state => state.TimelineSpace.Modals.MuteConfirm.modalOpen,
+      addListMemberModal: state => state.TimelineSpace.Modals.AddListMember.modalOpen
     })
   }
 }

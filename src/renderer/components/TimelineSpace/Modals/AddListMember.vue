@@ -33,58 +33,68 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, ref } from 'vue'
+import { Entity } from 'megalodon'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/AddListMember'
+import { ACTION_TYPES as LIST_ACTION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Edit'
 
-export default {
+export default defineComponent({
   name: 'add-list-member',
-  data() {
-    return {
-      name: ''
-    }
-  },
-  computed: {
-    ...mapState({
-      loadingBackground: state => state.App.theme.wrapper_mask_color,
-      accounts: state => state.TimelineSpace.Modals.AddListMember.accounts,
-      listId: state => state.TimelineSpace.Modals.AddListMember.targetListId
-    }),
-    addListMemberModal: {
-      get() {
-        return this.$store.state.TimelineSpace.Modals.AddListMember.modalOpen
-      },
-      set(value) {
-        this.$store.dispatch('TimelineSpace/Modals/AddListMember/changeModal', value)
-      }
-    }
-  },
-  methods: {
-    username(account) {
+  setup() {
+    const space = 'TimelineSpace/Modals/AddListMember'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const name = ref<string>('')
+
+    const loadingBackground = computed(() => store.state.App.theme.wrapper_mask_color)
+    const accounts = computed(() => store.state.TimelineSpace.Modals.AddListMember.accounts)
+    const listId = computed(() => store.state.TimelineSpace.Modals.AddListMember.targetListId)
+    const addListMemberModal = computed({
+      get: () => store.state.TimelineSpace.Modals.AddListMember.modalOpen,
+      set: (value: boolean) => store.dispatch(`${space}/${ACTION_TYPES.CHANGE_MODAL}`, value)
+    })
+
+    const username = (account: Entity.Account): string => {
       if (account.display_name !== '') {
         return account.display_name
       } else {
         return account.username
       }
-    },
-    search() {
-      this.$store.dispatch('TimelineSpace/Modals/AddListMember/search', this.name)
-    },
-    add(user) {
-      this.$store
-        .dispatch('TimelineSpace/Modals/AddListMember/add', user)
+    }
+    const search = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.SEARCH}`, name.value)
+    }
+    const add = (account: Entity.Account) => {
+      store
+        .dispatch(`${space}/${ACTION_TYPES.ADD}`, account)
         .then(() => {
-          this.addListMemberModal = false
-          this.$store.dispatch('TimelineSpace/Contents/Lists/Edit/fetchMembers', this.listId)
+          store.dispatch(`${space}/${ACTION_TYPES.CHANGE_MODAL}`, false)
+          store.dispatch(`TimelineSpace/Contents/Lists/Edit/${LIST_ACTION_TYPES.FETCH_MEMBERS}`, listId.value)
         })
         .catch(() => {
-          this.$message({
-            message: this.$t('message.add_user_error'),
+          ElMessage({
+            message: i18n.t('message.add_user_error'),
             type: 'error'
           })
         })
     }
+
+    return {
+      name,
+      loadingBackground,
+      accounts,
+      addListMemberModal,
+      username,
+      search,
+      add
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

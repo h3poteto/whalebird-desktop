@@ -32,11 +32,17 @@ const mutations: MutationTree<AddListMemberState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  CHANGE_MODAL: 'changeModal',
+  SEARCH: 'search',
+  ADD: 'add'
+}
+
 const actions: ActionTree<AddListMemberState, RootState> = {
-  changeModal: ({ commit }, value: boolean) => {
+  [ACTION_TYPES.CHANGE_MODAL]: ({ commit }, value: boolean) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, value)
   },
-  search: async ({ commit, rootState }, name: string): Promise<Array<Entity.Account>> => {
+  [ACTION_TYPES.SEARCH]: async ({ commit, rootState }, name: string): Promise<Array<Entity.Account>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -47,7 +53,7 @@ const actions: ActionTree<AddListMemberState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_ACCOUNTS, res.data)
     return res.data
   },
-  add: async ({ state, rootState }, account: Entity.Account): Promise<{}> => {
+  [ACTION_TYPES.ADD]: async ({ state, rootState }, account: Entity.Account): Promise<{}> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
