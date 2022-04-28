@@ -26,14 +26,20 @@ const mutations: MutationTree<MuteConfirmState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  CHANGE_MODAL: 'changeModal',
+  CHANGE_ACCOUNT: 'changeAccount',
+  SUBMIT: 'submit'
+}
+
 const actions: ActionTree<MuteConfirmState, RootState> = {
-  changeModal: ({ commit }, value: boolean) => {
+  [ACTION_TYPES.CHANGE_MODAL]: ({ commit }, value: boolean) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, value)
   },
-  changeAccount: ({ commit }, account: Entity.Account) => {
+  [ACTION_TYPES.CHANGE_ACCOUNT]: ({ commit }, account: Entity.Account) => {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
-  submit: async ({ state, rootState, dispatch }, notify: boolean) => {
+  [ACTION_TYPES.SUBMIT]: async ({ state, rootState, dispatch }, notify: boolean) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,

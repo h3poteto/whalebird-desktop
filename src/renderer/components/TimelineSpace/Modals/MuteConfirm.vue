@@ -12,39 +12,40 @@
   </el-dialog>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, ref, computed } from 'vue'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/MuteConfirm'
 
-export default {
+export default defineComponent({
   name: 'MuteConfirm',
-  data() {
+  setup() {
+    const space = 'TimelineSpace/Modals/MuteConfirm'
+    const store = useStore()
+
+    const notify = ref<boolean>(true)
+
+    const muteConfirmModal = computed({
+      get: () => store.state.TimelineSpace.Modals.MuteConfirm.modalOpen,
+      set: (value: boolean) => store.dispatch(`${space}/${ACTION_TYPES.CHANGE_MODAL}`, value)
+    })
+
+    const closeModal = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.CHANGE_MODAL}`, false)
+    }
+    const submit = async () => {
+      closeModal()
+      await store.dispatch(`${space}/${ACTION_TYPES.SUBMIT}`, notify.value)
+    }
+
     return {
-      notify: true
-    }
-  },
-  computed: {
-    ...mapState('TimelineSpace/Modals/MuteConfirm', {
-      account: state => state.account
-    }),
-    muteConfirmModal: {
-      get() {
-        return this.$store.state.TimelineSpace.Modals.MuteConfirm.modalOpen
-      },
-      set(value) {
-        this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', value)
-      }
-    }
-  },
-  methods: {
-    closeModal() {
-      this.muteConfirmModal = false
-    },
-    async submit() {
-      this.closeModal()
-      await this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/submit', this.notify)
+      notify,
+      muteConfirmModal,
+      closeModal,
+      submit
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
