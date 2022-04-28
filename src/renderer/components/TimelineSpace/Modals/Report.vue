@@ -10,43 +10,45 @@
   </el-dialog>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, ref } from 'vue'
+import { useStore } from '@/store'
+import { MUTATION_TYPES, ACTION_TYPES } from '@/store/TimelineSpace/Modals/Report'
 
-export default {
+export default defineComponent({
   name: 'Report',
-  data() {
-    return {
-      comment: ''
+  setup() {
+    const space = 'TimelineSpace/Modals/Report'
+    const store = useStore()
+
+    const comment = ref<string>('')
+
+    const status = computed(() => store.state.TimelineSpace.Modals.Report.message)
+    const reportModal = computed({
+      get: () => store.state.TimelineSpace.Modals.Report.modalOpen,
+      set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_MODAL_OPEN}`, value)
+    })
+
+    const closeModal = () => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_MODAL_OPEN}`, false)
     }
-  },
-  computed: {
-    ...mapState('TimelineSpace/Modals/Report', {
-      toot: state => state.message
-    }),
-    reportModal: {
-      get() {
-        return this.$store.state.TimelineSpace.Modals.Report.modalOpen
-      },
-      set(value) {
-        this.$store.commit('TimelineSpace/Modals/Report/changeModalOpen', value)
-      }
-    }
-  },
-  methods: {
-    closeModal() {
-      this.reportModal = false
-    },
-    async submit() {
-      this.closeModal()
-      await this.$store.dispatch('TimelineSpace/Modals/Report/submit', {
-        account_id: this.toot.account.id,
-        status_id: this.toot.id,
-        comment: this.comment
+    const submit = async () => {
+      closeModal()
+      await store.dispatch(`${space}/${ACTION_TYPES.SUBMIT}`, {
+        account_id: status.value?.account.id,
+        status_id: status.value?.id,
+        comment: comment.value
       })
     }
+
+    return {
+      comment,
+      reportModal,
+      closeModal,
+      submit
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped></style>

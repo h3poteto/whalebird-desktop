@@ -7,7 +7,7 @@
     <add-list-member></add-list-member>
     <mute-confirm></mute-confirm>
     <shortcut></shortcut>
-    <report></report>
+    <report v-if="reportModal"></report>
   </div>
 </template>
 
@@ -36,7 +36,8 @@ export default {
   },
   computed: {
     ...mapState({
-      jumpModal: state => state.TimelineSpace.Modals.Jump.modalOpen
+      jumpModal: state => state.TimelineSpace.Modals.Jump.modalOpen,
+      reportModal: state => state.TimelineSpace.Modals.Report.modalOpen
     })
   }
 }
