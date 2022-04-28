@@ -3,7 +3,7 @@
     <new-toot></new-toot>
     <jump v-if="jumpModal"></jump>
     <image-viewer></image-viewer>
-    <list-membership></list-membership>
+    <list-membership v-if="listMembershipModal"></list-membership>
     <add-list-member v-if="addListMemberModal"></add-list-member>
     <mute-confirm v-if="muteConfirmModal"></mute-confirm>
     <shortcut></shortcut>
@@ -39,7 +39,8 @@ export default {
       jumpModal: state => state.TimelineSpace.Modals.Jump.modalOpen,
       reportModal: state => state.TimelineSpace.Modals.Report.modalOpen,
       muteConfirmModal: state => state.TimelineSpace.Modals.MuteConfirm.modalOpen,
-      addListMemberModal: state => state.TimelineSpace.Modals.AddListMember.modalOpen
+      addListMemberModal: state => state.TimelineSpace.Modals.AddListMember.modalOpen,
+      listMembershipModal: state => state.TimelineSpace.Modals.ListMembership.modalOpen
     })
   }
 }
