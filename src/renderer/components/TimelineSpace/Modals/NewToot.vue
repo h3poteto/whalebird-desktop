@@ -27,15 +27,7 @@
           @suggestOpened="innerElementOpened"
         />
       </el-form>
-      <Poll
-        v-if="openPoll"
-        v-model="polls"
-        @addPoll="addPoll"
-        @removePoll="removePoll"
-        :defaultExpire="pollExpire"
-        @changeExpire="changeExpire"
-        ref="poll"
-      ></Poll>
+      <Poll v-if="openPoll" v-model:polls="polls" v-model:expire="pollExpire" @addPoll="addPoll" @removePoll="removePoll" ref="poll"></Poll>
       <div class="preview" ref="preview">
         <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
           <img :src="media.preview_url" class="preview-image" />
@@ -431,9 +423,6 @@ export default {
       await this.polls.splice(id, 1)
       const diff = previousPollHeight - this.$refs.poll.$el.offsetHeight
       this.statusHeight = this.statusHeight + diff
-    },
-    changeExpire(obj) {
-      this.pollExpire = obj
     },
     async toggleContentWarning() {
       const previousHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0

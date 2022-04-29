@@ -1,6 +1,6 @@
 <template>
   <div>
-    <new-toot></new-toot>
+    <new-toot v-if="newTootModal"></new-toot>
     <jump v-if="jumpModal"></jump>
     <image-viewer></image-viewer>
     <list-membership v-if="listMembershipModal"></list-membership>
@@ -36,6 +36,7 @@ export default {
   },
   computed: {
     ...mapState({
+      newTootModal: state => state.TimelineSpace.Modals.NewToot.modalOpen,
       jumpModal: state => state.TimelineSpace.Modals.Jump.modalOpen,
       reportModal: state => state.TimelineSpace.Modals.Report.modalOpen,
       muteConfirmModal: state => state.TimelineSpace.Modals.MuteConfirm.modalOpen,
