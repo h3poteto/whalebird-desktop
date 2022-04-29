@@ -45,7 +45,6 @@
           set="twitter"
           :autoFocus="true"
           @select="selectEmoji"
-          :custom="pickerEmojis"
           :perLine="7"
           :emojiSize="24"
           :showPreview="false"
@@ -96,7 +95,7 @@ export default defineComponent({
   setup(props, ctx) {
     const space = 'TimelineSpace/Modals/NewToot/Status'
     const store = useStore()
-    const emojiIndex = new EmojiIndex(data)
+
     const { modelValue } = toRefs(props)
     const highlightedIndex = ref(0)
     const statusRef = ref<HTMLTextAreaElement>()
@@ -110,7 +109,10 @@ export default defineComponent({
     })
     const startIndex = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.startIndex)
     const matchWord = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.matchWord)
-    const pickerEmojis = computed(() => store.getters[`${space}/pickerEmojis`])
+    const customEmojis = computed(() => store.getters[`${space}/pickerEmojis`])
+    const emojiIndex = new EmojiIndex(data, {
+      custom: customEmojis.value
+    })
 
     const closeSuggest = () => {
       store.dispatch(`${space}/${ACTION_TYPES.CLOSE_SUGGEST}`)
@@ -223,7 +225,6 @@ export default defineComponent({
       filteredAccounts,
       filteredHashtags,
       filteredSuggestion,
-      pickerEmojis,
       openSuggest,
       startSuggest,
       suggestHighlight,
