@@ -17,14 +17,13 @@
           </div>
         </div>
         <Status
-          v-model="status"
+          :modelValue="status"
+          @update:modelValue="status = $event"
           :opened="newTootModal"
           :fixCursorPos="hashtagInserting"
           :height="statusHeight"
           @paste="onPaste"
           @toot="toot"
-          @pickerOpened="innerElementOpened"
-          @suggestOpened="innerElementOpened"
         />
       </el-form>
       <Poll v-if="openPoll" v-model:polls="polls" v-model:expire="pollExpire" @addPoll="addPoll" @removePoll="removePoll" ref="poll"></Poll>

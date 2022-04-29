@@ -1,15 +1,17 @@
 <template>
   <div class="status">
     <textarea
-      v-model="status"
-      ref="status"
-      @paste="onPaste"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      ref="statusRef"
+      @paste="$emit('paste', $event)"
       v-on:input="startSuggest"
       :placeholder="$t('modals.new_toot.status')"
       role="textbox"
       contenteditable="true"
       aria-multiline="true"
       :style="`height: ${height}px`"
+      v-focus
       autofocus
     >
     </textarea>
@@ -19,7 +21,7 @@
           v-for="(item, index) in filteredSuggestion"
           :key="index"
           @click="insertItem(item)"
-          @mouseover="highlightedIndex = index"
+          @mouseover="suggestHighlight(index)"
           :class="{ highlighted: highlightedIndex === index }"
         >
           <span v-if="item.image">
@@ -59,23 +61,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
-import { mapState, mapGetters } from 'vuex'
+import { defineComponent, computed, toRefs, ref } from 'vue'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import suggestText from '@/utils/suggestText'
+import { useStore } from '@/store'
+import { MUTATION_TYPES, ACTION_TYPES } from '@/store/TimelineSpace/Modals/NewToot/Status'
 
-const emojiIndex = new EmojiIndex(data)
-
-export default {
+export default defineComponent({
   name: 'status',
   components: {
     Picker
   },
   props: {
-    value: {
-      type: String
+    modelValue: {
+      type: String,
+      default: ''
     },
     opened: {
       type: Boolean,
@@ -90,194 +93,145 @@ export default {
       default: 120
     }
   },
-  data() {
-    return {
-      highlightedIndex: 0,
-      openEmojiPicker: false,
-      emojiIndex: emojiIndex
+  setup(props, ctx) {
+    const space = 'TimelineSpace/Modals/NewToot/Status'
+    const store = useStore()
+    const emojiIndex = new EmojiIndex(data)
+    const { modelValue } = toRefs(props)
+    const highlightedIndex = ref(0)
+    const statusRef = ref<HTMLTextAreaElement>()
+
+    const filteredAccounts = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.filteredAccounts)
+    const filteredHashtags = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.filteredHashtags)
+    const filteredSuggestion = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.filteredSuggestion)
+    const openSuggest = computed({
+      get: () => store.state.TimelineSpace.Modals.NewToot.Status.openSuggest,
+      set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_OPEN_SUGGEST}`, value)
+    })
+    const startIndex = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.startIndex)
+    const matchWord = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.matchWord)
+    const pickerEmojis = computed(() => store.getters[`${space}/pickerEmojis`])
+
+    const closeSuggest = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.CLOSE_SUGGEST}`)
+      if (openSuggest.value) {
+        highlightedIndex.value = 0
+      }
+      ctx.emit('suggestOpened', false)
     }
-  },
-  computed: {
-    ...mapState('TimelineSpace/Modals/NewToot/Status', {
-      filteredAccounts: state => state.filteredAccounts,
-      filteredHashtags: state => state.filteredHashtags,
-      openSuggest: state => state.openSuggest,
-      startIndex: state => state.startIndex,
-      matchWord: state => state.matchWord,
-      filteredSuggestion: state => state.filteredSuggestion
-    }),
-    ...mapGetters('TimelineSpace/Modals/NewToot/Status', ['pickerEmojis']),
-    status: {
-      get: function () {
-        return this.value
-      },
-      set: function (value) {
-        this.$emit('input', value)
+    const suggestAccount = async (start: number, word: string) => {
+      try {
+        await store.dispatch(`${space}/${ACTION_TYPES.SUGGEST_ACCOUNT}`, { word: word, start: start })
+        ctx.emit('suggestOpened', true)
+        return true
+      } catch (err) {
+        console.log(err)
+        return false
       }
     }
-  },
-  mounted() {
-    // When change account, the new toot modal is recreated.
-    // So can not catch open event in watch.
-    this.$refs.status.focus()
-    if (this.fixCursorPos) {
-      this.$refs.status.setSelectionRange(0, 0)
-    }
-  },
-  watch: {
-    opened: function (newState, oldState) {
-      if (!oldState && newState) {
-        this.$nextTick(function () {
-          this.$refs.status.focus()
-          if (this.fixCursorPos) {
-            this.$refs.status.setSelectionRange(0, 0)
-          }
-        })
-      } else if (oldState && !newState) {
-        this.closeSuggest()
+    const suggestHashtag = async (start: number, word: string) => {
+      try {
+        await store.dispatch(`${space}/${ACTION_TYPES.SUGGEST_HASHTAG}`, { word: word, start: start })
+        ctx.emit('suggestOpened', true)
+        return true
+      } catch (err) {
+        console.log(err)
+        return false
       }
     }
-  },
-  methods: {
-    async startSuggest(e) {
-      const currentValue = e.target.value
-      // Start suggest after user stop writing
-      setTimeout(async () => {
-        if (currentValue === this.status) {
-          await this.suggest(e)
-        }
-      }, 700)
-    },
-    async suggest(e) {
+    const suggestEmoji = async (start: number, word: string) => {
+      try {
+        store.dispatch(`${space}/${ACTION_TYPES.SUGGEST_EMOJI}`, { word: word, start: start })
+        ctx.emit('suggestOpened', true)
+        return true
+      } catch (err) {
+        console.log(err)
+        return false
+      }
+    }
+    const suggest = async (e: Event) => {
+      const target = e.target as HTMLInputElement
       // e.target.sectionStart: Cursor position
       // e.target.value: current value of the textarea
-      const [start, word] = suggestText(e.target.value, e.target.selectionStart)
+      const [start, word] = suggestText(target.value, target.selectionStart!)
       if (!start || !word) {
-        this.closeSuggest()
+        closeSuggest()
         return false
       }
       switch (word.charAt(0)) {
         case ':':
-          await this.suggestEmoji(start, word)
+          await suggestEmoji(start, word)
           return true
         case '@':
-          await this.suggestAccount(start, word)
+          await suggestAccount(start, word)
           return true
         case '#':
-          await this.suggestHashtag(start, word)
+          await suggestHashtag(start, word)
           return true
         default:
           return false
       }
-    },
-    async suggestAccount(start, word) {
-      try {
-        await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestAccount', { word: word, start: start })
-        this.$emit('suggestOpened', true)
-        return true
-      } catch (err) {
-        console.log(err)
-        return false
-      }
-    },
-    async suggestHashtag(start, word) {
-      try {
-        await this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestHashtag', { word: word, start: start })
-        this.$emit('suggestOpened', true)
-        return true
-      } catch (err) {
-        console.log(err)
-        return false
-      }
-    },
-    suggestEmoji(start, word) {
-      try {
-        this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/suggestEmoji', { word: word, start: start })
-        this.$emit('suggestOpened', true)
-        return true
-      } catch (err) {
-        this.closeSuggest()
-        return false
-      }
-    },
-    closeSuggest() {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/Status/closeSuggest')
-      if (this.openSuggest) {
-        this.highlightedIndex = 0
-      }
-      this.$emit('suggestOpened', false)
-    },
-    suggestHighlight(index) {
+    }
+    const startSuggest = (e: Event) => {
+      const currentValue = (e.target as HTMLInputElement).value
+      // Start suggest after user stop writing
+      setTimeout(async () => {
+        if (currentValue === modelValue.value) {
+          await suggest(e)
+        }
+      }, 700)
+    }
+
+    const suggestHighlight = (index: number) => {
       if (index < 0) {
-        this.highlightedIndex = 0
-      } else if (index >= this.filteredSuggestion.length) {
-        this.highlightedIndex = this.filteredSuggestion.length - 1
+        highlightedIndex.value = 0
+      } else if (index >= filteredSuggestion.value.length) {
+        highlightedIndex.value = filteredSuggestion.value.length - 1
       } else {
-        this.highlightedIndex = index
+        highlightedIndex.value = index
       }
-    },
-    insertItem(item) {
+    }
+    const insertItem = item => {
+      console.log('inserted', item.name)
       if (item.code) {
-        const str = `${this.status.slice(0, this.startIndex - 1)}${item.code} ${this.status.slice(this.startIndex + this.matchWord.length)}`
-        this.status = str
+        const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.code} ${modelValue.value.slice(
+          startIndex.value + matchWord.value.length
+        )}`
+        ctx.emit('update:modelValue', str)
       } else {
-        const str = `${this.status.slice(0, this.startIndex - 1)}${item.name} ${this.status.slice(this.startIndex + this.matchWord.length)}`
-        this.status = str
+        const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.name} ${modelValue.value.slice(
+          startIndex.value + matchWord.value.length
+        )}`
+        console.log(str)
+        ctx.emit('update:modelValue', str)
       }
-      this.closeSuggest()
-    },
-    selectCurrentItem() {
-      const item = this.filteredSuggestion[this.highlightedIndex]
-      this.insertItem(item)
-    },
-    onPaste(e) {
-      this.$emit('paste', e)
-    },
-    handleKey(event) {
-      const current = event.target.selectionStart
-      switch (event.srcKey) {
-        case 'up':
-          this.suggestHighlight(this.highlightedIndex - 1)
-          break
-        case 'down':
-          this.suggestHighlight(this.highlightedIndex + 1)
-          break
-        case 'enter':
-          this.selectCurrentItem()
-          break
-        case 'esc':
-          this.closeSuggest()
-          break
-        case 'left':
-          event.target.setSelectionRange(current - 1, current - 1)
-          break
-        case 'right':
-          event.target.setSelectionRange(current + 1, current + 1)
-          break
-        case 'linux':
-        case 'mac':
-          this.$emit('toot')
-          break
-        default:
-          return true
-      }
-    },
-    toggleEmojiPicker() {
-      this.openEmojiPicker = !this.openEmojiPicker
-      this.$emit('pickerOpened', this.openEmojiPicker)
-    },
-    selectEmoji(emoji) {
-      const current = this.$refs.status.selectionStart
+      closeSuggest()
+    }
+    const selectEmoji = emoji => {
+      const current = statusRef.value?.selectionStart
       if (emoji.native) {
-        this.status = `${this.status.slice(0, current)}${emoji.native} ${this.status.slice(current)}`
+        ctx.emit('update:modelValue', `${modelValue.value.slice(0, current)}${emoji.native} ${modelValue.value.slice(current)}`)
       } else {
         // Custom emoji don't have natvie code
-        this.status = `${this.status.slice(0, current)}${emoji.name} ${this.status.slice(current)}`
+        ctx.emit('update:modelValue', `${modelValue.value.slice(0, current)}${emoji.name} ${modelValue.value.slice(current)}`)
       }
-      this.hideEmojiPicker()
+    }
+
+    return {
+      emojiIndex,
+      highlightedIndex,
+      filteredAccounts,
+      filteredHashtags,
+      filteredSuggestion,
+      pickerEmojis,
+      openSuggest,
+      startSuggest,
+      suggestHighlight,
+      insertItem,
+      selectEmoji
     }
   }
-}
+})
 </script>
 
 <style lang="scss">
