@@ -32,7 +32,7 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch('App/watchShortcutsEvents')
+    this.$store.dispatch('App/watchShortcutEvents')
     this.$store.dispatch('App/loadPreferences').then(conf => {
       this.$i18n.locale = conf.language.language
     })
