@@ -7,18 +7,18 @@
       :before-close="closeConfirm"
       width="600px"
       custom-class="new-toot-modal"
-      ref="dialog"
+      ref="dialogRef"
     >
       <el-form v-on:submit.prevent="toot" role="form">
-        <Quote :message="quoteToMessage" :displayNameStyle="displayNameStyle" v-if="quoteToMessage !== null" ref="quote"></Quote>
-        <div class="spoiler" v-if="showContentWarning" ref="spoiler">
+        <Quote :message="quoteToMessage" :displayNameStyle="displayNameStyle" v-if="quoteToMessage !== null" ref="quoteRef"></Quote>
+        <div class="spoiler" v-if="showContentWarning" ref="spoilerRef">
           <div class="el-input">
-            <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoiler" />
+            <input type="text" class="el-input__inner" :placeholder="$t('modals.new_toot.cw')" v-model="spoilerText" />
           </div>
         </div>
         <Status
-          :modelValue="status"
-          @update:modelValue="status = $event"
+          :modelValue="statusText"
+          @update:modelValue="statusText = $event"
           :opened="newTootModal"
           :fixCursorPos="hashtagInserting"
           :height="statusHeight"
@@ -26,8 +26,15 @@
           @toot="toot"
         />
       </el-form>
-      <Poll v-if="openPoll" v-model:polls="polls" v-model:expire="pollExpire" @addPoll="addPoll" @removePoll="removePoll" ref="poll"></Poll>
-      <div class="preview" ref="preview">
+      <Poll
+        v-if="openPoll"
+        v-model:polls="polls"
+        v-model:expire="pollExpire"
+        @addPoll="addPoll"
+        @removePoll="removePoll"
+        ref="pollRef"
+      ></Poll>
+      <div class="preview" ref="previewRef">
         <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
           <img :src="media.preview_url" class="preview-image" />
           <el-button type="text" @click="removeAttachment(media)" class="remove-image"><font-awesome-icon icon="circle-xmark" /></el-button>
@@ -50,7 +57,7 @@
             <el-button size="default" type="text" @click="selectImage" :title="$t('modals.new_toot.footer.add_image')">
               <font-awesome-icon icon="camera" />
             </el-button>
-            <input name="image" type="file" class="image-input" ref="image" @change="onChangeImage" :key="attachedMediaId" />
+            <input name="image" type="file" class="image-input" ref="imageRef" @change="onChangeImage" />
           </div>
           <div class="poll">
             <el-button size="default" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
@@ -122,7 +129,7 @@
           </div>
           <div class="info">
             <img src="../../../assets/images/loading-spinner-wide.svg" v-show="loading" class="loading" />
-            <span class="text-count">{{ tootMax - status.length }}</span>
+            <span class="text-count">{{ tootMax - statusText.length }}</span>
 
             <el-button class="toot-action" @click="closeConfirm(close)">{{ $t('modals.new_toot.cancel') }}</el-button>
             <el-button class="toot-action" type="primary" @click="toot" :loading="blockSubmit">{{ $t('modals.new_toot.toot') }}</el-button>
@@ -135,332 +142,366 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
+<script lang="ts">
+import { defineComponent, ref, reactive, computed, onMounted, ComponentPublicInstance, nextTick } from 'vue'
+import { useI18next } from 'vue3-i18next'
+import { ElMessage, ElMessageBox, ElDialog } from 'element-plus'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
 import Visibility from '~/src/constants/visibility'
-import Status from './NewToot/Status'
-import Poll from './NewToot/Poll'
-import Quote from './NewToot/Quote'
+import Status from './NewToot/Status.vue'
+import Poll from './NewToot/Poll.vue'
+import Quote from './NewToot/Quote.vue'
 import { NewTootTootLength, NewTootAttachLength, NewTootModalOpen, NewTootBlockSubmit, NewTootPollInvalid } from '@/errors/validations'
-import { EventEmitter } from '~/src/renderer/components/event'
+import { EventEmitter } from '@/components/event'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Modals/NewToot'
 
-export default {
+export default defineComponent({
   name: 'new-toot',
   components: {
     Status,
     Poll,
     Quote
   },
-  data() {
-    return {
-      status: '',
-      spoiler: '',
-      showContentWarning: false,
-      visibilityList: Visibility,
-      openPoll: false,
-      polls: [],
-      pollExpire: {
-        label: this.$t('modals.new_toot.poll.expires.1_day'),
-        value: 3600 * 24
-      },
-      statusHeight: 240
-    }
-  },
-  computed: {
-    ...mapState('TimelineSpace/Modals/NewToot', {
-      replyToId: state => {
-        if (state.replyToMessage !== null) {
-          return state.replyToMessage.id
-        } else {
-          return null
-        }
-      },
-      quoteToMessage: state => state.quoteToMessage,
-      attachedMedias: state => state.attachedMedias,
-      attachedMediaId: state => state.attachedMediaId,
-      mediaDescriptions: state => state.mediaDescriptions,
-      blockSubmit: state => state.blockSubmit,
-      visibility: state => state.visibility,
-      sensitive: state => state.sensitive,
-      initialStatus: state => state.initialStatus,
-      initialSpoiler: state => state.initialSpoiler,
-      visibilityIcon: state => {
-        switch (state.visibility) {
-          case Visibility.Public.value:
-            return 'globe'
-          case Visibility.Unlisted.value:
-            return 'unlock'
-          case Visibility.Private.value:
-            return 'lock'
-          case Visibility.Direct.value:
-            return 'envelope'
-          default:
-            return 'globe'
-        }
-      },
-      loading: state => state.loading
-    }),
-    ...mapState('TimelineSpace', {
-      tootMax: state => state.tootMax
-    }),
-    ...mapState('App', {
-      displayNameStyle: state => state.displayNameStyle
-    }),
-    ...mapGetters('TimelineSpace/Modals/NewToot', ['hashtagInserting']),
-    newTootModal: {
-      get() {
-        return this.$store.state.TimelineSpace.Modals.NewToot.modalOpen
-      },
-      set(value) {
-        if (value) {
-          this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
-        } else {
-          this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
-        }
-      }
-    },
-    pinedHashtag: {
-      get() {
-        return this.$store.state.TimelineSpace.Modals.NewToot.pinedHashtag
-      },
-      set(value) {
-        this.$store.commit('TimelineSpace/Modals/NewToot/changePinedHashtag', value)
-      }
-    }
-  },
-  created() {
-    this.$store.dispatch('TimelineSpace/Modals/NewToot/setupLoading')
-  },
-  mounted() {
-    EventEmitter.on('image-uploaded', () => {
-      if (this.$refs.preview) {
-        this.statusHeight = this.statusHeight - this.$refs.preview.offsetHeight
+  setup() {
+    const space = 'TimelineSpace/Modals/NewToot'
+    const store = useStore()
+    const i18n = useI18next()
+    const visibilityList = Visibility
+
+    const enableResizing = ref<boolean>(true)
+    const statusText = ref<string>('')
+    const spoilerText = ref<string>('')
+    const showContentWarning = ref<boolean>(false)
+    const openPoll = ref<boolean>(false)
+    const polls = ref<Array<string>>([])
+    const pollExpire = reactive({
+      label: i18n.t('modals.new_toot.poll.expires.1_day'),
+      value: 3600 * 24
+    })
+    const statusHeight = ref<number>(240)
+    const previewRef = ref<HTMLElement>()
+    const imageRef = ref<HTMLInputElement>()
+    const pollRef = ref<ComponentPublicInstance>()
+    const spoilerRef = ref<HTMLElement>()
+    const dialogRef = ref<InstanceType<typeof ElDialog>>()
+    const quoteRef = ref<ComponentPublicInstance>()
+
+    const quoteToMessage = computed(() => store.state.TimelineSpace.Modals.NewToot.quoteToMessage)
+    const attachedMedias = computed(() => store.state.TimelineSpace.Modals.NewToot.attachedMedias)
+    const mediaDescriptions = computed(() => store.state.TimelineSpace.Modals.NewToot.mediaDescriptions)
+    const blockSubmit = computed(() => store.state.TimelineSpace.Modals.NewToot.blockSubmit)
+    const sensitive = computed(() => store.state.TimelineSpace.Modals.NewToot.sensitive)
+    const initialStatus = computed(() => store.state.TimelineSpace.Modals.NewToot.initialStatus)
+    const initialSpoiler = computed(() => store.state.TimelineSpace.Modals.NewToot.initialSpoiler)
+    const visibilityIcon = computed(() => {
+      switch (store.state.TimelineSpace.Modals.NewToot.visibility) {
+        case Visibility.Public.value:
+          return 'globe'
+        case Visibility.Unlisted.value:
+          return 'unlock'
+        case Visibility.Private.value:
+          return 'lock'
+        case Visibility.Direct.value:
+          return 'envelope'
+        default:
+          return 'globe'
       }
     })
-  },
-  watch: {
-    newTootModal: function (newState, oldState) {
-      if (!oldState && newState) {
-        this.showContentWarning = this.initialSpoiler
-        this.status = this.initialStatus
-        this.spoiler = this.initialSpoiler
+    const loading = computed(() => store.state.TimelineSpace.Modals.NewToot.loading)
+    const tootMax = computed(() => store.state.TimelineSpace.tootMax)
+    const displayNameStyle = computed(() => store.state.App.displayNameStyle)
+    const hashtagInserting = computed(() => store.getters[`${space}/hashtagInserting`])
+    const newTootModal = computed({
+      get: () => store.state.TimelineSpace.Modals.NewToot.modalOpen,
+      set: (value: boolean) => {
+        if (value) {
+          store.dispatch(`${space}/${ACTION_TYPES.OPEN_MODAL}`)
+        } else {
+          store.dispatch(`${space}/${ACTION_TYPES.CLOSE_MODAL}`)
+        }
       }
+    })
+    const pinedHashtag = computed({
+      get: () => store.state.TimelineSpace.Modals.NewToot.pinedHashtag,
+      set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_PINED_HASHTAG}`, value)
+    })
+
+    store.dispatch(`${space}/${ACTION_TYPES.SETUP_LOADING}`)
+
+    onMounted(() => {
+      EventEmitter.on('image-uploaded', () => {
+        if (previewRef.value) {
+          statusHeight.value = statusHeight.value - previewRef.value.offsetHeight
+        }
+      })
+
+      showContentWarning.value = initialSpoiler.value.length > 0
+      statusText.value = initialStatus.value
+      spoilerText.value = initialSpoiler.value
+    })
+
+    const close = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.RESET_MEDIA_COUNT}`)
+      store.dispatch(`${space}/${ACTION_TYPES.CLOSE_MODAL}`)
     }
-  },
-  methods: {
-    close() {
-      this.filteredAccount = []
-      const spoilerHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
-      this.showContentWarning = false
-      this.spoiler = ''
-      this.statusHeight = this.statusHeight + spoilerHeight
-      const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
-      this.openPoll = false
-      this.polls = []
-      this.pollExpire = {
-        label: this.$t('modals.new_toot.poll.expires.1_day'),
-        value: 3600 * 24
-      }
-      this.statusHeight = this.statusHeight + pollHeight
-      const quoteHeight = this.$refs.quote ? this.$refs.quote.$el.offsetHeight : 0
-      this.statusHeight = this.statusHeight + quoteHeight
-      const attachmentHeight = this.$refs.preview ? this.$refs.preview.offsetHeight : 0
-      this.statusHeight = this.statusHeight + attachmentHeight
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/resetMediaCount')
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/closeModal')
-    },
-    async toot() {
+    const toot = async () => {
       const form = {
-        status: this.status,
-        spoiler: this.spoiler,
-        polls: this.polls,
-        pollExpireSeconds: this.pollExpire.value
+        status: statusText.value,
+        spoiler: spoilerText.value,
+        polls: polls.value,
+        pollExpireSeconds: pollExpire.value
       }
 
       try {
-        const status = await this.$store.dispatch('TimelineSpace/Modals/NewToot/postToot', form)
-        this.$store.dispatch('TimelineSpace/Modals/NewToot/updateHashtags', status.tags)
-        this.close()
+        const status = await store.dispatch(`${space}/${ACTION_TYPES.POST_TOOT}`, form)
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_HASHTAGS}`, status.tags)
+        close()
       } catch (err) {
         console.error(err)
         if (err instanceof NewTootTootLength) {
-          this.$message({
-            message: this.$t('validation.new_toot.toot_length', {
+          ElMessage({
+            message: i18n.t('validation.new_toot.toot_length', {
               min: 1,
-              max: this.tootMax
+              max: tootMax.value
             }),
             type: 'error'
           })
         } else if (err instanceof NewTootAttachLength) {
-          this.$message({
-            message: this.$t('validation.new_toot.attach_length', { max: 4 }),
+          ElMessage({
+            message: i18n.t('validation.new_toot.attach_length', { max: 4 }),
             type: 'error'
           })
         } else if (err instanceof NewTootPollInvalid) {
-          this.$message({
-            message: this.$t('validation.new_toot.poll_invalid'),
+          ElMessage({
+            message: i18n.t('validation.new_toot.poll_invalid'),
             type: 'error'
           })
         } else if (err instanceof NewTootModalOpen || err instanceof NewTootBlockSubmit) {
           // Nothing
         } else {
-          this.$message({
-            message: this.$t('message.toot_error'),
+          ElMessage({
+            message: i18n.t('message.toot_error'),
             type: 'error'
           })
         }
       }
-    },
-    selectImage() {
-      this.$refs.image.click()
-    },
-    onChangeImage(e) {
-      if (e.target.files.item(0) === null || e.target.files.item(0) === undefined) {
+    }
+    const selectImage = () => {
+      imageRef!.value!.click()
+    }
+    const updateImage = (file: File) => {
+      store
+        .dispatch(`${space}/${ACTION_TYPES.UPLOAD_IMAGE}`, file)
+        .then(() => {
+          enableResizing.value = false
+          nextTick(() => {
+            if (attachedMedias.value.length === 1 && previewRef.value) {
+              statusHeight.value = statusHeight.value - previewRef.value.offsetHeight
+            }
+            enableResizing.value = true
+          })
+        })
+        .catch(err => {
+          if (err instanceof NewTootAttachLength) {
+            ElMessage({
+              message: i18n.t('validation.new_toot.attach_length', { max: 4 }),
+              type: 'error'
+            })
+          } else {
+            ElMessage({
+              message: i18n.t('message.attach_error'),
+              type: 'error'
+            })
+          }
+        })
+    }
+    const onChangeImage = (e: Event) => {
+      const target = e.target as HTMLInputElement
+      const file = target.files?.item(0)
+      if (file === null || file === undefined) {
         return
       }
-      const file = e.target.files.item(0)
       if (!file.type.includes('image') && !file.type.includes('video')) {
-        this.$message({
-          message: this.$t('validation.new_toot.attach_image'),
+        ElMessage({
+          message: i18n.t('validation.new_toot.attach_image'),
           type: 'error'
         })
         return
       }
-      this.updateImage(file)
-    },
-    onPaste(e) {
-      const mimeTypes = window.clipboard.availableFormats().filter(type => type.startsWith('image'))
+      updateImage(file)
+    }
+    const onPaste = (e: Event) => {
+      const mimeTypes = (window as any).clipboard.availableFormats().filter(t => t.startsWith('image'))
       if (mimeTypes.length === 0) {
         return
       }
       e.preventDefault()
-      const image = window.clipboard.readImage()
-      let data
+      const image = (window as any).clipboard.readImage()
+      let data: any
       if (/^image\/jpe?g$/.test(mimeTypes[0])) {
         data = image.toJPEG(100)
       } else {
         data = image.toPNG()
       }
       const file = new File([data], 'clipboard.picture', { type: mimeTypes[0] })
-      this.updateImage(file)
-    },
-    updateImage(file) {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaCount')
-      this.$store
-        .dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
-        .then(() => {
-          this.statusHeight = this.statusHeight - this.$refs.preview.offsetHeight
-        })
-        .catch(err => {
-          if (err instanceof NewTootAttachLength) {
-            this.$message({
-              message: this.$t('validation.new_toot.attach_length', { max: 4 }),
-              type: 'error'
-            })
-          } else {
-            this.$message({
-              message: this.$t('message.attach_error'),
-              type: 'error'
-            })
+      updateImage(file)
+    }
+    const removeAttachment = (media: Entity.Attachment) => {
+      const previousHeight = previewRef!.value!.offsetHeight
+      store.dispatch(`${space}/${ACTION_TYPES.REMOVE_MEDIA}`, media).then(() => {
+        enableResizing.value = false
+        nextTick(() => {
+          if (attachedMedias.value.length === 0) {
+            statusHeight.value = statusHeight.value + previousHeight
           }
+          enableResizing.value = true
         })
-    },
-    removeAttachment(media) {
-      const previousHeight = this.$refs.preview.offsetHeight
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/removeMedia', media).then(() => {
-        this.statusHeight = this.statusHeight + previousHeight
       })
-    },
-    changeVisibility(level) {
-      this.$store.commit('TimelineSpace/Modals/NewToot/changeVisibilityValue', level)
-    },
-    changeSensitive() {
-      this.$store.commit('TimelineSpace/Modals/NewToot/changeSensitive', !this.sensitive)
-    },
-    closeConfirm(done) {
-      if (this.status.length === 0) {
+    }
+    const changeVisibility = (level: number) => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_VISIBILITY_VALUE}`, level)
+    }
+    const changeSensitive = () => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_SENSITIVE}`, !sensitive.value)
+    }
+    const closeConfirm = (done: Function) => {
+      if (statusText.value.length === 0) {
         done()
       } else {
-        this.$confirm(this.$t('modals.new_toot.close_confirm'), {
-          confirmButtonText: this.$t('modals.new_toot.close_confirm_ok'),
-          cancelButtonText: this.$t('modals.new_toot.close_confirm_cancel')
+        ElMessageBox.confirm(i18n.t('modals.new_toot.close_confirm'), {
+          confirmButtonText: i18n.t('modals.new_toot.close_confirm_ok'),
+          cancelButtonText: i18n.t('modals.new_toot.close_confirm_cancel')
         })
           .then(_ => {
             done()
           })
           .catch(_ => {})
       }
-    },
-    updateDescription(id, value) {
-      this.$store.commit('TimelineSpace/Modals/NewToot/updateMediaDescription', { id: id, description: value })
-    },
-    async togglePollForm() {
-      const previousHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
+    }
+    const updateDescription = (id: number, value: string) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_MEDIA_DESCRIPTION}`, { id: id, description: value })
+    }
+    const togglePollForm = () => {
+      const previousHeight = pollRef.value ? pollRef.value.$el.offsetHeight : 0
       const toggle = () => {
-        this.openPoll = !this.openPoll
-        if (this.openPoll) {
-          this.polls = ['', '']
+        openPoll.value = !openPoll.value
+        if (openPoll.value) {
+          polls.value = ['', '']
         } else {
-          this.polls = []
+          polls.value = []
         }
       }
-      await toggle()
-      if (this.openPoll) {
-        this.statusHeight = this.statusHeight - this.$refs.poll.$el.offsetHeight
-      } else {
-        this.statusHeight = this.statusHeight + previousHeight
-      }
-    },
-    async addPoll() {
-      const previousPollHeight = this.$refs.poll.$el.offsetHeight
-      await this.polls.push('')
-      const diff = this.$refs.poll.$el.offsetHeight - previousPollHeight
-      this.statusHeight = this.statusHeight - diff
-    },
-    async removePoll(id) {
-      const previousPollHeight = this.$refs.poll.$el.offsetHeight
-      await this.polls.splice(id, 1)
-      const diff = previousPollHeight - this.$refs.poll.$el.offsetHeight
-      this.statusHeight = this.statusHeight + diff
-    },
-    async toggleContentWarning() {
-      const previousHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
-      await (this.showContentWarning = !this.showContentWarning)
-      if (this.showContentWarning) {
-        this.statusHeight = this.statusHeight - this.$refs.spoiler.offsetHeight
-      } else {
-        this.statusHeight = this.statusHeight + previousHeight
-      }
-    },
-    handleResize(event) {
+      enableResizing.value = false
+      toggle()
+      nextTick(() => {
+        if (openPoll.value) {
+          const currentHeight = pollRef.value ? pollRef.value.$el.offsetHeight : 0
+          statusHeight.value = statusHeight.value - currentHeight
+        } else {
+          statusHeight.value = statusHeight.value + previousHeight
+        }
+        enableResizing.value = true
+      })
+    }
+    const addPoll = () => {
+      enableResizing.value = false
+      polls.value.push('')
+      nextTick(() => {
+        enableResizing.value = true
+      })
+    }
+    const removePoll = (id: number) => {
+      enableResizing.value = false
+      polls.value.splice(id, 1)
+      nextTick(() => {
+        enableResizing.value = true
+      })
+    }
+    const toggleContentWarning = () => {
+      const previousHeight = spoilerRef.value ? spoilerRef.value.offsetHeight : 0
+      enableResizing.value = false
+      showContentWarning.value = !showContentWarning.value
+      nextTick(() => {
+        if (showContentWarning.value) {
+          if (spoilerRef.value) {
+            statusHeight.value = statusHeight.value - spoilerRef.value.offsetHeight
+          }
+        } else {
+          statusHeight.value = statusHeight.value + previousHeight
+        }
+        enableResizing.value = true
+      })
+    }
+    const handleResize = (event: { width: number; height: number }) => {
+      if (!enableResizing.value) return
+      const dialog = document.getElementsByClassName('new-toot-modal').item(0) as HTMLElement
+      if (!dialog) return
+      const dialogStyle = window.getComputedStyle(dialog, null)
       // Ignore when the modal height already reach window height.
-      const vHeight = this.$refs.dialog.$el.firstChild.style.marginTop
-      const marginTop = (document.documentElement.clientHeight / 100) * parseInt(vHeight)
-      const limitHeight = document.documentElement.clientHeight - marginTop - 80
-      if (this.$refs.dialog.$el.firstChild.offsetHeight >= limitHeight) {
+      const marginTop = dialogStyle.marginTop
+      const limitHeight = document.documentElement.clientHeight - parseInt(marginTop) - 80
+      if (dialog.offsetHeight >= limitHeight) {
         return
       }
-      // When emoji picker is opened, resize event has to be stopped.
-      const style = this.$refs.dialog.$el.firstChild.style
-      if (style.overflow === '' || style.overflow === 'hidden') {
-        const pollHeight = this.$refs.poll ? this.$refs.poll.$el.offsetHeight : 0
-        const spoilerHeight = this.$refs.spoiler ? this.$refs.spoiler.offsetHeight : 0
-        const quoteHeight = this.$refs.quote ? this.$refs.quote.$el.offsetHeight : 0
-        const headerHeight = 54
-        const footerHeight = 63
-        this.statusHeight =
-          event.height - footerHeight - headerHeight - this.$refs.preview.offsetHeight - pollHeight - spoilerHeight - quoteHeight
-      }
-    },
-    innerElementOpened() {
-      // if (open) {
-      //   this.$refs.dialog.$el.firstChild.style.overflow = 'visible'
-      // } else {
-      //   this.$refs.dialog.$el.firstChild.style.overflow = 'hidden'
-      // }
+      const pollHeight = pollRef.value ? pollRef.value.$el.offsetHeight : 0
+      const spoilerHeight = spoilerRef.value ? spoilerRef.value.offsetHeight : 0
+      const quoteHeight = quoteRef.value ? quoteRef.value.$el.offsetHeight : 0
+      const previewHeight = previewRef.value ? previewRef.value.offsetHeight : 0
+      const headerHeight = 54
+      const footerHeight = 66
+      statusHeight.value = event.height - footerHeight - headerHeight - previewHeight - pollHeight - spoilerHeight - quoteHeight
     }
-  }
-}
+
+    return {
+      visibilityList,
+      statusText,
+      spoilerText,
+      showContentWarning,
+      openPoll,
+      polls,
+      pollExpire,
+      statusHeight,
+      // DOM refs
+      previewRef,
+      imageRef,
+      pollRef,
+      spoilerRef,
+      dialogRef,
+      quoteRef,
+      // computed
+      quoteToMessage,
+      attachedMedias,
+      mediaDescriptions,
+      blockSubmit,
+      sensitive,
+      visibilityIcon,
+      loading,
+      tootMax,
+      displayNameStyle,
+      hashtagInserting,
+      newTootModal,
+      pinedHashtag,
+      // methods
+      close,
+      toot,
+      selectImage,
+      onChangeImage,
+      onPaste,
+      removeAttachment,
+      changeVisibility,
+      changeSensitive,
+      closeConfirm,
+      updateDescription,
+      togglePollForm,
+      addPoll,
+      removePoll,
+      toggleContentWarning,
+      handleResize
+    }
+  },
+  methods: {}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -16,7 +16,7 @@ import {
 } from '@/errors/validations'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 type MediaDescription = {
   id: string
@@ -156,8 +156,27 @@ const mutations: MutationTree<NewTootState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  SETUP_LOADING: 'setupLoading',
+  START_LOADING: 'startLoading',
+  STOP_LOADING: 'stopLoading',
+  UPDATE_MEDIA: 'updateMedia',
+  POST_TOOT: 'postToot',
+  OPEN_REPLY: 'openReply',
+  OPEN_QUOTE: 'openQuote',
+  OPEN_MODAL: 'openModal',
+  CLOSE_MODAL: 'closeModal',
+  UPLOAD_IMAGE: 'uploadImage',
+  INCREMENT_MEDIA_COUNT: 'incrementMediaCount',
+  DECREMENT_MEDIA_COUNT: 'decrementMediaCount',
+  RESET_MEDIA_COUNT: 'resetMediaCount',
+  REMOVE_MEDIA: 'removeMedia',
+  UPDATE_HASHTAGS: 'updateHashtags',
+  FETCH_VISIBILITY: 'fetchVisibility'
+}
+
 const actions: ActionTree<NewTootState, RootState> = {
-  setupLoading: ({ dispatch }) => {
+  [ACTION_TYPES.SETUP_LOADING]: ({ dispatch }) => {
     const axiosLoading = new AxiosLoading()
     axiosLoading.on('start', (_: number) => {
       dispatch('startLoading')
@@ -166,17 +185,17 @@ const actions: ActionTree<NewTootState, RootState> = {
       dispatch('stopLoading')
     })
   },
-  startLoading: ({ commit, state }) => {
+  [ACTION_TYPES.START_LOADING]: ({ commit, state }) => {
     if (state.modalOpen && !state.loading) {
       commit(MUTATION_TYPES.CHANGE_LOADING, true)
     }
   },
-  stopLoading: ({ commit, state }) => {
+  [ACTION_TYPES.STOP_LOADING]: ({ commit, state }) => {
     if (state.modalOpen && state.loading) {
       commit(MUTATION_TYPES.CHANGE_LOADING, false)
     }
   },
-  updateMedia: async ({ rootState }, mediaDescription: MediaDescription) => {
+  [ACTION_TYPES.UPDATE_MEDIA]: async ({ rootState }, mediaDescription: MediaDescription) => {
     if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
       throw new AuthenticationError()
     }
@@ -198,7 +217,7 @@ const actions: ActionTree<NewTootState, RootState> = {
       throw err
     })
   },
-  postToot: async ({ state, commit, rootState, dispatch }, params: TootForm): Promise<Entity.Status> => {
+  [ACTION_TYPES.POST_TOOT]: async ({ state, commit, rootState, dispatch }, params: TootForm): Promise<Entity.Status> => {
     if (!state.modalOpen) {
       throw new NewTootModalOpen()
     }
@@ -287,7 +306,7 @@ const actions: ActionTree<NewTootState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, false)
       })
   },
-  openReply: ({ commit, rootState }, message: Entity.Status) => {
+  [ACTION_TYPES.OPEN_REPLY]: ({ commit, rootState }, message: Entity.Status) => {
     commit(MUTATION_TYPES.SET_REPLY_TO, message)
     const mentionAccounts = [message.account.acct]
       .concat(message.mentions.map(a => a.acct))
@@ -305,18 +324,18 @@ const actions: ActionTree<NewTootState, RootState> = {
     })
     commit(MUTATION_TYPES.CHANGE_VISIBILITY_VALUE, value)
   },
-  openQuote: ({ commit }, message: Entity.Status) => {
+  [ACTION_TYPES.OPEN_QUOTE]: ({ commit }, message: Entity.Status) => {
     commit(MUTATION_TYPES.SET_QUOTE_TO, message)
     commit(MUTATION_TYPES.CHANGE_MODAL, true)
   },
-  openModal: ({ dispatch, commit, state }) => {
+  [ACTION_TYPES.OPEN_MODAL]: ({ dispatch, commit, state }) => {
     if (!state.replyToMessage && state.pinedHashtag) {
       commit(MUTATION_TYPES.UPDATE_INITIAL_STATUS, state.hashtags.map(t => `#${t.name}`).join(' '))
     }
     commit(MUTATION_TYPES.CHANGE_MODAL, true)
     dispatch('fetchVisibility')
   },
-  closeModal: ({ commit }) => {
+  [ACTION_TYPES.CLOSE_MODAL]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, false)
     commit(MUTATION_TYPES.UPDATE_INITIAL_STATUS, '')
     commit(MUTATION_TYPES.UPDATE_INITIAL_SPOILER, '')
@@ -328,7 +347,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_SENSITIVE, false)
     commit(MUTATION_TYPES.CHANGE_VISIBILITY_VALUE, Visibility.Public.value)
   },
-  uploadImage: async ({ commit, state, rootState }, image: any) => {
+  [ACTION_TYPES.UPLOAD_IMAGE]: async ({ commit, state, dispatch, rootState }, image: any) => {
     if (state.attachedMedias.length > 3) {
       throw new NewTootAttachLength()
     }
@@ -348,6 +367,7 @@ const actions: ActionTree<NewTootState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, false)
         if (res.data.type === 'unknown') throw new NewTootUnknownType()
         commit(MUTATION_TYPES.APPEND_ATTACHED_MEDIAS, res.data)
+        dispatch(ACTION_TYPES.INCREMENT_MEDIA_COUNT)
         return res.data
       })
       .catch(err => {
@@ -356,26 +376,26 @@ const actions: ActionTree<NewTootState, RootState> = {
         throw err
       })
   },
-  incrementMediaCount: ({ commit, state }) => {
+  [ACTION_TYPES.INCREMENT_MEDIA_COUNT]: ({ commit, state }) => {
     commit(MUTATION_TYPES.UPDATE_MEDIA_COUNT, state.attachedMediaCount + 1)
   },
-  decrementMediaCount: ({ commit, state }) => {
+  [ACTION_TYPES.DECREMENT_MEDIA_COUNT]: ({ commit, state }) => {
     commit(MUTATION_TYPES.UPDATE_MEDIA_COUNT, state.attachedMediaCount - 1)
   },
-  resetMediaCount: ({ commit }) => {
+  [ACTION_TYPES.RESET_MEDIA_COUNT]: ({ commit }) => {
     commit(MUTATION_TYPES.UPDATE_MEDIA_COUNT, 0)
   },
-  removeMedia: ({ commit, dispatch }, media: Entity.Attachment) => {
+  [ACTION_TYPES.REMOVE_MEDIA]: ({ commit, dispatch }, media: Entity.Attachment) => {
     commit(MUTATION_TYPES.REMOVE_MEDIA, media)
     commit(MUTATION_TYPES.REMOVE_MEDIA_DESCRIPTION, media.id)
-    dispatch('decrementMediaCount')
+    dispatch(ACTION_TYPES.DECREMENT_MEDIA_COUNT)
   },
-  updateHashtags: ({ commit, state }, tags: Array<Entity.Tag>) => {
+  [ACTION_TYPES.UPDATE_HASHTAGS]: ({ commit, state }, tags: Array<Entity.Tag>) => {
     if (state.pinedHashtag && tags.length > 0) {
       commit(MUTATION_TYPES.UPDATE_HASHTAGS, tags)
     }
   },
-  fetchVisibility: async ({ commit, rootState }) => {
+  [ACTION_TYPES.FETCH_VISIBILITY]: async ({ commit, rootState }) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
