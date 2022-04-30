@@ -1,4 +1,5 @@
-import emojidata from 'unicode-emoji-json/data-by-emoji.json'
+import { EmojiIndex } from 'emoji-mart-vue-fast'
+import emojidata from 'emoji-mart-vue-fast/data/all.json'
 import generator, { MegalodonInterface } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store/index'
@@ -7,7 +8,19 @@ import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { CachedAccount } from '~/src/types/cachedAccount'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
+
+const emojiIndex = new EmojiIndex(emojidata)
+
+type EmojiMartEmoji = {
+  id: string
+  name: string
+  colons: string
+  text: string
+  emoticons: Array<string>
+  skin: any
+  native: string
+}
 
 type Suggest = {
   name: string
@@ -27,8 +40,8 @@ export type StatusState = {
   filteredHashtags: Array<SuggestHashtag>
   filteredEmojis: Array<SuggestEmoji>
   openSuggest: boolean
-  startIndex: number | null
-  matchWord: string | null
+  startIndex: number
+  matchWord: string
   client: MegalodonInterface | null
 }
 
@@ -38,8 +51,8 @@ const state = (): StatusState => ({
   filteredHashtags: [],
   filteredEmojis: [],
   openSuggest: false,
-  startIndex: null,
-  matchWord: null,
+  startIndex: 0,
+  matchWord: '',
   client: null
 })
 
@@ -113,10 +126,10 @@ const mutations: MutationTree<StatusState> = {
   [MUTATION_TYPES.CHANGE_OPEN_SUGGEST]: (state, value: boolean) => {
     state.openSuggest = value
   },
-  [MUTATION_TYPES.CHANGE_START_INDEX]: (state, index: number | null) => {
+  [MUTATION_TYPES.CHANGE_START_INDEX]: (state, index: number) => {
     state.startIndex = index
   },
-  [MUTATION_TYPES.CHANGE_MATCH_WORD]: (state, word: string | null) => {
+  [MUTATION_TYPES.CHANGE_MATCH_WORD]: (state, word: string) => {
     state.matchWord = word
   },
   [MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS]: state => {
@@ -144,8 +157,16 @@ type WordStart = {
   start: number
 }
 
+export const ACTION_TYPES = {
+  SUGGEST_ACCOUNT: 'suggestAccount',
+  SUGGEST_HASHTAG: 'suggestHashtag',
+  SUGGEST_EMOJI: 'suggestEmoji',
+  CANCEL_REQUEST: 'cancelRequest',
+  CLOSE_SUGGEST: 'closeSuggest'
+}
+
 const actions: ActionTree<StatusState, RootState> = {
-  suggestAccount: async ({ commit, rootState, dispatch }, wordStart: WordStart) => {
+  [ACTION_TYPES.SUGGEST_ACCOUNT]: async ({ commit, rootState, dispatch }, wordStart: WordStart) => {
     dispatch('cancelRequest')
     commit(MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
@@ -188,7 +209,7 @@ const actions: ActionTree<StatusState, RootState> = {
     }
     await Promise.all([searchCache(), searchAPI()])
   },
-  suggestHashtag: async ({ commit, rootState, dispatch }, wordStart: WordStart) => {
+  [ACTION_TYPES.SUGGEST_HASHTAG]: async ({ commit, rootState, dispatch }, wordStart: WordStart) => {
     dispatch('cancelRequest')
     commit(MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
@@ -231,16 +252,29 @@ const actions: ActionTree<StatusState, RootState> = {
     }
     await Promise.all([searchCache(), searchAPI()])
   },
-  suggestEmoji: ({ commit, rootState }, wordStart: WordStart) => {
+  [ACTION_TYPES.SUGGEST_EMOJI]: ({ commit, rootState }, wordStart: WordStart) => {
     const { word, start } = wordStart
     // Find native emojis
-    const filteredEmojiName: Array<string> = Object.keys(emojidata).filter((emoji: string) => `:${emojidata[emoji].name}:`.includes(word))
-    const filteredNativeEmoji: Array<SuggestEmoji> = filteredEmojiName.map((emoji: string) => {
+    const foundEmoji: EmojiMartEmoji = emojiIndex.findEmoji(word)
+    if (foundEmoji) {
       return {
-        name: `:${emojidata[emoji].name}:`,
-        code: emoji
+        name: foundEmoji.colons,
+        code: foundEmoji.native
       }
-    })
+    }
+    let filteredNativeEmoji: Array<SuggestEmoji> = []
+
+    const regexp = word.match(/^:(.+)/)
+    if (regexp && regexp.length > 1) {
+      const emojiName = regexp[1]
+      const filteredEmoji: Array<EmojiMartEmoji> = emojiIndex.search(emojiName)
+      filteredNativeEmoji = filteredEmoji.map((emoji: EmojiMartEmoji) => {
+        return {
+          name: emoji.colons,
+          code: emoji.native
+        }
+      })
+    }
     // Find custom emojis
     const filteredCustomEmoji: Array<Suggest> = rootState.TimelineSpace.emojis
       .map(emoji => {
@@ -264,16 +298,16 @@ const actions: ActionTree<StatusState, RootState> = {
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_EMOJIS)
     return filtered
   },
-  cancelRequest: ({ state }) => {
+  [ACTION_TYPES.CANCEL_REQUEST]: ({ state }) => {
     if (state.client) {
       state.client.cancel()
     }
   },
-  closeSuggest: ({ commit, dispatch }) => {
+  [ACTION_TYPES.CLOSE_SUGGEST]: ({ commit, dispatch }) => {
     dispatch('cancelRequest')
     commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, false)
-    commit(MUTATION_TYPES.CHANGE_START_INDEX, null)
-    commit(MUTATION_TYPES.CHANGE_MATCH_WORD, null)
+    commit(MUTATION_TYPES.CHANGE_START_INDEX, 0)
+    commit(MUTATION_TYPES.CHANGE_MATCH_WORD, '')
     commit(MUTATION_TYPES.CLEAR_FILTERED_SUGGESTION)
     commit(MUTATION_TYPES.CLEAR_FILTERED_ACCOUNTS)
     commit(MUTATION_TYPES.CLEAR_FILTERED_HASHTAGS)

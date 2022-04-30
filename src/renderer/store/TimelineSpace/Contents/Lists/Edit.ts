@@ -21,8 +21,13 @@ const mutations: MutationTree<EditState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_MEMBERS: 'fetchMembers',
+  REMOVE_ACCOUNT: 'removeAccount'
+}
+
 const actions: ActionTree<EditState, RootState> = {
-  fetchMembers: async ({ commit, rootState }, listId: string): Promise<Array<Entity.Account>> => {
+  [ACTION_TYPES.FETCH_MEMBERS]: async ({ commit, rootState }, listId: string): Promise<Array<Entity.Account>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -33,7 +38,7 @@ const actions: ActionTree<EditState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_MEMBERS, res.data)
     return res.data
   },
-  removeAccount: async ({ rootState }, remove: RemoveAccountFromList): Promise<{}> => {
+  [ACTION_TYPES.REMOVE_ACCOUNT]: async ({ rootState }, remove: RemoveAccountFromList): Promise<{}> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,

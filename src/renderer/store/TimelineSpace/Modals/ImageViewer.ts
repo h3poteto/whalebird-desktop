@@ -46,28 +46,36 @@ const mutations: MutationTree<ImageViewerState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  OPEN_MODAL: 'openModal',
+  CLOSE_MODAL: 'closeModal',
+  INCREMENT_INDEX: 'incrementIndex',
+  DECREMENT_INDEX: 'decrementIndex',
+  LOADED: 'loaded'
+}
+
 const actions: ActionTree<ImageViewerState, RootState> = {
-  openModal: ({ commit }, { currentIndex, mediaList }) => {
+  [ACTION_TYPES.OPEN_MODAL]: ({ commit }, { currentIndex, mediaList }) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, true)
     commit(MUTATION_TYPES.CHANGE_CURRENT_INDEX, currentIndex as number)
     commit(MUTATION_TYPES.CHANGE_MEDIA_LIST, mediaList as Array<Entity.Attachment>)
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
   },
-  closeModal: ({ commit }) => {
+  [ACTION_TYPES.CLOSE_MODAL]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, false)
     commit(MUTATION_TYPES.CHANGE_CURRENT_INDEX, -1)
     commit(MUTATION_TYPES.CHANGE_MEDIA_LIST, [])
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
   },
-  incrementIndex: ({ commit }) => {
+  [ACTION_TYPES.INCREMENT_INDEX]: ({ commit }) => {
     commit(MUTATION_TYPES.INCREMENT_INDEX)
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
   },
-  decrementIndex: ({ commit }) => {
+  [ACTION_TYPES.DECREMENT_INDEX]: ({ commit }) => {
     commit(MUTATION_TYPES.DECREMENT_INDEX)
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
   },
-  loaded: ({ commit }) => {
+  [ACTION_TYPES.LOADED]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
   }
 }

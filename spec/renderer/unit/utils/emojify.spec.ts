@@ -4,15 +4,21 @@ describe('emojify', () => {
   const emoji = [
     {
       shortcode: 'python',
-      url: 'https://example.com/python'
+      static_url: 'https://example.com/python',
+      url: 'https://example.com/python',
+      visible_in_picker: true
     },
     {
       shortcode: 'nodejs',
-      url: 'https://example.com/nodejs'
+      static_url: 'https://example.com/nodejs',
+      url: 'https://example.com/nodejs',
+      visible_in_picker: true
     },
     {
       shortcode: 'slack',
-      url: 'https://example.com/slack'
+      static_url: 'https://example.com/slack',
+      url: 'https://example.com/slack',
+      visible_in_picker: true
     }
   ]
   describe('Does not contain shortcode', () => {

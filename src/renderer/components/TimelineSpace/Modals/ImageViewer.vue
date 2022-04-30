@@ -11,7 +11,7 @@
           <span class="button-area"
             ><el-button type="text" v-show="showLeft" @click="decrementIndex()"> <font-awesome-icon icon="angle-left" /> </el-button
           ></span>
-          <Media :src="imageURL" :type="imageType"></Media>
+          <Media :src="imageURL" :imageType="imageType"></Media>
           <span class="button-area"
             ><el-button type="text" v-show="showRight" @click="incrementIndex()"> <font-awesome-icon icon="angle-right" /> </el-button
           ></span>
@@ -21,51 +21,49 @@
   </transition>
 </template>
 
-<script>
-import Media from './Media'
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/ImageViewer'
+import Media from './ImageViewer/Media.vue'
 
-export default {
+export default defineComponent({
+  name: 'image-viewer',
   components: {
     Media
   },
-  name: 'image-viewer',
-  computed: {
-    ...mapState({
-      modalOpen: state => state.TimelineSpace.Modals.ImageViewer.modalOpen
-    }),
-    imageURL() {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageURL']
-    },
-    imageType() {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/imageType']
-    },
-    showLeft() {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/showLeft']
-    },
-    showRight() {
-      return this.$store.getters['TimelineSpace/Modals/ImageViewer/showRight']
+  setup() {
+    const space = 'TimelineSpace/Modals/ImageViewer'
+    const store = useStore()
+
+    const modalOpen = computed(() => store.state.TimelineSpace.Modals.ImageViewer.modalOpen)
+    const imageURL = computed(() => store.getters[`${space}/imageURL`])
+    const imageType = computed(() => store.getters[`${space}/imageType`])
+    const showLeft = computed(() => store.getters[`${space}/showLeft`])
+    const showRight = computed(() => store.getters[`${space}/showRight`])
+
+    const close = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.CLOSE_MODAL}`)
     }
-  },
-  methods: {
-    close() {
-      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/closeModal')
-    },
-    decrementIndex() {
-      if (this.showLeft) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/decrementIndex')
-    },
-    incrementIndex() {
-      if (this.showRight) this.$store.dispatch('TimelineSpace/Modals/ImageViewer/incrementIndex')
-    },
-    closeHandle(event) {
-      switch (event.srcKey) {
-        case 'close':
-          this.close()
-          break
-      }
+    const decrementIndex = () => {
+      if (showLeft.value) store.dispatch(`${space}/${ACTION_TYPES.DECREMENT_INDEX}`)
+    }
+    const incrementIndex = () => {
+      if (showRight.value) store.dispatch(`${space}/${ACTION_TYPES.INCREMENT_INDEX}`)
+    }
+
+    return {
+      modalOpen,
+      imageURL,
+      imageType,
+      showLeft,
+      showRight,
+      close,
+      decrementIndex,
+      incrementIndex
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

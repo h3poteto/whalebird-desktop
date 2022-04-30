@@ -106,19 +106,26 @@ const mutations: MutationTree<JumpState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  JUMP_CURRENT_SELECTED: 'jumpCurrentSelected',
+  JUMP: 'jump',
+  SYNC_LIST_CHANNEL: 'syncListChannel',
+  SYNC_TAG_CHANNEL: 'syncTagChannel'
+}
+
 const actions: ActionTree<JumpState, RootState> = {
-  jumpCurrentSelected: ({ state, commit, rootState }) => {
+  [ACTION_TYPES.JUMP_CURRENT_SELECTED]: ({ state, commit, rootState }) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, false)
     router.push({ path: `/${rootState.TimelineSpace.account._id}/${state.selectedChannel.path}` })
   },
-  jump: ({ commit, rootState }, channel: Channel) => {
+  [ACTION_TYPES.JUMP]: ({ commit, rootState }, channel: Channel) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, false)
     router.push({ path: `/${rootState.TimelineSpace.account._id}/${channel.path}` })
   },
-  syncListChannel: ({ commit, rootState }) => {
+  [ACTION_TYPES.SYNC_LIST_CHANNEL]: ({ commit, rootState }) => {
     commit(MUTATION_TYPES.UPDATE_LIST_CHANNEL, rootState.TimelineSpace.SideMenu.lists)
   },
-  syncTagChannel: ({ commit, rootState }) => {
+  [ACTION_TYPES.SYNC_TAG_CHANNEL]: ({ commit, rootState }) => {
     commit(MUTATION_TYPES.UPDATE_TAG_CHANNEL, rootState.TimelineSpace.SideMenu.tags)
   }
 }

@@ -20,12 +20,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, toRefs } from 'vue'
 import DisplayStyle from '~/src/constants/displayStyle'
-import FailoverImg from '@/components/atoms/FailoverImg'
+import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import emojify from '@/utils/emojify'
+import { Entity } from 'megalodon'
 
-export default {
+export default defineComponent({
   new: 'quote-target',
   components: {
     FailoverImg
@@ -40,9 +42,10 @@ export default {
       default: 0
     }
   },
-  methods: {
-    username(account) {
-      switch (this.displayNameStyle) {
+  setup(props) {
+    const { displayNameStyle } = toRefs(props)
+    const username = (account: Entity.Account) => {
+      switch (displayNameStyle.value) {
         case DisplayStyle.DisplayNameAndUsername.value:
           if (account.display_name !== '') {
             return emojify(account.display_name, account.emojis)
@@ -55,24 +58,30 @@ export default {
           } else {
             return account.acct
           }
-        case DisplayStyle.Username.value:
+        default:
           return account.acct
       }
-    },
-    accountName(account) {
-      switch (this.displayNameStyle) {
+    }
+    const accountName = (account: Entity.Account) => {
+      switch (displayNameStyle.value) {
         case DisplayStyle.DisplayNameAndUsername.value:
           return `@${account.acct}`
         case DisplayStyle.DisplayName.value:
-        case DisplayStyle.Username.value:
+        default:
           return ''
       }
-    },
-    emojiText(content, emojis) {
+    }
+    const emojiText = (content: string, emojis: Array<Entity.Emoji>) => {
       return emojify(content, emojis)
     }
+
+    return {
+      username,
+      accountName,
+      emojiText
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

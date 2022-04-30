@@ -38,14 +38,22 @@ const mutations: MutationTree<ListMembershipState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  CHANGE_MODAL: 'changeModal',
+  SET_ACCOUNT: 'setAccount',
+  FETCH_LIST_MEMBERSHIP: 'fetchListMembership',
+  FETCH_LISTS: 'fetchLists',
+  CHANGE_BELONG_TO_LISTS: 'changeBelongToLists'
+}
+
 const actions: ActionTree<ListMembershipState, RootState> = {
-  changeModal: ({ commit }, value: boolean) => {
+  [ACTION_TYPES.CHANGE_MODAL]: ({ commit }, value: boolean) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, value)
   },
-  setAccount: ({ commit }, account: Entity.Account) => {
+  [ACTION_TYPES.SET_ACCOUNT]: ({ commit }, account: Entity.Account) => {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
-  fetchListMembership: async ({ commit, rootState }, account: Entity.Account) => {
+  [ACTION_TYPES.FETCH_LIST_MEMBERSHIP]: async ({ commit, rootState }, account: Entity.Account) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -56,7 +64,7 @@ const actions: ActionTree<ListMembershipState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_BELONG_TO_LISTS, res.data)
     return res.data
   },
-  fetchLists: async ({ commit, rootState }) => {
+  [ACTION_TYPES.FETCH_LISTS]: async ({ commit, rootState }) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -67,7 +75,7 @@ const actions: ActionTree<ListMembershipState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_LISTS, res.data)
     return res.data
   },
-  changeBelongToLists: async ({ rootState, dispatch, state }, belongToLists: Array<string>) => {
+  [ACTION_TYPES.CHANGE_BELONG_TO_LISTS]: async ({ rootState, dispatch, state }, belongToLists: Array<string>) => {
     // Calcurate diff
     const removedLists = state.belongToLists.map(l => l.id).filter(i => belongToLists.indexOf(i) === -1)
     const addedLists = belongToLists.filter(i => state.belongToLists.map(l => l.id).indexOf(i) === -1)

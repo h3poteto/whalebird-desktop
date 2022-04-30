@@ -119,7 +119,6 @@ export default {
         return false
       }
       this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/incrementMediaCount')
       this.$store
         .dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
         .then(() => {

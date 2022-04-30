@@ -1,6 +1,10 @@
 // https://github.com/tootsuite/mastodon/blob/master/app/javascript/mastodon/components/autosuggest_textarea.js
-const textAtCursorMatch = (str, cursorPosition, separators = ['@', '#', ':']) => {
-  let word
+const textAtCursorMatch = (
+  str: string,
+  cursorPosition: number,
+  separators: Array<string> = ['@', '#', ':']
+): [number | null, string | null] => {
+  let word: string
 
   const left = str.slice(0, cursorPosition).search(/\S+$/)
   const right = str.slice(cursorPosition).search(/\s/)

@@ -26,12 +26,17 @@ const mutations: MutationTree<ReportState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  OPEN_REPORT: 'openReport',
+  SUBMIT: 'submit'
+}
+
 const actions: ActionTree<ReportState, RootState> = {
-  openReport: ({ commit }, message: Entity.Status) => {
+  [ACTION_TYPES.OPEN_REPORT]: ({ commit }, message: Entity.Status) => {
     commit(MUTATION_TYPES.CHANGE_MESSAGE, message)
     commit(MUTATION_TYPES.CHANGE_MODAL_OPEN, true)
   },
-  submit: async ({ rootState }, { account_id, status_id, comment }) => {
+  [ACTION_TYPES.SUBMIT]: async ({ rootState }, { account_id, status_id, comment }) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,

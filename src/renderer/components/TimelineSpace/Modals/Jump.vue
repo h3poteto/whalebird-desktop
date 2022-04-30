@@ -1,11 +1,11 @@
 <template>
-  <el-dialog v-model="jumpModal" width="440px" class="jump-modal">
-    <el-form class="jump-form" v-on:submit.prevent="jump">
+  <el-dialog v-model="jumpModal" width="440px" custom-class="jump-modal">
+    <el-form class="jump-form" v-on:submit.prevent="jumpCurrentSelected">
       <div class="channel">
-        <input type="text" v-model="channel" :placeholder="$t('modals.jump.jump_to')" ref="channel" />
+        <input type="text" v-model="inputtedChannel" :placeholder="$t('modals.jump.jump_to')" ref="channelForm" v-focus autofocus />
         <ul class="channel-list">
           <li
-            v-for="c in filterdChannel"
+            v-for="c in filteredChannel"
             :class="c.name === selectedChannel.name ? 'channel-list-item selected' : 'channel-list-item'"
             @click="jump(c)"
             @mouseover="changeSelected(c)"
@@ -22,107 +22,69 @@
   </el-dialog>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, watch } from 'vue'
+import { useStore } from '@/store'
+import { MUTATION_TYPES, ACTION_TYPES, Channel } from '@/store/TimelineSpace/Modals/Jump'
 
-export default {
+export default defineComponent({
   name: 'jump',
-  computed: {
-    ...mapState('TimelineSpace/Modals/Jump', {
-      channelList: state => state.defaultChannelList.concat(state.tagChannelList).concat(state.listChannelList),
-      selectedChannel: state => state.selectedChannel
-    }),
-    channel: {
-      get() {
-        return this.$store.state.TimelineSpace.Modals.Jump.channel
-      },
-      set(value) {
-        this.$store.commit('TimelineSpace/Modals/Jump/updateChannel', value)
-      }
-    },
-    filterdChannel() {
-      return this.filterChannelForm()
-    },
-    jumpModal: {
-      get() {
-        return this.$store.state.TimelineSpace.Modals.Jump.modalOpen
-      },
-      set(value) {
-        this.$store.commit('TimelineSpace/Modals/Jump/changeModal', value)
-      }
-    },
-    shortcutEnabled: function () {
-      return this.jumpModal
-    }
-  },
-  watch: {
-    channel: function (_newChannel, _oldChannel) {
-      this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', this.filterChannelForm()[0])
-    },
-    jumpModal: function (newModal, oldModal) {
-      if (!oldModal && newModal) {
-        this.$nextTick(function () {
-          this.$store.dispatch('TimelineSpace/Modals/Jump/syncListChannel')
-          this.$store.dispatch('TimelineSpace/Modals/Jump/syncTagChannel')
-          this.$refs.channel.focus()
-        })
+  setup() {
+    const space = 'TimelineSpace/Modals/Jump'
+    const store = useStore()
+
+    const channelList = computed(() =>
+      store.state.TimelineSpace.Modals.Jump.defaultChannelList
+        .concat(store.state.TimelineSpace.Modals.Jump.tagChannelList)
+        .concat(store.state.TimelineSpace.Modals.Jump.listChannelList)
+    )
+    const selectedChannel = computed(() => store.state.TimelineSpace.Modals.Jump.selectedChannel)
+    const inputtedChannel = computed({
+      get: () => store.state.TimelineSpace.Modals.Jump.channel,
+      set: (value: string) => store.commit(`${space}/${MUTATION_TYPES.UPDATE_CHANNEL}`, value)
+    })
+    const jumpModal = computed({
+      get: () => store.state.TimelineSpace.Modals.Jump.modalOpen,
+      set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_MODAL}`, value)
+    })
+    // const shortcutEnabled = computed(() => jumpModal.value)
+    const filteredChannel = computed(() =>
+      channelList.value.filter(c => c.name.toLowerCase().indexOf(inputtedChannel.value.toLowerCase()) !== -1)
+    )
+
+    watch(inputtedChannel, (_new, _old) => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_SELECTED}`, filteredChannel.value[0])
+    })
+    watch(jumpModal, (newValue, oldValue) => {
+      if (!oldValue && newValue) {
+        store.dispatch(`${space}/${ACTION_TYPES.SYNC_LIST_CHANNEL}`)
+        store.dispatch(`${space}/${ACTION_TYPES.SYNC_TAG_CHANNEL}`)
       } else {
-        this.channel = ''
+        store.commit(`${space}/${MUTATION_TYPES.UPDATE_CHANNEL}`, '')
       }
+    })
+
+    const changeSelected = (channel: Channel) => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_SELECTED}`, channel)
     }
-  },
-  methods: {
-    filterChannelForm() {
-      return this.channelList.filter(c => {
-        return c.name.toLowerCase().indexOf(this.channel.toLowerCase()) !== -1
-      })
-    },
-    nextChannel() {
-      const filterd = this.filterChannelForm()
-      const i = filterd.findIndex(e => {
-        return e.name === this.selectedChannel.name
-      })
-      if (i !== undefined && i < filterd.length - 1) {
-        this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', filterd[i + 1])
-      }
-    },
-    prevChannel() {
-      const filterd = this.filterChannelForm()
-      const i = filterd.findIndex(e => {
-        return e.name === this.selectedChannel.name
-      })
-      if (i !== undefined && i > 0) {
-        this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', filterd[i - 1])
-      }
-    },
-    changeSelected(channel) {
-      this.$store.commit('TimelineSpace/Modals/Jump/changeSelected', channel)
-    },
-    jumpCurrentSelected() {
-      if (this.jumpModal) {
-        this.$store.dispatch('TimelineSpace/Modals/Jump/jumpCurrentSelected')
-      }
-    },
-    jump(channel) {
-      this.$store.dispatch('TimelineSpace/Modals/Jump/jump', channel)
-    },
-    handleKey(event) {
-      switch (event.srcKey) {
-        case 'next':
-          this.nextChannel()
-          break
-        case 'prev':
-          this.prevChannel()
-          break
-        case 'select':
-          this.jumpCurrentSelected()
-          break
-        default:
-          return true
-      }
+    const jump = (channel: Channel) => {
+      store.dispatch(`${space}/${ACTION_TYPES.JUMP}`, channel)
+    }
+    const jumpCurrentSelected = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.JUMP_CURRENT_SELECTED}`)
+    }
+
+    return {
+      selectedChannel,
+      inputtedChannel,
+      jumpModal,
+      filteredChannel,
+      jump,
+      changeSelected,
+      jumpCurrentSelected
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
