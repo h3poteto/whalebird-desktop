@@ -21,6 +21,8 @@
   "main": "./dist/electron/main.js",
   "scripts": {
     "dev": "node .electron-vue/dev-runner.js",
+    "dev:main": "webpack --node-env=development --mode development --progress --config .electron-vue/webpack.main.config.js",
+    "dev:renderer": "webpack --node-env=development --mode development --progress --config .electron-vue/webpack.renderer.config.js",
     "lint": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter src spec",
     "lint:fix": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter --fix src spec",
     "stylelint": "stylelint '**/*.vue'",
@@ -36,7 +38,7 @@
     "pack": "yarn run pack:main && yarn run pack:renderer",
     "pack:main": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.renderer.config.js",
-    "postinstall": "yarn run lint:fix",
+    "typecheck": "tsc -p . --noEmit",
     "spec": "NODE_ENV=test jest -u --maxWorkers=3"
   },
   "jest": {
@@ -73,7 +75,6 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.0",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
-    "vue-virtual-scroller": "2.0.0-alpha.1",
     "@trodi/electron-splashscreen": "^1.0.2",
     "about-window": "^1.15.2",
     "animate.css": "^4.1.0",
@@ -108,6 +109,7 @@
     "vue-popperjs": "^2.3.0",
     "vue-resize": "^2.0.0-alpha.1",
     "vue-router": "^4.0.14",
+    "vue-virtual-scroller": "2.0.0-alpha.1",
     "vue3-i18next": "^0.2.0",
     "vuex": "^4.0.2",
     "vuex-router-sync": "^6.0.0-rc.1"

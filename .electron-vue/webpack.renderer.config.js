@@ -18,29 +18,13 @@ let rendererConfig = {
   module: {
     rules: [
       {
-        test: /\.(js|vue|ts)$/,
-        enforce: 'pre',
-        exclude: /node_modules/,
-        use: {
-          loader: 'eslint-loader',
-          options: {
-            formatter: require('eslint-friendly-formatter')
-          }
-        }
-      },
-      {
         test: /\.vue$/,
         use: {
           loader: 'vue-loader',
           options: {
             extractCSS: process.env.NODE_ENV === 'production',
-            loaders: {
-              js: 'ts-loader',
-              ts: 'ts-loader',
-              sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
-              scss: 'vue-style-loader!css-loader!sass-loader',
-              less: 'vue-style-loader!css-loader!less-loader'
-            }
+            esModule: true,
+            optimizeSSR: false
           }
         }
       },
@@ -109,19 +93,20 @@ let rendererConfig = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader'
+            loader: 'babel-loader?cacheDirectory'
           },
           {
             loader: 'ts-loader',
             options: {
-              appendTsSuffixTo: [/\.vue$/]
+              appendTsSuffixTo: [/\.vue$/],
+              transpileOnly: true
             }
           }
         ]
       },
       {
         test: /\.js$/,
-        use: 'babel-loader',
+        use: 'babel-loader?cacheDirectory',
         exclude: /node_modules/
       },
       {
