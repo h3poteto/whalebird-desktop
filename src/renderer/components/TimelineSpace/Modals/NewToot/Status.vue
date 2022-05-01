@@ -15,7 +15,14 @@
       autofocus
     >
     </textarea>
-    <el-popover placement="bottom-start" width="300" trigger="manual" v-model:visible="openSuggest" popper-class="suggest-popper">
+    <el-popover
+      placement="bottom-start"
+      width="300"
+      trigger="focus"
+      popper-class="suggest-popper"
+      :popper-options="popperOptions()"
+      ref="suggestRef"
+    >
       <ul class="suggest-list">
         <li
           v-for="(item, index) in filteredSuggestion"
@@ -35,11 +42,11 @@
       </ul>
       <!-- dummy object to open suggest popper -->
       <template #reference>
-        <span></span>
+        <el-button type="text" ref="suggestButtonRef" class="dummy-button">dummy</el-button>
       </template>
     </el-popover>
     <div>
-      <el-popover placement="bottom" width="281" trigger="click" popper-class="new-toot-emoji-picker" ref="new_toot_emoji_picker">
+      <el-popover placement="bottom" width="281" trigger="click" popper-class="new-toot-emoji-picker">
         <picker
           :data="emojiIndex"
           set="twitter"
@@ -63,11 +70,13 @@
 <script lang="ts">
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
-import { defineComponent, computed, toRefs, ref } from 'vue'
+import { defineComponent, computed, toRefs, ref, onBeforeUnmount, onMounted } from 'vue'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
+import { ElButton } from 'element-plus'
+
 import suggestText from '@/utils/suggestText'
 import { useStore } from '@/store'
-import { MUTATION_TYPES, ACTION_TYPES } from '@/store/TimelineSpace/Modals/NewToot/Status'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/NewToot/Status'
 
 export default defineComponent({
   name: 'status',
@@ -99,14 +108,12 @@ export default defineComponent({
     const { modelValue } = toRefs(props)
     const highlightedIndex = ref(0)
     const statusRef = ref<HTMLTextAreaElement>()
+    const suggestButtonRef = ref<InstanceType<typeof ElButton>>()
+    const suggestRef = ref()
 
     const filteredAccounts = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.filteredAccounts)
     const filteredHashtags = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.filteredHashtags)
     const filteredSuggestion = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.filteredSuggestion)
-    const openSuggest = computed({
-      get: () => store.state.TimelineSpace.Modals.NewToot.Status.openSuggest,
-      set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_OPEN_SUGGEST}`, value)
-    })
     const startIndex = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.startIndex)
     const matchWord = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.matchWord)
     const customEmojis = computed(() => store.getters[`${space}/pickerEmojis`])
@@ -114,17 +121,47 @@ export default defineComponent({
       custom: customEmojis.value
     })
 
+    const onKeyUp = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowUp') {
+        suggestHighlight(highlightedIndex.value - 1)
+        event.preventDefault()
+      }
+      if (event.key === 'ArrowDown') {
+        suggestHighlight(highlightedIndex.value + 1)
+        event.preventDefault()
+      }
+      if (event.key === 'Enter') {
+        selectCurrentItem()
+        event.preventDefault()
+      }
+      if (event.key === 'Escape') {
+        closeSuggest()
+        event.preventDefault()
+      }
+    }
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('keyup', onKeyUp)
+      closeSuggest()
+    })
+    onMounted(() => {
+      document.addEventListener('keyup', onKeyUp)
+    })
+
+    const openSuggest = () => {
+      suggestButtonRef.value?.$el.focus()
+      statusRef.value?.click()
+    }
     const closeSuggest = () => {
       store.dispatch(`${space}/${ACTION_TYPES.CLOSE_SUGGEST}`)
-      if (openSuggest.value) {
-        highlightedIndex.value = 0
-      }
-      ctx.emit('suggestOpened', false)
+      highlightedIndex.value = 0
+      suggestButtonRef.value?.$el.blur()
+      statusRef.value?.focus()
     }
     const suggestAccount = async (start: number, word: string) => {
       try {
         await store.dispatch(`${space}/${ACTION_TYPES.SUGGEST_ACCOUNT}`, { word: word, start: start })
-        ctx.emit('suggestOpened', true)
+        openSuggest()
         return true
       } catch (err) {
         console.log(err)
@@ -134,7 +171,7 @@ export default defineComponent({
     const suggestHashtag = async (start: number, word: string) => {
       try {
         await store.dispatch(`${space}/${ACTION_TYPES.SUGGEST_HASHTAG}`, { word: word, start: start })
-        ctx.emit('suggestOpened', true)
+        openSuggest()
         return true
       } catch (err) {
         console.log(err)
@@ -144,7 +181,7 @@ export default defineComponent({
     const suggestEmoji = async (start: number, word: string) => {
       try {
         store.dispatch(`${space}/${ACTION_TYPES.SUGGEST_EMOJI}`, { word: word, start: start })
-        ctx.emit('suggestOpened', true)
+        openSuggest()
         return true
       } catch (err) {
         console.log(err)
@@ -193,20 +230,25 @@ export default defineComponent({
         highlightedIndex.value = index
       }
     }
+    const selectCurrentItem = () => {
+      const item = filteredSuggestion.value[highlightedIndex.value]
+      insertItem(item)
+    }
     const insertItem = item => {
-      console.log('inserted', item.name)
-      if (item.code) {
-        const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.code} ${modelValue.value.slice(
-          startIndex.value + matchWord.value.length
-        )}`
-        ctx.emit('update:modelValue', str)
-      } else {
-        const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.name} ${modelValue.value.slice(
-          startIndex.value + matchWord.value.length
-        )}`
-        console.log(str)
-        ctx.emit('update:modelValue', str)
+      if (item) {
+        if (item.code) {
+          const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.code} ${modelValue.value.slice(
+            startIndex.value + matchWord.value.length
+          )}`
+          ctx.emit('update:modelValue', str)
+        } else {
+          const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.name} ${modelValue.value.slice(
+            startIndex.value + matchWord.value.length
+          )}`
+          ctx.emit('update:modelValue', str)
+        }
       }
+
       closeSuggest()
     }
     const selectEmoji = emoji => {
@@ -217,19 +259,38 @@ export default defineComponent({
         // Custom emoji don't have natvie code
         ctx.emit('update:modelValue', `${modelValue.value.slice(0, current)}${emoji.name} ${modelValue.value.slice(current)}`)
       }
+      closeSuggest()
+    }
+    const popperOptions = () => {
+      const element = document.querySelector('#status_textarea')
+      return {
+        modifiers: [
+          {
+            name: 'preventOverflow',
+            options: {
+              boundary: element,
+              rootBoundary: 'viewport',
+              altBoundary: true
+            }
+          }
+        ]
+      }
     }
 
     return {
+      statusRef,
+      suggestButtonRef,
+      suggestRef,
       emojiIndex,
       highlightedIndex,
       filteredAccounts,
       filteredHashtags,
       filteredSuggestion,
-      openSuggest,
       startSuggest,
       suggestHighlight,
       insertItem,
-      selectEmoji
+      selectEmoji,
+      popperOptions
     }
   }
 })
@@ -305,6 +366,15 @@ export default defineComponent({
     &:focus {
       outline: 0;
     }
+  }
+
+  .dummy-button {
+    height: 0;
+    font-size: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+    display: block;
   }
 
   .emoji-selector {

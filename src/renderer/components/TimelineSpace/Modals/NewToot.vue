@@ -7,7 +7,7 @@
       :before-close="closeConfirm"
       width="600px"
       custom-class="new-toot-modal"
-      ref="dialogRef"
+      v-if="newTootModal"
     >
       <el-form v-on:submit.prevent="toot" role="form">
         <Quote :message="quoteToMessage" :displayNameStyle="displayNameStyle" v-if="quoteToMessage !== null" ref="quoteRef"></Quote>
@@ -145,7 +145,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, computed, onMounted, ComponentPublicInstance, nextTick } from 'vue'
 import { useI18next } from 'vue3-i18next'
-import { ElMessage, ElMessageBox, ElDialog } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { Entity } from 'megalodon'
 import { useStore } from '@/store'
 import Visibility from '~/src/constants/visibility'
@@ -184,7 +184,6 @@ export default defineComponent({
     const imageRef = ref<HTMLInputElement>()
     const pollRef = ref<ComponentPublicInstance>()
     const spoilerRef = ref<HTMLElement>()
-    const dialogRef = ref<InstanceType<typeof ElDialog>>()
     const quoteRef = ref<ComponentPublicInstance>()
 
     const quoteToMessage = computed(() => store.state.TimelineSpace.Modals.NewToot.quoteToMessage)
@@ -230,6 +229,7 @@ export default defineComponent({
     store.dispatch(`${space}/${ACTION_TYPES.SETUP_LOADING}`)
 
     onMounted(() => {
+      console.log('new toot mounted')
       EventEmitter.on('image-uploaded', () => {
         if (previewRef.value) {
           statusHeight.value = statusHeight.value - previewRef.value.offsetHeight
@@ -366,6 +366,7 @@ export default defineComponent({
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_SENSITIVE}`, !sensitive.value)
     }
     const closeConfirm = (done: Function) => {
+      if (!newTootModal.value) return
       if (statusText.value.length === 0) {
         done()
       } else {
@@ -467,7 +468,6 @@ export default defineComponent({
       imageRef,
       pollRef,
       spoilerRef,
-      dialogRef,
       quoteRef,
       // computed
       quoteToMessage,

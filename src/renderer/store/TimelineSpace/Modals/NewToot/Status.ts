@@ -39,7 +39,6 @@ export type StatusState = {
   filteredAccounts: Array<SuggestAccount>
   filteredHashtags: Array<SuggestHashtag>
   filteredEmojis: Array<SuggestEmoji>
-  openSuggest: boolean
   startIndex: number
   matchWord: string
   client: MegalodonInterface | null
@@ -50,7 +49,6 @@ const state = (): StatusState => ({
   filteredAccounts: [],
   filteredHashtags: [],
   filteredEmojis: [],
-  openSuggest: false,
   startIndex: 0,
   matchWord: '',
   client: null
@@ -63,7 +61,6 @@ export const MUTATION_TYPES = {
   CLEAR_FILTERED_HASHTAGS: 'clearFilteredHashtags',
   UPDATE_FILTERED_EMOJIS: 'updateFilteredEmojis',
   CLEAR_FILTERED_EMOJIS: 'clearFilteredEmojis',
-  CHANGE_OPEN_SUGGEST: 'changeOpenSuggest',
   CHANGE_START_INDEX: 'changeStartIndex',
   CHANGE_MATCH_WORD: 'changeMatchWord',
   FILTERED_SUGGESTION_FROM_HASHTAGS: 'filteredSuggestionFromHashtags',
@@ -123,9 +120,6 @@ const mutations: MutationTree<StatusState> = {
   [MUTATION_TYPES.UPDATE_FILTERED_EMOJIS]: (state, emojis: Array<SuggestEmoji>) => {
     state.filteredEmojis = emojis
   },
-  [MUTATION_TYPES.CHANGE_OPEN_SUGGEST]: (state, value: boolean) => {
-    state.openSuggest = value
-  },
   [MUTATION_TYPES.CHANGE_START_INDEX]: (state, index: number) => {
     state.startIndex = index
   },
@@ -177,7 +171,6 @@ const actions: ActionTree<StatusState, RootState> = {
       const matched = accounts.map(account => account.acct).filter(acct => acct.includes(target))
       if (matched.length === 0) throw new Error('Empty')
       commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, matched)
-      commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
       commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
       commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
@@ -201,7 +194,6 @@ const actions: ActionTree<StatusState, RootState> = {
         ownerID: rootState.TimelineSpace.account._id!,
         accts: res.data.map(a => a.acct)
       } as InsertAccountCache)
-      commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
       commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
       commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_ACCOUNTS)
@@ -220,7 +212,6 @@ const actions: ActionTree<StatusState, RootState> = {
       const matched = tags.map(tag => tag.tagName).filter(tag => tag.includes(target))
       if (matched.length === 0) throw new Error('Empty')
       commit(MUTATION_TYPES.APPEND_FILTERED_HASHTAGS, matched)
-      commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
       commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
       commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
@@ -244,7 +235,6 @@ const actions: ActionTree<StatusState, RootState> = {
         'insert-cache-hashtags',
         res.data.hashtags.map(tag => tag.name)
       )
-      commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
       commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
       commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_HASHTAGS)
@@ -292,7 +282,6 @@ const actions: ActionTree<StatusState, RootState> = {
         return array.findIndex(ar => e.name === ar.name) === i
       })
     )
-    commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, true)
     commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
     commit(MUTATION_TYPES.CHANGE_MATCH_WORD, word)
     commit(MUTATION_TYPES.FILTERED_SUGGESTION_FROM_EMOJIS)
@@ -305,7 +294,6 @@ const actions: ActionTree<StatusState, RootState> = {
   },
   [ACTION_TYPES.CLOSE_SUGGEST]: ({ commit, dispatch }) => {
     dispatch('cancelRequest')
-    commit(MUTATION_TYPES.CHANGE_OPEN_SUGGEST, false)
     commit(MUTATION_TYPES.CHANGE_START_INDEX, 0)
     commit(MUTATION_TYPES.CHANGE_MATCH_WORD, '')
     commit(MUTATION_TYPES.CLEAR_FILTERED_SUGGESTION)
