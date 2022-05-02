@@ -73,6 +73,7 @@ import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
 import { defineComponent, computed, toRefs, ref, onBeforeUnmount, onMounted } from 'vue'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
+import { useMagicKeys, whenever } from '@vueuse/core'
 
 import suggestText from '@/utils/suggestText'
 import { useStore } from '@/store'
@@ -104,6 +105,12 @@ export default defineComponent({
   setup(props, ctx) {
     const space = 'TimelineSpace/Modals/NewToot/Status'
     const store = useStore()
+    const { up, down, enter, escape, Ctrl_Enter } = useMagicKeys({
+      passive: false,
+      onEventFired(e) {
+        if (e.key === 'Enter' && suggestOpened.value) e.preventDefault()
+      }
+    })
 
     const { modelValue } = toRefs(props)
     const highlightedIndex = ref(0)
@@ -121,31 +128,27 @@ export default defineComponent({
       custom: customEmojis.value
     })
 
-    const onKeyUp = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowUp') {
-        event.preventDefault()
-        suggestHighlight(highlightedIndex.value - 1)
-      }
-      if (event.key === 'ArrowDown') {
-        event.preventDefault()
-        suggestHighlight(highlightedIndex.value + 1)
-      }
-      if (event.key === 'Enter') {
-        event.preventDefault()
-        selectCurrentItem()
-      }
-      if (event.key === 'Escape') {
-        event.preventDefault()
-        closeSuggest()
-      }
-    }
+    whenever(up, () => {
+      suggestHighlight(highlightedIndex.value - 1)
+    })
+    whenever(down, () => {
+      suggestHighlight(highlightedIndex.value + 1)
+    })
+    whenever(enter, () => {
+      selectCurrentItem()
+    })
+    whenever(escape, () => {
+      closeSuggest()
+    })
+    whenever(Ctrl_Enter, () => {
+      ctx.emit('toot')
+    })
 
     onBeforeUnmount(() => {
-      document.removeEventListener('keyup', onKeyUp)
       closeSuggest()
     })
     onMounted(() => {
-      document.addEventListener('keyup', onKeyUp)
+      statusRef.value?.focus()
     })
 
     const openSuggest = () => {
