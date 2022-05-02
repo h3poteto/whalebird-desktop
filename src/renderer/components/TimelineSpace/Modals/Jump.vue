@@ -23,7 +23,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, watch } from 'vue'
+import { defineComponent, computed, ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { MUTATION_TYPES, ACTION_TYPES, Channel } from '@/store/TimelineSpace/Modals/Jump'
 
@@ -32,6 +33,9 @@ export default defineComponent({
   setup() {
     const space = 'TimelineSpace/Modals/Jump'
     const store = useStore()
+    const { up, down, enter } = useMagicKeys()
+
+    const channelForm = ref<HTMLInputElement>()
 
     const channelList = computed(() =>
       store.state.TimelineSpace.Modals.Jump.defaultChannelList
@@ -47,23 +51,50 @@ export default defineComponent({
       get: () => store.state.TimelineSpace.Modals.Jump.modalOpen,
       set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_MODAL}`, value)
     })
-    // const shortcutEnabled = computed(() => jumpModal.value)
+
     const filteredChannel = computed(() =>
       channelList.value.filter(c => c.name.toLowerCase().indexOf(inputtedChannel.value.toLowerCase()) !== -1)
     )
 
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.SYNC_LIST_CHANNEL}`)
+      store.dispatch(`${space}/${ACTION_TYPES.SYNC_TAG_CHANNEL}`)
+      nextTick(() => {
+        channelForm.value?.focus()
+      })
+    })
+    onBeforeUnmount(() => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_CHANNEL}`, '')
+    })
+
     watch(inputtedChannel, (_new, _old) => {
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_SELECTED}`, filteredChannel.value[0])
     })
-    watch(jumpModal, (newValue, oldValue) => {
-      if (!oldValue && newValue) {
-        store.dispatch(`${space}/${ACTION_TYPES.SYNC_LIST_CHANNEL}`)
-        store.dispatch(`${space}/${ACTION_TYPES.SYNC_TAG_CHANNEL}`)
-      } else {
-        store.commit(`${space}/${MUTATION_TYPES.UPDATE_CHANNEL}`, '')
-      }
+
+    whenever(up, () => {
+      prevChannel()
+    })
+    whenever(down, () => {
+      nextChannel()
+    })
+    whenever(enter, () => {
+      jumpCurrentSelected()
     })
 
+    const nextChannel = () => {
+      const filtered = filteredChannel.value
+      const i = filtered.findIndex(e => e.name === selectedChannel.value.name)
+      if (i !== undefined && i < filtered.length - 1) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SELECTED}`, filtered[i + 1])
+      }
+    }
+    const prevChannel = () => {
+      const filtered = filteredChannel.value
+      const i = filtered.findIndex(e => e.name === selectedChannel.value.name)
+      if (i !== undefined && i > 0) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SELECTED}`, filtered[i - 1])
+      }
+    }
     const changeSelected = (channel: Channel) => {
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_SELECTED}`, channel)
     }
@@ -75,6 +106,7 @@ export default defineComponent({
     }
 
     return {
+      channelForm,
       selectedChannel,
       inputtedChannel,
       jumpModal,
