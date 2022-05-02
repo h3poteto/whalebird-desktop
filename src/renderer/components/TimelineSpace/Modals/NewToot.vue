@@ -24,6 +24,8 @@
           :height="statusHeight"
           @paste="onPaste"
           @toot="toot"
+          ref="statusRef"
+          v-if="newTootModal"
         />
       </el-form>
       <Poll
@@ -185,6 +187,7 @@ export default defineComponent({
     const pollRef = ref<ComponentPublicInstance>()
     const spoilerRef = ref<HTMLElement>()
     const quoteRef = ref<ComponentPublicInstance>()
+    const statusRef = ref<InstanceType<typeof Status>>()
 
     const quoteToMessage = computed(() => store.state.TimelineSpace.Modals.NewToot.quoteToMessage)
     const attachedMedias = computed(() => store.state.TimelineSpace.Modals.NewToot.attachedMedias)
@@ -226,10 +229,8 @@ export default defineComponent({
       set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_PINED_HASHTAG}`, value)
     })
 
-    store.dispatch(`${space}/${ACTION_TYPES.SETUP_LOADING}`)
-
     onMounted(() => {
-      console.log('new toot mounted')
+      store.dispatch(`${space}/${ACTION_TYPES.SETUP_LOADING}`)
       EventEmitter.on('image-uploaded', () => {
         if (previewRef.value) {
           statusHeight.value = statusHeight.value - previewRef.value.offsetHeight
@@ -367,6 +368,7 @@ export default defineComponent({
     }
     const closeConfirm = (done: Function) => {
       if (!newTootModal.value) return
+      if (statusRef.value?.suggestOpened) return
       if (statusText.value.length === 0) {
         done()
       } else {
@@ -469,6 +471,7 @@ export default defineComponent({
       pollRef,
       spoilerRef,
       quoteRef,
+      statusRef,
       // computed
       quoteToMessage,
       attachedMedias,

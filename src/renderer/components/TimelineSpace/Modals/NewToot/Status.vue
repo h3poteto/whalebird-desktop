@@ -2,7 +2,7 @@
   <div class="status">
     <textarea
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', $event.target?.value)"
       ref="statusRef"
       @paste="$emit('paste', $event)"
       v-on:input="startSuggest"
@@ -18,10 +18,11 @@
     <el-popover
       placement="bottom-start"
       width="300"
-      trigger="focus"
+      trigger="manual"
       popper-class="suggest-popper"
       :popper-options="popperOptions()"
       ref="suggestRef"
+      v-model:visible="suggestOpened"
     >
       <ul class="suggest-list">
         <li
@@ -110,6 +111,7 @@ export default defineComponent({
     const statusRef = ref<HTMLTextAreaElement>()
     const suggestButtonRef = ref<InstanceType<typeof ElButton>>()
     const suggestRef = ref()
+    const suggestOpened = ref<boolean>(false)
 
     const filteredAccounts = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.filteredAccounts)
     const filteredHashtags = computed(() => store.state.TimelineSpace.Modals.NewToot.Status.filteredHashtags)
@@ -123,20 +125,20 @@ export default defineComponent({
 
     const onKeyUp = (event: KeyboardEvent) => {
       if (event.key === 'ArrowUp') {
-        suggestHighlight(highlightedIndex.value - 1)
         event.preventDefault()
+        suggestHighlight(highlightedIndex.value - 1)
       }
       if (event.key === 'ArrowDown') {
-        suggestHighlight(highlightedIndex.value + 1)
         event.preventDefault()
+        suggestHighlight(highlightedIndex.value + 1)
       }
       if (event.key === 'Enter') {
-        selectCurrentItem()
         event.preventDefault()
+        selectCurrentItem()
       }
       if (event.key === 'Escape') {
-        closeSuggest()
         event.preventDefault()
+        closeSuggest()
       }
     }
 
@@ -149,14 +151,16 @@ export default defineComponent({
     })
 
     const openSuggest = () => {
-      suggestButtonRef.value?.$el.focus()
-      statusRef.value?.click()
+      suggestOpened.value = true
+      // suggestButtonRef.value?.$el.focus()
+      // statusRef.value?.click()
     }
     const closeSuggest = () => {
       store.dispatch(`${space}/${ACTION_TYPES.CLOSE_SUGGEST}`)
       highlightedIndex.value = 0
-      suggestButtonRef.value?.$el.blur()
-      statusRef.value?.focus()
+      // suggestButtonRef.value?.$el.blur()
+      // statusRef.value?.focus()
+      suggestOpened.value = false
     }
     const suggestAccount = async (start: number, word: string) => {
       try {
@@ -235,18 +239,17 @@ export default defineComponent({
       insertItem(item)
     }
     const insertItem = item => {
-      if (item) {
-        if (item.code) {
-          const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.code} ${modelValue.value.slice(
-            startIndex.value + matchWord.value.length
-          )}`
-          ctx.emit('update:modelValue', str)
-        } else {
-          const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.name} ${modelValue.value.slice(
-            startIndex.value + matchWord.value.length
-          )}`
-          ctx.emit('update:modelValue', str)
-        }
+      if (!item) return
+      if (item.code) {
+        const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.code} ${modelValue.value.slice(
+          startIndex.value + matchWord.value.length
+        )}`
+        ctx.emit('update:modelValue', str)
+      } else {
+        const str = `${modelValue.value.slice(0, startIndex.value - 1)}${item.name} ${modelValue.value.slice(
+          startIndex.value + matchWord.value.length
+        )}`
+        ctx.emit('update:modelValue', str)
       }
 
       closeSuggest()
@@ -281,6 +284,7 @@ export default defineComponent({
       statusRef,
       suggestButtonRef,
       suggestRef,
+      suggestOpened,
       emojiIndex,
       highlightedIndex,
       filteredAccounts,
