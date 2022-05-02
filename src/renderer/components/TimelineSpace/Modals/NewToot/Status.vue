@@ -71,7 +71,7 @@
 <script lang="ts">
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
-import { defineComponent, computed, toRefs, ref, onBeforeUnmount, onMounted } from 'vue'
+import { defineComponent, computed, toRefs, ref, onBeforeUnmount, onMounted, nextTick } from 'vue'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import { useMagicKeys, whenever } from '@vueuse/core'
 
@@ -129,13 +129,13 @@ export default defineComponent({
     })
 
     whenever(up, () => {
-      suggestHighlight(highlightedIndex.value - 1)
+      if (suggestOpened.value) suggestHighlight(highlightedIndex.value - 1)
     })
     whenever(down, () => {
-      suggestHighlight(highlightedIndex.value + 1)
+      if (suggestOpened.value) suggestHighlight(highlightedIndex.value + 1)
     })
     whenever(enter, () => {
-      selectCurrentItem()
+      if (suggestOpened.value) selectCurrentItem()
     })
     whenever(escape, () => {
       closeSuggest()
@@ -148,7 +148,9 @@ export default defineComponent({
       closeSuggest()
     })
     onMounted(() => {
-      statusRef.value?.focus()
+      nextTick(() => {
+        statusRef.value?.focus()
+      })
     })
 
     const openSuggest = () => {
