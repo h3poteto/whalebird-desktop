@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/ImageViewer'
 import Media from './ImageViewer/Media.vue'
@@ -35,12 +36,23 @@ export default defineComponent({
   setup() {
     const space = 'TimelineSpace/Modals/ImageViewer'
     const store = useStore()
+    const { left, right, Escape } = useMagicKeys()
 
     const modalOpen = computed(() => store.state.TimelineSpace.Modals.ImageViewer.modalOpen)
     const imageURL = computed(() => store.getters[`${space}/imageURL`])
     const imageType = computed(() => store.getters[`${space}/imageType`])
     const showLeft = computed(() => store.getters[`${space}/showLeft`])
     const showRight = computed(() => store.getters[`${space}/showRight`])
+
+    whenever(left, () => {
+      decrementIndex()
+    })
+    whenever(right, () => {
+      incrementIndex()
+    })
+    whenever(Escape, () => {
+      close()
+    })
 
     const close = () => {
       store.dispatch(`${space}/${ACTION_TYPES.CLOSE_MODAL}`)
