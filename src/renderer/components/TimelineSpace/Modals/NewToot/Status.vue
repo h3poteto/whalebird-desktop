@@ -109,10 +109,12 @@ export default defineComponent({
       passive: false,
       onEventFired(e) {
         if (e.key === 'Enter' && suggestOpened.value) e.preventDefault()
+        if (e.key === 'ArrowUp' && suggestOpened.value) e.preventDefault()
+        if (e.key === 'ArrowDown' && suggestOpened.value) e.preventDefault()
       }
     })
 
-    const { modelValue } = toRefs(props)
+    const { modelValue, fixCursorPos } = toRefs(props)
     const highlightedIndex = ref(0)
     const statusRef = ref<HTMLTextAreaElement>()
     const suggestRef = ref()
@@ -150,6 +152,9 @@ export default defineComponent({
     onMounted(() => {
       nextTick(() => {
         statusRef.value?.focus()
+        if (fixCursorPos.value) {
+          statusRef.value?.setSelectionRange(0, 0)
+        }
       })
     })
 
