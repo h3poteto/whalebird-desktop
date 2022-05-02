@@ -43,7 +43,7 @@
       </ul>
       <!-- dummy object to open suggest popper -->
       <template #reference>
-        <el-button type="text" ref="suggestButtonRef" class="dummy-button">dummy</el-button>
+        <span></span>
       </template>
     </el-popover>
     <div>
@@ -73,7 +73,6 @@ import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
 import { defineComponent, computed, toRefs, ref, onBeforeUnmount, onMounted } from 'vue'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
-import { ElButton } from 'element-plus'
 
 import suggestText from '@/utils/suggestText'
 import { useStore } from '@/store'
@@ -109,7 +108,6 @@ export default defineComponent({
     const { modelValue } = toRefs(props)
     const highlightedIndex = ref(0)
     const statusRef = ref<HTMLTextAreaElement>()
-    const suggestButtonRef = ref<InstanceType<typeof ElButton>>()
     const suggestRef = ref()
     const suggestOpened = ref<boolean>(false)
 
@@ -152,14 +150,10 @@ export default defineComponent({
 
     const openSuggest = () => {
       suggestOpened.value = true
-      // suggestButtonRef.value?.$el.focus()
-      // statusRef.value?.click()
     }
     const closeSuggest = () => {
       store.dispatch(`${space}/${ACTION_TYPES.CLOSE_SUGGEST}`)
       highlightedIndex.value = 0
-      // suggestButtonRef.value?.$el.blur()
-      // statusRef.value?.focus()
       suggestOpened.value = false
     }
     const suggestAccount = async (start: number, word: string) => {
@@ -282,7 +276,6 @@ export default defineComponent({
 
     return {
       statusRef,
-      suggestButtonRef,
       suggestRef,
       suggestOpened,
       emojiIndex,
@@ -370,15 +363,6 @@ export default defineComponent({
     &:focus {
       outline: 0;
     }
-  }
-
-  .dummy-button {
-    height: 0;
-    font-size: 0;
-    padding: 0;
-    margin: 0;
-    border: none;
-    display: block;
   }
 
   .emoji-selector {

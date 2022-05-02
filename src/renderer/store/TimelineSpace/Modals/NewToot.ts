@@ -158,6 +158,7 @@ const mutations: MutationTree<NewTootState> = {
 
 export const ACTION_TYPES = {
   SETUP_LOADING: 'setupLoading',
+  TEARDOWN_LOADING: 'tearDownLoading',
   START_LOADING: 'startLoading',
   STOP_LOADING: 'stopLoading',
   UPDATE_MEDIA: 'updateMedia',
@@ -175,15 +176,19 @@ export const ACTION_TYPES = {
   FETCH_VISIBILITY: 'fetchVisibility'
 }
 
+const axiosLoading = new AxiosLoading()
+
 const actions: ActionTree<NewTootState, RootState> = {
   [ACTION_TYPES.SETUP_LOADING]: ({ dispatch }) => {
-    const axiosLoading = new AxiosLoading()
     axiosLoading.on('start', (_: number) => {
       dispatch('startLoading')
     })
     axiosLoading.on('done', () => {
       dispatch('stopLoading')
     })
+  },
+  [ACTION_TYPES.TEARDOWN_LOADING]: () => {
+    axiosLoading.removeAllListeners()
   },
   [ACTION_TYPES.START_LOADING]: ({ commit, state }) => {
     if (state.modalOpen && !state.loading) {

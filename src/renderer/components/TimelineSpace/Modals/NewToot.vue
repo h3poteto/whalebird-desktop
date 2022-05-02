@@ -145,7 +145,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, onMounted, ComponentPublicInstance, nextTick } from 'vue'
+import { defineComponent, ref, reactive, computed, onMounted, ComponentPublicInstance, nextTick, onBeforeUnmount } from 'vue'
 import { useI18next } from 'vue3-i18next'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Entity } from 'megalodon'
@@ -240,6 +240,10 @@ export default defineComponent({
       showContentWarning.value = initialSpoiler.value.length > 0
       statusText.value = initialStatus.value
       spoilerText.value = initialSpoiler.value
+    })
+
+    onBeforeUnmount(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.TEARDOWN_LOADING}`)
     })
 
     const close = () => {
