@@ -7,7 +7,7 @@
       :before-close="closeConfirm"
       width="600px"
       custom-class="new-toot-modal"
-      ref="dialogRef"
+      v-if="newTootModal"
     >
       <el-form v-on:submit.prevent="toot" role="form">
         <Quote :message="quoteToMessage" :displayNameStyle="displayNameStyle" v-if="quoteToMessage !== null" ref="quoteRef"></Quote>
@@ -24,6 +24,8 @@
           :height="statusHeight"
           @paste="onPaste"
           @toot="toot"
+          ref="statusRef"
+          v-if="newTootModal"
         />
       </el-form>
       <Poll
@@ -143,9 +145,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, onMounted, ComponentPublicInstance, nextTick } from 'vue'
+import { defineComponent, ref, reactive, computed, onMounted, ComponentPublicInstance, nextTick, onBeforeUnmount } from 'vue'
 import { useI18next } from 'vue3-i18next'
-import { ElMessage, ElMessageBox, ElDialog } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { Entity } from 'megalodon'
 import { useStore } from '@/store'
 import Visibility from '~/src/constants/visibility'
@@ -184,8 +186,8 @@ export default defineComponent({
     const imageRef = ref<HTMLInputElement>()
     const pollRef = ref<ComponentPublicInstance>()
     const spoilerRef = ref<HTMLElement>()
-    const dialogRef = ref<InstanceType<typeof ElDialog>>()
     const quoteRef = ref<ComponentPublicInstance>()
+    const statusRef = ref<InstanceType<typeof Status>>()
 
     const quoteToMessage = computed(() => store.state.TimelineSpace.Modals.NewToot.quoteToMessage)
     const attachedMedias = computed(() => store.state.TimelineSpace.Modals.NewToot.attachedMedias)
@@ -227,9 +229,8 @@ export default defineComponent({
       set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_PINED_HASHTAG}`, value)
     })
 
-    store.dispatch(`${space}/${ACTION_TYPES.SETUP_LOADING}`)
-
     onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.SETUP_LOADING}`)
       EventEmitter.on('image-uploaded', () => {
         if (previewRef.value) {
           statusHeight.value = statusHeight.value - previewRef.value.offsetHeight
@@ -239,6 +240,10 @@ export default defineComponent({
       showContentWarning.value = initialSpoiler.value.length > 0
       statusText.value = initialStatus.value
       spoilerText.value = initialSpoiler.value
+    })
+
+    onBeforeUnmount(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.TEARDOWN_LOADING}`)
     })
 
     const close = () => {
@@ -366,6 +371,8 @@ export default defineComponent({
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_SENSITIVE}`, !sensitive.value)
     }
     const closeConfirm = (done: Function) => {
+      if (!newTootModal.value) return
+      if (statusRef.value?.suggestOpened) return
       if (statusText.value.length === 0) {
         done()
       } else {
@@ -467,8 +474,8 @@ export default defineComponent({
       imageRef,
       pollRef,
       spoilerRef,
-      dialogRef,
       quoteRef,
+      statusRef,
       // computed
       quoteToMessage,
       attachedMedias,
