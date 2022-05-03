@@ -1,9 +1,9 @@
 <template>
   <el-form
-    ref="loginForm"
+    ref="loginFormRef"
     label-width="120px"
     label-position="top"
-    v-on:submit.prevent="confirm('loginForm')"
+    v-on:submit.prevent="confirm(loginFormRef)"
     class="login-form"
     :rules="rules"
     :model="form"
@@ -26,7 +26,7 @@
         type="primary"
         class="search"
         v-else
-        @click="confirm('loginForm')"
+        @click="confirm(loginFormRef)"
         v-loading="searching"
         element-loading-background="rgba(0, 0, 0, 0.8)"
       >
@@ -36,112 +36,118 @@
   </el-form>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import { domainFormat } from '../../utils/validator'
+<script lang="ts">
+import { defineComponent, computed, reactive, ref } from 'vue'
+import { useI18next } from 'vue3-i18next'
+import { ElLoading, ElMessage, FormInstance, FormRules } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { domainFormat } from '@/utils/validator'
+import { ACTION_TYPES } from '@/store/Login'
 
-export default {
+export default defineComponent({
   name: 'login-form',
-  data() {
-    return {
-      form: {
-        domainName: ''
-      }
-    }
-  },
-  computed: {
-    ...mapState({
-      selectedInstance: state => state.Login.selectedInstance,
-      searching: state => state.Login.searching,
-      sns: state => state.Login.sns
-    }),
-    allowLogin: function () {
-      return this.selectedInstance && this.form.domainName === this.selectedInstance
-    },
-    rules: {
-      get() {
-        return {
-          domainName: [
-            {
-              type: 'string',
-              required: true,
-              message: this.$t('validation.login.require_domain_name')
-            },
-            {
-              pattern: domainFormat,
-              trigger: 'change',
-              message: this.$t('validation.login.domain_format')
-            }
-          ]
+  setup() {
+    const space = 'Login'
+    const store = useStore()
+    const i18n = useI18next()
+    const router = useRouter()
+
+    const form = reactive({
+      domainName: ''
+    })
+    const loginFormRef = ref<FormInstance>()
+
+    const selectedInstance = computed(() => store.state.Login.selectedInstance)
+    const searching = computed(() => store.state.Login.searching)
+    const sns = computed(() => store.state.Login.sns)
+    const allowLogin = computed(() => selectedInstance.value && form.domainName === selectedInstance.value)
+    const rules = reactive<FormRules>({
+      domainName: [
+        {
+          type: 'string',
+          required: true,
+          message: i18n.t('validation.login.require_domain_name')
+        },
+        {
+          pattern: domainFormat,
+          trigger: 'change',
+          message: i18n.t('validation.login.domain_format')
         }
-      }
-    }
-  },
-  methods: {
-    login() {
-      const loading = this.$loading({
+      ]
+    })
+
+    const login = () => {
+      const loading = ElLoading.service({
         lock: true,
-        text: this.$t('message.loading'),
-        spinner: 'el-icon-loading',
+        text: i18n.t('message.loading'),
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      this.$store
-        .dispatch('Login/fetchLogin')
+      store
+        .dispatch(`${space}/${ACTION_TYPES.FETCH_LOGIN}`)
         .then(url => {
-          loading.close()
-          this.$store.dispatch('Login/pageBack')
-          this.$router.push({
+          store.dispatch(`${space}/${ACTION_TYPES.PAGE_BACK}`)
+          router.push({
             path: '/authorize',
-            query: { url: url, sns: this.sns }
+            query: { url: url, sns: sns.value }
           })
         })
-        .catch(() => {
-          loading.close()
-          this.$message({
-            message: this.$t('message.authorize_url_error'),
+        .catch(err => {
+          ElMessage({
+            message: i18n.t('message.authorize_url_error'),
             type: 'error'
           })
+          console.error(err)
         })
-    },
-    confirm(formName) {
-      this.$refs[formName].validate(valid => {
+        .finally(() => {
+          loading.close()
+        })
+    }
+
+    const confirm = async (formEl: FormInstance | undefined) => {
+      if (!formEl) return
+      await formEl.validate(valid => {
         if (valid) {
-          this.$store
-            .dispatch('Login/confirmInstance', this.form.domainName)
+          return store
+            .dispatch(`${space}/${ACTION_TYPES.CONFIRM_INSTANCE}`, form.domainName)
             .then(() => {
-              this.$message({
-                message: this.$t('message.domain_confirmed', {
-                  domain: this.form.domainName
+              ElMessage({
+                message: i18n.t('message.domain_confirmed', {
+                  domain: form.domainName
                 }),
                 type: 'success'
               })
             })
-            .catch(() => {
-              this.$message({
-                message: this.$t('message.domain_doesnt_exist', {
-                  domain: this.form.domainName
+            .catch(err => {
+              ElMessage({
+                message: i18n.t('message.domain_doesnt_exist', {
+                  domain: form.domainName
                 }),
                 type: 'error'
               })
+              console.error(err)
             })
         } else {
-          this.$message({
-            message: this.$t('validation.login.domain_format'),
+          ElMessage({
+            message: i18n.t('validation.login.domain_format'),
             type: 'error'
           })
           return false
         }
       })
-    },
-    handleKey(_event) {
-      if (!this.selectedInstance) {
-        this.confirm('loginForm')
-      } else {
-        this.login()
-      }
+    }
+
+    return {
+      form,
+      loginFormRef,
+      searching,
+      allowLogin,
+      rules,
+      login,
+      confirm
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
