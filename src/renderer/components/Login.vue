@@ -16,25 +16,34 @@
   </el-container>
 </template>
 
-<script>
-import LoginForm from './Login/LoginForm'
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import LoginForm from './Login/LoginForm.vue'
+import { ACTION_TYPES } from '@/store/Login'
 
-export default {
+export default defineComponent({
   name: 'login',
   components: { LoginForm },
-  computed: {
-    ...mapState({
-      page: state => state.Login.page
-    })
-  },
-  methods: {
-    close() {
-      this.$store.dispatch('Login/pageBack')
-      return this.$router.push({ path: '/', query: { redirect: 'home' } })
+  setup() {
+    const space = 'Login'
+    const store = useStore()
+    const router = useRouter()
+
+    const close = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.PAGE_BACK}`)
+      return router.push({
+        path: '/',
+        query: { redirect: 'home' }
+      })
+    }
+
+    return {
+      close
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

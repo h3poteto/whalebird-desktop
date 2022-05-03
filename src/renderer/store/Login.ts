@@ -3,7 +3,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type LoginState = {
   selectedInstance: string | null
@@ -35,18 +35,24 @@ const mutations: MutationTree<LoginState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_LOGIN: 'fetchLogin',
+  PAGE_BACK: 'pageBack',
+  CONFIRM_INSTANCE: 'confirmInstance'
+}
+
 const actions: ActionTree<LoginState, RootState> = {
-  fetchLogin: async ({ state }): Promise<string> => {
+  [ACTION_TYPES.FETCH_LOGIN]: async ({ state }): Promise<string> => {
     const url = await win.ipcRenderer.invoke('get-auth-url', {
       instance: state.selectedInstance,
       sns: state.sns
     })
     return url
   },
-  pageBack: ({ commit }) => {
+  [ACTION_TYPES.PAGE_BACK]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_INSTANCE, null)
   },
-  confirmInstance: async ({ commit }, domain: string): Promise<boolean> => {
+  [ACTION_TYPES.CONFIRM_INSTANCE]: async ({ commit }, domain: string): Promise<boolean> => {
     commit(MUTATION_TYPES.CHANGE_SEARCHING, true)
     const cleanDomain = domain.trim()
     try {
