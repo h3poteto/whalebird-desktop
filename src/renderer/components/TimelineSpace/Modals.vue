@@ -11,18 +11,19 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import NewToot from './Modals/NewToot'
-import Jump from './Modals/Jump'
-import ImageViewer from './Modals/ImageViewer'
-import ListMembership from './Modals/ListMembership'
-import AddListMember from './Modals/AddListMember'
-import MuteConfirm from './Modals/MuteConfirm'
-import Shortcut from './Modals/Shortcut'
-import Report from './Modals/Report'
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import { useStore } from '@/store'
+import NewToot from './Modals/NewToot.vue'
+import Jump from './Modals/Jump.vue'
+import ImageViewer from './Modals/ImageViewer.vue'
+import ListMembership from './Modals/ListMembership.vue'
+import AddListMember from './Modals/AddListMember.vue'
+import MuteConfirm from './Modals/MuteConfirm.vue'
+import Shortcut from './Modals/Shortcut.vue'
+import Report from './Modals/Report.vue'
 
-export default {
+export default defineComponent({
   name: 'modals',
   components: {
     NewToot,
@@ -34,15 +35,23 @@ export default {
     Shortcut,
     Report
   },
-  computed: {
-    ...mapState({
-      newTootModal: state => state.TimelineSpace.Modals.NewToot.modalOpen,
-      jumpModal: state => state.TimelineSpace.Modals.Jump.modalOpen,
-      reportModal: state => state.TimelineSpace.Modals.Report.modalOpen,
-      muteConfirmModal: state => state.TimelineSpace.Modals.MuteConfirm.modalOpen,
-      addListMemberModal: state => state.TimelineSpace.Modals.AddListMember.modalOpen,
-      listMembershipModal: state => state.TimelineSpace.Modals.ListMembership.modalOpen
-    })
+  setup() {
+    const store = useStore()
+    const newTootModal = computed(() => store.state.TimelineSpace.Modals.NewToot.modalOpen)
+    const jumpModal = computed(() => store.state.TimelineSpace.Modals.Jump.modalOpen)
+    const reportModal = computed(() => store.state.TimelineSpace.Modals.Report.modalOpen)
+    const muteConfirmModal = computed(() => store.state.TimelineSpace.Modals.MuteConfirm.modalOpen)
+    const addListMemberModal = computed(() => store.state.TimelineSpace.Modals.AddListMember.modalOpen)
+    const listMembershipModal = computed(() => store.state.TimelineSpace.Modals.ListMembership.modalOpen)
+
+    return {
+      newTootModal,
+      jumpModal,
+      reportModal,
+      muteConfirmModal,
+      addListMemberModal,
+      listMembershipModal
+    }
   }
-}
+})
 </script>
