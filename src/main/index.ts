@@ -1367,6 +1367,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
         },
         {
           label: i18n.t('main_menu.application.shortcuts'),
+          accelerator: 'Shift+?',
           click: () => {
             mainWindow!.webContents.send('open-shortcuts-list')
           }
