@@ -38,6 +38,7 @@ import { defineComponent, computed, ref } from 'vue'
 import { Entity } from 'megalodon'
 import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/AddListMember'
 import { ACTION_TYPES as LIST_ACTION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Edit'
@@ -48,6 +49,7 @@ export default defineComponent({
     const space = 'TimelineSpace/Modals/AddListMember'
     const store = useStore()
     const i18n = useI18next()
+    const { enter } = useMagicKeys()
 
     const name = ref<string>('')
 
@@ -57,6 +59,10 @@ export default defineComponent({
     const addListMemberModal = computed({
       get: () => store.state.TimelineSpace.Modals.AddListMember.modalOpen,
       set: (value: boolean) => store.dispatch(`${space}/${ACTION_TYPES.CHANGE_MODAL}`, value)
+    })
+
+    whenever(enter, () => {
+      search()
     })
 
     const username = (account: Entity.Account): string => {
