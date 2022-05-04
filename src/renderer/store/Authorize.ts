@@ -2,14 +2,18 @@ import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type AuthorizeState = {}
 
 const state = (): AuthorizeState => ({})
 
+export const ACTION_TYPES = {
+  SUBMIT: 'submit'
+}
+
 const actions: ActionTree<AuthorizeState, RootState> = {
-  submit: async (_, request: { code: string | null; sns: 'mastodon' | 'pleroma' | 'misskey' }): Promise<string> => {
+  [ACTION_TYPES.SUBMIT]: async (_, request: { code: string | null; sns: 'mastodon' | 'pleroma' | 'misskey' }): Promise<string> => {
     let req = {
       sns: request.sns
     }

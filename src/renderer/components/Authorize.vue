@@ -5,7 +5,7 @@
         <el-row>
           <el-col :span="24" class="close">
             <el-button type="text" @click="close" class="close-button">
-              <font-awesome-icon icon="x-mark"></font-awesome-icon>
+              <font-awesome-icon icon="xmark"></font-awesome-icon>
             </el-button>
           </el-col>
         </el-row>
@@ -43,16 +43,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      authorizeForm: {
-        code: null
-      },
-      submitting: false
-    }
-  },
+<script lang="ts">
+import { defineComponent, ref, reactive, toRefs, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18next } from 'vue3-i18next'
+import { ElMessage } from 'element-plus'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/Authorize'
+
+export default defineComponent({
   name: 'authorize',
   props: {
     url: {
@@ -64,42 +63,63 @@ export default {
       default: 'mastodon'
     }
   },
-  mounted() {
-    console.log(this.url)
-  },
-  methods: {
-    authorizeSubmit() {
-      this.submitting = true
-      this.$store
-        .dispatch('Authorize/submit', {
-          code: this.authorizeForm.code,
-          sns: this.sns
+  setup(props) {
+    const space = 'Authorize'
+    const store = useStore()
+    const router = useRouter()
+    const i18n = useI18next()
+
+    const { url, sns } = toRefs(props)
+
+    const authorizeForm = reactive({
+      code: null
+    })
+    const submitting = ref<boolean>(false)
+
+    onMounted(() => {
+      console.log(url.value)
+    })
+
+    const authorizeSubmit = () => {
+      submitting.value = true
+      store
+        .dispatch(`${space}/${ACTION_TYPES.SUBMIT}`, {
+          code: authorizeForm.code,
+          sns: sns.value
         })
         .finally(() => {
-          this.submitting = false
+          submitting.value = false
         })
         .then(id => {
-          this.$router.push({ path: `/${id}/home` })
+          router.push({ path: `/${id}/home` })
         })
         .catch(err => {
           if (err.name === 'DuplicateRecordError') {
-            this.$message({
-              message: this.$t('message.authorize_duplicate_error'),
+            ElMessage({
+              message: i18n.t('message.authorize_duplicate_error'),
               type: 'error'
             })
           } else {
-            this.$message({
-              message: this.$t('message.authorize_error'),
+            ElMessage({
+              message: i18n.t('message.authorize_error'),
               type: 'error'
             })
           }
         })
-    },
-    close() {
-      return this.$router.push({ path: '/', query: { redirect: 'home' } })
+    }
+
+    const close = () => {
+      router.push({ path: '/', query: { redirect: 'home' } })
+    }
+
+    return {
+      authorizeForm,
+      submitting,
+      authorizeSubmit,
+      close
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
