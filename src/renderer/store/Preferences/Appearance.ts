@@ -79,7 +79,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
     dispatch('App/loadPreferences', null, { root: true })
   },
   [ACTION_TYPES.UPDATE_FONT_SIZE]: async ({ dispatch, commit, state }, fontSize: number) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       fontSize: fontSize
     })
     const config = {
@@ -90,7 +90,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
     dispatch('App/loadPreferences', null, { root: true })
   },
   [ACTION_TYPES.UPDATE_DISPLAY_NAME_STYLE]: async ({ dispatch, commit, state }, value: number) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       displayNameStyle: value
     })
     const config = {
@@ -101,7 +101,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
   },
   [ACTION_TYPES.UPDATE_TIME_FORMAT]: async ({ dispatch, commit, state }, value: number) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       timeFormat: value
     })
     const config = {
@@ -124,7 +124,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
     dispatch('App/loadPreferences', null, { root: true })
   },
   [ACTION_TYPES.UPDATE_FONT]: async ({ dispatch, state, commit }, value: string) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       font: value
     })
     const config = {
@@ -135,7 +135,7 @@ const actions: ActionTree<AppearanceState, RootState> = {
     dispatch('App/loadPreferences', null, { root: true })
   },
   [ACTION_TYPES.UPDATE_TOOT_PADDING]: async ({ dispatch, state, commit }, value: number) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       tootPadding: value
     })
     const config = {

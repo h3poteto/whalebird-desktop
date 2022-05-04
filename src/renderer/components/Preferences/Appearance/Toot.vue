@@ -1,5 +1,5 @@
 <template>
-  <div class="status" tabIndex="0" ref="status">
+  <div class="status" tabIndex="0" ref="statusRef">
     <div class="toot">
       <div class="icon">
         <img :src="sampleIcon" />
