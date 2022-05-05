@@ -45,15 +45,23 @@ const mutations: MutationTree<GeneralState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  LOAD_GENERAL: 'loadGeneral',
+  UPDATE_SOUND: 'updateSound',
+  UPDATE_TIMELINE: 'updateTimeline',
+  UPDATE_OTHER: 'updateOther',
+  RESET: 'reset'
+}
+
 const actions: ActionTree<GeneralState, RootState> = {
-  loadGeneral: async ({ commit }) => {
+  [ACTION_TYPES.LOAD_GENERAL]: async ({ commit }) => {
     const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences').finally(() => {
       commit(MUTATION_TYPES.CHANGE_LOADING, false)
     })
     commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
     return conf
   },
-  updateSound: async ({ commit, state }, sound: object) => {
+  [ACTION_TYPES.UPDATE_SOUND]: async ({ commit, state }, sound: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newSound: Sound = Object.assign({}, state.general.sound, sound)
     const newGeneral: General = Object.assign({}, toRaw(state.general), {
@@ -67,7 +75,7 @@ const actions: ActionTree<GeneralState, RootState> = {
     })
     commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
   },
-  updateTimeline: async ({ commit, state, dispatch }, timeline: object) => {
+  [ACTION_TYPES.UPDATE_TIMELINE]: async ({ commit, state, dispatch }, timeline: object) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newTimeline: Timeline = Object.assign({}, state.general.timeline, timeline)
     const newGeneral: General = Object.assign({}, toRaw(state.general), {
@@ -82,7 +90,7 @@ const actions: ActionTree<GeneralState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_GENERAL, conf.general as General)
     dispatch('App/loadPreferences', null, { root: true })
   },
-  updateOther: async ({ commit, state, dispatch }, other: {}) => {
+  [ACTION_TYPES.UPDATE_OTHER]: async ({ commit, state, dispatch }, other: {}) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     const newOther: Other = Object.assign({}, state.general.other, other)
     const newGeneral: General = Object.assign({}, toRaw(state.general), {
@@ -98,7 +106,7 @@ const actions: ActionTree<GeneralState, RootState> = {
     dispatch('App/loadPreferences', null, { root: true })
     await win.ipcRenderer.invoke('change-auto-launch', newOther.launch)
   },
-  reset: async ({ commit, dispatch }): Promise<string> => {
+  [ACTION_TYPES.RESET]: async ({ commit, dispatch }): Promise<string> => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     try {
       const conf: BaseConfig = await win.ipcRenderer.invoke('reset-preferences')

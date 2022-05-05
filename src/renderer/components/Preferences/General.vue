@@ -40,104 +40,103 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/Preferences/General'
 
-export default {
+export default defineComponent({
   name: 'general',
-  computed: {
-    ...mapState('Preferences/General', {
-      loading: state => state.loading
-    }),
-    ...mapState({
-      backgroundColor: state => state.App.theme.background_color
-    }),
-    ...mapGetters('Preferences/General', ['notDarwin']),
-    sound_fav_rb: {
-      get() {
-        return this.$store.state.Preferences.General.general.sound.fav_rb
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/General/updateSound', {
+  setup() {
+    const space = 'Preferences/General'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const loading = computed(() => store.state.Preferences.General.loading)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+    const notDarwin = computed(() => store.getters[`${space}/notDarwin`])
+    const sound_fav_rb = computed({
+      get: () => store.state.Preferences.General.general.sound.fav_rb,
+      set: (value: boolean) =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_SOUND}`, {
           fav_rb: value
         })
-      }
-    },
-    sound_toot: {
-      get() {
-        return this.$store.state.Preferences.General.general.sound.toot
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/General/updateSound', {
+    })
+    const sound_toot = computed({
+      get: () => store.state.Preferences.General.general.sound.toot,
+      set: (value: boolean) =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_SOUND}`, {
           toot: value
         })
-      }
-    },
-    timeline_cw: {
-      get() {
-        return this.$store.state.Preferences.General.general.timeline.cw
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/General/updateTimeline', {
+    })
+    const timeline_cw = computed({
+      get: () => store.state.Preferences.General.general.timeline.cw,
+      set: (value: boolean) =>
+        store.dispatch('Preferences/General/updateTimeline', {
           cw: value
         })
-      }
-    },
-    timeline_nsfw: {
-      get() {
-        return this.$store.state.Preferences.General.general.timeline.nsfw
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/General/updateTimeline', {
+    })
+    const timeline_nsfw = computed({
+      get: () => store.state.Preferences.General.general.timeline.nsfw,
+      set: (value: boolean) =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_TIMELINE}`, {
           nsfw: value
         })
-      }
-    },
-    timeline_hide_attachments: {
-      get() {
-        return this.$store.state.Preferences.General.general.timeline.hideAllAttachments
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/General/updateTimeline', {
+    })
+    const timeline_hide_attachments = computed({
+      get: () => store.state.Preferences.General.general.timeline.hideAllAttachments,
+      set: (value: boolean) =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_TIMELINE}`, {
           hideAllAttachments: value
         })
-      }
-    },
-    other_launch: {
-      get() {
-        return this.$store.state.Preferences.General.general.other.launch
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/General/updateOther', {
+    })
+    const other_launch = computed({
+      get: () => store.state.Preferences.General.general.other.launch,
+      set: (value: boolean) =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_OTHER}`, {
           launch: value
         })
-      }
-    }
-  },
-  created() {
-    this.$store.dispatch('Preferences/General/loadGeneral').catch(() => {
-      this.$message({
-        message: this.$t('message.preferences_load_error'),
-        type: 'error'
+    })
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.LOAD_GENERAL}`).catch(() => {
+        ElMessage({
+          message: i18n.t('message.preferences_load_error'),
+          type: 'error'
+        })
       })
     })
-  },
-  methods: {
-    reset() {
-      this.$store
-        .dispatch('Preferences/General/reset')
+
+    const reset = () => {
+      store
+        .dispatch(`${space}/${ACTION_TYPES.RESET}`)
         .then(language => {
-          this.$i18n.locale = language
+          i18n.changeLanguage(language)
         })
         .catch(() => {
-          this.$message({
-            message: this.$t('message.preferences_load_error'),
+          ElMessage({
+            message: i18n.t('message.preferences_load_error'),
             type: 'error'
           })
         })
     }
+
+    return {
+      loading,
+      backgroundColor,
+      notDarwin,
+      sound_fav_rb,
+      sound_toot,
+      timeline_cw,
+      timeline_nsfw,
+      timeline_hide_attachments,
+      other_launch,
+      reset
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
