@@ -39,89 +39,103 @@
         </el-table>
       </el-form-item>
       <el-form-item>
-        <el-popover placement="top" width="160" v-model="deletePopoverVisible">
-          <p>{{ $t('preferences.account.confirm_message') }}</p>
-          <div style="text-align: right; margin: 0">
-            <el-button size="small" type="text" @click="deletePopoverVisible = false">{{ $t('preferences.account.cancel') }}</el-button>
-            <el-button type="danger" size="small" @click="removeAllAssociations">{{ $t('preferences.account.confirm') }}</el-button>
-          </div>
+        <el-popconfirm
+          :confirm-button-text="$t('preferences.account.confirm')"
+          :cancel-button-text="$t('preferences.account.cancel')"
+          :title="$t('preferences.account.confirm_message')"
+          @confirm="removeAllAssociations"
+        >
           <template #reference>
             <el-button type="danger">{{ $t('preferences.account.remove_all_associations') }}</el-button>
           </template>
-        </el-popover>
+        </el-popconfirm>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useI18next } from 'vue3-i18next'
+import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/Preferences/Account'
+import { ElMessage } from 'element-plus'
+import { LocalAccount } from '~/src/types/localAccount'
 
-export default {
-  data() {
-    return {
-      openRemoveDialog: false,
-      deletePopoverVisible: false
-    }
-  },
+export default defineComponent({
   name: 'account',
-  computed: {
-    ...mapState({
-      accounts: state => state.Preferences.Account.accounts,
-      accountLoading: state => state.Preferences.Account.accountLoading
-    }),
-    ...mapState({
-      backgroundColor: state => state.App.theme.background_color
+  setup() {
+    const space = 'Preferences/Account'
+    const store = useStore()
+    const i18n = useI18next()
+    const router = useRouter()
+
+    const accounts = computed(() => store.state.Preferences.Account.accounts)
+    const accountLoading = computed(() => store.state.Preferences.Account.accountLoading)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+
+    onMounted(() => {
+      loadAccounts()
     })
-  },
-  created() {
-    this.loadAccounts()
-  },
-  methods: {
-    async loadAccounts() {
-      this.$store.commit('Preferences/Account/updateAccountLoading', true)
+
+    const loadAccounts = async () => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_ACCOUNT_LOADING}`, true)
       try {
-        await this.$store.dispatch('Preferences/Account/loadAccounts')
+        await store.dispatch(`${space}/${ACTION_TYPES.LOAD_ACCOUNTS}`)
       } catch (err) {
-        return this.$message({
-          message: this.$t('message.account_load_error'),
+        ElMessage({
+          message: i18n.t('message.account_load_error'),
           type: 'error'
         })
       } finally {
-        this.$store.commit('Preferences/Account/updateAccountLoading', false)
+        store.commit(`${space}/${MUTATION_TYPES.UPDATE_ACCOUNT_LOADING}`, false)
       }
-    },
-    removeAccount(index, accounts) {
-      this.$store
-        .dispatch('Preferences/Account/removeAccount', accounts[index])
+    }
+
+    const removeAccount = (index: number, accounts: Array<LocalAccount>) => {
+      store
+        .dispatch(`${space}/${ACTION_TYPES.REMOVE_ACCOUNT}`, accounts[index])
         .then(() => {
-          this.loadAccounts()
+          loadAccounts()
         })
         .catch(() => {
-          this.$message({
-            message: this.$t('message.account_remove_error'),
+          ElMessage({
+            message: i18n.t('message.account_remove_error'),
             type: 'error'
           })
         })
-    },
-    forward(index, accounts) {
-      this.$store.dispatch('Preferences/Account/forwardAccount', accounts[index]).then(() => {
-        this.loadAccounts()
-      })
-    },
-    backward(index, accounts) {
-      this.$store.dispatch('Preferences/Account/backwardAccount', accounts[index]).then(() => {
-        this.loadAccounts()
-      })
-    },
-    removeAllAssociations() {
-      this.deletePopoverVisible = false
-      this.$store.dispatch('Preferences/Account/removeAllAccounts').then(() => {
-        this.$router.push('/login')
+    }
+
+    const forward = (index: number, accounts: Array<LocalAccount>) => {
+      store.dispatch(`${space}/${ACTION_TYPES.FORWARD_ACCOUNT}`, accounts[index]).then(() => {
+        loadAccounts()
       })
     }
+
+    const backward = (index: number, accounts: Array<LocalAccount>) => {
+      store.dispatch(`${space}/${ACTION_TYPES.BACKWARD_ACCOUNT}`, accounts[index]).then(() => {
+        loadAccounts()
+      })
+    }
+
+    const removeAllAssociations = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.REMOVE_ALL_ACCOUNTS}`).then(() => {
+        router.push('/login')
+      })
+    }
+
+    return {
+      accounts,
+      accountLoading,
+      backgroundColor,
+      removeAccount,
+      forward,
+      backward,
+      removeAllAssociations
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

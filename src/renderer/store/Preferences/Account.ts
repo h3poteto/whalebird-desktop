@@ -30,6 +30,14 @@ const mutations: MutationTree<AccountState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  LOAD_ACCOUNTS: 'loadAccounts',
+  REMOVE_ACCOUNT: 'removeAccount',
+  FORWARD_ACCOUNT: 'forwardAccount',
+  BACKWARD_ACCOUNT: 'backwardAccount',
+  REMOVE_ALL_ACCOUNTS: 'removeAllAccounts'
+}
+
 const actions: ActionTree<AccountState, RootState> = {
   loadAccounts: async ({ commit }): Promise<Array<LocalAccount>> => {
     const accounts = await win.ipcRenderer.invoke('list-accounts')
