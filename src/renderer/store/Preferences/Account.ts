@@ -39,21 +39,21 @@ export const ACTION_TYPES = {
 }
 
 const actions: ActionTree<AccountState, RootState> = {
-  loadAccounts: async ({ commit }): Promise<Array<LocalAccount>> => {
+  [ACTION_TYPES.LOAD_ACCOUNTS]: async ({ commit }): Promise<Array<LocalAccount>> => {
     const accounts = await win.ipcRenderer.invoke('list-accounts')
     commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
     return accounts
   },
-  removeAccount: async (_, account: LocalAccount) => {
+  [ACTION_TYPES.REMOVE_ACCOUNT]: async (_, account: LocalAccount) => {
     await win.ipcRenderer.invoke('remove-account', account._id)
   },
-  forwardAccount: async (_, account: LocalAccount) => {
+  [ACTION_TYPES.FORWARD_ACCOUNT]: async (_, account: LocalAccount) => {
     await win.ipcRenderer.invoke('forward-account', toRaw(account))
   },
-  backwardAccount: async (_, account: LocalAccount) => {
+  [ACTION_TYPES.BACKWARD_ACCOUNT]: async (_, account: LocalAccount) => {
     await win.ipcRenderer.invoke('backward-account', toRaw(account))
   },
-  removeAllAccounts: async () => {
+  [ACTION_TYPES.REMOVE_ALL_ACCOUNTS]: async () => {
     await win.ipcRenderer.invoke('remove-all-accounts')
   }
 }
