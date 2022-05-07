@@ -57,6 +57,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 
 export default defineComponent({
@@ -65,9 +66,14 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
+    const { escape } = useMagicKeys()
 
     const primaryColor = computed(() => store.state.App.theme.primary_color)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
+
+    whenever(escape, () => {
+      close()
+    })
 
     const close = () => {
       router.push({ path: '/', query: { redirect: 'home' } })

@@ -134,8 +134,7 @@ export default defineComponent({
       notifyPollVote,
       notifyPollExpired
     }
-  },
-  created() {}
+  }
 })
 </script>
 
