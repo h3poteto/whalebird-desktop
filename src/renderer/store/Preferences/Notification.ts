@@ -4,7 +4,7 @@ import { Notify } from '~/src/types/notify'
 import { BaseConfig, Notification } from '~/src/types/preference'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type NotificationState = {
   notification: Notification
@@ -36,13 +36,18 @@ const mutations: MutationTree<NotificationState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  LOAD_NOTIFICATION: 'loadNotification',
+  UPDATE_NOTIFY: 'updateNotify'
+}
+
 const actions: ActionTree<NotificationState, RootState> = {
-  loadNotification: async ({ commit }) => {
+  [ACTION_TYPES.LOAD_NOTIFICATION]: async ({ commit }) => {
     const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
     commit(MUTATION_TYPES.UPDATE_NOTIFICATION, conf.notification)
     return conf
   },
-  updateNotify: async ({ commit, state, dispatch }, notify: object) => {
+  [ACTION_TYPES.UPDATE_NOTIFY]: async ({ commit, state, dispatch }, notify: object) => {
     const newNotify: Notify = Object.assign({}, state.notification.notify, notify)
     const newNotification: Notification = Object.assign({}, state.notification, {
       notify: newNotify
