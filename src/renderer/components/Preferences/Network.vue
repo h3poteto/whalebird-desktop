@@ -40,76 +40,70 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/Preferences/Network'
 
-export default {
+export default defineComponent({
   name: 'network',
-  computed: {
-    ...mapGetters('Preferences/Network', ['manualProxyConfiguration']),
-    source: {
-      get() {
-        return this.$store.state.Preferences.Network.source
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Network/changeSource', value)
-      }
-    },
-    proxyProtocol: {
-      get() {
-        return this.$store.state.Preferences.Network.proxy.protocol
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Network/updateProtocol', value)
-      }
-    },
-    proxyHost: {
-      get() {
-        return this.$store.state.Preferences.Network.proxy.host
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Network/updateHost', value)
-      }
-    },
-    proxyPort: {
-      get() {
-        return this.$store.state.Preferences.Network.proxy.port
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Network/updatePort', value)
-      }
-    },
-    proxyUsername: {
-      get() {
-        return this.$store.state.Preferences.Network.proxy.username
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Network/updateUsername', value)
-      }
-    },
-    proxyPassword: {
-      get() {
-        return this.$store.state.Preferences.Network.proxy.password
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Network/updatePassword', value)
-      }
-    }
-  },
-  created() {
-    this.$store.dispatch('Preferences/Network/loadProxy').catch(() => {
-      this.$message({
-        message: this.$t('message.preferences_load_error'),
-        type: 'error'
+  setup() {
+    const space = 'Preferences/Network'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const manualProxyConfiguration = computed(() => store.getters[`${space}/manualProxyConfiguration`])
+    const source = computed({
+      get: () => store.state.Preferences.Network.source,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.CHANGE_SOURCE}`, value)
+    })
+    const proxyProtocol = computed({
+      get: () => store.state.Preferences.Network.proxy.protocol,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_PROTOCOL}`, value)
+    })
+    const proxyHost = computed({
+      get: () => store.state.Preferences.Network.proxy.host,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_HOST}`, value)
+    })
+    const proxyPort = computed({
+      get: () => store.state.Preferences.Network.proxy.port,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_PORT}`, value)
+    })
+    const proxyUsername = computed({
+      get: () => store.state.Preferences.Network.proxy.username,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_USERNAME}`, value)
+    })
+    const proxyPassword = computed({
+      get: () => store.state.Preferences.Network.proxy.password,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_PASSWORD}`, value)
+    })
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.LOAD_PROXY}`).catch(() => {
+        ElMessage({
+          message: i18n.t('message.preferences_load_error'),
+          type: 'error'
+        })
       })
     })
-  },
-  methods: {
-    onSave() {
-      this.$store.dispatch('Preferences/Network/saveProxyConfig')
+
+    const onSave = () => store.dispatch(`${space}/${ACTION_TYPES.SAVE_PROXY_CONFIG}`)
+
+    return {
+      manualProxyConfiguration,
+      source,
+      proxyProtocol,
+      proxyHost,
+      proxyPort,
+      proxyUsername,
+      proxyPassword,
+      onSave
     }
-  }
-}
+  },
+  methods: {}
+})
 </script>
 
 <style lang="scss" scoped>
