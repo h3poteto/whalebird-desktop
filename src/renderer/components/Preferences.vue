@@ -54,26 +54,34 @@
   </el-container>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useStore } from '@/store'
 
-export default {
+export default defineComponent({
   name: 'preferences',
-  computed: {
-    ...mapState({
-      primaryColor: state => state.App.theme.primary_color,
-      backgroundColor: state => state.App.theme.background_color
-    })
-  },
-  methods: {
-    close() {
-      this.$router.push({ path: '/', query: { redirect: 'home' } })
-    },
-    activeRoute() {
-      return this.$route.path
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+    const route = useRoute()
+
+    const primaryColor = computed(() => store.state.App.theme.primary_color)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+
+    const close = () => {
+      router.push({ path: '/', query: { redirect: 'home' } })
+    }
+    const activeRoute = () => route.path
+
+    return {
+      primaryColor,
+      backgroundColor,
+      close,
+      activeRoute
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

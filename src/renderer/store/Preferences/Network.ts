@@ -4,7 +4,7 @@ import { BaseConfig } from '~/src/types/preference'
 import { Proxy, ProxySource, ProxyProtocol, ManualProxy } from '~/src/types/proxy'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type NetworkState = {
   source: ProxySource
@@ -91,31 +91,42 @@ const mutations: MutationTree<NetworkState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  LOAD_PROXY: 'loadProxy',
+  CHANGE_SOURCE: 'changeSource',
+  UPDATE_PROTOCOL: 'updateProtocol',
+  UPDATE_HOST: 'updateHost',
+  UPDATE_PORT: 'updatePort',
+  UPDATE_USERNAME: 'updateUsername',
+  UPDATE_PASSWORD: 'updatePassword',
+  SAVE_PROXY_CONFIG: 'saveProxyConfig'
+}
+
 const actions: ActionTree<NetworkState, RootState> = {
-  loadProxy: async ({ commit }) => {
+  [ACTION_TYPES.LOAD_PROXY]: async ({ commit }) => {
     const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
     commit(MUTATION_TYPES.UPDATE_PROXY, conf.proxy as Proxy)
     return conf
   },
-  changeSource: ({ commit }, source: string) => {
+  [ACTION_TYPES.CHANGE_SOURCE]: ({ commit }, source: string) => {
     commit(MUTATION_TYPES.CHANGE_SOURCE, source)
   },
-  updateProtocol: ({ commit }, protocol: string) => {
+  [ACTION_TYPES.UPDATE_PROTOCOL]: ({ commit }, protocol: string) => {
     commit(MUTATION_TYPES.UPDATE_PROTOCOL, protocol)
   },
-  updateHost: ({ commit }, host: string) => {
+  [ACTION_TYPES.UPDATE_HOST]: ({ commit }, host: string) => {
     commit(MUTATION_TYPES.UPDATE_HOST, host)
   },
-  updatePort: ({ commit }, port: string) => {
+  [ACTION_TYPES.UPDATE_PORT]: ({ commit }, port: string) => {
     commit(MUTATION_TYPES.UPDATE_PORT, port)
   },
-  updateUsername: ({ commit }, username: string) => {
+  [ACTION_TYPES.UPDATE_USERNAME]: ({ commit }, username: string) => {
     commit(MUTATION_TYPES.UPDATE_USERNAME, username)
   },
-  updatePassword: ({ commit }, password: string) => {
+  [ACTION_TYPES.UPDATE_PASSWORD]: ({ commit }, password: string) => {
     commit(MUTATION_TYPES.UPDATE_PASSWORD, password)
   },
-  saveProxyConfig: async ({ state }) => {
+  [ACTION_TYPES.SAVE_PROXY_CONFIG]: async ({ state }) => {
     const proxy: Proxy = {
       source: state.source,
       manualProxyConfig: state.proxy

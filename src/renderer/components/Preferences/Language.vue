@@ -30,73 +30,79 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useI18next } from 'vue3-i18next'
+import { ElMessage } from 'element-plus'
+import { useStore } from '@/store'
 import Language from '~/src/constants/language'
+import { ACTION_TYPES } from '@/store/Preferences/Language'
 
-export default {
+export default defineComponent({
   name: 'language',
-  data() {
-    return {
-      languages: [
-        Language.cs,
-        Language.de,
-        Language.en,
-        Language.es_es,
-        Language.fr,
-        Language.gd,
-        Language.id,
-        Language.it,
-        Language.ja,
-        Language.ko,
-        Language.no,
-        Language.pl,
-        Language.pt_pt,
-        Language.ru,
-        Language.si,
-        Language.sv_se,
-        Language.tzm,
-        Language.zh_cn,
-        Language.zh_tw
-      ]
-    }
-  },
-  computed: {
-    displayLanguage: {
-      get() {
-        return this.$store.state.Preferences.Language.language.language
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Language/changeLanguage', value).then(key => {
-          this.$i18n.locale = key
+  setup() {
+    const space = 'Preferences/Language'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const languages = [
+      Language.cs,
+      Language.de,
+      Language.en,
+      Language.es_es,
+      Language.fr,
+      Language.gd,
+      Language.id,
+      Language.it,
+      Language.ja,
+      Language.ko,
+      Language.no,
+      Language.pl,
+      Language.pt_pt,
+      Language.ru,
+      Language.si,
+      Language.sv_se,
+      Language.tzm,
+      Language.zh_cn,
+      Language.zh_tw
+    ]
+
+    const displayLanguage = computed({
+      get: () => store.state.Preferences.Language.language.language,
+      set: (value: string) =>
+        store.dispatch(`${space}/${ACTION_TYPES.CHANGE_LANGUAGE}`, value).then(key => {
+          i18n.changeLanguage(key)
         })
-      }
-    },
-    spellcheck: {
-      get() {
-        return this.$store.state.Preferences.Language.language.spellchecker.enabled
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Language/toggleSpellchecker', value)
-      }
-    },
-    spellcheckLanguages: {
-      get() {
-        return this.$store.state.Preferences.Language.language.spellchecker.languages
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Language/updateSpellcheckerLanguages', value).catch(() => {
-          this.$message({
-            message: this.$t('message.language_not_support_spellchecker_error'),
+    })
+
+    const spellcheck = computed({
+      get: () => store.state.Preferences.Language.language.spellchecker.enabled,
+      set: (value: boolean) => store.dispatch(`${space}/${ACTION_TYPES.TOGGLE_SPELLCHECKER}`, value)
+    })
+
+    const spellcheckLanguages = computed({
+      get: () => store.state.Preferences.Language.language.spellchecker.languages,
+      set: (value: Array<string>) =>
+        store.dispatch('Preferences/Language/updateSpellcheckerLanguages', value).catch(() => {
+          ElMessage({
+            message: i18n.t('message.language_not_support_spellchecker_error'),
             type: 'error'
           })
         })
-      }
+    })
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.LOAD_LANGUAGE}`)
+    })
+
+    return {
+      languages,
+      displayLanguage,
+      spellcheck,
+      spellcheckLanguages
     }
-  },
-  created() {
-    this.$store.dispatch('Preferences/Language/loadLanguage')
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

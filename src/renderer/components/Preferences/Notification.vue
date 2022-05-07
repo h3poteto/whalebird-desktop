@@ -36,110 +36,107 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/Preferences/Notification'
+
+export default defineComponent({
   name: 'notification',
-  computed: {
-    notifyReply: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.reply
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+  setup() {
+    const space = 'Preferences/Notification'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const notifyReply = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.reply,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           reply: value
         })
-      }
-    },
-    notifyReblog: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.reblog
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+    })
+    const notifyReblog = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.reblog,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           reblog: value
         })
-      }
-    },
-    notifyFavourite: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.favourite
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+    })
+    const notifyFavourite = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.favourite,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           favourite: value
         })
-      }
-    },
-    notifyFollow: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.follow
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+    })
+    const notifyFollow = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.follow,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           follow: value
         })
-      }
-    },
-    notifyFollowRequest: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.follow_request
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+    })
+    const notifyFollowRequest = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.follow_request,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           follow_request: value
         })
-      }
-    },
-    notifyReaction: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.reaction
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+    })
+    const notifyReaction = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.reaction,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           reaction: value
         })
-      }
-    },
-    notifyStatus: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.status
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+    })
+    const notifyStatus = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.status,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           status: value
         })
-      }
-    },
-    notifyPollVote: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.poll_vote
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+    })
+    const notifyPollVote = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.poll_vote,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           poll_vote: value
         })
-      }
-    },
-    notifyPollExpired: {
-      get() {
-        return this.$store.state.Preferences.Notification.notification.notify.poll_expired
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Notification/updateNotify', {
+    })
+    const notifyPollExpired = computed({
+      get: () => store.state.Preferences.Notification.notification.notify.poll_expired,
+      set: value =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_NOTIFY}`, {
           poll_expired: value
         })
-      }
-    }
-  },
-  created() {
-    this.$store.dispatch('Preferences/Notification/loadNotification').catch(() => {
-      this.$message({
-        message: this.$t('message.preferences_load_error'),
-        type: 'error'
+    })
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.LOAD_NOTIFICATION}`).catch(() => {
+        ElMessage({
+          message: i18n.t('message.preferences_load_error'),
+          type: 'error'
+        })
       })
     })
-  }
-}
+
+    return {
+      notifyReply,
+      notifyReblog,
+      notifyFavourite,
+      notifyFollow,
+      notifyFollowRequest,
+      notifyReaction,
+      notifyStatus,
+      notifyPollVote,
+      notifyPollExpired
+    }
+  },
+  created() {}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -5,7 +5,7 @@ import { Language as LanguageSet } from '~/src/types/language'
 import { BaseConfig } from '~/src/types/preference'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type LanguageState = {
   language: LanguageSet
@@ -43,23 +43,30 @@ const mutations: MutationTree<LanguageState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  LOAD_LANGUAGE: 'loadLanguage',
+  CHANGE_LANGUAGE: 'changeLanguage',
+  TOGGLE_SPELLCHECKER: 'toggleSpellchecker',
+  UPDATE_SPELLCHECKER_LANGUAGES: 'updateSpellcheckerLanguages'
+}
+
 const actions: ActionTree<LanguageState, RootState> = {
-  loadLanguage: async ({ commit }): Promise<string> => {
+  [ACTION_TYPES.LOAD_LANGUAGE]: async ({ commit }): Promise<string> => {
     const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
     commit(MUTATION_TYPES.UPDATE_LANGUAGE, conf.language as LanguageSet)
     return conf.language.language
   },
-  changeLanguage: async ({ commit }, key: string): Promise<string> => {
+  [ACTION_TYPES.CHANGE_LANGUAGE]: async ({ commit }, key: string): Promise<string> => {
     const value: string = await win.ipcRenderer.invoke('change-language', key)
     commit(MUTATION_TYPES.CHANGE_LANGUAGE, value)
     return value
   },
-  toggleSpellchecker: async ({ commit }, enabled: boolean) => {
+  [ACTION_TYPES.TOGGLE_SPELLCHECKER]: async ({ commit }, enabled: boolean) => {
     const value: boolean = await win.ipcRenderer.invoke('toggle-spellchecker', enabled)
     commit(MUTATION_TYPES.TOGGLE_SPELLCHECKER, value)
     return value
   },
-  updateSpellcheckerLanguages: async ({ commit }, languages: Array<string>) => {
+  [ACTION_TYPES.UPDATE_SPELLCHECKER_LANGUAGES]: async ({ commit }, languages: Array<string>) => {
     const langs: Array<string> = await win.ipcRenderer.invoke('update-spellchecker-languages', languages)
     commit(MUTATION_TYPES.UPDATE_SPELLCHECKER_LANGUAGES, langs)
     return langs

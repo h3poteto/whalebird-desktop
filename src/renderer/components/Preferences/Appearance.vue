@@ -48,82 +48,79 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import Toot from './Appearance/Toot'
-import ColorPallet from './Appearance/ColorPallet'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useStore } from '@/store'
+import Toot from './Appearance/Toot.vue'
+import ColorPallet from './Appearance/ColorPallet.vue'
 import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
+import { ACTION_TYPES } from '@/store/Preferences/Appearance'
 
-export default {
+export default defineComponent({
   name: 'appearance',
   components: {
     Toot,
     ColorPallet
   },
-  data() {
+  setup() {
+    const space = 'Preferences/Appearance'
+    const store = useStore()
+
+    const nameStyles = [DisplayStyle.DisplayNameAndUsername, DisplayStyle.DisplayName, DisplayStyle.Username]
+    const themes = [Theme.System, Theme.Light, Theme.Dark, Theme.SolarizedLight, Theme.SolarizedDark, Theme.KimbieDark, Theme.Custom]
+    const timeFormats = [TimeFormat.Absolute, TimeFormat.Relative]
+
+    const fontSize = computed(() => store.state.Preferences.Appearance.appearance.fontSize)
+    const fontList = computed(() => store.state.Preferences.Appearance.fonts)
+    const tootPadding = computed(() => store.state.Preferences.Appearance.appearance.tootPadding)
+    const theme = computed({
+      get: () => store.state.Preferences.Appearance.appearance.theme,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_THEME}`, value)
+    })
+    const displayNameStyle = computed({
+      get: () => store.state.Preferences.Appearance.appearance.displayNameStyle,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_DISPLAY_NAME_STYLE}`, value)
+    })
+    const timeFormat = computed({
+      get: () => store.state.Preferences.Appearance.appearance.timeFormat,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_TIME_FORMAT}`, value)
+    })
+    const customizeThemeColor = computed(() => theme.value === Theme.Custom.key)
+    const font = computed({
+      get: () => store.state.Preferences.Appearance.appearance.font,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.UPDATE_FONT}`, value)
+    })
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.LOAD_APPEARANCE}`)
+      store.dispatch(`${space}/${ACTION_TYPES.LOAD_FONTS}`)
+    })
+
+    const updateFontSize = async (value: number) => {
+      await store.dispatch(`${space}/${ACTION_TYPES.UPDATE_FONT_SIZE}`, value)
+    }
+    const updateTootPadding = async (value: number) => {
+      store.dispatch(`${space}/${ACTION_TYPES.UPDATE_TOOT_PADDING}`, value)
+    }
     return {
-      nameStyles: [DisplayStyle.DisplayNameAndUsername, DisplayStyle.DisplayName, DisplayStyle.Username],
-      themes: [Theme.System, Theme.Light, Theme.Dark, Theme.SolarizedLight, Theme.SolarizedDark, Theme.KimbieDark, Theme.Custom],
-      timeFormats: [TimeFormat.Absolute, TimeFormat.Relative]
-    }
-  },
-  computed: {
-    ...mapState('Preferences/Appearance', {
-      fontSize: state => state.appearance.fontSize,
-      fontList: state => state.fonts,
-      tootPadding: state => state.appearance.tootPadding
-    }),
-    theme: {
-      get() {
-        return this.$store.state.Preferences.Appearance.appearance.theme
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Appearance/updateTheme', value)
-      }
-    },
-    displayNameStyle: {
-      get() {
-        return this.$store.state.Preferences.Appearance.appearance.displayNameStyle
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Appearance/updateDisplayNameStyle', value)
-      }
-    },
-    timeFormat: {
-      get() {
-        return this.$store.state.Preferences.Appearance.appearance.timeFormat
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Appearance/updateTimeFormat', value)
-      }
-    },
-    customizeThemeColor() {
-      return this.theme === Theme.Custom.key
-    },
-    font: {
-      get() {
-        return this.$store.state.Preferences.Appearance.appearance.font
-      },
-      set(value) {
-        this.$store.dispatch('Preferences/Appearance/updateFont', value)
-      }
-    }
-  },
-  created() {
-    this.$store.dispatch('Preferences/Appearance/loadAppearance')
-    this.$store.dispatch('Preferences/Appearance/loadFonts')
-  },
-  methods: {
-    async updateFontSize(value) {
-      await this.$store.dispatch('Preferences/Appearance/updateFontSize', value)
-    },
-    async updateTootPadding(value) {
-      await this.$store.dispatch('Preferences/Appearance/updateTootPadding', value)
+      nameStyles,
+      themes,
+      timeFormats,
+      fontSize,
+      fontList,
+      tootPadding,
+      theme,
+      displayNameStyle,
+      timeFormat,
+      customizeThemeColor,
+      font,
+      updateFontSize,
+      updateTootPadding
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

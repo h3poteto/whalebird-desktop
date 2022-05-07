@@ -12,6 +12,7 @@ export type LanguageList = {
   ja: LanguageType
   ko: LanguageType
   pl: LanguageType
+  id: LanguageType
   it: LanguageType
   zh_cn: LanguageType
   zh_tw: LanguageType

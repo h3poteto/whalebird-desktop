@@ -4,12 +4,13 @@ import TimeFormat from '~/src/constants/timeFormat'
 import { LightTheme, ThemeColorType } from '~/src/constants/themeColor'
 import DefaultFonts from '@/utils/fonts'
 import { Module, MutationTree, ActionTree } from 'vuex'
+import { toRaw } from 'vue'
 import { RootState } from '@/store'
 import { Appearance } from '~/src/types/appearance'
 import { BaseConfig } from '~/src/types/preference'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type AppearanceState = {
   appearance: Appearance
@@ -43,19 +44,31 @@ const mutations: MutationTree<AppearanceState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  LOAD_APPEARANCE: 'loadAppearance',
+  LOAD_FONTS: 'loadFonts',
+  UPDATE_THEME: 'updateTheme',
+  UPDATE_FONT_SIZE: 'updateFontSize',
+  UPDATE_DISPLAY_NAME_STYLE: 'updateDisplayNameStyle',
+  UPDATE_TIME_FORMAT: 'updateTimeFormat',
+  UPDATE_CUSTOM_THEME_COLOR: 'updateCustomThemeColor',
+  UPDATE_FONT: 'updateFont',
+  UPDATE_TOOT_PADDING: 'updateTootPadding'
+}
+
 const actions: ActionTree<AppearanceState, RootState> = {
-  loadAppearance: async ({ commit }) => {
+  [ACTION_TYPES.LOAD_APPEARANCE]: async ({ commit }) => {
     const conf: BaseConfig = await win.ipcRenderer.invoke('get-preferences')
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
     return conf
   },
-  loadFonts: async ({ commit }) => {
+  [ACTION_TYPES.LOAD_FONTS]: async ({ commit }) => {
     const fonts: Array<string> = await win.ipcRenderer.invoke('list-fonts')
     commit(MUTATION_TYPES.UPDATE_FONTS, [DefaultFonts[0]].concat(fonts))
     return fonts
   },
-  updateTheme: async ({ dispatch, commit, state }, themeKey: string) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+  [ACTION_TYPES.UPDATE_THEME]: async ({ dispatch, commit, state }, themeKey: string) => {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       theme: themeKey
     })
     const config = {
@@ -65,8 +78,8 @@ const actions: ActionTree<AppearanceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
     dispatch('App/loadPreferences', null, { root: true })
   },
-  updateFontSize: async ({ dispatch, commit, state }, fontSize: number) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+  [ACTION_TYPES.UPDATE_FONT_SIZE]: async ({ dispatch, commit, state }, fontSize: number) => {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       fontSize: fontSize
     })
     const config = {
@@ -76,8 +89,8 @@ const actions: ActionTree<AppearanceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
     dispatch('App/loadPreferences', null, { root: true })
   },
-  updateDisplayNameStyle: async ({ dispatch, commit, state }, value: number) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+  [ACTION_TYPES.UPDATE_DISPLAY_NAME_STYLE]: async ({ dispatch, commit, state }, value: number) => {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       displayNameStyle: value
     })
     const config = {
@@ -87,8 +100,8 @@ const actions: ActionTree<AppearanceState, RootState> = {
     dispatch('App/loadPreferences', null, { root: true })
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
   },
-  updateTimeFormat: async ({ dispatch, commit, state }, value: number) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+  [ACTION_TYPES.UPDATE_TIME_FORMAT]: async ({ dispatch, commit, state }, value: number) => {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       timeFormat: value
     })
     const config = {
@@ -98,8 +111,8 @@ const actions: ActionTree<AppearanceState, RootState> = {
     dispatch('App/loadPreferences', null, { root: true })
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
   },
-  updateCustomThemeColor: async ({ dispatch, state, commit }, value: object) => {
-    const newCustom: ThemeColorType = Object.assign({}, state.appearance.customThemeColor, value)
+  [ACTION_TYPES.UPDATE_CUSTOM_THEME_COLOR]: async ({ dispatch, state, commit }, value: object) => {
+    const newCustom: ThemeColorType = Object.assign({}, toRaw(state.appearance.customThemeColor), value)
     const newAppearance: Appearance = Object.assign({}, state.appearance, {
       customThemeColor: newCustom
     })
@@ -110,8 +123,8 @@ const actions: ActionTree<AppearanceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
     dispatch('App/loadPreferences', null, { root: true })
   },
-  updateFont: async ({ dispatch, state, commit }, value: string) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+  [ACTION_TYPES.UPDATE_FONT]: async ({ dispatch, state, commit }, value: string) => {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       font: value
     })
     const config = {
@@ -121,8 +134,8 @@ const actions: ActionTree<AppearanceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_APPEARANCE, conf.appearance)
     dispatch('App/loadPreferences', null, { root: true })
   },
-  updateTootPadding: async ({ dispatch, state, commit }, value: number) => {
-    const newAppearance: Appearance = Object.assign({}, state.appearance, {
+  [ACTION_TYPES.UPDATE_TOOT_PADDING]: async ({ dispatch, state, commit }, value: number) => {
+    const newAppearance: Appearance = Object.assign({}, toRaw(state.appearance), {
       tootPadding: value
     })
     const config = {

@@ -1,5 +1,5 @@
 <template>
-  <div class="status" tabIndex="0" ref="status">
+  <div class="status" tabIndex="0" ref="statusRef">
     <div class="toot">
       <div class="icon">
         <img :src="sampleIcon" />
@@ -44,12 +44,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, computed, toRefs } from 'vue'
 import moment from 'moment'
 import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
 
-export default {
+export default defineComponent({
   name: 'toot',
   props: {
     displayNameStyle: {
@@ -61,46 +62,53 @@ export default {
       default: TimeFormat.Absolute.value
     }
   },
-  computed: {
-    sampleIcon() {
-      return 'https://github.com/h3poteto/whalebird-desktop/raw/master/build/icons/256x256.png'
-    },
-    username() {
-      switch (this.displayNameStyle) {
+  setup(props) {
+    const { displayNameStyle, timeFormat } = toRefs(props)
+
+    const sampleIcon = 'https://github.com/h3poteto/whalebird-desktop/raw/master/build/icons/256x256.png'
+    const status = '<p>Sample status</p>'
+    const reblogsCount = 1
+    const favouritesCount = 5
+
+    const username = computed(() => {
+      switch (displayNameStyle.value) {
         case DisplayStyle.DisplayNameAndUsername.value:
         case DisplayStyle.DisplayName.value:
           return 'Whalebird'
         default:
           return 'whalebird@mastodon.social'
       }
-    },
-    accountName() {
-      switch (this.displayNameStyle) {
+    })
+    const accountName = computed(() => {
+      switch (displayNameStyle.value) {
         case DisplayStyle.DisplayNameAndUsername.value:
           return 'whalebird@mastodon.social'
         default:
           return ''
       }
-    },
-    timestamp() {
-      switch (this.timeFormat) {
+    })
+    const timestamp = computed(() => {
+      switch (timeFormat.value) {
         case TimeFormat.Absolute.value:
           return '2018-08-12 20:35:41'
         case TimeFormat.Relative.value:
           return moment('2018-08-12 20:35:41').fromNow()
+        default:
+          return '2018-08-12 20:35:41'
       }
-    },
-    status() {
-      return '<p>Sample status</p>'
-    },
-    reblogsCount() {
-      return 1
-    },
-    favouritesCount() {
-      return 5
+    })
+
+    return {
+      sampleIcon,
+      username,
+      accountName,
+      timestamp,
+      status,
+      reblogsCount,
+      favouritesCount
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
