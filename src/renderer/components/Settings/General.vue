@@ -18,46 +18,49 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/Settings/General'
 import Visibility from '~/src/constants/visibility'
 
-export default {
+export default defineComponent({
   name: 'General',
-  data() {
+  setup() {
+    const space = 'Settings/General'
+    const store = useStore()
+
+    const visibilities = [Visibility.Public, Visibility.Unlisted, Visibility.Private]
+
+    const tootVisibility = computed({
+      get: () => store.state.Settings.General.visibility,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.SET_VISIBILITY}`, value)
+    })
+    const tootSensitive = computed({
+      get: () => store.state.Settings.General.sensitive,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.SET_SENSITIVE}`, value)
+    })
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.FETCH_SETTINGS}`)
+    })
+
+    const changeVisibility = (value: number) => {
+      tootVisibility.value = value
+    }
+    const changeSensitive = (value: boolean) => {
+      tootSensitive.value = value
+    }
+
     return {
-      visibilities: [Visibility.Public, Visibility.Unlisted, Visibility.Private]
-    }
-  },
-  computed: {
-    tootVisibility: {
-      get() {
-        return this.$store.state.Settings.General.visibility
-      },
-      set(value) {
-        this.$store.dispatch('Settings/General/setVisibility', value)
-      }
-    },
-    tootSensitive: {
-      get() {
-        return this.$store.state.Settings.General.sensitive
-      },
-      set(value) {
-        this.$store.dispatch('Settings/General/setSensitive', value)
-      }
-    }
-  },
-  created() {
-    this.$store.dispatch('Settings/General/fetchSettings')
-  },
-  methods: {
-    changeVisibility(value) {
-      this.tootVisibility = value
-    },
-    changeSensitive(value) {
-      this.tootSensitive = value
+      visibilities,
+      tootVisibility,
+      tootSensitive,
+      changeVisibility,
+      changeSensitive
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
