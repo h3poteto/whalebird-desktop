@@ -33,6 +33,12 @@ export const mutations: MutationTree<EditFiltersState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_FILTER: 'fetchFilter',
+  EDIT_FILTER: 'editFilter',
+  UPDATE_FILTER: 'updateFilter'
+}
+
 export const actions: ActionTree<EditFiltersState, RootState> = {
   fetchFilter: async ({ commit, rootState }, id: string): Promise<Entity.Filter> => {
     const client = generator(

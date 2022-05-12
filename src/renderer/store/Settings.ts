@@ -25,7 +25,7 @@ const mutations: MutationTree<SettingsState> = {
 type SettingsModule = {
   General: GeneralState
   Timeline: TimelineState
-  Filter: FiltersModuleState
+  Filters: FiltersModuleState
 }
 
 export type SettingsModuleState = SettingsModule & SettingsState

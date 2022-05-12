@@ -14,7 +14,7 @@
         <el-checkbox label="notifications"></el-checkbox>
         <el-checkbox label="public"></el-checkbox>
         <el-checkbox label="thread"></el-checkbox>
-        <el-checkbox label="account" :disabled="accountDisabled()"></el-checkbox>
+        <el-checkbox label="account" :disabled="accountDisabled"></el-checkbox>
       </el-checkbox-group>
     </el-form-item>
     <el-form-item>
@@ -30,128 +30,125 @@
   </el-form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, computed, toRefs, PropType } from 'vue'
+import { useI18next } from 'vue3-i18next'
+import { Entity } from 'megalodon'
+
+export default defineComponent({
   name: 'FilterForm',
   props: {
     loading: {
       type: Boolean,
       default: false
     },
-    value: {
-      type: Object
+    modelValue: {
+      type: Object as PropType<Entity.Filter>,
+      required: true
     },
     sns: {
       type: String,
       default: 'mastodon'
     }
   },
-  data() {
-    return {
-      expires: [
-        {
-          label: this.$t('settings.filters.expires.never'),
-          value: null
-        },
-        {
-          label: this.$t('settings.filters.expires.30_minutes'),
-          value: 60 * 30
-        },
-        {
-          label: this.$t('settings.filters.expires.1_hour'),
-          value: 3600
-        },
-        {
-          label: this.$t('settings.filters.expires.6_hours'),
-          value: 3600 * 6
-        },
-        {
-          label: this.$t('settings.filters.expires.12_hours'),
-          value: 3600 * 12
-        },
-        {
-          label: this.$t('settings.filters.expires.1_day'),
-          value: 3600 * 24
-        },
-        {
-          label: this.$t('settings.filters.expires.1_week'),
-          value: 3600 * 24 * 7
-        }
-      ]
-    }
-  },
-  computed: {
-    filter: {
-      get() {
-        return this.value
+  setup(props, ctx) {
+    const i18n = useI18next()
+    const { modelValue, sns } = toRefs(props)
+
+    const expires = [
+      {
+        label: i18n.t('settings.filters.expires.never'),
+        value: null
       },
-      set(value) {
-        this.$emit('input', value)
+      {
+        label: i18n.t('settings.filters.expires.30_minutes'),
+        value: 60 * 30
+      },
+      {
+        label: i18n.t('settings.filters.expires.1_hour'),
+        value: 3600
+      },
+      {
+        label: i18n.t('settings.filters.expires.6_hours'),
+        value: 3600 * 6
+      },
+      {
+        label: i18n.t('settings.filters.expires.12_hours'),
+        value: 3600 * 12
+      },
+      {
+        label: i18n.t('settings.filters.expires.1_day'),
+        value: 3600 * 24
+      },
+      {
+        label: i18n.t('settings.filters.expires.1_week'),
+        value: 3600 * 24 * 7
       }
-    },
-    filterPhrase: {
-      get() {
-        return this.filter.phrase
-      },
-      set(value) {
-        this.filter = Object.assign({}, this.filter, {
+    ]
+
+    const filter = computed({
+      get: () => modelValue.value,
+      set: value => ctx.emit('update:modelValue', value)
+    })
+    const filterPhrase = computed({
+      get: () => filter.value.phrase,
+      set: value => {
+        filter.value = Object.assign({}, filter.value, {
           phrase: value
         })
       }
-    },
-    filterExpire: {
-      get() {
-        return this.filter.expires_at
-      },
-      set(value) {
-        this.filter = Object.assign({}, this.filter, {
+    })
+    const filterExpire = computed({
+      get: () => filter.value.expires_at,
+      set: value => {
+        filter.value = Object.assign({}, filter.value, {
           expires_at: value
         })
       }
-    },
-    filterContext: {
-      get() {
-        return this.filter.context
-      },
-      set(value) {
-        this.filter = Object.assign({}, this.filter, {
+    })
+    const filterContext = computed({
+      get: () => filter.value.context,
+      set: value => {
+        filter.value = Object.assign({}, filter.value, {
           context: value
         })
       }
-    },
-    filterIrreversible: {
-      get() {
-        return this.filter.irreversible
-      },
-      set(value) {
-        this.filter = Object.assign({}, this.filter, {
+    })
+    const filterIrreversible = computed({
+      get: () => filter.value.irreversible,
+      set: value => {
+        filter.value = Object.assign({}, filter.value, {
           irreversible: value
         })
       }
-    },
-    filterWholeWord: {
-      get() {
-        return this.filter.whole_word
-      },
-      set(value) {
-        this.filter = Object.assign({}, this.filter, {
+    })
+    const filterWholeWord = computed({
+      get: () => filter.value.whole_word,
+      set: value => {
+        filter.value = Object.assign({}, filter.value, {
           whole_word: value
         })
       }
-    }
-  },
-  methods: {
-    cancel() {
-      this.$emit('cancel')
-    },
-    onSubmit() {
-      this.$emit('onSubmit')
-    },
-    accountDisabled() {
-      return this.sns === 'pleroma'
+    })
+    const accountDisabled = computed(() => sns.value === 'pleroma')
+
+    const cancel = () => ctx.emit('cancel')
+    const onSubmit = () => ctx.emit('onSubmit')
+
+    return {
+      expires,
+      filter,
+      filterPhrase,
+      filterExpire,
+      filterContext,
+      filterIrreversible,
+      filterWholeWord,
+      cancel,
+      onSubmit,
+      accountDisabled
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

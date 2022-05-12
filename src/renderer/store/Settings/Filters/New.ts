@@ -35,15 +35,21 @@ export const mutations: MutationTree<NewFiltersState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  EDIT_FILTER: 'editFilter',
+  RESET_FILTER: 'resetFilter',
+  CREATE_FILTER: 'createFilter'
+}
+
 export const actions: ActionTree<NewFiltersState, RootState> = {
-  editFilter: ({ commit, state }, filter: any) => {
+  [ACTION_TYPES.EDIT_FILTER]: ({ commit, state }, filter: any) => {
     const newFilter = Object.assign({}, state.filter, filter)
     commit(MUTATION_TYPES.UPDATE_FILTER, newFilter)
   },
-  resetFilter: ({ commit }) => {
+  [ACTION_TYPES.RESET_FILTER]: ({ commit }) => {
     commit(MUTATION_TYPES.UPDATE_FILTER, defaultFilter)
   },
-  createFilter: async ({ commit, state, dispatch, rootState }): Promise<Entity.Filter> => {
+  [ACTION_TYPES.CREATE_FILTER]: async ({ commit, state, dispatch, rootState }): Promise<Entity.Filter> => {
     if (state.filter === null) {
       throw new Error('filter is not set')
     }

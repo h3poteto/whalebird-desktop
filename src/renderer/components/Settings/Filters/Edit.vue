@@ -1,65 +1,64 @@
 <template>
   <div id="edit_filter">
     <h2>{{ $t('settings.filters.edit.title') }}</h2>
-    <FilterForm
-      v-model="filter"
-      @cancel="cancel"
-      @onSubmit="onSubmit"
-      :loading="loading"
-      :sns="sns"
-    >
-    </FilterForm>
+    <FilterForm v-model="filter" @cancel="cancel" @onSubmit="onSubmit" :loading="loading" :sns="sns"> </FilterForm>
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import FilterForm from './form'
+<script lang="ts">
+import { defineComponent, computed, onMounted, toRefs } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useStore } from '@/store'
+import { useRouter } from 'vue-router'
+import { useI18next } from 'vue3-i18next'
+import FilterForm from './form.vue'
+import { ACTION_TYPES } from '@/store/Settings/Filters/Edit'
 
-export default {
+export default defineComponent({
   name: 'EditFilter',
   props: ['filter_id'],
   components: { FilterForm },
-  computed: {
-    ...mapState('Settings/Filters/Edit', {
-      loading: (state) => state.loading,
-    }),
-    ...mapState('TimelineSpace', {
-      sns: (state) => state.sns,
-    }),
-    filter: {
-      get() {
-        return this.$store.state.Settings.Filters.Edit.filter
-      },
-      set(value) {
-        this.$store.dispatch('Settings/Filters/Edit/editFilter', value)
-      },
-    },
-  },
-  async created() {
-    await this.$store.dispatch(
-      'Settings/Filters/Edit/fetchFilter',
-      this.filter_id
-    )
-  },
-  methods: {
-    cancel() {
-      this.$router.go(-1)
-    },
-    onSubmit() {
-      this.$store
-        .dispatch('Settings/Filters/Edit/updateFilter')
+  setup(props) {
+    const space = 'Settings/Filters/Edit'
+    const store = useStore()
+    const router = useRouter()
+    const i18n = useI18next()
+    const { filter_id } = toRefs(props)
+
+    const loading = computed(() => store.state.Settings.Filters.Edit.loading)
+    const sns = computed(() => store.state.TimelineSpace.sns)
+    const filter = computed({
+      get: () => store.state.Settings.Filters.Edit.filter,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.EDIT_FILTER}`, value)
+    })
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.FETCH_FILTER}`, filter_id.value)
+    })
+
+    const cancel = () => router.go(-1)
+    const onSubmit = () => {
+      store
+        .dispatch(`${space}/${ACTION_TYPES.UPDATE_FILTER}`)
         .then(() => {
-          this.$router.go(-1)
+          router.go(-1)
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err)
-          this.$message({
-            message: this.$t('message.update_filter_error'),
-            type: 'error',
+          ElMessage({
+            message: i18n.t('message.update_filter_error'),
+            type: 'error'
           })
         })
-    },
-  },
-}
+    }
+
+    return {
+      loading,
+      sns,
+      filter,
+      cancel,
+      onSubmit
+    }
+  }
+})
 </script>
