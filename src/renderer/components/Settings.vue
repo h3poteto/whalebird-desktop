@@ -16,21 +16,21 @@
       <div></div>
       <el-aside width="240px" class="menu">
         <el-menu
-          :default-active="activeRoute()"
+          :default-active="activeRoute"
           class="setting-menu"
           :text-color="primaryColor"
           :background-color="backgroundColor"
           :router="true"
         >
-          <el-menu-item :index="`/${id()}/settings/general`">
+          <el-menu-item :index="`/${id}/settings/general`">
             <font-awesome-icon icon="gear" class="icon" size="lg" />
             <span>{{ $t('settings.general.title') }}</span>
           </el-menu-item>
-          <el-menu-item :index="`/${id()}/settings/timeline`">
+          <el-menu-item :index="`/${id}/settings/timeline`">
             <font-awesome-icon icon="align-left" class="icon" size="lg" />
             <span>{{ $t('settings.timeline.title') }}</span>
           </el-menu-item>
-          <el-menu-item :index="`/${id()}/settings/filters`">
+          <el-menu-item :index="`/${id}/settings/filters`">
             <font-awesome-icon icon="filter" class="icon" size="lg" />
             <span>{{ $t('settings.filters.title') }}</span>
           </el-menu-item>
@@ -43,33 +43,43 @@
   </el-container>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { MUTATION_TYPES } from '@/store/Settings'
 
-export default {
+export default defineComponent({
   name: 'Settings',
-  computed: {
-    ...mapState({
-      primaryColor: state => state.App.theme.primary_color,
-      backgroundColor: state => state.App.theme.background_color
+  setup() {
+    const space = `Settings`
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+
+    const primaryColor = computed(() => store.state.App.theme.primary_color)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+    const id = computed(() => route.params.id)
+    const activeRoute = computed(() => route.path)
+
+    onMounted(() => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_ACCOUNT_ID}`, id.value)
+      router.push(`/${id.value}/settings/general`)
     })
-  },
-  created() {
-    this.$store.commit('Settings/changeAccountID', this.id())
-    this.$router.push(`/${this.id()}/settings/general`)
-  },
-  methods: {
-    id() {
-      return this.$route.params.id
-    },
-    close() {
-      this.$router.push(`/${this.id()}/home`)
-    },
-    activeRoute() {
-      return this.$route.path
+
+    const close = () => {
+      router.push(`/${id.value}/home`)
+    }
+
+    return {
+      primaryColor,
+      backgroundColor,
+      id,
+      activeRoute,
+      close
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
