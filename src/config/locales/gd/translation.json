@@ -4,7 +4,7 @@
       "name": "Whalebird",
       "about": "Mu Whalebird",
       "preferences": "Roghainnean…",
-      "shortcuts": "Shortcut Keys",
+      "shortcuts": "Iuchraichean nan ath-ghoiridean",
       "services": "Seirbheisean",
       "hide": "Cuir Whalebird am falach",
       "hide_others": "Cuir càch am falach",
@@ -114,10 +114,10 @@
         "public": "Loidhne-ama phoblach"
       },
       "use_marker": {
-        "title": "Load the timeline from the last reading position",
-        "home": "Home",
-        "notifications": "Notifications",
-        "mentions": "Mentions"
+        "title": "Luchdaich an loidhne-ama on ionad-leughaidh mu dheireadh",
+        "home": "Dachaigh",
+        "notifications": "Brathan",
+        "mentions": "Iomraidhean"
       }
     },
     "filters": {
@@ -176,14 +176,14 @@
         "launch": "Cuir an aplacaid gu dol leis a’ chlàradh a-steach"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "Ath-shuidhich na roghainnean"
       }
     },
     "appearance": {
       "title": "Coltas",
       "theme_color": "Dath an ùrlair",
       "theme": {
-        "system": "System",
+        "system": "An siostam",
         "light": "Soilleir",
         "dark": "Dorcha",
         "solarized_light": "Grianach soilleir",
@@ -385,7 +385,7 @@
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "Luchdaich barrachd phostaichean"
     }
   },
   "side_bar": {
@@ -508,8 +508,8 @@
     },
     "new_toot": {
       "toot_length": "Bu chòir dhan phost a bhith eadar {{min}} is {{max}} a dh’fhaid",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_length": "Chan urrainn dhut barrachd air {{max}} dealbh a cheangal ris",
+      "attach_length_plural": "Chan urrainn dhut barrachd air {{max}} dealbh(an) a cheangal ris",
       "attach_image": "Chan urrainn dhut ach dealbhan no videothan a cheangal ris",
       "poll_invalid": "Roghainnean mì-dhligheach sa chunntas-bheachd"
     }
