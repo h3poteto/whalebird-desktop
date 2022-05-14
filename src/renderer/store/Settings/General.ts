@@ -27,8 +27,14 @@ const mutations: MutationTree<GeneralState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_SETTINGS: 'fetchSettings',
+  SET_VISIBILITY: 'setVisibility',
+  SET_SENSITIVE: 'setSensitive'
+}
+
 const actions: ActionTree<GeneralState, RootState> = {
-  fetchSettings: async ({ commit, rootState }): Promise<Entity.Account> => {
+  [ACTION_TYPES.FETCH_SETTINGS]: async ({ commit, rootState }): Promise<Entity.Account> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -43,7 +49,7 @@ const actions: ActionTree<GeneralState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_SENSITIVE, res.data.source!.sensitive)
     return res.data
   },
-  setVisibility: async ({ commit, rootState }, value: number) => {
+  [ACTION_TYPES.SET_VISIBILITY]: async ({ commit, rootState }, value: number) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -57,7 +63,7 @@ const actions: ActionTree<GeneralState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_VISIBILITY, visibility!.value)
     return res.data
   },
-  setSensitive: async ({ commit, rootState }, value: boolean) => {
+  [ACTION_TYPES.SET_SENSITIVE]: async ({ commit, rootState }, value: boolean) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,

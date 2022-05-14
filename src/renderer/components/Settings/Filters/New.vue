@@ -1,58 +1,58 @@
 <template>
   <div id="new_filter">
     <h2>{{ $t('settings.filters.new.title') }}</h2>
-    <FilterForm
-      v-model="filter"
-      @cancel="cancel"
-      @onSubmit="onSubmit"
-      :loading="loading"
-      :sns="sns"
-    >
-    </FilterForm>
+    <FilterForm v-model="filter" @cancel="cancel" @onSubmit="onSubmit" :loading="loading" :sns="sns"> </FilterForm>
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import FilterForm from './form'
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import FilterForm from './form.vue'
+import { ACTION_TYPES } from '@/store/Settings/Filters/New'
 
-export default {
+export default defineComponent({
   name: 'NewFilter',
   components: { FilterForm },
-  computed: {
-    ...mapState('Settings/Filters/New', {
-      loading: (state) => state.loading,
-    }),
-    ...mapState('TimelineSpace', {
-      sns: (state) => state.sns,
-    }),
-    filter: {
-      get() {
-        return this.$store.state.Settings.Filters.New.filter
-      },
-      set(value) {
-        this.$store.dispatch('Settings/Filters/New/editFilter', value)
-      },
-    },
-  },
-  methods: {
-    cancel() {
-      this.$router.go(-1)
-    },
-    onSubmit() {
-      this.$store
-        .dispatch('Settings/Filters/New/createFilter')
+  setup() {
+    const space = 'Settings/Filters/New'
+    const store = useStore()
+    const router = useRouter()
+    const i18n = useI18next()
+
+    const loading = computed(() => store.state.Settings.Filters.New.loading)
+    const sns = computed(() => store.state.TimelineSpace.sns)
+    const filter = computed({
+      get: () => store.state.Settings.Filters.New.filter,
+      set: value => store.dispatch(`${space}/${ACTION_TYPES.EDIT_FILTER}`, value)
+    })
+
+    const cancel = () => router.go(-1)
+    const onSubmit = () => {
+      store
+        .dispatch(`${space}/${ACTION_TYPES.CREATE_FILTER}`)
         .then(() => {
-          this.$router.go(-1)
+          router.go(-1)
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err)
-          this.$message({
-            message: this.$t('message.create_filter_error'),
-            type: 'error',
+          ElMessage({
+            message: i18n.t('message.create_filter_error'),
+            type: 'error'
           })
         })
-    },
-  },
-}
+    }
+
+    return {
+      loading,
+      sns,
+      filter,
+      cancel,
+      onSubmit
+    }
+  }
+})
 </script>

@@ -25,13 +25,19 @@ const mutations: MutationTree<TimelineState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  LOAD_TIMELINE_SETTING: 'loadTimelineSetting',
+  CHANGE_UNREAD_NOTIFICATION: 'changeUnreadNotification',
+  CHANGE_USER_MARKER: 'changeUserMarker'
+}
+
 const actions: ActionTree<TimelineState, RootState> = {
-  loadTimelineSetting: async ({ commit, rootState }): Promise<boolean> => {
+  [ACTION_TYPES.LOAD_TIMELINE_SETTING]: async ({ commit, rootState }): Promise<boolean> => {
     const setting: Setting = await win.ipcRenderer.invoke('get-account-setting', rootState.Settings.accountID)
     commit(MUTATION_TYPES.UPDATE_TIMELINE_SETTING, setting.timeline)
     return true
   },
-  changeUnreadNotification: async ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
+  [ACTION_TYPES.CHANGE_UNREAD_NOTIFICATION]: async ({ dispatch, state, rootState }, timeline: { key: boolean }): Promise<boolean> => {
     const unread: UnreadNotification = Object.assign({}, state.setting.unreadNotification, timeline)
     const tl: TimelineSetting = Object.assign({}, toRaw(state.setting), {
       unreadNotification: unread
@@ -44,7 +50,7 @@ const actions: ActionTree<TimelineState, RootState> = {
     dispatch('loadTimelineSetting')
     return true
   },
-  changeUseMarker: async ({ dispatch, state, rootState }, timeline: { key: boolean }) => {
+  [ACTION_TYPES.CHANGE_USER_MARKER]: async ({ dispatch, state, rootState }, timeline: { key: boolean }) => {
     const marker: UseMarker = Object.assign({}, state.setting.useMarker, timeline)
     const tl: TimelineSetting = Object.assign({}, toRaw(state.setting), {
       useMarker: marker
