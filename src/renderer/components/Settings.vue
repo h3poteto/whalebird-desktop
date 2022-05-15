@@ -13,7 +13,6 @@
       </el-row>
     </el-header>
     <el-container>
-      <div></div>
       <el-aside width="240px" class="menu">
         <el-menu
           :default-active="activeRoute"
@@ -45,6 +44,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { MUTATION_TYPES } from '@/store/Settings'
@@ -56,6 +56,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
+    const { escape } = useMagicKeys()
 
     const primaryColor = computed(() => store.state.App.theme.primary_color)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
@@ -65,6 +66,10 @@ export default defineComponent({
     onMounted(() => {
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_ACCOUNT_ID}`, id.value)
       router.push(`/${id.value}/settings/general`)
+    })
+
+    whenever(escape, () => {
+      close()
     })
 
     const close = () => {
