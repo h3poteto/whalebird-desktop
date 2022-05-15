@@ -837,6 +837,8 @@ export default {
         background-color: var(--theme-selected-background-color);
         border-color: var(--theme-border-color);
         padding: 2px 4px;
+        height: 1.7rem;
+        margin: 0 4px;
       }
     }
 
