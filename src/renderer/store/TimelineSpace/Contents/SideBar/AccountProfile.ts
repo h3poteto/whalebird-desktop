@@ -60,6 +60,23 @@ const mutations: MutationTree<AccountProfileState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_ACCOUNT: 'fetchAccount',
+  SEARCH_ACCOUNT: 'searchAccount',
+  CHANGE_ACCOUNT: 'changeAccount',
+  FETCH_RELATIONSHIP: 'fetchRelationship',
+  RELOAD: 'reload',
+  FOLLOW: 'follow',
+  UNFOLLOW: 'unfollow',
+  CLOSE: 'close',
+  UNMUTE: 'unmute',
+  BLOCK: 'block',
+  UNBLOCK: 'unblock',
+  IDENTITY_PROOFS: 'identityProofs',
+  SUBSCRIBE: 'subscribe',
+  UNSBSCRIBE: 'unsubscribe'
+}
+
 const actions: ActionTree<AccountProfileState, RootState> = {
   fetchAccount: async ({ rootState, dispatch }, accountID: string): Promise<Entity.Account> => {
     const client = generator(

@@ -40,23 +40,30 @@ const mutations: MutationTree<SideBarState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  CLOSE: 'close',
+  RELOAD: 'reload',
+  OPEN_ACCOUNT_COMPONENT: 'openAccountComponent',
+  OPEN_TOOT_COMPONENT: 'openTootComponent'
+}
+
 const actions: ActionTree<SideBarState, RootState> = {
-  close: ({ dispatch, commit }) => {
+  [ACTION_TYPES.CLOSE]: ({ dispatch, commit }) => {
     dispatch('TimelineSpace/Contents/SideBar/AccountProfile/close', {}, { root: true })
     commit(MUTATION_TYPES.CHANGE_OPEN_SIDEBAR, false)
     commit(MUTATION_TYPES.CHANGE_COMPONENT, Component.Blank)
   },
-  reload: ({ state, dispatch }) => {
+  [ACTION_TYPES.RELOAD]: ({ state, dispatch }) => {
     if (state.component === Component.AccountProfile) {
       dispatch('TimelineSpace/Contents/SideBar/AccountProfile/reload', {}, { root: true })
     } else if (state.component === Component.TootDetail) {
       dispatch('TimelineSpace/Contents/SideBar/TootDetail/reload', {}, { root: true })
     }
   },
-  openAccountComponent: ({ commit }) => {
+  [ACTION_TYPES.OPEN_ACCOUNT_COMPONENT]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_COMPONENT, Component.AccountProfile)
   },
-  openTootComponent: ({ commit }) => {
+  [ACTION_TYPES.OPEN_TOOT_COMPONENT]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_COMPONENT, Component.TootDetail)
   }
 }

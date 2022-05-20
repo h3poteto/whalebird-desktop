@@ -48,18 +48,23 @@
   </div>
 </template>
 
-<script>
-import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import { ACTION_TYPES as SIDEBAR_ACTION, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/SideBar'
+import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
 import emojify from '~/src/renderer/utils/emojify'
 
-export default {
+export default defineComponent({
   name: 'user',
   components: {
     FailoverImg
   },
   props: {
     user: {
-      type: Object,
+      type: Object as PropType<Entity.Account>,
       default: {}
     },
     remove: {
@@ -75,36 +80,48 @@ export default {
       default: false
     }
   },
-  methods: {
-    username(account) {
+  setup(_props, ctx) {
+    const store = useStore()
+
+    const username = (account: Entity.Account) => {
       if (account.display_name !== '') {
         return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
-    },
-    openUser(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    removeAccount(account) {
-      this.$emit('removeAccount', account)
-    },
-    unfollowAccount(account) {
-      this.$emit('unfollowAccount', account)
-    },
-    followAccount(account) {
-      this.$emit('followAccount', account)
-    },
-    acceptRequest(account) {
-      this.$emit('acceptRequest', account)
-    },
-    rejectRequest(account) {
-      this.$emit('rejectRequest', account)
+    }
+    const openUser = (account: Entity.Account) => {
+      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
+      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
+      store.commit(`TimelineSpace/Contents/SideBar/${MUTATION_TYPES.CHANGE_OPEN_SIDEBAR}`, true)
+    }
+    const removeAccount = (account: Entity.Account) => {
+      ctx.emit('removeAccount', account)
+    }
+    const unfollowAccount = (account: Entity.Account) => {
+      ctx.emit('unfollowAccount', account)
+    }
+    const followAccount = (account: Entity.Account) => {
+      ctx.emit('followAccount', account)
+    }
+    const acceptRequest = (account: Entity.Account) => {
+      ctx.emit('acceptRequest', account)
+    }
+    const rejectRequest = (account: Entity.Account) => {
+      ctx.emit('rejectRequest', account)
+    }
+
+    return {
+      username,
+      openUser,
+      removeAccount,
+      unfollowAccount,
+      followAccount,
+      acceptRequest,
+      rejectRequest
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
