@@ -12,8 +12,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'link-preview',
   props: {
     icon: {
@@ -33,14 +35,16 @@ export default {
       default: null
     }
   },
-  methods: {
-    openLink(link) {
-      if (link) {
-        return window.shell.openExternal(link)
-      }
+  setup() {
+    const openLink = (link: string) => {
+      ;(window as any).shell.openExternal(link)
+    }
+
+    return {
+      openLink
     }
   }
-}
+})
 </script>
 
 <style lang="scss">
