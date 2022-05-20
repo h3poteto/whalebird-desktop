@@ -27,63 +27,77 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, ref, toRefs, PropType } from 'vue'
+import { Entity } from 'megalodon'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
 import moment from 'moment'
 import TimeFormat from '~/src/constants/timeFormat'
 
-export default {
-  data() {
-    return {
-      pollRadio: null,
-      now: Date.now()
-    }
-  },
+export default defineComponent({
   props: {
     poll: {
-      type: Object,
+      type: Object as PropType<Entity.Poll>,
       default: null
     }
   },
-  computed: {
-    ...mapState('App', {
-      timeFormat: state => state.timeFormat,
-      language: state => state.language
-    })
-  },
-  methods: {
-    parseDatetime(datetime, epoch) {
-      switch (this.timeFormat) {
-        case TimeFormat.Absolute.value:
-          return this.$t('cards.toot.poll.until', {
-            datetime: moment(datetime).format('YYYY-MM-DD HH:mm:ss')
-          })
+  setup(props, ctx) {
+    const store = useStore()
+    const i18n = useI18next()
+    const { poll } = toRefs(props)
+
+    const timeFormat = computed(() => store.state.App.timeFormat)
+    const language = computed(() => store.state.App.language)
+
+    const pollRadio = ref<string | null>(null)
+    const now = ref(Date.now())
+
+    const parseDatetime = (datetime: string | null, epoch: number) => {
+      switch (timeFormat.value) {
         case TimeFormat.Relative.value:
-          moment.locale(this.language)
-          return this.$t('cards.toot.poll.left', {
+          moment.locale(language.value)
+          return i18n.t('cards.toot.poll.left', {
             datetime: moment(datetime).from(epoch)
           })
+        default:
+          return i18n.t('cards.toot.poll.until', {
+            datetime: moment(datetime).format('YYYY-MM-DD HH:mm:ss')
+          })
       }
-    },
-    percentage(option_votes, poll_votes) {
+    }
+    const percentage = (option_votes: number | null, poll_votes: number) => {
       if (poll_votes === 0) {
-        return 0
+        return '0'
+      }
+      if (!option_votes) {
+        return '0'
       }
       return ((option_votes * 100) / poll_votes).toFixed(0)
-    },
-    vote() {
-      if (this.pollRadio !== null) {
-        this.$emit('vote', [this.pollRadio])
+    }
+    const vote = () => {
+      if (pollRadio !== null) {
+        ctx.emit('vote', [pollRadio.value])
       }
-    },
-    progress(percent) {
+    }
+    const progress = (percent: string) => {
       return `width: ${percent}%`
-    },
-    refresh() {
-      this.$emit('refresh', this.poll.id)
+    }
+    const refresh = () => {
+      ctx.emit('refresh', poll.value.id)
+    }
+
+    return {
+      pollRadio,
+      now,
+      parseDatetime,
+      percentage,
+      vote,
+      progress,
+      refresh
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
