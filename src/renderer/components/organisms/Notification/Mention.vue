@@ -16,37 +16,44 @@
   </div>
 </template>
 
-<script>
-import Toot from '../Toot'
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { Entity } from 'megalodon'
+import Toot from '../Toot.vue'
 
-export default {
+export default defineComponent({
   name: 'mention',
   props: {
     message: {
-      type: Object,
-      default: {},
+      type: Object as PropType<Entity.Notification>,
+      default: {}
     },
     filters: {
-      type: Array,
-      default: [],
+      type: Array as PropType<Array<Entity.Filter>>,
+      default: []
     },
     focused: {
       type: Boolean,
-      default: false,
+      default: false
     },
     overlaid: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   components: { Toot },
-  methods: {
-    updateToot(message) {
-      return this.$emit('update', message)
-    },
-    deleteToot(message) {
-      return this.$emit('delete', message)
-    },
-  },
-}
+  setup(_props, ctx) {
+    const updateToot = message => {
+      return ctx.emit('update', message)
+    }
+    const deleteToot = message => {
+      return ctx.emit('delete', message)
+    }
+
+    return {
+      updateToot,
+      deleteToot
+    }
+  }
+})
 </script>
