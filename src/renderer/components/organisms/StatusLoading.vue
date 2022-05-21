@@ -1,45 +1,51 @@
 <template>
   <div class="status-loading" tabIndex="0" @click="onClick">
-    <img
-      v-if="loading"
-      src="../../assets/images/loading-spinner-wide.svg"
-      class="load-icon"
-    />
+    <img v-if="loading" src="../../assets/images/loading-spinner-wide.svg" class="load-icon" />
     <p v-else class="load-text">{{ $t('cards.status_loading.message') }}</p>
     <div class="fill-line"></div>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, toRefs } from 'vue'
+
+export default defineComponent({
   name: 'status-loading',
   props: {
     max_id: {
       type: String,
-      default: '',
+      default: ''
     },
     since_id: {
       type: String,
-      default: '',
+      default: ''
     },
     loading: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  methods: {
-    onClick() {
-      if (this.loading) {
+  setup(props, ctx) {
+    const { loading, since_id, max_id } = toRefs(props)
+    const onClick = () => {
+      if (loading.value) {
         return
       }
-      if (this.since_id !== '') {
-        this.$emit('load_since', this.since_id)
-      } else if (this.max_id !== '') {
-        this.$emit('load_max', this.max_id)
+      if (since_id.value !== '') {
+        ctx.emit('load_since', since_id.value)
+      } else if (max_id.value !== '') {
+        ctx.emit('load_max', max_id.value)
       }
-    },
+    }
+
+    return {
+      onClick
+    }
   },
-}
+  methods: {
+    onClick() {}
+  }
+})
 </script>
 
 <style lang="scss" scoped>
