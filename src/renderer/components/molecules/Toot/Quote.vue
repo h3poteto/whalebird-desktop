@@ -11,32 +11,34 @@
   </div>
 </template>
 
-<script>
-import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
+
+export default defineComponent({
   name: 'quote',
   props: {
     icon: {
       type: String,
-      default: '',
+      default: ''
     },
     username: {
       type: String,
-      default: '',
+      default: ''
     },
     accountName: {
       type: String,
-      default: '',
+      default: ''
     },
     body: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   components: {
-    FailoverImg,
-  },
-}
+    FailoverImg
+  }
+})
 </script>
 
 <style lang="scss">

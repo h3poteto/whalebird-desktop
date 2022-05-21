@@ -9,24 +9,33 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, computed, PropType } from 'vue'
+import { Entity } from 'megalodon'
+import { useRouter, useRoute } from 'vue-router'
+
+export default defineComponent({
   name: 'tag',
   props: {
     tag: {
-      type: Object,
-      default: null,
-    },
+      type: Object as PropType<Entity.Tag>,
+      default: null
+    }
   },
-  methods: {
-    openTag(tag) {
-      this.$router.push(`/${this.id()}/hashtag/${tag.name}`)
-    },
-    id() {
-      return this.$route.params.id
-    },
-  },
-}
+  setup() {
+    const router = useRouter()
+    const route = useRoute()
+
+    const id = computed(() => route.params.id)
+    const openTag = (tag: Entity.Tag) => {
+      router.push(`/${id.value}/hashtag/${tag.name}`)
+    }
+
+    return {
+      openTag
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
