@@ -398,8 +398,7 @@ export default defineComponent({
           })
         return parsedAccount.acct
       }
-      openLink(e)
-      return
+      return openLink(e)
     }
     const openLink = (e: MouseEvent) => {
       const link = findLink(e.target as HTMLElement, 'toot')
