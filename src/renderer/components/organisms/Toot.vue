@@ -231,8 +231,6 @@ import { ElMessage } from 'element-plus'
 import { useStore } from '@/store'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
-import DisplayStyle from '~/src/constants/displayStyle'
-import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
 import Poll from '~/src/renderer/components/molecules/Toot/Poll.vue'
@@ -241,6 +239,8 @@ import Quote from '@/components/molecules/Toot/Quote.vue'
 // import { setInterval, clearInterval } from 'timers'
 import QuoteSupported from '@/utils/quoteSupported'
 import Filtered from '@/utils/filter'
+import { usernameWithStyle, accountNameWithStyle } from '@/utils/username'
+import { parseDatetime } from '@/utils/datetime'
 import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
 import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
 import { ACTION_TYPES as NEW_ACTION } from '@/store/TimelineSpace/Modals/NewToot'
@@ -296,7 +296,6 @@ export default defineComponent({
     const showContent = ref(store.state.App.ignoreCW)
     const showAttachments = ref(store.state.App.ignoreNSFW)
     const hideAllAttachments = ref(store.state.App.hideAllAttachments)
-    const now = ref(Date.now())
     const emojiIndex = new EmojiIndex(data)
 
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
@@ -313,7 +312,7 @@ export default defineComponent({
         return message.value
       }
     })
-    const timestamp = computed(() => parseDatetime(originalMessage.value.created_at, now.value))
+    const timestamp = computed(() => parseDatetime(originalMessage.value.created_at, timeFormat.value, language.value))
     const readableTimestamp = computed(() => {
       moment.locale(language.value)
       return moment(originalMessage.value.created_at).format('LLLL')
@@ -371,41 +370,8 @@ export default defineComponent({
       return QuoteSupported(sns.value, account.value.domain)
     })
 
-    const username = (account: Entity.Account) => {
-      switch (displayNameStyle.value) {
-        case DisplayStyle.DisplayNameAndUsername.value:
-          if (account.display_name !== '') {
-            return emojify(account.display_name, account.emojis)
-          } else {
-            return account.acct
-          }
-        case DisplayStyle.DisplayName.value:
-          if (account.display_name !== '') {
-            return emojify(account.display_name, account.emojis)
-          } else {
-            return account.acct
-          }
-        default:
-          return account.acct
-      }
-    }
-    const accountName = (account: Entity.Account) => {
-      switch (displayNameStyle.value) {
-        case DisplayStyle.DisplayNameAndUsername.value:
-          return `@${account.acct}`
-        default:
-          return ''
-      }
-    }
-    const parseDatetime = (datetime: string, epoch: number) => {
-      switch (timeFormat.value) {
-        case TimeFormat.Relative.value:
-          moment.locale(language.value)
-          return moment(datetime).from(epoch)
-        default:
-          return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
-      }
-    }
+    const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
+    const accountName = (account: Entity.Account) => accountNameWithStyle(account, displayNameStyle.value)
     const tootClick = (e: MouseEvent) => {
       const parsedTag = findTag(e.target as HTMLElement, 'toot')
       if (parsedTag !== null) {
@@ -664,7 +630,6 @@ export default defineComponent({
       quoteSupported,
       username,
       accountName,
-      parseDatetime,
       tootClick,
       openReply,
       openDetail,

@@ -1,7 +1,7 @@
 <template>
-  <div class="status" tabIndex="0" ref="status" @click="$emit('select')" role="article" aria-label="favourited toot">
-    <div v-show="filtered(message)" class="filtered">Filtered</div>
-    <div v-show="!filtered(message)" class="favourite">
+  <div class="status" tabIndex="0" @click="$emit('select')" role="article" aria-label="favourited toot">
+    <div v-show="filtered" class="filtered">Filtered</div>
+    <div v-show="!filtered" class="favourite">
       <div class="action">
         <div class="action-mark">
           <font-awesome-icon icon="star" size="sm" />
@@ -23,56 +23,41 @@
         </div>
       </div>
       <div class="clearfix"></div>
-      <div class="target" v-on:dblclick="openDetail(message.status)">
-        <div class="icon" @click="openUser(message.status.account)">
-          <FailoverImg :src="message.status.account.avatar" :alt="`Avatar of ${message.status.account.username}`" role="presentation" />
+      <div class="target" v-on:dblclick="openDetail(status)">
+        <div class="icon" @click="openUser(status.account)">
+          <FailoverImg :src="status.account.avatar" :alt="`Avatar of ${status.account.username}`" role="presentation" />
         </div>
         <div class="detail">
           <div class="toot-header">
-            <div class="user" @click="openUser(message.status.account)">
-              <span class="display-name"><bdi v-html="username(message.status.account)"></bdi></span>
+            <div class="user" @click="openUser(status.account)">
+              <span class="display-name"><bdi v-html="username(status.account)"></bdi></span>
             </div>
             <div class="timestamp">
-              {{ parseDatetime(message.status.created_at) }}
+              <time :datetime="message.created_at" :title="readableTimestamp">
+                {{ timestamp }}
+              </time>
             </div>
             <div class="clearfix"></div>
           </div>
           <div class="content-wrapper">
-            <div class="spoiler" v-show="spoilered(message.status)">
-              <span v-html="spoilerText(message.status)"></span>
-              <el-button
-                v-if="!isShowContent(message.status)"
-                plain
-                type="primary"
-                size="default"
-                class="spoil-button"
-                @click="showContent = true"
-              >
+            <div class="spoiler" v-show="spoilered">
+              <span v-html="spoilerText"></span>
+              <el-button v-if="!isShowContent" plain type="primary" size="default" class="spoil-button" @click="showContent = true">
                 {{ $t('cards.toot.show_more') }}
               </el-button>
               <el-button v-else plain type="primary" size="default" class="spoil-button" @click="showContent = false">
                 {{ $t('cards.toot.hide') }}
               </el-button>
             </div>
-            <div
-              class="content"
-              v-show="isShowContent(message.status)"
-              v-html="status(message.status)"
-              @click.capture.prevent="tootClick"
-            ></div>
+            <div class="content" v-show="isShowContent" v-html="statusText" @click.capture.prevent="tootClick"></div>
           </div>
           <div class="attachments">
-            <el-button
-              v-show="sensitive(message.status) && !isShowAttachments(message.status)"
-              class="show-sensitive"
-              type="info"
-              @click="showAttachments = true"
-            >
+            <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="showAttachments = true">
               {{ $t('cards.toot.sensitive') }}
             </el-button>
-            <div v-show="isShowAttachments(message.status)">
+            <div v-show="isShowAttachments">
               <el-button
-                v-show="sensitive(message.status) && isShowAttachments(message.status)"
+                v-show="sensitive && isShowAttachments"
                 class="hide-sensitive"
                 type="text"
                 @click="showAttachments = false"
@@ -80,7 +65,7 @@
               >
                 <font-awesome-icon icon="eye" class="hide" />
               </el-button>
-              <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments(message.status)">
+              <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
                 <FailoverImg :src="media.preview_url" :title="media.description" :readExif="true" />
                 <el-tag class="media-label" size="small" v-if="media.type == 'gifv'">GIF</el-tag>
                 <el-tag class="media-label" size="small" v-else-if="media.type == 'video'">VIDEO</el-tag>
@@ -89,11 +74,11 @@
             <div class="clearfix"></div>
           </div>
           <LinkPreview
-            v-if="message.status.card && message.status.card.type === 'link'"
-            :icon="message.status.card.image"
-            :title="message.status.card.title"
-            :description="message.status.card.description"
-            :url="message.status.card.url"
+            v-if="status.card && status.card.type === 'link'"
+            :icon="status.card.image"
+            :title="status.card.title"
+            :description="status.card.description"
+            :url="status.card.url"
           />
         </div>
       </div>
@@ -103,17 +88,24 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, toRefs, ref, PropType } from 'vue'
+import { Entity } from 'megalodon'
 import moment from 'moment'
+import { useRouter, useRoute } from 'vue-router'
+import { useStore } from '@/store'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
-import TimeFormat from '~/src/constants/timeFormat'
-import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
-import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
+import FailoverImg from '@/components/atoms/FailoverImg.vue'
+import LinkPreview from '@/components/molecules/Toot/LinkPreview.vue'
 import Filtered from '@/utils/filter'
+import { parseDatetime } from '@/utils/datetime'
+import { usernameWithStyle } from '@/utils/username'
+import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
+import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
+import { ACTION_TYPES as DETAIL_ACTION } from '@/store/TimelineSpace/Contents/SideBar/TootDetail'
 
-export default {
+export default defineComponent({
   name: 'favourite',
   components: {
     FailoverImg,
@@ -121,11 +113,11 @@ export default {
   },
   props: {
     message: {
-      type: Object,
+      type: Object as PropType<Entity.Notification>,
       default: {}
     },
     filters: {
-      type: Array,
+      type: Array as PropType<Array<Entity.Filter>>,
       default: []
     },
     focused: {
@@ -137,147 +129,109 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      showContent: false,
-      showAttachments: false
-    }
-  },
-  computed: {
-    ...mapState('App', {
-      displayNameStyle: state => state.displayNameStyle,
-      timeFormat: state => state.timeFormat,
-      language: state => state.language,
-      hideAllAttachments: state => state.hideAllAttachments
-    }),
-    shortcutEnabled: function () {
-      return this.focused && !this.overlaid
-    }
-  },
-  mounted() {
-    if (this.focused) {
-      this.$refs.status.focus()
-    }
-  },
-  watch: {
-    focused: function (newState, oldState) {
-      if (newState) {
-        this.$nextTick(function () {
-          this.$refs.status.focus()
-        })
-      } else if (oldState && !newState) {
-        this.$nextTick(function () {
-          this.$refs.status.blur()
-        })
+  setup(props) {
+    const store = useStore()
+    const router = useRouter()
+    const route = useRoute()
+    const { focused, overlaid, message, filters } = toRefs(props)
+
+    const showContent = ref<boolean>(false)
+    const showAttachments = ref<boolean>(false)
+
+    const displayNameStyle = computed(() => store.state.App.displayNameStyle)
+    const timeFormat = computed(() => store.state.App.timeFormat)
+    const language = computed(() => store.state.App.language)
+    const hideAllAttachments = computed(() => store.state.App.hideAllAttachments)
+    const shortcutEnabled = computed(() => focused.value && !overlaid.value)
+    const timestamp = computed(() => parseDatetime(message.value.created_at, timeFormat.value, language.value))
+    const readableTimestamp = computed(() => {
+      moment.locale(language.value)
+      return moment(message.value.created_at).format('LLLL')
+    })
+    const status = computed(() => message.value.status!)
+    const spoilered = computed(() => status.value.spoiler_text.length > 0)
+    const isShowContent = computed(() => !spoilered.value || showContent.value)
+    const filtered = computed(() => {
+      if (!message.value.status) {
+        return false
       }
-    }
-  },
-  methods: {
-    username(account) {
-      if (account.display_name !== '') {
-        return emojify(account.display_name, account.emojis)
-      } else {
-        return account.username
-      }
-    },
-    parseDatetime(datetime) {
-      switch (this.timeFormat) {
-        case TimeFormat.Absolute.value:
-          return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
-        case TimeFormat.Relative.value:
-          moment.locale(this.language)
-          return moment(datetime).fromNow()
-      }
-    },
-    tootClick(e) {
-      const parsedTag = findTag(e.target, 'favourite')
+      return Filtered(message.value.status.content, filters.value)
+    })
+    const mediaAttachments = computed(() => status.value.media_attachments)
+    const sensitive = computed(() => (hideAllAttachments.value || status.value.sensitive) && mediaAttachments.value.length > 0)
+    const isShowAttachments = computed(() => !sensitive.value || showAttachments.value)
+    const statusText = computed(() => emojify(status.value.content, status.value.emojis))
+    const spoilerText = computed(() => emojify(status.value.spoiler_text, status.value.emojis))
+
+    const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
+    const tootClick = (e: MouseEvent) => {
+      const parsedTag = findTag(e.target as HTMLElement, 'favourite')
       if (parsedTag !== null) {
-        const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
-        this.$router.push({ path: tag })
+        const tag = `/${route.params.id}/hashtag/${parsedTag}`
+        router.push({ path: tag })
         return tag
       }
-      const parsedAccount = findAccount(e.target, 'favourite')
+      const parsedAccount = findAccount(e.target as HTMLElement, 'favourite')
       if (parsedAccount !== null) {
-        this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-        this.$store
-          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', parsedAccount)
+        store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+        store
+          .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.SEARCH_ACCOUNT}`, parsedAccount)
           .then(account => {
-            this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-            this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+            store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
+            store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
           })
           .catch(err => {
             console.error(err)
-            this.openLink(e)
-            this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
+            openLink(e)
+            store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, false)
           })
         return parsedAccount.acct
       }
-      this.openLink(e)
-    },
-    openLink(e) {
-      const link = findLink(e.target, 'favourite')
+      return openLink(e)
+    }
+    const openLink = (e: MouseEvent) => {
+      const link = findLink(e.target as HTMLElement, 'favourite')
       if (link !== null) {
-        return window.shell.openExternal(link)
-      }
-    },
-    openUser(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    openDetail(message) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    mediaAttachments(message) {
-      return message.media_attachments
-    },
-    filtered(message) {
-      return Filtered(message.status.content, this.filters)
-    },
-    spoilered(message) {
-      return message.spoiler_text.length > 0
-    },
-    isShowContent(message) {
-      return !this.spoilered(message) || this.showContent
-    },
-    sensitive(message) {
-      return (this.hideAllAttachments || message.sensitive) && this.mediaAttachments(message).length > 0
-    },
-    isShowAttachments(message) {
-      return !this.sensitive(message) || this.showAttachments
-    },
-    status(message) {
-      return emojify(message.content, message.emojis)
-    },
-    spoilerText(message) {
-      return emojify(message.spoiler_text, message.emojis)
-    },
-    handleStatusControl(event) {
-      switch (event.srcKey) {
-        case 'next':
-          this.$emit('focusNext')
-          break
-        case 'prev':
-          this.$emit('focusPrev')
-          break
-        case 'right':
-          this.$emit('focusRight')
-          break
-        case 'left':
-          this.$emit('focusLeft')
-          break
-        case 'open':
-          this.openDetail(this.message.status)
-          break
-        case 'profile':
-          this.openUser(this.message.account)
-          break
+        return (window as any).shell.openExternal(link)
       }
     }
+    const openUser = (account: Entity.Account) => {
+      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
+      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
+      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+    }
+    const openDetail = (status: Entity.Status) => {
+      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_TOOT_COMPONENT}`)
+      store.dispatch(`TimelineSpace/Contents/SideBar/TootDetail/${DETAIL_ACTION.CHANGE_TOOT}`, status)
+      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+    }
+
+    return {
+      showContent,
+      showAttachments,
+      displayNameStyle,
+      timeFormat,
+      language,
+      hideAllAttachments,
+      shortcutEnabled,
+      timestamp,
+      readableTimestamp,
+      username,
+      tootClick,
+      openUser,
+      openDetail,
+      mediaAttachments,
+      filtered,
+      spoilered,
+      isShowContent,
+      sensitive,
+      isShowAttachments,
+      status,
+      statusText,
+      spoilerText
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
