@@ -6,7 +6,7 @@ import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 import { EnabledTimelines } from '~/src/types/enabledTimelines'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type SideMenuState = {
   unreadHomeTimeline: boolean
@@ -97,42 +97,58 @@ const mutations: MutationTree<SideMenuState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_LISTS: 'fetchLists',
+  FETCH_FOLLOW_REQUESTS: 'fetchFollowRequests',
+  CONFIRM_TIMELINES: 'confirmTimelines',
+  DISABLE_LOCAL: 'disableLocal',
+  DISABLE_PUBLIC: 'disablePublic',
+  DISABLE_DIRECT: 'disableDirect',
+  CLEAR_UNREAD: 'clearUnread',
+  CHANGE_COLLAPSE: 'changeCollapse',
+  READ_COLLAPSE: 'readCollapse',
+  LIST_TAGS: 'listTags'
+}
+
 const actions: ActionTree<SideMenuState, RootState> = {
-  fetchLists: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Entity.List>> => {
+  [ACTION_TYPES.FETCH_LISTS]: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Entity.List>> => {
     if (account === null) account = rootState.TimelineSpace.account
     const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
     const res = await client.getLists()
     commit(MUTATION_TYPES.UPDATE_LISTS, res.data)
     return res.data
   },
-  fetchFollowRequests: async ({ commit, rootState }, account: LocalAccount | null = null): Promise<Array<Entity.Account>> => {
+  [ACTION_TYPES.FETCH_FOLLOW_REQUESTS]: async (
+    { commit, rootState },
+    account: LocalAccount | null = null
+  ): Promise<Array<Entity.Account>> => {
     if (account === null) account = rootState.TimelineSpace.account
     const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
     const res = await client.getFollowRequests()
     commit(MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS, res.data.length > 0)
     return res.data
   },
-  confirmTimelines: async ({ commit, rootState }, account: LocalAccount | null = null) => {
+  [ACTION_TYPES.CONFIRM_TIMELINES]: async ({ commit, rootState }, account: LocalAccount | null = null) => {
     if (account === null) account = rootState.TimelineSpace.account
     const timelines: EnabledTimelines = await win.ipcRenderer.invoke('confirm-timelines', account)
     commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
   },
-  disableLocal: ({ commit, state }) => {
+  [ACTION_TYPES.DISABLE_LOCAL]: ({ commit, state }) => {
     let timelines = state.enabledTimelines
     timelines = { ...timelines, local: false }
     commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
   },
-  disablePublic: ({ commit, state }) => {
+  [ACTION_TYPES.DISABLE_PUBLIC]: ({ commit, state }) => {
     let timelines = state.enabledTimelines
     timelines = { ...timelines, public: false }
     commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
   },
-  disableDirect: ({ commit, state }) => {
+  [ACTION_TYPES.DISABLE_DIRECT]: ({ commit, state }) => {
     let timelines = state.enabledTimelines
     timelines = { ...timelines, direct: false }
     commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
   },
-  clearUnread: ({ commit }) => {
+  [ACTION_TYPES.CLEAR_UNREAD]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_UNREAD_HOME_TIMELINE, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_NOTIFICATIONS, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_MENTIONS, false)
@@ -140,16 +156,16 @@ const actions: ActionTree<SideMenuState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_UNREAD_DIRECT_MESSAGES_TIMELINE, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_PUBLIC_TIMELINE, false)
   },
-  changeCollapse: ({ commit }, value: boolean) => {
+  [ACTION_TYPES.CHANGE_COLLAPSE]: ({ commit }, value: boolean) => {
     win.ipcRenderer.send('change-collapse', value)
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
   },
-  readCollapse: async ({ commit }) => {
+  [ACTION_TYPES.READ_COLLAPSE]: async ({ commit }) => {
     const value: boolean = await win.ipcRenderer.invoke('get-collapse')
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
     return value
   },
-  listTags: async ({ commit }) => {
+  [ACTION_TYPES.LIST_TAGS]: async ({ commit }) => {
     const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags')
     commit(MUTATION_TYPES.UPDATE_TAGS, tags)
     return tags
