@@ -1,16 +1,21 @@
 <template>
-  <div class="status" tabIndex="0" @click="$emit('select')" role="article" aria-label="favourited toot">
+  <div class="status" tabIndex="0" @click="$emit('select')" role="article" :aria-label="reactionType">
     <div v-show="filtered" class="filtered">Filtered</div>
-    <div v-show="!filtered" class="favourite">
+    <div v-show="!filtered" class="status-reaction">
       <div class="action">
-        <div class="action-mark">
-          <font-awesome-icon icon="star" size="sm" />
+        <div :class="`action-mark ${reactionClass}`">
+          <template v-if="reactionIcon === 'unknown'">
+            {{ message.emoji }}
+          </template>
+          <template v-else>
+            <font-awesome-icon :icon="reactionIcon" size="sm" />
+          </template>
         </div>
         <div class="action-detail">
           <span class="bold" @click="openUser(message.account)">
             <bdi
               v-html="
-                $t('notification.favourite.body', {
+                $t(reactionMessage, {
                   username: username(message.account),
                   interpolation: { escapeValue: false }
                 })
@@ -89,7 +94,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRefs, ref, PropType } from 'vue'
+import { defineComponent, computed, toRefs, ref, PropType, h } from 'vue'
 import { Entity } from 'megalodon'
 import moment from 'moment'
 import { useRouter, useRoute } from 'vue-router'
@@ -106,7 +111,7 @@ import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/S
 import { ACTION_TYPES as DETAIL_ACTION } from '@/store/TimelineSpace/Contents/SideBar/TootDetail'
 
 export default defineComponent({
-  name: 'favourite',
+  name: 'status-reaction',
   components: {
     FailoverImg,
     LinkPreview
@@ -119,6 +124,10 @@ export default defineComponent({
     filters: {
       type: Array as PropType<Array<Entity.Filter>>,
       default: []
+    },
+    reactionType: {
+      type: String,
+      required: true
     },
     focused: {
       type: Boolean,
@@ -133,7 +142,7 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
-    const { focused, overlaid, message, filters } = toRefs(props)
+    const { focused, overlaid, message, filters, reactionType } = toRefs(props)
 
     const showContent = ref<boolean>(false)
     const showAttachments = ref<boolean>(false)
@@ -162,16 +171,49 @@ export default defineComponent({
     const isShowAttachments = computed(() => !sensitive.value || showAttachments.value)
     const statusText = computed(() => emojify(status.value.content, status.value.emojis))
     const spoilerText = computed(() => emojify(status.value.spoiler_text, status.value.emojis))
+    const reactionMessage = computed(() => {
+      switch (reactionType.value) {
+        case 'favourite':
+          return 'notification.favourite.body'
+        case 'poll-expired':
+          return 'notification.poll_expired.body'
+        case 'poll-vote':
+          return 'notification.poll_vote.body'
+        case 'quote':
+          return 'notification.quote.body'
+        case 'reaction':
+          return 'notification.reaction.body'
+        case 'reblog':
+          return 'notification.reblog.body'
+        default:
+          return 'unknown'
+      }
+    })
+    const reactionClass = computed(() => `action-${reactionType.value}`)
+    const reactionIcon = computed(() => {
+      switch (reactionType.value) {
+        case 'favourite':
+          return 'star'
+        case 'poll-expired':
+        case 'poll-vote':
+          return 'square-poll-horizontal'
+        case 'quote':
+        case 'reblog':
+          return 'retweet'
+        default:
+          return 'unknown'
+      }
+    })
 
     const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
     const tootClick = (e: MouseEvent) => {
-      const parsedTag = findTag(e.target as HTMLElement, 'favourite')
+      const parsedTag = findTag(e.target as HTMLElement, 'status-reaction')
       if (parsedTag !== null) {
         const tag = `/${route.params.id}/hashtag/${parsedTag}`
         router.push({ path: tag })
         return tag
       }
-      const parsedAccount = findAccount(e.target as HTMLElement, 'favourite')
+      const parsedAccount = findAccount(e.target as HTMLElement, 'status-reaction')
       if (parsedAccount !== null) {
         store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
         store
@@ -190,7 +232,7 @@ export default defineComponent({
       return openLink(e)
     }
     const openLink = (e: MouseEvent) => {
-      const link = findLink(e.target as HTMLElement, 'favourite')
+      const link = findLink(e.target as HTMLElement, 'status-reaction')
       if (link !== null) {
         return (window as any).shell.openExternal(link)
       }
@@ -228,7 +270,10 @@ export default defineComponent({
       isShowAttachments,
       status,
       statusText,
-      spoilerText
+      spoilerText,
+      reactionMessage,
+      reactionClass,
+      reactionIcon
     }
   }
 })
@@ -239,7 +284,7 @@ export default defineComponent({
   font-weight: bold;
 }
 
-.favourite {
+.status-reaction {
   padding: 8px 0 0 16px;
 
   .fa-icon {
@@ -254,10 +299,33 @@ export default defineComponent({
     margin-right: 8px;
 
     .action-mark {
-      color: #e6a23c;
       float: left;
       width: 32px;
       text-align: right;
+    }
+
+    .action-favourite {
+      color: #e6a23c;
+    }
+
+    .action-poll-expired {
+      color: #409eff;
+    }
+
+    .action-poll-vote {
+      color: #67c23a;
+    }
+
+    .action-quote {
+      color: #409eff;
+    }
+
+    .action-reaction {
+      color: #e6a23c;
+    }
+
+    .action-reblog {
+      color: #409eff;
     }
 
     .action-detail {

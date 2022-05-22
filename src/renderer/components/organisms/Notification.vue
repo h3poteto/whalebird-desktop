@@ -1,17 +1,18 @@
 <template>
   <div class="notification">
-    <favourite
+    <StatusReaction
       v-if="message.type === 'favourite'"
       :message="message"
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      reactionType="favourite"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
-    </favourite>
+    </StatusReaction>
     <follow
       v-else-if="message.type === 'follow'"
       :message="message"
@@ -48,42 +49,45 @@
       @select="$emit('selectNotification')"
     >
     </mention>
-    <quote
+    <StatusReaction
       v-else-if="message.type === 'reblog' && message.status.quote"
       :message="message"
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      reactionType="quote"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
-    </quote>
-    <reblog
+    </StatusReaction>
+    <StatusReaction
       v-else-if="message.type === 'reblog' && !message.status.quote"
       :message="message"
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      reactionType="reblog"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
-    </reblog>
-    <reaction
+    </StatusReaction>
+    <StatusReaction
       v-else-if="message.type === 'emoji_reaction'"
       :message="message"
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      reactiontype="reaction"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
-    </reaction>
+    </StatusReaction>
     <status
       v-else-if="message.type === 'status'"
       :message="message"
@@ -96,76 +100,68 @@
       @select="$emit('selectNotification')"
     >
     </status>
-    <PollVote
+    <StatusReaction
       v-else-if="message.type === 'poll_vote'"
       :message="message"
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      reactionType="poll-vote"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
-    </PollVote>
-    <PollExpired
+    </StatusReaction>
+    <StatusReaction
       v-else-if="message.type === 'poll_expired'"
       :message="message"
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      reactionType="poll-expired"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
-    </PollExpired>
+    </StatusReaction>
   </div>
 </template>
 
 <script>
-import Favourite from './Notification/Favourite'
+import StatusReaction from './Notification/StatusReaction'
 import Follow from './Notification/Follow'
 import FollowRequest from './Notification/FollowRequest'
 import Mention from './Notification/Mention'
-import Quote from './Notification/Quote'
-import Reblog from './Notification/Reblog'
-import Reaction from './Notification/Reaction'
 import Status from './Notification/Status'
-import PollVote from './Notification/PollVote'
-import PollExpired from './Notification/PollExpired'
 
 export default {
   name: 'notification',
   props: {
     message: {
       type: Object,
-      default: {},
+      default: {}
     },
     filters: {
       type: Array,
-      default: [],
+      default: []
     },
     focused: {
       type: Boolean,
-      defalt: false,
+      defalt: false
     },
     overlaid: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   components: {
-    Favourite,
+    StatusReaction,
     Follow,
     FollowRequest,
     Mention,
-    Quote,
-    Reblog,
-    Reaction,
-    Status,
-    PollVote,
-    PollExpired,
+    Status
   },
   methods: {
     updateToot(message) {
@@ -173,7 +169,7 @@ export default {
     },
     deleteToot(message) {
       return this.$emit('delete', message)
-    },
-  },
+    }
+  }
 }
 </script>
