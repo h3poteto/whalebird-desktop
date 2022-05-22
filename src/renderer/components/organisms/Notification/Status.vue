@@ -38,20 +38,25 @@
   </div>
 </template>
 
-<script>
-import emojify from '~/src/renderer/utils/emojify'
-import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
-import Toot from '../Toot'
+<script lang="ts">
+import { defineComponent, PropType, computed } from 'vue'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import FailoverImg from '@/components/atoms/FailoverImg.vue'
+import Toot from '../Toot.vue'
+import { usernameWithStyle } from '@/utils/username'
+import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
+import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
 
-export default {
+export default defineComponent({
   name: 'mention',
   props: {
     message: {
-      type: Object,
+      type: Object as PropType<Entity.Notification>,
       default: {}
     },
     filters: {
-      type: Array,
+      type: Array as PropType<Array<Entity.Filter>>,
       default: []
     },
     focused: {
@@ -64,27 +69,32 @@ export default {
     }
   },
   components: { Toot, FailoverImg },
-  methods: {
-    updateToot(message) {
-      return this.$emit('update', message)
-    },
-    deleteToot(message) {
-      return this.$emit('delete', message)
-    },
-    username(account) {
-      if (account.display_name !== '') {
-        return emojify(account.display_name, account.emojis)
-      } else {
-        return account.username
-      }
-    },
-    openUser(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
+  setup(_props, ctx) {
+    const store = useStore()
+
+    const displayNameStyle = computed(() => store.state.App.displayNameStyle)
+
+    const updateToot = (message: Entity.Status) => {
+      return ctx.emit('update', message)
+    }
+    const deleteToot = (message: Entity.Status) => {
+      return ctx.emit('delete', message)
+    }
+    const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
+    const openUser = (account: Entity.Account) => {
+      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
+      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
+      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+    }
+
+    return {
+      updateToot,
+      deleteToot,
+      username,
+      openUser
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
