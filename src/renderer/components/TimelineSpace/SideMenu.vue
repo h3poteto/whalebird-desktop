@@ -34,7 +34,7 @@
       </div>
     </div>
     <el-menu
-      :default-active="activeRoute()"
+      :default-active="activeRoute"
       :background-color="themeColor"
       text-color="#909399"
       :collapse="collapse"
@@ -43,7 +43,7 @@
       :class="collapse ? 'el-menu-vertical timeline-menu narrow-menu' : 'el-menu-vertical timeline-menu'"
       role="menu"
     >
-      <el-menu-item :index="`/${id()}/home`" role="menuitem" :title="$t('side_menu.home')" class="menu-item">
+      <el-menu-item :index="`/${id}/home`" role="menuitem" :title="$t('side_menu.home')" class="menu-item">
         <div class="menu-item-icon">
           <font-awesome-icon icon="home" />
         </div>
@@ -55,7 +55,7 @@
         </template>
       </el-menu-item>
       <el-menu-item
-        :index="`/${id()}/notifications`"
+        :index="`/${id}/notifications`"
         role="menuitem"
         :title="$t('side_menu.notification')"
         class="menu-item"
@@ -72,7 +72,7 @@
         </template>
       </el-menu-item>
       <el-menu-item
-        :index="`/${id()}/mentions`"
+        :index="`/${id}/mentions`"
         role="menuitem"
         :title="$t('side_menu.mention')"
         class="menu-item"
@@ -89,7 +89,7 @@
         </template>
       </el-menu-item>
       <el-menu-item
-        :index="`/${id()}/direct-messages`"
+        :index="`/${id}/direct-messages`"
         role="menuitem"
         :title="$t('side_menu.direct')"
         class="menu-item"
@@ -107,7 +107,7 @@
       </el-menu-item>
       <el-menu-item
         v-if="unreadFollowRequests"
-        :index="`/${id()}/follow-requests`"
+        :index="`/${id}/follow-requests`"
         role="menuitem"
         :title="$t('side_menu.follow_requests')"
         class="menu-item"
@@ -123,7 +123,7 @@
         </template>
       </el-menu-item>
       <el-menu-item
-        :index="`/${id()}/favourites`"
+        :index="`/${id}/favourites`"
         role="menuitem"
         :title="$t('side_menu.favourite')"
         class="menu-item"
@@ -139,7 +139,7 @@
         </template>
       </el-menu-item>
       <el-menu-item
-        :index="`/${id()}/bookmarks`"
+        :index="`/${id}/bookmarks`"
         role="menuitem"
         :title="$t('side_menu.bookmark')"
         class="menu-item"
@@ -154,13 +154,7 @@
           </div>
         </template>
       </el-menu-item>
-      <el-menu-item
-        :index="`/${id()}/local`"
-        role="menuitem"
-        :title="$t('side_menu.local')"
-        class="menu-item"
-        v-if="enabledTimelines.local"
-      >
+      <el-menu-item :index="`/${id}/local`" role="menuitem" :title="$t('side_menu.local')" class="menu-item" v-if="enabledTimelines.local">
         <div class="menu-item-icon">
           <font-awesome-icon icon="users" />
         </div>
@@ -172,7 +166,7 @@
         </template>
       </el-menu-item>
       <el-menu-item
-        :index="`/${id()}/public`"
+        :index="`/${id}/public`"
         role="menuitem"
         :title="$t('side_menu.public')"
         class="menu-item"
@@ -188,7 +182,7 @@
           </div>
         </template>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/search`" role="menuitem" :title="$t('side_menu.search')" class="menu-item">
+      <el-menu-item :index="`/${id}/search`" role="menuitem" :title="$t('side_menu.search')" class="menu-item">
         <div class="menu-item-icon">
           <font-awesome-icon icon="magnifying-glass" />
         </div>
@@ -198,7 +192,7 @@
           </div>
         </template>
       </el-menu-item>
-      <el-menu-item :index="`/${id()}/hashtag`" role="menuitem" :title="$t('side_menu.hashtag')" class="menu-item">
+      <el-menu-item :index="`/${id}/hashtag`" role="menuitem" :title="$t('side_menu.hashtag')" class="menu-item">
         <div class="menu-item-icon">
           <font-awesome-icon icon="hashtag" />
         </div>
@@ -211,7 +205,7 @@
       <template v-if="enabledTimelines.tag">
         <template v-for="tag in tags" :key="tag.tagName">
           <el-menu-item
-            :index="`/${id()}/hashtag/${tag.tagName}`"
+            :index="`/${id}/hashtag/${tag.tagName}`"
             :class="collapse ? '' : 'sub-menu'"
             role="menuitem"
             :title="tag.tagName"
@@ -228,7 +222,7 @@
           </el-menu-item>
         </template>
       </template>
-      <el-menu-item :index="`/${id()}/lists`" role="menuitem" :title="$t('side_menu.lists')" class="menu-item">
+      <el-menu-item :index="`/${id}/lists`" role="menuitem" :title="$t('side_menu.lists')" class="menu-item">
         <div class="menu-item-icon">
           <font-awesome-icon icon="list-ul" />
         </div>
@@ -241,7 +235,7 @@
       <template v-if="enabledTimelines.list">
         <template v-for="list in lists" :key="list.id">
           <el-menu-item
-            :index="`/${id()}/lists/${list.id}`"
+            :index="`/${id}/lists/${list.id}`"
             :class="collapse ? '' : 'sub-menu'"
             role="menuitem"
             :title="list.title"
@@ -268,73 +262,101 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/TimelineSpace/SideMenu'
+import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
+import { ACTION_TYPES as SIDEBAR_ACTION, MUTATION_TYPES as SIDEBAR_MUTATION } from '@/store/TimelineSpace/Contents/SideBar'
+import { ACTION_TYPES as GLOBAL_ACTION } from '@/store/GlobalHeader'
 
-export default {
+export default defineComponent({
   name: 'side-menu',
-  computed: {
-    ...mapState('TimelineSpace/SideMenu', {
-      unreadHomeTimeline: state => state.unreadHomeTimeline,
-      unreadNotifications: state => state.unreadNotifications,
-      unreadMentions: state => state.unreadMentions,
-      unreadLocalTimeline: state => state.unreadLocalTimeline,
-      unreadDirectMessagesTimeline: state => state.unreadDirectMessagesTimeline,
-      unreadPublicTimeline: state => state.unreadPublicTimeline,
-      unreadFollowRequests: state => state.unreadFollowRequests,
-      lists: state => state.lists,
-      tags: state => state.tags,
-      collapse: state => state.collapse,
-      enabledTimelines: state => state.enabledTimelines
-    }),
-    ...mapState({
-      account: state => state.TimelineSpace.account,
-      themeColor: state => state.App.theme.side_menu_color,
-      hideGlobalHeader: state => state.GlobalHeader.hide
+  setup() {
+    const space = 'TimelineSpace/SideMenu'
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+
+    const unreadHomeTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadHomeTimeline)
+    const unreadNotifications = computed(() => store.state.TimelineSpace.SideMenu.unreadNotifications)
+    const unreadMentions = computed(() => store.state.TimelineSpace.SideMenu.unreadMentions)
+    const unreadLocalTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadLocalTimeline)
+    const unreadDirectMessagesTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline)
+    const unreadPublicTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadPublicTimeline)
+    const unreadFollowRequests = computed(() => store.state.TimelineSpace.SideMenu.unreadFollowRequests)
+    const lists = computed(() => store.state.TimelineSpace.SideMenu.lists)
+    const tags = computed(() => store.state.TimelineSpace.SideMenu.tags)
+    const collapse = computed(() => store.state.TimelineSpace.SideMenu.collapse)
+    const enabledTimelines = computed(() => store.state.TimelineSpace.SideMenu.enabledTimelines)
+    const account = computed(() => store.state.TimelineSpace.account)
+    const themeColor = computed(() => store.state.App.theme.side_menu_color)
+    const hideGlobalHeader = computed(() => store.state.GlobalHeader.hide)
+    const activeRoute = computed(() => route.path)
+    const id = computed(() => route.params.id)
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.READ_COLLAPSE}`)
+      store.dispatch(`${space}/${ACTION_TYPES.LIST_TAGS}`)
     })
-  },
-  created() {
-    this.$store.dispatch('TimelineSpace/SideMenu/readCollapse')
-    this.$store.dispatch('TimelineSpace/SideMenu/listTags')
-  },
-  methods: {
-    activeRoute() {
-      return this.$route.path
-    },
-    id() {
-      return this.$route.params.id
-    },
-    handleProfile(command) {
+
+    const handleProfile = (command: string) => {
       switch (command) {
         case 'show':
-          this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/fetchAccount', this.account.accountId).then(account => {
-            this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-            this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-          })
+          store
+            .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.FETCH_ACCOUNT}`, account.value.accountId)
+            .then(account => {
+              store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
+              store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+            })
 
-          this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
+          store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
           break
         case 'edit':
-          window.shell.openExternal(this.account.baseURL + '/settings/profile')
+          ;(window as any).shell.openExternal(account.value.baseURL + '/settings/profile')
           break
         case 'settings': {
-          const url = `/${this.id()}/settings`
-          this.$router.push(url)
+          const url = `/${id}/settings`
+          router.push(url)
           break
         }
       }
-    },
-    doCollapse() {
-      this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', true)
-    },
-    releaseCollapse() {
-      this.$store.dispatch('TimelineSpace/SideMenu/changeCollapse', false)
-    },
-    async changeGlobalHeader(value) {
-      await this.$store.dispatch('GlobalHeader/switchHide', value)
+    }
+    const doCollapse = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.CHANGE_COLLAPSE}`, true)
+    }
+    const releaseCollapse = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.CHANGE_COLLAPSE}`, false)
+    }
+    const changeGlobalHeader = async value => {
+      await store.dispatch(`GlobalHeader/${GLOBAL_ACTION.SWITCH_HIDE}`, value)
+    }
+
+    return {
+      unreadHomeTimeline,
+      unreadNotifications,
+      unreadMentions,
+      unreadLocalTimeline,
+      unreadDirectMessagesTimeline,
+      unreadPublicTimeline,
+      unreadFollowRequests,
+      lists,
+      tags,
+      collapse,
+      enabledTimelines,
+      account,
+      themeColor,
+      hideGlobalHeader,
+      activeRoute,
+      id,
+      handleProfile,
+      doCollapse,
+      releaseCollapse,
+      changeGlobalHeader
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

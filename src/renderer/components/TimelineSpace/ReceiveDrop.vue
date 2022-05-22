@@ -8,10 +8,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'receive-drop',
-}
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'receive-drop'
+})
 </script>
 
 <style lang="scss" scoped>
