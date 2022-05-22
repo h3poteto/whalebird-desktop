@@ -219,27 +219,38 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType, ref, computed, toRefs } from 'vue'
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
-import { mapState } from 'vuex'
+import { Entity } from 'megalodon'
+import { useRoute, useRouter } from 'vue-router'
+import { useI18next } from 'vue3-i18next'
+import { ElMessage } from 'element-plus'
+import { useStore } from '@/store'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
-import DisplayStyle from '~/src/constants/displayStyle'
-import TimeFormat from '~/src/constants/timeFormat'
 import emojify from '~/src/renderer/utils/emojify'
-import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
-import Poll from '~/src/renderer/components/molecules/Toot/Poll'
-import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview'
-import Quote from '@/components/molecules/Toot/Quote'
-import { setInterval, clearInterval } from 'timers'
+import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
+import Poll from '~/src/renderer/components/molecules/Toot/Poll.vue'
+import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview.vue'
+import Quote from '@/components/molecules/Toot/Quote.vue'
+// import { setInterval, clearInterval } from 'timers'
 import QuoteSupported from '@/utils/quoteSupported'
 import Filtered from '@/utils/filter'
+import { usernameWithStyle, accountNameWithStyle } from '@/utils/username'
+import { parseDatetime } from '@/utils/datetime'
+import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
+import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
+import { ACTION_TYPES as NEW_ACTION } from '@/store/TimelineSpace/Modals/NewToot'
+import { ACTION_TYPES as DETAIL_ACTION } from '@/store/TimelineSpace/Contents/SideBar/TootDetail'
+import { ACTION_TYPES as REPORT_ACTION } from '@/store/TimelineSpace/Modals/Report'
+import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
+import { ACTION_TYPES as VIEWER_ACTION } from '@/store/TimelineSpace/Modals/ImageViewer'
+import { ACTION_TYPES } from '@/store/organisms/Toot'
 
-const emojiIndex = new EmojiIndex(data)
-
-export default {
+export default defineComponent({
   name: 'toot',
   components: {
     FailoverImg,
@@ -248,22 +259,13 @@ export default {
     LinkPreview,
     Quote
   },
-  data() {
-    return {
-      showContent: this.$store.state.App.ignoreCW,
-      showAttachments: this.$store.state.App.ignoreNSFW,
-      hideAllAttachments: this.$store.state.App.hideAllAttachments,
-      now: Date.now(),
-      emojiIndex: emojiIndex
-    }
-  },
   props: {
     message: {
-      type: Object,
+      type: Object as PropType<Entity.Status>,
       default: {}
     },
     filters: {
-      type: Array,
+      type: Array as PropType<Array<Entity.Filter>>,
       default: []
     },
     focused: {
@@ -283,421 +285,376 @@ export default {
       default: false
     }
   },
-  computed: {
-    ...mapState('App', {
-      displayNameStyle: state => state.displayNameStyle,
-      timeFormat: state => state.timeFormat,
-      language: state => state.language
-    }),
-    ...mapState('TimelineSpace', {
-      sns: state => state.sns,
-      account: state => state.account
-    }),
-    ...mapState('TimelineSpace/SideMenu', {
-      bookmarkSupported: state => state.enabledTimelines.bookmark
-    }),
-    shortcutEnabled: function () {
-      return this.focused && !this.overlaid
-    },
-    timestamp: function () {
-      return this.parseDatetime(this.originalMessage.created_at, this.now)
-    },
-    readableTimestamp: function () {
-      moment.locale(this.language)
-      return moment(this.originalMessage.created_at).format('LLLL')
-    },
-    originalMessage: function () {
-      if (this.message.reblog && !this.message.quote) {
-        return this.message.reblog
+  setup(props, ctx) {
+    const space = 'organisms/Toot'
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const i18n = useI18next()
+    const { focused, overlaid, message, filters } = toRefs(props)
+
+    const showContent = ref(store.state.App.ignoreCW)
+    const showAttachments = ref(store.state.App.ignoreNSFW)
+    const hideAllAttachments = ref(store.state.App.hideAllAttachments)
+    const emojiIndex = new EmojiIndex(data)
+
+    const displayNameStyle = computed(() => store.state.App.displayNameStyle)
+    const timeFormat = computed(() => store.state.App.timeFormat)
+    const language = computed(() => store.state.App.language)
+    const sns = computed(() => store.state.TimelineSpace.sns)
+    const account = computed(() => store.state.TimelineSpace.account)
+    const bookmarkSupported = computed(() => store.state.TimelineSpace.SideMenu.enabledTimelines.bookmark)
+    const shortcutEnabled = computed(() => focused.value && !overlaid.value)
+    const originalMessage = computed(() => {
+      if (message.value.reblog && message.value.quote) {
+        return message.value.reblog
       } else {
-        return this.message
+        return message.value
       }
-    },
-    mediaAttachments: function () {
-      return this.originalMessage.media_attachments
-    },
-    reblogsCount: function () {
-      if (this.originalMessage.reblogs_count > 0) {
-        return this.originalMessage.reblogs_count
+    })
+    const timestamp = computed(() => parseDatetime(originalMessage.value.created_at, timeFormat.value, language.value))
+    const readableTimestamp = computed(() => {
+      moment.locale(language.value)
+      return moment(originalMessage.value.created_at).format('LLLL')
+    })
+    const mediaAttachments = computed(() => {
+      return originalMessage.value.media_attachments
+    })
+    const reblogsCount = computed(() => {
+      if (originalMessage.value.reblogs_count > 0) {
+        return originalMessage.value.reblogs_count
       }
       return null
-    },
-    favouritesCount: function () {
-      if (this.originalMessage.favourites_count > 0) {
-        return this.originalMessage.favourites_count
+    })
+    const favouritesCount = computed(() => {
+      if (originalMessage.value.favourites_count > 0) {
+        return originalMessage.value.favourites_count
       }
       return null
-    },
-    isMyMessage: function () {
-      return this.$store.state.TimelineSpace.account.accountId === this.originalMessage.account.id
-    },
-    application: function () {
-      const msg = this.originalMessage
+    })
+    const isMyMessage = computed(() => {
+      return store.state.TimelineSpace.account.accountId === originalMessage.value.account.id
+    })
+    const application = computed(() => {
+      const msg = originalMessage.value
       if (msg.application !== undefined && msg.application !== null) {
         return msg.application.name
       }
       return null
-    },
-    spoilered: function () {
-      return this.originalMessage.spoiler_text.length > 0
-    },
-    isShowContent: function () {
-      return !this.spoilered || this.showContent
-    },
-    poll: function () {
-      return this.originalMessage.poll
-    },
-    sensitive: function () {
-      return (this.hideAllAttachments || this.originalMessage.sensitive) && this.mediaAttachments.length > 0
-    },
-    isShowAttachments: function () {
-      return !this.sensitive || this.showAttachments
-    },
-    filtered: function () {
-      return Filtered(this.originalMessage.content, this.filters)
-    },
-    locked: function () {
-      return this.message.visibility === 'private'
-    },
-    directed: function () {
-      return this.message.visibility === 'direct'
-    },
-    quoteSupported: function () {
-      return QuoteSupported(this.sns, this.account.domain)
-    }
-  },
-  mounted() {
-    if (this.focused) {
-      this.$refs.status.focus()
-    }
-    this.updateInterval = setInterval(() => {
-      this.$data.now = Date.now()
-    }, 60000)
-  },
-  beforeUnmount() {
-    clearInterval(this.updateInterval)
-  },
-  watch: {
-    focused: function (newState, oldState) {
-      if (newState) {
-        this.$nextTick(function () {
-          this.$refs.status.focus()
-        })
-      } else if (oldState && !newState) {
-        this.$nextTick(function () {
-          this.$refs.status.blur()
-        })
-      }
-    }
-  },
-  methods: {
-    username(account) {
-      switch (this.displayNameStyle) {
-        case DisplayStyle.DisplayNameAndUsername.value:
-          if (account.display_name !== '') {
-            return emojify(account.display_name, account.emojis)
-          } else {
-            return account.acct
-          }
-        case DisplayStyle.DisplayName.value:
-          if (account.display_name !== '') {
-            return emojify(account.display_name, account.emojis)
-          } else {
-            return account.acct
-          }
-        case DisplayStyle.Username.value:
-          return account.acct
-      }
-    },
-    accountName(account) {
-      switch (this.displayNameStyle) {
-        case DisplayStyle.DisplayNameAndUsername.value:
-          return `@${account.acct}`
-        case DisplayStyle.DisplayName.value:
-        case DisplayStyle.Username.value:
-          return ''
-      }
-    },
-    parseDatetime(datetime, epoch) {
-      switch (this.timeFormat) {
-        case TimeFormat.Absolute.value:
-          return moment(datetime).format('YYYY-MM-DD HH:mm:ss')
-        case TimeFormat.Relative.value:
-          moment.locale(this.language)
-          return moment(datetime).from(epoch)
-      }
-    },
-    tootClick(e) {
-      const parsedTag = findTag(e.target, 'toot')
+    })
+    const spoilered = computed(() => {
+      return originalMessage.value.spoiler_text.length > 0
+    })
+    const isShowContent = computed(() => {
+      return !spoilered.value || showContent.value
+    })
+    const poll = computed(() => {
+      return originalMessage.value.poll
+    })
+    const sensitive = computed(() => {
+      return (hideAllAttachments.value || originalMessage.value.sensitive) && mediaAttachments.value.length > 0
+    })
+    const isShowAttachments = computed(() => {
+      return !sensitive.value || showAttachments.value
+    })
+    const filtered = computed(() => {
+      return Filtered(originalMessage.value.content, filters.value)
+    })
+    const locked = computed(() => {
+      return message.value.visibility === 'private'
+    })
+    const directed = computed(() => {
+      return message.value.visibility === 'direct'
+    })
+    const quoteSupported = computed(() => {
+      return QuoteSupported(sns.value, account.value.domain)
+    })
+
+    const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
+    const accountName = (account: Entity.Account) => accountNameWithStyle(account, displayNameStyle.value)
+    const tootClick = (e: MouseEvent) => {
+      const parsedTag = findTag(e.target as HTMLElement, 'toot')
       if (parsedTag !== null) {
-        const tag = `/${this.$route.params.id}/hashtag/${parsedTag}`
-        this.$router.push({ path: tag })
+        const tag = `/${route.params.id}/hashtag/${parsedTag}`
+        router.push({ path: tag })
         return tag
       }
-      const parsedAccount = findAccount(e.target, 'toot')
+      const parsedAccount = findAccount(e.target as HTMLElement, 'toot')
       if (parsedAccount !== null) {
-        this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-        this.$store
-          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/searchAccount', {
+        store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+        store
+          .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.SEARCH_ACCOUNT}`, {
             parsedAccount: parsedAccount,
-            status: this.originalMessage
+            status: originalMessage.value
           })
           .then(account => {
-            this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-            this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
+            store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
+            store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
           })
           .catch(err => {
             console.error(err)
-            this.openLink(e)
-            this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', false)
+            openLink(e)
+            store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, false)
           })
         return parsedAccount.acct
       }
-      this.openLink(e)
-    },
-    openLink(e) {
-      const link = findLink(e.target, 'toot')
+      return openLink(e)
+    }
+    const openLink = (e: MouseEvent) => {
+      const link = findLink(e.target as HTMLElement, 'toot')
       if (link !== null) {
-        return window.shell.openExternal(link)
+        return (window as any).shell.openExternal(link)
       }
-    },
-    openReply() {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/openReply', this.originalMessage)
-    },
-    openDetail(message) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openTootComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/TootDetail/changeToot', message)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    openBrowser(message) {
-      window.shell.openExternal(message.url)
-    },
-    copyLink(message) {
-      window.clipboard.writeText(message.url, 'toot-link')
-    },
-    reportUser() {
-      this.$store.dispatch('TimelineSpace/Modals/Report/openReport', this.originalMessage)
-    },
-    confirmMute() {
-      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', this.originalMessage.account)
-      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
-    },
-    block() {
-      this.$store.dispatch('organisms/Toot/block', this.originalMessage.account)
-    },
-    changeReblog(message) {
+    }
+    const openReply = () => {
+      store.dispatch(`TimelineSpace/Modals/NewToot/${NEW_ACTION.OPEN_REPLY}`, originalMessage.value)
+    }
+    const openDetail = (message: Entity.Status) => {
+      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_TOOT_COMPONENT}`)
+      store.dispatch(`TimelineSpace/Contents/SideBar/TootDetail/${DETAIL_ACTION.CHANGE_TOOT}`, message)
+      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+    }
+    const openBrowser = (message: Entity.Status) => {
+      ;(window as any).shell.openExternal(message.url)
+    }
+    const copyLink = (message: Entity.Status) => {
+      ;(window as any).clipboard.writeText(message.url, 'toot-link')
+    }
+    const reportUser = () => {
+      store.dispatch(`TimelineSpace/Modals/Report/${REPORT_ACTION.OPEN_REPORT}`, originalMessage.value)
+    }
+    const confirmMute = () => {
+      store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_ACCOUNT}`, originalMessage.value.account)
+      store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_MODAL}`, true)
+    }
+    const block = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.BLOCK}`, originalMessage.value.account)
+    }
+    const changeReblog = (message: Entity.Status) => {
       if (message.reblogged) {
-        this.$store
-          .dispatch('organisms/Toot/unreblog', message)
+        store
+          .dispatch(`${space}/${ACTION_TYPES.UNREBLOG}`, message)
           .then(data => {
-            this.$emit('update', data)
+            ctx.emit('update', data)
           })
           .catch(err => {
             console.error(err)
-            this.$message({
-              message: this.$t('message.unreblog_error'),
+            ElMessage({
+              message: i18n.t('message.unreblog_error'),
               type: 'error'
             })
           })
       } else {
-        this.$store
-          .dispatch('organisms/Toot/reblog', message)
+        store
+          .dispatch(`${space}/${ACTION_TYPES.REBLOG}`, message)
           .then(data => {
-            this.$emit('update', data)
+            ctx.emit('update', data)
           })
           .catch(err => {
             console.error(err)
-            this.$message({
-              message: this.$t('message.reblog_error'),
+            ElMessage({
+              message: i18n.t('message.reblog_error'),
               type: 'error'
             })
           })
       }
-    },
-    changeFavourite(message) {
+    }
+    const changeFavourite = (message: Entity.Status) => {
       if (message.favourited) {
-        this.$store
-          .dispatch('organisms/Toot/removeFavourite', message)
+        store
+          .dispatch(`${space}/${ACTION_TYPES.REMOVE_FAVOURITE}`, message)
           .then(data => {
-            this.$emit('update', data)
+            ctx.emit('update', data)
           })
           .catch(err => {
             console.error(err)
-            this.$message({
-              message: this.$t('message.unfavourite_error'),
+            ElMessage({
+              message: i18n.t('message.unfavourite_error'),
               type: 'error'
             })
           })
       } else {
-        this.$store
-          .dispatch('organisms/Toot/addFavourite', message)
+        store
+          .dispatch(`${space}/${ACTION_TYPES.ADD_FAVOURITE}`, message)
           .then(data => {
-            this.$emit('update', data)
+            ctx.emit('update', data)
           })
           .catch(err => {
             console.error(err)
-            this.$message({
-              message: this.$t('message.favourite_error'),
+            ElMessage({
+              message: i18n.t('message.favourite_error'),
               type: 'error'
             })
           })
       }
-    },
-    changeBookmark(message) {
+    }
+    const changeBookmark = (message: Entity.Status) => {
       if (message.bookmarked) {
-        this.$store
-          .dispatch('organisms/Toot/removeBookmark', message)
+        store
+          .dispatch(`${space}/${ACTION_TYPES.REMOVE_BOOKMARK}`, message)
           .then(data => {
-            this.$emit('update', data)
+            ctx.emit('update', data)
           })
           .catch(err => {
             console.error(err)
-            this.$message({
-              message: this.$t('message.unbookmark_error'),
+            ElMessage({
+              message: i18n.t('message.unbookmark_error'),
               type: 'error'
             })
           })
       } else {
-        this.$store
-          .dispatch('organisms/Toot/addBookmark', message)
+        store
+          .dispatch(`${space}/${ACTION_TYPES.ADD_BOOKMARK}`, message)
           .then(data => {
-            this.$emit('update', data)
+            ctx.emit('update', data)
           })
           .catch(err => {
             console.error(err)
-            this.$message({
-              message: this.$t('message.bookmark_error'),
+            ElMessage({
+              message: i18n.t('message.bookmark_error'),
               type: 'error'
             })
           })
       }
-    },
-    openImage(url, rawMediaList) {
+    }
+    const openImage = (url: string, rawMediaList: Array<Entity.Attachment>) => {
       const mediaList = rawMediaList.map(media => {
         return media.url
       })
       const currentIndex = mediaList.indexOf(url)
-      this.$store.dispatch('TimelineSpace/Modals/ImageViewer/openModal', {
+      store.dispatch(`TimelineSpace/Modals/ImageViewer/${VIEWER_ACTION.OPEN_MODAL}`, {
         currentIndex: currentIndex,
         mediaList: rawMediaList
       })
-    },
-    openUser(account) {
-      console.log(account)
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    deleteToot(message) {
-      this.$store
-        .dispatch('organisms/Toot/deleteToot', message)
+    }
+    const openUser = (account: Entity.Account) => {
+      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
+      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
+      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+    }
+    const deleteToot = (message: Entity.Status) => {
+      store
+        .dispatch(`${space}/${ACTION_TYPES.DELETE_TOOT}`, message)
         .then(message => {
-          this.$emit('delete', message)
+          ctx.emit('delete', message)
         })
         .catch(() => {
-          this.$message({
-            message: this.$t('message.delete_error'),
+          ElMessage({
+            message: i18n.t('message.delete_error'),
             type: 'error'
           })
         })
-    },
-    emojiText(content, emojis) {
+    }
+    const emojiText = (content: string, emojis: Array<Entity.Emoji>) => {
       return emojify(content, emojis)
-    },
-    handleTootControl(event) {
-      switch (event.srcKey) {
-        case 'next':
-          this.$emit('focusNext')
-          break
-        case 'prev':
-          this.$emit('focusPrev')
-          break
-        case 'right':
-          this.$emit('focusRight')
-          break
-        case 'left':
-          this.$emit('focusLeft')
-          break
-        case 'reply':
-          this.openReply()
-          break
-        case 'boost':
-          this.changeReblog(this.originalMessage)
-          break
-        case 'fav':
-          this.changeFavourite(this.originalMessage)
-          break
-        case 'open':
-          this.openDetail(this.message)
-          break
-        case 'profile':
-          this.openUser(this.originalMessage.account)
-          break
-        case 'image': {
-          const images = this.mediaAttachments
-          if (images.length === 0) {
-            return 0
-          }
-          this.openImage(images[0].url, images)
-          break
-        }
-        case 'cw':
-          this.toggleSpoiler()
-          this.toggleCW()
-          break
+    }
+    const vote = async choices => {
+      if (!poll.value) {
+        return
       }
-    },
-    async vote(choices) {
-      const res = await this.$store.dispatch('organisms/Toot/vote', {
-        id: this.poll.id,
+      const res = await store.dispatch(`${space}/${ACTION_TYPES.VOTE}`, {
+        id: poll.value.id,
         choices: choices
       })
-      const status = Object.assign({}, this.originalMessage, {
+      const status = Object.assign({}, originalMessage.value, {
         poll: res
       })
-      this.$emit('update', status)
-    },
-    async refresh(id) {
-      const res = await this.$store.dispatch('organisms/Toot/refresh', id)
-      const status = Object.assign({}, this.originalMessage, {
+      ctx.emit('update', status)
+    }
+    const refresh = async (id: string) => {
+      const res = await store.dispatch(`${space}/${ACTION_TYPES.REFRESH}`, id)
+      const status = Object.assign({}, originalMessage.value, {
         poll: res
       })
-      this.$emit('update', status)
-    },
-    async selectEmoji(emoji) {
-      const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
-        status_id: this.originalMessage.id,
+      ctx.emit('update', status)
+    }
+    const selectEmoji = async (emoji: any) => {
+      const status = await store.dispatch(`${space}/${ACTION_TYPES.SEND_REACTION}`, {
+        status_id: originalMessage.value.id,
         native: emoji.native
       })
-      this.$emit('update', status)
-    },
-    async addReaction(native) {
-      const status = await this.$store.dispatch('organisms/Toot/sendReaction', {
-        status_id: this.originalMessage.id,
+      ctx.emit('update', status)
+    }
+    const addReaction = async (native: any) => {
+      const status = await store.dispatch(`${space}/${ACTION_TYPES.SEND_REACTION}`, {
+        status_id: originalMessage.value.id,
         native: native
       })
-      this.$emit('update', status)
-    },
-    async removeReaction(native) {
-      const status = await this.$store.dispatch('organisms/Toot/deleteReaction', {
-        status_id: this.originalMessage.id,
+      ctx.emit('update', status)
+    }
+    const removeReaction = async (native: any) => {
+      const status = await store.dispatch(`${space}/${ACTION_TYPES.DELETE_REACTION}`, {
+        status_id: originalMessage.value.id,
         native: native
       })
-      this.$emit('update', status)
-    },
-    openQuote() {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/openQuote', this.originalMessage)
-    },
-    toggleSpoiler() {
-      this.showContent = !this.showContent
-      this.$emit('sizeChanged', true)
-    },
-    toggleCW() {
-      this.showAttachments = !this.showAttachments
-      this.$emit('sizeChanged', true)
+      ctx.emit('update', status)
+    }
+    const openQuote = () => {
+      store.dispatch(`TimelineSpace/Modals/NewToot/${NEW_ACTION.OPEN_QUOTE}`, originalMessage.value)
+    }
+    const toggleSpoiler = () => {
+      showContent.value = !showContent.value
+      ctx.emit('sizeChanged', true)
+    }
+    const toggleCW = () => {
+      showAttachments.value = !showAttachments.value
+      ctx.emit('sizeChanged', true)
+    }
+
+    return {
+      emojiIndex,
+      displayNameStyle,
+      timeFormat,
+      language,
+      sns,
+      account,
+      bookmarkSupported,
+      shortcutEnabled,
+      originalMessage,
+      timestamp,
+      readableTimestamp,
+      mediaAttachments,
+      reblogsCount,
+      favouritesCount,
+      isMyMessage,
+      application,
+      spoilered,
+      isShowContent,
+      poll,
+      sensitive,
+      isShowAttachments,
+      filtered,
+      locked,
+      directed,
+      quoteSupported,
+      username,
+      accountName,
+      tootClick,
+      openReply,
+      openDetail,
+      openBrowser,
+      copyLink,
+      reportUser,
+      confirmMute,
+      block,
+      changeReblog,
+      changeFavourite,
+      changeBookmark,
+      openImage,
+      openUser,
+      deleteToot,
+      emojiText,
+      vote,
+      refresh,
+      selectEmoji,
+      addReaction,
+      removeReaction,
+      openQuote,
+      toggleSpoiler,
+      toggleCW
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

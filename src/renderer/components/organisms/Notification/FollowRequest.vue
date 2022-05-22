@@ -27,18 +27,23 @@
   </div>
 </template>
 
-<script>
-import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
-import emojify from '~/src/renderer/utils/emojify'
+<script lang="ts">
+import { defineComponent, PropType, computed, toRefs } from 'vue'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import FailoverImg from '@/components/atoms/FailoverImg.vue'
+import { usernameWithStyle } from '@/utils/username'
+import { ACTION_TYPES as SIDEBAR_ACTION, MUTATION_TYPES as SIDEBAR_MUTATION } from '@/store/TimelineSpace/Contents/SideBar'
+import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
 
-export default {
+export default defineComponent({
   name: 'follow-request',
   components: {
     FailoverImg
   },
   props: {
     message: {
-      type: Object,
+      type: Object as PropType<Entity.Notification>,
       default: {}
     },
     focused: {
@@ -50,60 +55,27 @@ export default {
       default: false
     }
   },
-  computed: {
-    shortcutEnabled: function () {
-      return this.focused && !this.overlaid
+  setup(props) {
+    const { focused, overlaid } = toRefs(props)
+    const store = useStore()
+
+    const shortcutEnabled = computed(() => focused.value && !overlaid.value)
+    const displayNameStyle = computed(() => store.state.App.displayNameStyle)
+
+    const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
+    const openUser = (account: Entity.Account) => {
+      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
+      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
+      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
     }
-  },
-  mounted() {
-    if (this.focused) {
-      this.$refs.status.focus()
-    }
-  },
-  watch: {
-    focused: function (newState, oldState) {
-      if (newState) {
-        this.$nextTick(function () {
-          this.$refs.status.focus()
-        })
-      } else if (oldState && !newState) {
-        this.$nextTick(function () {
-          this.$refs.status.blur()
-        })
-      }
-    }
-  },
-  methods: {
-    username(account) {
-      if (account.display_name !== '') {
-        return emojify(account.display_name, account.emojis)
-      } else {
-        return account.username
-      }
-    },
-    openUser(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/openAccountComponent')
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/changeAccount', account)
-      this.$store.commit('TimelineSpace/Contents/SideBar/changeOpenSideBar', true)
-    },
-    handleStatusControl(event) {
-      switch (event.srcKey) {
-        case 'next':
-          this.$emit('focusNext')
-          break
-        case 'prev':
-          this.$emit('focusPrev')
-          break
-        case 'right':
-          this.$emit('focusRight')
-          break
-        case 'profile':
-          this.openUser(this.message.account)
-          break
-      }
+
+    return {
+      shortcutEnabled,
+      username,
+      openUser
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -113,13 +113,19 @@ const mutations: MutationTree<TootDetailState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  CHANGE_TOOT: 'changeToot',
+  FETCH_TOOT: 'fetchToot',
+  RELOAD: 'reload'
+}
+
 const actions: ActionTree<TootDetailState, RootState> = {
-  changeToot: ({ commit }, message: Entity.Status) => {
+  [ACTION_TYPES.CHANGE_TOOT]: ({ commit }, message: Entity.Status) => {
     commit(MUTATION_TYPES.UPDATE_ANCESTORS, [])
     commit(MUTATION_TYPES.UPDATE_DESCENDANTS, [])
     commit(MUTATION_TYPES.CHANGE_TOOT, message)
   },
-  fetchToot: async ({ commit, rootState }, message: Entity.Status) => {
+  [ACTION_TYPES.FETCH_TOOT]: async ({ commit, rootState }, message: Entity.Status) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -131,7 +137,7 @@ const actions: ActionTree<TootDetailState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_DESCENDANTS, res.data.descendants)
     return res.data
   },
-  reload: async ({ state, dispatch }) => {
+  [ACTION_TYPES.RELOAD]: async ({ state, dispatch }) => {
     await dispatch('fetchToot', state.message)
   }
 }

@@ -3,7 +3,7 @@ import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 type VoteParam = {
   id: string
@@ -19,8 +19,23 @@ export type TootState = {}
 
 const state = (): TootState => ({})
 
+export const ACTION_TYPES = {
+  REBLOG: 'reblog',
+  UNREBLOG: 'unreblog',
+  ADD_FAVOURITE: 'addFavourite',
+  REMOVE_FAVOURITE: 'addFavourite',
+  ADD_BOOKMARK: 'addBookmark',
+  REMOVE_BOOKMARK: 'removeBookmark',
+  DELETE_TOOT: 'deleteToot',
+  BLOCK: 'block',
+  VOTE: 'vote',
+  REFRESH: 'refresh',
+  SEND_REACTION: 'sendReaction',
+  DELETE_REACTION: 'deleteReaction'
+}
+
 const actions: ActionTree<TootState, RootState> = {
-  reblog: async ({ rootState, dispatch }, message: Entity.Status) => {
+  [ACTION_TYPES.REBLOG]: async ({ rootState, dispatch }, message: Entity.Status) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -35,7 +50,7 @@ const actions: ActionTree<TootState, RootState> = {
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data.reblog, { root: true })
     return res.data.reblog
   },
-  unreblog: async ({ rootState, dispatch }, message: Entity.Status) => {
+  [ACTION_TYPES.UNREBLOG]: async ({ rootState, dispatch }, message: Entity.Status) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -46,7 +61,7 @@ const actions: ActionTree<TootState, RootState> = {
     dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  addFavourite: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  [ACTION_TYPES.ADD_FAVOURITE]: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,

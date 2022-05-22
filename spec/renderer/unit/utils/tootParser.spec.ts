@@ -32,7 +32,8 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
 </html>`).window.document
     const target = doc.getElementById('tag')
     it('should find', () => {
-      const res = findTag(target)
+      expect(target).not.toBeNull()
+      const res = findTag(target!)
       expect(res).toEqual('whalebird')
     })
   })
@@ -48,7 +49,8 @@ I released Whalebird version 2.4.1. In version 2.4.0, Whalebird supports streami
 </html>`).window.document
     const target = doc.getElementById('tag')
     it('should find', () => {
-      const res = findTag(target)
+      expect(target).not.toBeNull()
+      const res = findTag(target!)
       expect(res).toEqual('whalebird')
     })
   })
@@ -65,7 +67,8 @@ describe('findAccount', () => {
 </html>`).window.document
       const target = doc.getElementById('user')
       it('should find', () => {
-        const res = findAccount(target)
+        expect(target).not.toBeNull()
+        const res = findAccount(target!)
         expect(res).not.toBeNull()
         expect(res!.username).toEqual('@h3_poteto')
         expect(res!.acct).toEqual('@h3_poteto@social.mikutter.hachune.net')
@@ -81,7 +84,8 @@ describe('findAccount', () => {
 </html>`).window.document
       const target = doc.getElementById('user')
       it('should find', () => {
-        const res = findAccount(target)
+        expect(target).not.toBeNull()
+        const res = findAccount(target!)
         expect(res).not.toBeNull()
         expect(res!.username).toEqual('@h3poteto')
         expect(res!.acct).toEqual('@h3poteto@pleroma.io')
@@ -97,7 +101,8 @@ describe('findAccount', () => {
 </html>`).window.document
       const target = doc.getElementById('status')
       it('should not find', () => {
-        const res = findAccount(target)
+        expect(target).not.toBeNull()
+        const res = findAccount(target!)
         expect(res).toBeNull()
       })
     })
@@ -111,7 +116,8 @@ describe('findAccount', () => {
 </html>`).window.document
       const target = doc.getElementById('status')
       it('should not find', () => {
-        const res = findAccount(target)
+        expect(target).not.toBeNull()
+        const res = findAccount(target!)
         expect(res).toBeNull()
       })
     })
