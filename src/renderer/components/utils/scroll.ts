@@ -3,7 +3,7 @@
  * @param element a target dom element
  * @param point scroll target point of the element
  **/
-export default function scrollTop(element, point = 0) {
+export default function scrollTop(element: HTMLElement, point: number = 0) {
   const start = element.scrollTop
   const range = start - point
   // Progress of scroll: 0 ~ 100
@@ -32,26 +32,28 @@ export default function scrollTop(element, point = 0) {
 /**
  * easeOut
  **/
-const easeOut = function (p) {
+const easeOut = function (p: number) {
   return p * (2 - p)
 }
 
 export class ScrollPosition {
-  node = null
-  previousScrollHeightMinusTop = 0
+  private node: HTMLElement | null = null
+  private previousScrollHeightMinusTop: number = 0
 
-  constructor(node) {
+  constructor(node: HTMLElement) {
     this.node = node
     this.previousScrollHeightMinusTop = 0
   }
 
   prepare() {
-    this.previousScrollHeightMinusTop =
-      this.node.scrollHeight - this.node.scrollTop
+    if (this.node) {
+      this.previousScrollHeightMinusTop = this.node.scrollHeight - this.node.scrollTop
+    }
   }
 
   restore() {
-    this.node.scrollTop =
-      this.node.scrollHeight - this.previousScrollHeightMinusTop
+    if (this.node) {
+      this.node.scrollTop = this.node.scrollHeight - this.previousScrollHeightMinusTop
+    }
   }
 }
