@@ -3,7 +3,7 @@
     <h2>{{ $t('settings.filters.title') }}</h2>
     <div class="new-filter">
       <el-button type="primary" :disabled="sns === 'misskey'">
-        <router-link :to="`/${id()}/settings/filters/new`">
+        <router-link :to="`/${id}/settings/filters/new`">
           {{ $t('settings.filters.new.title') }}
         </router-link>
       </el-button>
@@ -26,7 +26,7 @@
       <el-table-column width="80">
         <template #default="scope">
           <el-button type="text">
-            <router-link tag="span" :to="`/${id()}/settings/filters/${filters[scope.$index].id}/edit`">
+            <router-link tag="span" :to="`/${id}/settings/filters/${filters[scope.$index].id}/edit`">
               {{ $t('settings.filters.edit.title') }}
             </router-link>
           </el-button>
@@ -43,41 +43,52 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { ElMessageBox } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/Settings/Filters'
 
-export default {
+export default defineComponent({
   name: 'Filters',
-  computed: {
-    ...mapState('Settings/Filters', {
-      filters: state => state.filters,
-      filtersLoading: state => state.filtersLoading
-    }),
-    ...mapState({
-      backgroundColor: state => state.App.theme.background_color
-    }),
-    ...mapState('TimelineSpace', {
-      sns: state => state.sns
+  setup() {
+    const space = 'Settings/Filters'
+    const store = useStore()
+    const route = useRoute()
+    const i18n = useI18next()
+
+    const filters = computed(() => store.state.Settings.Filters.filters)
+    const filtersLoading = computed(() => store.state.Settings.Filters.filtersLoading)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+    const sns = computed(() => store.state.TimelineSpace.sns)
+    const id = computed(() => route.params.id)
+
+    onMounted(async () => {
+      await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FILTERS}`)
     })
-  },
-  async created() {
-    await this.$store.dispatch('Settings/Filters/fetchFilters')
-  },
-  methods: {
-    id() {
-      return this.$route.params.id
-    },
-    deleteFilter(id) {
-      this.$confirm(this.$t('settings.filters.delete.confirm'), 'Warning', {
-        confirmButtonText: this.$t('settings.filters.delete.confirm_ok'),
-        cancelButtonText: this.$t('settings.filters.delete.confirm_cancel'),
+
+    const deleteFilter = (id: string) => {
+      ElMessageBox.confirm(i18n.t('settings.filters.delete.confirm'), 'Warning', {
+        confirmButtonText: i18n.t('settings.filters.delete.confirm_ok'),
+        cancelButtonText: i18n.t('settings.filters.delete.confirm_cancel'),
         type: 'warning'
       }).then(() => {
-        return this.$store.dispatch('Settings/Filters/deleteFilter', id)
+        return store.dispatch(`${space}/${ACTION_TYPES.DELETE_FILTER}`, id)
       })
     }
+
+    return {
+      filters,
+      filtersLoading,
+      backgroundColor,
+      sns,
+      id,
+      deleteFilter
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
