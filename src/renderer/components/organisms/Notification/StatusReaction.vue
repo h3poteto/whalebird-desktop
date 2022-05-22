@@ -94,7 +94,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRefs, ref, PropType, h } from 'vue'
+import { defineComponent, computed, toRefs, ref, PropType } from 'vue'
 import { Entity } from 'megalodon'
 import moment from 'moment'
 import { useRouter, useRoute } from 'vue-router'

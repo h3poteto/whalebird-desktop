@@ -50,7 +50,7 @@
     >
     </mention>
     <StatusReaction
-      v-else-if="message.type === 'reblog' && message.status.quote"
+      v-else-if="message.type === 'reblog' && message.status?.quote"
       :message="message"
       :filters="filters"
       :focused="focused"
@@ -63,7 +63,7 @@
     >
     </StatusReaction>
     <StatusReaction
-      v-else-if="message.type === 'reblog' && !message.status.quote"
+      v-else-if="message.type === 'reblog' && !message.status?.quote"
       :message="message"
       :filters="filters"
       :focused="focused"
@@ -81,7 +81,7 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      reactiontype="reaction"
+      reactionType="reaction"
       @focusNext="$emit('focusNext')"
       @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
@@ -129,22 +129,24 @@
   </div>
 </template>
 
-<script>
-import StatusReaction from './Notification/StatusReaction'
-import Follow from './Notification/Follow'
-import FollowRequest from './Notification/FollowRequest'
-import Mention from './Notification/Mention'
-import Status from './Notification/Status'
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { Entity } from 'megalodon'
+import StatusReaction from './Notification/StatusReaction.vue'
+import Follow from './Notification/Follow.vue'
+import FollowRequest from './Notification/FollowRequest.vue'
+import Mention from './Notification/Mention.vue'
+import Status from './Notification/Status.vue'
 
-export default {
+export default defineComponent({
   name: 'notification',
   props: {
     message: {
-      type: Object,
+      type: Object as PropType<Entity.Notification>,
       default: {}
     },
     filters: {
-      type: Array,
+      type: Array as PropType<Array<Entity.Filter>>,
       default: []
     },
     focused: {
@@ -163,13 +165,18 @@ export default {
     Mention,
     Status
   },
-  methods: {
-    updateToot(message) {
-      return this.$emit('update', message)
-    },
-    deleteToot(message) {
-      return this.$emit('delete', message)
+  setup(_props, ctx) {
+    const updateToot = (message: Entity.Status) => {
+      return ctx.emit('update', message)
+    }
+    const deleteToot = (message: Entity.Status) => {
+      return ctx.emit('delete', message)
+    }
+
+    return {
+      updateToot,
+      deleteToot
     }
   }
-}
+})
 </script>
