@@ -2,7 +2,7 @@
   <div id="global_header">
     <el-menu
       v-if="!hide"
-      :default-active="activeRoute()"
+      :default-active="activeRoute"
       class="el-menu-vertical account-menu"
       :collapse="true"
       :router="true"
@@ -14,7 +14,7 @@
       <el-menu-item
         :index="`/${account._id}/`"
         :route="{ path: `/${account._id}/home` }"
-        v-for="(account, index) in accounts"
+        v-for="(account, _index) in accounts"
         v-bind:key="account._id"
         role="menuitem"
       >
@@ -34,56 +34,69 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import { StreamingError } from '~/src/errors/streamingError'
+import { ACTION_TYPES } from '@/store/GlobalHeader'
 
-export default {
+export default defineComponent({
   components: {
     FailoverImg
   },
   name: 'global-header',
-  computed: {
-    ...mapState('GlobalHeader', {
-      accounts: state => state.accounts,
-      hide: state => state.hide
-    }),
-    ...mapState({
-      themeColor: state => state.App.theme.global_header_color
+  setup() {
+    const space = 'GlobalHeader'
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const i18n = useI18next()
+
+    const accounts = computed(() => store.state.GlobalHeader.accounts)
+    const hide = computed(() => store.state.GlobalHeader.hide)
+    const themeColor = computed(() => store.state.App.theme.global_header_color)
+    const activeRoute = computed(() => `/${route.path.split('/')[1]}/`)
+
+    onMounted(() => {
+      initialize()
     })
-  },
-  created() {
-    this.initialize()
-  },
-  methods: {
-    activeRoute() {
-      return `/${this.$route.path.split('/')[1]}/`
-    },
-    async initialize() {
-      await this.$store
-        .dispatch('GlobalHeader/initLoad')
+
+    const initialize = async () => {
+      await store
+        .dispatch(`${space}/initLoad`)
         .then(accounts => {
-          this.$store.dispatch('GlobalHeader/startStreamings').catch(err => {
+          store.dispatch(`${space}/${ACTION_TYPES.START_STREAMINGS}`).catch(err => {
             if (err instanceof StreamingError) {
-              this.$message({
-                message: this.$t('message.start_all_streamings_error', {
+              ElMessage({
+                message: i18n.t('message.start_all_streamings_error', {
                   domain: err.domain
                 }),
                 type: 'error'
               })
             }
           })
-          if (this.$route.params.id === undefined) {
-            this.$router.push({ path: `/${accounts[0]._id}/home` })
+          if (route.params.id === undefined) {
+            router.push({ path: `/${accounts[0]._id}/home` })
           }
         })
         .catch(_ => {
-          return this.$router.push({ path: '/login' })
+          return router.push({ path: '/login' })
         })
     }
-  }
-}
+
+    return {
+      accounts,
+      hide,
+      themeColor,
+      activeRoute
+    }
+  },
+  methods: {}
+})
 </script>
 
 <style lang="scss" scoped>

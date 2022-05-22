@@ -37,6 +37,20 @@ const mutations: MutationTree<GlobalHeaderState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  INIT_LOAD: 'initLoad',
+  START_STREAMINGS: 'startStreamings',
+  LIST_ACCOUNTS: 'listAccounts',
+  REFRESH_ACCOUNTS: 'refreshAccounts',
+  WATCH_SHORTCUT_EVENTS: 'watchShortcutEvents',
+  REMOVE_SHORTCUT_EVENTS: 'removeShortcutEvents',
+  LOAD_HIDE: 'loadHide',
+  SWITCH_HIDE: 'switchHide',
+  START_USER_STREAMINGS: 'startUserStreamings',
+  STOP_USER_STREAMINGS: 'stopUserStreamings',
+  BIND_NOTIFICATION: 'bindNotification'
+}
+
 const actions: ActionTree<GlobalHeaderState, RootState> = {
   initLoad: async ({ dispatch }): Promise<Array<LocalAccount>> => {
     // Ignore error
