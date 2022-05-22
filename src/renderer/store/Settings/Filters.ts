@@ -27,8 +27,14 @@ export const mutations: MutationTree<FiltersState> = {
     state.filtersLoading = loading
   }
 }
+
+export const ACTION_TYPES = {
+  FETCH_FILTERS: 'fetchFilters',
+  DELETE_FILTER: 'deleteFilter'
+}
+
 export const actions: ActionTree<FiltersState, RootState> = {
-  fetchFilters: async ({ commit, rootState }): Promise<Array<Entity.Filter>> => {
+  [ACTION_TYPES.FETCH_FILTERS]: async ({ commit, rootState }): Promise<Array<Entity.Filter>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -44,7 +50,7 @@ export const actions: ActionTree<FiltersState, RootState> = {
       commit(MUTATION_TYPES.CHANGE_LOADING, false)
     }
   },
-  deleteFilter: async ({ commit, dispatch, rootState }, id: string) => {
+  [ACTION_TYPES.DELETE_FILTER]: async ({ commit, dispatch, rootState }, id: string) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
