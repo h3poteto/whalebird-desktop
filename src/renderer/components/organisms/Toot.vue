@@ -326,7 +326,7 @@ export default defineComponent({
     const bookmarkSupported = computed(() => store.state.TimelineSpace.SideMenu.enabledTimelines.bookmark)
     const shortcutEnabled = computed(() => focused.value && !overlaid.value)
     const originalMessage = computed(() => {
-      if (message.value.reblog && message.value.quote) {
+      if (message.value.reblog && !message.value.quote) {
         return message.value.reblog
       } else {
         return message.value
