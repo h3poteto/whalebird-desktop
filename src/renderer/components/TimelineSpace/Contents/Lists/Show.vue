@@ -33,7 +33,6 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
@@ -50,7 +49,6 @@ export default {
   name: 'list',
   props: ['list_id'],
   components: { Toot },
-  mixins: [reloadable],
   computed: {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
@@ -223,7 +221,6 @@ export default {
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
-        await this.reloadable()
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
         await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', this.list_id).catch(() => {
           this.$message({

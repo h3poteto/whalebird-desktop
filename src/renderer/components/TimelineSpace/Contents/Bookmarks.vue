@@ -30,7 +30,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Toot from '@/components/organisms/Toot'
-import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { EventEmitter } from '~/src/renderer/components/event'
 
 export default {
@@ -42,7 +41,6 @@ export default {
   },
   name: 'bookmarks',
   components: { Toot },
-  mixins: [reloadable],
   computed: {
     ...mapState('TimelineSpace', {
       account: state => state.account
@@ -145,7 +143,6 @@ export default {
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
-        const account = await this.reloadable()
         await this.$store.dispatch('TimelineSpace/Contents/Bookmarks/fetchBookmarks', account).catch(() => {
           this.$message({
             message: this.$t('message.bookmark_fetch_error'),

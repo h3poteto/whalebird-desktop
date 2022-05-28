@@ -33,7 +33,6 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
@@ -49,7 +48,6 @@ export default {
   },
   name: 'local',
   components: { Toot },
-  mixins: [reloadable],
   computed: {
     ...mapState('TimelineSpace/Contents/Local', {
       timeline: state => state.timeline,
@@ -219,7 +217,6 @@ export default {
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
-        await this.reloadable()
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)
       }

@@ -5,7 +5,7 @@ import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type NotificationsState = {
   lazyLoading: boolean
@@ -135,7 +135,8 @@ const actions: ActionTree<NotificationsState, RootState> = {
           // If the number of unread statuses is less than 30, max_id is necessary, but it is enough to reject duplicated statuses.
           // So we do it in mutation.
           max_id: null,
-          id: 'loading-card'
+          id: 'loading-card',
+          uri: 'loading-card'
         }
         let notifications: Array<Entity.Notification | LoadingCard> = [card]
         const res = await client.getNotifications({ limit: 30, max_id: nextResponse.data[0].id })
@@ -203,7 +204,8 @@ const actions: ActionTree<NotificationsState, RootState> = {
         type: 'middle-load',
         since_id: res.data[0].id,
         max_id: maxID,
-        id: 'loading-card'
+        id: 'loading-card',
+        uri: 'loading-card'
       }
       let notifications: Array<Entity.Notification | LoadingCard> = [card]
       notifications = notifications.concat(res.data)

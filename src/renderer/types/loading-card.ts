@@ -3,4 +3,5 @@ export type LoadingCard = {
   max_id: string | null
   since_id: string | null
   id: 'loading-card'
+  uri: 'loading-card'
 }

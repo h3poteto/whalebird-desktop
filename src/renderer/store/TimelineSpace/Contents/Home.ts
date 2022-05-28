@@ -5,7 +5,7 @@ import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type HomeState = {
   lazyLoading: boolean
@@ -122,8 +122,16 @@ const mutations: MutationTree<HomeState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_TIMELINE: 'fetchTimeline',
+  LAZY_FETCH_TIMELINE: 'lazyFetchTimeline',
+  FETCH_TIMELINE_SINCE: 'fetchTimelineSince',
+  GET_MARKER: 'getMarker',
+  SAVE_MARKER: 'saveMarker'
+}
+
 const actions: ActionTree<HomeState, RootState> = {
-  fetchTimeline: async ({ dispatch, commit, rootState }) => {
+  [ACTION_TYPES.FETCH_TIMELINE]: async ({ dispatch, commit, rootState }) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -149,7 +157,8 @@ const actions: ActionTree<HomeState, RootState> = {
         // If the number of unread statuses is less than 40, max_id is necessary, but it is enough to reject duplicated statuses.
         // So we do it in mutation.
         max_id: null,
-        id: 'loading-card'
+        id: 'loading-card',
+        uri: 'loading-card'
       }
 
       const res = await client.getHomeTimeline({ limit: 40, max_id: lastReadStatus.id })
@@ -168,7 +177,10 @@ const actions: ActionTree<HomeState, RootState> = {
       return res.data
     }
   },
-  lazyFetchTimeline: async ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
+  [ACTION_TYPES.LAZY_FETCH_TIMELINE]: async (
+    { state, commit, rootState },
+    lastStatus: Entity.Status
+  ): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
@@ -189,7 +201,7 @@ const actions: ActionTree<HomeState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
       })
   },
-  fetchTimelineSince: async ({ state, rootState, commit }, since_id: string): Promise<Array<Entity.Status> | null> => {
+  [ACTION_TYPES.FETCH_TIMELINE_SINCE]: async ({ state, rootState, commit }, since_id: string): Promise<Array<Entity.Status> | null> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -229,7 +241,8 @@ const actions: ActionTree<HomeState, RootState> = {
         type: 'middle-load',
         since_id: res.data[0].id,
         max_id: maxID,
-        id: 'loading-card'
+        id: 'loading-card',
+        uri: 'loading-card'
       }
       let timeline: Array<Entity.Status | LoadingCard> = [card]
       timeline = timeline.concat(res.data)
@@ -239,7 +252,7 @@ const actions: ActionTree<HomeState, RootState> = {
     }
     return res.data
   },
-  getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
+  [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<LocalMarker | null> => {
     if (!rootState.TimelineSpace.timelineSetting.useMarker.home) {
       return null
     }
@@ -265,7 +278,7 @@ const actions: ActionTree<HomeState, RootState> = {
     const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-home-marker', rootState.TimelineSpace.account._id)
     return localMarker
   },
-  saveMarker: async ({ state, rootState }) => {
+  [ACTION_TYPES.SAVE_MARKER]: async ({ state, rootState }) => {
     const timeline = state.timeline
     if (timeline.length === 0 || timeline[0].id === 'loading-card') {
       return

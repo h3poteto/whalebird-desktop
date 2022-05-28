@@ -33,7 +33,6 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Toot from '~/src/renderer/components/organisms/Toot'
-import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
@@ -49,7 +48,6 @@ export default {
   },
   name: 'tag',
   components: { Toot },
-  mixins: [reloadable],
   props: ['tag'],
   computed: {
     ...mapState({
@@ -223,7 +221,6 @@ export default {
       const tag = this.tag
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
-        await this.reloadable()
         await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/stopStreaming')
         await this.$store.dispatch('TimelineSpace/Contents/Hashtag/Tag/fetch', tag).catch(() => {
           this.$message({

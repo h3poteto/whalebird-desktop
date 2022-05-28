@@ -92,8 +92,46 @@ const mutations: MutationTree<TimelineSpaceState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  INIT_LOAD: 'initLoad',
+  PREPARE_SPACE: 'prepareSpace',
+  LOCAL_ACCOUNT: 'localAccount',
+  FETCH_ACCOUNT: 'fetchAccount',
+  CLEAR_ACCOUNT: 'clearAccount',
+  DETECT_SNS: 'detectSNS',
+  WATCH_SHORTCUT_EVENTS: 'watchShortcutEvents',
+  REMOVE_SHORTCUT_EVENTS: 'removeShortcutEvents',
+  CLEAR_UNREAD: 'clearUnread',
+  FETCH_EMOJIS: 'fetchEmojis',
+  FETCH_FILTERS: 'fetchFilters',
+  FETCH_INSTANCE: 'fetchInstance',
+  LOAD_TIMELINE_SETTING: 'loadTimelineSetting',
+  FETCH_CONTENTS_TIMELINES: 'fetchContentsTimelines',
+  CLEAR_CONTENTS_TIMELINES: 'clearContentsTimelines',
+  BIND_STREAMINGS: 'bindStreamings',
+  START_STREAMINGS: 'startStreamings',
+  STOP_STREAMINGS: 'stopStreamings',
+  UNBIND_STREAMINGS: 'unbindStreamings',
+  BIND_USER_STREAMING: 'bindUserStreaming',
+  BIND_LOCAL_STREAMING: 'bindLocalStreaming',
+  START_LOCAL_STREAMING: 'startLocalStreaming',
+  BIND_PUBLIC_STREAMING: 'bindPublicStreaming',
+  START_PUBLIC_STREAMING: 'startPublicStreaming',
+  BIND_DIRECT_MESSAGES_STREAMING: 'bindDirectMessagesStreaming',
+  START_DIRECT_MESSAGES_STREAMING: 'startDirectMessagesStreaming',
+  UNBIND_USER_STREAMING: 'unbindUserStreaming',
+  UNBIND_LOCAL_STREAMING: 'unbindLocalStreaming',
+  STOP_LOCAL_STREAMING: 'stopLocalStreaming',
+  UNBIND_PUBLIC_STREAMING: 'unbindPublicStreaming',
+  STOP_PUBLIC_STREAMING: 'stopPublicStreaming',
+  UNBIND_DIRECT_MESSAGES_STREAMING: 'unbindDirectMessagesStreaming',
+  STOP_DIRECT_MESSAGES_STREAMING: 'stopDirectMessagesStreaming',
+  UPDATE_TOOT_FOR_ALL_TIMELINES: 'updateTootForAllTimelines',
+  WAIT_TO_UNBIND_USER_STREAMING: 'waitToUnbindUserStreaming'
+}
+
 const actions: ActionTree<TimelineSpaceState, RootState> = {
-  initLoad: async ({ dispatch, commit }, accountId: string): Promise<LocalAccount> => {
+  [ACTION_TYPES.INIT_LOAD]: async ({ dispatch, commit }, accountId: string): Promise<LocalAccount> => {
     commit(MUTATION_TYPES.CHANGE_LOADING, true)
     dispatch('watchShortcutEvents')
     const account: LocalAccount = await dispatch('localAccount', accountId).catch(_ => {
@@ -113,7 +151,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     })
     return account
   },
-  prepareSpace: async ({ state, dispatch }) => {
+  [ACTION_TYPES.PREPARE_SPACE]: async ({ state, dispatch }) => {
     await dispatch('bindStreamings')
     dispatch('startStreamings')
     await dispatch('fetchEmojis', state.account)
@@ -124,7 +162,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // -------------------------------------------------
   // Accounts
   // -------------------------------------------------
-  localAccount: async ({ dispatch, commit }, id: string): Promise<LocalAccount> => {
+  [ACTION_TYPES.LOCAL_ACCOUNT]: async ({ dispatch, commit }, id: string): Promise<LocalAccount> => {
     const account: LocalAccount = await win.ipcRenderer.invoke('get-local-account', id)
     if (account.username === undefined || account.username === null || account.username === '') {
       const acct: LocalAccount = await dispatch('fetchAccount', account)
@@ -135,22 +173,22 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       return account
     }
   },
-  fetchAccount: async (_, account: LocalAccount): Promise<LocalAccount> => {
+  [ACTION_TYPES.FETCH_ACCOUNT]: async (_, account: LocalAccount): Promise<LocalAccount> => {
     const acct: LocalAccount = await win.ipcRenderer.invoke('update-account', account)
     return acct
   },
-  clearAccount: async ({ commit }) => {
+  [ACTION_TYPES.CLEAR_ACCOUNT]: async ({ commit }) => {
     commit(MUTATION_TYPES.UPDATE_ACCOUNT, blankAccount)
     return true
   },
-  detectSNS: async ({ commit, state }) => {
+  [ACTION_TYPES.DETECT_SNS]: async ({ commit, state }) => {
     const sns = await detector(state.account.baseURL)
     commit(MUTATION_TYPES.CHANGE_SNS, sns)
   },
   // -----------------------------------------------
   // Shortcuts
   // -----------------------------------------------
-  watchShortcutEvents: ({ commit, dispatch }) => {
+  [ACTION_TYPES.WATCH_SHORTCUT_EVENTS]: ({ commit, dispatch }) => {
     win.ipcRenderer.on('CmdOrCtrl+N', () => {
       dispatch('TimelineSpace/Modals/NewToot/openModal', {}, { root: true })
     })
@@ -161,7 +199,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Modals/Shortcut/changeModal', true, { root: true })
     })
   },
-  removeShortcutEvents: async () => {
+  [ACTION_TYPES.REMOVE_SHORTCUT_EVENTS]: async () => {
     win.ipcRenderer.removeAllListeners('CmdOrCtrl+N')
     win.ipcRenderer.removeAllListeners('CmdOrCtrl+K')
     return true
@@ -169,13 +207,13 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * clearUnread
    */
-  clearUnread: async ({ dispatch }) => {
+  [ACTION_TYPES.CLEAR_UNREAD]: async ({ dispatch }) => {
     dispatch('TimelineSpace/SideMenu/clearUnread', {}, { root: true })
   },
   /**
    * fetchEmojis
    */
-  fetchEmojis: async ({ commit, state }, account: LocalAccount): Promise<Array<Entity.Emoji>> => {
+  [ACTION_TYPES.FETCH_EMOJIS]: async ({ commit, state }, account: LocalAccount): Promise<Array<Entity.Emoji>> => {
     const client = generator(state.sns, account.baseURL, null, 'Whalebird')
     const res = await client.getInstanceCustomEmojis()
     commit(MUTATION_TYPES.UPDATE_EMOJIS, res.data)
@@ -184,7 +222,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchFilters
    */
-  fetchFilters: async ({ commit, state, rootState }): Promise<Array<Entity.Filter>> => {
+  [ACTION_TYPES.FETCH_FILTERS]: async ({ commit, state, rootState }): Promise<Array<Entity.Filter>> => {
     try {
       const client = generator(state.sns, state.account.baseURL, state.account.accessToken, rootState.App.userAgent)
       const res = await client.getFilters()
@@ -197,17 +235,17 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchInstance
    */
-  fetchInstance: async ({ commit, state }, account: LocalAccount) => {
+  [ACTION_TYPES.FETCH_INSTANCE]: async ({ commit, state }, account: LocalAccount) => {
     const client = generator(state.sns, account.baseURL, null, 'Whalebird')
     const res = await client.getInstance()
     commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
     return true
   },
-  loadTimelineSetting: async ({ commit }, accountID: string) => {
+  [ACTION_TYPES.LOAD_TIMELINE_SETTING]: async ({ commit }, accountID: string) => {
     const setting: Setting = await win.ipcRenderer.invoke('get-account-setting', accountID)
     commit(MUTATION_TYPES.UPDATE_TIMELINE_SETTING, setting.timeline)
   },
-  fetchContentsTimelines: async ({ dispatch, state }) => {
+  [ACTION_TYPES.FETCH_CONTENTS_TIMELINES]: async ({ dispatch, state }) => {
     dispatch('TimelineSpace/Contents/changeLoading', true, { root: true })
     await dispatch('TimelineSpace/Contents/Home/fetchTimeline', {}, { root: true }).finally(() => {
       dispatch('TimelineSpace/Contents/changeLoading', false, { root: true })
@@ -225,7 +263,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
     }
   },
-  clearContentsTimelines: ({ commit }) => {
+  [ACTION_TYPES.CLEAR_CONTENTS_TIMELINES]: ({ commit }) => {
     commit('TimelineSpace/Contents/Home/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Local/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
@@ -233,7 +271,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Mentions/clearMentions', {}, { root: true })
   },
-  bindStreamings: ({ dispatch, state }) => {
+  [ACTION_TYPES.BIND_STREAMINGS]: ({ dispatch, state }) => {
     dispatch('bindUserStreaming')
     if (state.timelineSetting.unreadNotification.direct) {
       dispatch('bindDirectMessagesStreaming')
@@ -245,7 +283,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       dispatch('bindPublicStreaming')
     }
   },
-  startStreamings: ({ dispatch, state }) => {
+  [ACTION_TYPES.START_STREAMINGS]: ({ dispatch, state }) => {
     if (state.timelineSetting.unreadNotification.direct) {
       dispatch('startDirectMessagesStreaming')
     }
@@ -256,12 +294,12 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       dispatch('startPublicStreaming')
     }
   },
-  stopStreamings: ({ dispatch }) => {
+  [ACTION_TYPES.STOP_STREAMINGS]: ({ dispatch }) => {
     dispatch('stopDirectMessagesStreaming')
     dispatch('stopLocalStreaming')
     dispatch('stopPublicStreaming')
   },
-  unbindStreamings: ({ dispatch }) => {
+  [ACTION_TYPES.UNBIND_STREAMINGS]: ({ dispatch }) => {
     dispatch('unbindUserStreaming')
     dispatch('unbindDirectMessagesStreaming')
     dispatch('unbindLocalStreaming')
@@ -270,7 +308,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // ------------------------------------------------
   // Each streaming methods
   // ------------------------------------------------
-  bindUserStreaming: async ({ commit, state, rootState, dispatch }) => {
+  [ACTION_TYPES.BIND_USER_STREAMING]: async ({ commit, state, rootState, dispatch }) => {
     if (!state.account._id) {
       throw new Error('Account is not set')
     }
@@ -306,7 +344,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
     })
   },
-  bindLocalStreaming: ({ commit, rootState }) => {
+  [ACTION_TYPES.BIND_LOCAL_STREAMING]: ({ commit, rootState }) => {
     win.ipcRenderer.on('update-start-local-streaming', (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
@@ -318,7 +356,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Contents/Local/deleteToot', id, { root: true })
     })
   },
-  startLocalStreaming: ({ state }) => {
+  [ACTION_TYPES.START_LOCAL_STREAMING]: ({ state }) => {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
@@ -328,7 +366,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       })
     })
   },
-  bindPublicStreaming: ({ commit, rootState }) => {
+  [ACTION_TYPES.BIND_PUBLIC_STREAMING]: ({ commit, rootState }) => {
     win.ipcRenderer.on('update-start-public-streaming', (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
@@ -340,7 +378,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Contents/Public/deleteToot', id, { root: true })
     })
   },
-  startPublicStreaming: ({ state }) => {
+  [ACTION_TYPES.START_PUBLIC_STREAMING]: ({ state }) => {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
@@ -350,7 +388,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       })
     })
   },
-  bindDirectMessagesStreaming: ({ commit, rootState }) => {
+  [ACTION_TYPES.BIND_DIRECT_MESSAGES_STREAMING]: ({ commit, rootState }) => {
     win.ipcRenderer.on('update-start-directmessages-streaming', (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.DirectMessages.heading && Math.random() > 0.8) {
@@ -362,7 +400,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       commit('TimelineSpace/Contents/DirectMessages/deleteToot', id, { root: true })
     })
   },
-  startDirectMessagesStreaming: ({ state }) => {
+  [ACTION_TYPES.START_DIRECT_MESSAGES_STREAMING]: ({ state }) => {
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
@@ -372,7 +410,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       })
     })
   },
-  unbindUserStreaming: ({ state, commit }) => {
+  [ACTION_TYPES.UNBIND_USER_STREAMING]: ({ state, commit }) => {
     // When unbind is called, sometimes account is already cleared and account does not have _id.
     // So we have to get previous account to unbind streamings.
     if (state.bindingAccount) {
@@ -386,31 +424,31 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       console.info('binding account does not exist')
     }
   },
-  unbindLocalStreaming: () => {
+  [ACTION_TYPES.UNBIND_LOCAL_STREAMING]: () => {
     win.ipcRenderer.removeAllListeners('error-start-local-streaming')
     win.ipcRenderer.removeAllListeners('update-start-local-streaming')
     win.ipcRenderer.removeAllListeners('delete-start-local-streaming')
   },
-  stopLocalStreaming: () => {
+  [ACTION_TYPES.STOP_LOCAL_STREAMING]: () => {
     win.ipcRenderer.send('stop-local-streaming')
   },
-  unbindPublicStreaming: () => {
+  [ACTION_TYPES.UNBIND_PUBLIC_STREAMING]: () => {
     win.ipcRenderer.removeAllListeners('error-start-public-streaming')
     win.ipcRenderer.removeAllListeners('update-start-public-streaming')
     win.ipcRenderer.removeAllListeners('delete-start-public-streaming')
   },
-  stopPublicStreaming: () => {
+  [ACTION_TYPES.STOP_PUBLIC_STREAMING]: () => {
     win.ipcRenderer.send('stop-public-streaming')
   },
-  unbindDirectMessagesStreaming: () => {
+  [ACTION_TYPES.UNBIND_DIRECT_MESSAGES_STREAMING]: () => {
     win.ipcRenderer.removeAllListeners('error-start-directmessages-streaming')
     win.ipcRenderer.removeAllListeners('update-start-directmessages-streaming')
     win.ipcRenderer.removeAllListeners('delete-start-directmessages-streaming')
   },
-  stopDirectMessagesStreaming: () => {
+  [ACTION_TYPES.STOP_DIRECT_MESSAGES_STREAMING]: () => {
     win.ipcRenderer.send('stop-directmessages-streaming')
   },
-  updateTootForAllTimelines: ({ commit, state }, status: Entity.Status): boolean => {
+  [ACTION_TYPES.UPDATE_TOOT_FOR_ALL_TIMELINES]: ({ commit, state }, status: Entity.Status): boolean => {
     commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Notifications/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Mentions/updateToot', status, { root: true })
@@ -425,7 +463,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     }
     return true
   },
-  waitToUnbindUserStreaming: async ({ state, dispatch }): Promise<boolean> => {
+  [ACTION_TYPES.WAIT_TO_UNBIND_USER_STREAMING]: async ({ state, dispatch }): Promise<boolean> => {
     if (!state.bindingAccount) {
       return true
     }

@@ -39,7 +39,6 @@ import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import Notification from '~/src/renderer/components/organisms/Notification'
 import StatusLoading from '~/src/renderer/components/organisms/StatusLoading'
-import reloadable from '~/src/renderer/components/mixins/reloadable'
 import { EventEmitter } from '~/src/renderer/components/event'
 import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
 
@@ -56,7 +55,6 @@ export default {
   },
   name: 'notifications',
   components: { Notification, StatusLoading },
-  mixins: [reloadable],
   computed: {
     ...mapState({
       openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
@@ -224,7 +222,6 @@ export default {
     async reload() {
       this.$store.commit('TimelineSpace/changeLoading', true)
       try {
-        await this.reloadable()
         this.$store.dispatch('TimelineSpace/Contents/Notifications/resetBadge')
       } finally {
         this.$store.commit('TimelineSpace/changeLoading', false)

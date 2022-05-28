@@ -138,7 +138,8 @@ const actions: ActionTree<MentionsState, RootState> = {
           type: 'middle-load',
           since_id: localMarker.last_read_id,
           max_id: null,
-          id: 'loading-card'
+          id: 'loading-card',
+          uri: 'loading-card'
         }
         let mentions: Array<Entity.Notification | LoadingCard> = [card]
         const res = await client.getNotifications({ limit: 30, max_id: nextResponse.data[0].id, exclude_types: excludes })
@@ -211,7 +212,8 @@ const actions: ActionTree<MentionsState, RootState> = {
         type: 'middle-load',
         since_id: res.data[0].id,
         max_id: maxID,
-        id: 'loading-card'
+        id: 'loading-card',
+        uri: 'loading-card'
       }
       let mentions: Array<Entity.Notification | LoadingCard> = [card]
       mentions = mentions.concat(res.data)
