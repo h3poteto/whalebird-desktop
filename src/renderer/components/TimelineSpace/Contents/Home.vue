@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onBeforeUnmount, watch } from 'vue'
+import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onBeforeUnmount, watch, onUnmounted } from 'vue'
 import moment from 'moment'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
@@ -141,6 +141,15 @@ export default defineComponent({
     })
     onBeforeUnmount(() => {
       observer.value?.disconnect()
+    })
+    onUnmounted(() => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+      store.commit(`${space}/${MUTATION_TYPES.ARCHIVE_TIMELINE}`)
+      const el = document.getElementById('scroller')
+      if (el !== undefined && el !== null) {
+        el.removeEventListener('scroll', onScroll)
+        el.scrollTop = 0
+      }
     })
     watch(startReload, (newVal, oldVal) => {
       if (!oldVal && newVal) {
