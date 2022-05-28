@@ -112,14 +112,14 @@
             <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
               <font-awesome-icon icon="reply" size="sm" />
             </el-button>
-            <el-button v-show="locked" type="text" class="locked">
+            <el-button v-if="locked" type="text" class="locked">
               <font-awesome-icon icon="lock" size="sm" />
             </el-button>
-            <el-button v-show="directed" type="text" class="directed">
+            <el-button v-else-if="directed" type="text" class="directed">
               <font-awesome-icon icon="envelope" size="sm" />
             </el-button>
             <el-button
-              v-show="!locked && !directed"
+              v-else
               type="text"
               @click="changeReblog(originalMessage)"
               :class="originalMessage.reblogged ? 'reblogged' : 'reblog'"
@@ -361,10 +361,10 @@ export default defineComponent({
       return Filtered(originalMessage.value.content, filters.value)
     })
     const locked = computed(() => {
-      return message.value.visibility === 'private'
+      return originalMessage.value.visibility === 'private'
     })
     const directed = computed(() => {
-      return message.value.visibility === 'direct'
+      return originalMessage.value.visibility === 'direct'
     })
     const quoteSupported = computed(() => {
       return QuoteSupported(sns.value, account.value.domain)
