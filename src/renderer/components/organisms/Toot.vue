@@ -1,8 +1,8 @@
 <template>
   <div class="status" tabIndex="0" ref="status" @click="$emit('selectToot', message)" role="article" aria-label="toot">
-    <div v-show="filtered" class="filtered">Filtered</div>
-    <div v-show="!filtered" class="toot">
-      <div class="reblogger" v-show="message.reblog && !message.quote">
+    <div v-if="filtered" class="filtered">Filtered</div>
+    <div v-if="!filtered" class="toot">
+      <div class="reblogger" v-if="message.reblog && !message.quote">
         <span class="reblogger-icon" @click="openUser(message.account)" role="presentation">
           <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
         </span>
@@ -37,7 +37,7 @@
           <div class="clearfix"></div>
         </div>
         <div class="content-wrapper">
-          <div class="spoiler" v-show="spoilered">
+          <div class="spoiler" v-if="spoilered">
             <span v-html="emojiText(originalMessage.spoiler_text, originalMessage.emojis)"></span>
             <el-button v-if="!isShowContent" plain type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
               {{ $t('cards.toot.show_more') }}
@@ -48,19 +48,19 @@
           </div>
           <div
             class="content"
-            v-show="isShowContent"
+            v-if="isShowContent"
             v-html="emojiText(originalMessage.content, originalMessage.emojis)"
             @click.capture.prevent="tootClick"
           ></div>
-          <Poll v-show="isShowContent" v-if="poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
+          <Poll v-if="isShowContent && poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
         </div>
         <div class="attachments">
-          <el-button v-show="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="toggleCW()">
+          <el-button v-if="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="toggleCW()">
             {{ $t('cards.toot.sensitive') }}
           </el-button>
-          <div v-show="isShowAttachments">
+          <div v-if="isShowAttachments">
             <el-button
-              v-show="sensitive && isShowAttachments"
+              v-if="sensitive && isShowAttachments"
               class="hide-sensitive"
               type="text"
               @click="toggleCW()"
@@ -156,8 +156,18 @@
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
             <template v-if="sns !== 'mastodon'">
-              <el-popover placement="bottom" width="281" trigger="click" popper-class="status-emoji-picker" ref="status_emoji_picker">
+              <el-popover
+                placement="bottom"
+                width="281"
+                trigger="click"
+                popper-class="status-emoji-picker"
+                ref="status_emoji_picker"
+                @show="emojiPickerShow"
+                @hide="emojiPickerHide"
+                :persistent="false"
+              >
                 <picker
+                  v-if="emojiPickerOpened"
                   :data="emojiIndex"
                   set="twitter"
                   :autoFocus="true"
@@ -174,12 +184,19 @@
                 </template>
               </el-popover>
             </template>
-            <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-show="pinned">
+            <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-if="pinned">
               <font-awesome-icon icon="thumbtack" size="sm" />
             </el-button>
-            <el-popover placement="bottom" width="200" trigger="click" popper-class="status-menu-popper" ref="status_menu_popper">
+            <el-popover
+              placement="bottom"
+              width="200"
+              trigger="click"
+              popper-class="status-menu-popper"
+              ref="status_menu_popper"
+              :persistent="false"
+            >
               <ul class="menu-list">
-                <li role="button" @click="openDetail(message)" v-show="!detailed">
+                <li role="button" @click="openDetail(message)" v-if="!detailed">
                   {{ $t('cards.toot.view_toot_detail') }}
                 </li>
                 <li role="button" @click="openBrowser(originalMessage)">
@@ -208,7 +225,7 @@
               </template>
             </el-popover>
           </div>
-          <div class="application" v-show="application !== null">
+          <div class="application" v-if="application !== null">
             {{ $t('cards.toot.via', { application: application }) }}
           </div>
         </div>
@@ -249,6 +266,8 @@ import { ACTION_TYPES as REPORT_ACTION } from '@/store/TimelineSpace/Modals/Repo
 import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
 import { ACTION_TYPES as VIEWER_ACTION } from '@/store/TimelineSpace/Modals/ImageViewer'
 import { ACTION_TYPES } from '@/store/organisms/Toot'
+
+const defaultEmojiIndex = new EmojiIndex(data)
 
 export default defineComponent({
   name: 'toot',
@@ -296,7 +315,8 @@ export default defineComponent({
     const showContent = ref(store.state.App.ignoreCW)
     const showAttachments = ref(store.state.App.ignoreNSFW)
     const hideAllAttachments = ref(store.state.App.hideAllAttachments)
-    const emojiIndex = new EmojiIndex(data)
+    const emojiPickerOpened = ref(false)
+    const emojiIndex = defaultEmojiIndex
 
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
     const timeFormat = computed(() => store.state.App.timeFormat)
@@ -600,6 +620,12 @@ export default defineComponent({
       showAttachments.value = !showAttachments.value
       ctx.emit('sizeChanged', true)
     }
+    const emojiPickerShow = () => {
+      emojiPickerOpened.value = true
+    }
+    const emojiPickerHide = () => {
+      emojiPickerOpened.value = false
+    }
 
     return {
       emojiIndex,
@@ -651,7 +677,10 @@ export default defineComponent({
       removeReaction,
       openQuote,
       toggleSpoiler,
-      toggleCW
+      toggleCW,
+      emojiPickerOpened,
+      emojiPickerShow,
+      emojiPickerHide
     }
   }
 })

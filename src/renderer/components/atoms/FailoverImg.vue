@@ -7,6 +7,7 @@
     v-on:load="loading = false"
     :class="loading ? 'loading' : ''"
     @click="$emit('click')"
+    loading="lazy"
   />
 </template>
 
