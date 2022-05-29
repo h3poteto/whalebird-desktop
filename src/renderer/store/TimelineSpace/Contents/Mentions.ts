@@ -114,8 +114,16 @@ const mutations: MutationTree<MentionsState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_MENTIONS: 'fetchMentions',
+  LAZY_FETCH_MENTIONS: 'lazyFetchMentions',
+  FETCH_MENTIONS_SINCE: 'fetchMentionsSince',
+  GET_MARKER: 'getMarker',
+  SAVE_MARKER: 'saveMarker'
+}
+
 const actions: ActionTree<MentionsState, RootState> = {
-  fetchMentions: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Notification>> => {
+  [ACTION_TYPES.FETCH_MENTIONS]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Notification>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -157,7 +165,10 @@ const actions: ActionTree<MentionsState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_MENTIONS, res.data)
     return res.data
   },
-  lazyFetchMentions: async ({ state, commit, rootState }, lastMention: Entity.Notification): Promise<Array<Entity.Notification> | null> => {
+  [ACTION_TYPES.LAZY_FETCH_MENTIONS]: async (
+    { state, commit, rootState },
+    lastMention: Entity.Notification
+  ): Promise<Array<Entity.Notification> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
@@ -182,7 +193,10 @@ const actions: ActionTree<MentionsState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
       })
   },
-  fetchMentionsSince: async ({ state, rootState, commit }, since_id: string): Promise<Array<Entity.Notification> | null> => {
+  [ACTION_TYPES.FETCH_MENTIONS_SINCE]: async (
+    { state, rootState, commit },
+    since_id: string
+  ): Promise<Array<Entity.Notification> | null> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -223,14 +237,14 @@ const actions: ActionTree<MentionsState, RootState> = {
     }
     return res.data
   },
-  getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
+  [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<LocalMarker | null> => {
     if (!rootState.TimelineSpace.timelineSetting.useMarker.mentions) {
       return null
     }
     const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-mentions-marker', rootState.TimelineSpace.account._id)
     return localMarker
   },
-  saveMarker: async ({ state, rootState }) => {
+  [ACTION_TYPES.SAVE_MARKER]: async ({ state, rootState }) => {
     const mentions = state.mentions
     if (mentions.length === 0 || mentions[0].id === 'loading-card') {
       return

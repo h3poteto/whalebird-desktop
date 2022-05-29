@@ -82,7 +82,7 @@ export default defineComponent({
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
-    const filters = computed(() => store.getters[`${space}/filters}`])
+    const filters = computed(() => store.getters[`${space}/filters`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
     // const shortcutEnabled = computed(() => {
     //   if (modalOpened.value) {
@@ -158,6 +158,15 @@ export default defineComponent({
         })
       }
     })
+    watch(
+      timeline,
+      (newState, _oldState) => {
+        if (heading.value && newState.length > 0) {
+          store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
+        }
+      },
+      { deep: true }
+    )
 
     const onScroll = (event: Event) => {
       if (moment().diff(resizeTime.value) < 500) {

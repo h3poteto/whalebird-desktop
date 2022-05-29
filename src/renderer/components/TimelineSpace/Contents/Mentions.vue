@@ -35,239 +35,239 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
+<script lang="ts">
+import { computed, defineComponent, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, ref, watch } from 'vue'
 import moment from 'moment'
-import Notification from '~/src/renderer/components/organisms/Notification'
-import StatusLoading from '~/src/renderer/components/organisms/StatusLoading'
-import { EventEmitter } from '~/src/renderer/components/event'
-import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
+import { useI18next } from 'vue3-i18next'
+import { useRoute } from 'vue-router'
+import { Entity } from 'megalodon'
+import { ElMessage } from 'element-plus'
+import { useStore } from '@/store'
+import Notification from '@/components/organisms/Notification.vue'
+import StatusLoading from '@/components/organisms/StatusLoading.vue'
+import { EventEmitter } from '@/components/event'
+import { ScrollPosition } from '@/components/utils/scroll'
+import useReloadable from '@/components/utils/reloadable'
+import { LoadingCard } from '@/types/loading-card'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Mentions'
+import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
+import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
+import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
 
-export default {
-  data() {
-    return {
-      focusedId: null,
-      scrollPosition: null,
-      observer: null,
-      scrollTime: null,
-      resizeTime: null,
-      loadingMore: false
-    }
-  },
+export default defineComponent({
   name: 'mentions',
   components: { Notification, StatusLoading },
-  computed: {
-    ...mapState('App', {
-      backgroundColor: state => state.theme.background_color
-    }),
-    ...mapState('TimelineSpace/HeaderMenu', {
-      startReload: state => state.reload
-    }),
-    ...mapState('TimelineSpace/Contents/SideBar', {
-      openSideBar: state => state.openSideBar
-    }),
-    ...mapState('TimelineSpace/Contents/Mentions', {
-      lazyLoading: state => state.lazyLoading,
-      heading: state => state.heading,
-      scrolling: state => state.scrolling
-    }),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    ...mapGetters('TimelineSpace/Contents/Mentions', ['mentions']),
-    shortcutEnabled: function () {
-      if (this.modalOpened) {
-        return false
+  setup() {
+    const space = 'TimelineSpace/Contents/Mentions'
+    const store = useStore()
+    const route = useRoute()
+    const i18n = useI18next()
+    const { reloadable } = useReloadable(store, route, i18n)
+
+    const focusedId = ref<string | null>(null)
+    const scrollPosition = ref<ScrollPosition | null>(null)
+    const observer = ref<ResizeObserver | null>(null)
+    const scrollTime = ref<moment.Moment | null>(null)
+    const resizeTime = ref<moment.Moment | null>(null)
+    const loadingMore = ref(false)
+    const scroller = ref<any>()
+
+    const mentions = computed<Array<Entity.Notification | LoadingCard>>(() => store.getters[`${space}/mentions`])
+    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Mentions.lazyLoading)
+    const heading = computed(() => store.state.TimelineSpace.Contents.Mentions.heading)
+    const scrolling = computed(() => store.state.TimelineSpace.Contents.Mentions.scrolling)
+    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
+    const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
+    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const currentFocusedIndex = computed(() => mentions.value.findIndex(notification => focusedId.value === notification.id))
+    // const shortcutEnabled = computed(() => {
+    //   if (modalOpened.value) {
+    //     return false
+    //   }
+    //   if (!focusedId.value) {
+    //     return true
+    //   }
+    //   // Sometimes toots are deleted, so perhaps focused toot don't exist.
+    //   return currentFocusedIndex.value === -1
+    // })
+
+    onMounted(() => {
+      store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_HOME_TIMELINE}`, false)
+      document.getElementById('scroller')?.addEventListener('scroll', onScroll)
+
+      if (heading.value && mentions.value.length > 0) {
+        store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
       }
-      if (!this.focusedId) {
-        return true
+      const el = document.getElementById('scroller')
+      if (el) {
+        scrollPosition.value = new ScrollPosition(el)
+        scrollPosition.value.prepare()
+        observer.value = new ResizeObserver(() => {
+          if (loadingMore.value || (scrollPosition.value && !heading.value && !lazyLoading.value && !scrolling.value)) {
+            resizeTime.value = moment()
+            scrollPosition.value?.restore()
+          }
+        })
+        const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
+        observer.value.observe(scrollWrapper)
       }
-      // Sometimes toots are deleted, so perhaps focused toot don't exist.
-      const currentIndex = this.mentions.findIndex(toot => this.focusedId === toot.id)
-      return currentIndex === -1
-    }
-  },
-  mounted() {
-    this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
-    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
-    EventEmitter.on('focus-timeline', () => {
-      // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
-      const previousFocusedId = this.focusedId
-      this.focusedId = 0
-      this.$nextTick(function () {
-        this.focusedId = previousFocusedId
-      })
     })
-
-    if (this.heading && this.mentions.length > 0) {
-      this.$store.dispatch('TimelineSpace/Contents/Mentions/saveMarker')
-    }
-    const el = document.getElementById('scroller')
-    this.scrollPosition = new ScrollPosition(el)
-    this.scrollPosition.prepare()
-
-    this.observer = new ResizeObserver(() => {
-      if (this.loadingMore || (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling)) {
-        this.resizeTime = moment()
-        this.scrollPosition.restore()
+    onBeforeUpdate(() => {
+      if (store.state.TimelineSpace.SideMenu.unreadMentions && heading.value) {
+        store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_MENTIONS}`, false)
+      }
+      if (scrollPosition.value) {
+        scrollPosition.value.prepare()
       }
     })
-
-    const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
-    this.observer.observe(scrollWrapper)
-  },
-  beforeUpdate() {
-    if (this.$store.state.TimelineSpace.SideMenu.unreadMentions && this.heading) {
-      this.$store.commit('TimelineSpace/SideMenu/changeUnreadMentions', false)
-    }
-    if (this.scrollPosition) {
-      this.scrollPosition.prepare()
-    }
-  },
-  beforeUnmount() {
-    EventEmitter.off('focus-timeline')
-    this.observer.disconnect()
-  },
-  unounted() {
-    this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
-    this.$store.commit('TimelineSpace/Contents/Mentions/archiveMentions')
-    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
-      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scroller').scrollTop = 0
-    }
-  },
-  watch: {
-    startReload: function (newState, oldState) {
-      if (!oldState && newState) {
-        this.reload().finally(() => {
-          this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
+    onBeforeUnmount(() => {
+      observer.value?.disconnect()
+    })
+    onUnmounted(() => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+      store.commit(`${space}/${MUTATION_TYPES.ARCHIVE_MENTIONS}`)
+      const el = document.getElementById('scroller')
+      if (el !== undefined && el !== null) {
+        el.removeEventListener('scroll', onScroll)
+        el.scrollTop = 0
+      }
+    })
+    watch(startReload, (newVal, oldVal) => {
+      if (!oldVal && newVal) {
+        reload().finally(() => {
+          store.commit(`TimelineSpace/HeaderMenu/${HEADER_MUTATION.CHANGE_RELOAD}`, false)
         })
       }
-    },
-    focusedId: function (newState, _oldState) {
-      if (newState && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
-      } else if (newState === null && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
-      }
-    },
-    mentions: {
-      handler(newState, _oldState) {
-        if (this.heading && newState.length > 0) {
-          this.$store.dispatch('TimelineSpace/Contents/Mentions/saveMarker')
+    })
+    watch(
+      mentions,
+      (newVal, _oldVal) => {
+        if (heading.value && newVal.length > 0) {
+          store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
         }
       },
-      deep: true
-    }
-  },
-  methods: {
-    onScroll(event) {
-      if (moment().diff(this.resizeTime) < 500) {
+      { deep: true }
+    )
+
+    const onScroll = (event: Event) => {
+      if (moment().diff(resizeTime.value) < 500) {
         return
       }
-      this.scrollTime = moment()
-      if (!this.scrolling) {
-        this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', true)
+      scrollTime.value = moment()
+      if (!scrolling.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
       }
 
       // for lazyLoading
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
-        !this.lazyloading
+        (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
+          document.getElementById('scroller')!.scrollHeight - 10 &&
+        !lazyLoading.value
       ) {
-        this.$store
-          .dispatch('TimelineSpace/Contents/Mentions/lazyFetchMentions', this.mentions[this.mentions.length - 1])
+        store
+          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_MENTIONS}`, mentions.value[mentions.value.length - 1])
           .then(statuses => {
             if (statuses === null) {
               return
             }
             if (statuses.length > 0) {
-              this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', true)
+              store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
               setTimeout(() => {
-                this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', false)
+                store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
               }, 500)
             }
           })
           .catch(() => {
-            this.$message({
-              message: this.$t('message.timeline_fetch_error'),
+            ElMessage({
+              message: i18n.t('message.timeline_fetch_error'),
               type: 'error'
             })
           })
       }
 
-      if (event.target.scrollTop > 10 && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', false)
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Mentions/changeHeading', true)
-        this.$store.dispatch('TimelineSpace/Contents/Mentions/saveMarker')
+      if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+      } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+        store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
       }
 
       setTimeout(() => {
         const now = moment()
-        if (now.diff(this.scrollTime) >= 150) {
-          this.scrollTime = null
-          this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', false)
+        if (now.diff(scrollTime.value) >= 150) {
+          scrollTime.value = null
+          store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
         }
       }, 150)
-    },
-    fetchMentionsSince(since_id) {
-      this.loadingMore = true
-      this.$store.dispatch('TimelineSpace/Contents/Mentions/fetchMentionsSince', since_id).finally(() => {
+    }
+    const updateToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+    }
+    const fetchMentionsSince = (since_id: string) => {
+      loadingMore.value = true
+      store.dispatch(`${space}/${ACTION_TYPES.FETCH_MENTIONS_SINCE}`, since_id).finally(() => {
         setTimeout(() => {
-          this.loadingMore = false
+          loadingMore.value = false
         }, 500)
       })
-    },
-    async reload() {
-      this.$store.commit('TimelineSpace/changeLoading', true)
+    }
+    const reload = async () => {
+      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
+        reloadable()
       } finally {
-        this.$store.commit('TimelineSpace/changeLoading', false)
+        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
       }
-    },
-    updateToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Mentions/updateToot', message)
-    },
-    upper() {
-      this.$refs.scroller.scrollToItem(0)
-      this.focusedId = null
-    },
-    focusNext() {
-      const currentIndex = this.mentions.findIndex(toot => this.focusedId === toot.id)
-      if (currentIndex === -1) {
-        this.focusedId = this.mentions[0].id
-      } else if (currentIndex < this.mentions.length) {
-        this.focusedId = this.mentions[currentIndex + 1].id
+    }
+    const upper = () => {
+      scroller.value.scrollToItem(0)
+      focusedId.value = null
+    }
+    const focusNext = () => {
+      if (currentFocusedIndex.value === -1) {
+        focusedId.value = mentions.value[0].id
+      } else if (currentFocusedIndex.value < mentions.value.length) {
+        focusedId.value = mentions.value[currentFocusedIndex.value + 1].id
       }
-    },
-    focusPrev() {
-      const currentIndex = this.mentions.findIndex(toot => this.focusedId === toot.id)
-      if (currentIndex === 0) {
-        this.focusedId = null
-      } else if (currentIndex > 0) {
-        this.focusedId = this.mentions[currentIndex - 1].id
+    }
+    const focusPrev = () => {
+      if (currentFocusedIndex.value === 0) {
+        focusedId.value = null
+      } else if (currentFocusedIndex.value > 0) {
+        focusedId.value = mentions.value[currentFocusedIndex.value - 1].id
       }
-    },
-    focusNotification(message) {
-      this.focusedId = message.id
-    },
-    focusSidebar() {
+    }
+    const focusNotification = (message: Entity.Notification) => {
+      focusedId.value = message.id
+    }
+    const focusSidebar = () => {
       EventEmitter.emit('focus-sidebar')
-    },
-    handleKey(event) {
-      switch (event.srcKey) {
-        case 'next':
-          this.focusedId = this.mentions[0].id
-          break
-      }
-    },
-    sizeChanged() {
-      this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', true)
+    }
+    const sizeChanged = () => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
       setTimeout(() => {
-        this.$store.commit('TimelineSpace/Contents/Mentions/changeScrolling', false)
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
       }, 500)
     }
+
+    return {
+      mentions,
+      loadingMore,
+      fetchMentionsSince,
+      focusedId,
+      modalOpened,
+      updateToot,
+      focusNext,
+      focusPrev,
+      focusSidebar,
+      focusNotification,
+      sizeChanged,
+      openSideBar,
+      heading,
+      upper
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
