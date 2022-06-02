@@ -65,6 +65,11 @@ const mutations: MutationTree<FavouritesState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_FAVOURITES: 'fetchFavourites',
+  LAZY_FETCH_FAVOURITES: 'lazyFetchFavourites'
+}
+
 const actions: ActionTree<FavouritesState, RootState> = {
   fetchFavourites: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Entity.Status>> => {
     const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
