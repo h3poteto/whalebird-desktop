@@ -50,8 +50,12 @@ const mutations: MutationTree<ContentsState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  CHANGE_LOADING: 'changeLoading'
+}
+
 const actions: ActionTree<ContentsState, RootState> = {
-  changeLoading: ({ commit }, loading) => {
+  [ACTION_TYPES.CHANGE_LOADING]: ({ commit }, loading) => {
     commit(MUTATION_TYPES.CHANGE_LOADING, loading)
   }
 }

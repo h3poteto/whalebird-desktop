@@ -252,6 +252,7 @@ export default defineComponent({
 
     return {
       mentions,
+      scroller,
       loadingMore,
       fetchMentionsSince,
       focusedId,
