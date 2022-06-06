@@ -139,6 +139,7 @@ describe('TimelineSpace/Contents/DirectMessages', () => {
           state = {
             lazyLoading: false,
             heading: true,
+            scrolling: false,
             timeline: [status2, status1]
           }
         })
@@ -153,6 +154,7 @@ describe('TimelineSpace/Contents/DirectMessages', () => {
           state = {
             lazyLoading: false,
             heading: true,
+            scrolling: false,
             timeline: [status2, rebloggedStatus]
           }
         })
@@ -170,6 +172,7 @@ describe('TimelineSpace/Contents/DirectMessages', () => {
             state = {
               lazyLoading: false,
               heading: true,
+              scrolling: false,
               timeline: [status2, status1]
             }
           })
@@ -184,6 +187,7 @@ describe('TimelineSpace/Contents/DirectMessages', () => {
             state = {
               lazyLoading: false,
               heading: true,
+              scrolling: false,
               timeline: [rebloggedStatus, status2, status1]
             }
           })
@@ -200,6 +204,7 @@ describe('TimelineSpace/Contents/DirectMessages', () => {
             state = {
               lazyLoading: false,
               heading: false,
+              scrolling: false,
               timeline: [status2, status1]
             }
           })
@@ -214,6 +219,7 @@ describe('TimelineSpace/Contents/DirectMessages', () => {
             state = {
               lazyLoading: false,
               heading: false,
+              scrolling: false,
               timeline: [rebloggedStatus, status2, status1]
             }
           })
