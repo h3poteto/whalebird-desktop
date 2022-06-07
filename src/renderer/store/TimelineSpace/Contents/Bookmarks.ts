@@ -65,8 +65,13 @@ const mutations: MutationTree<BookmarksState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_BOOKMARKS: 'fetchBookmarks',
+  LAZY_FETCH_BOOKMARKS: 'lazyFetchBookmarks'
+}
+
 const actions: ActionTree<BookmarksState, RootState> = {
-  fetchBookmarks: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Entity.Status>> => {
+  [ACTION_TYPES.FETCH_BOOKMARKS]: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Entity.Status>> => {
     const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
     const res = await client.getBookmarks({ limit: 40 })
     commit(MUTATION_TYPES.UPDATE_BOOKMARKS, res.data)
@@ -84,7 +89,7 @@ const actions: ActionTree<BookmarksState, RootState> = {
     }
     return res.data
   },
-  laxyFetchBookmarks: async ({ state, commit, rootState }): Promise<Array<Entity.Status> | null> => {
+  [ACTION_TYPES.LAZY_FETCH_BOOKMARKS]: async ({ state, commit, rootState }): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }

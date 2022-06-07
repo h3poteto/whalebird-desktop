@@ -217,7 +217,7 @@ export default defineComponent({
     const reload = async () => {
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
-        reloadable()
+        await reloadable()
         store.dispatch(`${space}/${ACTION_TYPES.RESET_BADGE}`)
       } finally {
         store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)

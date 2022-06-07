@@ -27,167 +27,147 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
-import Toot from '@/components/organisms/Toot'
-import { EventEmitter } from '~/src/renderer/components/event'
+<script lang="ts">
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import { useStore } from '@/store'
+import { useI18next } from 'vue3-i18next'
+import { useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { Entity } from 'megalodon'
+import useReloadable from '@/components/utils/reloadable'
+import Toot from '@/components/organisms/Toot.vue'
+import { EventEmitter } from '@/components/event'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Bookmarks'
+import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
+import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
 
-export default {
-  data() {
-    return {
-      heading: true,
-      focusedId: null
-    }
-  },
+export default defineComponent({
   name: 'bookmarks',
   components: { Toot },
-  computed: {
-    ...mapState('TimelineSpace', {
-      account: state => state.account
-    }),
-    ...mapState('App', {
-      backgroundColor: state => state.theme.background_color
-    }),
-    ...mapState('TimelineSpace/HeaderMenu', {
-      startReload: state => state.reload
-    }),
-    ...mapState('TimelineSpace/Contents/SideBar', {
-      openSideBar: state => state.openSideBar
-    }),
-    ...mapState('TimelineSpace/Contents/Bookmarks', {
-      bookmarks: state => state.bookmarks,
-      lazyLoading: state => state.lazyLoading
-    }),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    shortcutEnabled: function () {
-      return !this.focusedId && !this.modalOpened
-    }
-  },
-  created() {
-    this.$store.commit('TimelineSpace/Contents/changeLoading', true)
-    this.$store
-      .dispatch('TimelineSpace/Contents/Bookmarks/fetchBookmarks', this.account)
-      .catch(() => {
-        this.$message({
-          message: this.$t('message.bookmark_fetch_error'),
-          type: 'error'
+  setup() {
+    const space = 'TimelineSpace/Contents/Bookmarks'
+    const store = useStore()
+    const route = useRoute()
+    const i18n = useI18next()
+    const { reloadable } = useReloadable(store, route, i18n)
+
+    const focusedId = ref<string | null>(null)
+    const heading = ref<boolean>(true)
+    const scroller = ref<any>()
+
+    const bookmarks = computed(() => store.state.TimelineSpace.Contents.Bookmarks.bookmarks)
+    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Bookmarks.lazyLoading)
+    const account = computed(() => store.state.TimelineSpace.account)
+    const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
+    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
+    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const currentFocusedIndex = computed(() => bookmarks.value.findIndex(toot => focusedId.value === toot.uri))
+
+    onMounted(() => {
+      document.getElementById('scroller')?.addEventListener('scroll', onScroll)
+      store.commit(`TimelineSpace/Contents/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
+      store
+        .dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account.value)
+        .catch(() => {
+          ElMessage({
+            message: i18n.t('message.bookmark_fetch_error'),
+            type: 'error'
+          })
         })
-      })
-      .finally(() => {
-        this.$store.commit('TimelineSpace/Contents/changeLoading', false)
-      })
-  },
-  mounted() {
-    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
-    EventEmitter.on('focus-timeline', () => {
-      // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
-      const previousFocusedId = this.focusedId
-      this.focusedId = 0
-      this.$nextTick(function () {
-        this.focusedId = previousFocusedId
-      })
+        .finally(() => {
+          store.commit(`TimelineSpace/Contents/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
+        })
     })
-  },
-  beforeUnmount() {
-    EventEmitter.off('focus-timeline')
-  },
-  unmounted() {
-    this.$store.commit('TimelineSpace/Contents/Bookmarks/updateBookmarks', [])
-    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
-      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scroller').scrollTop = 0
-    }
-  },
-  watch: {
-    startReload: function (newState, oldState) {
-      if (!oldState && newState) {
-        this.reload().finally(() => {
-          this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
+    watch(startReload, (newVal, oldVal) => {
+      if (!oldVal && newVal) {
+        reload().finally(() => {
+          store.commit(`TimelineSpace/HeaderMenu/${HEADER_MUTATION.CHANGE_RELOAD}`, false)
         })
       }
-    },
-    focusedId: function (newState, _oldState) {
-      if (newState && this.heading) {
-        this.heading = false
-      } else if (newState === null && !this.heading) {
-        this.heading = true
-      }
-    }
-  },
-  methods: {
-    updateToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Bookmarks/updateToot', message)
-    },
-    deleteToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Bookmarks/deleteToot', message)
-    },
-    onScroll(event) {
+    })
+
+    const onScroll = (event: Event) => {
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
-        !this.lazyloading
+        (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
+          document.getElementById('scroller')!.scrollHeight - 10 &&
+        !lazyLoading.value
       ) {
-        this.$store.dispatch('TimelineSpace/Contents/Bookmarks/lazyFetchBookmarks', this.bookmarks[this.bookmarks.length - 1]).catch(() => {
-          this.$message({
-            message: this.$t('message.bookmark_fetch_error'),
+        store.dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_BOOKMARKS}`, bookmarks.value[bookmarks.value.length - 1]).catch(() => {
+          ElMessage({
+            message: i18n.t('message.bookmark_fetch_error'),
             type: 'error'
           })
         })
       }
       // for upper
-      if (event.target.scrollTop > 10 && this.heading) {
-        this.heading = false
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.heading = true
+      if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
+        heading.value = false
+      } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
+        heading.value = true
       }
-    },
-    async reload() {
-      this.$store.commit('TimelineSpace/changeLoading', true)
+    }
+    const reload = async () => {
+      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
-        await this.$store.dispatch('TimelineSpace/Contents/Bookmarks/fetchBookmarks', account).catch(() => {
-          this.$message({
-            message: this.$t('message.bookmark_fetch_error'),
+        await reloadable()
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account.value).catch(() => {
+          ElMessage({
+            message: i18n.t('message.bookmark_fetch_error'),
             type: 'error'
           })
         })
       } finally {
-        this.$store.commit('TimelineSpace/changeLoading', false)
-      }
-    },
-    upper() {
-      this.$refs.scroller.scrollToItem(0)
-      this.focusedId = null
-    },
-    focusNext() {
-      const currentIndex = this.bookmarks.findIndex(toot => this.focusedId === toot.uri)
-      if (currentIndex === -1) {
-        this.focusedId = this.bookmarks[0].uri
-      } else if (currentIndex < this.bookmarks.length) {
-        this.focusedId = this.bookmarks[currentIndex + 1].uri
-      }
-    },
-    focusPrev() {
-      const currentIndex = this.bookmarks.findIndex(toot => this.focusedId === toot.uri)
-      if (currentIndex === 0) {
-        this.focusedId = null
-      } else if (currentIndex > 0) {
-        this.focusedId = this.bookmarks[currentIndex - 1].uri
-      }
-    },
-    focusToot(message) {
-      this.focusedId = message.id
-    },
-    focusSidebar() {
-      EventEmitter.emit('focus-sidebar')
-    },
-    handleKey(event) {
-      switch (event.srcKey) {
-        case 'next':
-          this.focusedId = this.bookmarks[0].uri
-          break
+        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
       }
     }
+    const updateToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+    }
+    const deleteToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message)
+    }
+    const upper = () => {
+      scroller.value.scrollToItem(0)
+      focusedId.value = null
+    }
+    const focusNext = () => {
+      if (currentFocusedIndex.value === -1) {
+        focusedId.value = bookmarks.value[0].uri
+      } else if (currentFocusedIndex.value < bookmarks.value.length) {
+        focusedId.value = bookmarks.value[currentFocusedIndex.value + 1].uri
+      }
+    }
+    const focusPrev = () => {
+      if (currentFocusedIndex.value === 0) {
+        focusedId.value = null
+      } else if (currentFocusedIndex.value > 0) {
+        focusedId.value = bookmarks.value[currentFocusedIndex.value - 1].uri
+      }
+    }
+    const focusToot = (message: Entity.Status) => {
+      focusedId.value = message.id
+    }
+    const focusSidebar = () => {
+      EventEmitter.emit('focus-sidebar')
+    }
+
+    return {
+      scroller,
+      bookmarks,
+      focusedId,
+      modalOpened,
+      updateToot,
+      deleteToot,
+      focusNext,
+      focusPrev,
+      focusSidebar,
+      focusToot,
+      openSideBar,
+      heading,
+      upper
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
