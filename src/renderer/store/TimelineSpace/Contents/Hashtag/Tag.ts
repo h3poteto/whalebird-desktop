@@ -88,8 +88,15 @@ const mutations: MutationTree<TagState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH: 'fetch',
+  START_STREAMING: 'startStreaming',
+  STOP_STREAMING: 'stopStreaming',
+  LAZY_FETCH_TIMELINE: 'lazyFetchTimeline'
+}
+
 const actions: ActionTree<TagState, RootState> = {
-  fetch: async ({ commit, rootState }, tag: string): Promise<Array<Entity.Status>> => {
+  [ACTION_TYPES.FETCH]: async ({ commit, rootState }, tag: string): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -100,7 +107,7 @@ const actions: ActionTree<TagState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
   },
-  startStreaming: ({ state, commit, rootState }, tag: string) => {
+  [ACTION_TYPES.START_STREAMING]: ({ state, commit, rootState }, tag: string) => {
     win.ipcRenderer.on('update-start-tag-streaming', (_, update: Entity.Status) => {
       commit(MUTATION_TYPES.APPEND_TIMELINE, update)
       if (state.heading && Math.random() > 0.8) {
@@ -122,7 +129,7 @@ const actions: ActionTree<TagState, RootState> = {
       })
     })
   },
-  stopStreaming: () => {
+  [ACTION_TYPES.STOP_STREAMING]: () => {
     return new Promise(resolve => {
       win.ipcRenderer.removeAllListeners('error-start-tag-streaming')
       win.ipcRenderer.removeAllListeners('update-start-tag-streaming')
@@ -131,7 +138,10 @@ const actions: ActionTree<TagState, RootState> = {
       resolve(null)
     })
   },
-  lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPositionWithTag): Promise<Array<Entity.Status> | null> => {
+  [ACTION_TYPES.LAZY_FETCH_TIMELINE]: async (
+    { state, commit, rootState },
+    loadPosition: LoadPositionWithTag
+  ): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }

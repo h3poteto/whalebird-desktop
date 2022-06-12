@@ -3,7 +3,7 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type ListState = {
   tags: Array<LocalTag>
@@ -23,13 +23,18 @@ const mutations: MutationTree<ListState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  LIST_TAGS: 'listTags',
+  REMOVE_TAG: 'removeTag'
+}
+
 const actions: ActionTree<ListState, RootState> = {
-  listTags: async ({ commit }) => {
+  [ACTION_TYPES.LIST_TAGS]: async ({ commit }) => {
     const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags')
     commit(MUTATION_TYPES.UPDATE_TAGS, tags)
     return tags
   },
-  removeTag: async ({ dispatch }, tag: LocalTag) => {
+  [ACTION_TYPES.REMOVE_TAG]: async ({ dispatch }, tag: LocalTag) => {
     await win.ipcRenderer.invoke('remove-hashtag', tag)
     dispatch('listTags')
     dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
