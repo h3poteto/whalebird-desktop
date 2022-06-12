@@ -20,8 +20,12 @@ const mutations: MutationTree<AccountState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  SEARCH: 'search'
+}
+
 const actions: ActionTree<AccountState, RootState> = {
-  search: async ({ commit, rootState }, query: string): Promise<Array<Entity.Account>> => {
+  [ACTION_TYPES.SEARCH]: async ({ commit, rootState }, query: string): Promise<Array<Entity.Account>> => {
     commit('TimelineSpace/Contents/changeLoading', true, { root: true })
     const client = generator(
       rootState.TimelineSpace.sns,

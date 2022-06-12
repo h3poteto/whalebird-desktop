@@ -10,20 +10,26 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import Tag from '~/src/renderer/components/molecules/Tag'
+<script lang="ts">
+import { defineComponent, onUnmounted, computed } from 'vue'
+import { useStore } from '@/store'
+import Tag from '@/components/molecules/Tag.vue'
+import { MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Search/Tag'
 
-export default {
+export default defineComponent({
   name: 'search-tag',
   components: { Tag },
-  computed: {
-    ...mapState('TimelineSpace/Contents/Search/Tag', {
-      results: state => state.results
+  setup() {
+    const store = useStore()
+    const results = computed(() => store.state.TimelineSpace.Contents.Search.Tag.results)
+
+    onUnmounted(() => {
+      store.commit(`TimelineSpace/Contents/Search/Tag/${MUTATION_TYPES.UPDATE_RESULTS}`, [])
     })
-  },
-  unmounted() {
-    this.$store.commit('TimelineSpace/Contents/Search/Tag/updateResults', [])
+
+    return {
+      results
+    }
   }
-}
+})
 </script>
