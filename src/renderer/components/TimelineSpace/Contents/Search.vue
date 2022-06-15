@@ -17,58 +17,65 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue'
-import SearchAccount from './Search/Account'
-import SearchTag from './Search/Tag'
-import SearchToots from './Search/Toots'
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import SearchAccount from './Search/Account.vue'
+import SearchTag from './Search/Tag.vue'
+import SearchToots from './Search/Toots.vue'
+import { ACTION_TYPES as TAG_ACTION } from '@/store/TimelineSpace/Contents/Search/Tag'
+import { ACTION_TYPES as ACCOUNT_ACTION } from '@/store/TimelineSpace/Contents/Search/Account'
+import { ACTION_TYPES as TOOTS_ACTION } from '@/store/TimelineSpace/Contents/Search/Toots'
 
-export default {
+export default defineComponent({
   name: 'search',
   components: { SearchAccount, SearchTag, SearchToots },
-  data() {
-    return {
-      target: ref('account'),
-      query: '',
-      searchTargets: [
-        {
-          target: 'account',
-          label: this.$t('search.account')
-        },
-        {
-          target: 'tag',
-          label: this.$t('search.tag')
-        },
-        {
-          target: 'toot',
-          label: this.$t('search.toot')
-        }
-      ]
-    }
-  },
-  methods: {
-    search() {
-      switch (this.target) {
+  setup() {
+    const space = 'TimelineSpace/Contents/Search'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const target = ref<string>('account')
+    const query = ref<string>('')
+    const searchTargets = [
+      {
+        target: 'account',
+        label: i18n.t('search.account')
+      },
+      {
+        target: 'tag',
+        label: i18n.t('search.tag')
+      },
+      {
+        target: 'toot',
+        label: i18n.t('search.toot')
+      }
+    ]
+
+    const search = () => {
+      switch (target.value) {
         case 'account':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Account/search', this.query).catch(() => {
-            this.$message({
-              message: this.$t('message.search_error'),
+          store.dispatch(`${space}/Tag/${ACCOUNT_ACTION.SEARCH}`, query.value).catch(() => {
+            ElMessage({
+              message: i18n.t('message.search_error'),
               type: 'error'
             })
           })
           break
         case 'tag':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Tag/search', `#${this.query}`).catch(() => {
-            this.$message({
-              message: this.$t('message.search_error'),
+          store.dispatch(`${space}/Tag/${TAG_ACTION.SEARCH}`, `#${query.value}`).catch(() => {
+            ElMessage({
+              message: i18n.t('message.search_error'),
               type: 'error'
             })
           })
           break
         case 'toot':
-          this.$store.dispatch('TimelineSpace/Contents/Search/Toots/search', this.query).catch(() => {
-            this.$message({
-              message: this.$t('message.search_error'),
+          store.dispatch(`${space}/Toots/${TOOTS_ACTION.SEARCH}`, query.value).catch(() => {
+            ElMessage({
+              message: i18n.t('message.search_error'),
               type: 'error'
             })
           })
@@ -77,8 +84,15 @@ export default {
           break
       }
     }
+
+    return {
+      target,
+      searchTargets,
+      query,
+      search
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

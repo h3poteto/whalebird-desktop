@@ -3,7 +3,7 @@
     <div class="search-header" v-loading="false">
       <el-form>
         <div class="form-wrapper">
-          <div class="form-item" v-show="tagPage()">
+          <div class="form-item" v-show="tagPage">
             <el-button type="text" @click="back">
               <font-awesome-icon icon="chevron-left" />
             </el-button>
@@ -11,7 +11,7 @@
           <div class="form-item input">
             <input v-model="tag" :placeholder="$t('hashtag.tag_name')" class="search-keyword" v-on:keyup.enter="search" autofocus />
           </div>
-          <div class="form-item" v-show="tagPage()">
+          <div class="form-item" v-show="tagPage">
             <el-button type="text" @click="save" :title="$t('hashtag.save_tag')">
               <font-awesome-icon icon="thumbtack" />
             </el-button>
@@ -23,44 +23,55 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '@/store'
+
+export default defineComponent({
   name: 'hashtag',
-  data() {
-    return {
-      tag: ''
-    }
-  },
-  mounted() {
-    if (this.$route.name === 'tag') {
-      this.tag = this.$route.params.tag
-    }
-  },
-  watch: {
-    $route: function (route) {
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
+
+    const tag = ref<string>('')
+    const id = computed(() => route.params.id)
+    const tagPage = computed(() => route.name === 'tag')
+
+    onMounted(() => {
       if (route.name === 'tag') {
-        this.tag = route.params.tag
+        tag.value = route.params.tag as string
       }
+    })
+    watch(
+      () => route.params.tag,
+      () => {
+        if (route.name === 'tag') {
+          tag.value = route.params.tag as string
+        }
+      }
+    )
+    const search = () => {
+      router.push({ path: `/${id.value}/hashtag/${tag.value}` })
+    }
+    const back = () => {
+      router.push({ path: `/${id.value}/hashtag` })
+    }
+    const save = () => {
+      store.dispatch('TimelineSpace/Contents/Hashtag/saveTag', tag.value)
+    }
+
+    return {
+      tagPage,
+      tag,
+      back,
+      search,
+      save
     }
   },
-  methods: {
-    id() {
-      return this.$route.params.id
-    },
-    search() {
-      this.$router.push({ path: `/${this.id()}/hashtag/${this.tag}` })
-    },
-    tagPage() {
-      return this.$route.name === 'tag'
-    },
-    back() {
-      this.$router.push({ path: `/${this.id()}/hashtag` })
-    },
-    save() {
-      this.$store.dispatch('TimelineSpace/Contents/Hashtag/saveTag', this.tag)
-    }
-  }
-}
+  methods: {}
+})
 </script>
 
 <style lang="scss" scoped>

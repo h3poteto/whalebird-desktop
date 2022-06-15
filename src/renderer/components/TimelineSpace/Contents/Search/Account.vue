@@ -10,20 +10,27 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import User from '~/src/renderer/components/molecules/User'
+<script lang="ts">
+import { computed, defineComponent, onUnmounted } from 'vue'
+import { useStore } from '@/store'
+import { MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Search/Account'
+import User from '@/components/molecules/User.vue'
 
-export default {
+export default defineComponent({
   name: 'search-account',
   components: { User },
-  computed: {
-    ...mapState({
-      results: state => state.TimelineSpace.Contents.Search.Account.results
+  setup() {
+    const store = useStore()
+    const results = computed(() => store.state.TimelineSpace.Contents.Search.Account.results)
+
+    onUnmounted(() => {
+      store.commit(`TimelineSpace/Contents/Search/Account/${MUTATION_TYPES.UPDATE_RESULTS}`, [])
     })
+
+    return {
+      results
+    }
   },
-  unmounted() {
-    this.$store.commit('TimelineSpace/Contents/Search/Account/updateResults', [])
-  }
-}
+  unmounted() {}
+})
 </script>

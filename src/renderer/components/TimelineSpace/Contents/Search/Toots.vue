@@ -10,20 +10,26 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import Toot from '~/src/renderer/components/organisms/Toot'
+<script lang="ts">
+import { computed, defineComponent, onUnmounted } from 'vue'
+import { useStore } from '@/store'
+import Toot from '@/components/organisms/Toot.vue'
+import { MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Search/Toots'
 
-export default {
+export default defineComponent({
   name: 'search-account',
   components: { Toot },
-  computed: {
-    ...mapState({
-      results: state => state.TimelineSpace.Contents.Search.Toots.results
+  setup() {
+    const store = useStore()
+    const results = computed(() => store.state.TimelineSpace.Contents.Search.Toots.results)
+
+    onUnmounted(() => {
+      this.$store.commit(`TimelineSpace/Contents/Search/Toots/${MUTATION_TYPES.UPDATE_RESULTS}`, [])
     })
-  },
-  unmounted() {
-    this.$store.commit('TimelineSpace/Contents/Search/Toots/updateResults', [])
+
+    return {
+      results
+    }
   }
-}
+})
 </script>

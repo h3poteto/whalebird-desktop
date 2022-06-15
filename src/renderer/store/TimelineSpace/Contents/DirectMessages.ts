@@ -5,15 +5,15 @@ import { RootState } from '@/store'
 export type DirectMessagesState = {
   lazyLoading: boolean
   heading: boolean
-  timeline: Array<Entity.Status>
   scrolling: boolean
+  timeline: Array<Entity.Status>
 }
 
 const state = (): DirectMessagesState => ({
   lazyLoading: false,
   heading: true,
-  timeline: [],
-  scrolling: false
+  scrolling: false,
+  timeline: []
 })
 
 export const MUTATION_TYPES = {
@@ -85,8 +85,13 @@ const mutations: MutationTree<DirectMessagesState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_TIMELINE: 'fetchTimeline',
+  LAZY_FETCH_TIMELINE: 'lazyFetchTimeline'
+}
+
 const actions: ActionTree<DirectMessagesState, RootState> = {
-  fetchTimeline: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
+  [ACTION_TYPES.FETCH_TIMELINE]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -104,7 +109,10 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
       return []
     }
   },
-  lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
+  [ACTION_TYPES.LAZY_FETCH_TIMELINE]: async (
+    { state, commit, rootState },
+    lastStatus: Entity.Status
+  ): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }

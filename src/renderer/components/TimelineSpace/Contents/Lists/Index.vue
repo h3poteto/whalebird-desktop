@@ -9,7 +9,7 @@
       </el-form>
     </div>
     <div class="list" v-for="list in lists" :key="list.id">
-      <router-link tag="div" class="title" :to="`/${id()}/lists/${list.id}`">
+      <router-link tag="div" class="title" :to="`/${id}/lists/${list.id}`">
         {{ list.title }}
       </router-link>
       <div class="tools">
@@ -24,72 +24,90 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { Entity } from 'megalodon'
+import { useI18next } from 'vue3-i18next'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Index'
+import { ACTION_TYPES as SIDE_MENU_ACTION } from '@/store/TimelineSpace/SideMenu'
 
-export default {
+export default defineComponent({
   name: 'lists',
-  data() {
-    return {
-      title: '',
-      creating: false
-    }
-  },
-  computed: {
-    ...mapState({
-      lists: state => state.TimelineSpace.Contents.Lists.Index.lists,
-      loadingBackground: state => state.App.theme.wrapper_mask_color
+  setup() {
+    const space = 'TimelineSpace/Contents/Lists/Index'
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const i18n = useI18next()
+
+    const title = ref<string>('')
+    const creating = ref<boolean>(false)
+
+    const lists = computed(() => store.state.TimelineSpace.Contents.Lists.Index.lists)
+    const loadingBackground = computed(() => store.state.App.theme.wrapper_mask_color)
+    const id = computed(() => route.params.id)
+
+    onMounted(() => {
+      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
+      fetch().finally(() => {
+        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
+      })
     })
-  },
-  created() {
-    this.$store.commit('TimelineSpace/changeLoading', true)
-    this.fetch().finally(() => {
-      this.$store.commit('TimelineSpace/changeLoading', false)
-    })
-  },
-  methods: {
-    id() {
-      return this.$route.params.id
-    },
-    fetch() {
-      return this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists').catch(() => {
-        this.$message({
-          message: this.$t('message.lists_fetch_error'),
+
+    const fetch = async () => {
+      return store.dispatch(`${space}/${ACTION_TYPES.FETCH_LISTS}`).catch(() => {
+        ElMessage({
+          message: i18n.t('message.lists_fetch_error'),
           type: 'error'
         })
       })
-    },
-    async createList() {
-      this.creating = true
+    }
+    const createList = async () => {
+      creating.value = true
       try {
-        await this.$store.dispatch('TimelineSpace/Contents/Lists/Index/createList', this.title)
-        await this.$store.dispatch('TimelineSpace/Contents/Lists/Index/fetchLists')
+        await store.dispatch(`${space}/${ACTION_TYPES.CREATE_LIST}`, title.value)
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_LISTS}`)
       } catch (err) {
-        this.$message({
-          message: this.$t('message.list_create_error'),
+        ElMessage({
+          message: i18n.t('message.list_create_error'),
           type: 'error'
         })
       } finally {
-        this.creating = false
+        creating.value = false
       }
-      await this.$store.dispatch('TimelineSpace/SideMenu/fetchLists')
-    },
-    edit(list) {
-      return this.$router.push(`/${this.id()}/lists/${list.id}/edit`)
-    },
-    del(list) {
-      this.$confirm(this.$t('lists.index.delete.confirm.message'), this.$t('lists.index.delete.confirm.title'), {
-        confirmButtonText: this.$t('lists.index.delete.confirm.ok'),
-        cancelButtonText: this.$t('lists.index.delete.confirm.cancel'),
+      await store.dispatch(`TimelineSpace/SideMenu/${SIDE_MENU_ACTION.FETCH_LISTS}`)
+    }
+    const edit = (list: Entity.List) => {
+      return router.push(`/${id.value}/lists/${list.id}/edit`)
+    }
+    const del = (list: Entity.List) => {
+      ElMessageBox.confirm(i18n.t('lists.index.delete.confirm.message'), i18n.t('lists.index.delete.confirm.title'), {
+        confirmButtonText: i18n.t('lists.index.delete.confirm.ok'),
+        cancelButtonText: i18n.t('lists.index.delete.confirm.cancel'),
         type: 'warning'
       })
         .then(() => {
-          this.$store.dispatch('TimelineSpace/Contents/Lists/Index/deleteList', list)
+          store.dispatch(`${space}/${ACTION_TYPES.DELETE_LIST}`, list)
         })
         .catch(() => {})
     }
+
+    return {
+      id,
+      creating,
+      title,
+      lists,
+      loadingBackground,
+      createList,
+      edit,
+      del
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

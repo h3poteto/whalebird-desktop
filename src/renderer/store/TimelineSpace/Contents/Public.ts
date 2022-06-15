@@ -84,8 +84,13 @@ const mutations: MutationTree<PublicState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_PUBLIC_TIMELINE: 'fetchPublicTimeline',
+  LAZY_FETCH_TIMELINE: 'lazyFetchTimeline'
+}
+
 const actions: ActionTree<PublicState, RootState> = {
-  fetchPublicTimeline: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
+  [ACTION_TYPES.FETCH_PUBLIC_TIMELINE]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -102,7 +107,10 @@ const actions: ActionTree<PublicState, RootState> = {
       return []
     }
   },
-  lazyFetchTimeline: ({ state, commit, rootState }, lastStatus: Entity.Status): Promise<Array<Entity.Status> | null> => {
+  [ACTION_TYPES.LAZY_FETCH_TIMELINE]: async (
+    { state, commit, rootState },
+    lastStatus: Entity.Status
+  ): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }

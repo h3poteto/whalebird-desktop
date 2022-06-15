@@ -17,30 +17,41 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/Hashtag/List'
+import { LocalTag } from '~/src/types/localTag'
 
-export default {
+export default defineComponent({
   name: 'list',
-  computed: {
-    ...mapState({
-      tags: state => state.TimelineSpace.Contents.Hashtag.List.tags
+  setup() {
+    const space = 'TimelineSpace/Contents/Hashtag/List'
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const tags = computed(() => store.state.TimelineSpace.Contents.Hashtag.List.tags)
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.LIST_TAGS}`)
     })
-  },
-  created() {
-    this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/listTags')
-  },
-  methods: {
-    openTimeline(tagName) {
-      this.$router.push({
-        path: `/${this.$route.params.id}/hashtag/${tagName}`
+    const openTimeline = (tagName: string) => {
+      router.push({
+        path: `/${route.params.id}/hashtag/${tagName}`
       })
-    },
-    deleteTag(tag) {
-      this.$store.dispatch('TimelineSpace/Contents/Hashtag/List/removeTag', tag)
+    }
+    const deleteTag = (tag: LocalTag) => {
+      store.dispatch(`${space}/${ACTION_TYPES.REMOVE_TAG}`, tag)
+    }
+
+    return {
+      tags,
+      openTimeline,
+      deleteTag
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

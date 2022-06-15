@@ -5,7 +5,7 @@ import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
 
-const win = (window as any) as MyWindow
+const win = window as any as MyWindow
 
 export type NotificationsState = {
   lazyLoading: boolean
@@ -107,8 +107,17 @@ const mutations: MutationTree<NotificationsState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_NOTIFICATIONS: 'fetchNotifications',
+  LAZY_FETCH_NOTIFICATIONS: 'lazyFetchNotifications',
+  FETCH_NOTIFICATIONS_SINCE: 'fetchNotificationsSince',
+  RESET_BADGE: 'resetBadge',
+  GET_MARKER: 'getMarker',
+  SAVE_MARKER: 'saveMarker'
+}
+
 const actions: ActionTree<NotificationsState, RootState> = {
-  fetchNotifications: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Notification>> => {
+  [ACTION_TYPES.FETCH_NOTIFICATIONS]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Notification>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -135,7 +144,8 @@ const actions: ActionTree<NotificationsState, RootState> = {
           // If the number of unread statuses is less than 30, max_id is necessary, but it is enough to reject duplicated statuses.
           // So we do it in mutation.
           max_id: null,
-          id: 'loading-card'
+          id: 'loading-card',
+          uri: 'loading-card'
         }
         let notifications: Array<Entity.Notification | LoadingCard> = [card]
         const res = await client.getNotifications({ limit: 30, max_id: nextResponse.data[0].id })
@@ -149,7 +159,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_NOTIFICATIONS, res.data)
     return res.data
   },
-  lazyFetchNotifications: async (
+  [ACTION_TYPES.LAZY_FETCH_NOTIFICATIONS]: async (
     { state, commit, rootState },
     lastNotification: Entity.Notification
   ): Promise<Array<Entity.Notification> | null> => {
@@ -173,7 +183,10 @@ const actions: ActionTree<NotificationsState, RootState> = {
         commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
       })
   },
-  fetchNotificationsSince: async ({ state, rootState, commit }, since_id: string): Promise<Array<Entity.Notification> | null> => {
+  [ACTION_TYPES.FETCH_NOTIFICATIONS_SINCE]: async (
+    { state, rootState, commit },
+    since_id: string
+  ): Promise<Array<Entity.Notification> | null> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -203,7 +216,8 @@ const actions: ActionTree<NotificationsState, RootState> = {
         type: 'middle-load',
         since_id: res.data[0].id,
         max_id: maxID,
-        id: 'loading-card'
+        id: 'loading-card',
+        uri: 'loading-card'
       }
       let notifications: Array<Entity.Notification | LoadingCard> = [card]
       notifications = notifications.concat(res.data)
@@ -213,10 +227,10 @@ const actions: ActionTree<NotificationsState, RootState> = {
     }
     return res.data
   },
-  resetBadge: () => {
+  [ACTION_TYPES.RESET_BADGE]: () => {
     win.ipcRenderer.send('reset-badge')
   },
-  getMarker: async ({ rootState }): Promise<LocalMarker | null> => {
+  [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<LocalMarker | null> => {
     if (!rootState.TimelineSpace.timelineSetting.useMarker.notifications) {
       return null
     }
@@ -242,7 +256,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
     const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-notifications-marker', rootState.TimelineSpace.account._id)
     return localMarker
   },
-  saveMarker: async ({ state, rootState }) => {
+  [ACTION_TYPES.SAVE_MARKER]: async ({ state, rootState }) => {
     const notifications = state.notifications
     if (notifications.length === 0 || notifications[0].id === 'loading-card') {
       return

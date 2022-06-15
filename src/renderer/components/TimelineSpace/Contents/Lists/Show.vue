@@ -29,259 +29,248 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
+<script lang="ts">
+import { defineComponent, toRefs, ref, computed, onMounted, onBeforeUpdate, watch, onBeforeUnmount, onUnmounted } from 'vue'
 import moment from 'moment'
-import Toot from '~/src/renderer/components/organisms/Toot'
-import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { EventEmitter } from '~/src/renderer/components/event'
-import { ScrollPosition } from '~/src/renderer/components/utils/scroll'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import Toot from '@/components/organisms/Toot.vue'
+import { EventEmitter } from '@/components/event'
+import { ScrollPosition } from '@/components/utils/scroll'
+import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
+import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Show'
+import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 
-export default {
-  data() {
-    return {
-      focusedId: null,
-      scrollPosition: null,
-      observer: null,
-      scrollTime: null,
-      resizeTime: null
-    }
-  },
+export default defineComponent({
   name: 'list',
   props: ['list_id'],
   components: { Toot },
-  mixins: [reloadable],
-  computed: {
-    ...mapState({
-      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
-      backgroundColor: state => state.App.theme.background_color,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      timeline: state => state.TimelineSpace.Contents.Lists.Show.timeline,
-      lazyLoading: state => state.TimelineSpace.Contents.Lists.Show.lazyLoading,
-      heading: state => state.TimelineSpace.Contents.Lists.Show.heading,
-      scrolling: state => state.TimelineSpace.Contents.Lists.Show.scrolling
-    }),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    shortcutEnabled: function () {
-      if (this.modalOpened) {
-        return false
+  setup(props) {
+    const space = 'TimelineSpace/Contents/Lists/Show'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const { list_id } = toRefs(props)
+    const focusedId = ref<string | null>(null)
+    const scrollPosition = ref<ScrollPosition | null>(null)
+    const observer = ref<ResizeObserver | null>(null)
+    const scrollTime = ref<moment.Moment | null>(null)
+    const resizeTime = ref<moment.Moment | null>(null)
+    const scroller = ref<any>(null)
+
+    const timeline = computed(() => store.state.TimelineSpace.Contents.Lists.Show.timeline)
+    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Lists.Show.lazyLoading)
+    const heading = computed(() => store.state.TimelineSpace.Contents.Lists.Show.heading)
+    const scrolling = computed(() => store.state.TimelineSpace.Contents.Lists.Show.scrolling)
+    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
+    const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
+    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
+
+    onMounted(() => {
+      document.getElementById('scroller')?.addEventListener('scroll', onScroll)
+      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
+      load().finally(() => {
+        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
+      })
+
+      const el = document.getElementById('scroller')
+      if (el) {
+        scrollPosition.value = new ScrollPosition(el)
+        scrollPosition.value.prepare()
+
+        observer.value = new ResizeObserver(() => {
+          if (scrollPosition.value && !heading.value && !lazyLoading.value && !scrolling.value) {
+            resizeTime.value = moment()
+            scrollPosition.value?.restore()
+          }
+        })
+
+        const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
+        observer.value?.observe(scrollWrapper)
       }
-      if (!this.focusedId) {
-        return true
-      }
-      // Sometimes toots are deleted, so perhaps focused toot don't exist.
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
-      return currentIndex === -1
-    }
-  },
-  created() {
-    this.$store.commit('TimelineSpace/Contents/changeLoading', true)
-    this.load().finally(() => {
-      this.$store.commit('TimelineSpace/Contents/changeLoading', false)
     })
-  },
-  mounted() {
-    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
-    EventEmitter.on('focus-timeline', () => {
-      // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
-      const previousFocusedId = this.focusedId
-      this.focusedId = 0
-      this.$nextTick(function () {
-        this.focusedId = previousFocusedId
+    onBeforeUpdate(() => {
+      if (scrollPosition.value) {
+        scrollPosition.value.prepare()
+      }
+    })
+    watch(list_id, () => {
+      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
+      load().finally(() => {
+        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
       })
     })
-    const el = document.getElementById('scroller')
-    this.scrollPosition = new ScrollPosition(el)
-    this.scrollPosition.prepare()
-
-    this.observer = new ResizeObserver(() => {
-      if (this.scrollPosition && !this.heading && !this.lazyLoading && !this.scrolling) {
-        this.resizeTime = moment()
-        this.scrollPosition.restore()
-      }
-    })
-
-    const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
-    this.observer.observe(scrollWrapper)
-  },
-  beforeUpdate() {
-    if (this.scrollPosition) {
-      this.scrollPosition.prepare()
-    }
-  },
-  watch: {
-    list_id: function () {
-      this.$store.commit('TimelineSpace/Contents/changeLoading', true)
-      this.load().finally(() => {
-        this.$store.commit('TimelineSpace/Contents/changeLoading', false)
-      })
-    },
-    startReload: function (newState, oldState) {
-      if (!oldState && newState) {
-        this.reload().finally(() => {
-          this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
+    watch(startReload, (newVal, oldVal) => {
+      if (!oldVal && newVal) {
+        reload().finally(() => {
+          store.commit(`TimelineSpace/HeaderMenu/${HEADER_MUTATION.CHANGE_RELOAD}`, false)
         })
       }
-    },
-    focusedId: function (newState, _oldState) {
-      if (newState && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', false)
-      } else if (newState === null && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
+    })
+    onBeforeUnmount(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
+      observer.value?.disconnect()
+    })
+    onUnmounted(() => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+      store.commit(`${space}/${MUTATION_TYPES.ARCHIVE_TIMELINE}`)
+      store.commit(`${space}/${MUTATION_TYPES.CLEAR_TIMELINE}`)
+      const el = document.getElementById('scroller')
+      if (el !== undefined && el !== null) {
+        el.removeEventListener('scroll', onScroll)
+        el.scrollTop = 0
       }
-    }
-  },
-  beforeUnmount() {
-    this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
-    this.observer.disconnect()
-  },
-  unmounted() {
-    this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
-    this.$store.commit('TimelineSpace/Contents/Lists/Show/archiveTimeline')
-    this.$store.commit('TimelineSpace/Contents/Lists/Show/clearTimeline')
-    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
-      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scroller').scrollTop = 0
-    }
-  },
-  methods: {
-    async load() {
-      await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
+    })
+
+    const load = async () => {
+      await store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
       try {
-        await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', this.list_id)
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_TIMELINE}`, list_id.value)
       } catch (err) {
-        this.$message({
-          message: this.$t('message.timeline_fetch_error'),
+        ElMessage({
+          message: i18n.t('message.timeline_fetch_error'),
           type: 'error'
         })
       }
-      this.$store.dispatch('TimelineSpace/Contents/Lists/Show/startStreaming', this.list_id).catch(() => {
-        this.$message({
-          message: this.$t('message.start_streaming_error'),
+      store.dispatch(`${space}/${ACTION_TYPES.START_STREAMING}`, list_id.value).catch(() => {
+        ElMessage({
+          message: i18n.t('message.start_streaming_error'),
           type: 'error'
         })
       })
       return 'started'
-    },
-    updateToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Lists/Show/updateToot', message)
-    },
-    deleteToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Lists/Show/deleteToot', message.id)
-    },
-    onScroll(event) {
-      if (moment().diff(this.resizeTime) < 500) {
+    }
+    const onScroll = (event: Event) => {
+      if (moment().diff(resizeTime.value) < 500) {
         return
       }
-      this.scrollTime = moment()
-      if (!this.scrolling) {
-        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeScrolling', true)
+      scrollTime.value = moment()
+      if (!scrolling.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
       }
 
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
-        !this.lazyloading
+        (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
+          document.getElementById('scroller')!.scrollHeight - 10 &&
+        !lazyLoading
       ) {
-        this.$store
-          .dispatch('TimelineSpace/Contents/Lists/Show/lazyFetchTimeline', {
-            list_id: this.list_id,
-            status: this.timeline[this.timeline.length - 1]
+        store
+          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
+            list_id: list_id.value,
+            status: timeline.value[timeline.value.length - 1]
           })
           .then(statuses => {
             if (statuses === null) {
               return
             }
             if (statuses.length > 0) {
-              this.$store.commit('TimelineSpace/Contents/Lists/Show/changeScrolling', true)
+              store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
               setTimeout(() => {
-                this.$store.commit('TimelineSpace/Contents/Lists/Show/changeScrolling', false)
+                store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
               }, 500)
             }
           })
           .catch(() => {
-            this.$message({
-              message: this.$t('message.timeline_fetch_error'),
+            ElMessage({
+              message: i18n.t('message.timeline_fetch_error'),
               type: 'error'
             })
           })
       }
 
-      if (event.target.scrollTop > 10 && this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', false)
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeHeading', true)
+      if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+      } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
       }
 
       setTimeout(() => {
         const now = moment()
-        if (now.diff(this.scrollTime) >= 150) {
-          this.scrollTime = null
-          this.$store.commit('TimelineSpace/Contents/Lists/Show/changeScrolling', false)
+        if (now.diff(scrollTime.value) >= 150) {
+          scrollTime.value = null
+          store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
         }
       }, 150)
-    },
-    async reload() {
-      this.$store.commit('TimelineSpace/changeLoading', true)
+    }
+    const reload = async () => {
+      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
-        await this.reloadable()
-        await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/stopStreaming')
-        await this.$store.dispatch('TimelineSpace/Contents/Lists/Show/fetchTimeline', this.list_id).catch(() => {
-          this.$message({
-            message: this.$t('message.timeline_fetch_error'),
+        await store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_TIMELINE}`, list_id.value).catch(() => {
+          ElMessage({
+            message: i18n.t('message.timeline_fetch_error'),
             type: 'error'
           })
         })
-        this.$store.dispatch('TimelineSpace/Contents/Lists/Show/startStreaming', this.list_id).catch(() => {
-          this.$message({
-            message: this.$t('message.start_streaming_error'),
+        store.dispatch(`${space}/${ACTION_TYPES.START_STREAMING}`, list_id.value).catch(() => {
+          ElMessage({
+            message: i18n.t('message.start_streaming_error'),
             type: 'error'
           })
         })
       } finally {
-        this.$store.commit('TimelineSpace/changeLoading', false)
+        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
       }
-    },
-    upper() {
-      this.$refs.scroller.scrollToItem(0)
-      this.focusedId = null
-    },
-    focusNext() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
-      if (currentIndex === -1) {
-        this.focusedId = this.timeline[0].uri + this.timeline[0].id
-      } else if (currentIndex < this.timeline.length) {
-        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
+    }
+    const updateToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+    }
+    const deleteToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message.id)
+    }
+    const upper = () => {
+      scroller.value.scrollToItem(0)
+      focusedId.value = null
+    }
+    const focusNext = () => {
+      if (currentFocusedIndex.value === -1) {
+        focusedId.value = timeline.value[0].uri + timeline.value[0].id
+      } else if (currentFocusedIndex.value < timeline.value.length) {
+        focusedId.value = timeline.value[currentFocusedIndex.value + 1].uri + timeline.value[currentFocusedIndex.value + 1].id
       }
-    },
-    focusPrev() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
-      if (currentIndex === 0) {
-        this.focusedId = null
-      } else if (currentIndex > 0) {
-        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
+    }
+    const focusPrev = () => {
+      if (currentFocusedIndex.value === 0) {
+        focusedId.value = null
+      } else if (currentFocusedIndex.value > 0) {
+        focusedId.value = timeline.value[currentFocusedIndex.value - 1].uri + timeline.value[currentFocusedIndex.value - 1].id
       }
-    },
-    focusToot(message) {
-      this.focusedId = message.uri + message.id
-    },
-    focusSidebar() {
+    }
+    const focusToot = (message: Entity.Status) => {
+      focusedId.value = message.uri + message.id
+    }
+    const focusSidebar = () => {
       EventEmitter.emit('focus-sidebar')
-    },
-    handleKey(event) {
-      switch (event.srcKey) {
-        case 'next':
-          this.focusedId = this.timeline[0].uri + this.timeline[0].id
-          break
-      }
-    },
-    sizeChanged() {
-      this.$store.commit('TimelineSpace/Contents/Lists/Show/changeScrolling', true)
+    }
+    const sizeChanged = () => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
       setTimeout(() => {
-        this.$store.commit('TimelineSpace/Contents/Lists/Show/changeScrolling', false)
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
       }, 500)
     }
+
+    return {
+      scroller,
+      timeline,
+      focusedId,
+      modalOpened,
+      updateToot,
+      deleteToot,
+      focusNext,
+      focusPrev,
+      focusSidebar,
+      focusToot,
+      sizeChanged,
+      openSideBar,
+      heading,
+      upper
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

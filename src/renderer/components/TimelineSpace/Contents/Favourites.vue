@@ -28,164 +28,153 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
-import Toot from '~/src/renderer/components/organisms/Toot'
-import reloadable from '~/src/renderer/components/mixins/reloadable'
-import { EventEmitter } from '~/src/renderer/components/event'
+<script lang="ts">
+import { defineComponent, computed, ref, onMounted, onUnmounted, watch } from 'vue'
+import { useStore } from '@/store'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { Entity } from 'megalodon'
+import Toot from '@/components/organisms/Toot.vue'
+import { EventEmitter } from '@/components/event'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Favourites'
+import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
+import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
+import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 
-export default {
-  data() {
-    return {
-      heading: true,
-      focusedId: null
-    }
-  },
+export default defineComponent({
   name: 'favourites',
   components: { Toot },
-  mixins: [reloadable],
-  computed: {
-    ...mapState({
-      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
-      backgroundColor: state => state.App.theme.background_color,
-      startReload: state => state.TimelineSpace.HeaderMenu.reload,
-      account: state => state.TimelineSpace.account,
-      favourites: state => state.TimelineSpace.Contents.Favourites.favourites,
-      lazyLoading: state => state.TimelineSpace.Contents.Favourites.lazyLoading
-    }),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    shortcutEnabled: function () {
-      return !this.focusedId && !this.modalOpened
-    }
-  },
-  created() {
-    this.$store.commit('TimelineSpace/Contents/changeLoading', true)
-    this.$store
-      .dispatch('TimelineSpace/Contents/Favourites/fetchFavourites', this.account)
-      .catch(() => {
-        this.$message({
-          message: this.$t('message.favourite_fetch_error'),
-          type: 'error'
-        })
-      })
-      .finally(() => {
-        this.$store.commit('TimelineSpace/Contents/changeLoading', false)
-      })
-  },
-  mounted() {
-    document.getElementById('scroller').addEventListener('scroll', this.onScroll)
-    EventEmitter.on('focus-timeline', () => {
-      // If focusedId does not change, we have to refresh focusedId because Toot component watch change events.
-      const previousFocusedId = this.focusedId
-      this.focusedId = 0
-      this.$nextTick(function () {
-        this.focusedId = previousFocusedId
-      })
-    })
-  },
-  beforeUnmount() {
-    EventEmitter.off('focus-timeline')
-  },
-  unmounted() {
-    this.$store.commit('TimelineSpace/Contents/Favourites/updateFavourites', [])
-    if (document.getElementById('scroller') !== undefined && document.getElementById('scroller') !== null) {
-      document.getElementById('scroller').removeEventListener('scroll', this.onScroll)
-      document.getElementById('scroller').scrollTop = 0
-    }
-  },
-  watch: {
-    startReload: function (newState, oldState) {
-      if (!oldState && newState) {
-        this.reload().finally(() => {
-          this.$store.commit('TimelineSpace/HeaderMenu/changeReload', false)
-        })
-      }
-    },
-    focusedId: function (newState, _oldState) {
-      if (newState && this.heading) {
-        this.heading = false
-      } else if (newState === null && !this.heading) {
-        this.heading = true
-      }
-    }
-  },
-  methods: {
-    updateToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Favourites/updateToot', message)
-    },
-    deleteToot(message) {
-      this.$store.commit('TimelineSpace/Contents/Favourites/deleteToot', message)
-    },
-    onScroll(event) {
-      if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('scroller').scrollHeight - 10 &&
-        !this.lazyloading
-      ) {
-        this.$store
-          .dispatch('TimelineSpace/Contents/Favourites/lazyFetchFavourites', this.favourites[this.favourites.length - 1])
-          .catch(() => {
-            this.$message({
-              message: this.$t('message.favourite_fetch_error'),
-              type: 'error'
-            })
+  setup() {
+    const space = 'TimelineSpace/Contents/Favourites'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const heading = ref<boolean>(false)
+    const focusedId = ref<string | null>(null)
+    const scroller = ref<any>()
+
+    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
+    const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
+    const account = computed(() => store.state.TimelineSpace.account)
+    const favourites = computed(() => store.state.TimelineSpace.Contents.Favourites.favourites)
+    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Favourites.lazyLoading)
+    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const currentFocusedIndex = computed(() => favourites.value.findIndex(status => focusedId.value === status.uri))
+
+    onMounted(() => {
+      document.getElementById('scroller')?.addEventListener('scroll', onScroll)
+
+      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
+      store
+        .dispatch(`${space}/${ACTION_TYPES.FETCH_FAVOURITES}`, account.value)
+        .catch(() => {
+          ElMessage({
+            message: i18n.t('message.favourite_fetch_error'),
+            type: 'error'
           })
+        })
+        .finally(() => {
+          store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
+        })
+    })
+
+    onUnmounted(() => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_FAVOURITES}`, [])
+      const el = document.getElementById('scroller')
+      if (el !== undefined && el !== null) {
+        el.removeEventListener('scroll', onScroll)
+        el.scrollTop = 0
+      }
+    })
+    watch(startReload, (newVal, oldVal) => {
+      if (!oldVal && newVal) {
+        reload().finally(() => {
+          store.commit(`TimelineSpace/HeaderMenu/${HEADER_MUTATION.CHANGE_RELOAD}`, false)
+        })
+      }
+    })
+
+    const onScroll = (event: Event) => {
+      if (
+        (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
+          document.getElementById('scroller')!.scrollHeight - 10 &&
+        !lazyLoading.value
+      ) {
+        store.dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_FAVOURITES}`, favourites.value[favourites.value.length - 1]).catch(() => {
+          ElMessage({
+            message: i18n.t('message.favourite_fetch_error'),
+            type: 'error'
+          })
+        })
       }
       // for upper
-      if (event.target.scrollTop > 10 && this.heading) {
-        this.heading = false
-      } else if (event.target.scrollTop <= 10 && !this.heading) {
-        this.heading = true
+      if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
+        heading.value = false
+      } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
+        heading.value = true
       }
-    },
-    async reload() {
-      this.$store.commit('TimelineSpace/changeLoading', true)
+    }
+    const updateToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+    }
+    const deleteToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message)
+    }
+    const reload = async () => {
+      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
-        const account = await this.reloadable()
-        await this.$store.dispatch('TimelineSpace/Contents/Favourites/fetchFavourites', account).catch(() => {
-          this.$message({
-            message: this.$t('message.favourite_fetch_error'),
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FAVOURITES}`, account.value).catch(() => {
+          ElMessage({
+            message: i18n.t('message.favourite_fetch_error'),
             type: 'error'
           })
         })
       } finally {
-        this.$store.commit('TimelineSpace/changeLoading', false)
-      }
-    },
-    upper() {
-      this.$refs.scroller.scrollToItem(0)
-      this.focusedId = null
-    },
-    focusNext() {
-      const currentIndex = this.favourites.findIndex(toot => this.focusedId === toot.uri)
-      if (currentIndex === -1) {
-        this.focusedId = this.favourites[0].uri
-      } else if (currentIndex < this.favourites.length) {
-        this.focusedId = this.favourites[currentIndex + 1].uri
-      }
-    },
-    focusPrev() {
-      const currentIndex = this.favourites.findIndex(toot => this.focusedId === toot.uri)
-      if (currentIndex === 0) {
-        this.focusedId = null
-      } else if (currentIndex > 0) {
-        this.focusedId = this.favourites[currentIndex - 1].uri
-      }
-    },
-    focusToot(message) {
-      this.focusedId = message.id
-    },
-    focusSidebar() {
-      EventEmitter.emit('focus-sidebar')
-    },
-    handleKey(event) {
-      switch (event.srcKey) {
-        case 'next':
-          this.focusedId = this.favourites[0].uri
-          break
+        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
       }
     }
+    const upper = () => {
+      scroller.value.scrollToItem(0)
+      focusedId.value = null
+    }
+    const focusNext = () => {
+      if (currentFocusedIndex.value === -1) {
+        focusedId.value = favourites.value[0].uri
+      } else if (currentFocusedIndex.value < favourites.value.length) {
+        focusedId.value = favourites.value[currentFocusedIndex.value + 1].uri
+      }
+    }
+    const focusPrev = () => {
+      if (currentFocusedIndex.value === 0) {
+        focusedId.value = null
+      } else if (currentFocusedIndex.value > 0) {
+        focusedId.value = favourites.value[currentFocusedIndex.value - 1].uri
+      }
+    }
+    const focusToot = (message: Entity.Status) => {
+      focusedId.value = message.id
+    }
+    const focusSidebar = () => {
+      EventEmitter.emit('focus-sidebar')
+    }
+
+    return {
+      favourites,
+      scroller,
+      focusedId,
+      modalOpened,
+      updateToot,
+      deleteToot,
+      focusNext,
+      focusPrev,
+      focusSidebar,
+      focusToot,
+      openSideBar,
+      heading,
+      upper
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
