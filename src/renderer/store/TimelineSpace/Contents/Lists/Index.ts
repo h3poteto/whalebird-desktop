@@ -20,8 +20,14 @@ const mutations: MutationTree<IndexState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_LISTS: 'fetchLists',
+  CREATE_LIST: 'createList',
+  DELETE_LIST: 'deleteList'
+}
+
 const actions: ActionTree<IndexState, RootState> = {
-  fetchLists: async ({ commit, rootState }): Promise<Array<Entity.List>> => {
+  [ACTION_TYPES.FETCH_LISTS]: async ({ commit, rootState }): Promise<Array<Entity.List>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -32,7 +38,7 @@ const actions: ActionTree<IndexState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_LISTS, res.data)
     return res.data
   },
-  createList: async ({ rootState }, title: string): Promise<Entity.List> => {
+  [ACTION_TYPES.CREATE_LIST]: async ({ rootState }, title: string): Promise<Entity.List> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -42,7 +48,7 @@ const actions: ActionTree<IndexState, RootState> = {
     const res = await client.createList(title)
     return res.data
   },
-  deleteList: async ({ dispatch, rootState }, list: Entity.List) => {
+  [ACTION_TYPES.DELETE_LIST]: async ({ dispatch, rootState }, list: Entity.List) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -50,7 +56,7 @@ const actions: ActionTree<IndexState, RootState> = {
       rootState.App.userAgent
     )
     const res = await client.deleteList(list.id)
-    dispatch('fetchLists')
+    dispatch(ACTION_TYPES.FETCH_LISTS)
     return res.data
   }
 }

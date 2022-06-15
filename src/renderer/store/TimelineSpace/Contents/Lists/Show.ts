@@ -88,8 +88,15 @@ const mutations: MutationTree<ShowState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_TIMELINE: 'fetchTimeline',
+  START_STREAMING: 'startStreaming',
+  STOP_STREAMING: 'stopStreaming',
+  LAZY_FETCH_TIMELINE: 'lazyFetchTimeline'
+}
+
 const actions: ActionTree<ShowState, RootState> = {
-  fetchTimeline: async ({ commit, rootState }, listID: string): Promise<Array<Entity.Status>> => {
+  [ACTION_TYPES.FETCH_TIMELINE]: async ({ commit, rootState }, listID: string): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -100,7 +107,7 @@ const actions: ActionTree<ShowState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
   },
-  startStreaming: ({ state, commit, rootState }, listID: string) => {
+  [ACTION_TYPES.START_STREAMING]: ({ state, commit, rootState }, listID: string) => {
     win.ipcRenderer.on('update-start-list-streaming', (_, update: Entity.Status) => {
       commit(MUTATION_TYPES.APPEND_TIMELINE, update)
       if (state.heading && Math.random() > 0.8) {
@@ -122,7 +129,7 @@ const actions: ActionTree<ShowState, RootState> = {
       })
     })
   },
-  stopStreaming: () => {
+  [ACTION_TYPES.STOP_STREAMING]: () => {
     return new Promise(resolve => {
       win.ipcRenderer.removeAllListeners('error-start-list-streaming')
       win.ipcRenderer.removeAllListeners('update-start-list-streaming')
@@ -131,7 +138,10 @@ const actions: ActionTree<ShowState, RootState> = {
       resolve(null)
     })
   },
-  lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPositionWithList): Promise<Array<Entity.Status> | null> => {
+  [ACTION_TYPES.LAZY_FETCH_TIMELINE]: async (
+    { state, commit, rootState },
+    loadPosition: LoadPositionWithList
+  ): Promise<Array<Entity.Status> | null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }

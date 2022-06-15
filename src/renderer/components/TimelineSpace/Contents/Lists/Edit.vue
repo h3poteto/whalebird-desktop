@@ -6,83 +6,82 @@
       </el-button>
     </div>
     <template v-for="account in members">
-      <user
-        :user="account"
-        :remove="true"
-        @removeAccount="removeAccount"
-      ></user>
+      <user :user="account" :remove="true" @removeAccount="removeAccount"></user>
     </template>
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import User from '~/src/renderer/components/molecules/User'
+<script lang="ts">
+import { computed, defineComponent, onMounted, toRefs } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import User from '@/components/molecules/User.vue'
+import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Edit'
+import {
+  MUTATION_TYPES as ADD_LIST_MEMBER_MUTATION,
+  ACTION_TYPES as ADD_LIST_MEMBER_ACTION
+} from '@/store/TimelineSpace/Modals/AddListMember'
 
-export default {
+export default defineComponent({
   name: 'edit-list',
   props: ['list_id'],
   components: { User },
-  computed: {
-    ...mapState({
-      members: (state) => state.TimelineSpace.Contents.Lists.Edit.members,
-    }),
-  },
-  created() {
-    this.init()
-  },
-  methods: {
-    async init() {
-      this.$store.commit('TimelineSpace/Contents/changeLoading', true)
+  setup(props) {
+    const { list_id } = toRefs(props)
+    const space = 'TimelineSpace/Contents/Lists/Edit'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const members = computed(() => store.state.TimelineSpace.Contents.Lists.Edit.members)
+
+    onMounted(async () => {
+      await init()
+    })
+    const init = async () => {
+      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
       try {
-        await this.$store.dispatch(
-          'TimelineSpace/Contents/Lists/Edit/fetchMembers',
-          this.list_id
-        )
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_MEMBERS}`, list_id.value)
       } catch (err) {
-        this.$message({
-          message: this.$t('message.members_fetch_error'),
-          type: 'error',
+        ElMessage({
+          message: i18n.t('message.members_fetch_error'),
+          type: 'error'
         })
       } finally {
-        this.$store.commit('TimelineSpace/Contents/changeLoading', false)
+        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
       }
-    },
-    async removeAccount(account) {
-      this.$store.commit('TimelineSpace/Contents/changeLoading', true)
+    }
+    const removeAccount = async (account: Entity.Account) => {
+      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
       try {
-        await this.$store.dispatch(
-          'TimelineSpace/Contents/Lists/Edit/removeAccount',
-          {
-            account: account,
-            listId: this.list_id,
-          }
-        )
-        await this.$store.dispatch(
-          'TimelineSpace/Contents/Lists/Edit/fetchMembers',
-          this.list_id
-        )
+        await store.dispatch(`${space}/${ACTION_TYPES.REMOVE_ACCOUNT}`, {
+          account: account,
+          listId: list_id.value
+        })
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_MEMBERS}`, list_id.value)
       } catch (err) {
-        this.$message({
-          message: this.$t('message.remove_user_error'),
-          type: 'error',
+        ElMessage({
+          message: i18n.t('message.remove_user_error'),
+          type: 'error'
         })
       } finally {
-        this.$store.commit('TimelineSpace/Contents/changeLoading', false)
+        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
       }
-    },
-    addAccount() {
-      this.$store.commit(
-        'TimelineSpace/Modals/AddListMember/setListId',
-        this.list_id
-      )
-      this.$store.dispatch(
-        'TimelineSpace/Modals/AddListMember/changeModal',
-        true
-      )
-    },
-  },
-}
+    }
+    const addAccount = () => {
+      store.commit(`TimelineSpace/Modals/AddListMember/${ADD_LIST_MEMBER_MUTATION.SET_LIST_ID}`, list_id.value)
+      store.dispatch(`TimelineSpace/Modals/AddListMember/${ADD_LIST_MEMBER_ACTION.CHANGE_MODAL}`, true)
+    }
+
+    return {
+      addAccount,
+      members,
+      removeAccount
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
