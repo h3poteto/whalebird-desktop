@@ -167,9 +167,9 @@
       "timeline": {
         "title": "Fil d'actualité",
         "description": "Customisez l'apparence du fil d'actualité",
-        "cw": "Toujours ignorer les avertissements relatifs au contenu",
-        "nsfw": "Toujours ignorer le contenu NSFW",
-        "hideAllAttachments": "Cacher tous les médias"
+        "cw": "Always expand posts marked with contents warnings",
+        "nsfw": "Always show all media",
+        "hideAllAttachments": "Always hide all media"
       },
       "other": {
         "title": "Autres options",
