@@ -109,7 +109,7 @@
     "vue": "^3.2.31",
     "vue-popperjs": "^2.3.0",
     "vue-resize": "^2.0.0-alpha.1",
-    "vue-router": "^4.0.14",
+    "vue-router": "^4.0.16",
     "vue-virtual-scroller": "2.0.0-alpha.1",
     "vue3-i18next": "^0.2.0",
     "vuex": "^4.0.2",
