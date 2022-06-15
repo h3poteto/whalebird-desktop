@@ -167,9 +167,9 @@
       "timeline": {
         "title": "Loidhne-ama",
         "description": "Gnàthaich an sealladh air na loidhnichean-ama agad.",
-        "cw": "Leig seachad rabhaidhean susbainte an-còmhnaidh",
-        "nsfw": "Leig seachad rabhadh inbhich air meadhanan an-còmhnaidh",
-        "hideAllAttachments": "Cuir a h-uile meadhan am falach"
+        "cw": "Always expand posts marked with contents warnings",
+        "nsfw": "Always show all media",
+        "hideAllAttachments": "Always hide all media"
       },
       "other": {
         "title": "Roghainnean eile",

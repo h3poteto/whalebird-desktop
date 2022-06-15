@@ -167,9 +167,9 @@
       "timeline": {
         "title": "Zeitleiste",
         "description": "Passen Sie die Ansicht in Ihren Zeitleisten an.",
-        "cw": "Ignoriere immer Content Warnungen",
-        "nsfw": "Ignogiere immer NSFW Medien",
-        "hideAllAttachments": "Verstecke alle Medien"
+        "cw": "Always expand posts marked with contents warnings",
+        "nsfw": "Always show all media",
+        "hideAllAttachments": "Always hide all media"
       },
       "other": {
         "title": "Andere Optionen",

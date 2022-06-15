@@ -167,9 +167,9 @@
       "timeline": {
         "title": "Timeline",
         "description": "Customize view in your timelines.",
-        "cw": "Always ignore contents warnings",
-        "nsfw": "Always ignore NSFW of medias",
-        "hideAllAttachments": "සියලුම මාධ්‍ය සඟවන්න"
+        "cw": "Always expand posts marked with contents warnings",
+        "nsfw": "Always show all media",
+        "hideAllAttachments": "Always hide all media"
       },
       "other": {
         "title": "වෙනත් විකල්ප",

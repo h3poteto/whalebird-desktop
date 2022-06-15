@@ -167,9 +167,9 @@
       "timeline": {
         "title": "Ifili n uzmez",
         "description": "Customize view in your timelines.",
-        "cw": "Always ignore contents warnings",
-        "nsfw": "Nxxel abda tumayin n NSFW",
-        "hideAllAttachments": "Ffer isneɣmisen maṛṛa"
+        "cw": "Always expand posts marked with contents warnings",
+        "nsfw": "Always show all media",
+        "hideAllAttachments": "Always hide all media"
       },
       "other": {
         "title": "Tideɣrin yaḍnin",
