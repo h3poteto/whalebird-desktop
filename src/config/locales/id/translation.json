@@ -167,9 +167,9 @@
       "timeline": {
         "title": "Linimasa",
         "description": "Kustomisasi tampilan linimasa anda.",
-        "cw": "Selalu abaikan peringatan konten",
-        "nsfw": "Selalu abaikan media NSFW",
-        "hideAllAttachments": "Sembunyikan semua media"
+        "cw": "Always expand posts marked with contents warnings",
+        "nsfw": "Always show all media",
+        "hideAllAttachments": "Always hide all media"
       },
       "other": {
         "title": "Pilihan lainnya",
