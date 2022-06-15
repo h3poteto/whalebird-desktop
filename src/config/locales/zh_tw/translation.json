@@ -167,9 +167,9 @@
       "timeline": {
         "title": "時間軸",
         "description": "自訂時間軸外觀",
-        "cw": "永遠忽略內容警告",
-        "nsfw": "永遠忽略 NSFW 媒體標記",
-        "hideAllAttachments": "隱藏所有媒體"
+        "cw": "Always expand posts marked with contents warnings",
+        "nsfw": "Always show all media",
+        "hideAllAttachments": "Always hide all media"
       },
       "other": {
         "title": "其他選項",
