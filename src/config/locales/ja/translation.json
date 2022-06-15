@@ -167,9 +167,9 @@
       "timeline": {
         "title": "タイムライン",
         "description": "タイムラインをカスタマイズ",
-        "cw": "常にCWを表示する",
-        "nsfw": "常にNSFWを表示する",
-        "hideAllAttachments": "すべてのメディアを非表示にする"
+        "cw": "Always expand posts marked with contents warnings",
+        "nsfw": "Always show all media",
+        "hideAllAttachments": "Always hide all media"
       },
       "other": {
         "title": "その他",
