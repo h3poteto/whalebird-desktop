@@ -4,7 +4,7 @@
       "name": "Whalebird",
       "about": "Whalebirdについて",
       "preferences": "設定...",
-      "shortcuts": "Shortcut Keys",
+      "shortcuts": "ショートカットキー",
       "services": "サービス",
       "hide": "Whalebirdを隠す",
       "hide_others": "ほかを隠す",
@@ -117,7 +117,7 @@
         "title": "前回読んだ位置からタイムラインを読み込む",
         "home": "ホーム",
         "notifications": "通知",
-        "mentions": "Mentions"
+        "mentions": "返信"
       }
     },
     "filters": {
@@ -167,9 +167,9 @@
       "timeline": {
         "title": "タイムライン",
         "description": "タイムラインをカスタマイズ",
-        "cw": "Always expand posts marked with contents warnings",
-        "nsfw": "Always show all media",
-        "hideAllAttachments": "Always hide all media"
+        "cw": "閲覧注意の投稿を常に展開する",
+        "nsfw": "すべてのメディアを常に表示する",
+        "hideAllAttachments": "全てのメディアを常に隠す"
       },
       "other": {
         "title": "その他",
