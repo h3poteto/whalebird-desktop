@@ -6,46 +6,59 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import User from '@/components/molecules/User'
+<script lang="ts">
+import { defineComponent, computed, onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import User from '@/components/molecules/User.vue'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/FollowRequests'
 
-export default {
+export default defineComponent({
   name: 'folllow-requests',
   components: { User },
-  computed: {
-    ...mapState('TimelineSpace/Contents/FollowRequests', {
-      requests: state => state.requests
+  setup() {
+    const space = 'TimelineSpace/Contents/FollowRequests'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const requests = computed(() => store.state.TimelineSpace.Contents.FollowRequests.requests)
+
+    onMounted(async () => {
+      await initialize()
     })
-  },
-  async mounted() {
-    await this.initialize()
-  },
-  methods: {
-    async initialize() {
-      await this.$store.dispatch('TimelineSpace/Contents/FollowRequests/fetchRequests').catch(_ => {
-        this.$message({
-          message: this.$t('message.timeline_fetch_error'),
-          type: 'error'
-        })
-      })
-    },
-    accept(account) {
-      this.$store.dispatch('TimelineSpace/Contents/FollowRequests/acceptRequest', account).catch(_ => {
-        this.$message({
-          message: this.$t('message.follow_request_accept_error'),
-          type: 'error'
-        })
-      })
-    },
-    reject(account) {
-      this.$store.dispatch('TimelineSpace/Contents/FollowRequests/rejectRequest', account).catch(_ => {
-        this.$message({
-          message: this.$t('message.follow_request_reject_error'),
+
+    const initialize = async () => {
+      await store.dispatch(`${space}/${ACTION_TYPES.FETCH_REQUESTS}`).catch(_ => {
+        ElMessage({
+          message: i18n.t('message.timeline_fetch_error'),
           type: 'error'
         })
       })
     }
+    const accept = (account: Entity.Account) => {
+      store.dispatch(`${space}/${ACTION_TYPES.ACCEPT_REQUEST}`, account).catch(_ => {
+        ElMessage({
+          message: i18n.t('message.follow_request_accept_error'),
+          type: 'error'
+        })
+      })
+    }
+    const reject = (account: Entity.Account) => {
+      store.dispatch(`${space}/${ACTION_TYPES.REJECT_REQUEST}`, account).catch(_ => {
+        ElMessage({
+          message: i18n.t('message.follow_request_reject_error'),
+          type: 'error'
+        })
+      })
+    }
+
+    return {
+      requests,
+      accept,
+      reject
+    }
   }
-}
+})
 </script>
