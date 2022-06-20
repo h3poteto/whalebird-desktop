@@ -87,7 +87,7 @@
     "electron-json-storage": "^4.5.0",
     "electron-log": "^4.4.6",
     "electron-window-state": "^5.0.3",
-    "element-plus": "^2.2.5",
+    "element-plus": "^2.2.6",
     "emoji-mart-vue-fast": "^10.2.2",
     "i18next": "^21.6.16",
     "lodash": "^4.17.21",
