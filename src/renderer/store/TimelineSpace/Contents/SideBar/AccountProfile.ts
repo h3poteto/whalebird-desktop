@@ -1,5 +1,5 @@
 import generator, { Entity } from 'megalodon'
-import Timeline, { TimelineState } from './AccountProfile/Timeline'
+import Timeline, { TimelineModuleState } from './AccountProfile/Timeline'
 import Follows, { FollowsState } from './AccountProfile/Follows'
 import Followers, { FollowersState } from './AccountProfile/Followers'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
@@ -26,7 +26,7 @@ export type AccountProfileState = {
 type AccountProfileModule = {
   Followers: FollowersState
   Follows: FollowsState
-  Timeline: TimelineState
+  Timeline: TimelineModuleState
 }
 
 export type AccountProfileModuleState = AccountProfileModule & AccountProfileState
