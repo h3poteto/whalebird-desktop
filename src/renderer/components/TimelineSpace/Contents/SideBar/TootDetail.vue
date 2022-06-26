@@ -49,112 +49,124 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
-import Toot from '~/src/renderer/components/organisms/Toot'
-import { EventEmitter } from '~/src/renderer/components/event'
+<script lang="ts">
+import { defineComponent, ref, computed, onMounted, watch, onBeforeUnmount } from 'vue'
+import { ElMessage } from 'element-plus'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import { useI18next } from 'vue3-i18next'
+import Toot from '@/components/organisms/Toot.vue'
+import { EventEmitter } from '@/components/event'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/SideBar/TootDetail'
 
-export default {
+export default defineComponent({
   name: 'toot-detail',
   components: { Toot },
-  data() {
-    return {
-      focusedId: null
-    }
-  },
-  computed: {
-    ...mapState('TimelineSpace/Contents/SideBar/TootDetail', {
-      message: state => state.message,
-      ancestors: state => state.ancestors,
-      descendants: state => state.descendants,
-      timeline: state => state.ancestors.concat([state.message]).concat(state.descendants)
-    }),
-    ...mapGetters('TimelineSpace/Contents/SideBar/TootDetail', ['filters']),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened'])
-  },
-  created() {
-    this.load()
-  },
-  mounted() {
-    EventEmitter.on('focus-sidebar', () => {
-      this.focusedId = 0
-      this.$nextTick(function () {
-        this.focusedId = this.timeline[0].uri + this.timeline[0].id
-      })
+  setup() {
+    const space = 'TimelineSpace/Contents/SideBar/TootDetail'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const focusedId = ref<string | null>(null)
+    const original = ref<any>(null)
+
+    const message = computed(() => store.state.TimelineSpace.Contents.SideBar.TootDetail.message)
+    const ancestors = computed(() => store.state.TimelineSpace.Contents.SideBar.TootDetail.ancestors)
+    const descendants = computed(() => store.state.TimelineSpace.Contents.SideBar.TootDetail.descendants)
+    const timeline = computed(() => {
+      const mes = message.value ? [message.value] : []
+      return ancestors.value.concat(mes).concat(descendants.value)
     })
-  },
-  watch: {
-    message: function () {
-      this.load()
-    }
-  },
-  beforeUnmount() {
-    EventEmitter.emit('focus-timeline')
-    EventEmitter.off('focus-sidebar')
-  },
-  methods: {
-    originalMessage(message) {
-      if (message.reblog !== null) {
-        return message.reblog
-      } else {
-        return message
-      }
-    },
-    load() {
-      this.$store
-        .dispatch('TimelineSpace/Contents/SideBar/TootDetail/fetchToot', this.originalMessage(this.message))
+    const filters = computed(() => store.getters[`${space}/filters`])
+    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
+    const originalMessage = computed(() => (message.value?.reblog !== null ? message.value?.reblog : message.value))
+
+    onMounted(() => {
+      load()
+    })
+    watch(message, () => {
+      load()
+    })
+
+    onBeforeUnmount(() => {
+      EventEmitter.emit('focus-timeline')
+      EventEmitter.off('focus-sidebar')
+    })
+
+    const load = () => {
+      store
+        .dispatch(`${space}/${ACTION_TYPES.FETCH_TOOT}`, originalMessage.value)
         .then(() => {
-          const toot = this.$refs.original
+          const toot = original.value
           toot.scrollIntoView()
         })
         .catch(() => {
-          this.$message({
-            message: this.$t('message.toot_fetch_error'),
+          ElMessage({
+            message: i18n.t('message.toot_fetch_error'),
             type: 'error'
           })
         })
-    },
-    updateAncestorsToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateAncestorsToot', message)
-    },
-    deleteAncestorsToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteAncestorsToot', message)
-    },
-    updateToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateToot', message)
-    },
-    deleteToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteToot', message)
-    },
-    updateDescendantsToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/updateDescendantsToot', message)
-    },
-    deleteDescendantsToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/TootDetail/deleteDescendantsToot', message)
-    },
-    focusNext() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
-      if (currentIndex === -1) {
-        this.focusedId = this.timeline[0].uri + this.timeline[0].id
-      } else if (currentIndex < this.timeline.length - 1) {
-        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
+    }
+    const updateAncestorsToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_ANCESTORS_TOOT}`, message)
+    }
+    const deleteAncestorsToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.DELETE_ANCESTORS_TOOT}`, message)
+    }
+    const updateToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+    }
+    const deleteToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message)
+    }
+    const updateDescendantsToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_DESCENDANTS_TOOT}`, message)
+    }
+    const deleteDescendantsToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.DELETE_DESCENDANTS_TOOT}`, message)
+    }
+    const focusNext = () => {
+      if (currentFocusedIndex.value === -1) {
+        focusedId.value = timeline.value[0].uri + timeline.value[0].id
+      } else if (currentFocusedIndex.value < timeline.value.length - 1) {
+        focusedId.value = timeline.value[currentFocusedIndex.value + 1].uri + timeline.value[currentFocusedIndex.value + 1].id
       }
-    },
-    focusPrev() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
-      if (currentIndex > 0) {
-        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
+    }
+    const focusPrev = () => {
+      if (currentFocusedIndex.value > 0) {
+        focusedId.value = timeline.value[currentFocusedIndex.value - 1].uri + timeline.value[currentFocusedIndex.value - 1].id
       }
-    },
-    focusToot(message) {
-      this.focusedId = message.uri + message.id
-    },
-    focusTimeline() {
-      this.focusedId = 0
+    }
+    const focusToot = (message: Entity.Status) => {
+      focusedId.value = message.uri + message.id
+    }
+    const focusTimeline = () => {
+      focusedId.value = null
       EventEmitter.emit('focus-timeline')
     }
+
+    return {
+      original,
+      ancestors,
+      focusedId,
+      modalOpened,
+      filters,
+      updateAncestorsToot,
+      deleteAncestorsToot,
+      focusNext,
+      focusPrev,
+      focusTimeline,
+      focusToot,
+      message,
+      updateToot,
+      deleteToot,
+      descendants,
+      updateDescendantsToot,
+      deleteDescendantsToot
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
