@@ -23,12 +23,14 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import TootDetail from './SideBar/TootDetail'
-import AccountProfile from './SideBar/AccountProfile'
+<script lang="ts">
+import { defineComponent, ref, toRefs, computed, onBeforeUnmount } from 'vue'
+import TootDetail from './SideBar/TootDetail.vue'
+import AccountProfile from './SideBar/AccountProfile.vue'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/SideBar'
 
-export default {
+export default defineComponent({
   components: {
     TootDetail,
     AccountProfile
@@ -40,43 +42,42 @@ export default {
       default: false
     }
   },
-  data() {
+  setup(props) {
+    const space = 'TimelineSpace/Contents/SideBar'
+    const store = useStore()
+
+    const { overlaid } = toRefs(props)
+    const loading = ref<boolean>(false)
+
+    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
+    const component = computed(() => store.state.TimelineSpace.Contents.SideBar.component)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+    const shortcutEnabled = computed(() => !overlaid.value)
+
+    onBeforeUnmount(() => {
+      close()
+    })
+
+    const close = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.CLOSE}`)
+    }
+    const changeLoading = (value: boolean) => {
+      loading.value = value
+    }
+    const reload = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.RELOAD}`)
+    }
+
     return {
-      loading: false
-    }
-  },
-  computed: {
-    ...mapState({
-      openSideBar: state => state.TimelineSpace.Contents.SideBar.openSideBar,
-      component: state => state.TimelineSpace.Contents.SideBar.component,
-      backgroundColor: state => state.App.theme.background_color
-    }),
-    shortcutEnabled: function () {
-      return !this.overlaid
-    }
-  },
-  beforeUnmount() {
-    this.close()
-  },
-  methods: {
-    close() {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/close')
-    },
-    changeLoading(value) {
-      this.loading = value
-    },
-    reload() {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/reload')
-    },
-    handleKey(event) {
-      switch (event.srcKey) {
-        case 'close':
-          this.close()
-          break
-      }
+      openSideBar,
+      component,
+      backgroundColor,
+      shortcutEnabled,
+      changeLoading,
+      reload
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

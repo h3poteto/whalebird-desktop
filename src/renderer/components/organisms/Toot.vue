@@ -146,7 +146,7 @@
               @click="changeBookmark(originalMessage)"
               :class="originalMessage.bookmarked ? 'bookmarked' : 'bookmark'"
               type="text"
-              :text="$t('cards.toot.bookmark')"
+              :title="$t('cards.toot.bookmark')"
               :aria-label="$t('cards.toot.bookmark')"
               v-if="bookmarkSupported"
             >

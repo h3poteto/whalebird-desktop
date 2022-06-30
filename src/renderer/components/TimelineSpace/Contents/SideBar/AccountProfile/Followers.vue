@@ -60,7 +60,7 @@ export default defineComponent({
       store.commit(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_MUTATION.CHANGE_LOADING}`, true)
       try {
         const followers = await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FOLLOWERS}`, account.value)
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_RELATIONSHIPS}`, followers.value)
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_RELATIONSHIPS}`, followers)
       } catch (err) {
         ElMessage({
           message: i18n.t('message.followers_fetch_error'),
