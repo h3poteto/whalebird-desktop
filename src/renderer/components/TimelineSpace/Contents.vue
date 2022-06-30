@@ -25,51 +25,54 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
-import SideBar from './Contents/SideBar'
+<script lang="ts">
+import { defineComponent, ref, computed } from 'vue'
+import SideBar from './Contents/SideBar.vue'
+import { useStore } from '@/store'
 
-export default {
+export default defineComponent({
   name: 'contents',
-  data() {
-    return {
-      sidebarWidth: 360,
-      dragging: false
-    }
-  },
   components: {
     SideBar
   },
-  computed: {
-    ...mapState('TimelineSpace/Contents', {
-      loading: state => state.loading
-    }),
-    ...mapState('TimelineSpace/Contents/SideBar', {
-      openSideBar: state => state.openSideBar
-    }),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    customWidth: function () {
-      return {
-        '--current-sidebar-width': `${this.sidebarWidth}px`
+  setup() {
+    const store = useStore()
+
+    const sidebarWidth = ref<number>(360)
+    const dragging = ref<boolean>(false)
+    const contents = ref<HTMLElement | null>(null)
+
+    const loading = computed(() => store.state.TimelineSpace.Contents.loading)
+    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
+    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const customWidth = computed(() => ({ '--current-sidebar-width': `${sidebarWidth.value}px` }))
+
+    const resize = (event: MouseEvent) => {
+      if (dragging.value && event.clientX) {
+        sidebarWidth.value = window.innerWidth - event.clientX
       }
     }
-  },
-  methods: {
-    resize(event) {
-      if (this.dragging && event.clientX) {
-        this.sidebarWidth = window.innerWidth - event.clientX
-      }
-    },
-    dragStart() {
-      this.dragging = true
-      this.$refs.contents.style.setProperty('user-select', 'none')
-    },
-    dragEnd() {
-      this.dragging = false
-      this.$refs.contents.style.setProperty('user-select', 'text')
+    const dragStart = () => {
+      dragging.value = true
+      contents.value?.style.setProperty('user-select', 'none')
+    }
+    const dragEnd = () => {
+      dragging.value = false
+      contents.value?.style.setProperty('user-select', 'text')
+    }
+
+    return {
+      contents,
+      customWidth,
+      loading,
+      openSideBar,
+      modalOpened,
+      resize,
+      dragStart,
+      dragEnd
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
