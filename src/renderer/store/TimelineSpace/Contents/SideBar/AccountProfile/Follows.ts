@@ -43,8 +43,14 @@ const mutations: MutationTree<FollowsState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_FOLLOWS: 'fetchFollows',
+  LAZY_FETCH_FOLLOWS: 'lazyFetchFollows',
+  FETCH_RELATIONSHIPS: 'fetchRelationships'
+}
+
 const actions: ActionTree<FollowsState, RootState> = {
-  fetchFollows: async ({ commit, rootState }, account: Entity.Account) => {
+  [ACTION_TYPES.FETCH_FOLLOWS]: async ({ commit, rootState }, account: Entity.Account) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -67,7 +73,7 @@ const actions: ActionTree<FollowsState, RootState> = {
     }
     return res.data
   },
-  lazyFetchFollows: async ({ commit, state, rootState }, account: Entity.Account) => {
+  [ACTION_TYPES.LAZY_FETCH_FOLLOWS]: async ({ commit, state, rootState }, account: Entity.Account) => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
@@ -100,7 +106,7 @@ const actions: ActionTree<FollowsState, RootState> = {
     }
     return res.data
   },
-  fetchRelationships: async ({ commit, rootState }, accounts: Array<Entity.Account>) => {
+  [ACTION_TYPES.FETCH_RELATIONSHIPS]: async ({ commit, rootState }, accounts: Array<Entity.Account>) => {
     const ids = accounts.map(a => a.id)
     const client = generator(
       rootState.TimelineSpace.sns,
