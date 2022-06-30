@@ -40,120 +40,143 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
-import Toot from '~/src/renderer/components/organisms/Toot'
-import { EventEmitter } from '~/src/renderer/components/event'
+<script lang="ts">
+import { defineComponent, PropType, ref, computed, onMounted, onBeforeUnmount, onUnmounted, watch, toRefs } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import Toot from '@/components/organisms/Toot.vue'
+import { EventEmitter } from '@/components/event'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts'
 
-export default {
+export default defineComponent({
   name: 'posts',
-  props: ['account', 'buffer', 'filters'],
   components: { Toot },
-  data() {
-    return {
-      focusedId: null
+  props: {
+    account: {
+      type: Object as PropType<Entity.Account>,
+      required: true
+    },
+    buffer: {
+      type: Number,
+      required: true
+    },
+    filters: {
+      type: Object as PropType<Array<Entity.Filter>>,
+      required: true
     }
   },
-  computed: {
-    ...mapState('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts', {
-      timeline: state => state.timeline,
-      pinnedToots: state => state.pinnedToots,
-      lazyLoading: state => state.lazyLoading
-    }),
-    ...mapState('App', {
-      backgroundColor: state => state.theme.background_color
-    }),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened'])
-  },
-  created() {
-    this.load()
-  },
-  mounted() {
-    this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts/clearTimeline')
-    document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
-    EventEmitter.on('focus-sidebar', () => {
-      this.focusedId = 0
-      this.$nextTick(function () {
-        this.focusedId = this.timeline[0].uri + this.timeline[0].id
-      })
+  setup(props) {
+    const space = 'TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts'
+    const store = useStore()
+    const i18n = useI18next()
+    const { account } = toRefs(props)
+
+    const focusedId = ref<string | null>(null)
+
+    const timeline = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.Posts.timeline)
+    const pinnedToots = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.Posts.pinnedToots)
+    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.Timeline.Posts.lazyLoading)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
+
+    onMounted(() => {
+      load()
+      store.dispatch(`${space}/${ACTION_TYPES.CLEAR_TIMELINE}`)
+      document.getElementById('sidebar_scrollable')?.addEventListener('scroll', onScroll)
     })
-  },
-  beforeUnmount() {
-    EventEmitter.emit('focus-timeline')
-    EventEmitter.off('focus-sidebar')
-  },
-  unmounted() {
-    if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
-      document.getElementById('sidebar_scrollable').removeEventListener('scroll', this.onScroll)
-    }
-  },
-  watch: {
-    account: function (_newAccount, _oldAccount) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts/clearTimeline')
-      this.load()
-    }
-  },
-  methods: {
-    load() {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts/fetchTimeline', this.account).catch(() => {
-        this.$message({
-          message: this.$t('message.timeline_fetch_error'),
+    onBeforeUnmount(() => {
+      EventEmitter.emit('focus-timeline')
+      EventEmitter.off('focus-sidebar')
+    })
+    onUnmounted(() => {
+      const el = document.getElementById('sidebar_scrollable')
+      if (el !== undefined && el !== null) {
+        el.removeEventListener('scroll', onScroll)
+      }
+    })
+    watch(account, () => {
+      store.dispatch(`${space}/${ACTION_TYPES.CLEAR_TIMELINE}`)
+      load()
+    })
+
+    const load = () => {
+      store.dispatch(`${space}/${ACTION_TYPES.FETCH_TIMELINE}`, account.value).catch(() => {
+        ElMessage({
+          message: i18n.t('message.timeline_fetch_error'),
           type: 'error'
         })
       })
-    },
-    onScroll(event) {
+    }
+    const onScroll = (event: Event) => {
       // for lazyLoading
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('account_profile').clientHeight - 10 &&
-        !this.lazyloading
+        (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
+          document.getElementById('account_profile')!.clientHeight - 10 &&
+        !lazyLoading
       ) {
-        this.$store
-          .dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts/lazyFetchTimeline', {
-            account: this.account,
-            status: this.timeline[this.timeline.length - 1]
+        store
+          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
+            account: account.value,
+            status: timeline[timeline.value.length - 1]
           })
           .catch(err => {
             console.error(err)
-            this.$message({
-              message: this.$t('message.timeline_fetch_error'),
+            ElMessage({
+              message: i18n.t('message.timeline_fetch_error'),
               type: 'error'
             })
           })
       }
-    },
-    updatePinnedToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts/updatePinnedToot', message)
-    },
-    updateToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts/updateToot', message)
-    },
-    deleteToot(message) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/Timeline/Posts/deleteToot', message)
-    },
-    focusNext() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
-      if (currentIndex === -1) {
-        this.focusedId = this.timeline[0].uri + this.timeline[0].id
-      } else if (currentIndex < this.timeline.length - 1) {
-        this.focusedId = this.timeline[currentIndex + 1].uri + this.timeline[currentIndex + 1].id
+    }
+    const updatePinnedToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_PINNED_TOOT}`, message)
+    }
+    const updateToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+    }
+    const deleteToot = (message: Entity.Status) => {
+      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message)
+    }
+    const focusNext = () => {
+      if (currentFocusedIndex.value === -1) {
+        focusedId.value = timeline.value[0].uri + timeline.value[0].id
+      } else if (currentFocusedIndex.value < timeline.value.length - 1) {
+        focusedId.value = timeline.value[currentFocusedIndex.value + 1].uri + timeline.value[currentFocusedIndex.value + 1].id
       }
-    },
-    focusPrev() {
-      const currentIndex = this.timeline.findIndex(toot => this.focusedId === toot.uri + toot.id)
-      if (currentIndex > 0) {
-        this.focusedId = this.timeline[currentIndex - 1].uri + this.timeline[currentIndex - 1].id
+    }
+    const focusPrev = () => {
+      if (currentFocusedIndex.value > 0) {
+        focusedId.value = timeline.value[currentFocusedIndex.value - 1].uri + timeline.value[currentFocusedIndex.value - 1].id
       }
-    },
-    focusToot(message) {
-      this.focusedId = message.uri + message.id
-    },
-    focusTimeline() {
-      this.focusedId = 0
+    }
+    const focusToot = (message: Entity.Status) => {
+      focusedId.value = message.uri + message.id
+    }
+    const focusTimeline = () => {
+      focusedId.value = null
       EventEmitter.emit('focus-timeline')
     }
+
+    return {
+      pinnedToots,
+      focusedId,
+      modalOpened,
+      updatePinnedToot,
+      updateToot,
+      deleteToot,
+      focusNext,
+      focusPrev,
+      focusTimeline,
+      focusToot,
+      timeline,
+      lazyLoading,
+      backgroundColor
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

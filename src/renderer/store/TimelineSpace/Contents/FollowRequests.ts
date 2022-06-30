@@ -20,8 +20,14 @@ const mutations: MutationTree<FollowRequestsState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_REQUESTS: 'fetchRequests',
+  ACCEPT_REQUEST: 'acceptRequest',
+  REJECT_REQUEST: 'rejectRequest'
+}
+
 const actions: ActionTree<FollowRequestsState, RootState> = {
-  fetchRequests: async ({ commit, rootState }): Promise<Array<Entity.Account>> => {
+  [ACTION_TYPES.FETCH_REQUESTS]: async ({ commit, rootState }): Promise<Array<Entity.Account>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -32,7 +38,7 @@ const actions: ActionTree<FollowRequestsState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_REQUESTS, res.data)
     return res.data
   },
-  acceptRequest: async ({ dispatch, rootState }, user: Entity.Account) => {
+  [ACTION_TYPES.ACCEPT_REQUEST]: async ({ dispatch, rootState }, user: Entity.Account) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -44,7 +50,7 @@ const actions: ActionTree<FollowRequestsState, RootState> = {
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', rootState.TimelineSpace.account, { root: true })
     return res.data
   },
-  rejectRequest: async ({ dispatch, rootState }, user: Entity.Account) => {
+  [ACTION_TYPES.REJECT_REQUEST]: async ({ dispatch, rootState }, user: Entity.Account) => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,

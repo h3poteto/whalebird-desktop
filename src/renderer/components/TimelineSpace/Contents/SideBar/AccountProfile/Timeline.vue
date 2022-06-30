@@ -10,42 +10,56 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import Posts from './Timeline/Posts'
-import PostsAndReplies from './Timeline/PostsAndReplies'
-import Media from './Timeline/Media'
+<script lang="ts">
+import { defineComponent, PropType, ref, computed, onMounted } from 'vue'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import Posts from './Timeline/Posts.vue'
+import PostsAndReplies from './Timeline/PostsAndReplies.vue'
+import Media from './Timeline/Media.vue'
 
-export default {
+export default defineComponent({
   name: 'timeline',
-  props: ['account'],
+  props: {
+    account: {
+      type: Object as PropType<Entity.Account>,
+      required: true
+    }
+  },
   components: {
     Posts,
     PostsAndReplies,
     Media
   },
-  data() {
-    return {
-      activeName: 'posts',
-      defaultBuffer: 200,
-      buffer: 200
-    }
-  },
-  computed: {
-    ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile/Timeline', ['filters'])
-  },
-  mounted() {
-    const timeline = document.getElementById('sidebar_tabs')
-    if (timeline !== undefined && timeline !== null) {
-      this.buffer = this.defaultBuffer + timeline.getBoundingClientRect().top
-    }
-  },
-  methods: {
-    handleClick(tab, event) {
+  setup() {
+    const space = 'TimelineSpace/Contents/SideBar/AccountProfile/Timeline'
+    const store = useStore()
+
+    const activeName = ref<string>('posts')
+    const defaultBuffer = ref<number>(200)
+    const buffer = ref<number>(200)
+
+    const filters = computed(() => store.getters[`${space}/filters`])
+
+    onMounted(() => {
+      const timeline = document.getElementById('sidebar_tabs')
+      if (timeline !== undefined && timeline !== null) {
+        buffer.value = defaultBuffer.value + timeline.getBoundingClientRect().top
+      }
+    })
+
+    const handleClick = (tab, event) => {
       console.log(tab, event)
     }
+
+    return {
+      activeName,
+      handleClick,
+      buffer,
+      filters
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

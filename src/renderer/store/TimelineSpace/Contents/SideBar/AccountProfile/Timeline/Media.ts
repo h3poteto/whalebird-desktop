@@ -59,8 +59,14 @@ const mutations: MutationTree<MediaState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_TIMELINE: 'fetchTimeline',
+  LAZY_FETCH_TIMELINE: 'lazyFetchTimeline',
+  CLEAR_TIMELINE: 'clearTimeline'
+}
+
 const actions: ActionTree<MediaState, RootState> = {
-  fetchTimeline: async ({ commit, rootState }, account: Entity.Account) => {
+  [ACTION_TYPES.FETCH_TIMELINE]: async ({ commit, rootState }, account: Entity.Account) => {
     commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true, { root: true })
     const client = generator(
       rootState.TimelineSpace.sns,
@@ -73,7 +79,7 @@ const actions: ActionTree<MediaState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
     return res.data
   },
-  lazyFetchTimeline: async ({ state, commit, rootState }, loadPosition: LoadPositionWithAccount): Promise<null> => {
+  [ACTION_TYPES.LAZY_FETCH_TIMELINE]: async ({ state, commit, rootState }, loadPosition: LoadPositionWithAccount): Promise<null> => {
     if (state.lazyLoading) {
       return Promise.resolve(null)
     }
@@ -97,7 +103,7 @@ const actions: ActionTree<MediaState, RootState> = {
     }
     return null
   },
-  clearTimeline: ({ commit }) => {
+  [ACTION_TYPES.CLEAR_TIMELINE]: ({ commit }) => {
     commit(MUTATION_TYPES.UPDATE_TIMELINE, [])
   }
 }

@@ -6,7 +6,7 @@ import PostsAndReplies, { PostsAndRepliesState } from './Timeline/PostsAndReplie
 import Media, { MediaState } from './Timeline/Media'
 import { FilterContext } from 'megalodon'
 
-export type TimelineState = {}
+type TimelineState = {}
 
 type TimelineModule = {
   Posts: PostsState

@@ -1,3 +1,4 @@
+@
 <template>
   <div id="followers">
     <DynamicScroller :items="followers" :min-item-size="53" class="scroller" page-mode>
@@ -12,103 +13,121 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
-import User from '~/src/renderer/components/molecules/User'
+<script lang="ts">
+import { defineComponent, PropType, computed, onMounted, watch, onUnmounted, toRefs } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import { Entity } from 'megalodon'
+import { useStore } from '@/store'
+import User from '@/components/molecules/User.vue'
+import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile/Followers'
+import { ACTION_TYPES as PROFILE_ACTION, MUTATION_TYPES as PROFILE_MUTATION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
 
-export default {
+export default defineComponent({
   name: 'followers',
-  props: ['account'],
+  props: {
+    account: {
+      type: Object as PropType<Entity.Account>,
+      required: true
+    }
+  },
   components: { User },
-  computed: {
-    ...mapState('TimelineSpace/Contents/SideBar/AccountProfile/Followers', {
-      followers: state => state.followers,
-      relationships: state => state.relationships,
-      lazyLoading: state => state.lazyLoading
-    }),
-    ...mapState('App', {
-      backgroundColor: state => state.theme.background_color
+  setup(props) {
+    const space = 'TimelineSpace/Contents/SideBar/AccountProfile/Followers'
+    const { account } = toRefs(props)
+    const store = useStore()
+    const i18n = useI18next()
+
+    const followers = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.Followers.followers)
+    const relationships = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.Followers.relationships)
+    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.Followers.lazyLoading)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+
+    onMounted(() => {
+      load()
+      document.getElementById('sidebar_scrollable')?.addEventListener('scroll', onScroll)
     })
-  },
-  created() {
-    this.load()
-  },
-  watch: {
-    account: function (_newAccount, _oldAccount) {
-      this.load()
-    }
-  },
-  mounted() {
-    document.getElementById('sidebar_scrollable').addEventListener('scroll', this.onScroll)
-  },
-  unmounted() {
-    if (document.getElementById('sidebar_scrollable') !== undefined && document.getElementById('sidebar_scrollable') !== null) {
-      document.getElementById('sidebar_scrollable').removeEventListener('scroll', this.onScroll)
-    }
-  },
-  methods: {
-    async load() {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+    watch(account, () => {
+      load()
+    })
+    onUnmounted(() => {
+      const el = document.getElementById('sidebar_scrollable')
+      if (el !== undefined && el !== null) {
+        el.removeEventListener('scroll', onScroll)
+      }
+    })
+    const load = async () => {
+      store.commit(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_MUTATION.CHANGE_LOADING}`, true)
       try {
-        const followers = await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchFollowers', this.account)
-        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchRelationships', followers)
+        const followers = await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FOLLOWERS}`, account.value)
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_RELATIONSHIPS}`, followers)
       } catch (err) {
-        this.$message({
-          message: this.$t('message.followers_fetch_error'),
+        ElMessage({
+          message: i18n.t('message.followers_fetch_error'),
           type: 'error'
         })
       } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+        store.commit(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_MUTATION.CHANGE_LOADING}`, false)
       }
-    },
-    onScroll(event) {
+    }
+    const onScroll = (event: Event) => {
       // for lazyLoading
       if (
-        event.target.clientHeight + event.target.scrollTop >= document.getElementById('account_profile').clientHeight - 10 &&
-        !this.lazyloading
+        (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
+          document.getElementById('account_profile')!.clientHeight - 10 &&
+        !lazyLoading.value
       ) {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/lazyFetchFollowers', this.account).catch(err => {
+        store.dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_FOLLOWERS}`, account.value).catch(err => {
           console.error(err)
-          this.$message({
-            message: this.$t('message.timeline_fetch_error'),
+          ElMessage({
+            message: i18n.t('message.timeline_fetch_error'),
             type: 'error'
           })
         })
       }
-    },
-    targetRelation(id) {
-      return this.relationships.find(r => r.id === id)
-    },
-    async followAccount(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
+    }
+    const targetRelation = (id: string) => {
+      return relationships.value.find(r => r.id === id)
+    }
+    const followAccount = async (account: Entity.Account) => {
+      store.commit(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_MUTATION.CHANGE_LOADING}`, true)
       try {
-        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
-        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchRelationships', this.followers)
+        await store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.FOLLOW}`, account)
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_RELATIONSHIPS}`, followers.value)
       } catch (err) {
-        this.$message({
-          message: this.$t('message.follow_error'),
+        ElMessage({
+          message: i18n.t('message.follow_error'),
           type: 'error'
         })
       } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
-      }
-    },
-    async unfollowAccount(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
-      try {
-        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
-        await this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/Followers/fetchRelationships', this.followers)
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.unfollow_error'),
-          type: 'error'
-        })
-      } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+        store.commit(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_MUTATION.CHANGE_LOADING}`, false)
       }
     }
+    const unfollowAccount = async (account: Entity.Status) => {
+      store.commit(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_MUTATION.CHANGE_LOADING}`, true)
+      try {
+        await store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.UNFOLLOW}`, account)
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_RELATIONSHIPS}`, followers.value)
+      } catch (err) {
+        ElMessage({
+          message: i18n.t('message.unfollow_error'),
+          type: 'error'
+        })
+      } finally {
+        store.commit(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_MUTATION.CHANGE_LOADING}`, false)
+      }
+    }
+
+    return {
+      followers,
+      targetRelation,
+      followAccount,
+      unfollowAccount,
+      lazyLoading,
+      backgroundColor
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
