@@ -8,14 +8,14 @@
     role="article"
     aria-label="account profile"
   >
-    <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account.header + ')' }">
+    <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account?.header + ')' }">
       <div class="header">
-        <div class="relationship" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+        <div class="relationship" v-if="relationship !== null && !isOwnProfile">
           <div class="follower-status">
             <el-tag class="status" size="small" v-if="relationship.followed_by">{{ $t('side_bar.account_profile.follows_you') }}</el-tag>
             <el-tag class="status" size="default" v-else>{{ $t('side_bar.account_profile.doesnt_follow_you') }}</el-tag>
           </div>
-          <div class="notify" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+          <div class="notify" v-if="relationship !== null && !isOwnProfile">
             <div
               v-if="relationship.notifying"
               class="unsubscribe"
@@ -31,7 +31,7 @@
         </div>
 
         <div class="user-info">
-          <div class="more" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+          <div class="more" v-if="relationship !== null && !isOwnProfile">
             <el-popover placement="bottom" width="200" trigger="click" popper-class="account-menu-popper">
               <ul class="menu-list">
                 <li role="button" @click="openBrowser(account)">
@@ -62,9 +62,9 @@
             </el-popover>
           </div>
           <div class="icon" role="presentation">
-            <FailoverImg :src="account.avatar" :alt="`Avatar of ${account.username}`" />
+            <FailoverImg :src="account?.avatar" :alt="`Avatar of ${account?.username}`" />
           </div>
-          <div class="follow-status" v-if="relationship !== null && relationship !== '' && !isOwnProfile">
+          <div class="follow-status" v-if="relationship !== null && !isOwnProfile">
             <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
               <font-awesome-icon icon="user-xmark" size="xl" />
             </div>
@@ -79,7 +79,7 @@
         <div class="username">
           <bdi v-html="username(account)"></bdi>
         </div>
-        <div class="account">@{{ account.acct }}</div>
+        <div class="account">@{{ account?.acct }}</div>
         <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
       </div>
     </div>
@@ -94,7 +94,7 @@
       </dl>
     </div>
     <div class="metadata">
-      <dl v-for="(data, index) in account.fields" :key="index">
+      <dl v-for="(data, index) in account?.fields" :key="index">
         <dt>
           {{ data.name }}
         </dt>
@@ -102,16 +102,16 @@
       </dl>
     </div>
     <el-row class="basic-info">
-      <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'" @click="changeTab">
+      <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'">
         <el-button type="text" class="tab" @click="changeTab(1)">
           <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
-          <div class="count">{{ account.statuses_count }}</div>
+          <div class="count">{{ account?.statuses_count }}</div>
         </el-button>
       </el-col>
       <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
         <el-button type="text" class="tab" @click="changeTab(2)">
           <div class="title">{{ $t('side_bar.account_profile.follows') }}</div>
-          <div class="count">{{ account.following_count }}</div>
+          <div class="count">{{ account?.following_count }}</div>
         </el-button>
       </el-col>
       <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
@@ -119,7 +119,7 @@
           <div class="title">
             {{ $t('side_bar.account_profile.followers') }}
           </div>
-          <div class="count">{{ account.followers_count }}</div>
+          <div class="count">{{ account?.followers_count }}</div>
         </el-button>
       </el-col>
     </el-row>
@@ -131,16 +131,23 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
-import { findLink } from '~/src/renderer/utils/tootParser'
-import emojify from '~/src/renderer/utils/emojify'
-import Timeline from './AccountProfile/Timeline'
-import Follows from './AccountProfile/Follows'
-import Followers from './AccountProfile/Followers'
-import FailoverImg from '~/src/renderer/components/atoms/FailoverImg'
+<script lang="ts">
+import { defineComponent, computed, ref, watch } from 'vue'
+import { ElMessage } from 'element-plus'
+import { Entity } from 'megalodon'
+import { useI18next } from 'vue3-i18next'
+import { findLink } from '@/utils/tootParser'
+import emojify from '@/utils/emojify'
+import Timeline from './AccountProfile/Timeline.vue'
+import Follows from './AccountProfile/Follows.vue'
+import Followers from './AccountProfile/Followers.vue'
+import FailoverImg from '@/components/atoms/FailoverImg.vue'
+import { useStore } from '@/store'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
+import { ACTION_TYPES as LIST_MEMBERSHIP_ACTION } from '@/store/TimelineSpace/Modals/ListMembership'
+import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
 
-export default {
+export default defineComponent({
   name: 'account-profile',
   components: {
     Timeline,
@@ -148,142 +155,165 @@ export default {
     Followers,
     FailoverImg
   },
-  data() {
-    return {
-      activeTab: 1
-    }
-  },
-  computed: {
-    ...mapState({
-      theme: state => {
-        return {
-          '--theme-mask-color': state.App.theme.wrapper_mask_color,
-          '--theme-border-color': state.App.theme.border_color,
-          '--theme-primary-color': state.App.theme.primary_color
-        }
+  setup(_, ctx) {
+    const space = 'TimelineSpace/Contents/SideBar/AccountProfile'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const activeTab = ref<number>(1)
+
+    const theme = computed(() => {
+      return {
+        '--theme-mask-color': store.state.App.theme.wrapper_mask_color,
+        '--theme-border-color': store.state.App.theme.border_color,
+        '--theme-primary-color': store.state.App.theme.primary_color
       }
-    }),
-    ...mapState('TimelineSpace/Contents/SideBar/AccountProfile', {
-      account: state => state.account,
-      identityProofs: state => state.identityProofs,
-      relationship: state => state.relationship,
-      loading: state => state.loading,
-      muting: state => state.relationship && state.relationship.muting,
-      blocking: state => state.relationship && state.relationship.blocking
-    }),
-    ...mapGetters('TimelineSpace/Contents/SideBar/AccountProfile', ['isOwnProfile'])
-  },
-  watch: {
-    account: function () {
-      this.activeTab = 1
-    },
-    loading: function (newState, _oldState) {
-      this.$emit('change-loading', newState)
-    }
-  },
-  methods: {
-    username(account) {
+    })
+    const account = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.account)
+    const identityProofs = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.identityProofs)
+    const relationship = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.relationship)
+    const loading = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.loading)
+    const muting = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.relationship?.muting)
+    const blocking = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.relationship?.blocking)
+    const isOwnProfile = computed(() => store.getters[`${space}/isOwnProfile`])
+
+    watch(account, () => {
+      activeTab.value = 1
+    })
+    watch(loading, (newVal, _oldVal) => {
+      ctx.emit('change-loading', newVal)
+    })
+
+    const username = (account: Entity.Account) => {
       if (account.display_name !== '') {
         return emojify(account.display_name, account.emojis)
       } else {
         return account.username
       }
-    },
-    note(account) {
+    }
+    const note = (account: Entity.Account) => {
       return emojify(account.note, account.emojis)
-    },
-    noteClick(e) {
-      const link = findLink(e.target, 'note')
+    }
+    const noteClick = (e: Event) => {
+      const link = findLink(e.target as HTMLElement, 'note')
       if (link !== null) {
-        window.shell.openExternal(link)
-      }
-    },
-    follow(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
-      try {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/follow', account)
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.follow_error'),
-          type: 'error'
-        })
-      } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
-      }
-    },
-    unfollow(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
-      try {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unfollow', account)
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.unfollow_error'),
-          type: 'error'
-        })
-      } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
-      }
-    },
-    changeTab(index) {
-      this.activeTab = index
-    },
-    openBrowser(account) {
-      window.shell.openExternal(account.url)
-    },
-    addToList(account) {
-      this.$store.dispatch('TimelineSpace/Modals/ListMembership/setAccount', account)
-      this.$store.dispatch('TimelineSpace/Modals/ListMembership/changeModal', true)
-    },
-    confirmMute(account) {
-      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeAccount', account)
-      this.$store.dispatch('TimelineSpace/Modals/MuteConfirm/changeModal', true)
-    },
-    unmute(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unmute', account)
-    },
-    block(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/block', account)
-    },
-    unblock(account) {
-      this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unblock', account)
-    },
-    metadataClick(e) {
-      const link = findLink(e.target, 'metadata')
-      if (link !== null) {
-        return window.shell.openExternal(link)
-      }
-    },
-    identityOpen(link) {
-      return window.shell.openExternal(link)
-    },
-    subscribe(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
-      try {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/subscribe', account)
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.subscribe_error'),
-          type: 'error'
-        })
-      } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
-      }
-    },
-    unsubscribe(account) {
-      this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', true)
-      try {
-        this.$store.dispatch('TimelineSpace/Contents/SideBar/AccountProfile/unsubscribe', account)
-      } catch (err) {
-        this.$message({
-          message: this.$t('message.unsubscribe_error'),
-          type: 'error'
-        })
-      } finally {
-        this.$store.commit('TimelineSpace/Contents/SideBar/AccountProfile/changeLoading', false)
+        ;(window as any).shell.openExternal(link)
       }
     }
+    const follow = (account: Entity.Account) => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
+      try {
+        store.dispatch(`${space}/${ACTION_TYPES.FOLLOW}`, account)
+      } catch (err) {
+        ElMessage({
+          message: i18n.t('message.follow_error'),
+          type: 'error'
+        })
+      } finally {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, false)
+      }
+    }
+    const unfollow = (account: Entity.Account) => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
+      try {
+        store.dispatch(`${space}/${ACTION_TYPES.UNFOLLOW}`, account)
+      } catch (err) {
+        ElMessage({
+          message: i18n.t('message.unfollow_error'),
+          type: 'error'
+        })
+      } finally {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, false)
+      }
+    }
+    const changeTab = (payload: number) => {
+      activeTab.value = payload
+    }
+    const openBrowser = (account: Entity.Account) => {
+      ;(window as any).shell.openExternal(account.url)
+    }
+    const addToList = (account: Entity.Account) => {
+      store.dispatch(`TimelineSpace/Modals/ListMembership/${LIST_MEMBERSHIP_ACTION.SET_ACCOUNT}`, account)
+      store.dispatch(`TimelineSpace/Modals/ListMembership/${LIST_MEMBERSHIP_ACTION.CHANGE_MODAL}`, true)
+    }
+    const confirmMute = (account: Entity.Account) => {
+      store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_ACCOUNT}`, account)
+      store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_MODAL}`, true)
+    }
+    const unmute = (account: Entity.Account) => {
+      store.dispatch(`${space}/${ACTION_TYPES.UNMUTE}`, account)
+    }
+    const block = (account: Entity.Account) => {
+      store.dispatch(`${space}/${ACTION_TYPES.BLOCK}`, account)
+    }
+    const unblock = (account: Entity.Account) => {
+      store.dispatch(`${space}/${ACTION_TYPES.UNBLOCK}`, account)
+    }
+    const metadataClick = (e: Event) => {
+      const link = findLink(e.target as HTMLElement, 'metadata')
+      if (link !== null) {
+        return (window as any).shell.openExternal(link)
+      }
+    }
+    const identityOpen = (link: string) => {
+      return (window as any).shell.openExternal(link)
+    }
+    const subscribe = (account: Entity.Account) => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
+      try {
+        store.dispatch(`${space}/${ACTION_TYPES.SUBSCRIBE}`, account)
+      } catch (err) {
+        ElMessage({
+          message: i18n.t('message.subscribe_error'),
+          type: 'error'
+        })
+      } finally {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, false)
+      }
+    }
+    const unsubscribe = (account: Entity.Account) => {
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
+      try {
+        store.dispatch(`${space}/${ACTION_TYPES.UNSBSCRIBE}`, account)
+      } catch (err) {
+        ElMessage({
+          message: i18n.t('message.unsubscribe_error'),
+          type: 'error'
+        })
+      } finally {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, false)
+      }
+    }
+
+    return {
+      activeTab,
+      loading,
+      account,
+      relationship,
+      isOwnProfile,
+      muting,
+      blocking,
+      identityProofs,
+      theme,
+      username,
+      note,
+      noteClick,
+      changeTab,
+      unsubscribe,
+      subscribe,
+      openBrowser,
+      addToList,
+      unmute,
+      confirmMute,
+      unblock,
+      block,
+      unfollow,
+      follow,
+      metadataClick,
+      identityOpen
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
