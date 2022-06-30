@@ -33,8 +33,13 @@ const mutations: MutationTree<HeaderMenuState> = {
   }
 }
 
+export const ACTION_TYPES = {
+  FETCH_LIST: 'fetchList',
+  SETUP_LOADING: 'setupLoading'
+}
+
 const actions: ActionTree<HeaderMenuState, RootState> = {
-  fetchList: async ({ commit, rootState }, listID: string): Promise<Entity.List> => {
+  [ACTION_TYPES.FETCH_LIST]: async ({ commit, rootState }, listID: string): Promise<Entity.List> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
@@ -45,7 +50,7 @@ const actions: ActionTree<HeaderMenuState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_TITLE, `#${res.data.title}`)
     return res.data
   },
-  setupLoading: ({ commit }) => {
+  [ACTION_TYPES.SETUP_LOADING]: ({ commit }) => {
     const axiosLoading = new AxiosLoading()
     axiosLoading.on('start', (_: number) => {
       commit(MUTATION_TYPES.CHANGE_LOADING, true)
