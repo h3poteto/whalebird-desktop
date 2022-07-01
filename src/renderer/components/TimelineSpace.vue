@@ -18,150 +18,154 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
-import SideMenu from './TimelineSpace/SideMenu'
-import HeaderMenu from './TimelineSpace/HeaderMenu'
-import Contents from './TimelineSpace/Contents'
-import Modals from './TimelineSpace/Modals'
+<script lang="ts">
+import { defineComponent, computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { useI18next } from 'vue3-i18next'
+import SideMenu from './TimelineSpace/SideMenu.vue'
+import HeaderMenu from './TimelineSpace/HeaderMenu.vue'
+import Contents from './TimelineSpace/Contents.vue'
+import Modals from './TimelineSpace/Modals.vue'
 import Mousetrap from 'mousetrap'
-import ReceiveDrop from './TimelineSpace/ReceiveDrop'
+import ReceiveDrop from './TimelineSpace/ReceiveDrop.vue'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 import { NewTootAttachLength } from '@/errors/validations'
-import { EventEmitter } from '~/src/renderer/components/event'
+import { EventEmitter } from '@/components/event'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/TimelineSpace'
+import { ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
+import { MUTATION_TYPES as GLOBAL_HEADER_MUTATION } from '@/store/GlobalHeader'
+import { MUTATION_TYPES as JUMP_MUTATION } from '@/store/TimelineSpace/Modals/Jump'
+import { ACTION_TYPES as NEW_TOOT_ACTION } from '@/store/TimelineSpace/Modals/NewToot'
 
-export default {
+export default defineComponent({
   name: 'timeline-space',
   components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop },
-  data() {
-    return {
-      dropTarget: null,
-      droppableVisible: false
-    }
-  },
-  computed: {
-    ...mapState({
-      loading: state => state.TimelineSpace.loading,
-      collapse: state => state.TimelineSpace.SideMenu.collapse
-    }),
-    ...mapGetters('TimelineSpace/Modals', ['modalOpened']),
-    shortcutEnabled: function () {
-      return !this.modalOpened
-    }
-  },
-  async created() {
-    this.$store.dispatch('TimelineSpace/Contents/SideBar/close')
-    await this.initialize().finally(() => {
-      this.$store.commit('GlobalHeader/updateChanging', false)
+  setup() {
+    const space = 'TimelineSpace'
+    const store = useStore()
+    const route = useRoute()
+    const i18n = useI18next()
+
+    const dropTarget = ref<any>(null)
+    const droppableVisible = ref<boolean>(false)
+
+    const loading = computed(() => store.state.TimelineSpace.loading)
+    const collapse = computed(() => store.state.TimelineSpace.SideMenu.collapse)
+    // const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    // const shortcutEnabled = computed(() => !modalOpened.value)
+
+    onMounted(async () => {
+      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.CLOSE}`)
+      await initialize().finally(() => {
+        store.commit(`GlobalHeader/${GLOBAL_HEADER_MUTATION.UPDATE_CHANGING}`, false)
+      })
+      ;(window as any).addEventListener('dragenter', onDragEnter)
+      ;(window as any).addEventListener('dragleave', onDragLeave)
+      ;(window as any).addEventListener('dragover', onDragOver)
+      ;(window as any).addEventListener('drop', handleDrop)
+      Mousetrap.bind(['command+t', 'ctrl+t'], () => {
+        store.commit(`TimelineSpace/Modals/Jump/${JUMP_MUTATION.CHANGE_MODAL}`, true)
+      })
     })
-  },
-  mounted() {
-    window.addEventListener('dragenter', this.onDragEnter)
-    window.addEventListener('dragleave', this.onDragLeave)
-    window.addEventListener('dragover', this.onDragOver)
-    window.addEventListener('drop', this.handleDrop)
-    Mousetrap.bind(['command+t', 'ctrl+t'], () => {
-      this.$store.commit('TimelineSpace/Modals/Jump/changeModal', true)
+    onBeforeUnmount(() => {
+      ;(window as any).removeEventListener('dragenter', onDragEnter)
+      ;(window as any).removeEventListener('dragleave', onDragLeave)
+      ;(window as any).removeEventListener('dragover', onDragOver)
+      ;(window as any).removeEventListener('drop', handleDrop)
+      store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMINGS}`)
+      store.dispatch(`${space}/${ACTION_TYPES.UNBIND_STREAMINGS}`)
     })
-  },
-  beforeUnmount() {
-    window.removeEventListener('dragenter', this.onDragEnter)
-    window.removeEventListener('dragleave', this.onDragLeave)
-    window.removeEventListener('dragover', this.onDragOver)
-    window.removeEventListener('drop', this.handleDrop)
-    this.$store.dispatch('TimelineSpace/stopStreamings')
-    this.$store.dispatch('TimelineSpace/unbindStreamings')
-  },
-  methods: {
-    async clear() {
-      this.$store.dispatch('TimelineSpace/unbindStreamings')
-      await this.$store.dispatch('TimelineSpace/clearAccount')
-      this.$store.dispatch('TimelineSpace/clearContentsTimelines')
-      await this.$store.dispatch('TimelineSpace/removeShortcutEvents')
-      await this.$store.dispatch('TimelineSpace/clearUnread')
+
+    const clear = async () => {
+      store.dispatch(`${space}/${ACTION_TYPES.UNBIND_STREAMINGS}`)
+      await store.dispatch(`${space}/${ACTION_TYPES.CLEAR_ACCOUNT}`)
+      store.dispatch(`${space}/${ACTION_TYPES.CLEAR_CONTENTS_TIMELINES}`)
+      await store.dispatch(`${space}/${ACTION_TYPES.REMOVE_SHORTCUT_EVENTS}`)
+      await store.dispatch(`${space}/${ACTION_TYPES.CLEAR_UNREAD}`)
       return 'clear'
-    },
-    async initialize() {
-      await this.clear()
+    }
+    const initialize = async () => {
+      await clear()
 
       try {
-        await this.$store.dispatch('TimelineSpace/initLoad', this.$route.params.id)
+        await store.dispatch(`${space}/${ACTION_TYPES.INIT_LOAD}`, route.params.id)
       } catch (err) {
         if (err instanceof AccountLoadError) {
-          this.$message({
-            message: this.$t('message.account_load_error'),
+          ElMessage({
+            message: i18n.t('message.account_load_error'),
             type: 'error'
           })
         } else if (err instanceof TimelineFetchError) {
-          this.$message({
-            message: this.$t('message.timeline_fetch_error'),
+          ElMessage({
+            message: i18n.t('message.timeline_fetch_error'),
             type: 'error'
           })
         }
       }
 
-      await this.$store.dispatch('TimelineSpace/prepareSpace')
-    },
-    handleDrop(e) {
+      await store.dispatch(`${space}/${ACTION_TYPES.PREPARE_SPACE}`)
+    }
+    const handleDrop = (e: DragEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      this.droppableVisible = false
-      if (e.dataTransfer.files.item(0) === null || e.dataTransfer.files.item(0) === undefined) {
+      droppableVisible.value = false
+      if (e.dataTransfer?.files.item(0) === null || e.dataTransfer?.files.item(0) === undefined) {
         return false
       }
-      const file = e.dataTransfer.files.item(0)
-      if (!file.type.includes('image') && !file.type.includes('video')) {
-        this.$message({
-          message: this.$t('validation.new_toot.attach_image'),
+      const file = e.dataTransfer?.files.item(0)
+      if (file === null || (!file.type.includes('image') && !file.type.includes('video'))) {
+        ElMessage({
+          message: i18n.t('validation.new_toot.attach_image'),
           type: 'error'
         })
         return false
       }
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
-      this.$store
-        .dispatch('TimelineSpace/Modals/NewToot/uploadImage', file)
+      store.dispatch(`TimelineSpace/Modals/NewToot/${NEW_TOOT_ACTION.OPEN_MODAL}`)
+      store
+        .dispatch(`TimelineSpace/Modals/NewToot/${NEW_TOOT_ACTION.UPLOAD_IMAGE}`, file)
         .then(() => {
           EventEmitter.emit('image-uploaded')
         })
         .catch(err => {
           if (err instanceof NewTootAttachLength) {
-            this.$message({
-              message: this.$t('validation.new_toot.attach_length', { max: 4 }),
+            ElMessage({
+              message: i18n.t('validation.new_toot.attach_length', { max: 4 }),
               type: 'error'
             })
           } else {
-            this.$message({
-              message: this.$t('message.attach_error'),
+            ElMessage({
+              message: i18n.t('message.attach_error'),
               type: 'error'
             })
           }
         })
       return false
-    },
-    onDragEnter(e) {
-      if (e.dataTransfer.types.indexOf('Files') >= 0) {
-        this.dropTarget = e.target
-        this.droppableVisible = true
-      }
-    },
-    onDragLeave(e) {
-      if (e.target === this.dropTarget) {
-        this.droppableVisible = false
-      }
-    },
-    onDragOver(e) {
-      e.preventDefault()
-    },
-    handleKey(event) {
-      switch (event.srcKey) {
-        case 'help':
-          this.$store.commit('TimelineSpace/Modals/Shortcut/changeModal', true)
-          break
+    }
+    const onDragEnter = (e: DragEvent) => {
+      if (e.dataTransfer && e.dataTransfer.types.indexOf('Files') >= 0) {
+        dropTarget.value = e.target
+        droppableVisible.value = true
       }
     }
+    const onDragLeave = (e: DragEvent) => {
+      if (e.target === dropTarget.value) {
+        droppableVisible.value = false
+      }
+    }
+    const onDragOver = (e: DragEvent) => {
+      e.preventDefault()
+    }
+
+    return {
+      loading,
+      collapse,
+      droppableVisible
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

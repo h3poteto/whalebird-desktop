@@ -36,96 +36,101 @@
   </nav>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, ref, computed, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/HeaderMenu'
+import { ACTION_TYPES as NEW_TOOT_ACTION } from '@/store/TimelineSpace/Modals/NewToot'
+import { MUTATION_TYPES as HOME_MUTATION } from '@/store/TimelineSpace/Contents/Home'
 
-export default {
+export default defineComponent({
   name: 'header-menu',
-  data() {
-    return {
-      showReblogs: true,
-      showReplies: true
-    }
-  },
-  computed: {
-    ...mapState('TimelineSpace/HeaderMenu', {
-      title: state => state.title,
-      loading: state => state.loading
+  setup() {
+    const space = 'TimelineSpace/HeaderMenu'
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const i18n = useI18next()
+
+    const showReblogs = ref<boolean>(true)
+    const showReplies = ref<boolean>(true)
+
+    const title = computed(() => store.state.TimelineSpace.HeaderMenu.title)
+    const loading = computed(() => store.state.TimelineSpace.HeaderMenu.loading)
+    const id = computed(() => route.params.id)
+
+    onMounted(() => {
+      channelName()
+      loadTLOption()
+      store.dispatch(`${space}/${ACTION_TYPES.SETUP_LOADING}`)
     })
-  },
-  created() {
-    this.channelName()
-    this.loadTLOption()
-    this.$store.dispatch('TimelineSpace/HeaderMenu/setupLoading')
-  },
-  watch: {
-    $route: function () {
-      this.channelName()
-      this.loadTLOption()
-    }
-  },
-  methods: {
-    id() {
-      return this.$route.params.id
-    },
-    channelName() {
-      switch (this.$route.name) {
+    watch(
+      () => route.name,
+      () => {
+        channelName()
+        loadTLOption()
+      }
+    )
+    const channelName = () => {
+      switch (route.name) {
         case 'home':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.home'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.home'))
           break
         case 'notifications':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.notification'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.notification'))
           break
         case 'favourites':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.favourite'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.favourite'))
           break
         case 'bookmarks':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.bookmark'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.bookmark'))
           break
         case 'mentions':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.mention'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.mention'))
           break
         case 'follow-requests':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.follow_requests'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.follow_requests'))
           break
         case 'local':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.local'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.local'))
           break
         case 'public':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.public'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.public'))
           break
         case 'hashtag-list':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.hashtag'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.hashtag'))
           break
         case 'tag':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', `#${this.$route.params.tag}`)
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, `#${route.params.tag}`)
           break
         case 'search':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.search'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.search'))
           break
         case 'lists':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.lists'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.lists'))
           break
         case 'direct-messages':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.direct_messages'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.direct_messages'))
           break
         case 'edit-list':
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.members'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.members'))
           break
         case 'list':
-          this.$store.dispatch('TimelineSpace/HeaderMenu/fetchList', this.$route.params.list_id)
+          store.dispatch(`${space}/${ACTION_TYPES.FETCH_LIST}`, route.params.list_id)
           break
         default:
-          console.log(this.$route)
-          this.$store.commit('TimelineSpace/HeaderMenu/updateTitle', this.$t('header_menu.home'))
+          console.debug(route)
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.home'))
           break
       }
-    },
-    openNewTootModal() {
-      this.$store.dispatch('TimelineSpace/Modals/NewToot/openModal')
-    },
-    reload() {
-      switch (this.$route.name) {
+    }
+    const openNewTootModal = () => {
+      store.dispatch(`TimelineSpace/Modals/NewToot/${NEW_TOOT_ACTION.OPEN_MODAL}`)
+    }
+    const reload = () => {
+      switch (route.name) {
         case 'home':
         case 'notifications':
         case 'mentions':
@@ -136,14 +141,14 @@ export default {
         case 'tag':
         case 'list':
         case 'direct-messages':
-          this.$store.commit('TimelineSpace/HeaderMenu/changeReload', true)
+          store.commit(`${space}/${MUTATION_TYPES.CHANGE_RELOAD}`, true)
           break
         default:
-          console.error('Not implemented')
+          console.error('Not implemented: ', route.name)
       }
-    },
-    reloadable() {
-      switch (this.$route.name) {
+    }
+    const reloadable = () => {
+      switch (route.name) {
         case 'home':
         case 'notifications':
         case 'mentions':
@@ -158,41 +163,54 @@ export default {
         default:
           return false
       }
-    },
-    loadTLOption() {
-      switch (this.$route.name) {
+    }
+    const loadTLOption = () => {
+      switch (route.name) {
         case 'home':
-          this.showReblogs = this.$store.state.TimelineSpace.Contents.Home.showReblogs
-          this.showReplies = this.$store.state.TimelineSpace.Contents.Home.showReplies
+          showReblogs.value = store.state.TimelineSpace.Contents.Home.showReblogs
+          showReplies.value = store.state.TimelineSpace.Contents.Home.showReplies
           break
         default:
-          console.log('Not implemented')
+          break
       }
-    },
-    applyTLOption() {
-      switch (this.$route.name) {
+    }
+    const applyTLOption = () => {
+      switch (route.name) {
         case 'home':
-          this.$store.commit('TimelineSpace/Contents/Home/showReblogs', this.showReblogs)
-          this.$store.commit('TimelineSpace/Contents/Home/showReplies', this.showReplies)
+          store.commit(`TimelineSpace/Contents/Home/${HOME_MUTATION.SHOW_REBLOGS}`, showReblogs.value)
+          store.commit(`TimelineSpace/Contents/Home/${HOME_MUTATION.SHOW_REPLIES}`, showReplies.value)
           break
         default:
-          console.log('Not implemented')
+          break
       }
-    },
-    TLOption() {
-      switch (this.$route.name) {
+    }
+    const TLOption = () => {
+      switch (route.name) {
         case 'home':
           return true
         default:
           return false
       }
-    },
-    settings() {
-      const url = `/${this.id()}/settings`
-      this.$router.push(url)
+    }
+    const settings = () => {
+      const url = `/${id.value}/settings`
+      router.push(url)
+    }
+
+    return {
+      title,
+      loading,
+      openNewTootModal,
+      reloadable,
+      reload,
+      TLOption,
+      showReblogs,
+      showReplies,
+      applyTLOption,
+      settings
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
