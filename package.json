@@ -135,7 +135,7 @@
     "@types/parse-link-header": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "@typescript-eslint/typescript-estree": "^5.28.0",
+    "@typescript-eslint/typescript-estree": "^5.30.4",
     "@vue/compiler-sfc": "^3.2.37",
     "ajv": "^8.11.0",
     "all-object-keys": "^2.2.0",
