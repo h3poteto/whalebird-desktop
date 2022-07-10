@@ -1,4 +1,5 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
+import { toRaw } from 'vue'
 import { RootState } from '@/store'
 import { BaseConfig } from '~/src/types/preference'
 import { Proxy, ProxySource, ProxyProtocol, ManualProxy } from '~/src/types/proxy'
@@ -128,8 +129,8 @@ const actions: ActionTree<NetworkState, RootState> = {
   },
   [ACTION_TYPES.SAVE_PROXY_CONFIG]: async ({ state }) => {
     const proxy: Proxy = {
-      source: state.source,
-      manualProxyConfig: state.proxy
+      source: toRaw(state.source),
+      manualProxyConfig: toRaw(state.proxy)
     }
     // Originally we have to restart all streamings after user change proxy configuration.
     // But streamings are restart after close preferences.
