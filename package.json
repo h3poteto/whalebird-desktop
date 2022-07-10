@@ -95,7 +95,7 @@
     "megalodon": "4.0.2",
     "minimist": "^1.2.6",
     "mitt": "^3.0.0",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "mousetrap": "^1.6.5",
     "nedb": "^1.8.0",
     "object-assign-deep": "^0.4.0",
