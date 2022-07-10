@@ -111,7 +111,7 @@
     "vue-resize": "^2.0.0-alpha.1",
     "vue-router": "^4.0.16",
     "vue-virtual-scroller": "2.0.0-alpha.1",
-    "vue3-i18next": "^0.2.0",
+    "vue3-i18next": "^0.2.1",
     "vuex": "^4.0.2",
     "vuex-router-sync": "^6.0.0-rc.1"
   },
