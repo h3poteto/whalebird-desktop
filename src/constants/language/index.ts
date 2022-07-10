@@ -1,4 +1,32 @@
-export default {
+export type LanguageType = {
+  name: string
+  key: string
+  rfc4646: string
+}
+
+export type LanguageList = {
+  de: LanguageType
+  en: LanguageType
+  fr: LanguageType
+  gd: LanguageType
+  ja: LanguageType
+  ko: LanguageType
+  pl: LanguageType
+  id: LanguageType
+  it: LanguageType
+  zh_cn: LanguageType
+  zh_tw: LanguageType
+  cs: LanguageType
+  es_es: LanguageType
+  no: LanguageType
+  pt_pt: LanguageType
+  ru: LanguageType
+  si: LanguageType
+  sv_se: LanguageType
+  tzm: LanguageType
+}
+
+const languageList: LanguageList = {
   de: {
     name: 'Deutsch',
     key: 'de',
@@ -27,7 +55,7 @@ export default {
   ko: {
     name: '한국어',
     key: 'ko',
-    frc4646: 'ko'
+    rfc4646: 'ko'
   },
   pl: {
     name: 'Polski',
@@ -95,3 +123,5 @@ export default {
     rfc4646: 'tzm'
   }
 }
+
+export default languageList

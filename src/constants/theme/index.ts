@@ -1,4 +1,19 @@
-export default {
+export type ThemeType = {
+  name: string
+  key: string
+}
+
+export type ThemeList = {
+  System: ThemeType
+  Light: ThemeType
+  Dark: ThemeType
+  SolarizedLight: ThemeType
+  SolarizedDark: ThemeType
+  KimbieDark: ThemeType
+  Custom: ThemeType
+}
+
+const themeList: ThemeList = {
   System: {
     name: 'preferences.appearance.theme.system',
     key: 'system'
@@ -28,3 +43,5 @@ export default {
     key: 'custom'
   }
 }
+
+export default themeList

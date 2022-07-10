@@ -1,4 +1,18 @@
-export const LightTheme = {
+export type ThemeColorType = {
+  background_color: string
+  selected_background_color: string
+  global_header_color: string
+  side_menu_color: string
+  primary_color: string
+  regular_color: string
+  secondary_color: string
+  border_color: string
+  header_menu_color: string
+  wrapper_mask_color: string
+  scrollbar_color: string
+}
+
+export const LightTheme: ThemeColorType = {
   background_color: '#ffffff',
   selected_background_color: '#f2f6fc',
   global_header_color: '#4a5664',
@@ -12,7 +26,7 @@ export const LightTheme = {
   scrollbar_color: 'rgba(0, 0, 0, 0.4)'
 }
 
-export const DarkTheme = {
+export const DarkTheme: ThemeColorType = {
   background_color: '#282c37',
   selected_background_color: '#313543',
   global_header_color: '#393f4f',
@@ -26,7 +40,7 @@ export const DarkTheme = {
   scrollbar_color: 'rgba(255, 255, 255, 0.4)'
 }
 
-export const SolarizedLightTheme = {
+export const SolarizedLightTheme: ThemeColorType = {
   background_color: '#fdf6e3',
   selected_background_color: '#eee8d5',
   global_header_color: '#002b36',
@@ -40,7 +54,7 @@ export const SolarizedLightTheme = {
   scrollbar_color: 'rgba(0, 0, 0, 0.4)'
 }
 
-export const SolarizedDarkTheme = {
+export const SolarizedDarkTheme: ThemeColorType = {
   background_color: '#073642',
   selected_background_color: '#586e75',
   global_header_color: '#073642',
@@ -54,7 +68,7 @@ export const SolarizedDarkTheme = {
   scrollbar_color: 'rgba(255, 255, 255, 0.4)'
 }
 
-export const KimbieDarkTheme = {
+export const KimbieDarkTheme: ThemeColorType = {
   background_color: '#221a0f',
   selected_background_color: '#2e2920',
   global_header_color: '#221a0f',
