@@ -87,6 +87,7 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   outline: 0;
+  z-index: 2;
 
   .image-header {
     width: 100%;
