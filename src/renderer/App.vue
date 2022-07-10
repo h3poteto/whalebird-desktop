@@ -4,43 +4,51 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { defineComponent, computed, onMounted, onUnmounted } from 'vue'
+import { useI18next } from 'vue3-i18next'
+import { useStore } from '@/store'
+import { ACTION_TYPES } from '@/store/App'
 
-export default {
+export default defineComponent({
   name: 'Whalebird',
-  computed: {
-    ...mapState({
-      theme: state => {
-        return {
-          '--theme-background-color': state.App.theme.background_color,
-          '--theme-selected-background-color': state.App.theme.selected_background_color,
-          '--theme-global-header-color': state.App.theme.global_header_color,
-          '--theme-side-menu-color': state.App.theme.side_menu_color,
-          '--theme-primary-color': state.App.theme.primary_color,
-          '--theme-regular-color': state.App.theme.regular_color,
-          '--theme-secondary-color': state.App.theme.secondary_color,
-          '--theme-border-color': state.App.theme.border_color,
-          '--theme-header-menu-color': state.App.theme.header_menu_color,
-          '--theme-wrapper-mask-color': state.App.theme.wrapper_mask_color,
-          '--theme-scrollbar-color': state.App.theme.scrollbar_color,
-          '--toot-padding': `${state.App.tootPadding}px`,
-          '--base-font-size': `${state.App.fontSize}px`,
-          '--specified-fonts': state.App.defaultFonts.join(', ')
-        }
-      }
+  setup() {
+    const space = 'App'
+    const store = useStore()
+    const i18n = useI18next()
+
+    const theme = computed(() => ({
+      '--theme-background-color': store.state.App.theme.background_color,
+      '--theme-selected-background-color': store.state.App.theme.selected_background_color,
+      '--theme-global-header-color': store.state.App.theme.global_header_color,
+      '--theme-side-menu-color': store.state.App.theme.side_menu_color,
+      '--theme-primary-color': store.state.App.theme.primary_color,
+      '--theme-regular-color': store.state.App.theme.regular_color,
+      '--theme-secondary-color': store.state.App.theme.secondary_color,
+      '--theme-border-color': store.state.App.theme.border_color,
+      '--theme-header-menu-color': store.state.App.theme.header_menu_color,
+      '--theme-wrapper-mask-color': store.state.App.theme.wrapper_mask_color,
+      '--theme-scrollbar-color': store.state.App.theme.scrollbar_color,
+      '--toot-padding': `${store.state.App.tootPadding}px`,
+      '--base-font-size': `${store.state.App.fontSize}px`,
+      '--specified-fonts': store.state.App.defaultFonts.join(', ')
+    }))
+
+    onMounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.WATCH_SHORTCUT_EVENTS}`)
+      store.dispatch(`${space}/${ACTION_TYPES.LOAD_PREFERENCES}`).then(conf => {
+        i18n.changeLanguage(conf.language.language)
+      })
     })
-  },
-  created() {
-    this.$store.dispatch('App/watchShortcutEvents')
-    this.$store.dispatch('App/loadPreferences').then(conf => {
-      this.$i18n.changeLanguage(conf.language.language)
+    onUnmounted(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.REMOVE_SHORTCUT_EVENTS}`)
     })
-  },
-  unmounted() {
-    this.$store.dispatch('App/removeShortcutsEvents')
+
+    return {
+      theme
+    }
   }
-}
+})
 </script>
 
 <style lang="scss">
