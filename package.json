@@ -111,7 +111,7 @@
     "vue-resize": "^2.0.0-alpha.1",
     "vue-router": "^4.0.16",
     "vue-virtual-scroller": "2.0.0-alpha.1",
-    "vue3-i18next": "^0.2.0",
+    "vue3-i18next": "^0.2.1",
     "vuex": "^4.0.2",
     "vuex-router-sync": "^6.0.0-rc.1"
   },
@@ -184,7 +184,7 @@
     "jsdom": "^19.0.0",
     "json-loader": "^0.5.7",
     "listr": "^0.14.3",
-    "mini-css-extract-plugin": "^2.6.0",
+    "mini-css-extract-plugin": "^2.6.1",
     "node-loader": "^2.0.0",
     "node-sass": "^7.0.1",
     "os-browserify": "^0.3.0",
