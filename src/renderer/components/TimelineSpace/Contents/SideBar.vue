@@ -74,7 +74,8 @@ export default defineComponent({
       backgroundColor,
       shortcutEnabled,
       changeLoading,
-      reload
+      reload,
+      close
     }
   }
 })
