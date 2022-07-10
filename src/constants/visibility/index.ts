@@ -1,4 +1,17 @@
-export default {
+export type VisibilityType = {
+  name: string
+  value: number
+  key: 'public' | 'unlisted' | 'private' | 'direct'
+}
+
+export type VisibilityList = {
+  Public: VisibilityType
+  Unlisted: VisibilityType
+  Private: VisibilityType
+  Direct: VisibilityType
+}
+
+const visibilityList: VisibilityList = {
   Public: {
     name: 'settings.general.toot.visibility.public',
     value: 0,
@@ -20,3 +33,5 @@ export default {
     key: 'direct'
   }
 }
+
+export default visibilityList

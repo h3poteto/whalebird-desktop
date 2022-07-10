@@ -1,4 +1,15 @@
-export default {
+export type DisplayStyleType = {
+  name: string
+  value: number
+}
+
+export type DisplayStyleList = {
+  DisplayNameAndUsername: DisplayStyleType
+  DisplayName: DisplayStyleType
+  Username: DisplayStyleType
+}
+
+const displayStyleList: DisplayStyleList = {
   DisplayNameAndUsername: {
     name: 'preferences.appearance.display_style.display_name_and_username',
     value: 0
@@ -12,3 +23,5 @@ export default {
     value: 2
   }
 }
+
+export default displayStyleList
