@@ -3829,10 +3829,10 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-cfonts@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-3.1.0.tgz#47e3d5932a8655db6299470bca5392194d236df2"
-  integrity sha512-zPMg6XFIuzFRsVi2WTUYmfmOUM2k/T74l2vOYyBknVdPhIfXyYBQTe3dR7JmbFINqsS3bfB4RSUj90kv6vUb3Q==
+cfonts@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-3.1.1.tgz#81bf9cfce2fcee581046d8912a55bab4366f9cfc"
+  integrity sha512-PFknL/y+QVzoVmnm4X/PLd+t5Bt4aSvFBebpvyjcVUb81jHIVHFKvAopADbTk9tnfLLC2RHFZgdVa9YAwQp1mw==
   dependencies:
     supports-color "^8"
     window-size "^1.1.1"

@@ -148,7 +148,7 @@
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "bufferutil": "^4.0.6",
-    "cfonts": "^3.1.0",
+    "cfonts": "^3.1.1",
     "chai": "^4.3.6",
     "chalk": "^4.1.2",
     "copy-webpack-plugin": "^10.2.4",
