@@ -89,7 +89,7 @@
     "electron-window-state": "^5.0.3",
     "element-plus": "^2.2.5",
     "emoji-mart-vue-fast": "^10.2.2",
-    "i18next": "^21.6.16",
+    "i18next": "^21.8.13",
     "lodash": "^4.17.21",
     "lokijs": "^1.5.12",
     "megalodon": "4.0.2",
