@@ -111,7 +111,7 @@ export default defineComponent({
       position: fixed;
       top: 50%;
       right: calc(var(--current-sidebar-width) - 8px);
-      z-index: 1000;
+      z-index: 1;
       border-radius: 0 8px 8px 0;
       cursor: col-resize;
       text-align: center;
