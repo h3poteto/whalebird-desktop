@@ -8876,10 +8876,10 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-megalodon@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-4.0.2.tgz#0c9671af46d8ab0cf5811e0e3e28815a2a6a74b6"
-  integrity sha512-wHRH/5BfJ/p13OibdKzR454l236VNu846SCkWK6UnUt0HEzhDo2rcDys5SHLlb4nyAFvpQQBGYGU0I8Ok/iO7A==
+megalodon@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-4.1.0.tgz#fea7361f07908e05880aa5f5f7e243503dfe4aef"
+  integrity sha512-NrhePOFPVSRrglyjUZk3F9N+HgkSaV0qCajL5In+zz9LuwocU9tNg/QIa+yIQ3LSjIqgOD0fnYH2unXzx+YN4Q==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^8.2.3"
@@ -8890,7 +8890,7 @@ megalodon@4.0.2:
     oauth "^0.9.15"
     object-assign-deep "^0.4.0"
     socks-proxy-agent "^7.0.0"
-    typescript "4.7.3"
+    typescript "4.7.4"
     uuid "^8.0.0"
     ws "8.5.0"
 
@@ -12171,12 +12171,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@4.7.3:
-  version "4.7.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.3.tgz#8364b502d5257b540f9de4c40be84c98e23a129d"
-  integrity sha512-WOkT3XYvrpXx4vMMqlD+8R8R37fZkjyLGlxavMc4iB8lrl8L0DeTcHbYgw/v0N/z9wAFsgBhcsF0ruoySS22mA==
-
-typescript@^4.7.4:
+typescript@4.7.4, typescript@^4.7.4:
   version "4.7.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
   integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
