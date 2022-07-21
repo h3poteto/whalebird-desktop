@@ -60,7 +60,9 @@ export default defineComponent({
       store.dispatch(`${space}/${ACTION_TYPES.SYNC_LIST_CHANNEL}`)
       store.dispatch(`${space}/${ACTION_TYPES.SYNC_TAG_CHANNEL}`)
       nextTick(() => {
-        channelForm.value?.focus()
+        setTimeout(() => {
+          channelForm.value?.focus()
+        }, 500)
       })
     })
     onBeforeUnmount(() => {
