@@ -151,10 +151,12 @@ export default defineComponent({
     })
     onMounted(() => {
       nextTick(() => {
-        statusRef.value?.focus()
-        if (fixCursorPos.value) {
-          statusRef.value?.setSelectionRange(0, 0)
-        }
+        setTimeout(() => {
+          statusRef.value?.focus()
+          if (fixCursorPos.value) {
+            statusRef.value?.setSelectionRange(0, 0)
+          }
+        }, 500)
       })
     })
 
