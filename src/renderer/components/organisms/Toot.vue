@@ -1,5 +1,5 @@
 <template>
-  <div class="status" tabIndex="0" ref="status" @click="$emit('selectToot', message)" role="article" aria-label="toot">
+  <div class="status" tabIndex="0" ref="statusRef" @click="$emit('selectToot', message)" role="article" aria-label="toot">
     <div v-if="filtered" class="filtered">Filtered</div>
     <div v-if="!filtered" class="toot">
       <div class="reblogger" v-if="message.reblog && !message.quote">
@@ -237,7 +237,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed, toRefs } from 'vue'
+import { defineComponent, PropType, ref, computed, toRefs, watch, nextTick } from 'vue'
+import { useMagicKeys, whenever, and } from '@vueuse/core'
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
@@ -311,7 +312,9 @@ export default defineComponent({
     const router = useRouter()
     const i18n = useI18next()
     const { focused, overlaid, message, filters } = toRefs(props)
+    const { l, h, r, b, f, o, p, i, x } = useMagicKeys()
 
+    const statusRef = ref<any>(null)
     const showContent = ref(store.state.App.ignoreCW)
     const showAttachments = ref(store.state.App.ignoreNSFW)
     const hideAllAttachments = ref(store.state.App.hideAllAttachments)
@@ -388,6 +391,51 @@ export default defineComponent({
     })
     const quoteSupported = computed(() => {
       return QuoteSupported(sns.value, account.value.domain)
+    })
+
+    whenever(and(l, shortcutEnabled), () => {
+      ctx.emit('focusRight')
+    })
+    whenever(and(h, shortcutEnabled), () => {
+      ctx.emit('focusLeft')
+    })
+    whenever(and(r, shortcutEnabled), () => {
+      openReply()
+    })
+    whenever(and(b, shortcutEnabled), () => {
+      changeReblog(originalMessage.value)
+    })
+    whenever(and(f, shortcutEnabled), () => {
+      changeFavourite(originalMessage.value)
+    })
+    whenever(and(o, shortcutEnabled), () => {
+      openDetail(message.value)
+    })
+    whenever(and(p, shortcutEnabled), () => {
+      openUser(originalMessage.value.account)
+    })
+    whenever(and(i, shortcutEnabled), () => {
+      const images = mediaAttachments.value
+      if (images.length === 0) {
+        return
+      }
+      openImage(images[0].url, images)
+    })
+    whenever(and(x, shortcutEnabled), () => {
+      toggleSpoiler()
+      toggleCW()
+    })
+
+    watch(focused, (newVal, oldVal) => {
+      if (newVal) {
+        nextTick(() => {
+          statusRef.value.focus()
+        })
+      } else if (oldVal && !newVal) {
+        nextTick(() => {
+          statusRef.value.blur()
+        })
+      }
     })
 
     const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
@@ -628,6 +676,7 @@ export default defineComponent({
     }
 
     return {
+      statusRef,
       emojiIndex,
       displayNameStyle,
       timeFormat,
@@ -635,7 +684,6 @@ export default defineComponent({
       sns,
       account,
       bookmarkSupported,
-      shortcutEnabled,
       originalMessage,
       timestamp,
       readableTimestamp,
