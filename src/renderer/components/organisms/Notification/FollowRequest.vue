@@ -1,5 +1,5 @@
 <template>
-  <div class="relationship" tabIndex="0" ref="status" @click="$emit('select')" role="article" aria-label="follow event">
+  <div class="relationship" tabIndex="0" @click="$emit('select')" role="article" aria-label="follow event" ref="notificationRef">
     <div class="follow-request">
       <div class="action">
         <div class="action-mark">
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, toRefs } from 'vue'
+import { defineComponent, PropType, computed, toRefs, ref, watch, nextTick } from 'vue'
 import { Entity } from 'megalodon'
 import { useStore } from '@/store'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
@@ -56,11 +56,24 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { focused, overlaid } = toRefs(props)
+    const { focused } = toRefs(props)
     const store = useStore()
+    const notificationRef = ref<any>(null)
 
-    const shortcutEnabled = computed(() => focused.value && !overlaid.value)
+    // const shortcutEnabled = computed(() => focused.value && !overlaid.value)
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
+
+    watch(focused, (newVal, oldVal) => {
+      if (newVal) {
+        nextTick(() => {
+          notificationRef.value.focus()
+        })
+      } else if (oldVal && !newVal) {
+        nextTick(() => {
+          notificationRef.value.blur()
+        })
+      }
+    })
 
     const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
     const openUser = (account: Entity.Account) => {
@@ -70,7 +83,7 @@ export default defineComponent({
     }
 
     return {
-      shortcutEnabled,
+      notificationRef,
       username,
       openUser
     }

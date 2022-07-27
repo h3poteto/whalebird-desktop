@@ -16,8 +16,6 @@
               :overlaid="modalOpened"
               :filters="filters"
               v-on:update="updateToot"
-              @focusNext="focusNext"
-              @focusPrev="focusPrev"
               @focusRight="focusSidebar"
               @selectNotification="focusNotification(item)"
             >
@@ -36,6 +34,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onBeforeUnmount, onUnmounted, watch } from 'vue'
+import { useMagicKeys, whenever, and } from '@vueuse/core'
 import moment from 'moment'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
@@ -62,6 +61,7 @@ export default defineComponent({
     const route = useRoute()
     const i18n = useI18next()
     const { reloadable } = useReloadable(store, route, i18n)
+    const { j, k } = useMagicKeys()
 
     const focusedId = ref<string | null>(null)
     const scrollPosition = ref<ScrollPosition | null>(null)
@@ -77,20 +77,12 @@ export default defineComponent({
     const scrolling = computed(() => store.state.TimelineSpace.Contents.Notifications.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
-    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const filters = computed(() => store.getters[`${space}/filters}`])
     const handledNotifications = computed(() => store.getters[`${space}/handledNotifications`])
     const currentFocusedIndex = computed(() => notifications.value.findIndex(notification => focusedId.value === notification.id))
-    // const shortcutEnabled = computed(() => {
-    //   if (modalOpened.value) {
-    //     return false
-    //   }
-    //   if (!focusedId.value) {
-    //     return true
-    //   }
-    //   // Sometimes toots are deleted, so perhaps focused toot don't exist.
-    //   return currentFocusedIndex.value === -1
-    // })
+    const shortcutEnabled = computed(() => !modalOpened.value)
+
     onMounted(() => {
       store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_NOTIFICATIONS}`, false)
       store.dispatch(`${space}/${ACTION_TYPES.RESET_BADGE}`)
@@ -151,6 +143,24 @@ export default defineComponent({
       },
       { deep: true }
     )
+    watch(focusedId, (newVal, _oldVal) => {
+      if (newVal && heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+      } else if (newVal === null && !heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+        store.commit(`${space}/${ACTION_TYPES.RESET_BADGE}`)
+      }
+    })
+    whenever(and(j, shortcutEnabled), () => {
+      if (focusedId.value === null) {
+        focusedId.value = handledNotifications.value[0].id
+      } else {
+        focusNext()
+      }
+    })
+    whenever(and(k, shortcutEnabled), () => {
+      focusPrev()
+    })
 
     const onScroll = (event: Event) => {
       if (moment().diff(resizeTime.value) < 500) {
