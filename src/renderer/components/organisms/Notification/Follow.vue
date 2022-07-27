@@ -92,8 +92,8 @@ export default defineComponent({
     .action-mark {
       color: #409eff;
       float: left;
-      width: 32px;
       text-align: right;
+      width: 32px;
     }
 
     .action-detail {
