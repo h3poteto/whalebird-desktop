@@ -19,6 +19,9 @@ jobs:
       - name: Install
         run: |
           yarn install
+      - name: typecheck
+        run: |
+          yarn run typecheck
       - name: Test
         run: |
           yarn run spec
@@ -28,21 +31,3 @@ jobs:
       - name: Compile renderer
         run: |
           yarn run pack:renderer
-
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Install
-        run: |
-          yarn install
-      - name: typecheck
-        run: |
-          yarn run typecheck
-      - name: lint
-        run: |
-           yarn run lint

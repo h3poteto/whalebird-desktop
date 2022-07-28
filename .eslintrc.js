@@ -3,17 +3,19 @@ module.exports = {
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
-    sourceType: 'module'
+    sourceType: 'module',
+    ecmaVersion: 12
   },
   env: {
     browser: true,
-    node: true
+    node: true,
+    es2021: true
   },
-  extends: ['standard', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', '@vue/typescript/recommended', 'prettier'],
   globals: {
     __static: true
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'vue'],
   rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
