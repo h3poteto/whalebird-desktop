@@ -54,8 +54,8 @@ export default defineComponent({
     onMounted(async () => {
       loading.value = true
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_LIST_MEMBERSHIP}`, account.value)
         await store.dispatch(`${space}/${ACTION_TYPES.FETCH_LISTS}`)
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_LIST_MEMBERSHIP}`, account.value)
       } catch (err) {
         ElMessage({
           message: i18n.t('message.lists_fetch_error'),
