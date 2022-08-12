@@ -135,7 +135,7 @@ export default defineComponent({
     })
     whenever(and(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
-        focusedId.value = timeline.value[0].id
+        focusedId.value = timeline.value[0].uri + timeline.value[0].id
       } else {
         focusNext()
       }
@@ -255,8 +255,6 @@ export default defineComponent({
       modalOpened,
       updateToot,
       deleteToot,
-      focusNext,
-      focusPrev,
       focusSidebar,
       focusToot,
       openSideBar,

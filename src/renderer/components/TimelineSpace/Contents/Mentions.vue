@@ -266,8 +266,6 @@ export default defineComponent({
       focusedId,
       modalOpened,
       updateToot,
-      focusNext,
-      focusPrev,
       focusSidebar,
       focusNotification,
       sizeChanged,
