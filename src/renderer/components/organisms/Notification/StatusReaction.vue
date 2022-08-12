@@ -1,5 +1,5 @@
 <template>
-  <div class="status" tabIndex="0" @click="$emit('select')" role="article" :aria-label="reactionType" ref="notificationRef">
+  <div ref="notificationRef" class="status" tabIndex="0" role="article" :aria-label="reactionType" @click="$emit('select')">
     <div v-show="filtered" class="filtered">Filtered</div>
     <div v-show="!filtered" class="status-reaction">
       <div class="action">
@@ -138,6 +138,7 @@ export default defineComponent({
       default: false
     }
   },
+  emits: ['select'],
   setup(props) {
     const store = useStore()
     const router = useRouter()

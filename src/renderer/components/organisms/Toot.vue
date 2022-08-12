@@ -1,5 +1,5 @@
 <template>
-  <div class="status" tabIndex="0" ref="statusRef" @click="$emit('selectToot', message)" role="article" aria-label="toot">
+  <div ref="statusRef" class="status" tabIndex="0" role="article" aria-label="toot" @click="$emit('selectToot', message)">
     <div v-if="filtered" class="filtered">Filtered</div>
     <div v-if="!filtered" class="toot">
       <div class="reblogger" v-if="message.reblog && !message.quote">
@@ -305,6 +305,7 @@ export default defineComponent({
       default: false
     }
   },
+  emits: ['selectToot', 'focusRight', 'focusLeft'],
   setup(props, ctx) {
     const space = 'organisms/Toot'
     const store = useStore()

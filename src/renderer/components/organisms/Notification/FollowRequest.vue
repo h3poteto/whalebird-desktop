@@ -1,5 +1,5 @@
 <template>
-  <div class="relationship" tabIndex="0" @click="$emit('select')" role="article" aria-label="follow event" ref="notificationRef">
+  <div ref="notificationRef" class="relationship" tabIndex="0" role="article" aria-label="follow event" @click="$emit('select')">
     <div class="follow-request">
       <div class="action">
         <div class="action-mark">
@@ -55,6 +55,7 @@ export default defineComponent({
       default: false
     }
   },
+  emits: ['select'],
   setup(props) {
     const { focused } = toRefs(props)
     const store = useStore()
