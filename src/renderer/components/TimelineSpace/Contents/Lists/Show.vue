@@ -51,7 +51,7 @@ export default defineComponent({
     const space = 'TimelineSpace/Contents/Lists/Show'
     const store = useStore()
     const i18n = useI18next()
-    const { j, k } = useMagicKeys()
+    const { j, k, r } = useMagicKeys()
 
     const { list_id } = toRefs(props)
     const focusedId = ref<string | null>(null)
@@ -128,6 +128,9 @@ export default defineComponent({
     })
     whenever(and(k, shortcutEnabled), () => {
       focusPrev()
+    })
+    whenever(and(r, shortcutEnabled), () => {
+      reload()
     })
 
     onBeforeUnmount(() => {

@@ -53,7 +53,7 @@ export default defineComponent({
     const focusedId = ref<string | null>(null)
     const heading = ref<boolean>(true)
     const scroller = ref<any>()
-    const { j, k } = useMagicKeys()
+    const { j, k, r } = useMagicKeys()
 
     const bookmarks = computed(() => store.state.TimelineSpace.Contents.Bookmarks.bookmarks)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Bookmarks.lazyLoading)
@@ -96,6 +96,9 @@ export default defineComponent({
     })
     whenever(and(k, shortcutEnabled), () => {
       focusPrev()
+    })
+    whenever(and(r, shortcutEnabled), () => {
+      reload()
     })
 
     const onScroll = (event: Event) => {

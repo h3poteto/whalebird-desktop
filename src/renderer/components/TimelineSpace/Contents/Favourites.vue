@@ -51,7 +51,7 @@ export default defineComponent({
     const heading = ref<boolean>(false)
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>()
-    const { j, k } = useMagicKeys()
+    const { j, k, r } = useMagicKeys()
 
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
@@ -104,6 +104,9 @@ export default defineComponent({
     })
     whenever(and(k, shortcutEnabled), () => {
       focusPrev()
+    })
+    whenever(and(r, shortcutEnabled), () => {
+      reload()
     })
 
     const onScroll = (event: Event) => {
