@@ -11,8 +11,6 @@
             :filters="[]"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
-            @focusNext="focusNext"
-            @focusPrev="focusPrev"
             @focusRight="focusSidebar"
             @selectToot="focusToot(item)"
             @sizeChanged="sizeChanged"
@@ -31,6 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, toRefs, ref, computed, onMounted, onBeforeUpdate, watch, onBeforeUnmount, onUnmounted } from 'vue'
+import { useMagicKeys, whenever, and } from '@vueuse/core'
 import moment from 'moment'
 import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
@@ -52,6 +51,7 @@ export default defineComponent({
     const space = 'TimelineSpace/Contents/Lists/Show'
     const store = useStore()
     const i18n = useI18next()
+    const { j, k } = useMagicKeys()
 
     const { list_id } = toRefs(props)
     const focusedId = ref<string | null>(null)
@@ -67,8 +67,9 @@ export default defineComponent({
     const scrolling = computed(() => store.state.TimelineSpace.Contents.Lists.Show.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
-    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
+    const shortcutEnabled = computed(() => !modalOpened.value)
 
     onMounted(() => {
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
@@ -111,6 +112,24 @@ export default defineComponent({
         })
       }
     })
+    watch(focusedId, (newVal, _oldVal) => {
+      if (newVal && heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+      } else if (newVal === null && !heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+      }
+    })
+    whenever(and(j, shortcutEnabled), () => {
+      if (focusedId.value === null) {
+        focusedId.value = timeline.value[0].uri + timeline.value[0].id
+      } else {
+        focusNext()
+      }
+    })
+    whenever(and(k, shortcutEnabled), () => {
+      focusPrev()
+    })
+
     onBeforeUnmount(() => {
       store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
       observer.value?.disconnect()
@@ -260,8 +279,6 @@ export default defineComponent({
       modalOpened,
       updateToot,
       deleteToot,
-      focusNext,
-      focusPrev,
       focusSidebar,
       focusToot,
       sizeChanged,
