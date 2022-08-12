@@ -1,5 +1,5 @@
 <template>
-  <div class="status" tabIndex="0" @click="$emit('select')" role="article" :aria-label="reactionType">
+  <div ref="notificationRef" class="status" tabIndex="0" role="article" :aria-label="reactionType" @click="$emit('select')">
     <div v-show="filtered" class="filtered">Filtered</div>
     <div v-show="!filtered" class="status-reaction">
       <div class="action">
@@ -94,7 +94,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRefs, ref, PropType } from 'vue'
+import { defineComponent, computed, toRefs, ref, PropType, watch, nextTick } from 'vue'
 import { Entity } from 'megalodon'
 import moment from 'moment'
 import { useRouter, useRoute } from 'vue-router'
@@ -138,20 +138,22 @@ export default defineComponent({
       default: false
     }
   },
+  emits: ['select'],
   setup(props) {
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
-    const { focused, overlaid, message, filters, reactionType } = toRefs(props)
+    const { focused, message, filters, reactionType } = toRefs(props)
 
     const showContent = ref<boolean>(false)
     const showAttachments = ref<boolean>(false)
+    const notificationRef = ref<any>(null)
 
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
     const timeFormat = computed(() => store.state.App.timeFormat)
     const language = computed(() => store.state.App.language)
     const hideAllAttachments = computed(() => store.state.App.hideAllAttachments)
-    const shortcutEnabled = computed(() => focused.value && !overlaid.value)
+    // const shortcutEnabled = computed(() => focused.value && !overlaid.value)
     const timestamp = computed(() => parseDatetime(message.value.created_at, timeFormat.value, language.value))
     const readableTimestamp = computed(() => {
       moment.locale(language.value)
@@ -205,6 +207,18 @@ export default defineComponent({
       }
     })
 
+    watch(focused, (newVal, oldVal) => {
+      if (newVal) {
+        nextTick(() => {
+          notificationRef.value.focus()
+        })
+      } else if (oldVal && !newVal) {
+        nextTick(() => {
+          notificationRef.value.blur()
+        })
+      }
+    })
+
     const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
     const tootClick = (e: MouseEvent) => {
       const parsedTag = findTag(e.target as HTMLElement, 'status-reaction')
@@ -251,11 +265,11 @@ export default defineComponent({
     return {
       showContent,
       showAttachments,
+      notificationRef,
       displayNameStyle,
       timeFormat,
       language,
       hideAllAttachments,
-      shortcutEnabled,
       timestamp,
       readableTimestamp,
       username,

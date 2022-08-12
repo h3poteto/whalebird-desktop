@@ -7,8 +7,6 @@
       :focused="focused"
       :overlaid="overlaid"
       reactionType="favourite"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -18,8 +16,6 @@
       :message="message"
       :focused="focused"
       :overlaid="overlaid"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -29,8 +25,6 @@
       :message="message"
       :focused="focused"
       :overlaid="overlaid"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -43,8 +37,6 @@
       :overlaid="overlaid"
       v-on:update="updateToot"
       v-on:delete="deleteToot"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -56,8 +48,6 @@
       :focused="focused"
       :overlaid="overlaid"
       reactionType="quote"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -69,21 +59,6 @@
       :focused="focused"
       :overlaid="overlaid"
       reactionType="reblog"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
-      @focusRight="$emit('focusRight')"
-      @select="$emit('selectNotification')"
-    >
-    </StatusReaction>
-    <StatusReaction
-      v-else-if="message.type === 'emoji_reaction'"
-      :message="message"
-      :filters="filters"
-      :focused="focused"
-      :overlaid="overlaid"
-      reactionType="reaction"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -94,8 +69,6 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -107,8 +80,6 @@
       :focused="focused"
       :overlaid="overlaid"
       reactionType="poll-vote"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -120,8 +91,6 @@
       :focused="focused"
       :overlaid="overlaid"
       reactionType="poll-expired"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >

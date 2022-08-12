@@ -28,8 +28,6 @@
       :overlaid="overlaid"
       v-on:update="updateToot"
       v-on:delete="deleteToot"
-      @focusNext="$emit('focusNext')"
-      @focusPrev="$emit('focusPrev')"
       @focusRight="$emit('focusRight')"
       @selectToot="$emit('select')"
     >

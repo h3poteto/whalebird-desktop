@@ -11,8 +11,6 @@
             :filters="[]"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
-            @focusNext="focusNext"
-            @focusPrev="focusPrev"
             @focusRight="focusSidebar"
             @selectToot="focusToot(item)"
           >
@@ -30,6 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted, onUnmounted, watch } from 'vue'
+import { useMagicKeys, whenever, and } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
@@ -52,14 +51,16 @@ export default defineComponent({
     const heading = ref<boolean>(false)
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>()
+    const { j, k } = useMagicKeys()
 
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const account = computed(() => store.state.TimelineSpace.account)
     const favourites = computed(() => store.state.TimelineSpace.Contents.Favourites.favourites)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Favourites.lazyLoading)
-    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => favourites.value.findIndex(status => focusedId.value === status.uri))
+    const shortcutEnabled = computed(() => !modalOpened.value)
 
     onMounted(() => {
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
@@ -92,6 +93,17 @@ export default defineComponent({
           store.commit(`TimelineSpace/HeaderMenu/${HEADER_MUTATION.CHANGE_RELOAD}`, false)
         })
       }
+    })
+
+    whenever(and(j, shortcutEnabled), () => {
+      if (focusedId.value === null) {
+        focusedId.value = favourites.value[0].uri
+      } else {
+        focusNext()
+      }
+    })
+    whenever(and(k, shortcutEnabled), () => {
+      focusPrev()
     })
 
     const onScroll = (event: Event) => {
@@ -165,8 +177,6 @@ export default defineComponent({
       modalOpened,
       updateToot,
       deleteToot,
-      focusNext,
-      focusPrev,
       focusSidebar,
       focusToot,
       openSideBar,
