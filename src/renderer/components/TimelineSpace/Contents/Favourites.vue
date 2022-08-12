@@ -97,7 +97,7 @@ export default defineComponent({
 
     whenever(and(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
-        focusedId.value = favourites.value[0].id
+        focusedId.value = favourites.value[0].uri
       } else {
         focusNext()
       }
