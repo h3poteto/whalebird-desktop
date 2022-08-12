@@ -33,7 +33,13 @@
             <el-input></el-input>
           </el-form-item>
           <el-form-item class="submit">
-            <el-button type="primary" @click="authorizeSubmit" v-loading="submitting" element-loading-background="rgba(0, 0, 0, 0.8)">
+            <el-button
+              v-loading="submitting"
+              type="primary"
+              class="authorize"
+              element-loading-background="rgba(0, 0, 0, 0.8)"
+              @click="authorizeSubmit"
+            >
               {{ $t('authorize.submit') }}
             </el-button>
           </el-form-item>
@@ -125,7 +131,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 #authorize {
   background-color: #292f3f;
-  color: #ffffff;
+  color: #fff;
   text-align: center;
   min-height: 100%;
 
@@ -150,6 +156,10 @@ export default defineComponent({
   .authorize-form {
     width: 500px;
     margin: 0 auto;
+
+    .authorize {
+      margin: 0 auto;
+    }
   }
 
   .authorize-form :deep() {
@@ -159,8 +169,12 @@ export default defineComponent({
 
     .el-input__inner {
       background-color: #373d48;
-      color: #ffffff;
+      color: #fff;
       border: 0;
+    }
+
+    .el-input__wrapper {
+      background-color: #373d48;
     }
   }
 

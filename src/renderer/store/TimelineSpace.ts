@@ -241,7 +241,12 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   [ACTION_TYPES.FETCH_INSTANCE]: async ({ commit, state }, account: LocalAccount) => {
     const client = generator(state.sns, account.baseURL, null, 'Whalebird')
     const res = await client.getInstance()
-    commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
+    if (res.data.max_toot_chars) {
+      commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
+    }
+    if (res.data.configuration) {
+      commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.configuration.statuses.max_characters)
+    }
     return true
   },
   [ACTION_TYPES.LOAD_TIMELINE_SETTING]: async ({ commit }, accountID: string) => {
