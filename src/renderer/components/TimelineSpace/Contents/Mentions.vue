@@ -16,8 +16,6 @@
               :overlaid="modalOpened"
               :filters="[]"
               v-on:update="updateToot"
-              @focusNext="focusNext"
-              @focusPrev="focusPrev"
               @focusRight="focusSidebar"
               @selectNotification="focusNotification(item)"
               @sizeChanged="sizeChanged"
@@ -37,6 +35,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useMagicKeys, whenever, and } from '@vueuse/core'
 import moment from 'moment'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
@@ -63,6 +62,7 @@ export default defineComponent({
     const route = useRoute()
     const i18n = useI18next()
     const { reloadable } = useReloadable(store, route, i18n)
+    const { j, k } = useMagicKeys()
 
     const focusedId = ref<string | null>(null)
     const scrollPosition = ref<ScrollPosition | null>(null)
@@ -78,18 +78,9 @@ export default defineComponent({
     const scrolling = computed(() => store.state.TimelineSpace.Contents.Mentions.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
-    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => mentions.value.findIndex(notification => focusedId.value === notification.id))
-    // const shortcutEnabled = computed(() => {
-    //   if (modalOpened.value) {
-    //     return false
-    //   }
-    //   if (!focusedId.value) {
-    //     return true
-    //   }
-    //   // Sometimes toots are deleted, so perhaps focused toot don't exist.
-    //   return currentFocusedIndex.value === -1
-    // })
+    const shortcutEnabled = computed(() => !modalOpened.value)
 
     onMounted(() => {
       store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_HOME_TIMELINE}`, false)
@@ -148,6 +139,23 @@ export default defineComponent({
       },
       { deep: true }
     )
+    watch(focusedId, (newVal, _oldVal) => {
+      if (newVal && heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+      } else if (newVal === null && !heading.value) {
+        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+      }
+    })
+    whenever(and(j, shortcutEnabled), () => {
+      if (focusedId.value === null) {
+        focusedId.value = mentions.value[0].id
+      } else {
+        focusNext()
+      }
+    })
+    whenever(and(k, shortcutEnabled), () => {
+      focusPrev()
+    })
 
     const onScroll = (event: Event) => {
       if (moment().diff(resizeTime.value) < 500) {
