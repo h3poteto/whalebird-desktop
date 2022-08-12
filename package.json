@@ -72,7 +72,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
-    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "@trodi/electron-splashscreen": "^1.0.2",
     "@vueuse/core": "^8.9.4",
@@ -91,7 +91,7 @@
     "i18next": "^21.8.13",
     "lodash": "^4.17.21",
     "lokijs": "^1.5.12",
-    "megalodon": "4.0.2",
+    "megalodon": "4.1.0",
     "minimist": "^1.2.6",
     "mitt": "^3.0.0",
     "moment": "^2.29.4",
