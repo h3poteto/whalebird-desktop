@@ -1911,10 +1911,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.44.tgz#16dd0bb5338f016d8ca10631789f0d0612fe5d5b"
   integrity sha512-gWYiOlu6Y4oyLYBvsJAPlwHbC8H4tX+tLsHy6Ee976wedwwZKrG2hFl3Y/HiH6bIyLTbDWQexQF/ohwKkOpUCg==
 
-"@types/node@^14.6.2":
-  version "14.14.31"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.31.tgz#72286bd33d137aa0d152d47ec7c1762563d34055"
-  integrity sha512-vFHy/ezP5qI0rFgJ7aQnjDXwAMrG0KqqIH7tQG5PPv3BWBayOPIQNBjVc/P6hhdZfMx51REc6tfDNXHUio893g==
+"@types/node@^16.11.26":
+  version "16.11.48"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.48.tgz#22d386f32b24fb644940b606ed393b56be7d8686"
+  integrity sha512-Z9r9UWlNeNkYnxybm+1fc0jxUNjZqRekTAr1pG0qdXe9apT9yCiqk1c4VvKQJsFpnchU4+fLl25MabSLA2wxIw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -2534,6 +2534,11 @@ acorn@^8.2.4, acorn@^8.4.1, acorn@^8.7.1:
   version "8.7.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.1.tgz#0197122c843d1bf6d0a5e83220a788f278f63c30"
   integrity sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==
+
+acorn@^8.5.0:
+  version "8.8.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
+  integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
 agent-base@6:
   version "6.0.1"
@@ -5149,13 +5154,13 @@ electron-window-state@^5.0.3:
     jsonfile "^4.0.0"
     mkdirp "^0.5.1"
 
-electron@17.3.0:
-  version "17.3.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-17.3.0.tgz#cdcc46a7a3cd0b6f2a1757fbeb807f6b2fce847e"
-  integrity sha512-KuYHCOw1a+CE9thZlWRqTScf6M81KLd6n5qpdBGb0rl62+50RUuau9CnYpBb3EJxrjsXLaiQCBBSdPsozf/XUg==
+electron@18.3.8:
+  version "18.3.8"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-18.3.8.tgz#394ae5f8c6133db4c5c5c166ef9167bb65249e56"
+  integrity sha512-x67LztfMFMR/oQ788PTHLl871tQ/As78+/esjXCv/MhbumgVbd+dWYHf1YU4FaZK7GnUHNK7W8b2BamOyIP5AA==
   dependencies:
     "@electron/get" "^1.13.0"
-    "@types/node" "^14.6.2"
+    "@types/node" "^16.11.26"
     extract-zip "^1.0.3"
 
 elegant-spinner@^1.0.1:
