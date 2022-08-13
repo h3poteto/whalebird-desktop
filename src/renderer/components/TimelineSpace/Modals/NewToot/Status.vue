@@ -102,10 +102,11 @@ export default defineComponent({
       default: 120
     }
   },
+  emits: ['toot'],
   setup(props, ctx) {
     const space = 'TimelineSpace/Modals/NewToot/Status'
     const store = useStore()
-    const { up, down, enter, escape, Ctrl_Enter } = useMagicKeys({
+    const { up, down, enter, escape, Ctrl_Enter, Cmd_Enter } = useMagicKeys({
       passive: false,
       onEventFired(e) {
         if (e.key === 'Enter' && suggestOpened.value) e.preventDefault()
@@ -143,6 +144,9 @@ export default defineComponent({
       closeSuggest()
     })
     whenever(Ctrl_Enter, () => {
+      ctx.emit('toot')
+    })
+    whenever(Cmd_Enter, () => {
       ctx.emit('toot')
     })
 
