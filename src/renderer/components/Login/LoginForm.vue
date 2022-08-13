@@ -196,5 +196,9 @@ export default defineComponent({
     color: #fff;
     box-shadow: none;
   }
+
+  .el-input__wrapper {
+    background-color: #373d48;
+  }
 }
 </style>
