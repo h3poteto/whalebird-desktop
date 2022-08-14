@@ -95,6 +95,17 @@
       @select="$emit('selectNotification')"
     >
     </StatusReaction>
+    <StatusReaction
+      v-else-if="message.type === 'emoji_reaction'"
+      :message="message"
+      :filters="filters"
+      :focused="focused"
+      :overlaid="overlaid"
+      reactionType="emoji-reaction"
+      @focusRight="$emit('focusRight')"
+      @select="$emit('selectNotification')"
+    >
+    </StatusReaction>
   </div>
 </template>
 

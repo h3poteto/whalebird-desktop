@@ -183,7 +183,7 @@ export default defineComponent({
           return 'notification.poll_vote.body'
         case 'quote':
           return 'notification.quote.body'
-        case 'reaction':
+        case 'emoji-reaction':
           return 'notification.reaction.body'
         case 'reblog':
           return 'notification.reblog.body'
