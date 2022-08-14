@@ -158,7 +158,7 @@
     "css-loader": "^6.7.1",
     "del": "^6.1.1",
     "devtron": "^1.4.0",
-    "electron": "18.3.8",
+    "electron": "20.0.2",
     "electron-builder": "^23.3.3",
     "electron-debug": "^3.2.0",
     "electron-devtools-installer": "^3.2.0",
