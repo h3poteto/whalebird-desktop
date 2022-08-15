@@ -6,8 +6,8 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      reactionType="favourite"
-      @focusRight="$emit('focusRight')"
+      reaction-type="favourite"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </StatusReaction>
@@ -16,7 +16,7 @@
       :message="message"
       :focused="focused"
       :overlaid="overlaid"
-      @focusRight="$emit('focusRight')"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </follow>
@@ -25,7 +25,7 @@
       :message="message"
       :focused="focused"
       :overlaid="overlaid"
-      @focusRight="$emit('focusRight')"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </FollowRequest>
@@ -35,9 +35,9 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      v-on:update="updateToot"
-      v-on:delete="deleteToot"
-      @focusRight="$emit('focusRight')"
+      @update="updateToot"
+      @delete="deleteToot"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </mention>
@@ -47,8 +47,8 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      reactionType="quote"
-      @focusRight="$emit('focusRight')"
+      reaction-type="quote"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </StatusReaction>
@@ -58,8 +58,8 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      reactionType="reblog"
-      @focusRight="$emit('focusRight')"
+      reaction-type="reblog"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </StatusReaction>
@@ -69,7 +69,7 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      @focusRight="$emit('focusRight')"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </status>
@@ -79,8 +79,8 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      reactionType="poll-vote"
-      @focusRight="$emit('focusRight')"
+      reaction-type="poll-vote"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </StatusReaction>
@@ -90,8 +90,19 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
-      reactionType="poll-expired"
-      @focusRight="$emit('focusRight')"
+      reaction-type="poll-expired"
+      @focus-right="$emit('focusRight')"
+      @select="$emit('selectNotification')"
+    >
+    </StatusReaction>
+    <StatusReaction
+      v-else-if="message.type === 'emoji_reaction'"
+      :message="message"
+      :filters="filters"
+      :focused="focused"
+      :overlaid="overlaid"
+      reaction-type="emoji-reaction"
+      @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
     </StatusReaction>
@@ -108,25 +119,7 @@ import Mention from './Notification/Mention.vue'
 import Status from './Notification/Status.vue'
 
 export default defineComponent({
-  name: 'notification',
-  props: {
-    message: {
-      type: Object as PropType<Entity.Notification>,
-      default: {}
-    },
-    filters: {
-      type: Array as PropType<Array<Entity.Filter>>,
-      default: []
-    },
-    focused: {
-      type: Boolean,
-      defalt: false
-    },
-    overlaid: {
-      type: Boolean,
-      default: false
-    }
-  },
+  name: 'Notification',
   components: {
     StatusReaction,
     Follow,
@@ -134,6 +127,25 @@ export default defineComponent({
     Mention,
     Status
   },
+  props: {
+    message: {
+      type: Object as PropType<Entity.Notification>,
+      default: () => ({})
+    },
+    filters: {
+      type: Array as PropType<Array<Entity.Filter>>,
+      default: () => []
+    },
+    focused: {
+      type: Boolean,
+      defalt: () => false
+    },
+    overlaid: {
+      type: Boolean,
+      default: () => false
+    }
+  },
+  emits: ['focusRight', 'selectNotification', 'update', 'delete'],
   setup(_props, ctx) {
     const updateToot = (message: Entity.Status) => {
       return ctx.emit('update', message)

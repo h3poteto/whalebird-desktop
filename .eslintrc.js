@@ -33,6 +33,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     camelcase: 'off',
     '@typescript-eslint/camelcase': 'off',
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    'vue/multi-word-component-names': 'off'
   }
 }
