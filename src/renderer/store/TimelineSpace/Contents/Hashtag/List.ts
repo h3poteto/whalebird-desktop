@@ -2,6 +2,7 @@ import { LocalTag } from '~/src/types/localTag'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
+import { toRaw } from 'vue'
 
 const win = window as any as MyWindow
 
@@ -35,7 +36,7 @@ const actions: ActionTree<ListState, RootState> = {
     return tags
   },
   [ACTION_TYPES.REMOVE_TAG]: async ({ dispatch }, tag: LocalTag) => {
-    await win.ipcRenderer.invoke('remove-hashtag', tag)
+    await win.ipcRenderer.invoke('remove-hashtag', toRaw(tag))
     dispatch('listTags')
     dispatch('TimelineSpace/SideMenu/listTags', {}, { root: true })
     return 'deleted'
