@@ -83,7 +83,7 @@ export default defineComponent({
     const shortcutEnabled = computed(() => !modalOpened.value)
 
     onMounted(() => {
-      store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_HOME_TIMELINE}`, false)
+      store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_MENTIONS}`, false)
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
 
       if (heading.value && mentions.value.length > 0) {
