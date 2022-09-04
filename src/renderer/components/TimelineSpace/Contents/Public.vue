@@ -55,7 +55,7 @@ export default defineComponent({
     const route = useRoute()
     const i18n = useI18next()
     const { reloadable } = useReloadable(store, route, i18n)
-    const { j, k, r } = useMagicKeys()
+    const { j, k, Ctrl_r } = useMagicKeys()
 
     const focusedId = ref<string | null>(null)
     const scrollPosition = ref<ScrollPosition | null>(null)
@@ -155,7 +155,7 @@ export default defineComponent({
     whenever(and(k, shortcutEnabled), () => {
       focusPrev()
     })
-    whenever(and(r, shortcutEnabled), () => {
+    whenever(and(Ctrl_r, shortcutEnabled), () => {
       reload()
     })
 
