@@ -14,7 +14,8 @@ import {
   Notification,
   NotificationConstructorOptions,
   nativeTheme,
-  IpcMainInvokeEvent
+  IpcMainInvokeEvent,
+  globalShortcut
 } from 'electron'
 import Datastore from 'nedb'
 import { isEmpty } from 'lodash'
@@ -449,6 +450,13 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+app.on('browser-window-focus', () => {
+  // Disable reload
+  globalShortcut.register('CommandOrControl+R', () => {
+    console.log('CommandOrControl+R is pressed: Shortcut Disabled')
+  })
 })
 
 const auth = new Authentication(accountRepo)
