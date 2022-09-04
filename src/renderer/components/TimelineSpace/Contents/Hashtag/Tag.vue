@@ -1,6 +1,5 @@
 <template>
   <div name="tag" class="tag-timeline">
-    <div></div>
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
