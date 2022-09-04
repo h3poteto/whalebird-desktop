@@ -167,7 +167,7 @@
     "electron-packager": "^15.5.1",
     "eslint": "^8.20.0",
     "eslint-loader": "^4.0.2",
-    "eslint-plugin-vue": "^9.3.0",
+    "eslint-plugin-vue": "^9.4.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "https-browserify": "^1.0.0",
