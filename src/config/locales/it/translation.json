@@ -167,7 +167,7 @@
       "timeline": {
         "title": "Cronologia",
         "description": "Personalizza la visualizzazione nelle tue timeline.",
-        "cw": "Always expand posts marked with contents warnings",
+        "cw": "Espandi sempre i post contrassegnati con avvisi di contenuto",
         "nsfw": "Always show all media",
         "hideAllAttachments": "Always hide all media"
       },
