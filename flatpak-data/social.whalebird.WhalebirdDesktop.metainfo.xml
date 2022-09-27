@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
   <id>social.whalebird.WhalebirdDesktop</id>
-  
-  <name>WhaleBrird </name>
+
+  <name>Whalebird </name>
   <summary>Whalebird is a Mastodon, Pleroma, and Misskey client for the desktop</summary>
-  
+
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MIT</project_license>
   <url type="homepage">https://whalebird.social/en/desktop/contents</url>
@@ -25,7 +25,7 @@
             <li>Manage multiple accounts</li>
         </ul>
   </description>
-  
+
   <launchable type="desktop-id">social.whalebird.WhalebirdDesktop.desktop</launchable>
   <screenshots>
     <screenshot type="default">
@@ -33,16 +33,11 @@
     </screenshot>
   </screenshots>
   <releases>
-      <release version="4.4.6" date="2021-10-29">
+      <release version="4.6.5" date="2022-9-9">
           <description>
-              <p>Added</p>
-            <ul>
-                    <li>Add reset menu to reset preferences</li>
-                    <li>Use system theme as the default theme</li>
-              </ul>
               <p>Changed</p>
               <ul>
-                    <li>New Crowdin updates</li>
+                <li>Stop building linux ia32 build because Electron 19 does not support it</li>
               </ul>
           </description>
       </release>
