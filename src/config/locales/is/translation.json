@@ -2,44 +2,44 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "shortcuts": "Shortcut Keys",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
+      "about": "Um Whalebird",
+      "preferences": "Kjörstillingar...",
+      "shortcuts": "Flýtilyklar",
+      "services": "Þjónustur",
+      "hide": "Fela Whalebird",
+      "hide_others": "Fela annað",
+      "show_all": "Sýna allt",
       "open": "Open Window",
       "quit": "Quit"
     },
     "toot": {
-      "name": "Toot",
-      "new": "New Toot"
+      "name": "Færsla",
+      "new": "Ný færsla"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "Breyta",
+      "undo": "Afturkalla",
+      "redo": "Endurtaka",
+      "cut": "Klippa",
+      "copy": "Afrita",
+      "paste": "Líma",
+      "select_all": "Velja allt"
     },
     "view": {
       "name": "View",
       "toggle_full_screen": "Toggle Full Screen"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
+      "always_show_menu_bar": "Alltaf að sýna valmyndastiku",
+      "name": "Gluggi",
       "close": "Close Window",
-      "open": "Open Window",
+      "open": "Opna glugga",
       "minimize": "Minimize",
-      "jump_to": "Jump to"
+      "jump_to": "Hoppa í"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "Bæta við nýjum aðgangi"
   },
   "side_menu": {
     "profile": "Profile",
@@ -50,38 +50,38 @@
     "expand": "Expand",
     "home": "Home",
     "notification": "Notification",
-    "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
+    "mention": "Minnst á",
+    "direct": "Bein skilaboð",
+    "follow_requests": "Fylgjendabeiðnir",
+    "favourite": "Eftirlæti",
+    "bookmark": "Bókamerki",
+    "local": "Staðvær tímalína",
+    "public": "Opinber tímalína",
+    "hashtag": "Myllumerki",
     "search": "Search",
-    "lists": "Lists"
+    "lists": "Listar"
   },
   "header_menu": {
     "home": "Home",
     "notification": "Notification",
     "mention": "Mention",
     "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
+    "bookmark": "Bókamerki",
+    "follow_requests": "Fylgjendabeiðnir",
+    "direct_messages": "Bein skilaboð",
+    "local": "Staðvær tímalína",
+    "public": "Opinber tímalína",
+    "hashtag": "Myllumerki",
     "search": "Search",
-    "lists": "Lists",
-    "members": "Members",
+    "lists": "Listar",
+    "members": "Meðlimir",
     "option": {
       "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
+      "show_reblogs": "Sýna endurbirtingar",
+      "show_replies": "Sýna svör",
       "apply": "Apply"
     },
-    "new_toot": "Toot",
+    "new_toot": "Tíst",
     "reload": "Reload",
     "settings": "Settings"
   },
@@ -90,14 +90,14 @@
     "general": {
       "title": "General",
       "toot": {
-        "title": "Toot",
+        "title": "Tíst",
         "visibility": {
           "description": "Customize default visibility of toot",
           "notice": "This setting applies to only new toots, replies follow visibility of original toots",
           "public": "Public",
-          "unlisted": "Unlisted",
+          "unlisted": "Óskráð",
           "private": "Private",
-          "direct": "Direct"
+          "direct": "Beint"
         },
         "sensitive": {
           "description": "Mark media as sensitive by default"
@@ -105,13 +105,13 @@
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Tímalína",
       "unread_notification": {
         "title": "Unread Notification",
         "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "direct": "Bein skilaboð",
+        "local": "Staðvær tímalína",
+        "public": "Opinber tímalína"
       },
       "use_marker": {
         "title": "Load the timeline from the last reading position",
@@ -121,24 +121,24 @@
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Síur",
       "form": {
         "phrase": "Keyword or phrase",
         "expire": "Expire after",
         "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
+        "irreversible": "Fella niður í staðinn fyrir að fela",
         "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "submit": "Senda inn",
+        "cancel": "Hætta við"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Aldrei",
+        "30_minutes": "30 mínútur",
+        "1_hour": "1 klukkustund",
+        "6_hours": "6 klukkustundir",
+        "12_hours": "12 klukkustundir",
+        "1_day": "1 dagur",
+        "1_week": "1 vika"
       },
       "new": {
         "title": "New"
@@ -148,28 +148,28 @@
       },
       "delete": {
         "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
+        "confirm": "Ertu viss um að þú viljir eyða þessari síu?",
         "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "confirm_cancel": "Hætta við"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Kjörstillingar",
     "general": {
       "title": "General",
       "sounds": {
-        "title": "Sounds",
+        "title": "Hljóð",
         "description": "Please set feedback sounds.",
         "fav_rb": "When you favorite or boost the toot",
         "toot": "When you post toot"
       },
       "timeline": {
-        "title": "Timeline",
+        "title": "Tímalína",
         "description": "Customize view in your timelines.",
         "cw": "Always expand posts marked with contents warnings",
         "nsfw": "Always show all media",
-        "hideAllAttachments": "Always hide all media"
+        "hideAllAttachments": "Alltaf fela allt myndefni"
       },
       "other": {
         "title": "Other options",
@@ -181,11 +181,11 @@
     },
     "appearance": {
       "title": "Appearance",
-      "theme_color": "Theme color",
+      "theme_color": "Litur þema",
       "theme": {
-        "system": "System",
-        "light": "Light",
-        "dark": "Dark",
+        "system": "Kerfis",
+        "light": "Ljóst",
+        "dark": "Dökkt",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
@@ -213,13 +213,13 @@
         "username": "Username"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "title": "Tímasnið",
+        "absolute": "Algilt",
+        "relative": "Hlutfallslegt"
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "Tilkynning",
       "enable": {
         "description": "Please set notification events.",
         "reply": "Notify me when I receive a reply",
@@ -237,27 +237,27 @@
       "title": "Account",
       "connected": "Connected Account",
       "username": "Username",
-      "domain": "Domain",
-      "association": "Association",
+      "domain": "Lén",
+      "association": "Samtök",
       "order": "Order",
       "remove_association": "Remove association",
       "remove_all_associations": "Remove all associations",
       "confirm": "Confirm",
-      "cancel": "Cancel",
+      "cancel": "Hætta við",
       "confirm_message": "Are you sure to remove all associations?"
     },
     "network": {
       "title": "Network",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
+        "title": "Uppsetning milliþjóns (proxy)",
+        "no": "Enginn milliþjónn",
         "system": "Use system proxy",
         "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
-        "host": "Proxy host",
-        "port": "Proxy port",
-        "username": "Proxy username",
-        "password": "Proxy password",
+        "protocol": "Samskiptamáti",
+        "host": "Hýsilvél milliþjóns",
+        "port": "Gátt milliþjóns",
+        "username": "Notandanafn á milliþjóni",
+        "password": "Lykilorð á milliþjóni",
         "protocol_list": {
           "http": "http",
           "https": "https",
@@ -267,7 +267,7 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "Vista"
     },
     "language": {
       "title": "Language",
@@ -284,17 +284,17 @@
   "modals": {
     "new_toot": {
       "title": "New Toot",
-      "cw": "Write your warning here",
-      "status": "What is on your mind?",
-      "cancel": "Cancel",
-      "toot": "Toot",
+      "cw": "Skrifaðu aðvörunina þína hér",
+      "status": "Hvað liggur þér á hjarta?",
+      "cancel": "Hætta við",
+      "toot": "Tíst",
       "close_confirm": "Are you sure you want to discard this toot?",
       "close_confirm_ok": "Discard",
       "close_confirm_cancel": "Continue Editing",
-      "description": "Describe for the visually impaired",
+      "description": "Lýstu þessu fyrir sjónskerta",
       "footer": {
         "add_image": "Add images",
-        "poll": "Add a poll",
+        "poll": "Bæta við könnun",
         "change_visibility": "Change visibility",
         "change_sensitive": "Change sensitive",
         "add_cw": "Add content warning",
@@ -303,12 +303,12 @@
       "poll": {
         "add_choice": "Add a choice",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
+          "5_minutes": "5 mínútur",
+          "30_minutes": "30 mínútur",
+          "1_hour": "1 klukkustund",
+          "6_hours": "6 klukkustundir",
+          "1_day": "1 dagur",
+          "3_days": "3 dagar",
           "7_days": "7 days"
         }
       }
@@ -326,7 +326,7 @@
     "mute_confirm": {
       "title": "Are you sure you want to mute?",
       "body": "Hide notification from this user?",
-      "cancel": "Cancel",
+      "cancel": "Hætta við",
       "ok": "Mute"
     },
     "shortcut": {
@@ -353,7 +353,7 @@
     "report": {
       "title": "Reporting this user",
       "comment": "Additional comments",
-      "cancel": "Cancel",
+      "cancel": "Hætta við",
       "ok": "Report"
     }
   },
@@ -370,14 +370,14 @@
       "report": "Report",
       "delete": "Delete",
       "via": "via {{application}}",
-      "reply": "Reply",
-      "reblog": "Reblog",
+      "reply": "Svara",
+      "reblog": "Endurbirta",
       "fav": "Favourite",
       "detail": "Toot details",
-      "bookmark": "Bookmark",
-      "pinned": "Pinned toot",
+      "bookmark": "Bókamerki",
+      "pinned": "Fest tíst",
       "poll": {
-        "vote": "Vote",
+        "vote": "Greiða atkvæði",
         "votes_count": "votes",
         "until": "until {{datetime}}",
         "left": "{{datetime}} left",
@@ -390,14 +390,14 @@
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
+      "follows_you": "Fylgir þér",
       "doesnt_follow_you": "Doesn't follow you",
       "detail": "Detail",
       "follow": "Follow this user",
       "unfollow": "Unfollow this user",
       "subscribe": "Subscribe this user",
       "unsubscribe": "Unsubscribe this user",
-      "follow_requested": "Follow requested",
+      "follow_requested": "Beðið um að fylgja",
       "open_in_browser": "Open in Browser",
       "manage_list_memberships": "Manage List Memberships",
       "mute": "Mute",
@@ -405,25 +405,25 @@
       "unblock": "Unblock",
       "block": "Block",
       "toots": "Toots",
-      "follows": "Follows",
-      "followers": "Followers"
+      "follows": "Fylgist með",
+      "followers": "Fylgjendur"
     }
   },
   "follow_requests": {
     "accept": "Accept",
-    "reject": "Reject"
+    "reject": "Hafna"
   },
   "hashtag": {
     "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
+    "delete_tag": "Eyða merki",
     "save_tag": "Save tag"
   },
   "search": {
     "search": "Search",
     "account": "Account",
-    "tag": "Hashtag",
+    "tag": "Myllumerki",
     "keyword": "keyword",
-    "toot": "Toot"
+    "toot": "Tíst"
   },
   "lists": {
     "index": {
@@ -434,7 +434,7 @@
           "title": "Confirm",
           "message": "This operation can not be undone, this list will be permanently deleted",
           "ok": "Delete",
-          "cancel": "Cancel"
+          "cancel": "Hætta við"
         }
       }
     }
@@ -489,7 +489,7 @@
     "bookmark_error": "Failed to bookmark",
     "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Failed to delete the toot",
-    "search_error": "Failed to search",
+    "search_error": "Tókst ekki að leita",
     "toot_error": "Failed to toot",
     "update_list_memberships_error": "Failed to update the list memberships",
     "add_user_error": "Failed to add user",
@@ -528,7 +528,7 @@
       "body": "Receive a follow request from {{username}}"
     },
     "reblog": {
-      "title": "Reblog",
+      "title": "Endurbirta",
       "body": "{{username}} boosted your status"
     },
     "quote": {
@@ -540,7 +540,7 @@
       "body": "{{username}} reacted your status"
     },
     "status": {
-      "title": "Status",
+      "title": "Staða",
       "body": "{{username}} just posted"
     },
     "poll_vote": {
