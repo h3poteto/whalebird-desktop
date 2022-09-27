@@ -132,7 +132,7 @@
     "@types/nedb": "^1.8.12",
     "@types/node": "^18.7.15",
     "@types/parse-link-header": "^2.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.36.2",
     "@vue/compiler-sfc": "^3.2.37",
     "@vue/eslint-config-prettier": "^7.0.0",
