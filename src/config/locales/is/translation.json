@@ -454,102 +454,102 @@
     "submit": "Senda inn"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Slepptu til að senda inn á Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
-    "preferences_load_error": "Failed to load preferences",
-    "timeline_fetch_error": "Failed to fetch timeline",
-    "notification_fetch_error": "Failed to fetch notification",
-    "favourite_fetch_error": "Failed to fetch favorite",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_request_reject_error": "Failed to reject the request",
-    "start_streaming_error": "Failed to start streaming",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
-    "attach_error": "Could not attach the file",
+    "account_load_error": "Mistókst að hlaða inn notendaaðgöngum",
+    "account_remove_error": "Mistókst að fjarlægja notandaaðganginn",
+    "preferences_load_error": "Mistókst að hlaða inn kjörstillingum",
+    "timeline_fetch_error": "Mistókst að sækja tímalínu",
+    "notification_fetch_error": "Mistókst að sækja tilkynningu",
+    "favourite_fetch_error": "Mistókst að sækja eftirlæti",
+    "follow_request_accept_error": "Mistókst að samþykkja beiðnina",
+    "follow_request_reject_error": "Mistókst að hafna beiðninni",
+    "start_streaming_error": "Mistókst að ræsa streymi",
+    "start_all_streamings_error": "Mistókst að ræsa streymi á {{domain}}",
+    "attach_error": "Gat ekki hengt við skrána",
     "authorize_duplicate_error": "Can not login the same account of the same domain",
-    "authorize_error": "Failed to authorize",
-    "followers_fetch_error": "Failed to fetch followers",
-    "follows_fetch_error": "Failed to fetch follows",
-    "toot_fetch_error": "Failed to fetch the toot detail",
-    "follow_error": "Failed to follow the user",
-    "unfollow_error": "Failed to unfollow the user",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
-    "lists_fetch_error": "Failed to fetch lists",
-    "list_create_error": "Failed to create a list",
-    "members_fetch_error": "Failed to fetch members",
-    "remove_user_error": "Failed to remove the user",
-    "find_account_error": "Account not found",
+    "authorize_error": "Tókst ekki að auðkenna",
+    "followers_fetch_error": "Mistókst að sækja fylgjendur",
+    "follows_fetch_error": "Mistókst að sækja þá sem fylgst er með",
+    "toot_fetch_error": "Mistókst að sækja nánari upplýsingar um færslu",
+    "follow_error": "Mistókst að fylgjast með notandanum",
+    "unfollow_error": "Mistókst að hætta að fylgjast með notandanum",
+    "subscribe_error": "Mistókst að gerast áskrifandi að þessum notanda",
+    "unsubscribe_error": "Mistókst að hætta sem áskrifandi að þessum notanda",
+    "lists_fetch_error": "Mistókst að sækja lista",
+    "list_create_error": "Mistókst að búa til lista",
+    "members_fetch_error": "Mistókst að sækja meðlimi",
+    "remove_user_error": "Mistókst að fjarlægja notandann",
+    "find_account_error": "Notandaaðgangur fannst ekki",
     "reblog_error": "Tókst ekki að endurbirta",
     "unreblog_error": "Tókst ekki að afturkalla endurbirtingu",
-    "favourite_error": "Failed to favourite",
-    "unfavourite_error": "Failed to unfavourite",
-    "bookmark_error": "Failed to bookmark",
-    "unbookmark_error": "Failed to remove bookmark",
-    "delete_error": "Failed to delete the toot",
+    "favourite_error": "Mistókst að setja í eftirlæti",
+    "unfavourite_error": "FMistókst að taka úr eftirlætum",
+    "bookmark_error": "Mistókst að vista bókamerki",
+    "unbookmark_error": "Mistókst að fjarlægja bókamerki",
+    "delete_error": "Mistókst að eyða færslunni",
     "search_error": "Tókst ekki að leita",
-    "toot_error": "Failed to toot",
+    "toot_error": "Mistókst að birta færslu",
     "update_list_memberships_error": "Failed to update the list memberships",
     "add_user_error": "Mistókst að bæta við notanda",
     "authorize_url_error": "Failed to get authorize url",
-    "domain_confirmed": "{{domain}} is confirmed, please login",
+    "domain_confirmed": "{{domain}} er staðfest, skráðu þig inn",
     "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
     "loading": "Hleð inn...",
-    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
-    "update_filter_error": "Failed to update the filter",
-    "create_filter_error": "Failed to create the filter"
+    "language_not_support_spellchecker_error": "Þetta tungumál er ekki stutt af stafsetningaryfirferðinni",
+    "update_filter_error": "Mistókst að uppfæra síuna",
+    "create_filter_error": "Mistókst að útbúa síuna"
   },
   "validation": {
     "login": {
-      "require_domain_name": "A domain name is required",
-      "domain_format": "Please only enter the domain name"
+      "require_domain_name": "Heiti léns er nauðsynlegt",
+      "domain_format": "Settu einungis inn heiti lénsins"
     },
     "new_toot": {
-      "toot_length": "Toot length should be {{min}} to {{max}}",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "toot_length": "Lengd færslu ætti að vera frá {{min}} til {{max}}",
+      "attach_length": "Þú getur einungis hengt við {{max}} mynd",
+      "attach_length_plural": "Þú getur einungis hengt við {{max}} myndir",
+      "attach_image": "Þú getur einungis hengt við myndir eða myndskeið",
+      "poll_invalid": "Ógildir valkostir í könnun"
     }
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{{username}} favourited your status"
+      "title": "Eftirlæti",
+      "body": "{{username}} setti stöðufærslu þína í eftirlæti"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{{username}} is now following you"
+      "title": "Fylgja",
+      "body": "{{username}}  er núna að fylgjast með þér"
     },
     "follow_request": {
-      "title": "FollowRequest",
-      "body": "Receive a follow request from {{username}}"
+      "title": "FylgjendaBeiðni",
+      "body": "Fékkst fylgjendabeiðni frá {{username}}"
     },
     "reblog": {
       "title": "Endurbirta",
       "body": "{{username}} endurbirti stöðufærslu þína"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "Tilvitnun",
+      "body": "{{username}} vitnaði í stöðufærslu þína"
     },
     "reaction": {
       "title": "Viðbrögð",
-      "body": "{{username}} reacted your status"
+      "body": "{{username}} brást við stöðufærslu þinni"
     },
     "status": {
       "title": "Staða",
-      "body": "{{username}} just posted"
+      "body": "{{username}} var að birta"
     },
     "poll_vote": {
-      "title": "PollVote",
-      "body": "{{username}} voted your poll"
+      "title": "KönnunAtkvæði",
+      "body": "{{username}} greiddi atkvæði í könnuninni þinni"
     },
     "poll_expired": {
-      "title": "PollExpired",
-      "body": "{{username}}'s poll is expired"
+      "title": "KönnunÚtrunnin",
+      "body": "Könnun á vegum {{username}} er útrunnin"
     }
   }
 }
