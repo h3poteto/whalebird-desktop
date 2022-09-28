@@ -93,7 +93,7 @@
         "title": "Færsla",
         "visibility": {
           "description": "Sérsníða sjálfgefinn sýnileika færslna",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "notice": "Þessi stilling á aðeins við nýjar færslur, svör taka mið af sýnileika upprunalegra færslna",
           "public": "Opinbert",
           "unlisted": "Óskráð",
           "private": "Einka",
@@ -114,7 +114,7 @@
         "public": "Opinber tímalína"
       },
       "use_marker": {
-        "title": "Load the timeline from the last reading position",
+        "title": "Hlaða inn tímalínunni þar sem síðast var verið að skoða",
         "home": "Heim",
         "notifications": "Tilkynningar",
         "mentions": "Tilvísanir"
@@ -333,7 +333,7 @@
       "title": "Flýtileiðir á lyklaborði",
       "ctrl_number": "Skipta um notandaaðgang",
       "ctrl_k": "Hoppa á aðrar tímalínur",
-      "ctrl_n": "Open the new toot modal",
+      "ctrl_n": "Opna nýja færslugluggann",
       "ctrl_enter": "Senda inn færsluna",
       "ctrl_r": "Endurhlaða núverandi tímalínu",
       "j": "Velja næstu færslu",
@@ -440,17 +440,17 @@
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
+    "domain_name_label": "Fyrst skulum við skrá inn á Mastodon-netþjón. Settu inn lénsheiti þjónsins.",
+    "proxy_info": "Ef þú ætlar að nota milliþjón (proxy), skaltu setja hann upp",
     "proxy_here": " hér",
     "search": "Leita",
     "login": "Innskráning"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
-    "misskey_label": "Please submit after you authorize in your browser.",
+    "manually_1": "Auðkenningarsíða hefur opnast í vafranum þínum.",
+    "manually_2": "Ef hún hefur ekki opnast sjálfkrafa, skaltu fara handvirkt á eftirfarandi slóð",
+    "code_label": "Límdu inn auðkenningarkóðann úr vafranum þínum:",
+    "misskey_label": "Sendu inn eftir að þú hefur auðkennt þig í vafranum þínum.",
     "submit": "Senda inn"
   },
   "receive_drop": {
@@ -468,7 +468,7 @@
     "start_streaming_error": "Mistókst að ræsa streymi",
     "start_all_streamings_error": "Mistókst að ræsa streymi á {{domain}}",
     "attach_error": "Gat ekki hengt við skrána",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
+    "authorize_duplicate_error": "Get ekki skráð inn sama aðgang af sama léni",
     "authorize_error": "Tókst ekki að auðkenna",
     "followers_fetch_error": "Mistókst að sækja fylgjendur",
     "follows_fetch_error": "Mistókst að sækja þá sem fylgst er með",
@@ -491,11 +491,11 @@
     "delete_error": "Mistókst að eyða færslunni",
     "search_error": "Tókst ekki að leita",
     "toot_error": "Mistókst að birta færslu",
-    "update_list_memberships_error": "Failed to update the list memberships",
+    "update_list_memberships_error": "Mistókst að uppfæra lista yfir meðlimi",
     "add_user_error": "Mistókst að bæta við notanda",
-    "authorize_url_error": "Failed to get authorize url",
+    "authorize_url_error": "Tókst ekki að fá auðkenningarslóð",
     "domain_confirmed": "{{domain}} er staðfest, skráðu þig inn",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
+    "domain_doesnt_exist": "Mistókst að tengja {{domain}}, yfirfarðu slóð netþjónsins",
     "loading": "Hleð inn...",
     "language_not_support_spellchecker_error": "Þetta tungumál er ekki stutt af stafsetningaryfirferðinni",
     "update_filter_error": "Mistókst að uppfæra síuna",
