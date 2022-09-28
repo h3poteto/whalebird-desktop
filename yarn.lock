@@ -2163,6 +2163,16 @@
     estree-walker "^2.0.2"
     source-map "^0.6.1"
 
+"@vue/compiler-core@3.2.40":
+  version "3.2.40"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-core/-/compiler-core-3.2.40.tgz#c785501f09536748121e937fb87605bbb1ada8e5"
+  integrity sha512-2Dc3Stk0J/VyQ4OUr2yEC53kU28614lZS+bnrCbFSAIftBJ40g/2yQzf4mPBiFuqguMB7hyHaujdgZAQ67kZYA==
+  dependencies:
+    "@babel/parser" "^7.16.4"
+    "@vue/shared" "3.2.40"
+    estree-walker "^2.0.2"
+    source-map "^0.6.1"
+
 "@vue/compiler-dom@3.2.38":
   version "3.2.38"
   resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.2.38.tgz#53d04ed0c0c62d1ef259bf82f9b28100a880b6fd"
@@ -2171,7 +2181,15 @@
     "@vue/compiler-core" "3.2.38"
     "@vue/shared" "3.2.38"
 
-"@vue/compiler-sfc@3.2.38", "@vue/compiler-sfc@^3.2.37":
+"@vue/compiler-dom@3.2.40":
+  version "3.2.40"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.2.40.tgz#c225418773774db536174d30d3f25ba42a33e7e4"
+  integrity sha512-OZCNyYVC2LQJy4H7h0o28rtk+4v+HMQygRTpmibGoG9wZyomQiS5otU7qo3Wlq5UfHDw2RFwxb9BJgKjVpjrQw==
+  dependencies:
+    "@vue/compiler-core" "3.2.40"
+    "@vue/shared" "3.2.40"
+
+"@vue/compiler-sfc@3.2.38":
   version "3.2.38"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.2.38.tgz#9e763019471a535eb1fceeaac9d4d18a83f0940f"
   integrity sha512-KZjrW32KloMYtTcHAFuw3CqsyWc5X6seb8KbkANSWt3Cz9p2qA8c1GJpSkksFP9ABb6an0FLCFl46ZFXx3kKpg==
@@ -2187,6 +2205,22 @@
     postcss "^8.1.10"
     source-map "^0.6.1"
 
+"@vue/compiler-sfc@^3.2.40":
+  version "3.2.40"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.2.40.tgz#61823283efc84d25d9d2989458f305d32a2ed141"
+  integrity sha512-tzqwniIN1fu1PDHC3CpqY/dPCfN/RN1thpBC+g69kJcrl7mbGiHKNwbA6kJ3XKKy8R6JLKqcpVugqN4HkeBFFg==
+  dependencies:
+    "@babel/parser" "^7.16.4"
+    "@vue/compiler-core" "3.2.40"
+    "@vue/compiler-dom" "3.2.40"
+    "@vue/compiler-ssr" "3.2.40"
+    "@vue/reactivity-transform" "3.2.40"
+    "@vue/shared" "3.2.40"
+    estree-walker "^2.0.2"
+    magic-string "^0.25.7"
+    postcss "^8.1.10"
+    source-map "^0.6.1"
+
 "@vue/compiler-ssr@3.2.38":
   version "3.2.38"
   resolved "https://registry.yarnpkg.com/@vue/compiler-ssr/-/compiler-ssr-3.2.38.tgz#933b23bf99e667e5078eefc6ba94cb95fd765dfe"
@@ -2194,6 +2228,14 @@
   dependencies:
     "@vue/compiler-dom" "3.2.38"
     "@vue/shared" "3.2.38"
+
+"@vue/compiler-ssr@3.2.40":
+  version "3.2.40"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-ssr/-/compiler-ssr-3.2.40.tgz#67df95a096c63e9ec4b50b84cc6f05816793629c"
+  integrity sha512-80cQcgasKjrPPuKcxwuCx7feq+wC6oFl5YaKSee9pV3DNq+6fmCVwEEC3vvkf/E2aI76rIJSOYHsWSEIxK74oQ==
+  dependencies:
+    "@vue/compiler-dom" "3.2.40"
+    "@vue/shared" "3.2.40"
 
 "@vue/devtools-api@^6.0.0-beta.11", "@vue/devtools-api@^6.1.4":
   version "6.2.1"
@@ -2225,6 +2267,17 @@
     "@babel/parser" "^7.16.4"
     "@vue/compiler-core" "3.2.38"
     "@vue/shared" "3.2.38"
+    estree-walker "^2.0.2"
+    magic-string "^0.25.7"
+
+"@vue/reactivity-transform@3.2.40":
+  version "3.2.40"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity-transform/-/reactivity-transform-3.2.40.tgz#dc24b9074b26f0d9dd2034c6349f5bb2a51c86ac"
+  integrity sha512-HQUCVwEaacq6fGEsg2NUuGKIhUveMCjOk8jGHqLXPI2w6zFoPrlQhwWEaINTv5kkZDXKEnCijAp+4gNEHG03yw==
+  dependencies:
+    "@babel/parser" "^7.16.4"
+    "@vue/compiler-core" "3.2.40"
+    "@vue/shared" "3.2.40"
     estree-walker "^2.0.2"
     magic-string "^0.25.7"
 
@@ -2264,6 +2317,11 @@
   version "3.2.38"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.38.tgz#e823f0cb2e85b6bf43430c0d6811b1441c300f3c"
   integrity sha512-dTyhTIRmGXBjxJE+skC8tTWCGLCVc4wQgRRLt8+O9p5ewBAjoBwtCAkLPrtToSr1xltoe3st21Pv953aOZ7alg==
+
+"@vue/shared@3.2.40":
+  version "3.2.40"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.40.tgz#e57799da2a930b975321981fcee3d1e90ed257ae"
+  integrity sha512-0PLQ6RUtZM0vO3teRfzGi4ltLUO5aO+kLgwh4Um3THSR03rpQWLTuRCkuO5A41ITzwdWeKdPHtSARuPkoo5pCQ==
 
 "@vueuse/core@8.9.4":
   version "8.9.4"
