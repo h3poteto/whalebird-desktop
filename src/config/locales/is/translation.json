@@ -125,7 +125,7 @@
       "form": {
         "phrase": "Stikkorð eða setning",
         "expire": "Rennur út eftir",
-        "context": "Filter contexts",
+        "context": "Sía samhengi",
         "irreversible": "Fella niður í staðinn fyrir að fela",
         "whole_word": "Heil orð",
         "submit": "Senda inn",
@@ -160,14 +160,14 @@
       "title": "Almennt",
       "sounds": {
         "title": "Hljóð",
-        "description": "Please set feedback sounds.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "description": "Settu hljóð fyrir virkni.",
+        "fav_rb": "Þegar þú setur færslu í eftirlæti eða endurbirtir hana",
+        "toot": "Þegar þú sendir inn færslu"
       },
       "timeline": {
         "title": "Tímalína",
-        "description": "Customize view in your timelines.",
-        "cw": "Always expand posts marked with contents warnings",
+        "description": "Sérsníða sýn í tímalínum þínum.",
+        "cw": "Alltaf fletta út færslum sem eru með aðvörun vegna efnis",
         "nsfw": "Alltaf birta allt myndefni",
         "hideAllAttachments": "Alltaf fela allt myndefni"
       },
@@ -186,9 +186,9 @@
         "system": "Kerfis",
         "light": "Ljóst",
         "dark": "Dökkt",
-        "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
-        "kimbie_dark": "KimbieDark",
+        "solarized_light": "SólaríseraðLjóst",
+        "solarized_dark": "SólaríseraðDökkt",
+        "kimbie_dark": "KimbieDökkt",
         "custom": "Sérsniðið"
       },
       "custom_theme": {
@@ -200,7 +200,7 @@
         "regular_color": "Venjulegt letur",
         "secondary_color": "Aukaletur",
         "border_color": "Jaðar",
-        "header_menu_color": "Header menu",
+        "header_menu_color": "Valmynd í haus",
         "wrapper_mask_color": "Modal wrapper"
       },
       "font_size": "Leturstærð",
