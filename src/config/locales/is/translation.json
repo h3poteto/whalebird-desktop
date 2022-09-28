@@ -201,7 +201,7 @@
         "secondary_color": "Aukaletur",
         "border_color": "Jaðar",
         "header_menu_color": "Valmynd í haus",
-        "wrapper_mask_color": "Modal wrapper"
+        "wrapper_mask_color": "Umbúðir glugga"
       },
       "font_size": "Leturstærð",
       "font_family": "Leturgerð",
@@ -221,16 +221,16 @@
     "notification": {
       "title": "Tilkynning",
       "enable": {
-        "description": "Please set notification events.",
-        "reply": "Notify me when I receive a reply",
+        "description": "Settu inn atburði tilkynninga.",
+        "reply": "Láta mig vita þegar ég fæ svar",
         "reblog": "Láta mig vita þegar ég fæ endurbirtingu",
-        "favourite": "Notify me when I receive a favourite",
-        "follow": "Notify me when I receive a follow",
-        "reaction": "Notify me when I receive a emoji reaction",
-        "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification",
-        "poll_vote": "Notify me when I receive a vote of poll",
-        "poll_expired": "Notify me when I receive a poll expired event"
+        "favourite": "Láta mig vita þegar færsla frá mér er sett í eftirlæti",
+        "follow": "Láta mig vita þegar ég fæ fylgjanda",
+        "reaction": "Láta mig vita þegar ég fæ táknviðbrögð",
+        "follow_request": "Láta mig vita þegar ég fæ fylgjendabeiðni",
+        "status": "Láta mig vita þegar ég fæ stöðutilkynningu",
+        "poll_vote": "Láta mig vita þegar ég fæ atkvæði í könnun",
+        "poll_expired": "Láta mig vita þegar ég fæ útrunninn atburð í könnun"
       }
     },
     "account": {
@@ -244,15 +244,15 @@
       "remove_all_associations": "Fjarlægja öll tengsl",
       "confirm": "Staðfesta",
       "cancel": "Hætta við",
-      "confirm_message": "Are you sure to remove all associations?"
+      "confirm_message": "Ertu viss um að þú viljir öll tengsl ?"
     },
     "network": {
       "title": "Netkerfi",
       "proxy": {
         "title": "Uppsetning milliþjóns (proxy)",
         "no": "Enginn milliþjónn",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
+        "system": "Nota milliþjón kerfis",
+        "manual": "Handvirk uppsetning milliþjóns (proxy)\n",
         "protocol": "Samskiptamáti",
         "host": "Hýsilvél milliþjóns",
         "port": "Gátt milliþjóns",
@@ -321,7 +321,7 @@
       "account_name": "Heiti notandaaðgangs"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "Listi yfir meðlimi"
     },
     "mute_confirm": {
       "title": "Ertu viss um að þú viljir þagga niður?",
@@ -338,15 +338,15 @@
       "ctrl_r": "Endurhlaða núverandi tímalínu",
       "j": "Velja næstu færslu",
       "k": "Velja fyrri færslu",
-      "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
+      "h": "Skipta yfir í dálkinn til vinstri",
+      "l": "Skipta yfir í dálkinn til hægri",
       "r": "Svara færslunni",
       "b": "Endurbirta færsluna",
       "f": "Setja færsluna í eftirlæti",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
+      "o": "Opna nánari upplýsingar um færsluna",
+      "p": "Opna snið notandaaðgangs tengt færslunni",
       "i": "Opna myndir",
-      "x": "Show/hide CW and NSFW",
+      "x": "Birta/Fela aðvaranir vegna efnis og NSFW",
       "?": "Birta þessa hjálp",
       "esc": "Loka núverandi síðu"
     },
@@ -362,9 +362,9 @@
       "show_more": "Sýna meira",
       "hide": "Fela",
       "sensitive": "Birta viðkvæmt myndefni",
-      "view_toot_detail": "View Toot Detail",
+      "view_toot_detail": "Skoða nánar um færslu",
       "open_in_browser": "Opna í vafra",
-      "copy_link_to_toot": "Copy Link to Toot",
+      "copy_link_to_toot": "Afrita tengil á færslu",
       "mute": "Þagga niður",
       "block": "Útiloka",
       "report": "Tilkynna",
@@ -385,21 +385,21 @@
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "Hlaða inn fleiri stöðufærslum"
     }
   },
   "side_bar": {
     "account_profile": {
       "follows_you": "Fylgir þér",
-      "doesnt_follow_you": "Doesn't follow you",
+      "doesnt_follow_you": "Fylgist ekki með þér",
       "detail": "Nánar",
       "follow": "Fylgjast með þessum notanda",
       "unfollow": "Hætta að fylgjast með þessum notanda",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
+      "subscribe": "Gerast áskrifandi að þessum notanda",
+      "unsubscribe": "Hætta sem áskrifandi að þessum notanda",
       "follow_requested": "Beðið um að fylgja",
       "open_in_browser": "Opna í vafra",
-      "manage_list_memberships": "Manage List Memberships",
+      "manage_list_memberships": "Sýsla með lista yfir meðlimi",
       "mute": "Þagga niður",
       "unmute": "Ekki þagga",
       "unblock": "Aflétta útilokun",
@@ -432,7 +432,7 @@
       "delete": {
         "confirm": {
           "title": "Staðfesta",
-          "message": "This operation can not be undone, this list will be permanently deleted",
+          "message": "Þessa aðgerð er ekki hægt að afturkalla, þessu lista verður endanlega eytt",
           "ok": "Eyða",
           "cancel": "Hætta við"
         }
