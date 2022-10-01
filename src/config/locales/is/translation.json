@@ -2,262 +2,262 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "shortcuts": "Shortcut Keys",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
+      "about": "Um Whalebird",
+      "preferences": "Kjörstillingar...",
+      "shortcuts": "Flýtilyklar",
+      "services": "Þjónustur",
+      "hide": "Fela Whalebird",
+      "hide_others": "Fela annað",
+      "show_all": "Sýna allt",
       "open": "Open Window",
       "quit": "Quit"
     },
     "toot": {
-      "name": "Toot",
-      "new": "New Toot"
+      "name": "Færsla",
+      "new": "Ný færsla"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "Breyta",
+      "undo": "Afturkalla",
+      "redo": "Endurtaka",
+      "cut": "Klippa",
+      "copy": "Afrita",
+      "paste": "Líma",
+      "select_all": "Velja allt"
     },
     "view": {
-      "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "name": "Skoðun",
+      "toggle_full_screen": "Víxla skjáfylli af/á"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
-      "jump_to": "Jump to"
+      "always_show_menu_bar": "Alltaf að sýna valmyndastiku",
+      "name": "Gluggi",
+      "close": "Loka glugga",
+      "open": "Opna glugga",
+      "minimize": "Lágmarka",
+      "jump_to": "Hoppa í"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "Bæta við nýjum aðgangi"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
-    "collapse": "Collapse",
-    "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists"
+    "profile": "Notandasnið",
+    "show_profile": "Birta notandasnið",
+    "edit_profile": "Breyta notandasniði",
+    "settings": "Stillingar",
+    "collapse": "Fella saman",
+    "expand": "Fletta út",
+    "home": "Heim",
+    "notification": "Tilkynning",
+    "mention": "Minnst á",
+    "direct": "Bein skilaboð",
+    "follow_requests": "Fylgjendabeiðnir",
+    "favourite": "Eftirlæti",
+    "bookmark": "Bókamerki",
+    "local": "Staðvær tímalína",
+    "public": "Opinber tímalína",
+    "hashtag": "Myllumerki",
+    "search": "Leita",
+    "lists": "Listar"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
-    "mention": "Mention",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists",
-    "members": "Members",
+    "home": "Heim",
+    "notification": "Tilkynning",
+    "mention": "Minnst á",
+    "favourite": "Eftirlæti",
+    "bookmark": "Bókamerki",
+    "follow_requests": "Fylgjendabeiðnir",
+    "direct_messages": "Bein skilaboð",
+    "local": "Staðvær tímalína",
+    "public": "Opinber tímalína",
+    "hashtag": "Myllumerki",
+    "search": "Leita",
+    "lists": "Listar",
+    "members": "Meðlimir",
     "option": {
-      "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "Valkostur",
+      "show_reblogs": "Sýna endurbirtingar",
+      "show_replies": "Sýna svör",
+      "apply": "Virkja"
     },
-    "new_toot": "Toot",
-    "reload": "Reload",
-    "settings": "Settings"
+    "new_toot": "Færsla",
+    "reload": "Endurlesa",
+    "settings": "Stillingar"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Stillingar",
     "general": {
-      "title": "General",
+      "title": "Almennt",
       "toot": {
-        "title": "Toot",
+        "title": "Færsla",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
-          "public": "Public",
-          "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "description": "Sérsníða sjálfgefinn sýnileika færslna",
+          "notice": "Þessi stilling á aðeins við nýjar færslur, svör taka mið af sýnileika upprunalegra færslna",
+          "public": "Opinbert",
+          "unlisted": "Óskráð",
+          "private": "Einka",
+          "direct": "Beint"
         },
         "sensitive": {
-          "description": "Mark media as sensitive by default"
+          "description": "Sjálfgefið merkja myndefni sem viðkvæmt"
         }
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Tímalína",
       "unread_notification": {
-        "title": "Unread Notification",
-        "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "title": "Ólesin tilkynning",
+        "description": "Sérsníða ólesnar tilkynningar fyrir hverja tímalínu.",
+        "direct": "Bein skilaboð",
+        "local": "Staðvær tímalína",
+        "public": "Opinber tímalína"
       },
       "use_marker": {
-        "title": "Load the timeline from the last reading position",
-        "home": "Home",
-        "notifications": "Notifications",
-        "mentions": "Mentions"
+        "title": "Hlaða inn tímalínunni þar sem síðast var verið að skoða",
+        "home": "Heim",
+        "notifications": "Tilkynningar",
+        "mentions": "Tilvísanir"
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Síur",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "Stikkorð eða setning",
+        "expire": "Rennur út eftir",
+        "context": "Sía samhengi",
+        "irreversible": "Fella niður í staðinn fyrir að fela",
+        "whole_word": "Heil orð",
+        "submit": "Senda inn",
+        "cancel": "Hætta við"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Aldrei",
+        "30_minutes": "30 mínútur",
+        "1_hour": "1 klukkustund",
+        "6_hours": "6 klukkustundir",
+        "12_hours": "12 klukkustundir",
+        "1_day": "1 dagur",
+        "1_week": "1 vika"
       },
       "new": {
-        "title": "New"
+        "title": "Nýtt"
       },
       "edit": {
-        "title": "Edit"
+        "title": "Breyta"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "title": "Eyða",
+        "confirm": "Ertu viss um að þú viljir eyða þessari síu?",
+        "confirm_ok": "Eyða",
+        "confirm_cancel": "Hætta við"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Kjörstillingar",
     "general": {
-      "title": "General",
+      "title": "Almennt",
       "sounds": {
-        "title": "Sounds",
-        "description": "Please set feedback sounds.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "title": "Hljóð",
+        "description": "Settu hljóð fyrir virkni.",
+        "fav_rb": "Þegar þú setur færslu í eftirlæti eða endurbirtir hana",
+        "toot": "Þegar þú sendir inn færslu"
       },
       "timeline": {
-        "title": "Timeline",
-        "description": "Customize view in your timelines.",
-        "cw": "Always expand posts marked with contents warnings",
-        "nsfw": "Always show all media",
-        "hideAllAttachments": "Always hide all media"
+        "title": "Tímalína",
+        "description": "Sérsníða sýn í tímalínum þínum.",
+        "cw": "Alltaf fletta út færslum sem eru með aðvörun vegna efnis",
+        "nsfw": "Alltaf birta allt myndefni",
+        "hideAllAttachments": "Alltaf fela allt myndefni"
       },
       "other": {
-        "title": "Other options",
-        "launch": "Launch app on login"
+        "title": "Aðrir valkostir",
+        "launch": "Ræsa forrit við innskráningu"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "Frumstilla kjörstillingar"
       }
     },
     "appearance": {
-      "title": "Appearance",
-      "theme_color": "Theme color",
+      "title": "Útlit",
+      "theme_color": "Litur þema",
       "theme": {
-        "system": "System",
-        "light": "Light",
-        "dark": "Dark",
-        "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
-        "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "system": "Kerfis",
+        "light": "Ljóst",
+        "dark": "Dökkt",
+        "solarized_light": "SólaríseraðLjóst",
+        "solarized_dark": "SólaríseraðDökkt",
+        "kimbie_dark": "KimbieDökkt",
+        "custom": "Sérsniðið"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
-        "header_menu_color": "Header menu",
-        "wrapper_mask_color": "Modal wrapper"
+        "background_color": "Aðalbakgrunnur",
+        "selected_background_color": "Bakgrunnur við virkni",
+        "global_header_color": "Valmynd notandaaðgangs",
+        "side_menu_color": "Hliðarvalmynd",
+        "primary_color": "Aðalletur",
+        "regular_color": "Venjulegt letur",
+        "secondary_color": "Aukaletur",
+        "border_color": "Jaðar",
+        "header_menu_color": "Valmynd í haus",
+        "wrapper_mask_color": "Umbúðir glugga"
       },
-      "font_size": "Font size",
-      "font_family": "Font family",
-      "toot_padding": "Padding around toots",
+      "font_size": "Leturstærð",
+      "font_family": "Leturgerð",
+      "toot_padding": "Fylling í kringum færslur",
       "display_style": {
-        "title": "Display style of username",
-        "display_name_and_username": "Display name and username",
-        "display_name": "Display name",
-        "username": "Username"
+        "title": "Birting notandanafns",
+        "display_name_and_username": "Birtingarnafn og notandanafn",
+        "display_name": "Birtingarnafn",
+        "username": "Notandanafn"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "title": "Tímasnið",
+        "absolute": "Algilt",
+        "relative": "Hlutfallslegt"
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "Tilkynning",
       "enable": {
-        "description": "Please set notification events.",
-        "reply": "Notify me when I receive a reply",
-        "reblog": "Notify me when I receive a reblog",
-        "favourite": "Notify me when I receive a favourite",
-        "follow": "Notify me when I receive a follow",
-        "reaction": "Notify me when I receive a emoji reaction",
-        "follow_request": "Notify me when I receive a follow request",
-        "status": "Notify me when I receive a status notification",
-        "poll_vote": "Notify me when I receive a vote of poll",
-        "poll_expired": "Notify me when I receive a poll expired event"
+        "description": "Settu inn atburði tilkynninga.",
+        "reply": "Láta mig vita þegar ég fæ svar",
+        "reblog": "Láta mig vita þegar ég fæ endurbirtingu",
+        "favourite": "Láta mig vita þegar færsla frá mér er sett í eftirlæti",
+        "follow": "Láta mig vita þegar ég fæ fylgjanda",
+        "reaction": "Láta mig vita þegar ég fæ táknviðbrögð",
+        "follow_request": "Láta mig vita þegar ég fæ fylgjendabeiðni",
+        "status": "Láta mig vita þegar ég fæ stöðutilkynningu",
+        "poll_vote": "Láta mig vita þegar ég fæ atkvæði í könnun",
+        "poll_expired": "Láta mig vita þegar ég fæ útrunninn atburð í könnun"
       }
     },
     "account": {
-      "title": "Account",
-      "connected": "Connected Account",
-      "username": "Username",
-      "domain": "Domain",
-      "association": "Association",
-      "order": "Order",
-      "remove_association": "Remove association",
-      "remove_all_associations": "Remove all associations",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "confirm_message": "Are you sure to remove all associations?"
+      "title": "Notandaaðgangur",
+      "connected": "Tengdur aðgangur",
+      "username": "Notandanafn",
+      "domain": "Lén",
+      "association": "Tengsl",
+      "order": "Röðun",
+      "remove_association": "Fjarlægja tengsl",
+      "remove_all_associations": "Fjarlægja öll tengsl",
+      "confirm": "Staðfesta",
+      "cancel": "Hætta við",
+      "confirm_message": "Ertu viss um að þú viljir öll tengsl ?"
     },
     "network": {
-      "title": "Network",
+      "title": "Netkerfi",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
-        "host": "Proxy host",
-        "port": "Proxy port",
-        "username": "Proxy username",
-        "password": "Proxy password",
+        "title": "Uppsetning milliþjóns (proxy)",
+        "no": "Enginn milliþjónn",
+        "system": "Nota milliþjón kerfis",
+        "manual": "Handvirk uppsetning milliþjóns (proxy)\n",
+        "protocol": "Samskiptamáti",
+        "host": "Hýsilvél milliþjóns",
+        "port": "Gátt milliþjóns",
+        "username": "Notandanafn á milliþjóni",
+        "password": "Lykilorð á milliþjóni",
         "protocol_list": {
           "http": "http",
           "https": "https",
@@ -267,289 +267,289 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "Vista"
     },
     "language": {
-      "title": "Language",
+      "title": "Tungumál",
       "language": {
-        "title": "Language",
-        "description": "Choose the language you would like to use with Whalebird."
+        "title": "Tungumál",
+        "description": "Veldu tungumálið sem þú vilt nota í Whalebird."
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "Yfirfara stafsetningu",
+        "enabled": "Virkja stafsetningaryfirferð"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
-      "cw": "Write your warning here",
-      "status": "What is on your mind?",
-      "cancel": "Cancel",
-      "toot": "Toot",
-      "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
-      "close_confirm_cancel": "Continue Editing",
-      "description": "Describe for the visually impaired",
+      "title": "Ný færsla",
+      "cw": "Skrifaðu aðvörunina þína hér",
+      "status": "Hvað liggur þér á hjarta?",
+      "cancel": "Hætta við",
+      "toot": "Færsla",
+      "close_confirm": "Ertu viss um að þú viljir henda þessari færslu?",
+      "close_confirm_ok": "Henda",
+      "close_confirm_cancel": "Halda áfram breytingum",
+      "description": "Lýstu þessu fyrir sjónskerta",
       "footer": {
-        "add_image": "Add images",
-        "poll": "Add a poll",
-        "change_visibility": "Change visibility",
-        "change_sensitive": "Change sensitive",
-        "add_cw": "Add content warning",
-        "pined_hashtag": "Pin the hashtag"
+        "add_image": "Bæta við myndum",
+        "poll": "Bæta við könnun",
+        "change_visibility": "Breyta sýnileika",
+        "change_sensitive": "Breyta viðkvæmu",
+        "add_cw": "Bæta við aðvörun vegna efnis",
+        "pined_hashtag": "Festa myllumerkið"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Bæta við valkosti",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 mínútur",
+          "30_minutes": "30 mínútur",
+          "1_hour": "1 klukkustund",
+          "6_hours": "6 klukkustundir",
+          "1_day": "1 dagur",
+          "3_days": "3 dagar",
+          "7_days": "7 dagar"
         }
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "Hoppa á..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "Bæta meðlimi á lista",
+      "account_name": "Heiti notandaaðgangs"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "Listi yfir meðlimi"
     },
     "mute_confirm": {
-      "title": "Are you sure you want to mute?",
-      "body": "Hide notification from this user?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "title": "Ertu viss um að þú viljir þagga niður?",
+      "body": "Fela tilkynningar frá þessum notanda?",
+      "cancel": "Hætta við",
+      "ok": "Þagga niður"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
-      "ctrl_r": "Reload current timeline",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
-      "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
-      "?": "Show this help",
-      "esc": "Close current page"
+      "title": "Flýtileiðir á lyklaborði",
+      "ctrl_number": "Skipta um notandaaðgang",
+      "ctrl_k": "Hoppa á aðrar tímalínur",
+      "ctrl_n": "Opna nýja færslugluggann",
+      "ctrl_enter": "Senda inn færsluna",
+      "ctrl_r": "Endurhlaða núverandi tímalínu",
+      "j": "Velja næstu færslu",
+      "k": "Velja fyrri færslu",
+      "h": "Skipta yfir í dálkinn til vinstri",
+      "l": "Skipta yfir í dálkinn til hægri",
+      "r": "Svara færslunni",
+      "b": "Endurbirta færsluna",
+      "f": "Setja færsluna í eftirlæti",
+      "o": "Opna nánari upplýsingar um færsluna",
+      "p": "Opna snið notandaaðgangs tengt færslunni",
+      "i": "Opna myndir",
+      "x": "Birta/Fela aðvaranir vegna efnis og NSFW",
+      "?": "Birta þessa hjálp",
+      "esc": "Loka núverandi síðu"
     },
     "report": {
-      "title": "Reporting this user",
-      "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
+      "title": "Tilkynni þennan notanda",
+      "comment": "Aðrar athugasemdir",
+      "cancel": "Hætta við",
+      "ok": "Tilkynna"
     }
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
-      "sensitive": "Show sensitive content",
-      "view_toot_detail": "View Toot Detail",
-      "open_in_browser": "Open in Browser",
-      "copy_link_to_toot": "Copy Link to Toot",
-      "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
-      "delete": "Delete",
-      "via": "via {{application}}",
-      "reply": "Reply",
-      "reblog": "Reblog",
-      "fav": "Favourite",
-      "detail": "Toot details",
-      "bookmark": "Bookmark",
-      "pinned": "Pinned toot",
+      "show_more": "Sýna meira",
+      "hide": "Fela",
+      "sensitive": "Birta viðkvæmt myndefni",
+      "view_toot_detail": "Skoða nánar um færslu",
+      "open_in_browser": "Opna í vafra",
+      "copy_link_to_toot": "Afrita tengil á færslu",
+      "mute": "Þagga niður",
+      "block": "Útiloka",
+      "report": "Tilkynna",
+      "delete": "Eyða",
+      "via": "með {{application}}",
+      "reply": "Svara",
+      "reblog": "Endurbirta",
+      "fav": "Eftirlæti",
+      "detail": "Nánar um færslu",
+      "bookmark": "Bókamerki",
+      "pinned": "Fest færsla",
       "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
-        "until": "until {{datetime}}",
-        "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "vote": "Greiða atkvæði",
+        "votes_count": "atkvæði",
+        "until": "til {{datetime}}",
+        "left": "{{datetime}} eftir",
+        "refresh": "Endurlesa"
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "Hlaða inn fleiri stöðufærslum"
     }
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
-      "doesnt_follow_you": "Doesn't follow you",
-      "detail": "Detail",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
-      "follow_requested": "Follow requested",
-      "open_in_browser": "Open in Browser",
-      "manage_list_memberships": "Manage List Memberships",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
-      "toots": "Toots",
-      "follows": "Follows",
-      "followers": "Followers"
+      "follows_you": "Fylgir þér",
+      "doesnt_follow_you": "Fylgist ekki með þér",
+      "detail": "Nánar",
+      "follow": "Fylgjast með þessum notanda",
+      "unfollow": "Hætta að fylgjast með þessum notanda",
+      "subscribe": "Gerast áskrifandi að þessum notanda",
+      "unsubscribe": "Hætta sem áskrifandi að þessum notanda",
+      "follow_requested": "Beðið um að fylgja",
+      "open_in_browser": "Opna í vafra",
+      "manage_list_memberships": "Sýsla með lista yfir meðlimi",
+      "mute": "Þagga niður",
+      "unmute": "Ekki þagga",
+      "unblock": "Aflétta útilokun",
+      "block": "Útiloka",
+      "toots": "Færslur",
+      "follows": "Fylgist með",
+      "followers": "Fylgjendur"
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "Samþykkja",
+    "reject": "Hafna"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "Heiti merkis",
+    "delete_tag": "Eyða merki",
+    "save_tag": "Vista merki"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
-    "toot": "Toot"
+    "search": "Leita",
+    "account": "Notandaaðgangur",
+    "tag": "Myllumerki",
+    "keyword": "stikkorð",
+    "toot": "Færsla"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
-      "edit": "Edit",
+      "new_list": "Nýr listi",
+      "edit": "Breyta",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "Staðfesta",
+          "message": "Þessa aðgerð er ekki hægt að afturkalla, þessu lista verður endanlega eytt",
+          "ok": "Eyða",
+          "cancel": "Hætta við"
         }
       }
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "domain_name_label": "Fyrst skulum við skrá inn á Mastodon-netþjón. Settu inn lénsheiti þjónsins.",
+    "proxy_info": "Ef þú ætlar að nota milliþjón (proxy), skaltu setja hann upp",
+    "proxy_here": " hér",
+    "search": "Leita",
+    "login": "Innskráning"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
-    "misskey_label": "Please submit after you authorize in your browser.",
-    "submit": "Submit"
+    "manually_1": "Auðkenningarsíða hefur opnast í vafranum þínum.",
+    "manually_2": "Ef hún hefur ekki opnast sjálfkrafa, skaltu fara handvirkt á eftirfarandi slóð",
+    "code_label": "Límdu inn auðkenningarkóðann úr vafranum þínum:",
+    "misskey_label": "Sendu inn eftir að þú hefur auðkennt þig í vafranum þínum.",
+    "submit": "Senda inn"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Slepptu til að senda inn á Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
-    "preferences_load_error": "Failed to load preferences",
-    "timeline_fetch_error": "Failed to fetch timeline",
-    "notification_fetch_error": "Failed to fetch notification",
-    "favourite_fetch_error": "Failed to fetch favorite",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_request_reject_error": "Failed to reject the request",
-    "start_streaming_error": "Failed to start streaming",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
-    "attach_error": "Could not attach the file",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
-    "authorize_error": "Failed to authorize",
-    "followers_fetch_error": "Failed to fetch followers",
-    "follows_fetch_error": "Failed to fetch follows",
-    "toot_fetch_error": "Failed to fetch the toot detail",
-    "follow_error": "Failed to follow the user",
-    "unfollow_error": "Failed to unfollow the user",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
-    "lists_fetch_error": "Failed to fetch lists",
-    "list_create_error": "Failed to create a list",
-    "members_fetch_error": "Failed to fetch members",
-    "remove_user_error": "Failed to remove the user",
-    "find_account_error": "Account not found",
-    "reblog_error": "Failed to reblog",
-    "unreblog_error": "Failed to unreblog",
-    "favourite_error": "Failed to favourite",
-    "unfavourite_error": "Failed to unfavourite",
-    "bookmark_error": "Failed to bookmark",
-    "unbookmark_error": "Failed to remove bookmark",
-    "delete_error": "Failed to delete the toot",
-    "search_error": "Failed to search",
-    "toot_error": "Failed to toot",
-    "update_list_memberships_error": "Failed to update the list memberships",
-    "add_user_error": "Failed to add user",
-    "authorize_url_error": "Failed to get authorize url",
-    "domain_confirmed": "{{domain}} is confirmed, please login",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
-    "loading": "Loading...",
-    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
-    "update_filter_error": "Failed to update the filter",
-    "create_filter_error": "Failed to create the filter"
+    "account_load_error": "Mistókst að hlaða inn notendaaðgöngum",
+    "account_remove_error": "Mistókst að fjarlægja notandaaðganginn",
+    "preferences_load_error": "Mistókst að hlaða inn kjörstillingum",
+    "timeline_fetch_error": "Mistókst að sækja tímalínu",
+    "notification_fetch_error": "Mistókst að sækja tilkynningu",
+    "favourite_fetch_error": "Mistókst að sækja eftirlæti",
+    "follow_request_accept_error": "Mistókst að samþykkja beiðnina",
+    "follow_request_reject_error": "Mistókst að hafna beiðninni",
+    "start_streaming_error": "Mistókst að ræsa streymi",
+    "start_all_streamings_error": "Mistókst að ræsa streymi á {{domain}}",
+    "attach_error": "Gat ekki hengt við skrána",
+    "authorize_duplicate_error": "Get ekki skráð inn sama aðgang af sama léni",
+    "authorize_error": "Tókst ekki að auðkenna",
+    "followers_fetch_error": "Mistókst að sækja fylgjendur",
+    "follows_fetch_error": "Mistókst að sækja þá sem fylgst er með",
+    "toot_fetch_error": "Mistókst að sækja nánari upplýsingar um færslu",
+    "follow_error": "Mistókst að fylgjast með notandanum",
+    "unfollow_error": "Mistókst að hætta að fylgjast með notandanum",
+    "subscribe_error": "Mistókst að gerast áskrifandi að þessum notanda",
+    "unsubscribe_error": "Mistókst að hætta sem áskrifandi að þessum notanda",
+    "lists_fetch_error": "Mistókst að sækja lista",
+    "list_create_error": "Mistókst að búa til lista",
+    "members_fetch_error": "Mistókst að sækja meðlimi",
+    "remove_user_error": "Mistókst að fjarlægja notandann",
+    "find_account_error": "Notandaaðgangur fannst ekki",
+    "reblog_error": "Tókst ekki að endurbirta",
+    "unreblog_error": "Tókst ekki að afturkalla endurbirtingu",
+    "favourite_error": "Mistókst að setja í eftirlæti",
+    "unfavourite_error": "FMistókst að taka úr eftirlætum",
+    "bookmark_error": "Mistókst að vista bókamerki",
+    "unbookmark_error": "Mistókst að fjarlægja bókamerki",
+    "delete_error": "Mistókst að eyða færslunni",
+    "search_error": "Tókst ekki að leita",
+    "toot_error": "Mistókst að birta færslu",
+    "update_list_memberships_error": "Mistókst að uppfæra lista yfir meðlimi",
+    "add_user_error": "Mistókst að bæta við notanda",
+    "authorize_url_error": "Tókst ekki að fá auðkenningarslóð",
+    "domain_confirmed": "{{domain}} er staðfest, skráðu þig inn",
+    "domain_doesnt_exist": "Mistókst að tengja {{domain}}, yfirfarðu slóð netþjónsins",
+    "loading": "Hleð inn...",
+    "language_not_support_spellchecker_error": "Þetta tungumál er ekki stutt af stafsetningaryfirferðinni",
+    "update_filter_error": "Mistókst að uppfæra síuna",
+    "create_filter_error": "Mistókst að útbúa síuna"
   },
   "validation": {
     "login": {
-      "require_domain_name": "A domain name is required",
-      "domain_format": "Please only enter the domain name"
+      "require_domain_name": "Heiti léns er nauðsynlegt",
+      "domain_format": "Settu einungis inn heiti lénsins"
     },
     "new_toot": {
-      "toot_length": "Toot length should be {{min}} to {{max}}",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "toot_length": "Lengd færslu ætti að vera frá {{min}} til {{max}}",
+      "attach_length": "Þú getur einungis hengt við {{max}} mynd",
+      "attach_length_plural": "Þú getur einungis hengt við {{max}} myndir",
+      "attach_image": "Þú getur einungis hengt við myndir eða myndskeið",
+      "poll_invalid": "Ógildir valkostir í könnun"
     }
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{{username}} favourited your status"
+      "title": "Eftirlæti",
+      "body": "{{username}} setti stöðufærslu þína í eftirlæti"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{{username}} is now following you"
+      "title": "Fylgja",
+      "body": "{{username}}  er núna að fylgjast með þér"
     },
     "follow_request": {
-      "title": "FollowRequest",
-      "body": "Receive a follow request from {{username}}"
+      "title": "FylgjendaBeiðni",
+      "body": "Fékkst fylgjendabeiðni frá {{username}}"
     },
     "reblog": {
-      "title": "Reblog",
-      "body": "{{username}} boosted your status"
+      "title": "Endurbirta",
+      "body": "{{username}} endurbirti stöðufærslu þína"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "Tilvitnun",
+      "body": "{{username}} vitnaði í stöðufærslu þína"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "Viðbrögð",
+      "body": "{{username}} brást við stöðufærslu þinni"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} just posted"
+      "title": "Staða",
+      "body": "{{username}} var að birta"
     },
     "poll_vote": {
-      "title": "PollVote",
-      "body": "{{username}} voted your poll"
+      "title": "KönnunAtkvæði",
+      "body": "{{username}} greiddi atkvæði í könnuninni þinni"
     },
     "poll_expired": {
-      "title": "PollExpired",
-      "body": "{{username}}'s poll is expired"
+      "title": "KönnunÚtrunnin",
+      "body": "Könnun á vegum {{username}} er útrunnin"
     }
   }
 }
