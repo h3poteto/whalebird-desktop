@@ -4,7 +4,7 @@
       "name": "Whalebird",
       "about": "O Whalebird",
       "preferences": "Preferencje…",
-      "shortcuts": "Shortcut Keys",
+      "shortcuts": "Skróty klawiszowe",
       "services": "Usługi",
       "hide": "Ukryj Whalebird",
       "hide_others": "Ukryj pozostałe",
@@ -78,7 +78,7 @@
     "option": {
       "title": "Option",
       "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
+      "show_replies": "Pokaż odpowiedzi",
       "apply": "Apply"
     },
     "new_toot": "Wpisy",
@@ -129,16 +129,16 @@
         "irreversible": "Drop instead of hide",
         "whole_word": "Whole word",
         "submit": "Submit",
-        "cancel": "Cancel"
+        "cancel": "Anuluj"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Nigdy",
+        "30_minutes": "30 minut",
+        "1_hour": "1 godzina",
+        "6_hours": "6 godzin",
+        "12_hours": "12 godzin",
+        "1_day": "1 dzień",
+        "1_week": "1 tydzień"
       },
       "new": {
         "title": "New"
@@ -249,11 +249,11 @@
     "network": {
       "title": "Sieć",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
+        "title": "Konfiguracja serwera proxy",
+        "no": "Nie używaj proxy",
+        "system": "Użyj systemowego proxy",
+        "manual": "Użyj ręcznej konfiguracji proxy",
+        "protocol": "Protokół",
         "host": "Proxy host",
         "port": "Proxy port",
         "username": "Proxy username",
@@ -331,8 +331,8 @@
     },
     "shortcut": {
       "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
+      "ctrl_number": "Przełącz konta",
+      "ctrl_k": "Przejdź do innych osi czasu",
       "ctrl_n": "Open the new toot modal",
       "ctrl_enter": "Post the toot",
       "ctrl_r": "Reload current timeline",
@@ -381,7 +381,7 @@
         "votes_count": "votes",
         "until": "until {{datetime}}",
         "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "refresh": "Odśwież"
       }
     },
     "status_loading": {
@@ -411,7 +411,7 @@
   },
   "follow_requests": {
     "accept": "Accept",
-    "reject": "Reject"
+    "reject": "Odrzuć"
   },
   "hashtag": {
     "tag_name": "Tag",
@@ -517,7 +517,7 @@
   "notification": {
     "favourite": {
       "title": "Favourite",
-      "body": "{{username}} favourited your status"
+      "body": "{{username}} lubi Twój status"
     },
     "follow": {
       "title": "Follow",
