@@ -4,7 +4,7 @@
       "name": "Whalebird",
       "about": "O Whalebird",
       "preferences": "Preferencje…",
-      "shortcuts": "Shortcut Keys",
+      "shortcuts": "Skróty klawiszowe",
       "services": "Usługi",
       "hide": "Ukryj Whalebird",
       "hide_others": "Ukryj pozostałe",
@@ -30,7 +30,7 @@
       "toggle_full_screen": "Przełącz pełny ekran"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
+      "always_show_menu_bar": "Zawsze pokazuj pasek menu",
       "name": "Okno",
       "close": "Zamknij okno",
       "open": "Otwórz okno",
@@ -78,8 +78,8 @@
     "option": {
       "title": "Option",
       "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "show_replies": "Pokaż odpowiedzi",
+      "apply": "Zastosuj"
     },
     "new_toot": "Wpisy",
     "reload": "Przeładować",
@@ -92,8 +92,8 @@
       "toot": {
         "title": "Wpisy",
         "visibility": {
-          "description": "Customize default visibility of toot",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "description": "Domyślna widoczność moich wpisów",
+          "notice": "To ustawienie dotyczy tylko nowych wpisów, odpowiedzi używają widoczności oryginalnych wpisów",
           "public": "Publiczne",
           "unlisted": "Niewidoczne",
           "private": "Prywatne",
@@ -117,7 +117,7 @@
         "title": "Load the timeline from the last reading position",
         "home": "Home",
         "notifications": "Notifications",
-        "mentions": "Mentions"
+        "mentions": "Wzmianki"
       }
     },
     "filters": {
@@ -127,30 +127,30 @@
         "expire": "Expire after",
         "context": "Filter contexts",
         "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
+        "whole_word": "Całe słowo",
         "submit": "Submit",
-        "cancel": "Cancel"
+        "cancel": "Anuluj"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Nigdy",
+        "30_minutes": "30 minut",
+        "1_hour": "1 godzina",
+        "6_hours": "6 godzin",
+        "12_hours": "12 godzin",
+        "1_day": "1 dzień",
+        "1_week": "1 tydzień"
       },
       "new": {
-        "title": "New"
+        "title": "Nowy"
       },
       "edit": {
-        "title": "Edit"
+        "title": "Edytuj"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "title": "Usuń",
+        "confirm": "Czy na pewno chcesz usunąć ten filtr?",
+        "confirm_ok": "Usuń",
+        "confirm_cancel": "Anuluj"
       }
     }
   },
@@ -186,16 +186,16 @@
         "system": "System",
         "light": "Jasny",
         "dark": "Ciemny",
-        "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
-        "kimbie_dark": "KimbieDark",
+        "solarized_light": "Solarized Light",
+        "solarized_dark": "Solarized Dark",
+        "kimbie_dark": "Kimbie Dark",
         "custom": "Własna"
       },
       "custom_theme": {
         "background_color": "Base background",
         "selected_background_color": "Focused background",
         "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
+        "side_menu_color": "Menu boczne",
         "primary_color": "Primary font",
         "regular_color": "Regular font",
         "secondary_color": "Secondary font",
@@ -214,8 +214,8 @@
       },
       "time_format": {
         "title": "Format godziny",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "absolute": "Bezwzględny",
+        "relative": "Względny"
       }
     },
     "notification": {
@@ -229,7 +229,7 @@
         "reaction": "Notify me when I receive a emoji reaction",
         "follow_request": "Notify me when I receive a follow request",
         "status": "Notify me when I receive a status notification",
-        "poll_vote": "Notify me when I receive a vote of poll",
+        "poll_vote": "Powiadom mnie, kiedy ktoś zagłosuje w mojej ankiecie",
         "poll_expired": "Notify me when I receive a poll expired event"
       }
     },
@@ -249,11 +249,11 @@
     "network": {
       "title": "Sieć",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
+        "title": "Konfiguracja serwera proxy",
+        "no": "Nie używaj proxy",
+        "system": "Użyj systemowego proxy",
+        "manual": "Użyj ręcznej konfiguracji proxy",
+        "protocol": "Protokół",
         "host": "Proxy host",
         "port": "Proxy port",
         "username": "Proxy username",
@@ -267,16 +267,16 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "Zapisz"
     },
     "language": {
       "title": "Język",
       "language": {
-        "title": "Language",
+        "title": "Język",
         "description": "Choose the language you would like to use with Whalebird."
       },
       "spellchecker": {
-        "title": "Spellcheck",
+        "title": "Sprawdzanie pisowni",
         "enabled": "Enable spellchecker"
       }
     }
@@ -289,12 +289,12 @@
       "cancel": "Anuluj",
       "toot": "Wyślij",
       "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
+      "close_confirm_ok": "Odrzuć",
       "close_confirm_cancel": "Continue Editing",
       "description": "Wprowadź opis dla niewidomych i niedowidzących",
       "footer": {
         "add_image": "Dodaj obraz",
-        "poll": "Add a poll",
+        "poll": "Dodaj ankietę",
         "change_visibility": "Zmień widoczność",
         "change_sensitive": "Zmień wrażliwy",
         "add_cw": "Dodaj ostrzeżenie zawartości",
@@ -303,13 +303,13 @@
       "poll": {
         "add_choice": "Add a choice",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 minut",
+          "30_minutes": "30 minut",
+          "1_hour": "1 godzinę",
+          "6_hours": "6 godzin",
+          "1_day": "1 dzień",
+          "3_days": "3 dni",
+          "7_days": "7 dni"
         }
       }
     },
@@ -330,9 +330,9 @@
       "ok": "Mute"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
+      "title": "Skróty klawiszowe",
+      "ctrl_number": "Przełącz konta",
+      "ctrl_k": "Przejdź do innych osi czasu",
       "ctrl_n": "Open the new toot modal",
       "ctrl_enter": "Post the toot",
       "ctrl_r": "Reload current timeline",
@@ -381,7 +381,7 @@
         "votes_count": "votes",
         "until": "until {{datetime}}",
         "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "refresh": "Odśwież"
       }
     },
     "status_loading": {
@@ -411,7 +411,7 @@
   },
   "follow_requests": {
     "accept": "Accept",
-    "reject": "Reject"
+    "reject": "Odrzuć"
   },
   "hashtag": {
     "tag_name": "Tag",
@@ -431,18 +431,18 @@
       "edit": "Edytuj",
       "delete": {
         "confirm": {
-          "title": "Confirm",
+          "title": "Potwierdź",
           "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "ok": "Usuń",
+          "cancel": "Anuluj"
         }
       }
     }
   },
   "login": {
     "domain_name_label": "Na początek musisz się zalogować na serwerze Mastodona. Wprowadź domenę serwerze.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
+    "proxy_info": "Jeśli chcesz korzystać z serwera proxy, skonfiguruj go",
+    "proxy_here": " tutaj",
     "search": "Znajdź",
     "login": "Zaloguj się"
   },
@@ -517,7 +517,7 @@
   "notification": {
     "favourite": {
       "title": "Favourite",
-      "body": "{{username}} favourited your status"
+      "body": "{{username}} lubi Twój status"
     },
     "follow": {
       "title": "Follow",
