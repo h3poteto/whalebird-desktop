@@ -114,6 +114,7 @@ export default defineComponent({
 .image-viewer-leave-active {
   transition: opacity 0.5s;
 }
+
 .image-viewer-enter,
 .image-viewer-leave-to {
   opacity: 0;

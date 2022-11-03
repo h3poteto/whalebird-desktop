@@ -132,7 +132,7 @@ p {
   margin: 8px 0;
 }
 
-.clearfix:after {
+.clearfix::after {
   content: ' ';
   display: block;
   clear: both;

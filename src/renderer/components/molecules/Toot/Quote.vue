@@ -71,6 +71,7 @@ export default defineComponent({
         height: 20px;
       }
     }
+
     .body {
       margin-top: 4px;
 

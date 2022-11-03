@@ -556,8 +556,7 @@ export default defineComponent({
       .preview {
         box-sizing: border-box;
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-flow: row wrap;
 
         .image-wrapper {
           position: relative;

@@ -119,6 +119,7 @@ export default defineComponent({
       height: 100%;
       user-select: none;
     }
+
     .setting-menu :deep(.icon) {
       margin-right: 9px;
     }
