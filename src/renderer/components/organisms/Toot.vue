@@ -941,7 +941,7 @@ export default defineComponent({
 
       button {
         display: block;
-        padding: 0 8px;
+        padding: 4px 8px;
         margin: 0;
         color: #909399;
       }
