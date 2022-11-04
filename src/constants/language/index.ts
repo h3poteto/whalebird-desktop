@@ -25,6 +25,7 @@ export type LanguageList = {
   sv_se: LanguageType
   tzm: LanguageType
   fa: LanguageType
+  is: LanguageType
 }
 
 const languageList: LanguageList = {
@@ -72,6 +73,11 @@ const languageList: LanguageList = {
     name: 'Indonesian',
     key: 'id',
     rfc4646: 'id'
+  },
+  is: {
+    name: 'Icelandic',
+    key: 'is',
+    rfc4646: 'is'
   },
   it: {
     name: 'Italiano',

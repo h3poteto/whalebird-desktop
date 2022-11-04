@@ -8,6 +8,7 @@ import fr from '~/src/config/locales/fr/translation.json'
 import gd from '~/src/config/locales/gd/translation.json'
 import id from '~/src/config/locales/id/translation.json'
 import it from '~/src/config/locales/it/translation.json'
+import is from '~/src/config/locales/is/translation.json'
 import ja from '~/src/config/locales/ja/translation.json'
 import ko from '~/src/config/locales/ko/translation.json'
 import no from '~/src/config/locales/no/translation.json'
@@ -52,6 +53,9 @@ const options: InitOptions = {
     },
     it: {
       translation: it
+    },
+    is: {
+      translation: is
     },
     ja: {
       translation: ja

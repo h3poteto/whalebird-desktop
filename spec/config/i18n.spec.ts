@@ -10,6 +10,7 @@ const locales = [
   'ja',
   'ko',
   'pl',
+  'is',
   'it',
   'zh_cn',
   'zh_tw',
