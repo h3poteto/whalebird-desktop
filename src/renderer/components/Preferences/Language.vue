@@ -50,6 +50,7 @@ export default defineComponent({
       Language.de,
       Language.en,
       Language.es_es,
+      Language.fa,
       Language.fr,
       Language.gd,
       Language.id,
