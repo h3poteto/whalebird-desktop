@@ -10,7 +10,7 @@
       <div class="acct">@{{ user.acct }}</div>
     </div>
     <div class="tool" v-if="remove">
-      <el-button type="text" @click.stop.prevent="removeAccount(user)">
+      <el-button link @click.stop.prevent="removeAccount(user)">
         <font-awesome-icon icon="xmark" />
       </el-button>
     </div>
@@ -18,19 +18,19 @@
       <el-button
         v-if="relationship.following"
         class="unfollow"
-        type="text"
+        link
         @click.stop.prevent="unfollowAccount(user)"
         :title="$t('side_bar.account_profile.unfollow')"
       >
         <font-awesome-icon icon="user-xmark" />
       </el-button>
-      <el-button v-else-if="relationship.requested" class="requested" type="text" :title="$t('side_bar.account_profile.follow_requested')">
+      <el-button v-else-if="relationship.requested" class="requested" link :title="$t('side_bar.account_profile.follow_requested')">
         <font-awesome-icon icon="hourglass" />
       </el-button>
       <el-button
         v-else-if="!relationship.following"
         class="follow"
-        type="text"
+        link
         @click.stop.prevent="followAccount(user)"
         :title="$t('side_bar.account_profile.follow')"
       >
@@ -38,10 +38,10 @@
       </el-button>
     </div>
     <div class="tool" v-else-if="request">
-      <el-button class="accept" type="text" @click.stop.prevent="acceptRequest(user)" :title="$t('follow_requests.accept')">
+      <el-button class="accept" link :title="$t('follow_requests.accept')" @click.stop.prevent="acceptRequest(user)">
         <font-awesome-icon icon="check" />
       </el-button>
-      <el-button class="reject" type="text" @click.stop.prevent="rejectRequest(user)" :tilte="$t('follow_requests.reject')">
+      <el-button class="reject" link :tilte="$t('follow_requests.reject')" @click.stop.prevent="rejectRequest(user)">
         <font-awesome-icon icon="xmark" />
       </el-button>
     </div>

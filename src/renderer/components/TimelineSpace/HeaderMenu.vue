@@ -5,10 +5,10 @@
     </div>
     <div class="tools">
       <img src="../../assets/images/loading-spinner-wide.svg" v-show="loading" class="header-loading" />
-      <el-button type="text" class="action" @click="openNewTootModal" :title="$t('header_menu.new_toot')">
+      <el-button class="action" link :title="$t('header_menu.new_toot')" @click="openNewTootModal">
         <font-awesome-icon :icon="['far', 'pen-to-square']" />
       </el-button>
-      <el-button v-show="reloadable()" type="text" class="action" @click="reload" :title="$t('header_menu.reload')">
+      <el-button v-show="reloadable()" link class="action" :title="$t('header_menu.reload')" @click="reload">
         <font-awesome-icon icon="rotate" />
       </el-button>
       <el-popover v-if="TLOption()" placement="left-start" width="180" popper-class="theme-popover" trigger="click">
@@ -24,12 +24,12 @@
           </el-form>
         </div>
         <template #reference>
-          <el-button type="text" class="action" :title="$t('header_menu.option.title')">
+          <el-button link class="action" :title="$t('header_menu.option.title')">
             <font-awesome-icon icon="sliders" />
           </el-button>
         </template>
       </el-popover>
-      <el-button type="text" class="action" @click="settings" :title="$t('header_menu.settings')">
+      <el-button class="action" link :title="$t('header_menu.settings')" @click="settings">
         <font-awesome-icon icon="gear" />
       </el-button>
     </div>

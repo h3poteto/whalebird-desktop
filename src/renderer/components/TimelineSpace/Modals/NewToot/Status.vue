@@ -59,7 +59,7 @@
           :emojiTooltip="true"
         />
         <template #reference>
-          <el-button class="emoji-selector" type="text">
+          <el-button class="emoji-selector" link>
             <font-awesome-icon :icon="['far', 'face-smile']" size="lg" />
           </el-button>
         </template>

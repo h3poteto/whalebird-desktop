@@ -19,16 +19,16 @@
           <div class="content" v-html="status"></div>
         </div>
         <div class="tool-box">
-          <el-button type="text" class="reply" :title="$t('cards.toot.reply')">
+          <el-button link class="reply" :title="$t('cards.toot.reply')">
             <font-awesome-icon icon="reply" size="sm" />
           </el-button>
-          <el-button type="text" class="reblog" :title="$t('cards.toot.reblog')">
+          <el-button link class="reblog" :title="$t('cards.toot.reblog')">
             <font-awesome-icon icon="retweet" size="sm" />
           </el-button>
           <span class="count">
             {{ reblogsCount }}
           </span>
-          <el-button type="text" class="favourite" :title="$t('cards.toot.fav')">
+          <el-button link class="favourite" :title="$t('cards.toot.fav')">
             <font-awesome-icon icon="star" size="sm" />
           </el-button>
           <span class="count">

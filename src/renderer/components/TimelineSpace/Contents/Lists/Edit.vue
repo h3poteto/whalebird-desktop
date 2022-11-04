@@ -1,7 +1,7 @@
 <template>
   <div class="members">
     <div class="add-account">
-      <el-button type="text" class="add-button" @click="addAccount">
+      <el-button link class="add-button" @click="addAccount">
         <font-awesome-icon icon="plus" />
       </el-button>
     </div>

@@ -25,10 +25,10 @@
         </div>
       </div>
       <div class="collapse">
-        <el-button type="text" class="release-collapse" @click="releaseCollapse" v-if="collapse" :title="$t('side_menu.expand')">
+        <el-button v-if="collapse" link class="release-collapse" :title="$t('side_menu.expand')" @click="releaseCollapse">
           <font-awesome-icon :icon="['fa', 'angles-right']" />
         </el-button>
-        <el-button type="text" class="do-collapse" @click="doCollapse" v-else :title="$t('side_menu.collapse')">
+        <el-button v-else link class="do-collapse" :title="$t('side_menu.collapse')" @click="doCollapse">
           <font-awesome-icon :icon="['fa', 'angles-left']" />
         </el-button>
       </div>
@@ -253,10 +253,10 @@
         </template>
       </template>
     </el-menu>
-    <el-button v-if="hideGlobalHeader" class="global-header-control" type="text" @click="changeGlobalHeader(false)">
+    <el-button v-if="hideGlobalHeader" class="global-header-control" link @click="changeGlobalHeader(false)">
       <font-awesome-icon icon="angles-right" />
     </el-button>
-    <el-button v-else class="global-header-control" type="text" @click="changeGlobalHeader(true)">
+    <el-button v-else class="global-header-control" link @click="changeGlobalHeader(true)">
       <font-awesome-icon icon="angles-left" />
     </el-button>
   </div>

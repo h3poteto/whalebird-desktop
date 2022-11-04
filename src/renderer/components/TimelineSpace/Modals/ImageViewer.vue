@@ -3,17 +3,17 @@
     <div id="image" v-show="modalOpen" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
       <div class="image-wrapper">
         <div class="image-header">
-          <el-button type="text" @click="close" class="close-button">
+          <el-button class="close-button" link @click="close">
             <font-awesome-icon icon="xmark" />
           </el-button>
         </div>
         <div class="image-content" role="presentation" @click.self="close">
           <span class="button-area"
-            ><el-button type="text" v-show="showLeft" @click="decrementIndex()"> <font-awesome-icon icon="angle-left" /> </el-button
+            ><el-button v-show="showLeft" link @click="decrementIndex()"> <font-awesome-icon icon="angle-left" /> </el-button
           ></span>
           <Media :src="imageURL" :imageType="imageType"></Media>
           <span class="button-area"
-            ><el-button type="text" v-show="showRight" @click="incrementIndex()"> <font-awesome-icon icon="angle-right" /> </el-button
+            ><el-button v-show="showRight" link @click="incrementIndex()"> <font-awesome-icon icon="angle-right" /> </el-button
           ></span>
         </div>
       </div>

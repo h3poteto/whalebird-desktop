@@ -4,7 +4,7 @@
       <el-form>
         <div class="form-wrapper">
           <div class="form-item" v-show="tagPage">
-            <el-button type="text" @click="back">
+            <el-button link @click="back">
               <font-awesome-icon icon="chevron-left" />
             </el-button>
           </div>
@@ -12,7 +12,7 @@
             <input v-model="tag" :placeholder="$t('hashtag.tag_name')" class="search-keyword" v-on:keyup.enter="search" autofocus />
           </div>
           <div class="form-item" v-show="tagPage">
-            <el-button type="text" @click="save" :title="$t('hashtag.save_tag')">
+            <el-button link :title="$t('hashtag.save_tag')" @click="save">
               <font-awesome-icon icon="thumbtack" />
             </el-button>
           </div>

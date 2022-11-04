@@ -4,7 +4,7 @@
       <div class="search-account" :element-loading-background="loadingBackground">
         <el-form :inline="true">
           <input v-model="name" placeholder="Account name" class="account-name" autofocus />
-          <el-button type="text" class="search" @click="search">
+          <el-button link class="search" @click="search">
             <font-awesome-icon icon="magnifying-glass" />
           </el-button>
         </el-form>
@@ -21,7 +21,7 @@
                 <div class="acct">@{{ user.acct }}</div>
               </div>
               <div class="add">
-                <el-button type="text" @click="add(user)">
+                <el-button link @click="add(user)">
                   <font-awesome-icon icon="plus" />
                 </el-button>
               </div>
