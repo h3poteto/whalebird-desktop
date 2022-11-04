@@ -57,7 +57,7 @@ export default defineComponent({
     const search = () => {
       switch (target.value) {
         case 'account':
-          store.dispatch(`${space}/Tag/${ACCOUNT_ACTION.SEARCH}`, query.value).catch(() => {
+          store.dispatch(`${space}/Account/${ACCOUNT_ACTION.SEARCH}`, query.value).catch(() => {
             ElMessage({
               message: i18n.t('message.search_error'),
               type: 'error'
