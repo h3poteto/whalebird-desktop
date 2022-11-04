@@ -533,10 +533,14 @@ export default defineComponent({
     .el-dialog__body {
       padding: 0;
 
+      .el-input__wrapper {
+        background-color: var(--theme-background-color);
+        border: 1px solid var(--theme-border-color);
+      }
+
       .el-input__inner {
         background-color: var(--theme-background-color);
         color: var(--theme-primary-color);
-        border: 1px solid var(--theme-border-color);
       }
 
       .spoiler {
