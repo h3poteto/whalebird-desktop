@@ -33,11 +33,17 @@
     </screenshot>
   </screenshots>
   <releases>
-      <release version="4.6.5" date="2022-9-9">
+      <release version="4.7.0" date="2022-11-6">
           <description>
-              <p>Changed</p>
+              <p>Added</p>
               <ul>
-                <li>Stop building linux ia32 build because Electron 19 does not support it</li>
+                <li>Add Persian and Icelandic</li>
+                <li>Close image preview when user clicks outside the image</li>
+              </ul>
+              <p>Fixed</p>
+              <ul>
+                <li>Fix input design</li>
+                <li>Fix to set poll expire</li>
               </ul>
           </description>
       </release>
