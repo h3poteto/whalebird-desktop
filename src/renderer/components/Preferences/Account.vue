@@ -16,7 +16,7 @@
           <el-table-column prop="domain" :label="$t('preferences.account.domain')"> </el-table-column>
           <el-table-column :label="$t('preferences.account.association')">
             <template #default="scope">
-              <el-button @click.prevent="removeAccount(scope.$index, accounts)" type="text" class="action">
+              <el-button class="action" link @click.prevent="removeAccount(scope.$index, accounts)">
                 <font-awesome-icon icon="xmark" />
                 {{ $t('preferences.account.remove_association') }}
               </el-button>
@@ -25,12 +25,12 @@
           <el-table-column :label="$t('preferences.account.order')" width="60">
             <template #default="scope">
               <div class="allow-up">
-                <el-button class="arrow-up action" type="text" @click.prevent="forward(scope.$index, accounts)">
+                <el-button class="arrow-up action" link @click.prevent="forward(scope.$index, accounts)">
                   <font-awesome-icon icon="arrow-up" />
                 </el-button>
               </div>
               <div class="allow-down">
-                <el-button class="arrow-down action" type="text" @click.prevent="backward(scope.$index, accounts)">
+                <el-button class="arrow-down action" link @click.prevent="backward(scope.$index, accounts)">
                   <font-awesome-icon icon="arrow-down" />
                 </el-button>
               </div>

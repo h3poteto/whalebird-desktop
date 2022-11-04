@@ -25,7 +25,7 @@
       <el-table-column prop="expires_at" label="Expires" width="180"> </el-table-column>
       <el-table-column width="80">
         <template #default="scope">
-          <el-button type="text">
+          <el-button link>
             <router-link tag="span" :to="`/${id}/settings/filters/${filters[scope.$index].id}/edit`">
               {{ $t('settings.filters.edit.title') }}
             </router-link>
@@ -34,7 +34,7 @@
       </el-table-column>
       <el-table-column width="80">
         <template #default="scope">
-          <el-button type="text" @click="deleteFilter(filters[scope.$index].id)">
+          <el-button link @click="deleteFilter(filters[scope.$index].id)">
             {{ $t('settings.filters.delete.title') }}
           </el-button>
         </template>

@@ -64,7 +64,7 @@
               <el-button
                 v-show="sensitive && isShowAttachments"
                 class="hide-sensitive"
-                type="text"
+                link
                 @click="showAttachments = false"
                 :title="$t('cards.toot.hide')"
               >

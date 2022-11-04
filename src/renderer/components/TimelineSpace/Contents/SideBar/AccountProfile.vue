@@ -55,7 +55,7 @@
               </ul>
 
               <template #reference>
-                <el-button type="text" :title="$t('side_bar.account_profile.detail')">
+                <el-button link :title="$t('side_bar.account_profile.detail')">
                   <font-awesome-icon icon="gear" size="xl" />
                 </el-button>
               </template>
@@ -103,19 +103,19 @@
     </div>
     <el-row class="basic-info">
       <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'">
-        <el-button type="text" class="tab" @click="changeTab(1)">
+        <el-button link class="tab" @click="changeTab(1)">
           <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
           <div class="count">{{ account?.statuses_count }}</div>
         </el-button>
       </el-col>
       <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
-        <el-button type="text" class="tab" @click="changeTab(2)">
+        <el-button link class="tab" @click="changeTab(2)">
           <div class="title">{{ $t('side_bar.account_profile.follows') }}</div>
           <div class="count">{{ account?.following_count }}</div>
         </el-button>
       </el-col>
       <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
-        <el-button type="text" class="tab" @click="changeTab(3)">
+        <el-button link class="tab" @click="changeTab(3)">
           <div class="title">
             {{ $t('side_bar.account_profile.followers') }}
           </div>

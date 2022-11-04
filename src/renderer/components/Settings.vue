@@ -6,7 +6,7 @@
           <h1>{{ $t('settings.title') }}</h1>
         </el-col>
         <el-col :span="1" class="close-area">
-          <el-button type="text" @click="close" class="close-button" role="button">
+          <el-button class="close-button" link role="button" @click="close">
             <font-awesome-icon icon="xmark" />
           </el-button>
         </el-col>

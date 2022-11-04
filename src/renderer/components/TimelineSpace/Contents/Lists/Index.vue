@@ -3,7 +3,7 @@
     <div class="new-list" v-loading="creating" :element-loading-background="loadingBackground">
       <el-form :inline="true">
         <input v-model="title" :placeholder="$t('lists.index.new_list')" class="list-title" />
-        <el-button type="text" class="create" @click="createList">
+        <el-button link class="create" @click="createList">
           <font-awesome-icon icon="plus" />
         </el-button>
       </el-form>
@@ -13,10 +13,10 @@
         {{ list.title }}
       </router-link>
       <div class="tools">
-        <el-button type="text" @click="edit(list)">
+        <el-button link @click="edit(list)">
           <font-awesome-icon :icon="['far', 'pen-to-square']" />
         </el-button>
-        <el-button type="text" @click="del(list)">
+        <el-button link @click="del(list)">
           <font-awesome-icon :icon="['far', 'trash-can']" />
         </el-button>
       </div>

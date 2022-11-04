@@ -20,7 +20,7 @@
       <el-button v-if="!poll.voted" type="success" size="small" @click="vote" :disabled="pollRadio === null">{{
         $t('cards.toot.poll.vote')
       }}</el-button>
-      <el-button v-else type="text" @click="refresh">{{ $t('cards.toot.poll.refresh') }}</el-button>
+      <el-button v-else link @click="refresh">{{ $t('cards.toot.poll.refresh') }}</el-button>
       <span class="votes-count">{{ poll.votes_count }} {{ $t('cards.toot.poll.votes_count') }},</span>
       <span class="until">{{ parseDatetime(poll.expires_at, now) }}</span>
     </template>

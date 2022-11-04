@@ -1,10 +1,10 @@
 <template>
   <div class="side-bar" v-if="openSideBar">
     <div class="header">
-      <el-button type="text" @click="reload" class="action">
+      <el-button class="action" link @click="reload">
         <font-awesome-icon icon="rotate" />
       </el-button>
-      <el-button type="text" @click="close" class="action">
+      <el-button link class="action" @click="close">
         <font-awesome-icon icon="xmark" />
       </el-button>
     </div>

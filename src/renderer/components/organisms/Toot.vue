@@ -59,13 +59,7 @@
             {{ $t('cards.toot.sensitive') }}
           </el-button>
           <div v-if="isShowAttachments">
-            <el-button
-              v-if="sensitive && isShowAttachments"
-              class="hide-sensitive"
-              type="text"
-              @click="toggleCW()"
-              :title="$t('cards.toot.hide')"
-            >
+            <el-button v-if="sensitive && isShowAttachments" class="hide-sensitive" link :title="$t('cards.toot.hide')" @click="toggleCW()">
               <font-awesome-icon icon="eye" class="hide" />
             </el-button>
             <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
@@ -98,29 +92,29 @@
           :url="originalMessage.card.url"
         />
         <div class="emoji-reactions">
-          <template v-for="reaction in originalMessage.emoji_reactions">
+          <template v-for="reaction in originalMessage.emoji_reactions" :key="reaction.name">
             <el-button v-if="reaction.me" type="success" size="default" class="reaction" @click="removeReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
-            <el-button v-else type="text" size="default" class="reaction" @click="addReaction(reaction.name)"
+            <el-button v-else link size="default" class="reaction" @click="addReaction(reaction.name)"
               >{{ reaction.name }} {{ reaction.count }}</el-button
             >
           </template>
         </div>
         <div class="toot-footer">
           <div class="tool-box">
-            <el-button type="text" @click="openReply()" class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')">
+            <el-button link class="reply" :title="$t('cards.toot.reply')" :aria-label="$t('cards.toot.reply')" @click="openReply()">
               <font-awesome-icon icon="reply" size="sm" />
             </el-button>
-            <el-button v-if="locked" type="text" class="locked">
+            <el-button v-if="locked" link class="locked">
               <font-awesome-icon icon="lock" size="sm" />
             </el-button>
-            <el-button v-else-if="directed" type="text" class="directed">
+            <el-button v-else-if="directed" link class="directed">
               <font-awesome-icon icon="envelope" size="sm" />
             </el-button>
             <el-button
               v-else
-              type="text"
+              link
               @click="changeReblog(originalMessage)"
               :class="originalMessage.reblogged ? 'reblogged' : 'reblog'"
               :title="$t('cards.toot.reblog')"
@@ -131,7 +125,7 @@
               {{ reblogsCount }}
             </div>
             <el-button
-              type="text"
+              link
               @click="changeFavourite(originalMessage)"
               :class="originalMessage.favourited ? 'favourited animated bounceIn' : 'favourite'"
               :title="$t('cards.toot.fav')"
@@ -143,16 +137,16 @@
               {{ favouritesCount }}
             </div>
             <el-button
-              @click="changeBookmark(originalMessage)"
+              v-if="bookmarkSupported"
               :class="originalMessage.bookmarked ? 'bookmarked' : 'bookmark'"
-              type="text"
+              link
               :title="$t('cards.toot.bookmark')"
               :aria-label="$t('cards.toot.bookmark')"
-              v-if="bookmarkSupported"
+              @click="changeBookmark(originalMessage)"
             >
               <font-awesome-icon icon="bookmark" size="sm" />
             </el-button>
-            <el-button type="text" class="quote-btn" v-if="quoteSupported" @click="openQuote()">
+            <el-button v-if="quoteSupported" link class="quote-btn" @click="openQuote()">
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
             <template v-if="sns !== 'mastodon'">
@@ -178,13 +172,13 @@
                   :emojiTooltip="true"
                 />
                 <template #reference>
-                  <el-button class="emoji" type="text">
+                  <el-button class="emoji" link>
                     <font-awesome-icon :icon="['far', 'face-smile']" size="sm" />
                   </el-button>
                 </template>
               </el-popover>
             </template>
-            <el-button class="pinned" type="text" :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')" v-if="pinned">
+            <el-button v-if="pinned" class="pinned" link :title="$t('cards.toot.pinned')" :aria-label="$t('cards.toot.pinned')">
               <font-awesome-icon icon="thumbtack" size="sm" />
             </el-button>
             <el-popover
@@ -219,7 +213,7 @@
                 </li>
               </ul>
               <template #reference>
-                <el-button type="text" :title="$t('cards.toot.detail')">
+                <el-button link :title="$t('cards.toot.detail')">
                   <font-awesome-icon icon="ellipsis" size="sm" />
                 </el-button>
               </template>

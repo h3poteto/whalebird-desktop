@@ -4,7 +4,7 @@
       <li class="poll-option" v-for="(option, id) in polls" v-bind:key="id">
         <el-radio :disabled="true" :label="id">
           <el-input :placeholder="`choice ${id}`" :modelValue="option" @input="polls[id] = $event" size="small"></el-input>
-          <el-button class="remove-poll" type="text" @click="removePoll(id)" size="small"><font-awesome-icon icon="xmark" /></el-button>
+          <el-button class="remove-poll" link size="small" @click="removePoll(id)"><font-awesome-icon icon="xmark" /></el-button>
         </el-radio>
       </li>
     </ul>

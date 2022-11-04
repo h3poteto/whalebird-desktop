@@ -40,7 +40,7 @@
       <div class="preview" ref="previewRef">
         <div class="image-wrapper" v-for="media in attachedMedias" v-bind:key="media.id">
           <img :src="media.preview_url" class="preview-image" />
-          <el-button type="text" @click="removeAttachment(media)" class="remove-image"><font-awesome-icon icon="circle-xmark" /></el-button>
+          <el-button class="remove-image" link @click="removeAttachment(media)"><font-awesome-icon icon="circle-xmark" /></el-button>
           <textarea
             maxlength="420"
             class="image-description"
@@ -57,19 +57,19 @@
       <template #footer>
         <div class="dialog-footer">
           <div class="upload-image">
-            <el-button size="default" type="text" @click="selectImage" :title="$t('modals.new_toot.footer.add_image')">
+            <el-button size="default" link :title="$t('modals.new_toot.footer.add_image')" @click="selectImage">
               <font-awesome-icon icon="camera" />
             </el-button>
             <input name="image" type="file" class="image-input" ref="imageRef" @change="onChangeImage" />
           </div>
           <div class="poll">
-            <el-button size="default" type="text" @click="togglePollForm" :title="$t('modals.new_toot.footer.poll')">
+            <el-button size="default" link :title="$t('modals.new_toot.footer.poll')" @click="togglePollForm">
               <font-awesome-icon icon="square-poll-horizontal" />
             </el-button>
           </div>
           <div class="privacy">
             <el-dropdown trigger="click" @command="changeVisibility">
-              <el-button size="default" type="text" :title="$t('modals.new_toot.footer.change_visibility')">
+              <el-button size="default" link :title="$t('modals.new_toot.footer.change_visibility')">
                 <font-awesome-icon :icon="visibilityIcon" />
               </el-button>
               <template #dropdown>
@@ -97,7 +97,7 @@
           <div class="sensitive" v-show="attachedMedias.length > 0">
             <el-button
               size="default"
-              type="text"
+              link
               @click="changeSensitive"
               :title="$t('modals.new_toot.footer.change_sensitive')"
               :aria-pressed="sensitive"
@@ -109,7 +109,7 @@
           <div class="content-warning">
             <el-button
               size="default"
-              type="text"
+              link
               @click="toggleContentWarning()"
               :title="$t('modals.new_toot.footer.add_cw')"
               :class="showContentWarning ? '' : 'clickable'"
@@ -121,7 +121,7 @@
           <div class="pined-hashtag">
             <el-button
               size="default"
-              type="text"
+              link
               @click="pinedHashtag = !pinedHashtag"
               :title="$t('modals.new_toot.footer.pined_hashtag')"
               :class="pinedHashtag ? '' : 'clickable'"

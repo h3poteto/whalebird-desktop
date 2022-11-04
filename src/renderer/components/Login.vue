@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="24" class="close">
-          <el-button type="text" @click="close" class="close-button">
+          <el-button class="close-button" link @click="close">
             <font-awesome-icon icon="xmark" />
           </el-button>
         </el-col>
