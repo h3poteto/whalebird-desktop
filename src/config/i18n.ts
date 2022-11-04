@@ -3,10 +3,12 @@ import cs from '~/src/config/locales/cs/translation.json'
 import de from '~/src/config/locales/de/translation.json'
 import en from '~/src/config/locales/en/translation.json'
 import es_es from '~/src/config/locales/es_es/translation.json'
+import fa from '~/src/config/locales/fa/translation.json'
 import fr from '~/src/config/locales/fr/translation.json'
 import gd from '~/src/config/locales/gd/translation.json'
 import id from '~/src/config/locales/id/translation.json'
 import it from '~/src/config/locales/it/translation.json'
+import is from '~/src/config/locales/is/translation.json'
 import ja from '~/src/config/locales/ja/translation.json'
 import ko from '~/src/config/locales/ko/translation.json'
 import no from '~/src/config/locales/no/translation.json'
@@ -37,6 +39,9 @@ const options: InitOptions = {
     es_es: {
       translation: es_es
     },
+    fa: {
+      translation: fa
+    },
     fr: {
       translation: fr
     },
@@ -48,6 +53,9 @@ const options: InitOptions = {
     },
     it: {
       translation: it
+    },
+    is: {
+      translation: is
     },
     ja: {
       translation: ja
