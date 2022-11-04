@@ -9,7 +9,7 @@
       </li>
     </ul>
     <el-button class="add-poll" type="info" size="small" @click="addPoll" plain>{{ $t('modals.new_toot.poll.add_choice') }}</el-button>
-    <el-select :modelValue="expire" @change="$emit('update:expire', $event)" size="small" value-key="value">
+    <el-select :model-value="expire" size="small" value-key="value" @change="updateExpire">
       <el-option v-for="exp in expiresList" :key="exp.value" :label="exp.label" :value="exp"> </el-option>
     </el-select>
   </div>
@@ -36,6 +36,7 @@ export default defineComponent({
       required: true
     }
   },
+  emits: ['addPoll', 'removePoll', 'update:expire', 'update:polls'],
   setup(props, ctx) {
     const i18n = useI18next()
     const { expire, polls } = toRefs(props)
@@ -76,9 +77,12 @@ export default defineComponent({
     const removePoll = (id: number) => {
       ctx.emit('removePoll', id)
     }
+    const updateExpire = newExpire => {
+      ctx.emit('update:expire', newExpire)
+    }
 
     watch(expire, (newExpire, _old) => {
-      ctx.emit('update:expire', newExpire)
+      updateExpire(newExpire)
     })
     watch(
       polls,
@@ -93,7 +97,8 @@ export default defineComponent({
       expire,
       expiresList,
       addPoll,
-      removePoll
+      removePoll,
+      updateExpire
     }
   }
 })

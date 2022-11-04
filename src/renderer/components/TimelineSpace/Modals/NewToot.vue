@@ -31,7 +31,8 @@
       <Poll
         v-if="openPoll"
         v-model:polls="polls"
-        v-model:expire="pollExpire"
+        :expire="pollExpire"
+        @update:expire="updatePollExpire"
         @addPoll="addPoll"
         @removePoll="removePoll"
         ref="pollRef"
@@ -425,6 +426,11 @@ export default defineComponent({
         enableResizing.value = true
       })
     }
+    const updatePollExpire = newExpire => {
+      pollExpire.label = newExpire.label
+      pollExpire.value = newExpire.value
+    }
+
     const toggleContentWarning = () => {
       const previousHeight = spoilerRef.value ? spoilerRef.value.offsetHeight : 0
       enableResizing.value = false
@@ -468,6 +474,7 @@ export default defineComponent({
       openPoll,
       polls,
       pollExpire,
+      updatePollExpire,
       statusHeight,
       // DOM refs
       previewRef,
