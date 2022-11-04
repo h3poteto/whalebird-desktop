@@ -173,6 +173,7 @@ export default defineComponent({
     }
   }
 
+  /* stylelint-disable-next-line selector-class-pattern */
   .action :deep(.svg-inline--fa) {
     padding-right: 4px;
   }

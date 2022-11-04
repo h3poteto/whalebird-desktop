@@ -1,22 +1,25 @@
 {
-  "extends": [
-    "stylelint-config-html/vue",
-    "stylelint-config-standard",
-    "stylelint-config-prettier"
+  "extends": ["stylelint-config-html/vue", "stylelint-config-standard", "stylelint-config-prettier"],
+  "overrides": [
+    {
+      "customSyntax": "postcss-scss",
+      "files": ["**/*.scss"]
+    }
   ],
   "rules": {
+    "alpha-value-notation": "number",
+    "color-function-notation": "legacy",
+    "color-hex-length": null,
+    "no-descending-specificity": null,
+    "no-empty-source": null,
+    "selector-class-pattern": "^(([a-z][a-zA-Z0-9_]+)|([a-z][a-z0-9]*)(-[a-zA-Z0-9_]+)*)$",
+    "selector-id-pattern": "^(([a-z][a-zA-Z0-9_]+)|([a-z][a-z0-9]*)(-[a-zA-Z0-9_]+)*)$",
     "selector-pseudo-class-no-unknown": [
       true,
       {
         "ignorePseudoClasses": ["deep"]
       }
     ],
-    "selector-class-pattern": "^(([a-z][a-zA-Z0-9_]+)|([a-z][a-z0-9]*)(-[a-zA-Z0-9_]+)*)$"
-  },
-  "overrides": [
-    {
-      "files": ["**/*.scss"],
-      "customSyntax": "postcss-scss"
-    }
-  ]
+    "shorthand-property-no-redundant-values": null
+  }
 }

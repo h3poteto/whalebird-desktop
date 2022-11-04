@@ -172,6 +172,7 @@ export default defineComponent({
 #timeline_space {
   height: 100%;
 }
+
 .page {
   margin-left: 180px;
   height: 100%;

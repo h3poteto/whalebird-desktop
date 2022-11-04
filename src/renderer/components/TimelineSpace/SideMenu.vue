@@ -493,6 +493,7 @@ export default defineComponent({
         width: 18px;
       }
     }
+
     .menu-item * {
       vertical-align: middle;
     }
@@ -500,7 +501,7 @@ export default defineComponent({
     .el-badge {
       vertical-align: top;
       line-height: 32px;
-      margin-left: 0px;
+      margin-left: 0;
     }
   }
 
