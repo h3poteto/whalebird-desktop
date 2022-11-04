@@ -106,6 +106,10 @@ export default defineComponent({
       width: 20%;
     }
 
+    .search-target :deep(.el-input__wrapper) {
+      background-color: var(--theme-background-color);
+    }
+
     .search-target :deep(.el-input__inner) {
       background-color: var(--theme-background-color);
       border: none;
