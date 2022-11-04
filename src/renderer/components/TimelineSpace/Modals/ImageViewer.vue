@@ -7,7 +7,7 @@
             <font-awesome-icon icon="xmark" />
           </el-button>
         </div>
-        <div class="image-content" role="presentation">
+        <div class="image-content" role="presentation" @click.self="close">
           <span class="button-area"
             ><el-button type="text" v-show="showLeft" @click="decrementIndex()"> <font-awesome-icon icon="angle-left" /> </el-button
           ></span>
