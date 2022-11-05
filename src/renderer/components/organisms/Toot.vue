@@ -834,6 +834,10 @@ export default defineComponent({
         overflow: hidden;
         text-overflow: ellipsis;
 
+        span ~ span {
+          padding-left: 0.5em;
+        }
+
         .display-name {
           font-weight: 800;
           color: var(--theme-primary-color);
