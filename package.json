@@ -202,7 +202,7 @@
     "typescript": "^4.8.4",
     "url": "^0.11.0",
     "url-loader": "^4.1.1",
-    "utf-8-validate": "^5.0.9",
+    "utf-8-validate": "^5.0.10",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^17.0.0",
     "vue-style-loader": "^4.1.3",
