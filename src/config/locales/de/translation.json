@@ -397,16 +397,16 @@
       "unfollow": "Diesem Benutzer nicht mehr folgen",
       "subscribe": "Diesen Benutzer abonnieren",
       "unsubscribe": "Diesen Benutzer abbestellen",
-      "follow_requested": "Folgen Sie angefordert",
+      "follow_requested": "Follower Anfrage gestellt",
       "open_in_browser": "Im Browser öffnen",
-      "manage_list_memberships": "Listen-Mitgliedschaften verwalten",
+      "manage_list_memberships": "Mitgliedschaften verwalten",
       "mute": "Stummschalten",
       "unmute": "Stummschaltung aufheben",
-      "unblock": "Block aufheben",
+      "unblock": "Freigeben",
       "block": "Blocken",
-      "toots": "Toots",
-      "follows": "Follows",
-      "followers": "Follower"
+      "toots": "Beiträge",
+      "follows": "Folgt",
+      "followers": "Folgende"
     }
   },
   "follow_requests": {
@@ -414,16 +414,16 @@
     "reject": "Ablehnen"
   },
   "hashtag": {
-    "tag_name": "Tagname",
+    "tag_name": "Tag-Name",
     "delete_tag": "Tag löschen",
     "save_tag": "Tag speichern"
   },
   "search": {
-    "search": "Suche",
-    "account": "Konto",
+    "search": "Suchen",
+    "account": "Benutzerkonto",
     "tag": "Hashtag",
-    "keyword": "stichwort",
-    "toot": "Toot"
+    "keyword": "Stichwörter",
+    "toot": "Beitrag"
   },
   "lists": {
     "index": {
@@ -440,7 +440,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Als erstes wollen wir uns bei einer Mastodon-Server anmelden. Bitte gib den Domainnamen einer Server an.",
+    "domain_name_label": "Zuerst melden wir uns bei einem Mastodon-Server an. Bitte geben Sie einen Servernamen ein.",
     "proxy_info": "Wenn Sie den Proxy-Server verwenden möchten, richten Sie bitte Ihren Proxy ein in",
     "proxy_here": " hier",
     "search": "Suche",
@@ -488,14 +488,14 @@
     "unfavourite_error": "Widerruf des Favorisierens fehlgeschlagen",
     "bookmark_error": "Hinzufügen des Lesezeichens fehlgeschlagen",
     "unbookmark_error": "Löschen des Lesezeichens fehlgeschlagen",
-    "delete_error": "Löschen des Toots fehlgeschlagen",
+    "delete_error": "Löschen des Beitrags fehlgeschlagen",
     "search_error": "Suche fehlgeschlagen",
-    "toot_error": "Toot fehlgeschlagen",
+    "toot_error": "Beitrag senden fehlgeschlagen",
     "update_list_memberships_error": "Konnte Listen-Mitgliedschaften nicht aktualisieren",
-    "add_user_error": "Hinzufügen des Benutzers fehlgeschlagen",
-    "authorize_url_error": "Konnte Zugrifss-URL nicht laden",
-    "domain_confirmed": "{{domain}} ist bestätigt, bitte einloggen",
-    "domain_doesnt_exist": "Verbindung mit {{domain}} fehlgeschlagen, stellen Sie sicher, dass die Server-URL",
+    "add_user_error": "Benutzer konnte nicht hinzugefügt werden",
+    "authorize_url_error": "Fehler beim Abrufen der Autorisierungs-URL",
+    "domain_confirmed": "{{domain}} wurde bestätigt, bitte anmelden",
+    "domain_doesnt_exist": "Verbindung mit {{domain}} fehlgeschlagen, bitte die Server-URL prüfen",
     "loading": "Laden...",
     "language_not_support_spellchecker_error": "Diese Sprache wird noch nicht unterstützt",
     "update_filter_error": "Aktualisierung des Filters fehlgeschlagen",
@@ -507,7 +507,7 @@
       "domain_format": "Bitte gib nur den Domainnamen an"
     },
     "new_toot": {
-      "toot_length": "Länge des Toots sollte zwischen {{min}} und {{max}} sein",
+      "toot_length": "Länge des Beitrags sollte zwischen {{min}} und {{max}} sein",
       "attach_length": "Du kannst maximal {{max}} Bilder anhängen",
       "attach_length_plural": "Du kannst maximal {{max}} Bilder anhängen",
       "attach_image": "Du kannst nur Bilder oder Videos anhängen",
