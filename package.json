@@ -147,7 +147,7 @@
     "babel-register": "^6.26.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
-    "bufferutil": "^4.0.6",
+    "bufferutil": "^4.0.7",
     "cfonts": "^3.1.1",
     "chai": "^4.3.6",
     "chalk": "^4.1.2",
