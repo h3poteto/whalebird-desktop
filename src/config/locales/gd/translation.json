@@ -167,9 +167,9 @@
       "timeline": {
         "title": "Loidhne-ama",
         "description": "Gnàthaich an sealladh air na loidhnichean-ama agad.",
-        "cw": "Always expand posts marked with contents warnings",
-        "nsfw": "Always show all media",
-        "hideAllAttachments": "Always hide all media"
+        "cw": "Leudaich postaichean ris a bheil rabhadh susbainte an-còmhnaidh",
+        "nsfw": "Seall a h-uile meadhan an-còmhnaidh",
+        "hideAllAttachments": "Falaich a h-uile meadhan an-còmhnaidh"
       },
       "other": {
         "title": "Roghainnean eile",
@@ -391,13 +391,13 @@
   "side_bar": {
     "account_profile": {
       "follows_you": "’Gad leantainn",
-      "doesnt_follow_you": "Gun leantainn ort",
+      "doesnt_follow_you": "Nach eil ’gad leantainn",
       "detail": "Mion-fhiosrachadh",
-      "follow": "Lean air a’ chleachdaiche seo",
-      "unfollow": "Na lean air a’ chleachdaiche seo tuilleadh",
+      "follow": "Lean an cleachdaiche seo",
+      "unfollow": "Na lean an cleachdaiche seo tuilleadh",
       "subscribe": "Fo-sgrìobh dhan chleachdaiche seo",
       "unsubscribe": "Na fo-sgrìobh dhan chleachdaiche seo tuilleadh",
-      "follow_requested": "Iarrar leantainn orm",
+      "follow_requested": "Iarrar leantainn",
       "open_in_browser": "Fosgail ann am brabhsair",
       "manage_list_memberships": "Stiùir ballrachdan liosta",
       "mute": "Mùch",
@@ -405,7 +405,7 @@
       "unblock": "Dì-bhac",
       "block": "Bac",
       "toots": "Postaichean",
-      "follows": "A’ leantainn air",
+      "follows": "A’ leantainn",
       "followers": "Luchd-leantainn"
     }
   },
@@ -473,8 +473,8 @@
     "followers_fetch_error": "Cha b’ urrainn dhuinn an luchd-leantainn fhaighinn",
     "follows_fetch_error": "Cha b’ urrainn dhuinn fiosrachadh do leantainn fhaighinn",
     "toot_fetch_error": "Cha b’ urrainn dhuinn mion-fhiosrachadh a’ phuist fhaighinn",
-    "follow_error": "Dh’fhàillig le leantainn air a’ chleachdaiche",
-    "unfollow_error": "Dh’fhàillig le sgur de leantainn air a’ chleachdaiche",
+    "follow_error": "Dh’fhàillig le leantainn a’ chleachdaiche",
+    "unfollow_error": "Dh’fhàillig le sgur de leantainn a’ chleachdaiche",
     "subscribe_error": "Dh’fhàillig leis an fho-sgrìobhadh air a’ chleachdaiche",
     "unsubscribe_error": "Cha deach leinn crìoch a chur air an fho-sgrìobhadh air a’ chleachdaiche",
     "lists_fetch_error": "Cha b’ urrainn dhuinn na liostaichean fhaighinn",
@@ -520,8 +520,8 @@
       "body": "Is annsa le {{username}} am post agad"
     },
     "follow": {
-      "title": "Leantainn ort",
-      "body": "Tha {{username}} a’ leantainn ort a-nis"
+      "title": "Lean",
+      "body": "Tha {{username}} ’gad leantainn a-nis"
     },
     "follow_request": {
       "title": "Iarrtas leantainn",
