@@ -2,6 +2,13 @@ import { domainFormat } from '@/utils/validator'
 
 describe('validator', () => {
   describe('domainFormat', () => {
+    describe('single character domain name', () => {
+      const domain = 'c.im'
+      it('should match', () => {
+        const res = domain.search(domainFormat)
+        expect(res).toEqual(0)
+      })
+    })
     describe('string contains protocol', () => {
       const domain = 'https://mastodon.social'
       it('should not match', () => {
