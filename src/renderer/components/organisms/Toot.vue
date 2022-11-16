@@ -36,45 +36,47 @@
           </div>
           <div class="clearfix"></div>
         </div>
-        <div class="content-wrapper">
-          <div class="spoiler" v-if="spoilered">
-            <span v-html="emojiText(originalMessage.spoiler_text, originalMessage.emojis)"></span>
-            <el-button v-if="!isShowContent" plain type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
-              {{ $t('cards.toot.show_more') }}
-            </el-button>
-            <el-button v-else type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
-              {{ $t('cards.toot.hide') }}
-            </el-button>
-          </div>
-          <div
-            class="content"
-            v-if="isShowContent"
-            v-html="emojiText(originalMessage.content, originalMessage.emojis)"
-            @click.capture.prevent="tootClick"
-          ></div>
-          <Poll v-if="isShowContent && poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
-        </div>
-        <div class="attachments">
-          <el-button v-if="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="toggleCW()">
-            {{ $t('cards.toot.sensitive') }}
-          </el-button>
-          <div v-if="isShowAttachments">
-            <el-button v-if="sensitive && isShowAttachments" class="hide-sensitive" link :title="$t('cards.toot.hide')" @click="toggleCW()">
-              <font-awesome-icon icon="eye" class="hide" />
-            </el-button>
-            <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
-              <FailoverImg
-                :src="media.preview_url ? media.preview_url : originalMessage.account.avatar"
-                @click="openImage(media.url, mediaAttachments)"
-                :title="media.description"
-                :readExif="true"
-              />
-              <el-tag class="media-label" size="small" v-if="media.type === 'gifv'">GIF</el-tag>
-              <el-tag class="media-label" size="small" v-else-if="media.type === 'video'">VIDEO</el-tag>
-              <el-tag class="media-label" size="small" v-else-if="media.type === 'audio'">AUDIO</el-tag>
+        <div v-bind:class="rtl?'rtl':''">
+          <div class="content-wrapper">
+            <div class="spoiler" v-if="spoilered">
+              <span v-html="emojiText(originalMessage.spoiler_text, originalMessage.emojis)"></span>
+              <el-button v-if="!isShowContent" plain type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
+                {{ $t('cards.toot.show_more') }}
+              </el-button>
+              <el-button v-else type="primary" size="default" class="spoil-button" @click="toggleSpoiler">
+                {{ $t('cards.toot.hide') }}
+              </el-button>
             </div>
+            <div
+              class="content"
+              v-if="isShowContent"
+              v-html="emojiText(originalMessage.content, originalMessage.emojis)"
+              @click.capture.prevent="tootClick"
+            ></div>
+            <Poll v-if="isShowContent && poll" :poll="poll" @vote="vote" @refresh="refresh"></Poll>
           </div>
-          <div class="clearfix"></div>
+          <div class="attachments">
+            <el-button v-if="sensitive && !isShowAttachments" class="show-sensitive" type="info" @click="toggleCW()">
+              {{ $t('cards.toot.sensitive') }}
+            </el-button>
+            <div v-if="isShowAttachments">
+              <el-button v-if="sensitive && isShowAttachments" class="hide-sensitive" link :title="$t('cards.toot.hide')" @click="toggleCW()">
+                <font-awesome-icon icon="eye" class="hide" />
+              </el-button>
+              <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
+                <FailoverImg
+                  :src="media.preview_url ? media.preview_url : originalMessage.account.avatar"
+                  @click="openImage(media.url, mediaAttachments)"
+                  :title="media.description"
+                  :readExif="true"
+                />
+                <el-tag class="media-label" size="small" v-if="media.type === 'gifv'">GIF</el-tag>
+                <el-tag class="media-label" size="small" v-else-if="media.type === 'video'">VIDEO</el-tag>
+                <el-tag class="media-label" size="small" v-else-if="media.type === 'audio'">AUDIO</el-tag>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
         </div>
         <Quote
           v-if="message.quote"
@@ -242,7 +244,7 @@ import { useI18next } from 'vue3-i18next'
 import { ElMessage } from 'element-plus'
 import { useStore } from '@/store'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
-import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
+import { findAccount, findLink, findTag, isRTL } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
 import Poll from '~/src/renderer/components/molecules/Toot/Poll.vue'
@@ -362,6 +364,9 @@ export default defineComponent({
     })
     const spoilered = computed(() => {
       return originalMessage.value.spoiler_text.length > 0
+    })
+    var rtl = computed(() => {
+      return isRTL(originalMessage.value.content)
     })
     const isShowContent = computed(() => {
       return !spoilered.value || showContent.value
@@ -688,6 +693,7 @@ export default defineComponent({
       isMyMessage,
       application,
       spoilered,
+      rtl,
       isShowContent,
       poll,
       sensitive,
@@ -793,6 +799,11 @@ export default defineComponent({
     margin: 0 8px 0 8px;
     float: left;
     width: calc(100% - 52px);
+
+    .rtl {
+      align-items: right;
+      text-align: right;
+    }
 
     .content-wrapper {
       font-size: var(--base-font-size);

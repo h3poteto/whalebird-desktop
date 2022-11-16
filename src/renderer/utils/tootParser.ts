@@ -1,3 +1,5 @@
+import { faL } from "@fortawesome/free-solid-svg-icons"
+
 type Account = {
   username: string
   acct: string
@@ -105,4 +107,13 @@ export function parsePleromaAccount(accountURL: string): Account | null {
     acct: `@${accountName}@${domainName}`,
     url: accountURL
   }
+}
+
+export function isRTL(content: string): boolean{
+  //based on the first character check if Hebrew or arab
+  let pattern = /^<p>[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F]/
+  if(pattern.test(content.trim())){
+    return true
+  }
+  return false
 }
