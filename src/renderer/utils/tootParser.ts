@@ -109,11 +109,12 @@ export function parsePleromaAccount(accountURL: string): Account | null {
   }
 }
 
-export function isRTL(content: string): boolean{
-  //based on the first character check if Hebrew or arab
-  let pattern = /^<p>[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F]/
-  if(pattern.test(content.trim())){
-    return true
-  }
-  return false
+export function isRTL(content: string): boolean {
+  // Remove all non-Letter characters from the contents.
+  const nonLetters = /[^\p{Letter}]/gu;
+  const lettersOnly = content.replace(nonLetters, "")
+
+  //based on the first character check if Hebrew or Arabic
+  const isRTL = /<p>[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F]/u;
+  return isRTL.test(lettersOnly);  
 }
