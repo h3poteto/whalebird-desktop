@@ -20,6 +20,7 @@
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import LoginForm from './Login/LoginForm.vue'
 import { ACTION_TYPES } from '@/store/Login'
 
@@ -30,6 +31,11 @@ export default defineComponent({
     const space = 'Login'
     const store = useStore()
     const router = useRouter()
+    const { escape } = useMagicKeys()
+
+    whenever(escape, () => {
+      close()
+    })
 
     const close = () => {
       store.dispatch(`${space}/${ACTION_TYPES.PAGE_BACK}`)
