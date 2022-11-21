@@ -54,6 +54,7 @@ import { defineComponent, ref, reactive, toRefs, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18next } from 'vue3-i18next'
 import { ElMessage } from 'element-plus'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Authorize'
 
@@ -74,6 +75,7 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const i18n = useI18next()
+    const { escape } = useMagicKeys()
 
     const { url, sns } = toRefs(props)
 
@@ -84,6 +86,10 @@ export default defineComponent({
 
     onMounted(() => {
       console.log(url.value)
+    })
+
+    whenever(escape, () => {
+      close()
     })
 
     const authorizeSubmit = () => {
