@@ -317,7 +317,7 @@ export default defineComponent({
           ;(window as any).shell.openExternal(account.value.baseURL + '/settings/profile')
           break
         case 'settings': {
-          const url = `/${id}/settings`
+          const url = `/${id.value}/settings`
           router.push(url)
           break
         }
