@@ -12324,10 +12324,10 @@ vuex-router-sync@^6.0.0-rc.1:
   resolved "https://registry.yarnpkg.com/vuex-router-sync/-/vuex-router-sync-6.0.0-rc.1.tgz#d8d003bca3067194808e16fd145eefc46ac5ac10"
   integrity sha512-pzVrX/rmQsDjJiKPAjgKxpkxWdiBBQmxATFA6eFyS2Tmo6jauq8iDk9BWxkw41/OA+pbq4wkONRC0aeErDw8GQ==
 
-vuex@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"
-  integrity sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==
+vuex@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.1.0.tgz#aa1b3ea5c7385812b074c86faeeec2217872e36c"
+  integrity sha512-hmV6UerDrPcgbSy9ORAtNXDr9M4wlNP4pEFKye4ujJF8oqgFFuxDCdOLS3eNoRTtq5O3hoBDh9Doj1bQMYHRbQ==
   dependencies:
     "@vue/devtools-api" "^6.0.0-beta.11"
 
