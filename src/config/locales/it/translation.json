@@ -147,9 +147,9 @@
         "title": "Modifica"
       },
       "delete": {
-        "title": "Cancella",
+        "title": "Elimina",
         "confirm": "Sei sicuro di voler eliminare questo filtro?",
-        "confirm_ok": "Cancella",
+        "confirm_ok": "Elimina",
         "confirm_cancel": "Annulla"
       }
     }
@@ -159,7 +159,7 @@
     "general": {
       "title": "Generali",
       "sounds": {
-        "title": "Audio",
+        "title": "Suoni",
         "description": "Imposta suoni di feedback.",
         "fav_rb": "Quando aggiungi ai preferiti o condividi il toot",
         "toot": "Quando posti un toot"
@@ -181,7 +181,7 @@
     },
     "appearance": {
       "title": "Aspetto",
-      "theme_color": "Tema",
+      "theme_color": "Colore tema",
       "theme": {
         "system": "Sistema",
         "light": "Chiaro",
