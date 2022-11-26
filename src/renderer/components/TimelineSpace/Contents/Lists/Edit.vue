@@ -86,6 +86,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .members {
+  height: 100%;
+  overflow: auto;
+  scroll-behavior: auto;
+  background-color: var(--theme-background-color);
+
   .add-account {
     text-align: center;
     border-bottom: 1px solid var(--theme-border-color);
