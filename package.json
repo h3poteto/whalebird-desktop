@@ -137,7 +137,7 @@
     "@vue/compiler-sfc": "^3.2.37",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
-    "ajv": "^8.11.0",
+    "ajv": "^8.11.2",
     "all-object-keys": "^2.2.0",
     "assert": "^2.0.0",
     "babel-eslint": "^10.1.0",
