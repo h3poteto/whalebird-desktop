@@ -15,10 +15,10 @@
         <div>
           <el-form role="form" label-position="left" label-width="125px" size="default">
             <el-form-item for="show-reblogs" :label="$t('header_menu.option.show_reblogs')">
-              <el-checkbox id="show-reblogs" :model-value="showReblogs"></el-checkbox>
+              <el-checkbox id="show-reblogs" v-model="showReblogs"></el-checkbox>
             </el-form-item>
             <el-form-item for="show-replies" :label="$t('header_menu.option.show_replies')">
-              <el-checkbox id="show-replies" :model-value="showReplies"></el-checkbox>
+              <el-checkbox id="show-replies" v-model="showReplies"></el-checkbox>
             </el-form-item>
             <el-button type="primary" @click="applyTLOption">{{ $t('header_menu.option.apply') }}</el-button>
           </el-form>
