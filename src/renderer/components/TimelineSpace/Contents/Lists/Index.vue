@@ -139,7 +139,7 @@ export default defineComponent({
   }
 
   .list {
-    padding: 4px 24px;
+    padding: 8px 24px;
     display: flex;
     flex-direction: row;
     align-items: baseline;
