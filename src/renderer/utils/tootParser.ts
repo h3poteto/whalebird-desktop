@@ -1,5 +1,5 @@
-import { faL } from "@fortawesome/free-solid-svg-icons"
 
+import { faL } from "@fortawesome/free-solid-svg-icons"
 type Account = {
   username: string
   acct: string
@@ -112,9 +112,11 @@ export function parsePleromaAccount(accountURL: string): Account | null {
 export function isRTL(content: string): boolean {
   // Remove all non-Letter characters from the contents.
   const nonLetters = /[^\p{Letter}]/gu;
-  const lettersOnly = content.replace(nonLetters, "")
+  const paragraph_begin = /^<p>/u
+  const noBeginTag = content.replace(paragraph_begin, "")
+  const lettersOnly = noBeginTag.replace(nonLetters, "")
 
   //based on the first character check if Hebrew or Arabic
-  const isRTL = /<p>[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F]/u;
+  const isRTL = /[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F]/u;
   return isRTL.test(lettersOnly);  
 }
