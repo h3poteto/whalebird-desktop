@@ -1,5 +1,4 @@
 
-import { faL } from "@fortawesome/free-solid-svg-icons"
 type Account = {
   username: string
   acct: string
