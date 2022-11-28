@@ -134,7 +134,7 @@
     "@types/parse-link-header": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
-    "@vue/compiler-sfc": "^3.2.37",
+    "@vue/compiler-sfc": "^3.2.45",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
     "ajv": "^8.11.2",
