@@ -49,7 +49,7 @@
     "collapse": "Fella saman",
     "expand": "Fletta út",
     "home": "Heim",
-    "notification": "Tilkynning",
+    "notification": "Tilkynningar",
     "mention": "Minnst á",
     "direct": "Bein skilaboð",
     "follow_requests": "Fylgjendabeiðnir",
@@ -63,7 +63,7 @@
   },
   "header_menu": {
     "home": "Heim",
-    "notification": "Tilkynning",
+    "notification": "Tilkynningar",
     "mention": "Minnst á",
     "favourite": "Eftirlæti",
     "bookmark": "Bókamerki",
@@ -76,8 +76,8 @@
     "lists": "Listar",
     "members": "Meðlimir",
     "option": {
-      "title": "Valkostur",
-      "show_reblogs": "Sýna endurbirtingar",
+      "title": "Valkostir",
+      "show_reblogs": "Endurbirtingar",
       "show_replies": "Sýna svör",
       "apply": "Virkja"
     },
@@ -107,7 +107,7 @@
     "timeline": {
       "title": "Tímalína",
       "unread_notification": {
-        "title": "Ólesin tilkynning",
+        "title": "Ólesnar tilkynningar",
         "description": "Sérsníða ólesnar tilkynningar fyrir hverja tímalínu.",
         "direct": "Bein skilaboð",
         "local": "Staðvær tímalína",
@@ -219,7 +219,7 @@
       }
     },
     "notification": {
-      "title": "Tilkynning",
+      "title": "Tilkynningar",
       "enable": {
         "description": "Settu inn atburði tilkynninga.",
         "reply": "Láta mig vita þegar ég fæ svar",
@@ -461,7 +461,7 @@
     "account_remove_error": "Mistókst að fjarlægja notandaaðganginn",
     "preferences_load_error": "Mistókst að hlaða inn kjörstillingum",
     "timeline_fetch_error": "Mistókst að sækja tímalínu",
-    "notification_fetch_error": "Mistókst að sækja tilkynningu",
+    "notification_fetch_error": "Mistókst að sækja tilkynningar",
     "favourite_fetch_error": "Mistókst að sækja eftirlæti",
     "follow_request_accept_error": "Mistókst að samþykkja beiðnina",
     "follow_request_reject_error": "Mistókst að hafna beiðninni",
