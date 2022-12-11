@@ -139,8 +139,7 @@ describe('TimelineSpace/Contents/Local', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [status2, status1],
-            scrolling: false
+            timeline: [status2, status1]
           }
         })
         it('should be deleted', () => {
@@ -154,7 +153,6 @@ describe('TimelineSpace/Contents/Local', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            scrolling: true,
             timeline: [status2, rebloggedStatus]
           }
         })
@@ -172,7 +170,6 @@ describe('TimelineSpace/Contents/Local', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              scrolling: true,
               timeline: [status2, status1]
             }
           })
@@ -187,7 +184,6 @@ describe('TimelineSpace/Contents/Local', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              scrolling: true,
               timeline: [rebloggedStatus, status2, status1]
             }
           })
@@ -204,7 +200,6 @@ describe('TimelineSpace/Contents/Local', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              scrolling: true,
               timeline: [status2, status1]
             }
           })
@@ -219,7 +214,6 @@ describe('TimelineSpace/Contents/Local', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              scrolling: true,
               timeline: [rebloggedStatus, status2, status1]
             }
           })

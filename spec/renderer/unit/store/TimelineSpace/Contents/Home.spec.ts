@@ -100,7 +100,6 @@ describe('TimelineSpace/Contents/Home', () => {
       state = {
         lazyLoading: false,
         heading: true,
-        scrolling: false,
         timeline: [],
         showReblogs: true,
         showReplies: true
@@ -128,7 +127,6 @@ describe('TimelineSpace/Contents/Home', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              scrolling: false,
               timeline: [status1],
               showReblogs: true,
               showReplies: true
@@ -145,7 +143,6 @@ describe('TimelineSpace/Contents/Home', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              scrolling: false,
               timeline: [status2, status1],
               showReblogs: true,
               showReplies: true
@@ -164,7 +161,6 @@ describe('TimelineSpace/Contents/Home', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              scrolling: false,
               timeline: [status1],
               showReblogs: true,
               showReplies: true
@@ -180,7 +176,6 @@ describe('TimelineSpace/Contents/Home', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              scrolling: false,
               timeline: [status2, status1],
               showReblogs: true,
               showReplies: true
@@ -199,7 +194,6 @@ describe('TimelineSpace/Contents/Home', () => {
         state = {
           lazyLoading: false,
           heading: true,
-          scrolling: false,
           timeline: [status1],
           showReblogs: true,
           showReplies: true
@@ -217,7 +211,6 @@ describe('TimelineSpace/Contents/Home', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            scrolling: false,
             timeline: [status1, status2],
             showReblogs: true,
             showReplies: true
@@ -274,7 +267,6 @@ describe('TimelineSpace/Contents/Home', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            scrolling: false,
             timeline: [rebloggedStatus, status2],
             showReblogs: true,
             showReplies: true
@@ -294,7 +286,6 @@ describe('TimelineSpace/Contents/Home', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            scrolling: false,
             timeline: [status1, status2],
             showReblogs: true,
             showReplies: true
@@ -346,7 +337,6 @@ describe('TimelineSpace/Contents/Home', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            scrolling: false,
             timeline: [rebloggedStatus, status2],
             showReblogs: true,
             showReplies: true

@@ -13,7 +13,6 @@
             v-on:delete="deleteToot"
             @focusRight="focusSidebar"
             @selectToot="focusToot(item)"
-            @sizeChanged="sizeChanged"
           >
           </toot>
         </DynamicScrollerItem>
@@ -37,7 +36,6 @@ import { Entity } from 'megalodon'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
 import { EventEmitter } from '@/components/event'
-import { ScrollPosition } from '@/components/utils/scroll'
 import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Show'
@@ -55,16 +53,11 @@ export default defineComponent({
 
     const { list_id } = toRefs(props)
     const focusedId = ref<string | null>(null)
-    const scrollPosition = ref<ScrollPosition | null>(null)
-    const observer = ref<ResizeObserver | null>(null)
-    const scrollTime = ref<moment.Moment | null>(null)
-    const resizeTime = ref<moment.Moment | null>(null)
     const scroller = ref<any>(null)
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Lists.Show.timeline)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Lists.Show.lazyLoading)
     const heading = computed(() => store.state.TimelineSpace.Contents.Lists.Show.heading)
-    const scrolling = computed(() => store.state.TimelineSpace.Contents.Lists.Show.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
@@ -77,27 +70,6 @@ export default defineComponent({
       load().finally(() => {
         store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
       })
-
-      const el = document.getElementById('scroller')
-      if (el) {
-        scrollPosition.value = new ScrollPosition(el)
-        scrollPosition.value.prepare()
-
-        observer.value = new ResizeObserver(() => {
-          if (scrollPosition.value && !heading.value && !lazyLoading.value && !scrolling.value) {
-            resizeTime.value = moment()
-            scrollPosition.value?.restore()
-          }
-        })
-
-        const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
-        observer.value?.observe(scrollWrapper)
-      }
-    })
-    onBeforeUpdate(() => {
-      if (scrollPosition.value) {
-        scrollPosition.value.prepare()
-      }
     })
     watch(list_id, () => {
       store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
@@ -135,7 +107,6 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
-      observer.value?.disconnect()
     })
     onUnmounted(() => {
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
@@ -167,14 +138,6 @@ export default defineComponent({
       return 'started'
     }
     const onScroll = (event: Event) => {
-      if (moment().diff(resizeTime.value) < 500) {
-        return
-      }
-      scrollTime.value = moment()
-      if (!scrolling.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-      }
-
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
           document.getElementById('scroller')!.scrollHeight - 10 &&
@@ -184,17 +147,6 @@ export default defineComponent({
           .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
             list_id: list_id.value,
             status: timeline.value[timeline.value.length - 1]
-          })
-          .then(statuses => {
-            if (statuses === null) {
-              return
-            }
-            if (statuses.length > 0) {
-              store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-              setTimeout(() => {
-                store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-              }, 500)
-            }
           })
           .catch(() => {
             ElMessage({
@@ -209,14 +161,6 @@ export default defineComponent({
       } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
       }
-
-      setTimeout(() => {
-        const now = moment()
-        if (now.diff(scrollTime.value) >= 150) {
-          scrollTime.value = null
-          store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-        }
-      }, 150)
     }
     const reload = async () => {
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
@@ -268,12 +212,6 @@ export default defineComponent({
     const focusSidebar = () => {
       EventEmitter.emit('focus-sidebar')
     }
-    const sizeChanged = () => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-      setTimeout(() => {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-      }, 500)
-    }
 
     return {
       scroller,
@@ -284,7 +222,6 @@ export default defineComponent({
       deleteToot,
       focusSidebar,
       focusToot,
-      sizeChanged,
       openSideBar,
       heading,
       upper

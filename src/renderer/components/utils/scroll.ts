@@ -35,25 +35,3 @@ export default function scrollTop(element: HTMLElement, point: number = 0) {
 const easeOut = function (p: number) {
   return p * (2 - p)
 }
-
-export class ScrollPosition {
-  private node: HTMLElement | null = null
-  private previousScrollHeightMinusTop: number = 0
-
-  constructor(node: HTMLElement) {
-    this.node = node
-    this.previousScrollHeightMinusTop = 0
-  }
-
-  prepare() {
-    if (this.node) {
-      this.previousScrollHeightMinusTop = this.node.scrollHeight - this.node.scrollTop
-    }
-  }
-
-  restore() {
-    if (this.node) {
-      this.node.scrollTop = this.node.scrollHeight - this.previousScrollHeightMinusTop
-    }
-  }
-}

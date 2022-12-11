@@ -190,7 +190,6 @@ describe('Mentions', () => {
           return {
             lazyLoading: true,
             heading: true,
-            scrolling: false,
             mentions: []
           }
         }
@@ -207,7 +206,6 @@ describe('Mentions', () => {
           return {
             lazyLoading: false,
             heading: true,
-            scrolling: false,
             mentions: [mention, reblog]
           }
         }
@@ -238,7 +236,6 @@ describe('Mentions', () => {
         return {
           lazyLoading: false,
           heading: true,
-          scrolling: false,
           mentions: [mention, favourite, reblog, follow]
         }
       }

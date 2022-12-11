@@ -41,7 +41,6 @@ import { Entity } from 'megalodon'
 import Notification from '@/components/organisms/Notification.vue'
 import StatusLoading from '@/components/organisms/StatusLoading.vue'
 import { EventEmitter } from '@/components/event'
-import { ScrollPosition } from '@/components/utils/scroll'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
 import { useI18next } from 'vue3-i18next'
@@ -64,17 +63,12 @@ export default defineComponent({
     const { j, k, Ctrl_r } = useMagicKeys()
 
     const focusedId = ref<string | null>(null)
-    const scrollPosition = ref<ScrollPosition | null>(null)
-    const observer = ref<ResizeObserver | null>(null)
-    const scrollTime = ref<moment.Moment | null>(null)
-    const resizeTime = ref<moment.Moment | null>(null)
     const loadingMore = ref(false)
     const scroller = ref<any>()
 
     const notifications = computed(() => store.state.TimelineSpace.Contents.Notifications.notifications)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Notifications.lazyLoading)
     const heading = computed(() => store.state.TimelineSpace.Contents.Notifications.heading)
-    const scrolling = computed(() => store.state.TimelineSpace.Contents.Notifications.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
@@ -91,32 +85,11 @@ export default defineComponent({
       if (heading.value && handledNotifications.value.length > 0) {
         store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
       }
-      const el = document.getElementById('scroller')
-      if (el) {
-        scrollPosition.value = new ScrollPosition(el)
-        scrollPosition.value.prepare()
-
-        observer.value = new ResizeObserver(() => {
-          if (loadingMore.value || (scrollPosition.value && !heading.value && !lazyLoading.value && !scrolling.value)) {
-            resizeTime.value = moment()
-            scrollPosition.value?.restore()
-          }
-        })
-
-        const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
-        observer.value.observe(scrollWrapper)
-      }
     })
     onBeforeUpdate(() => {
       if (store.state.TimelineSpace.SideMenu.unreadNotifications && heading.value) {
         store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_NOTIFICATIONS}`, false)
       }
-      if (scrollPosition.value) {
-        scrollPosition.value.prepare()
-      }
-    })
-    onBeforeUnmount(() => {
-      observer.value?.disconnect()
     })
     onUnmounted(() => {
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
@@ -166,14 +139,6 @@ export default defineComponent({
     })
 
     const onScroll = (event: Event) => {
-      if (moment().diff(resizeTime.value) < 500) {
-        return
-      }
-      scrollTime.value = moment()
-      if (!scrolling.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-      }
-
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
           document.getElementById('scroller')!.scrollHeight - 10 &&
@@ -181,17 +146,6 @@ export default defineComponent({
       ) {
         store
           .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_NOTIFICATIONS}`, handledNotifications.value[handledNotifications.value.length - 1])
-          .then(statuses => {
-            if (statuses === null) {
-              return
-            }
-            if (statuses.length > 0) {
-              store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-              setTimeout(() => {
-                store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-              }, 500)
-            }
-          })
           .catch(() => {
             ElMessage({
               message: i18n.t('message.notification_fetch_error'),
@@ -207,14 +161,6 @@ export default defineComponent({
         store.dispatch(`${space}/${ACTION_TYPES.RESET_BADGE}`)
         store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
       }
-
-      setTimeout(() => {
-        const now = moment()
-        if (now.diff(scrollTime.value) >= 150) {
-          scrollTime.value = null
-          store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-        }
-      }, 150)
     }
     const updateToot = (message: Entity.Status) => {
       store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)

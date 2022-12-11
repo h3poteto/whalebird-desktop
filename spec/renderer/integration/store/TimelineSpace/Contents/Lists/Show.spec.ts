@@ -122,7 +122,6 @@ let state = (): ShowState => {
   return {
     lazyLoading: false,
     heading: true,
-    scrolling: false,
     timeline: []
   }
 }
@@ -195,7 +194,6 @@ describe('Lists/Show', () => {
         return {
           lazyLoading: false,
           heading: true,
-          scrolling: false,
           timeline: [status1]
         }
       }

@@ -19,7 +19,6 @@
               v-on:delete="deleteToot"
               @focusRight="focusSidebar"
               @selectToot="focusToot(item)"
-              @sizeChanged="sizeChanged"
             >
             </toot>
           </DynamicScrollerItem>
@@ -47,7 +46,6 @@ import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
 import StatusLoading from '@/components/organisms/StatusLoading.vue'
 import { EventEmitter } from '@/components/event'
-import { ScrollPosition } from '@/components/utils/scroll'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Home'
 import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
 import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
@@ -66,10 +64,6 @@ export default defineComponent({
     const { j, k, Ctrl_r } = useMagicKeys()
 
     const focusedId = ref<string | null>(null)
-    const scrollPosition = ref<ScrollPosition | null>(null)
-    const observer = ref<ResizeObserver | null>(null)
-    const scrollTime = ref<moment.Moment | null>(null)
-    const resizeTime = ref<moment.Moment | null>(null)
     const loadingMore = ref(false)
     const scroller = ref<any>()
 
@@ -78,7 +72,6 @@ export default defineComponent({
     const heading = computed(() => store.state.TimelineSpace.Contents.Home.heading)
     const showReblogs = computed(() => store.state.TimelineSpace.Contents.Home.showReblogs)
     const showReplies = computed(() => store.state.TimelineSpace.Contents.Home.showReplies)
-    const scrolling = computed(() => store.state.TimelineSpace.Contents.Home.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
@@ -108,30 +101,11 @@ export default defineComponent({
       if (heading.value && timeline.value.length > 0) {
         store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
       }
-      const el = document.getElementById('scroller')
-      if (el) {
-        scrollPosition.value = new ScrollPosition(el)
-        scrollPosition.value.prepare()
-        observer.value = new ResizeObserver(() => {
-          if (loadingMore.value || (scrollPosition.value && !heading.value && !lazyLoading.value && !scrolling.value)) {
-            resizeTime.value = moment()
-            scrollPosition.value?.restore()
-          }
-        })
-        const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
-        observer.value.observe(scrollWrapper)
-      }
     })
     onBeforeUpdate(() => {
       if (store.state.TimelineSpace.SideMenu.unreadHomeTimeline && heading.value) {
         store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_HOME_TIMELINE}`, false)
       }
-      if (scrollPosition.value) {
-        scrollPosition.value.prepare()
-      }
-    })
-    onBeforeUnmount(() => {
-      observer.value?.disconnect()
     })
     onUnmounted(() => {
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
@@ -180,39 +154,18 @@ export default defineComponent({
     })
 
     const onScroll = (event: Event) => {
-      if (moment().diff(resizeTime.value) < 500) {
-        return
-      }
-      scrollTime.value = moment()
-      if (!scrolling.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-      }
-
       // for lazyLoading
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
           document.getElementById('scroller')!.scrollHeight - 10 &&
         !lazyLoading.value
       ) {
-        store
-          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, timeline.value[timeline.value.length - 1])
-          .then(statuses => {
-            if (statuses === null) {
-              return
-            }
-            if (statuses.length > 0) {
-              store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-              setTimeout(() => {
-                store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-              }, 500)
-            }
+        store.dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, timeline.value[timeline.value.length - 1]).catch(() => {
+          ElMessage({
+            message: i18n.t('message.timeline_fetch_error'),
+            type: 'error'
           })
-          .catch(() => {
-            ElMessage({
-              message: i18n.t('message.timeline_fetch_error'),
-              type: 'error'
-            })
-          })
+        })
       }
 
       if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
@@ -220,14 +173,6 @@ export default defineComponent({
       } else if ((event.target as HTMLElement)!.scrollTop <= 5 && !heading.value) {
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
       }
-
-      setTimeout(() => {
-        const now = moment()
-        if (now.diff(scrollTime.value) >= 150) {
-          scrollTime.value = null
-          store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-        }
-      }, 150)
     }
     const updateToot = (message: Entity.Status) => {
       store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
@@ -275,12 +220,6 @@ export default defineComponent({
     const focusSidebar = () => {
       EventEmitter.emit('focus-sidebar')
     }
-    const sizeChanged = () => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-      setTimeout(() => {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-      }, 500)
-    }
 
     return {
       filteredTimeline,
@@ -296,7 +235,6 @@ export default defineComponent({
       focusPrev,
       focusSidebar,
       focusToot,
-      sizeChanged,
       openSideBar,
       heading,
       upper
