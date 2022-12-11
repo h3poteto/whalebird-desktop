@@ -5,14 +5,12 @@ import { RootState } from '@/store'
 export type DirectMessagesState = {
   lazyLoading: boolean
   heading: boolean
-  scrolling: boolean
   timeline: Array<Entity.Status>
 }
 
 const state = (): DirectMessagesState => ({
   lazyLoading: false,
   heading: true,
-  scrolling: false,
   timeline: []
 })
 
@@ -25,8 +23,7 @@ export const MUTATION_TYPES = {
   ARCHIVE_TIMELINE: 'archiveTimeline',
   CLEAR_TIMELINE: 'clearTimeline',
   UPDATE_TOOT: 'updateToot',
-  DELETE_TOOT: 'deleteToot',
-  CHANGE_SCROLLING: 'changeScrolling'
+  DELETE_TOOT: 'deleteToot'
 }
 
 const mutations: MutationTree<DirectMessagesState> = {
@@ -79,9 +76,6 @@ const mutations: MutationTree<DirectMessagesState> = {
         return toot.id !== id
       }
     })
-  },
-  [MUTATION_TYPES.CHANGE_SCROLLING]: (state, value: boolean) => {
-    state.scrolling = value
   }
 }
 
