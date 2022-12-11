@@ -5296,14 +5296,13 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.1.tgz#c02375a927a40948c0345cc903072597f5270451"
   integrity sha512-d34LN4L6h18Bzz9xpoku2nPwKxCPlPMr3EEKTkoEBi+1/+b0lcRkRJ1UVyyZaKNeqGR3swcGl6s390DNO4YVgQ==
 
-emoji-mart-vue-fast@^11.2.0:
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/emoji-mart-vue-fast/-/emoji-mart-vue-fast-11.2.0.tgz#3183aae3c7a984f0e77ba02129297d88596d3e4e"
-  integrity sha512-dEVAJAbQop+efR8Zn4bvPQtSREwsVZccQxEBHdi1GNPO0JC9H6l0FswuCli/TrZXAQr1KS7dGEUhS9A1gURFRA==
+emoji-mart-vue-fast@^12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/emoji-mart-vue-fast/-/emoji-mart-vue-fast-12.0.1.tgz#0bbc5f110c5d6c607e9a178619821c18c6a91057"
+  integrity sha512-qO8F9aduHwPGEU2U1YobOH3lRXEMvrjej6KdhGMnSoMJ+OFSmNf+pUal/MbrEn0RUy+Uqc7U9sPopA+3ipK4+g==
   dependencies:
     "@babel/runtime" "^7.18.6"
     core-js "^3.23.5"
-    vue-virtual-scroller "^1.0.10"
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -10750,11 +10749,6 @@ schema-utils@^4.0.0:
     ajv-formats "^2.1.1"
     ajv-keywords "^5.0.0"
 
-scrollparent@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/scrollparent/-/scrollparent-2.0.1.tgz#715d5b9cc57760fb22bdccc3befb5bfe06b1a317"
-  integrity sha1-cV1bnMV3YPsivczDvvtb/gaxoxc=
-
 scss-tokenizer@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/scss-tokenizer/-/scss-tokenizer-0.4.3.tgz#1058400ee7d814d71049c29923d2b25e61dc026c"
@@ -12369,11 +12363,6 @@ vue-loader@^17.0.0:
     hash-sum "^2.0.0"
     loader-utils "^2.0.0"
 
-vue-observe-visibility@^0.4.4:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/vue-observe-visibility/-/vue-observe-visibility-0.4.6.tgz#878cb8ebcf3078e40807af29774e97105ebd519e"
-  integrity sha512-xo0CEVdkjSjhJoDdLSvoZoQrw/H2BlzB5jrCBKGZNXN2zdZgMuZ9BKrxXDjNP2AxlcCoKc8OahI3F3r3JGLv2Q==
-
 vue-observe-visibility@^2.0.0-alpha.1:
   version "2.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/vue-observe-visibility/-/vue-observe-visibility-2.0.0-alpha.1.tgz#1e4eda7b12562161d58984b7e0dea676d83bdb13"
@@ -12386,11 +12375,6 @@ vue-popperjs@^2.3.0:
   dependencies:
     opencollective-postinstall "^2.0.2"
     popper.js "^1.15.0"
-
-vue-resize@^0.4.5:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/vue-resize/-/vue-resize-0.4.5.tgz#4777a23042e3c05620d9cbda01c0b3cc5e32dcea"
-  integrity sha512-bhP7MlgJQ8TIkZJXAfDf78uJO+mEI3CaLABLjv0WNzr4CcGRGPIAItyWYnP6LsPA4Oq0WE+suidNs6dgpO4RHg==
 
 vue-resize@^2.0.0-alpha.1:
   version "2.0.0-alpha.1"
@@ -12420,15 +12404,6 @@ vue-virtual-scroller@2.0.0-beta.3:
     mitt "^2.1.0"
     vue-observe-visibility "^2.0.0-alpha.1"
     vue-resize "^2.0.0-alpha.1"
-
-vue-virtual-scroller@^1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/vue-virtual-scroller/-/vue-virtual-scroller-1.0.10.tgz#fdf243240001f05bd79aa77f2e2e60403760e2fb"
-  integrity sha512-Hn4qSBDhRY4XdngPioYy/ykDjrLX/NMm1fQXm/4UQQ/Xv1x8JbHGFZNftQowTcfICgN7yc31AKnUk1UGLJ2ndA==
-  dependencies:
-    scrollparent "^2.0.1"
-    vue-observe-visibility "^0.4.4"
-    vue-resize "^0.4.5"
 
 vue3-i18next@^0.2.1:
   version "0.2.1"
