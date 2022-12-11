@@ -5,7 +5,7 @@ import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 export type HomeState = {
   lazyLoading: boolean
@@ -13,7 +13,6 @@ export type HomeState = {
   showReblogs: boolean
   showReplies: boolean
   timeline: Array<Entity.Status | LoadingCard>
-  scrolling: boolean
 }
 
 const state = (): HomeState => ({
@@ -21,8 +20,7 @@ const state = (): HomeState => ({
   heading: true,
   timeline: [],
   showReblogs: true,
-  showReplies: true,
-  scrolling: false
+  showReplies: true
 })
 
 export const MUTATION_TYPES = {
@@ -37,7 +35,6 @@ export const MUTATION_TYPES = {
   DELETE_TOOT: 'deleteToot',
   SHOW_REBLOGS: 'showReblogs',
   SHOW_REPLIES: 'showReplies',
-  CHANGE_SCROLLING: 'changeScrolling',
   APPEND_TIMELINE_AFTER_LOADING_CARD: 'appendTimelineAfterLoadingCard'
 }
 
@@ -105,9 +102,6 @@ const mutations: MutationTree<HomeState> = {
   },
   [MUTATION_TYPES.SHOW_REPLIES]: (state, visible: boolean) => {
     state.showReplies = visible
-  },
-  [MUTATION_TYPES.CHANGE_SCROLLING]: (state, value: boolean) => {
-    state.scrolling = value
   },
   [MUTATION_TYPES.APPEND_TIMELINE_AFTER_LOADING_CARD]: (state, timeline: Array<Entity.Status | LoadingCard>) => {
     const tl = state.timeline.flatMap(status => {
