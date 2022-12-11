@@ -151,7 +151,7 @@
     "cfonts": "^3.1.1",
     "chai": "^4.3.7",
     "chalk": "^4.1.2",
-    "copy-webpack-plugin": "^10.2.4",
+    "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.26.0",
     "cross-env": "^7.0.3",
     "crypto-browserify": "^3.12.0",
