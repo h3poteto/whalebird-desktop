@@ -5,20 +5,18 @@ import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 export type NotificationsState = {
   lazyLoading: boolean
   heading: boolean
   notifications: Array<Entity.Notification | LoadingCard>
-  scrolling: boolean
 }
 
 const state = (): NotificationsState => ({
   lazyLoading: false,
   heading: true,
-  notifications: [],
-  scrolling: false
+  notifications: []
 })
 
 export const MUTATION_TYPES = {
@@ -31,7 +29,6 @@ export const MUTATION_TYPES = {
   DELETE_TOOT: 'deleteToot',
   CLEAR_NOTIFICATIONS: 'clearNotifications',
   ARCHIVE_NOTIFICATIONS: 'archiveNotifications',
-  CHANGE_SCROLLING: 'changeScrolling',
   APPEND_NOTIFICATIONS_AFTER_LOADING_CARD: 'appendNotificationsAfterLoadingCard'
 }
 
@@ -90,9 +87,6 @@ const mutations: MutationTree<NotificationsState> = {
   },
   [MUTATION_TYPES.ARCHIVE_NOTIFICATIONS]: state => {
     state.notifications = state.notifications.slice(0, 30)
-  },
-  [MUTATION_TYPES.CHANGE_SCROLLING]: (state, value: boolean) => {
-    state.scrolling = value
   },
   [MUTATION_TYPES.APPEND_NOTIFICATIONS_AFTER_LOADING_CARD]: (state, notifications: Array<Entity.Notification | LoadingCard>) => {
     const n = state.notifications.flatMap(notify => {
