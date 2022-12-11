@@ -5,7 +5,7 @@ import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
 import { LocalMarker } from '~/src/types/localMarker'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 const excludes: Array<string> = [
   NotificationType.Follow,
@@ -20,14 +20,12 @@ export type MentionsState = {
   lazyLoading: boolean
   heading: boolean
   mentions: Array<Entity.Notification | LoadingCard>
-  scrolling: boolean
 }
 
 const state = (): MentionsState => ({
   lazyLoading: false,
   heading: true,
-  mentions: [],
-  scrolling: false
+  mentions: []
 })
 
 export const MUTATION_TYPES = {
@@ -40,7 +38,6 @@ export const MUTATION_TYPES = {
   CLEAR_MENTIONS: 'clearMentions',
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
-  CHANGE_SCROLLING: 'changeScrolling',
   APPEND_MENTIONS_AFTER_LOADING_CARD: 'appendMentionsAfterLoadingCard'
 }
 
@@ -97,9 +94,6 @@ const mutations: MutationTree<MentionsState> = {
         return true
       }
     })
-  },
-  [MUTATION_TYPES.CHANGE_SCROLLING]: (state, value: boolean) => {
-    state.scrolling = value
   },
   [MUTATION_TYPES.APPEND_MENTIONS_AFTER_LOADING_CARD]: (state, mentions: Array<Entity.Notification | LoadingCard>) => {
     const m = state.mentions.flatMap(mention => {

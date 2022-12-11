@@ -72,7 +72,6 @@ export default defineComponent({
     const heading = computed(() => store.state.TimelineSpace.Contents.Home.heading)
     const showReblogs = computed(() => store.state.TimelineSpace.Contents.Home.showReblogs)
     const showReplies = computed(() => store.state.TimelineSpace.Contents.Home.showReplies)
-    const scrolling = computed(() => store.state.TimelineSpace.Contents.Home.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])

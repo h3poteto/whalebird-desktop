@@ -121,8 +121,7 @@ let state = (): HomeState => {
     heading: true,
     timeline: [],
     showReblogs: true,
-    showReplies: true,
-    scrolling: false
+    showReplies: true
   }
 }
 
@@ -198,8 +197,7 @@ describe('Home', () => {
             timeline: [status1],
             unreadTimeline: [],
             showReblogs: true,
-            showReplies: true,
-            scrolling: false
+            showReplies: true
           }
         }
       })

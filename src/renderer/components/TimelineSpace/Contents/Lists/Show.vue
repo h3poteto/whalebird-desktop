@@ -58,7 +58,6 @@ export default defineComponent({
     const timeline = computed(() => store.state.TimelineSpace.Contents.Lists.Show.timeline)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Lists.Show.lazyLoading)
     const heading = computed(() => store.state.TimelineSpace.Contents.Lists.Show.heading)
-    const scrolling = computed(() => store.state.TimelineSpace.Contents.Lists.Show.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])

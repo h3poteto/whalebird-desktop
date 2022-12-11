@@ -61,7 +61,6 @@ export default defineComponent({
     const timeline = computed(() => store.state.TimelineSpace.Contents.DirectMessages.timeline)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.DirectMessages.lazyLoading)
     const heading = computed(() => store.state.TimelineSpace.Contents.DirectMessages.heading)
-    const scrolling = computed(() => store.state.TimelineSpace.Contents.DirectMessages.scrolling)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const unreadNotification = computed(() => store.state.TimelineSpace.timelineSetting.unreadNotification)
