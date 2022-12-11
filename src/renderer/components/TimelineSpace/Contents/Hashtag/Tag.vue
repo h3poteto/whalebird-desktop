@@ -12,7 +12,6 @@
             v-on:delete="deleteToot"
             @focusRight="focusSidebar"
             @selectToot="focusToot(item)"
-            @sizeChanged="sizeChanged"
           >
           </toot>
         </DynamicScrollerItem>
@@ -37,7 +36,6 @@ import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
 import { EventEmitter } from '@/components/event'
-import { ScrollPosition } from '@/components/utils/scroll'
 import useReloadable from '@/components/utils/reloadable'
 import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
@@ -58,10 +56,6 @@ export default defineComponent({
 
     const { tag } = toRefs(props)
     const focusedId = ref<string | null>(null)
-    const scrollPosition = ref<ScrollPosition | null>(null)
-    const observer = ref<ResizeObserver | null>(null)
-    const scrollTime = ref<moment.Moment | null>(null)
-    const resizeTime = ref<moment.Moment | null>(null)
     const scroller = ref<any>(null)
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Hashtag.Tag.timeline)
@@ -80,27 +74,6 @@ export default defineComponent({
         store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
       })
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
-
-      const el = document.getElementById('scroller')
-      if (el) {
-        scrollPosition.value = new ScrollPosition(el)
-        scrollPosition.value.prepare()
-
-        observer.value = new ResizeObserver(() => {
-          if (scrollPosition.value && !heading.value && !lazyLoading.value && !scrolling.value) {
-            resizeTime.value = moment()
-            scrollPosition.value.restore()
-          }
-        })
-
-        const scrollWrapper = el.getElementsByClassName('vue-recycle-scroller__item-wrapper')[0]
-        observer.value.observe(scrollWrapper)
-      }
-    })
-    onBeforeUpdate(() => {
-      if (scrollPosition.value) {
-        scrollPosition.value?.prepare()
-      }
     })
     watch(tag, (newTag, _oldTag) => {
       store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
@@ -141,7 +114,6 @@ export default defineComponent({
       store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
       reset()
       EventEmitter.off('focus-timeline')
-      observer.value?.disconnect()
     })
 
     const load = async (tag: string) => {
@@ -170,14 +142,6 @@ export default defineComponent({
       }
     }
     const onScroll = (event: Event) => {
-      if (moment().diff(resizeTime.value) < 500) {
-        return
-      }
-      scrollTime.value = moment()
-      if (!scrolling.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-      }
-
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
           document.getElementById('scroller')!.scrollHeight - 10 &&
@@ -187,17 +151,6 @@ export default defineComponent({
           .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
             tag: tag.value,
             status: timeline.value[timeline.value.length - 1]
-          })
-          .then(statuses => {
-            if (statuses === null) {
-              return
-            }
-            if (statuses.length > 0) {
-              store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-              setTimeout(() => {
-                store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-              }, 500)
-            }
           })
           .catch(() => {
             ElMessage({
@@ -212,14 +165,6 @@ export default defineComponent({
       } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
       }
-
-      setTimeout(() => {
-        const now = moment()
-        if (now.diff(scrollTime.value) >= 150) {
-          scrollTime.value = null
-          store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-        }
-      }, 150)
     }
     const updateToot = (toot: Entity.Status) => {
       store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, toot)
@@ -272,12 +217,6 @@ export default defineComponent({
     const focusSidebar = () => {
       EventEmitter.emit('focus-sidebar')
     }
-    const sizeChanged = () => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, true)
-      setTimeout(() => {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_SCROLLING}`, false)
-      }, 500)
-    }
 
     return {
       timeline,
@@ -288,7 +227,6 @@ export default defineComponent({
       deleteToot,
       focusSidebar,
       focusToot,
-      sizeChanged,
       openSideBar,
       heading,
       upper
