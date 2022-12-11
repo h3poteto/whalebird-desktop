@@ -12384,10 +12384,10 @@ vue-style-loader@^4.1.3:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-virtual-scroller@2.0.0-beta.3:
-  version "2.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/vue-virtual-scroller/-/vue-virtual-scroller-2.0.0-beta.3.tgz#ae95ce97adf511d5e18b95d3e53e932c73461f3c"
-  integrity sha512-k0hTAkZRmm3TXpfhW5Ig1fd8VV7+CmgnkebbQ4Uw6wnuQF52YJoaMQTFD3IV/Qi2WNadDB4ETrLUbVdnWboSjg==
+vue-virtual-scroller@2.0.0-beta.5:
+  version "2.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/vue-virtual-scroller/-/vue-virtual-scroller-2.0.0-beta.5.tgz#183acbede386280d8b128958e3802098609baa63"
+  integrity sha512-P7m/8D/7bzu45gWqCflQxyZomWL4cy75AZXz73Ri43VYRiSx1hW8QNIGr6PoAR1kZAcEqHZwYlvM76gUDA3wdA==
   dependencies:
     mitt "^2.1.0"
     vue-observe-visibility "^2.0.0-alpha.1"
