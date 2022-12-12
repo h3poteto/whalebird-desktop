@@ -1,6 +1,6 @@
 <template>
   <div id="public">
-    <div></div>
+    <div class="unread">{{ unreads.length > 0 ? unreads.length : '' }}</div>
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
@@ -29,7 +29,6 @@
 <script lang="ts">
 import { computed, defineComponent, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMagicKeys, whenever, and } from '@vueuse/core'
-import moment from 'moment'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
 import { useI18next } from 'vue3-i18next'
@@ -59,6 +58,7 @@ export default defineComponent({
     const scroller = ref<any>(null)
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Public.timeline)
+    const unreads = computed(() => store.state.TimelineSpace.Contents.Public.unreads)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Public.lazyLoading)
     const heading = computed(() => store.state.TimelineSpace.Contents.Public.heading)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
@@ -160,6 +160,7 @@ export default defineComponent({
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
       } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+        store.commit(`${space}/${MUTATION_TYPES.MERGE_UNREADS}`)
       }
     }
     const reload = async () => {
@@ -213,7 +214,8 @@ export default defineComponent({
       focusToot,
       openSideBar,
       heading,
-      upper
+      upper,
+      unreads
     }
   }
 })
@@ -244,6 +246,21 @@ export default defineComponent({
 
   .upper-icon {
     padding: 3px;
+  }
+
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 52px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
+    z-index: 1;
+
+    &:empty {
+      display: none;
+    }
   }
 }
 </style>
