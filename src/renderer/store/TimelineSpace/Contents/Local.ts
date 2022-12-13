@@ -6,12 +6,14 @@ export type LocalState = {
   timeline: Array<Entity.Status>
   lazyLoading: boolean
   heading: boolean
+  unreads: Array<Entity.Status>
 }
 
 const state = (): LocalState => ({
   timeline: [],
   lazyLoading: false,
-  heading: true
+  heading: true,
+  unreads: []
 })
 
 export const MUTATION_TYPES = {
@@ -23,7 +25,8 @@ export const MUTATION_TYPES = {
   CLEAR_TIMELINE: 'clearTimeline',
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
-  CHANGE_LAZY_LOADING: 'changeLazyLoading'
+  CHANGE_LAZY_LOADING: 'changeLazyLoading',
+  MERGE_UNREADS: 'mergeUnreads'
 }
 
 const mutations: MutationTree<LocalState> = {
@@ -32,8 +35,12 @@ const mutations: MutationTree<LocalState> = {
   },
   [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Entity.Status) => {
     // Reject duplicated status in timeline
-    if (!state.timeline.find(item => item.id === update.id)) {
-      state.timeline = [update].concat(state.timeline)
+    if (!state.timeline.find(item => item.id === update.id) && !state.unreads.find(item => item.id === update.id)) {
+      if (state.heading) {
+        state.timeline = [update].concat(state.timeline)
+      } else {
+        state.unreads = [update].concat(state.unreads)
+      }
     }
   },
   [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Entity.Status>) => {
@@ -47,6 +54,7 @@ const mutations: MutationTree<LocalState> = {
   },
   [MUTATION_TYPES.CLEAR_TIMELINE]: state => {
     state.timeline = []
+    state.unreads = []
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Status) => {
     state.timeline = state.timeline.map(toot => {
@@ -75,6 +83,10 @@ const mutations: MutationTree<LocalState> = {
   },
   [MUTATION_TYPES.CHANGE_LAZY_LOADING]: (state, value: boolean) => {
     state.lazyLoading = value
+  },
+  [MUTATION_TYPES.MERGE_UNREADS]: state => {
+    state.timeline = state.unreads.slice(0, 80).concat(state.timeline)
+    state.unreads = []
   }
 }
 
