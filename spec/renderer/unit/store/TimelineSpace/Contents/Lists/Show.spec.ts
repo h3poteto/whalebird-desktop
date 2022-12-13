@@ -139,7 +139,8 @@ describe('TimelineSpace/Contents/Lists/Show', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [status2, status1]
+            timeline: [status2, status1],
+            unreads: []
           }
         })
         it('should be deleted', () => {
@@ -153,7 +154,8 @@ describe('TimelineSpace/Contents/Lists/Show', () => {
           state = {
             lazyLoading: false,
             heading: true,
-            timeline: [status2, rebloggedStatus]
+            timeline: [status2, rebloggedStatus],
+            unreads: []
           }
         })
         it('should be deleted', () => {
@@ -170,7 +172,8 @@ describe('TimelineSpace/Contents/Lists/Show', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              timeline: [status2, status1]
+              timeline: [status2, status1],
+              unreads: []
             }
           })
           it('should be updated timeline', () => {
@@ -184,7 +187,8 @@ describe('TimelineSpace/Contents/Lists/Show', () => {
             state = {
               lazyLoading: false,
               heading: true,
-              timeline: [rebloggedStatus, status2, status1]
+              timeline: [rebloggedStatus, status2, status1],
+              unreads: []
             }
           })
           it('should not be updated timeline', () => {
@@ -200,12 +204,14 @@ describe('TimelineSpace/Contents/Lists/Show', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              timeline: [status2, status1]
+              timeline: [status2, status1],
+              unreads: []
             }
           })
-          it('should be updated timeline', () => {
+          it('should not be updated timeline', () => {
             Show.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, rebloggedStatus)
-            expect(state.timeline).toEqual([rebloggedStatus, status2, status1])
+            expect(state.timeline).toEqual([status2, status1])
+            expect(state.unreads).toEqual([rebloggedStatus])
           })
         })
 
@@ -214,7 +220,8 @@ describe('TimelineSpace/Contents/Lists/Show', () => {
             state = {
               lazyLoading: false,
               heading: false,
-              timeline: [rebloggedStatus, status2, status1]
+              timeline: [rebloggedStatus, status2, status1],
+              unreads: []
             }
           })
           it('should not be updated timeline', () => {
