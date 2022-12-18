@@ -116,8 +116,7 @@
       "use_marker": {
         "title": "Hlaða inn tímalínunni þar sem síðast var verið að skoða",
         "home": "Heim",
-        "notifications": "Tilkynningar",
-        "mentions": "Tilvísanir"
+        "notifications": "Tilkynningar"
       }
     },
     "filters": {
