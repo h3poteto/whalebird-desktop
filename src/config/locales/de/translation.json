@@ -116,8 +116,7 @@
       "use_marker": {
         "title": "Lade die Zeitleiste von der letzten Lese-Position",
         "home": "Start",
-        "notifications": "Benachrichtigungen",
-        "mentions": "Erwähnungen (Mentions)"
+        "notifications": "Benachrichtigungen"
       }
     },
     "filters": {
