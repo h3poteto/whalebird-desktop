@@ -3,15 +3,15 @@
     <div></div>
     <DynamicScroller :items="mentions" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watch-data="true">
           <notification
             :message="item"
             :focused="item.id === focusedId"
             :overlaid="modalOpened"
             :filters="[]"
-            v-on:update="updateToot"
-            @focusRight="focusSidebar"
-            @selectNotification="focusNotification(item)"
+            @update="updateToot"
+            @focus-right="focusSidebar"
+            @select-notification="focusNotification(item)"
           >
           </notification>
         </DynamicScrollerItem>

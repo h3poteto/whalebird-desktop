@@ -4,7 +4,7 @@ import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import TimelineSpace, { TimelineSpaceState, blankAccount } from '~/src/renderer/store/TimelineSpace'
 import { MyWindow } from '~/src/types/global'
-;(window as any as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const emacsEmoji: Entity.Emoji = {
   shortcode: 'emacs',
@@ -86,8 +86,7 @@ const state = (): TimelineSpaceState => {
       },
       useMarker: {
         home: false,
-        notifications: true,
-        mentions: false
+        notifications: true
       }
     },
     sns: 'mastodon',

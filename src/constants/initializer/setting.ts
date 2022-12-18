@@ -8,8 +8,7 @@ const unreadNotification: UnreadNotification = {
 
 const useMarker: UseMarker = {
   home: false,
-  notifications: true,
-  mentions: false
+  notifications: true
 }
 
 const timeline: Timeline = {

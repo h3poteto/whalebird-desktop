@@ -26,9 +26,6 @@
       <el-form-item for="marker_notifications" :label="$t('settings.timeline.use_marker.notifications')">
         <el-switch v-model="marker_notifications" id="marker_notifications" />
       </el-form-item>
-      <el-form-item for="marker_mentions" :label="$t('settings.timeline.use_marker.mentions')">
-        <el-switch v-model="marker_mentions" id="marker_mentions" />
-      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -79,13 +76,6 @@ export default defineComponent({
           notifications: value
         })
     })
-    const marker_mentions = computed({
-      get: () => store.state.Settings.Timeline.setting.useMarker.mentions,
-      set: value =>
-        store.dispatch(`${space}/${ACTION_TYPES.CHANGE_USER_MARKER}`, {
-          mentions: value
-        })
-    })
 
     onMounted(() => {
       store.dispatch(`${space}/${ACTION_TYPES.LOAD_TIMELINE_SETTING}`)
@@ -96,8 +86,7 @@ export default defineComponent({
       localNotify,
       publicNotify,
       marker_home,
-      marker_notifications,
-      marker_mentions
+      marker_notifications
     }
   }
 })
