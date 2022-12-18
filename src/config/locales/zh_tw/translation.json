@@ -116,8 +116,7 @@
       "use_marker": {
         "title": "從上次閱讀位置讀取時間軸",
         "home": "首頁",
-        "notifications": "通知",
-        "mentions": "Mentions"
+        "notifications": "通知"
       }
     },
     "filters": {

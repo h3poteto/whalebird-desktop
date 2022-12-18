@@ -116,8 +116,7 @@
       "use_marker": {
         "title": "前回読んだ位置からタイムラインを読み込む",
         "home": "ホーム",
-        "notifications": "通知",
-        "mentions": "返信"
+        "notifications": "通知"
       }
     },
     "filters": {

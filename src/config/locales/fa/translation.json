@@ -116,8 +116,7 @@
       "use_marker": {
         "title": "Load the timeline from the last reading position",
         "home": "Home",
-        "notifications": "Notifications",
-        "mentions": "Mentions"
+        "notifications": "Notifications"
       }
     },
     "filters": {
