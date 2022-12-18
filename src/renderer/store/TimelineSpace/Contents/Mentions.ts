@@ -1,11 +1,6 @@
 import generator, { Entity, NotificationType } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
-import { MyWindow } from '~/src/types/global'
-import { LoadingCard } from '@/types/loading-card'
-import { LocalMarker } from '~/src/types/localMarker'
-
-const win = (window as any) as MyWindow
 
 const excludes: Array<string> = [
   NotificationType.Follow,
@@ -19,7 +14,7 @@ const excludes: Array<string> = [
 export type MentionsState = {
   lazyLoading: boolean
   heading: boolean
-  mentions: Array<Entity.Notification | LoadingCard>
+  mentions: Array<Entity.Notification>
 }
 
 const state = (): MentionsState => ({
@@ -37,8 +32,7 @@ export const MUTATION_TYPES = {
   ARCHIVE_MENTIONS: 'archiveMentions',
   CLEAR_MENTIONS: 'clearMentions',
   UPDATE_TOOT: 'updateToot',
-  DELETE_TOOT: 'deleteToot',
-  APPEND_MENTIONS_AFTER_LOADING_CARD: 'appendMentionsAfterLoadingCard'
+  DELETE_TOOT: 'deleteToot'
 }
 
 const mutations: MutationTree<MentionsState> = {
@@ -51,13 +45,13 @@ const mutations: MutationTree<MentionsState> = {
   [MUTATION_TYPES.APPEND_MENTIONS]: (state, update: Entity.Notification) => {
     // Reject duplicated status in timeline
     if (!state.mentions.find(item => item.id === update.id)) {
-      state.mentions = ([update] as Array<Entity.Notification | LoadingCard>).concat(state.mentions)
+      state.mentions = [update].concat(state.mentions)
     }
   },
-  [MUTATION_TYPES.UPDATE_MENTIONS]: (state, messages: Array<Entity.Notification | LoadingCard>) => {
+  [MUTATION_TYPES.UPDATE_MENTIONS]: (state, messages: Array<Entity.Notification>) => {
     state.mentions = messages
   },
-  [MUTATION_TYPES.INSERT_MENTIONS]: (state, messages: Array<Entity.Notification | LoadingCard>) => {
+  [MUTATION_TYPES.INSERT_MENTIONS]: (state, messages: Array<Entity.Notification>) => {
     state.mentions = state.mentions.concat(messages)
   },
   [MUTATION_TYPES.ARCHIVE_MENTIONS]: state => {
@@ -94,63 +88,22 @@ const mutations: MutationTree<MentionsState> = {
         return true
       }
     })
-  },
-  [MUTATION_TYPES.APPEND_MENTIONS_AFTER_LOADING_CARD]: (state, mentions: Array<Entity.Notification | LoadingCard>) => {
-    const m = state.mentions.flatMap(mention => {
-      if (mention.id !== 'loading-card') {
-        return mention
-      } else {
-        return mentions
-      }
-    })
-    // Reject duplicated status in timeline
-    state.mentions = Array.from(new Set(m))
   }
 }
 
 export const ACTION_TYPES = {
   FETCH_MENTIONS: 'fetchMentions',
-  LAZY_FETCH_MENTIONS: 'lazyFetchMentions',
-  FETCH_MENTIONS_SINCE: 'fetchMentionsSince',
-  GET_MARKER: 'getMarker',
-  SAVE_MARKER: 'saveMarker'
+  LAZY_FETCH_MENTIONS: 'lazyFetchMentions'
 }
 
 const actions: ActionTree<MentionsState, RootState> = {
-  [ACTION_TYPES.FETCH_MENTIONS]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Notification>> => {
+  [ACTION_TYPES.FETCH_MENTIONS]: async ({ commit, rootState }): Promise<Array<Entity.Notification>> => {
     const client = generator(
       rootState.TimelineSpace.sns,
       rootState.TimelineSpace.account.baseURL,
       rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent
     )
-
-    const localMarker: LocalMarker | null = await dispatch('getMarker').catch(err => {
-      console.error(err)
-    })
-
-    if (rootState.TimelineSpace.timelineSetting.useMarker.mentions && localMarker !== null) {
-      const nextResponse = await client.getNotifications({
-        limit: 1,
-        min_id: localMarker.last_read_id,
-        exclude_types: excludes
-      })
-      if (nextResponse.data.length > 0) {
-        const card: LoadingCard = {
-          type: 'middle-load',
-          since_id: localMarker.last_read_id,
-          max_id: null,
-          id: 'loading-card',
-          uri: 'loading-card'
-        }
-        let mentions: Array<Entity.Notification | LoadingCard> = [card]
-        const res = await client.getNotifications({ limit: 30, max_id: nextResponse.data[0].id, exclude_types: excludes })
-        mentions = mentions.concat(res.data)
-        commit(MUTATION_TYPES.UPDATE_MENTIONS, mentions)
-        commit('TimelineSpace/SideMenu/changeUnreadMentions', true, { root: true })
-        return res.data
-      }
-    }
 
     const res = await client.getNotifications({
       limit: 30,
@@ -186,68 +139,6 @@ const actions: ActionTree<MentionsState, RootState> = {
       .finally(() => {
         commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
       })
-  },
-  [ACTION_TYPES.FETCH_MENTIONS_SINCE]: async (
-    { state, rootState, commit },
-    since_id: string
-  ): Promise<Array<Entity.Notification> | null> => {
-    const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
-      rootState.App.userAgent
-    )
-    const cardIndex = state.mentions.findIndex(s => {
-      if (s.id === 'loading-card') {
-        return true
-      }
-      return false
-    })
-    let maxID: string | null = null
-    if (cardIndex > 0) {
-      maxID = state.mentions[cardIndex - 1].id
-    }
-    let params = { min_id: since_id, limit: 30, exclude_types: excludes }
-    if (maxID !== null) {
-      params = Object.assign({}, params, {
-        max_id: maxID
-      })
-    }
-
-    const res = await client.getNotifications(params)
-    if (res.data.length >= 30) {
-      const card: LoadingCard = {
-        type: 'middle-load',
-        since_id: res.data[0].id,
-        max_id: maxID,
-        id: 'loading-card',
-        uri: 'loading-card'
-      }
-      let mentions: Array<Entity.Notification | LoadingCard> = [card]
-      mentions = mentions.concat(res.data)
-      commit(MUTATION_TYPES.APPEND_MENTIONS_AFTER_LOADING_CARD, mentions)
-    } else {
-      commit(MUTATION_TYPES.APPEND_MENTIONS_AFTER_LOADING_CARD, res.data)
-    }
-    return res.data
-  },
-  [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<LocalMarker | null> => {
-    if (!rootState.TimelineSpace.timelineSetting.useMarker.mentions) {
-      return null
-    }
-    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-mentions-marker', rootState.TimelineSpace.account._id)
-    return localMarker
-  },
-  [ACTION_TYPES.SAVE_MARKER]: async ({ state, rootState }) => {
-    const mentions = state.mentions
-    if (mentions.length === 0 || mentions[0].id === 'loading-card') {
-      return
-    }
-    win.ipcRenderer.send('save-marker', {
-      owner_id: rootState.TimelineSpace.account._id,
-      timeline: 'mentions',
-      last_read_id: mentions[0].id
-    } as LocalMarker)
   }
 }
 

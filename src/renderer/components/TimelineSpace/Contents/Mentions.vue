@@ -3,25 +3,18 @@
     <div></div>
     <DynamicScroller :items="mentions" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
-        <template v-if="item.id === 'loading-card'">
-          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.id]" :data-index="index" :watchData="true">
-            <StatusLoading :since_id="item.since_id" :max_id="item.max_id" :loading="loadingMore" @load_since="fetchMentionsSince" />
-          </DynamicScrollerItem>
-        </template>
-        <template v-else>
-          <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
-            <notification
-              :message="item"
-              :focused="item.id === focusedId"
-              :overlaid="modalOpened"
-              :filters="[]"
-              v-on:update="updateToot"
-              @focusRight="focusSidebar"
-              @selectNotification="focusNotification(item)"
-            >
-            </notification>
-          </DynamicScrollerItem>
-        </template>
+        <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.url]" :data-index="index" :watchData="true">
+          <notification
+            :message="item"
+            :focused="item.id === focusedId"
+            :overlaid="modalOpened"
+            :filters="[]"
+            v-on:update="updateToot"
+            @focusRight="focusSidebar"
+            @selectNotification="focusNotification(item)"
+          >
+          </notification>
+        </DynamicScrollerItem>
       </template>
     </DynamicScroller>
     <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
@@ -33,9 +26,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, defineComponent, onBeforeUpdate, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMagicKeys, whenever, and } from '@vueuse/core'
-import moment from 'moment'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
 import { Entity } from 'megalodon'
@@ -63,7 +55,6 @@ export default defineComponent({
     const { j, k, Ctrl_r } = useMagicKeys()
 
     const focusedId = ref<string | null>(null)
-    const loadingMore = ref(false)
     const scroller = ref<any>()
 
     const mentions = computed<Array<Entity.Notification | LoadingCard>>(() => store.getters[`${space}/mentions`])
@@ -78,10 +69,6 @@ export default defineComponent({
     onMounted(() => {
       store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_MENTIONS}`, false)
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
-
-      if (heading.value && mentions.value.length > 0) {
-        store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
-      }
     })
     onBeforeUpdate(() => {
       if (store.state.TimelineSpace.SideMenu.unreadMentions && heading.value) {
@@ -104,15 +91,6 @@ export default defineComponent({
         })
       }
     })
-    watch(
-      mentions,
-      (newVal, _oldVal) => {
-        if (heading.value && newVal.length > 0) {
-          store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
-        }
-      },
-      { deep: true }
-    )
     watch(focusedId, (newVal, _oldVal) => {
       if (newVal && heading.value) {
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
@@ -153,19 +131,10 @@ export default defineComponent({
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
       } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
-        store.dispatch(`${space}/${ACTION_TYPES.SAVE_MARKER}`)
       }
     }
     const updateToot = (message: Entity.Status) => {
       store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
-    }
-    const fetchMentionsSince = (since_id: string) => {
-      loadingMore.value = true
-      store.dispatch(`${space}/${ACTION_TYPES.FETCH_MENTIONS_SINCE}`, since_id).finally(() => {
-        setTimeout(() => {
-          loadingMore.value = false
-        }, 500)
-      })
     }
     const reload = async () => {
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
@@ -203,8 +172,6 @@ export default defineComponent({
     return {
       mentions,
       scroller,
-      loadingMore,
-      fetchMentionsSince,
       focusedId,
       modalOpened,
       updateToot,
