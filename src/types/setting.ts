@@ -7,7 +7,6 @@ export type UnreadNotification = {
 export type UseMarker = {
   home: boolean
   notifications: boolean
-  mentions: boolean
 }
 
 export type Timeline = {

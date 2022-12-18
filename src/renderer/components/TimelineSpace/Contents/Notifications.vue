@@ -33,9 +33,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onBeforeUnmount, onUnmounted, watch } from 'vue'
+import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onUnmounted, watch } from 'vue'
 import { useMagicKeys, whenever, and } from '@vueuse/core'
-import moment from 'moment'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
 import Notification from '@/components/organisms/Notification.vue'
