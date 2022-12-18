@@ -50,7 +50,7 @@ const mutations: MutationTree<PublicState> = {
     state.timeline = state.timeline.concat(messages)
   },
   [MUTATION_TYPES.ARCHIVE_TIMELINE]: state => {
-    state.timeline = state.timeline.slice(0, 40)
+    state.timeline = state.timeline.slice(0, 20)
   },
   [MUTATION_TYPES.CLEAR_TIMELINE]: state => {
     state.timeline = []
@@ -104,7 +104,7 @@ const actions: ActionTree<PublicState, RootState> = {
       rootState.App.userAgent
     )
     try {
-      const res = await client.getPublicTimeline({ limit: 40 })
+      const res = await client.getPublicTimeline({ limit: 20 })
       commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
       return res.data
     } catch (err) {
@@ -128,7 +128,7 @@ const actions: ActionTree<PublicState, RootState> = {
       rootState.App.userAgent
     )
     return client
-      .getPublicTimeline({ max_id: lastStatus.id, limit: 40 })
+      .getPublicTimeline({ max_id: lastStatus.id, limit: 20 })
       .then(res => {
         commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
         return res.data

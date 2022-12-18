@@ -58,7 +58,7 @@ const mutations: MutationTree<HomeState> = {
     state.timeline = state.timeline.concat(messages)
   },
   [MUTATION_TYPES.ARCHIVE_TIMELINE]: state => {
-    state.timeline = state.timeline.slice(0, 40)
+    state.timeline = state.timeline.slice(0, 20)
   },
   [MUTATION_TYPES.CLEAR_TIMELINE]: state => {
     state.timeline = []
@@ -146,16 +146,16 @@ const actions: ActionTree<HomeState, RootState> = {
         since_id: lastReadStatus.id,
         // We don't need to fill this field in the first fetcing.
         // Because in most cases there is no new statuses at the first fetching.
-        // After new statuses are received, if the number of unread statuses is more than 40, max_id is not necessary.
+        // After new statuses are received, if the number of unread statuses is more than 20, max_id is not necessary.
         // We can fill max_id when calling fetchTimelineSince.
-        // If the number of unread statuses is less than 40, max_id is necessary, but it is enough to reject duplicated statuses.
+        // If the number of unread statuses is less than 20, max_id is necessary, but it is enough to reject duplicated statuses.
         // So we do it in mutation.
         max_id: null,
         id: 'loading-card',
         uri: 'loading-card'
       }
 
-      const res = await client.getHomeTimeline({ limit: 40, max_id: lastReadStatus.id })
+      const res = await client.getHomeTimeline({ limit: 20, max_id: lastReadStatus.id })
       // Make sure whether new statuses exist or not.
       const nextResponse = await client.getHomeTimeline({ limit: 1, min_id: lastReadStatus.id })
       if (nextResponse.data.length > 0) {
@@ -166,7 +166,7 @@ const actions: ActionTree<HomeState, RootState> = {
       commit(MUTATION_TYPES.UPDATE_TIMELINE, timeline)
       return res.data
     } else {
-      const res = await client.getHomeTimeline({ limit: 40 })
+      const res = await client.getHomeTimeline({ limit: 20 })
       commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
       return res.data
     }
@@ -186,7 +186,7 @@ const actions: ActionTree<HomeState, RootState> = {
       rootState.App.userAgent
     )
     return client
-      .getHomeTimeline({ max_id: lastStatus.id, limit: 40 })
+      .getHomeTimeline({ max_id: lastStatus.id, limit: 20 })
       .then(res => {
         commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
         return res.data
@@ -222,7 +222,7 @@ const actions: ActionTree<HomeState, RootState> = {
     // Also, we can get statuses which are older than max_id and newer than min_id.
     // If the number of statuses exceeds the limit, it truncates newer statuses.
     // That means, the status immediately before max_id is not included in the response.
-    let params = { min_id: since_id, limit: 40 }
+    let params = { min_id: since_id, limit: 20 }
     if (maxID !== null) {
       params = Object.assign({}, params, {
         max_id: maxID
@@ -230,7 +230,7 @@ const actions: ActionTree<HomeState, RootState> = {
     }
 
     const res = await client.getHomeTimeline(params)
-    if (res.data.length >= 40) {
+    if (res.data.length >= 20) {
       const card: LoadingCard = {
         type: 'middle-load',
         since_id: res.data[0].id,

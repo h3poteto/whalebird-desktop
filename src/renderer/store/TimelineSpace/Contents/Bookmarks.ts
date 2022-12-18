@@ -73,7 +73,7 @@ export const ACTION_TYPES = {
 const actions: ActionTree<BookmarksState, RootState> = {
   [ACTION_TYPES.FETCH_BOOKMARKS]: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Entity.Status>> => {
     const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
-    const res = await client.getBookmarks({ limit: 40 })
+    const res = await client.getBookmarks({ limit: 20 })
     commit(MUTATION_TYPES.UPDATE_BOOKMARKS, res.data)
     // Parse link header
     try {
@@ -103,7 +103,7 @@ const actions: ActionTree<BookmarksState, RootState> = {
       rootState.TimelineSpace.account.accessToken,
       rootState.App.userAgent
     )
-    const res = await client.getFavourites({ max_id: state.maxId, limit: 40 }).finally(() => {
+    const res = await client.getFavourites({ max_id: state.maxId, limit: 20 }).finally(() => {
       commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
     })
     commit(MUTATION_TYPES.INSERT_BOOKMARKS, res.data)

@@ -105,7 +105,7 @@ const actions: ActionTree<LocalState, RootState> = {
     )
 
     try {
-      const res = await client.getLocalTimeline({ limit: 40 })
+      const res = await client.getLocalTimeline({ limit: 20 })
       commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
       return res.data
     } catch (err) {
@@ -129,7 +129,7 @@ const actions: ActionTree<LocalState, RootState> = {
       rootState.App.userAgent
     )
     return client
-      .getLocalTimeline({ max_id: lastStatus.id, limit: 40 })
+      .getLocalTimeline({ max_id: lastStatus.id, limit: 20 })
       .then(res => {
         commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
         return res.data

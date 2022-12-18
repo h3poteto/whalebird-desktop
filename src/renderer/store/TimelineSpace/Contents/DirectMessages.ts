@@ -46,7 +46,7 @@ const mutations: MutationTree<DirectMessagesState> = {
     state.timeline = state.timeline.concat(messages)
   },
   [MUTATION_TYPES.ARCHIVE_TIMELINE]: state => {
-    state.timeline = state.timeline.slice(0, 40)
+    state.timeline = state.timeline.slice(0, 20)
   },
   [MUTATION_TYPES.CLEAR_TIMELINE]: state => {
     state.timeline = []
@@ -93,7 +93,7 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
       rootState.App.userAgent
     )
     try {
-      const res = await client.getConversationTimeline({ limit: 40 })
+      const res = await client.getConversationTimeline({ limit: 20 })
       const statuses: Array<Entity.Status> = res.data.map(con => con.last_status!)
       commit(MUTATION_TYPES.UPDATE_TIMELINE, statuses)
       return statuses
@@ -118,7 +118,7 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
       rootState.App.userAgent
     )
     return client
-      .getConversationTimeline({ max_id: lastStatus.id, limit: 40 })
+      .getConversationTimeline({ max_id: lastStatus.id, limit: 20 })
       .then(res => {
         const statuses: Array<Entity.Status> = res.data.map(con => con.last_status!)
         commit(MUTATION_TYPES.INSERT_TIMELINE, statuses)

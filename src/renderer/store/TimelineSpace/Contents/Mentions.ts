@@ -61,7 +61,7 @@ const mutations: MutationTree<MentionsState> = {
     state.mentions = state.mentions.concat(messages)
   },
   [MUTATION_TYPES.ARCHIVE_MENTIONS]: state => {
-    state.mentions = state.mentions.slice(0, 40)
+    state.mentions = state.mentions.slice(0, 30)
   },
   [MUTATION_TYPES.CLEAR_MENTIONS]: state => {
     state.mentions = []
