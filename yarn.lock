@@ -1095,15 +1095,15 @@
     minimatch "^3.0.4"
     plist "^3.0.4"
 
-"@electron/universal@^1.3.0", "@electron/universal@^1.3.2":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@electron/universal/-/universal-1.3.3.tgz#f22088dce7f2e808130fd1bbcd43925246adfa59"
-  integrity sha512-79yc61D5QWaQpia+sLQbIIi5iVoV4y9HtgOTlE0fYT0xoyg+ChwndBl4a0Q7yJfDsqq+/nLEPE655F0bTpDiCg==
+"@electron/universal@^1.3.2", "@electron/universal@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@electron/universal/-/universal-1.3.4.tgz#bccd94b635d7c85eeed5eabba457eb4ed2be2777"
+  integrity sha512-BdhBgm2ZBnYyYRLRgOjM5VHkyFItsbggJ0MHycOjKWdFGYwK97ZFXH54dTvUWEfha81vfvwr5On6XBjt99uDcg==
   dependencies:
     "@electron/asar" "^3.2.1"
     "@malept/cross-spawn-promise" "^1.1.0"
     debug "^4.3.1"
-    dir-compare "^2.4.0"
+    dir-compare "^3.0.0"
     fs-extra "^9.0.1"
     minimatch "^3.0.4"
     plist "^3.0.4"
@@ -3598,6 +3598,11 @@ buffer-equal@1.0.0:
   resolved "https://registry.yarnpkg.com/buffer-equal/-/buffer-equal-1.0.0.tgz#59616b498304d556abd466966b22eeda3eca5fbe"
   integrity sha1-WWFrSYME1Var1GaWayLu2j7KX74=
 
+buffer-equal@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/buffer-equal/-/buffer-equal-1.0.1.tgz#2f7651be5b1b3f057fcd6e7ee16cf34767077d90"
+  integrity sha512-QoV3ptgEaQpvVwbXdSO39iqPQTCxSF7A5U99AxbHYqUdCizL/lH2Z0A2y6nbZucxMEOtNyZfG2s6gsVugGpKkg==
+
 buffer-fill@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/buffer-fill/-/buffer-fill-1.0.0.tgz#f8f78b76789888ef39f205cd637f68e702122b2c"
@@ -4801,6 +4806,14 @@ dir-compare@^2.4.0:
     colors "1.0.3"
     commander "2.9.0"
     minimatch "3.0.4"
+
+dir-compare@^3.0.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/dir-compare/-/dir-compare-3.3.0.tgz#2c749f973b5c4b5d087f11edaae730db31788416"
+  integrity sha512-J7/et3WlGUCxjdnD3HAAzQ6nsnc0WL6DD7WcwJb7c39iH1+AWfg+9OqzJNaI6PkBwBvm1mhZNL9iY/nRiZXlPg==
+  dependencies:
+    buffer-equal "^1.0.0"
+    minimatch "^3.0.4"
 
 dir-glob@^3.0.1:
   version "3.0.1"
