@@ -10,3 +10,5 @@ updates:
       update-types: ["version-update:semver-major"]
     - dependency-name: "chalk"
       update-types: ["version-update:semver-major"]
+    - dependency-name: "electron-builder"
+      versions: "^23.4"
