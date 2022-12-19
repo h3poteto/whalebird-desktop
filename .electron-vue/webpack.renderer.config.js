@@ -18,6 +18,12 @@ let rendererConfig = {
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false
+        }
+      },
+      {
         test: /\.vue$/,
         use: {
           loader: 'vue-loader',
