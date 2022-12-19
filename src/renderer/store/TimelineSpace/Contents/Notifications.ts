@@ -241,10 +241,11 @@ const actions: ActionTree<NotificationsState, RootState> = {
     } catch (err) {
       console.warn(err)
     }
-    if ((serverMarker as Entity.Marker).notifications !== undefined) {
+    const s = serverMarker as Entity.Marker
+    if (s.notifications !== undefined) {
       return {
         timeline: 'notifications',
-        last_read_id: (serverMarker as Entity.Marker).notifications.last_read_id
+        last_read_id: s.notifications.last_read_id
       } as LocalMarker
     }
     const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-notifications-marker', rootState.TimelineSpace.account._id)
