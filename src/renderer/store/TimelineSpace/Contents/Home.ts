@@ -263,10 +263,11 @@ const actions: ActionTree<HomeState, RootState> = {
     } catch (err) {
       console.warn(err)
     }
-    if ((serverMarker as Entity.Marker).home !== undefined) {
+    const s = serverMarker as Entity.Marker
+    if (s.home !== undefined) {
       return {
         timeline: 'home',
-        last_read_id: (serverMarker as Entity.Marker).home.last_read_id
+        last_read_id: s.home.last_read_id
       } as LocalMarker
     }
     const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-home-marker', rootState.TimelineSpace.account._id)
