@@ -50,7 +50,7 @@
       "@/router": "<rootDir>/spec/mock/router.ts",
       "^@/(.+)": "<rootDir>/src/renderer/$1",
       "^~/(.+)": "<rootDir>/$1",
-       "axios": "axios/dist/node/axios.cjs"
+      "axios": "axios/dist/node/axios.cjs"
     },
     "testMatch": [
       "**/spec/**/*.spec.ts"
@@ -60,7 +60,9 @@
       "^.+\\.(js|jsx)$": "babel-jest",
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
-    "transformIgnorePatterns": ["/node_modules/(?!axios)"],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!axios)"
+    ],
     "setupFiles": [
       "core-js",
       "<rootDir>/spec/setupJest.ts"
@@ -78,6 +80,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "@trodi/electron-splashscreen": "^1.0.2",
     "@vueuse/core": "9.7.0",
+    "@vueuse/math": "^9.7.0",
     "about-window": "^1.15.2",
     "animate.css": "^4.1.0",
     "auto-launch": "^5.0.5",

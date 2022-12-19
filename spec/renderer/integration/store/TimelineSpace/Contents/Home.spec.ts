@@ -120,6 +120,7 @@ let state = (): HomeState => {
     lazyLoading: false,
     heading: true,
     timeline: [],
+    unreads: [],
     showReblogs: true,
     showReplies: true
   }
@@ -195,7 +196,7 @@ describe('Home', () => {
             lazyLoading: false,
             heading: true,
             timeline: [status1],
-            unreadTimeline: [],
+            unreads: [],
             showReblogs: true,
             showReplies: true
           }

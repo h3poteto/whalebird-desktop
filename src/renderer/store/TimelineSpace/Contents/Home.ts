@@ -13,6 +13,7 @@ export type HomeState = {
   showReblogs: boolean
   showReplies: boolean
   timeline: Array<Entity.Status | LoadingCard>
+  unreads: Array<Entity.Status>
 }
 
 const state = (): HomeState => ({
@@ -20,7 +21,8 @@ const state = (): HomeState => ({
   heading: true,
   timeline: [],
   showReblogs: true,
-  showReplies: true
+  showReplies: true,
+  unreads: []
 })
 
 export const MUTATION_TYPES = {
@@ -35,7 +37,8 @@ export const MUTATION_TYPES = {
   DELETE_TOOT: 'deleteToot',
   SHOW_REBLOGS: 'showReblogs',
   SHOW_REPLIES: 'showReplies',
-  APPEND_TIMELINE_AFTER_LOADING_CARD: 'appendTimelineAfterLoadingCard'
+  APPEND_TIMELINE_AFTER_LOADING_CARD: 'appendTimelineAfterLoadingCard',
+  MERGE_UNREADS: 'mergeUnreads'
 }
 
 const mutations: MutationTree<HomeState> = {
@@ -47,8 +50,12 @@ const mutations: MutationTree<HomeState> = {
   },
   [MUTATION_TYPES.APPEND_TIMELINE]: (state, update: Entity.Status) => {
     // Reject duplicated status in timeline
-    if (!state.timeline.find(item => item.id === update.id)) {
-      state.timeline = ([update] as Array<Entity.Status | LoadingCard>).concat(state.timeline)
+    if (!state.timeline.find(item => item.id === update.id) && !state.unreads.find(item => item.id === update.id)) {
+      if (state.heading) {
+        state.timeline = ([update] as Array<Entity.Status | LoadingCard>).concat(state.timeline)
+      } else {
+        state.unreads = [update].concat(state.unreads)
+      }
     }
   },
   [MUTATION_TYPES.UPDATE_TIMELINE]: (state, messages: Array<Entity.Status | LoadingCard>) => {
@@ -62,6 +69,7 @@ const mutations: MutationTree<HomeState> = {
   },
   [MUTATION_TYPES.CLEAR_TIMELINE]: state => {
     state.timeline = []
+    state.unreads = []
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, message: Entity.Status) => {
     // Replace target message in homeTimeline and notifications
@@ -113,6 +121,10 @@ const mutations: MutationTree<HomeState> = {
     })
     // Reject duplicated status in timeline
     state.timeline = Array.from(new Set(tl))
+  },
+  [MUTATION_TYPES.MERGE_UNREADS]: state => {
+    state.timeline = (state.unreads.slice(0, 80) as Array<Entity.Status | LoadingCard>).concat(state.timeline)
+    state.unreads = []
   }
 }
 

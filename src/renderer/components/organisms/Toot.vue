@@ -232,7 +232,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, computed, toRefs, watch, nextTick } from 'vue'
-import { useMagicKeys, whenever, and } from '@vueuse/core'
+import { logicAnd } from '@vueuse/math'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
@@ -388,35 +389,35 @@ export default defineComponent({
       return QuoteSupported(sns.value, account.value.domain)
     })
 
-    whenever(and(l, shortcutEnabled), () => {
+    whenever(logicAnd(l, shortcutEnabled), () => {
       ctx.emit('focusRight')
     })
-    whenever(and(h, shortcutEnabled), () => {
+    whenever(logicAnd(h, shortcutEnabled), () => {
       ctx.emit('focusLeft')
     })
-    whenever(and(r, shortcutEnabled), () => {
+    whenever(logicAnd(r, shortcutEnabled), () => {
       openReply()
     })
-    whenever(and(b, shortcutEnabled), () => {
+    whenever(logicAnd(b, shortcutEnabled), () => {
       changeReblog(originalMessage.value)
     })
-    whenever(and(f, shortcutEnabled), () => {
+    whenever(logicAnd(f, shortcutEnabled), () => {
       changeFavourite(originalMessage.value)
     })
-    whenever(and(o, shortcutEnabled), () => {
+    whenever(logicAnd(o, shortcutEnabled), () => {
       openDetail(message.value)
     })
-    whenever(and(p, shortcutEnabled), () => {
+    whenever(logicAnd(p, shortcutEnabled), () => {
       openUser(originalMessage.value.account)
     })
-    whenever(and(i, shortcutEnabled), () => {
+    whenever(logicAnd(i, shortcutEnabled), () => {
       const images = mediaAttachments.value
       if (images.length === 0) {
         return
       }
       openImage(images[0].url, images)
     })
-    whenever(and(x, shortcutEnabled), () => {
+    whenever(logicAnd(x, shortcutEnabled), () => {
       toggleSpoiler()
       toggleCW()
     })
