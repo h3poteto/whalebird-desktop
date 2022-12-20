@@ -90,10 +90,10 @@
     "general": {
       "title": "Orokorra",
       "toot": {
-        "title": "Tuta",
+        "title": "Tutak",
         "visibility": {
-          "description": "Ezarri tuten defektuzko irismena",
-          "notice": "Ezarpen honek tut berriei soilik eragiten die; erantzunek jatorrizko tutaren ikusgarritasuna izango dute",
+          "description": "Ezarri tuten defektuzko ikusgaitasuna",
+          "notice": "Ezarpen honek tut berriei eragiten die soilik; erantzunek jatorrizko tutaren ikusgaitasuna izango dute",
           "public": "Publikoa",
           "unlisted": "Zerrendatu gabea",
           "private": "Jarraitzaileak soilik",
@@ -160,19 +160,19 @@
       "sounds": {
         "title": "Soinuak",
         "description": "Ezarri berrelikadura soinuak.",
-        "fav_rb": "Tut bat gogoko egin edo bultzatzerakoan",
-        "toot": "Tut bat publikatzerakoan"
+        "fav_rb": "Tut bat gogoko egiten edo bultzatzen duzunean",
+        "toot": "Tut bat publikatzen duzunean"
       },
       "timeline": {
         "title": "Denbora-lerroa",
         "description": "Pertsonalizatu ikuspegia zure denbora-lerroetan.",
-        "cw": "Hedatu beti abisua duten publikazioak",
+        "cw": "Hedatu beti edukiaren abisua duten publikazioak",
         "nsfw": "Erakutsi beti multimedia guztia",
         "hideAllAttachments": "Ezkutatu beti multimedia guztia"
       },
       "other": {
         "title": "Beste aukera batzuk",
-        "launch": "Abiarazi aplikazioa saioa hasterakoan"
+        "launch": "Abiarazi aplikazioa ordenagailuarekin bat"
       },
       "reset": {
         "button": "Berrezarri hobespenak"
@@ -225,8 +225,8 @@
         "reblog": "Jakinarazi nire mezuak bultzatzen dituztenean",
         "favourite": "Jakinarazi nire mezuak gogoko egiten dituztenean",
         "follow": "Jakinarazi jarraitzen nautenean",
-        "reaction": "Jakinarazi emoji-erreakzio bat jasotzen dudanean",
-        "follow_request": "Jakinarazi jarraipen-eskaera bidali didatenean",
+        "reaction": "Jakinarazi emoji-erreakzioak jasotzen ditudanean",
+        "follow_request": "Jakinarazi jarraipen-eskaerak bidaltzen dizkidatenean",
         "status": "Jakinarazi egoera baten jakinarazpena jasotzen dudanean",
         "poll_vote": "Jakinarazi nire inkestek botoak jasotzen dituztenean",
         "poll_expired": "Jakinarazi parte hartu dudan inkestak amaitzen direnean"
@@ -251,7 +251,7 @@
         "title": "Proxy ezarpenak",
         "no": "Proxyrik ez",
         "system": "Erabili sistemaren proxya",
-        "manual": "Eskoz konfiguratu proxya",
+        "manual": "Eskuzko proxy konfigurazioa",
         "protocol": "Protokoloa",
         "host": "Proxy ostalaria",
         "port": "Proxy ataka",
@@ -272,7 +272,7 @@
       "title": "Hizkuntza",
       "language": {
         "title": "Hizkuntza",
-        "description": "Aukeratu Whalebirden hizkuntza."
+        "description": "Aukeratu Whalebirdek erabiltzea nahi duzun hizkuntza."
       },
       "spellchecker": {
         "title": "Ortografia-egiaztatzea",
@@ -350,10 +350,10 @@
       "esc": "Itxi oraingo orria"
     },
     "report": {
-      "title": "Erabiltzailea salatzen",
+      "title": "Salaketa",
       "comment": "Iruzkin gehigarriak",
       "cancel": "Utzi",
-      "ok": "Bai, salatu"
+      "ok": "Salatu"
     }
   },
   "cards": {
@@ -368,7 +368,7 @@
       "block": "Blokeatu",
       "report": "Salatu",
       "delete": "Ezabatu",
-      "via": "{{application}} bidez",
+      "via": "{{application}}(e)n bidez",
       "reply": "Erantzun",
       "reblog": "Bultzatu",
       "fav": "Egin gogoko",
@@ -391,11 +391,11 @@
     "account_profile": {
       "follows_you": "Jarraitzen zaitu",
       "doesnt_follow_you": "Ez zaitu jarraitzen",
-      "detail": "Xehetasuna",
-      "follow": "Jarraitu erabiltzailea",
-      "unfollow": "Utzi erabiltzailea jarraitzeari",
-      "subscribe": "Harpidetu erabiltzaileari",
-      "unsubscribe": "Utzi erabiltzailearen harpidetza",
+      "detail": "Xehetasunak",
+      "follow": "Jarraitu",
+      "unfollow": "Utzi jarraitzeari",
+      "subscribe": "Harpidetu",
+      "unsubscribe": "Utzi harpidetza",
       "follow_requested": "Eskaera bidalita",
       "open_in_browser": "Ireki nabigatzailean",
       "manage_list_memberships": "Kudeatu zerrendaren kideak",
@@ -404,8 +404,8 @@
       "unblock": "Utzi blokeatzeari",
       "block": "Blokeatu",
       "toots": "Tutak",
-      "follows": "Jarraitzen ditu",
-      "followers": "Jarraitzaileak"
+      "follows": "Jarraitzen",
+      "followers": "Jarraitzaile"
     }
   },
   "follow_requests": {
@@ -449,7 +449,7 @@
     "manually_1": "Baimena emateko leiho berri bat ireki da nabigatzailean.",
     "manually_2": "Automatikoki ireki ez bada, joan ondorengo helbidera.",
     "code_label": "Itsatsi nabigatzailean agertu den kodea hemen:",
-    "misskey_label": "Bidali nabigatzailean baimendu ondoren.",
+    "misskey_label": "Bidali nabigatzailean baimena eman ondoren.",
     "submit": "Bidali"
   },
   "receive_drop": {
@@ -466,7 +466,7 @@
     "follow_request_reject_error": "Eskaera baztertzeak huts egin du",
     "start_streaming_error": "Transmisioa hasteak huts egin du",
     "start_all_streamings_error": "{{domain}}(r)en transmisioa hasteak huts egin du",
-    "attach_error": "Ezin izan da fitxategia atxiki",
+    "attach_error": "Ezin izan da fitxategia erantsi",
     "authorize_duplicate_error": "Ezin da kontu bera birritan gehitu",
     "authorize_error": "Baimentzeak huts egin du",
     "followers_fetch_error": "Jarraitzaileak eskuratzeak huts egin du",
@@ -507,10 +507,10 @@
     },
     "new_toot": {
       "toot_length": "Tutaren luzera {{min}} eta {{max}} artekoa izan behar da",
-      "attach_length": "{{max}} irudi soilik atxiki ditzakezu",
-      "attach_length_plural": "{{max}} irudi soilik atxiki ditzakezu",
-      "attach_image": "Irudiak edo bideoak soilik atxiki ditzakezu",
-      "poll_invalid": "Inkestaren aukerak ez dira baliogarriak"
+      "attach_length": "Irudi bakar {{max}} erantsi dezakezu",
+      "attach_length_plural": "{{max}} irudi soilik erantsi ditzakezu",
+      "attach_image": "Irudiak edo bideoak soilik erantsi ditzakezu",
+      "poll_invalid": "Inkestaren aukerek ez dute balio"
     }
   },
   "notification": {
@@ -524,14 +524,14 @@
     },
     "follow_request": {
       "title": "Jarraipen-eskaera",
-      "body": "{{username}}(e)k jarraitzeko eskaera egin du"
+      "body": "{{username}}(e)k jarraitzeko eskaera egin dizu"
     },
     "reblog": {
-      "title": "Bultzatu",
+      "title": "Bultzada",
       "body": "{{username}}(e)k zure egoera bultzatu du"
     },
     "quote": {
-      "title": "Aipatu",
+      "title": "Aipua",
       "body": "{{username}}(e)k zure egoera aipatu du"
     },
     "reaction": {
@@ -547,7 +547,7 @@
       "body": "{{username}}(e)k zure inkestan botoa eman du"
     },
     "poll_expired": {
-      "title": "Bozketa amaitu da",
+      "title": "Bozketaren amaiera",
       "body": "{{username}}(r)en inkesta amaitu da"
     }
   }
