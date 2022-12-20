@@ -2,68 +2,68 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "shortcuts": "Shortcut Keys",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "about": "Whalebirdi buruz",
+      "preferences": "Hobespenak…",
+      "shortcuts": "Laster-teklak",
+      "services": "Zerbitzuak",
+      "hide": "Ezkutatu Whalebird",
+      "hide_others": "Ezkutatu besteak",
+      "show_all": "Erakutsi guztia",
+      "open": "Ireki leihoa",
+      "quit": "Itxi"
     },
     "toot": {
       "name": "Toot",
-      "new": "New Toot"
+      "new": "Tut berria"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "Editatu",
+      "undo": "Desegin",
+      "redo": "Berregin",
+      "cut": "Ebaki",
+      "copy": "Kopiatu",
+      "paste": "Itsatsi",
+      "select_all": "Hautatu guztia"
     },
     "view": {
       "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "toggle_full_screen": "Aldatu pantaila osora"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
+      "always_show_menu_bar": "Erakutsi beti menu barra",
+      "name": "Leihoa",
+      "close": "Itxi leihoa",
+      "open": "Ireki leihoa",
+      "minimize": "Minimizatu",
       "jump_to": "Jump to"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "Gehitu kontu berria"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
+    "profile": "Profila",
+    "show_profile": "Erakutsi profila",
+    "edit_profile": "Editatu profila",
+    "settings": "Ezarpenak",
     "collapse": "Collapse",
     "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
+    "home": "Hasiera",
+    "notification": "Jakinarazpena",
     "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
+    "direct": "Mezu zuzenak",
+    "follow_requests": "Jarraipen-eskaerak",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
+    "local": "Denbora-lerro lokala",
+    "public": "Denbora-lerro publikoa",
+    "hashtag": "Traola",
     "search": "Search",
-    "lists": "Lists"
+    "lists": "Zerrendak"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
+    "home": "Hasiera",
+    "notification": "Jakinarazpena",
     "mention": "Mention",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
@@ -126,12 +126,12 @@
         "expire": "Expire after",
         "context": "Filter contexts",
         "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "whole_word": "Hitz osoa",
+        "submit": "Bidali",
+        "cancel": "Utzi"
       },
       "expires": {
-        "never": "Never",
+        "never": "Inoiz ez",
         "30_minutes": "30 minutes",
         "1_hour": "1 hour",
         "6_hours": "6 hours",
