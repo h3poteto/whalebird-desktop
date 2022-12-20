@@ -13,7 +13,7 @@
       "quit": "Itxi"
     },
     "toot": {
-      "name": "Toot",
+      "name": "Tuta",
       "new": "Tut berria"
     },
     "edit": {
@@ -26,7 +26,7 @@
       "select_all": "Hautatu guztia"
     },
     "view": {
-      "name": "View",
+      "name": "Ikusi",
       "toggle_full_screen": "Aldatu pantaila osora"
     },
     "window": {
@@ -46,86 +46,86 @@
     "show_profile": "Erakutsi profila",
     "edit_profile": "Editatu profila",
     "settings": "Ezarpenak",
-    "collapse": "Collapse",
-    "expand": "Expand",
+    "collapse": "Tolestu",
+    "expand": "Hedatu",
     "home": "Hasiera",
     "notification": "Jakinarazpena",
-    "mention": "Mention",
+    "mention": "Aipamenak",
     "direct": "Mezu zuzenak",
     "follow_requests": "Jarraipen-eskaerak",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
+    "favourite": "Gogokoak",
+    "bookmark": "Laster-markak",
     "local": "Denbora-lerro lokala",
     "public": "Denbora-lerro publikoa",
     "hashtag": "Traola",
-    "search": "Search",
+    "search": "Bilaketa",
     "lists": "Zerrendak"
   },
   "header_menu": {
     "home": "Hasiera",
     "notification": "Jakinarazpena",
-    "mention": "Mention",
-    "favourite": "Favourite",
-    "bookmark": "Bookmark",
-    "follow_requests": "Follow Requests",
-    "direct_messages": "Direct Messages",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
-    "search": "Search",
-    "lists": "Lists",
-    "members": "Members",
+    "mention": "Aipamenak",
+    "favourite": "Gogokoak",
+    "bookmark": "Laster-markak",
+    "follow_requests": "Jarraipen-eskaerak",
+    "direct_messages": "Mezu zuzenak",
+    "local": "Denbora-lerro lokala",
+    "public": "Denbora-lerro publikoa",
+    "hashtag": "Traolak",
+    "search": "Bilaketa",
+    "lists": "Zerrendak",
+    "members": "Kideak",
     "option": {
-      "title": "Option",
-      "show_reblogs": "Show reblogs",
-      "show_replies": "Show replies",
-      "apply": "Apply"
+      "title": "Aukerak",
+      "show_reblogs": "Erakutsi bultzadak",
+      "show_replies": "Erakutsi erantzunak",
+      "apply": "Ezarri"
     },
-    "new_toot": "Toot",
-    "reload": "Reload",
-    "settings": "Settings"
+    "new_toot": "Bidali",
+    "reload": "Birkargatu",
+    "settings": "Ezarpenak"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Ezarpenak",
     "general": {
-      "title": "General",
+      "title": "Orokorra",
       "toot": {
-        "title": "Toot",
+        "title": "Tuta",
         "visibility": {
-          "description": "Customize default visibility of toot",
+          "description": "Ezarri tuten defektuzko irismena",
           "notice": "This setting applies to only new toots, replies follow visibility of original toots",
-          "public": "Public",
-          "unlisted": "Unlisted",
-          "private": "Private",
-          "direct": "Direct"
+          "public": "Publikoa",
+          "unlisted": "Zerrendatu gabea",
+          "private": "Jarraitzaileak soilik",
+          "direct": "Aipatutako jendea soilik"
         },
         "sensitive": {
-          "description": "Mark media as sensitive by default"
+          "description": "Markatu edukia hunkigarri gisa, defektuz"
         }
       }
     },
     "timeline": {
-      "title": "Timeline",
+      "title": "Denbora-lerroa",
       "unread_notification": {
-        "title": "Unread Notification",
+        "title": "Irakurri gabeko jakinarazpenak",
         "description": "Customize unread notifications for each timeline.",
-        "direct": "Direct Messages",
-        "local": "Local Timeline",
-        "public": "Public Timeline"
+        "direct": "Mezu zuzenak",
+        "local": "Denbora-lerro lokala",
+        "public": "Denbora-lerro publikoa"
       },
       "use_marker": {
         "title": "Load the timeline from the last reading position",
-        "home": "Home",
-        "notifications": "Notifications"
+        "home": "Hasiera",
+        "notifications": "Jakinarazpenak"
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Iragazkiak",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
+        "phrase": "Hitz-gakoa edo esaldia",
+        "expire": "Iraungitze-data",
+        "context": "Iragazkien testuinguruak",
+        "irreversible": "Desagerrarazi ezkutatu beharrean",
         "whole_word": "Hitz osoa",
         "submit": "Bidali",
         "cancel": "Utzi"
@@ -148,8 +148,8 @@
       "delete": {
         "title": "Ezabatu",
         "confirm": "Ziur iragazki hau ezabatu nahi duzula?",
-        "confirm_ok": "Ezabatu",
-        "confirm_cancel": "Utzi"
+        "confirm_ok": "Bai, ezabatu",
+        "confirm_cancel": "Bai, utzi"
       }
     }
   },
@@ -166,9 +166,9 @@
       "timeline": {
         "title": "Denbora-lerroa",
         "description": "Customize view in your timelines.",
-        "cw": "Always expand posts marked with contents warnings",
-        "nsfw": "Always show all media",
-        "hideAllAttachments": "Always hide all media"
+        "cw": "Hedatu beti abisua duten publikazioak",
+        "nsfw": "Erakutsi beti multimedia guztia",
+        "hideAllAttachments": "Ezkutatu beti multimedia guztia"
       },
       "other": {
         "title": "Beste aukera batzuk",
@@ -180,21 +180,21 @@
     },
     "appearance": {
       "title": "Itxura",
-      "theme_color": "Theme color",
+      "theme_color": "Gaiaren kolorea",
       "theme": {
         "system": "Sistemak darabilena",
         "light": "Argia",
         "dark": "Iluna",
-        "solarized_light": "SolarizedLight",
-        "solarized_dark": "SolarizedDark",
-        "kimbie_dark": "KimbieDark",
+        "solarized_light": "Horixka",
+        "solarized_dark": "Urdinxka",
+        "kimbie_dark": "Marroixka",
         "custom": "Pertsonalizatua"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
+        "background_color": "Hondoa",
+        "selected_background_color": "Fokatuta dagoen hondoa",
+        "global_header_color": "Kontuaren menua",
+        "side_menu_color": "Alboko menua",
         "primary_color": "Primary font",
         "regular_color": "Regular font",
         "secondary_color": "Secondary font",
@@ -204,7 +204,7 @@
       },
       "font_size": "Font size",
       "font_family": "Font family",
-      "toot_padding": "Padding around toots",
+      "toot_padding": "Tuten arteko paddinga",
       "display_style": {
         "title": "Display style of username",
         "display_name_and_username": "Display name and username",
@@ -218,18 +218,18 @@
       }
     },
     "notification": {
-      "title": "Notification",
+      "title": "Jakinarazpenak",
       "enable": {
         "description": "Please set notification events.",
-        "reply": "Notify me when I receive a reply",
-        "reblog": "Notify me when I receive a reblog",
-        "favourite": "Notify me when I receive a favourite",
-        "follow": "Notify me when I receive a follow",
+        "reply": "Jakinarazi nire mezuei erantzuten dietenean",
+        "reblog": "Jakinarazi nire mezuak bultzatzen dituztenean",
+        "favourite": "Jakinarazi nire mezuak gogoko egiten dituztenean",
+        "follow": "Jakinarazi jarraitzen hasi zatzaizkidanean",
         "reaction": "Notify me when I receive a emoji reaction",
-        "follow_request": "Notify me when I receive a follow request",
+        "follow_request": "Jakinarazi jarraitzeko eskaera bidali didatenean",
         "status": "Notify me when I receive a status notification",
-        "poll_vote": "Notify me when I receive a vote of poll",
-        "poll_expired": "Notify me when I receive a poll expired event"
+        "poll_vote": "Jakinarazi nire inkestek botoak jasotzen dituztenean",
+        "poll_expired": "Jakinarazi inkesta amaitu denean"
       }
     },
     "account": {
@@ -283,10 +283,10 @@
   "modals": {
     "new_toot": {
       "title": "Tut berria",
-      "cw": "Write your warning here",
+      "cw": "Idatzi abisua hemen",
       "status": "Zer duzu buruan?",
       "cancel": "Utzi",
-      "toot": "Toot",
+      "toot": "Bidali",
       "close_confirm": "Ziur zaude zirriborro hau baztertu nahi duzula?",
       "close_confirm_ok": "Baztertu",
       "close_confirm_cancel": "Jarraitu editatzen",
@@ -295,8 +295,8 @@
         "add_image": "Gehitu irudiak",
         "poll": "Gehitu inkesta",
         "change_visibility": "Aldatu ikusgaitasuna",
-        "change_sensitive": "Change sensitive",
-        "add_cw": "Add content warning",
+        "change_sensitive": "Aldatu hunkigarritasuna",
+        "add_cw": "Gehitu edukiari buruzko oharra",
         "pined_hashtag": "Finkatu traola"
       },
       "poll": {
@@ -324,7 +324,7 @@
     },
     "mute_confirm": {
       "title": "Are you sure you want to mute?",
-      "body": "Hide notification from this user?",
+      "body": "Erabiltzaile honen jakinarazpenak ezkutatu?",
       "cancel": "Cancel",
       "ok": "Mute"
     },
@@ -333,53 +333,53 @@
       "ctrl_number": "Switch accounts",
       "ctrl_k": "Jump to other timelines",
       "ctrl_n": "Open the new toot modal",
-      "ctrl_enter": "Post the toot",
+      "ctrl_enter": "Bidali tuta",
       "ctrl_r": "Reload current timeline",
-      "j": "Select the next toot",
-      "k": "Select the previous toot",
+      "j": "Hautatu hurrengo tuta",
+      "k": "Hautatu aurreko tuta",
       "h": "Switch focus to the left column",
-      "l": "Switch focus to the right column",
-      "r": "Reply to the toot",
-      "b": "Reblog the toot",
-      "f": "Favourite the toot",
-      "o": "Open details of the toot",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
-      "x": "Show/hide CW and NSFW",
-      "?": "Show this help",
-      "esc": "Close current page"
+      "l": "Aldatu fokua eskumako zutabera",
+      "r": "Erantzun tutari",
+      "b": "Bultzatu tuta",
+      "f": "Egin gogoko tuta",
+      "o": "Ireki tutaren xehetasunak",
+      "p": "Ireki tutaren kontuaren profila",
+      "i": "Ireki irudiak",
+      "x": "Erakutsi / ezkutatu lanerako desegokiak (NSFW) eta abisua duten publikazioak",
+      "?": "Erakutsi laguntza",
+      "esc": "Itxi oraingo orria"
     },
     "report": {
-      "title": "Reporting this user",
-      "comment": "Additional comments",
-      "cancel": "Cancel",
-      "ok": "Report"
+      "title": "Erabiltzailea salatzen",
+      "comment": "Iruzkin gehigarriak",
+      "cancel": "Utzi",
+      "ok": "Bai, salatu"
     }
   },
   "cards": {
     "toot": {
-      "show_more": "Show more",
-      "hide": "Hide",
-      "sensitive": "Show sensitive content",
-      "view_toot_detail": "View Toot Detail",
-      "open_in_browser": "Open in Browser",
-      "copy_link_to_toot": "Copy Link to Toot",
-      "mute": "Mute",
-      "block": "Block",
-      "report": "Report",
-      "delete": "Delete",
-      "via": "via {{application}}",
-      "reply": "Reply",
-      "reblog": "Reblog",
-      "fav": "Favourite",
+      "show_more": "Erakutsi gehiago",
+      "hide": "Ezkutatu",
+      "sensitive": "Erakutsi eduki hunkigarria",
+      "view_toot_detail": "Ikusi tutaren xehetasunak",
+      "open_in_browser": "Ireki nabigatzailean",
+      "copy_link_to_toot": "Kopiatu tutaren esteka",
+      "mute": "Mututu",
+      "block": "Blokeatu",
+      "report": "Salatu",
+      "delete": "Ezabatu",
+      "via": "{{application}} bidez",
+      "reply": "Erantzun",
+      "reblog": "Bultzatu",
+      "fav": "Egin gogoko",
       "detail": "Tutaren xehetasunak",
-      "bookmark": "Bookmark",
+      "bookmark": "Jarri laster-marka",
       "pinned": "Finkatutako tuta",
       "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
+        "vote": "Bozkatu",
+        "votes_count": "boto",
         "until": "{{datetime}} arte",
-        "left": "{{datetime}} left",
+        "left": "epemuga: {{datetime}}",
         "refresh": "Freskatu"
       }
     },
@@ -422,7 +422,7 @@
     "account": "Kontua",
     "tag": "Traola",
     "keyword": "hitz-gakoa",
-    "toot": "Toot"
+    "toot": "Tutak"
   },
   "lists": {
     "index": {
@@ -433,7 +433,7 @@
           "title": "Baieztatu",
           "message": "Eragiketa hau ezin da desegin; zerrenda betiko ezabatuko da",
           "ok": "Ezabatu",
-          "cancel": "Utzi"
+          "cancel": "Bai, utzi"
         }
       }
     }
@@ -447,58 +447,58 @@
   },
   "authorize": {
     "manually_1": "Baimena emateko leiho berri bat ireki da nabigatzailean.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
+    "manually_2": "Automatikoki ireki ez bada, joan ondorengo helbidera.",
+    "code_label": "Itsatsi nabigatzailean agertu den kodea hemen:",
     "misskey_label": "Please submit after you authorize in your browser.",
-    "submit": "Submit"
+    "submit": "Bidali"
   },
   "receive_drop": {
     "drop_message": "Drop to Upload to Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
-    "preferences_load_error": "Failed to load preferences",
-    "timeline_fetch_error": "Failed to fetch timeline",
-    "notification_fetch_error": "Failed to fetch notification",
-    "favourite_fetch_error": "Failed to fetch favorite",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_request_reject_error": "Failed to reject the request",
-    "start_streaming_error": "Failed to start streaming",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
+    "account_load_error": "Kontuak kargatzeak huts egin du",
+    "account_remove_error": "Kontua ezabatzeak huts egin du",
+    "preferences_load_error": "Hobespenak kargatzeak huts egin du",
+    "timeline_fetch_error": "Denbora-lerroa eskuratzeak huts egin du",
+    "notification_fetch_error": "Jakinarazpenak eskuratzeak huts egin du",
+    "favourite_fetch_error": "Gogokoak eskuratzeak huts egin du",
+    "follow_request_accept_error": "Eskaera onartzeak huts egin du",
+    "follow_request_reject_error": "Eskaera baztertzeak huts egin du",
+    "start_streaming_error": "Transmisioa hasteak huts egin du",
+    "start_all_streamings_error": "{{domain}}(r)en transmisioa hasteak huts egin du",
     "attach_error": "Could not attach the file",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
-    "authorize_error": "Failed to authorize",
-    "followers_fetch_error": "Failed to fetch followers",
+    "authorize_duplicate_error": "Ezin da kontu bera birritan gehitu",
+    "authorize_error": "Baimentzeak huts egin du",
+    "followers_fetch_error": "Jarraitzaileak eskuratzeak huts egin du",
     "follows_fetch_error": "Failed to fetch follows",
-    "toot_fetch_error": "Failed to fetch the toot detail",
-    "follow_error": "Failed to follow the user",
-    "unfollow_error": "Failed to unfollow the user",
+    "toot_fetch_error": "Tutaren xehetasunak eskuratzeak huts egin du",
+    "follow_error": "Erabiltzailea jarraitzeak huts egin du",
+    "unfollow_error": "Erabiltzailea jarraitzeari uzteak huts egin du",
     "subscribe_error": "Failed to subscribe the user",
     "unsubscribe_error": "Failed to unsubscribe the user",
-    "lists_fetch_error": "Failed to fetch lists",
-    "list_create_error": "Failed to create a list",
-    "members_fetch_error": "Failed to fetch members",
-    "remove_user_error": "Failed to remove the user",
+    "lists_fetch_error": "Zerrendak eskuratzeak huts egin du",
+    "list_create_error": "Zerrenda sortzeak huts egin du",
+    "members_fetch_error": "Kideak eskuratzeak huts egin du",
+    "remove_user_error": "Erabiltzailea kentzeak huts egin du",
     "find_account_error": "Account not found",
-    "reblog_error": "Failed to reblog",
-    "unreblog_error": "Failed to unreblog",
-    "favourite_error": "Failed to favourite",
-    "unfavourite_error": "Failed to unfavourite",
-    "bookmark_error": "Failed to bookmark",
-    "unbookmark_error": "Failed to remove bookmark",
-    "delete_error": "Failed to delete the toot",
+    "reblog_error": "Bultzada emateak huts egin du",
+    "unreblog_error": "Bultzada kentzeak huts egin du",
+    "favourite_error": "Gogoko egiteak huts egin du",
+    "unfavourite_error": "Gogokoetatik kentzeak huts egin du",
+    "bookmark_error": "Laster-marka jartzeak huts egin du",
+    "unbookmark_error": "Laster-marka kentzeak huts egin du",
+    "delete_error": "Tuta ezabatzeak huts egin du",
     "search_error": "Bilaketak huts egin du",
     "toot_error": "Tuta publikatzeak huts egin du",
-    "update_list_memberships_error": "Ezin izan dira zerrendaren kideak eguneratu",
-    "add_user_error": "Ezin izan da erabiltzailea gehitu",
-    "authorize_url_error": "Ezin izan da baimentzeko URLa eskuratu",
+    "update_list_memberships_error": "Zerrendaren kideen eguneratzeak huts egin du",
+    "add_user_error": "Erabiltzailea gehitzeak huts egin du",
+    "authorize_url_error": "Baimentzeko URLa eskuratzeak huts egin du",
     "domain_confirmed": "{{domain}} domeinua baieztatu da; hasi saioa",
-    "domain_doesnt_exist": "Ezin izan da {{domain}}(e)ra konektatu; egiaztatu zerbitzariaren helbidea",
+    "domain_doesnt_exist": "{{domain}}(e)ra konektatzeak huts egin du; egiaztatu zerbitzariaren helbidea",
     "loading": "Kargatzen…",
     "language_not_support_spellchecker_error": "Ortografia-egiaztatzailea ezin da hizkuntza honekin erabili",
-    "update_filter_error": "Ezin izan da bahea eguneratu",
-    "create_filter_error": "Ezin izan da bahea sortu"
+    "update_filter_error": "Iragazkiaren eguneraketak huts egin du",
+    "create_filter_error": "Iragazkiaren sorrerak huts egin du"
   },
   "validation": {
     "login": {
