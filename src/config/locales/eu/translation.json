@@ -35,7 +35,7 @@
       "close": "Itxi leihoa",
       "open": "Ireki leihoa",
       "minimize": "Minimizatu",
-      "jump_to": "Jump to"
+      "jump_to": "Joan hona"
     }
   },
   "global_header": {
@@ -57,7 +57,7 @@
     "bookmark": "Laster-markak",
     "local": "Denbora-lerro lokala",
     "public": "Denbora-lerro publikoa",
-    "hashtag": "Traola",
+    "hashtag": "Traolak",
     "search": "Bilaketa",
     "lists": "Zerrendak"
   },
@@ -93,7 +93,7 @@
         "title": "Tuta",
         "visibility": {
           "description": "Ezarri tuten defektuzko irismena",
-          "notice": "This setting applies to only new toots, replies follow visibility of original toots",
+          "notice": "Ezarpen honek tut berriei soilik eragiten die; erantzunek jatorrizko tutaren ikusgarritasuna izango dute",
           "public": "Publikoa",
           "unlisted": "Zerrendatu gabea",
           "private": "Jarraitzaileak soilik",
@@ -108,13 +108,13 @@
       "title": "Denbora-lerroa",
       "unread_notification": {
         "title": "Irakurri gabeko jakinarazpenak",
-        "description": "Customize unread notifications for each timeline.",
+        "description": "Pertsonalizatu irakurri gabeko jakinarazpenak denbora-lerro bakoitzarentzat.",
         "direct": "Mezu zuzenak",
         "local": "Denbora-lerro lokala",
         "public": "Denbora-lerro publikoa"
       },
       "use_marker": {
-        "title": "Load the timeline from the last reading position",
+        "title": "Kargatu denbora-lerroa irakurritako azken kokapenetik",
         "home": "Hasiera",
         "notifications": "Jakinarazpenak"
       }
@@ -149,7 +149,7 @@
         "title": "Ezabatu",
         "confirm": "Ziur iragazki hau ezabatu nahi duzula?",
         "confirm_ok": "Bai, ezabatu",
-        "confirm_cancel": "Bai, utzi"
+        "confirm_cancel": "Ez, utzi"
       }
     }
   },
@@ -159,13 +159,13 @@
       "title": "Orokorra",
       "sounds": {
         "title": "Soinuak",
-        "description": "Please set feedback sounds.",
+        "description": "Ezarri berrelikadura soinuak.",
         "fav_rb": "Tut bat gogoko egin edo bultzatzerakoan",
         "toot": "Tut bat publikatzerakoan"
       },
       "timeline": {
         "title": "Denbora-lerroa",
-        "description": "Customize view in your timelines.",
+        "description": "Pertsonalizatu ikuspegia zure denbora-lerroetan.",
         "cw": "Hedatu beti abisua duten publikazioak",
         "nsfw": "Erakutsi beti multimedia guztia",
         "hideAllAttachments": "Ezkutatu beti multimedia guztia"
@@ -195,55 +195,55 @@
         "selected_background_color": "Fokatuta dagoen hondoa",
         "global_header_color": "Kontuaren menua",
         "side_menu_color": "Alboko menua",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
+        "primary_color": "Letra-tipo nagusia",
+        "regular_color": "Letra-tipo arrunta",
+        "secondary_color": "Bigarren mailako letra-tipoa",
         "border_color": "Ertza",
-        "header_menu_color": "Header menu",
-        "wrapper_mask_color": "Modal wrapper"
+        "header_menu_color": "Goiburuko menua",
+        "wrapper_mask_color": "Profilen goiburuko geruzaren kolorea"
       },
-      "font_size": "Font size",
-      "font_family": "Font family",
+      "font_size": "Letraren tamaina",
+      "font_family": "Letra-tipoaren familia",
       "toot_padding": "Tuten arteko paddinga",
       "display_style": {
-        "title": "Display style of username",
-        "display_name_and_username": "Display name and username",
-        "display_name": "Display name",
-        "username": "Username"
+        "title": "Erabiltzaile-izenak erakusteko aukerak",
+        "display_name_and_username": "Izena eta erabiltzaile-izena",
+        "display_name": "Izena soilik",
+        "username": "Erabiltzaile-izena soilik"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Relative"
+        "title": "Orduaren formatua",
+        "absolute": "Absolutua",
+        "relative": "Erlatiboa"
       }
     },
     "notification": {
       "title": "Jakinarazpenak",
       "enable": {
-        "description": "Please set notification events.",
+        "description": "Ezarri jakinarazpen egoerak.",
         "reply": "Jakinarazi nire mezuei erantzuten dietenean",
         "reblog": "Jakinarazi nire mezuak bultzatzen dituztenean",
         "favourite": "Jakinarazi nire mezuak gogoko egiten dituztenean",
-        "follow": "Jakinarazi jarraitzen hasi zatzaizkidanean",
-        "reaction": "Notify me when I receive a emoji reaction",
-        "follow_request": "Jakinarazi jarraitzeko eskaera bidali didatenean",
-        "status": "Notify me when I receive a status notification",
+        "follow": "Jakinarazi jarraitzen nautenean",
+        "reaction": "Jakinarazi emoji-erreakzio bat jasotzen dudanean",
+        "follow_request": "Jakinarazi jarraipen-eskaera bidali didatenean",
+        "status": "Jakinarazi egoera baten jakinarazpena jasotzen dudanean",
         "poll_vote": "Jakinarazi nire inkestek botoak jasotzen dituztenean",
-        "poll_expired": "Jakinarazi inkesta amaitu denean"
+        "poll_expired": "Jakinarazi parte hartu dudan inkestak amaitzen direnean"
       }
     },
     "account": {
-      "title": "Account",
-      "connected": "Connected Account",
-      "username": "Username",
-      "domain": "Domain",
-      "association": "Association",
-      "order": "Order",
-      "remove_association": "Remove association",
-      "remove_all_associations": "Remove all associations",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "confirm_message": "Are you sure to remove all associations?"
+      "title": "Kontua",
+      "connected": "Konektaturiko kontuak",
+      "username": "Erabiltzaile-izena",
+      "domain": "Domeinua",
+      "association": "Asoziazioa",
+      "order": "Ordena",
+      "remove_association": "Kendu asoziazioa",
+      "remove_all_associations": "Kendu asoziazio guztiak",
+      "confirm": "Baieztatu",
+      "cancel": "Utzi",
+      "confirm_message": "Ziur zaude asoziazio guztiak kendu nahi dituzula?"
     },
     "network": {
       "title": "Sarea",
@@ -288,8 +288,8 @@
       "cancel": "Utzi",
       "toot": "Bidali",
       "close_confirm": "Ziur zaude zirriborro hau baztertu nahi duzula?",
-      "close_confirm_ok": "Baztertu",
-      "close_confirm_cancel": "Jarraitu editatzen",
+      "close_confirm_ok": "Bai, baztertu",
+      "close_confirm_cancel": "Ez, jarraitu editatzen",
       "description": "Deskribatu ikusmen urritasuna dutenentzat",
       "footer": {
         "add_image": "Gehitu irudiak",
@@ -313,31 +313,31 @@
       }
     },
     "jump": {
-      "jump_to": "Jump to..."
+      "jump_to": "Joan hona…"
     },
     "add_list_member": {
       "title": "Gehitu kidea zerrendara",
       "account_name": "Kontuaren izena"
     },
     "list_membership": {
-      "title": "List Memberships"
+      "title": "Zerrendaren kideak"
     },
     "mute_confirm": {
-      "title": "Are you sure you want to mute?",
+      "title": "Ziur zaude mututu nahi duzula?",
       "body": "Erabiltzaile honen jakinarazpenak ezkutatu?",
-      "cancel": "Cancel",
-      "ok": "Mute"
+      "cancel": "Ez, utzi",
+      "ok": "Bai, mututu"
     },
     "shortcut": {
-      "title": "Keyboard shortcuts",
-      "ctrl_number": "Switch accounts",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
+      "title": "Teklatuaren lasterbideak",
+      "ctrl_number": "Aldatu kontuak",
+      "ctrl_k": "Egin jauzi beste denbora-lerro batzuetara",
+      "ctrl_n": "Ireki tuta idazteko leihoa",
       "ctrl_enter": "Bidali tuta",
-      "ctrl_r": "Reload current timeline",
+      "ctrl_r": "Birkargatu oraingo denbora-lerroa",
       "j": "Hautatu hurrengo tuta",
       "k": "Hautatu aurreko tuta",
-      "h": "Switch focus to the left column",
+      "h": "Aldatu fokua ezkerreko zutabera",
       "l": "Aldatu fokua eskumako zutabera",
       "r": "Erantzun tutari",
       "b": "Bultzatu tuta",
@@ -398,13 +398,13 @@
       "unsubscribe": "Utzi erabiltzailearen harpidetza",
       "follow_requested": "Eskaera bidalita",
       "open_in_browser": "Ireki nabigatzailean",
-      "manage_list_memberships": "Manage List Memberships",
+      "manage_list_memberships": "Kudeatu zerrendaren kideak",
       "mute": "Mututu",
       "unmute": "Utzi mututzeari",
       "unblock": "Utzi blokeatzeari",
       "block": "Blokeatu",
       "toots": "Tutak",
-      "follows": "Follows",
+      "follows": "Jarraitzen ditu",
       "followers": "Jarraitzaileak"
     }
   },
@@ -422,7 +422,7 @@
     "account": "Kontua",
     "tag": "Traola",
     "keyword": "hitz-gakoa",
-    "toot": "Tutak"
+    "toot": "Tuta"
   },
   "lists": {
     "index": {
@@ -432,8 +432,8 @@
         "confirm": {
           "title": "Baieztatu",
           "message": "Eragiketa hau ezin da desegin; zerrenda betiko ezabatuko da",
-          "ok": "Ezabatu",
-          "cancel": "Bai, utzi"
+          "ok": "Bai, ezabatu",
+          "cancel": "Ez, utzi"
         }
       }
     }
@@ -449,11 +449,11 @@
     "manually_1": "Baimena emateko leiho berri bat ireki da nabigatzailean.",
     "manually_2": "Automatikoki ireki ez bada, joan ondorengo helbidera.",
     "code_label": "Itsatsi nabigatzailean agertu den kodea hemen:",
-    "misskey_label": "Please submit after you authorize in your browser.",
+    "misskey_label": "Bidali nabigatzailean baimendu ondoren.",
     "submit": "Bidali"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Bertan behera utzi Mastodonerako igoerak"
   },
   "message": {
     "account_load_error": "Kontuak kargatzeak huts egin du",
@@ -466,21 +466,21 @@
     "follow_request_reject_error": "Eskaera baztertzeak huts egin du",
     "start_streaming_error": "Transmisioa hasteak huts egin du",
     "start_all_streamings_error": "{{domain}}(r)en transmisioa hasteak huts egin du",
-    "attach_error": "Could not attach the file",
+    "attach_error": "Ezin izan da fitxategia atxiki",
     "authorize_duplicate_error": "Ezin da kontu bera birritan gehitu",
     "authorize_error": "Baimentzeak huts egin du",
     "followers_fetch_error": "Jarraitzaileak eskuratzeak huts egin du",
-    "follows_fetch_error": "Failed to fetch follows",
+    "follows_fetch_error": "Jarraitzen dituenak eskuratzeak huts egin du",
     "toot_fetch_error": "Tutaren xehetasunak eskuratzeak huts egin du",
     "follow_error": "Erabiltzailea jarraitzeak huts egin du",
     "unfollow_error": "Erabiltzailea jarraitzeari uzteak huts egin du",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
+    "subscribe_error": "Erabiltzailera harpidetzeak huts egin du",
+    "unsubscribe_error": "Erabiltzailearen harpidetza uzteak huts egin du",
     "lists_fetch_error": "Zerrendak eskuratzeak huts egin du",
     "list_create_error": "Zerrenda sortzeak huts egin du",
     "members_fetch_error": "Kideak eskuratzeak huts egin du",
     "remove_user_error": "Erabiltzailea kentzeak huts egin du",
-    "find_account_error": "Account not found",
+    "find_account_error": "Ez da kontua aurkitu",
     "reblog_error": "Bultzada emateak huts egin du",
     "unreblog_error": "Bultzada kentzeak huts egin du",
     "favourite_error": "Gogoko egiteak huts egin du",
@@ -515,7 +515,7 @@
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
+      "title": "Egin gogoko",
       "body": "{{username}}(e)k gogoko du zure egoera"
     },
     "follow": {
@@ -523,7 +523,7 @@
       "body": "{{username}} jarraitzen hasi zaizu"
     },
     "follow_request": {
-      "title": "FollowRequest",
+      "title": "Jarraipen-eskaera",
       "body": "{{username}}(e)k jarraitzeko eskaera egin du"
     },
     "reblog": {
@@ -535,19 +535,19 @@
       "body": "{{username}}(e)k zure egoera aipatu du"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "Erreakzioa",
+      "body": "{{username}}(e)k zure egoerari erreakzionatu du"
     },
     "status": {
       "title": "Egoera",
       "body": "{{username}}(e)k publikatu berri du"
     },
     "poll_vote": {
-      "title": "PollVote",
+      "title": "Bozketa",
       "body": "{{username}}(e)k zure inkestan botoa eman du"
     },
     "poll_expired": {
-      "title": "PollExpired",
+      "title": "Bozketa amaitu da",
       "body": "{{username}}(r)en inkesta amaitu da"
     }
   }
