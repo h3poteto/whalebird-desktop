@@ -102,7 +102,8 @@ describe('TimelineSpace/Contents/Home', () => {
         heading: true,
         timeline: [],
         showReblogs: true,
-        showReplies: true
+        showReplies: true,
+        unreads: []
       }
     })
 
@@ -129,7 +130,8 @@ describe('TimelineSpace/Contents/Home', () => {
               heading: true,
               timeline: [status1],
               showReblogs: true,
-              showReplies: true
+              showReplies: true,
+              unreads: []
             }
           })
           it('should update timeline', () => {
@@ -145,7 +147,8 @@ describe('TimelineSpace/Contents/Home', () => {
               heading: true,
               timeline: [status2, status1],
               showReblogs: true,
-              showReplies: true
+              showReplies: true,
+              unreads: []
             }
           })
           it('should not update timeline', () => {
@@ -163,12 +166,14 @@ describe('TimelineSpace/Contents/Home', () => {
               heading: false,
               timeline: [status1],
               showReblogs: true,
-              showReplies: true
+              showReplies: true,
+              unreads: []
             }
           })
           it('should update timeline', () => {
             Home.mutations![MUTATION_TYPES.APPEND_TIMELINE](state, status2)
-            expect(state.timeline).toEqual([status2, status1])
+            expect(state.timeline).toEqual([status1])
+            expect(state.unreads).toEqual([status2])
           })
         })
         describe('duplicated status', () => {
@@ -178,7 +183,8 @@ describe('TimelineSpace/Contents/Home', () => {
               heading: false,
               timeline: [status2, status1],
               showReblogs: true,
-              showReplies: true
+              showReplies: true,
+              unreads: []
             }
           })
           it('should not update timeline', () => {
@@ -196,7 +202,8 @@ describe('TimelineSpace/Contents/Home', () => {
           heading: true,
           timeline: [status1],
           showReblogs: true,
-          showReplies: true
+          showReplies: true,
+          unreads: []
         }
       })
       it('should be inserted', () => {
@@ -213,7 +220,8 @@ describe('TimelineSpace/Contents/Home', () => {
             heading: true,
             timeline: [status1, status2],
             showReblogs: true,
-            showReplies: true
+            showReplies: true,
+            unreads: []
           }
         })
         const favouritedStatus: Entity.Status = Object.assign(status1, {
@@ -269,7 +277,8 @@ describe('TimelineSpace/Contents/Home', () => {
             heading: true,
             timeline: [rebloggedStatus, status2],
             showReblogs: true,
-            showReplies: true
+            showReplies: true,
+            unreads: []
           }
         })
         it('should be updated', () => {
@@ -288,7 +297,8 @@ describe('TimelineSpace/Contents/Home', () => {
             heading: true,
             timeline: [status1, status2],
             showReblogs: true,
-            showReplies: true
+            showReplies: true,
+            unreads: []
           }
         })
         it('should be deleted', () => {
@@ -339,7 +349,8 @@ describe('TimelineSpace/Contents/Home', () => {
             heading: true,
             timeline: [rebloggedStatus, status2],
             showReblogs: true,
-            showReplies: true
+            showReplies: true,
+            unreads: []
           }
         })
         it('should be deleted', () => {

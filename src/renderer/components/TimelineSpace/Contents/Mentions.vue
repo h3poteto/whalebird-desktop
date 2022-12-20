@@ -27,7 +27,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, onBeforeUpdate, onMounted, onUnmounted, ref, watch } from 'vue'
-import { useMagicKeys, whenever, and } from '@vueuse/core'
+import { logicAnd } from '@vueuse/math'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
 import { Entity } from 'megalodon'
@@ -98,17 +99,17 @@ export default defineComponent({
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
       }
     })
-    whenever(and(j, shortcutEnabled), () => {
+    whenever(logicAnd(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
         focusedId.value = mentions.value[0].id
       } else {
         focusNext()
       }
     })
-    whenever(and(k, shortcutEnabled), () => {
+    whenever(logicAnd(k, shortcutEnabled), () => {
       focusPrev()
     })
-    whenever(and(Ctrl_r, shortcutEnabled), () => {
+    whenever(logicAnd(Ctrl_r, shortcutEnabled), () => {
       reload()
     })
 

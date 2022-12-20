@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div></div>
+    <div class="unread">{{ unreads.length > 0 ? unreads.length : '' }}</div>
     <DynamicScroller :items="filteredTimeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <template v-if="item.id === 'loading-card'">
@@ -35,9 +35,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onBeforeUnmount, watch, onUnmounted } from 'vue'
-import { useMagicKeys, whenever, and } from '@vueuse/core'
-import moment from 'moment'
+import { defineComponent, ref, computed, onMounted, onBeforeUpdate, watch, onUnmounted } from 'vue'
+import { logicAnd } from '@vueuse/math'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
 import { useI18next } from 'vue3-i18next'
@@ -68,6 +68,7 @@ export default defineComponent({
     const scroller = ref<any>()
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Home.timeline)
+    const unreads = computed(() => store.state.TimelineSpace.Contents.Home.unreads)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Home.lazyLoading)
     const heading = computed(() => store.state.TimelineSpace.Contents.Home.heading)
     const showReblogs = computed(() => store.state.TimelineSpace.Contents.Home.showReblogs)
@@ -139,17 +140,17 @@ export default defineComponent({
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
       }
     })
-    whenever(and(j, shortcutEnabled), () => {
+    whenever(logicAnd(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
         focusedId.value = timeline.value[0].uri + timeline.value[0].id
       } else {
         focusNext()
       }
     })
-    whenever(and(k, shortcutEnabled), () => {
+    whenever(logicAnd(k, shortcutEnabled), () => {
       focusPrev()
     })
-    whenever(and(Ctrl_r, shortcutEnabled), () => {
+    whenever(logicAnd(Ctrl_r, shortcutEnabled), () => {
       reload()
     })
 
@@ -172,6 +173,7 @@ export default defineComponent({
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
       } else if ((event.target as HTMLElement)!.scrollTop <= 5 && !heading.value) {
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+        store.commit(`${space}/${MUTATION_TYPES.MERGE_UNREADS}`)
       }
     }
     const updateToot = (message: Entity.Status) => {
@@ -237,7 +239,8 @@ export default defineComponent({
       focusToot,
       openSideBar,
       heading,
-      upper
+      upper,
+      unreads
     }
   }
 })
@@ -277,6 +280,21 @@ export default defineComponent({
 
   .upper-icon {
     padding: 3px;
+  }
+
+  .unread {
+    position: fixed;
+    right: 24px;
+    top: 52px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 0 0 2px 2px;
+    z-index: 1;
+
+    &:empty {
+      display: none;
+    }
   }
 }
 </style>

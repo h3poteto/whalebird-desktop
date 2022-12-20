@@ -27,7 +27,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import { useMagicKeys, whenever, and } from '@vueuse/core'
+import { logicAnd } from '@vueuse/math'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
@@ -87,17 +88,17 @@ export default defineComponent({
       }
     })
 
-    whenever(and(j, shortcutEnabled), () => {
+    whenever(logicAnd(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
         focusedId.value = bookmarks.value[0].uri
       } else {
         focusNext()
       }
     })
-    whenever(and(k, shortcutEnabled), () => {
+    whenever(logicAnd(k, shortcutEnabled), () => {
       focusPrev()
     })
-    whenever(and(Ctrl_r, shortcutEnabled), () => {
+    whenever(logicAnd(Ctrl_r, shortcutEnabled), () => {
       reload()
     })
 

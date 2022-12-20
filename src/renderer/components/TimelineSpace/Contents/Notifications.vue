@@ -34,7 +34,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onUnmounted, watch } from 'vue'
-import { useMagicKeys, whenever, and } from '@vueuse/core'
+import { logicAnd } from '@vueuse/math'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
 import Notification from '@/components/organisms/Notification.vue'
@@ -123,17 +124,17 @@ export default defineComponent({
         store.commit(`${space}/${ACTION_TYPES.RESET_BADGE}`)
       }
     })
-    whenever(and(j, shortcutEnabled), () => {
+    whenever(logicAnd(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
         focusedId.value = handledNotifications.value[0].id
       } else {
         focusNext()
       }
     })
-    whenever(and(k, shortcutEnabled), () => {
+    whenever(logicAnd(k, shortcutEnabled), () => {
       focusPrev()
     })
-    whenever(and(Ctrl_r, shortcutEnabled), () => {
+    whenever(logicAnd(Ctrl_r, shortcutEnabled), () => {
       reload()
     })
 

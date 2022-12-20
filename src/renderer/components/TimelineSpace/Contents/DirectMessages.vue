@@ -28,8 +28,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onBeforeUnmount, onUnmounted, watch } from 'vue'
-import { useMagicKeys, whenever, and } from '@vueuse/core'
-import moment from 'moment'
+import { logicAnd } from '@vueuse/math'
+import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
@@ -110,17 +110,17 @@ export default defineComponent({
         store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
       }
     })
-    whenever(and(j, shortcutEnabled), () => {
+    whenever(logicAnd(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
         focusedId.value = timeline.value[0].uri + timeline.value[0].id
       } else {
         focusNext()
       }
     })
-    whenever(and(k, shortcutEnabled), () => {
+    whenever(logicAnd(k, shortcutEnabled), () => {
       focusPrev()
     })
-    whenever(and(Ctrl_r, shortcutEnabled), () => {
+    whenever(logicAnd(Ctrl_r, shortcutEnabled), () => {
       reload()
     })
 
