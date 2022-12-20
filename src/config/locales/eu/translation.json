@@ -27,7 +27,7 @@
     },
     "view": {
       "name": "Ikusi",
-      "toggle_full_screen": "Aldatu pantaila osora"
+      "toggle_full_screen": "Pantaila osoa bai/ez"
     },
     "window": {
       "always_show_menu_bar": "Erakutsi beti menu barra",
@@ -49,7 +49,7 @@
     "collapse": "Tolestu",
     "expand": "Hedatu",
     "home": "Hasiera",
-    "notification": "Jakinarazpena",
+    "notification": "Jakinarazpenak",
     "mention": "Aipamenak",
     "direct": "Mezu zuzenak",
     "follow_requests": "Jarraipen-eskaerak",
@@ -63,7 +63,7 @@
   },
   "header_menu": {
     "home": "Hasiera",
-    "notification": "Jakinarazpena",
+    "notification": "Jakinarazpenak",
     "mention": "Aipamenak",
     "favourite": "Gogokoak",
     "bookmark": "Laster-markak",
