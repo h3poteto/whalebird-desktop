@@ -2,68 +2,68 @@
   "main_menu": {
     "application": {
       "name": "Whalebird",
-      "about": "About Whalebird",
-      "preferences": "Preferences...",
-      "shortcuts": "Shortcut Keys",
-      "services": "Services",
-      "hide": "Hide Whalebird",
-      "hide_others": "Hide Others",
-      "show_all": "Show All",
-      "open": "Open Window",
-      "quit": "Quit"
+      "about": "Whalebirdi buruz",
+      "preferences": "Hobespenak…",
+      "shortcuts": "Laster-teklak",
+      "services": "Zerbitzuak",
+      "hide": "Ezkutatu Whalebird",
+      "hide_others": "Ezkutatu besteak",
+      "show_all": "Erakutsi guztia",
+      "open": "Ireki leihoa",
+      "quit": "Itxi"
     },
     "toot": {
       "name": "Toot",
-      "new": "New Toot"
+      "new": "Tut berria"
     },
     "edit": {
-      "name": "Edit",
-      "undo": "Undo",
-      "redo": "Redo",
-      "cut": "Cut",
-      "copy": "Copy",
-      "paste": "Paste",
-      "select_all": "Select All"
+      "name": "Editatu",
+      "undo": "Desegin",
+      "redo": "Berregin",
+      "cut": "Ebaki",
+      "copy": "Kopiatu",
+      "paste": "Itsatsi",
+      "select_all": "Hautatu guztia"
     },
     "view": {
       "name": "View",
-      "toggle_full_screen": "Toggle Full Screen"
+      "toggle_full_screen": "Aldatu pantaila osora"
     },
     "window": {
-      "always_show_menu_bar": "Always Show Menu Bar",
-      "name": "Window",
-      "close": "Close Window",
-      "open": "Open Window",
-      "minimize": "Minimize",
+      "always_show_menu_bar": "Erakutsi beti menu barra",
+      "name": "Leihoa",
+      "close": "Itxi leihoa",
+      "open": "Ireki leihoa",
+      "minimize": "Minimizatu",
       "jump_to": "Jump to"
     }
   },
   "global_header": {
-    "add_new_account": "Add new account"
+    "add_new_account": "Gehitu kontu berria"
   },
   "side_menu": {
-    "profile": "Profile",
-    "show_profile": "Show profile",
-    "edit_profile": "Edit profile",
-    "settings": "Settings",
+    "profile": "Profila",
+    "show_profile": "Erakutsi profila",
+    "edit_profile": "Editatu profila",
+    "settings": "Ezarpenak",
     "collapse": "Collapse",
     "expand": "Expand",
-    "home": "Home",
-    "notification": "Notification",
+    "home": "Hasiera",
+    "notification": "Jakinarazpena",
     "mention": "Mention",
-    "direct": "Direct messages",
-    "follow_requests": "Follow Requests",
+    "direct": "Mezu zuzenak",
+    "follow_requests": "Jarraipen-eskaerak",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
-    "local": "Local timeline",
-    "public": "Public timeline",
-    "hashtag": "Hashtag",
+    "local": "Denbora-lerro lokala",
+    "public": "Denbora-lerro publikoa",
+    "hashtag": "Traola",
     "search": "Search",
-    "lists": "Lists"
+    "lists": "Zerrendak"
   },
   "header_menu": {
-    "home": "Home",
-    "notification": "Notification",
+    "home": "Hasiera",
+    "notification": "Jakinarazpena",
     "mention": "Mention",
     "favourite": "Favourite",
     "bookmark": "Bookmark",
@@ -126,69 +126,69 @@
         "expire": "Expire after",
         "context": "Filter contexts",
         "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "whole_word": "Hitz osoa",
+        "submit": "Bidali",
+        "cancel": "Utzi"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "never": "Inoiz ez",
+        "30_minutes": "30 minutu",
+        "1_hour": "Ordubete",
+        "6_hours": "6 ordu",
+        "12_hours": "12 ordu",
+        "1_day": "Egun 1",
+        "1_week": "Astebete"
       },
       "new": {
-        "title": "New"
+        "title": "Berria"
       },
       "edit": {
-        "title": "Edit"
+        "title": "Editatu"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "title": "Ezabatu",
+        "confirm": "Ziur iragazki hau ezabatu nahi duzula?",
+        "confirm_ok": "Ezabatu",
+        "confirm_cancel": "Utzi"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Hobespenak",
     "general": {
-      "title": "General",
+      "title": "Orokorra",
       "sounds": {
-        "title": "Sounds",
+        "title": "Soinuak",
         "description": "Please set feedback sounds.",
-        "fav_rb": "When you favorite or boost the toot",
-        "toot": "When you post toot"
+        "fav_rb": "Tut bat gogoko egin edo bultzatzerakoan",
+        "toot": "Tut bat publikatzerakoan"
       },
       "timeline": {
-        "title": "Timeline",
+        "title": "Denbora-lerroa",
         "description": "Customize view in your timelines.",
         "cw": "Always expand posts marked with contents warnings",
         "nsfw": "Always show all media",
         "hideAllAttachments": "Always hide all media"
       },
       "other": {
-        "title": "Other options",
-        "launch": "Launch app on login"
+        "title": "Beste aukera batzuk",
+        "launch": "Abiarazi aplikazioa saioa hasterakoan"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "Berrezarri hobespenak"
       }
     },
     "appearance": {
-      "title": "Appearance",
+      "title": "Itxura",
       "theme_color": "Theme color",
       "theme": {
-        "system": "System",
-        "light": "Light",
-        "dark": "Dark",
+        "system": "Sistemak darabilena",
+        "light": "Argia",
+        "dark": "Iluna",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "Pertsonalizatua"
       },
       "custom_theme": {
         "background_color": "Base background",
@@ -198,7 +198,7 @@
         "primary_color": "Primary font",
         "regular_color": "Regular font",
         "secondary_color": "Secondary font",
-        "border_color": "Border",
+        "border_color": "Ertza",
         "header_menu_color": "Header menu",
         "wrapper_mask_color": "Modal wrapper"
       },
@@ -246,17 +246,17 @@
       "confirm_message": "Are you sure to remove all associations?"
     },
     "network": {
-      "title": "Network",
+      "title": "Sarea",
       "proxy": {
-        "title": "Proxy Configuration",
-        "no": "No proxy",
-        "system": "Use system proxy",
-        "manual": "Manual proxy configuration",
-        "protocol": "Protocol",
-        "host": "Proxy host",
-        "port": "Proxy port",
-        "username": "Proxy username",
-        "password": "Proxy password",
+        "title": "Proxy ezarpenak",
+        "no": "Proxyrik ez",
+        "system": "Erabili sistemaren proxya",
+        "manual": "Eskoz konfiguratu proxya",
+        "protocol": "Protokoloa",
+        "host": "Proxy ostalaria",
+        "port": "Proxy ataka",
+        "username": "Proxy erabiltzaile-izena",
+        "password": "Proxy pasahitza",
         "protocol_list": {
           "http": "http",
           "https": "https",
@@ -266,49 +266,49 @@
           "socks5h": "socks5h"
         }
       },
-      "save": "Save"
+      "save": "Gorde"
     },
     "language": {
-      "title": "Language",
+      "title": "Hizkuntza",
       "language": {
-        "title": "Language",
-        "description": "Choose the language you would like to use with Whalebird."
+        "title": "Hizkuntza",
+        "description": "Aukeratu Whalebirden hizkuntza."
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spellchecker"
+        "title": "Ortografia-egiaztatzea",
+        "enabled": "Gaitu ortografia-egiaztatzailea"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New Toot",
+      "title": "Tut berria",
       "cw": "Write your warning here",
-      "status": "What is on your mind?",
-      "cancel": "Cancel",
+      "status": "Zer duzu buruan?",
+      "cancel": "Utzi",
       "toot": "Toot",
-      "close_confirm": "Are you sure you want to discard this toot?",
-      "close_confirm_ok": "Discard",
-      "close_confirm_cancel": "Continue Editing",
-      "description": "Describe for the visually impaired",
+      "close_confirm": "Ziur zaude zirriborro hau baztertu nahi duzula?",
+      "close_confirm_ok": "Baztertu",
+      "close_confirm_cancel": "Jarraitu editatzen",
+      "description": "Deskribatu ikusmen urritasuna dutenentzat",
       "footer": {
-        "add_image": "Add images",
-        "poll": "Add a poll",
-        "change_visibility": "Change visibility",
+        "add_image": "Gehitu irudiak",
+        "poll": "Gehitu inkesta",
+        "change_visibility": "Aldatu ikusgaitasuna",
         "change_sensitive": "Change sensitive",
         "add_cw": "Add content warning",
-        "pined_hashtag": "Pin the hashtag"
+        "pined_hashtag": "Finkatu traola"
       },
       "poll": {
-        "add_choice": "Add a choice",
+        "add_choice": "Gehitu aukera bat",
         "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
+          "5_minutes": "5 minutu",
+          "30_minutes": "30 minutu",
+          "1_hour": "Ordubete",
+          "6_hours": "6 ordu",
+          "1_day": "Egun 1",
+          "3_days": "3 egun",
+          "7_days": "7 egun"
         }
       }
     },
@@ -316,8 +316,8 @@
       "jump_to": "Jump to..."
     },
     "add_list_member": {
-      "title": "Add Member to List",
-      "account_name": "Account name"
+      "title": "Gehitu kidea zerrendara",
+      "account_name": "Kontuaren izena"
     },
     "list_membership": {
       "title": "List Memberships"
@@ -372,81 +372,81 @@
       "reply": "Reply",
       "reblog": "Reblog",
       "fav": "Favourite",
-      "detail": "Toot details",
+      "detail": "Tutaren xehetasunak",
       "bookmark": "Bookmark",
-      "pinned": "Pinned toot",
+      "pinned": "Finkatutako tuta",
       "poll": {
         "vote": "Vote",
         "votes_count": "votes",
-        "until": "until {{datetime}}",
+        "until": "{{datetime}} arte",
         "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "refresh": "Freskatu"
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "Kargatu egoera gehiago"
     }
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
-      "doesnt_follow_you": "Doesn't follow you",
-      "detail": "Detail",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
-      "follow_requested": "Follow requested",
-      "open_in_browser": "Open in Browser",
+      "follows_you": "Jarraitzen zaitu",
+      "doesnt_follow_you": "Ez zaitu jarraitzen",
+      "detail": "Xehetasuna",
+      "follow": "Jarraitu erabiltzailea",
+      "unfollow": "Utzi erabiltzailea jarraitzeari",
+      "subscribe": "Harpidetu erabiltzaileari",
+      "unsubscribe": "Utzi erabiltzailearen harpidetza",
+      "follow_requested": "Eskaera bidalita",
+      "open_in_browser": "Ireki nabigatzailean",
       "manage_list_memberships": "Manage List Memberships",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
-      "toots": "Toots",
+      "mute": "Mututu",
+      "unmute": "Utzi mututzeari",
+      "unblock": "Utzi blokeatzeari",
+      "block": "Blokeatu",
+      "toots": "Tutak",
       "follows": "Follows",
-      "followers": "Followers"
+      "followers": "Jarraitzaileak"
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "Onartu",
+    "reject": "Baztertu"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "Etiketaren izena",
+    "delete_tag": "Ezabatu etiketa",
+    "save_tag": "Gorde etiketa"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
+    "search": "Bilatu",
+    "account": "Kontua",
+    "tag": "Traola",
+    "keyword": "hitz-gakoa",
     "toot": "Toot"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
-      "edit": "Edit",
+      "new_list": "Zerrenda berria",
+      "edit": "Editatu",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "Baieztatu",
+          "message": "Eragiketa hau ezin da desegin; zerrenda betiko ezabatuko da",
+          "ok": "Ezabatu",
+          "cancel": "Utzi"
         }
       }
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "domain_name_label": "Lehenik eta behin, hasi saioa Mastodon zerbitzari batean. Sartu zerbitzariaren helbidea.",
+    "proxy_info": "Proxy zerbitzari bat erabili nahi izanez gero, ezarri ezarpenak",
+    "proxy_here": " hemen",
+    "search": "Bilatu",
+    "login": "Hasi saioa"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
+    "manually_1": "Baimena emateko leiho berri bat ireki da nabigatzailean.",
     "manually_2": "If it has not opened, please go to the following URL manually.",
     "code_label": "Please paste the authorization code from your browser:",
     "misskey_label": "Please submit after you authorize in your browser.",
@@ -488,67 +488,67 @@
     "bookmark_error": "Failed to bookmark",
     "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Failed to delete the toot",
-    "search_error": "Failed to search",
-    "toot_error": "Failed to toot",
-    "update_list_memberships_error": "Failed to update the list memberships",
-    "add_user_error": "Failed to add user",
-    "authorize_url_error": "Failed to get authorize url",
-    "domain_confirmed": "{{domain}} is confirmed, please login",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
-    "loading": "Loading...",
-    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
-    "update_filter_error": "Failed to update the filter",
-    "create_filter_error": "Failed to create the filter"
+    "search_error": "Bilaketak huts egin du",
+    "toot_error": "Tuta publikatzeak huts egin du",
+    "update_list_memberships_error": "Ezin izan dira zerrendaren kideak eguneratu",
+    "add_user_error": "Ezin izan da erabiltzailea gehitu",
+    "authorize_url_error": "Ezin izan da baimentzeko URLa eskuratu",
+    "domain_confirmed": "{{domain}} domeinua baieztatu da; hasi saioa",
+    "domain_doesnt_exist": "Ezin izan da {{domain}}(e)ra konektatu; egiaztatu zerbitzariaren helbidea",
+    "loading": "Kargatzen…",
+    "language_not_support_spellchecker_error": "Ortografia-egiaztatzailea ezin da hizkuntza honekin erabili",
+    "update_filter_error": "Ezin izan da bahea eguneratu",
+    "create_filter_error": "Ezin izan da bahea sortu"
   },
   "validation": {
     "login": {
-      "require_domain_name": "A domain name is required",
-      "domain_format": "Please only enter the domain name"
+      "require_domain_name": "Domeinuaren izena ezinbestekoa da",
+      "domain_format": "Sartu domeinuaren izena soilik"
     },
     "new_toot": {
-      "toot_length": "Toot length should be {{min}} to {{max}}",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "toot_length": "Tutaren luzera {{min}} eta {{max}} artekoa izan behar da",
+      "attach_length": "{{max}} irudi soilik atxiki ditzakezu",
+      "attach_length_plural": "{{max}} irudi soilik atxiki ditzakezu",
+      "attach_image": "Irudiak edo bideoak soilik atxiki ditzakezu",
+      "poll_invalid": "Inkestaren aukerak ez dira baliogarriak"
     }
   },
   "notification": {
     "favourite": {
       "title": "Favourite",
-      "body": "{{username}} favourited your status"
+      "body": "{{username}}(e)k gogoko du zure egoera"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{{username}} is now following you"
+      "title": "Jarraitu",
+      "body": "{{username}} jarraitzen hasi zaizu"
     },
     "follow_request": {
       "title": "FollowRequest",
-      "body": "Receive a follow request from {{username}}"
+      "body": "{{username}}(e)k jarraitzeko eskaera egin du"
     },
     "reblog": {
-      "title": "Reblog",
-      "body": "{{username}} boosted your status"
+      "title": "Bultzatu",
+      "body": "{{username}}(e)k zure egoera bultzatu du"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "Aipatu",
+      "body": "{{username}}(e)k zure egoera aipatu du"
     },
     "reaction": {
       "title": "Reaction",
       "body": "{{username}} reacted your status"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} just posted"
+      "title": "Egoera",
+      "body": "{{username}}(e)k publikatu berri du"
     },
     "poll_vote": {
       "title": "PollVote",
-      "body": "{{username}} voted your poll"
+      "body": "{{username}}(e)k zure inkestan botoa eman du"
     },
     "poll_expired": {
       "title": "PollExpired",
-      "body": "{{username}}'s poll is expired"
+      "body": "{{username}}(r)en inkesta amaitu da"
     }
   }
 }
