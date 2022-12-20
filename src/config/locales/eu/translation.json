@@ -439,14 +439,14 @@
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
+    "domain_name_label": "Lehenik eta behin, hasi saioa Mastodon zerbitzari batean. Sartu zerbitzariaren helbidea.",
+    "proxy_info": "Proxy zerbitzari bat erabili nahi izanez gero, ezarri ezarpenak",
+    "proxy_here": " hemen",
     "search": "Bilatu",
     "login": "Hasi saioa"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
+    "manually_1": "Baimena emateko leiho berri bat ireki da nabigatzailean.",
     "manually_2": "If it has not opened, please go to the following URL manually.",
     "code_label": "Please paste the authorization code from your browser:",
     "misskey_label": "Please submit after you authorize in your browser.",
