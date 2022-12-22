@@ -24,7 +24,8 @@ const timeline: Timeline = {
 }
 
 const other: Other = {
-  launch: false
+  launch: false,
+  hideOnLaunch: false
 }
 
 const general: General = {

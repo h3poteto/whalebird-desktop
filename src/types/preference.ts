@@ -7,6 +7,7 @@ import { Proxy } from '~/src/types/proxy'
 
 export type Other = {
   launch: boolean
+  hideOnLaunch: boolean
 }
 
 export type General = {

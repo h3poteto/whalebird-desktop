@@ -33,6 +33,9 @@
       <el-form-item for="launch" :label="$t('preferences.general.other.launch')">
         <el-switch id="launch" v-model="other_launch" active-color="#13ce66"> </el-switch>
       </el-form-item>
+      <el-form-item for="hideOnLaunch" :label="$t('preferences.general.other.hideOnLaunch')">
+        <el-switch id="hideOnLaunch" v-model="other_hideOnLaunch" active-color="#13ce66"> </el-switch>
+      </el-form-item>
     </el-form>
     <el-form class="reset section">
       <el-button type="info" @click="reset">{{ $t('preferences.general.reset.button') }}</el-button>
@@ -99,6 +102,13 @@ export default defineComponent({
           launch: value
         })
     })
+    const other_hideOnLaunch = computed({
+      get: () => store.state.Preferences.General.general.other.hideOnLaunch,
+      set: (value: boolean) =>
+        store.dispatch(`${space}/${ACTION_TYPES.UPDATE_OTHER}`, {
+          hideOnLaunch: value
+        })
+    })
 
     onMounted(() => {
       store.dispatch(`${space}/${ACTION_TYPES.LOAD_GENERAL}`).catch(() => {
@@ -133,6 +143,7 @@ export default defineComponent({
       timeline_nsfw,
       timeline_hide_attachments,
       other_launch,
+      other_hideOnLaunch,
       reset
     }
   }

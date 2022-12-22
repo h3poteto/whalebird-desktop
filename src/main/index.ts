@@ -51,6 +51,7 @@ import ProxyConfiguration from './proxy'
 import confirm from './timelines'
 import { EnabledTimelines } from '~/src/types/enabledTimelines'
 import { Menu as MenuPreferences } from '~/src/types/preference'
+import { General as GeneralPreferences } from '~/src/types/preference'
 import { LocalMarker } from '~/src/types/localMarker'
 import Marker from './marker'
 import newDB from './database'
@@ -225,6 +226,12 @@ const getMenuPreferences = async (): Promise<MenuPreferences> => {
   return conf.menu
 }
 
+const getGeneralPreferences = async (): Promise<GeneralPreferences> => {
+  const preferences = new Preferences(preferencesDBPath)
+  const conf = await preferences.load()
+  return conf.general
+}
+
 /**
  * Set application menu
  * @return Whether the menu bar is auto hide.
@@ -280,6 +287,11 @@ async function createWindow() {
    * Get spellcheck
    */
   const spellcheck = await getSpellChecker()
+
+  /**
+   * Get general preferences
+   */
+  const generalPreferences = await getGeneralPreferences()
 
   /**
    * Load system theme color for dark mode
@@ -391,6 +403,15 @@ async function createWindow() {
       mainWindow!.setSkipTaskbar(true)
       event.preventDefault()
     })
+
+    // Minimize to tray immediately if "hide on launch" selected
+    // or if --hidden arg is passed
+    if ((generalPreferences.other.hideOnLaunch || args.hidden) && !args.show) {
+      mainWindow.once('show', () => {
+        mainWindow!.hide()
+        mainWindow!.setSkipTaskbar(true)
+      })
+    }
   } else {
     mainWindow.on('closed', () => {
       mainWindow = null
@@ -409,6 +430,8 @@ Usage
 
 Options
  --help    show help
+ --hidden  start Whalebird hidden to tray
+ --show    start Whalebird with a window
 `)
   process.exit(0)
 }
