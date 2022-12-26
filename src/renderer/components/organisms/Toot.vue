@@ -226,7 +226,7 @@
       </div>
       <div class="clearfix"></div>
     </div>
-    <div class="fill-line"></div>
+    <div class="fill-line" />
   </div>
 </template>
 
@@ -733,6 +733,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .status {
   background-color: var(--theme-background-color);
+  padding-bottom: 4px;
 }
 
 .toot {
