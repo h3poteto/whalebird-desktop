@@ -1269,7 +1269,7 @@
 
 ## [2.4.3] - 2018-10-26
 ### Added
-- [#675](https://github.com/h3poteto/whalebird-desktop/pull/675) Add option to hide/show global hea
+- [#675](https://github.com/h3poteto/whalebird-desktop/pull/675) Add option to hide/show global header
 - [#661](https://github.com/h3poteto/whalebird-desktop/pull/661) Show follow/unfollow button in follow/followers tab in profile
 
 ### Changed
