@@ -1030,7 +1030,7 @@
 ## [2.7.1] - 2019-04-25
 ### Added
 - [#898](https://github.com/h3poteto/whalebird-desktop/pull/898) Build package for 32bit
-- [#891](https://github.com/h3poteto/whalebird-desktop/pull/891) Introduce prettier combinated eslint
+- [#891](https://github.com/h3poteto/whalebird-desktop/pull/891) Introduce prettier combined eslint
 - [#862](https://github.com/h3poteto/whalebird-desktop/pull/862) Add detail link on timestamp in toot
 
 ### Changed
