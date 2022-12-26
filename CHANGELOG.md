@@ -1077,7 +1077,7 @@
 - [#827](https://github.com/h3poteto/whalebird-desktop/pull/827) Add option to ignore CW and NSFW
 - [#824](https://github.com/h3poteto/whalebird-desktop/pull/824) Add unit/integration tests for TimelineSpace
 - [#823](https://github.com/h3poteto/whalebird-desktop/pull/823) Add unit tests for Home
-- [#820](https://github.com/h3poteto/whalebird-desktop/pull/820) Add intergation tests for Contents/Home
+- [#820](https://github.com/h3poteto/whalebird-desktop/pull/820) Add integration tests for Contents/Home
 
 ### Changed
 - [#838](https://github.com/h3poteto/whalebird-desktop/pull/838) Update megalodon version to 0.5.0
