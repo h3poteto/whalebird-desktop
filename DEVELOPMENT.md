@@ -23,7 +23,7 @@ You have to use macOS to build packages for macOS.
 And you have to install certificates for Mac Application.
 
 - Mac App Distribution: `Developer ID Application: Akira Fukushima (DR9TBDD8DFM)`
-- Mac App Installer Distribution: `Developer ID Appplication: Akira Fukushima (DR9TBDD8DFM)`
+- Mac App Installer Distribution: `Developer ID Application: Akira Fukushima (DR9TBDD8DFM)`
 
 Then use make command.
 
