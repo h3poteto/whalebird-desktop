@@ -142,6 +142,10 @@ export default defineComponent({
   }
 }
 
+.relationship {
+  padding-bottom: 4px;
+}
+
 .relationship:focus {
   background-color: var(--theme-selected-background-color);
   outline: 0;

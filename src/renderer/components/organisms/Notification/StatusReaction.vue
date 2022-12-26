@@ -494,6 +494,10 @@ export default defineComponent({
   justify-content: center;
 }
 
+.status {
+  padding-bottom: 4px;
+}
+
 .status:focus {
   background-color: var(--theme-selected-background-color);
   outline: 0;
