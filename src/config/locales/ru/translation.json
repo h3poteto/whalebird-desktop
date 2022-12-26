@@ -114,33 +114,33 @@
         "public": "Публичная лента времени"
       },
       "use_marker": {
-        "title": "Load the timeline from the last reading position",
-        "home": "Home",
-        "notifications": "Notifications"
+        "title": "Загрузить ленту времени от последней прочитанной позиции",
+        "home": "Главная",
+        "notifications": "Уведомления"
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Фильтры",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "Ключевое слово или фраза",
+        "expire": "Истекает после",
+        "context": "Фильтр контекстов",
+        "irreversible": "Удалить вместо скрытия",
+        "whole_word": "Слово целиком",
+        "submit": "Подтвердить",
+        "cancel": "Отмена"
       },
       "expires": {
-        "never": "Never",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
+        "never": "Никогда",
+        "30_minutes": "30 минут",
+        "1_hour": "1 час",
+        "6_hours": "6 часов",
+        "12_hours": "12 часов",
+        "1_day": "1 день",
         "1_week": "1 неделя"
       },
       "new": {
-        "title": "New"
+        "title": "Новый"
       },
       "edit": {
         "title": "Изменить"
@@ -164,41 +164,41 @@
         "toot": "Когда я публикую тут"
       },
       "timeline": {
-        "title": "Timeline",
-        "description": "Customize view in your timelines.",
-        "cw": "Always expand posts marked with contents warnings",
+        "title": "Лента времени",
+        "description": "Настроить внешний вид лент времени.",
+        "cw": "Всегда открывать сообщения с предупреждениями о содержимом",
         "nsfw": "Всегда показывать любые медиафайлы",
         "hideAllAttachments": "Всегда скрывать любые медиафайлы"
       },
       "other": {
-        "title": "Other options",
-        "launch": "Launch app on login"
+        "title": "Другие настройки",
+        "launch": "Запустить приложение при входе в систему"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "Сбросить настройки"
       }
     },
     "appearance": {
-      "title": "Appearance",
-      "theme_color": "Theme color",
+      "title": "Внешний вид",
+      "theme_color": "Цвет темы",
       "theme": {
-        "system": "System",
-        "light": "Light",
-        "dark": "Dark",
+        "system": "Системная",
+        "light": "Светлая",
+        "dark": "Тёмная",
         "solarized_light": "SolarizedLight",
         "solarized_dark": "SolarizedDark",
         "kimbie_dark": "KimbieDark",
-        "custom": "Custom"
+        "custom": "Пользовательская"
       },
       "custom_theme": {
-        "background_color": "Base background",
-        "selected_background_color": "Focused background",
-        "global_header_color": "Account menu",
-        "side_menu_color": "Side menu",
-        "primary_color": "Primary font",
-        "regular_color": "Regular font",
-        "secondary_color": "Secondary font",
-        "border_color": "Border",
+        "background_color": "Основной фон",
+        "selected_background_color": "Фон в фокусе",
+        "global_header_color": "Меню учетной записи",
+        "side_menu_color": "Боковое меню",
+        "primary_color": "Основной шрифт",
+        "regular_color": "Обычный шрифт",
+        "secondary_color": "Дополнительный шрифт",
+        "border_color": "Граница",
         "header_menu_color": "Меню заголовка",
         "wrapper_mask_color": "Обертка модального диалога"
       },
@@ -207,14 +207,14 @@
       "toot_padding": "Отступы вокруг тутов",
       "display_style": {
         "title": "Стиль отображения имени пользователя",
-        "display_name_and_username": "Display name and username",
-        "display_name": "Display name",
-        "username": "Username"
+        "display_name_and_username": "Отображаемое имя и имя пользователя",
+        "display_name": "Отображаемое имя",
+        "username": "Имя пользователя"
       },
       "time_format": {
-        "title": "Time format",
-        "absolute": "Absolute",
-        "relative": "Относительный"
+        "title": "Формат времени",
+        "absolute": "Абсолютно",
+        "relative": "Относительно"
       }
     },
     "notification": {
@@ -331,8 +331,8 @@
     "shortcut": {
       "title": "Горячие клавиши",
       "ctrl_number": "Сменить учетную запись",
-      "ctrl_k": "Jump to other timelines",
-      "ctrl_n": "Open the new toot modal",
+      "ctrl_k": "Перейти к другим лентам времени",
+      "ctrl_n": "Открыть новый тут в модельном окне",
       "ctrl_enter": "Опубликовать тут",
       "ctrl_r": "Обновить текущую ленту времени",
       "j": "Выбрать следующий тут",
@@ -343,8 +343,8 @@
       "b": "Реблогить тут",
       "f": "Поместить тут в избранное",
       "o": "Открыть подробности тута",
-      "p": "Open account profile of the toot",
-      "i": "Open the images",
+      "p": "Открыть профиль учетной записи тута",
+      "i": "Открыть изображения",
       "x": "Показать/скрыть CW и NSFW",
       "?": "Показать эту справку",
       "esc": "Закрыть текущую страницу"
@@ -370,185 +370,185 @@
       "delete": "Удалить",
       "via": "через {{application}}",
       "reply": "Ответ",
-      "reblog": "Reblog",
-      "fav": "Favourite",
+      "reblog": "Реблог",
+      "fav": "Избранное",
       "detail": "Подробности тута",
-      "bookmark": "Bookmark",
+      "bookmark": "Закладка",
       "pinned": "Закрепленный тут",
       "poll": {
-        "vote": "Vote",
-        "votes_count": "votes",
-        "until": "until {{datetime}}",
-        "left": "{{datetime}} left",
-        "refresh": "Refresh"
+        "vote": "Голосование",
+        "votes_count": "голоса",
+        "until": "до {{datetime}}",
+        "left": "Осталось {{datetime}}",
+        "refresh": "Обновить"
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "Загрузить больше статуса"
     }
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "Follows you",
-      "doesnt_follow_you": "Doesn't follow you",
+      "follows_you": "Подписан на вас",
+      "doesnt_follow_you": "Не подписан на вас",
       "detail": "Подробности",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
-      "follow_requested": "Follow requested",
-      "open_in_browser": "Open in Browser",
-      "manage_list_memberships": "Manage List Memberships",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "unblock": "Unblock",
-      "block": "Block",
+      "follow": "Подписаться на этого пользователя",
+      "unfollow": "Отписаться от этого пользователя",
+      "subscribe": "Подписаться на пользователя",
+      "unsubscribe": "Отписаться от пользователя",
+      "follow_requested": "Запросы на подписку",
+      "open_in_browser": "Открыть в браузере",
+      "manage_list_memberships": "Управление списком участников",
+      "mute": "Заглушить",
+      "unmute": "Включить звук",
+      "unblock": "Разблокировать",
+      "block": "Блокировать",
       "toots": "Туты",
-      "follows": "Follows",
-      "followers": "Followers"
+      "follows": "Подписки",
+      "followers": "Подписчики"
     }
   },
   "follow_requests": {
-    "accept": "Accept",
-    "reject": "Reject"
+    "accept": "Принять",
+    "reject": "Отклонить"
   },
   "hashtag": {
-    "tag_name": "Tag name",
-    "delete_tag": "Delete tag",
-    "save_tag": "Save tag"
+    "tag_name": "Имя тега",
+    "delete_tag": "Удалить тег",
+    "save_tag": "Сохранить тег"
   },
   "search": {
-    "search": "Search",
-    "account": "Account",
-    "tag": "Hashtag",
-    "keyword": "keyword",
+    "search": "Поиск",
+    "account": "Учетная запись",
+    "tag": "Хэштег",
+    "keyword": "ключевое слово",
     "toot": "Тут"
   },
   "lists": {
     "index": {
-      "new_list": "New List",
-      "edit": "Edit",
+      "new_list": "Новый список",
+      "edit": "Изменить",
       "delete": {
         "confirm": {
-          "title": "Confirm",
-          "message": "This operation can not be undone, this list will be permanently deleted",
-          "ok": "Delete",
-          "cancel": "Cancel"
+          "title": "Подтвердить",
+          "message": "Эта операция не может быть отменена, этот список будет удален навсегда",
+          "ok": "Удалить",
+          "cancel": "Отмена"
         }
       }
     }
   },
   "login": {
-    "domain_name_label": "First, let's log in to a Mastodon server. Please enter a server domain name.",
-    "proxy_info": "If you want to use proxy server, please setup your proxy in",
-    "proxy_here": " here",
-    "search": "Search",
-    "login": "Login"
+    "domain_name_label": "Сначала давайте войдем на сервер Mastodon. Пожалуйста, введите имя домена сервера.",
+    "proxy_info": "Если вы хотите использовать прокси-сервер, пожалуйста, установите ваш прокси в",
+    "proxy_here": " здесь",
+    "search": "Поиск",
+    "login": "Вход"
   },
   "authorize": {
-    "manually_1": "An authorization page has opened in your browser.",
-    "manually_2": "If it has not opened, please go to the following URL manually.",
-    "code_label": "Please paste the authorization code from your browser:",
-    "misskey_label": "Please submit after you authorize in your browser.",
-    "submit": "Submit"
+    "manually_1": "Страница авторизации открыта в браузере.",
+    "manually_2": "Если он не открылся, перейдите по следующему адресу вручную.",
+    "code_label": "Пожалуйста, вставьте код авторизации из вашего браузера:",
+    "misskey_label": "Пожалуйста, подтвердите после авторизации в вашем браузере.",
+    "submit": "Подтвердить"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Перетащите для загрузки в Mastodon"
   },
   "message": {
-    "account_load_error": "Failed to load accounts",
-    "account_remove_error": "Failed to remove the account",
-    "preferences_load_error": "Failed to load preferences",
-    "timeline_fetch_error": "Failed to fetch timeline",
-    "notification_fetch_error": "Failed to fetch notification",
+    "account_load_error": "Не удалось загрузить учетные записи",
+    "account_remove_error": "Не удалось удалить учетную запись",
+    "preferences_load_error": "Не удалось загрузить настройки",
+    "timeline_fetch_error": "Не удалось загрузить ленту времени",
+    "notification_fetch_error": "Не удалось получить уведомление",
     "favourite_fetch_error": "Не удалось получить избранное",
-    "follow_request_accept_error": "Failed to accept the request",
-    "follow_request_reject_error": "Failed to reject the request",
-    "start_streaming_error": "Failed to start streaming",
-    "start_all_streamings_error": "Failed to start streaming of {{domain}}",
-    "attach_error": "Could not attach the file",
-    "authorize_duplicate_error": "Can not login the same account of the same domain",
-    "authorize_error": "Failed to authorize",
-    "followers_fetch_error": "Failed to fetch followers",
-    "follows_fetch_error": "Failed to fetch follows",
+    "follow_request_accept_error": "Не удалось принять запрос",
+    "follow_request_reject_error": "Не удалось отклонить запрос",
+    "start_streaming_error": "Не удалось запустить трансляцию",
+    "start_all_streamings_error": "Не удалось начать трансляцию из {{domain}}",
+    "attach_error": "Не удалось прикрепить файл",
+    "authorize_duplicate_error": "Не могу войти в один и тот же аккаунт одного домена",
+    "authorize_error": "Не удалось авторизовать",
+    "followers_fetch_error": "Не удалось загрузить подписчиков",
+    "follows_fetch_error": "Не удалось загрузить на кого вы подписаны",
     "toot_fetch_error": "Не удалось получить подробности тута",
-    "follow_error": "Failed to follow the user",
-    "unfollow_error": "Failed to unfollow the user",
-    "subscribe_error": "Failed to subscribe the user",
-    "unsubscribe_error": "Failed to unsubscribe the user",
-    "lists_fetch_error": "Failed to fetch lists",
-    "list_create_error": "Failed to create a list",
-    "members_fetch_error": "Failed to fetch members",
-    "remove_user_error": "Failed to remove the user",
-    "find_account_error": "Account not found",
-    "reblog_error": "Failed to reblog",
-    "unreblog_error": "Failed to unreblog",
-    "favourite_error": "Failed to favourite",
-    "unfavourite_error": "Failed to unfavourite",
-    "bookmark_error": "Failed to bookmark",
-    "unbookmark_error": "Failed to remove bookmark",
-    "delete_error": "Failed to delete the toot",
-    "search_error": "Failed to search",
+    "follow_error": "Не удалось подписаться на пользователя",
+    "unfollow_error": "Не удалось отменить подписку от пользователя",
+    "subscribe_error": "Не удалось подписать пользователя",
+    "unsubscribe_error": "Не удалось отписаться от пользователя",
+    "lists_fetch_error": "Не удалось получить списки",
+    "list_create_error": "Не удалось создать список",
+    "members_fetch_error": "Не удалось загрузить участников",
+    "remove_user_error": "Не удалось удалить пользователя",
+    "find_account_error": "Аккаунт не найден",
+    "reblog_error": "Не удалось добавить реблог",
+    "unreblog_error": "Не удалось отменить реблог",
+    "favourite_error": "Не удалось добавить в избранное",
+    "unfavourite_error": "Не удалось удалить избранное",
+    "bookmark_error": "Не удалось добавить в закладку",
+    "unbookmark_error": "Не удалось удалить закладку",
+    "delete_error": "Не удалось удалить тут",
+    "search_error": "Не удалось найти",
     "toot_error": "Не удалось отправить тут",
-    "update_list_memberships_error": "Failed to update the list memberships",
-    "add_user_error": "Failed to add user",
-    "authorize_url_error": "Failed to get authorize url",
-    "domain_confirmed": "{{domain}} is confirmed, please login",
-    "domain_doesnt_exist": "Failed to connect {{domain}}, make sure the server URL",
-    "loading": "Loading...",
-    "language_not_support_spellchecker_error": "This language is not supported by Spellchecker",
-    "update_filter_error": "Failed to update the filter",
-    "create_filter_error": "Failed to create the filter"
+    "update_list_memberships_error": "Не удалось обновить список участников",
+    "add_user_error": "Не удалось добавить пользователя",
+    "authorize_url_error": "Не удалось получить адрес авторизации",
+    "domain_confirmed": "{{domain}} подтверждено, пожалуйста, войдите",
+    "domain_doesnt_exist": "Не удалось подключиться к {{domain}}, убедитесь, что URL сервера",
+    "loading": "Загрузка...",
+    "language_not_support_spellchecker_error": "Этот язык не поддерживается Spellchecker",
+    "update_filter_error": "Не удалось обновить фильтр",
+    "create_filter_error": "Не удалось создать фильтр"
   },
   "validation": {
     "login": {
-      "require_domain_name": "A domain name is required",
-      "domain_format": "Please only enter the domain name"
+      "require_domain_name": "Требуется доменное имя",
+      "domain_format": "Пожалуйста, введите только доменное имя"
     },
     "new_toot": {
       "toot_length": "Длина тута должна быть между {{min}} и {{max}}",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "attach_length": "Вы можете прикрепить изображение вплоть до {{max}}",
+      "attach_length_plural": "Вы можете прикрепить только {{max}} изображений",
+      "attach_image": "Вы можете прикрепить только изображения или видео",
+      "poll_invalid": "Неверные варианты опроса"
     }
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{{username}} favourited your status"
+      "title": "Избранное",
+      "body": "{{username}} добавил ваш статус в избранное"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{{username}} is now following you"
+      "title": "Подписка",
+      "body": "{{username}} стал вашим подписчиком"
     },
     "follow_request": {
-      "title": "FollowRequest",
-      "body": "Receive a follow request from {{username}}"
+      "title": "ЗапросНаПодписку",
+      "body": "Получить запрос на подписку от {{username}}"
     },
     "reblog": {
-      "title": "Reblog",
-      "body": "{{username}} boosted your status"
+      "title": "Реблог",
+      "body": "{{username}} продвинул(а) ваш статус"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{{username}} quoted your status"
+      "title": "Цитировать",
+      "body": "{{username}} процитировал ваш статус"
     },
     "reaction": {
-      "title": "Reaction",
-      "body": "{{username}} reacted your status"
+      "title": "Реакция",
+      "body": "{{username}} отреагировал на ваш статус"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} just posted"
+      "title": "Статус",
+      "body": "{{username}} только что опубликовал(а)"
     },
     "poll_vote": {
-      "title": "PollVote",
-      "body": "{{username}} voted your poll"
+      "title": "ОпросГолос",
+      "body": "{{username}} проголосовал(а) в вашем опросе"
     },
     "poll_expired": {
-      "title": "PollExpired",
-      "body": "{{username}}'s poll is expired"
+      "title": "ОпросПросрочен",
+      "body": "Опрос {{username}} просрочен"
     }
   }
 }
