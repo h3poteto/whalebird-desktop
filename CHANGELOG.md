@@ -1869,7 +1869,7 @@
 ### Changed
 
 - [#113](https://github.com/h3poteto/whalebird-desktop/pull/113) Add electron-log for production logs
-- [#109](https://github.com/h3poteto/whalebird-desktop/pull/109) Get recently timeline in local and public when it is opend
+- [#109](https://github.com/h3poteto/whalebird-desktop/pull/109) Get recently timeline in local and public when it is opened
 
 ### Fixed
 
