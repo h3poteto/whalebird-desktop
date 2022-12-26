@@ -1293,7 +1293,7 @@
 - [#659](https://github.com/h3poteto/whalebird-desktop/pull/659) Fix order of unique when initialize
 - [#658](https://github.com/h3poteto/whalebird-desktop/pull/658) Fix searching account when open my profile
 - [#655](https://github.com/h3poteto/whalebird-desktop/pull/655) Fix accounts order on global header
-- [#654](https://github.com/h3poteto/whalebird-desktop/pull/654) Reoreder accounts and fix order method
+- [#654](https://github.com/h3poteto/whalebird-desktop/pull/654) Reorder accounts and fix order method
 - [#652](https://github.com/h3poteto/whalebird-desktop/pull/652) Fix toot parser for Pleroma
 
 
