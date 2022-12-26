@@ -138,7 +138,7 @@ export default defineComponent({
     },
     focused: {
       type: Boolean,
-      defalt: () => false
+      default: () => false
     },
     overlaid: {
       type: Boolean,
