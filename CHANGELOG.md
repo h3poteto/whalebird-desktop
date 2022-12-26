@@ -1595,7 +1595,7 @@
 
 ## [1.4.0] - 2018-06-20
 ### Added
-- [#403](https://github.com/h3poteto/whalebird-desktop/pull/403) Create list editting page which can manage list memberships
+- [#403](https://github.com/h3poteto/whalebird-desktop/pull/403) Create list editing page which can manage list memberships
 - [#401](https://github.com/h3poteto/whalebird-desktop/pull/401) Create lists in lists page
 - [#398](https://github.com/h3poteto/whalebird-desktop/pull/398) Add lists page
 - [#395](https://github.com/h3poteto/whalebird-desktop/pull/395) Open the manage lists window of an account on account profile
