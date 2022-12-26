@@ -866,7 +866,7 @@
 
 ## [2.8.5] - 2019-09-09
 ### Changed
-- [#1029](https://github.com/h3poteto/whalebird-desktop/pull/1029) Block to root path when user use brower-back
+- [#1029](https://github.com/h3poteto/whalebird-desktop/pull/1029) Block to root path when user use browser-back
 - [#1024](https://github.com/h3poteto/whalebird-desktop/pull/1024) Update German translation
 - [#1020](https://github.com/h3poteto/whalebird-desktop/pull/1020) audit: Update eslint-utils version to 1.4.2
 - [#1016](https://github.com/h3poteto/whalebird-desktop/pull/1016) Update megalodon version to 1.0.2
