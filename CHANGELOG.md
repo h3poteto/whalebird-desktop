@@ -1460,7 +1460,7 @@
 ### Fixed
 - [#511](https://github.com/h3poteto/whalebird-desktop/pull/511) Fix Deutsch for close confirm modal
 - [#509](https://github.com/h3poteto/whalebird-desktop/pull/509) Update default toot visibility of new toot
-- [#499](https://github.com/h3poteto/whalebird-desktop/pull/499) Hide follower menue for own user account
+- [#499](https://github.com/h3poteto/whalebird-desktop/pull/499) Hide follower menu for own user account
 - [#497](https://github.com/h3poteto/whalebird-desktop/pull/497) Translate loading message for each languages
 
 
