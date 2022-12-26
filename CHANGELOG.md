@@ -956,7 +956,7 @@
 ### Changed
 - [#955](https://github.com/h3poteto/whalebird-desktop/pull/955) Remove unused tests and packages
 - [#954](https://github.com/h3poteto/whalebird-desktop/pull/954) Update outdated packages
-- [#953](https://github.com/h3poteto/whalebird-desktop/pull/953) Use electrom-mock-ipc instead of electron-ipc-mock
+- [#953](https://github.com/h3poteto/whalebird-desktop/pull/953) Use electron-mock-ipc instead of electron-ipc-mock
 - [#951](https://github.com/h3poteto/whalebird-desktop/pull/951) Update node version to 10.16.0
 - [#950](https://github.com/h3poteto/whalebird-desktop/pull/950) Update megalodon version to 0.8.0
 
