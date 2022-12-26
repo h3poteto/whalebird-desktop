@@ -802,7 +802,7 @@
 - [#1164](https://github.com/h3poteto/whalebird-desktop/pull/1164) Use default preference if the file does not exist when get proxy configuration
 - [#1162](https://github.com/h3poteto/whalebird-desktop/pull/1162) Update megalodon version to 2.1.0
 - [#1159](https://github.com/h3poteto/whalebird-desktop/pull/1159)  Update jest version to 24.9.0 and fix some tests
-- [#1157](https://github.com/h3poteto/whalebird-desktop/pull/1157) Update electron-mock-ipc verions to 0.3.1
+- [#1157](https://github.com/h3poteto/whalebird-desktop/pull/1157) Update electron-mock-ipc version to 0.3.1
 
 ## [3.0.0] - 2019-11-17
 ### Added
