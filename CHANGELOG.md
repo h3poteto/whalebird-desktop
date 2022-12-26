@@ -1362,7 +1362,7 @@
 ### Added
 - [#602](https://github.com/h3poteto/whalebird-desktop/pull/602) Add mute/block menu
 - [#599](https://github.com/h3poteto/whalebird-desktop/pull/599) Add shortcut events for notification
-- [#596](https://github.com/h3poteto/whalebird-desktop/pull/596) Minmize to tray for win32
+- [#596](https://github.com/h3poteto/whalebird-desktop/pull/596) Minimize to tray for win32
 
 ### Changed
 
