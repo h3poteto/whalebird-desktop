@@ -533,7 +533,7 @@
 - [#1394](https://github.com/h3poteto/whalebird-desktop/pull/1394) refs #1281 Handle emoji reactions in web socket
 - [#1393](https://github.com/h3poteto/whalebird-desktop/pull/1393) refs #1281 Add emoji reaction notification
 - [#1392](https://github.com/h3poteto/whalebird-desktop/pull/1392) New translations translation.json (Polish)
-- [#1391](https://github.com/h3poteto/whalebird-desktop/pull/1391) refs #1281 Add reaction buttion and refresh after reaction
+- [#1391](https://github.com/h3poteto/whalebird-desktop/pull/1391) refs #1281 Add reaction button and refresh after reaction
 - [#1389](https://github.com/h3poteto/whalebird-desktop/pull/1389) refs #1281 Send emoji reactions to statuses
 
 ### Changed
