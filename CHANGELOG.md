@@ -1483,7 +1483,7 @@
 - [#487](https://github.com/h3poteto/whalebird-desktop/pull/487) spelling typos
 - [#486](https://github.com/h3poteto/whalebird-desktop/pull/486) Fix API response of lists
 - [#475](https://github.com/h3poteto/whalebird-desktop/pull/475) Use vue-shortkey in jump modal because sometimes jump modal is freeze
-- [#474](https://github.com/h3poteto/whalebird-desktop/pull/474) Disable transparent becasue user can not change window size
+- [#474](https://github.com/h3poteto/whalebird-desktop/pull/474) Disable transparent because user can not change window size
 
 
 
@@ -1874,7 +1874,7 @@
 ### Fixed
 
 - [#134](https://github.com/h3poteto/whalebird-desktop/pull/134) Clear the domain name in login form after login
-- [#130](https://github.com/h3poteto/whalebird-desktop/pull/130), [#128](https://github.com/h3poteto/whalebird-desktop/pull/128) Set NotoSans as the default font. And remove google-fonts-webpack-plugin becase the API has been dead.
+- [#130](https://github.com/h3poteto/whalebird-desktop/pull/130), [#128](https://github.com/h3poteto/whalebird-desktop/pull/128) Set NotoSans as the default font. And remove google-fonts-webpack-plugin because the API has been dead.
 - [#114](https://github.com/h3poteto/whalebird-desktop/pull/114) Allow application to be draggable for Mac
 - [#111](https://github.com/h3poteto/whalebird-desktop/pull/111) Fix text overflow in side menu
 - [#110](https://github.com/h3poteto/whalebird-desktop/pull/110) Clear old status after close new toot modal
