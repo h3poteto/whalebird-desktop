@@ -51,7 +51,7 @@ describe('validator', () => {
         expect(res).toEqual(0)
       })
     })
-    describe('string contains hyphone', () => {
+    describe('string contains hyphen', () => {
       const domain = 'music-mastodon.social'
       it('should match', () => {
         const res = domain.search(domainFormat)
