@@ -274,7 +274,7 @@ export default defineComponent({
     const unsubscribe = (account: Entity.Account) => {
       store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
       try {
-        store.dispatch(`${space}/${ACTION_TYPES.UNSBSCRIBE}`, account)
+        store.dispatch(`${space}/${ACTION_TYPES.UNSUBSCRIBE}`, account)
       } catch (err) {
         ElMessage({
           message: i18n.t('message.unsubscribe_error'),
