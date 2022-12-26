@@ -1263,7 +1263,7 @@
 ### Fixed
 - [#684](https://github.com/h3poteto/whalebird-desktop/pull/684) Open the links in meta fields in the default browser
 - [#683](https://github.com/h3poteto/whalebird-desktop/pull/683) Remove duplicated emojis when suggest
-- [#679](https://github.com/h3poteto/whalebird-desktop/pull/679) Remove unnecesary state to fix preference's menu
+- [#679](https://github.com/h3poteto/whalebird-desktop/pull/679) Remove unnecessary state to fix preference's menu
 
 
 
