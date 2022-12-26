@@ -308,7 +308,7 @@ export default class Account {
     } catch (err) {
       log.error(err)
       log.info('Get new access token using refresh token...')
-      // If failed to fetch account, get new access token usign refresh token.
+      // If failed to fetch account, get new access token using refresh token.
       if (!account.refreshToken) {
         throw new RefreshTokenDoesNotExist()
       }
