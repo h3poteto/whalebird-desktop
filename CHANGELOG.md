@@ -1576,7 +1576,7 @@
 - [#422](https://github.com/h3poteto/whalebird-desktop/pull/422) Add small window layout menu
 
 ### Changed
-- [#421](https://github.com/h3poteto/whalebird-desktop/pull/421) Use Lato font in textarea because backtic is broken in Noto
+- [#421](https://github.com/h3poteto/whalebird-desktop/pull/421) Use Lato font in textarea because backtick is broken in Noto
 - [#420](https://github.com/h3poteto/whalebird-desktop/pull/420) Display loading on the timeline space instead of loading covering the whole
 
 ### Fixed
