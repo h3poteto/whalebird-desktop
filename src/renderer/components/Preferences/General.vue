@@ -13,7 +13,7 @@
         <el-switch id="sound_toot" v-model="sound_toot" active-color="#13ce66"> </el-switch>
       </el-form-item>
     </el-form>
-    <el-form class="timeline section" label-potision="right" label-width="302px">
+    <el-form class="timeline section" label-position="right" label-width="302px">
       <h3>{{ $t('preferences.general.timeline.title') }}</h3>
       <p class="description">
         {{ $t('preferences.general.timeline.description') }}
