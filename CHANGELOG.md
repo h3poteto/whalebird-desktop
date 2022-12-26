@@ -1371,7 +1371,7 @@
 
 ### Fixed
 
-- [#605](https://github.com/h3poteto/whalebird-desktop/pull/605) Fix losting focused toot in timeline
+- [#605](https://github.com/h3poteto/whalebird-desktop/pull/605) Fix losing focused toot in timeline
 - [#604](https://github.com/h3poteto/whalebird-desktop/pull/604) Fix typo in doc
 - [#603](https://github.com/h3poteto/whalebird-desktop/pull/603) Fix popper design
 - [#600](https://github.com/h3poteto/whalebird-desktop/pull/600) Fix default fonts for japanese
