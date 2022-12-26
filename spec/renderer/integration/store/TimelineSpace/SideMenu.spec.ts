@@ -119,7 +119,7 @@ describe('SideMenu', () => {
   })
 
   describe('clearUnread', () => {
-    it('should be resetted', () => {
+    it('should be reset', () => {
       store.dispatch('TimelineSpace/SideMenu/clearUnread')
       expect(store.state.TimelineSpace.SideMenu.unreadHomeTimeline).toEqual(false)
       expect(store.state.TimelineSpace.SideMenu.unreadNotifications).toEqual(false)
