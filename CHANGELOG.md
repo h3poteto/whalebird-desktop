@@ -42,7 +42,7 @@
 - [#2116](https://github.com/h3poteto/whalebird-desktop/pull/2116) Use unicode-emoji-json instead of emojilib
 - [#2107](https://github.com/h3poteto/whalebird-desktop/pull/2107) build(deps-dev): Bump all-object-keys from 2.1.1 to 2.2.0
 - [#2105](https://github.com/h3poteto/whalebird-desktop/pull/2105) build(deps-dev): Bump eslint from 7.17.0 to 7.19.0
-- [#2115](https://github.com/h3poteto/whalebird-desktop/pull/2115) Use --node-env in webpack-cli instead of corss-env in pack command
+- [#2115](https://github.com/h3poteto/whalebird-desktop/pull/2115) Use --node-env in webpack-cli instead of cross-env in pack command
 - [#2101](https://github.com/h3poteto/whalebird-desktop/pull/2101) build(deps-dev): Bump electron from 11.2.0 to 11.2.2
 - [#2113](https://github.com/h3poteto/whalebird-desktop/pull/2113) build(deps-dev): Bump @babel/runtime from 7.12.5 to 7.12.13
 - [#2110](https://github.com/h3poteto/whalebird-desktop/pull/2110) build(deps-dev): Bump stylelint from 13.8.0 to 13.9.0
