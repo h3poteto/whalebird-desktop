@@ -3,6 +3,9 @@ name: reviewdog
 on:
   pull_request:
 
+permissions:
+  pull-requests: write
+
 jobs:
   eslint:
     runs-on: ubuntu-latest
