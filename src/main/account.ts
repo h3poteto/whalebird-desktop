@@ -251,7 +251,7 @@ export default class Account {
     const nextOrder = nextAccount.order
 
     // At first, we need to update the next account with dummy order.
-    // Because this colum is uniqued, so can not update with same order.
+    // Because this column is uniqued, so can not update with same order.
     await this.updateAccount(
       nextAccount._id!,
       Object.assign(nextAccount, {
