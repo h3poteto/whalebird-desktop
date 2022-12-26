@@ -156,7 +156,7 @@ const actions: ActionTree<HomeState, RootState> = {
       const card: LoadingCard = {
         type: 'middle-load',
         since_id: lastReadStatus.id,
-        // We don't need to fill this field in the first fetcing.
+        // We don't need to fill this field in the first fetching.
         // Because in most cases there is no new statuses at the first fetching.
         // After new statuses are received, if the number of unread statuses is more than 20, max_id is not necessary.
         // We can fill max_id when calling fetchTimelineSince.
