@@ -348,7 +348,7 @@
 ### Fixed
 
 - [#1651](https://github.com/h3poteto/whalebird-desktop/pull/1651) closes #1647 Adjust status height when attachments are dropped
-- [#1650](https://github.com/h3poteto/whalebird-desktop/pull/1650) closes #1642 Fix calcurate diff in change list memberships
+- [#1650](https://github.com/h3poteto/whalebird-desktop/pull/1650) closes #1642 Fix calculate diff in change list memberships
 - [#1622](https://github.com/h3poteto/whalebird-desktop/pull/1622) Use target instead of linter.eslint.dir in sideci.yml
 
 
