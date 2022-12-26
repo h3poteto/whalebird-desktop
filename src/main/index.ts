@@ -1281,7 +1281,7 @@ app.on('ready', () => {
  */
 
 /**
- * Genrate application menu
+ * Generate application menu
  */
 const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu: MenuPreferences, i18n: I18n): Menu => {
   /**
