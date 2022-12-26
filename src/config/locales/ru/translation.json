@@ -137,29 +137,29 @@
         "6_hours": "6 hours",
         "12_hours": "12 hours",
         "1_day": "1 day",
-        "1_week": "1 week"
+        "1_week": "1 неделя"
       },
       "new": {
         "title": "New"
       },
       "edit": {
-        "title": "Edit"
+        "title": "Изменить"
       },
       "delete": {
-        "title": "Delete",
-        "confirm": "Are you sure to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "title": "Удалить",
+        "confirm": "Вы уверены, что хотите удалить этот фильтр?",
+        "confirm_ok": "Удалить",
+        "confirm_cancel": "Отмена"
       }
     }
   },
   "preferences": {
-    "title": "Preferences",
+    "title": "Настройки",
     "general": {
-      "title": "General",
+      "title": "Общие",
       "sounds": {
-        "title": "Sounds",
-        "description": "Please set feedback sounds.",
+        "title": "Звуки",
+        "description": "Настройте звуки отклика.",
         "fav_rb": "When you favorite or boost the toot",
         "toot": "When you post toot"
       },
