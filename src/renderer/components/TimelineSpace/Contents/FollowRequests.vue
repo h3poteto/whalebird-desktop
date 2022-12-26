@@ -16,7 +16,7 @@ import User from '@/components/molecules/User.vue'
 import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/FollowRequests'
 
 export default defineComponent({
-  name: 'folllow-requests',
+  name: 'follow-requests',
   components: { User },
   setup() {
     const space = 'TimelineSpace/Contents/FollowRequests'
