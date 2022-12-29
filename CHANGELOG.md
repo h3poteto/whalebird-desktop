@@ -42,7 +42,7 @@
 - [#2116](https://github.com/h3poteto/whalebird-desktop/pull/2116) Use unicode-emoji-json instead of emojilib
 - [#2107](https://github.com/h3poteto/whalebird-desktop/pull/2107) build(deps-dev): Bump all-object-keys from 2.1.1 to 2.2.0
 - [#2105](https://github.com/h3poteto/whalebird-desktop/pull/2105) build(deps-dev): Bump eslint from 7.17.0 to 7.19.0
-- [#2115](https://github.com/h3poteto/whalebird-desktop/pull/2115) Use --node-env in webpack-cli instead of corss-env in pack command
+- [#2115](https://github.com/h3poteto/whalebird-desktop/pull/2115) Use --node-env in webpack-cli instead of cross-env in pack command
 - [#2101](https://github.com/h3poteto/whalebird-desktop/pull/2101) build(deps-dev): Bump electron from 11.2.0 to 11.2.2
 - [#2113](https://github.com/h3poteto/whalebird-desktop/pull/2113) build(deps-dev): Bump @babel/runtime from 7.12.5 to 7.12.13
 - [#2110](https://github.com/h3poteto/whalebird-desktop/pull/2110) build(deps-dev): Bump stylelint from 13.8.0 to 13.9.0
@@ -348,7 +348,7 @@
 ### Fixed
 
 - [#1651](https://github.com/h3poteto/whalebird-desktop/pull/1651) closes #1647 Adjust status height when attachments are dropped
-- [#1650](https://github.com/h3poteto/whalebird-desktop/pull/1650) closes #1642 Fix calcurate diff in change list memberships
+- [#1650](https://github.com/h3poteto/whalebird-desktop/pull/1650) closes #1642 Fix calculate diff in change list memberships
 - [#1622](https://github.com/h3poteto/whalebird-desktop/pull/1622) Use target instead of linter.eslint.dir in sideci.yml
 
 
@@ -533,7 +533,7 @@
 - [#1394](https://github.com/h3poteto/whalebird-desktop/pull/1394) refs #1281 Handle emoji reactions in web socket
 - [#1393](https://github.com/h3poteto/whalebird-desktop/pull/1393) refs #1281 Add emoji reaction notification
 - [#1392](https://github.com/h3poteto/whalebird-desktop/pull/1392) New translations translation.json (Polish)
-- [#1391](https://github.com/h3poteto/whalebird-desktop/pull/1391) refs #1281 Add reaction buttion and refresh after reaction
+- [#1391](https://github.com/h3poteto/whalebird-desktop/pull/1391) refs #1281 Add reaction button and refresh after reaction
 - [#1389](https://github.com/h3poteto/whalebird-desktop/pull/1389) refs #1281 Send emoji reactions to statuses
 
 ### Changed
@@ -802,7 +802,7 @@
 - [#1164](https://github.com/h3poteto/whalebird-desktop/pull/1164) Use default preference if the file does not exist when get proxy configuration
 - [#1162](https://github.com/h3poteto/whalebird-desktop/pull/1162) Update megalodon version to 2.1.0
 - [#1159](https://github.com/h3poteto/whalebird-desktop/pull/1159)  Update jest version to 24.9.0 and fix some tests
-- [#1157](https://github.com/h3poteto/whalebird-desktop/pull/1157) Update electron-mock-ipc verions to 0.3.1
+- [#1157](https://github.com/h3poteto/whalebird-desktop/pull/1157) Update electron-mock-ipc version to 0.3.1
 
 ## [3.0.0] - 2019-11-17
 ### Added
@@ -866,7 +866,7 @@
 
 ## [2.8.5] - 2019-09-09
 ### Changed
-- [#1029](https://github.com/h3poteto/whalebird-desktop/pull/1029) Block to root path when user use brower-back
+- [#1029](https://github.com/h3poteto/whalebird-desktop/pull/1029) Block to root path when user use browser-back
 - [#1024](https://github.com/h3poteto/whalebird-desktop/pull/1024) Update German translation
 - [#1020](https://github.com/h3poteto/whalebird-desktop/pull/1020) audit: Update eslint-utils version to 1.4.2
 - [#1016](https://github.com/h3poteto/whalebird-desktop/pull/1016) Update megalodon version to 1.0.2
@@ -956,7 +956,7 @@
 ### Changed
 - [#955](https://github.com/h3poteto/whalebird-desktop/pull/955) Remove unused tests and packages
 - [#954](https://github.com/h3poteto/whalebird-desktop/pull/954) Update outdated packages
-- [#953](https://github.com/h3poteto/whalebird-desktop/pull/953) Use electrom-mock-ipc instead of electron-ipc-mock
+- [#953](https://github.com/h3poteto/whalebird-desktop/pull/953) Use electron-mock-ipc instead of electron-ipc-mock
 - [#951](https://github.com/h3poteto/whalebird-desktop/pull/951) Update node version to 10.16.0
 - [#950](https://github.com/h3poteto/whalebird-desktop/pull/950) Update megalodon version to 0.8.0
 
@@ -1030,7 +1030,7 @@
 ## [2.7.1] - 2019-04-25
 ### Added
 - [#898](https://github.com/h3poteto/whalebird-desktop/pull/898) Build package for 32bit
-- [#891](https://github.com/h3poteto/whalebird-desktop/pull/891) Introduce prettier combinated eslint
+- [#891](https://github.com/h3poteto/whalebird-desktop/pull/891) Introduce prettier combined eslint
 - [#862](https://github.com/h3poteto/whalebird-desktop/pull/862) Add detail link on timestamp in toot
 
 ### Changed
@@ -1077,7 +1077,7 @@
 - [#827](https://github.com/h3poteto/whalebird-desktop/pull/827) Add option to ignore CW and NSFW
 - [#824](https://github.com/h3poteto/whalebird-desktop/pull/824) Add unit/integration tests for TimelineSpace
 - [#823](https://github.com/h3poteto/whalebird-desktop/pull/823) Add unit tests for Home
-- [#820](https://github.com/h3poteto/whalebird-desktop/pull/820) Add intergation tests for Contents/Home
+- [#820](https://github.com/h3poteto/whalebird-desktop/pull/820) Add integration tests for Contents/Home
 
 ### Changed
 - [#838](https://github.com/h3poteto/whalebird-desktop/pull/838) Update megalodon version to 0.5.0
@@ -1263,13 +1263,13 @@
 ### Fixed
 - [#684](https://github.com/h3poteto/whalebird-desktop/pull/684) Open the links in meta fields in the default browser
 - [#683](https://github.com/h3poteto/whalebird-desktop/pull/683) Remove duplicated emojis when suggest
-- [#679](https://github.com/h3poteto/whalebird-desktop/pull/679) Remove unnecesary state to fix preference's menu
+- [#679](https://github.com/h3poteto/whalebird-desktop/pull/679) Remove unnecessary state to fix preference's menu
 
 
 
 ## [2.4.3] - 2018-10-26
 ### Added
-- [#675](https://github.com/h3poteto/whalebird-desktop/pull/675) Add option to hide/show global hea
+- [#675](https://github.com/h3poteto/whalebird-desktop/pull/675) Add option to hide/show global header
 - [#661](https://github.com/h3poteto/whalebird-desktop/pull/661) Show follow/unfollow button in follow/followers tab in profile
 
 ### Changed
@@ -1292,8 +1292,8 @@
 ### Fixed
 - [#659](https://github.com/h3poteto/whalebird-desktop/pull/659) Fix order of unique when initialize
 - [#658](https://github.com/h3poteto/whalebird-desktop/pull/658) Fix searching account when open my profile
-- [#655](https://github.com/h3poteto/whalebird-desktop/pull/655) Fix accounts order on globala header
-- [#654](https://github.com/h3poteto/whalebird-desktop/pull/654) Reoreder accounts and fix order method
+- [#655](https://github.com/h3poteto/whalebird-desktop/pull/655) Fix accounts order on global header
+- [#654](https://github.com/h3poteto/whalebird-desktop/pull/654) Reorder accounts and fix order method
 - [#652](https://github.com/h3poteto/whalebird-desktop/pull/652) Fix toot parser for Pleroma
 
 
@@ -1362,7 +1362,7 @@
 ### Added
 - [#602](https://github.com/h3poteto/whalebird-desktop/pull/602) Add mute/block menu
 - [#599](https://github.com/h3poteto/whalebird-desktop/pull/599) Add shortcut events for notification
-- [#596](https://github.com/h3poteto/whalebird-desktop/pull/596) Minmize to tray for win32
+- [#596](https://github.com/h3poteto/whalebird-desktop/pull/596) Minimize to tray for win32
 
 ### Changed
 
@@ -1371,7 +1371,7 @@
 
 ### Fixed
 
-- [#605](https://github.com/h3poteto/whalebird-desktop/pull/605) Fix losting focused toot in timeline
+- [#605](https://github.com/h3poteto/whalebird-desktop/pull/605) Fix losing focused toot in timeline
 - [#604](https://github.com/h3poteto/whalebird-desktop/pull/604) Fix typo in doc
 - [#603](https://github.com/h3poteto/whalebird-desktop/pull/603) Fix popper design
 - [#600](https://github.com/h3poteto/whalebird-desktop/pull/600) Fix default fonts for japanese
@@ -1460,7 +1460,7 @@
 ### Fixed
 - [#511](https://github.com/h3poteto/whalebird-desktop/pull/511) Fix Deutsch for close confirm modal
 - [#509](https://github.com/h3poteto/whalebird-desktop/pull/509) Update default toot visibility of new toot
-- [#499](https://github.com/h3poteto/whalebird-desktop/pull/499) Hide follower menue for own user account
+- [#499](https://github.com/h3poteto/whalebird-desktop/pull/499) Hide follower menu for own user account
 - [#497](https://github.com/h3poteto/whalebird-desktop/pull/497) Translate loading message for each languages
 
 
@@ -1483,7 +1483,7 @@
 - [#487](https://github.com/h3poteto/whalebird-desktop/pull/487) spelling typos
 - [#486](https://github.com/h3poteto/whalebird-desktop/pull/486) Fix API response of lists
 - [#475](https://github.com/h3poteto/whalebird-desktop/pull/475) Use vue-shortkey in jump modal because sometimes jump modal is freeze
-- [#474](https://github.com/h3poteto/whalebird-desktop/pull/474) Disable transparent becasue user can not change window size
+- [#474](https://github.com/h3poteto/whalebird-desktop/pull/474) Disable transparent because user can not change window size
 
 
 
@@ -1576,7 +1576,7 @@
 - [#422](https://github.com/h3poteto/whalebird-desktop/pull/422) Add small window layout menu
 
 ### Changed
-- [#421](https://github.com/h3poteto/whalebird-desktop/pull/421) Use Lato font in textarea because backtic is broken in Noto
+- [#421](https://github.com/h3poteto/whalebird-desktop/pull/421) Use Lato font in textarea because backtick is broken in Noto
 - [#420](https://github.com/h3poteto/whalebird-desktop/pull/420) Display loading on the timeline space instead of loading covering the whole
 
 ### Fixed
@@ -1595,7 +1595,7 @@
 
 ## [1.4.0] - 2018-06-20
 ### Added
-- [#403](https://github.com/h3poteto/whalebird-desktop/pull/403) Create list editting page which can manage list memberships
+- [#403](https://github.com/h3poteto/whalebird-desktop/pull/403) Create list editing page which can manage list memberships
 - [#401](https://github.com/h3poteto/whalebird-desktop/pull/401) Create lists in lists page
 - [#398](https://github.com/h3poteto/whalebird-desktop/pull/398) Add lists page
 - [#395](https://github.com/h3poteto/whalebird-desktop/pull/395) Open the manage lists window of an account on account profile
@@ -1869,12 +1869,12 @@
 ### Changed
 
 - [#113](https://github.com/h3poteto/whalebird-desktop/pull/113) Add electron-log for production logs
-- [#109](https://github.com/h3poteto/whalebird-desktop/pull/109) Get recently timeline in local and public when it is opend
+- [#109](https://github.com/h3poteto/whalebird-desktop/pull/109) Get recently timeline in local and public when it is opened
 
 ### Fixed
 
 - [#134](https://github.com/h3poteto/whalebird-desktop/pull/134) Clear the domain name in login form after login
-- [#130](https://github.com/h3poteto/whalebird-desktop/pull/130), [#128](https://github.com/h3poteto/whalebird-desktop/pull/128) Set NotoSans as the default font. And remove google-fonts-webpack-plugin becase the API has been dead.
+- [#130](https://github.com/h3poteto/whalebird-desktop/pull/130), [#128](https://github.com/h3poteto/whalebird-desktop/pull/128) Set NotoSans as the default font. And remove google-fonts-webpack-plugin because the API has been dead.
 - [#114](https://github.com/h3poteto/whalebird-desktop/pull/114) Allow application to be draggable for Mac
 - [#111](https://github.com/h3poteto/whalebird-desktop/pull/111) Fix text overflow in side menu
 - [#110](https://github.com/h3poteto/whalebird-desktop/pull/110) Clear old status after close new toot modal

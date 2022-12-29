@@ -41,7 +41,7 @@
       <el-button class="accept" link :title="$t('follow_requests.accept')" @click.stop.prevent="acceptRequest(user)">
         <font-awesome-icon icon="check" />
       </el-button>
-      <el-button class="reject" link :tilte="$t('follow_requests.reject')" @click.stop.prevent="rejectRequest(user)">
+      <el-button class="reject" link :title="$t('follow_requests.reject')" @click.stop.prevent="rejectRequest(user)">
         <font-awesome-icon icon="xmark" />
       </el-button>
     </div>

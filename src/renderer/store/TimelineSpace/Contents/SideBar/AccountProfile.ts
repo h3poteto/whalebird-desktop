@@ -74,7 +74,7 @@ export const ACTION_TYPES = {
   UNBLOCK: 'unblock',
   IDENTITY_PROOFS: 'identityProofs',
   SUBSCRIBE: 'subscribe',
-  UNSBSCRIBE: 'unsubscribe'
+  UNSUBSCRIBE: 'unsubscribe'
 }
 
 const actions: ActionTree<AccountProfileState, RootState> = {

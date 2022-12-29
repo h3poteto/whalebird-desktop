@@ -269,7 +269,7 @@ export default defineComponent({
       if (emoji.native) {
         ctx.emit('update:modelValue', `${modelValue.value.slice(0, current)}${emoji.native} ${modelValue.value.slice(current)}`)
       } else {
-        // Custom emoji don't have natvie code
+        // Custom emoji don't have native code
         ctx.emit('update:modelValue', `${modelValue.value.slice(0, current)}${emoji.name} ${modelValue.value.slice(current)}`)
       }
       closeSuggest()

@@ -76,7 +76,7 @@ const actions: ActionTree<ListMembershipState, RootState> = {
     return res.data
   },
   [ACTION_TYPES.CHANGE_BELONG_TO_LISTS]: async ({ rootState, dispatch, state }, belongToLists: Array<string>) => {
-    // Calcurate diff
+    // Calculate diff
     const removedLists = state.belongToLists.map(l => l.id).filter(i => belongToLists.indexOf(i) === -1)
     const addedLists = belongToLists.filter(i => state.belongToLists.map(l => l.id).indexOf(i) === -1)
     const client = generator(
