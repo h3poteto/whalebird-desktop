@@ -26,6 +26,8 @@ export type LanguageList = {
   tzm: LanguageType
   fa: LanguageType
   is: LanguageType
+  eu: LanguageType
+  hu: LanguageType
 }
 
 const languageList: LanguageList = {
@@ -38,6 +40,11 @@ const languageList: LanguageList = {
     name: 'English',
     key: 'en',
     rfc4646: 'en-US'
+  },
+  eu: {
+    name: 'Basque',
+    key: 'eu',
+    rfc4646: 'eu'
   },
   fa: {
     name: 'Persian',
@@ -68,6 +75,11 @@ const languageList: LanguageList = {
     name: 'Polski',
     key: 'pl',
     rfc4646: 'pl'
+  },
+  hu: {
+    name: 'Hungarian',
+    key: 'hu',
+    rfc4646: 'hu'
   },
   id: {
     name: 'Indonesian',

@@ -2,11 +2,13 @@ import i18next, { InitOptions } from 'i18next'
 import cs from '~/src/config/locales/cs/translation.json'
 import de from '~/src/config/locales/de/translation.json'
 import en from '~/src/config/locales/en/translation.json'
+import eu from '~/src/config/locales/eu/translation.json'
 import es_es from '~/src/config/locales/es_es/translation.json'
 import fa from '~/src/config/locales/fa/translation.json'
 import fr from '~/src/config/locales/fr/translation.json'
 import gd from '~/src/config/locales/gd/translation.json'
 import id from '~/src/config/locales/id/translation.json'
+import hu from '~/src/config/locales/hu/translation.json'
 import it from '~/src/config/locales/it/translation.json'
 import is from '~/src/config/locales/is/translation.json'
 import ja from '~/src/config/locales/ja/translation.json'
@@ -36,6 +38,9 @@ const options: InitOptions = {
     en: {
       translation: en
     },
+    eu: {
+      translation: eu
+    },
     es_es: {
       translation: es_es
     },
@@ -47,6 +52,9 @@ const options: InitOptions = {
     },
     gd: {
       translation: gd
+    },
+    hu: {
+      translation: hu
     },
     id: {
       translation: id
