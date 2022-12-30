@@ -33,18 +33,9 @@
     </screenshot>
   </screenshots>
   <releases>
-      <release version="4.7.0" date="2022-11-6">
+      <release version="4.7.4" date="2022-12-30">
           <description>
-              <p>Added</p>
-              <ul>
-                <li>Add Persian and Icelandic</li>
-                <li>Close image preview when user clicks outside the image</li>
-              </ul>
-              <p>Fixed</p>
-              <ul>
-                <li>Fix input design</li>
-                <li>Fix to set poll expire</li>
-              </ul>
+              <p>Updated</p>
           </description>
       </release>
   </releases>
