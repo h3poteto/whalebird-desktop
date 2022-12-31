@@ -26,7 +26,7 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import generator, { Entity, detector, NotificationType, OAuth, MegalodonInterface } from 'megalodon'
+import generator, { Entity, detector, NotificationType, OAuth } from 'megalodon'
 import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
@@ -50,8 +50,6 @@ import { Proxy } from '~/src/types/proxy'
 import ProxyConfiguration from './proxy'
 import { Menu as MenuPreferences } from '~/src/types/preference'
 import { General as GeneralPreferences } from '~/src/types/preference'
-import { LocalMarker } from '~/src/types/localMarker'
-import Marker from './marker'
 import newDB from './database'
 import Settings from './settings'
 import { BaseSettings, Setting } from '~/src/types/setting'
@@ -127,8 +125,6 @@ const databasePath = process.env.NODE_ENV === 'production' ? userData + '/db/wha
 const db = newDB(databasePath)
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
-
-let markerRepo: Marker | null = null
 
 const hashtagsDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/hashtags.db' : 'hashtags.db'
 const hashtagsDB = new Datastore({
@@ -1139,45 +1135,6 @@ ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, la
   return conf.language.spellchecker.languages
 })
 
-// marker
-ipcMain.handle('get-home-marker', async (_: IpcMainInvokeEvent, ownerID: string) => {
-  if (markerRepo === null) {
-    return null
-  }
-  const marker = await markerRepo.get(ownerID, 'home')
-  return marker
-})
-
-ipcMain.handle('get-notifications-marker', async (_: IpcMainInvokeEvent, ownerID: string) => {
-  if (markerRepo === null) {
-    return null
-  }
-  const marker = await markerRepo.get(ownerID, 'notifications')
-  return marker
-})
-
-ipcMain.handle('get-mentions-marker', async (_: IpcMainInvokeEvent, ownerID: string) => {
-  if (markerRepo === null) {
-    return null
-  }
-  const marker = await markerRepo.get(ownerID, 'mentions')
-  return marker
-})
-
-ipcMain.on(
-  'save-marker',
-  async (_: IpcMainEvent, marker: LocalMarker): Promise<LocalMarker | null> => {
-    if (marker.owner_id === null || marker.owner_id === undefined || marker.owner_id === '') {
-      return null
-    }
-    if (markerRepo === null) {
-      return null
-    }
-    const res = await markerRepo.save(marker)
-    return res
-  }
-)
-
 // hashtag
 ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
   const hashtags = new Hashtags(hashtagsDB)
@@ -1666,26 +1623,4 @@ const decodeLanguage = (lang: string): LanguageType => {
   } else {
     return Language[l]
   }
-}
-
-const getMarker = async (client: MegalodonInterface, accountID: string): Promise<LocalMarker | null> => {
-  let serverMarker: Entity.Marker | {} = {}
-  try {
-    const res = await client.getMarkers(['notifications'])
-    serverMarker = res.data
-  } catch (err) {
-    console.warn(err)
-  }
-  const s = serverMarker as Entity.Marker
-  if (s.notifications !== undefined) {
-    return {
-      timeline: 'notifications',
-      last_read_id: s.notifications.last_read_id
-    } as LocalMarker
-  }
-  if (markerRepo === null) {
-    return null
-  }
-  const marker = await markerRepo.get(accountID, 'notifications')
-  return marker
 }
