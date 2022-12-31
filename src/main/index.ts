@@ -35,7 +35,6 @@ import { getAccount, insertAccount, listAccounts } from './account'
 // import { StreamingURL, UserStreaming, DirectStreaming, LocalStreaming, PublicStreaming, ListStreaming, TagStreaming } from './websocket'
 import Preferences from './preferences'
 import Fonts from './fonts'
-import Hashtags from './hashtags'
 import i18next from '~/src/config/i18n'
 import { i18n as I18n } from 'i18next'
 import Language, { LanguageType } from '../constants/language'
@@ -55,6 +54,7 @@ import Settings from './settings'
 import { BaseSettings, Setting } from '~/src/types/setting'
 import { insertServer } from './server'
 import { LocalServer } from '~src/types/localServer'
+import { insertTag, listTags, removeTag } from './hashtags'
 
 /**
  * Context menu
@@ -125,12 +125,6 @@ const databasePath = process.env.NODE_ENV === 'production' ? userData + '/db/wha
 const db = newDB(databasePath)
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
-
-const hashtagsDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/hashtags.db' : 'hashtags.db'
-const hashtagsDB = new Datastore({
-  filename: hashtagsDBPath,
-  autoload: true
-})
 
 const settingsDBPath = process.env.NODE_ENV === 'production' ? userData + './db/settings.json' : 'settings.json'
 
@@ -1136,20 +1130,17 @@ ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, la
 })
 
 // hashtag
-ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
-  const hashtags = new Hashtags(hashtagsDB)
-  await hashtags.insertTag(tag)
+ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, req: { accountId: number; tag: string }) => {
+  await insertTag(db, req.accountId, req.tag)
 })
 
-ipcMain.handle('list-hashtags', async (_: IpcMainInvokeEvent) => {
-  const hashtags = new Hashtags(hashtagsDB)
-  const tags = await hashtags.listTags()
+ipcMain.handle('list-hashtags', async (_: IpcMainInvokeEvent, accountId: number) => {
+  const tags = await listTags(db, accountId)
   return tags
 })
 
 ipcMain.handle('remove-hashtag', async (_: IpcMainInvokeEvent, tag: LocalTag) => {
-  const hashtags = new Hashtags(hashtagsDB)
-  await hashtags.removeTag(tag)
+  await removeTag(db, tag)
 })
 
 // Fonts
