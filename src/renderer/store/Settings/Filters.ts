@@ -36,9 +36,9 @@ export const ACTION_TYPES = {
 export const actions: ActionTree<FiltersState, RootState> = {
   [ACTION_TYPES.FETCH_FILTERS]: async ({ commit, rootState }): Promise<Array<Entity.Filter>> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     try {
@@ -52,9 +52,9 @@ export const actions: ActionTree<FiltersState, RootState> = {
   },
   [ACTION_TYPES.DELETE_FILTER]: async ({ commit, dispatch, rootState }, id: string) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     try {

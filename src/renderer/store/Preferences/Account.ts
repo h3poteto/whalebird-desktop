@@ -3,11 +3,12 @@ import { toRaw } from 'vue'
 import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
+import { LocalServer } from '~src/types/localServer'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 export type AccountState = {
-  accounts: Array<LocalAccount>
+  accounts: Array<[LocalAccount, LocalServer]>
   accountLoading: boolean
 }
 
@@ -22,7 +23,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<AccountState> = {
-  [MUTATION_TYPES.UPDATE_ACCOUNTS]: (state, accounts: Array<LocalAccount>) => {
+  [MUTATION_TYPES.UPDATE_ACCOUNTS]: (state, accounts: Array<[LocalAccount, LocalServer]>) => {
     state.accounts = accounts
   },
   [MUTATION_TYPES.UPDATE_ACCOUNT_LOADING]: (state, value: boolean) => {
@@ -39,13 +40,13 @@ export const ACTION_TYPES = {
 }
 
 const actions: ActionTree<AccountState, RootState> = {
-  [ACTION_TYPES.LOAD_ACCOUNTS]: async ({ commit }): Promise<Array<LocalAccount>> => {
-    const accounts = await win.ipcRenderer.invoke('list-accounts')
+  [ACTION_TYPES.LOAD_ACCOUNTS]: async ({ commit }): Promise<Array<[LocalAccount, LocalServer]>> => {
+    const accounts: Array<[LocalAccount, LocalServer]> = await win.ipcRenderer.invoke('list-accounts')
     commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
     return accounts
   },
   [ACTION_TYPES.REMOVE_ACCOUNT]: async (_, account: LocalAccount) => {
-    await win.ipcRenderer.invoke('remove-account', account._id)
+    await win.ipcRenderer.invoke('remove-account', account.id)
   },
   [ACTION_TYPES.FORWARD_ACCOUNT]: async (_, account: LocalAccount) => {
     await win.ipcRenderer.invoke('forward-account', toRaw(account))

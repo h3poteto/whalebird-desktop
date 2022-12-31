@@ -107,6 +107,7 @@
     "rc": "^1.2.7",
     "sanitize-html": "^2.8.1",
     "simplayer": "0.0.8",
+    "sqlite3": "^5.1.4",
     "system-font-families": "^0.6.0",
     "tunnel-agent": "^0.6.0",
     "unicode-emoji-json": "^0.4.0",

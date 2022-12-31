@@ -29,9 +29,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<FollowRequestsState, RootState> = {
   [ACTION_TYPES.FETCH_REQUESTS]: async ({ commit, rootState }): Promise<Array<Entity.Account>> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getFollowRequests()
@@ -40,9 +40,9 @@ const actions: ActionTree<FollowRequestsState, RootState> = {
   },
   [ACTION_TYPES.ACCEPT_REQUEST]: async ({ dispatch, rootState }, user: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.acceptFollowRequest(user.id)
@@ -52,9 +52,9 @@ const actions: ActionTree<FollowRequestsState, RootState> = {
   },
   [ACTION_TYPES.REJECT_REQUEST]: async ({ dispatch, rootState }, user: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.rejectFollowRequest(user.id)

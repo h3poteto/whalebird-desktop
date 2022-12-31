@@ -29,9 +29,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<IndexState, RootState> = {
   [ACTION_TYPES.FETCH_LISTS]: async ({ commit, rootState }): Promise<Array<Entity.List>> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getLists()
@@ -40,9 +40,9 @@ const actions: ActionTree<IndexState, RootState> = {
   },
   [ACTION_TYPES.CREATE_LIST]: async ({ rootState }, title: string): Promise<Entity.List> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.createList(title)
@@ -50,9 +50,9 @@ const actions: ActionTree<IndexState, RootState> = {
   },
   [ACTION_TYPES.DELETE_LIST]: async ({ dispatch, rootState }, list: Entity.List) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.deleteList(list.id)

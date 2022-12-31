@@ -29,9 +29,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<EditState, RootState> = {
   [ACTION_TYPES.FETCH_MEMBERS]: async ({ commit, rootState }, listId: string): Promise<Array<Entity.Account>> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getAccountsInList(listId, { limit: 0 })
@@ -40,9 +40,9 @@ const actions: ActionTree<EditState, RootState> = {
   },
   [ACTION_TYPES.REMOVE_ACCOUNT]: async ({ rootState }, remove: RemoveAccountFromList): Promise<{}> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client.deleteAccountsFromList(remove.listId, [remove.account.id])

@@ -139,9 +139,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<HomeState, RootState> = {
   [ACTION_TYPES.FETCH_TIMELINE]: async ({ dispatch, commit, rootState }) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const localMarker: LocalMarker | null = await dispatch('getMarker').catch(err => {
@@ -192,9 +192,9 @@ const actions: ActionTree<HomeState, RootState> = {
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client
@@ -209,9 +209,9 @@ const actions: ActionTree<HomeState, RootState> = {
   },
   [ACTION_TYPES.FETCH_TIMELINE_SINCE]: async ({ state, rootState, commit }, since_id: string): Promise<Array<Entity.Status> | null> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const cardIndex = state.timeline.findIndex(s => {
@@ -263,9 +263,9 @@ const actions: ActionTree<HomeState, RootState> = {
       return null
     }
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     let serverMarker: Entity.Marker | {} = {}
@@ -282,7 +282,7 @@ const actions: ActionTree<HomeState, RootState> = {
         last_read_id: s.home.last_read_id
       } as LocalMarker
     }
-    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-home-marker', rootState.TimelineSpace.account._id)
+    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-home-marker', rootState.TimelineSpace.account!.id)
     return localMarker
   },
   [ACTION_TYPES.SAVE_MARKER]: async ({ state, rootState }) => {
@@ -291,18 +291,18 @@ const actions: ActionTree<HomeState, RootState> = {
       return
     }
     win.ipcRenderer.send('save-marker', {
-      owner_id: rootState.TimelineSpace.account._id,
+      owner_id: rootState.TimelineSpace.account!.id,
       timeline: 'home',
       last_read_id: timeline[0].id
     } as LocalMarker)
 
-    if (rootState.TimelineSpace.sns === 'misskey') {
+    if (rootState.TimelineSpace.server!.sns === 'misskey') {
       return
     }
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.saveMarkers({ home: { last_read_id: timeline[0].id } })

@@ -56,7 +56,6 @@ export default defineComponent({
 
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
-    const account = computed(() => store.state.TimelineSpace.account)
     const favourites = computed(() => store.state.TimelineSpace.Contents.Favourites.favourites)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Favourites.lazyLoading)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
@@ -68,7 +67,7 @@ export default defineComponent({
 
       store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
       store
-        .dispatch(`${space}/${ACTION_TYPES.FETCH_FAVOURITES}`, account.value)
+        .dispatch(`${space}/${ACTION_TYPES.FETCH_FAVOURITES}`)
         .catch(() => {
           ElMessage({
             message: i18n.t('message.favourite_fetch_error'),
@@ -139,7 +138,7 @@ export default defineComponent({
     const reload = async () => {
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FAVOURITES}`, account.value).catch(() => {
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FAVOURITES}`).catch(() => {
           ElMessage({
             message: i18n.t('message.favourite_fetch_error'),
             type: 'error'

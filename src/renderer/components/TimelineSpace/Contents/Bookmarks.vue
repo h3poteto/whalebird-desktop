@@ -58,7 +58,6 @@ export default defineComponent({
 
     const bookmarks = computed(() => store.state.TimelineSpace.Contents.Bookmarks.bookmarks)
     const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Bookmarks.lazyLoading)
-    const account = computed(() => store.state.TimelineSpace.account)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
@@ -69,7 +68,7 @@ export default defineComponent({
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
       store.commit(`TimelineSpace/Contents/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       store
-        .dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account.value)
+        .dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`)
         .catch(() => {
           ElMessage({
             message: i18n.t('message.bookmark_fetch_error'),
@@ -126,7 +125,7 @@ export default defineComponent({
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
         await reloadable()
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account.value).catch(() => {
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`).catch(() => {
           ElMessage({
             message: i18n.t('message.bookmark_fetch_error'),
             type: 'error'

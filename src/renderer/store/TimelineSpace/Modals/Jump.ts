@@ -116,11 +116,11 @@ export const ACTION_TYPES = {
 const actions: ActionTree<JumpState, RootState> = {
   [ACTION_TYPES.JUMP_CURRENT_SELECTED]: ({ state, commit, rootState }) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, false)
-    router.push({ path: `/${rootState.TimelineSpace.account._id}/${state.selectedChannel.path}` })
+    router.push({ path: `/${rootState.TimelineSpace.account!.id}/${state.selectedChannel.path}` })
   },
   [ACTION_TYPES.JUMP]: ({ commit, rootState }, channel: Channel) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, false)
-    router.push({ path: `/${rootState.TimelineSpace.account._id}/${channel.path}` })
+    router.push({ path: `/${rootState.TimelineSpace.account!.id}/${channel.path}` })
   },
   [ACTION_TYPES.SYNC_LIST_CHANNEL]: ({ commit, rootState }) => {
     commit(MUTATION_TYPES.UPDATE_LIST_CHANNEL, rootState.TimelineSpace.SideMenu.lists)

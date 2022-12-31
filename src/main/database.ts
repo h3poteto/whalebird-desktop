@@ -1,22 +1,44 @@
-import Loki from 'lokijs'
+import sqlite3 from 'sqlite3'
 
-const newDB = (file: string): Promise<Loki> => {
-  return new Promise(resolve => {
-    const databaseInitializer = () => {
-      let markers = db.getCollection('markers')
-      if (markers === null) {
-        markers = db.addCollection('markers')
+const newDB = (file: string): sqlite3.Database => {
+  let db = new sqlite3.Database(file, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
+
+  // migration
+  db.serialize(() => {
+    db.run(
+      'CREATE TABLE IF NOT EXISTS accounts(\
+id INTEGER PRIMARY KEY, \
+username TEXT NOT NULL, \
+account_id TEXT NOT NULL, \
+avatar TEXT NOT NULL, \
+client_id TEXT DEFAULT NULL, \
+client_secret TEXT NOT NULL, \
+access_token TEXT NOT NULL, \
+refresh_token TEXT DEFAULT NULL, \
+sort INTEGER UNIQUE NOT NULL)',
+      err => {
+        if (err) {
+          console.error('failed to create accounts: ', err)
+        }
       }
-      resolve(db)
-    }
-
-    const db = new Loki(file, {
-      autoload: true,
-      autosave: true,
-      autosaveInterval: 4000,
-      autoloadCallback: databaseInitializer
-    })
+    )
+    db.run(
+      'CREATE TABLE IF NOT EXISTS servers(\
+id INTEGER PRIMARY KEY, \
+domain TEXT NOT NULL, \
+base_url TEXT NOT NULL, \
+sns TEXT NOT NULL, \
+account_id INTEGER UNIQUE DEFAULT NULL, \
+FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE)',
+      err => {
+        if (err) {
+          console.error('failed to create servers: ', err)
+        }
+      }
+    )
   })
+
+  return db
 }
 
 export default newDB

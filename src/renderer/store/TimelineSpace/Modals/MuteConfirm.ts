@@ -41,9 +41,9 @@ const actions: ActionTree<MuteConfirmState, RootState> = {
   },
   [ACTION_TYPES.SUBMIT]: async ({ state, rootState, dispatch }, notify: boolean) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.muteAccount(state.account!.id, notify)

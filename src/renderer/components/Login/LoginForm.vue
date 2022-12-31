@@ -40,7 +40,6 @@
 import { defineComponent, computed, reactive, ref } from 'vue'
 import { useI18next } from 'vue3-i18next'
 import { ElLoading, ElMessage, FormInstance, FormRules } from 'element-plus'
-import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { domainFormat } from '@/utils/validator'
 import { ACTION_TYPES } from '@/store/Login'
@@ -51,16 +50,14 @@ export default defineComponent({
     const space = 'Login'
     const store = useStore()
     const i18n = useI18next()
-    const router = useRouter()
 
     const form = reactive({
       domainName: ''
     })
     const loginFormRef = ref<FormInstance>()
 
-    const selectedInstance = computed(() => store.state.Login.selectedInstance)
+    const selectedInstance = computed(() => store.state.Login.domain)
     const searching = computed(() => store.state.Login.searching)
-    const sns = computed(() => store.state.Login.sns)
     const allowLogin = computed(() => selectedInstance.value && form.domainName === selectedInstance.value)
     const rules = reactive<FormRules>({
       domainName: [
@@ -77,31 +74,24 @@ export default defineComponent({
       ]
     })
 
-    const login = () => {
+    const login = async () => {
       const loading = ElLoading.service({
         lock: true,
         text: i18n.t('message.loading'),
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      store
-        .dispatch(`${space}/${ACTION_TYPES.FETCH_LOGIN}`)
-        .then(url => {
-          store.dispatch(`${space}/${ACTION_TYPES.PAGE_BACK}`)
-          router.push({
-            path: '/authorize',
-            query: { url: url, sns: sns.value }
-          })
+      try {
+        await store.dispatch(`${space}/${ACTION_TYPES.ADD_SERVER}`)
+        await store.dispatch(`${space}/${ACTION_TYPES.ADD_APP}`)
+      } catch (err) {
+        ElMessage({
+          message: i18n.t('message.authorize_url_error'),
+          type: 'error'
         })
-        .catch(err => {
-          ElMessage({
-            message: i18n.t('message.authorize_url_error'),
-            type: 'error'
-          })
-          console.error(err)
-        })
-        .finally(() => {
-          loading.close()
-        })
+        console.error(err)
+      } finally {
+        loading.close()
+      }
     }
 
     const confirm = async (formEl: FormInstance | undefined) => {

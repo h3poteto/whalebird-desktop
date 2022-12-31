@@ -36,9 +36,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<GeneralState, RootState> = {
   [ACTION_TYPES.FETCH_SETTINGS]: async ({ commit, rootState }): Promise<Entity.Account> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.verifyAccountCredentials()
@@ -51,9 +51,9 @@ const actions: ActionTree<GeneralState, RootState> = {
   },
   [ACTION_TYPES.SET_VISIBILITY]: async ({ commit, rootState }, value: number) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const visibility: VisibilityType | undefined = (Object.values(Visibility) as Array<VisibilityType>).find(v => {
@@ -65,9 +65,9 @@ const actions: ActionTree<GeneralState, RootState> = {
   },
   [ACTION_TYPES.SET_SENSITIVE]: async ({ commit, rootState }, value: boolean) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.updateCredentials({ source: { sensitive: value } })

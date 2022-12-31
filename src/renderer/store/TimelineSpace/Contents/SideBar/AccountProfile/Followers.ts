@@ -52,9 +52,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<FollowersState, RootState> = {
   [ACTION_TYPES.FETCH_FOLLOWERS]: async ({ commit, rootState }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getAccountFollowers(account.id, { limit: 80 })
@@ -82,9 +82,9 @@ const actions: ActionTree<FollowersState, RootState> = {
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getAccountFollowers(account.id, { limit: 80, max_id: state.maxId }).finally(() => {
@@ -109,9 +109,9 @@ const actions: ActionTree<FollowersState, RootState> = {
   [ACTION_TYPES.FETCH_RELATIONSHIPS]: async ({ commit, rootState }, accounts: Array<Entity.Account>) => {
     const ids = accounts.map(a => a.id)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
 
       rootState.App.userAgent
     )
