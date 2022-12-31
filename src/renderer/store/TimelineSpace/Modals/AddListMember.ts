@@ -44,9 +44,9 @@ const actions: ActionTree<AddListMemberState, RootState> = {
   },
   [ACTION_TYPES.SEARCH]: async ({ commit, rootState }, name: string): Promise<Array<Entity.Account>> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.searchAccount(name, { following: true })
@@ -55,9 +55,9 @@ const actions: ActionTree<AddListMemberState, RootState> = {
   },
   [ACTION_TYPES.ADD]: async ({ state, rootState }, account: Entity.Account): Promise<{}> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.addAccountsToList(state.targetListId!, [account.id])

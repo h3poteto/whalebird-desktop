@@ -4,11 +4,11 @@
       <div :class="collapse ? 'profile-narrow' : 'profile-wide'">
         <div class="account">
           <div class="avatar" v-if="collapse">
-            <img :src="account.avatar" />
+            <img :src="account?.avatar" />
           </div>
           <div class="acct" v-else>
-            @{{ account.username }}
-            <span class="domain-name">{{ account.domain }}</span>
+            @{{ account?.username }}
+            <span class="domain-name">{{ server?.domain }}</span>
           </div>
           <el-dropdown trigger="click" @command="handleProfile" :title="$t('side_menu.profile')">
             <span class="el-dropdown-link">
@@ -291,6 +291,7 @@ export default defineComponent({
     const collapse = computed(() => store.state.TimelineSpace.SideMenu.collapse)
     const enabledTimelines = computed(() => store.state.TimelineSpace.SideMenu.enabledTimelines)
     const account = computed(() => store.state.TimelineSpace.account)
+    const server = computed(() => store.state.TimelineSpace.server)
     const themeColor = computed(() => store.state.App.theme.side_menu_color)
     const hideGlobalHeader = computed(() => store.state.GlobalHeader.hide)
     const activeRoute = computed(() => route.path)
@@ -305,7 +306,7 @@ export default defineComponent({
       switch (command) {
         case 'show':
           store
-            .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.FETCH_ACCOUNT}`, account.value.accountId)
+            .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.FETCH_ACCOUNT}`, account.value!.accountId)
             .then(account => {
               store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
               store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
@@ -314,7 +315,7 @@ export default defineComponent({
           store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
           break
         case 'edit':
-          ;(window as any).shell.openExternal(account.value.baseURL + '/settings/profile')
+          ;(window as any).shell.openExternal(server.value!.baseURL + '/settings/profile')
           break
         case 'settings': {
           const url = `/${id.value}/settings`
@@ -346,6 +347,7 @@ export default defineComponent({
       collapse,
       enabledTimelines,
       account,
+      server,
       themeColor,
       hideGlobalHeader,
       activeRoute,

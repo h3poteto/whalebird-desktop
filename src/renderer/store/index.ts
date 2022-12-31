@@ -5,20 +5,18 @@ import { InjectionKey } from 'vue'
 import App, { AppState } from './App'
 import GlobalHeader, { GlobalHeaderState } from './GlobalHeader'
 import Login, { LoginState } from './Login'
-import Authorize, { AuthorizeState } from './Authorize'
 import TimelineSpace, { TimelineSpaceModuleState } from './TimelineSpace'
 import Preferences, { PreferencesModuleState } from './Preferences'
 import Settings, { SettingsModuleState } from './Settings'
 import organisms, { OrganismsModuleState } from './organisms'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 export interface RootState {
   App: AppState
   GlobalHeader: GlobalHeaderState
   Login: LoginState
-  Authorize: AuthorizeState
   TimelineSpace: TimelineSpaceModuleState
   Preferences: PreferencesModuleState
   Settings: SettingsModuleState
@@ -39,7 +37,6 @@ export default createStore({
     App,
     GlobalHeader,
     Login,
-    Authorize,
     TimelineSpace,
     Preferences,
     Settings,

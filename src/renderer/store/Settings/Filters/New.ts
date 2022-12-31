@@ -54,9 +54,9 @@ export const actions: ActionTree<NewFiltersState, RootState> = {
       throw new Error('filter is not set')
     }
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     try {

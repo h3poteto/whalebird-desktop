@@ -28,9 +28,9 @@ const actions: ActionTree<TagState, RootState> = {
   [ACTION_TYPES.SEARCH]: async ({ commit, rootState }, query: string): Promise<Array<Entity.Tag>> => {
     commit('TimelineSpace/Contents/changeLoading', true, { root: true })
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client

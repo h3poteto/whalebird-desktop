@@ -1,16 +1,18 @@
 import generator, { MegalodonInterface, WebSocketInterface, Entity, ProxyConfig } from 'megalodon'
 import log from 'electron-log'
 import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~src/types/localServer'
 
 const StreamingURL = async (
   sns: 'mastodon' | 'pleroma' | 'misskey',
   account: LocalAccount,
+  server: LocalServer,
   proxy: ProxyConfig | false
 ): Promise<string> => {
   if (!account.accessToken) {
     throw new Error('access token is empty')
   }
-  const client = generator(sns, account.baseURL, account.accessToken, 'Whalebird', proxy)
+  const client = generator(sns, server.baseURL, account.accessToken, 'Whalebird', proxy)
   const res = await client.getInstance()
   return res.data.urls.streaming_api
 }

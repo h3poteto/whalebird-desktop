@@ -98,9 +98,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<LocalState, RootState> = {
   [ACTION_TYPES.FETCH_LOCAL_TIMELINE]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
 
@@ -123,9 +123,9 @@ const actions: ActionTree<LocalState, RootState> = {
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client

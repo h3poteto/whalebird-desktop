@@ -11,12 +11,11 @@ import {
   NewTootAttachLength,
   NewTootMediaDescription,
   NewTootPollInvalid,
-  NewTootUnknownType,
-  AuthenticationError
+  NewTootUnknownType
 } from '@/errors/validations'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 type MediaDescription = {
   id: string
@@ -201,13 +200,10 @@ const actions: ActionTree<NewTootState, RootState> = {
     }
   },
   [ACTION_TYPES.UPDATE_MEDIA]: async ({ rootState }, mediaDescription: MediaDescription) => {
-    if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
-      throw new AuthenticationError()
-    }
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const attachments = Object.keys(mediaDescription).map(async id => {
@@ -272,9 +268,6 @@ const actions: ActionTree<NewTootState, RootState> = {
       })
     }
 
-    if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
-      throw new AuthenticationError()
-    }
     if (state.blockSubmit) {
       throw new NewTootBlockSubmit()
     }
@@ -296,9 +289,9 @@ const actions: ActionTree<NewTootState, RootState> = {
 
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, true)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client
@@ -316,7 +309,7 @@ const actions: ActionTree<NewTootState, RootState> = {
     const mentionAccounts = [message.account.acct]
       .concat(message.mentions.map(a => a.acct))
       .filter((a, i, self) => self.indexOf(a) === i)
-      .filter(a => a !== rootState.TimelineSpace.account.username)
+      .filter(a => a !== rootState.TimelineSpace.account!.username)
     commit(MUTATION_TYPES.UPDATE_INITIAL_STATUS, `${mentionAccounts.map(m => `@${m}`).join(' ')} `)
     commit(MUTATION_TYPES.UPDATE_INITIAL_SPOILER, message.spoiler_text)
     commit(MUTATION_TYPES.CHANGE_MODAL, true)
@@ -357,13 +350,10 @@ const actions: ActionTree<NewTootState, RootState> = {
       throw new NewTootAttachLength()
     }
     commit(MUTATION_TYPES.CHANGE_BLOCK_SUBMIT, true)
-    if (rootState.TimelineSpace.account.accessToken === undefined || rootState.TimelineSpace.account.accessToken === null) {
-      throw new AuthenticationError()
-    }
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client
@@ -402,9 +392,9 @@ const actions: ActionTree<NewTootState, RootState> = {
   },
   [ACTION_TYPES.FETCH_VISIBILITY]: async ({ commit, rootState }) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.verifyAccountCredentials()

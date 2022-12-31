@@ -55,9 +55,9 @@ const actions: ActionTree<ListMembershipState, RootState> = {
   },
   [ACTION_TYPES.FETCH_LIST_MEMBERSHIP]: async ({ commit, rootState }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getAccountLists(account.id)
@@ -66,9 +66,9 @@ const actions: ActionTree<ListMembershipState, RootState> = {
   },
   [ACTION_TYPES.FETCH_LISTS]: async ({ commit, rootState }) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getLists()
@@ -80,9 +80,9 @@ const actions: ActionTree<ListMembershipState, RootState> = {
     const removedLists = state.belongToLists.map(l => l.id).filter(i => belongToLists.indexOf(i) === -1)
     const addedLists = belongToLists.filter(i => state.belongToLists.map(l => l.id).indexOf(i) === -1)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const removedPromise = removedLists.map(id => {
