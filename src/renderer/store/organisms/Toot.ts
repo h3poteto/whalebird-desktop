@@ -3,7 +3,7 @@ import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 type VoteParam = {
   id: string
@@ -37,9 +37,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<TootState, RootState> = {
   [ACTION_TYPES.REBLOG]: async ({ rootState, dispatch }, message: Entity.Status) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.reblogStatus(message.id)
@@ -52,9 +52,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   [ACTION_TYPES.UNREBLOG]: async ({ rootState, dispatch }, message: Entity.Status) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unreblogStatus(message.id)
@@ -63,9 +63,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   [ACTION_TYPES.ADD_FAVOURITE]: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.favouriteStatus(message.id)
@@ -75,9 +75,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   removeFavourite: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unfavouriteStatus(message.id)
@@ -86,9 +86,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   addBookmark: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.bookmarkStatus(message.id)
@@ -98,9 +98,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   removeBookmark: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unbookmarkStatus(message.id)
@@ -109,9 +109,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   deleteToot: async ({ rootState }, message: Entity.Status) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     await client.deleteStatus(message.id)
@@ -119,18 +119,18 @@ const actions: ActionTree<TootState, RootState> = {
   },
   block: async ({ rootState }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client.blockAccount(account.id)
   },
   vote: async ({ rootState }, params: VoteParam): Promise<Entity.Poll> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.votePoll(params.id, params.choices)
@@ -138,9 +138,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   refresh: async ({ rootState }, id: string): Promise<Entity.Poll> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getPoll(id)
@@ -148,9 +148,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   sendReaction: async ({ rootState }, params: ReactionParam): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.createEmojiReaction(params.status_id, params.native)
@@ -158,9 +158,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   deleteReaction: async ({ rootState }, params: ReactionParam): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.deleteEmojiReaction(params.status_id, params.native)

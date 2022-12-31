@@ -1,4 +1,4 @@
 export type InsertAccountCache = {
-  ownerID: string
+  ownerID: number
   accts: Array<string>
 }

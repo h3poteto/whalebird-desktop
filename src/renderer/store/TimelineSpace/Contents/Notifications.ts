@@ -113,9 +113,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<NotificationsState, RootState> = {
   [ACTION_TYPES.FETCH_NOTIFICATIONS]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Notification>> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
 
@@ -162,9 +162,9 @@ const actions: ActionTree<NotificationsState, RootState> = {
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client
@@ -182,9 +182,9 @@ const actions: ActionTree<NotificationsState, RootState> = {
     since_id: string
   ): Promise<Array<Entity.Notification> | null> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const cardIndex = state.notifications.findIndex(s => {
@@ -229,9 +229,9 @@ const actions: ActionTree<NotificationsState, RootState> = {
       return null
     }
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     let serverMarker: Entity.Marker | {} = {}
@@ -248,7 +248,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
         last_read_id: s.notifications.last_read_id
       } as LocalMarker
     }
-    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-notifications-marker', rootState.TimelineSpace.account._id)
+    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-notifications-marker', rootState.TimelineSpace.account!.id)
     return localMarker
   },
   [ACTION_TYPES.SAVE_MARKER]: async ({ state, rootState }) => {
@@ -257,22 +257,22 @@ const actions: ActionTree<NotificationsState, RootState> = {
       return
     }
     win.ipcRenderer.send('save-marker', {
-      owner_id: rootState.TimelineSpace.account._id,
+      owner_id: rootState.TimelineSpace.account!.id,
       timeline: 'notifications',
       last_read_id: notifications[0].id
     } as LocalMarker)
 
-    if (rootState.TimelineSpace.sns === 'misskey') {
+    if (rootState.TimelineSpace.server!.sns === 'misskey') {
       return
     }
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
-    if (rootState.TimelineSpace.sns === 'pleroma') {
+    if (rootState.TimelineSpace.server!.sns === 'pleroma') {
       await client.readNotifications({ max_id: notifications[0].id })
     }
     return res.data

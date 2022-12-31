@@ -104,9 +104,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<ShowState, RootState> = {
   [ACTION_TYPES.FETCH_TIMELINE]: async ({ commit, rootState }, listID: string): Promise<Array<Entity.Status>> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getListTimeline(listID, { limit: 20 })
@@ -128,7 +128,7 @@ const actions: ActionTree<ShowState, RootState> = {
       // eslint-disable-line no-unused-vars
       win.ipcRenderer.send('start-list-streaming', {
         listID: listID,
-        accountID: rootState.TimelineSpace.account._id
+        accountID: rootState.TimelineSpace.account!.id
       })
       win.ipcRenderer.once('error-start-list-streaming', (_, err: Error) => {
         reject(err)
@@ -153,9 +153,9 @@ const actions: ActionTree<ShowState, RootState> = {
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client

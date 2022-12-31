@@ -2,7 +2,6 @@ import generator, { Entity } from 'megalodon'
 import parse from 'parse-link-header'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
-import { LocalAccount } from '~/src/types/localAccount'
 
 export type FavouritesState = {
   favourites: Array<Entity.Status>
@@ -71,8 +70,13 @@ export const ACTION_TYPES = {
 }
 
 const actions: ActionTree<FavouritesState, RootState> = {
-  fetchFavourites: async ({ commit, rootState }, account: LocalAccount): Promise<Array<Entity.Status>> => {
-    const client = generator(rootState.TimelineSpace.sns, account.baseURL, account.accessToken, rootState.App.userAgent)
+  [ACTION_TYPES.FETCH_FAVOURITES]: async ({ commit, rootState }): Promise<Array<Entity.Status>> => {
+    const client = generator(
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
+      rootState.App.userAgent
+    )
     const res = await client.getFavourites({ limit: 20 })
     commit(MUTATION_TYPES.UPDATE_FAVOURITES, res.data)
     // Parse link header
@@ -98,9 +102,9 @@ const actions: ActionTree<FavouritesState, RootState> = {
     }
     commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getFavourites({ max_id: state.maxId, limit: 20 }).finally(() => {

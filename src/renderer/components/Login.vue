@@ -10,28 +10,31 @@
       </el-row>
     </el-header>
     <el-container>
-      <div></div>
-      <login-form></login-form>
+      <login-form v-if="appData === null" />
+      <authorize v-else />
     </el-container>
   </el-container>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import LoginForm from './Login/LoginForm.vue'
+import Authorize from './Login/Authorize.vue'
 import { ACTION_TYPES } from '@/store/Login'
 
 export default defineComponent({
   name: 'login',
-  components: { LoginForm },
+  components: { LoginForm, Authorize },
   setup() {
     const space = 'Login'
     const store = useStore()
     const router = useRouter()
     const { escape } = useMagicKeys()
+
+    const appData = computed(() => store.state.Login.appData)
 
     whenever(escape, () => {
       close()
@@ -46,7 +49,8 @@ export default defineComponent({
     }
 
     return {
-      close
+      close,
+      appData
     }
   }
 })

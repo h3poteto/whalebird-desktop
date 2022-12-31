@@ -1,13 +1,11 @@
 export type LocalAccount = {
-  _id?: string
-  baseURL: string
-  domain: string
-  clientId: string
+  id: number
+  username: string
+  accountId: string
+  avatar: string
+  clientId: string | null
   clientSecret: string
-  accessToken: string | null
+  accessToken: string
   refreshToken: string | null
-  username: string | null
-  accountId: string | null
-  avatar: string | null
   order: number
 }

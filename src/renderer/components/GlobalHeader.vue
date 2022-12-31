@@ -12,16 +12,15 @@
       role="menubar"
     >
       <el-menu-item
-        :index="`/${account._id}/`"
-        :route="{ path: `/${account._id}/home` }"
-        v-for="(account, _index) in accounts"
-        v-bind:key="account._id"
+        :index="`/${account.id}/`"
+        :route="{ path: `/${account.id}/home` }"
+        v-for="([account, server], _index) in accounts"
+        v-bind:key="account.id"
         role="menuitem"
       >
-        <font-awesome-icon icon="circle-user" v-if="account.avatar === undefined || account.avatar === null || account.avatar === ''" />
-        <FailoverImg v-else :src="account.avatar" class="avatar" :title="account.username + '@' + account.domain" />
-        <FailoverImg :src="`${account.baseURL}/favicon.ico`" :failoverSrc="`${account.baseURL}/favicon.png`" class="instance-icon" />
-        <span slot="title">{{ account.domain }}</span>
+        <FailoverImg :src="account.avatar" class="avatar" :title="account.username + '@' + server.domain" />
+        <FailoverImg :src="`${server.baseURL}/favicon.ico`" :failoverSrc="`${server.baseURL}/favicon.png`" class="instance-icon" />
+        <span slot="title">{{ server.domain }}</span>
       </el-menu-item>
       <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem" class="add-new-account">
         <font-awesome-icon icon="plus" />
@@ -37,11 +36,8 @@
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
 import { useStore } from '@/store'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
-import { StreamingError } from '~/src/errors/streamingError'
 import { ACTION_TYPES } from '@/store/GlobalHeader'
 
 export default defineComponent({
@@ -54,7 +50,6 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
-    const i18n = useI18next()
 
     const accounts = computed(() => store.state.GlobalHeader.accounts)
     const hide = computed(() => store.state.GlobalHeader.hide)
@@ -67,20 +62,10 @@ export default defineComponent({
 
     const initialize = async () => {
       await store
-        .dispatch(`${space}/initLoad`)
+        .dispatch(`${space}/${ACTION_TYPES.INIT_LOAD}`)
         .then(accounts => {
-          store.dispatch(`${space}/${ACTION_TYPES.START_STREAMINGS}`).catch(err => {
-            if (err instanceof StreamingError) {
-              ElMessage({
-                message: i18n.t('message.start_all_streamings_error', {
-                  domain: err.domain
-                }),
-                type: 'error'
-              })
-            }
-          })
           if (route.params.id === undefined) {
-            router.push({ path: `/${accounts[0]._id}/home` })
+            router.push({ path: `/${accounts[0][0].id}/home` })
           }
         })
         .catch(_ => {

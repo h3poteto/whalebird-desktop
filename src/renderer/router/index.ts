@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Login from '@/components/Login.vue'
-import Authorize from '@/components/Authorize.vue'
 import Preferences from '@/components/Preferences.vue'
 import PreferencesGeneral from '@/components/Preferences/General.vue'
 import PreferencesAppearance from '@/components/Preferences/Appearance.vue'
@@ -39,12 +38,6 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
-  },
-  {
-    path: '/authorize',
-    name: 'authorize',
-    component: Authorize,
-    props: route => ({ url: route.query.url, sns: route.query.sns })
   },
   {
     path: '/preferences/',

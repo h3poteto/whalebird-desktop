@@ -38,9 +38,9 @@ const actions: ActionTree<ReportState, RootState> = {
   },
   [ACTION_TYPES.SUBMIT]: async ({ rootState }, { account_id, status_id, comment }) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client.report(account_id, comment, { status_ids: [status_id] })
