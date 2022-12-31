@@ -223,8 +223,10 @@ const actions: ActionTree<SideMenuState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
     return value
   },
-  [ACTION_TYPES.LIST_TAGS]: async ({ commit }) => {
-    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags')
+  [ACTION_TYPES.LIST_TAGS]: async ({ rootState, commit }) => {
+    // TODO: Can not get account because too early.
+    // It should be executed after TimelineSpace obtain local account.
+    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags', rootState.TimelineSpace.account!.id)
     commit(MUTATION_TYPES.UPDATE_TAGS, tags)
     return tags
   }
