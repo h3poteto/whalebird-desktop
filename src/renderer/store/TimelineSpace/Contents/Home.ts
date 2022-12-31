@@ -1,11 +1,7 @@
 import generator, { Entity, FilterContext } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
-import { LocalMarker } from '~/src/types/localMarker'
-import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
-
-const win = (window as any) as MyWindow
 
 export type HomeState = {
   lazyLoading: boolean
@@ -144,12 +140,12 @@ const actions: ActionTree<HomeState, RootState> = {
       rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
-    const localMarker: LocalMarker | null = await dispatch('getMarker').catch(err => {
+    const marker: Entity.Marker | null = await dispatch('getMarker').catch(err => {
       console.error(err)
     })
 
-    if (rootState.TimelineSpace.timelineSetting.useMarker.home && localMarker !== null) {
-      const last = await client.getStatus(localMarker.last_read_id)
+    if (rootState.TimelineSpace.timelineSetting.useMarker.home && marker !== null && marker.home) {
+      const last = await client.getStatus(marker.home.last_read_id)
       const lastReadStatus = last.data
 
       let timeline: Array<Entity.Status | LoadingCard> = [lastReadStatus]
@@ -258,7 +254,7 @@ const actions: ActionTree<HomeState, RootState> = {
     }
     return res.data
   },
-  [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<LocalMarker | null> => {
+  [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<Entity.Marker | null> => {
     if (!rootState.TimelineSpace.timelineSetting.useMarker.home) {
       return null
     }
@@ -275,27 +271,13 @@ const actions: ActionTree<HomeState, RootState> = {
     } catch (err) {
       console.warn(err)
     }
-    const s = serverMarker as Entity.Marker
-    if (s.home !== undefined) {
-      return {
-        timeline: 'home',
-        last_read_id: s.home.last_read_id
-      } as LocalMarker
-    }
-    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-home-marker', rootState.TimelineSpace.account!.id)
-    return localMarker
+    return serverMarker
   },
   [ACTION_TYPES.SAVE_MARKER]: async ({ state, rootState }) => {
     const timeline = state.timeline
     if (timeline.length === 0 || timeline[0].id === 'loading-card') {
       return
     }
-    win.ipcRenderer.send('save-marker', {
-      owner_id: rootState.TimelineSpace.account!.id,
-      timeline: 'home',
-      last_read_id: timeline[0].id
-    } as LocalMarker)
-
     if (rootState.TimelineSpace.server!.sns === 'misskey') {
       return
     }

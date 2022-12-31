@@ -1,7 +1,6 @@
 import generator, { Entity, FilterContext, NotificationType } from 'megalodon'
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
 import { RootState } from '@/store'
-import { LocalMarker } from '~/src/types/localMarker'
 import { MyWindow } from '~/src/types/global'
 import { LoadingCard } from '@/types/loading-card'
 
@@ -119,18 +118,18 @@ const actions: ActionTree<NotificationsState, RootState> = {
       rootState.App.userAgent
     )
 
-    const localMarker: LocalMarker | null = await dispatch('getMarker').catch(err => {
+    const marker: Entity.Marker | null = await dispatch('getMarker').catch(err => {
       console.error(err)
     })
 
-    if (rootState.TimelineSpace.timelineSetting.useMarker.notifications && localMarker !== null) {
+    if (rootState.TimelineSpace.timelineSetting.useMarker.notifications && marker !== null && marker.notifications) {
       // The result does not contain max_id's notification, when we specify max_id parameter in get notifications.
       // So we need to get max_id's notification.
-      const nextResponse = await client.getNotifications({ limit: 1, min_id: localMarker.last_read_id })
+      const nextResponse = await client.getNotifications({ limit: 1, min_id: marker.notifications.last_read_id })
       if (nextResponse.data.length > 0) {
         const card: LoadingCard = {
           type: 'middle-load',
-          since_id: localMarker.last_read_id,
+          since_id: marker.notifications.last_read_id,
           // We don't need to fill this field in the first fetching.
           // Because in most cases there is no new statuses at the first fetching.
           // After new statuses are received, if the number of unread statuses is more than 30, max_id is not necessary.
@@ -224,7 +223,7 @@ const actions: ActionTree<NotificationsState, RootState> = {
   [ACTION_TYPES.RESET_BADGE]: () => {
     win.ipcRenderer.send('reset-badge')
   },
-  [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<LocalMarker | null> => {
+  [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<Entity.Marker | null> => {
     if (!rootState.TimelineSpace.timelineSetting.useMarker.notifications) {
       return null
     }
@@ -241,26 +240,13 @@ const actions: ActionTree<NotificationsState, RootState> = {
     } catch (err) {
       console.warn(err)
     }
-    const s = serverMarker as Entity.Marker
-    if (s.notifications !== undefined) {
-      return {
-        timeline: 'notifications',
-        last_read_id: s.notifications.last_read_id
-      } as LocalMarker
-    }
-    const localMarker: LocalMarker | null = await win.ipcRenderer.invoke('get-notifications-marker', rootState.TimelineSpace.account!.id)
-    return localMarker
+    return serverMarker
   },
   [ACTION_TYPES.SAVE_MARKER]: async ({ state, rootState }) => {
     const notifications = state.notifications
     if (notifications.length === 0 || notifications[0].id === 'loading-card') {
       return
     }
-    win.ipcRenderer.send('save-marker', {
-      owner_id: rootState.TimelineSpace.account!.id,
-      timeline: 'notifications',
-      last_read_id: notifications[0].id
-    } as LocalMarker)
 
     if (rootState.TimelineSpace.server!.sns === 'misskey') {
       return
