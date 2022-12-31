@@ -1,4 +1,5 @@
 export type LocalTag = {
+  id: number
   tagName: string
-  _id?: string
+  accountId: number
 }

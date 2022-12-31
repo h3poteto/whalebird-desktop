@@ -1,44 +1,63 @@
-import Datastore from 'nedb'
+import sqlite3 from 'sqlite3'
 import { LocalTag } from '~/src/types/localTag'
 
-export default class Hashtags {
-  private db: Datastore
-
-  constructor(db: Datastore) {
-    this.db = db
-    this.db.ensureIndex({ fieldName: 'tagName', unique: true }, _ => {})
-  }
-
-  listTags(): Promise<Array<LocalTag>> {
-    return new Promise((resolve, reject) => {
-      this.db.find<LocalTag>({}, (err, docs) => {
-        if (err) return reject(err)
-        resolve(docs)
-      })
-    })
-  }
-
-  insertTag(tag: string): Promise<LocalTag> {
-    return new Promise((resolve, reject) => {
-      this.db.insert({ tagName: tag }, (err, doc) => {
-        if (err) return reject(err)
-        resolve(doc)
-      })
-    })
-  }
-
-  removeTag(localTag: LocalTag): Promise<number> {
-    return new Promise((resolve, reject) => {
-      this.db.remove(
-        {
-          tagName: localTag.tagName
-        },
-        { multi: true },
-        (err, numRemoved) => {
-          if (err) return reject(err)
-          resolve(numRemoved)
-        }
+export const listTags = (db: sqlite3.Database, accountId: number): Promise<Array<LocalTag>> => {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM hashtags WHERE account_id = ?', accountId, (err, rows) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(
+        rows.map(r => ({
+          id: r.id,
+          tagName: r.tag,
+          accountId: r.account_id
+        }))
       )
     })
-  }
+  })
+}
+
+export const insertTag = (db: sqlite3.Database, accountId: number, tag: string): Promise<LocalTag> => {
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run('BEGIN TRANSACTION')
+
+      db.get('SELECT * FROM hashtags WHERE id = ? AND tag = ?', [accountId, tag], (err, row) => {
+        if (err) {
+          reject(err)
+        }
+        if (row) {
+          resolve({
+            id: row.id,
+            tagName: row.tag,
+            accountId: row.account_id
+          })
+        }
+
+        db.run('INSERT INTO hashtags(tag, account_id) VALUES (?, ?)', [accountId, tag], function (err) {
+          if (err) {
+            reject(err)
+          }
+          db.run('COMMIT')
+          resolve({
+            id: this.lastID,
+            tagName: tag,
+            accountId: accountId
+          })
+        })
+      })
+    })
+  })
+}
+
+export const removeTag = (db: sqlite3.Database, tag: LocalTag): Promise<null> => {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM hashtags WHERE id = ?', tag.id, err => {
+      if (err) {
+        reject(err)
+      }
+      resolve(null)
+    })
+  })
 }

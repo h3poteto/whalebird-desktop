@@ -36,6 +36,18 @@ FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE)',
         }
       }
     )
+    db.run(
+      'CREATE TABLE IF NOT EXISTS hashtags(\
+id INTEGER PRIMARY KEY, \
+tag TEXT NOT NULL, \
+account_id INTEGER UNIQUE NOT NULL, \
+FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE)',
+      err => {
+        if (err) {
+          console.error('failed to create hashtags: ', err)
+        }
+      }
+    )
   })
 
   return db
