@@ -17,7 +17,6 @@ import {
   IpcMainInvokeEvent
 } from 'electron'
 
-import Datastore from 'nedb'
 import crypto from 'crypto'
 import log from 'electron-log'
 import windowStateKeeper from 'electron-window-state'
@@ -42,9 +41,6 @@ import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
 import { Notify } from '~/src/types/notify'
 // import { StreamingError } from '~/src/errors/streamingError'
-import HashtagCache from './cache/hashtag'
-import AccountCache from './cache/account'
-import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { Proxy } from '~/src/types/proxy'
 import ProxyConfiguration from './proxy'
 import { Menu as MenuPreferences } from '~/src/types/preference'
@@ -126,15 +122,6 @@ const db = newDB(databasePath)
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
 
 const settingsDBPath = process.env.NODE_ENV === 'production' ? userData + './db/settings.json' : 'settings.json'
-
-/**
- * Cache path
- */
-const hashtagCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/hashtag.db' : 'cache/hashtag.db'
-const hashtagCache = new HashtagCache(hashtagCachePath)
-
-const accountCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/account.db' : 'cache/account.db'
-const accountCache = new AccountCache(accountCachePath)
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
@@ -1147,30 +1134,20 @@ ipcMain.handle(
 
 // Cache
 ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
-  const tags = await hashtagCache.listTags()
-  return tags
+  // TODO:
+  return []
 })
 
-ipcMain.handle('insert-cache-hashtags', async (_: IpcMainInvokeEvent, tags: Array<string>) => {
-  await Promise.all(
-    tags.map(async name => {
-      await hashtagCache.insertHashtag(name).catch(err => console.error(err))
-    })
-  )
+ipcMain.handle('insert-cache-hashtags', async (_: IpcMainInvokeEvent) => {
+  return null
 })
 
-ipcMain.handle('get-cache-accounts', async (_: IpcMainInvokeEvent, ownerID: string) => {
-  const accounts = await accountCache.listAccounts(ownerID)
-  return accounts
+ipcMain.handle('get-cache-accounts', async (_: IpcMainInvokeEvent) => {
+  return []
 })
 
-ipcMain.handle('insert-cache-accounts', async (_: IpcMainInvokeEvent, obj: InsertAccountCache) => {
-  const { ownerID, accts } = obj
-  Promise.all(
-    accts.map(async acct => {
-      await accountCache.insertAccount(ownerID, acct).catch(err => console.error(err))
-    })
-  )
+ipcMain.handle('insert-cache-accounts', async (_: IpcMainInvokeEvent) => {
+  return []
 })
 
 // Application control
