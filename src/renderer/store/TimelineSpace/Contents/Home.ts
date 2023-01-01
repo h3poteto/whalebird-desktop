@@ -144,7 +144,7 @@ const actions: ActionTree<HomeState, RootState> = {
       console.error(err)
     })
 
-    if (rootState.TimelineSpace.timelineSetting.useMarker.home && marker !== null && marker.home) {
+    if (rootState.TimelineSpace.setting.markerHome && marker !== null && marker.home) {
       const last = await client.getStatus(marker.home.last_read_id)
       const lastReadStatus = last.data
 
@@ -255,7 +255,7 @@ const actions: ActionTree<HomeState, RootState> = {
     return res.data
   },
   [ACTION_TYPES.GET_MARKER]: async ({ rootState }): Promise<Entity.Marker | null> => {
-    if (!rootState.TimelineSpace.timelineSetting.useMarker.home) {
+    if (!rootState.TimelineSpace.setting.markerHome) {
       return null
     }
     const client = generator(

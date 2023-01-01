@@ -1,80 +1,55 @@
-import storage from 'electron-json-storage'
-import log from 'electron-log'
-import objectAssignDeep from 'object-assign-deep'
-import { BaseSettings, Setting } from '~/src/types/setting'
+import sqlite3 from 'sqlite3'
+import { Setting } from '~/src/types/setting'
 import { DefaultSetting } from '~/src/constants/initializer/setting'
-import { isEmpty } from 'lodash'
 
-export default class Settings {
-  private path: string
-
-  constructor(path: string) {
-    this.path = path
-  }
-
-  public async _load(): Promise<BaseSettings> {
-    try {
-      const settings = await this._get()
-      if (isEmpty(settings)) {
-        return []
+export const getSetting = (db: sqlite3.Database, accountId: number): Promise<Setting> => {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM settings WHERE account_id = ?', accountId, (err, row) => {
+      if (err) {
+        reject(err)
       }
-      return settings
-    } catch (err) {
-      log.error(err)
-      return []
-    }
-  }
+      if (row) {
+        resolve({
+          accountId: row.account_id,
+          markerHome: Boolean(row.marker_home),
+          markerNotifications: Boolean(row.marker_notifications)
+        })
+      }
+      resolve(DefaultSetting)
+    })
+  })
+}
 
-  public async get(accountID: string): Promise<Setting> {
-    const current = await this._load()
-    const find: Setting | undefined = current.find(d => {
-      return d.accountID === accountID
+export const createOrUpdateSetting = (db: sqlite3.Database, setting: Setting): Promise<Setting> => {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM settings WHERE account_id = ?', setting.accountId, (err, row) => {
+      if (err) {
+        reject(err)
+      }
+      if (row) {
+        db.run(
+          'UPDATE settings SET marker_home = ?, marker_notifications = ? WHERE account_id = ?',
+          [setting.markerHome, setting.markerNotifications, setting.accountId],
+          err => {
+            if (err) {
+              reject(err)
+            }
+            resolve(setting)
+          }
+        )
+        resolve(setting)
+      } else {
+        db.run(
+          'INSERT INTO settings(account_id, marker_home, marker_notifications) VALUES (?, ?, ?)',
+          [setting.accountId, setting.markerHome, setting.markerNotifications],
+          function (err) {
+            if (err) {
+              reject(err)
+            }
+            resolve(setting)
+          }
+        )
+      }
     })
-    if (find) {
-      return objectAssignDeep({}, DefaultSetting, find)
-    }
-    return objectAssignDeep({}, DefaultSetting, {
-      accountID: accountID
-    })
-  }
-
-  private _get(): Promise<BaseSettings> {
-    return new Promise((resolve, reject) => {
-      storage.get(this.path, (err, data) => {
-        if (err) return reject(err)
-        return resolve(data as BaseSettings)
-      })
-    })
-  }
-
-  private _save(data: BaseSettings): Promise<BaseSettings> {
-    return new Promise((resolve, reject) => {
-      storage.set(this.path, data, err => {
-        if (err) return reject(err)
-        return resolve(data)
-      })
-    })
-  }
-
-  public async update(obj: Setting): Promise<BaseSettings> {
-    const current = await this._load()
-    const find = current.find(d => {
-      return d.accountID === obj.accountID
-    })
-    if (find) {
-      const data = current.map(d => {
-        if (d.accountID !== obj.accountID) {
-          return d
-        }
-        const newData = objectAssignDeep({}, d, obj)
-        return newData
-      })
-      const result = await this._save(data)
-      return result
-    } else {
-      const data = current.concat([obj])
-      const result = await this._save(data)
-      return result
-    }
-  }
+  })
 }
