@@ -1,4 +1,4 @@
-import TimelineSpace, { TimelineSpaceState, blankAccount, MUTATION_TYPES } from '~/src/renderer/store/TimelineSpace'
+import TimelineSpace, { TimelineSpaceState, MUTATION_TYPES } from '~/src/renderer/store/TimelineSpace'
 import { DefaultSetting } from '~/src/constants/initializer/setting'
 
 describe('TimelineSpace', () => {
@@ -6,13 +6,12 @@ describe('TimelineSpace', () => {
     let state: TimelineSpaceState
     beforeEach(() => {
       state = {
-        account: blankAccount,
-        bindingAccount: null,
+        account: null,
+        server: null,
         loading: false,
         emojis: [],
         tootMax: 500,
-        timelineSetting: DefaultSetting.timeline,
-        sns: 'mastodon',
+        setting: DefaultSetting,
         filters: []
       }
     })

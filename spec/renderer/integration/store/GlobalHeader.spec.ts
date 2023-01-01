@@ -3,7 +3,7 @@ import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import GlobalHeader, { GlobalHeaderState } from '~/src/renderer/store/GlobalHeader'
 import { MyWindow } from '~/src/types/global'
-;(window as any as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const state = (): GlobalHeaderState => {
   return {
@@ -55,21 +55,6 @@ describe('GlobalHeader', () => {
     it('should be updated', async () => {
       await store.dispatch('GlobalHeader/listAccounts')
       expect(store.state.GlobalHeader.accounts).toEqual(['account'])
-    })
-  })
-
-  describe('refreshAccounts', () => {
-    beforeEach(() => {
-      ipcMain.handle('refresh-accounts', () => {
-        return ['accounts']
-      })
-    })
-    afterEach(() => {
-      ipcMain.removeHandler('refresh-accounts')
-    })
-    it('should be refreshed', async () => {
-      await store.dispatch('GlobalHeader/refreshAccounts')
-      expect(store.state.GlobalHeader.accounts).toEqual(['accounts'])
     })
   })
 
