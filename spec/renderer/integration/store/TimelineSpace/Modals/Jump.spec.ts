@@ -70,7 +70,7 @@ const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
-      _id: '0'
+      id: 0
     }
   },
   modules: {
