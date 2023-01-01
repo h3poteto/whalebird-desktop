@@ -1,22 +1,7 @@
-import { Setting, Timeline, UnreadNotification, UseMarker } from '~/src/types/setting'
-
-const unreadNotification: UnreadNotification = {
-  direct: false,
-  local: true,
-  public: false
-}
-
-const useMarker: UseMarker = {
-  home: false,
-  notifications: true
-}
-
-const timeline: Timeline = {
-  unreadNotification: unreadNotification,
-  useMarker: useMarker
-}
+import { Setting } from '~/src/types/setting'
 
 export const DefaultSetting: Setting = {
-  accountID: '',
-  timeline: timeline
+  accountId: 0,
+  markerHome: false,
+  markerNotifications: true
 }

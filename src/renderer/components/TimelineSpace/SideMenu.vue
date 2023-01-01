@@ -299,7 +299,7 @@ export default defineComponent({
 
     onMounted(() => {
       store.dispatch(`${space}/${ACTION_TYPES.READ_COLLAPSE}`)
-      store.dispatch(`${space}/${ACTION_TYPES.LIST_TAGS}`)
+      store.dispatch(`${space}/${ACTION_TYPES.LIST_TAGS}`, parseInt(id.value as string))
     })
 
     const handleProfile = (command: string) => {
