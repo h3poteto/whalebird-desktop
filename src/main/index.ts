@@ -36,7 +36,7 @@ import { insertTag, listTags, removeTag } from './db/hashtags'
 import { createOrUpdateSetting, getSetting } from './db/setting'
 import { insertServer } from './db/server'
 
-import { DirectStreaming, LocalStreaming, PublicStreaming, StreamingURL, UserStreaming } from './websocket'
+import { DirectStreaming, ListStreaming, LocalStreaming, PublicStreaming, StreamingURL, TagStreaming, UserStreaming } from './websocket'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import i18next from '~/src/config/i18n'
@@ -568,116 +568,6 @@ ipcMain.on('reset-badge', () => {
     app.dock.setBadge('')
   }
 })
-
-// let listStreaming: ListStreaming | null = null
-
-// type ListStreamingOpts = {
-//   listID: string
-//   accountID: string
-// }
-
-// ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListStreamingOpts) => {
-//   const { listID, accountID } = obj
-//   try {
-//     const acct = await accountRepo.getAccount(accountID)
-
-//     // Stop old list streaming
-//     if (listStreaming !== null) {
-//       listStreaming.stop()
-//       listStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     listStreaming = new ListStreaming(sns, acct, url, proxy)
-//     listStreaming.start(
-//       listID,
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-list-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-list-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-list-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-list-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-list-streaming', () => {
-//   if (listStreaming !== null) {
-//     listStreaming.stop()
-//     listStreaming = null
-//   }
-// })
-
-// let tagStreaming: TagStreaming | null = null
-
-// type TagStreamingOpts = {
-//   tag: string
-//   accountID: string
-// }
-
-// ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: TagStreamingOpts) => {
-//   const { tag, accountID } = obj
-//   try {
-//     const acct = await accountRepo.getAccount(accountID)
-
-//     // Stop old tag streaming
-//     if (tagStreaming !== null) {
-//       tagStreaming.stop()
-//       tagStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     tagStreaming = new TagStreaming(sns, acct, url, proxy)
-//     tagStreaming.start(
-//       tag,
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-tag-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-tag-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-tag-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-tag-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-tag-streaming', () => {
-//   if (tagStreaming !== null) {
-//     tagStreaming.stop()
-//     tagStreaming = null
-//   }
-// })
 
 // sounds
 ipcMain.on('fav-rt-action-sound', () => {
@@ -1214,10 +1104,10 @@ const decodeLanguage = (lang: string): LanguageType => {
 //----------------------------------------------
 // Streamings
 //----------------------------------------------
-let userStreamings: { [key: number]: UserStreaming } = []
-let directStreamings: { [key: number]: DirectStreaming } = []
-let localStreamings: { [key: number]: DirectStreaming } = []
-let publicStreamings: { [key: number]: DirectStreaming } = []
+const userStreamings: { [key: number]: UserStreaming } = {}
+const directStreamings: { [key: number]: DirectStreaming } = {}
+const localStreamings: { [key: number]: DirectStreaming } = {}
+const publicStreamings: { [key: number]: DirectStreaming } = {}
 
 const stopAllStreamings = () => {
   Object.keys(userStreamings).forEach((key: string) => {
@@ -1460,3 +1350,89 @@ const username = (account: Entity.Account): string => {
     return account.username
   }
 }
+
+//----------------------------------------
+// List streamings
+//----------------------------------------
+const listStreamings: { [key: number]: ListStreaming } = {}
+
+type ListStreamingOpts = {
+  listId: string
+  accountId: number
+}
+
+ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListStreamingOpts) => {
+  const { listId, accountId } = obj
+  try {
+    const [account, server] = await getAccount(db, accountId)
+
+    // Stop old list streaming
+    if (listStreamings[accountId] !== undefined) {
+      listStreamings[accountId].stop()
+    }
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    listStreamings[accountId] = new ListStreaming(server.sns, account, url, proxy)
+    listStreamings[accountId].start(
+      listId,
+      (update: Entity.Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(`update-list-streamings-${accountId}`, update)
+        }
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(`delete-list-streamings-${accountId}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  } catch (err) {
+    log.error(err)
+  }
+})
+
+//----------------------------------------
+// Tag streamings
+//----------------------------------------
+const tagStreamings: { [key: number]: TagStreaming } = {}
+
+type TagStreamingOpts = {
+  tag: string
+  accountId: number
+}
+
+ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: TagStreamingOpts) => {
+  const { tag, accountId } = obj
+  try {
+    const [account, server] = await getAccount(db, accountId)
+
+    // Stop old tag streaming
+    if (tagStreamings[accountId] !== undefined) {
+      tagStreamings[accountId].stop()
+    }
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    tagStreamings[accountId] = new TagStreaming(server.sns, account, url, proxy)
+    tagStreamings[accountId].start(
+      tag,
+      (update: Entity.Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(`update-tag-streamings-${accountId}`, update)
+        }
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(`delete-tag-streamings-${accountId}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  } catch (err) {
+    log.error(err)
+  }
+})
