@@ -30,7 +30,7 @@ import sanitizeHtml from 'sanitize-html'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
 
-import { getAccount, insertAccount, listAccounts } from './account'
+import { backwardAccount, forwardAccount, getAccount, insertAccount, listAccounts, removeAccount, removeAllAccounts } from './account'
 // import { StreamingURL, UserStreaming, DirectStreaming, LocalStreaming, PublicStreaming, ListStreaming, TagStreaming } from './websocket'
 import Preferences from './preferences'
 import Fonts from './fonts'
@@ -45,11 +45,11 @@ import { Proxy } from '~/src/types/proxy'
 import ProxyConfiguration from './proxy'
 import { Menu as MenuPreferences } from '~/src/types/preference'
 import newDB from './database'
-import Settings from './settings'
-import { BaseSettings, Setting } from '~/src/types/setting'
+import { Setting } from '~/src/types/setting'
 import { insertServer } from './server'
 import { LocalServer } from '~src/types/localServer'
 import { insertTag, listTags, removeTag } from './hashtags'
+import { createOrUpdateSetting, getSetting } from './settings'
 
 /**
  * Context menu
@@ -112,7 +112,6 @@ const splashURL =
     ? path.resolve(__dirname, '../../static/splash-screen.html')
     : path.join(__dirname, '/static/splash-screen.html')
 
-// https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
 const appPath = app.getPath('exe')
 
@@ -120,8 +119,6 @@ const databasePath = process.env.NODE_ENV === 'production' ? userData + '/db/wha
 const db = newDB(databasePath)
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
-
-const settingsDBPath = process.env.NODE_ENV === 'production' ? userData + './db/settings.json' : 'settings.json'
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
@@ -144,7 +141,7 @@ if (process.platform !== 'darwin') {
   })
 }
 
-async function changeAccount([account, _server]: [LocalAccount, LocalServer], index: number) {
+async function changeAccount(account: LocalAccount, index: number) {
   // Sometimes application is closed to tray.
   // In this time, mainWindow in not exist, so we have to create window.
   if (mainWindow === null) {
@@ -222,7 +219,7 @@ async function createWindow() {
     return {
       label: s.domain,
       accelerator: `CmdOrCtrl+${index + 1}`,
-      click: () => changeAccount([a, s], index)
+      click: () => changeAccount(a, index)
     }
   })
 
@@ -474,66 +471,52 @@ ipcMain.handle('get-local-account', async (_: IpcMainInvokeEvent, id: number) =>
   return account
 })
 
-// ipcMain.handle('update-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-//   const proxy = await proxyConfiguration.forMastodon()
-//   const ac: LocalAccount = await accountRepo.refresh(acct, proxy)
-//   return ac
-// })
+ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: number) => {
+  await removeAccount(db, id)
 
-// ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: string) => {
-//   const accountId = await accountRepo.removeAccount(id)
+  const accounts = await listAccounts(db)
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map(([account, server], index) => {
+    return {
+      label: server.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(account, index)
+    }
+  })
 
-//   const accounts = await listAccounts()
-//   const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
-//     return {
-//       label: a.domain,
-//       accelerator: `CmdOrCtrl+${index + 1}`,
-//       click: () => changeAccount(a, index)
-//     }
-//   })
+  await updateApplicationMenu(accountsChange)
+  await updateDockMenu(accountsChange)
+  if (process.platform !== 'darwin' && tray !== null) {
+    tray.setContextMenu(TrayMenu(accountsChange, i18next))
+  }
 
-//   await updateApplicationMenu(accountsChange)
-//   await updateDockMenu(accountsChange)
-//   if (process.platform !== 'darwin' && tray !== null) {
-//     tray.setContextMenu(TrayMenu(accountsChange, i18next))
-//   }
+  // TODO: stopUserStreaming(accountId)
+})
 
-//   stopUserStreaming(accountId)
-// })
+ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
+  await forwardAccount(db, acct)
+})
 
-// ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-//   await accountRepo.forwardAccount(acct)
-// })
+ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
+  await backwardAccount(db, acct)
+})
 
-// ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-//   await accountRepo.backwardAccount(acct)
-// })
+ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
+  await removeAllAccounts(db)
+  const accounts = await listAccounts(db)
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map(([account, server], index) => {
+    return {
+      label: server.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(account, index)
+    }
+  })
 
-// ipcMain.handle('refresh-accounts', async (_: IpcMainInvokeEvent) => {
-//   const proxy = await proxyConfiguration.forMastodon()
-//   const accounts = await accountRepo.refreshAccounts(proxy)
-
-//   return accounts
-// })
-
-// ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
-//   await accountRepo.removeAll()
-
-//   const accounts = await listAccounts()
-//   const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
-//     return {
-//       label: a.domain,
-//       accelerator: `CmdOrCtrl+${index + 1}`,
-//       click: () => changeAccount(a, index)
-//     }
-//   })
-
-//   await updateApplicationMenu(accountsChange)
-//   await updateDockMenu(accountsChange)
-//   if (process.platform !== 'darwin' && tray !== null) {
-//     tray.setContextMenu(TrayMenu(accountsChange, i18next))
-//   }
-// })
+  await updateApplicationMenu(accountsChange)
+  await updateDockMenu(accountsChange)
+  if (process.platform !== 'darwin' && tray !== null) {
+    tray.setContextMenu(TrayMenu(accountsChange, i18next))
+  }
+})
 
 ipcMain.handle('change-auto-launch', async (_: IpcMainInvokeEvent, enable: boolean) => {
   if (launcher) {
@@ -1049,7 +1032,7 @@ ipcMain.handle('change-language', async (_: IpcMainInvokeEvent, value: string) =
     return {
       label: s.domain,
       accelerator: `CmdOrCtrl+${index + 1}`,
-      click: () => changeAccount([a, s], index)
+      click: () => changeAccount(a, index)
     }
   })
 
@@ -1116,18 +1099,17 @@ ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
 // Settings
 ipcMain.handle(
   'get-account-setting',
-  async (_: IpcMainInvokeEvent, accountID: string): Promise<Setting> => {
-    const settings = new Settings(settingsDBPath)
-    const setting = await settings.get(accountID)
+  async (_: IpcMainInvokeEvent, accountId: number): Promise<Setting> => {
+    const setting = await getSetting(db, accountId)
     return setting
   }
 )
 
 ipcMain.handle(
   'update-account-setting',
-  async (_: IpcMainInvokeEvent, setting: Setting): Promise<BaseSettings> => {
-    const settings = new Settings(settingsDBPath)
-    const res = await settings.update(setting)
+  async (_: IpcMainInvokeEvent, setting: Setting): Promise<Setting> => {
+    console.log(setting)
+    const res = await createOrUpdateSetting(db, setting)
     return res
   }
 )

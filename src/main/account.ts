@@ -23,7 +23,7 @@ export const insertAccount = (
         }
         let order = 1
         if (row) {
-          order = row.order
+          order = row.sort + 1
         }
         db.run(
           'INSERT INTO accounts(username, account_id, avatar, client_id, client_secret, access_token, refresh_token, sort) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
@@ -159,5 +159,117 @@ FROM accounts INNER JOIN servers ON servers.account_id = accounts.id WHERE accou
         ])
       }
     )
+  })
+}
+
+export const removeAccount = (db: sqlite3.Database, id: number): Promise<null> => {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM accounts WHERE id = ?', id, err => {
+      if (err) {
+        reject(err)
+      }
+      resolve(null)
+    })
+  })
+}
+
+export const removeAllAccounts = (db: sqlite3.Database): Promise<null> => {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM accounts', err => {
+      if (err) {
+        reject(err)
+      }
+      resolve(null)
+    })
+  })
+}
+
+export const forwardAccount = (db: sqlite3.Database, account: LocalAccount): Promise<LocalAccount> => {
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run('BEGIN TRANSACTION')
+
+      db.all('SELECT * FROM accounts ORDER BY sort', (err, rows) => {
+        if (err) {
+          reject(err)
+        }
+        const index = rows.findIndex(r => r.id === account.id)
+        if (index < 0 || index >= rows.length) {
+          db.run('ROLLBACK TRANSACTION')
+          return resolve(account)
+        }
+        const target = rows[index + 1]
+        const base = rows[index]
+
+        db.serialize(() => {
+          db.run('UPDATE accounts SET sort = ? WHERE id = ?', [-100, base.id], err => {
+            if (err) {
+              reject(err)
+            }
+          })
+          db.run('UPDATE accounts SET sort = ? WHERE id = ?', [base.sort, target.id], err => {
+            if (err) {
+              reject(err)
+            }
+          })
+          db.run('UPDATE accounts SET sort = ? WHERE id = ?', [target.sort, base.id], err => {
+            if (err) {
+              reject(err)
+            }
+            db.run('COMMIT')
+            resolve(
+              Object.assign(account, {
+                order: target.sort
+              })
+            )
+          })
+        })
+      })
+    })
+  })
+}
+
+export const backwardAccount = (db: sqlite3.Database, account: LocalAccount): Promise<LocalAccount> => {
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run('BEGIN TRANSACTION')
+
+      db.all('SELECT * FROM accounts ORDER BY sort', (err, rows) => {
+        if (err) {
+          reject(err)
+        }
+        const index = rows.findIndex(r => r.id === account.id)
+        if (index < 1) {
+          return resolve(account)
+        }
+        const target = rows[index - 1]
+        const base = rows[index]
+
+        db.serialize(() => {
+          db.run('UPDATE accounts SET sort = ? WHERE id = ?', [-100, base.id], err => {
+            if (err) {
+              db.run('ROLLBACK TRANSACTION')
+              reject(err)
+            }
+          })
+          db.run('UPDATE accounts SET sort = ? WHERE id = ?', [base.sort, target.id], err => {
+            if (err) {
+              reject(err)
+            }
+          })
+          db.run('UPDATE accounts SET sort = ? WHERE id = ?', [target.sort, base.id], err => {
+            if (err) {
+              reject(err)
+            }
+            db.run('COMMIT')
+            resolve(
+              Object.assign(account, {
+                order: target.sort
+              })
+            )
+          })
+        })
+      })
+    })
   })
 }

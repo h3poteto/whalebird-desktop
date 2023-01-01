@@ -48,6 +48,19 @@ FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE)',
         }
       }
     )
+    db.run(
+      'CREATE TABLE IF NOT EXISTS settings(\
+id INTEGER PRIMARY KEY, \
+account_id INTEGER UNIQUE NOT NULL, \
+marker_home BOOLEAN NOT NULL DEFAULT false, \
+marker_notifications BOOLEAN NOT NULL DEFAULT true, \
+FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE)',
+      err => {
+        if (err) {
+          console.error('failed to create settings: ', err)
+        }
+      }
+    )
   })
 
   return db
