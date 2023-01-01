@@ -235,7 +235,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       throw new Error('Account is not set')
     }
 
-    win.ipcRenderer.on(`update-start-all-user-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
+    win.ipcRenderer.on(`update-user-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
       // Sometimes archive old statuses
       if (rootState.TimelineSpace.Contents.Home.heading && Math.random() > 0.8) {
@@ -243,59 +243,52 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
     })
-    win.ipcRenderer.on(`notification-start-all-user-streamings-${state.account!.id}`, (_, notification: Entity.Notification) => {
+    win.ipcRenderer.on(`notification-user-streamings-${state.account!.id}`, (_, notification: Entity.Notification) => {
       commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
       if (rootState.TimelineSpace.Contents.Notifications.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Notifications/archiveNotifications', null, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
     })
-    win.ipcRenderer.on(`mention-start-all-user-streamings-${state.account!.id}`, (_, mention: Entity.Notification) => {
-      commit('TimelineSpace/Contents/Mentions/appendMentions', mention, { root: true })
-      if (rootState.TimelineSpace.Contents.Mentions.heading && Math.random() > 0.8) {
-        commit('TimelineSpace/Contents/Mentions/archiveMentions', null, { root: true })
-      }
-      commit('TimelineSpace/SideMenu/changeUnreadMentions', true, { root: true })
-    })
-    win.ipcRenderer.on(`delete-start-all-user-streamings-${state.account!.id}`, (_, id: string) => {
+    win.ipcRenderer.on(`delete-user-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Home/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Notifications/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
     })
   },
-  [ACTION_TYPES.BIND_LOCAL_STREAMING]: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-local-streaming', (_, update: Entity.Status) => {
+  [ACTION_TYPES.BIND_LOCAL_STREAMING]: ({ commit, rootState, state }) => {
+    win.ipcRenderer.on(`update-local-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Local/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
     })
-    win.ipcRenderer.on('delete-start-local-streaming', (_, id: string) => {
+    win.ipcRenderer.on(`delete-local-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Local/deleteToot', id, { root: true })
     })
   },
-  [ACTION_TYPES.BIND_PUBLIC_STREAMING]: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-public-streaming', (_, update: Entity.Status) => {
+  [ACTION_TYPES.BIND_PUBLIC_STREAMING]: ({ commit, rootState, state }) => {
+    win.ipcRenderer.on(`update-public-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Public/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
     })
-    win.ipcRenderer.on('delete-start-public-streaming', (_, id: string) => {
+    win.ipcRenderer.on(`delete-public-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Public/deleteToot', id, { root: true })
     })
   },
-  [ACTION_TYPES.BIND_DIRECT_MESSAGES_STREAMING]: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-directmessages-streaming', (_, update: Entity.Status) => {
+  [ACTION_TYPES.BIND_DIRECT_MESSAGES_STREAMING]: ({ commit, rootState, state }) => {
+    win.ipcRenderer.on(`update-direct-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.DirectMessages.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/DirectMessages/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', true, { root: true })
     })
-    win.ipcRenderer.on('delete-start-directmessages-streaming', (_, id: string) => {
+    win.ipcRenderer.on(`delete-direct-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/DirectMessages/deleteToot', id, { root: true })
     })
   },
