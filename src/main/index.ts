@@ -11,10 +11,10 @@ import {
   BrowserWindowConstructorOptions,
   MenuItemConstructorOptions,
   IpcMainEvent,
-  Notification,
-  NotificationConstructorOptions,
   nativeTheme,
-  IpcMainInvokeEvent
+  IpcMainInvokeEvent,
+  Notification,
+  NotificationConstructorOptions
 } from 'electron'
 
 import crypto from 'crypto'
@@ -25,13 +25,18 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import generator, { Entity, detector, NotificationType, OAuth } from 'megalodon'
-import sanitizeHtml from 'sanitize-html'
+import generator, { detector, OAuth, NotificationType, Entity } from 'megalodon'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
+import sanitizeHtml from 'sanitize-html'
 
-import { backwardAccount, forwardAccount, getAccount, insertAccount, listAccounts, removeAccount, removeAllAccounts } from './account'
-// import { StreamingURL, UserStreaming, DirectStreaming, LocalStreaming, PublicStreaming, ListStreaming, TagStreaming } from './websocket'
+// db
+import { backwardAccount, forwardAccount, getAccount, insertAccount, listAccounts, removeAccount, removeAllAccounts } from './db/account'
+import { insertTag, listTags, removeTag } from './db/hashtags'
+import { createOrUpdateSetting, getSetting } from './db/setting'
+import { insertServer } from './db/server'
+
+import { DirectStreaming, LocalStreaming, PublicStreaming, StreamingURL, UserStreaming } from './websocket'
 import Preferences from './preferences'
 import Fonts from './fonts'
 import i18next from '~/src/config/i18n'
@@ -39,17 +44,13 @@ import { i18n as I18n } from 'i18next'
 import Language, { LanguageType } from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
-import { Notify } from '~/src/types/notify'
-// import { StreamingError } from '~/src/errors/streamingError'
 import { Proxy } from '~/src/types/proxy'
 import ProxyConfiguration from './proxy'
 import { Menu as MenuPreferences } from '~/src/types/preference'
 import newDB from './database'
 import { Setting } from '~/src/types/setting'
-import { insertServer } from './server'
-import { LocalServer } from '~src/types/localServer'
-import { insertTag, listTags, removeTag } from './hashtags'
-import { createOrUpdateSetting, getSetting } from './settings'
+import { LocalServer } from '~/src/types/localServer'
+import { Notify } from '~/src/types/notify'
 
 /**
  * Context menu
@@ -369,7 +370,15 @@ Options
 // Do not lower the rendering priority of Chromium when background
 app.commandLine.appendSwitch('disable-renderer-backgrounding')
 
-app.on('ready', createWindow)
+app.on('ready', async () => {
+  createWindow()
+  const accounts = await listAccounts(db)
+  const preferences = new Preferences(preferencesDBPath)
+  startUserStreamings(accounts, proxyConfiguration, preferences)
+  startDirectStreamings(accounts, proxyConfiguration)
+  startLocalStreamings(accounts, proxyConfiguration)
+  startPublicStreamings(accounts, proxyConfiguration)
+})
 
 app.on('window-all-closed', () => {
   // this action is called when user click the close button.
@@ -488,8 +497,6 @@ ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: number) => {
   if (process.platform !== 'darwin' && tray !== null) {
     tray.setContextMenu(TrayMenu(accountsChange, i18next))
   }
-
-  // TODO: stopUserStreaming(accountId)
 })
 
 ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
@@ -538,252 +545,6 @@ ipcMain.on('reset-badge', () => {
     app.dock.setBadge('')
   }
 })
-
-// // user streaming
-// const userStreamings: { [key: string]: UserStreaming | null } = {}
-
-// ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<string>) => {
-//   accounts.map(async id => {
-//     const acct = await accountRepo.getAccount(id)
-//     try {
-//       // Stop old user streaming
-//       if (userStreamings[id]) {
-//         userStreamings[id]!.stop()
-//         userStreamings[id] = null
-//       }
-//       const proxy = await proxyConfiguration.forMastodon()
-//       const sns = await detector(acct.baseURL, proxy)
-//       const url = await StreamingURL(sns, acct, proxy)
-//       userStreamings[id] = new UserStreaming(sns, acct, url, proxy)
-//       userStreamings[id]!.start(
-//         async (update: Entity.Status) => {
-//           if (!event.sender.isDestroyed()) {
-//             event.sender.send(`update-start-all-user-streamings-${id}`, update)
-//           }
-//           // Cache hashtag
-//           update.tags.map(async tag => {
-//             await hashtagCache.insertHashtag(tag.name).catch(err => console.error(err))
-//           })
-//           // Cache account
-//           await accountCache.insertAccount(id, update.account.acct).catch(err => console.error(err))
-//         },
-//         async (notification: Entity.Notification) => {
-//           await publishNotification(notification, event, id)
-
-//           // In macOS and Windows, sometimes window is closed (not quit).
-//           // But streamings are always running.
-//           // When window is closed, we can not send event to webContents; because it is already destroyed.
-//           // So we have to guard it.
-//           if (!event.sender.isDestroyed()) {
-//             // To update notification timeline
-//             event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
-
-//             // Does not exist a endpoint for only mention. And mention is a part of notification.
-//             // So we have to get mention from notification.
-//             if (notification.type === 'mention') {
-//               event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
-//             }
-//           }
-//         },
-//         (statusId: string) => {
-//           if (!event.sender.isDestroyed()) {
-//             event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
-//           }
-//         },
-//         (err: Error) => {
-//           log.error(err)
-//           // In macOS, sometimes window is closed (not quit).
-//           // When window is closed, we can not send event to webContents; because it is destroyed.
-//           // So we have to guard it.
-//           if (!event.sender.isDestroyed()) {
-//             event.sender.send('error-start-all-user-streamings', err)
-//           }
-//         }
-//       )
-//       // Generate notifications received while the app was not running
-//       const client = generator(sns, acct.baseURL, acct.accessToken, 'Whalebird', proxy)
-//       const marker = await getMarker(client, id)
-//       if (marker !== null) {
-//         const unreadResponse = await client.getNotifications({ min_id: marker.last_read_id })
-//         unreadResponse.data.map(async notification => {
-//           await publishNotification(notification, event, id)
-//         })
-//       }
-//     } catch (err: any) {
-//       log.error(err)
-//       const streamingError = new StreamingError(err.message, acct.domain)
-//       if (!event.sender.isDestroyed()) {
-//         event.sender.send('error-start-all-user-streamings', streamingError)
-//       }
-//     }
-//   })
-// })
-
-// ipcMain.on('stop-all-user-streamings', () => {
-//   Object.keys(userStreamings).forEach((key: string) => {
-//     if (userStreamings[key]) {
-//       userStreamings[key]!.stop()
-//       userStreamings[key] = null
-//     }
-//   })
-// })
-
-// /**
-//  * Stop an user streaming in all user streamings.
-//  * @param id specified user id in nedb.
-//  */
-// const stopUserStreaming = (id: string) => {
-//   Object.keys(userStreamings).forEach((key: string) => {
-//     if (key === id && userStreamings[id]) {
-//       userStreamings[id]!.stop()
-//       userStreamings[id] = null
-//     }
-//   })
-// }
-
-// let directMessagesStreaming: DirectStreaming | null = null
-
-// ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, id: string) => {
-//   try {
-//     const acct = await accountRepo.getAccount(id)
-
-//     // Stop old directmessages streaming
-//     if (directMessagesStreaming !== null) {
-//       directMessagesStreaming.stop()
-//       directMessagesStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     directMessagesStreaming = new DirectStreaming(sns, acct, url, proxy)
-//     directMessagesStreaming.start(
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-directmessages-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-directmessages-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-directmessages-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-directmessages-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-directmessages-streaming', () => {
-//   if (directMessagesStreaming !== null) {
-//     directMessagesStreaming.stop()
-//     directMessagesStreaming = null
-//   }
-// })
-
-// let localStreaming: LocalStreaming | null = null
-
-// ipcMain.on('start-local-streaming', async (event: IpcMainEvent, id: string) => {
-//   try {
-//     const acct = await accountRepo.getAccount(id)
-
-//     // Stop old local streaming
-//     if (localStreaming !== null) {
-//       localStreaming.stop()
-//       localStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     localStreaming = new LocalStreaming(sns, acct, url, proxy)
-//     localStreaming.start(
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-local-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-local-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-local-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-local-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-local-streaming', () => {
-//   if (localStreaming !== null) {
-//     localStreaming.stop()
-//     localStreaming = null
-//   }
-// })
-
-// let publicStreaming: PublicStreaming | null = null
-
-// ipcMain.on('start-public-streaming', async (event: IpcMainEvent, id: string) => {
-//   try {
-//     const acct = await accountRepo.getAccount(id)
-
-//     // Stop old public streaming
-//     if (publicStreaming !== null) {
-//       publicStreaming.stop()
-//       publicStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     publicStreaming = new PublicStreaming(sns, acct, url, proxy)
-//     publicStreaming.start(
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-public-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-public-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-public-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-public-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-public-streaming', () => {
-//   if (publicStreaming !== null) {
-//     publicStreaming.stop()
-//     publicStreaming = null
-//   }
-// })
 
 // let listStreaming: ListStreaming | null = null
 
@@ -1385,6 +1146,7 @@ const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n)
     {
       label: i18n.t('main_menu.application.quit'),
       click: () => {
+        stopAllStreamings()
         mainWindow!.destroy()
       }
     }
@@ -1417,15 +1179,148 @@ async function reopenWindow() {
   }
 }
 
-const publishNotification = async (notification: Entity.Notification, event: IpcMainEvent | IpcMainInvokeEvent, id: string) => {
-  const preferences = new Preferences(preferencesDBPath)
+const decodeLanguage = (lang: string): LanguageType => {
+  const l = Object.keys(Language).find(k => Language[k].key === lang)
+  if (l === undefined) {
+    return Language.en
+  } else {
+    return Language[l]
+  }
+}
+
+//----------------------------------------------
+// Streamings
+//----------------------------------------------
+let userStreamings: { [key: number]: UserStreaming } = []
+let directStreamings: { [key: number]: DirectStreaming } = []
+let localStreamings: { [key: number]: DirectStreaming } = []
+let publicStreamings: { [key: number]: DirectStreaming } = []
+
+const stopAllStreamings = () => {
+  Object.keys(userStreamings).forEach((key: string) => {
+    userStreamings[parseInt(key)].stop()
+  })
+  Object.keys(directStreamings).forEach((key: string) => {
+    directStreamings[parseInt(key)].stop()
+  })
+  Object.keys(localStreamings).forEach((key: string) => [localStreamings[parseInt(key)].stop()])
+  Object.keys(publicStreamings).forEach((key: string) => {
+    publicStreamings[parseInt(key)].stop()
+  })
+}
+
+const startUserStreamings = async (
+  accounts: Array<[LocalAccount, LocalServer]>,
+  proxyConfiguration: ProxyConfiguration,
+  preferences: Preferences
+) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  accounts.forEach(async ([account, server]) => {
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    userStreamings[account.id] = new UserStreaming(server.sns, account, url, proxy)
+    userStreamings[account.id].start(
+      async (update: Entity.Status) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`update-user-streamings-${account.id}`, update)
+        }
+      },
+      async (notification: Entity.Notification) => {
+        await publishNotification(notification, account.id, preferences)
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`notification-user-streamings-${account.id}`, notification)
+        }
+      },
+      (statusId: string) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`delete-user-streamings-${account.id}`, statusId)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  })
+
+  return userStreamings
+}
+
+const startDirectStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  accounts.forEach(async ([account, server]) => {
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    directStreamings[account.id] = new DirectStreaming(server.sns, account, url, proxy)
+    directStreamings[account.id].start(
+      (update: Entity.Status) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`update-direct-streamings-${account.id}`, update)
+        }
+      },
+      (id: string) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`delete-direct-streamings-${account.id}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  })
+}
+
+const startLocalStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  accounts.forEach(async ([account, server]) => {
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    localStreamings[account.id] = new LocalStreaming(server.sns, account, url, proxy)
+    localStreamings[account.id].start(
+      (update: Entity.Status) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`update-local-streamings-${account.id}`, update)
+        }
+      },
+      (id: string) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`delete-local-streamings-${account.id}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  })
+}
+
+const startPublicStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  accounts.forEach(async ([account, server]) => {
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    publicStreamings[account.id] = new PublicStreaming(server.sns, account, url, proxy)
+    publicStreamings[account.id].start(
+      (update: Entity.Status) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`update-public-streamings-${account.id}`, update)
+        }
+      },
+      (id: string) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`delete-public-streamings-${account.id}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  })
+}
+
+const publishNotification = async (notification: Entity.Notification, accountId: number, preferences: Preferences) => {
   const conf = await preferences.load()
   const options = createNotification(notification, conf.notification.notify)
   if (options !== null) {
     const notify = new Notification(options)
     notify.on('click', _ => {
-      if (!event.sender.isDestroyed()) {
-        event.sender.send('open-notification-tab', id)
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send('open-notification-tab', accountId)
       }
     })
     notify.show()
@@ -1540,14 +1435,5 @@ const username = (account: Entity.Account): string => {
     return account.display_name
   } else {
     return account.username
-  }
-}
-
-const decodeLanguage = (lang: string): LanguageType => {
-  const l = Object.keys(Language).find(k => Language[k].key === lang)
-  if (l === undefined) {
-    return Language.en
-  } else {
-    return Language[l]
   }
 }
