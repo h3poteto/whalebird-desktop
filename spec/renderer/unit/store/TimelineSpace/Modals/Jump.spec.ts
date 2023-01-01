@@ -88,10 +88,14 @@ describe('TimelineSpace/Modals/Jump', () => {
     describe('updateTagChannel', () => {
       it('should be updated', () => {
         const whalebird: LocalTag = {
-          tagName: 'whalebird'
+          tagName: 'whalebird',
+          id: 0,
+          accountId: 1
         }
         const tqrk: LocalTag = {
-          tagName: 'tqrk'
+          tagName: 'tqrk',
+          id: 0,
+          accountId: 1
         }
         const channelList = [whalebird, tqrk]
         Jump.mutations![MUTATION_TYPES.UPDATE_TAG_CHANNEL](state, channelList)
