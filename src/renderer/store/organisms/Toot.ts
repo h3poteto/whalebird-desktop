@@ -35,7 +35,7 @@ export const ACTION_TYPES = {
 }
 
 const actions: ActionTree<TootState, RootState> = {
-  [ACTION_TYPES.REBLOG]: async ({ rootState, dispatch }, message: Entity.Status) => {
+  [ACTION_TYPES.REBLOG]: async ({ rootState }, message: Entity.Status) => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -47,10 +47,9 @@ const actions: ActionTree<TootState, RootState> = {
     // Reblog target status is in the data.reblog.
     // So I send data.reblog as status for update local timeline.
     win.ipcRenderer.send('fav-rt-action-sound')
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data.reblog, { root: true })
     return res.data.reblog
   },
-  [ACTION_TYPES.UNREBLOG]: async ({ rootState, dispatch }, message: Entity.Status) => {
+  [ACTION_TYPES.UNREBLOG]: async ({ rootState }, message: Entity.Status) => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -58,10 +57,9 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.App.userAgent
     )
     const res = await client.unreblogStatus(message.id)
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  [ACTION_TYPES.ADD_FAVOURITE]: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  [ACTION_TYPES.ADD_FAVOURITE]: async ({ rootState }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -70,10 +68,9 @@ const actions: ActionTree<TootState, RootState> = {
     )
     const res = await client.favouriteStatus(message.id)
     win.ipcRenderer.send('fav-rt-action-sound')
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  removeFavourite: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  removeFavourite: async ({ rootState }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -81,10 +78,9 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.App.userAgent
     )
     const res = await client.unfavouriteStatus(message.id)
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  addBookmark: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  addBookmark: async ({ rootState }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -93,10 +89,9 @@ const actions: ActionTree<TootState, RootState> = {
     )
     const res = await client.bookmarkStatus(message.id)
     win.ipcRenderer.send('fav-rt-action-sound')
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  removeBookmark: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  removeBookmark: async ({ rootState }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -104,7 +99,6 @@ const actions: ActionTree<TootState, RootState> = {
       rootState.App.userAgent
     )
     const res = await client.unbookmarkStatus(message.id)
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
   deleteToot: async ({ rootState }, message: Entity.Status) => {
