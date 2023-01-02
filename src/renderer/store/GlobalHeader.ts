@@ -45,6 +45,8 @@ export const ACTION_TYPES = {
   REMOVE_SHORTCUT_EVENTS: 'removeShortcutEvents',
   LOAD_HIDE: 'loadHide',
   SWITCH_HIDE: 'switchHide',
+  LOAD_TIMELINES: 'loadTimelines',
+  BIND_STREAMINGS: 'bindStreamings',
   BIND_NOTIFICATION: 'bindNotification'
 }
 
@@ -59,6 +61,8 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       console.error(err)
     }
     const accounts = await dispatch(ACTION_TYPES.LIST_ACCOUNTS)
+    await dispatch(ACTION_TYPES.LOAD_TIMELINES, accounts)
+    await dispatch(ACTION_TYPES.BIND_STREAMINGS, accounts)
     // Block to root path when user use browser-back, like mouse button.
     // Because any contents are not rendered when browser back to / from home.
     router.beforeEach((to, from, next) => {
@@ -111,6 +115,19 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       router.push(`/${id}/home`)
       // We have to wait until change el-menu-item
       setTimeout(() => router.push(`/${id}/notifications`), 500)
+    })
+  },
+  [ACTION_TYPES.LOAD_TIMELINES]: async ({ dispatch }, req: Array<[LocalAccount, LocalServer]>) => {
+    req.forEach(async ([account, server]) => {
+      await dispatch('TimelineSpace/Contents/Home/fetchTimeline', { account, server }, { root: true })
+    })
+  },
+  [ACTION_TYPES.BIND_STREAMINGS]: async ({ commit }, req: Array<[LocalAccount, LocalServer]>) => {
+    req.forEach(async ([account, _server]) => {
+      win.ipcRenderer.removeAllListeners(`update-user-streamings-${account.id}`)
+      win.ipcRenderer.on(`update-user-streamings-${account.id}`, (_, update: Entity.Status) => {
+        commit('TimelineSpace/Contents/Home/appendTimeline', { status: update, accountId: account.id }, { root: true })
+      })
     })
   }
 }
