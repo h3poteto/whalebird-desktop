@@ -50,9 +50,6 @@ import StatusLoading from '@/components/organisms/StatusLoading.vue'
 import { EventEmitter } from '@/components/event'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Home'
 import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
-import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
-import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
-import useReloadable from '@/components/utils/reloadable'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
 import { MyWindow } from '~/src/types/global'
@@ -65,8 +62,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const i18n = useI18next()
-    const { reloadable } = useReloadable(store, route, i18n)
-    const { j, k, Ctrl_r } = useMagicKeys()
+    const { j, k } = useMagicKeys()
 
     const win = (window as any) as MyWindow
 
@@ -87,7 +83,6 @@ export default defineComponent({
     const timeline = computed(() => store.state.TimelineSpace.Contents.Home.timeline[id.value])
 
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
-    const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const filters = computed(() => store.getters[`${space}/filters`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
@@ -131,13 +126,6 @@ export default defineComponent({
         el.scrollTop = 0
       }
     })
-    watch(startReload, (newVal, oldVal) => {
-      if (!oldVal && newVal) {
-        reload().finally(() => {
-          store.commit(`TimelineSpace/HeaderMenu/${HEADER_MUTATION.CHANGE_RELOAD}`, false)
-        })
-      }
-    })
     watch(
       timeline,
       (newState, _oldState) => {
@@ -163,9 +151,6 @@ export default defineComponent({
     })
     whenever(logicAnd(k, shortcutEnabled), () => {
       focusPrev()
-    })
-    whenever(logicAnd(Ctrl_r, shortcutEnabled), () => {
-      reload()
     })
 
     const onScroll = (event: Event) => {
@@ -218,14 +203,6 @@ export default defineComponent({
             loadingMore.value = false
           }, 500)
         })
-    }
-    const reload = async () => {
-      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
-      try {
-        await reloadable()
-      } finally {
-        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
-      }
     }
     const upper = () => {
       scroller.value.scrollToItem(0)
