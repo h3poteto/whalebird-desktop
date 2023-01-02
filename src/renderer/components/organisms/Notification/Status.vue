@@ -26,6 +26,8 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      :account="account"
+      :server="server"
       v-on:update="updateToot"
       v-on:delete="deleteToot"
       @focusRight="$emit('focusRight')"
@@ -45,6 +47,8 @@ import Toot from '../Toot.vue'
 import { usernameWithStyle } from '@/utils/username'
 import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
 import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
 
 export default defineComponent({
   name: 'mention',
@@ -64,6 +68,14 @@ export default defineComponent({
     overlaid: {
       type: Boolean,
       default: false
+    },
+    account: {
+      type: Object as PropType<LocalAccount>,
+      required: true
+    },
+    server: {
+      type: Object as PropType<LocalServer>,
+      required: true
     }
   },
   components: { Toot, FailoverImg },
