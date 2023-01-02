@@ -85,7 +85,7 @@ export const ACTION_TYPES = {
 }
 
 const actions: ActionTree<DirectMessagesState, RootState> = {
-  [ACTION_TYPES.FETCH_TIMELINE]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
+  [ACTION_TYPES.FETCH_TIMELINE]: async ({ commit, rootState }): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -98,8 +98,6 @@ const actions: ActionTree<DirectMessagesState, RootState> = {
       commit(MUTATION_TYPES.UPDATE_TIMELINE, statuses)
       return statuses
     } catch (err) {
-      // Disable direct timeline
-      dispatch('TimelineSpace/SideMenu/disableDirect', {}, { root: true })
       return []
     }
   },

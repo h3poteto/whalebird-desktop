@@ -96,7 +96,7 @@ export const ACTION_TYPES = {
 }
 
 const actions: ActionTree<LocalState, RootState> = {
-  [ACTION_TYPES.FETCH_LOCAL_TIMELINE]: async ({ dispatch, commit, rootState }): Promise<Array<Entity.Status>> => {
+  [ACTION_TYPES.FETCH_LOCAL_TIMELINE]: async ({ commit, rootState }): Promise<Array<Entity.Status>> => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -109,8 +109,6 @@ const actions: ActionTree<LocalState, RootState> = {
       commit(MUTATION_TYPES.UPDATE_TIMELINE, res.data)
       return res.data
     } catch (err) {
-      // Disable local timeline
-      dispatch('TimelineSpace/SideMenu/disableLocal', {}, { root: true })
       return []
     }
   },
