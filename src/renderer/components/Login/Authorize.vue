@@ -11,7 +11,7 @@
       label-width="120px"
       label-position="top"
       class="authorize-form"
-      v-on:submit.prevent="authorizeSubmit"
+      @submit.prevent="authorizeSubmit"
     >
       <p v-if="sns === 'misskey'">{{ $t('authorize.misskey_label') }}</p>
       <el-form-item :label="$t('authorize.code_label')" v-else>
@@ -46,7 +46,7 @@ import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Login'
 
 export default defineComponent({
-  name: 'authorize',
+  name: 'Authorize',
   setup() {
     const space = 'Login'
     const store = useStore()

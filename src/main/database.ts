@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3'
 
 const newDB = (file: string): sqlite3.Database => {
-  let db = new sqlite3.Database(file, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
+  const db = new sqlite3.Database(file, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
 
   // migration
   db.serialize(() => {

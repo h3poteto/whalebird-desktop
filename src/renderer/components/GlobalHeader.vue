@@ -15,7 +15,7 @@
         :index="`/${account.id}/`"
         :route="{ path: `/${account.id}/home` }"
         v-for="([account, server], _index) in accounts"
-        v-bind:key="account.id"
+        :key="account.id"
         role="menuitem"
       >
         <FailoverImg :src="account.avatar" class="avatar" :title="account.username + '@' + server.domain" />
