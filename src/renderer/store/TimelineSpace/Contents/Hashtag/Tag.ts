@@ -114,13 +114,13 @@ const actions: ActionTree<TagState, RootState> = {
     return res.data
   },
   [ACTION_TYPES.START_STREAMING]: ({ state, commit, rootState }, tag: string) => {
-    win.ipcRenderer.on('update-start-tag-streaming', (_, update: Entity.Status) => {
+    win.ipcRenderer.on(`update-tag-streamings-${rootState.TimelineSpace.account!.id}`, (_, update: Entity.Status) => {
       commit(MUTATION_TYPES.APPEND_TIMELINE, update)
       if (state.heading && Math.random() > 0.8) {
         commit(MUTATION_TYPES.ARCHIVE_TIMELINE)
       }
     })
-    win.ipcRenderer.on('delete-start-tag-streaming', (_, id: string) => {
+    win.ipcRenderer.on(`delete-tag-streamings-${rootState.TimelineSpace.account!.id}`, (_, id: string) => {
       commit(MUTATION_TYPES.DELETE_TOOT, id)
     })
     // @ts-ignore
@@ -128,19 +128,14 @@ const actions: ActionTree<TagState, RootState> = {
       // eslint-disable-line no-unused-vars
       win.ipcRenderer.send('start-tag-streaming', {
         tag: encodeURIComponent(tag),
-        accountID: rootState.TimelineSpace.account!.id
-      })
-      win.ipcRenderer.once('error-start-tag-streaming', (_, err: Error) => {
-        reject(err)
+        accountId: rootState.TimelineSpace.account!.id
       })
     })
   },
-  [ACTION_TYPES.STOP_STREAMING]: () => {
+  [ACTION_TYPES.STOP_STREAMING]: ({ rootState }) => {
     return new Promise(resolve => {
-      win.ipcRenderer.removeAllListeners('error-start-tag-streaming')
-      win.ipcRenderer.removeAllListeners('update-start-tag-streaming')
-      win.ipcRenderer.removeAllListeners('delete-start-tag-streaming')
-      win.ipcRenderer.send('stop-tag-streaming')
+      win.ipcRenderer.removeAllListeners(`update-tag-streamings-${rootState.TimelineSpace.account!.id}`)
+      win.ipcRenderer.removeAllListeners(`update-tag-streamings-${rootState.TimelineSpace.account!.id}`)
       resolve(null)
     })
   },

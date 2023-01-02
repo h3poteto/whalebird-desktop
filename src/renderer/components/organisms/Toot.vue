@@ -149,7 +149,7 @@
             <el-button v-if="quoteSupported" link class="quote-btn" @click="openQuote()">
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
-            <template v-if="sns !== 'mastodon'">
+            <template v-if="server!.sns !== 'mastodon'">
               <el-popover
                 placement="bottom"
                 width="281"
@@ -300,7 +300,7 @@ export default defineComponent({
       default: false
     }
   },
-  emits: ['selectToot', 'focusRight', 'focusLeft'],
+  emits: ['selectToot', 'focusRight', 'focusLeft', 'update', 'delete', 'sizeChanged'],
   setup(props, ctx) {
     const space = 'organisms/Toot'
     const store = useStore()
@@ -320,7 +320,7 @@ export default defineComponent({
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
     const timeFormat = computed(() => store.state.App.timeFormat)
     const language = computed(() => store.state.App.language)
-    const sns = computed(() => store.state.TimelineSpace.sns)
+    const server = computed(() => store.state.TimelineSpace.server)
     const account = computed(() => store.state.TimelineSpace.account)
     const bookmarkSupported = computed(() => store.state.TimelineSpace.SideMenu.enabledTimelines.bookmark)
     const shortcutEnabled = computed(() => focused.value && !overlaid.value)
@@ -352,7 +352,7 @@ export default defineComponent({
       return null
     })
     const isMyMessage = computed(() => {
-      return store.state.TimelineSpace.account.accountId === originalMessage.value.account.id
+      return account.value!.accountId === originalMessage.value.account.id
     })
     const application = computed(() => {
       const msg = originalMessage.value
@@ -386,7 +386,7 @@ export default defineComponent({
       return originalMessage.value.visibility === 'direct'
     })
     const quoteSupported = computed(() => {
-      return QuoteSupported(sns.value, account.value.domain)
+      return QuoteSupported(server.value!.sns, server.value!.domain)
     })
 
     whenever(logicAnd(l, shortcutEnabled), () => {
@@ -677,7 +677,7 @@ export default defineComponent({
       displayNameStyle,
       timeFormat,
       language,
-      sns,
+      server,
       account,
       bookmarkSupported,
       originalMessage,

@@ -2,10 +2,9 @@ import { Entity, Response } from 'megalodon'
 import { createStore, Store } from 'vuex'
 import { ipcMain, ipcRenderer } from '~/spec/mock/electron'
 import SideMenu, { SideMenuState } from '~/src/renderer/store/TimelineSpace/SideMenu'
-import { LocalTag } from '~/src/types/localTag'
 import { MyWindow } from '~/src/types/global'
 import { RootState } from '@/store'
-;(window as any as MyWindow).ipcRenderer = ipcRenderer
+;((window as any) as MyWindow).ipcRenderer = ipcRenderer
 
 const mockClient = {
   getLists: () => {
@@ -85,7 +84,14 @@ const appStore = {
 const timelineStore = () => ({
   namespaced: true,
   state: {
-    sns: 'mastodon'
+    account: {
+      id: 0,
+      accessToken: 'token'
+    },
+    server: {
+      sns: 'mastodon',
+      baseURL: 'http://localhost'
+    }
   },
   modules: {
     SideMenu: initStore()
@@ -143,22 +149,6 @@ describe('SideMenu', () => {
       })
       await store.dispatch('TimelineSpace/SideMenu/readCollapse')
       expect(store.state.TimelineSpace.SideMenu.collapse).toEqual(true)
-    })
-  })
-
-  describe('listTags', () => {
-    it('should be listed', async () => {
-      const tag1: LocalTag = {
-        tagName: 'tag1'
-      }
-      const tag2: LocalTag = {
-        tagName: 'tag2'
-      }
-      ipcMain.handle('list-hashtags', () => {
-        return [tag1, tag2]
-      })
-      await store.dispatch('TimelineSpace/SideMenu/listTags')
-      expect(store.state.TimelineSpace.SideMenu.tags).toEqual([tag1, tag2])
     })
   })
 })

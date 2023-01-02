@@ -9,9 +9,9 @@ import { RootState } from '@/store'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 import { MyWindow } from '~/src/types/global'
-import { Timeline, Setting } from '~src/types/setting'
-import { DefaultSetting } from '~/src/constants/initializer/setting'
 import { LocalServer } from '~src/types/localServer'
+import { Setting } from '~/src/types/setting'
+import { DefaultSetting } from '~/src/constants/initializer/setting'
 
 const win = (window as any) as MyWindow
 
@@ -21,8 +21,8 @@ export type TimelineSpaceState = {
   loading: boolean
   emojis: Array<Entity.Emoji>
   tootMax: number
-  timelineSetting: Timeline
   filters: Array<Entity.Filter>
+  setting: Setting
 }
 
 const state = (): TimelineSpaceState => ({
@@ -31,8 +31,8 @@ const state = (): TimelineSpaceState => ({
   loading: false,
   emojis: [],
   tootMax: 500,
-  timelineSetting: DefaultSetting.timeline,
-  filters: []
+  filters: [],
+  setting: DefaultSetting
 })
 
 export const MUTATION_TYPES = {
@@ -41,8 +41,8 @@ export const MUTATION_TYPES = {
   CHANGE_LOADING: 'changeLoading',
   UPDATE_EMOJIS: 'updateEmojis',
   UPDATE_TOOT_MAX: 'updateTootMax',
-  UPDATE_TIMELINE_SETTING: 'updateTimelineSetting',
-  UPDATE_FILTERS: 'updateFilters'
+  UPDATE_FILTERS: 'updateFilters',
+  UPDATE_SETTING: 'updateSetting'
 }
 
 const mutations: MutationTree<TimelineSpaceState> = {
@@ -65,11 +65,11 @@ const mutations: MutationTree<TimelineSpaceState> = {
       state.tootMax = 500
     }
   },
-  [MUTATION_TYPES.UPDATE_TIMELINE_SETTING]: (state, setting: Timeline) => {
-    state.timelineSetting = setting
-  },
   [MUTATION_TYPES.UPDATE_FILTERS]: (state, filters: Array<Entity.Filter>) => {
     state.filters = filters
+  },
+  [MUTATION_TYPES.UPDATE_SETTING]: (state, setting: Setting) => {
+    state.setting = setting
   }
 }
 
@@ -84,7 +84,6 @@ export const ACTION_TYPES = {
   FETCH_EMOJIS: 'fetchEmojis',
   FETCH_FILTERS: 'fetchFilters',
   FETCH_INSTANCE: 'fetchInstance',
-  LOAD_TIMELINE_SETTING: 'loadTimelineSetting',
   FETCH_CONTENTS_TIMELINES: 'fetchContentsTimelines',
   CLEAR_CONTENTS_TIMELINES: 'clearContentsTimelines',
   BIND_STREAMINGS: 'bindStreamings',
@@ -92,7 +91,8 @@ export const ACTION_TYPES = {
   BIND_LOCAL_STREAMING: 'bindLocalStreaming',
   BIND_PUBLIC_STREAMING: 'bindPublicStreaming',
   BIND_DIRECT_MESSAGES_STREAMING: 'bindDirectMessagesStreaming',
-  UPDATE_TOOT_FOR_ALL_TIMELINES: 'updateTootForAllTimelines'
+  UPDATE_TOOT_FOR_ALL_TIMELINES: 'updateTootForAllTimelines',
+  LOAD_SETTING: 'loadSetting'
 }
 
 const actions: ActionTree<TimelineSpaceState, RootState> = {
@@ -107,7 +107,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     dispatch('TimelineSpace/SideMenu/fetchLists', null, { root: true })
     dispatch('TimelineSpace/SideMenu/fetchFollowRequests', null, { root: true })
     dispatch('TimelineSpace/SideMenu/confirmTimelines', null, { root: true })
-    await dispatch(ACTION_TYPES.LOAD_TIMELINE_SETTING, accountId)
+    await dispatch(ACTION_TYPES.LOAD_SETTING)
     await dispatch(ACTION_TYPES.FETCH_FILTERS)
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
     await dispatch(ACTION_TYPES.FETCH_CONTENTS_TIMELINES).catch(_ => {
@@ -170,6 +170,10 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_EMOJIS, res.data)
     return res.data
   },
+  [ACTION_TYPES.LOAD_SETTING]: async ({ commit, state }) => {
+    const setting: Setting = await win.ipcRenderer.invoke('get-account-setting', state.account!.id)
+    commit(MUTATION_TYPES.UPDATE_SETTING, setting)
+  },
   /**
    * fetchFilters
    */
@@ -197,11 +201,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     }
     return true
   },
-  [ACTION_TYPES.LOAD_TIMELINE_SETTING]: async ({ commit }, accountID: string) => {
-    const setting: Setting = await win.ipcRenderer.invoke('get-account-setting', accountID)
-    commit(MUTATION_TYPES.UPDATE_TIMELINE_SETTING, setting.timeline)
-  },
-  [ACTION_TYPES.FETCH_CONTENTS_TIMELINES]: async ({ dispatch, state }) => {
+  [ACTION_TYPES.FETCH_CONTENTS_TIMELINES]: async ({ dispatch }) => {
     dispatch('TimelineSpace/Contents/changeLoading', true, { root: true })
     await dispatch('TimelineSpace/Contents/Home/fetchTimeline', {}, { root: true }).finally(() => {
       dispatch('TimelineSpace/Contents/changeLoading', false, { root: true })
@@ -209,15 +209,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
 
     await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', {}, { root: true })
     await dispatch('TimelineSpace/Contents/Mentions/fetchMentions', {}, { root: true })
-    if (state.timelineSetting.unreadNotification.direct) {
-      await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
-    }
-    if (state.timelineSetting.unreadNotification.local) {
-      await dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', {}, { root: true })
-    }
-    if (state.timelineSetting.unreadNotification.public) {
-      await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
-    }
+    await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
+    await dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', {}, { root: true })
+    await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
   },
   [ACTION_TYPES.CLEAR_CONTENTS_TIMELINES]: ({ commit }) => {
     commit('TimelineSpace/Contents/Home/clearTimeline', {}, { root: true })
@@ -227,17 +221,11 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Mentions/clearMentions', {}, { root: true })
   },
-  [ACTION_TYPES.BIND_STREAMINGS]: ({ dispatch, state }) => {
+  [ACTION_TYPES.BIND_STREAMINGS]: ({ dispatch }) => {
     dispatch('bindUserStreaming')
-    if (state.timelineSetting.unreadNotification.direct) {
-      dispatch('bindDirectMessagesStreaming')
-    }
-    if (state.timelineSetting.unreadNotification.local) {
-      dispatch('bindLocalStreaming')
-    }
-    if (state.timelineSetting.unreadNotification.public) {
-      dispatch('bindPublicStreaming')
-    }
+    dispatch('bindDirectMessagesStreaming')
+    dispatch('bindLocalStreaming')
+    dispatch('bindPublicStreaming')
   },
   // ------------------------------------------------
   // Each streaming methods
@@ -247,7 +235,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       throw new Error('Account is not set')
     }
 
-    win.ipcRenderer.on(`update-start-all-user-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
+    win.ipcRenderer.on(`update-user-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
       // Sometimes archive old statuses
       if (rootState.TimelineSpace.Contents.Home.heading && Math.random() > 0.8) {
@@ -255,76 +243,63 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       }
       commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
     })
-    win.ipcRenderer.on(`notification-start-all-user-streamings-${state.account!.id}`, (_, notification: Entity.Notification) => {
+    win.ipcRenderer.on(`notification-user-streamings-${state.account!.id}`, (_, notification: Entity.Notification) => {
       commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
       if (rootState.TimelineSpace.Contents.Notifications.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Notifications/archiveNotifications', null, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadNotifications', true, { root: true })
     })
-    win.ipcRenderer.on(`mention-start-all-user-streamings-${state.account!.id}`, (_, mention: Entity.Notification) => {
-      commit('TimelineSpace/Contents/Mentions/appendMentions', mention, { root: true })
-      if (rootState.TimelineSpace.Contents.Mentions.heading && Math.random() > 0.8) {
-        commit('TimelineSpace/Contents/Mentions/archiveMentions', null, { root: true })
-      }
-      commit('TimelineSpace/SideMenu/changeUnreadMentions', true, { root: true })
-    })
-    win.ipcRenderer.on(`delete-start-all-user-streamings-${state.account!.id}`, (_, id: string) => {
+    win.ipcRenderer.on(`delete-user-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Home/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Notifications/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
     })
   },
-  [ACTION_TYPES.BIND_LOCAL_STREAMING]: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-local-streaming', (_, update: Entity.Status) => {
+  [ACTION_TYPES.BIND_LOCAL_STREAMING]: ({ commit, rootState, state }) => {
+    win.ipcRenderer.on(`update-local-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Local/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
     })
-    win.ipcRenderer.on('delete-start-local-streaming', (_, id: string) => {
+    win.ipcRenderer.on(`delete-local-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Local/deleteToot', id, { root: true })
     })
   },
-  [ACTION_TYPES.BIND_PUBLIC_STREAMING]: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-public-streaming', (_, update: Entity.Status) => {
+  [ACTION_TYPES.BIND_PUBLIC_STREAMING]: ({ commit, rootState, state }) => {
+    win.ipcRenderer.on(`update-public-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/Public/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
     })
-    win.ipcRenderer.on('delete-start-public-streaming', (_, id: string) => {
+    win.ipcRenderer.on(`delete-public-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Public/deleteToot', id, { root: true })
     })
   },
-  [ACTION_TYPES.BIND_DIRECT_MESSAGES_STREAMING]: ({ commit, rootState }) => {
-    win.ipcRenderer.on('update-start-directmessages-streaming', (_, update: Entity.Status) => {
+  [ACTION_TYPES.BIND_DIRECT_MESSAGES_STREAMING]: ({ commit, rootState, state }) => {
+    win.ipcRenderer.on(`update-direct-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
       if (rootState.TimelineSpace.Contents.DirectMessages.heading && Math.random() > 0.8) {
         commit('TimelineSpace/Contents/DirectMessages/archiveTimeline', {}, { root: true })
       }
       commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', true, { root: true })
     })
-    win.ipcRenderer.on('delete-start-directmessages-streaming', (_, id: string) => {
+    win.ipcRenderer.on(`delete-direct-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/DirectMessages/deleteToot', id, { root: true })
     })
   },
 
-  [ACTION_TYPES.UPDATE_TOOT_FOR_ALL_TIMELINES]: ({ commit, state }, status: Entity.Status): boolean => {
+  [ACTION_TYPES.UPDATE_TOOT_FOR_ALL_TIMELINES]: ({ commit }, status: Entity.Status): boolean => {
     commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Notifications/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Mentions/updateToot', status, { root: true })
-    if (state.timelineSetting.unreadNotification.direct) {
-      commit('TimelineSpace/Contents/DirectMessages/updateToot', status, { root: true })
-    }
-    if (state.timelineSetting.unreadNotification.local) {
-      commit('TimelineSpace/Contents/Local/updateToot', status, { root: true })
-    }
-    if (state.timelineSetting.unreadNotification.public) {
-      commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
-    }
+    commit('TimelineSpace/Contents/DirectMessages/updateToot', status, { root: true })
+    commit('TimelineSpace/Contents/Local/updateToot', status, { root: true })
+    commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
     return true
   }
 }

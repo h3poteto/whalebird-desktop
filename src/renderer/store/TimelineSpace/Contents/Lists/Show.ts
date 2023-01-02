@@ -114,33 +114,28 @@ const actions: ActionTree<ShowState, RootState> = {
     return res.data
   },
   [ACTION_TYPES.START_STREAMING]: ({ state, commit, rootState }, listID: string) => {
-    win.ipcRenderer.on('update-start-list-streaming', (_, update: Entity.Status) => {
+    win.ipcRenderer.on(`update-list-streamings-${rootState.TimelineSpace.account!.id}`, (_, update: Entity.Status) => {
       commit(MUTATION_TYPES.APPEND_TIMELINE, update)
       if (state.heading && Math.random() > 0.8) {
         commit(MUTATION_TYPES.ARCHIVE_TIMELINE)
       }
     })
-    win.ipcRenderer.on('delete-start-list-streaming', (_, id: string) => {
+    win.ipcRenderer.on(`delete-list-streamings-${rootState.TimelineSpace.account!.id}`, (_, id: string) => {
       commit(MUTATION_TYPES.DELETE_TOOT, id)
     })
     // @ts-ignore
     return new Promise((resolve, reject) => {
       // eslint-disable-line no-unused-vars
       win.ipcRenderer.send('start-list-streaming', {
-        listID: listID,
-        accountID: rootState.TimelineSpace.account!.id
-      })
-      win.ipcRenderer.once('error-start-list-streaming', (_, err: Error) => {
-        reject(err)
+        listId: listID,
+        accountId: rootState.TimelineSpace.account!.id
       })
     })
   },
-  [ACTION_TYPES.STOP_STREAMING]: () => {
+  [ACTION_TYPES.STOP_STREAMING]: ({ rootState }) => {
     return new Promise(resolve => {
-      win.ipcRenderer.removeAllListeners('error-start-list-streaming')
-      win.ipcRenderer.removeAllListeners('update-start-list-streaming')
-      win.ipcRenderer.removeAllListeners('delete-start-list-streaming')
-      win.ipcRenderer.send('stop-list-streaming')
+      win.ipcRenderer.removeAllListeners(`update-list-streamings-${rootState.TimelineSpace.account!.id}`)
+      win.ipcRenderer.removeAllListeners(`delete-list-streamings-${rootState.TimelineSpace.account!.id}`)
       resolve(null)
     })
   },
