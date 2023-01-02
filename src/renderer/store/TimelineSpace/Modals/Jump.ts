@@ -28,10 +28,6 @@ const state = (): JumpState => ({
       path: 'notifications'
     },
     {
-      name: i18n.t('side_menu.mention'),
-      path: 'mentions'
-    },
-    {
       name: i18n.t('side_menu.favourite'),
       path: 'favourites'
     },

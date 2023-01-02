@@ -7,7 +7,6 @@ const win = (window as any) as MyWindow
 export type SideMenuState = {
   unreadHomeTimeline: boolean
   unreadNotifications: boolean
-  unreadMentions: boolean
   unreadLocalTimeline: boolean
   unreadDirectMessagesTimeline: boolean
   unreadPublicTimeline: boolean
@@ -18,7 +17,6 @@ export type SideMenuState = {
 const state = (): SideMenuState => ({
   unreadHomeTimeline: false,
   unreadNotifications: false,
-  unreadMentions: false,
   unreadLocalTimeline: false,
   unreadDirectMessagesTimeline: false,
   unreadPublicTimeline: false,
@@ -29,7 +27,6 @@ const state = (): SideMenuState => ({
 export const MUTATION_TYPES = {
   CHANGE_UNREAD_HOME_TIMELINE: 'changeUnreadHomeTimeline',
   CHANGE_UNREAD_NOTIFICATIONS: 'changeUnreadNotifications',
-  CHANGE_UNREAD_MENTIONS: 'changeUnreadMentions',
   CHANGE_UNREAD_LOCAL_TIMELINE: 'changeUnreadLocalTimeline',
   CHANGE_UNREAD_DIRECT_MESSAGES_TIMELINE: 'changeUnreadDirectMessagesTimeline',
   CHANGE_UNREAD_PUBLIC_TIMELINE: 'changeUnreadPublicTimeline',
@@ -43,9 +40,6 @@ const mutations: MutationTree<SideMenuState> = {
   },
   [MUTATION_TYPES.CHANGE_UNREAD_NOTIFICATIONS]: (state, value: boolean) => {
     state.unreadNotifications = value
-  },
-  [MUTATION_TYPES.CHANGE_UNREAD_MENTIONS]: (state, value: boolean) => {
-    state.unreadMentions = value
   },
   [MUTATION_TYPES.CHANGE_UNREAD_LOCAL_TIMELINE]: (state, value: boolean) => {
     state.unreadLocalTimeline = value
@@ -74,7 +68,6 @@ const actions: ActionTree<SideMenuState, RootState> = {
   [ACTION_TYPES.CLEAR_UNREAD]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_UNREAD_HOME_TIMELINE, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_NOTIFICATIONS, false)
-    commit(MUTATION_TYPES.CHANGE_UNREAD_MENTIONS, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_LOCAL_TIMELINE, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_DIRECT_MESSAGES_TIMELINE, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_PUBLIC_TIMELINE, false)

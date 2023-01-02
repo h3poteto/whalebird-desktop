@@ -10,7 +10,6 @@ import Lists, { ListsModuleState } from './Contents/Lists'
 import Hashtag, { HashtagModuleState } from './Contents/Hashtag'
 import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
 import FollowRequests, { FollowRequestsState } from './Contents/FollowRequests'
-import Mentions, { MentionsState } from './Contents/Mentions'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -22,7 +21,6 @@ type ContentsModule = {
   SideBar: SideBarModuleState
   Home: HomeState
   Notifications: NotificationsState
-  Mentions: MentionsState
   DirectMessages: DirectMessagesState
   Favourites: FavouritesState
   Bookmarks: BookmarksState
@@ -71,7 +69,6 @@ const Contents: Module<ContentsState, RootState> = {
     Bookmarks,
     Local,
     DirectMessages,
-    Mentions,
     Public,
     Search,
     Lists,

@@ -87,9 +87,6 @@ export default defineComponent({
         case 'bookmarks':
           store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.bookmark'))
           break
-        case 'mentions':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.mention'))
-          break
         case 'follow-requests':
           store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.follow_requests'))
           break
@@ -133,7 +130,6 @@ export default defineComponent({
       switch (route.name) {
         case 'home':
         case 'notifications':
-        case 'mentions':
         case 'favourites':
         case 'bookmarks':
         case 'local':
@@ -151,7 +147,6 @@ export default defineComponent({
       switch (route.name) {
         case 'home':
         case 'notifications':
-        case 'mentions':
         case 'favourites':
         case 'bookmarks':
         case 'local':

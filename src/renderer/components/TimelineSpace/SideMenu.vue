@@ -72,23 +72,6 @@
         </template>
       </el-menu-item>
       <el-menu-item
-        :index="`/${id}/mentions`"
-        role="menuitem"
-        :title="$t('side_menu.mention')"
-        class="menu-item"
-        v-if="enabledTimelines.mention"
-      >
-        <div class="menu-item-icon">
-          <font-awesome-icon icon="at" />
-        </div>
-        <template #title>
-          <div>
-            <span>{{ $t('side_menu.mention') }}</span>
-            <el-badge is-dot :hidden="!unreadMentions"> </el-badge>
-          </div>
-        </template>
-      </el-menu-item>
-      <el-menu-item
         :index="`/${id}/direct-messages`"
         role="menuitem"
         :title="$t('side_menu.direct')"
@@ -291,7 +274,6 @@ export default defineComponent({
     const enabledTimelines = reactive({
       home: true,
       notification: true,
-      mention: true,
       direct: true,
       favourite: true,
       bookmark: true,
@@ -307,7 +289,6 @@ export default defineComponent({
 
     const unreadHomeTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadHomeTimeline)
     const unreadNotifications = computed(() => store.state.TimelineSpace.SideMenu.unreadNotifications)
-    const unreadMentions = computed(() => store.state.TimelineSpace.SideMenu.unreadMentions)
     const unreadLocalTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadLocalTimeline)
     const unreadDirectMessagesTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline)
     const unreadPublicTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadPublicTimeline)
@@ -344,7 +325,6 @@ export default defineComponent({
       const notification = async () => {
         return client.getNotifications({ limit: 1 }).catch(() => {
           enabledTimelines.notification = false
-          enabledTimelines.mention = false
         })
       }
       const direct = async () => {
@@ -415,7 +395,6 @@ export default defineComponent({
     return {
       unreadHomeTimeline,
       unreadNotifications,
-      unreadMentions,
       unreadLocalTimeline,
       unreadDirectMessagesTimeline,
       unreadPublicTimeline,

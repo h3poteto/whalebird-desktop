@@ -200,7 +200,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   [ACTION_TYPES.FETCH_CONTENTS_TIMELINES]: async ({ dispatch }) => {
     await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', {}, { root: true })
-    await dispatch('TimelineSpace/Contents/Mentions/fetchMentions', {}, { root: true })
     await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
     await dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', {}, { root: true })
     await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
@@ -210,7 +209,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Notifications/clearNotifications', {}, { root: true })
     commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
-    commit('TimelineSpace/Contents/Mentions/clearMentions', {}, { root: true })
   },
   [ACTION_TYPES.BIND_STREAMINGS]: ({ dispatch }) => {
     dispatch('bindUserStreaming')
@@ -236,7 +234,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     win.ipcRenderer.on(`delete-user-streamings-${state.account!.id}`, (_, id: string) => {
       commit('TimelineSpace/Contents/Home/deleteToot', id, { root: true })
       commit('TimelineSpace/Contents/Notifications/deleteToot', id, { root: true })
-      commit('TimelineSpace/Contents/Mentions/deleteToot', id, { root: true })
     })
   },
   [ACTION_TYPES.BIND_LOCAL_STREAMING]: ({ commit, rootState, state }) => {
@@ -279,7 +276,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   [ACTION_TYPES.UPDATE_TOOT_FOR_ALL_TIMELINES]: ({ commit }, status: Entity.Status): boolean => {
     commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Notifications/updateToot', status, { root: true })
-    commit('TimelineSpace/Contents/Mentions/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/DirectMessages/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Local/updateToot', status, { root: true })
     commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
