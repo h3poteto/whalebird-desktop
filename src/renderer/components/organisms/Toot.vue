@@ -261,6 +261,8 @@ import { ACTION_TYPES as REPORT_ACTION } from '@/store/TimelineSpace/Modals/Repo
 import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
 import { ACTION_TYPES as VIEWER_ACTION } from '@/store/TimelineSpace/Modals/ImageViewer'
 import { ACTION_TYPES } from '@/store/organisms/Toot'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
 
 const defaultEmojiIndex = new EmojiIndex(data)
 
@@ -297,6 +299,14 @@ export default defineComponent({
     detailed: {
       type: Boolean,
       default: false
+    },
+    account: {
+      type: Object as PropType<LocalAccount>,
+      required: true
+    },
+    server: {
+      type: Object as PropType<LocalServer>,
+      required: true
     }
   },
   emits: ['selectToot', 'focusRight', 'focusLeft', 'update', 'delete', 'sizeChanged'],
@@ -306,7 +316,7 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const i18n = useI18next()
-    const { focused, overlaid, message, filters } = toRefs(props)
+    const { focused, overlaid, message, filters, account, server } = toRefs(props)
     const { l, h, r, b, f, o, p, i, x } = useMagicKeys()
 
     const statusRef = ref<any>(null)
@@ -319,8 +329,6 @@ export default defineComponent({
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
     const timeFormat = computed(() => store.state.App.timeFormat)
     const language = computed(() => store.state.App.language)
-    const server = computed(() => store.state.TimelineSpace.server)
-    const account = computed(() => store.state.TimelineSpace.account)
     const shortcutEnabled = computed(() => focused.value && !overlaid.value)
     const originalMessage = computed(() => {
       if (message.value.reblog && !message.value.quote) {
@@ -350,7 +358,7 @@ export default defineComponent({
       return null
     })
     const isMyMessage = computed(() => {
-      return account.value!.accountId === originalMessage.value.account.id
+      return account.value.accountId === originalMessage.value.account.id
     })
     const application = computed(() => {
       const msg = originalMessage.value
@@ -384,7 +392,7 @@ export default defineComponent({
       return originalMessage.value.visibility === 'direct'
     })
     const quoteSupported = computed(() => {
-      return QuoteSupported(server.value!.sns, server.value!.domain)
+      return QuoteSupported(server.value.sns, server.value.domain)
     })
 
     whenever(logicAnd(l, shortcutEnabled), () => {

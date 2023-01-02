@@ -9,7 +9,7 @@ import { RootState } from '@/store'
 import { AccountLoadError } from '@/errors/load'
 import { TimelineFetchError } from '@/errors/fetch'
 import { MyWindow } from '~/src/types/global'
-import { LocalServer } from '~src/types/localServer'
+import { LocalServer } from '~/src/types/localServer'
 import { Setting } from '~/src/types/setting'
 import { DefaultSetting } from '~/src/constants/initializer/setting'
 
@@ -199,11 +199,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     return true
   },
   [ACTION_TYPES.FETCH_CONTENTS_TIMELINES]: async ({ dispatch }) => {
-    dispatch('TimelineSpace/Contents/changeLoading', true, { root: true })
-    await dispatch('TimelineSpace/Contents/Home/fetchTimeline', {}, { root: true }).finally(() => {
-      dispatch('TimelineSpace/Contents/changeLoading', false, { root: true })
-    })
-
     await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', {}, { root: true })
     await dispatch('TimelineSpace/Contents/Mentions/fetchMentions', {}, { root: true })
     await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
@@ -211,7 +206,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
   },
   [ACTION_TYPES.CLEAR_CONTENTS_TIMELINES]: ({ commit }) => {
-    commit('TimelineSpace/Contents/Home/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Local/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Notifications/clearNotifications', {}, { root: true })
@@ -232,14 +226,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       throw new Error('Account is not set')
     }
 
-    win.ipcRenderer.on(`update-user-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
-      commit('TimelineSpace/Contents/Home/appendTimeline', update, { root: true })
-      // Sometimes archive old statuses
-      if (rootState.TimelineSpace.Contents.Home.heading && Math.random() > 0.8) {
-        commit('TimelineSpace/Contents/Home/archiveTimeline', null, { root: true })
-      }
-      commit('TimelineSpace/SideMenu/changeUnreadHomeTimeline', true, { root: true })
-    })
     win.ipcRenderer.on(`notification-user-streamings-${state.account!.id}`, (_, notification: Entity.Notification) => {
       commit('TimelineSpace/Contents/Notifications/appendNotifications', notification, { root: true })
       if (rootState.TimelineSpace.Contents.Notifications.heading && Math.random() > 0.8) {
