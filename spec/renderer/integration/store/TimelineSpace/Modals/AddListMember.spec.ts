@@ -84,9 +84,12 @@ const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
-      _id: '0'
+      id: 0,
+      accessToken: 'token'
     },
-    sns: 'mastodon'
+    server: {
+      sns: 'mastodon'
+    }
   },
   modules: {
     Modals: modalsStore()
