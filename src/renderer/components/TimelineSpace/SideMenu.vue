@@ -4,11 +4,11 @@
       <div :class="collapse ? 'profile-narrow' : 'profile-wide'">
         <div class="account">
           <div class="avatar" v-if="collapse">
-            <img :src="account?.avatar" />
+            <img :src="account.account?.avatar" />
           </div>
           <div class="acct" v-else>
-            @{{ account?.username }}
-            <span class="domain-name">{{ server?.domain }}</span>
+            @{{ account.account?.username }}
+            <span class="domain-name">{{ account.server?.domain }}</span>
           </div>
           <el-dropdown trigger="click" @command="handleProfile" :title="$t('side_menu.profile')">
             <span class="el-dropdown-link">
@@ -263,13 +263,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue'
+import { defineComponent, computed, onMounted, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/SideMenu'
 import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
 import { ACTION_TYPES as SIDEBAR_ACTION, MUTATION_TYPES as SIDEBAR_MUTATION } from '@/store/TimelineSpace/Contents/SideBar'
 import { ACTION_TYPES as GLOBAL_ACTION } from '@/store/GlobalHeader'
+import { MyWindow } from '~/src/types/global'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { LocalTag } from '~/src/types/localTag'
 
 export default defineComponent({
   name: 'side-menu',
@@ -279,6 +284,27 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
 
+    const win = (window as any) as MyWindow
+
+    const lists = ref<Array<Entity.List>>([])
+    const tags = ref<Array<LocalTag>>([])
+    const enabledTimelines = reactive({
+      home: true,
+      notification: true,
+      mention: true,
+      direct: true,
+      favourite: true,
+      bookmark: true,
+      local: true,
+      public: true,
+      tag: true,
+      list: true
+    })
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
+
     const unreadHomeTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadHomeTimeline)
     const unreadNotifications = computed(() => store.state.TimelineSpace.SideMenu.unreadNotifications)
     const unreadMentions = computed(() => store.state.TimelineSpace.SideMenu.unreadMentions)
@@ -286,27 +312,77 @@ export default defineComponent({
     const unreadDirectMessagesTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline)
     const unreadPublicTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadPublicTimeline)
     const unreadFollowRequests = computed(() => store.state.TimelineSpace.SideMenu.unreadFollowRequests)
-    const lists = computed(() => store.state.TimelineSpace.SideMenu.lists)
-    const tags = computed(() => store.state.TimelineSpace.SideMenu.tags)
     const collapse = computed(() => store.state.TimelineSpace.SideMenu.collapse)
-    const enabledTimelines = computed(() => store.state.TimelineSpace.SideMenu.enabledTimelines)
-    const account = computed(() => store.state.TimelineSpace.account)
-    const server = computed(() => store.state.TimelineSpace.server)
     const themeColor = computed(() => store.state.App.theme.side_menu_color)
     const hideGlobalHeader = computed(() => store.state.GlobalHeader.hide)
+    const userAgent = computed(() => store.state.App.userAgent)
     const activeRoute = computed(() => route.path)
-    const id = computed(() => route.params.id)
+    const id = computed(() => parseInt(route.params.id as string))
 
-    onMounted(() => {
+    onMounted(async () => {
       store.dispatch(`${space}/${ACTION_TYPES.READ_COLLAPSE}`)
-      store.dispatch(`${space}/${ACTION_TYPES.LIST_TAGS}`, parseInt(id.value as string))
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+
+      const client = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+      await fetchLists(client)
+      await fetchTags(a)
+      await confirmTimelines(client)
     })
+
+    const fetchLists = async (client: MegalodonInterface) => {
+      const res = await client.getLists()
+      lists.value = res.data
+    }
+
+    const fetchTags = async (account: LocalAccount) => {
+      tags.value = await win.ipcRenderer.invoke('list-hashtags', account.id)
+    }
+
+    const confirmTimelines = async (client: MegalodonInterface) => {
+      const notification = async () => {
+        return client.getNotifications({ limit: 1 }).catch(() => {
+          enabledTimelines.notification = false
+          enabledTimelines.mention = false
+        })
+      }
+      const direct = async () => {
+        return client.getConversationTimeline({ limit: 1 }).catch(() => {
+          enabledTimelines.direct = false
+        })
+      }
+      const favourite = async () => {
+        return client.getFavourites({ limit: 1 }).catch(() => {
+          enabledTimelines.favourite = false
+        })
+      }
+      const bookmark = async () => {
+        return client.getBookmarks({ limit: 1 }).catch(() => {
+          enabledTimelines.bookmark = false
+        })
+      }
+      const local = async () => {
+        return client.getLocalTimeline({ limit: 1 }).catch(() => {
+          enabledTimelines.local = false
+        })
+      }
+      const pub = async () => {
+        return client.getPublicTimeline({ limit: 1 }).catch(() => {
+          enabledTimelines.public = false
+        })
+      }
+      await Promise.all([notification(), direct(), favourite(), bookmark(), local(), pub()])
+    }
 
     const handleProfile = (command: string) => {
       switch (command) {
         case 'show':
+          if (!account.account) {
+            return
+          }
           store
-            .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.FETCH_ACCOUNT}`, account.value!.accountId)
+            .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.FETCH_ACCOUNT}`, account.account.accountId)
             .then(account => {
               store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
               store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
@@ -315,7 +391,9 @@ export default defineComponent({
           store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
           break
         case 'edit':
-          ;(window as any).shell.openExternal(server.value!.baseURL + '/settings/profile')
+          if (account.server) {
+            ;(window as any).shell.openExternal(account.server.baseURL + '/settings/profile')
+          }
           break
         case 'settings': {
           const url = `/${id.value}/settings`
@@ -347,7 +425,6 @@ export default defineComponent({
       collapse,
       enabledTimelines,
       account,
-      server,
       themeColor,
       hideGlobalHeader,
       activeRoute,

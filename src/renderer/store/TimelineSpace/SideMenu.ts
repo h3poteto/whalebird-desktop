@@ -1,9 +1,6 @@
-import generator, { Entity } from 'megalodon'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import { LocalTag } from '~/src/types/localTag'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
-import { EnabledTimelines } from '~/src/types/enabledTimelines'
 
 const win = (window as any) as MyWindow
 
@@ -15,10 +12,7 @@ export type SideMenuState = {
   unreadDirectMessagesTimeline: boolean
   unreadPublicTimeline: boolean
   unreadFollowRequests: boolean
-  lists: Array<Entity.List>
-  tags: Array<LocalTag>
   collapse: boolean
-  enabledTimelines: EnabledTimelines
 }
 
 const state = (): SideMenuState => ({
@@ -29,21 +23,7 @@ const state = (): SideMenuState => ({
   unreadDirectMessagesTimeline: false,
   unreadPublicTimeline: false,
   unreadFollowRequests: false,
-  lists: [],
-  tags: [],
-  collapse: false,
-  enabledTimelines: {
-    home: true,
-    notification: true,
-    mention: true,
-    direct: true,
-    favourite: true,
-    bookmark: true,
-    local: true,
-    public: true,
-    tag: true,
-    list: true
-  }
+  collapse: false
 })
 
 export const MUTATION_TYPES = {
@@ -54,10 +34,7 @@ export const MUTATION_TYPES = {
   CHANGE_UNREAD_DIRECT_MESSAGES_TIMELINE: 'changeUnreadDirectMessagesTimeline',
   CHANGE_UNREAD_PUBLIC_TIMELINE: 'changeUnreadPublicTimeline',
   CHANGE_UNREAD_FOLLOW_REQUESTS: 'changeUnreadFollowRequests',
-  UPDATE_LISTS: 'updateLists',
-  CHANGE_COLLAPSE: 'changeCollapse',
-  UPDATE_TAGS: 'updateTags',
-  UPDATE_ENABLED_TIMELINES: 'updateEnabledTimelines'
+  CHANGE_COLLAPSE: 'changeCollapse'
 }
 
 const mutations: MutationTree<SideMenuState> = {
@@ -82,130 +59,18 @@ const mutations: MutationTree<SideMenuState> = {
   [MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS]: (state, value: boolean) => {
     state.unreadFollowRequests = value
   },
-  [MUTATION_TYPES.UPDATE_LISTS]: (state, lists: Array<Entity.List>) => {
-    state.lists = lists
-  },
   [MUTATION_TYPES.CHANGE_COLLAPSE]: (state, collapse: boolean) => {
     state.collapse = collapse
-  },
-  [MUTATION_TYPES.UPDATE_TAGS]: (state, tags: Array<LocalTag>) => {
-    state.tags = tags
-  },
-  [MUTATION_TYPES.UPDATE_ENABLED_TIMELINES]: (state, timelines: EnabledTimelines) => {
-    state.enabledTimelines = timelines
   }
 }
 
 export const ACTION_TYPES = {
-  FETCH_LISTS: 'fetchLists',
-  FETCH_FOLLOW_REQUESTS: 'fetchFollowRequests',
-  CONFIRM_TIMELINES: 'confirmTimelines',
-  DISABLE_LOCAL: 'disableLocal',
-  DISABLE_PUBLIC: 'disablePublic',
-  DISABLE_DIRECT: 'disableDirect',
   CLEAR_UNREAD: 'clearUnread',
   CHANGE_COLLAPSE: 'changeCollapse',
-  READ_COLLAPSE: 'readCollapse',
-  LIST_TAGS: 'listTags'
+  READ_COLLAPSE: 'readCollapse'
 }
 
 const actions: ActionTree<SideMenuState, RootState> = {
-  [ACTION_TYPES.FETCH_LISTS]: async ({ commit, rootState }): Promise<Array<Entity.List>> => {
-    const client = generator(
-      rootState.TimelineSpace.server!.sns,
-      rootState.TimelineSpace.server!.baseURL,
-      rootState.TimelineSpace.account!.accessToken,
-      rootState.App.userAgent
-    )
-    const res = await client.getLists()
-    commit(MUTATION_TYPES.UPDATE_LISTS, res.data)
-    return res.data
-  },
-  [ACTION_TYPES.FETCH_FOLLOW_REQUESTS]: async ({ commit, rootState }): Promise<Array<Entity.Account>> => {
-    const client = generator(
-      rootState.TimelineSpace.server!.sns,
-      rootState.TimelineSpace.server!.baseURL,
-      rootState.TimelineSpace.account!.accessToken,
-      rootState.App.userAgent
-    )
-    const res = await client.getFollowRequests()
-    commit(MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS, res.data.length > 0)
-    return res.data
-  },
-  [ACTION_TYPES.CONFIRM_TIMELINES]: async ({ commit, rootState }) => {
-    const client = generator(
-      rootState.TimelineSpace.server!.sns,
-      rootState.TimelineSpace.server!.baseURL,
-      rootState.TimelineSpace.account!.accessToken,
-      rootState.App.userAgent
-    )
-    let timelines: EnabledTimelines = {
-      home: true,
-      notification: true,
-      mention: true,
-      direct: true,
-      favourite: true,
-      bookmark: true,
-      local: true,
-      public: true,
-      tag: true,
-      list: true
-    }
-
-    const notification = async () => {
-      return client.getNotifications({ limit: 1 }).catch(() => {
-        timelines = { ...timelines, notification: false, mention: false }
-      })
-    }
-    const direct = async () => {
-      return client.getConversationTimeline({ limit: 1 }).catch(() => {
-        timelines = { ...timelines, direct: false }
-      })
-    }
-    const favourite = async () => {
-      return client.getFavourites({ limit: 1 }).catch(() => {
-        timelines = { ...timelines, favourite: false }
-      })
-    }
-    const bookmark = async () => {
-      return client.getBookmarks({ limit: 1 }).catch(() => {
-        timelines = { ...timelines, bookmark: false }
-      })
-    }
-    const local = async () => {
-      return client.getLocalTimeline({ limit: 1 }).catch(() => {
-        timelines = { ...timelines, local: false }
-      })
-    }
-    const pub = async () => {
-      return client.getPublicTimeline({ limit: 1 }).catch(() => {
-        timelines = { ...timelines, public: false }
-      })
-    }
-    const tag = async () => {
-      return client.getTagTimeline('whalebird', { limit: 1 }).catch(() => {
-        timelines = { ...timelines, tag: false }
-      })
-    }
-    await Promise.all([notification(), direct(), favourite(), bookmark(), local(), pub(), tag()])
-
-    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
-  },
-  [ACTION_TYPES.DISABLE_LOCAL]: ({ commit, state }) => {
-    let timelines = state.enabledTimelines
-    timelines = { ...timelines, local: false }
-    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
-  },
-  [ACTION_TYPES.DISABLE_PUBLIC]: ({ commit, state }) => {
-    let timelines = state.enabledTimelines
-    timelines = { ...timelines, public: false }
-    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
-  },
-  [ACTION_TYPES.DISABLE_DIRECT]: ({ commit, state }) => {
-    let timelines = state.enabledTimelines
-    timelines = { ...timelines, direct: false }
-    commit(MUTATION_TYPES.UPDATE_ENABLED_TIMELINES, timelines)
-  },
   [ACTION_TYPES.CLEAR_UNREAD]: ({ commit }) => {
     commit(MUTATION_TYPES.CHANGE_UNREAD_HOME_TIMELINE, false)
     commit(MUTATION_TYPES.CHANGE_UNREAD_NOTIFICATIONS, false)
@@ -222,11 +87,6 @@ const actions: ActionTree<SideMenuState, RootState> = {
     const value: boolean = await win.ipcRenderer.invoke('get-collapse')
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
     return value
-  },
-  [ACTION_TYPES.LIST_TAGS]: async ({ commit }, accountId: number) => {
-    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags', accountId)
-    commit(MUTATION_TYPES.UPDATE_TAGS, tags)
-    return tags
   }
 }
 

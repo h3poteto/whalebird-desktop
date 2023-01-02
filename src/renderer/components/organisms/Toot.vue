@@ -137,7 +137,6 @@
               {{ favouritesCount }}
             </div>
             <el-button
-              v-if="bookmarkSupported"
               :class="originalMessage.bookmarked ? 'bookmarked' : 'bookmark'"
               link
               :title="$t('cards.toot.bookmark')"
@@ -322,7 +321,6 @@ export default defineComponent({
     const language = computed(() => store.state.App.language)
     const server = computed(() => store.state.TimelineSpace.server)
     const account = computed(() => store.state.TimelineSpace.account)
-    const bookmarkSupported = computed(() => store.state.TimelineSpace.SideMenu.enabledTimelines.bookmark)
     const shortcutEnabled = computed(() => focused.value && !overlaid.value)
     const originalMessage = computed(() => {
       if (message.value.reblog && !message.value.quote) {
@@ -679,7 +677,6 @@ export default defineComponent({
       language,
       server,
       account,
-      bookmarkSupported,
       originalMessage,
       timestamp,
       readableTimestamp,

@@ -42,8 +42,6 @@ const state = (): JumpState => {
         path: 'direct-messages'
       }
     ],
-    listChannelList: [],
-    tagChannelList: [],
     selectedChannel: {
       name: i18n.t('side_menu.home'),
       path: 'home'

@@ -104,9 +104,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
       throw new AccountLoadError()
     })
 
-    dispatch('TimelineSpace/SideMenu/fetchLists', null, { root: true })
-    dispatch('TimelineSpace/SideMenu/fetchFollowRequests', null, { root: true })
-    dispatch('TimelineSpace/SideMenu/confirmTimelines', null, { root: true })
     await dispatch(ACTION_TYPES.LOAD_SETTING)
     await dispatch(ACTION_TYPES.FETCH_FILTERS)
     commit(MUTATION_TYPES.CHANGE_LOADING, false)

@@ -1,8 +1,6 @@
 import router from '@/router'
 import i18n from '~/src/config/i18n'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import { Entity } from 'megalodon'
-import { LocalTag } from '~/src/types/localTag'
 import { RootState } from '@/store'
 
 export type Channel = {
@@ -14,8 +12,6 @@ export type JumpState = {
   modalOpen: boolean
   channel: string
   defaultChannelList: Array<Channel>
-  listChannelList: Array<Channel>
-  tagChannelList: Array<Channel>
   selectedChannel: Channel
 }
 
@@ -60,8 +56,6 @@ const state = (): JumpState => ({
       path: 'direct-messages'
     }
   ],
-  listChannelList: [],
-  tagChannelList: [],
   selectedChannel: {
     name: i18n.t('side_menu.home'),
     path: 'home'
@@ -71,9 +65,7 @@ const state = (): JumpState => ({
 export const MUTATION_TYPES = {
   CHANGE_MODAL: 'changeModal',
   UPDATE_CHANNEL: 'updateChannel',
-  CHANGE_SELECTED: 'changeSelected',
-  UPDATE_LIST_CHANNEL: 'updateListChannel',
-  UPDATE_TAG_CHANNEL: 'updateTagChannel'
+  CHANGE_SELECTED: 'changeSelected'
 }
 
 const mutations: MutationTree<JumpState> = {
@@ -85,32 +77,12 @@ const mutations: MutationTree<JumpState> = {
   },
   [MUTATION_TYPES.CHANGE_SELECTED]: (state, channel: Channel) => {
     state.selectedChannel = channel
-  },
-  [MUTATION_TYPES.UPDATE_LIST_CHANNEL]: (state, lists: Array<Entity.List>) => {
-    state.listChannelList = lists.map(l => {
-      const channel: Channel = {
-        name: `#${l.title}`,
-        path: `lists/${l.id}`
-      }
-      return channel
-    })
-  },
-  [MUTATION_TYPES.UPDATE_TAG_CHANNEL]: (state, tags: Array<LocalTag>) => {
-    state.tagChannelList = tags.map(t => {
-      const channel: Channel = {
-        name: `#${t.tagName}`,
-        path: `hashtag/${t.tagName}`
-      }
-      return channel
-    })
   }
 }
 
 export const ACTION_TYPES = {
   JUMP_CURRENT_SELECTED: 'jumpCurrentSelected',
-  JUMP: 'jump',
-  SYNC_LIST_CHANNEL: 'syncListChannel',
-  SYNC_TAG_CHANNEL: 'syncTagChannel'
+  JUMP: 'jump'
 }
 
 const actions: ActionTree<JumpState, RootState> = {
@@ -121,12 +93,6 @@ const actions: ActionTree<JumpState, RootState> = {
   [ACTION_TYPES.JUMP]: ({ commit, rootState }, channel: Channel) => {
     commit(MUTATION_TYPES.CHANGE_MODAL, false)
     router.push({ path: `/${rootState.TimelineSpace.account!.id}/${channel.path}` })
-  },
-  [ACTION_TYPES.SYNC_LIST_CHANNEL]: ({ commit, rootState }) => {
-    commit(MUTATION_TYPES.UPDATE_LIST_CHANNEL, rootState.TimelineSpace.SideMenu.lists)
-  },
-  [ACTION_TYPES.SYNC_TAG_CHANNEL]: ({ commit, rootState }) => {
-    commit(MUTATION_TYPES.UPDATE_TAG_CHANNEL, rootState.TimelineSpace.SideMenu.tags)
   }
 }
 
