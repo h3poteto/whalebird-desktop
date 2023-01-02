@@ -18,7 +18,6 @@ import SettingsFiltersNew from '@/components/Settings/Filters/New.vue'
 import TimelineSpace from '@/components/TimelineSpace.vue'
 import TimelineSpaceContentsHome from '@/components/TimelineSpace/Contents/Home.vue'
 import TimelineSpaceContentsNotifications from '@/components/TimelineSpace/Contents/Notifications.vue'
-import TimelineSpaceContentsMentions from '@/components/TimelineSpace/Contents/Mentions.vue'
 import TimelineSpaceContentsFavourites from '@/components/TimelineSpace/Contents/Favourites.vue'
 import TimelineSpaceContentsLocal from '@/components/TimelineSpace/Contents/Local.vue'
 import TimelineSpaceContentsPublic from '@/components/TimelineSpace/Contents/Public.vue'
@@ -122,11 +121,6 @@ const routes = [
             path: 'notifications',
             name: 'notifications',
             component: TimelineSpaceContentsNotifications
-          },
-          {
-            path: 'mentions',
-            name: 'mentions',
-            component: TimelineSpaceContentsMentions
           },
           {
             path: 'follow-requests',
