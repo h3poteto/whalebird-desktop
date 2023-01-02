@@ -223,8 +223,8 @@ const actions: ActionTree<SideMenuState, RootState> = {
     commit(MUTATION_TYPES.CHANGE_COLLAPSE, value)
     return value
   },
-  [ACTION_TYPES.LIST_TAGS]: async ({ commit }) => {
-    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags')
+  [ACTION_TYPES.LIST_TAGS]: async ({ commit }, accountId: number) => {
+    const tags: Array<LocalTag> = await win.ipcRenderer.invoke('list-hashtags', accountId)
     commit(MUTATION_TYPES.UPDATE_TAGS, tags)
     return tags
   }

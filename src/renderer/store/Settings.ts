@@ -5,20 +5,20 @@ import { Module, MutationTree } from 'vuex'
 import { RootState } from '@/store'
 
 export type SettingsState = {
-  accountID: string | null
+  accountId: number | null
 }
 
 const state = (): SettingsState => ({
-  accountID: null
+  accountId: null
 })
 
 export const MUTATION_TYPES = {
-  CHANGE_ACCOUNT_ID: 'changeAccountID'
+  CHANGE_ACCOUNT_ID: 'changeAccountId'
 }
 
 const mutations: MutationTree<SettingsState> = {
-  [MUTATION_TYPES.CHANGE_ACCOUNT_ID]: (state, id: string) => {
-    state.accountID = id
+  [MUTATION_TYPES.CHANGE_ACCOUNT_ID]: (state, id: number) => {
+    state.accountId = id
   }
 }
 

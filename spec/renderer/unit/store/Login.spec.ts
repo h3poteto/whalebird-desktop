@@ -5,15 +5,17 @@ describe('Login', () => {
     let state: LoginState
     beforeEach(() => {
       state = {
-        selectedInstance: null,
+        domain: null,
         searching: false,
+        server: null,
+        appData: null,
         sns: 'mastodon'
       }
     })
     describe('changeInstance', () => {
       it('should be changed', () => {
-        Login.mutations![MUTATION_TYPES.CHANGE_INSTANCE](state, 'pleroma.io')
-        expect(state.selectedInstance).toEqual('pleroma.io')
+        Login.mutations![MUTATION_TYPES.CHANGE_DOMAIN](state, 'pleroma.io')
+        expect(state.domain).toEqual('pleroma.io')
       })
     })
     describe('changeSearching', () => {

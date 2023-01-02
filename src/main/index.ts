@@ -11,13 +11,12 @@ import {
   BrowserWindowConstructorOptions,
   MenuItemConstructorOptions,
   IpcMainEvent,
-  Notification,
-  NotificationConstructorOptions,
   nativeTheme,
-  IpcMainInvokeEvent
+  IpcMainInvokeEvent,
+  Notification,
+  NotificationConstructorOptions
 } from 'electron'
 
-import Datastore from 'nedb'
 import crypto from 'crypto'
 import log from 'electron-log'
 import windowStateKeeper from 'electron-window-state'
@@ -26,34 +25,32 @@ import path from 'path'
 import ContextMenu from 'electron-context-menu'
 import { initSplashScreen, Config } from '@trodi/electron-splashscreen'
 import openAboutWindow from 'about-window'
-import generator, { Entity, detector, NotificationType, OAuth } from 'megalodon'
-import sanitizeHtml from 'sanitize-html'
+import generator, { detector, OAuth, NotificationType, Entity } from 'megalodon'
 import AutoLaunch from 'auto-launch'
 import minimist from 'minimist'
+import sanitizeHtml from 'sanitize-html'
 
-import { getAccount, insertAccount, listAccounts } from './account'
-// import { StreamingURL, UserStreaming, DirectStreaming, LocalStreaming, PublicStreaming, ListStreaming, TagStreaming } from './websocket'
+// db
+import { backwardAccount, forwardAccount, getAccount, insertAccount, listAccounts, removeAccount, removeAllAccounts } from './db/account'
+import { insertTag, listTags, removeTag } from './db/hashtags'
+import { createOrUpdateSetting, getSetting } from './db/setting'
+import { insertServer } from './db/server'
+
+import { DirectStreaming, ListStreaming, LocalStreaming, PublicStreaming, StreamingURL, TagStreaming, UserStreaming } from './websocket'
 import Preferences from './preferences'
 import Fonts from './fonts'
-import Hashtags from './hashtags'
 import i18next from '~/src/config/i18n'
 import { i18n as I18n } from 'i18next'
 import Language, { LanguageType } from '../constants/language'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalTag } from '~/src/types/localTag'
-import { Notify } from '~/src/types/notify'
-// import { StreamingError } from '~/src/errors/streamingError'
-import HashtagCache from './cache/hashtag'
-import AccountCache from './cache/account'
-import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { Proxy } from '~/src/types/proxy'
 import ProxyConfiguration from './proxy'
 import { Menu as MenuPreferences } from '~/src/types/preference'
 import newDB from './database'
-import Settings from './settings'
-import { BaseSettings, Setting } from '~/src/types/setting'
-import { insertServer } from './server'
-import { LocalServer } from '~src/types/localServer'
+import { Setting } from '~/src/types/setting'
+import { LocalServer } from '~/src/types/localServer'
+import { Notify } from '~/src/types/notify'
 
 /**
  * Context menu
@@ -116,7 +113,6 @@ const splashURL =
     ? path.resolve(__dirname, '../../static/splash-screen.html')
     : path.join(__dirname, '/static/splash-screen.html')
 
-// https://github.com/louischatriot/nedb/issues/459
 const userData = app.getPath('userData')
 const appPath = app.getPath('exe')
 
@@ -124,23 +120,6 @@ const databasePath = process.env.NODE_ENV === 'production' ? userData + '/db/wha
 const db = newDB(databasePath)
 
 const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
-
-const hashtagsDBPath = process.env.NODE_ENV === 'production' ? userData + '/db/hashtags.db' : 'hashtags.db'
-const hashtagsDB = new Datastore({
-  filename: hashtagsDBPath,
-  autoload: true
-})
-
-const settingsDBPath = process.env.NODE_ENV === 'production' ? userData + './db/settings.json' : 'settings.json'
-
-/**
- * Cache path
- */
-const hashtagCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/hashtag.db' : 'cache/hashtag.db'
-const hashtagCache = new HashtagCache(hashtagCachePath)
-
-const accountCachePath = process.env.NODE_ENV === 'production' ? userData + '/cache/account.db' : 'cache/account.db'
-const accountCache = new AccountCache(accountCachePath)
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
@@ -163,7 +142,7 @@ if (process.platform !== 'darwin') {
   })
 }
 
-async function changeAccount([account, _server]: [LocalAccount, LocalServer], index: number) {
+async function changeAccount(account: LocalAccount, index: number) {
   // Sometimes application is closed to tray.
   // In this time, mainWindow in not exist, so we have to create window.
   if (mainWindow === null) {
@@ -241,7 +220,7 @@ async function createWindow() {
     return {
       label: s.domain,
       accelerator: `CmdOrCtrl+${index + 1}`,
-      click: () => changeAccount([a, s], index)
+      click: () => changeAccount(a, index)
     }
   })
 
@@ -391,7 +370,15 @@ Options
 // Do not lower the rendering priority of Chromium when background
 app.commandLine.appendSwitch('disable-renderer-backgrounding')
 
-app.on('ready', createWindow)
+app.on('ready', async () => {
+  createWindow()
+  const accounts = await listAccounts(db)
+  const preferences = new Preferences(preferencesDBPath)
+  startUserStreamings(accounts, proxyConfiguration, preferences)
+  startDirectStreamings(accounts, proxyConfiguration)
+  startLocalStreamings(accounts, proxyConfiguration)
+  startPublicStreamings(accounts, proxyConfiguration)
+})
 
 app.on('window-all-closed', () => {
   // this action is called when user click the close button.
@@ -493,66 +480,50 @@ ipcMain.handle('get-local-account', async (_: IpcMainInvokeEvent, id: number) =>
   return account
 })
 
-// ipcMain.handle('update-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-//   const proxy = await proxyConfiguration.forMastodon()
-//   const ac: LocalAccount = await accountRepo.refresh(acct, proxy)
-//   return ac
-// })
+ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: number) => {
+  await removeAccount(db, id)
 
-// ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: string) => {
-//   const accountId = await accountRepo.removeAccount(id)
+  const accounts = await listAccounts(db)
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map(([account, server], index) => {
+    return {
+      label: server.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(account, index)
+    }
+  })
 
-//   const accounts = await listAccounts()
-//   const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
-//     return {
-//       label: a.domain,
-//       accelerator: `CmdOrCtrl+${index + 1}`,
-//       click: () => changeAccount(a, index)
-//     }
-//   })
+  await updateApplicationMenu(accountsChange)
+  await updateDockMenu(accountsChange)
+  if (process.platform !== 'darwin' && tray !== null) {
+    tray.setContextMenu(TrayMenu(accountsChange, i18next))
+  }
+})
 
-//   await updateApplicationMenu(accountsChange)
-//   await updateDockMenu(accountsChange)
-//   if (process.platform !== 'darwin' && tray !== null) {
-//     tray.setContextMenu(TrayMenu(accountsChange, i18next))
-//   }
+ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
+  await forwardAccount(db, acct)
+})
 
-//   stopUserStreaming(accountId)
-// })
+ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
+  await backwardAccount(db, acct)
+})
 
-// ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-//   await accountRepo.forwardAccount(acct)
-// })
+ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
+  await removeAllAccounts(db)
+  const accounts = await listAccounts(db)
+  const accountsChange: Array<MenuItemConstructorOptions> = accounts.map(([account, server], index) => {
+    return {
+      label: server.domain,
+      accelerator: `CmdOrCtrl+${index + 1}`,
+      click: () => changeAccount(account, index)
+    }
+  })
 
-// ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-//   await accountRepo.backwardAccount(acct)
-// })
-
-// ipcMain.handle('refresh-accounts', async (_: IpcMainInvokeEvent) => {
-//   const proxy = await proxyConfiguration.forMastodon()
-//   const accounts = await accountRepo.refreshAccounts(proxy)
-
-//   return accounts
-// })
-
-// ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
-//   await accountRepo.removeAll()
-
-//   const accounts = await listAccounts()
-//   const accountsChange: Array<MenuItemConstructorOptions> = accounts.map((a, index) => {
-//     return {
-//       label: a.domain,
-//       accelerator: `CmdOrCtrl+${index + 1}`,
-//       click: () => changeAccount(a, index)
-//     }
-//   })
-
-//   await updateApplicationMenu(accountsChange)
-//   await updateDockMenu(accountsChange)
-//   if (process.platform !== 'darwin' && tray !== null) {
-//     tray.setContextMenu(TrayMenu(accountsChange, i18next))
-//   }
-// })
+  await updateApplicationMenu(accountsChange)
+  await updateDockMenu(accountsChange)
+  if (process.platform !== 'darwin' && tray !== null) {
+    tray.setContextMenu(TrayMenu(accountsChange, i18next))
+  }
+})
 
 ipcMain.handle('change-auto-launch', async (_: IpcMainInvokeEvent, enable: boolean) => {
   if (launcher) {
@@ -574,362 +545,6 @@ ipcMain.on('reset-badge', () => {
     app.dock.setBadge('')
   }
 })
-
-// // user streaming
-// const userStreamings: { [key: string]: UserStreaming | null } = {}
-
-// ipcMain.on('start-all-user-streamings', (event: IpcMainEvent, accounts: Array<string>) => {
-//   accounts.map(async id => {
-//     const acct = await accountRepo.getAccount(id)
-//     try {
-//       // Stop old user streaming
-//       if (userStreamings[id]) {
-//         userStreamings[id]!.stop()
-//         userStreamings[id] = null
-//       }
-//       const proxy = await proxyConfiguration.forMastodon()
-//       const sns = await detector(acct.baseURL, proxy)
-//       const url = await StreamingURL(sns, acct, proxy)
-//       userStreamings[id] = new UserStreaming(sns, acct, url, proxy)
-//       userStreamings[id]!.start(
-//         async (update: Entity.Status) => {
-//           if (!event.sender.isDestroyed()) {
-//             event.sender.send(`update-start-all-user-streamings-${id}`, update)
-//           }
-//           // Cache hashtag
-//           update.tags.map(async tag => {
-//             await hashtagCache.insertHashtag(tag.name).catch(err => console.error(err))
-//           })
-//           // Cache account
-//           await accountCache.insertAccount(id, update.account.acct).catch(err => console.error(err))
-//         },
-//         async (notification: Entity.Notification) => {
-//           await publishNotification(notification, event, id)
-
-//           // In macOS and Windows, sometimes window is closed (not quit).
-//           // But streamings are always running.
-//           // When window is closed, we can not send event to webContents; because it is already destroyed.
-//           // So we have to guard it.
-//           if (!event.sender.isDestroyed()) {
-//             // To update notification timeline
-//             event.sender.send(`notification-start-all-user-streamings-${id}`, notification)
-
-//             // Does not exist a endpoint for only mention. And mention is a part of notification.
-//             // So we have to get mention from notification.
-//             if (notification.type === 'mention') {
-//               event.sender.send(`mention-start-all-user-streamings-${id}`, notification)
-//             }
-//           }
-//         },
-//         (statusId: string) => {
-//           if (!event.sender.isDestroyed()) {
-//             event.sender.send(`delete-start-all-user-streamings-${id}`, statusId)
-//           }
-//         },
-//         (err: Error) => {
-//           log.error(err)
-//           // In macOS, sometimes window is closed (not quit).
-//           // When window is closed, we can not send event to webContents; because it is destroyed.
-//           // So we have to guard it.
-//           if (!event.sender.isDestroyed()) {
-//             event.sender.send('error-start-all-user-streamings', err)
-//           }
-//         }
-//       )
-//       // Generate notifications received while the app was not running
-//       const client = generator(sns, acct.baseURL, acct.accessToken, 'Whalebird', proxy)
-//       const marker = await getMarker(client, id)
-//       if (marker !== null) {
-//         const unreadResponse = await client.getNotifications({ min_id: marker.last_read_id })
-//         unreadResponse.data.map(async notification => {
-//           await publishNotification(notification, event, id)
-//         })
-//       }
-//     } catch (err: any) {
-//       log.error(err)
-//       const streamingError = new StreamingError(err.message, acct.domain)
-//       if (!event.sender.isDestroyed()) {
-//         event.sender.send('error-start-all-user-streamings', streamingError)
-//       }
-//     }
-//   })
-// })
-
-// ipcMain.on('stop-all-user-streamings', () => {
-//   Object.keys(userStreamings).forEach((key: string) => {
-//     if (userStreamings[key]) {
-//       userStreamings[key]!.stop()
-//       userStreamings[key] = null
-//     }
-//   })
-// })
-
-// /**
-//  * Stop an user streaming in all user streamings.
-//  * @param id specified user id in nedb.
-//  */
-// const stopUserStreaming = (id: string) => {
-//   Object.keys(userStreamings).forEach((key: string) => {
-//     if (key === id && userStreamings[id]) {
-//       userStreamings[id]!.stop()
-//       userStreamings[id] = null
-//     }
-//   })
-// }
-
-// let directMessagesStreaming: DirectStreaming | null = null
-
-// ipcMain.on('start-directmessages-streaming', async (event: IpcMainEvent, id: string) => {
-//   try {
-//     const acct = await accountRepo.getAccount(id)
-
-//     // Stop old directmessages streaming
-//     if (directMessagesStreaming !== null) {
-//       directMessagesStreaming.stop()
-//       directMessagesStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     directMessagesStreaming = new DirectStreaming(sns, acct, url, proxy)
-//     directMessagesStreaming.start(
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-directmessages-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-directmessages-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-directmessages-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-directmessages-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-directmessages-streaming', () => {
-//   if (directMessagesStreaming !== null) {
-//     directMessagesStreaming.stop()
-//     directMessagesStreaming = null
-//   }
-// })
-
-// let localStreaming: LocalStreaming | null = null
-
-// ipcMain.on('start-local-streaming', async (event: IpcMainEvent, id: string) => {
-//   try {
-//     const acct = await accountRepo.getAccount(id)
-
-//     // Stop old local streaming
-//     if (localStreaming !== null) {
-//       localStreaming.stop()
-//       localStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     localStreaming = new LocalStreaming(sns, acct, url, proxy)
-//     localStreaming.start(
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-local-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-local-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-local-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-local-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-local-streaming', () => {
-//   if (localStreaming !== null) {
-//     localStreaming.stop()
-//     localStreaming = null
-//   }
-// })
-
-// let publicStreaming: PublicStreaming | null = null
-
-// ipcMain.on('start-public-streaming', async (event: IpcMainEvent, id: string) => {
-//   try {
-//     const acct = await accountRepo.getAccount(id)
-
-//     // Stop old public streaming
-//     if (publicStreaming !== null) {
-//       publicStreaming.stop()
-//       publicStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     publicStreaming = new PublicStreaming(sns, acct, url, proxy)
-//     publicStreaming.start(
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-public-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-public-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-public-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-public-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-public-streaming', () => {
-//   if (publicStreaming !== null) {
-//     publicStreaming.stop()
-//     publicStreaming = null
-//   }
-// })
-
-// let listStreaming: ListStreaming | null = null
-
-// type ListStreamingOpts = {
-//   listID: string
-//   accountID: string
-// }
-
-// ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListStreamingOpts) => {
-//   const { listID, accountID } = obj
-//   try {
-//     const acct = await accountRepo.getAccount(accountID)
-
-//     // Stop old list streaming
-//     if (listStreaming !== null) {
-//       listStreaming.stop()
-//       listStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     listStreaming = new ListStreaming(sns, acct, url, proxy)
-//     listStreaming.start(
-//       listID,
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-list-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-list-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-list-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-list-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-list-streaming', () => {
-//   if (listStreaming !== null) {
-//     listStreaming.stop()
-//     listStreaming = null
-//   }
-// })
-
-// let tagStreaming: TagStreaming | null = null
-
-// type TagStreamingOpts = {
-//   tag: string
-//   accountID: string
-// }
-
-// ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: TagStreamingOpts) => {
-//   const { tag, accountID } = obj
-//   try {
-//     const acct = await accountRepo.getAccount(accountID)
-
-//     // Stop old tag streaming
-//     if (tagStreaming !== null) {
-//       tagStreaming.stop()
-//       tagStreaming = null
-//     }
-//     const proxy = await proxyConfiguration.forMastodon()
-//     const sns = await detector(acct.baseURL, proxy)
-//     const url = await StreamingURL(sns, acct, proxy)
-//     tagStreaming = new TagStreaming(sns, acct, url, proxy)
-//     tagStreaming.start(
-//       tag,
-//       (update: Entity.Status) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('update-start-tag-streaming', update)
-//         }
-//       },
-//       (id: string) => {
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('delete-start-tag-streaming', id)
-//         }
-//       },
-//       (err: Error) => {
-//         log.error(err)
-//         if (!event.sender.isDestroyed()) {
-//           event.sender.send('error-start-tag-streaming', err)
-//         }
-//       }
-//     )
-//   } catch (err) {
-//     log.error(err)
-//     if (!event.sender.isDestroyed()) {
-//       event.sender.send('error-start-tag-streaming', err)
-//     }
-//   }
-// })
-
-// ipcMain.on('stop-tag-streaming', () => {
-//   if (tagStreaming !== null) {
-//     tagStreaming.stop()
-//     tagStreaming = null
-//   }
-// })
 
 // sounds
 ipcMain.on('fav-rt-action-sound', () => {
@@ -1068,7 +683,7 @@ ipcMain.handle('change-language', async (_: IpcMainInvokeEvent, value: string) =
     return {
       label: s.domain,
       accelerator: `CmdOrCtrl+${index + 1}`,
-      click: () => changeAccount([a, s], index)
+      click: () => changeAccount(a, index)
     }
   })
 
@@ -1113,20 +728,17 @@ ipcMain.handle('update-spellchecker-languages', async (_: IpcMainInvokeEvent, la
 })
 
 // hashtag
-ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, tag: string) => {
-  const hashtags = new Hashtags(hashtagsDB)
-  await hashtags.insertTag(tag)
+ipcMain.handle('save-hashtag', async (_: IpcMainInvokeEvent, req: { accountId: number; tag: string }) => {
+  await insertTag(db, req.accountId, req.tag)
 })
 
-ipcMain.handle('list-hashtags', async (_: IpcMainInvokeEvent) => {
-  const hashtags = new Hashtags(hashtagsDB)
-  const tags = await hashtags.listTags()
+ipcMain.handle('list-hashtags', async (_: IpcMainInvokeEvent, accountId: number) => {
+  const tags = await listTags(db, accountId)
   return tags
 })
 
 ipcMain.handle('remove-hashtag', async (_: IpcMainInvokeEvent, tag: LocalTag) => {
-  const hashtags = new Hashtags(hashtagsDB)
-  await hashtags.removeTag(tag)
+  await removeTag(db, tag)
 })
 
 // Fonts
@@ -1138,48 +750,37 @@ ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
 // Settings
 ipcMain.handle(
   'get-account-setting',
-  async (_: IpcMainInvokeEvent, accountID: string): Promise<Setting> => {
-    const settings = new Settings(settingsDBPath)
-    const setting = await settings.get(accountID)
+  async (_: IpcMainInvokeEvent, accountId: number): Promise<Setting> => {
+    const setting = await getSetting(db, accountId)
     return setting
   }
 )
 
 ipcMain.handle(
   'update-account-setting',
-  async (_: IpcMainInvokeEvent, setting: Setting): Promise<BaseSettings> => {
-    const settings = new Settings(settingsDBPath)
-    const res = await settings.update(setting)
+  async (_: IpcMainInvokeEvent, setting: Setting): Promise<Setting> => {
+    console.log(setting)
+    const res = await createOrUpdateSetting(db, setting)
     return res
   }
 )
 
 // Cache
 ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
-  const tags = await hashtagCache.listTags()
-  return tags
+  // TODO:
+  return []
 })
 
-ipcMain.handle('insert-cache-hashtags', async (_: IpcMainInvokeEvent, tags: Array<string>) => {
-  await Promise.all(
-    tags.map(async name => {
-      await hashtagCache.insertHashtag(name).catch(err => console.error(err))
-    })
-  )
+ipcMain.handle('insert-cache-hashtags', async (_: IpcMainInvokeEvent) => {
+  return null
 })
 
-ipcMain.handle('get-cache-accounts', async (_: IpcMainInvokeEvent, ownerID: string) => {
-  const accounts = await accountCache.listAccounts(ownerID)
-  return accounts
+ipcMain.handle('get-cache-accounts', async (_: IpcMainInvokeEvent) => {
+  return []
 })
 
-ipcMain.handle('insert-cache-accounts', async (_: IpcMainInvokeEvent, obj: InsertAccountCache) => {
-  const { ownerID, accts } = obj
-  Promise.all(
-    accts.map(async acct => {
-      await accountCache.insertAccount(ownerID, acct).catch(err => console.error(err))
-    })
-  )
+ipcMain.handle('insert-cache-accounts', async (_: IpcMainInvokeEvent) => {
+  return []
 })
 
 // Application control
@@ -1435,6 +1036,7 @@ const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n)
     {
       label: i18n.t('main_menu.application.quit'),
       click: () => {
+        stopAllStreamings()
         mainWindow!.destroy()
       }
     }
@@ -1467,15 +1069,148 @@ async function reopenWindow() {
   }
 }
 
-const publishNotification = async (notification: Entity.Notification, event: IpcMainEvent | IpcMainInvokeEvent, id: string) => {
-  const preferences = new Preferences(preferencesDBPath)
+const decodeLanguage = (lang: string): LanguageType => {
+  const l = Object.keys(Language).find(k => Language[k].key === lang)
+  if (l === undefined) {
+    return Language.en
+  } else {
+    return Language[l]
+  }
+}
+
+//----------------------------------------------
+// Streamings
+//----------------------------------------------
+const userStreamings: { [key: number]: UserStreaming } = {}
+const directStreamings: { [key: number]: DirectStreaming } = {}
+const localStreamings: { [key: number]: DirectStreaming } = {}
+const publicStreamings: { [key: number]: DirectStreaming } = {}
+
+const stopAllStreamings = () => {
+  Object.keys(userStreamings).forEach((key: string) => {
+    userStreamings[parseInt(key)].stop()
+  })
+  Object.keys(directStreamings).forEach((key: string) => {
+    directStreamings[parseInt(key)].stop()
+  })
+  Object.keys(localStreamings).forEach((key: string) => [localStreamings[parseInt(key)].stop()])
+  Object.keys(publicStreamings).forEach((key: string) => {
+    publicStreamings[parseInt(key)].stop()
+  })
+}
+
+const startUserStreamings = async (
+  accounts: Array<[LocalAccount, LocalServer]>,
+  proxyConfiguration: ProxyConfiguration,
+  preferences: Preferences
+) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  accounts.forEach(async ([account, server]) => {
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    userStreamings[account.id] = new UserStreaming(server.sns, account, url, proxy)
+    userStreamings[account.id].start(
+      async (update: Entity.Status) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`update-user-streamings-${account.id}`, update)
+        }
+      },
+      async (notification: Entity.Notification) => {
+        await publishNotification(notification, account.id, preferences)
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`notification-user-streamings-${account.id}`, notification)
+        }
+      },
+      (statusId: string) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`delete-user-streamings-${account.id}`, statusId)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  })
+
+  return userStreamings
+}
+
+const startDirectStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  accounts.forEach(async ([account, server]) => {
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    directStreamings[account.id] = new DirectStreaming(server.sns, account, url, proxy)
+    directStreamings[account.id].start(
+      (update: Entity.Status) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`update-direct-streamings-${account.id}`, update)
+        }
+      },
+      (id: string) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`delete-direct-streamings-${account.id}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  })
+}
+
+const startLocalStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  accounts.forEach(async ([account, server]) => {
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    localStreamings[account.id] = new LocalStreaming(server.sns, account, url, proxy)
+    localStreamings[account.id].start(
+      (update: Entity.Status) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`update-local-streamings-${account.id}`, update)
+        }
+      },
+      (id: string) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`delete-local-streamings-${account.id}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  })
+}
+
+const startPublicStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  accounts.forEach(async ([account, server]) => {
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    publicStreamings[account.id] = new PublicStreaming(server.sns, account, url, proxy)
+    publicStreamings[account.id].start(
+      (update: Entity.Status) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`update-public-streamings-${account.id}`, update)
+        }
+      },
+      (id: string) => {
+        if (!mainWindow?.webContents.isDestroyed()) {
+          mainWindow?.webContents.send(`delete-public-streamings-${account.id}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  })
+}
+
+const publishNotification = async (notification: Entity.Notification, accountId: number, preferences: Preferences) => {
   const conf = await preferences.load()
   const options = createNotification(notification, conf.notification.notify)
   if (options !== null) {
     const notify = new Notification(options)
     notify.on('click', _ => {
-      if (!event.sender.isDestroyed()) {
-        event.sender.send('open-notification-tab', id)
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send('open-notification-tab', accountId)
       }
     })
     notify.show()
@@ -1593,11 +1328,88 @@ const username = (account: Entity.Account): string => {
   }
 }
 
-const decodeLanguage = (lang: string): LanguageType => {
-  const l = Object.keys(Language).find(k => Language[k].key === lang)
-  if (l === undefined) {
-    return Language.en
-  } else {
-    return Language[l]
-  }
+//----------------------------------------
+// List streamings
+//----------------------------------------
+const listStreamings: { [key: number]: ListStreaming } = {}
+
+type ListStreamingOpts = {
+  listId: string
+  accountId: number
 }
+
+ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListStreamingOpts) => {
+  const { listId, accountId } = obj
+  try {
+    const [account, server] = await getAccount(db, accountId)
+
+    // Stop old list streaming
+    if (listStreamings[accountId] !== undefined) {
+      listStreamings[accountId].stop()
+    }
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    listStreamings[accountId] = new ListStreaming(server.sns, account, url, proxy)
+    listStreamings[accountId].start(
+      listId,
+      (update: Entity.Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(`update-list-streamings-${accountId}`, update)
+        }
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(`delete-list-streamings-${accountId}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  } catch (err) {
+    log.error(err)
+  }
+})
+
+//----------------------------------------
+// Tag streamings
+//----------------------------------------
+const tagStreamings: { [key: number]: TagStreaming } = {}
+
+type TagStreamingOpts = {
+  tag: string
+  accountId: number
+}
+
+ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: TagStreamingOpts) => {
+  const { tag, accountId } = obj
+  try {
+    const [account, server] = await getAccount(db, accountId)
+
+    // Stop old tag streaming
+    if (tagStreamings[accountId] !== undefined) {
+      tagStreamings[accountId].stop()
+    }
+    const proxy = await proxyConfiguration.forMastodon()
+    const url = await StreamingURL(server.sns, account, server, proxy)
+    tagStreamings[accountId] = new TagStreaming(server.sns, account, url, proxy)
+    tagStreamings[accountId].start(
+      tag,
+      (update: Entity.Status) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(`update-tag-streamings-${accountId}`, update)
+        }
+      },
+      (id: string) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(`delete-tag-streamings-${accountId}`, id)
+        }
+      },
+      (err: Error) => {
+        log.error(err)
+      }
+    )
+  } catch (err) {
+    log.error(err)
+  }
+})
