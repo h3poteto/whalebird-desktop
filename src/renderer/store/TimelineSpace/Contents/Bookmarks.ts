@@ -100,7 +100,7 @@ const actions: ActionTree<BookmarksState, RootState> = {
     // Parse link header
     try {
       const link = parse(res.headers.link)
-      if (link !== null) {
+      if (link !== null && link.next) {
         commit(MUTATION_TYPES.CHANGE_MAX_ID, link.next.max_id)
       } else {
         commit(MUTATION_TYPES.CHANGE_MAX_ID, null)

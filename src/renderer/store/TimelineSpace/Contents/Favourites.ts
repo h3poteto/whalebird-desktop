@@ -2,16 +2,16 @@ import generator, { Entity } from 'megalodon'
 import parse from 'parse-link-header'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
 
 export type FavouritesState = {
   favourites: Array<Entity.Status>
-  lazyLoading: boolean
   maxId: string | null
 }
 
 const state = (): FavouritesState => ({
   favourites: [],
-  lazyLoading: false,
   maxId: null
 })
 
@@ -20,7 +20,6 @@ export const MUTATION_TYPES = {
   INSERT_FAVOURITES: 'insertFavourites',
   UPDATE_TOOT: 'updateToot',
   DELETE_TOOT: 'deleteToot',
-  CHANGE_LAZY_LOADING: 'changeLazyLoading',
   CHANGE_MAX_ID: 'changeMaxId'
 }
 
@@ -56,9 +55,6 @@ const mutations: MutationTree<FavouritesState> = {
       }
     })
   },
-  [MUTATION_TYPES.CHANGE_LAZY_LOADING]: (state, value: boolean) => {
-    state.lazyLoading = value
-  },
   [MUTATION_TYPES.CHANGE_MAX_ID]: (state, id: string | null) => {
     state.maxId = id
   }
@@ -70,19 +66,17 @@ export const ACTION_TYPES = {
 }
 
 const actions: ActionTree<FavouritesState, RootState> = {
-  [ACTION_TYPES.FETCH_FAVOURITES]: async ({ commit, rootState }): Promise<Array<Entity.Status>> => {
-    const client = generator(
-      rootState.TimelineSpace.server!.sns,
-      rootState.TimelineSpace.server!.baseURL,
-      rootState.TimelineSpace.account!.accessToken,
-      rootState.App.userAgent
-    )
+  [ACTION_TYPES.FETCH_FAVOURITES]: async (
+    { commit, rootState },
+    req: { account: LocalAccount; server: LocalServer }
+  ): Promise<Array<Entity.Status>> => {
+    const client = generator(req.server.sns, req.server.baseURL, req.account.accessToken, rootState.App.userAgent)
     const res = await client.getFavourites({ limit: 20 })
     commit(MUTATION_TYPES.UPDATE_FAVOURITES, res.data)
     // Parse link header
     try {
       const link = parse(res.headers.link)
-      if (link !== null) {
+      if (link !== null && link.next) {
         commit(MUTATION_TYPES.CHANGE_MAX_ID, link.next.max_id)
       } else {
         commit(MUTATION_TYPES.CHANGE_MAX_ID, null)
@@ -93,28 +87,20 @@ const actions: ActionTree<FavouritesState, RootState> = {
     }
     return res.data
   },
-  lazyFetchFavourites: async ({ state, commit, rootState }): Promise<Array<Entity.Status> | null> => {
-    if (state.lazyLoading) {
-      return Promise.resolve(null)
-    }
+  lazyFetchFavourites: async (
+    { state, commit, rootState },
+    req: { account: LocalAccount; server: LocalServer }
+  ): Promise<Array<Entity.Status> | null> => {
     if (!state.maxId) {
       return Promise.resolve(null)
     }
-    commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, true)
-    const client = generator(
-      rootState.TimelineSpace.server!.sns,
-      rootState.TimelineSpace.server!.baseURL,
-      rootState.TimelineSpace.account!.accessToken,
-      rootState.App.userAgent
-    )
-    const res = await client.getFavourites({ max_id: state.maxId, limit: 20 }).finally(() => {
-      commit(MUTATION_TYPES.CHANGE_LAZY_LOADING, false)
-    })
+    const client = generator(req.server.sns, req.server.baseURL, req.account.accessToken, rootState.App.userAgent)
+    const res = await client.getFavourites({ max_id: state.maxId, limit: 20 })
     commit(MUTATION_TYPES.INSERT_FAVOURITES, res.data)
     // Parse link header
     try {
       const link = parse(res.headers.link)
-      if (link !== null) {
+      if (link !== null && link.next) {
         commit(MUTATION_TYPES.CHANGE_MAX_ID, link.next.max_id)
       } else {
         commit(MUTATION_TYPES.CHANGE_MAX_ID, null)
