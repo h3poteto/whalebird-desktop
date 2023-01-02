@@ -39,10 +39,7 @@ import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
 import { EventEmitter } from '@/components/event'
-import useReloadable from '@/components/utils/reloadable'
 import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
-import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
-import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Public'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
@@ -56,8 +53,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const i18n = useI18next()
-    const { reloadable } = useReloadable(store, route, i18n)
-    const { j, k, Ctrl_r } = useMagicKeys()
+    const { j, k } = useMagicKeys()
 
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
@@ -73,7 +69,6 @@ export default defineComponent({
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Public.timeline[id.value])
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
-    const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const filters = computed(() => store.getters[`${space}/filters`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
@@ -102,13 +97,6 @@ export default defineComponent({
         el.scrollTop = 0
       }
     })
-    watch(startReload, (newVal, oldVal) => {
-      if (!oldVal && newVal) {
-        reload().finally(() => {
-          store.commit(`TimelineSpace/HeaderMenu/${HEADER_MUTATION.CHANGE_RELOAD}`, false)
-        })
-      }
-    })
 
     watch(focusedId, (newVal, _oldVal) => {
       if (newVal && heading.value) {
@@ -126,9 +114,6 @@ export default defineComponent({
     })
     whenever(logicAnd(k, shortcutEnabled), () => {
       focusPrev()
-    })
-    whenever(logicAnd(Ctrl_r, shortcutEnabled), () => {
-      reload()
     })
 
     const onScroll = (event: Event) => {
@@ -161,14 +146,7 @@ export default defineComponent({
         heading.value = true
       }
     }
-    const reload = async () => {
-      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
-      try {
-        await reloadable()
-      } finally {
-        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
-      }
-    }
+
     const updateToot = (message: Entity.Status) => {
       if (account.account) {
         store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, { status: message, accountId: account.account.id })

@@ -14,7 +14,6 @@ export default function useReloadable(store: Store<RootState>, route: RouteLocat
       })
       throw err
     })
-    await store.dispatch(`TimelineSpace/${ACTION_TYPES.FETCH_CONTENTS_TIMELINES}`)
     return account
   }
 
