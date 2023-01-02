@@ -87,7 +87,6 @@ export const ACTION_TYPES = {
   FETCH_CONTENTS_TIMELINES: 'fetchContentsTimelines',
   CLEAR_CONTENTS_TIMELINES: 'clearContentsTimelines',
   BIND_STREAMINGS: 'bindStreamings',
-  BIND_LOCAL_STREAMING: 'bindLocalStreaming',
   BIND_PUBLIC_STREAMING: 'bindPublicStreaming',
   BIND_DIRECT_MESSAGES_STREAMING: 'bindDirectMessagesStreaming',
   UPDATE_TOOT_FOR_ALL_TIMELINES: 'updateTootForAllTimelines',
@@ -199,34 +198,19 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   [ACTION_TYPES.FETCH_CONTENTS_TIMELINES]: async ({ dispatch }) => {
     await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
-    await dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', {}, { root: true })
     await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
   },
   [ACTION_TYPES.CLEAR_CONTENTS_TIMELINES]: ({ commit }) => {
-    commit('TimelineSpace/Contents/Local/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
     commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
   },
   [ACTION_TYPES.BIND_STREAMINGS]: ({ dispatch }) => {
     dispatch('bindDirectMessagesStreaming')
-    dispatch('bindLocalStreaming')
     dispatch('bindPublicStreaming')
   },
   // ------------------------------------------------
   // Each streaming methods
   // ------------------------------------------------
-  [ACTION_TYPES.BIND_LOCAL_STREAMING]: ({ commit, rootState, state }) => {
-    win.ipcRenderer.on(`update-local-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
-      commit('TimelineSpace/Contents/Local/appendTimeline', update, { root: true })
-      if (rootState.TimelineSpace.Contents.Local.heading && Math.random() > 0.8) {
-        commit('TimelineSpace/Contents/Local/archiveTimeline', {}, { root: true })
-      }
-      commit('TimelineSpace/SideMenu/changeUnreadLocalTimeline', true, { root: true })
-    })
-    win.ipcRenderer.on(`delete-local-streamings-${state.account!.id}`, (_, id: string) => {
-      commit('TimelineSpace/Contents/Local/deleteToot', id, { root: true })
-    })
-  },
   [ACTION_TYPES.BIND_PUBLIC_STREAMING]: ({ commit, rootState, state }) => {
     win.ipcRenderer.on(`update-public-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })

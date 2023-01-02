@@ -200,10 +200,14 @@ export default defineComponent({
       }
     }
     const updateToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+      if (account.account) {
+        store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, { status: message, accountId: account.account.id })
+      }
     }
     const deleteToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message.id)
+      if (account.account) {
+        store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, { statusId: message.id, accountId: account.account.id })
+      }
     }
     const fetchTimelineSince = (since_id: string) => {
       loadingMore.value = true
