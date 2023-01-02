@@ -79,7 +79,6 @@ export default defineComponent({
 
     const clear = async () => {
       await store.dispatch(`${space}/${ACTION_TYPES.CLEAR_ACCOUNT}`)
-      store.dispatch(`${space}/${ACTION_TYPES.CLEAR_CONTENTS_TIMELINES}`)
       await store.dispatch(`${space}/${ACTION_TYPES.REMOVE_SHORTCUT_EVENTS}`)
       await store.dispatch(`${space}/${ACTION_TYPES.CLEAR_UNREAD}`)
       return 'clear'

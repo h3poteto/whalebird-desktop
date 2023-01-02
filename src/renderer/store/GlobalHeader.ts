@@ -123,6 +123,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', { account, server }, { root: true })
       await dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', { account, server }, { root: true })
       await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', { account, server }, { root: true })
+      await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', { account, server }, { root: true })
     })
   },
   [ACTION_TYPES.BIND_STREAMINGS]: async ({ commit }, req: Array<[LocalAccount, LocalServer]>) => {
@@ -155,6 +156,14 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       win.ipcRenderer.removeAllListeners(`delete-public-streamings-${account.id}`)
       win.ipcRenderer.on(`delete-public-streamings-${account.id}`, (_, id: string) => {
         commit('TimelineSpace/Contents/Public/deleteToot', { statusId: id, accountId: account.id }, { root: true })
+      })
+      win.ipcRenderer.removeAllListeners(`update-direct-streamings-${account.id}`)
+      win.ipcRenderer.on(`update-direct-streamings-${account.id}`, (_, update: Entity.Status) => {
+        commit('TimelineSpace/Contents/DirectMessages/appendTimeline', { status: update, accountId: account.id }, { root: true })
+      })
+      win.ipcRenderer.removeAllListeners(`delete-direct-streamings-${account.id}`)
+      win.ipcRenderer.on(`delete-direct-streamings-${account.id}`, (_, id: string) => {
+        commit('TimelineSpace/Contents/DirectMessages/deleteToot', { statusId: id, accountId: account.id }, { root: true })
       })
     })
   }

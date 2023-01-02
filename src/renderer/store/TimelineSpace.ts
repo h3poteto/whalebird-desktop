@@ -7,7 +7,6 @@ import { Module, MutationTree, ActionTree } from 'vuex'
 import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
 import { AccountLoadError } from '@/errors/load'
-import { TimelineFetchError } from '@/errors/fetch'
 import { MyWindow } from '~/src/types/global'
 import { LocalServer } from '~/src/types/localServer'
 import { Setting } from '~/src/types/setting'
@@ -84,11 +83,6 @@ export const ACTION_TYPES = {
   FETCH_EMOJIS: 'fetchEmojis',
   FETCH_FILTERS: 'fetchFilters',
   FETCH_INSTANCE: 'fetchInstance',
-  FETCH_CONTENTS_TIMELINES: 'fetchContentsTimelines',
-  CLEAR_CONTENTS_TIMELINES: 'clearContentsTimelines',
-  BIND_STREAMINGS: 'bindStreamings',
-  BIND_DIRECT_MESSAGES_STREAMING: 'bindDirectMessagesStreaming',
-  UPDATE_TOOT_FOR_ALL_TIMELINES: 'updateTootForAllTimelines',
   LOAD_SETTING: 'loadSetting'
 }
 
@@ -104,13 +98,9 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     await dispatch(ACTION_TYPES.LOAD_SETTING)
     await dispatch(ACTION_TYPES.FETCH_FILTERS)
     commit(MUTATION_TYPES.CHANGE_LOADING, false)
-    await dispatch(ACTION_TYPES.FETCH_CONTENTS_TIMELINES).catch(_ => {
-      throw new TimelineFetchError()
-    })
     return account
   },
   [ACTION_TYPES.PREPARE_SPACE]: async ({ dispatch }) => {
-    await dispatch(ACTION_TYPES.BIND_STREAMINGS)
     await dispatch(ACTION_TYPES.FETCH_EMOJIS)
     await dispatch(ACTION_TYPES.FETCH_INSTANCE)
   },
@@ -158,8 +148,11 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchEmojis
    */
-  [ACTION_TYPES.FETCH_EMOJIS]: async ({ commit, state }): Promise<Array<Entity.Emoji>> => {
-    const client = generator(state.server!.sns, state.server!.baseURL, null, 'Whalebird')
+  [ACTION_TYPES.FETCH_EMOJIS]: async ({ commit, state, rootState }): Promise<Array<Entity.Emoji>> => {
+    if (!state.server) {
+      return []
+    }
+    const client = generator(state.server.sns, state.server.baseURL, null, rootState.App.userAgent)
     const res = await client.getInstanceCustomEmojis()
     commit(MUTATION_TYPES.UPDATE_EMOJIS, res.data)
     return res.data
@@ -172,8 +165,11 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
    * fetchFilters
    */
   [ACTION_TYPES.FETCH_FILTERS]: async ({ commit, state, rootState }): Promise<Array<Entity.Filter>> => {
+    if (!state.server || !state.account) {
+      return []
+    }
     try {
-      const client = generator(state.server!.sns, state.server!.baseURL, state.account!.accessToken, rootState.App.userAgent)
+      const client = generator(state.server.sns, state.server.baseURL, state.account.accessToken, rootState.App.userAgent)
       const res = await client.getFilters()
       commit(MUTATION_TYPES.UPDATE_FILTERS, res.data)
       return res.data
@@ -184,8 +180,11 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   /**
    * fetchInstance
    */
-  [ACTION_TYPES.FETCH_INSTANCE]: async ({ commit, state }) => {
-    const client = generator(state.server!.sns, state.server!.baseURL, null, 'Whalebird')
+  [ACTION_TYPES.FETCH_INSTANCE]: async ({ commit, state, rootState }) => {
+    if (!state.server) {
+      return false
+    }
+    const client = generator(state.server.sns, state.server.baseURL, null, rootState.App.userAgent)
     const res = await client.getInstance()
     if (res.data.max_toot_chars) {
       commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
@@ -193,39 +192,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     if (res.data.configuration) {
       commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.configuration.statuses.max_characters)
     }
-    return true
-  },
-  [ACTION_TYPES.FETCH_CONTENTS_TIMELINES]: async ({ dispatch }) => {
-    await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
-  },
-  [ACTION_TYPES.CLEAR_CONTENTS_TIMELINES]: ({ commit }) => {
-    commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
-  },
-  [ACTION_TYPES.BIND_STREAMINGS]: ({ dispatch }) => {
-    dispatch('bindDirectMessagesStreaming')
-  },
-  // ------------------------------------------------
-  // Each streaming methods
-  // ------------------------------------------------
-  [ACTION_TYPES.BIND_DIRECT_MESSAGES_STREAMING]: ({ commit, rootState, state }) => {
-    win.ipcRenderer.on(`update-direct-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
-      commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
-      if (rootState.TimelineSpace.Contents.DirectMessages.heading && Math.random() > 0.8) {
-        commit('TimelineSpace/Contents/DirectMessages/archiveTimeline', {}, { root: true })
-      }
-      commit('TimelineSpace/SideMenu/changeUnreadDirectMessagesTimeline', true, { root: true })
-    })
-    win.ipcRenderer.on(`delete-direct-streamings-${state.account!.id}`, (_, id: string) => {
-      commit('TimelineSpace/Contents/DirectMessages/deleteToot', id, { root: true })
-    })
-  },
-  // todo
-  [ACTION_TYPES.UPDATE_TOOT_FOR_ALL_TIMELINES]: ({ commit }, status: Entity.Status): boolean => {
-    commit('TimelineSpace/Contents/Home/updateToot', status, { root: true })
-    commit('TimelineSpace/Contents/Notifications/updateToot', status, { root: true })
-    commit('TimelineSpace/Contents/DirectMessages/updateToot', status, { root: true })
-    commit('TimelineSpace/Contents/Local/updateToot', status, { root: true })
-    commit('TimelineSpace/Contents/Public/updateToot', status, { root: true })
     return true
   }
 }
