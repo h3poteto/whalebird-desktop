@@ -121,6 +121,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
     req.forEach(async ([account, server]) => {
       await dispatch('TimelineSpace/Contents/Home/fetchTimeline', { account, server }, { root: true })
       await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', { account, server }, { root: true })
+      await dispatch('TimelineSpace/Contents/Local/fetchLocalTimeline', { account, server }, { root: true })
     })
   },
   [ACTION_TYPES.BIND_STREAMINGS]: async ({ commit }, req: Array<[LocalAccount, LocalServer]>) => {
@@ -137,6 +138,14 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       win.ipcRenderer.on(`delete-user-streamings-${account.id}`, (_, id: string) => {
         commit('TimelineSpace/Contents/Home/deleteToot', { statusId: id, accountId: account.id }, { root: true })
         commit('TimelineSpace/Contents/Notifications/deleteToot', { statusId: id, accountId: account.id }, { root: true })
+      })
+      win.ipcRenderer.removeAllListeners(`update-local-streamings-${account.id}`)
+      win.ipcRenderer.on(`update-local-streamings-${account.id}`, (_, update: Entity.Status) => {
+        commit('TimelineSpace/Contents/Local/appendTimeline', { status: update, accountId: account.id }, { root: true })
+      })
+      win.ipcRenderer.removeAllListeners(`delete-local-streamings-${account.id}`)
+      win.ipcRenderer.on(`delete-local-streamings-${account.id}`, (_, id: string) => {
+        commit('TimelineSpace/Contents/Local/deleteToot', { statusId: id, accountId: account.id }, { root: true })
       })
     })
   }

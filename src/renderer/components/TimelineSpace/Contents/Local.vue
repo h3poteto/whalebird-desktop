@@ -1,14 +1,16 @@
 <template>
   <div id="local">
-    <div class="unread">{{ unreads.length > 0 ? unreads.length : '' }}</div>
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
+            v-if="account.account && account.server"
             :message="item"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
             :filters="[]"
+            :account="account.account"
+            :server="account.server"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusRight="focusSidebar"
@@ -27,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, defineComponent, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, ref, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
@@ -40,9 +42,11 @@ import { EventEmitter } from '@/components/event'
 import useReloadable from '@/components/utils/reloadable'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Local'
 import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
-import { MUTATION_TYPES as TIMELINE_MUTATION, ACTION_TYPES as TIMELINE_ACTION } from '@/store/TimelineSpace'
+import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
-import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'local',
@@ -55,29 +59,33 @@ export default defineComponent({
     const { reloadable } = useReloadable(store, route, i18n)
     const { j, k, Ctrl_r } = useMagicKeys()
 
+    const win = (window as any) as MyWindow
+    const id = computed(() => parseInt(route.params.id as string))
+
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>(null)
+    const lazyLoading = ref(false)
+    const heading = ref(true)
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
 
-    const timeline = computed(() => store.state.TimelineSpace.Contents.Local.timeline)
-    const unreads = computed(() => store.state.TimelineSpace.Contents.Local.unreads)
-    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Local.lazyLoading)
-    const heading = computed(() => store.state.TimelineSpace.Contents.Local.heading)
+    const timeline = computed(() => store.state.TimelineSpace.Contents.Local.timeline[id.value])
+
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
-    const unreadNotification = computed(() => store.state.TimelineSpace.timelineSetting.unreadNotification)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
     const shortcutEnabled = computed(() => !modalOpened.value)
 
     onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+
       store.commit(`TimelineSpace/SideMenu/${SIDE_MENU_MUTATION.CHANGE_UNREAD_LOCAL_TIMELINE}`, false)
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
-      if (!unreadNotification.value.local) {
-        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
-        await initialize().finally(() => {
-          store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
-        })
-      }
     })
     onBeforeUpdate(() => {
       if (store.state.TimelineSpace.SideMenu.unreadLocalTimeline && heading.value) {
@@ -85,18 +93,9 @@ export default defineComponent({
       }
     })
     onBeforeUnmount(() => {
-      if (!unreadNotification.value.local) {
-        store.dispatch(`TimelineSpace/${TIMELINE_ACTION.STOP_LOCAL_STREAMING}`)
-        store.dispatch(`TimelineSpace/${TIMELINE_ACTION.UNBIND_LOCAL_STREAMING}`)
-      }
       EventEmitter.off('focus-timeline')
     })
     onUnmounted(() => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
-      store.commit(`${space}/${MUTATION_TYPES.ARCHIVE_TIMELINE}`)
-      if (!unreadNotification.value.local) {
-        store.commit(`${space}/${MUTATION_TYPES.CLEAR_TIMELINE}`)
-      }
       const el = document.getElementById('scroller')
       if (el) {
         el.removeEventListener('scroll', onScroll)
@@ -113,9 +112,9 @@ export default defineComponent({
 
     watch(focusedId, (newVal, _oldVal) => {
       if (newVal && heading.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+        heading.value = false
       } else if (newVal === null && !heading.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+        heading.value = true
       }
     })
     whenever(logicAnd(j, shortcutEnabled), () => {
@@ -132,34 +131,29 @@ export default defineComponent({
       reload()
     })
 
-    const initialize = async () => {
-      await store.dispatch(`${space}/${ACTION_TYPES.FETCH_LOCAL_TIMELINE}`).catch(_ => {
-        ElMessage({
-          message: i18n.t('message.timeline_fetch_error'),
-          type: 'error'
-        })
-      })
-      await store.dispatch(`TimelineSpace/${TIMELINE_ACTION.BIND_LOCAL_STREAMING}`)
-      store.dispatch(`TimelineSpace/${TIMELINE_ACTION.START_LOCAL_STREAMING}`)
-    }
     const onScroll = (event: Event) => {
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
           document.getElementById('scroller')!.scrollHeight - 10 &&
         !lazyLoading.value
       ) {
-        store.dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, timeline.value[timeline.value.length - 1]).catch(() => {
-          ElMessage({
-            message: i18n.t('message.timeline_fetch_error'),
-            type: 'error'
+        store
+          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
+            lastStatus: timeline.value[timeline.value.length - 1],
+            account: account.account,
+            server: account.server
           })
-        })
+          .catch(() => {
+            ElMessage({
+              message: i18n.t('message.timeline_fetch_error'),
+              type: 'error'
+            })
+          })
       }
       if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+        heading.value = false
       } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
-        store.commit(`${space}/${MUTATION_TYPES.MERGE_UNREADS}`)
+        heading.value = true
       }
     }
     const reload = async () => {
@@ -171,10 +165,14 @@ export default defineComponent({
       }
     }
     const updateToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+      if (account.account) {
+        store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, { status: message, accountId: account.account.id })
+      }
     }
     const deleteToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message.id)
+      if (account.account) {
+        store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, { statusId: message.id, accountId: account.account.id })
+      }
     }
     const upper = () => {
       scroller.value.scrollToItem(0)
@@ -213,7 +211,7 @@ export default defineComponent({
       openSideBar,
       heading,
       upper,
-      unreads
+      account
     }
   }
 })
