@@ -120,6 +120,7 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
   [ACTION_TYPES.LOAD_TIMELINES]: async ({ dispatch }, req: Array<[LocalAccount, LocalServer]>) => {
     req.forEach(async ([account, server]) => {
       await dispatch('TimelineSpace/Contents/Home/fetchTimeline', { account, server }, { root: true })
+      await dispatch('TimelineSpace/Contents/Notifications/fetchNotifications', { account, server }, { root: true })
     })
   },
   [ACTION_TYPES.BIND_STREAMINGS]: async ({ commit }, req: Array<[LocalAccount, LocalServer]>) => {
@@ -127,6 +128,15 @@ const actions: ActionTree<GlobalHeaderState, RootState> = {
       win.ipcRenderer.removeAllListeners(`update-user-streamings-${account.id}`)
       win.ipcRenderer.on(`update-user-streamings-${account.id}`, (_, update: Entity.Status) => {
         commit('TimelineSpace/Contents/Home/appendTimeline', { status: update, accountId: account.id }, { root: true })
+      })
+      win.ipcRenderer.removeAllListeners(`notification-user-streamings-${account.id}`)
+      win.ipcRenderer.on(`notification-user-streamings-${account.id}`, (_, notification: Entity.Notification) => {
+        commit('TimelineSpace/Contents/Notifications/appendNotifications', { notification, accountId: account.id }, { root: true })
+      })
+      win.ipcRenderer.removeAllListeners(`delete-user-streamings-${account.id}`)
+      win.ipcRenderer.on(`delete-user-streamings-${account.id}`, (_, id: string) => {
+        commit('TimelineSpace/Contents/Home/deleteToot', { statusId: id, accountId: account.id }, { root: true })
+        commit('TimelineSpace/Contents/Notifications/deleteToot', { statusId: id, accountId: account.id }, { root: true })
       })
     })
   }

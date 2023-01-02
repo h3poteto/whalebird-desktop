@@ -35,6 +35,8 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      :account="account"
+      :server="server"
       @update="updateToot"
       @delete="deleteToot"
       @focus-right="$emit('focusRight')"
@@ -69,6 +71,8 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      :account="account"
+      :server="server"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -117,6 +121,8 @@ import Follow from './Notification/Follow.vue'
 import FollowRequest from './Notification/FollowRequest.vue'
 import Mention from './Notification/Mention.vue'
 import Status from './Notification/Status.vue'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
 
 export default defineComponent({
   name: 'Notification',
@@ -143,6 +149,14 @@ export default defineComponent({
     overlaid: {
       type: Boolean,
       default: () => false
+    },
+    account: {
+      type: Object as PropType<LocalAccount>,
+      required: true
+    },
+    server: {
+      type: Object as PropType<LocalServer>,
+      required: true
     }
   },
   emits: ['focusRight', 'selectNotification', 'update', 'delete'],

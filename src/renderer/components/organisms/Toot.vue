@@ -683,8 +683,6 @@ export default defineComponent({
       displayNameStyle,
       timeFormat,
       language,
-      server,
-      account,
       originalMessage,
       timestamp,
       readableTimestamp,

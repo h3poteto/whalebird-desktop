@@ -5,6 +5,8 @@
       :filters="filters"
       :focused="focused"
       :overlaid="overlaid"
+      :account="account"
+      :server="server"
       v-on:update="updateToot"
       v-on:delete="deleteToot"
       @focusRight="$emit('focusRight')"
@@ -18,6 +20,8 @@
 import { defineComponent, PropType } from 'vue'
 import { Entity } from 'megalodon'
 import Toot from '../Toot.vue'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
 
 export default defineComponent({
   name: 'mention',
@@ -37,6 +41,14 @@ export default defineComponent({
     overlaid: {
       type: Boolean,
       default: false
+    },
+    account: {
+      type: Object as PropType<LocalAccount>,
+      required: true
+    },
+    server: {
+      type: Object as PropType<LocalServer>,
+      required: true
     }
   },
   components: { Toot },
