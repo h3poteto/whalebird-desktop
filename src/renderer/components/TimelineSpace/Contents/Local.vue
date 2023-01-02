@@ -137,6 +137,7 @@ export default defineComponent({
           document.getElementById('scroller')!.scrollHeight - 10 &&
         !lazyLoading.value
       ) {
+        lazyLoading.value = true
         store
           .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
             lastStatus: timeline.value[timeline.value.length - 1],
@@ -148,6 +149,9 @@ export default defineComponent({
               message: i18n.t('message.timeline_fetch_error'),
               type: 'error'
             })
+          })
+          .finally(() => {
+            lazyLoading.value = false
           })
       }
       if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {

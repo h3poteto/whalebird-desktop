@@ -82,6 +82,7 @@ const actions: ActionTree<LocalState, RootState> = {
       commit(MUTATION_TYPES.REPLACE_TIMELINE, { statuses: res.data, accountId: req.account.id })
       return res.data
     } catch (err) {
+      console.error(err)
       return []
     }
   },

@@ -87,7 +87,6 @@ export const ACTION_TYPES = {
   FETCH_CONTENTS_TIMELINES: 'fetchContentsTimelines',
   CLEAR_CONTENTS_TIMELINES: 'clearContentsTimelines',
   BIND_STREAMINGS: 'bindStreamings',
-  BIND_PUBLIC_STREAMING: 'bindPublicStreaming',
   BIND_DIRECT_MESSAGES_STREAMING: 'bindDirectMessagesStreaming',
   UPDATE_TOOT_FOR_ALL_TIMELINES: 'updateTootForAllTimelines',
   LOAD_SETTING: 'loadSetting'
@@ -198,31 +197,16 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   },
   [ACTION_TYPES.FETCH_CONTENTS_TIMELINES]: async ({ dispatch }) => {
     await dispatch('TimelineSpace/Contents/DirectMessages/fetchTimeline', {}, { root: true })
-    await dispatch('TimelineSpace/Contents/Public/fetchPublicTimeline', {}, { root: true })
   },
   [ACTION_TYPES.CLEAR_CONTENTS_TIMELINES]: ({ commit }) => {
     commit('TimelineSpace/Contents/DirectMessages/clearTimeline', {}, { root: true })
-    commit('TimelineSpace/Contents/Public/clearTimeline', {}, { root: true })
   },
   [ACTION_TYPES.BIND_STREAMINGS]: ({ dispatch }) => {
     dispatch('bindDirectMessagesStreaming')
-    dispatch('bindPublicStreaming')
   },
   // ------------------------------------------------
   // Each streaming methods
   // ------------------------------------------------
-  [ACTION_TYPES.BIND_PUBLIC_STREAMING]: ({ commit, rootState, state }) => {
-    win.ipcRenderer.on(`update-public-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
-      commit('TimelineSpace/Contents/Public/appendTimeline', update, { root: true })
-      if (rootState.TimelineSpace.Contents.Public.heading && Math.random() > 0.8) {
-        commit('TimelineSpace/Contents/Public/archiveTimeline', {}, { root: true })
-      }
-      commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', true, { root: true })
-    })
-    win.ipcRenderer.on(`delete-public-streamings-${state.account!.id}`, (_, id: string) => {
-      commit('TimelineSpace/Contents/Public/deleteToot', id, { root: true })
-    })
-  },
   [ACTION_TYPES.BIND_DIRECT_MESSAGES_STREAMING]: ({ commit, rootState, state }) => {
     win.ipcRenderer.on(`update-direct-streamings-${state.account!.id}`, (_, update: Entity.Status) => {
       commit('TimelineSpace/Contents/DirectMessages/appendTimeline', update, { root: true })
