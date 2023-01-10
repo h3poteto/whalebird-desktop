@@ -11,11 +11,6 @@
           <div class="form-item input">
             <input v-model="tag" :placeholder="$t('hashtag.tag_name')" class="search-keyword" v-on:keyup.enter="search" autofocus />
           </div>
-          <div class="form-item" v-show="tagPage">
-            <el-button link :title="$t('hashtag.save_tag')" @click="save">
-              <font-awesome-icon icon="thumbtack" />
-            </el-button>
-          </div>
         </div>
       </el-form>
     </div>
@@ -26,14 +21,12 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'hashtag',
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const store = useStore()
 
     const tag = ref<string>('')
     const id = computed(() => route.params.id)
@@ -58,16 +51,12 @@ export default defineComponent({
     const back = () => {
       router.push({ path: `/${id.value}/hashtag` })
     }
-    const save = () => {
-      store.dispatch('TimelineSpace/Contents/Hashtag/saveTag', tag.value)
-    }
 
     return {
       tagPage,
       tag,
       back,
-      search,
-      save
+      search
     }
   },
   methods: {}
