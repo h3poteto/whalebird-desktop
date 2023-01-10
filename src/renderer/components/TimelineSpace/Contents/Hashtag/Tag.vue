@@ -1,14 +1,16 @@
 <template>
   <div name="tag" class="tag-timeline">
-    <div class="unread">{{ unreads.length > 0 ? unreads.length : '' }}</div>
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
+            v-if="account.account && account.server"
             :message="item"
             :focused="item.uri + item.id === focusedId"
             :overlaid="modalOpened"
             :filters="[]"
+            :account="account.account"
+            :server="account.server"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusRight="focusSidebar"
@@ -27,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, onMounted, ref, toRefs, watch } from 'vue'
+import { computed, defineComponent, onBeforeUnmount, onMounted, ref, toRefs, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
@@ -42,6 +44,9 @@ import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
 import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Hashtag/Tag'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'tag',
@@ -55,21 +60,31 @@ export default defineComponent({
     const { reloadable } = useReloadable(store, route, i18n)
     const { j, k, Ctrl_r } = useMagicKeys()
 
+    const win = (window as any) as MyWindow
+    const id = computed(() => parseInt(route.params.id as string))
+
     const { tag } = toRefs(props)
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>(null)
+    const lazyLoading = ref(false)
+    const heading = ref(true)
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Hashtag.Tag.timeline)
-    const unreads = computed(() => store.state.TimelineSpace.Contents.Hashtag.Tag.unreads)
-    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Hashtag.Tag.lazyLoading)
-    const heading = computed(() => store.state.TimelineSpace.Contents.Hashtag.Tag.heading)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
     const shortcutEnabled = computed(() => !modalOpened.value)
 
-    onMounted(() => {
+    onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+
       store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
       load(tag.value).finally(() => {
         store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
@@ -92,9 +107,9 @@ export default defineComponent({
     })
     watch(focusedId, (newVal, _oldVal) => {
       if (newVal && heading.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+        heading.value = false
       } else if (newVal === null && !heading.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
+        heading.value = true
       }
     })
     whenever(logicAnd(j, shortcutEnabled), () => {
@@ -118,13 +133,13 @@ export default defineComponent({
     })
 
     const load = async (tag: string) => {
-      await store.dispatch(`${space}/${ACTION_TYPES.FETCH}`, tag).catch(() => {
+      await store.dispatch(`${space}/${ACTION_TYPES.FETCH}`, { tag: tag, account: account.account, server: account.server }).catch(() => {
         ElMessage({
           message: i18n.t('message.timeline_fetch_error'),
           type: 'error'
         })
       })
-      store.dispatch(`${space}/${ACTION_TYPES.START_STREAMING}`, tag).catch(() => {
+      store.dispatch(`${space}/${ACTION_TYPES.START_STREAMING}`, { tag: tag, account: account.account }).catch(() => {
         ElMessage({
           message: i18n.t('message.start_streaming_error'),
           type: 'error'
@@ -133,9 +148,7 @@ export default defineComponent({
       return true
     }
     const reset = () => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
-      store.commit(`${space}/${MUTATION_TYPES.ARCHIVE_TIMELINE}`)
-      store.commit(`${space}/${MUTATION_TYPES.CLEAR_TIMELINE}`)
+      heading.value = true
       const el = document.getElementById('scroller')
       if (el !== undefined && el !== null) {
         el.removeEventListener('scroll', onScroll)
@@ -148,10 +161,13 @@ export default defineComponent({
           document.getElementById('scroller')!.scrollHeight - 10 &&
         !lazyLoading.value
       ) {
+        lazyLoading.value = true
         store
           .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
             tag: tag.value,
-            status: timeline.value[timeline.value.length - 1]
+            status: timeline.value[timeline.value.length - 1],
+            account: account.account,
+            server: account.server
           })
           .catch(() => {
             ElMessage({
@@ -159,13 +175,15 @@ export default defineComponent({
               type: 'error'
             })
           })
+          .finally(() => {
+            lazyLoading.value = false
+          })
       }
 
       if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, false)
+        heading.value = false
       } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_HEADING}`, true)
-        store.commit(`${space}/${MUTATION_TYPES.MERGE_UNREADS}`)
+        heading.value = true
       }
     }
     const updateToot = (toot: Entity.Status) => {
@@ -232,7 +250,7 @@ export default defineComponent({
       openSideBar,
       heading,
       upper,
-      unreads
+      account
     }
   }
 })
