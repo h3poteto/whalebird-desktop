@@ -408,8 +408,8 @@ async function createWindow() {
     // or if --hidden arg is passed
     if ((generalPreferences.other.hideOnLaunch || args.hidden) && !args.show) {
       mainWindow.once('show', () => {
-        mainWindow!.hide()
-        mainWindow!.setSkipTaskbar(true)
+        mainWindow?.hide()
+        mainWindow?.setSkipTaskbar(true)
       })
     }
   } else {
