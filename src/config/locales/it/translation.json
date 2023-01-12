@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "Altre opzioni",
-        "launch": "Avvia l'app al login"
+        "launch": "Avvia l'app al login",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "Ripristina preferenze"
