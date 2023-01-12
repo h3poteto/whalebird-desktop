@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "その他",
-        "launch": "ログイン時にアプリを起動する"
+        "launch": "ログイン時にアプリを起動する",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "設定をリセット"
