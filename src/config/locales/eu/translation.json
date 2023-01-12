@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "Beste aukera batzuk",
-        "launch": "Abiarazi aplikazioa ordenagailuarekin bat"
+        "launch": "Abiarazi aplikazioa ordenagailuarekin bat",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "Berrezarri hobespenak"
