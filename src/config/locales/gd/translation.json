@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "Roghainnean eile",
-        "launch": "Cuir an aplacaid gu dol leis a’ chlàradh a-steach"
+        "launch": "Cuir an aplacaid gu dol leis a’ chlàradh a-steach",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "Ath-shuidhich na roghainnean"
