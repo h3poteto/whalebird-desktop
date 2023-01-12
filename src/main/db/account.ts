@@ -184,19 +184,22 @@ export const removeAllAccounts = (db: sqlite3.Database): Promise<null> => {
   })
 }
 
-export const forwardAccount = (db: sqlite3.Database, account: LocalAccount): Promise<LocalAccount> => {
+export const forwardAccount = (db: sqlite3.Database, id: number): Promise<null> => {
   return new Promise((resolve, reject) => {
     db.serialize(() => {
       db.run('BEGIN TRANSACTION')
 
       db.all('SELECT * FROM accounts ORDER BY sort', (err, rows) => {
         if (err) {
-          reject(err)
-        }
-        const index = rows.findIndex(r => r.id === account.id)
-        if (index < 0 || index >= rows.length) {
+          console.error(err)
           db.run('ROLLBACK TRANSACTION')
-          return resolve(account)
+          return reject(err)
+        }
+
+        const index = rows.findIndex(r => r.id === id)
+        if (index < 0 || index >= rows.length - 1) {
+          db.run('ROLLBACK TRANSACTION')
+          return resolve(null)
         }
         const target = rows[index + 1]
         const base = rows[index]
@@ -204,24 +207,26 @@ export const forwardAccount = (db: sqlite3.Database, account: LocalAccount): Pro
         db.serialize(() => {
           db.run('UPDATE accounts SET sort = ? WHERE id = ?', [-100, base.id], err => {
             if (err) {
-              reject(err)
+              console.error(err)
+              db.run('ROLLBACK TRANSACTION')
+              return reject(err)
             }
           })
           db.run('UPDATE accounts SET sort = ? WHERE id = ?', [base.sort, target.id], err => {
             if (err) {
-              reject(err)
+              console.error(err)
+              db.run('ROLLBACK TRANSACTION')
+              return reject(err)
             }
           })
           db.run('UPDATE accounts SET sort = ? WHERE id = ?', [target.sort, base.id], err => {
             if (err) {
-              reject(err)
+              console.error(err)
+              db.run('ROLLBACK TRANSACTION')
+              return reject(err)
             }
             db.run('COMMIT')
-            resolve(
-              Object.assign(account, {
-                order: target.sort
-              })
-            )
+            return resolve(null)
           })
         })
       })
@@ -229,18 +234,22 @@ export const forwardAccount = (db: sqlite3.Database, account: LocalAccount): Pro
   })
 }
 
-export const backwardAccount = (db: sqlite3.Database, account: LocalAccount): Promise<LocalAccount> => {
+export const backwardAccount = (db: sqlite3.Database, id: number): Promise<null> => {
   return new Promise((resolve, reject) => {
     db.serialize(() => {
       db.run('BEGIN TRANSACTION')
 
       db.all('SELECT * FROM accounts ORDER BY sort', (err, rows) => {
         if (err) {
-          reject(err)
+          console.error(err)
+          db.run('ROLLBACK TRANSACTION')
+          return reject(err)
         }
-        const index = rows.findIndex(r => r.id === account.id)
+
+        const index = rows.findIndex(r => r.id === id)
         if (index < 1) {
-          return resolve(account)
+          db.run('ROLLBACK TRANSACTION')
+          return resolve(null)
         }
         const target = rows[index - 1]
         const base = rows[index]
@@ -248,25 +257,26 @@ export const backwardAccount = (db: sqlite3.Database, account: LocalAccount): Pr
         db.serialize(() => {
           db.run('UPDATE accounts SET sort = ? WHERE id = ?', [-100, base.id], err => {
             if (err) {
+              console.error(err)
               db.run('ROLLBACK TRANSACTION')
-              reject(err)
+              return reject(err)
             }
           })
           db.run('UPDATE accounts SET sort = ? WHERE id = ?', [base.sort, target.id], err => {
             if (err) {
-              reject(err)
+              console.error(err)
+              db.run('ROLLBACK TRANSACTION')
+              return reject(err)
             }
           })
           db.run('UPDATE accounts SET sort = ? WHERE id = ?', [target.sort, base.id], err => {
             if (err) {
-              reject(err)
+              console.error(err)
+              db.run('ROLLBACK TRANSACTION')
+              return reject(err)
             }
             db.run('COMMIT')
-            resolve(
-              Object.assign(account, {
-                order: target.sort
-              })
-            )
+            return resolve(null)
           })
         })
       })

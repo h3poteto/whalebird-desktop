@@ -522,12 +522,12 @@ ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: number) => {
   }
 })
 
-ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-  await forwardAccount(db, acct)
+ipcMain.handle('forward-account', async (_: IpcMainInvokeEvent, id: number) => {
+  await forwardAccount(db, id)
 })
 
-ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, acct: LocalAccount) => {
-  await backwardAccount(db, acct)
+ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, id: number) => {
+  await backwardAccount(db, id)
 })
 
 ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {

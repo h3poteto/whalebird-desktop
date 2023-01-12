@@ -1,5 +1,4 @@
 import { Module, MutationTree, ActionTree } from 'vuex'
-import { toRaw } from 'vue'
 import { LocalAccount } from '~/src/types/localAccount'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
@@ -45,14 +44,14 @@ const actions: ActionTree<AccountState, RootState> = {
     commit(MUTATION_TYPES.UPDATE_ACCOUNTS, accounts)
     return accounts
   },
-  [ACTION_TYPES.REMOVE_ACCOUNT]: async (_, account: LocalAccount) => {
-    await win.ipcRenderer.invoke('remove-account', account.id)
+  [ACTION_TYPES.REMOVE_ACCOUNT]: async (_, id: number) => {
+    await win.ipcRenderer.invoke('remove-account', id)
   },
-  [ACTION_TYPES.FORWARD_ACCOUNT]: async (_, account: LocalAccount) => {
-    await win.ipcRenderer.invoke('forward-account', toRaw(account))
+  [ACTION_TYPES.FORWARD_ACCOUNT]: async (_, id: number) => {
+    await win.ipcRenderer.invoke('forward-account', id)
   },
-  [ACTION_TYPES.BACKWARD_ACCOUNT]: async (_, account: LocalAccount) => {
-    await win.ipcRenderer.invoke('backward-account', toRaw(account))
+  [ACTION_TYPES.BACKWARD_ACCOUNT]: async (_, id: number) => {
+    await win.ipcRenderer.invoke('backward-account', id)
   },
   [ACTION_TYPES.REMOVE_ALL_ACCOUNTS]: async () => {
     await win.ipcRenderer.invoke('remove-all-accounts')
