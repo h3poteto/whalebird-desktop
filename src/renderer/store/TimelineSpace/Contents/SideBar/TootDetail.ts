@@ -127,9 +127,9 @@ const actions: ActionTree<TootDetailState, RootState> = {
   },
   [ACTION_TYPES.FETCH_TOOT]: async ({ commit, rootState }, message: Entity.Status) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getStatusContext(message.id, { limit: 40 })

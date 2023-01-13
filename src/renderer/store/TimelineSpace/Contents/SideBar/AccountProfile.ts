@@ -80,9 +80,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<AccountProfileState, RootState> = {
   fetchAccount: async ({ rootState, dispatch }, accountID: string): Promise<Entity.Account> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getAccount(accountID)
@@ -91,9 +91,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   searchAccount: async ({ rootState }, searchAccount: SearchAccount): Promise<Entity.Account> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
 
@@ -101,7 +101,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     if (searchAccount.status.in_reply_to_account_id) {
       const res = await client.getAccount(searchAccount.status.in_reply_to_account_id)
       if (res.status === 200) {
-        const user = accountMatch([res.data], searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
+        const user = accountMatch([res.data], searchAccount.parsedAccount, rootState.TimelineSpace.server!.domain)
         if (user) return user
       }
     }
@@ -111,7 +111,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
       const res = await client.getStatusContext(searchAccount.status.id)
       if (res.status === 200) {
         const accounts: Array<Entity.Account> = res.data.ancestors.map(s => s.account).concat(res.data.descendants.map(s => s.account))
-        const user = accountMatch(accounts, searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
+        const user = accountMatch(accounts, searchAccount.parsedAccount, rootState.TimelineSpace.server!.domain)
         if (user) return user
       }
     }
@@ -119,7 +119,7 @@ const actions: ActionTree<AccountProfileState, RootState> = {
     // Search account name
     const res = await client.searchAccount(searchAccount.parsedAccount.url, { resolve: true })
     if (res.data.length <= 0) throw new AccountNotFound('empty result')
-    const user = accountMatch(res.data, searchAccount.parsedAccount, rootState.TimelineSpace.account.domain)
+    const user = accountMatch(res.data, searchAccount.parsedAccount, rootState.TimelineSpace.server!.domain)
     if (!user) throw new AccountNotFound('not found')
     return user
   },
@@ -131,9 +131,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   fetchRelationship: async ({ commit, rootState }, account: Entity.Account): Promise<Entity.Relationship> => {
     commit(MUTATION_TYPES.CHANGE_RELATIONSHIP, null)
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getRelationship(account.id)
@@ -155,9 +155,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   follow: async ({ commit, rootState, dispatch }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.followAccount(account.id)
@@ -167,9 +167,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   unfollow: async ({ commit, rootState, dispatch }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unfollowAccount(account.id)
@@ -182,9 +182,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   unmute: async ({ rootState, commit, dispatch }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unmuteAccount(account.id)
@@ -194,9 +194,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   block: async ({ rootState, commit, dispatch }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.blockAccount(account.id)
@@ -206,9 +206,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   unblock: async ({ rootState, commit, dispatch }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unblockAccount(account.id)
@@ -218,9 +218,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   identityProofs: async ({ rootState, commit }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getIdentityProof(account.id)
@@ -228,9 +228,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   subscribe: async ({ rootState, commit }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.subscribeAccount(account.id)
@@ -238,9 +238,9 @@ const actions: ActionTree<AccountProfileState, RootState> = {
   },
   unsubscribe: async ({ rootState, commit }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unsubscribeAccount(account.id)
@@ -253,13 +253,12 @@ const getters: GetterTree<AccountProfileState, RootState> = {
     if (!state.account) {
       return false
     }
-    const own = rootState.TimelineSpace.account
     // For Mastodon
-    if (`${own.baseURL}/@${own.username}` === state.account.url) {
+    if (`${rootState.TimelineSpace.server!.baseURL}/@${rootState.TimelineSpace.account!.username}` === state.account.url) {
       return true
     }
     // For Pleroma
-    return `${own.baseURL}/users/${own.username}` === state.account.url
+    return `${rootState.TimelineSpace.server!.baseURL}/users/${rootState.TimelineSpace.account!.username}` === state.account.url
   }
 }
 

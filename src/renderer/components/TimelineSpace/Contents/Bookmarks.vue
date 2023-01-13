@@ -5,10 +5,13 @@
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
+            v-if="account.account && account.server"
             :message="item"
             :focused="item.uri === focusedId"
             :overlaid="modalOpened"
             :filters="[]"
+            :account="account.account"
+            :server="account.server"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
             @focusRight="focusSidebar"
@@ -26,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
@@ -40,6 +43,9 @@ import { EventEmitter } from '@/components/event'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Bookmarks'
 import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'bookmarks',
@@ -54,22 +60,33 @@ export default defineComponent({
     const focusedId = ref<string | null>(null)
     const heading = ref<boolean>(true)
     const scroller = ref<any>()
+    const lazyLoading = ref(false)
     const { j, k, Ctrl_r } = useMagicKeys()
 
+    const win = (window as any) as MyWindow
+    const id = computed(() => parseInt(route.params.id as string))
+
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
+
     const bookmarks = computed(() => store.state.TimelineSpace.Contents.Bookmarks.bookmarks)
-    const lazyLoading = computed(() => store.state.TimelineSpace.Contents.Bookmarks.lazyLoading)
-    const account = computed(() => store.state.TimelineSpace.account)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => bookmarks.value.findIndex(toot => focusedId.value === toot.uri))
     const shortcutEnabled = computed(() => !modalOpened.value)
 
-    onMounted(() => {
+    onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
       store.commit(`TimelineSpace/Contents/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       store
-        .dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account.value)
+        .dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account)
         .catch(() => {
           ElMessage({
             message: i18n.t('message.bookmark_fetch_error'),
@@ -108,12 +125,18 @@ export default defineComponent({
           document.getElementById('scroller')!.scrollHeight - 10 &&
         !lazyLoading.value
       ) {
-        store.dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_BOOKMARKS}`, bookmarks.value[bookmarks.value.length - 1]).catch(() => {
-          ElMessage({
-            message: i18n.t('message.bookmark_fetch_error'),
-            type: 'error'
+        lazyLoading.value = true
+        store
+          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_BOOKMARKS}`, account)
+          .catch(() => {
+            ElMessage({
+              message: i18n.t('message.bookmark_fetch_error'),
+              type: 'error'
+            })
           })
-        })
+          .finally(() => {
+            lazyLoading.value = false
+          })
       }
       // for upper
       if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
@@ -126,7 +149,7 @@ export default defineComponent({
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
         await reloadable()
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account.value).catch(() => {
+        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account).catch(() => {
           ElMessage({
             message: i18n.t('message.bookmark_fetch_error'),
             type: 'error'
@@ -178,7 +201,8 @@ export default defineComponent({
       focusToot,
       openSideBar,
       heading,
-      upper
+      upper,
+      account
     }
   }
 })

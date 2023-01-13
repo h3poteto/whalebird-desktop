@@ -87,9 +87,6 @@ export default defineComponent({
         case 'bookmarks':
           store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.bookmark'))
           break
-        case 'mentions':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.mention'))
-          break
         case 'follow-requests':
           store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.follow_requests'))
           break
@@ -131,16 +128,10 @@ export default defineComponent({
     }
     const reload = () => {
       switch (route.name) {
-        case 'home':
-        case 'notifications':
-        case 'mentions':
         case 'favourites':
         case 'bookmarks':
-        case 'local':
-        case 'public':
         case 'tag':
         case 'list':
-        case 'direct-messages':
           store.commit(`${space}/${MUTATION_TYPES.CHANGE_RELOAD}`, true)
           break
         default:
@@ -149,16 +140,10 @@ export default defineComponent({
     }
     const reloadable = () => {
       switch (route.name) {
-        case 'home':
-        case 'notifications':
-        case 'mentions':
         case 'favourites':
         case 'bookmarks':
-        case 'local':
-        case 'public':
         case 'tag':
         case 'list':
-        case 'direct-messages':
           return true
         default:
           return false

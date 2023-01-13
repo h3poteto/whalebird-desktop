@@ -42,9 +42,9 @@ export const ACTION_TYPES = {
 export const actions: ActionTree<EditFiltersState, RootState> = {
   fetchFilter: async ({ commit, rootState }, id: string): Promise<Entity.Filter> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     try {
@@ -65,9 +65,9 @@ export const actions: ActionTree<EditFiltersState, RootState> = {
       throw new Error('filter is not set')
     }
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     try {

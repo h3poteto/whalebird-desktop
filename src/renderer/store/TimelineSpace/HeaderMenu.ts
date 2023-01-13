@@ -41,9 +41,9 @@ export const ACTION_TYPES = {
 const actions: ActionTree<HeaderMenuState, RootState> = {
   [ACTION_TYPES.FETCH_LIST]: async ({ commit, rootState }, listID: string): Promise<Entity.List> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getList(listID)

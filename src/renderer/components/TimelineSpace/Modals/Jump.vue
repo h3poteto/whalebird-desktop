@@ -37,11 +37,7 @@ export default defineComponent({
 
     const channelForm = ref<HTMLInputElement>()
 
-    const channelList = computed(() =>
-      store.state.TimelineSpace.Modals.Jump.defaultChannelList
-        .concat(store.state.TimelineSpace.Modals.Jump.tagChannelList)
-        .concat(store.state.TimelineSpace.Modals.Jump.listChannelList)
-    )
+    const channelList = computed(() => store.state.TimelineSpace.Modals.Jump.defaultChannelList)
     const selectedChannel = computed(() => store.state.TimelineSpace.Modals.Jump.selectedChannel)
     const inputtedChannel = computed({
       get: () => store.state.TimelineSpace.Modals.Jump.channel,
@@ -57,8 +53,6 @@ export default defineComponent({
     )
 
     onMounted(() => {
-      store.dispatch(`${space}/${ACTION_TYPES.SYNC_LIST_CHANNEL}`)
-      store.dispatch(`${space}/${ACTION_TYPES.SYNC_TAG_CHANNEL}`)
       nextTick(() => {
         setTimeout(() => {
           channelForm.value?.focus()

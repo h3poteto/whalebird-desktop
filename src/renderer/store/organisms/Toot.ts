@@ -3,7 +3,7 @@ import { Module, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 type VoteParam = {
   id: string
@@ -35,11 +35,11 @@ export const ACTION_TYPES = {
 }
 
 const actions: ActionTree<TootState, RootState> = {
-  [ACTION_TYPES.REBLOG]: async ({ rootState, dispatch }, message: Entity.Status) => {
+  [ACTION_TYPES.REBLOG]: async ({ rootState }, message: Entity.Status) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.reblogStatus(message.id)
@@ -47,71 +47,65 @@ const actions: ActionTree<TootState, RootState> = {
     // Reblog target status is in the data.reblog.
     // So I send data.reblog as status for update local timeline.
     win.ipcRenderer.send('fav-rt-action-sound')
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data.reblog, { root: true })
     return res.data.reblog
   },
-  [ACTION_TYPES.UNREBLOG]: async ({ rootState, dispatch }, message: Entity.Status) => {
+  [ACTION_TYPES.UNREBLOG]: async ({ rootState }, message: Entity.Status) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unreblogStatus(message.id)
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  [ACTION_TYPES.ADD_FAVOURITE]: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  [ACTION_TYPES.ADD_FAVOURITE]: async ({ rootState }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.favouriteStatus(message.id)
     win.ipcRenderer.send('fav-rt-action-sound')
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  removeFavourite: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  removeFavourite: async ({ rootState }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unfavouriteStatus(message.id)
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  addBookmark: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  addBookmark: async ({ rootState }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.bookmarkStatus(message.id)
     win.ipcRenderer.send('fav-rt-action-sound')
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
-  removeBookmark: async ({ rootState, dispatch }, message: Entity.Status): Promise<Entity.Status> => {
+  removeBookmark: async ({ rootState }, message: Entity.Status): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.unbookmarkStatus(message.id)
-    dispatch('TimelineSpace/updateTootForAllTimelines', res.data, { root: true })
     return res.data
   },
   deleteToot: async ({ rootState }, message: Entity.Status) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     await client.deleteStatus(message.id)
@@ -119,18 +113,18 @@ const actions: ActionTree<TootState, RootState> = {
   },
   block: async ({ rootState }, account: Entity.Account) => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     return client.blockAccount(account.id)
   },
   vote: async ({ rootState }, params: VoteParam): Promise<Entity.Poll> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.votePoll(params.id, params.choices)
@@ -138,9 +132,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   refresh: async ({ rootState }, id: string): Promise<Entity.Poll> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.getPoll(id)
@@ -148,9 +142,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   sendReaction: async ({ rootState }, params: ReactionParam): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.createEmojiReaction(params.status_id, params.native)
@@ -158,9 +152,9 @@ const actions: ActionTree<TootState, RootState> = {
   },
   deleteReaction: async ({ rootState }, params: ReactionParam): Promise<Entity.Status> => {
     const client = generator(
-      rootState.TimelineSpace.sns,
-      rootState.TimelineSpace.account.baseURL,
-      rootState.TimelineSpace.account.accessToken,
+      rootState.TimelineSpace.server!.sns,
+      rootState.TimelineSpace.server!.baseURL,
+      rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
     const res = await client.deleteEmojiReaction(params.status_id, params.native)

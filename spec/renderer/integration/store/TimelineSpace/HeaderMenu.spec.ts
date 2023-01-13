@@ -49,10 +49,12 @@ const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
-      accessToken: 'token',
-      baseURL: 'http://localhost'
+      accessToken: 'token'
     },
-    sns: 'mastodon'
+    server: {
+      sns: 'mastodon',
+      baseURL: 'http://localhost'
+    }
   },
   modules: {
     HeaderMenu: initStore()

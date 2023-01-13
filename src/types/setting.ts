@@ -1,21 +1,5 @@
-export type UnreadNotification = {
-  direct: boolean
-  local: boolean
-  public: boolean
-}
-
-export type UseMarker = {
-  home: boolean
-  notifications: boolean
-}
-
-export type Timeline = {
-  unreadNotification: UnreadNotification
-  useMarker: UseMarker
-}
 export type Setting = {
-  accountID: string
-  timeline: Timeline
+  accountId: number
+  markerHome: boolean
+  markerNotifications: boolean
 }
-
-export type BaseSettings = Array<Setting>

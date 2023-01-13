@@ -130,7 +130,12 @@ const timelineStore = () => ({
   namespaced: true,
   state: {
     account: {
-      _id: '0'
+      id: 0,
+      accessToken: 'token'
+    },
+    server: {
+      sns: 'mastodon',
+      baseURL: 'http://localhost'
     }
   },
   modules: {

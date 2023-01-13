@@ -1,23 +1,6 @@
 <template>
   <div id="timeline">
     <h2>{{ $t('settings.timeline.title') }}</h2>
-    <el-form class="unread-notification section" size="default" label-position="right" label-width="250px">
-      <h3>{{ $t('settings.timeline.unread_notification.title') }}</h3>
-      <p class="description">
-        {{ $t('settings.timeline.unread_notification.description') }}
-      </p>
-
-      <el-form-item for="direct" :label="$t('settings.timeline.unread_notification.direct')">
-        <el-switch v-model="directNotify" id="direct" />
-      </el-form-item>
-      <el-form-item for="local" :label="$t('settings.timeline.unread_notification.local')">
-        <el-switch v-model="localNotify" id="local" />
-      </el-form-item>
-      <el-form-item for="public" :label="$t('settings.timeline.unread_notification.public')">
-        <el-switch v-model="publicNotify" id="public" />
-      </el-form-item>
-    </el-form>
-
     <el-form class="use-marker section" size="default" label-position="right" label-width="250px">
       <h3>{{ $t('settings.timeline.use_marker.title') }}</h3>
       <el-form-item for="marker_home" :label="$t('settings.timeline.use_marker.home')">
@@ -41,39 +24,18 @@ export default defineComponent({
     const space = 'Settings/Timeline'
     const store = useStore()
 
-    const directNotify = computed({
-      get: () => store.state.Settings.Timeline.setting.unreadNotification.direct,
-      set: value =>
-        store.dispatch(`${space}/${ACTION_TYPES.CHANGE_UNREAD_NOTIFICATION}`, {
-          direct: value
-        })
-    })
-    const localNotify = computed({
-      get: () => store.state.Settings.Timeline.setting.unreadNotification.local,
-      set: value =>
-        store.dispatch(`${space}/${ACTION_TYPES.CHANGE_UNREAD_NOTIFICATION}`, {
-          local: value
-        })
-    })
-    const publicNotify = computed({
-      get: () => store.state.Settings.Timeline.setting.unreadNotification.public,
-      set: value =>
-        store.dispatch(`${space}/${ACTION_TYPES.CHANGE_UNREAD_NOTIFICATION}`, {
-          public: value
-        })
-    })
     const marker_home = computed({
-      get: () => store.state.Settings.Timeline.setting.useMarker.home,
+      get: () => store.state.Settings.Timeline.setting.markerHome,
       set: value =>
         store.dispatch(`${space}/${ACTION_TYPES.CHANGE_USER_MARKER}`, {
-          home: value
+          markerHome: value
         })
     })
     const marker_notifications = computed({
-      get: () => store.state.Settings.Timeline.setting.useMarker.notifications,
+      get: () => store.state.Settings.Timeline.setting.markerNotifications,
       set: value =>
         store.dispatch(`${space}/${ACTION_TYPES.CHANGE_USER_MARKER}`, {
-          notifications: value
+          markerNotifications: value
         })
     })
 
@@ -82,9 +44,6 @@ export default defineComponent({
     })
 
     return {
-      directNotify,
-      localNotify,
-      publicNotify,
       marker_home,
       marker_notifications
     }

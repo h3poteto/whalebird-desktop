@@ -40,16 +40,13 @@ const timelineStore = (account: Entity.Account | null) => ({
   namespaced: true,
   state: {
     account: {
-      baseURL: 'https://example.com',
-      domain: 'example.com',
-      clientId: 'sampleId',
-      clientSecret: 'sampleSecret',
       accessToken: 'sampleAccessToken',
-      refreshToken: null,
-      username: 'h3poteto',
-      accountID: '1',
-      avatar: null,
-      order: 1
+      id: 1,
+      username: 'h3poteto'
+    },
+    server: {
+      sns: 'mastodon',
+      baseURL: 'https://example.com'
     }
   },
   modules: {

@@ -16,7 +16,16 @@
           <el-table-column prop="domain" :label="$t('preferences.account.domain')"> </el-table-column>
           <el-table-column :label="$t('preferences.account.association')">
             <template #default="scope">
-              <el-button class="action" link @click.prevent="removeAccount(scope.$index, accounts)">
+              <el-button
+                class="action"
+                link
+                @click.prevent="
+                  removeAccount(
+                    scope.$index,
+                    accounts.map(a => a.id)
+                  )
+                "
+              >
                 <font-awesome-icon icon="xmark" />
                 {{ $t('preferences.account.remove_association') }}
               </el-button>
@@ -25,12 +34,30 @@
           <el-table-column :label="$t('preferences.account.order')" width="60">
             <template #default="scope">
               <div class="allow-up">
-                <el-button class="arrow-up action" link @click.prevent="forward(scope.$index, accounts)">
+                <el-button
+                  class="arrow-up action"
+                  link
+                  @click.prevent="
+                    backward(
+                      scope.$index,
+                      accounts.map(a => a.id)
+                    )
+                  "
+                >
                   <font-awesome-icon icon="arrow-up" />
                 </el-button>
               </div>
               <div class="allow-down">
-                <el-button class="arrow-down action" link @click.prevent="backward(scope.$index, accounts)">
+                <el-button
+                  class="arrow-down action"
+                  link
+                  @click.prevent="
+                    forward(
+                      scope.$index,
+                      accounts.map(a => a.id)
+                    )
+                  "
+                >
                   <font-awesome-icon icon="arrow-down" />
                 </el-button>
               </div>
@@ -61,7 +88,6 @@ import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/Preferences/Account'
 import { ElMessage } from 'element-plus'
-import { LocalAccount } from '~/src/types/localAccount'
 
 export default defineComponent({
   name: 'account',
@@ -71,7 +97,13 @@ export default defineComponent({
     const i18n = useI18next()
     const router = useRouter()
 
-    const accounts = computed(() => store.state.Preferences.Account.accounts)
+    const accounts = computed(() =>
+      store.state.Preferences.Account.accounts.map(([a, s]) => ({
+        id: a.id,
+        username: a.username,
+        domain: s.domain
+      }))
+    )
     const accountLoading = computed(() => store.state.Preferences.Account.accountLoading)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
 
@@ -93,7 +125,7 @@ export default defineComponent({
       }
     }
 
-    const removeAccount = (index: number, accounts: Array<LocalAccount>) => {
+    const removeAccount = (index: number, accounts: Array<number>) => {
       store
         .dispatch(`${space}/${ACTION_TYPES.REMOVE_ACCOUNT}`, accounts[index])
         .then(() => {
@@ -107,13 +139,13 @@ export default defineComponent({
         })
     }
 
-    const forward = (index: number, accounts: Array<LocalAccount>) => {
+    const forward = (index: number, accounts: Array<number>) => {
       store.dispatch(`${space}/${ACTION_TYPES.FORWARD_ACCOUNT}`, accounts[index]).then(() => {
         loadAccounts()
       })
     }
 
-    const backward = (index: number, accounts: Array<LocalAccount>) => {
+    const backward = (index: number, accounts: Array<number>) => {
       store.dispatch(`${space}/${ACTION_TYPES.BACKWARD_ACCOUNT}`, accounts[index]).then(() => {
         loadAccounts()
       })

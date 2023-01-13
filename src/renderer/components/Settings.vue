@@ -64,7 +64,7 @@ export default defineComponent({
     const activeRoute = computed(() => route.path)
 
     onMounted(() => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_ACCOUNT_ID}`, id.value)
+      store.commit(`${space}/${MUTATION_TYPES.CHANGE_ACCOUNT_ID}`, parseInt(id.value as string))
       router.push(`/${id.value}/settings/general`)
     })
 

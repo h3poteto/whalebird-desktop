@@ -8,7 +8,7 @@ import { InsertAccountCache } from '~/src/types/insertAccountCache'
 import { CachedAccount } from '~/src/types/cachedAccount'
 import { MyWindow } from '~/src/types/global'
 
-const win = window as any as MyWindow
+const win = (window as any) as MyWindow
 
 const emojiIndex = new EmojiIndex(emojidata)
 
@@ -167,7 +167,7 @@ const actions: ActionTree<StatusState, RootState> = {
     const { word, start } = wordStart
     const searchCache = async () => {
       const target = word.replace('@', '')
-      const accounts: Array<CachedAccount> = await win.ipcRenderer.invoke('get-cache-accounts', rootState.TimelineSpace.account._id)
+      const accounts: Array<CachedAccount> = await win.ipcRenderer.invoke('get-cache-accounts', rootState.TimelineSpace.account!.id)
       const matched = accounts.map(account => account.acct).filter(acct => acct.includes(target))
       if (matched.length === 0) throw new Error('Empty')
       commit(MUTATION_TYPES.APPEND_FILTERED_ACCOUNTS, matched)
@@ -178,9 +178,9 @@ const actions: ActionTree<StatusState, RootState> = {
     }
     const searchAPI = async () => {
       const client = generator(
-        rootState.TimelineSpace.sns,
-        rootState.TimelineSpace.account.baseURL,
-        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.server!.sns,
+        rootState.TimelineSpace.server!.baseURL,
+        rootState.TimelineSpace.account!.accessToken,
         rootState.App.userAgent
       )
       commit(MUTATION_TYPES.SET_CLIENT, client)
@@ -191,7 +191,7 @@ const actions: ActionTree<StatusState, RootState> = {
         res.data.map(account => account.acct)
       )
       await win.ipcRenderer.invoke('insert-cache-accounts', {
-        ownerID: rootState.TimelineSpace.account._id!,
+        ownerID: rootState.TimelineSpace.account!.id,
         accts: res.data.map(a => a.acct)
       } as InsertAccountCache)
       commit(MUTATION_TYPES.CHANGE_START_INDEX, start)
@@ -219,9 +219,9 @@ const actions: ActionTree<StatusState, RootState> = {
     }
     const searchAPI = async () => {
       const client = generator(
-        rootState.TimelineSpace.sns,
-        rootState.TimelineSpace.account.baseURL,
-        rootState.TimelineSpace.account.accessToken,
+        rootState.TimelineSpace.server!.sns,
+        rootState.TimelineSpace.server!.baseURL,
+        rootState.TimelineSpace.account!.accessToken,
         rootState.App.userAgent
       )
       commit(MUTATION_TYPES.SET_CLIENT, client)

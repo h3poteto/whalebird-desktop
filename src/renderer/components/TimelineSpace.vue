@@ -75,14 +75,10 @@ export default defineComponent({
       ;(window as any).removeEventListener('dragleave', onDragLeave)
       ;(window as any).removeEventListener('dragover', onDragOver)
       ;(window as any).removeEventListener('drop', handleDrop)
-      store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMINGS}`)
-      store.dispatch(`${space}/${ACTION_TYPES.UNBIND_STREAMINGS}`)
     })
 
     const clear = async () => {
-      store.dispatch(`${space}/${ACTION_TYPES.UNBIND_STREAMINGS}`)
       await store.dispatch(`${space}/${ACTION_TYPES.CLEAR_ACCOUNT}`)
-      store.dispatch(`${space}/${ACTION_TYPES.CLEAR_CONTENTS_TIMELINES}`)
       await store.dispatch(`${space}/${ACTION_TYPES.REMOVE_SHORTCUT_EVENTS}`)
       await store.dispatch(`${space}/${ACTION_TYPES.CLEAR_UNREAD}`)
       return 'clear'
