@@ -27,8 +27,9 @@ jobs:
         run: |
           make -e linux
       - uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
         with:
-          store_login: ${{ secrets.STORE_LOGIN }}
           snap: "build/Whalebird-${{ github.event.release.name }}-linux-amd64.snap"
           release: beta
       - uses: shogo82148/actions-upload-release-asset@v1
