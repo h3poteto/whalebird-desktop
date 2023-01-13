@@ -12464,10 +12464,10 @@ vue-virtual-scroller@2.0.0-beta.7:
     vue-observe-visibility "^2.0.0-alpha.1"
     vue-resize "^2.0.0-alpha.1"
 
-vue3-i18next@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/vue3-i18next/-/vue3-i18next-0.2.1.tgz#e6798068a16121fdc3b9af8471a99f13d7d97c1a"
-  integrity sha512-t0Se8TFHybyPWR5RWrcfcgx85qS+N8iOub/eie6XVkmtBSqOTse0ZX5Gbd6sc51rERJX/WoLg67VIAp608EcEw==
+vue3-i18next@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/vue3-i18next/-/vue3-i18next-0.2.2.tgz#3f6ff83bef9503333e15b32c786ce3bfe6e16511"
+  integrity sha512-Yv3HmfUBuxpd1S2NlryLfSKMV4zpd9N3ffQU0sAd+fCzNvBwO36MR7keWIaWMXRhgtMJaKyAWJTfjhA1OThJbA==
 
 vue@^3.2.45:
   version "3.2.45"
