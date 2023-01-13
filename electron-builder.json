@@ -1,6 +1,6 @@
 {
   "productName": "Whalebird",
-  "appId": "org.whalebird.desktop",
+  "appId": "social.whalebird.desktop",
   "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
   "directories": {
     "output": "build"
