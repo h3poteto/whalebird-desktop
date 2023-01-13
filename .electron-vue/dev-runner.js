@@ -104,36 +104,11 @@ function startMain() {
 
       logStats('Main', stats)
 
-      if (electronProcess && electronProcess.kill) {
-        manualRestart = true
-        process.kill(electronProcess.pid)
-        electronProcess = null
-        startElectron()
-
-        setTimeout(() => {
-          manualRestart = false
-        }, 5000)
-      }
-
       resolve()
     })
   })
 }
 
-function startElectron() {
-  electronProcess = spawn(electron, ['--inspect=5858', path.join(__dirname, '../dist/electron/main.js')])
-
-  electronProcess.stdout.on('data', data => {
-    electronLog(data, 'blue')
-  })
-  electronProcess.stderr.on('data', data => {
-    electronLog(data, 'red')
-  })
-
-  electronProcess.on('close', () => {
-    if (!manualRestart) process.exit()
-  })
-}
 function startElectron() {
   var args = ['--inspect=5858', path.join(__dirname, '../dist/electron/main.js')]
 

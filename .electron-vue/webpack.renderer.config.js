@@ -161,6 +161,7 @@ let rendererConfig = {
     __filename: process.env.NODE_ENV !== 'production'
   },
   devServer: {
+    hot: true,
     hotOnly: true
   },
   plugins: [
