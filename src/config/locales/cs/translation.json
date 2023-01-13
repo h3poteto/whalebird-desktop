@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "Ostatní možnosti",
-        "launch": "Launch app on login"
+        "launch": "Launch app on login",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "Obnovit výchozí nastavení"

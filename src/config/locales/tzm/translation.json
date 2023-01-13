@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "Tideɣrin yaḍnin",
-        "launch": "Ṛẓem tisensi akd ukcam"
+        "launch": "Ṛẓem tisensi akd ukcam",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "Reset preferences"

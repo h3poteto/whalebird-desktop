@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "Aðrir valkostir",
-        "launch": "Ræsa forrit við innskráningu"
+        "launch": "Ræsa forrit við innskráningu",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "Frumstilla kjörstillingar"

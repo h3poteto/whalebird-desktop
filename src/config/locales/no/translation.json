@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "Other options",
-        "launch": "Launch app on login"
+        "launch": "Launch app on login",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "Reset preferences"

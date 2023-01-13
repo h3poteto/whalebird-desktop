@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "其它选项",
-        "launch": "登录时启动程序"
+        "launch": "登录时启动程序",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "重置首选项"

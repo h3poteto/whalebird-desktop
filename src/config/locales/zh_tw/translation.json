@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "其他選項",
-        "launch": "登入時啟動 app"
+        "launch": "登入時啟動 app",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "重置偏好設定"

@@ -172,7 +172,8 @@
       },
       "other": {
         "title": "Pilihan lainnya",
-        "launch": "Luncurkan aplikasi saat login"
+        "launch": "Luncurkan aplikasi saat login",
+        "hideOnLaunch": "Hide window on launch"
       },
       "reset": {
         "button": "Setel ulang preferensi"
