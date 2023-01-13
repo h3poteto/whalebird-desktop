@@ -85,7 +85,7 @@ describe('AccountProfile', () => {
         header_static: '',
         emojis: [],
         moved: null,
-        fields: null,
+        fields: [],
         bot: false
       }
       beforeEach(() => {
@@ -119,7 +119,7 @@ describe('AccountProfile', () => {
         header_static: '',
         emojis: [],
         moved: null,
-        fields: null,
+        fields: [],
         bot: false
       }
       beforeEach(() => {
@@ -153,7 +153,7 @@ describe('AccountProfile', () => {
         header_static: '',
         emojis: [],
         moved: null,
-        fields: null,
+        fields: [],
         bot: false
       }
       beforeEach(() => {
@@ -187,7 +187,7 @@ describe('AccountProfile', () => {
         header_static: '',
         emojis: [],
         moved: null,
-        fields: null,
+        fields: [],
         bot: false
       }
       beforeEach(() => {

@@ -52,7 +52,7 @@ const account: Entity.Account = {
   header_static: '',
   emojis: [],
   moved: null,
-  fields: null,
+  fields: [],
   bot: false
 }
 
