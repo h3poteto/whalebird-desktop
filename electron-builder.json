@@ -81,7 +81,6 @@
         "target": "tar.bz2",
         "arch": [
           "x64",
-          "armv7l",
           "arm64"
         ]
       },
