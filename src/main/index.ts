@@ -847,22 +847,22 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
             type: 'separator'
           },
           {
-            label: i18n.t('main_menu.application.services'),
+            label: i18n.t<string>('main_menu.application.services'),
             role: 'services'
           },
           {
             type: 'separator'
           },
           {
-            label: i18n.t('main_menu.application.hide'),
+            label: i18n.t<string>('main_menu.application.hide'),
             role: 'hide'
           },
           {
-            label: i18n.t('main_menu.application.hide_others'),
+            label: i18n.t<string>('main_menu.application.hide_others'),
             role: 'hideOthers'
           },
           {
-            label: i18n.t('main_menu.application.show_all'),
+            label: i18n.t<string>('main_menu.application.show_all'),
             role: 'unhide'
           }
         ]
@@ -872,7 +872,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
       ? []
       : [
           {
-            label: i18n.t('main_menu.window.always_show_menu_bar'),
+            label: i18n.t<string>('main_menu.window.always_show_menu_bar'),
             type: 'checkbox',
             checked: !menu.autoHideMenu,
             click: item => {
@@ -888,14 +888,14 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
     process.platform === 'darwin'
       ? [
           {
-            label: i18n.t('main_menu.application.quit'),
+            label: i18n.t<string>('main_menu.application.quit'),
             accelerator: 'CmdOrCtrl+Q',
             role: 'quit'
           }
         ]
       : [
           {
-            label: i18n.t('main_menu.application.quit'),
+            label: i18n.t<string>('main_menu.application.quit'),
             accelerator: 'CmdOrCtrl+Q',
             click: () => {
               mainWindow!.destroy()
@@ -905,10 +905,10 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
 
   const template: Array<MenuItemConstructorOptions> = [
     {
-      label: i18n.t('main_menu.application.name'),
+      label: i18n.t<string>('main_menu.application.name'),
       submenu: [
         {
-          label: i18n.t('main_menu.application.about'),
+          label: i18n.t<string>('main_menu.application.about'),
           role: 'about',
           click: () => {
             openAboutWindow({
@@ -923,14 +923,14 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
           type: 'separator'
         },
         {
-          label: i18n.t('main_menu.application.preferences'),
+          label: i18n.t<string>('main_menu.application.preferences'),
           accelerator: 'CmdOrCtrl+,',
           click: () => {
             mainWindow!.webContents.send('open-preferences')
           }
         },
         {
-          label: i18n.t('main_menu.application.shortcuts'),
+          label: i18n.t<string>('main_menu.application.shortcuts'),
           accelerator: 'Shift+?',
           click: () => {
             mainWindow!.webContents.send('open-shortcuts-list')
@@ -944,10 +944,10 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
       ]
     },
     {
-      label: i18n.t('main_menu.toot.name'),
+      label: i18n.t<string>('main_menu.toot.name'),
       submenu: [
         {
-          label: i18n.t('main_menu.toot.new'),
+          label: i18n.t<string>('main_menu.toot.new'),
           accelerator: 'CmdOrCtrl+N',
           click: () => {
             mainWindow!.webContents.send('CmdOrCtrl+N')
@@ -956,15 +956,15 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
       ]
     },
     {
-      label: i18n.t('main_menu.edit.name'),
+      label: i18n.t<string>('main_menu.edit.name'),
       submenu: [
         {
-          label: i18n.t('main_menu.edit.undo'),
+          label: i18n.t<string>('main_menu.edit.undo'),
           accelerator: 'CmdOrCtrl+Z',
           role: 'undo'
         },
         {
-          label: i18n.t('main_menu.edit.redo'),
+          label: i18n.t<string>('main_menu.edit.redo'),
           accelerator: 'Shift+CmdOrCtrl+Z',
           role: 'redo'
         },
@@ -972,60 +972,60 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
           type: 'separator'
         },
         {
-          label: i18n.t('main_menu.edit.cut'),
+          label: i18n.t<string>('main_menu.edit.cut'),
           accelerator: 'CmdOrCtrl+X',
           role: 'cut'
         },
         {
-          label: i18n.t('main_menu.edit.copy'),
+          label: i18n.t<string>('main_menu.edit.copy'),
           accelerator: 'CmdOrCtrl+C',
           role: 'copy'
         },
         {
-          label: i18n.t('main_menu.edit.paste'),
+          label: i18n.t<string>('main_menu.edit.paste'),
           accelerator: 'CmdOrCtrl+V',
           role: 'paste'
         },
         {
-          label: i18n.t('main_menu.edit.select_all'),
+          label: i18n.t<string>('main_menu.edit.select_all'),
           accelerator: 'CmdOrCtrl+A',
           role: 'selectall'
         }
       ] as Array<MenuItemConstructorOptions>
     },
     {
-      label: i18n.t('main_menu.view.name'),
+      label: i18n.t<string>('main_menu.view.name'),
       submenu: [
         {
-          label: i18n.t('main_menu.view.toggle_full_screen'),
+          label: i18n.t<string>('main_menu.view.toggle_full_screen'),
           role: 'togglefullscreen'
         }
       ]
     },
     {
-      label: i18n.t('main_menu.window.name'),
+      label: i18n.t<string>('main_menu.window.name'),
       submenu: [
         ...macWindowMenu,
         {
-          label: i18n.t('main_menu.window.close'),
+          label: i18n.t<string>('main_menu.window.close'),
           role: 'close'
         },
         {
-          label: i18n.t('main_menu.window.open'),
+          label: i18n.t<string>('main_menu.window.open'),
           enabled: false,
           click: () => {
             reopenWindow()
           }
         },
         {
-          label: i18n.t('main_menu.window.minimize'),
+          label: i18n.t<string>('main_menu.window.minimize'),
           role: 'minimize'
         },
         {
           type: 'separator'
         },
         {
-          label: i18n.t('main_menu.window.jump_to'),
+          label: i18n.t<string>('main_menu.window.jump_to'),
           accelerator: 'CmdOrCtrl+K',
           enabled: true,
           click: () => {
@@ -1047,7 +1047,7 @@ const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n)
   const template: Array<MenuItemConstructorOptions> = [
     ...accountsChange,
     {
-      label: i18n.t('main_menu.application.open'),
+      label: i18n.t<string>('main_menu.application.open'),
       click: async () => {
         if (mainWindow) {
           mainWindow.show()
@@ -1057,7 +1057,7 @@ const TrayMenu = (accountsChange: Array<MenuItemConstructorOptions>, i18n: I18n)
       }
     },
     {
-      label: i18n.t('main_menu.application.quit'),
+      label: i18n.t<string>('main_menu.application.quit'),
       click: () => {
         stopAllStreamings()
         mainWindow!.destroy()

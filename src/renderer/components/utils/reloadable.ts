@@ -9,7 +9,7 @@ export default function useReloadable(store: Store<RootState>, route: RouteLocat
   async function reloadable() {
     const account = await store.dispatch(`TimelineSpace/${ACTION_TYPES.LOCAL_ACCOUNT}`, route.params.id).catch(err => {
       ElMessage({
-        message: i18next.t('message.account_load_error'),
+        message: i18next.t<string>('message.account_load_error'),
         type: 'error'
       })
       throw err
