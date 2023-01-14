@@ -150,7 +150,6 @@
     "buffer": "^6.0.3",
     "bufferutil": "^4.0.7",
     "cfonts": "^3.1.1",
-    "chai": "^4.3.7",
     "cli-color": "^2.0.3",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.27.1",
