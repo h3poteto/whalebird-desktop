@@ -1,6 +1,6 @@
 'use strict'
 
-const chalk = require('chalk')
+const clc = require('cli-color')
 const electron = require('electron')
 const path = require('path')
 const { say } = require('cfonts')
@@ -19,7 +19,7 @@ let hotMiddleware
 function logStats(proc, data) {
   let log = ''
 
-  log += chalk.yellow.bold(`┏ ${proc} Process ${new Array(19 - proc.length + 1).join('-')}`)
+  log += clc.yellow.bold(`┏ ${proc} Process ${new Array(19 - proc.length + 1).join('-')}`)
   log += '\n\n'
 
   if (typeof data === 'object') {
@@ -36,7 +36,7 @@ function logStats(proc, data) {
     log += `  ${data}\n`
   }
 
-  log += '\n' + chalk.yellow.bold(`┗ ${new Array(28 + 1).join('-')}`) + '\n'
+  log += '\n' + clc.yellow.bold(`┗ ${new Array(28 + 1).join('-')}`) + '\n'
 
   console.log(log)
 }
@@ -91,7 +91,7 @@ function startMain() {
     const compiler = webpack(mainConfig)
 
     compiler.hooks.watchRun.tapAsync('watch-run', (compilation, done) => {
-      logStats('Main', chalk.white.bold('compiling...'))
+      logStats('Main', clc.white.bold('compiling...'))
       hotMiddleware.publish({ action: 'compiling' })
       done()
     })
@@ -104,36 +104,11 @@ function startMain() {
 
       logStats('Main', stats)
 
-      if (electronProcess && electronProcess.kill) {
-        manualRestart = true
-        process.kill(electronProcess.pid)
-        electronProcess = null
-        startElectron()
-
-        setTimeout(() => {
-          manualRestart = false
-        }, 5000)
-      }
-
       resolve()
     })
   })
 }
 
-function startElectron() {
-  electronProcess = spawn(electron, ['--inspect=5858', path.join(__dirname, '../dist/electron/main.js')])
-
-  electronProcess.stdout.on('data', data => {
-    electronLog(data, 'blue')
-  })
-  electronProcess.stderr.on('data', data => {
-    electronLog(data, 'red')
-  })
-
-  electronProcess.on('close', () => {
-    if (!manualRestart) process.exit()
-  })
-}
 function startElectron() {
   var args = ['--inspect=5858', path.join(__dirname, '../dist/electron/main.js')]
 
@@ -165,9 +140,7 @@ function electronLog(data, color) {
     log += `  ${line}\n`
   })
   if (/[0-9A-z]+/.test(log)) {
-    console.log(
-      chalk[color].bold('┏ Electron -------------------') + '\n\n' + log + chalk[color].bold('┗ ----------------------------') + '\n'
-    )
+    console.log(clc[color].bold('┏ Electron -------------------') + '\n\n' + log + clc[color].bold('┗ ----------------------------') + '\n')
   }
 }
 
@@ -185,8 +158,8 @@ function greeting() {
       font: 'simple3d',
       space: false
     })
-  } else console.log(chalk.yellow.bold('\n  electron-vue'))
-  console.log(chalk.blue('  getting ready...') + '\n')
+  } else console.log(clc.yellow.bold('\n  electron-vue'))
+  console.log(clc.blue('  getting ready...') + '\n')
 }
 
 function init() {
