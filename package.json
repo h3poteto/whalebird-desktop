@@ -151,7 +151,7 @@
     "bufferutil": "^4.0.7",
     "cfonts": "^3.1.1",
     "chai": "^4.3.7",
-    "chalk": "^4.1.2",
+    "cli-color": "^2.0.3",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.27.1",
     "cross-env": "^7.0.3",
