@@ -3,19 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Whalebird</title>
-    <% if (htmlWebpackPlugin.options.nodeModules) { %>
-      <!-- Add `node_modules/` to global paths so `require` works properly in development -->
-      <script>
-        window.mod.globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')
-      </script>
-    <% } %>
   </head>
   <body>
     <div id="app"></div>
-    <!-- Set `__static` path to static files in production -->
-    <script>
-      if (window.node_env !== 'development') window.__static = window.static_path
-    </script>
 
     <!-- webpack builds are automatically injected -->
   </body>
