@@ -28,7 +28,6 @@ linux:
 	mv build/Whalebird-${VERSION}-linux-x86_64.rpm build/Whalebird-${VERSION}-linux-x64.rpm
 	mv build/Whalebird-${VERSION}-linux-x86_64.AppImage build/Whalebird-${VERSION}-linux-x64.AppImage
 	cd build; sha256sum Whalebird-${VERSION}-linux-arm64.tar.bz2 | awk '{ print $1 }' > Whalebird-${VERSION}-linux-arm64.tar.bz2.shasum
-	cd build; sha256sum Whalebird-${VERSION}-linux-armv7l.tar.bz2 | awk '{ print $1 }' > Whalebird-${VERSION}-linux-armv7l.tar.bz2.shasum
 	cd build; sha256sum Whalebird-${VERSION}-linux-x64.AppImage | awk '{ print $1 }' > Whalebird-${VERSION}-linux-x64.AppImage.shasum
 	cd build; sha256sum Whalebird-${VERSION}-linux-x64.deb | awk '{ print $1 }' > Whalebird-${VERSION}-linux-x64.deb.shasum
 	cd build; sha256sum Whalebird-${VERSION}-linux-x64.rpm | awk '{ print $1 }' > Whalebird-${VERSION}-linux-x64.rpm.shasum
