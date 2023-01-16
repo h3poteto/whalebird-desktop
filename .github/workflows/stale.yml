@@ -1,0 +1,29 @@
+name: Stale
+on:
+  schedule:
+    - cron: '35 * * * *'
+
+permissions:
+  # contents: write # only for delete-branch option
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v7
+        with:
+          stale-issue-message: "This issue is stale because it has been open for 90 days with no activity."
+          close-issue-message: "This issue was closed because it has been inactive for 7 days since being marked as stale."
+          stale-issue-label: "stale"
+          operations-per-run: 60
+          debug-only: true
+          exempt-all-milestones: true
+          exempt-issue-labels: 'dependencies,security'
+          exempt-all-assignees: true
+          exempt-draft-pr: true
+          days-before-issue-stale: 90
+          days-before-issue-close: 7
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
