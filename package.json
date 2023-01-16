@@ -161,7 +161,7 @@
     "electron-notarize": "^1.2.2",
     "electron-packager": "^17.1.1",
     "electron-windows-store": "^2.1.0",
-    "eslint": "^8.31.0",
+    "eslint": "^8.32.0",
     "eslint-plugin-vue": "^9.9.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
