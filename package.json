@@ -147,7 +147,7 @@
     "cfonts": "^3.1.1",
     "cli-color": "^2.0.3",
     "copy-webpack-plugin": "^11.0.0",
-    "core-js": "^3.27.1",
+    "core-js": "^3.27.2",
     "cross-env": "^7.0.3",
     "crypto-browserify": "^3.12.0",
     "css-loader": "^6.7.3",
