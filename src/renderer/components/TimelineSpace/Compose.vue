@@ -1,7 +1,13 @@
 <template>
   <div class="compose">
     <el-form :model="form" class="compose-form">
-      <el-input v-model="form.status" type="textarea" :autosize="{ minRows: 2 }" :placeholder="$t('modals.new_toot.status')" />
+      <el-input
+        v-model="form.status"
+        type="textarea"
+        :autosize="{ minRows: 2 }"
+        :placeholder="$t('modals.new_toot.status')"
+        ref="statusRef"
+      />
       <div class="preview" ref="previewRef">
         <div class="image-wrapper" v-for="media in attachments" :key="media.id">
           <img :src="media.preview_url" class="preview-image" />
@@ -20,9 +26,24 @@
           <el-button link size="default">
             <font-awesome-icon icon="globe" />
           </el-button>
-          <el-button link size="default">
-            <font-awesome-icon :icon="['far', 'face-smile']" />
-          </el-button>
+          <el-popover placement="top" width="0" :visible="emojiVisible" popper-class="new-toot-emoji-picker">
+            <picker
+              v-if="emojiData !== null"
+              :data="emojiData"
+              set="twitter"
+              :autoFocus="true"
+              @select="selectEmoji"
+              :perLine="7"
+              :emojiSize="24"
+              :showPreview="false"
+              :emojiTooltip="true"
+            />
+            <template #reference>
+              <el-button link size="default" @click="emojiVisible = !emojiVisible">
+                <font-awesome-icon :icon="['far', 'face-smile']" />
+              </el-button>
+            </template>
+          </el-popover>
         </el-button-group>
         <div class="actions-group">
           <span>500</span>
@@ -37,6 +58,8 @@
 import { defineComponent, reactive, computed, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
+import emojiDefault from 'emoji-mart-vue-fast/data/all.json'
+import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import { useStore } from '@/store'
 import { MyWindow } from '~/src/types/global'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -44,6 +67,7 @@ import { LocalServer } from '~/src/types/localServer'
 
 export default defineComponent({
   name: 'Compose',
+  components: { Picker },
   setup() {
     const route = useRoute()
     const store = useStore()
@@ -51,19 +75,42 @@ export default defineComponent({
 
     const id = computed(() => parseInt(route.params.id as string))
     const userAgent = computed(() => store.state.App.userAgent)
-
+    const emojiData = ref<EmojiIndex | null>(null)
     const client = ref<MegalodonInterface | null>(null)
     const form = reactive({
       status: ''
     })
-    const imageRef = ref<any>(null)
     const attachments = ref<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
     const loading = ref<boolean>(false)
+    const emojiVisible = ref<boolean>(false)
+    const imageRef = ref<any>(null)
+    const statusRef = ref<any>(null)
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
       const c = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
       client.value = c
+
+      const res = await c.getInstanceCustomEmojis()
+      const customEmojis = res.data
+        .map(emoji => {
+          return {
+            name: `:${emoji.shortcode}:`,
+            image: emoji.url
+          }
+        })
+        .filter((e, i, array) => {
+          return array.findIndex(ar => e.name === ar.name) === i
+        })
+        .map(e => ({
+          name: e.name,
+          short_names: [e.name],
+          text: e.name,
+          emoticons: [],
+          keywords: [e.name],
+          imageUrl: e.image
+        }))
+      emojiData.value = new EmojiIndex(emojiDefault, { custom: customEmojis })
     })
 
     const post = async () => {
@@ -124,6 +171,19 @@ export default defineComponent({
       attachments.value = attachments.value.filter(e => e.id !== attachment.id)
     }
 
+    const selectEmoji = emoji => {
+      if (!statusRef.value) {
+        return
+      }
+      const current = statusRef.value?.textarea.selectionStart
+      if (emoji.native) {
+        form.status = form.status.slice(0, current) + emoji.native + form.status.slice(current)
+      } else {
+        form.status = form.status.slice(0, current) + emoji.name + form.status.slice(current)
+      }
+      emojiVisible.value = false
+    }
+
     return {
       form,
       post,
@@ -132,7 +192,11 @@ export default defineComponent({
       onChangeImage,
       loading,
       attachments,
-      removeAttachment
+      removeAttachment,
+      emojiData,
+      selectEmoji,
+      statusRef,
+      emojiVisible
     }
   }
 })
@@ -215,6 +279,17 @@ export default defineComponent({
         color: var(--theme-secondary-color);
       }
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.new-toot-emoji-picker {
+  background-color: transparent !important;
+  border: none !important;
+
+  .el-popper__arrow {
+    display: none;
   }
 }
 </style>
