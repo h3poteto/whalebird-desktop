@@ -15,6 +15,9 @@
           <el-button class="remove-image" link @click="removeAttachment(media)"><font-awesome-icon icon="circle-xmark" /></el-button>
         </div>
       </div>
+      <div class="nsfw" v-if="attachments.length > 0">
+        <el-checkbox v-model="nsfw">{{ $t('modals.new_toot.footer.change_sensitive') }}</el-checkbox>
+      </div>
       <div class="form-footer">
         <el-button-group class="tool-buttons">
           <el-button link size="default" @click="selectImage">
@@ -126,6 +129,7 @@ export default defineComponent({
     const attachments = ref<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
     const cw = ref<boolean>(false)
     const visibility = ref(visibilityList.Public.key)
+    const nsfw = ref<boolean>(false)
     const loading = ref<boolean>(false)
     const emojiVisible = ref<boolean>(false)
     const imageRef = ref<any>(null)
@@ -171,6 +175,11 @@ export default defineComponent({
           options = Object.assign(options, {
             media_ids: attachments.value.map(m => m.id)
           })
+          if (nsfw.value) {
+            options = Object.assign(options, {
+              sensitive: nsfw.value
+            })
+          }
         }
         if (form.spoiler.length > 0) {
           options = Object.assign(options, {
@@ -260,7 +269,8 @@ export default defineComponent({
       cw,
       visibilityList,
       visibilityIcon,
-      changeVisibility
+      changeVisibility,
+      nsfw
     }
   }
 })
