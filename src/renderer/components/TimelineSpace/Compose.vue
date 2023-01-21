@@ -1,6 +1,7 @@
 <template>
   <div class="compose">
     <el-form :model="form" class="compose-form">
+      <el-input v-model="form.spoiler" class="spoiler" :placeholder="$t('modals.new_toot.cw')" v-if="cw" />
       <el-input
         v-model="form.status"
         type="textarea"
@@ -44,6 +45,7 @@
               </el-button>
             </template>
           </el-popover>
+          <el-button link size="default" @click="cw = !cw"> CW </el-button>
         </el-button-group>
         <div class="actions-group">
           <span>500</span>
@@ -78,9 +80,11 @@ export default defineComponent({
     const emojiData = ref<EmojiIndex | null>(null)
     const client = ref<MegalodonInterface | null>(null)
     const form = reactive({
-      status: ''
+      status: '',
+      spoiler: ''
     })
     const attachments = ref<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
+    const cw = ref<boolean>(false)
     const loading = ref<boolean>(false)
     const emojiVisible = ref<boolean>(false)
     const imageRef = ref<any>(null)
@@ -125,6 +129,12 @@ export default defineComponent({
             media_ids: attachments.value.map(m => m.id)
           })
         }
+        if (form.spoiler.length > 0) {
+          options = Object.assign(options, {
+            spoiler_text: form.spoiler
+          })
+        }
+
         await client.value.postStatus(form.status, options)
         clear()
       } catch (err) {
@@ -136,7 +146,10 @@ export default defineComponent({
 
     const clear = () => {
       form.status = ''
+      form.spoiler = ''
       attachments.value = []
+      cw.value = false
+      emojiVisible.value = false
     }
 
     const selectImage = () => {
@@ -196,7 +209,8 @@ export default defineComponent({
       emojiData,
       selectEmoji,
       statusRef,
-      emojiVisible
+      emojiVisible,
+      cw
     }
   }
 })
@@ -210,12 +224,25 @@ export default defineComponent({
 
   .compose-form {
     height: calc(100% - 24px);
+
+    .spoiler {
+      padding-bottom: 8px;
+    }
   }
 
   .compose-form :deep(.el-textarea__inner) {
     color: var(--theme-primary-color);
     background-color: var(--theme-background-color);
     box-shadow: 0 0 0 1px var(--theme-border-color, var(--theme-border-color)) inset;
+  }
+
+  .compose-form :deep(.el-input__wrapper) {
+    background-color: var(--theme-background-color);
+    box-shadow: 0 0 0 1px var(--theme-border-color, var(--theme-border-color)) inset;
+  }
+
+  .compose-form :deep(.el-input__inner) {
+    color: var(--theme-primary-color);
   }
 
   .preview {
