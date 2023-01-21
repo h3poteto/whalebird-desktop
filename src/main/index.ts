@@ -16,7 +16,7 @@ import {
   Notification,
   NotificationConstructorOptions
 } from 'electron'
-
+import fs from 'fs'
 import crypto from 'crypto'
 import log from 'electron-log'
 import windowStateKeeper from 'electron-window-state'
@@ -116,11 +116,16 @@ const splashURL =
 
 const userData = app.getPath('userData')
 const appPath = app.getPath('exe')
+const dbDir = path.join(userData, '/db')
 
-const databasePath = process.env.NODE_ENV === 'production' ? userData + '/db/whalebird.db' : 'whalebird.db'
+if (!fs.existsSync(dbDir) || !fs.lstatSync(dbDir).isDirectory()) {
+  fs.mkdirSync(dbDir, { recursive: true })
+}
+
+const databasePath = path.join(dbDir, 'whalebird.db')
 const db = newDB(databasePath)
 
-const preferencesDBPath = process.env.NODE_ENV === 'production' ? userData + './db/preferences.json' : 'preferences.json'
+const preferencesDBPath = path.join(dbDir, 'preferences.json')
 
 const soundBasePath =
   process.env.NODE_ENV === 'development' ? path.join(__dirname, '../../build/sounds/') : path.join(process.resourcesPath!, 'build/sounds/')
