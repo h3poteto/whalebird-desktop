@@ -19,7 +19,7 @@
         </el-button-group>
         <div class="actions-group">
           <span>500</span>
-          <el-button type="primary"> {{ $t('modals.new_toot.toot') }} </el-button>
+          <el-button type="primary" @click="post"> {{ $t('modals.new_toot.toot') }} </el-button>
         </div>
       </div>
     </el-form>
@@ -27,17 +27,54 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, computed, ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import generator, { MegalodonInterface } from 'megalodon'
+import { useStore } from '@/store'
+import { MyWindow } from '~/src/types/global'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
 
 export default defineComponent({
   name: 'Compose',
   setup() {
+    const route = useRoute()
+    const store = useStore()
+    const win = (window as any) as MyWindow
+
+    const id = computed(() => parseInt(route.params.id as string))
+    const userAgent = computed(() => store.state.App.userAgent)
+
+    const client = ref<MegalodonInterface | null>(null)
     const form = reactive({
       status: ''
     })
 
+    onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      const c = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+      client.value = c
+    })
+
+    const post = async () => {
+      if (!client.value) {
+        return
+      }
+      try {
+        await client.value.postStatus(form.status)
+        clear()
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    const clear = () => {
+      form.status = ''
+    }
+
     return {
-      form
+      form,
+      post
     }
   }
 })
