@@ -24,9 +24,33 @@
           <el-button link size="default" disabled>
             <font-awesome-icon icon="square-poll-horizontal" />
           </el-button>
-          <el-button link size="default">
-            <font-awesome-icon icon="globe" />
-          </el-button>
+          <div>
+            <el-dropdown trigger="click" @command="changeVisibility">
+              <el-button size="default" link :title="$t('modals.new_toot.footer.change_visibility')">
+                <font-awesome-icon :icon="visibilityIcon" />
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item :command="visibilityList.Public.key">
+                    <font-awesome-icon icon="globe" class="privacy-icon" />
+                    {{ $t(visibilityList.Public.name) }}
+                  </el-dropdown-item>
+                  <el-dropdown-item :command="visibilityList.Unlisted.key">
+                    <font-awesome-icon icon="unlock" class="privacy-icon" />
+                    {{ $t(visibilityList.Unlisted.name) }}
+                  </el-dropdown-item>
+                  <el-dropdown-item :command="visibilityList.Private.key">
+                    <font-awesome-icon icon="lock" class="privacy-icon" />
+                    {{ $t(visibilityList.Private.name) }}
+                  </el-dropdown-item>
+                  <el-dropdown-item :command="visibilityList.Direct.key">
+                    <font-awesome-icon icon="envelope" class="privacy-icon" size="sm" />
+                    {{ $t(visibilityList.Direct.name) }}
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
           <el-popover placement="top" width="0" :visible="emojiVisible" popper-class="new-toot-emoji-picker">
             <picker
               v-if="emojiData !== null"
@@ -66,6 +90,7 @@ import { useStore } from '@/store'
 import { MyWindow } from '~/src/types/global'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
+import visibilityList from '~/src/constants/visibility'
 
 export default defineComponent({
   name: 'Compose',
@@ -77,6 +102,21 @@ export default defineComponent({
 
     const id = computed(() => parseInt(route.params.id as string))
     const userAgent = computed(() => store.state.App.userAgent)
+    const visibilityIcon = computed(() => {
+      switch (visibility.value) {
+        case visibilityList.Public.key:
+          return 'globe'
+        case visibilityList.Unlisted.key:
+          return 'unlock'
+        case visibilityList.Private.key:
+          return 'lock'
+        case visibilityList.Direct.key:
+          return 'envelope'
+        default:
+          return 'globe'
+      }
+    })
+
     const emojiData = ref<EmojiIndex | null>(null)
     const client = ref<MegalodonInterface | null>(null)
     const form = reactive({
@@ -85,6 +125,7 @@ export default defineComponent({
     })
     const attachments = ref<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
     const cw = ref<boolean>(false)
+    const visibility = ref(visibilityList.Public.key)
     const loading = ref<boolean>(false)
     const emojiVisible = ref<boolean>(false)
     const imageRef = ref<any>(null)
@@ -121,7 +162,9 @@ export default defineComponent({
       if (!client.value) {
         return
       }
-      let options = {}
+      let options = {
+        visibility: visibility.value
+      }
       try {
         loading.value = true
         if (attachments.value.length > 0) {
@@ -197,6 +240,10 @@ export default defineComponent({
       emojiVisible.value = false
     }
 
+    const changeVisibility = (value: 'public' | 'unlisted' | 'private' | 'direct') => {
+      visibility.value = value
+    }
+
     return {
       form,
       post,
@@ -210,7 +257,10 @@ export default defineComponent({
       selectEmoji,
       statusRef,
       emojiVisible,
-      cw
+      cw,
+      visibilityList,
+      visibilityIcon,
+      changeVisibility
     }
   }
 })
@@ -291,6 +341,8 @@ export default defineComponent({
     margin-top: 4px;
 
     .tool-buttons {
+      display: flex;
+
       button {
         margin-right: 8px;
       }
@@ -307,6 +359,10 @@ export default defineComponent({
       }
     }
   }
+}
+
+.privacy-icon {
+  margin-right: 4px;
 }
 </style>
 
