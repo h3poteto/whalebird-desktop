@@ -18,13 +18,29 @@
       <div class="nsfw" v-if="attachments.length > 0">
         <el-checkbox v-model="nsfw">{{ $t('modals.new_toot.footer.change_sensitive') }}</el-checkbox>
       </div>
+      <div class="poll" v-if="poll.options.length > 0">
+        <ul class="options-list">
+          <li class="option" v-for="(option, index) in poll.options" :key="index">
+            <el-radio :disabled="true" :label="index">
+              <el-input :placeholder="`Choice ${index}`" v-model="poll.options[index]" size="small"></el-input>
+              <el-button class="remove-poll" link size="small" @click="removePollOption(index)"
+                ><font-awesome-icon icon="xmark"
+              /></el-button>
+            </el-radio>
+          </li>
+        </ul>
+        <el-button class="add-poll" type="info" size="small" @click="addPollOption">{{ $t('modals.new_toot.poll.add_choice') }}</el-button>
+        <el-select v-model="poll.expires_in" size="small" value-key="value">
+          <el-option v-for="exp in expiresList" :key="exp.value" :label="exp.label" :value="exp.value"> </el-option>
+        </el-select>
+      </div>
       <div class="form-footer">
         <el-button-group class="tool-buttons">
           <el-button link size="default" @click="selectImage">
             <font-awesome-icon icon="camera" />
           </el-button>
           <input name="image" type="file" class="image-input" ref="imageRef" @change="onChangeImage" />
-          <el-button link size="default" disabled>
+          <el-button link size="default" @click="togglePoll">
             <font-awesome-icon icon="square-poll-horizontal" />
           </el-button>
           <div>
@@ -89,6 +105,7 @@ import { useRoute } from 'vue-router'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import emojiDefault from 'emoji-mart-vue-fast/data/all.json'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
+import { useI18next } from 'vue3-i18next'
 import { useStore } from '@/store'
 import { MyWindow } from '~/src/types/global'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -96,12 +113,18 @@ import { LocalServer } from '~/src/types/localServer'
 import visibilityList from '~/src/constants/visibility'
 import { MUTATION_TYPES } from '@/store/TimelineSpace/Compose'
 
+type Expire = {
+  label: string
+  value: number
+}
+
 export default defineComponent({
   name: 'Compose',
   components: { Picker },
   setup() {
     const route = useRoute()
     const store = useStore()
+    const i18n = useI18next()
     const space = 'TimelineSpace/Compose'
     const win = (window as any) as MyWindow
 
@@ -121,6 +144,36 @@ export default defineComponent({
           return 'globe'
       }
     })
+    const expiresList = reactive<Array<Expire>>([
+      {
+        label: i18n.t('modals.new_toot.poll.expires.5_minutes'),
+        value: 60 * 5
+      },
+      {
+        label: i18n.t('modals.new_toot.poll.expires.30_minutes'),
+        value: 60 * 30
+      },
+      {
+        label: i18n.t('modals.new_toot.poll.expires.1_hour'),
+        value: 3600
+      },
+      {
+        label: i18n.t('modals.new_toot.poll.expires.6_hours'),
+        value: 3600 * 6
+      },
+      {
+        label: i18n.t('modals.new_toot.poll.expires.1_day'),
+        value: 3600 * 24
+      },
+      {
+        label: i18n.t('modals.new_toot.poll.expires.3_days'),
+        value: 3600 * 24 * 3
+      },
+      {
+        label: i18n.t('modals.new_toot.poll.expires.7_days'),
+        value: 3600 * 24 * 7
+      }
+    ])
 
     const emojiData = ref<EmojiIndex | null>(null)
     const client = ref<MegalodonInterface | null>(null)
@@ -133,6 +186,10 @@ export default defineComponent({
     const visibility = ref(visibilityList.Public.key)
     const nsfw = ref<boolean>(false)
     const inReplyTo = computed(() => store.state.TimelineSpace.Compose.inReplyTo)
+    const poll = reactive<{ options: Array<string>; expires_in: number }>({
+      options: [],
+      expires_in: 86400
+    })
 
     const loading = ref<boolean>(false)
     const emojiVisible = ref<boolean>(false)
@@ -202,6 +259,12 @@ export default defineComponent({
           })
         }
 
+        if (poll.options.length > 0) {
+          options = Object.assign(options, {
+            poll: poll
+          })
+        }
+
         await client.value.postStatus(form.status, options)
         clear()
       } catch (err) {
@@ -218,6 +281,7 @@ export default defineComponent({
       cw.value = false
       emojiVisible.value = false
       store.commit(`${space}/${MUTATION_TYPES.CLEAR_REPLY_TO_ID}`)
+      poll.options = []
     }
 
     const selectImage = () => {
@@ -269,6 +333,22 @@ export default defineComponent({
       visibility.value = value
     }
 
+    const togglePoll = () => {
+      if (poll.options.length > 0) {
+        poll.options = []
+      } else {
+        poll.options = ['', '']
+      }
+    }
+
+    const addPollOption = () => {
+      poll.options = [...poll.options, '']
+    }
+
+    const removePollOption = (index: number) => {
+      poll.options = poll.options.filter((_, i) => i !== index)
+    }
+
     return {
       form,
       post,
@@ -286,7 +366,12 @@ export default defineComponent({
       visibilityList,
       visibilityIcon,
       changeVisibility,
-      nsfw
+      nsfw,
+      poll,
+      togglePoll,
+      expiresList,
+      addPollOption,
+      removePollOption
     }
   }
 })
@@ -358,6 +443,29 @@ export default defineComponent({
         }
       }
     }
+  }
+
+  .poll {
+    .options-list {
+      list-style: none;
+      padding-left: 16px;
+
+      .poll-option {
+        line-height: 38px;
+
+        .remove-poll {
+          margin-left: 4px;
+        }
+      }
+    }
+
+    .add-poll {
+      margin: 0 4px 0 40px;
+    }
+  }
+
+  .poll :deep(.el-input__inner) {
+    box-shadow: none;
   }
 
   .form-footer {
