@@ -294,7 +294,7 @@
         "add_image": "上传图片",
         "poll": "发起投票",
         "change_visibility": "设置嘟文可见范围",
-        "change_sensitive": "设置嘟文内容敏感性",
+        "change_sensitive": "Mark media as sensitive",
         "add_cw": "添加内容警告",
         "pined_hashtag": "保留话题标签"
       },
