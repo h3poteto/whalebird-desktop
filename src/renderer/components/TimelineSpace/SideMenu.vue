@@ -372,7 +372,7 @@ export default defineComponent({
           break
         case 'edit':
           if (account.server) {
-            ;(window as any).shell.openExternal(account.server.baseURL + '/settings/profile')
+            win.ipcRenderer.invoke('open-browser', account.server.baseURL + '/settings/profile')
           }
           break
         case 'settings': {

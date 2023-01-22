@@ -77,7 +77,7 @@
           <div class="clearfix"></div>
         </div>
         <Quote
-          v-if="message.quote"
+          v-if="message.quote && message.reblog"
           :icon="message.reblog.account.avatar"
           :username="username(message.reblog.account)"
           :accountName="accountName(message.reblog.account)"
@@ -145,7 +145,7 @@
             >
               <font-awesome-icon icon="bookmark" size="sm" />
             </el-button>
-            <el-button v-if="quoteSupported" link class="quote-btn" @click="openQuote()">
+            <el-button v-if="quoteSupported" link class="quote-btn" @click="openQuote()" disabled>
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
             <template v-if="server!.sns !== 'mastodon'">
@@ -239,7 +239,7 @@ import moment from 'moment'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18next } from 'vue3-i18next'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useStore } from '@/store'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import { findAccount, findLink, findTag, ParsedAccount } from '~/src/renderer/utils/tootParser'
@@ -258,6 +258,7 @@ import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteCo
 import { ACTION_TYPES as VIEWER_ACTION } from '@/store/TimelineSpace/Modals/ImageViewer'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 const defaultEmojiIndex = new EmojiIndex(data)
 
@@ -310,6 +311,7 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const i18n = useI18next()
+    const win = (window as any) as MyWindow
     const { focused, overlaid, message, filters, account, server } = toRefs(props)
     const { l, h, r, b, f, o, p, i, x } = useMagicKeys()
 
@@ -458,7 +460,17 @@ export default defineComponent({
           })
           .catch(err => {
             console.error(err)
-            openLink(e)
+            ElMessageBox.confirm(
+              i18n.t('cards.toot.open_account.text', { account: parsedAccount.acct }),
+              i18n.t('cards.toot.open_account.title'),
+              {
+                confirmButtonText: i18n.t('cards.toot.open_account.ok'),
+                cancelButtonText: i18n.t('cards.toot.open_account.cancel'),
+                type: 'Warning'
+              }
+            ).then(() => {
+              openLink(e)
+            })
           })
         return parsedAccount.acct
       }
@@ -494,7 +506,7 @@ export default defineComponent({
     const openLink = (e: MouseEvent) => {
       const link = findLink(e.target as HTMLElement, 'toot')
       if (link !== null) {
-        return (window as any).shell.openExternal(link)
+        win.ipcRenderer.invoke('open-browser', link)
       }
     }
     const openReply = () => {
@@ -507,7 +519,7 @@ export default defineComponent({
       router.push({ query: { detail: 'true', status_id: message.id } })
     }
     const openBrowser = (message: Entity.Status) => {
-      ;(window as any).shell.openExternal(message.url)
+      win.ipcRenderer.invoke('open-browser', message.url)
     }
     const copyLink = (message: Entity.Status) => {
       ;(window as any).clipboard.writeText(message.url, 'toot-link')

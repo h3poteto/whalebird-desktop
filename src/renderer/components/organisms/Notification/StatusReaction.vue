@@ -109,6 +109,7 @@ import { usernameWithStyle } from '@/utils/username'
 import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
 import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
 import { ACTION_TYPES as DETAIL_ACTION } from '@/store/TimelineSpace/Contents/SideBar/TootDetail'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'status-reaction',
@@ -143,6 +144,7 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
+    const win = (window as any) as MyWindow
     const { focused, message, filters, reactionType } = toRefs(props)
 
     const showContent = ref<boolean>(false)
@@ -248,7 +250,7 @@ export default defineComponent({
     const openLink = (e: MouseEvent) => {
       const link = findLink(e.target as HTMLElement, 'status-reaction')
       if (link !== null) {
-        return (window as any).shell.openExternal(link)
+        win.ipcRenderer.invoke('open-browser', link)
       }
     }
     const openUser = (account: Entity.Account) => {

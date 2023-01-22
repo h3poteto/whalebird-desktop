@@ -17,6 +17,7 @@
     </el-header>
     <el-main class="main">
       <Status v-if="target() === 'status'" />
+      <Profile v-if="target() === 'account'" />
     </el-main>
   </el-container>
 </template>
@@ -25,10 +26,11 @@
 import { defineComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Status from './Detail/Status.vue'
+import Profile from './Detail/Profile.vue'
 
 export default defineComponent({
   name: 'Detail',
-  components: { Status },
+  components: { Status, Profile },
   setup() {
     const route = useRoute()
     const router = useRouter()

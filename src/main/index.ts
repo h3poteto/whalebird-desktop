@@ -1441,3 +1441,7 @@ ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: TagStreamingO
     log.error(err)
   }
 })
+
+ipcMain.handle('open-browser', async (_: IpcMainInvokeEvent, url: string) => {
+  shell.openExternal(url)
+})
