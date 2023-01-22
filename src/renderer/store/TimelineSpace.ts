@@ -11,6 +11,7 @@ import { MyWindow } from '~/src/types/global'
 import { LocalServer } from '~/src/types/localServer'
 import { Setting } from '~/src/types/setting'
 import { DefaultSetting } from '~/src/constants/initializer/setting'
+import Compose, { ComposeState } from './TimelineSpace/Compose'
 
 const win = (window as any) as MyWindow
 
@@ -201,6 +202,7 @@ type TimelineSpaceModule = {
   HeaderMenu: HeaderMenuState
   Modals: ModalsModuleState
   Contents: ContentsModuleState
+  Compose: ComposeState
 }
 
 export type TimelineSpaceModuleState = TimelineSpaceModule & TimelineSpaceState
@@ -211,7 +213,8 @@ const TimelineSpace: Module<TimelineSpaceState, RootState> = {
     SideMenu,
     HeaderMenu,
     Modals,
-    Contents
+    Contents,
+    Compose
   },
   state: state,
   mutations: mutations,

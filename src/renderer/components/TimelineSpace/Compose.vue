@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, ref, onMounted } from 'vue'
+import { defineComponent, reactive, computed, ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import emojiDefault from 'emoji-mart-vue-fast/data/all.json'
@@ -94,6 +94,7 @@ import { MyWindow } from '~/src/types/global'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
 import visibilityList from '~/src/constants/visibility'
+import { MUTATION_TYPES } from '@/store/TimelineSpace/Compose'
 
 export default defineComponent({
   name: 'Compose',
@@ -101,6 +102,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const store = useStore()
+    const space = 'TimelineSpace/Compose'
     const win = (window as any) as MyWindow
 
     const id = computed(() => parseInt(route.params.id as string))
@@ -130,6 +132,8 @@ export default defineComponent({
     const cw = ref<boolean>(false)
     const visibility = ref(visibilityList.Public.key)
     const nsfw = ref<boolean>(false)
+    const inReplyTo = computed(() => store.state.TimelineSpace.Compose.inReplyTo)
+
     const loading = ref<boolean>(false)
     const emojiVisible = ref<boolean>(false)
     const imageRef = ref<any>(null)
@@ -162,6 +166,12 @@ export default defineComponent({
       emojiData.value = new EmojiIndex(emojiDefault, { custom: customEmojis })
     })
 
+    watch(inReplyTo, current => {
+      if (current) {
+        form.status = `@${current.acct} `
+      }
+    })
+
     const post = async () => {
       if (!client.value) {
         return
@@ -186,6 +196,11 @@ export default defineComponent({
             spoiler_text: form.spoiler
           })
         }
+        if (inReplyTo.value) {
+          options = Object.assign(options, {
+            in_reply_to_id: inReplyTo.value?.id
+          })
+        }
 
         await client.value.postStatus(form.status, options)
         clear()
@@ -202,6 +217,7 @@ export default defineComponent({
       attachments.value = []
       cw.value = false
       emojiVisible.value = false
+      store.commit(`${space}/${MUTATION_TYPES.CLEAR_REPLY_TO_ID}`)
     }
 
     const selectImage = () => {
