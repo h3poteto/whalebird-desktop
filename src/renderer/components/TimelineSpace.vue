@@ -11,7 +11,13 @@
       <header class="header" style="-webkit-app-region: drag">
         <header-menu></header-menu>
       </header>
-      <contents></contents>
+      <div class="contents-wrapper" ref="contentsRef">
+        <contents />
+      </div>
+      <div class="compose-wrapper">
+        <compose />
+        <resize-observer @notify="composeResized" />
+      </div>
     </div>
     <modals></modals>
     <receive-drop v-show="droppableVisible"></receive-drop>
@@ -26,6 +32,7 @@ import { useI18next } from 'vue3-i18next'
 import SideMenu from './TimelineSpace/SideMenu.vue'
 import HeaderMenu from './TimelineSpace/HeaderMenu.vue'
 import Contents from './TimelineSpace/Contents.vue'
+import Compose from './TimelineSpace/Compose.vue'
 import Modals from './TimelineSpace/Modals.vue'
 import Mousetrap from 'mousetrap'
 import ReceiveDrop from './TimelineSpace/ReceiveDrop.vue'
@@ -42,7 +49,7 @@ import { ACTION_TYPES as NEW_TOOT_ACTION } from '@/store/TimelineSpace/Modals/Ne
 
 export default defineComponent({
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop },
+  components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop, Compose },
   setup() {
     const space = 'TimelineSpace'
     const store = useStore()
@@ -51,6 +58,7 @@ export default defineComponent({
 
     const dropTarget = ref<any>(null)
     const droppableVisible = ref<boolean>(false)
+    const contentsRef = ref<HTMLElement | null>(null)
 
     const loading = computed(() => store.state.TimelineSpace.loading)
     const collapse = computed(() => store.state.TimelineSpace.SideMenu.collapse)
@@ -155,10 +163,18 @@ export default defineComponent({
       e.preventDefault()
     }
 
+    const composeResized = (event: { width: number; height: number }) => {
+      if (contentsRef.value) {
+        contentsRef.value.style.setProperty('height', `calc(100% - ${event.height}px)`)
+      }
+    }
+
     return {
       loading,
       collapse,
-      droppableVisible
+      droppableVisible,
+      composeResized,
+      contentsRef
     }
   }
 })
@@ -167,6 +183,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 #timeline_space {
   height: 100%;
+}
+
+.compose-wrapper {
+  position: sticky;
+  bottom: 0;
+  padding: 0 12px 18px 12px;
 }
 
 .page {

@@ -255,9 +255,9 @@ import { usernameWithStyle, accountNameWithStyle } from '@/utils/username'
 import { parseDatetime } from '@/utils/datetime'
 import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
 import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
-import { ACTION_TYPES as NEW_ACTION } from '@/store/TimelineSpace/Modals/NewToot'
 import { ACTION_TYPES as DETAIL_ACTION } from '@/store/TimelineSpace/Contents/SideBar/TootDetail'
 import { ACTION_TYPES as REPORT_ACTION } from '@/store/TimelineSpace/Modals/Report'
+import { MUTATION_TYPES as COMPOSE_MUTATION } from '@/store/TimelineSpace/Compose'
 import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
 import { ACTION_TYPES as VIEWER_ACTION } from '@/store/TimelineSpace/Modals/ImageViewer'
 import { ACTION_TYPES } from '@/store/organisms/Toot'
@@ -477,7 +477,10 @@ export default defineComponent({
       }
     }
     const openReply = () => {
-      store.dispatch(`TimelineSpace/Modals/NewToot/${NEW_ACTION.OPEN_REPLY}`, originalMessage.value)
+      store.commit(`TimelineSpace/Compose/${COMPOSE_MUTATION.SET_REPLY_TO_ID}`, {
+        acct: originalMessage.value.account.acct,
+        id: originalMessage.value.id
+      })
     }
     const openDetail = (message: Entity.Status) => {
       store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_TOOT_COMPONENT}`)

@@ -27,12 +27,6 @@
         </template>
       </template>
     </DynamicScroller>
-
-    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" @click="upper" circle>
-        <font-awesome-icon icon="angle-up" class="upper-icon" />
-      </el-button>
-    </div>
   </div>
 </template>
 
@@ -204,10 +198,6 @@ export default defineComponent({
           }, 500)
         })
     }
-    const upper = () => {
-      scroller.value.scrollToItem(0)
-      focusedId.value = null
-    }
     const focusNext = () => {
       if (currentFocusedIndex.value === -1) {
         focusedId.value = timeline.value[0].uri + timeline.value[0].id
@@ -245,7 +235,6 @@ export default defineComponent({
       focusToot,
       openSideBar,
       heading,
-      upper,
       account
     }
   }
@@ -268,39 +257,6 @@ export default defineComponent({
 
   .loading-card:empty {
     height: 0;
-  }
-
-  .upper {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    transition: all 0.5s;
-  }
-
-  .upper-with-side-bar {
-    position: fixed;
-    bottom: 20px;
-    right: calc(20px + var(--current-sidebar-width));
-    transition: all 0.5s;
-  }
-
-  .upper-icon {
-    padding: 3px;
-  }
-
-  .unread {
-    position: fixed;
-    right: 24px;
-    top: 52px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 0 0 2px 2px;
-    z-index: 1;
-
-    &:empty {
-      display: none;
-    }
   }
 }
 </style>
