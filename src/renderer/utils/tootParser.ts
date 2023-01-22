@@ -1,4 +1,4 @@
-type Account = {
+export type ParsedAccount = {
   username: string
   acct: string
   url: string
@@ -50,7 +50,7 @@ function parseTag(tagURL: string): string | null {
   return res[3]
 }
 
-export function findAccount(target: HTMLElement, parentClass = 'toot'): Account | null {
+export function findAccount(target: HTMLElement, parentClass = 'toot'): ParsedAccount | null {
   const targetClass = target.getAttribute('class')
   const link = target as HTMLLinkElement
   if (targetClass && targetClass.includes('u-url')) {
@@ -79,7 +79,7 @@ export function findAccount(target: HTMLElement, parentClass = 'toot'): Account 
   return findAccount(parent, parentClass)
 }
 
-export function parseMastodonAccount(accountURL: string): Account | null {
+export function parseMastodonAccount(accountURL: string): ParsedAccount | null {
   const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(@[a-zA-Z0-9-_.]+)$/)
   if (!res) {
     return null
@@ -93,7 +93,7 @@ export function parseMastodonAccount(accountURL: string): Account | null {
   }
 }
 
-export function parsePleromaAccount(accountURL: string): Account | null {
+export function parsePleromaAccount(accountURL: string): ParsedAccount | null {
   const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/users\/([a-zA-Z0-9-_.]+)$/)
   if (!res) {
     return null
