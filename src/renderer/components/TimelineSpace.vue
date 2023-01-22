@@ -14,7 +14,9 @@
       </div>
     </el-main>
   </el-container>
-  <div class="detail">detail</div>
+  <el-aside class="detail" v-if="detail">
+    <Detail />
+  </el-aside>
   <modals></modals>
   <receive-drop v-show="droppableVisible"></receive-drop>
 </template>
@@ -29,7 +31,7 @@ import HeaderMenu from './TimelineSpace/HeaderMenu.vue'
 import Contents from './TimelineSpace/Contents.vue'
 import Compose from './TimelineSpace/Compose.vue'
 import Modals from './TimelineSpace/Modals.vue'
-import SideBar from './TimelineSpace/Contents/SideBar.vue'
+import Detail from './TimelineSpace/Detail.vue'
 import Mousetrap from 'mousetrap'
 import ReceiveDrop from './TimelineSpace/ReceiveDrop.vue'
 import { AccountLoadError } from '@/errors/load'
@@ -45,7 +47,7 @@ import { ACTION_TYPES as NEW_TOOT_ACTION } from '@/store/TimelineSpace/Modals/Ne
 
 export default defineComponent({
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop, Compose, SideBar },
+  components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop, Compose, Detail },
   setup() {
     const space = 'TimelineSpace'
     const store = useStore()
@@ -57,9 +59,7 @@ export default defineComponent({
     const contentsRef = ref<HTMLElement | null>(null)
 
     const loading = computed(() => store.state.TimelineSpace.loading)
-    const collapse = computed(() => store.state.TimelineSpace.SideMenu.collapse)
-    // const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
-    // const shortcutEnabled = computed(() => !modalOpened.value)
+    const detail = computed(() => route.query.detail?.toString() === 'true')
 
     onMounted(async () => {
       store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.CLOSE}`)
@@ -167,10 +167,10 @@ export default defineComponent({
 
     return {
       loading,
-      collapse,
       droppableVisible,
       composeResized,
-      contentsRef
+      contentsRef,
+      detail
     }
   }
 })
@@ -183,6 +183,7 @@ export default defineComponent({
 
 .header {
   padding: 0;
+  height: auto;
   border-bottom: 1px solid var(--theme-border-color);
 }
 

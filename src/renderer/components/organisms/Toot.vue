@@ -483,9 +483,7 @@ export default defineComponent({
       })
     }
     const openDetail = (message: Entity.Status) => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_TOOT_COMPONENT}`)
-      store.dispatch(`TimelineSpace/Contents/SideBar/TootDetail/${DETAIL_ACTION.CHANGE_TOOT}`, message)
-      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+      router.push({ query: { detail: 'true', status_id: message.id } })
     }
     const openBrowser = (message: Entity.Status) => {
       ;(window as any).shell.openExternal(message.url)
