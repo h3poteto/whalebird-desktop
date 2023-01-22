@@ -294,7 +294,7 @@
         "add_image": "新增圖片",
         "poll": "新增投票",
         "change_visibility": "變更可見度",
-        "change_sensitive": "變更敏感設定",
+        "change_sensitive": "Mark media as sensitive",
         "add_cw": "新增內容警告",
         "pined_hashtag": "釘選主題標籤"
       },
