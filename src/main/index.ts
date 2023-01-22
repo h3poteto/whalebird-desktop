@@ -14,7 +14,8 @@ import {
   nativeTheme,
   IpcMainInvokeEvent,
   Notification,
-  NotificationConstructorOptions
+  NotificationConstructorOptions,
+  clipboard
 } from 'electron'
 import fs from 'fs'
 import crypto from 'crypto'
@@ -1444,4 +1445,8 @@ ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: TagStreamingO
 
 ipcMain.handle('open-browser', async (_: IpcMainInvokeEvent, url: string) => {
   shell.openExternal(url)
+})
+
+ipcMain.handle('copy-text', async (_: IpcMainInvokeEvent, text: string) => {
+  clipboard.writeText(text)
 })

@@ -522,7 +522,7 @@ export default defineComponent({
       win.ipcRenderer.invoke('open-browser', message.url)
     }
     const copyLink = (message: Entity.Status) => {
-      ;(window as any).clipboard.writeText(message.url, 'toot-link')
+      win.ipcRenderer.invoke('copy-text', message.url)
     }
     const reportUser = () => {
       store.dispatch(`TimelineSpace/Modals/Report/${REPORT_ACTION.OPEN_REPORT}`, originalMessage.value)
