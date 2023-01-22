@@ -294,7 +294,7 @@
         "add_image": "Bilder hinzufügen",
         "poll": "Eine Umfrage erstellen",
         "change_visibility": "Sichtbarkeit ändern",
-        "change_sensitive": "Empfindlichkeit ändern",
+        "change_sensitive": "Mark media as sensitive",
         "add_cw": "Inhaltswarnung bzw. Triggerwarnung hinzufügen",
         "pined_hashtag": "Den Hashtag anheften"
       },
