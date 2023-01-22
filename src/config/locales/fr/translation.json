@@ -294,7 +294,7 @@
         "add_image": "Ajouter une image",
         "poll": "Créer un sondage",
         "change_visibility": "Changer la visibilité",
-        "change_sensitive": "Changer sensible",
+        "change_sensitive": "Mark media as sensitive",
         "add_cw": "Ajouter un avertissement de contenu",
         "pined_hashtag": "Épingler le hashtag"
       },
