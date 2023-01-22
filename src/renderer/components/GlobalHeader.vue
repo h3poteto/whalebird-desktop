@@ -16,17 +16,17 @@
           <el-menu-item
             :index="`/${account.id}/`"
             :route="{ path: `/${account.id}/home` }"
-            v-for="([account, server], _index) in accounts"
+            v-for="[account, server] in accounts"
             :key="account.id"
             role="menuitem"
           >
             <FailoverImg :src="account.avatar" class="avatar" :title="account.username + '@' + server.domain" />
             <FailoverImg :src="`${server.baseURL}/favicon.ico`" :failoverSrc="`${server.baseURL}/favicon.png`" class="instance-icon" />
-            <span slot="title">{{ server.domain }}</span>
+            <span>{{ server.domain }}</span>
           </el-menu-item>
           <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem" class="add-new-account">
             <font-awesome-icon icon="plus" />
-            <span slot="new">New</span>
+            <span>New</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
