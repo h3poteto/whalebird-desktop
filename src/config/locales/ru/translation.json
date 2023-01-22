@@ -294,7 +294,7 @@
         "add_image": "Добавить изображения",
         "poll": "Добавить опрос",
         "change_visibility": "Изменение видимости",
-        "change_sensitive": "Изменить деликатность",
+        "change_sensitive": "Mark media as sensitive",
         "add_cw": "Добавить предупреждение о содержимом",
         "pined_hashtag": "Закрепить хэштег"
       },
