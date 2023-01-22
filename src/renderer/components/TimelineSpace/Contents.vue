@@ -9,19 +9,6 @@
     >
       <router-view></router-view>
     </div>
-    <template v-if="openSideBar">
-      <transition name="slide-detail">
-        <div>
-          <div id="resizer">
-            <div class="border"></div>
-            <div class="knob" @mousedown="dragStart">
-              <font-awesome-icon icon="ellipsis-vertical" class="icon" />
-            </div>
-          </div>
-          <side-bar id="side_bar" :overlaid="modalOpened"></side-bar>
-        </div>
-      </transition>
-    </template>
   </div>
 </template>
 
@@ -78,8 +65,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 #contents {
   --current-sidebar-width: 360px;
-
-  padding-top: 53px;
   height: 100%;
   box-sizing: border-box;
   user-select: text;
@@ -87,51 +72,6 @@ export default defineComponent({
   .timeline-wrapper {
     height: 100%;
     width: 100%;
-  }
-
-  .timeline-wrapper-with-side-bar {
-    height: 100%;
-    width: calc(100% - var(--current-sidebar-width));
-  }
-
-  #resizer {
-    .border {
-      width: 1px;
-      background-color: var(--theme-border-color);
-      height: calc(100% - 48px);
-      position: fixed;
-      top: 53px;
-      right: var(--current-sidebar-width);
-    }
-
-    .knob {
-      width: 8px;
-      background-color: var(--theme-border-color);
-      height: 72px;
-      position: fixed;
-      top: 50%;
-      right: calc(var(--current-sidebar-width) - 8px);
-      z-index: 1;
-      border-radius: 0 8px 8px 0;
-      cursor: col-resize;
-      text-align: center;
-      vertical-align: middle;
-      line-height: 72px;
-
-      .icon {
-        display: inline-block;
-        color: var(--theme-secondary-color);
-      }
-    }
-  }
-
-  #side_bar {
-    position: fixed;
-    top: 52px;
-    right: 0;
-    width: var(--current-sidebar-width);
-    height: calc(100% - 48px);
-    border-left: solid 1px var(--theme-border-color);
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="side_menu">
+  <el-aside id="side_menu" width="180">
     <div :class="collapse ? 'profile-wrapper narrow-menu' : 'profile-wrapper'" style="-webkit-app-region: drag">
       <div :class="collapse ? 'profile-narrow' : 'profile-wide'">
         <div class="account">
@@ -242,7 +242,7 @@
     <el-button v-else class="global-header-control" link @click="changeGlobalHeader(true)">
       <font-awesome-icon icon="angles-left" />
     </el-button>
-  </div>
+  </el-aside>
 </template>
 
 <script lang="ts">
@@ -421,8 +421,6 @@ export default defineComponent({
 #side_menu {
   .profile-wrapper {
     background-color: var(--theme-side-menu-color);
-    position: fixed;
-    top: 0;
     width: 180px;
     height: 82px;
     font-size: 16px;
@@ -518,8 +516,6 @@ export default defineComponent({
   }
 
   .timeline-menu {
-    position: fixed;
-    top: 82px;
     height: calc(100% - 82px);
     width: 180px;
     border: none;
