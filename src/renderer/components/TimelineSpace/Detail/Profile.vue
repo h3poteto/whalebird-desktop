@@ -97,7 +97,9 @@
       <el-tab-pane :label="precision(user.statuses_count) + ' Posts'" name="posts"
         ><Posts :user="user" :account="account.account" :server="account.server"
       /></el-tab-pane>
-      <el-tab-pane :label="precision(user.following_count) + ' Following'" name="following">Following</el-tab-pane>
+      <el-tab-pane :label="precision(user.following_count) + ' Following'" name="following"
+        ><Following :user="user" :account="account.account" :server="account.server"
+      /></el-tab-pane>
       <el-tab-pane :label="precision(user.followers_count) + ' Followers'" name="followers">Followers</el-tab-pane>
     </el-tabs>
   </div>
@@ -117,12 +119,14 @@ import { ACTION_TYPES as LIST_MEMBERSHIP_ACTION } from '@/store/TimelineSpace/Mo
 import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import Posts from './Profile/Posts.vue'
+import Following from './Profile/Following.vue'
 
 export default defineComponent({
   name: 'Profile',
   components: {
     FailoverImg,
-    Posts
+    Posts,
+    Following
   },
   setup() {
     const win = (window as any) as MyWindow
