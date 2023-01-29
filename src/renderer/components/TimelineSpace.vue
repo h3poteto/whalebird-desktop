@@ -1,16 +1,10 @@
 <template>
-  <div
-    id="timeline_space"
-    v-loading="loading"
-    :element-loading-text="$t('message.loading')"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
-  >
-    <side-menu></side-menu>
-    <div :class="collapse ? 'page-narrow' : 'page'">
-      <header class="header" style="-webkit-app-region: drag">
-        <header-menu></header-menu>
-      </header>
+  <side-menu></side-menu>
+  <el-container class="timeline-space">
+    <el-header class="header">
+      <header-menu></header-menu>
+    </el-header>
+    <el-main class="main">
       <div class="contents-wrapper" ref="contentsRef">
         <contents />
       </div>
@@ -18,10 +12,13 @@
         <compose />
         <resize-observer @notify="composeResized" />
       </div>
-    </div>
-    <modals></modals>
-    <receive-drop v-show="droppableVisible"></receive-drop>
-  </div>
+    </el-main>
+  </el-container>
+  <el-aside class="detail" v-if="detail">
+    <Detail />
+  </el-aside>
+  <modals></modals>
+  <receive-drop v-show="droppableVisible"></receive-drop>
 </template>
 
 <script lang="ts">
@@ -34,6 +31,7 @@ import HeaderMenu from './TimelineSpace/HeaderMenu.vue'
 import Contents from './TimelineSpace/Contents.vue'
 import Compose from './TimelineSpace/Compose.vue'
 import Modals from './TimelineSpace/Modals.vue'
+import Detail from './TimelineSpace/Detail.vue'
 import Mousetrap from 'mousetrap'
 import ReceiveDrop from './TimelineSpace/ReceiveDrop.vue'
 import { AccountLoadError } from '@/errors/load'
@@ -42,14 +40,13 @@ import { NewTootAttachLength } from '@/errors/validations'
 import { EventEmitter } from '@/components/event'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace'
-import { ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
 import { MUTATION_TYPES as GLOBAL_HEADER_MUTATION } from '@/store/GlobalHeader'
 import { MUTATION_TYPES as JUMP_MUTATION } from '@/store/TimelineSpace/Modals/Jump'
 import { ACTION_TYPES as NEW_TOOT_ACTION } from '@/store/TimelineSpace/Modals/NewToot'
 
 export default defineComponent({
   name: 'timeline-space',
-  components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop, Compose },
+  components: { SideMenu, HeaderMenu, Modals, Contents, ReceiveDrop, Compose, Detail },
   setup() {
     const space = 'TimelineSpace'
     const store = useStore()
@@ -61,12 +58,9 @@ export default defineComponent({
     const contentsRef = ref<HTMLElement | null>(null)
 
     const loading = computed(() => store.state.TimelineSpace.loading)
-    const collapse = computed(() => store.state.TimelineSpace.SideMenu.collapse)
-    // const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
-    // const shortcutEnabled = computed(() => !modalOpened.value)
+    const detail = computed(() => route.query.detail?.toString() === 'true')
 
     onMounted(async () => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.CLOSE}`)
       await initialize().finally(() => {
         store.commit(`GlobalHeader/${GLOBAL_HEADER_MUTATION.UPDATE_CHANGING}`, false)
       })
@@ -171,18 +165,28 @@ export default defineComponent({
 
     return {
       loading,
-      collapse,
       droppableVisible,
       composeResized,
-      contentsRef
+      contentsRef,
+      detail
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-#timeline_space {
+.timeline-space {
   height: 100%;
+}
+
+.header {
+  padding: 0;
+  height: auto;
+  border-bottom: 1px solid var(--theme-border-color);
+}
+
+.main {
+  padding: 0;
 }
 
 .compose-wrapper {
@@ -191,40 +195,9 @@ export default defineComponent({
   padding: 0 12px 18px 12px;
 }
 
-.page {
-  margin-left: 180px;
+.detail {
+  width: 380px;
   height: 100%;
-  box-sizing: border-box;
-
-  .header {
-    width: calc(100% - 180px);
-    position: fixed;
-    top: 0;
-    border-bottom: solid 1px var(--theme-border-color);
-  }
-}
-
-.page-narrow {
-  margin-left: 64px;
-  height: 100%;
-  box-sizing: border-box;
-
-  .header {
-    width: calc(100% - 64px);
-    position: fixed;
-    top: 0;
-    height: 48px;
-    border-bottom: solid 1px var(--theme-border-color);
-  }
-}
-
-.with-global-header {
-  .page .header {
-    width: calc(100% - 245px);
-  }
-
-  .page-narrow .header {
-    width: calc(100% - 65px - 64px);
-  }
+  border-left: 1px solid var(--theme-border-color);
 }
 </style>

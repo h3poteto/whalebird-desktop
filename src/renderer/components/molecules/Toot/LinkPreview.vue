@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'link-preview',
@@ -36,8 +37,9 @@ export default defineComponent({
     }
   },
   setup() {
+    const win = (window as any) as MyWindow
     const openLink = (link: string) => {
-      ;(window as any).shell.openExternal(link)
+      win.ipcRenderer.invoke('open-browser', link)
     }
 
     return {

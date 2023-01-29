@@ -51,11 +51,9 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { Entity } from 'megalodon'
-import { useStore } from '@/store'
-import { ACTION_TYPES as SIDEBAR_ACTION, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/SideBar'
-import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
 import emojify from '~/src/renderer/utils/emojify'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'user',
@@ -81,8 +79,7 @@ export default defineComponent({
     }
   },
   setup(_props, ctx) {
-    const store = useStore()
-
+    const router = useRouter()
     const username = (account: Entity.Account) => {
       if (account.display_name !== '') {
         return emojify(account.display_name, account.emojis)
@@ -91,9 +88,7 @@ export default defineComponent({
       }
     }
     const openUser = (account: Entity.Account) => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
-      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
-      store.commit(`TimelineSpace/Contents/SideBar/${MUTATION_TYPES.CHANGE_OPEN_SIDEBAR}`, true)
+      router.push({ query: { detail: 'true', account_id: account.id } })
     }
     const removeAccount = (account: Entity.Account) => {
       ctx.emit('removeAccount', account)

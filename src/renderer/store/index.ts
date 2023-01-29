@@ -8,7 +8,6 @@ import Login, { LoginState } from './Login'
 import TimelineSpace, { TimelineSpaceModuleState } from './TimelineSpace'
 import Preferences, { PreferencesModuleState } from './Preferences'
 import Settings, { SettingsModuleState } from './Settings'
-import organisms, { OrganismsModuleState } from './organisms'
 import { MyWindow } from '~/src/types/global'
 
 const win = (window as any) as MyWindow
@@ -20,7 +19,6 @@ export interface RootState {
   TimelineSpace: TimelineSpaceModuleState
   Preferences: PreferencesModuleState
   Settings: SettingsModuleState
-  molecules: OrganismsModuleState
   route: RouteLocationNormalized
 }
 
@@ -39,7 +37,6 @@ export default createStore({
     Login,
     TimelineSpace,
     Preferences,
-    Settings,
-    organisms
+    Settings
   }
 })

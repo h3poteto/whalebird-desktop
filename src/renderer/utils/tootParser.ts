@@ -1,4 +1,6 @@
-type Account = {
+import { Entity } from 'megalodon'
+
+export type ParsedAccount = {
   username: string
   acct: string
   url: string
@@ -50,7 +52,7 @@ function parseTag(tagURL: string): string | null {
   return res[3]
 }
 
-export function findAccount(target: HTMLElement, parentClass = 'toot'): Account | null {
+export function findAccount(target: HTMLElement, parentClass = 'toot'): ParsedAccount | null {
   const targetClass = target.getAttribute('class')
   const link = target as HTMLLinkElement
   if (targetClass && targetClass.includes('u-url')) {
@@ -79,7 +81,7 @@ export function findAccount(target: HTMLElement, parentClass = 'toot'): Account 
   return findAccount(parent, parentClass)
 }
 
-export function parseMastodonAccount(accountURL: string): Account | null {
+export function parseMastodonAccount(accountURL: string): ParsedAccount | null {
   const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(@[a-zA-Z0-9-_.]+)$/)
   if (!res) {
     return null
@@ -93,7 +95,7 @@ export function parseMastodonAccount(accountURL: string): Account | null {
   }
 }
 
-export function parsePleromaAccount(accountURL: string): Account | null {
+export function parsePleromaAccount(accountURL: string): ParsedAccount | null {
   const res = accountURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/users\/([a-zA-Z0-9-_.]+)$/)
   if (!res) {
     return null
@@ -105,4 +107,16 @@ export function parsePleromaAccount(accountURL: string): Account | null {
     acct: `@${accountName}@${domainName}`,
     url: accountURL
   }
+}
+
+export const accountMatch = (findAccounts: Array<Entity.Account>, parsedAccount: ParsedAccount, domain: string): Entity.Account | false => {
+  const account = findAccounts.find(a => `@${a.acct}` === parsedAccount.acct)
+  if (account) return account
+  const pleromaUser = findAccounts.find(a => a.acct === parsedAccount.acct)
+  if (pleromaUser) return pleromaUser
+  const localUser = findAccounts.find(a => `@${a.username}@${domain}` === parsedAccount.acct)
+  if (localUser) return localUser
+  const user = findAccounts.find(a => a.url === parsedAccount.url)
+  if (!user) return false
+  return user
 }

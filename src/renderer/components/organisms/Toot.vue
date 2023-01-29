@@ -77,7 +77,7 @@
           <div class="clearfix"></div>
         </div>
         <Quote
-          v-if="message.quote"
+          v-if="message.quote && message.reblog"
           :icon="message.reblog.account.avatar"
           :username="username(message.reblog.account)"
           :accountName="accountName(message.reblog.account)"
@@ -145,7 +145,7 @@
             >
               <font-awesome-icon icon="bookmark" size="sm" />
             </el-button>
-            <el-button v-if="quoteSupported" link class="quote-btn" @click="openQuote()">
+            <el-button v-if="quoteSupported" link class="quote-btn" @click="openQuote()" disabled>
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
             <template v-if="server!.sns !== 'mastodon'">
@@ -230,39 +230,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed, toRefs, watch, nextTick } from 'vue'
+import { defineComponent, PropType, ref, computed, toRefs, watch, nextTick, onMounted } from 'vue'
 import { logicAnd } from '@vueuse/math'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
-import { Entity } from 'megalodon'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18next } from 'vue3-i18next'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useStore } from '@/store'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
-import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
+import { findAccount, findLink, findTag, ParsedAccount, accountMatch } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
 import Poll from '~/src/renderer/components/molecules/Toot/Poll.vue'
 import LinkPreview from '~/src/renderer/components/molecules/Toot/LinkPreview.vue'
 import Quote from '@/components/molecules/Toot/Quote.vue'
-// import { setInterval, clearInterval } from 'timers'
 import QuoteSupported from '@/utils/quoteSupported'
 import Filtered from '@/utils/filter'
 import { usernameWithStyle, accountNameWithStyle } from '@/utils/username'
 import { parseDatetime } from '@/utils/datetime'
-import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
-import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
-import { ACTION_TYPES as DETAIL_ACTION } from '@/store/TimelineSpace/Contents/SideBar/TootDetail'
 import { ACTION_TYPES as REPORT_ACTION } from '@/store/TimelineSpace/Modals/Report'
 import { MUTATION_TYPES as COMPOSE_MUTATION } from '@/store/TimelineSpace/Compose'
 import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
 import { ACTION_TYPES as VIEWER_ACTION } from '@/store/TimelineSpace/Modals/ImageViewer'
-import { ACTION_TYPES } from '@/store/organisms/Toot'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 const defaultEmojiIndex = new EmojiIndex(data)
 
@@ -309,15 +305,15 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['selectToot', 'focusRight', 'focusLeft', 'update', 'delete', 'sizeChanged'],
+  emits: ['selectToot', 'update', 'delete', 'sizeChanged'],
   setup(props, ctx) {
-    const space = 'organisms/Toot'
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
     const i18n = useI18next()
+    const win = (window as any) as MyWindow
     const { focused, overlaid, message, filters, account, server } = toRefs(props)
-    const { l, h, r, b, f, o, p, i, x } = useMagicKeys()
+    const { r, b, f, o, p, i, x } = useMagicKeys()
 
     const statusRef = ref<any>(null)
     const showContent = ref(store.state.App.ignoreCW)
@@ -325,6 +321,8 @@ export default defineComponent({
     const hideAllAttachments = ref(store.state.App.hideAllAttachments)
     const emojiPickerOpened = ref(false)
     const emojiIndex = defaultEmojiIndex
+    const userAgent = computed(() => store.state.App.userAgent)
+    const client = ref<MegalodonInterface | null>(null)
 
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
     const timeFormat = computed(() => store.state.App.timeFormat)
@@ -395,12 +393,10 @@ export default defineComponent({
       return QuoteSupported(server.value.sns, server.value.domain)
     })
 
-    whenever(logicAnd(l, shortcutEnabled), () => {
-      ctx.emit('focusRight')
+    onMounted(() => {
+      client.value = generator(server.value.sns, server.value.baseURL, account.value.accessToken, userAgent.value)
     })
-    whenever(logicAnd(h, shortcutEnabled), () => {
-      ctx.emit('focusLeft')
-    })
+
     whenever(logicAnd(r, shortcutEnabled), () => {
       openReply()
     })
@@ -451,29 +447,60 @@ export default defineComponent({
       }
       const parsedAccount = findAccount(e.target as HTMLElement, 'toot')
       if (parsedAccount !== null) {
-        store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
-        store
-          .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.SEARCH_ACCOUNT}`, {
-            parsedAccount: parsedAccount,
-            status: originalMessage.value
-          })
+        searchAccount(parsedAccount, originalMessage.value)
           .then(account => {
-            store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
-            store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
+            if (account === null) throw new Error('account not found')
+            router.push({ query: { detail: 'true', account_id: account.id } })
           })
           .catch(err => {
             console.error(err)
-            openLink(e)
-            store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, false)
+            ElMessageBox.confirm(
+              i18n.t('cards.toot.open_account.text', { account: parsedAccount.acct }),
+              i18n.t('cards.toot.open_account.title'),
+              {
+                confirmButtonText: i18n.t('cards.toot.open_account.ok'),
+                cancelButtonText: i18n.t('cards.toot.open_account.cancel'),
+                type: 'Warning'
+              }
+            ).then(() => {
+              openLink(e)
+            })
           })
         return parsedAccount.acct
       }
       return openLink(e)
     }
+    const searchAccount = async (account: ParsedAccount, status: Entity.Status): Promise<Entity.Account | null> => {
+      if (!client.value) {
+        return null
+      }
+      if (status.in_reply_to_account_id) {
+        const res = await client.value.getAccount(status.in_reply_to_account_id)
+        if (res.status === 200) {
+          const user = accountMatch([res.data], account, server.value.domain)
+          if (user) return user
+        }
+      }
+
+      if (status.in_reply_to_id) {
+        const res = await client.value.getStatusContext(status.id)
+        if (res.status === 200) {
+          const accounts: Array<Entity.Account> = res.data.ancestors.map(s => s.account).concat(res.data.descendants.map(s => s.account))
+          const user = accountMatch(accounts, account, server.value.domain)
+          if (user) return user
+        }
+      }
+
+      const res = await client.value.searchAccount(account.url, { resolve: true })
+      if (res.data.length === 0) return null
+      const user = accountMatch(res.data, account, server.value.domain)
+      if (user) return user
+      return null
+    }
     const openLink = (e: MouseEvent) => {
       const link = findLink(e.target as HTMLElement, 'toot')
       if (link !== null) {
-        return (window as any).shell.openExternal(link)
+        win.ipcRenderer.invoke('open-browser', link)
       }
     }
     const openReply = () => {
@@ -482,16 +509,16 @@ export default defineComponent({
         id: originalMessage.value.id
       })
     }
-    const openDetail = (message: Entity.Status) => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_TOOT_COMPONENT}`)
-      store.dispatch(`TimelineSpace/Contents/SideBar/TootDetail/${DETAIL_ACTION.CHANGE_TOOT}`, message)
-      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+    const openDetail = (message: Entity.Status | null) => {
+      if (message) {
+        router.push({ query: { detail: 'true', status_id: message.id } })
+      }
     }
     const openBrowser = (message: Entity.Status) => {
-      ;(window as any).shell.openExternal(message.url)
+      win.ipcRenderer.invoke('open-browser', message.url)
     }
     const copyLink = (message: Entity.Status) => {
-      ;(window as any).clipboard.writeText(message.url, 'toot-link')
+      win.ipcRenderer.invoke('copy-text', message.url)
     }
     const reportUser = () => {
       store.dispatch(`TimelineSpace/Modals/Report/${REPORT_ACTION.OPEN_REPORT}`, originalMessage.value)
@@ -501,12 +528,12 @@ export default defineComponent({
       store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_MODAL}`, true)
     }
     const block = () => {
-      store.dispatch(`${space}/${ACTION_TYPES.BLOCK}`, originalMessage.value.account)
+      client.value?.blockAccount(originalMessage.value.account.id)
     }
     const changeReblog = (message: Entity.Status) => {
       if (message.reblogged) {
-        store
-          .dispatch(`${space}/${ACTION_TYPES.UNREBLOG}`, message)
+        client.value
+          ?.unreblogStatus(message.id)
           .then(data => {
             ctx.emit('update', data)
           })
@@ -518,8 +545,8 @@ export default defineComponent({
             })
           })
       } else {
-        store
-          .dispatch(`${space}/${ACTION_TYPES.REBLOG}`, message)
+        client.value
+          ?.reblogStatus(message.id)
           .then(data => {
             ctx.emit('update', data)
           })
@@ -534,8 +561,8 @@ export default defineComponent({
     }
     const changeFavourite = (message: Entity.Status) => {
       if (message.favourited) {
-        store
-          .dispatch(`${space}/${ACTION_TYPES.REMOVE_FAVOURITE}`, message)
+        client.value
+          ?.unfavouriteStatus(message.id)
           .then(data => {
             ctx.emit('update', data)
           })
@@ -547,8 +574,8 @@ export default defineComponent({
             })
           })
       } else {
-        store
-          .dispatch(`${space}/${ACTION_TYPES.ADD_FAVOURITE}`, message)
+        client.value
+          ?.favouriteStatus(message.id)
           .then(data => {
             ctx.emit('update', data)
           })
@@ -563,8 +590,8 @@ export default defineComponent({
     }
     const changeBookmark = (message: Entity.Status) => {
       if (message.bookmarked) {
-        store
-          .dispatch(`${space}/${ACTION_TYPES.REMOVE_BOOKMARK}`, message)
+        client.value
+          ?.unbookmarkStatus(message.id)
           .then(data => {
             ctx.emit('update', data)
           })
@@ -576,8 +603,8 @@ export default defineComponent({
             })
           })
       } else {
-        store
-          .dispatch(`${space}/${ACTION_TYPES.ADD_BOOKMARK}`, message)
+        client.value
+          ?.bookmarkStatus(message.id)
           .then(data => {
             ctx.emit('update', data)
           })
@@ -601,13 +628,11 @@ export default defineComponent({
       })
     }
     const openUser = (account: Entity.Account) => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
-      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
-      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+      router.push({ query: { detail: 'true', account_id: account.id } })
     }
     const deleteToot = (message: Entity.Status) => {
-      store
-        .dispatch(`${space}/${ACTION_TYPES.DELETE_TOOT}`, message)
+      client.value
+        ?.deleteStatus(message.id)
         .then(message => {
           ctx.emit('delete', message)
         })
@@ -622,48 +647,40 @@ export default defineComponent({
       return emojify(content, emojis)
     }
     const vote = async choices => {
-      if (!poll.value) {
+      if (!poll.value || !client.value) {
         return
       }
-      const res = await store.dispatch(`${space}/${ACTION_TYPES.VOTE}`, {
-        id: poll.value.id,
-        choices: choices
-      })
+      const res = await client.value.votePoll(poll.value.id, choices)
       const status = Object.assign({}, originalMessage.value, {
         poll: res
       })
       ctx.emit('update', status)
     }
     const refresh = async (id: string) => {
-      const res = await store.dispatch(`${space}/${ACTION_TYPES.REFRESH}`, id)
+      if (!client.value) return
+      const res = await client.value.getPoll(id)
       const status = Object.assign({}, originalMessage.value, {
         poll: res
       })
       ctx.emit('update', status)
     }
     const selectEmoji = async (emoji: any) => {
-      const status = await store.dispatch(`${space}/${ACTION_TYPES.SEND_REACTION}`, {
-        status_id: originalMessage.value.id,
-        native: emoji.native
-      })
+      if (!client.value) return
+      const status = await client.value.createEmojiReaction(originalMessage.value.id, emoji.native)
       ctx.emit('update', status)
     }
     const addReaction = async (native: any) => {
-      const status = await store.dispatch(`${space}/${ACTION_TYPES.SEND_REACTION}`, {
-        status_id: originalMessage.value.id,
-        native: native
-      })
+      if (!client.value) return
+      const status = await client.value.createEmojiReaction(originalMessage.value.id, native)
       ctx.emit('update', status)
     }
     const removeReaction = async (native: any) => {
-      const status = await store.dispatch(`${space}/${ACTION_TYPES.DELETE_REACTION}`, {
-        status_id: originalMessage.value.id,
-        native: native
-      })
+      if (!client.value) return
+      const status = await client.value.deleteEmojiReaction(originalMessage.value.id, native)
       ctx.emit('update', status)
     }
     const openQuote = () => {
-      store.dispatch(`TimelineSpace/Modals/NewToot/${NEW_ACTION.OPEN_QUOTE}`, originalMessage.value)
+      // TODO
     }
     const toggleSpoiler = () => {
       showContent.value = !showContent.value

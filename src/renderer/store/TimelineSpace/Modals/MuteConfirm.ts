@@ -39,7 +39,7 @@ const actions: ActionTree<MuteConfirmState, RootState> = {
   [ACTION_TYPES.CHANGE_ACCOUNT]: ({ commit }, account: Entity.Account) => {
     commit(MUTATION_TYPES.CHANGE_ACCOUNT, account)
   },
-  [ACTION_TYPES.SUBMIT]: async ({ state, rootState, dispatch }, notify: boolean) => {
+  [ACTION_TYPES.SUBMIT]: async ({ state, rootState }, notify: boolean) => {
     const client = generator(
       rootState.TimelineSpace.server!.sns,
       rootState.TimelineSpace.server!.baseURL,
@@ -47,8 +47,6 @@ const actions: ActionTree<MuteConfirmState, RootState> = {
       rootState.App.userAgent
     )
     const res = await client.muteAccount(state.account!.id, notify)
-    // Reload relationship
-    dispatch('TimelineSpace/Contents/SideBar/AccountProfile/fetchRelationship', state.account, { root: true })
     return res.data
   }
 }

@@ -1,35 +1,37 @@
 <template>
   <div id="global_header">
-    <el-menu
-      v-if="!hide"
-      :default-active="activeRoute"
-      class="el-menu-vertical account-menu"
-      :collapse="true"
-      :router="true"
-      :background-color="themeColor"
-      text-color="#909399"
-      active-text-color="#ffffff"
-      role="menubar"
-    >
-      <el-menu-item
-        :index="`/${account.id}/`"
-        :route="{ path: `/${account.id}/home` }"
-        v-for="([account, server], _index) in accounts"
-        :key="account.id"
-        role="menuitem"
-      >
-        <FailoverImg :src="account.avatar" class="avatar" :title="account.username + '@' + server.domain" />
-        <FailoverImg :src="`${server.baseURL}/favicon.ico`" :failoverSrc="`${server.baseURL}/favicon.png`" class="instance-icon" />
-        <span slot="title">{{ server.domain }}</span>
-      </el-menu-item>
-      <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem" class="add-new-account">
-        <font-awesome-icon icon="plus" />
-        <span slot="new">New</span>
-      </el-menu-item>
-    </el-menu>
-    <div :class="hide ? 'space no-global-header' : 'space with-global-header'">
+    <el-container class="space">
+      <el-aside width="65">
+        <el-menu
+          v-if="!hide"
+          :default-active="activeRoute"
+          class="el-menu-vertical account-menu"
+          :collapse="true"
+          :router="true"
+          :background-color="themeColor"
+          text-color="#909399"
+          active-text-color="#ffffff"
+          role="menubar"
+        >
+          <el-menu-item
+            :index="`/${account.id}/`"
+            :route="{ path: `/${account.id}/home` }"
+            v-for="[account, server] in accounts"
+            :key="account.id"
+            role="menuitem"
+          >
+            <FailoverImg :src="account.avatar" class="avatar" :title="account.username + '@' + server.domain" />
+            <FailoverImg :src="`${server.baseURL}/favicon.ico`" :failoverSrc="`${server.baseURL}/favicon.png`" class="instance-icon" />
+            <span>{{ server.domain }}</span>
+          </el-menu-item>
+          <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem" class="add-new-account">
+            <font-awesome-icon icon="plus" />
+            <span>New</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
       <router-view :key="$route.params.id"></router-view>
-    </div>
+    </el-container>
   </div>
 </template>
 
@@ -95,10 +97,6 @@ export default defineComponent({
 #global_header {
   .account-menu {
     height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 65px;
     padding-top: 24px;
     border: 0;
 

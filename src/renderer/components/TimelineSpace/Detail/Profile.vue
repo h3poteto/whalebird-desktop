@@ -1,14 +1,6 @@
 <template>
-  <div
-    id="account_profile"
-    v-loading="loading"
-    :element-loading-text="$t('message.loading')"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
-    role="article"
-    aria-label="account profile"
-  >
-    <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + account?.header + ')' }">
+  <div id="account_profile" role="article" aria-label="account profile" v-if="user">
+    <div class="header-background" :style="{ backgroundImage: 'url(' + user.header + ')' }">
       <div class="header">
         <div class="relationship" v-if="relationship !== null && !isOwnProfile">
           <div class="follower-status">
@@ -19,12 +11,12 @@
             <div
               v-if="relationship.notifying"
               class="unsubscribe"
-              @click="unsubscribe(account)"
+              @click="unsubscribe(user)"
               :title="$t('side_bar.account_profile.unsubscribe')"
             >
               <font-awesome-icon icon="bell" size="lg" />
             </div>
-            <div v-else class="subscribe" @click="subscribe(account)" :title="$t('side_bar.account_profile.subscribe')">
+            <div v-else class="subscribe" @click="subscribe(user)" :title="$t('side_bar.account_profile.subscribe')">
               <font-awesome-icon :icon="['far', 'bell']" size="lg" />
             </div>
           </div>
@@ -34,22 +26,22 @@
           <div class="more" v-if="relationship !== null && !isOwnProfile">
             <el-popover placement="bottom" width="200" trigger="click" popper-class="account-menu-popper">
               <ul class="menu-list">
-                <li role="button" @click="openBrowser(account)">
+                <li role="button" @click="openBrowser(user!.url)">
                   {{ $t('side_bar.account_profile.open_in_browser') }}
                 </li>
-                <li role="button" @click="addToList(account)">
+                <li role="button" @click="addToList(user)">
                   {{ $t('side_bar.account_profile.manage_list_memberships') }}
                 </li>
-                <li role="button" @click="unmute(account)" v-if="muting">
+                <li role="button" @click="unmute(user)" v-if="relationship.muting">
                   {{ $t('side_bar.account_profile.unmute') }}
                 </li>
-                <li role="button" @click="confirmMute(account)" v-else>
+                <li role="button" @click="confirmMute(user)" v-else>
                   {{ $t('side_bar.account_profile.mute') }}
                 </li>
-                <li role="button" @click="unblock(account)" v-if="blocking">
+                <li role="button" @click="unblock(user)" v-if="relationship.blocking">
                   {{ $t('side_bar.account_profile.unblock') }}
                 </li>
-                <li role="button" @click="block(account)" v-else>
+                <li role="button" @click="block(user)" v-else>
                   {{ $t('side_bar.account_profile.block') }}
                 </li>
               </ul>
@@ -62,25 +54,25 @@
             </el-popover>
           </div>
           <div class="icon" role="presentation">
-            <FailoverImg :src="account?.avatar" :alt="`Avatar of ${account?.username}`" />
+            <FailoverImg :src="user.avatar" :alt="`Avatar of ${user.username}`" />
           </div>
           <div class="follow-status" v-if="relationship !== null && !isOwnProfile">
-            <div v-if="relationship.following" class="unfollow" @click="unfollow(account)" :title="$t('side_bar.account_profile.unfollow')">
+            <div v-if="relationship.following" class="unfollow" @click="unfollow(user)" :title="$t('side_bar.account_profile.unfollow')">
               <font-awesome-icon icon="user-xmark" size="xl" />
             </div>
             <div v-else-if="relationship.requested" :title="$t('side_bar.account_profile.follow_requested')">
               <font-awesome-icon icon="hourglass" size="xl" />
             </div>
-            <div v-else class="follow" @click="follow(account)" :title="$t('side_bar.account_profile.follow')">
+            <div v-else class="follow" @click="follow(user)" :title="$t('side_bar.account_profile.follow')">
               <font-awesome-icon icon="user-plus" size="xl" />
             </div>
           </div>
         </div>
         <div class="username">
-          <bdi v-html="username(account)"></bdi>
+          <bdi v-html="username(user)"></bdi>
         </div>
-        <div class="account">@{{ account?.acct }}</div>
-        <div class="note" v-html="note(account)" @click.capture.prevent="noteClick"></div>
+        <div class="account">@{{ user.acct }}</div>
+        <div class="note" v-html="note(user)" @click.capture.prevent="noteClick"></div>
       </div>
     </div>
     <div class="identity">
@@ -88,79 +80,62 @@
         <dt>
           {{ identity.provider }}
         </dt>
-        <dd @click.capture.prevent="identityOpen(identity.profile_url)">
+        <dd @click.capture.prevent="openBrowser(identity.profile_url)">
           {{ identity.provider_username }}
         </dd>
       </dl>
     </div>
     <div class="metadata">
-      <dl v-for="(data, index) in account?.fields" :key="index">
+      <dl v-for="(data, index) in user.fields" :key="index">
         <dt>
           {{ data.name }}
         </dt>
         <dd v-html="data.value" @click.capture.prevent="metadataClick"></dd>
       </dl>
     </div>
-    <el-row class="basic-info">
-      <el-col :span="8" :class="activeTab === 1 ? 'info info-active' : 'info'">
-        <el-button link class="tab" @click="changeTab(1)">
-          <div class="title">{{ $t('side_bar.account_profile.toots') }}</div>
-          <div class="count">{{ account?.statuses_count }}</div>
-        </el-button>
-      </el-col>
-      <el-col :span="8" :class="activeTab === 2 ? 'info info-active' : 'info'">
-        <el-button link class="tab" @click="changeTab(2)">
-          <div class="title">{{ $t('side_bar.account_profile.follows') }}</div>
-          <div class="count">{{ account?.following_count }}</div>
-        </el-button>
-      </el-col>
-      <el-col :span="8" :class="activeTab === 3 ? 'info info-active' : 'info'">
-        <el-button link class="tab" @click="changeTab(3)">
-          <div class="title">
-            {{ $t('side_bar.account_profile.followers') }}
-          </div>
-          <div class="count">{{ account?.followers_count }}</div>
-        </el-button>
-      </el-col>
-    </el-row>
-    <div class="timeline">
-      <timeline :account="account" v-if="activeTab === 1"></timeline>
-      <follows :account="account" v-if="activeTab === 2"></follows>
-      <followers :account="account" v-if="activeTab === 3"></followers>
-    </div>
+    <el-tabs class="timeline" v-model="activeTab" stretch v-if="account.account && account.server">
+      <el-tab-pane :label="precision(user.statuses_count) + ' Posts'" name="posts"
+        ><Posts :user="user" :account="account.account" :server="account.server"
+      /></el-tab-pane>
+      <el-tab-pane :label="precision(user.following_count) + ' Following'" name="following"
+        ><Following :user="user" :account="account.account" :server="account.server"
+      /></el-tab-pane>
+      <el-tab-pane :label="precision(user.followers_count) + ' Followers'" name="followers"
+        ><Followers :user="user" :account="account.account" :server="account.server"
+      /></el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch } from 'vue'
-import { ElMessage } from 'element-plus'
-import { Entity } from 'megalodon'
-import { useI18next } from 'vue3-i18next'
-import { findLink } from '@/utils/tootParser'
-import emojify from '@/utils/emojify'
-import Timeline from './AccountProfile/Timeline.vue'
-import Follows from './AccountProfile/Follows.vue'
-import Followers from './AccountProfile/Followers.vue'
-import FailoverImg from '@/components/atoms/FailoverImg.vue'
+import { defineComponent, computed, ref, reactive, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useStore } from '@/store'
-import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
+import emojify from '@/utils/emojify'
+import { findLink } from '@/utils/tootParser'
+import { MyWindow } from '~/src/types/global'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
 import { ACTION_TYPES as LIST_MEMBERSHIP_ACTION } from '@/store/TimelineSpace/Modals/ListMembership'
 import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
+import FailoverImg from '@/components/atoms/FailoverImg.vue'
+import Posts from './Profile/Posts.vue'
+import Following from './Profile/Following.vue'
+import Followers from './Profile/Followers.vue'
 
 export default defineComponent({
-  name: 'account-profile',
+  name: 'Profile',
   components: {
-    Timeline,
-    Follows,
-    Followers,
-    FailoverImg
+    FailoverImg,
+    Posts,
+    Following,
+    Followers
   },
-  setup(_, ctx) {
-    const space = 'TimelineSpace/Contents/SideBar/AccountProfile'
+  setup() {
+    const win = (window as any) as MyWindow
     const store = useStore()
-    const i18n = useI18next()
-
-    const activeTab = ref<number>(1)
+    const route = useRoute()
 
     const theme = computed(() => {
       return {
@@ -169,136 +144,166 @@ export default defineComponent({
         '--theme-primary-color': store.state.App.theme.primary_color
       }
     })
-    const account = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.account)
-    const identityProofs = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.identityProofs)
-    const relationship = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.relationship)
-    const loading = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.loading)
-    const muting = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.relationship?.muting)
-    const blocking = computed(() => store.state.TimelineSpace.Contents.SideBar.AccountProfile.relationship?.blocking)
-    const isOwnProfile = computed(() => store.getters[`${space}/isOwnProfile`])
-
-    watch(account, () => {
-      activeTab.value = 1
+    const client = ref<MegalodonInterface | null>(null)
+    const id = computed(() => parseInt(route.params.id as string))
+    const userId = computed(() => route.query.account_id?.toString())
+    const userAgent = computed(() => store.state.App.userAgent)
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
     })
-    watch(loading, (newVal, _oldVal) => {
-      ctx.emit('change-loading', newVal)
+    const user = ref<Entity.Account | null>(null)
+    const relationship = ref<Entity.Relationship | null>(null)
+    const isOwnProfile = computed(() => {
+      if (!account.account || !account.server || !user.value) return false
+      // For Mastodon
+      if (`${account.server?.baseURL}/@${account.account?.username}` === user.value.url) return true
+      // For Pleroma
+      if (`${account.server.baseURL}/users/${account.account.username}` === user.value.url) return true
+      return false
+    })
+    const identityProofs = ref<Array<Entity.IdentityProof>>([])
+    const activeTab = ref<'posts' | 'following' | 'followers'>('posts')
+
+    onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+      const c = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+      client.value = c
+
+      if (userId.value) {
+        await load(userId.value)
+      }
     })
 
-    const username = (account: Entity.Account) => {
-      if (account.display_name !== '') {
-        return emojify(account.display_name, account.emojis)
-      } else {
-        return account.username
+    watch(userId, async current => {
+      if (current) {
+        await load(current)
+      }
+    })
+
+    const load = async (id: string) => {
+      if (client.value) {
+        const res = await client.value.getAccount(id)
+        user.value = res.data
+        const rel = await client.value.getRelationship(id)
+        relationship.value = rel.data
+        const proofs = await client.value.getIdentityProof(id)
+        identityProofs.value = proofs.data
       }
     }
-    const note = (account: Entity.Account) => {
-      return emojify(account.note, account.emojis)
+
+    const unsubscribe = async (a: Entity.Account | null) => {
+      if (client.value && a) {
+        const res = await client.value.unsubscribeAccount(a.id)
+        relationship.value = res.data
+      }
     }
+
+    const subscribe = async (a: Entity.Account | null) => {
+      if (client.value && a) {
+        const res = await client.value.subscribeAccount(a.id)
+        relationship.value = res.data
+      }
+    }
+
+    const openBrowser = (text: string) => {
+      win.ipcRenderer.invoke('open-browser', text)
+    }
+
+    const addToList = (a: Entity.Account | null) => {
+      if (a) {
+        store.dispatch(`TimelineSpace/Modals/ListMembership/${LIST_MEMBERSHIP_ACTION.SET_ACCOUNT}`, a)
+        store.dispatch(`TimelineSpace/Modals/ListMembership/${LIST_MEMBERSHIP_ACTION.CHANGE_MODAL}`, true)
+      }
+    }
+
+    const unmute = async (a: Entity.Account | null) => {
+      if (client.value && a) {
+        const res = await client.value.unmuteAccount(a.id)
+        relationship.value = res.data
+      }
+    }
+
+    const confirmMute = (a: Entity.Account | null) => {
+      if (a) {
+        store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_ACCOUNT}`, a)
+        store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_MODAL}`, true)
+      }
+    }
+
+    const unblock = async (a: Entity.Account | null) => {
+      if (client.value && a) {
+        const res = await client.value.unblockAccount(a.id)
+        relationship.value = res.data
+      }
+    }
+
+    const block = async (a: Entity.Account | null) => {
+      if (client.value && a) {
+        const res = await client.value.blockAccount(a.id)
+        relationship.value = res.data
+      }
+    }
+
+    const unfollow = async (a: Entity.Account | null) => {
+      if (client.value && a) {
+        const res = await client.value.unfollowAccount(a.id)
+        relationship.value = res.data
+      }
+    }
+
+    const follow = async (a: Entity.Account | null) => {
+      if (client.value && a) {
+        const res = await client.value.followAccount(a.id)
+        relationship.value = res.data
+      }
+    }
+
+    const username = (a: Entity.Account | null) => {
+      if (!a) return ''
+      if (a.display_name !== '') {
+        return emojify(a.display_name, a.emojis)
+      } else {
+        return a.username
+      }
+    }
+
+    const note = (a: Entity.Account | null) => {
+      if (!a) return ''
+      return emojify(a.note, a.emojis)
+    }
+
     const noteClick = (e: Event) => {
       const link = findLink(e.target as HTMLElement, 'note')
       if (link !== null) {
-        ;(window as any).shell.openExternal(link)
+        win.ipcRenderer.invoke('open-browser', link)
       }
     }
-    const follow = (account: Entity.Account) => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
-      try {
-        store.dispatch(`${space}/${ACTION_TYPES.FOLLOW}`, account)
-      } catch (err) {
-        ElMessage({
-          message: i18n.t('message.follow_error'),
-          type: 'error'
-        })
-      } finally {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, false)
-      }
-    }
-    const unfollow = (account: Entity.Account) => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
-      try {
-        store.dispatch(`${space}/${ACTION_TYPES.UNFOLLOW}`, account)
-      } catch (err) {
-        ElMessage({
-          message: i18n.t('message.unfollow_error'),
-          type: 'error'
-        })
-      } finally {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, false)
-      }
-    }
-    const changeTab = (payload: number) => {
-      activeTab.value = payload
-    }
-    const openBrowser = (account: Entity.Account) => {
-      ;(window as any).shell.openExternal(account.url)
-    }
-    const addToList = (account: Entity.Account) => {
-      store.dispatch(`TimelineSpace/Modals/ListMembership/${LIST_MEMBERSHIP_ACTION.SET_ACCOUNT}`, account)
-      store.dispatch(`TimelineSpace/Modals/ListMembership/${LIST_MEMBERSHIP_ACTION.CHANGE_MODAL}`, true)
-    }
-    const confirmMute = (account: Entity.Account) => {
-      store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_ACCOUNT}`, account)
-      store.dispatch(`TimelineSpace/Modals/MuteConfirm/${MUTE_ACTION.CHANGE_MODAL}`, true)
-    }
-    const unmute = (account: Entity.Account) => {
-      store.dispatch(`${space}/${ACTION_TYPES.UNMUTE}`, account)
-    }
-    const block = (account: Entity.Account) => {
-      store.dispatch(`${space}/${ACTION_TYPES.BLOCK}`, account)
-    }
-    const unblock = (account: Entity.Account) => {
-      store.dispatch(`${space}/${ACTION_TYPES.UNBLOCK}`, account)
-    }
+
     const metadataClick = (e: Event) => {
       const link = findLink(e.target as HTMLElement, 'metadata')
       if (link !== null) {
-        return (window as any).shell.openExternal(link)
+        win.ipcRenderer.invoke('open-browser', link)
       }
     }
-    const identityOpen = (link: string) => {
-      return (window as any).shell.openExternal(link)
-    }
-    const subscribe = (account: Entity.Account) => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
-      try {
-        store.dispatch(`${space}/${ACTION_TYPES.SUBSCRIBE}`, account)
-      } catch (err) {
-        ElMessage({
-          message: i18n.t('message.subscribe_error'),
-          type: 'error'
-        })
-      } finally {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, false)
-      }
-    }
-    const unsubscribe = (account: Entity.Account) => {
-      store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, true)
-      try {
-        store.dispatch(`${space}/${ACTION_TYPES.UNSUBSCRIBE}`, account)
-      } catch (err) {
-        ElMessage({
-          message: i18n.t('message.unsubscribe_error'),
-          type: 'error'
-        })
-      } finally {
-        store.commit(`${space}/${MUTATION_TYPES.CHANGE_LOADING}`, false)
+
+    const precision = (num: number) => {
+      if (num > 1000) {
+        return `${(num / 1000).toPrecision(3)}K`
+      } else if (num > 1000000) {
+        return `${(num / 1000000).toPrecision(3)}M`
+      } else {
+        return num.toString()
       }
     }
 
     return {
-      activeTab,
-      loading,
-      account,
+      user,
       relationship,
-      isOwnProfile,
-      muting,
-      blocking,
-      identityProofs,
       theme,
-      username,
-      note,
-      noteClick,
-      changeTab,
+      isOwnProfile,
       unsubscribe,
       subscribe,
       openBrowser,
@@ -309,8 +314,14 @@ export default defineComponent({
       block,
       unfollow,
       follow,
+      username,
+      note,
+      noteClick,
+      identityProofs,
       metadataClick,
-      identityOpen
+      precision,
+      activeTab,
+      account
     }
   }
 })
@@ -510,6 +521,10 @@ export default defineComponent({
 
   .timeline {
     font-size: calc(var(--base-font-size) * 0.85);
+  }
+
+  .timeline :deep(.el-tabs__item) {
+    --el-text-color-primary: var(--theme-secondary-color);
   }
 }
 </style>

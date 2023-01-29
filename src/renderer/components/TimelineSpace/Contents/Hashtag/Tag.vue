@@ -1,7 +1,7 @@
 <template>
   <div name="tag" class="tag-timeline">
     <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
-      <template v-slot="{ item, index, active }">
+      <template #default="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             v-if="account.account && account.server"
@@ -13,18 +13,12 @@
             :server="account.server"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
-            @focusRight="focusSidebar"
             @selectToot="focusToot(item)"
           >
           </toot>
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" @click="upper" circle>
-        <font-awesome-icon icon="angle-up" class="upper-icon" />
-      </el-button>
-    </div>
   </div>
 </template>
 
@@ -38,7 +32,6 @@ import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
-import { EventEmitter } from '@/components/event'
 import useReloadable from '@/components/utils/reloadable'
 import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
@@ -74,7 +67,6 @@ export default defineComponent({
     })
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Hashtag.Tag.timeline)
-    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
@@ -129,7 +121,6 @@ export default defineComponent({
     onBeforeUnmount(() => {
       store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
       reset()
-      EventEmitter.off('focus-timeline')
     })
 
     const load = async (tag: string) => {
@@ -234,9 +225,6 @@ export default defineComponent({
     const focusToot = (message: Entity.Status) => {
       focusedId.value = message.uri + message.id
     }
-    const focusSidebar = () => {
-      EventEmitter.emit('focus-sidebar')
-    }
 
     return {
       timeline,
@@ -245,9 +233,7 @@ export default defineComponent({
       modalOpened,
       updateToot,
       deleteToot,
-      focusSidebar,
       focusToot,
-      openSideBar,
       heading,
       upper,
       account
@@ -264,38 +250,6 @@ export default defineComponent({
 
   .scroller {
     height: 100%;
-  }
-
-  .upper {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  .upper-with-side-bar {
-    position: fixed;
-    bottom: 20px;
-    right: calc(20px + var(--current-sidebar-width));
-    transition: all 0.5s;
-  }
-
-  .upper-icon {
-    padding: 3px;
-  }
-
-  .unread {
-    position: fixed;
-    right: 24px;
-    top: 52px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 0 0 2px 2px;
-    z-index: 1;
-
-    &:empty {
-      display: none;
-    }
   }
 }
 </style>

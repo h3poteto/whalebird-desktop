@@ -2,7 +2,7 @@
   <div id="favourites">
     <div></div>
     <DynamicScroller :items="favourites" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
-      <template v-slot="{ item, index, active }">
+      <template #default="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             v-if="account.account && account.server"
@@ -14,18 +14,12 @@
             :server="account.server"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
-            @focusRight="focusSidebar"
             @selectToot="focusToot(item)"
           >
           </toot>
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" @click="upper" circle>
-        <font-awesome-icon icon="angle-up" class="upper-icon" />
-      </el-button>
-    </div>
   </div>
 </template>
 
@@ -38,7 +32,6 @@ import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
 import { Entity } from 'megalodon'
 import Toot from '@/components/organisms/Toot.vue'
-import { EventEmitter } from '@/components/event'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Favourites'
 import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
@@ -71,7 +64,6 @@ export default defineComponent({
       server: null
     })
 
-    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const favourites = computed(() => store.state.TimelineSpace.Contents.Favourites.favourites)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
@@ -195,9 +187,6 @@ export default defineComponent({
     const focusToot = (message: Entity.Status) => {
       focusedId.value = message.id
     }
-    const focusSidebar = () => {
-      EventEmitter.emit('focus-sidebar')
-    }
 
     return {
       favourites,
@@ -206,9 +195,7 @@ export default defineComponent({
       modalOpened,
       updateToot,
       deleteToot,
-      focusSidebar,
       focusToot,
-      openSideBar,
       heading,
       upper,
       account
@@ -225,23 +212,6 @@ export default defineComponent({
 
   .scroller {
     height: 100%;
-  }
-
-  .upper {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  .upper-with-side-bar {
-    position: fixed;
-    bottom: 20px;
-    right: calc(20px + var(--current-sidebar-width));
-    transition: all 0.5s;
-  }
-
-  .upper-icon {
-    padding: 3px;
   }
 }
 </style>

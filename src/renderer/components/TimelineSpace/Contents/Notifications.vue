@@ -18,7 +18,6 @@
               :account="account.account"
               :server="account.server"
               v-on:update="updateToot"
-              @focusRight="focusSidebar"
               @selectNotification="focusNotification(item)"
             >
             </notification>
@@ -26,11 +25,6 @@
         </template>
       </template>
     </DynamicScroller>
-    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" @click="upper" circle>
-        <font-awesome-icon icon="angle-up" class="upper-icon" />
-      </el-button>
-    </div>
   </div>
 </template>
 
@@ -42,14 +36,11 @@ import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
 import Notification from '@/components/organisms/Notification.vue'
 import StatusLoading from '@/components/organisms/StatusLoading.vue'
-import { EventEmitter } from '@/components/event'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
 import { useI18next } from 'vue3-i18next'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Notifications'
 import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
-import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
-import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
 import { MyWindow } from '~/src/types/global'
@@ -80,7 +71,6 @@ export default defineComponent({
     })
 
     const notifications = computed(() => store.state.TimelineSpace.Contents.Notifications.notifications[id.value])
-    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const filters = computed(() => store.getters[`${space}/filters}`])
     const currentFocusedIndex = computed(() => notifications.value.findIndex(notification => focusedId.value === notification.id))
@@ -211,9 +201,6 @@ export default defineComponent({
     const focusNotification = (notification: Entity.Notification) => {
       focusedId.value = notification.id
     }
-    const focusSidebar = () => {
-      EventEmitter.emit('focus-sidebar')
-    }
 
     return {
       notifications,
@@ -225,9 +212,7 @@ export default defineComponent({
       updateToot,
       focusNext,
       focusPrev,
-      focusSidebar,
       focusNotification,
-      openSideBar,
       heading,
       upper,
       account
@@ -252,23 +237,6 @@ export default defineComponent({
 
   .loading-card:empty {
     height: 0;
-  }
-
-  .upper {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  .upper-with-side-bar {
-    position: fixed;
-    bottom: 20px;
-    right: calc(20px + var(--current-sidebar-width));
-    transition: all 0.5s;
-  }
-
-  .upper-icon {
-    padding: 3px;
   }
 }
 </style>

@@ -71,7 +71,7 @@
                 <font-awesome-icon icon="eye" class="hide" />
               </el-button>
               <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
-                <FailoverImg :src="media.preview_url" :title="media.description" :readExif="true" />
+                <FailoverImg :srzc="media.preview_url" :title="media.description" :readExif="true" />
                 <el-tag class="media-label" size="small" v-if="media.type == 'gifv'">GIF</el-tag>
                 <el-tag class="media-label" size="small" v-else-if="media.type == 'video'">VIDEO</el-tag>
               </div>
@@ -99,16 +99,14 @@ import { Entity } from 'megalodon'
 import moment from 'moment'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from '@/store'
-import { findAccount, findLink, findTag } from '~/src/renderer/utils/tootParser'
+import { findLink, findTag } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import LinkPreview from '@/components/molecules/Toot/LinkPreview.vue'
 import Filtered from '@/utils/filter'
 import { parseDatetime } from '@/utils/datetime'
 import { usernameWithStyle } from '@/utils/username'
-import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
-import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
-import { ACTION_TYPES as DETAIL_ACTION } from '@/store/TimelineSpace/Contents/SideBar/TootDetail'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'status-reaction',
@@ -143,6 +141,7 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
+    const win = (window as any) as MyWindow
     const { focused, message, filters, reactionType } = toRefs(props)
 
     const showContent = ref<boolean>(false)
@@ -221,45 +220,26 @@ export default defineComponent({
 
     const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
     const tootClick = (e: MouseEvent) => {
-      const parsedTag = findTag(e.target as HTMLElement, 'status-reaction')
+      const parsedTag = findTag(e.target as HTMLElement, 'toot')
       if (parsedTag !== null) {
         const tag = `/${route.params.id}/hashtag/${parsedTag}`
         router.push({ path: tag })
         return tag
       }
-      const parsedAccount = findAccount(e.target as HTMLElement, 'status-reaction')
-      if (parsedAccount !== null) {
-        store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
-        store
-          .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.SEARCH_ACCOUNT}`, parsedAccount)
-          .then(account => {
-            store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
-            store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
-          })
-          .catch(err => {
-            console.error(err)
-            openLink(e)
-            store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, false)
-          })
-        return parsedAccount.acct
-      }
       return openLink(e)
     }
+
     const openLink = (e: MouseEvent) => {
       const link = findLink(e.target as HTMLElement, 'status-reaction')
       if (link !== null) {
-        return (window as any).shell.openExternal(link)
+        win.ipcRenderer.invoke('open-browser', link)
       }
     }
     const openUser = (account: Entity.Account) => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
-      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
-      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+      router.push({ query: { detail: 'true', account_id: account.id } })
     }
     const openDetail = (status: Entity.Status) => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_TOOT_COMPONENT}`)
-      store.dispatch(`TimelineSpace/Contents/SideBar/TootDetail/${DETAIL_ACTION.CHANGE_TOOT}`, status)
-      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+      router.push({ query: { detail: 'true', status_id: status.id } })
     }
 
     return {

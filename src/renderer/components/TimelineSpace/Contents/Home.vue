@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <DynamicScroller :items="filteredTimeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
-      <template v-slot="{ item, index, active }">
+      <template #default="{ item, index, active }">
         <template v-if="item.id === 'loading-card'">
           <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.id]" :data-index="index" :watchData="true">
             <StatusLoading :since_id="item.since_id" :max_id="item.max_id" :loading="loadingMore" @load_since="fetchTimelineSince" />
@@ -19,7 +19,6 @@
               :server="account.server"
               v-on:update="updateToot"
               v-on:delete="deleteToot"
-              @focusRight="focusSidebar"
               @selectToot="focusToot(item)"
             >
             </toot>
@@ -41,7 +40,6 @@ import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
 import StatusLoading from '@/components/organisms/StatusLoading.vue'
-import { EventEmitter } from '@/components/event'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Home'
 import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -76,7 +74,6 @@ export default defineComponent({
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Home.timeline[id.value])
 
-    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const filters = computed(() => store.getters[`${space}/filters`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
@@ -215,9 +212,6 @@ export default defineComponent({
     const focusToot = (message: Entity.Status) => {
       focusedId.value = message.uri + message.id
     }
-    const focusSidebar = () => {
-      EventEmitter.emit('focus-sidebar')
-    }
 
     return {
       filteredTimeline,
@@ -231,9 +225,7 @@ export default defineComponent({
       deleteToot,
       focusNext,
       focusPrev,
-      focusSidebar,
       focusToot,
-      openSideBar,
       heading,
       account
     }
