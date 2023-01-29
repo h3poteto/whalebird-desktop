@@ -54,6 +54,7 @@ export default defineComponent({
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>(null)
     const loading = ref<boolean>(false)
+    const lazyLoading = ref(false)
     const heading = ref(true)
     const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
       account: null,
@@ -129,9 +130,11 @@ export default defineComponent({
     const onScroll = (event: Event) => {
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
-        document.getElementById('scroller')!.scrollHeight - 10
+          document.getElementById('scroller')!.scrollHeight - 10 &&
+        !lazyLoading.value
       ) {
         const lastStatus = statuses.value[statuses.value.length - 1]
+        lazyLoading.value = true
         client.value
           ?.getPublicTimeline({ max_id: lastStatus.id, limit: 20 })
           .then(res => {
@@ -143,6 +146,9 @@ export default defineComponent({
               message: i18n.t('message.timeline_fetch_error'),
               type: 'error'
             })
+          })
+          .finally(() => {
+            lazyLoading.value = false
           })
       }
 
@@ -174,10 +180,6 @@ export default defineComponent({
         }
       })
     }
-    const upper = () => {
-      scroller.value.scrollToItem(0)
-      focusedId.value = null
-    }
     const focusNext = () => {
       if (currentFocusedIndex.value === -1) {
         focusedId.value = statuses.value[0].uri + statuses.value[0].id
@@ -207,7 +209,6 @@ export default defineComponent({
       deleteToot,
       focusToot,
       heading,
-      upper,
       account,
       backgroundColor
     }

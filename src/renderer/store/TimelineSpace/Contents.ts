@@ -1,6 +1,5 @@
 import Home, { HomeState } from './Contents/Home'
 import Notifications, { NotificationsState } from './Contents/Notifications'
-import Favourites, { FavouritesState } from './Contents/Favourites'
 import Bookmarks, { BookmarksState } from './Contents/Bookmarks'
 import Local, { LocalState } from './Contents/Local'
 import Search, { SearchModuleState } from './Contents/Search'
@@ -19,7 +18,6 @@ type ContentsModule = {
   Home: HomeState
   Notifications: NotificationsState
   DirectMessages: DirectMessagesState
-  Favourites: FavouritesState
   Bookmarks: BookmarksState
   Local: LocalState
   Search: SearchModuleState
@@ -60,7 +58,6 @@ const Contents: Module<ContentsState, RootState> = {
   modules: {
     Home,
     Notifications,
-    Favourites,
     Bookmarks,
     Local,
     DirectMessages,

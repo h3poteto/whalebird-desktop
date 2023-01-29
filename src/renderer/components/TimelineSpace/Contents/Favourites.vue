@@ -1,7 +1,7 @@
 <template>
   <div id="favourites">
-    <div></div>
-    <DynamicScroller :items="favourites" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
+    <div style="width: 100%; height: 120px" v-loading="loading" :element-loading-background="backgroundColor" v-if="loading" />
+    <DynamicScroller :items="favourites" :min-item-size="60" id="scroller" class="scroller" ref="scroller" v-else>
       <template #default="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
@@ -30,10 +30,9 @@ import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
-import { Entity } from 'megalodon'
+import parse from 'parse-link-header'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import Toot from '@/components/organisms/Toot.vue'
-import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Favourites'
-import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
 import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -45,12 +44,10 @@ export default defineComponent({
   name: 'favourites',
   components: { Toot },
   setup() {
-    const space = 'TimelineSpace/Contents/Favourites'
     const store = useStore()
     const route = useRoute()
     const i18n = useI18next()
 
-    const heading = ref<boolean>(false)
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>()
     const { j, k, Ctrl_r } = useMagicKeys()
@@ -58,41 +55,53 @@ export default defineComponent({
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
 
+    const loading = ref(false)
     const lazyLoading = ref(false)
     const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
       account: null,
       server: null
     })
+    const client = ref<MegalodonInterface | null>(null)
 
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
-    const favourites = computed(() => store.state.TimelineSpace.Contents.Favourites.favourites)
+    const favourites = ref<Array<Entity.Status>>([])
+    const nextMaxId = ref<string | null>(null)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => favourites.value.findIndex(status => focusedId.value === status.uri))
     const shortcutEnabled = computed(() => !modalOpened.value)
+    const userAgent = computed(() => store.state.App.userAgent)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
       account.account = a
       account.server = s
+      client.value = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
 
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
 
-      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
-      store
-        .dispatch(`${space}/${ACTION_TYPES.FETCH_FAVOURITES}`, account)
-        .catch(() => {
-          ElMessage({
-            message: i18n.t('message.favourite_fetch_error'),
-            type: 'error'
-          })
+      loading.value = true
+      try {
+        const res = await client.value.getFavourites({ limit: 20 })
+        favourites.value = res.data
+        const link = parse(res.headers.link)
+        if (link !== null && link.next) {
+          nextMaxId.value = link.next.max_id
+        } else {
+          nextMaxId.value = null
+        }
+      } catch (err) {
+        console.error(err)
+        ElMessage({
+          message: i18n.t('message.favourite_fetch_error'),
+          type: 'error'
         })
-        .finally(() => {
-          store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
-        })
+      } finally {
+        loading.value = false
+      }
     })
 
     onUnmounted(() => {
-      store.commit(`${space}/${MUTATION_TYPES.UPDATE_FAVOURITES}`, [])
       const el = document.getElementById('scroller')
       if (el !== undefined && el !== null) {
         el.removeEventListener('scroll', onScroll)
@@ -125,12 +134,23 @@ export default defineComponent({
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
           document.getElementById('scroller')!.scrollHeight - 10 &&
-        !lazyLoading.value
+        !lazyLoading.value &&
+        nextMaxId.value
       ) {
         lazyLoading.value = true
-        store
-          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_FAVOURITES}`, account)
-          .catch(() => {
+        client.value
+          ?.getFavourites({ limit: 20, max_id: nextMaxId.value })
+          .then(res => {
+            favourites.value = [...favourites.value, ...res.data]
+            const link = parse(res.headers.link)
+            if (link !== null && link.next) {
+              nextMaxId.value = link.next.max_id
+            } else {
+              nextMaxId.value = null
+            }
+          })
+          .catch(err => {
+            console.error(err)
             ElMessage({
               message: i18n.t('message.favourite_fetch_error'),
               type: 'error'
@@ -140,35 +160,42 @@ export default defineComponent({
             lazyLoading.value = false
           })
       }
-      // for upper
-      if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
-        heading.value = false
-      } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
-        heading.value = true
-      }
     }
     const updateToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+      favourites.value = favourites.value.map(status => {
+        if (status.id === message.id) {
+          return message
+        } else if (status.reblog && status.reblog.id === message.id) {
+          return Object.assign(status, {
+            reblog: message
+          })
+        }
+        return status
+      })
     }
     const deleteToot = (id: string) => {
-      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, id)
+      favourites.value = favourites.value.filter(status => {
+        if (status.reblog !== null && status.reblog.id === id) {
+          return false
+        } else {
+          return status.id !== id
+        }
+      })
     }
     const reload = async () => {
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FAVOURITES}`, account).catch(() => {
-          ElMessage({
-            message: i18n.t('message.favourite_fetch_error'),
-            type: 'error'
-          })
-        })
+        const res = await client.value!.getFavourites({ limit: 20 })
+        favourites.value = res.data
+        const link = parse(res.headers.link)
+        if (link !== null && link.next) {
+          nextMaxId.value = link.next.max_id
+        } else {
+          nextMaxId.value = null
+        }
       } finally {
         store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
       }
-    }
-    const upper = () => {
-      scroller.value.scrollToItem(0)
-      focusedId.value = null
     }
     const focusNext = () => {
       if (currentFocusedIndex.value === -1) {
@@ -189,15 +216,15 @@ export default defineComponent({
     }
 
     return {
+      loading,
       favourites,
+      backgroundColor,
       scroller,
       focusedId,
       modalOpened,
       updateToot,
       deleteToot,
       focusToot,
-      heading,
-      upper,
       account
     }
   }
