@@ -184,8 +184,9 @@ export default defineComponent({
     }
     const reload = async () => {
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
+      if (!client.value) return
       try {
-        const res = await client.value!.getFavourites({ limit: 20 })
+        const res = await client.value.getFavourites({ limit: 20 })
         favourites.value = res.data
         const link = parse(res.headers.link)
         if (link !== null && link.next) {
