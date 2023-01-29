@@ -3,7 +3,6 @@ import Notifications, { NotificationsState } from './Contents/Notifications'
 import Favourites, { FavouritesState } from './Contents/Favourites'
 import Bookmarks, { BookmarksState } from './Contents/Bookmarks'
 import Local, { LocalState } from './Contents/Local'
-import Public, { PublicState } from './Contents/Public'
 import Search, { SearchModuleState } from './Contents/Search'
 import Lists, { ListsModuleState } from './Contents/Lists'
 import Hashtag, { HashtagModuleState } from './Contents/Hashtag'
@@ -23,7 +22,6 @@ type ContentsModule = {
   Favourites: FavouritesState
   Bookmarks: BookmarksState
   Local: LocalState
-  Public: PublicState
   Search: SearchModuleState
   Hashtag: HashtagModuleState
   FollowRequests: FollowRequestsState
@@ -66,7 +64,6 @@ const Contents: Module<ContentsState, RootState> = {
     Bookmarks,
     Local,
     DirectMessages,
-    Public,
     Search,
     Lists,
     Hashtag,

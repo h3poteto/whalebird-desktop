@@ -11,9 +11,9 @@
             :filters="[]"
             :account="account.account"
             :server="account.server"
-            v-on:update="updateToot"
-            v-on:delete="deleteToot"
-            @selectToot="focusToot(item)"
+            @update="updateToot"
+            @delete="deleteToot"
+            @select-toot="focusToot(item)"
           >
           </toot>
         </DynamicScrollerItem>
@@ -132,9 +132,9 @@ export default defineComponent({
         store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, { status: message, accountId: account.account.id })
       }
     }
-    const deleteToot = (message: Entity.Status) => {
+    const deleteToot = (id: string) => {
       if (account.account) {
-        store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, { statusId: message.id, accountId: account.account.id })
+        store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, { statusId: id, accountId: account.account.id })
       }
     }
     const upper = () => {
