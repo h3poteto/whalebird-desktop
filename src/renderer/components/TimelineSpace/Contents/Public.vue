@@ -13,23 +13,17 @@
             :server="account.server"
             v-on:update="updateToot"
             v-on:delete="deleteToot"
-            @focusRight="focusSidebar"
             @selectToot="focusToot(item)"
           >
           </toot>
         </DynamicScrollerItem>
       </template>
     </DynamicScroller>
-    <div :class="openSideBar ? 'upper-with-side-bar' : 'upper'" v-show="!heading">
-      <el-button type="primary" @click="upper" circle>
-        <font-awesome-icon icon="angle-up" class="upper-icon" />
-      </el-button>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, ref, watch, reactive } from 'vue'
+import { computed, defineComponent, onBeforeUpdate, onMounted, onUnmounted, ref, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
@@ -38,7 +32,6 @@ import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
-import { EventEmitter } from '@/components/event'
 import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Public'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -68,7 +61,6 @@ export default defineComponent({
     })
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Public.timeline[id.value])
-    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const filters = computed(() => store.getters[`${space}/filters`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
@@ -86,9 +78,6 @@ export default defineComponent({
       if (store.state.TimelineSpace.SideMenu.unreadPublicTimeline && heading.value) {
         store.commit('TimelineSpace/SideMenu/changeUnreadPublicTimeline', false)
       }
-    })
-    onBeforeUnmount(() => {
-      EventEmitter.off('focus-timeline')
     })
     onUnmounted(() => {
       const el = document.getElementById('scroller')
@@ -178,9 +167,6 @@ export default defineComponent({
     const focusToot = (message: Entity.Status) => {
       focusedId.value = message.uri + message.id
     }
-    const focusSidebar = () => {
-      EventEmitter.emit('focus-sidebar')
-    }
 
     return {
       timeline,
@@ -190,9 +176,7 @@ export default defineComponent({
       filters,
       updateToot,
       deleteToot,
-      focusSidebar,
       focusToot,
-      openSideBar,
       heading,
       upper,
       account
@@ -209,38 +193,6 @@ export default defineComponent({
 
   .scroller {
     height: 100%;
-  }
-
-  .upper {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  .upper-with-side-bar {
-    position: fixed;
-    bottom: 20px;
-    right: calc(20px + var(--current-sidebar-width));
-    transition: all 0.5s;
-  }
-
-  .upper-icon {
-    padding: 3px;
-  }
-
-  .unread {
-    position: fixed;
-    right: 24px;
-    top: 52px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 0 0 2px 2px;
-    z-index: 1;
-
-    &:empty {
-      display: none;
-    }
   }
 }
 </style>

@@ -1,3 +1,5 @@
+import { Entity } from 'megalodon'
+
 export type ParsedAccount = {
   username: string
   acct: string
@@ -105,4 +107,16 @@ export function parsePleromaAccount(accountURL: string): ParsedAccount | null {
     acct: `@${accountName}@${domainName}`,
     url: accountURL
   }
+}
+
+export const accountMatch = (findAccounts: Array<Entity.Account>, parsedAccount: ParsedAccount, domain: string): Entity.Account | false => {
+  const account = findAccounts.find(a => `@${a.acct}` === parsedAccount.acct)
+  if (account) return account
+  const pleromaUser = findAccounts.find(a => a.acct === parsedAccount.acct)
+  if (pleromaUser) return pleromaUser
+  const localUser = findAccounts.find(a => `@${a.username}@${domain}` === parsedAccount.acct)
+  if (localUser) return localUser
+  const user = findAccounts.find(a => a.url === parsedAccount.url)
+  if (!user) return false
+  return user
 }

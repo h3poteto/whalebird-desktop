@@ -74,7 +74,6 @@ export default defineComponent({
 
     const timeline = computed(() => store.state.TimelineSpace.Contents.Home.timeline[id.value])
 
-    const openSideBar = computed(() => store.state.TimelineSpace.Contents.SideBar.openSideBar)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const filters = computed(() => store.getters[`${space}/filters`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
@@ -227,7 +226,6 @@ export default defineComponent({
       focusNext,
       focusPrev,
       focusToot,
-      openSideBar,
       heading,
       account
     }

@@ -40,7 +40,6 @@ import { NewTootAttachLength } from '@/errors/validations'
 import { EventEmitter } from '@/components/event'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace'
-import { ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
 import { MUTATION_TYPES as GLOBAL_HEADER_MUTATION } from '@/store/GlobalHeader'
 import { MUTATION_TYPES as JUMP_MUTATION } from '@/store/TimelineSpace/Modals/Jump'
 import { ACTION_TYPES as NEW_TOOT_ACTION } from '@/store/TimelineSpace/Modals/NewToot'
@@ -62,7 +61,6 @@ export default defineComponent({
     const detail = computed(() => route.query.detail?.toString() === 'true')
 
     onMounted(async () => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.CLOSE}`)
       await initialize().finally(() => {
         store.commit(`GlobalHeader/${GLOBAL_HEADER_MUTATION.UPDATE_CHANGING}`, false)
       })

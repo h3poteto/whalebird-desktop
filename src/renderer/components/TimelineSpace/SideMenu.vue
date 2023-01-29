@@ -250,8 +250,6 @@ import { defineComponent, computed, onMounted, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/SideMenu'
-import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
-import { ACTION_TYPES as SIDEBAR_ACTION, MUTATION_TYPES as SIDEBAR_MUTATION } from '@/store/TimelineSpace/Contents/SideBar'
 import { ACTION_TYPES as GLOBAL_ACTION } from '@/store/GlobalHeader'
 import { MyWindow } from '~/src/types/global'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
@@ -361,14 +359,7 @@ export default defineComponent({
           if (!account.account) {
             return
           }
-          store
-            .dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.FETCH_ACCOUNT}`, account.account.accountId)
-            .then(account => {
-              store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
-              store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
-            })
-
-          store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
+          router.push({ query: { detail: 'true', account_id: account.account.accountId } })
           break
         case 'edit':
           if (account.server) {

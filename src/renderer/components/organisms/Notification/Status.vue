@@ -45,10 +45,9 @@ import { useStore } from '@/store'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import Toot from '../Toot.vue'
 import { usernameWithStyle } from '@/utils/username'
-import { MUTATION_TYPES as SIDEBAR_MUTATION, ACTION_TYPES as SIDEBAR_ACTION } from '@/store/TimelineSpace/Contents/SideBar'
-import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'mention',
@@ -81,7 +80,7 @@ export default defineComponent({
   components: { Toot, FailoverImg },
   setup(_props, ctx) {
     const store = useStore()
-
+    const router = useRouter()
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
 
     const updateToot = (message: Entity.Status) => {
@@ -92,9 +91,7 @@ export default defineComponent({
     }
     const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
     const openUser = (account: Entity.Account) => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
-      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
-      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+      router.push({ query: { detail: 'true', account_id: account.id } })
     }
 
     return {

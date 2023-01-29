@@ -1,4 +1,3 @@
-import SideBar, { SideBarModuleState } from './Contents/SideBar'
 import Home, { HomeState } from './Contents/Home'
 import Notifications, { NotificationsState } from './Contents/Notifications'
 import Favourites, { FavouritesState } from './Contents/Favourites'
@@ -18,7 +17,6 @@ export type ContentsState = {
 }
 
 type ContentsModule = {
-  SideBar: SideBarModuleState
   Home: HomeState
   Notifications: NotificationsState
   DirectMessages: DirectMessagesState
@@ -62,7 +60,6 @@ const Contents: Module<ContentsState, RootState> = {
   namespaced: true,
   state: state,
   modules: {
-    SideBar,
     Home,
     Notifications,
     Favourites,

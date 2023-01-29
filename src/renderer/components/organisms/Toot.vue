@@ -242,7 +242,7 @@ import { useI18next } from 'vue3-i18next'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useStore } from '@/store'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
-import { findAccount, findLink, findTag, ParsedAccount } from '~/src/renderer/utils/tootParser'
+import { findAccount, findLink, findTag, ParsedAccount, accountMatch } from '~/src/renderer/utils/tootParser'
 import emojify from '~/src/renderer/utils/emojify'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
 import Poll from '~/src/renderer/components/molecules/Toot/Poll.vue'
@@ -509,8 +509,10 @@ export default defineComponent({
         id: originalMessage.value.id
       })
     }
-    const openDetail = (message: Entity.Status) => {
-      router.push({ query: { detail: 'true', status_id: message.id } })
+    const openDetail = (message: Entity.Status | null) => {
+      if (message) {
+        router.push({ query: { detail: 'true', status_id: message.id } })
+      }
     }
     const openBrowser = (message: Entity.Status) => {
       win.ipcRenderer.invoke('open-browser', message.url)
@@ -749,18 +751,6 @@ export default defineComponent({
     }
   }
 })
-
-const accountMatch = (findAccounts: Array<Entity.Account>, parsedAccount: ParsedAccount, domain: string): Entity.Account | false => {
-  const account = findAccounts.find(a => `@${a.acct}` === parsedAccount.acct)
-  if (account) return account
-  const pleromaUser = findAccounts.find(a => a.acct === parsedAccount.acct)
-  if (pleromaUser) return pleromaUser
-  const localUser = findAccounts.find(a => `@${a.username}@${domain}` === parsedAccount.acct)
-  if (localUser) return localUser
-  const user = findAccounts.find(a => a.url === parsedAccount.url)
-  if (!user) return false
-  return user
-}
 </script>
 
 <style lang="scss" scoped>

@@ -33,8 +33,7 @@ import { Entity } from 'megalodon'
 import { useStore } from '@/store'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import { usernameWithStyle } from '@/utils/username'
-import { ACTION_TYPES as SIDEBAR_ACTION, MUTATION_TYPES as SIDEBAR_MUTATION } from '@/store/TimelineSpace/Contents/SideBar'
-import { ACTION_TYPES as PROFILE_ACTION } from '@/store/TimelineSpace/Contents/SideBar/AccountProfile'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'follow',
@@ -59,6 +58,7 @@ export default defineComponent({
   setup(props) {
     const { focused } = toRefs(props)
     const store = useStore()
+    const router = useRouter()
     const notificationRef = ref<any>(null)
 
     // const shortcutEnabled = computed(() => focused.value && !overlaid.value)
@@ -78,9 +78,7 @@ export default defineComponent({
 
     const username = (account: Entity.Account) => usernameWithStyle(account, displayNameStyle.value)
     const openUser = (account: Entity.Account) => {
-      store.dispatch(`TimelineSpace/Contents/SideBar/${SIDEBAR_ACTION.OPEN_ACCOUNT_COMPONENT}`)
-      store.dispatch(`TimelineSpace/Contents/SideBar/AccountProfile/${PROFILE_ACTION.CHANGE_ACCOUNT}`, account)
-      store.commit(`TimelineSpace/Contents/SideBar/${SIDEBAR_MUTATION.CHANGE_OPEN_SIDEBAR}`, true)
+      router.push({ query: { detail: 'true', account_id: account.id } })
     }
 
     return {
