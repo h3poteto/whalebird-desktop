@@ -137,10 +137,6 @@ export default defineComponent({
         store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, { statusId: id, accountId: account.account.id })
       }
     }
-    const upper = () => {
-      scroller.value.scrollToItem(0)
-      focusedId.value = null
-    }
     const focusNext = () => {
       if (currentFocusedIndex.value === -1) {
         focusedId.value = timeline.value[0].uri + timeline.value[0].id
@@ -168,7 +164,6 @@ export default defineComponent({
       deleteToot,
       focusToot,
       heading,
-      upper,
       account
     }
   }

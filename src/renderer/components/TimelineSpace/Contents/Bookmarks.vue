@@ -30,10 +30,9 @@ import { useStore } from '@/store'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Entity } from 'megalodon'
-import useReloadable from '@/components/utils/reloadable'
+import parse from 'parse-link-header'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import Toot from '@/components/organisms/Toot.vue'
-import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Bookmarks'
 import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -44,15 +43,14 @@ export default defineComponent({
   name: 'bookmarks',
   components: { Toot },
   setup() {
-    const space = 'TimelineSpace/Contents/Bookmarks'
     const store = useStore()
     const route = useRoute()
     const i18n = useI18next()
-    const { reloadable } = useReloadable(store, route, i18n)
 
     const focusedId = ref<string | null>(null)
     const heading = ref<boolean>(true)
     const scroller = ref<any>()
+    const loading = ref(false)
     const lazyLoading = ref(false)
     const { j, k, Ctrl_r } = useMagicKeys()
 
@@ -63,12 +61,15 @@ export default defineComponent({
       account: null,
       server: null
     })
+    const client = ref<MegalodonInterface | null>(null)
 
-    const bookmarks = computed(() => store.state.TimelineSpace.Contents.Bookmarks.bookmarks)
+    const bookmarks = ref<Array<Entity.Status>>([])
+    const nextMaxId = ref<string | null>(null)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => bookmarks.value.findIndex(toot => focusedId.value === toot.uri))
     const shortcutEnabled = computed(() => !modalOpened.value)
+    const userAgent = computed(() => store.state.App.userAgent)
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
@@ -76,18 +77,27 @@ export default defineComponent({
       account.server = s
 
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
-      store.commit(`TimelineSpace/Contents/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
-      store
-        .dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account)
-        .catch(() => {
-          ElMessage({
-            message: i18n.t('message.bookmark_fetch_error'),
-            type: 'error'
-          })
+
+      client.value = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+      loading.value = true
+      try {
+        const res = await client.value.getBookmarks({ limit: 20 })
+        bookmarks.value = res.data
+        const link = parse(res.headers.link)
+        if (link !== null && link.next) {
+          nextMaxId.value = link.next.max_id
+        } else {
+          nextMaxId.value = null
+        }
+      } catch (err) {
+        console.error(err)
+        ElMessage({
+          message: i18n.t('message.bookmark_fetch_error'),
+          type: 'error'
         })
-        .finally(() => {
-          store.commit(`TimelineSpace/Contents/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
-        })
+      } finally {
+        loading.value = false
+      }
     })
     watch(startReload, (newVal, oldVal) => {
       if (!oldVal && newVal) {
@@ -115,12 +125,23 @@ export default defineComponent({
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
           document.getElementById('scroller')!.scrollHeight - 10 &&
-        !lazyLoading.value
+        !lazyLoading.value &&
+        nextMaxId.value
       ) {
         lazyLoading.value = true
-        store
-          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_BOOKMARKS}`, account)
-          .catch(() => {
+        client.value
+          ?.getBookmarks({ limit: 20, max_id: nextMaxId.value })
+          .then(res => {
+            bookmarks.value = [...bookmarks.value, ...res.data]
+            const link = parse(res.headers.link)
+            if (link !== null && link.next) {
+              nextMaxId.value = link.next.max_id
+            } else {
+              nextMaxId.value = null
+            }
+          })
+          .catch(err => {
+            console.error(err)
             ElMessage({
               message: i18n.t('message.bookmark_fetch_error'),
               type: 'error'
@@ -130,7 +151,7 @@ export default defineComponent({
             lazyLoading.value = false
           })
       }
-      // for upper
+
       if ((event.target as HTMLElement)!.scrollTop > 10 && heading.value) {
         heading.value = false
       } else if ((event.target as HTMLElement)!.scrollTop <= 10 && !heading.value) {
@@ -139,27 +160,40 @@ export default defineComponent({
     }
     const reload = async () => {
       store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
+      if (!client.value) return
       try {
-        await reloadable()
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_BOOKMARKS}`, account).catch(() => {
-          ElMessage({
-            message: i18n.t('message.bookmark_fetch_error'),
-            type: 'error'
-          })
-        })
+        const res = await client.value.getBookmarks({ limit: 20 })
+        bookmarks.value = res.data
+        const link = parse(res.headers.link)
+        if (link !== null && link.next) {
+          nextMaxId.value = link.next.max_id
+        } else {
+          nextMaxId.value = null
+        }
       } finally {
         store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
       }
     }
     const updateToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+      bookmarks.value = bookmarks.value.map(status => {
+        if (status.id === message.id) {
+          return message
+        } else if (status.reblog && status.reblog.id === message.id) {
+          return Object.assign(status, {
+            reblog: message
+          })
+        }
+        return status
+      })
     }
-    const deleteToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message)
-    }
-    const upper = () => {
-      scroller.value.scrollToItem(0)
-      focusedId.value = null
+    const deleteToot = (id: string) => {
+      bookmarks.value = bookmarks.value.filter(status => {
+        if (status.reblog !== null && status.reblog.id === id) {
+          return false
+        } else {
+          return status.id !== id
+        }
+      })
     }
     const focusNext = () => {
       if (currentFocusedIndex.value === -1) {
@@ -188,7 +222,6 @@ export default defineComponent({
       deleteToot,
       focusToot,
       heading,
-      upper,
       account
     }
   }

@@ -208,7 +208,6 @@ export default defineComponent({
       updateToot,
       deleteToot,
       focusToot,
-      heading,
       account,
       backgroundColor
     }
