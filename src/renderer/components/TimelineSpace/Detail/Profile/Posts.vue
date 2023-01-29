@@ -1,6 +1,6 @@
 <template>
   <DynamicScroller :items="statuses" :min-item-size="86">
-    <template v-slot="{ item, index, active }">
+    <template #default="{ item, index, active }">
       <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
         <Toot
           v-if="account && server"

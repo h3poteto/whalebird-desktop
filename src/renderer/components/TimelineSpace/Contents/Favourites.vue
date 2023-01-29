@@ -2,7 +2,7 @@
   <div id="favourites">
     <div></div>
     <DynamicScroller :items="favourites" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
-      <template v-slot="{ item, index, active }">
+      <template #default="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
             v-if="account.account && account.server"

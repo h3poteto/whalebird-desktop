@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <DynamicScroller :items="filteredTimeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
-      <template v-slot="{ item, index, active }">
+      <template #default="{ item, index, active }">
         <template v-if="item.id === 'loading-card'">
           <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.id]" :data-index="index" :watchData="true">
             <StatusLoading :since_id="item.since_id" :max_id="item.max_id" :loading="loadingMore" @load_since="fetchTimelineSince" />

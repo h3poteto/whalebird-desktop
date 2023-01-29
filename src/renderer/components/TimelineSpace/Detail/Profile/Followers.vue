@@ -1,6 +1,6 @@
 <template>
   <DynamicScroller :items="followers" :min-item-size="53" class="scroller" page-mode>
-    <template v-slot="{ item, index, active }">
+    <template #default="{ item, index, active }">
       <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.item]" :data-index="index" :watchData="true">
         <User :user="item" :relationship="targetRelationship(item.id)" @follow-account="follow" @unfollow-account="unfollow" />
       </DynamicScrollerItem>
