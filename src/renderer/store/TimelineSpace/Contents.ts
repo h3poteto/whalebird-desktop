@@ -3,7 +3,6 @@ import Notifications, { NotificationsState } from './Contents/Notifications'
 import Local, { LocalState } from './Contents/Local'
 import Search, { SearchModuleState } from './Contents/Search'
 import Lists, { ListsModuleState } from './Contents/Lists'
-import Hashtag, { HashtagModuleState } from './Contents/Hashtag'
 import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
@@ -18,7 +17,6 @@ type ContentsModule = {
   DirectMessages: DirectMessagesState
   Local: LocalState
   Search: SearchModuleState
-  Hashtag: HashtagModuleState
   Lists: ListsModuleState
 }
 
@@ -57,8 +55,7 @@ const Contents: Module<ContentsState, RootState> = {
     Local,
     DirectMessages,
     Search,
-    Lists,
-    Hashtag
+    Lists
   },
   mutations: mutations,
   actions: actions
