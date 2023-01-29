@@ -380,6 +380,12 @@
         "until": "直到 {{datetime}}",
         "left": "還剩下 {{datetime}}",
         "refresh": "重新整理"
+      },
+      "open_account": {
+        "title": "Account not found",
+        "text": "Could not find {{account}} in the server. Do you want to open the account in the browser instead?",
+        "ok": "Open",
+        "cancel": "Cancel"
       }
     },
     "status_loading": {
