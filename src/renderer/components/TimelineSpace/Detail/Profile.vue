@@ -1,6 +1,6 @@
 <template>
   <div id="account_profile" role="article" aria-label="account profile" v-if="user">
-    <div class="header-background" v-bind:style="{ backgroundImage: 'url(' + user.header + ')' }">
+    <div class="header-background" :style="{ backgroundImage: 'url(' + user.header + ')' }">
       <div class="header">
         <div class="relationship" v-if="relationship !== null && !isOwnProfile">
           <div class="follower-status">
@@ -93,13 +93,18 @@
         <dd v-html="data.value" @click.capture.prevent="metadataClick"></dd>
       </dl>
     </div>
-    <div class="timeline"></div>
+    <el-tabs class="timeline" v-model="activeTab" stretch v-if="account.account && account.server">
+      <el-tab-pane :label="precision(user.statuses_count) + ' Posts'" name="posts"
+        ><Posts :user="user" :account="account.account" :server="account.server"
+      /></el-tab-pane>
+      <el-tab-pane :label="precision(user.following_count) + ' Following'" name="following">Following</el-tab-pane>
+      <el-tab-pane :label="precision(user.followers_count) + ' Followers'" name="followers">Followers</el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed, ref, reactive, onMounted, watch } from 'vue'
-import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useStore } from '@/store'
@@ -111,17 +116,18 @@ import { LocalServer } from '~/src/types/localServer'
 import { ACTION_TYPES as LIST_MEMBERSHIP_ACTION } from '@/store/TimelineSpace/Modals/ListMembership'
 import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteConfirm'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
+import Posts from './Profile/Posts.vue'
 
 export default defineComponent({
   name: 'Profile',
   components: {
-    FailoverImg
+    FailoverImg,
+    Posts
   },
   setup() {
     const win = (window as any) as MyWindow
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
 
     const theme = computed(() => {
       return {
@@ -149,6 +155,7 @@ export default defineComponent({
       return false
     })
     const identityProofs = ref<Array<Entity.IdentityProof>>([])
+    const activeTab = ref<'posts' | 'following' | 'followers'>('posts')
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
@@ -274,6 +281,16 @@ export default defineComponent({
       }
     }
 
+    const precision = (num: number) => {
+      if (num > 1000) {
+        return `${(num / 1000).toPrecision(3)}K`
+      } else if (num > 1000000) {
+        return `${(num / 1000000).toPrecision(3)}M`
+      } else {
+        return num.toString()
+      }
+    }
+
     return {
       user,
       relationship,
@@ -293,7 +310,10 @@ export default defineComponent({
       note,
       noteClick,
       identityProofs,
-      metadataClick
+      metadataClick,
+      precision,
+      activeTab,
+      account
     }
   }
 })
@@ -493,6 +513,10 @@ export default defineComponent({
 
   .timeline {
     font-size: calc(var(--base-font-size) * 0.85);
+  }
+
+  .timeline :deep(.el-tabs__item) {
+    --el-text-color-primary: var(--theme-secondary-color);
   }
 }
 </style>

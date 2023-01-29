@@ -305,7 +305,7 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['selectToot', 'focusRight', 'focusLeft', 'update', 'delete', 'sizeChanged'],
+  emits: ['selectToot', 'update', 'delete', 'sizeChanged'],
   setup(props, ctx) {
     const store = useStore()
     const route = useRoute()
@@ -313,7 +313,7 @@ export default defineComponent({
     const i18n = useI18next()
     const win = (window as any) as MyWindow
     const { focused, overlaid, message, filters, account, server } = toRefs(props)
-    const { l, h, r, b, f, o, p, i, x } = useMagicKeys()
+    const { r, b, f, o, p, i, x } = useMagicKeys()
 
     const statusRef = ref<any>(null)
     const showContent = ref(store.state.App.ignoreCW)
@@ -397,12 +397,6 @@ export default defineComponent({
       client.value = generator(server.value.sns, server.value.baseURL, account.value.accessToken, userAgent.value)
     })
 
-    whenever(logicAnd(l, shortcutEnabled), () => {
-      ctx.emit('focusRight')
-    })
-    whenever(logicAnd(h, shortcutEnabled), () => {
-      ctx.emit('focusLeft')
-    })
     whenever(logicAnd(r, shortcutEnabled), () => {
       openReply()
     })

@@ -198,7 +198,7 @@ export default defineComponent({
 }
 
 .detail {
-  width: 340px;
+  width: 380px;
   height: 100%;
   border-left: 1px solid var(--theme-border-color);
 }
