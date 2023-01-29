@@ -100,7 +100,9 @@
       <el-tab-pane :label="precision(user.following_count) + ' Following'" name="following"
         ><Following :user="user" :account="account.account" :server="account.server"
       /></el-tab-pane>
-      <el-tab-pane :label="precision(user.followers_count) + ' Followers'" name="followers">Followers</el-tab-pane>
+      <el-tab-pane :label="precision(user.followers_count) + ' Followers'" name="followers"
+        ><Followers :user="user" :account="account.account" :server="account.server"
+      /></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -120,13 +122,15 @@ import { ACTION_TYPES as MUTE_ACTION } from '@/store/TimelineSpace/Modals/MuteCo
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import Posts from './Profile/Posts.vue'
 import Following from './Profile/Following.vue'
+import Followers from './Profile/Followers.vue'
 
 export default defineComponent({
   name: 'Profile',
   components: {
     FailoverImg,
     Posts,
-    Following
+    Following,
+    Followers
   },
   setup() {
     const win = (window as any) as MyWindow
