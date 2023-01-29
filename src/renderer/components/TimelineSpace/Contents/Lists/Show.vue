@@ -1,6 +1,7 @@
 <template>
   <div name="list" class="list-timeline">
-    <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
+    <div style="width: 100%; height: 120px" v-loading="loading" :element-loading-background="backgroundColor" v-if="loading" />
+    <DynamicScroller :items="statuses" :min-item-size="86" id="scroller" class="scroller" ref="scroller" v-else>
       <template #default="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
@@ -23,18 +24,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, ref, computed, onMounted, watch, onBeforeUnmount, onUnmounted, reactive } from 'vue'
+import { defineComponent, toRefs, ref, computed, onMounted, watch, onUnmounted, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
-import { Entity } from 'megalodon'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
-import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
-import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Show'
-import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
 import { MyWindow } from '~/src/types/global'
@@ -45,7 +43,6 @@ export default defineComponent({
   props: ['list_id'],
   components: { Toot },
   setup(props) {
-    const space = 'TimelineSpace/Contents/Lists/Show'
     const store = useStore()
     const route = useRoute()
     const i18n = useI18next()
@@ -58,17 +55,21 @@ export default defineComponent({
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>(null)
     const lazyLoading = ref<boolean>(false)
+    const loading = ref(false)
     const heading = ref<boolean>(true)
     const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
       account: null,
       server: null
     })
+    const client = ref<MegalodonInterface | null>(null)
 
-    const timeline = computed(() => store.state.TimelineSpace.Contents.Lists.Show.timeline)
+    const statuses = ref<Array<Entity.Status>>([])
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
-    const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
+    const currentFocusedIndex = computed(() => statuses.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
     const shortcutEnabled = computed(() => !modalOpened.value)
+    const userAgent = computed(() => store.state.App.userAgent)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
@@ -76,15 +77,18 @@ export default defineComponent({
       account.server = s
 
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
-      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
-      load().finally(() => {
-        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
-      })
+      client.value = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+      loading.value = true
+      try {
+        await load(list_id.value)
+      } finally {
+        loading.value = false
+      }
     })
-    watch(list_id, () => {
-      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
-      load().finally(() => {
-        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
+    watch(list_id, id => {
+      loading.value = true
+      load(id).finally(() => {
+        loading.value = false
       })
     })
     watch(startReload, (newVal, oldVal) => {
@@ -103,7 +107,7 @@ export default defineComponent({
     })
     whenever(logicAnd(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
-        focusedId.value = timeline.value[0].uri + timeline.value[0].id
+        focusedId.value = statuses.value[0].uri + statuses.value[0].id
       } else {
         focusNext()
       }
@@ -115,9 +119,6 @@ export default defineComponent({
       reload()
     })
 
-    onBeforeUnmount(() => {
-      store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
-    })
     onUnmounted(() => {
       heading.value = true
       const el = document.getElementById('scroller')
@@ -127,42 +128,42 @@ export default defineComponent({
       }
     })
 
-    const load = async () => {
-      await store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
+    const load = async (id: string) => {
+      if (!client.value) return
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_TIMELINE}`, {
-          listID: list_id.value,
-          account: account.account,
-          server: account.server
-        })
+        const res = await client.value.getListTimeline(id, { limit: 20 })
+        statuses.value = res.data
       } catch (err) {
+        console.error(err)
         ElMessage({
           message: i18n.t('message.timeline_fetch_error'),
           type: 'error'
         })
       }
-      store.dispatch(`${space}/${ACTION_TYPES.START_STREAMING}`, { listID: list_id.value, account: account.account }).catch(() => {
-        ElMessage({
-          message: i18n.t('message.start_streaming_error'),
-          type: 'error'
-        })
+      if (!account.account) return
+      win.ipcRenderer.on(`update-list-streamings-${account.account.id}`, (_, update: Entity.Status) => {
+        statuses.value = [update, ...statuses.value]
       })
-      return 'started'
+      win.ipcRenderer.on(`delete-list-streamings-${account.account.id}`, (_, id: string) => {
+        deleteToot(id)
+      })
+
+      win.ipcRenderer.send('start-list-streaming', {
+        listId: id,
+        accountId: account.account.id
+      })
     }
+
     const onScroll = (event: Event) => {
       if (
         (event.target as HTMLElement)!.clientHeight + (event.target as HTMLElement)!.scrollTop >=
           document.getElementById('scroller')!.scrollHeight - 10 &&
-        !lazyLoading
+        !lazyLoading.value
       ) {
+        const lastStatus = statuses.value[statuses.value.length - 1]
         lazyLoading.value = true
-        store
-          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
-            list_id: list_id.value,
-            status: timeline.value[timeline.value.length - 1],
-            account: account.account,
-            server: account.server
-          })
+        client.value
+          ?.getListTimeline(list_id.value, { max_id: lastStatus.id, limit: 20 })
           .catch(() => {
             ElMessage({
               message: i18n.t('message.timeline_fetch_error'),
@@ -181,47 +182,46 @@ export default defineComponent({
       }
     }
     const reload = async () => {
-      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
+      loading.value = true
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_TIMELINE}`, list_id.value).catch(() => {
-          ElMessage({
-            message: i18n.t('message.timeline_fetch_error'),
-            type: 'error'
-          })
-        })
-        store.dispatch(`${space}/${ACTION_TYPES.START_STREAMING}`, list_id.value).catch(() => {
-          ElMessage({
-            message: i18n.t('message.start_streaming_error'),
-            type: 'error'
-          })
-        })
+        await load(list_id.value)
       } finally {
-        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
+        loading.value = false
       }
     }
     const updateToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, message)
+      statuses.value = statuses.value.map(status => {
+        if (status.id === message.id) {
+          return message
+        } else if (status.reblog && status.reblog.id === message.id) {
+          return Object.assign(status, {
+            reblog: message
+          })
+        }
+        return status
+      })
     }
-    const deleteToot = (message: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, message.id)
-    }
-    const upper = () => {
-      scroller.value.scrollToItem(0)
-      focusedId.value = null
+    const deleteToot = (id: string) => {
+      statuses.value = statuses.value.filter(status => {
+        if (status.reblog !== null && status.reblog.id === id) {
+          return false
+        } else {
+          return status.id !== id
+        }
+      })
     }
     const focusNext = () => {
       if (currentFocusedIndex.value === -1) {
-        focusedId.value = timeline.value[0].uri + timeline.value[0].id
-      } else if (currentFocusedIndex.value < timeline.value.length) {
-        focusedId.value = timeline.value[currentFocusedIndex.value + 1].uri + timeline.value[currentFocusedIndex.value + 1].id
+        focusedId.value = statuses.value[0].uri + statuses.value[0].id
+      } else if (currentFocusedIndex.value < statuses.value.length) {
+        focusedId.value = statuses.value[currentFocusedIndex.value + 1].uri + statuses.value[currentFocusedIndex.value + 1].id
       }
     }
     const focusPrev = () => {
       if (currentFocusedIndex.value === 0) {
         focusedId.value = null
       } else if (currentFocusedIndex.value > 0) {
-        focusedId.value = timeline.value[currentFocusedIndex.value - 1].uri + timeline.value[currentFocusedIndex.value - 1].id
+        focusedId.value = statuses.value[currentFocusedIndex.value - 1].uri + statuses.value[currentFocusedIndex.value - 1].id
       }
     }
     const focusToot = (message: Entity.Status) => {
@@ -230,15 +230,16 @@ export default defineComponent({
 
     return {
       scroller,
-      timeline,
+      statuses,
       focusedId,
       modalOpened,
       updateToot,
       deleteToot,
       focusToot,
       heading,
-      upper,
-      account
+      account,
+      loading,
+      backgroundColor
     }
   }
 })

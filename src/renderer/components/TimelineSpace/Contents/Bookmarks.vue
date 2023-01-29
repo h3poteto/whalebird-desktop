@@ -1,7 +1,7 @@
 <template>
   <div id="bookmarks">
-    <div></div>
-    <DynamicScroller :items="bookmarks" :min-item-size="60" id="scroller" class="scroller" ref="scroller">
+    <div style="width: 100%; height: 120px" v-loading="loading" :element-loading-background="backgroundColor" v-if="loading" />
+    <DynamicScroller :items="bookmarks" :min-item-size="60" id="scroller" class="scroller" ref="scroller" v-else>
       <template #default="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
@@ -70,6 +70,7 @@ export default defineComponent({
     const currentFocusedIndex = computed(() => bookmarks.value.findIndex(toot => focusedId.value === toot.uri))
     const shortcutEnabled = computed(() => !modalOpened.value)
     const userAgent = computed(() => store.state.App.userAgent)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
@@ -222,7 +223,9 @@ export default defineComponent({
       deleteToot,
       focusToot,
       heading,
-      account
+      account,
+      loading,
+      backgroundColor
     }
   }
 })
