@@ -2286,25 +2286,18 @@
     "@vueuse/shared" "9.12.0"
     vue-demi "*"
 
-"@vueuse/math@^9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/math/-/math-9.11.0.tgz#1a240a6a525018c7c6b1b6b40a66250523dc8454"
-  integrity sha512-IDB8OkGvM1/Yc5yEFc1XaM5yZh7TF7r7wcCFJmawe6HgvHXcP1ve9KTJvwvE0P09n9JHNwRsdQT7xNf/8TCjSQ==
+"@vueuse/math@^9.12.0":
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/math/-/math-9.12.0.tgz#d7233840a7f6a1cc50357df02224745d9976f4a7"
+  integrity sha512-i4N67Ib+FXh/cdwK1J7hijSy8QXBKGqy492SvVBd6UjPPeCSIkkd4veO2Lsj0gMeRfObFsVdY0+1jW+kTRcJMw==
   dependencies:
-    "@vueuse/shared" "9.11.0"
+    "@vueuse/shared" "9.12.0"
     vue-demi "*"
 
 "@vueuse/metadata@9.12.0":
   version "9.12.0"
   resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-9.12.0.tgz#19a0fefcba6a66a2382af10a7a67ebad6eec1f27"
   integrity sha512-9oJ9MM9lFLlmvxXUqsR1wLt1uF7EVbP5iYaHJYqk+G2PbMjY6EXvZeTjbdO89HgoF5cI6z49o2zT/jD9SVoNpQ==
-
-"@vueuse/shared@9.11.0":
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-9.11.0.tgz#8cf7c64789040e90d0cb5c8ac73cc9d252f7306c"
-  integrity sha512-8lO7wD5abYxupKy2KynH1pSgP715ky6iCrWYb8aX2AuAVi9uHXj7qE1dw6BnmArSaLHci4x9iuzWPCpAzUkC/A==
-  dependencies:
-    vue-demi "*"
 
 "@vueuse/shared@9.12.0":
   version "9.12.0"
