@@ -83,6 +83,12 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "build/Whalebird-*.shasum"
+      - name: Release to WinGet
+        uses: vedantmgoyal2009/winget-releaser@v1
+        with:
+          identifier: h3poteto.whalebird-desktop
+          version: ${{ github.event.release.tag_name }}
+          token: ${{ secrets.WINGET_TOKEN }}
 
   release-darwin:
     name: Release for MacOS
