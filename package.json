@@ -85,7 +85,7 @@
     "about-window": "^1.15.2",
     "animate.css": "^4.1.0",
     "auto-launch": "^5.0.5",
-    "axios": "1.2.2",
+    "axios": "1.2.6",
     "blueimp-load-image": "^5.16.0",
     "electron-context-menu": "^3.6.1",
     "electron-json-storage": "^4.6.0",
