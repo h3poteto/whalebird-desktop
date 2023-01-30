@@ -380,6 +380,12 @@
         "until": "hingga {{datetime}}",
         "left": "sisa {{datetime}}",
         "refresh": "Muat ulang"
+      },
+      "open_account": {
+        "title": "Account not found",
+        "text": "Could not find {{account}} in the server. Do you want to open the account in the browser instead?",
+        "ok": "Open",
+        "cancel": "Cancel"
       }
     },
     "status_loading": {

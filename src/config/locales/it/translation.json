@@ -171,7 +171,7 @@
       "other": {
         "title": "Altre opzioni",
         "launch": "Avvia l'app al login",
-        "hideOnLaunch": "Hide window on launch"
+        "hideOnLaunch": "Nascondi la finestra all'avvio"
       },
       "reset": {
         "button": "Ripristina preferenze"
@@ -294,7 +294,7 @@
         "add_image": "Aggiungi immagini",
         "poll": "Aggiungi un sondaggio",
         "change_visibility": "Modifica visibilità",
-        "change_sensitive": "Mark media as sensitive",
+        "change_sensitive": "Contrassegnare i media come sensibili",
         "add_cw": "Aggiungi avviso sui contenuti",
         "pined_hashtag": "Fissa l'hashtag"
       },
@@ -380,6 +380,12 @@
         "until": "fino a {{datetime}}",
         "left": "{{datetime}} mancanti",
         "refresh": "Aggiorna"
+      },
+      "open_account": {
+        "title": "Account non trovato",
+        "text": "Impossibile trovare {{account}} nel server. Vuoi aprire l'account nel browser?",
+        "ok": "Apri",
+        "cancel": "Annulla"
       }
     },
     "status_loading": {
@@ -461,7 +467,7 @@
     "timeline_fetch_error": "Impossibile recuperare la cronologia",
     "notification_fetch_error": "Impossibile recuperare le notifiche",
     "favourite_fetch_error": "Impossibile recuperare i preferiti",
-    "bookmark_fetch_error": "Failed to fetch bookmarks",
+    "bookmark_fetch_error": "Recupero dei segnalibri non riuscito",
     "follow_request_accept_error": "Impossibile accettare la richiesta",
     "follow_request_reject_error": "Impossibile rifiutare la richiesta",
     "attach_error": "Non è stato possibile allegare il file",
