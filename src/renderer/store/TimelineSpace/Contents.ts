@@ -1,7 +1,6 @@
 import Home, { HomeState } from './Contents/Home'
 import Notifications, { NotificationsState } from './Contents/Notifications'
 import Local, { LocalState } from './Contents/Local'
-import Search, { SearchModuleState } from './Contents/Search'
 import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
@@ -15,7 +14,6 @@ type ContentsModule = {
   Notifications: NotificationsState
   DirectMessages: DirectMessagesState
   Local: LocalState
-  Search: SearchModuleState
 }
 
 export type ContentsModuleState = ContentsModule & ContentsState
@@ -51,8 +49,7 @@ const Contents: Module<ContentsState, RootState> = {
     Home,
     Notifications,
     Local,
-    DirectMessages,
-    Search
+    DirectMessages
   },
   mutations: mutations,
   actions: actions

@@ -11,24 +11,17 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onUnmounted } from 'vue'
-import { useStore } from '@/store'
+import { defineComponent, PropType } from 'vue'
+import { Entity } from 'megalodon'
 import Toot from '@/components/organisms/Toot.vue'
-import { MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Search/Toots'
 
 export default defineComponent({
   name: 'search-account',
   components: { Toot },
-  setup() {
-    const store = useStore()
-    const results = computed(() => store.state.TimelineSpace.Contents.Search.Toots.results)
-
-    onUnmounted(() => {
-      this.$store.commit(`TimelineSpace/Contents/Search/Toots/${MUTATION_TYPES.UPDATE_RESULTS}`, [])
-    })
-
-    return {
-      results
+  props: {
+    results: {
+      type: Object as PropType<Array<Entity.Account>>,
+      required: true
     }
   }
 })
