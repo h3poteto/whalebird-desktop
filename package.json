@@ -80,7 +80,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "@trodi/electron-splashscreen": "^1.0.2",
-    "@vueuse/core": "9.11.1",
+    "@vueuse/core": "9.12.0",
     "@vueuse/math": "^9.11.0",
     "about-window": "^1.15.2",
     "animate.css": "^4.1.0",
