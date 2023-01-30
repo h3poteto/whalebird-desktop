@@ -10,35 +10,45 @@
       </el-form>
     </div>
     <div class="search-result">
-      <search-account v-if="target === 'account'"></search-account>
-      <search-tag v-else-if="target === 'tag'"></search-tag>
-      <search-toots v-else-if="target === 'toot'"></search-toots>
+      <search-account v-if="target === 'account'" :results="accounts"></search-account>
+      <search-tag v-else-if="target === 'tag'" :results="tags"></search-tag>
+      <search-toots v-else-if="target === 'toot'" :results="statuses"></search-toots>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted, computed, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
+import generator, { MegalodonInterface, Entity } from 'megalodon'
 import { useStore } from '@/store'
 import SearchAccount from './Search/Account.vue'
 import SearchTag from './Search/Tag.vue'
 import SearchToots from './Search/Toots.vue'
-import { ACTION_TYPES as TAG_ACTION } from '@/store/TimelineSpace/Contents/Search/Tag'
-import { ACTION_TYPES as ACCOUNT_ACTION } from '@/store/TimelineSpace/Contents/Search/Account'
-import { ACTION_TYPES as TOOTS_ACTION } from '@/store/TimelineSpace/Contents/Search/Toots'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'search',
   components: { SearchAccount, SearchTag, SearchToots },
   setup() {
-    const space = 'TimelineSpace/Contents/Search'
     const store = useStore()
     const i18n = useI18next()
+    const route = useRoute()
+
+    const win = (window as any) as MyWindow
+    const id = computed(() => parseInt(route.params.id as string))
 
     const target = ref<string>('account')
     const query = ref<string>('')
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
+    const client = ref<MegalodonInterface | null>(null)
     const searchTargets = [
       {
         target: 'account',
@@ -53,32 +63,69 @@ export default defineComponent({
         label: i18n.t('search.toot')
       }
     ]
+    const userAgent = computed(() => store.state.App.userAgent)
+    const accounts = ref<Array<Entity.Account>>([])
+    const tags = ref<Array<Entity.Tag>>([])
+    const statuses = ref<Array<Entity.Status>>([])
+
+    onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+
+      client.value = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+    })
+
+    const clear = () => {
+      accounts.value = []
+      tags.value = []
+      statuses.value = []
+    }
 
     const search = () => {
+      clear()
       switch (target.value) {
         case 'account':
-          store.dispatch(`${space}/Account/${ACCOUNT_ACTION.SEARCH}`, query.value).catch(() => {
-            ElMessage({
-              message: i18n.t('message.search_error'),
-              type: 'error'
+          client.value
+            ?.searchAccount(query.value, { resolve: true })
+            .then(res => {
+              accounts.value = res.data
             })
-          })
+            .catch(err => {
+              console.error(err)
+              ElMessage({
+                message: i18n.t('message.search_error'),
+                type: 'error'
+              })
+            })
           break
         case 'tag':
-          store.dispatch(`${space}/Tag/${TAG_ACTION.SEARCH}`, `#${query.value}`).catch(() => {
-            ElMessage({
-              message: i18n.t('message.search_error'),
-              type: 'error'
+          client.value
+            ?.search(`#${query.value}`, 'hashtags', { resolve: true })
+            .then(res => {
+              tags.value = res.data.hashtags
             })
-          })
+            .catch(err => {
+              console.error(err)
+              ElMessage({
+                message: i18n.t('message.search_error'),
+                type: 'error'
+              })
+            })
           break
         case 'toot':
-          store.dispatch(`${space}/Toots/${TOOTS_ACTION.SEARCH}`, query.value).catch(() => {
-            ElMessage({
-              message: i18n.t('message.search_error'),
-              type: 'error'
+          client.value
+            ?.search(query.value, 'statuses', { resolve: true })
+            .then(res => {
+              statuses.value = res.data.statuses
             })
-          })
+            .catch(err => {
+              console.error(err)
+              ElMessage({
+                message: i18n.t('message.search_error'),
+                type: 'error'
+              })
+            })
           break
         default:
           break
@@ -89,7 +136,10 @@ export default defineComponent({
       target,
       searchTargets,
       query,
-      search
+      search,
+      accounts,
+      tags,
+      statuses
     }
   }
 })

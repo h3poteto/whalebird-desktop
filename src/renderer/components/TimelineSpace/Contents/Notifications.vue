@@ -17,8 +17,8 @@
               :filters="filters"
               :account="account.account"
               :server="account.server"
-              v-on:update="updateToot"
-              @selectNotification="focusNotification(item)"
+              @update="updateToot"
+              @select-notification="focusNotification(item)"
             >
             </notification>
           </DynamicScrollerItem>
@@ -180,10 +180,7 @@ export default defineComponent({
           }, 500)
         })
     }
-    const upper = () => {
-      scroller.value.scrollToItem(0)
-      focusedId.value = null
-    }
+
     const focusNext = () => {
       if (currentFocusedIndex.value === -1) {
         focusedId.value = notifications.value[0].id
@@ -213,9 +210,8 @@ export default defineComponent({
       focusNext,
       focusPrev,
       focusNotification,
-      heading,
-      upper,
-      account
+      account,
+      scroller
     }
   }
 })

@@ -1,6 +1,7 @@
 <template>
   <div name="tag" class="tag-timeline">
-    <DynamicScroller :items="timeline" :min-item-size="86" id="scroller" class="scroller" ref="scroller">
+    <div style="width: 100%; height: 120px" v-loading="loading" :element-loading-background="backgroundColor" v-if="loading" />
+    <DynamicScroller :items="statuses" :min-item-size="86" id="scroller" class="scroller" ref="scroller" v-else>
       <template #default="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.uri]" :data-index="index" :watchData="true">
           <toot
@@ -11,9 +12,9 @@
             :filters="[]"
             :account="account.account"
             :server="account.server"
-            v-on:update="updateToot"
-            v-on:delete="deleteToot"
-            @selectToot="focusToot(item)"
+            @update="updateToot"
+            @delete="deleteToot"
+            @select-toot="focusToot(item)"
           >
           </toot>
         </DynamicScrollerItem>
@@ -27,16 +28,12 @@ import { computed, defineComponent, onBeforeUnmount, onMounted, ref, toRefs, wat
 import { logicAnd } from '@vueuse/math'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
-import { Entity } from 'megalodon'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
-import useReloadable from '@/components/utils/reloadable'
-import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
 import { MUTATION_TYPES as HEADER_MUTATION } from '@/store/TimelineSpace/HeaderMenu'
-import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
-import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Hashtag/Tag'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
 import { MyWindow } from '~/src/types/global'
@@ -46,11 +43,9 @@ export default defineComponent({
   components: { Toot },
   props: ['tag'],
   setup(props) {
-    const space = 'TimelineSpace/Contents/Hashtag/Tag'
     const store = useStore()
     const route = useRoute()
     const i18n = useI18next()
-    const { reloadable } = useReloadable(store, route, i18n)
     const { j, k, Ctrl_r } = useMagicKeys()
 
     const win = (window as any) as MyWindow
@@ -60,34 +55,39 @@ export default defineComponent({
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>(null)
     const lazyLoading = ref(false)
+    const loading = ref(false)
     const heading = ref(true)
     const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
       account: null,
       server: null
     })
+    const client = ref<MegalodonInterface | null>(null)
 
-    const timeline = computed(() => store.state.TimelineSpace.Contents.Hashtag.Tag.timeline)
+    const statuses = ref<Array<Entity.Status>>([])
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
-    const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
+    const currentFocusedIndex = computed(() => statuses.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
     const shortcutEnabled = computed(() => !modalOpened.value)
+    const userAgent = computed(() => store.state.App.userAgent)
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
       account.account = a
       account.server = s
+      client.value = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
 
-      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
+      loading.value = true
       load(tag.value).finally(() => {
-        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
+        loading.value = false
       })
       document.getElementById('scroller')?.addEventListener('scroll', onScroll)
     })
     watch(tag, (newTag, _oldTag) => {
-      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
+      loading.value = true
       reset()
       load(newTag).finally(() => {
-        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
+        loading.value = false
       })
     })
     watch(startReload, (newVal, oldVal) => {
@@ -106,7 +106,7 @@ export default defineComponent({
     })
     whenever(logicAnd(j, shortcutEnabled), () => {
       if (focusedId.value === null) {
-        focusedId.value = timeline.value[0].uri + timeline.value[0].id
+        focusedId.value = statuses.value[0].uri + statuses.value[0].id
       } else {
         focusNext()
       }
@@ -119,24 +119,32 @@ export default defineComponent({
     })
 
     onBeforeUnmount(() => {
-      store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
       reset()
     })
 
     const load = async (tag: string) => {
-      await store.dispatch(`${space}/${ACTION_TYPES.FETCH}`, { tag: tag, account: account.account, server: account.server }).catch(() => {
+      if (!client.value) return
+      try {
+        const res = await client.value.getTagTimeline(tag, { limit: 20 })
+        statuses.value = res.data
+      } catch (err) {
+        console.error(err)
         ElMessage({
           message: i18n.t('message.timeline_fetch_error'),
           type: 'error'
         })
+      }
+      if (!account.account) return
+      win.ipcRenderer.on(`update-tag-streamings-${account.account.id}`, (_, update: Entity.Status) => {
+        statuses.value = [update, ...statuses.value]
       })
-      store.dispatch(`${space}/${ACTION_TYPES.START_STREAMING}`, { tag: tag, account: account.account }).catch(() => {
-        ElMessage({
-          message: i18n.t('message.start_streaming_error'),
-          type: 'error'
-        })
+      win.ipcRenderer.on(`delete-tag-streamings-${account.account.id}`, (_, id: string) => {
+        deleteToot(id)
       })
-      return true
+      win.ipcRenderer.send('start-tag-streaming', {
+        tag: encodeURIComponent(tag),
+        accountId: account.account.id
+      })
     }
     const reset = () => {
       heading.value = true
@@ -152,13 +160,12 @@ export default defineComponent({
           document.getElementById('scroller')!.scrollHeight - 10 &&
         !lazyLoading.value
       ) {
+        const lastStatus = statuses.value[statuses.value.length - 1]
         lazyLoading.value = true
-        store
-          .dispatch(`${space}/${ACTION_TYPES.LAZY_FETCH_TIMELINE}`, {
-            tag: tag.value,
-            status: timeline.value[timeline.value.length - 1],
-            account: account.account,
-            server: account.server
+        client.value
+          ?.getTagTimeline(tag.value, { max_id: lastStatus.id, limit: 20 })
+          .then(res => {
+            statuses.value = [...statuses.value, ...res.data]
           })
           .catch(() => {
             ElMessage({
@@ -177,49 +184,47 @@ export default defineComponent({
         heading.value = true
       }
     }
-    const updateToot = (toot: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.UPDATE_TOOT}`, toot)
+    const updateToot = (message: Entity.Status) => {
+      statuses.value = statuses.value.map(status => {
+        if (status.id === message.id) {
+          return message
+        } else if (status.reblog && status.reblog.id === message.id) {
+          return Object.assign(status, {
+            reblog: message
+          })
+        }
+        return status
+      })
     }
-    const deleteToot = (toot: Entity.Status) => {
-      store.commit(`${space}/${MUTATION_TYPES.DELETE_TOOT}`, toot.id)
+    const deleteToot = (id: string) => {
+      statuses.value = statuses.value.filter(status => {
+        if (status.reblog !== null && status.reblog.id === id) {
+          return false
+        } else {
+          return status.id !== id
+        }
+      })
     }
     const reload = async () => {
-      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
+      loading.value = true
       try {
-        await reloadable()
-        await store.dispatch(`${space}/${ACTION_TYPES.STOP_STREAMING}`)
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH}`, tag.value).catch(() => {
-          ElMessage({
-            message: i18n.t('message.timeline_fetch_error'),
-            type: 'error'
-          })
-        })
-        store.dispatch(`${space}/${ACTION_TYPES.START_STREAMING}`, tag.value).catch(() => {
-          ElMessage({
-            message: i18n.t('message.start_streaming_error'),
-            type: 'error'
-          })
-        })
+        await load(tag.value)
       } finally {
-        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
+        loading.value = false
       }
-    }
-    const upper = () => {
-      scroller.value.scrollToItem(0)
-      focusedId.value = null
     }
     const focusNext = () => {
       if (currentFocusedIndex.value === -1) {
-        focusedId.value = timeline.value[0].uri + timeline.value[0].id
-      } else if (currentFocusedIndex.value < timeline.value.length) {
-        focusedId.value = timeline.value[currentFocusedIndex.value + 1].uri + timeline.value[currentFocusedIndex.value + 1].id
+        focusedId.value = statuses.value[0].uri + statuses.value[0].id
+      } else if (currentFocusedIndex.value < statuses.value.length) {
+        focusedId.value = statuses.value[currentFocusedIndex.value + 1].uri + statuses.value[currentFocusedIndex.value + 1].id
       }
     }
     const focusPrev = () => {
       if (currentFocusedIndex.value === 0) {
         focusedId.value = null
       } else if (currentFocusedIndex.value > 0) {
-        focusedId.value = timeline.value[currentFocusedIndex.value - 1].uri + timeline.value[currentFocusedIndex.value - 1].id
+        focusedId.value = statuses.value[currentFocusedIndex.value - 1].uri + statuses.value[currentFocusedIndex.value - 1].id
       }
     }
     const focusToot = (message: Entity.Status) => {
@@ -227,7 +232,7 @@ export default defineComponent({
     }
 
     return {
-      timeline,
+      statuses,
       scroller,
       focusedId,
       modalOpened,
@@ -235,8 +240,9 @@ export default defineComponent({
       deleteToot,
       focusToot,
       heading,
-      upper,
-      account
+      account,
+      loading,
+      backgroundColor
     }
   }
 })

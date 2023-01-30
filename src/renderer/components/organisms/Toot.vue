@@ -633,8 +633,8 @@ export default defineComponent({
     const deleteToot = (message: Entity.Status) => {
       client.value
         ?.deleteStatus(message.id)
-        .then(message => {
-          ctx.emit('delete', message)
+        .then(() => {
+          ctx.emit('delete', message.id)
         })
         .catch(() => {
           ElMessage({

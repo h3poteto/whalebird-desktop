@@ -2,7 +2,7 @@
   <div id="list">
     <table class="tag-list">
       <tbody>
-        <tr v-for="tag in tags" v-bind:key="tag._id" @click.stop.prevent="openTimeline(tag.tagName)">
+        <tr v-for="tag in tags" :key="tag._id" @click.stop.prevent="openTimeline(tag.tagName)">
           <td>
             {{ tag.tagName }}
           </td>
@@ -18,31 +18,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue'
+import { defineComponent, computed, onMounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useStore } from '@/store'
-import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/Hashtag/List'
 import { LocalTag } from '~/src/types/localTag'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'list',
   setup() {
-    const space = 'TimelineSpace/Contents/Hashtag/List'
-    const store = useStore()
     const route = useRoute()
     const router = useRouter()
-    const tags = computed(() => store.state.TimelineSpace.Contents.Hashtag.List.tags)
+    const win = (window as any) as MyWindow
+    const id = computed(() => parseInt(route.params.id as string))
+    const tags = ref<Array<LocalTag>>([])
 
-    onMounted(() => {
-      store.dispatch(`${space}/${ACTION_TYPES.LIST_TAGS}`)
+    onMounted(async () => {
+      tags.value = await win.ipcRenderer.invoke('list-hashtags', id.value)
     })
     const openTimeline = (tagName: string) => {
       router.push({
         path: `/${route.params.id}/hashtag/${tagName}`
       })
     }
-    const deleteTag = (tag: LocalTag) => {
-      store.dispatch(`${space}/${ACTION_TYPES.REMOVE_TAG}`, tag)
+    const deleteTag = async (tag: LocalTag) => {
+      await win.ipcRenderer.invoke('remove-hashtag', tag)
+      tags.value = await win.ipcRenderer.invoke('list-hashtags', id.value)
     }
 
     return {

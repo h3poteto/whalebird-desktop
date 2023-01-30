@@ -41,7 +41,6 @@ import { useI18next } from 'vue3-i18next'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/AddListMember'
-import { ACTION_TYPES as LIST_ACTION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Edit'
 
 export default defineComponent({
   name: 'add-list-member',
@@ -55,7 +54,6 @@ export default defineComponent({
 
     const loadingBackground = computed(() => store.state.App.theme.wrapper_mask_color)
     const accounts = computed(() => store.state.TimelineSpace.Modals.AddListMember.accounts)
-    const listId = computed(() => store.state.TimelineSpace.Modals.AddListMember.targetListId)
     const addListMemberModal = computed({
       get: () => store.state.TimelineSpace.Modals.AddListMember.modalOpen,
       set: (value: boolean) => store.dispatch(`${space}/${ACTION_TYPES.CHANGE_MODAL}`, value)
@@ -80,7 +78,6 @@ export default defineComponent({
         .dispatch(`${space}/${ACTION_TYPES.ADD}`, account)
         .then(() => {
           store.dispatch(`${space}/${ACTION_TYPES.CHANGE_MODAL}`, false)
-          store.dispatch(`TimelineSpace/Contents/Lists/Edit/${LIST_ACTION_TYPES.FETCH_MEMBERS}`, listId.value)
         })
         .catch(() => {
           ElMessage({

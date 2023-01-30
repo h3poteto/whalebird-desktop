@@ -1,14 +1,7 @@
 import Home, { HomeState } from './Contents/Home'
 import Notifications, { NotificationsState } from './Contents/Notifications'
-import Favourites, { FavouritesState } from './Contents/Favourites'
-import Bookmarks, { BookmarksState } from './Contents/Bookmarks'
 import Local, { LocalState } from './Contents/Local'
-import Public, { PublicState } from './Contents/Public'
-import Search, { SearchModuleState } from './Contents/Search'
-import Lists, { ListsModuleState } from './Contents/Lists'
-import Hashtag, { HashtagModuleState } from './Contents/Hashtag'
 import DirectMessages, { DirectMessagesState } from './Contents/DirectMessages'
-import FollowRequests, { FollowRequestsState } from './Contents/FollowRequests'
 import { Module, MutationTree, ActionTree } from 'vuex'
 import { RootState } from '@/store'
 
@@ -20,14 +13,7 @@ type ContentsModule = {
   Home: HomeState
   Notifications: NotificationsState
   DirectMessages: DirectMessagesState
-  Favourites: FavouritesState
-  Bookmarks: BookmarksState
   Local: LocalState
-  Public: PublicState
-  Search: SearchModuleState
-  Hashtag: HashtagModuleState
-  FollowRequests: FollowRequestsState
-  Lists: ListsModuleState
 }
 
 export type ContentsModuleState = ContentsModule & ContentsState
@@ -62,15 +48,8 @@ const Contents: Module<ContentsState, RootState> = {
   modules: {
     Home,
     Notifications,
-    Favourites,
-    Bookmarks,
     Local,
-    DirectMessages,
-    Public,
-    Search,
-    Lists,
-    Hashtag,
-    FollowRequests
+    DirectMessages
   },
   mutations: mutations,
   actions: actions

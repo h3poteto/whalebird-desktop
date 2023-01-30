@@ -1,6 +1,7 @@
 <template>
   <div id="lists">
-    <div class="new-list" v-loading="creating" :element-loading-background="loadingBackground">
+    <div style="width: 100%; height: 120px" v-loading="loading" :element-loading-background="backgroundColor" v-if="loading" />
+    <div class="new-list" v-else>
       <el-form :inline="true">
         <input v-model="title" :placeholder="$t('lists.index.new_list')" class="list-title" />
         <el-button link class="create" @click="createList">
@@ -25,61 +26,78 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Entity } from 'megalodon'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useI18next } from 'vue3-i18next'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
-import { MUTATION_TYPES as TIMELINE_MUTATION } from '@/store/TimelineSpace'
-import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Index'
-import { ACTION_TYPES as SIDE_MENU_ACTION } from '@/store/TimelineSpace/SideMenu'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'lists',
   setup() {
-    const space = 'TimelineSpace/Contents/Lists/Index'
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
     const i18n = useI18next()
 
     const title = ref<string>('')
-    const creating = ref<boolean>(false)
+    const loading = ref<boolean>(false)
 
-    const lists = computed(() => store.state.TimelineSpace.Contents.Lists.Index.lists)
-    const loadingBackground = computed(() => store.state.App.theme.wrapper_mask_color)
+    const lists = ref<Array<Entity.List>>([])
+    const backgroundColor = computed(() => store.state.App.theme.background_color)
+    const userAgent = computed(() => store.state.App.userAgent)
+
+    const win = (window as any) as MyWindow
     const id = computed(() => route.params.id)
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
+    const client = ref<MegalodonInterface | null>(null)
 
-    onMounted(() => {
-      store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, true)
-      fetch().finally(() => {
-        store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)
-      })
+    onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+
+      client.value = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+      loading.value = true
+      await load().finally(() => (loading.value = false))
     })
 
-    const fetch = async () => {
-      return store.dispatch(`${space}/${ACTION_TYPES.FETCH_LISTS}`).catch(() => {
+    const load = async () => {
+      if (!client.value) return
+      try {
+        const res = await client.value.getLists()
+        lists.value = res.data
+      } catch (err) {
+        console.error(err)
         ElMessage({
           message: i18n.t('message.lists_fetch_error'),
           type: 'error'
         })
-      })
+      }
     }
+
     const createList = async () => {
-      creating.value = true
+      if (!client.value) return
+      loading.value = true
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.CREATE_LIST}`, title.value)
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_LISTS}`)
+        await client.value.createList(title.value)
+        await load()
       } catch (err) {
+        console.error(err)
         ElMessage({
           message: i18n.t('message.list_create_error'),
           type: 'error'
         })
       } finally {
-        creating.value = false
+        loading.value = false
       }
-      await store.dispatch(`TimelineSpace/SideMenu/${SIDE_MENU_ACTION.FETCH_LISTS}`)
     }
     const edit = (list: Entity.List) => {
       return router.push(`/${id.value}/lists/${list.id}/edit`)
@@ -89,19 +107,19 @@ export default defineComponent({
         confirmButtonText: i18n.t('lists.index.delete.confirm.ok'),
         cancelButtonText: i18n.t('lists.index.delete.confirm.cancel'),
         type: 'warning'
+      }).then(async () => {
+        if (!client.value) return
+        await client.value.deleteList(list.id)
+        await load()
       })
-        .then(() => {
-          store.dispatch(`${space}/${ACTION_TYPES.DELETE_LIST}`, list)
-        })
-        .catch(() => {})
     }
 
     return {
       id,
-      creating,
+      loading,
       title,
       lists,
-      loadingBackground,
+      backgroundColor,
       createList,
       edit,
       del

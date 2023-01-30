@@ -12,18 +12,20 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, toRefs } from 'vue'
+import { computed, defineComponent, onMounted, toRefs, ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
-import { Entity } from 'megalodon'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useStore } from '@/store'
 import User from '@/components/molecules/User.vue'
-import { MUTATION_TYPES as CONTENTS_MUTATION } from '@/store/TimelineSpace/Contents'
-import { ACTION_TYPES } from '@/store/TimelineSpace/Contents/Lists/Edit'
 import {
   MUTATION_TYPES as ADD_LIST_MEMBER_MUTATION,
   ACTION_TYPES as ADD_LIST_MEMBER_ACTION
 } from '@/store/TimelineSpace/Modals/AddListMember'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'edit-list',
@@ -31,43 +33,55 @@ export default defineComponent({
   components: { User },
   setup(props) {
     const { list_id } = toRefs(props)
-    const space = 'TimelineSpace/Contents/Lists/Edit'
     const store = useStore()
+    const route = useRoute()
     const i18n = useI18next()
 
-    const members = computed(() => store.state.TimelineSpace.Contents.Lists.Edit.members)
+    const win = (window as any) as MyWindow
+    const id = computed(() => parseInt(route.params.id as string))
+
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
+    const client = ref<MegalodonInterface | null>(null)
+
+    const members = ref<Array<Entity.Account>>([])
+    const userAgent = computed(() => store.state.App.userAgent)
 
     onMounted(async () => {
-      await init()
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+
+      client.value = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+      await load()
     })
-    const init = async () => {
-      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
+
+    const load = async () => {
+      if (!client.value) return
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_MEMBERS}`, list_id.value)
+        const res = await client.value.getAccountsInList(list_id.value, { limit: 0 })
+        members.value = res.data
       } catch (err) {
+        console.error(err)
         ElMessage({
           message: i18n.t('message.members_fetch_error'),
           type: 'error'
         })
-      } finally {
-        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
       }
     }
+
     const removeAccount = async (account: Entity.Account) => {
-      store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, true)
+      if (!client.value) return
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.REMOVE_ACCOUNT}`, {
-          account: account,
-          listId: list_id.value
-        })
-        await store.dispatch(`${space}/${ACTION_TYPES.FETCH_MEMBERS}`, list_id.value)
+        await client.value.deleteAccountsFromList(list_id.value, [account.id])
+        await load()
       } catch (err) {
         ElMessage({
           message: i18n.t('message.remove_user_error'),
           type: 'error'
         })
-      } finally {
-        store.commit(`TimelineSpace/Contents/${CONTENTS_MUTATION.CHANGE_LOADING}`, false)
       }
     }
     const addAccount = () => {
