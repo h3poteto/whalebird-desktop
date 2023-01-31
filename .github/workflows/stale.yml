@@ -1,7 +1,7 @@
 name: Stale
 on:
   schedule:
-    - cron: '35 * * * *'
+    - cron: '35 9 * * *'
 
 permissions:
   # contents: write # only for delete-branch option
