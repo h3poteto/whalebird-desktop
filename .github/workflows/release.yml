@@ -85,6 +85,7 @@ jobs:
           asset_path: "build/Whalebird-*.shasum"
       - name: Release to WinGet
         uses: vedantmgoyal2009/winget-releaser@v1
+        if: github.event_name == 'release' && github.event.release.prerelease == false
         with:
           identifier: h3poteto.whalebird-desktop
           version: ${{ github.event.release.tag_name }}
