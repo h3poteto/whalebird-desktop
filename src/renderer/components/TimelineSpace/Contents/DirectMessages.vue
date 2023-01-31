@@ -7,7 +7,6 @@
             v-if="account.account && account.server"
             :message="item"
             :focused="item.uri + item.id === focusedId"
-            :overlaid="modalOpened"
             :filters="[]"
             :account="account.account"
             :server="account.server"
@@ -159,7 +158,6 @@ export default defineComponent({
       timeline,
       scroller,
       focusedId,
-      modalOpened,
       updateToot,
       deleteToot,
       focusToot,

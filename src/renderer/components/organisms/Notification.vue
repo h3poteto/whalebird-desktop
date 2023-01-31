@@ -5,7 +5,6 @@
       :message="message"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       reaction-type="favourite"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
@@ -15,7 +14,6 @@
       v-else-if="message.type === 'follow'"
       :message="message"
       :focused="focused"
-      :overlaid="overlaid"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -24,7 +22,6 @@
       v-else-if="message.type === 'follow_request'"
       :message="message"
       :focused="focused"
-      :overlaid="overlaid"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
     >
@@ -34,7 +31,6 @@
       :message="message"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       :account="account"
       :server="server"
       @update="updateToot"
@@ -48,7 +44,6 @@
       :message="message"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       reaction-type="quote"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
@@ -59,7 +54,6 @@
       :message="message"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       reaction-type="reblog"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
@@ -70,7 +64,6 @@
       :message="message"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       :account="account"
       :server="server"
       @focus-right="$emit('focusRight')"
@@ -82,7 +75,6 @@
       :message="message"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       reaction-type="poll-vote"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
@@ -93,7 +85,6 @@
       :message="message"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       reaction-type="poll-expired"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
@@ -104,7 +95,6 @@
       :message="message"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       reaction-type="emoji-reaction"
       @focus-right="$emit('focusRight')"
       @select="$emit('selectNotification')"
@@ -143,10 +133,6 @@ export default defineComponent({
       default: () => []
     },
     focused: {
-      type: Boolean,
-      default: () => false
-    },
-    overlaid: {
       type: Boolean,
       default: () => false
     },

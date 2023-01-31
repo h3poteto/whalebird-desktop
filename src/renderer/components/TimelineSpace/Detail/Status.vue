@@ -4,7 +4,6 @@
       <Toot
         v-if="account.account && account.server"
         :message="mes"
-        :overlaid="modalOpened"
         :account="account.account"
         :server="account.server"
         @update="updateStatus"
@@ -14,7 +13,6 @@
       <Toot
         v-if="status !== null && account.account && account.server"
         :message="status"
-        :overlaid="modalOpened"
         :account="account.account"
         :server="account.server"
         @update="updateStatus"
@@ -24,7 +22,6 @@
       <Toot
         v-if="account.account && account.server"
         :message="mes"
-        :overlaid="modalOpened"
         :account="account.account"
         :server="account.server"
         @update="updateStatus"
@@ -62,7 +59,6 @@ export default defineComponent({
       account: null,
       server: null
     })
-    const modalOpened = computed(() => store.getters[`TimelineSpace/Modals/modalOpened`])
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
@@ -112,8 +108,7 @@ export default defineComponent({
       status,
       ancestors,
       descendants,
-      updateStatus,
-      modalOpened
+      updateStatus
     }
   }
 })
