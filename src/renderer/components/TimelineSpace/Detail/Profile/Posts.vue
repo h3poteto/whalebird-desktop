@@ -6,7 +6,6 @@
           v-if="account && server"
           :message="item"
           :focused="item.uri + item.id === focusedId"
-          :overlaid="modalOpened"
           :account="account"
           :server="server"
           @update="updateToot"
@@ -52,7 +51,6 @@ export default defineComponent({
     const focusedId = ref<string | null>(null)
 
     const userAgent = computed(() => store.state.App.userAgent)
-    const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
 
     onMounted(async () => {
       client.value = generator(server.value.sns, server.value.baseURL, account.value.accessToken, userAgent.value)
@@ -86,7 +84,6 @@ export default defineComponent({
 
     return {
       statuses,
-      modalOpened,
       updateToot,
       deleteToot,
       focusedId,

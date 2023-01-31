@@ -130,10 +130,6 @@ export default defineComponent({
     focused: {
       type: Boolean,
       default: false
-    },
-    overlaid: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['select'],
@@ -152,7 +148,6 @@ export default defineComponent({
     const timeFormat = computed(() => store.state.App.timeFormat)
     const language = computed(() => store.state.App.language)
     const hideAllAttachments = computed(() => store.state.App.hideAllAttachments)
-    // const shortcutEnabled = computed(() => focused.value && !overlaid.value)
     const timestamp = computed(() => parseDatetime(message.value.created_at, timeFormat.value, language.value))
     const readableTimestamp = computed(() => {
       moment.locale(language.value)

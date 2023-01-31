@@ -25,7 +25,6 @@
       :message="message.status"
       :filters="filters"
       :focused="focused"
-      :overlaid="overlaid"
       :account="account"
       :server="server"
       v-on:update="updateToot"
@@ -61,10 +60,6 @@ export default defineComponent({
       default: []
     },
     focused: {
-      type: Boolean,
-      default: false
-    },
-    overlaid: {
       type: Boolean,
       default: false
     },

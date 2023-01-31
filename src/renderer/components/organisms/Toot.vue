@@ -232,7 +232,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, computed, toRefs, watch, nextTick, onMounted } from 'vue'
 import { logicAnd } from '@vueuse/math'
-import { useMagicKeys, whenever } from '@vueuse/core'
+import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
 import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
@@ -284,10 +284,6 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    overlaid: {
-      type: Boolean,
-      default: false
-    },
     pinned: {
       type: Boolean,
       default: false
@@ -312,8 +308,9 @@ export default defineComponent({
     const router = useRouter()
     const i18n = useI18next()
     const win = (window as any) as MyWindow
-    const { focused, overlaid, message, filters, account, server } = toRefs(props)
+    const { focused, message, filters, account, server } = toRefs(props)
     const { r, b, f, o, p, i, x } = useMagicKeys()
+    const activeElement = useActiveElement()
 
     const statusRef = ref<any>(null)
     const showContent = ref(store.state.App.ignoreCW)
@@ -327,7 +324,10 @@ export default defineComponent({
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
     const timeFormat = computed(() => store.state.App.timeFormat)
     const language = computed(() => store.state.App.language)
-    const shortcutEnabled = computed(() => focused.value && !overlaid.value)
+    const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
+    const shortcutEnabled = computed(
+      () => focused.value && activeElement.value?.tagName !== 'INPUT' && activeElement.value?.tagName !== 'TEXTAREA' && !modalOpened.value
+    )
     const originalMessage = computed(() => {
       if (message.value.reblog && !message.value.quote) {
         return message.value.reblog

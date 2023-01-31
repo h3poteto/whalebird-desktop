@@ -48,10 +48,6 @@ export default defineComponent({
     focused: {
       type: Boolean,
       default: false
-    },
-    overlaid: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['select'],
@@ -61,7 +57,6 @@ export default defineComponent({
     const router = useRouter()
     const notificationRef = ref<any>(null)
 
-    // const shortcutEnabled = computed(() => focused.value && !overlaid.value)
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
 
     watch(focused, (newVal, oldVal) => {
