@@ -106,7 +106,7 @@
     "sqlite3": "^5.1.4",
     "system-font-families": "^0.6.0",
     "unicode-emoji-json": "^0.4.0",
-    "vue": "^3.2.45",
+    "vue": "^3.2.47",
     "vue-popperjs": "^2.3.0",
     "vue-resize": "^2.0.0-alpha.1",
     "vue-router": "^4.1.6",
