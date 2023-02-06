@@ -8,38 +8,16 @@
       <el-button v-show="reloadable()" link class="action" :title="$t('header_menu.reload')" @click="reload">
         <font-awesome-icon icon="rotate" />
       </el-button>
-      <el-popover v-if="TLOption()" placement="left-start" width="180" popper-class="theme-popover" trigger="click">
-        <div>
-          <el-form role="form" label-position="left" label-width="125px" size="default">
-            <el-form-item for="show-reblogs" :label="$t('header_menu.option.show_reblogs')">
-              <el-checkbox id="show-reblogs" v-model="showReblogs"></el-checkbox>
-            </el-form-item>
-            <el-form-item for="show-replies" :label="$t('header_menu.option.show_replies')">
-              <el-checkbox id="show-replies" v-model="showReplies"></el-checkbox>
-            </el-form-item>
-            <el-button type="primary" @click="applyTLOption">{{ $t('header_menu.option.apply') }}</el-button>
-          </el-form>
-        </div>
-        <template #reference>
-          <el-button link class="action" :title="$t('header_menu.option.title')">
-            <font-awesome-icon icon="sliders" />
-          </el-button>
-        </template>
-      </el-popover>
-      <el-button class="action" link :title="$t('header_menu.settings')" @click="settings">
-        <font-awesome-icon icon="gear" />
-      </el-button>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { defineComponent, computed, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useI18next } from 'vue3-i18next'
 import { useStore } from '@/store'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/HeaderMenu'
-import { MUTATION_TYPES as HOME_MUTATION } from '@/store/TimelineSpace/Contents/Home'
 
 export default defineComponent({
   name: 'header-menu',
@@ -47,26 +25,19 @@ export default defineComponent({
     const space = 'TimelineSpace/HeaderMenu'
     const store = useStore()
     const route = useRoute()
-    const router = useRouter()
     const i18n = useI18next()
-
-    const showReblogs = ref<boolean>(true)
-    const showReplies = ref<boolean>(true)
 
     const title = computed(() => store.state.TimelineSpace.HeaderMenu.title)
     const loading = computed(() => store.state.TimelineSpace.HeaderMenu.loading)
-    const id = computed(() => route.params.id)
 
     onMounted(() => {
       channelName()
-      loadTLOption()
       store.dispatch(`${space}/${ACTION_TYPES.SETUP_LOADING}`)
     })
     watch(
       () => route.name,
       () => {
         channelName()
-        loadTLOption()
       }
     )
     const channelName = () => {
@@ -143,49 +114,12 @@ export default defineComponent({
           return false
       }
     }
-    const loadTLOption = () => {
-      switch (route.name) {
-        case 'home':
-          showReblogs.value = store.state.TimelineSpace.Contents.Home.showReblogs
-          showReplies.value = store.state.TimelineSpace.Contents.Home.showReplies
-          break
-        default:
-          break
-      }
-    }
-    const applyTLOption = () => {
-      switch (route.name) {
-        case 'home':
-          store.commit(`TimelineSpace/Contents/Home/${HOME_MUTATION.SHOW_REBLOGS}`, showReblogs.value)
-          store.commit(`TimelineSpace/Contents/Home/${HOME_MUTATION.SHOW_REPLIES}`, showReplies.value)
-          break
-        default:
-          break
-      }
-    }
-    const TLOption = () => {
-      switch (route.name) {
-        case 'home':
-          return true
-        default:
-          return false
-      }
-    }
-    const settings = () => {
-      const url = `/${id.value}/settings`
-      router.push(url)
-    }
 
     return {
       title,
       loading,
       reloadable,
-      reload,
-      TLOption,
-      showReblogs,
-      showReplies,
-      applyTLOption,
-      settings
+      reload
     }
   }
 })
