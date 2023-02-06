@@ -5,9 +5,6 @@
     </div>
     <div class="tools">
       <img src="../../assets/images/loading-spinner-wide.svg" v-show="loading" class="header-loading" />
-      <el-button class="action" link :title="$t('header_menu.new_toot')" @click="openNewTootModal">
-        <font-awesome-icon :icon="['far', 'pen-to-square']" />
-      </el-button>
       <el-button v-show="reloadable()" link class="action" :title="$t('header_menu.reload')" @click="reload">
         <font-awesome-icon icon="rotate" />
       </el-button>
@@ -42,7 +39,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18next } from 'vue3-i18next'
 import { useStore } from '@/store'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/HeaderMenu'
-import { ACTION_TYPES as NEW_TOOT_ACTION } from '@/store/TimelineSpace/Modals/NewToot'
 import { MUTATION_TYPES as HOME_MUTATION } from '@/store/TimelineSpace/Contents/Home'
 
 export default defineComponent({
@@ -123,9 +119,7 @@ export default defineComponent({
           break
       }
     }
-    const openNewTootModal = () => {
-      store.dispatch(`TimelineSpace/Modals/NewToot/${NEW_TOOT_ACTION.OPEN_MODAL}`)
-    }
+
     const reload = () => {
       switch (route.name) {
         case 'favourites':
@@ -185,7 +179,6 @@ export default defineComponent({
     return {
       title,
       loading,
-      openNewTootModal,
       reloadable,
       reload,
       TLOption,

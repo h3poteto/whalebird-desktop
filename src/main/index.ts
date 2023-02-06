@@ -950,18 +950,6 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
       ]
     },
     {
-      label: i18n.t<string>('main_menu.toot.name'),
-      submenu: [
-        {
-          label: i18n.t<string>('main_menu.toot.new'),
-          accelerator: 'CmdOrCtrl+N',
-          click: () => {
-            mainWindow!.webContents.send('CmdOrCtrl+N')
-          }
-        }
-      ]
-    },
-    {
       label: i18n.t<string>('main_menu.edit.name'),
       submenu: [
         {

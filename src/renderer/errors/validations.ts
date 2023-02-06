@@ -1,5 +1,3 @@
-export class NewTootModalOpen extends Error {}
-
 export class NewTootBlockSubmit extends Error {}
 
 export class NewTootTootLength extends Error {}
