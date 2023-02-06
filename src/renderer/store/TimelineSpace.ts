@@ -121,10 +121,7 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
   // -----------------------------------------------
   // Shortcuts
   // -----------------------------------------------
-  [ACTION_TYPES.WATCH_SHORTCUT_EVENTS]: ({ commit, dispatch, rootGetters }) => {
-    win.ipcRenderer.on('CmdOrCtrl+N', () => {
-      dispatch('TimelineSpace/Modals/NewToot/openModal', {}, { root: true })
-    })
+  [ACTION_TYPES.WATCH_SHORTCUT_EVENTS]: ({ commit, rootGetters }) => {
     win.ipcRenderer.on('CmdOrCtrl+K', () => {
       commit('TimelineSpace/Modals/Jump/changeModal', true, { root: true })
     })

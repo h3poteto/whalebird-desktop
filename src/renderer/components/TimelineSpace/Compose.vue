@@ -96,22 +96,25 @@
         </div>
       </div>
     </el-form>
+    <receive-drop v-if="droppableVisible"></receive-drop>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, ref, onMounted, watch } from 'vue'
+import { defineComponent, reactive, computed, ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import emojiDefault from 'emoji-mart-vue-fast/data/all.json'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
 import { useI18next } from 'vue3-i18next'
+import { ElMessage } from 'element-plus'
 import { useStore } from '@/store'
 import { MyWindow } from '~/src/types/global'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
 import visibilityList from '~/src/constants/visibility'
 import { MUTATION_TYPES } from '@/store/TimelineSpace/Compose'
+import ReceiveDrop from './ReceiveDrop.vue'
 
 type Expire = {
   label: string
@@ -120,7 +123,7 @@ type Expire = {
 
 export default defineComponent({
   name: 'Compose',
-  components: { Picker },
+  components: { Picker, ReceiveDrop },
   setup() {
     const route = useRoute()
     const store = useStore()
@@ -196,6 +199,9 @@ export default defineComponent({
     const imageRef = ref<any>(null)
     const statusRef = ref<any>(null)
 
+    const dropTarget = ref<any>(null)
+    const droppableVisible = ref<boolean>(false)
+
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
       const c = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
@@ -221,6 +227,17 @@ export default defineComponent({
           imageUrl: e.image
         }))
       emojiData.value = new EmojiIndex(emojiDefault, { custom: customEmojis })
+      ;(window as any).addEventListener('dragenter', onDragEnter)
+      ;(window as any).addEventListener('dragleave', onDragLeave)
+      ;(window as any).addEventListener('dragover', onDragOver)
+      ;(window as any).addEventListener('drop', handleDrop)
+    })
+
+    onBeforeUnmount(() => {
+      ;(window as any).removeEventListener('dragenter', onDragEnter)
+      ;(window as any).removeEventListener('dragleave', onDragLeave)
+      ;(window as any).removeEventListener('dragover', onDragOver)
+      ;(window as any).removeEventListener('drop', handleDrop)
     })
 
     watch(inReplyTo, current => {
@@ -349,6 +366,45 @@ export default defineComponent({
       poll.options = poll.options.filter((_, i) => i !== index)
     }
 
+    const handleDrop = (e: DragEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      droppableVisible.value = false
+      if (e.dataTransfer?.files.item(0) === null || e.dataTransfer?.files.item(0) === undefined) {
+        return false
+      }
+      const file = e.dataTransfer?.files.item(0)
+      if (file === null || (!file.type.includes('image') && !file.type.includes('video'))) {
+        ElMessage({
+          message: i18n.t('validation.new_toot.attach_image'),
+          type: 'error'
+        })
+        return false
+      }
+      uploadImage(file).catch(err => {
+        console.error(err)
+        ElMessage({
+          message: i18n.t('message.attach_error'),
+          type: 'error'
+        })
+      })
+      return false
+    }
+    const onDragEnter = (e: DragEvent) => {
+      if (e.dataTransfer && e.dataTransfer.types.indexOf('Files') >= 0) {
+        dropTarget.value = e.target
+        droppableVisible.value = true
+      }
+    }
+    const onDragLeave = (e: DragEvent) => {
+      if (e.target === dropTarget.value) {
+        droppableVisible.value = false
+      }
+    }
+    const onDragOver = (e: DragEvent) => {
+      e.preventDefault()
+    }
+
     return {
       form,
       post,
@@ -371,7 +427,8 @@ export default defineComponent({
       togglePoll,
       expiresList,
       addPollOption,
-      removePollOption
+      removePollOption,
+      droppableVisible
     }
   }
 })

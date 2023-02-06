@@ -458,7 +458,7 @@
     "submit": "Submit"
   },
   "receive_drop": {
-    "drop_message": "Drop to Upload to Mastodon"
+    "drop_message": "Drop to Upload a file"
   },
   "message": {
     "account_load_error": "Failed to load accounts",
