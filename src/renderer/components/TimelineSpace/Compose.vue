@@ -207,8 +207,14 @@ export default defineComponent({
       const c = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
       client.value = c
 
-      const res = await c.getInstanceCustomEmojis()
-      const customEmojis = res.data
+      const credentials = await c.verifyAccountCredentials()
+      if (credentials.data.source) {
+        visibility.value = credentials.data.source.privacy
+        nsfw.value = credentials.data.source.sensitive
+      }
+
+      const emojis = await c.getInstanceCustomEmojis()
+      const customEmojis = emojis.data
         .map(emoji => {
           return {
             name: `:${emoji.shortcode}:`,
