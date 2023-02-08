@@ -92,7 +92,7 @@
           <el-button link size="default" @click="cw = !cw"> CW </el-button>
         </el-button-group>
         <div class="actions-group">
-          <span>500</span>
+          <span>{{ statusChars }}</span>
           <el-button type="primary" @click="post" :loading="loading"> {{ $t('modals.new_toot.toot') }} </el-button>
         </div>
       </div>
@@ -204,6 +204,9 @@ export default defineComponent({
     const dropTarget = ref<any>(null)
     const droppableVisible = ref<boolean>(false)
 
+    const maxStatusChars = ref<number>(500)
+    const statusChars = computed(() => maxStatusChars.value - (form.status.length + form.spoiler.length))
+
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
       const c = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
@@ -213,6 +216,11 @@ export default defineComponent({
       if (credentials.data.source) {
         visibility.value = credentials.data.source.privacy
         nsfw.value = credentials.data.source.sensitive
+      }
+
+      const instance = await c.getInstance()
+      if (instance.data.max_toot_chars) {
+        maxStatusChars.value = instance.data.max_toot_chars
       }
 
       const emojis = await c.getInstanceCustomEmojis()
@@ -442,7 +450,8 @@ export default defineComponent({
       removePollOption,
       droppableVisible,
       inReplyTo,
-      clearReply
+      clearReply,
+      statusChars
     }
   }
 })
