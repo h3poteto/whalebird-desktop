@@ -1,13 +1,9 @@
 import { Module, MutationTree } from 'vuex'
 import { RootState } from '@/store'
-
-export type ReplyTo = {
-  acct: string
-  id: string
-}
+import { Entity } from 'megalodon'
 
 export type ComposeState = {
-  inReplyTo: ReplyTo | null
+  inReplyTo: Entity.Status | null
 }
 
 const state = (): ComposeState => ({
@@ -20,7 +16,7 @@ export const MUTATION_TYPES = {
 }
 
 const mutations: MutationTree<ComposeState> = {
-  [MUTATION_TYPES.SET_REPLY_TO_ID]: (state, inReplyTo: ReplyTo) => {
+  [MUTATION_TYPES.SET_REPLY_TO_ID]: (state, inReplyTo: Entity.Status) => {
     state.inReplyTo = inReplyTo
   },
   [MUTATION_TYPES.CLEAR_REPLY_TO_ID]: state => {

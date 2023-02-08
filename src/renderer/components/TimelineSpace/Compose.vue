@@ -1,5 +1,6 @@
 <template>
   <div class="compose">
+    <Quote v-if="inReplyTo" :message="inReplyTo" @close="clearReply" />
     <el-form :model="form" class="compose-form">
       <el-input v-model="form.spoiler" class="spoiler" :placeholder="$t('modals.new_toot.cw')" v-if="cw" />
       <el-input
@@ -115,6 +116,7 @@ import { LocalServer } from '~/src/types/localServer'
 import visibilityList from '~/src/constants/visibility'
 import { MUTATION_TYPES } from '@/store/TimelineSpace/Compose'
 import ReceiveDrop from './ReceiveDrop.vue'
+import Quote from './Compose/Quote.vue'
 
 type Expire = {
   label: string
@@ -123,7 +125,7 @@ type Expire = {
 
 export default defineComponent({
   name: 'Compose',
-  components: { Picker, ReceiveDrop },
+  components: { Picker, ReceiveDrop, Quote },
   setup() {
     const route = useRoute()
     const store = useStore()
@@ -248,7 +250,7 @@ export default defineComponent({
 
     watch(inReplyTo, current => {
       if (current) {
-        form.status = `@${current.acct} `
+        form.status = `@${current.account.acct} `
       }
     })
 
@@ -411,6 +413,10 @@ export default defineComponent({
       e.preventDefault()
     }
 
+    const clearReply = () => {
+      store.commit(`${space}/${MUTATION_TYPES.CLEAR_REPLY_TO_ID}`)
+    }
+
     return {
       form,
       post,
@@ -434,7 +440,9 @@ export default defineComponent({
       expiresList,
       addPollOption,
       removePollOption,
-      droppableVisible
+      droppableVisible,
+      inReplyTo,
+      clearReply
     }
   }
 })
