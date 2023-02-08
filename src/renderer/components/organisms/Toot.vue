@@ -145,7 +145,7 @@
             >
               <font-awesome-icon icon="bookmark" size="sm" />
             </el-button>
-            <el-button v-if="quoteSupported" link class="quote-btn" @click="openQuote()" disabled>
+            <el-button v-if="quoteSupported" link class="quote-btn" @click="openQuote()">
               <font-awesome-icon icon="quote-right" size="sm" />
             </el-button>
             <template v-if="server!.sns !== 'mastodon'">
@@ -677,7 +677,7 @@ export default defineComponent({
       ctx.emit('update', status)
     }
     const openQuote = () => {
-      // TODO
+      store.commit(`TimelineSpace/Compose/${COMPOSE_MUTATION.SET_QUOTE_TO}`, originalMessage.value)
     }
     const toggleSpoiler = () => {
       showContent.value = !showContent.value

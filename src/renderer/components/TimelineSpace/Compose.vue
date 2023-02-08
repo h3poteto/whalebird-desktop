@@ -1,6 +1,7 @@
 <template>
   <div class="compose">
     <Quote v-if="inReplyTo" :message="inReplyTo" @close="clearReply" />
+    <Quote v-if="quoteTo" :message="quoteTo" @close="clearQuote" />
     <el-form :model="form" class="compose-form">
       <el-input v-model="form.spoiler" class="spoiler" :placeholder="$t('modals.new_toot.cw')" v-if="cw" />
       <el-input
@@ -191,6 +192,7 @@ export default defineComponent({
     const visibility = ref(visibilityList.Public.key)
     const nsfw = ref<boolean>(false)
     const inReplyTo = computed(() => store.state.TimelineSpace.Compose.inReplyTo)
+    const quoteTo = computed(() => store.state.TimelineSpace.Compose.quoteTo)
     const poll = reactive<{ options: Array<string>; expires_in: number }>({
       options: [],
       expires_in: 86400
@@ -289,6 +291,11 @@ export default defineComponent({
         if (inReplyTo.value) {
           options = Object.assign(options, {
             in_reply_to_id: inReplyTo.value?.id
+          })
+        }
+        if (quoteTo.value) {
+          options = Object.assign(options, {
+            quote_id: quoteTo.value?.id
           })
         }
 
@@ -425,6 +432,10 @@ export default defineComponent({
       store.commit(`${space}/${MUTATION_TYPES.CLEAR_REPLY_TO_ID}`)
     }
 
+    const clearQuote = () => {
+      store.commit(`${space}/${MUTATION_TYPES.CLEAR_QUOTE_TO}`)
+    }
+
     return {
       form,
       post,
@@ -450,7 +461,9 @@ export default defineComponent({
       removePollOption,
       droppableVisible,
       inReplyTo,
+      quoteTo,
       clearReply,
+      clearQuote,
       statusChars
     }
   }
