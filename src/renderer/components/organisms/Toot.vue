@@ -504,10 +504,7 @@ export default defineComponent({
       }
     }
     const openReply = () => {
-      store.commit(`TimelineSpace/Compose/${COMPOSE_MUTATION.SET_REPLY_TO_ID}`, {
-        acct: originalMessage.value.account.acct,
-        id: originalMessage.value.id
-      })
+      store.commit(`TimelineSpace/Compose/${COMPOSE_MUTATION.SET_REPLY_TO_ID}`, originalMessage.value)
     }
     const openDetail = (message: Entity.Status | null) => {
       if (message) {
