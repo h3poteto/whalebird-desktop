@@ -90,7 +90,7 @@
       "toot": {
         "title": "Posts",
         "visibility": {
-          "description": "Customize default visibility of post",
+          "description": "Default post visibility",
           "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "Public",
           "unlisted": "Unlisted",
@@ -227,7 +227,7 @@
         "reaction": "Emoji reactions",
         "follow_request": "Follow requests",
         "status": "Status notifications",
-        "poll_vote": "When someone votes in a poll",
+        "poll_vote": "Poll votes",
         "poll_expired": "When a poll expires"
       }
     },
@@ -242,7 +242,7 @@
       "remove_all_associations": "Remove all associations",
       "confirm": "Confirm",
       "cancel": "Cancel",
-      "confirm_message": "Are you sure to remove all associations?"
+      "confirm_message": "Are you sure you want to remove all associations?"
     },
     "network": {
       "title": "Network",
@@ -296,7 +296,7 @@
         "change_visibility": "Change visibility",
         "change_sensitive": "Mark media as sensitive",
         "add_cw": "Add content warnings",
-        "pined_hashtag": "Pin a hashtag"
+        "pined_hashtag": "Pinned hashtag"
       },
       "poll": {
         "add_choice": "Add an option",
@@ -338,13 +338,13 @@
       "k": "Select the previous post",
       "h": "Switch focus to the left column",
       "l": "Switch focus to the right column",
-      "r": "Reply to the post",
-      "b": "Boost the post",
-      "f": "Favorite the post",
-      "o": "Open the post's details",
-      "p": "Display the profile of the post's author",
-      "i": "Open the images",
-      "x": "Expand/hide content warned posts",
+      "r": "Reply to the selected post",
+      "b": "Boost the selected post",
+      "f": "Favorite the selected post",
+      "o": "View the selected post's details",
+      "p": "Display the profile of the selected post's author",
+      "i": "Open the selected post's images",
+      "x": "Show/hide a content warned post",
       "?": "Show this dialog",
       "esc": "Close current page"
     },
@@ -399,8 +399,8 @@
       "detail": "Detail",
       "follow": "Follow this user",
       "unfollow": "Unfollow this user",
-      "subscribe": "Subscribe this user",
-      "unsubscribe": "Unsubscribe this user",
+      "subscribe": "Subscribe to this user",
+      "unsubscribe": "Unsubscribe from this user",
       "follow_requested": "Follow requested",
       "open_in_browser": "Open in browser",
       "manage_list_memberships": "Manage list memberships",
