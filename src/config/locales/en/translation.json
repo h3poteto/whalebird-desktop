@@ -91,7 +91,7 @@
         "title": "Posts",
         "visibility": {
           "description": "Customize default visibility of post",
-          "notice": "This setting applies only to new posts; replies will follow the visibility of the original post.",
+          "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "Public",
           "unlisted": "Unlisted",
           "private": "Private",
@@ -340,7 +340,7 @@
       "l": "Switch focus to the right column",
       "r": "Reply to the post",
       "b": "Boost the post",
-      "f": "Favourite the post",
+      "f": "Favorite the post",
       "o": "Open the post's details",
       "p": "Display the profile of the post's author",
       "i": "Open the images",
@@ -487,8 +487,8 @@
     "find_account_error": "Account not found",
     "reblog_error": "Failed to boost",
     "unreblog_error": "Failed to unboost",
-    "favourite_error": "Failed to favourite",
-    "unfavourite_error": "Failed to unfavourite",
+    "favourite_error": "Failed to favorite",
+    "unfavourite_error": "Failed to unfavorite",
     "bookmark_error": "Failed to bookmark",
     "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Failed to delete the post",
@@ -519,8 +519,8 @@
   },
   "notification": {
     "favourite": {
-      "title": "New favourite",
-      "body": "{{username}} favourited your post"
+      "title": "New favorite",
+      "body": "{{username}} favorited your post"
     },
     "follow": {
       "title": "New follower",
