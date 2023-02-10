@@ -3,12 +3,12 @@
     "application": {
       "name": "Whalebird",
       "about": "Whalebirdi buruz",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "Hobespenak",
+      "shortcuts": "Teklatuaren lasterbideak",
       "services": "Zerbitzuak",
       "hide": "Ezkutatu Whalebird",
-      "hide_others": "Hide others",
-      "show_all": "Show all",
+      "hide_others": "Ezkutatu besteak",
+      "show_all": "Erakutsi guztia",
       "open": "Open window",
       "quit": "Itxi"
     },
