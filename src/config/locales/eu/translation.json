@@ -227,13 +227,13 @@
         "reaction": "Emoji erreakzioak",
         "follow_request": "Jarraipen-eskaerak",
         "status": "Egoera jakinarazpenak",
-        "poll_vote": "Poll votes",
-        "poll_expired": "When a poll expires"
+        "poll_vote": "Inkestaren botoak",
+        "poll_expired": "Bozketa bat amaitzerakoan"
       }
     },
     "account": {
       "title": "Kontua",
-      "connected": "Connected accounts",
+      "connected": "Konektatutako kontuak",
       "username": "Erabiltzaile-izena",
       "domain": "Domeinua",
       "association": "Asoziazioa",
@@ -242,12 +242,12 @@
       "remove_all_associations": "Kendu asoziazio guztiak",
       "confirm": "Baieztatu",
       "cancel": "Utzi",
-      "confirm_message": "Are you sure you want to remove all associations?"
+      "confirm_message": "Ziur zaude asoziazio guztiak kendu nahi dituzula?"
     },
     "network": {
       "title": "Sarea",
       "proxy": {
-        "title": "Proxy configuration",
+        "title": "Proxy ezarpenak",
         "no": "Proxyrik ez",
         "system": "Erabili sistemaren proxya",
         "manual": "Eskuzko proxy konfigurazioa",
@@ -275,21 +275,21 @@
       },
       "spellchecker": {
         "title": "Ortografia-egiaztatzea",
-        "enabled": "Enable spell checker"
+        "enabled": "Gaitu ortografia-egiaztatzailea"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "New post",
+      "title": "Bidalketa berria",
       "cw": "Idatzi abisua hemen",
-      "status": "What's on your mind?",
+      "status": "Zer duzu buruan?",
       "cancel": "Utzi",
       "toot": "Argitaratu",
       "close_confirm": "Ziur zaude bidalketa hau baztertu nahi duzula?",
       "close_confirm_ok": "Bai, baztertu",
       "close_confirm_cancel": "Ez, jarraitu editatzen",
-      "description": "Add alternate text for this media",
+      "description": "Gehitu multimedia honen deskribapena",
       "footer": {
         "add_image": "Gehitu irudiak",
         "poll": "Gehitu inkesta",
@@ -342,7 +342,7 @@
       "b": "Bultzatu hautatutako bidalketa",
       "f": "Egin gogoko hautatutako bidalketa",
       "o": "Ikusi hautatutako bidalketaren xehetasunak",
-      "p": "Display the profile of the selected post's author",
+      "p": "Erakutsi hautatutako bidalketaren autorearen profila",
       "i": "Ikusi hautatutako bidalketaren irudiak",
       "x": "Erakutsi/Ezkutatu edukiari buruzko abisua duen bidalketa",
       "?": "Erakutsi leiho hau",
@@ -383,7 +383,7 @@
       },
       "open_account": {
         "title": "Ez da kontua aurkitu",
-        "text": "Could not find {{account}} on the server. Do you want to open the account in a browser instead?",
+        "text": "Ezin izan da {{account}} kontua zerbitzarian aurkitu. Nabigatzailean ireki nahi al duzu kontu hori?",
         "ok": "Bai, ireki",
         "cancel": "Ez, utzi"
       }
@@ -452,13 +452,13 @@
   },
   "authorize": {
     "manually_1": "Baimena emateko leiho berri bat ireki da nabigatzailean.",
-    "manually_2": "If it has not yet opened, please go to the following URL manually:",
-    "code_label": "Enter your authorization code:",
+    "manually_2": "Automatikoki ireki ez bada, joan ondorengo helbidera:",
+    "code_label": "Sartu baimen-kodea:",
     "misskey_label": "Bidali nabigatzailean baimena eman ondoren.",
     "submit": "Bidali"
   },
   "receive_drop": {
-    "drop_message": "Drop here to attach a file"
+    "drop_message": "Ekarri hona fitxategia eransteko"
   },
   "message": {
     "account_load_error": "Kontuak kargatzeak huts egin du",
@@ -466,7 +466,7 @@
     "preferences_load_error": "Hobespenak kargatzeak huts egin du",
     "timeline_fetch_error": "Denbora-lerroa eskuratzeak huts egin du",
     "notification_fetch_error": "Jakinarazpenak eskuratzeak huts egin du",
-    "favourite_fetch_error": "Failed to fetch favourite",
+    "favourite_fetch_error": "Gogokoak eskuratzeak huts egin du",
     "bookmark_fetch_error": "Laster-markak eskuratzeak huts egin du",
     "follow_request_accept_error": "Eskaera onartzeak huts egin du",
     "follow_request_reject_error": "Eskaera baztertzeak huts egin du",
@@ -475,7 +475,7 @@
     "authorize_error": "Baimentzeak huts egin du",
     "followers_fetch_error": "Jarraitzaileak eskuratzeak huts egin du",
     "follows_fetch_error": "Jarraitzen dituenak eskuratzeak huts egin du",
-    "toot_fetch_error": "Failed to fetch the post details",
+    "toot_fetch_error": "Bidalketaren xehetasunak eskuratzeak huts egin du",
     "follow_error": "Erabiltzailea jarraitzeak huts egin du",
     "unfollow_error": "Erabiltzailea jarraitzeari uzteak huts egin du",
     "subscribe_error": "Erabiltzailera harpidetzeak huts egin du",
@@ -485,22 +485,22 @@
     "members_fetch_error": "Kideak eskuratzeak huts egin du",
     "remove_user_error": "Erabiltzailea kentzeak huts egin du",
     "find_account_error": "Ez da kontua aurkitu",
-    "reblog_error": "Failed to boost",
-    "unreblog_error": "Failed to unboost",
+    "reblog_error": "Bidalketaren bultzadak huts egin du",
+    "unreblog_error": "Bultzada kentzeak huts egin du",
     "favourite_error": "Gogoko egiteak huts egin du",
     "unfavourite_error": "Gogokoetatik kentzeak huts egin du",
     "bookmark_error": "Laster-marka jartzeak huts egin du",
     "unbookmark_error": "Laster-marka kentzeak huts egin du",
-    "delete_error": "Failed to delete the post",
+    "delete_error": "Bidalketa ezabatzeak huts egin du",
     "search_error": "Bilaketak huts egin du",
-    "toot_error": "Failed to create the post",
+    "toot_error": "Bidalketa sortzeak huts egin du",
     "update_list_memberships_error": "Zerrendaren kideen eguneratzeak huts egin du",
     "add_user_error": "Erabiltzailea gehitzeak huts egin du",
     "authorize_url_error": "Baimentzeko URLa eskuratzeak huts egin du",
-    "domain_confirmed": "{{domain}} is confirmed, please log in",
-    "domain_doesnt_exist": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
+    "domain_confirmed": "{{domain}} domeinua baieztatu da; hasi saioa",
+    "domain_doesnt_exist": "{{domain}} domeinuarekin konextioak huts egin du; egiaztatu zerbitzariaren URLa zuzena dela.",
     "loading": "Kargatzen…",
-    "language_not_support_spellchecker_error": "This language is not supported by the spell checker",
+    "language_not_support_spellchecker_error": "Ortografia-egiaztatzailea ezin da hizkuntza honekin erabili",
     "update_filter_error": "Iragazkiaren eguneraketak huts egin du",
     "create_filter_error": "Iragazkiaren sorrerak huts egin du"
   },
@@ -510,7 +510,7 @@
       "domain_format": "Sartu domeinuaren izena soilik"
     },
     "new_toot": {
-      "toot_length": "Post length should be between {{min}} and {{max}}",
+      "toot_length": "Bidalketaren luzera {{min}} eta {{max}} artekoa izan behar da",
       "attach_length": "Irudi bakar {{max}} erantsi dezakezu",
       "attach_length_plural": "{{max}} irudi soilik erantsi ditzakezu",
       "attach_image": "Irudiak edo bideoak soilik erantsi ditzakezu",
@@ -519,16 +519,16 @@
   },
   "notification": {
     "favourite": {
-      "title": "New favourite",
-      "body": "{{username}} favourited your post"
+      "title": "Gogoko berria",
+      "body": "{{username}}(e)k gogoko du zure bidalketa"
     },
     "follow": {
-      "title": "New follower",
+      "title": "Jarraitzaile berria",
       "body": "{{username}} jarraitzen hasi zaizu"
     },
     "follow_request": {
-      "title": "New follow request",
-      "body": "Received a follow request from {{username}}"
+      "title": "Jarraipen-eskaera berria",
+      "body": "{{username}}(e)k jarraitzeko eskaera egin dizu"
     },
     "reblog": {
       "title": "Bultzada berria",
