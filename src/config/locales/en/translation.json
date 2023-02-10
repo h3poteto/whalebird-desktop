@@ -52,7 +52,7 @@
     "notification": "Notifications",
     "direct": "Direct messages",
     "follow_requests": "Follow requests",
-    "favourite": "Favorited",
+    "favourite": "Favourited",
     "bookmark": "Bookmarks",
     "local": "Local timeline",
     "public": "Public timeline",
@@ -63,7 +63,7 @@
   "header_menu": {
     "home": "Home",
     "notification": "Notifications",
-    "favourite": "Favorited",
+    "favourite": "Favourited",
     "bookmark": "Bookmarks",
     "follow_requests": "Follow requests",
     "direct_messages": "Direct messages",
@@ -158,7 +158,7 @@
       "sounds": {
         "title": "Sounds",
         "description": "Play sounds when",
-        "fav_rb": "You favorite or boost a post",
+        "fav_rb": "You favourite or boost a post",
         "toot": "You make a post"
       },
       "timeline": {
@@ -179,7 +179,7 @@
     },
     "appearance": {
       "title": "Appearance",
-      "theme_color": "Theme color",
+      "theme_color": "Colour themes",
       "theme": {
         "system": "System",
         "light": "Light",
@@ -222,7 +222,7 @@
         "description": "Notify me when I receive...",
         "reply": "Replies",
         "reblog": "Boosts",
-        "favourite": "Favorites",
+        "favourite": "Favourites",
         "follow": "New followers",
         "reaction": "Emoji reactions",
         "follow_request": "Follow requests",
@@ -340,7 +340,7 @@
       "l": "Switch focus to the right column",
       "r": "Reply to the selected post",
       "b": "Boost the selected post",
-      "f": "Favorite the selected post",
+      "f": "Favourite the selected post",
       "o": "View the selected post's details",
       "p": "Display the profile of the selected post's author",
       "i": "Open the selected post's images",
@@ -370,7 +370,7 @@
       "via": "via {{application}}",
       "reply": "Reply",
       "reblog": "Boost",
-      "fav": "Favorite",
+      "fav": "Favourite",
       "detail": "Post details",
       "bookmark": "Bookmark",
       "pinned": "Pinned post",
@@ -466,7 +466,7 @@
     "preferences_load_error": "Failed to load preferences",
     "timeline_fetch_error": "Failed to fetch timeline",
     "notification_fetch_error": "Failed to fetch notification",
-    "favourite_fetch_error": "Failed to fetch favorite",
+    "favourite_fetch_error": "Failed to fetch favourite",
     "bookmark_fetch_error": "Failed to fetch bookmarks",
     "follow_request_accept_error": "Failed to accept the request",
     "follow_request_reject_error": "Failed to reject the request",
@@ -487,8 +487,8 @@
     "find_account_error": "Account not found",
     "reblog_error": "Failed to boost",
     "unreblog_error": "Failed to unboost",
-    "favourite_error": "Failed to favorite",
-    "unfavourite_error": "Failed to unfavorite",
+    "favourite_error": "Failed to favourite",
+    "unfavourite_error": "Failed to unfavourite",
     "bookmark_error": "Failed to bookmark",
     "unbookmark_error": "Failed to remove bookmark",
     "delete_error": "Failed to delete the post",
@@ -519,8 +519,8 @@
   },
   "notification": {
     "favourite": {
-      "title": "New favorite",
-      "body": "{{username}} favorited your post"
+      "title": "New favourite",
+      "body": "{{username}} favourited your post"
     },
     "follow": {
       "title": "New follower",
