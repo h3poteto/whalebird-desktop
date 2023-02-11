@@ -3,14 +3,8 @@
     <Quote v-if="inReplyTo" :message="inReplyTo" @close="clearReply" />
     <Quote v-if="quoteTo" :message="quoteTo" @close="clearQuote" />
     <el-form :model="form" class="compose-form">
-      <el-input v-model="form.spoiler" class="spoiler" :placeholder="$t('modals.new_toot.cw')" v-if="cw" />
-      <el-input
-        v-model="form.status"
-        type="textarea"
-        :autosize="{ minRows: 2 }"
-        :placeholder="$t('modals.new_toot.status')"
-        ref="statusRef"
-      />
+      <el-input v-model="form.spoiler" class="spoiler" :placeholder="$t('compose.cw')" v-if="cw" />
+      <el-input v-model="form.status" type="textarea" :autosize="{ minRows: 2 }" :placeholder="$t('compose.status')" ref="statusRef" />
       <div class="preview" ref="previewRef">
         <div class="image-wrapper" v-for="media in attachments" :key="media.id">
           <img :src="media.preview_url" class="preview-image" />
@@ -18,7 +12,7 @@
         </div>
       </div>
       <div class="nsfw" v-if="attachments.length > 0">
-        <el-checkbox v-model="nsfw">{{ $t('modals.new_toot.footer.change_sensitive') }}</el-checkbox>
+        <el-checkbox v-model="nsfw">{{ $t('compose.footer.change_sensitive') }}</el-checkbox>
       </div>
       <div class="poll" v-if="poll.options.length > 0">
         <ul class="options-list">
@@ -31,7 +25,7 @@
             </el-radio>
           </li>
         </ul>
-        <el-button class="add-poll" type="info" size="small" @click="addPollOption">{{ $t('modals.new_toot.poll.add_choice') }}</el-button>
+        <el-button class="add-poll" type="info" size="small" @click="addPollOption">{{ $t('compose.poll.add_choice') }}</el-button>
         <el-select v-model="poll.expires_in" size="small" value-key="value">
           <el-option v-for="exp in expiresList" :key="exp.value" :label="exp.label" :value="exp.value"> </el-option>
         </el-select>
@@ -47,7 +41,7 @@
           </el-button>
           <div>
             <el-dropdown trigger="click" @command="changeVisibility">
-              <el-button size="default" link :title="$t('modals.new_toot.footer.change_visibility')">
+              <el-button size="default" link :title="$t('compose.footer.change_visibility')">
                 <font-awesome-icon :icon="visibilityIcon" />
               </el-button>
               <template #dropdown>
@@ -94,7 +88,7 @@
         </el-button-group>
         <div class="actions-group">
           <span>{{ statusChars }}</span>
-          <el-button type="primary" @click="post" :loading="loading"> {{ $t('modals.new_toot.toot') }} </el-button>
+          <el-button type="primary" @click="post" :loading="loading"> {{ $t('compose.toot') }} </el-button>
         </div>
       </div>
     </el-form>
@@ -152,31 +146,31 @@ export default defineComponent({
     })
     const expiresList = reactive<Array<Expire>>([
       {
-        label: i18n.t('modals.new_toot.poll.expires.5_minutes'),
+        label: i18n.t('compose.poll.expires.5_minutes'),
         value: 60 * 5
       },
       {
-        label: i18n.t('modals.new_toot.poll.expires.30_minutes'),
+        label: i18n.t('compose.poll.expires.30_minutes'),
         value: 60 * 30
       },
       {
-        label: i18n.t('modals.new_toot.poll.expires.1_hour'),
+        label: i18n.t('compose.poll.expires.1_hour'),
         value: 3600
       },
       {
-        label: i18n.t('modals.new_toot.poll.expires.6_hours'),
+        label: i18n.t('compose.poll.expires.6_hours'),
         value: 3600 * 6
       },
       {
-        label: i18n.t('modals.new_toot.poll.expires.1_day'),
+        label: i18n.t('compose.poll.expires.1_day'),
         value: 3600 * 24
       },
       {
-        label: i18n.t('modals.new_toot.poll.expires.3_days'),
+        label: i18n.t('compose.poll.expires.3_days'),
         value: 3600 * 24 * 3
       },
       {
-        label: i18n.t('modals.new_toot.poll.expires.7_days'),
+        label: i18n.t('compose.poll.expires.7_days'),
         value: 3600 * 24 * 7
       }
     ])
@@ -399,7 +393,7 @@ export default defineComponent({
       const file = e.dataTransfer?.files.item(0)
       if (file === null || (!file.type.includes('image') && !file.type.includes('video'))) {
         ElMessage({
-          message: i18n.t('validation.new_toot.attach_image'),
+          message: i18n.t('validation.compose.attach_image'),
           type: 'error'
         })
         return false
