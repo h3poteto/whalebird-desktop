@@ -163,7 +163,7 @@
       },
       "timeline": {
         "title": "Denbora-lerroa",
-        "description": "Customize how your timelines are displayed",
+        "description": "Erabaki nola erakutsiko diren denbora-lerroak",
         "cw": "Hedatu beti edukiari buruzko oharra duten publikazioak.",
         "nsfw": "Erakutsi multimedia beti.",
         "hideAllAttachments": "Ezkutatu multimedia beti."
