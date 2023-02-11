@@ -3,18 +3,18 @@
     "application": {
       "name": "Whalebird",
       "about": "Über Whalebird",
-      "preferences": "Einstellungen…",
-      "shortcuts": "Kurzwahltasten",
+      "preferences": "Preferences",
+      "shortcuts": "Keyboard shortcuts",
       "services": "Dienste",
       "hide": "Whalebird ausblenden",
-      "hide_others": "Andere ausblenden",
-      "show_all": "Alle anzeigen",
-      "open": "Fenster öffnen",
+      "hide_others": "Hide others",
+      "show_all": "Show all",
+      "open": "Open window",
       "quit": "Beenden"
     },
     "toot": {
-      "name": "Toot",
-      "new": "Neuer Toot"
+      "name": "Posts",
+      "new": "New post..."
     },
     "edit": {
       "name": "Bearbeiten",
@@ -27,10 +27,10 @@
     },
     "view": {
       "name": "Ansicht",
-      "toggle_full_screen": "Vollbildmodus umschalten"
+      "toggle_full_screen": "Toggle full screen"
     },
     "window": {
-      "always_show_menu_bar": "Menüleiste immer anzeigen",
+      "always_show_menu_bar": "Always show menubar",
       "name": "Fenster",
       "close": "Fenster schließen",
       "open": "Fenster öffnen",
@@ -45,41 +45,41 @@
     "profile": "Profil",
     "show_profile": "Profil ansehen",
     "edit_profile": "Profil bearbeiten",
-    "settings": "Einstellungen",
+    "settings": "Account settings",
     "collapse": "Einklappen",
     "expand": "Ausklappen",
     "home": "Start",
-    "notification": "Benachrichtigung",
+    "notification": "Notifications",
     "direct": "Direktnachrichten",
-    "follow_requests": "Follower-Anfragen",
-    "favourite": "Favorit",
-    "bookmark": "Lesezeichen",
+    "follow_requests": "Follow requests",
+    "favourite": "Favourited",
+    "bookmark": "Bookmarks",
     "local": "Lokale Timeline",
     "public": "Öffenliche Timeline",
-    "hashtag": "Hashtag",
+    "hashtag": "Hashtags",
     "search": "Suche",
     "lists": "Listen"
   },
   "header_menu": {
     "home": "Start",
-    "notification": "Benachrichtigung",
-    "favourite": "Favorit",
-    "bookmark": "Lesezeichen",
-    "follow_requests": "Follower-Anfragen",
-    "direct_messages": "Direktnachrichten",
+    "notification": "Notifications",
+    "favourite": "Favourited",
+    "bookmark": "Bookmarks",
+    "follow_requests": "Follow requests",
+    "direct_messages": "Direct messages",
     "local": "Lokale Timeline",
     "public": "Öffenliche Timeline",
-    "hashtag": "Hashtag",
+    "hashtag": "Hashtags",
     "search": "Suche",
     "lists": "Listen",
     "members": "Mitglieder",
     "option": {
       "title": "Einstellungen",
-      "show_reblogs": "Reblogs anzeigen",
+      "show_reblogs": "Show boosts",
       "show_replies": "Antworten anzeigen",
       "apply": "Übernehmen"
     },
-    "new_toot": "Neuer Beitrag",
+    "new_toot": "Publish",
     "reload": "Neu laden",
     "settings": "Einstellungen"
   },
@@ -88,10 +88,10 @@
     "general": {
       "title": "Allgemein",
       "toot": {
-        "title": "Beitrag",
+        "title": "Posts",
         "visibility": {
-          "description": "Beitrag Standardsichtbarkeit anpassen",
-          "notice": "Diese Einstellung gilt nur für neue Beiträge, Antworten folgen der Sichtbarkeit des ursprünglichen Beitrags",
+          "description": "Default post visibility",
+          "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "Öffenlich",
           "unlisted": "Nicht gelistet",
           "private": "Privat",
@@ -105,11 +105,11 @@
     "timeline": {
       "title": "Zeitleiste",
       "unread_notification": {
-        "title": "Ungelesene Benachrichtigungen",
+        "title": "Unread notifications",
         "description": "Ungelesene Benachrichtigungen für jede Zeitleiste anpassen.",
-        "direct": "Direkt Nachrichten",
-        "local": "Lokale Zeitleiste",
-        "public": "Öffentliche Zeitleiste"
+        "direct": "Direct messages",
+        "local": "Local timeline",
+        "public": "Public timeline"
       },
       "use_marker": {
         "title": "Lade die Zeitleiste von der letzten Lese-Position",
@@ -145,7 +145,7 @@
       },
       "delete": {
         "title": "Löschen",
-        "confirm": "Möchten Sie diesen Filter wirklich löschen?",
+        "confirm": "Are you sure you want to delete this filter?",
         "confirm_ok": "Löschen",
         "confirm_cancel": "Abbrechen"
       }
@@ -157,21 +157,21 @@
       "title": "Allgemein",
       "sounds": {
         "title": "Klänge",
-        "description": "Bitte geben Sie Feedback-Töne ein.",
-        "fav_rb": "Wenn Sie den Zähler des Beitrags favorisieren oder erhöhen",
-        "toot": "Wenn ich einen Beitrag poste"
+        "description": "Play sounds when",
+        "fav_rb": "You favourite or boost a post",
+        "toot": "You make a post"
       },
       "timeline": {
         "title": "Zeitleiste",
-        "description": "Passen Sie die Ansicht in Ihren Zeitleisten an.",
-        "cw": "Beiträge mit Inhaltswarnungen immer ausklappen",
-        "nsfw": "Alle Medien immer anzeigen",
-        "hideAllAttachments": "Alle Medien immer verstecken"
+        "description": "Customize how your timelines are displayed",
+        "cw": "Always expand posts tagged with content warnings.",
+        "nsfw": "Always show media.",
+        "hideAllAttachments": "Always hide media."
       },
       "other": {
         "title": "Andere Optionen",
-        "launch": "App beim Login starten",
-        "hideOnLaunch": "Hide window on launch"
+        "launch": "Launch Whalebird on startup",
+        "hideOnLaunch": "Hide the Whalebird window on launch"
       },
       "reset": {
         "button": "Einstellungen zurücksetzen"
@@ -179,7 +179,7 @@
     },
     "appearance": {
       "title": "Anzeige",
-      "theme_color": "Themenfarbe",
+      "theme_color": "Colour themes",
       "theme": {
         "system": "System",
         "light": "Hell",
@@ -199,13 +199,13 @@
         "secondary_color": "Sekundäre Schriftart",
         "border_color": "Rand",
         "header_menu_color": "Kopfzeilen-Menü",
-        "wrapper_mask_color": "Modaler Wrapper"
+        "wrapper_mask_color": "Dialog wrapper"
       },
       "font_size": "Schriftgröße",
       "font_family": "Schriftfamilie",
-      "toot_padding": "Abstand zwischen den Toot",
+      "toot_padding": "Padding around posts",
       "display_style": {
-        "title": "Anzeigestil",
+        "title": "Username display style",
         "display_name_and_username": "Anzeige- und Benutzername",
         "display_name": "Angezeigter Name",
         "username": "Benutzername"
@@ -217,23 +217,23 @@
       }
     },
     "notification": {
-      "title": "Benachrichtigung",
+      "title": "Notifications",
       "enable": {
-        "description": "Ereignisse, bei denen ich benachrichtigt werden möchte",
-        "reply": "Wenn ich eine Antwort erhalte",
-        "reblog": "Wenn einer meiner Toots geteilt wird",
-        "favourite": "Wenn einer meiner Toots favorisiert wird",
-        "follow": "Wenn mir ein anderer Benutzer folgt",
-        "reaction": "Benachrichtige mich, wenn ich eine Emoji-Reaktion erhalte",
-        "follow_request": "Benachrichtige mich, wenn ich eine Folge-Anfrage empfange",
-        "status": "Benachrichtige mich, wenn ich eine Statusbenachrichtigung empfange",
-        "poll_vote": "Wenn ich eine Antwort erhalte",
-        "poll_expired": "Benachrichtige mich, wenn ich eine Folge-Anfrage empfange"
+        "description": "Notify me when I receive...",
+        "reply": "Replies",
+        "reblog": "Boosts",
+        "favourite": "Favourites",
+        "follow": "New followers",
+        "reaction": "Emoji reactions",
+        "follow_request": "Follow requests",
+        "status": "Status notifications",
+        "poll_vote": "Poll votes",
+        "poll_expired": "When a poll expires"
       }
     },
     "account": {
       "title": "Benutzerkonto",
-      "connected": "Verbundenes Konto",
+      "connected": "Connected accounts",
       "username": "Benutzername",
       "domain": "Domain",
       "association": "Verbindung",
@@ -242,12 +242,12 @@
       "remove_all_associations": "Alle Verbindungen trennen",
       "confirm": "Bestätigen",
       "cancel": "Abbrechen",
-      "confirm_message": "Möchtest du wirklich alle Verbindungen trennen?"
+      "confirm_message": "Are you sure you want to remove all associations?"
     },
     "network": {
       "title": "Netzwerk",
       "proxy": {
-        "title": "Proxy Einstellungen",
+        "title": "Proxy configuration",
         "no": "Kein Proxy",
         "system": "Systemproxy verwenden",
         "manual": "Manuelle Proxy-Konfiguration",
@@ -275,31 +275,31 @@
       },
       "spellchecker": {
         "title": "Rechtschreibprüfung",
-        "enabled": "Rechtschreibprüfung aktivieren"
+        "enabled": "Enable spell checker"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "Neuer Beitrag",
+      "title": "New post",
       "cw": "Schreibe hier deine Warnung",
-      "status": "Was ist Ihre Meinung?",
+      "status": "What's on your mind?",
       "cancel": "Abbrechen",
-      "toot": "Beitrag",
-      "close_confirm": "Sind Sie sicher, dass Sie diesen Entwurf verwerfen möchten?",
+      "toot": "Publish",
+      "close_confirm": "Are you sure you want to discard this post?",
       "close_confirm_ok": "Verwerfen",
-      "close_confirm_cancel": "Bearbeitung fortsetzen",
-      "description": "Beschreibe den Inhalt für Sehbehinderte",
+      "close_confirm_cancel": "Continue editing",
+      "description": "Add alternate text for this media",
       "footer": {
         "add_image": "Bilder hinzufügen",
         "poll": "Eine Umfrage erstellen",
         "change_visibility": "Sichtbarkeit ändern",
         "change_sensitive": "Mark media as sensitive",
-        "add_cw": "Inhaltswarnung bzw. Triggerwarnung hinzufügen",
-        "pined_hashtag": "Den Hashtag anheften"
+        "add_cw": "Add content warnings",
+        "pined_hashtag": "Pinned hashtag"
       },
       "poll": {
-        "add_choice": "Auswahl hinzufügen",
+        "add_choice": "Add an option",
         "expires": {
           "5_minutes": "5 Minuten",
           "30_minutes": "30 Minuten",
@@ -315,15 +315,15 @@
       "jump_to": "Springe zu..."
     },
     "add_list_member": {
-      "title": "Mitglied der Liste hinzufügen",
+      "title": "Add member to List",
       "account_name": "Kontoname"
     },
     "list_membership": {
-      "title": "Listen-Mitgliedschaften"
+      "title": "List memberships"
     },
     "mute_confirm": {
-      "title": "Are you sure to mute?",
-      "body": "Benachrichtigung von diesem Benutzer ausblenden?",
+      "title": "Mute user",
+      "body": "Are you sure you want to mute notifications from this user?",
       "cancel": "Abbrechen",
       "ok": "Stummschalten"
     },
@@ -331,25 +331,25 @@
       "title": "Tastenkürzel",
       "ctrl_number": "Wechsel zu einem anderen Konto",
       "ctrl_k": "Zu anderen Zeitleisten springen",
-      "ctrl_n": "Neues Toot-Modal öffnen",
-      "ctrl_enter": "Den Toot posten",
-      "ctrl_r": "Aktuelle Zeitleiste neu laden",
-      "j": "Wähle den nächsten Toot",
-      "k": "Wähle den vorherigen Toot",
+      "ctrl_n": "Open the new post dialog",
+      "ctrl_enter": "Publish the post",
+      "ctrl_r": "Refresh current timeline",
+      "j": "Select the next post",
+      "k": "Select the previous post",
       "h": "Wechsle den Fokus auf die linken Spalte",
       "l": "Wechsle den Fokus auf die rechte Spalte",
-      "r": "Auf den Toot antworten",
-      "b": "Diesen Toot teilen",
-      "f": "Den Toot favorisieren",
-      "o": "Details des Toot öffnen",
-      "p": "Kontoprofil des Toot öffnen",
-      "i": "Bilder öffnen",
-      "x": "CW und NSFW ein-/ausblenden",
-      "?": "Zeige diese Hilfe",
+      "r": "Reply to the selected post",
+      "b": "Boost the selected post",
+      "f": "Favourite the selected post",
+      "o": "View the selected post's details",
+      "p": "Display the profile of the selected post's author",
+      "i": "Open the selected post's images",
+      "x": "Show/hide a content warned post",
+      "?": "Show this dialog",
       "esc": "Aktuelle Seite schließen"
     },
     "report": {
-      "title": "Melde diesen Benutzer",
+      "title": "Report this user",
       "comment": "Warum soll geblockt werden?",
       "cancel": "Abbrechen",
       "ok": "Senden"
@@ -360,20 +360,20 @@
       "show_more": "Mehr anzeigen",
       "hide": "Verbergen",
       "sensitive": "Sensible inhalte anzeigen",
-      "view_toot_detail": "Zeige Toot-Details",
-      "open_in_browser": "Im Browser öffnen",
-      "copy_link_to_toot": "Link zum Beitrag kopieren",
+      "view_toot_detail": "View post details",
+      "open_in_browser": "Open in browser",
+      "copy_link_to_toot": "Copy post link",
       "mute": "Stummschalten",
       "block": "Blockieren",
       "report": "Melden",
       "delete": "Löschen",
       "via": "über {{application}}",
       "reply": "Antworten",
-      "reblog": "Teilen",
+      "reblog": "Boost",
       "fav": "Favorit",
-      "detail": "Details des Beitrags",
+      "detail": "Post details",
       "bookmark": "Lesezeichen",
-      "pinned": "Angehefteter Beitrag",
+      "pinned": "Pinned post",
       "poll": {
         "vote": "Abstimmen",
         "votes_count": "Abstimmungen",
@@ -383,7 +383,7 @@
       },
       "open_account": {
         "title": "Account not found",
-        "text": "Could not find {{account}} in the server. Do you want to open the account in the browser instead?",
+        "text": "Could not find {{account}} on the server. Do you want to open the account in a browser instead?",
         "ok": "Open",
         "cancel": "Cancel"
       }
@@ -399,16 +399,16 @@
       "detail": "Details",
       "follow": "Diesem Benutzer folgen",
       "unfollow": "Diesem Benutzer nicht mehr folgen",
-      "subscribe": "Diesen Benutzer abonnieren",
-      "unsubscribe": "Diesen Benutzer abbestellen",
+      "subscribe": "Subscribe to this user",
+      "unsubscribe": "Unsubscribe from this user",
       "follow_requested": "Follower Anfrage gestellt",
-      "open_in_browser": "Im Browser öffnen",
-      "manage_list_memberships": "Mitgliedschaften verwalten",
+      "open_in_browser": "Open in browser",
+      "manage_list_memberships": "Manage list memberships",
       "mute": "Stummschalten",
       "unmute": "Stummschaltung aufheben",
       "unblock": "Freigeben",
       "block": "Blocken",
-      "toots": "Beiträge",
+      "toots": "Posts",
       "follows": "Folgt",
       "followers": "Folgende"
     }
@@ -426,8 +426,8 @@
     "search": "Suchen",
     "account": "Benutzerkonto",
     "tag": "Hashtag",
-    "keyword": "Stichwörter",
-    "toot": "Beitrag"
+    "keyword": "Keyword",
+    "toot": "Post"
   },
   "lists": {
     "index": {
@@ -436,7 +436,7 @@
       "delete": {
         "confirm": {
           "title": "Bestätigen",
-          "message": "Dieser Vorgang kann nicht rückgängig gemacht werden, diese Liste wird dauerhaft gelöscht",
+          "message": "This list will be permanently deleted. Are you sure you want to continue?",
           "ok": "Löschen",
           "cancel": "Abbrechen"
         }
@@ -444,21 +444,21 @@
     }
   },
   "login": {
-    "domain_name_label": "Zuerst melden wir uns bei einem Mastodon-Server an. Bitte geben Sie einen Servernamen ein.",
-    "proxy_info": "Wenn Sie den Proxy-Server verwenden möchten, richten Sie bitte Ihren Proxy ein in",
+    "domain_name_label": "Welcome to Whalebird! Enter a server domain name to log into an account.",
+    "proxy_info": "If you need to use a proxy server, please set it up",
     "proxy_here": " hier",
     "search": "Suche",
     "login": "Anmelden"
   },
   "authorize": {
     "manually_1": "Jetzt wird die Zugriffsseite in deinem Browser geöffnet.",
-    "manually_2": "Falls nicht, öffne bitte die folgende URL von Hand.",
-    "code_label": "Bitte füge den Zugrifsscode aus dem Browser ein:",
+    "manually_2": "If it has not yet opened, please go to the following URL manually:",
+    "code_label": "Enter your authorization code:",
     "misskey_label": "Bitte senden Sie das Formular ab, nachdem Sie sich in Ihrem Browser autorisiert haben.",
     "submit": "Absenden"
   },
   "receive_drop": {
-    "drop_message": "Fallenlassen zum Hochladen auf Mastodon"
+    "drop_message": "Drop here to attach a file"
   },
   "message": {
     "account_load_error": "Konten konnten nicht geladen werden",
@@ -466,7 +466,7 @@
     "preferences_load_error": "Einstellungen konnten nicht geladen werden",
     "timeline_fetch_error": "Timeline konnte nicht abgerufen werden",
     "notification_fetch_error": "Benachrichtigung konnte nicht abgerufen werden",
-    "favourite_fetch_error": "Favorit konnte nicht abgerufen werden",
+    "favourite_fetch_error": "Failed to fetch favourite",
     "bookmark_fetch_error": "Failed to fetch bookmarks",
     "follow_request_accept_error": "Anfrage konnte nicht angenommen werden",
     "follow_request_reject_error": "Ablehnung der geteilten Anfrage fehlgeschlagen",
@@ -475,7 +475,7 @@
     "authorize_error": "Autorisierung fehlgeschlagen",
     "followers_fetch_error": "Follower konnten nicht abgerufen werden",
     "follows_fetch_error": "Follows konnten nicht abgerufen werden",
-    "toot_fetch_error": "Die Toot-Details konnten nicht abgerufen werden",
+    "toot_fetch_error": "Failed to fetch the post details",
     "follow_error": "Konnte dem Benutzer nicht folgen",
     "unfollow_error": "Konnte das Folgen des Benutzer nicht beenden",
     "subscribe_error": "Abonnierung von %s fehlgeschlagen",
@@ -485,22 +485,22 @@
     "members_fetch_error": "Konnte Mitglieder nicht abrufen",
     "remove_user_error": "Entfernen des Benutzers fehlgeschlagen",
     "find_account_error": "Konto nicht gefunden",
-    "reblog_error": "Fehler beim Reblog",
-    "unreblog_error": "Widerruf des Reblogs fehlgeschlagen",
+    "reblog_error": "Failed to boost",
+    "unreblog_error": "Failed to unboost",
     "favourite_error": "Favorisieren fehlgeschlagen",
     "unfavourite_error": "Widerruf des Favorisierens fehlgeschlagen",
     "bookmark_error": "Hinzufügen des Lesezeichens fehlgeschlagen",
     "unbookmark_error": "Löschen des Lesezeichens fehlgeschlagen",
-    "delete_error": "Löschen des Beitrags fehlgeschlagen",
+    "delete_error": "Failed to delete the post",
     "search_error": "Suche fehlgeschlagen",
-    "toot_error": "Beitrag senden fehlgeschlagen",
+    "toot_error": "Failed to create the post",
     "update_list_memberships_error": "Konnte Listen-Mitgliedschaften nicht aktualisieren",
     "add_user_error": "Benutzer konnte nicht hinzugefügt werden",
     "authorize_url_error": "Fehler beim Abrufen der Autorisierungs-URL",
-    "domain_confirmed": "{{domain}} wurde bestätigt, bitte anmelden",
-    "domain_doesnt_exist": "Verbindung mit {{domain}} fehlgeschlagen, bitte die Server-URL prüfen",
+    "domain_confirmed": "{{domain}} is confirmed, please log in",
+    "domain_doesnt_exist": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
     "loading": "Laden...",
-    "language_not_support_spellchecker_error": "Diese Sprache wird noch nicht unterstützt",
+    "language_not_support_spellchecker_error": "This language is not supported by the spell checker",
     "update_filter_error": "Aktualisierung des Filters fehlgeschlagen",
     "create_filter_error": "Fehler beim Erstellen des Filters"
   },
@@ -510,7 +510,7 @@
       "domain_format": "Bitte gib nur den Domainnamen an"
     },
     "new_toot": {
-      "toot_length": "Länge des Beitrags sollte zwischen {{min}} und {{max}} sein",
+      "toot_length": "Post length should be between {{min}} and {{max}}",
       "attach_length": "Du kannst maximal {{max}} Bilder anhängen",
       "attach_length_plural": "Du kannst maximal {{max}} Bilder anhängen",
       "attach_image": "Du kannst nur Bilder oder Videos anhängen",
@@ -519,40 +519,40 @@
   },
   "notification": {
     "favourite": {
-      "title": "Favoriten",
-      "body": "{{username}} hat Ihren Status favorisiert"
+      "title": "New favourite",
+      "body": "{{username}} favourited your post"
     },
     "follow": {
-      "title": "Folgen",
+      "title": "New follower",
       "body": "{{username}} folgt dir jetzt"
     },
     "follow_request": {
-      "title": "Followanfrage",
-      "body": "Erhalten Sie eine Follow-Anfrage von {{username}}"
+      "title": "New follow request",
+      "body": "Received a follow request from {{username}}"
     },
     "reblog": {
-      "title": "Teilen",
-      "body": "{{username}} hat deinen Status geboosted"
+      "title": "New boost",
+      "body": "{{username}} boosted your post"
     },
     "quote": {
-      "title": "Zitat",
-      "body": "{{username}} zitierte Ihren Status"
+      "title": "New quote",
+      "body": "{{username}} quoted your post"
     },
     "reaction": {
-      "title": "Reaktion",
-      "body": "{{username}} reagierte auf Ihren Status"
+      "title": "New reaction",
+      "body": "{{username}} reacted to your post"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} hat gerade etwas gepostet"
+      "title": "New reaction",
+      "body": "{{username}} made a new post"
     },
     "poll_vote": {
-      "title": "Abstimmung",
-      "body": "{{username}} hat deine Umfrage beantwortet"
+      "title": "New poll vote",
+      "body": "{{username}} voted in your poll"
     },
     "poll_expired": {
-      "title": "Umfrage abgelaufen",
-      "body": "Die Umfrage von {{username}} ist abgelaufen"
+      "title": "Poll expired",
+      "body": "{{username}}'s poll has ended"
     }
   }
 }

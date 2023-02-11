@@ -3,18 +3,18 @@
     "application": {
       "name": "Whalebird",
       "about": "Tentang Whalebird",
-      "preferences": "Preferensi...",
-      "shortcuts": "Shortcut Keys",
+      "preferences": "Preferences",
+      "shortcuts": "Keyboard shortcuts",
       "services": "Layanan",
       "hide": "Sembunyikan Whalebird",
-      "hide_others": "Sembunyikan lainnya",
-      "show_all": "Lihat semua",
-      "open": "Buka jendela",
+      "hide_others": "Hide others",
+      "show_all": "Show all",
+      "open": "Open window",
       "quit": "Keluar"
     },
     "toot": {
-      "name": "Toot",
-      "new": "Toot baru"
+      "name": "Posts",
+      "new": "New post..."
     },
     "edit": {
       "name": "Sunting",
@@ -27,10 +27,10 @@
     },
     "view": {
       "name": "Tampilan",
-      "toggle_full_screen": "Layar Penuh"
+      "toggle_full_screen": "Toggle full screen"
     },
     "window": {
-      "always_show_menu_bar": "Selalu tampilkan bilah menu",
+      "always_show_menu_bar": "Always show menubar",
       "name": "Jendela",
       "close": "Tutup jendela",
       "open": "Buka jendela",
@@ -45,41 +45,41 @@
     "profile": "Profil",
     "show_profile": "Lihat profil",
     "edit_profile": "Sunting profil",
-    "settings": "Pengaturan",
+    "settings": "Account settings",
     "collapse": "Ciutkan",
     "expand": "Perluas",
     "home": "Beranda",
-    "notification": "Pemberitahuan",
+    "notification": "Notifications",
     "direct": "Pesan langsung",
-    "follow_requests": "Permintaan Mengikuti",
-    "favourite": "Favorit",
-    "bookmark": "Markah",
+    "follow_requests": "Follow requests",
+    "favourite": "Favourited",
+    "bookmark": "Bookmarks",
     "local": "Linimasa lokal",
     "public": "Linimasa publik",
-    "hashtag": "Tagar",
+    "hashtag": "Hashtags",
     "search": "Cari",
     "lists": "Daftar"
   },
   "header_menu": {
     "home": "Beranda",
-    "notification": "Pemberitahuan",
-    "favourite": "Favorit",
-    "bookmark": "Markah",
-    "follow_requests": "Permintaan Mengikuti",
-    "direct_messages": "Pesan Langsung",
+    "notification": "Notifications",
+    "favourite": "Favourited",
+    "bookmark": "Bookmarks",
+    "follow_requests": "Follow requests",
+    "direct_messages": "Direct messages",
     "local": "Linimasa lokal",
     "public": "Linimasa publik",
-    "hashtag": "Tagar",
+    "hashtag": "Hashtags",
     "search": "Cari",
     "lists": "Daftar",
     "members": "Anggota",
     "option": {
       "title": "Opsi",
-      "show_reblogs": "Tampilkan reblog",
+      "show_reblogs": "Show boosts",
       "show_replies": "Tampilkan balasan",
       "apply": "Terapkan"
     },
-    "new_toot": "Toot",
+    "new_toot": "Publish",
     "reload": "Muat Ulang",
     "settings": "Pengaturan"
   },
@@ -88,10 +88,10 @@
     "general": {
       "title": "Umum",
       "toot": {
-        "title": "Toot",
+        "title": "Posts",
         "visibility": {
-          "description": "Sesuaikan visibilitas bawaan toot",
-          "notice": "Pengaturan ini hanya diterapkan pada toot baru, balasan mengikuti visibilitas dari toot asal",
+          "description": "Default post visibility",
+          "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "Publik",
           "unlisted": "Tidak terdaftar",
           "private": "Privat",
@@ -105,11 +105,11 @@
     "timeline": {
       "title": "Linimasa",
       "unread_notification": {
-        "title": "Notifikasi yang belum dibaca",
+        "title": "Unread notifications",
         "description": "Sesuaikan notifikasi belum terbaca untuk setiap linimasa.",
-        "direct": "Pesan Langsung",
-        "local": "Linimasa lokal",
-        "public": "Linimasa publik"
+        "direct": "Direct messages",
+        "local": "Local timeline",
+        "public": "Public timeline"
       },
       "use_marker": {
         "title": "Muat linimasa dari posisi baca terakhir",
@@ -145,7 +145,7 @@
       },
       "delete": {
         "title": "Hapus",
-        "confirm": "Anda yakin ingin menghapus filter ini?",
+        "confirm": "Are you sure you want to delete this filter?",
         "confirm_ok": "Hapus",
         "confirm_cancel": "Batal"
       }
@@ -157,21 +157,21 @@
       "title": "Umum",
       "sounds": {
         "title": "Bunyi",
-        "description": "Mohon setel bunyi timpal balik.",
-        "fav_rb": "Ketika memfavorit atau memboostihg toot",
-        "toot": "Ketika memposting toot"
+        "description": "Play sounds when",
+        "fav_rb": "You favourite or boost a post",
+        "toot": "You make a post"
       },
       "timeline": {
         "title": "Linimasa",
-        "description": "Kustomisasi tampilan linimasa anda.",
-        "cw": "Always expand posts marked with contents warnings",
-        "nsfw": "Always show all media",
-        "hideAllAttachments": "Always hide all media"
+        "description": "Customize how your timelines are displayed",
+        "cw": "Always expand posts tagged with content warnings.",
+        "nsfw": "Always show media.",
+        "hideAllAttachments": "Always hide media."
       },
       "other": {
         "title": "Pilihan lainnya",
-        "launch": "Luncurkan aplikasi saat login",
-        "hideOnLaunch": "Hide window on launch"
+        "launch": "Launch Whalebird on startup",
+        "hideOnLaunch": "Hide the Whalebird window on launch"
       },
       "reset": {
         "button": "Setel ulang preferensi"
@@ -179,7 +179,7 @@
     },
     "appearance": {
       "title": "Penampilan",
-      "theme_color": "Warna tema",
+      "theme_color": "Colour themes",
       "theme": {
         "system": "Sistem",
         "light": "Terang",
@@ -199,13 +199,13 @@
         "secondary_color": "Font sekunder",
         "border_color": "Tepian",
         "header_menu_color": "Menu header",
-        "wrapper_mask_color": "Modal wrapper"
+        "wrapper_mask_color": "Dialog wrapper"
       },
       "font_size": "Ukuran font",
       "font_family": "Jenis font",
-      "toot_padding": "Jarak antara toot",
+      "toot_padding": "Padding around posts",
       "display_style": {
-        "title": "Gaya tampilan nama pengguna",
+        "title": "Username display style",
         "display_name_and_username": "Tampilan nama dan nama pengguna",
         "display_name": "Nama tampilan",
         "username": "Nama pengguna"
@@ -217,23 +217,23 @@
       }
     },
     "notification": {
-      "title": "Pemberitahuan",
+      "title": "Notifications",
       "enable": {
-        "description": "Mohon set event pemberitahuan.",
-        "reply": "Beritahu saya ketika menerima balasan",
-        "reblog": "Beritahu saya ketika menerima reblog",
-        "favourite": "Beritahu saya ketika menerima favorit",
-        "follow": "Beritahu saya ketika menerima ikuti",
-        "reaction": "Beritahu saya ketika menerima reaksi emoji",
-        "follow_request": "Beritahu saya ketika menerima permintaan mengikuti",
-        "status": "Beritahu saya ketika menerima pemberitahuan status",
-        "poll_vote": "Beritahu saya ketika menerima suara dari angket",
-        "poll_expired": "Beritahu saya ketika menerima angket yang kadaluarsa"
+        "description": "Notify me when I receive...",
+        "reply": "Replies",
+        "reblog": "Boosts",
+        "favourite": "Favourites",
+        "follow": "New followers",
+        "reaction": "Emoji reactions",
+        "follow_request": "Follow requests",
+        "status": "Status notifications",
+        "poll_vote": "Poll votes",
+        "poll_expired": "When a poll expires"
       }
     },
     "account": {
       "title": "Akun",
-      "connected": "Akun yang terhubung",
+      "connected": "Connected accounts",
       "username": "Nama pengguna",
       "domain": "Domain",
       "association": "Asosiasi",
@@ -242,12 +242,12 @@
       "remove_all_associations": "Hapus semua asosiasi",
       "confirm": "Konfirmasi",
       "cancel": "Batalkan",
-      "confirm_message": "Apakah anda yakin menghapus semua asosiasi?"
+      "confirm_message": "Are you sure you want to remove all associations?"
     },
     "network": {
       "title": "Jaringan",
       "proxy": {
-        "title": "Konfigurasi proksi",
+        "title": "Proxy configuration",
         "no": "Tidak ada proksi",
         "system": "Gunakan proksi sistem",
         "manual": "Konfigurasi proksi manual",
@@ -275,31 +275,31 @@
       },
       "spellchecker": {
         "title": "Periksa Ejaan",
-        "enabled": "Nyalakan pemeriksa ejaan"
+        "enabled": "Enable spell checker"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "Toot baru",
+      "title": "New post",
       "cw": "Tulis peringatanmu disini",
-      "status": "Apa yang kamu pikirkan?",
+      "status": "What's on your mind?",
       "cancel": "Batal",
-      "toot": "Toot",
-      "close_confirm": "Apa Kamu yakin ingin membuang toot ini?",
+      "toot": "Publish",
+      "close_confirm": "Are you sure you want to discard this post?",
       "close_confirm_ok": "Buang",
-      "close_confirm_cancel": "Lanjutkan Menyunting",
-      "description": "Jelaskan untuk tuna netra",
+      "close_confirm_cancel": "Continue editing",
+      "description": "Add alternate text for this media",
       "footer": {
         "add_image": "Tambahkan gambar",
         "poll": "Tambahkan polling",
         "change_visibility": "Atur Visibilitas",
         "change_sensitive": "Mark media as sensitive",
-        "add_cw": "Tambahkan peringatan konten",
-        "pined_hashtag": "Sematkan tagar"
+        "add_cw": "Add content warnings",
+        "pined_hashtag": "Pinned hashtag"
       },
       "poll": {
-        "add_choice": "Tambahkan pilihan",
+        "add_choice": "Add an option",
         "expires": {
           "5_minutes": "5 menit",
           "30_minutes": "30 menit",
@@ -315,15 +315,15 @@
       "jump_to": "Lompat ke..."
     },
     "add_list_member": {
-      "title": "Tambahkan Anggota ke Daftar",
+      "title": "Add member to List",
       "account_name": "Nama akun"
     },
     "list_membership": {
-      "title": "Daftar keanggotaan"
+      "title": "List memberships"
     },
     "mute_confirm": {
-      "title": "Apakah Kamu yakin Kamu ingin membisukan?",
-      "body": "Sembunyikan pemberitahuan dari pengguna ini?",
+      "title": "Mute user",
+      "body": "Are you sure you want to mute notifications from this user?",
       "cancel": "Batal",
       "ok": "Bisu"
     },
@@ -331,25 +331,25 @@
       "title": "Pintasan keyboard",
       "ctrl_number": "Ganti akun",
       "ctrl_k": "Lompat ke linimasa lain",
-      "ctrl_n": "Buka modal toot baru",
-      "ctrl_enter": "Posting toot",
-      "ctrl_r": "Muat ulang linimasa saat ini",
-      "j": "Pilih toot selanjutnya",
-      "k": "Pilih toot sebelumnya",
+      "ctrl_n": "Open the new post dialog",
+      "ctrl_enter": "Publish the post",
+      "ctrl_r": "Refresh current timeline",
+      "j": "Select the next post",
+      "k": "Select the previous post",
       "h": "Ubah fokus ke kolom kiri",
       "l": "Ubah fokus ke kolom kanan",
-      "r": "Balas toot",
-      "b": "Reblog toot",
-      "f": "Favoritkan toot",
-      "o": "Buka toot selengkapnya",
-      "p": "Buka profil akun dari toot",
-      "i": "Buka gambar",
-      "x": "Tampil/sembunyikan media sensitif",
-      "?": "Tampilkan bantuan ini",
+      "r": "Reply to the selected post",
+      "b": "Boost the selected post",
+      "f": "Favourite the selected post",
+      "o": "View the selected post's details",
+      "p": "Display the profile of the selected post's author",
+      "i": "Open the selected post's images",
+      "x": "Show/hide a content warned post",
+      "?": "Show this dialog",
       "esc": "Tutup halaman ini"
     },
     "report": {
-      "title": "Laporkan pengguna ini",
+      "title": "Report this user",
       "comment": "Komentar tambahan",
       "cancel": "Batalkan",
       "ok": "Laporkan"
@@ -360,20 +360,20 @@
       "show_more": "Selengkapnya",
       "hide": "Sembunyikan",
       "sensitive": "Tampilkan konten sensitif",
-      "view_toot_detail": "Lihat detil toot",
-      "open_in_browser": "Buka di Browser",
-      "copy_link_to_toot": "Salin Link Kiriman ke Toot",
+      "view_toot_detail": "View post details",
+      "open_in_browser": "Open in browser",
+      "copy_link_to_toot": "Copy post link",
       "mute": "Bisukan",
       "block": "Blokir",
       "report": "Laporkan",
       "delete": "Hapus",
       "via": "melalui {{application}}",
       "reply": "Balas",
-      "reblog": "Reblog",
+      "reblog": "Boost",
       "fav": "Favorit",
-      "detail": "Detil toot",
+      "detail": "Post details",
       "bookmark": "Markah",
-      "pinned": "Toot tersemat",
+      "pinned": "Pinned post",
       "poll": {
         "vote": "Beri suara",
         "votes_count": "suara",
@@ -383,7 +383,7 @@
       },
       "open_account": {
         "title": "Account not found",
-        "text": "Could not find {{account}} in the server. Do you want to open the account in the browser instead?",
+        "text": "Could not find {{account}} on the server. Do you want to open the account in a browser instead?",
         "ok": "Open",
         "cancel": "Cancel"
       }
@@ -399,16 +399,16 @@
       "detail": "Rincian",
       "follow": "Ikuti pengguna ini",
       "unfollow": "Berhenti ikuti pengguna ini",
-      "subscribe": "Berlangganan ke pengguna ini",
-      "unsubscribe": "Berhenti berlangganan dari pengguna ini",
+      "subscribe": "Subscribe to this user",
+      "unsubscribe": "Unsubscribe from this user",
       "follow_requested": "Meminta permintaan mengikuti",
-      "open_in_browser": "Buka di Browser",
-      "manage_list_memberships": "Kelola Daftar Keanggotaan",
+      "open_in_browser": "Open in browser",
+      "manage_list_memberships": "Manage list memberships",
       "mute": "Bisukan",
       "unmute": "Buka bisu",
       "unblock": "Buka blokir",
       "block": "Blokir",
-      "toots": "Toot",
+      "toots": "Posts",
       "follows": "Mengikuti",
       "followers": "Pengikut"
     }
@@ -426,8 +426,8 @@
     "search": "Pencarian",
     "account": "Akun",
     "tag": "Tagar",
-    "keyword": "kata kunci",
-    "toot": "Toot"
+    "keyword": "Keyword",
+    "toot": "Post"
   },
   "lists": {
     "index": {
@@ -436,7 +436,7 @@
       "delete": {
         "confirm": {
           "title": "Konfirmasi",
-          "message": "Operasi ini tidak dapat dikembalikan, daftar ini akan dihapus permanen",
+          "message": "This list will be permanently deleted. Are you sure you want to continue?",
           "ok": "Hapus",
           "cancel": "Batal"
         }
@@ -444,21 +444,21 @@
     }
   },
   "login": {
-    "domain_name_label": "Pertama, masuk ke server Mastodon.\nMohon masukkan nama domain server.",
-    "proxy_info": "Jika kamu ingin menggunakan server proksi, mohon atur proksi kamu di",
+    "domain_name_label": "Welcome to Whalebird! Enter a server domain name to log into an account.",
+    "proxy_info": "If you need to use a proxy server, please set it up",
     "proxy_here": " sini",
     "search": "Cari",
     "login": "Masuk"
   },
   "authorize": {
     "manually_1": "Halaman otorisasi telah dibuka di perambanmu.",
-    "manually_2": "Jika masih belum terbuka, mohon pergi ke URL yang disebut secara manual.",
-    "code_label": "Mohon tempelkan kode otorisasi dari perambanmu:",
+    "manually_2": "If it has not yet opened, please go to the following URL manually:",
+    "code_label": "Enter your authorization code:",
     "misskey_label": "Mohon masukkan setelah kamu mengotorisasi di perambanmu.",
     "submit": "Otorisasi"
   },
   "receive_drop": {
-    "drop_message": "Jatuhkan untuk mengunggah ke Mastodon"
+    "drop_message": "Drop here to attach a file"
   },
   "message": {
     "account_load_error": "Gagal memuat akun",
@@ -466,7 +466,7 @@
     "preferences_load_error": "Gagal memuat preferensi",
     "timeline_fetch_error": "Gagal memuat linimasa",
     "notification_fetch_error": "Gagal memuat pemberitahuan",
-    "favourite_fetch_error": "Gagal memuat favorit",
+    "favourite_fetch_error": "Failed to fetch favourite",
     "bookmark_fetch_error": "Failed to fetch bookmarks",
     "follow_request_accept_error": "Gagal menerima permintaan mengikuti",
     "follow_request_reject_error": "Gagal menolak permintaan mengikuti",
@@ -475,7 +475,7 @@
     "authorize_error": "Gagal otorisasi",
     "followers_fetch_error": "Gagal memuat pengikut",
     "follows_fetch_error": "Gagal memuat mengikuti",
-    "toot_fetch_error": "Gagal memuat toot selengkapnya",
+    "toot_fetch_error": "Failed to fetch the post details",
     "follow_error": "Gagal memuat pengguna",
     "unfollow_error": "Gagal tidak mengikuti pengguna",
     "subscribe_error": "Gagal berlangganan ke pengguna",
@@ -485,22 +485,22 @@
     "members_fetch_error": "Gagal memuat anggota",
     "remove_user_error": "Gagal menghapus pengguna",
     "find_account_error": "Akun tidak ditemukan",
-    "reblog_error": "Gagal mereblog",
-    "unreblog_error": "Gagal unreblog",
+    "reblog_error": "Failed to boost",
+    "unreblog_error": "Failed to unboost",
     "favourite_error": "Gagal memfavoritkan",
     "unfavourite_error": "Gagal unfavorit",
     "bookmark_error": "Gagal memarkah",
     "unbookmark_error": "Gagal menghapus markah",
-    "delete_error": "Gagal menghapus toot",
+    "delete_error": "Failed to delete the post",
     "search_error": "Gagal mencari",
-    "toot_error": "Gagal mengetoot",
+    "toot_error": "Failed to create the post",
     "update_list_memberships_error": "Gagal memutakhirkan daftar anggota",
     "add_user_error": "Gagal menambahkan pengguna",
     "authorize_url_error": "Gagal mendapatkan url otorisasi",
-    "domain_confirmed": "{{domain}} telah dikonfirmasi, mohon masuk",
-    "domain_doesnt_exist": "Gagal untuk menghubungkan {{domain}}, pastikan URL server benar",
+    "domain_confirmed": "{{domain}} is confirmed, please log in",
+    "domain_doesnt_exist": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
     "loading": "Memuat...",
-    "language_not_support_spellchecker_error": "Bahasa ini tidak didukung oleh Spellchecker",
+    "language_not_support_spellchecker_error": "This language is not supported by the spell checker",
     "update_filter_error": "Gagal memutakhirkan filter",
     "create_filter_error": "Gagal membuat filter"
   },
@@ -510,7 +510,7 @@
       "domain_format": "Mohon masukkan nama domain"
     },
     "new_toot": {
-      "toot_length": "Panjang toot harus {{min}} hingga {{max}}",
+      "toot_length": "Post length should be between {{min}} and {{max}}",
       "attach_length": "Anda hanya dapat melampirkan hingga {{max}} gambar",
       "attach_length_plural": "Anda hanya dapat melampirkan hingga {{max}} gambar",
       "attach_image": "Anda hanya dapat melampirkan gambar atau video",
@@ -519,40 +519,40 @@
   },
   "notification": {
     "favourite": {
-      "title": "Favorit",
-      "body": "{{username}} memfavorit statusmu"
+      "title": "New favourite",
+      "body": "{{username}} favourited your post"
     },
     "follow": {
-      "title": "Ikuti",
+      "title": "New follower",
       "body": "{{username}} sekarang mengikuti anda"
     },
     "follow_request": {
-      "title": "Permintaan mengikuti",
-      "body": "Menerima permintaan mengikuti dari {{username}}"
+      "title": "New follow request",
+      "body": "Received a follow request from {{username}}"
     },
     "reblog": {
-      "title": "Reblog",
-      "body": "{{username}} memboost status anda"
+      "title": "New boost",
+      "body": "{{username}} boosted your post"
     },
     "quote": {
-      "title": "Kutip",
-      "body": "{{username}} mengutip status anda"
+      "title": "New quote",
+      "body": "{{username}} quoted your post"
     },
     "reaction": {
-      "title": "Reaksi",
-      "body": "{{username}} mereaksi status anda"
+      "title": "New reaction",
+      "body": "{{username}} reacted to your post"
     },
     "status": {
-      "title": "Status",
-      "body": "{{username}} baru saja memposting"
+      "title": "New reaction",
+      "body": "{{username}} made a new post"
     },
     "poll_vote": {
-      "title": "Angket suara",
-      "body": "{{username}} bersuara di angket anda"
+      "title": "New poll vote",
+      "body": "{{username}} voted in your poll"
     },
     "poll_expired": {
-      "title": "Angket kadaluarsa",
-      "body": "Angket {{username}} sudah kadaluarsa"
+      "title": "Poll expired",
+      "body": "{{username}}'s poll has ended"
     }
   }
 }

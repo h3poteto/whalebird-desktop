@@ -3,18 +3,18 @@
     "application": {
       "name": "Whalebird",
       "about": "Whalebirdについて",
-      "preferences": "設定...",
-      "shortcuts": "ショートカットキー",
+      "preferences": "Preferences",
+      "shortcuts": "Keyboard shortcuts",
       "services": "サービス",
       "hide": "Whalebirdを隠す",
-      "hide_others": "ほかを隠す",
-      "show_all": "すべてを表示",
-      "open": "ウィンドウを開く",
+      "hide_others": "Hide others",
+      "show_all": "Show all",
+      "open": "Open window",
       "quit": "終了"
     },
     "toot": {
-      "name": "トゥート",
-      "new": "トゥート"
+      "name": "Posts",
+      "new": "New post..."
     },
     "edit": {
       "name": "編集",
@@ -27,10 +27,10 @@
     },
     "view": {
       "name": "表示",
-      "toggle_full_screen": "フルスクリーンの切り替え"
+      "toggle_full_screen": "Toggle full screen"
     },
     "window": {
-      "always_show_menu_bar": "メニューバーを常に表示",
+      "always_show_menu_bar": "Always show menubar",
       "name": "ウィンドウ",
       "close": "ウィンドウを閉じる",
       "open": "ウィンドウを表示",
@@ -45,41 +45,41 @@
     "profile": "プロフィール",
     "show_profile": "プロフィール確認",
     "edit_profile": "プロフィール編集",
-    "settings": "設定",
+    "settings": "Account settings",
     "collapse": "縮小",
     "expand": "拡大",
     "home": "ホーム",
-    "notification": "通知",
+    "notification": "Notifications",
     "direct": "DM",
-    "follow_requests": "フォロー申請",
-    "favourite": "お気に入り",
-    "bookmark": "ブックマーク",
+    "follow_requests": "Follow requests",
+    "favourite": "Favourited",
+    "bookmark": "Bookmarks",
     "local": "ローカル",
     "public": "連合",
-    "hashtag": "ハッシュタグ",
+    "hashtag": "Hashtags",
     "search": "検索",
     "lists": "リスト"
   },
   "header_menu": {
     "home": "ホーム",
-    "notification": "通知",
-    "favourite": "お気に入り",
-    "bookmark": "ブックマーク",
-    "follow_requests": "フォロー申請",
-    "direct_messages": "ダイレクトメッセージ",
+    "notification": "Notifications",
+    "favourite": "Favourited",
+    "bookmark": "Bookmarks",
+    "follow_requests": "Follow requests",
+    "direct_messages": "Direct messages",
     "local": "ローカルタイムライン",
     "public": "連合タイムライン",
-    "hashtag": "ハッシュタグ",
+    "hashtag": "Hashtags",
     "search": "検索",
     "lists": "リスト",
     "members": "メンバー",
     "option": {
       "title": "設定",
-      "show_reblogs": "ブースト表示",
+      "show_reblogs": "Show boosts",
       "show_replies": "返信表示",
       "apply": "適用"
     },
-    "new_toot": "トゥート",
+    "new_toot": "Publish",
     "reload": "再読み込み",
     "settings": "設定"
   },
@@ -88,10 +88,10 @@
     "general": {
       "title": "一般",
       "toot": {
-        "title": "トゥート",
+        "title": "Posts",
         "visibility": {
-          "description": "トゥートの公開設定を変更する",
-          "notice": "この設定は新しいトゥートのみに適用され、返信は元のトゥートの公開設定に従います",
+          "description": "Default post visibility",
+          "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "公開",
           "unlisted": "未収載",
           "private": "フォロワー限定",
@@ -105,11 +105,11 @@
     "timeline": {
       "title": "タイムライン",
       "unread_notification": {
-        "title": "未読管理",
+        "title": "Unread notifications",
         "description": "未読管理をするタイムラインを設定",
-        "direct": "ダイレクトメッセージ",
-        "local": "ローカル",
-        "public": "連合"
+        "direct": "Direct messages",
+        "local": "Local timeline",
+        "public": "Public timeline"
       },
       "use_marker": {
         "title": "前回読んだ位置からタイムラインを読み込む",
@@ -145,7 +145,7 @@
       },
       "delete": {
         "title": "削除",
-        "confirm": "このフィルターを本当に削除しますか？",
+        "confirm": "Are you sure you want to delete this filter?",
         "confirm_ok": "削除する",
         "confirm_cancel": "キャンセル"
       }
@@ -157,21 +157,21 @@
       "title": "一般",
       "sounds": {
         "title": "効果音",
-        "description": "操作時の効果音を設定",
-        "fav_rb": "お気に入り，ブースト時",
-        "toot": "トゥート時"
+        "description": "Play sounds when",
+        "fav_rb": "You favourite or boost a post",
+        "toot": "You make a post"
       },
       "timeline": {
         "title": "タイムライン",
-        "description": "タイムラインをカスタマイズ",
-        "cw": "閲覧注意の投稿を常に展開する",
-        "nsfw": "すべてのメディアを常に表示する",
-        "hideAllAttachments": "全てのメディアを常に隠す"
+        "description": "Customize how your timelines are displayed",
+        "cw": "Always expand posts tagged with content warnings.",
+        "nsfw": "Always show media.",
+        "hideAllAttachments": "Always hide media."
       },
       "other": {
         "title": "その他",
-        "launch": "ログイン時にアプリを起動する",
-        "hideOnLaunch": "Hide window on launch"
+        "launch": "Launch Whalebird on startup",
+        "hideOnLaunch": "Hide the Whalebird window on launch"
       },
       "reset": {
         "button": "設定をリセット"
@@ -179,7 +179,7 @@
     },
     "appearance": {
       "title": "外観",
-      "theme_color": "テーマカラー",
+      "theme_color": "Colour themes",
       "theme": {
         "system": "システム",
         "light": "標準",
@@ -199,13 +199,13 @@
         "secondary_color": "文字色3",
         "border_color": "ボーダー",
         "header_menu_color": "ヘッダーメニュー",
-        "wrapper_mask_color": "モーダル背景"
+        "wrapper_mask_color": "Dialog wrapper"
       },
       "font_size": "フォントサイズ",
       "font_family": "フォント",
-      "toot_padding": "トゥート周りの空白",
+      "toot_padding": "Padding around posts",
       "display_style": {
-        "title": "ユーザ名の表示形式",
+        "title": "Username display style",
         "display_name_and_username": "表示名+ユーザー名",
         "display_name": "表示名",
         "username": "ユーザー名"
@@ -217,23 +217,23 @@
       }
     },
     "notification": {
-      "title": "通知",
+      "title": "Notifications",
       "enable": {
-        "description": "通知を受け取るかどうかを設定",
-        "reply": "返信がある時",
-        "reblog": "ブーストされた時",
-        "favourite": "お気に入りされた時",
-        "follow": "フォローされた時",
-        "reaction": "絵文字リアクションを受け取ったとき",
-        "follow_request": "フォローリクエストを受け取った時",
-        "status": "トゥートの通知を受け取った時",
-        "poll_vote": "アンケートに投票された時",
-        "poll_expired": "アンケートが終了したとき"
+        "description": "Notify me when I receive...",
+        "reply": "Replies",
+        "reblog": "Boosts",
+        "favourite": "Favourites",
+        "follow": "New followers",
+        "reaction": "Emoji reactions",
+        "follow_request": "Follow requests",
+        "status": "Status notifications",
+        "poll_vote": "Poll votes",
+        "poll_expired": "When a poll expires"
       }
     },
     "account": {
       "title": "アカウント",
-      "connected": "登録済みアカウント",
+      "connected": "Connected accounts",
       "username": "ユーザー名",
       "domain": "ドメイン名",
       "association": "連携",
@@ -242,12 +242,12 @@
       "remove_all_associations": "全ての連携を削除",
       "confirm": "確認",
       "cancel": "キャンセル",
-      "confirm_message": "本当に全ての連携を削除しますか？"
+      "confirm_message": "Are you sure you want to remove all associations?"
     },
     "network": {
       "title": "ネットワーク",
       "proxy": {
-        "title": "プロキシー設定",
+        "title": "Proxy configuration",
         "no": "プロキシーを使わない",
         "system": "OSのプロキシー設定を利用する",
         "manual": "プロキシーを手動で設定する",
@@ -275,31 +275,31 @@
       },
       "spellchecker": {
         "title": "スペルチェック",
-        "enabled": "スペルチェッカーを有効にする"
+        "enabled": "Enable spell checker"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "トゥート",
+      "title": "New post",
       "cw": "ここに警告を書いてください",
-      "status": "今なにしてる?",
+      "status": "What's on your mind?",
       "cancel": "キャンセル",
-      "toot": "トゥート！",
-      "close_confirm": "この下書きを破棄してよろしいですか？",
+      "toot": "Publish",
+      "close_confirm": "Are you sure you want to discard this post?",
       "close_confirm_ok": "破棄",
-      "close_confirm_cancel": "編集を継続",
-      "description": "メディアの説明を追加",
+      "close_confirm_cancel": "Continue editing",
+      "description": "Add alternate text for this media",
       "footer": {
         "add_image": "画像を添付",
         "poll": "アンケートを追加",
         "change_visibility": "プライバシー設定",
         "change_sensitive": "Mark media as sensitive",
-        "add_cw": "閲覧注意を追加",
-        "pined_hashtag": "ハッシュタグを固定する"
+        "add_cw": "Add content warnings",
+        "pined_hashtag": "Pinned hashtag"
       },
       "poll": {
-        "add_choice": "選択肢を追加",
+        "add_choice": "Add an option",
         "expires": {
           "5_minutes": "5分後",
           "30_minutes": "30分後",
@@ -315,15 +315,15 @@
       "jump_to": "移動..."
     },
     "add_list_member": {
-      "title": "リストに追加",
+      "title": "Add member to List",
       "account_name": "アカウント名"
     },
     "list_membership": {
-      "title": "リストメンバー管理"
+      "title": "List memberships"
     },
     "mute_confirm": {
-      "title": "本当にミュートしますか？",
-      "body": "このユーザからの通知もミュートしますか？",
+      "title": "Mute user",
+      "body": "Are you sure you want to mute notifications from this user?",
       "cancel": "キャンセル",
       "ok": "ミュートする"
     },
@@ -331,25 +331,25 @@
       "title": "キーボードショートカット",
       "ctrl_number": "アカウントの切り替え",
       "ctrl_k": "タイムラインの移動",
-      "ctrl_n": "トゥートモーダルの表示",
-      "ctrl_enter": "トゥート送信",
-      "ctrl_r": "タイムラインを更新",
-      "j": "次のトゥートを選択",
-      "k": "前のトゥートを選択",
+      "ctrl_n": "Open the new post dialog",
+      "ctrl_enter": "Publish the post",
+      "ctrl_r": "Refresh current timeline",
+      "j": "Select the next post",
+      "k": "Select the previous post",
       "h": "右のカラムを選択",
       "l": "左のカラムを選択",
-      "r": "リプライ",
-      "b": "ブースト",
-      "f": "お気に入り",
-      "o": "トゥート詳細を開く",
-      "p": "発言主のプロフィールを開く",
-      "i": "画像を表示",
-      "x": "CWとNSFWの表示切り替え",
-      "?": "このヘルプを開く",
+      "r": "Reply to the selected post",
+      "b": "Boost the selected post",
+      "f": "Favourite the selected post",
+      "o": "View the selected post's details",
+      "p": "Display the profile of the selected post's author",
+      "i": "Open the selected post's images",
+      "x": "Show/hide a content warned post",
+      "?": "Show this dialog",
       "esc": "ページを閉じる"
     },
     "report": {
-      "title": "このユーザを報告する",
+      "title": "Report this user",
       "comment": "追加のコメント",
       "cancel": "キャンセル",
       "ok": "報告"
@@ -360,20 +360,20 @@
       "show_more": "続きを見る",
       "hide": "隠す",
       "sensitive": "閲覧注意コンテンツを表示する",
-      "view_toot_detail": "詳細",
-      "open_in_browser": "ブラウザで開く",
-      "copy_link_to_toot": "コピー",
+      "view_toot_detail": "View post details",
+      "open_in_browser": "Open in browser",
+      "copy_link_to_toot": "Copy post link",
       "mute": "ミュート",
       "block": "ブロック",
       "report": "通報",
       "delete": "削除する",
       "via": "{{application}} より",
       "reply": "返信",
-      "reblog": "ブースト",
+      "reblog": "Boost",
       "fav": "お気に入り",
-      "detail": "詳細",
+      "detail": "Post details",
       "bookmark": "ブックマーク",
-      "pinned": "固定されたトゥート",
+      "pinned": "Pinned post",
       "poll": {
         "vote": "投票",
         "votes_count": "投票",
@@ -383,7 +383,7 @@
       },
       "open_account": {
         "title": "Account not found",
-        "text": "Could not find {{account}} in the server. Do you want to open the account in the browser instead?",
+        "text": "Could not find {{account}} on the server. Do you want to open the account in a browser instead?",
         "ok": "Open",
         "cancel": "Cancel"
       }
@@ -399,16 +399,16 @@
       "detail": "詳細",
       "follow": "このユーザーをフォロー",
       "unfollow": "このユーザーのフォローを解除",
-      "subscribe": "このユーザの投稿時に通知",
-      "unsubscribe": "このユーザの投稿通知を解除",
+      "subscribe": "Subscribe to this user",
+      "unsubscribe": "Unsubscribe from this user",
       "follow_requested": "フォロー承認待ち",
-      "open_in_browser": "ブラウザで開く",
-      "manage_list_memberships": "リストの管理",
+      "open_in_browser": "Open in browser",
+      "manage_list_memberships": "Manage list memberships",
       "mute": "ミュート",
       "unmute": "ミュートを解除",
       "unblock": "ブロックを解除",
       "block": "ブロック",
-      "toots": "トゥート",
+      "toots": "Posts",
       "follows": "フォロー",
       "followers": "フォロワー"
     }
@@ -426,8 +426,8 @@
     "search": "検索",
     "account": "アカウント",
     "tag": "ハッシュタグ",
-    "keyword": "キーワード",
-    "toot": "トゥート"
+    "keyword": "Keyword",
+    "toot": "Post"
   },
   "lists": {
     "index": {
@@ -436,7 +436,7 @@
       "delete": {
         "confirm": {
           "title": "確認",
-          "message": "この操作は元に戻すことができません。このリストを完全に削除しますか？",
+          "message": "This list will be permanently deleted. Are you sure you want to continue?",
           "ok": "削除する",
           "cancel": "キャンセル"
         }
@@ -444,21 +444,21 @@
     }
   },
   "login": {
-    "domain_name_label": "ドメイン名を入力してマストドンにログインしてください．",
-    "proxy_info": "もしプロキシを利用する場合は",
+    "domain_name_label": "Welcome to Whalebird! Enter a server domain name to log into an account.",
+    "proxy_info": "If you need to use a proxy server, please set it up",
     "proxy_here": "こちら．",
     "search": "検索",
     "login": "ログイン"
   },
   "authorize": {
     "manually_1": "認証用ページが自動的に開きます．",
-    "manually_2": "もし開かない場合は，以下のURLから手動で認証用ページを開いてください．",
-    "code_label": "ブラウザに表示された認証コードを貼り付けてください",
+    "manually_2": "If it has not yet opened, please go to the following URL manually:",
+    "code_label": "Enter your authorization code:",
     "misskey_label": "ブラウザでこのアプリを許可した後に認証ボタンを押してください",
     "submit": "認証"
   },
   "receive_drop": {
-    "drop_message": "ファイルをドロップしてください"
+    "drop_message": "Drop here to attach a file"
   },
   "message": {
     "account_load_error": "アカウントの読み込みに失敗しました",
@@ -466,7 +466,7 @@
     "preferences_load_error": "設定の読み込みに失敗しました",
     "timeline_fetch_error": "タイムラインの読み込みに失敗しました",
     "notification_fetch_error": "通知の読み込みに失敗しました",
-    "favourite_fetch_error": "お気に入りの読み込みに失敗しました",
+    "favourite_fetch_error": "Failed to fetch favourite",
     "bookmark_fetch_error": "Failed to fetch bookmarks",
     "follow_request_accept_error": "フォロー申請の承認に失敗しました",
     "follow_request_reject_error": "フォロー申請の却下に失敗しました",
@@ -475,7 +475,7 @@
     "authorize_error": "認証に失敗しました",
     "followers_fetch_error": "フォロワーの取得に失敗しました",
     "follows_fetch_error": "フォローの取得に失敗しました",
-    "toot_fetch_error": "トゥート詳細の読み込みに失敗しました",
+    "toot_fetch_error": "Failed to fetch the post details",
     "follow_error": "フォローに失敗しました",
     "unfollow_error": "フォロー解除に失敗しました",
     "subscribe_error": "通知設定に失敗しました",
@@ -485,22 +485,22 @@
     "members_fetch_error": "メンバーの取得に失敗しました",
     "remove_user_error": "ユーザの削除に失敗しました",
     "find_account_error": "アカウントが見つかりません",
-    "reblog_error": "ブーストできませんでした",
-    "unreblog_error": "ブースト解除に失敗しました",
+    "reblog_error": "Failed to boost",
+    "unreblog_error": "Failed to unboost",
     "favourite_error": "お気に入りできませんでした",
     "unfavourite_error": "お気に入り解除に失敗しました",
     "bookmark_error": "ブックマークの追加に失敗しました",
     "unbookmark_error": "ブックマークの削除に失敗しました",
-    "delete_error": "トゥート削除に失敗しました",
+    "delete_error": "Failed to delete the post",
     "search_error": "検索に失敗しました",
-    "toot_error": "トゥートに失敗しました",
+    "toot_error": "Failed to create the post",
     "update_list_memberships_error": "リストメンバーの更新に失敗しました",
     "add_user_error": "メンバー追加に失敗しました",
     "authorize_url_error": "認証用URLの取得に失敗しました",
-    "domain_confirmed": "{{domain}} が確認できました，ログインしてください",
-    "domain_doesnt_exist": "{{domain}} に接続できません，URLを確認してください",
+    "domain_confirmed": "{{domain}} is confirmed, please log in",
+    "domain_doesnt_exist": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
     "loading": "読み込み中...",
-    "language_not_support_spellchecker_error": "この言語はスペルチェッカーではサポートされていません",
+    "language_not_support_spellchecker_error": "This language is not supported by the spell checker",
     "update_filter_error": "フィルターの更新に失敗しました",
     "create_filter_error": "フィルターの作成に失敗しました"
   },
@@ -510,7 +510,7 @@
       "domain_format": "ドメイン名のみを入力してください"
     },
     "new_toot": {
-      "toot_length": "トゥートの長さは {{min}} から {{max}} 文字である必要があります",
+      "toot_length": "Post length should be between {{min}} and {{max}}",
       "attach_length": "添付ファイルは {{max}} つまでです",
       "attach_length_plural": "添付ファイルは {{max}} つまでです",
       "attach_image": "画像かビデオしか添付できません",
@@ -519,40 +519,40 @@
   },
   "notification": {
     "favourite": {
-      "title": "お気に入り",
-      "body": "{{username}} さんにお気に入り登録されました"
+      "title": "New favourite",
+      "body": "{{username}} favourited your post"
     },
     "follow": {
-      "title": "フォロー",
+      "title": "New follower",
       "body": "{{username}} さんにフォローされました"
     },
     "follow_request": {
-      "title": "フォローリクエスト",
-      "body": "{{username}} からフォローリクエストを受け取りました"
+      "title": "New follow request",
+      "body": "Received a follow request from {{username}}"
     },
     "reblog": {
-      "title": "ブースト",
-      "body": "{{username}} さんにブーストされました"
+      "title": "New boost",
+      "body": "{{username}} boosted your post"
     },
     "quote": {
-      "title": "引用",
-      "body": "{{username}} があなたのステータスを引用しました"
+      "title": "New quote",
+      "body": "{{username}} quoted your post"
     },
     "reaction": {
-      "title": "リアクション",
-      "body": "{{username}} さんがリアクションをつけました"
+      "title": "New reaction",
+      "body": "{{username}} reacted to your post"
     },
     "status": {
-      "title": "トゥート",
-      "body": "{{username}} さんが投稿しました"
+      "title": "New reaction",
+      "body": "{{username}} made a new post"
     },
     "poll_vote": {
-      "title": "アンケート投票",
-      "body": "{{username}} さんがあなたのアンケートに投票しました"
+      "title": "New poll vote",
+      "body": "{{username}} voted in your poll"
     },
     "poll_expired": {
-      "title": "アンケート終了",
-      "body": "{{username}} さんのアンケートが終了しました"
+      "title": "Poll expired",
+      "body": "{{username}}'s poll has ended"
     }
   }
 }

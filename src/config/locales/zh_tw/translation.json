@@ -3,18 +3,18 @@
     "application": {
       "name": "Whalebird (鯨鳥)",
       "about": "關於 Whalebird (鯨鳥)",
-      "preferences": "偏好設定...",
-      "shortcuts": "Shortcut Keys",
+      "preferences": "Preferences",
+      "shortcuts": "Keyboard shortcuts",
       "services": "服務",
       "hide": "隱藏 Whalebird (鯨鳥)",
-      "hide_others": "隱藏其他",
-      "show_all": "顯示全部",
-      "open": "開啟視窗",
+      "hide_others": "Hide others",
+      "show_all": "Show all",
+      "open": "Open window",
       "quit": "離開"
     },
     "toot": {
-      "name": "嘟文",
-      "new": "新嘟文"
+      "name": "Posts",
+      "new": "New post..."
     },
     "edit": {
       "name": "編輯",
@@ -27,10 +27,10 @@
     },
     "view": {
       "name": "檢視",
-      "toggle_full_screen": "切換全螢幕"
+      "toggle_full_screen": "Toggle full screen"
     },
     "window": {
-      "always_show_menu_bar": "總是顯示功能選單",
+      "always_show_menu_bar": "Always show menubar",
       "name": "視窗",
       "close": "關閉視窗",
       "open": "開啟視窗",
@@ -45,41 +45,41 @@
     "profile": "個人檔案",
     "show_profile": "顯示個人檔案",
     "edit_profile": "編輯個人檔案",
-    "settings": "設定",
+    "settings": "Account settings",
     "collapse": "收合",
     "expand": "展開",
     "home": "首頁",
-    "notification": "通知",
+    "notification": "Notifications",
     "direct": "私訊",
-    "follow_requests": "跟隨請求",
-    "favourite": "最愛",
-    "bookmark": "書籤",
+    "follow_requests": "Follow requests",
+    "favourite": "Favourited",
+    "bookmark": "Bookmarks",
     "local": "本機時間軸",
     "public": "公開時間軸",
-    "hashtag": "主題標籤",
+    "hashtag": "Hashtags",
     "search": "搜尋",
     "lists": "列表"
   },
   "header_menu": {
     "home": "首頁",
-    "notification": "通知",
-    "favourite": "最愛",
-    "bookmark": "書籤",
-    "follow_requests": "跟隨請求",
-    "direct_messages": "私訊",
+    "notification": "Notifications",
+    "favourite": "Favourited",
+    "bookmark": "Bookmarks",
+    "follow_requests": "Follow requests",
+    "direct_messages": "Direct messages",
     "local": "本機時間軸",
     "public": "公開時間軸",
-    "hashtag": "主題標籤",
+    "hashtag": "Hashtags",
     "search": "搜尋",
     "lists": "列表",
     "members": "成員",
     "option": {
       "title": "選項",
-      "show_reblogs": "顯示轉嘟",
+      "show_reblogs": "Show boosts",
       "show_replies": "顯示回覆",
       "apply": "套用"
     },
-    "new_toot": "嘟文",
+    "new_toot": "Publish",
     "reload": "重新整理",
     "settings": "設定"
   },
@@ -88,10 +88,10 @@
     "general": {
       "title": "一般",
       "toot": {
-        "title": "嘟文",
+        "title": "Posts",
         "visibility": {
-          "description": "自訂預設嘟文公開性",
-          "notice": "這項設定僅適用於新嘟文，嘟文回覆將會遵照原嘟文的公開性",
+          "description": "Default post visibility",
+          "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "公開",
           "unlisted": "不列出",
           "private": "私密",
@@ -105,11 +105,11 @@
     "timeline": {
       "title": "時間軸",
       "unread_notification": {
-        "title": "未讀通知",
+        "title": "Unread notifications",
         "description": "自訂每一個時間軸之未讀通知",
-        "direct": "私訊",
-        "local": "本機時間軸",
-        "public": "公開時間軸"
+        "direct": "Direct messages",
+        "local": "Local timeline",
+        "public": "Public timeline"
       },
       "use_marker": {
         "title": "從上次閱讀位置讀取時間軸",
@@ -145,7 +145,7 @@
       },
       "delete": {
         "title": "刪除",
-        "confirm": "您確定要刪除此過濾器嗎?",
+        "confirm": "Are you sure you want to delete this filter?",
         "confirm_ok": "刪除",
         "confirm_cancel": "取消"
       }
@@ -157,21 +157,21 @@
       "title": "一般",
       "sounds": {
         "title": "聲音",
-        "description": "請設定回饋音效",
-        "fav_rb": "當您最愛或轉嘟嘟文時",
-        "toot": "當您發嘟文時"
+        "description": "Play sounds when",
+        "fav_rb": "You favourite or boost a post",
+        "toot": "You make a post"
       },
       "timeline": {
         "title": "時間軸",
-        "description": "自訂時間軸外觀",
-        "cw": "Always expand posts marked with contents warnings",
-        "nsfw": "Always show all media",
-        "hideAllAttachments": "Always hide all media"
+        "description": "Customize how your timelines are displayed",
+        "cw": "Always expand posts tagged with content warnings.",
+        "nsfw": "Always show media.",
+        "hideAllAttachments": "Always hide media."
       },
       "other": {
         "title": "其他選項",
-        "launch": "登入時啟動 app",
-        "hideOnLaunch": "Hide window on launch"
+        "launch": "Launch Whalebird on startup",
+        "hideOnLaunch": "Hide the Whalebird window on launch"
       },
       "reset": {
         "button": "重置偏好設定"
@@ -179,7 +179,7 @@
     },
     "appearance": {
       "title": "外觀設定",
-      "theme_color": "佈景顏色",
+      "theme_color": "Colour themes",
       "theme": {
         "system": "系統",
         "light": "淺色主題",
@@ -199,13 +199,13 @@
         "secondary_color": "次要字型",
         "border_color": "邊框",
         "header_menu_color": "頁頂選單",
-        "wrapper_mask_color": "對話方塊邊框顏色"
+        "wrapper_mask_color": "Dialog wrapper"
       },
       "font_size": "字型大小",
       "font_family": "字型家族",
-      "toot_padding": "嘟文間距",
+      "toot_padding": "Padding around posts",
       "display_style": {
-        "title": "帳號名稱顯示風格",
+        "title": "Username display style",
         "display_name_and_username": "顯示名稱及帳號",
         "display_name": "顯示名稱",
         "username": "帳號"
@@ -217,23 +217,23 @@
       }
     },
     "notification": {
-      "title": "通知",
+      "title": "Notifications",
       "enable": {
-        "description": "請設定通知事件。",
-        "reply": "當我收到回覆時通知我",
-        "reblog": "當我收到轉嘟時通知我",
-        "favourite": "當我收到最愛時通知我",
-        "follow": "當我收到跟隨時通知我",
-        "reaction": "當我收到 emoji 表情符號時通知我",
-        "follow_request": "當我收到跟隨請求時通知我",
-        "status": "當我收到狀態通知時通知我",
-        "poll_vote": "當我收到投票時通知我",
-        "poll_expired": "當我收到投票截止時通知我"
+        "description": "Notify me when I receive...",
+        "reply": "Replies",
+        "reblog": "Boosts",
+        "favourite": "Favourites",
+        "follow": "New followers",
+        "reaction": "Emoji reactions",
+        "follow_request": "Follow requests",
+        "status": "Status notifications",
+        "poll_vote": "Poll votes",
+        "poll_expired": "When a poll expires"
       }
     },
     "account": {
       "title": "帳號",
-      "connected": "連接帳號",
+      "connected": "Connected accounts",
       "username": "帳號",
       "domain": "網域",
       "association": "配對",
@@ -242,12 +242,12 @@
       "remove_all_associations": "移除所有配對",
       "confirm": "確認",
       "cancel": "取消",
-      "confirm_message": "您確定要移除所有配對嗎？"
+      "confirm_message": "Are you sure you want to remove all associations?"
     },
     "network": {
       "title": "網路",
       "proxy": {
-        "title": "代理伺服器設定",
+        "title": "Proxy configuration",
         "no": "不使用代理伺服器",
         "system": "使用系統代理伺服器",
         "manual": "手動設定代理伺服器",
@@ -275,31 +275,31 @@
       },
       "spellchecker": {
         "title": "拼字檢查",
-        "enabled": "啟用拼字檢查器"
+        "enabled": "Enable spell checker"
       }
     }
   },
   "modals": {
     "new_toot": {
-      "title": "新嘟文",
+      "title": "New post",
       "cw": "請在此填入警告訊息",
-      "status": "正在想些什麼嗎？",
+      "status": "What's on your mind?",
       "cancel": "取消",
-      "toot": "嘟文",
-      "close_confirm": "是否確定要捨棄此嘟文？",
+      "toot": "Publish",
+      "close_confirm": "Are you sure you want to discard this post?",
       "close_confirm_ok": "捨棄",
-      "close_confirm_cancel": "繼續編輯",
-      "description": "為視障人士增加文字說明",
+      "close_confirm_cancel": "Continue editing",
+      "description": "Add alternate text for this media",
       "footer": {
         "add_image": "新增圖片",
         "poll": "新增投票",
         "change_visibility": "變更可見度",
         "change_sensitive": "Mark media as sensitive",
-        "add_cw": "新增內容警告",
-        "pined_hashtag": "釘選主題標籤"
+        "add_cw": "Add content warnings",
+        "pined_hashtag": "Pinned hashtag"
       },
       "poll": {
-        "add_choice": "新增選項",
+        "add_choice": "Add an option",
         "expires": {
           "5_minutes": "5 分鐘",
           "30_minutes": "30 分鐘",
@@ -315,15 +315,15 @@
       "jump_to": "跳至..."
     },
     "add_list_member": {
-      "title": "新增成員至列表",
+      "title": "Add member to List",
       "account_name": "帳號名稱"
     },
     "list_membership": {
-      "title": "列表成員"
+      "title": "List memberships"
     },
     "mute_confirm": {
-      "title": "您確定要靜音嗎？",
-      "body": "隱藏來自這位使用者的通知？",
+      "title": "Mute user",
+      "body": "Are you sure you want to mute notifications from this user?",
       "cancel": "取消",
       "ok": "靜音"
     },
@@ -331,25 +331,25 @@
       "title": "鍵盤快速鍵",
       "ctrl_number": "切換帳號",
       "ctrl_k": "跳至其他時間軸",
-      "ctrl_n": "開啟新嘟文對話方塊",
-      "ctrl_enter": "貼出嘟文",
-      "ctrl_r": "重新整理目前的時間軸",
-      "j": "選擇下一嘟文",
-      "k": "選擇前一嘟文",
+      "ctrl_n": "Open the new post dialog",
+      "ctrl_enter": "Publish the post",
+      "ctrl_r": "Refresh current timeline",
+      "j": "Select the next post",
+      "k": "Select the previous post",
       "h": "切換焦點至左方欄",
       "l": "切換焦點至右方欄",
-      "r": "回覆嘟文",
-      "b": "轉嘟",
-      "f": "最愛嘟文",
-      "o": "打開嘟文細節",
-      "p": "開啟此嘟文帳號的個人檔案",
-      "i": "開啟圖片",
-      "x": "顯示/隱藏 CW 與 NSFW",
-      "?": "顯示此說明",
+      "r": "Reply to the selected post",
+      "b": "Boost the selected post",
+      "f": "Favourite the selected post",
+      "o": "View the selected post's details",
+      "p": "Display the profile of the selected post's author",
+      "i": "Open the selected post's images",
+      "x": "Show/hide a content warned post",
+      "?": "Show this dialog",
       "esc": "關閉目前頁面"
     },
     "report": {
-      "title": "檢舉此使用者",
+      "title": "Report this user",
       "comment": "其他備註",
       "cancel": "取消",
       "ok": "檢舉"
@@ -360,20 +360,20 @@
       "show_more": "顯示更多",
       "hide": "隱藏",
       "sensitive": "顯示敏感內容",
-      "view_toot_detail": "檢視嘟文細節",
-      "open_in_browser": "在瀏覽器中開啟",
-      "copy_link_to_toot": "複製嘟文連結",
+      "view_toot_detail": "View post details",
+      "open_in_browser": "Open in browser",
+      "copy_link_to_toot": "Copy post link",
       "mute": "靜音",
       "block": "封鎖",
       "report": "檢舉",
       "delete": "刪除",
       "via": "via {{application}}",
       "reply": "回覆",
-      "reblog": "轉嘟",
+      "reblog": "Boost",
       "fav": "最愛",
-      "detail": "嘟文細節",
+      "detail": "Post details",
       "bookmark": "書籤",
-      "pinned": "釘選的嘟文",
+      "pinned": "Pinned post",
       "poll": {
         "vote": "投票",
         "votes_count": "投票數",
@@ -383,7 +383,7 @@
       },
       "open_account": {
         "title": "Account not found",
-        "text": "Could not find {{account}} in the server. Do you want to open the account in the browser instead?",
+        "text": "Could not find {{account}} on the server. Do you want to open the account in a browser instead?",
         "ok": "Open",
         "cancel": "Cancel"
       }
@@ -399,16 +399,16 @@
       "detail": "詳細資料",
       "follow": "跟隨此使用者",
       "unfollow": "取消跟隨此使用者",
-      "subscribe": "訂閱此使用者",
-      "unsubscribe": "取消訂閱此使用者",
+      "subscribe": "Subscribe to this user",
+      "unsubscribe": "Unsubscribe from this user",
       "follow_requested": "跟隨請求",
-      "open_in_browser": "在瀏覽器中開啟",
-      "manage_list_memberships": "管理列表成員",
+      "open_in_browser": "Open in browser",
+      "manage_list_memberships": "Manage list memberships",
       "mute": "靜音",
       "unmute": "取消靜音",
       "unblock": "解除封鎖",
       "block": "封鎖",
-      "toots": "嘟文",
+      "toots": "Posts",
       "follows": "跟隨",
       "followers": "跟隨者"
     }
@@ -426,8 +426,8 @@
     "search": "搜尋",
     "account": "帳號",
     "tag": "主題標籤",
-    "keyword": "關鍵字",
-    "toot": "嘟文"
+    "keyword": "Keyword",
+    "toot": "Post"
   },
   "lists": {
     "index": {
@@ -436,7 +436,7 @@
       "delete": {
         "confirm": {
           "title": "確認",
-          "message": "這個步驟將無法被復原，列表將會被永久刪除",
+          "message": "This list will be permanently deleted. Are you sure you want to continue?",
           "ok": "刪除",
           "cancel": "取消"
         }
@@ -444,21 +444,21 @@
     }
   },
   "login": {
-    "domain_name_label": "首先，請登入一台 Mastodon 伺服器。請輸入伺服器網域名稱 (無前綴 https://)。",
-    "proxy_info": "如果您欲設定代理伺服器，請於此設定代理伺服器",
+    "domain_name_label": "Welcome to Whalebird! Enter a server domain name to log into an account.",
+    "proxy_info": "If you need to use a proxy server, please set it up",
     "proxy_here": " 這裡",
     "search": "搜尋",
     "login": "登入"
   },
   "authorize": {
     "manually_1": "授權頁面已於瀏覽器中開啟",
-    "manually_2": "如果沒有成功開啟，請手動前往以下 URL 網址",
-    "code_label": "請於此貼上瀏覽器中的授權碼",
+    "manually_2": "If it has not yet opened, please go to the following URL manually:",
+    "code_label": "Enter your authorization code:",
     "misskey_label": "請於瀏覽器授權後再送出",
     "submit": "送出"
   },
   "receive_drop": {
-    "drop_message": "拖曳上傳至 Mastodon"
+    "drop_message": "Drop here to attach a file"
   },
   "message": {
     "account_load_error": "無法載入帳號",
@@ -466,7 +466,7 @@
     "preferences_load_error": "無法載入偏好設定",
     "timeline_fetch_error": "無法載入時間軸",
     "notification_fetch_error": "無法載入通知",
-    "favourite_fetch_error": "無法載入最愛",
+    "favourite_fetch_error": "Failed to fetch favourite",
     "bookmark_fetch_error": "Failed to fetch bookmarks",
     "follow_request_accept_error": "無法接受請求",
     "follow_request_reject_error": "無法拒絕請求",
@@ -475,7 +475,7 @@
     "authorize_error": "授權失敗",
     "followers_fetch_error": "無法載入跟隨者",
     "follows_fetch_error": "無法載入跟隨對象",
-    "toot_fetch_error": "無法載入嘟文細節",
+    "toot_fetch_error": "Failed to fetch the post details",
     "follow_error": "無法跟隨此使用者",
     "unfollow_error": "無法取消跟隨此使用者",
     "subscribe_error": "無法訂閱此使用者",
@@ -485,22 +485,22 @@
     "members_fetch_error": "無法載入成員",
     "remove_user_error": "無法移除此使用者",
     "find_account_error": "找不到該帳號",
-    "reblog_error": "無法轉嘟",
-    "unreblog_error": "無法取消轉嘟",
+    "reblog_error": "Failed to boost",
+    "unreblog_error": "Failed to unboost",
     "favourite_error": "無法標記最愛",
     "unfavourite_error": "無法取消最愛",
     "bookmark_error": "無法加入書籤",
     "unbookmark_error": "無法移除書籤",
-    "delete_error": "無法刪除嘟文",
+    "delete_error": "Failed to delete the post",
     "search_error": "無法搜尋",
-    "toot_error": "無法嘟文",
+    "toot_error": "Failed to create the post",
     "update_list_memberships_error": "無法更新列表成員",
     "add_user_error": "無法新增使用者",
     "authorize_url_error": "無法取得授權 URL",
-    "domain_confirmed": "{{domain}} 已確認，請登入",
-    "domain_doesnt_exist": "無法連線到 {{domain}}，請確認伺服器 URL",
+    "domain_confirmed": "{{domain}} is confirmed, please log in",
+    "domain_doesnt_exist": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
     "loading": "載入中...",
-    "language_not_support_spellchecker_error": "拼字檢查器不支援該語言",
+    "language_not_support_spellchecker_error": "This language is not supported by the spell checker",
     "update_filter_error": "無法更新過濾器",
     "create_filter_error": "無法新增過濾器"
   },
@@ -510,7 +510,7 @@
       "domain_format": "請僅輸入網域名稱 (無前綴 https://)"
     },
     "new_toot": {
-      "toot_length": "嘟文長度必須介於 {{min}} 至 {{max}} 之間",
+      "toot_length": "Post length should be between {{min}} and {{max}}",
       "attach_length": "您只能附加最多 {{max}} 個圖片。",
       "attach_length_plural": "您只能附加最多 {{max}} 個圖片。",
       "attach_image": "只能附加圖片或影片",
@@ -519,40 +519,40 @@
   },
   "notification": {
     "favourite": {
-      "title": "最愛",
-      "body": "{{username}} 最愛了您的嘟文"
+      "title": "New favourite",
+      "body": "{{username}} favourited your post"
     },
     "follow": {
-      "title": "跟隨",
+      "title": "New follower",
       "body": "{{username}} 跟隨您了"
     },
     "follow_request": {
-      "title": "跟隨請求",
-      "body": "收到來自 {{username}} 的跟隨請求"
+      "title": "New follow request",
+      "body": "Received a follow request from {{username}}"
     },
     "reblog": {
-      "title": "轉嘟",
-      "body": "{{username}} 轉嘟了您的嘟文"
+      "title": "New boost",
+      "body": "{{username}} boosted your post"
     },
     "quote": {
-      "title": "引用嘟文",
-      "body": "{{username}} 引用了您的嘟文"
+      "title": "New quote",
+      "body": "{{username}} quoted your post"
     },
     "reaction": {
-      "title": "回應",
-      "body": "{{username}} 回應了您的嘟文"
+      "title": "New reaction",
+      "body": "{{username}} reacted to your post"
     },
     "status": {
-      "title": "狀態",
-      "body": "{{username}} 剛剛嘟文"
+      "title": "New reaction",
+      "body": "{{username}} made a new post"
     },
     "poll_vote": {
-      "title": "投票",
-      "body": "{{username}} 參與了您的投票"
+      "title": "New poll vote",
+      "body": "{{username}} voted in your poll"
     },
     "poll_expired": {
-      "title": "投票截止",
-      "body": "{{username}} 的投票已截止"
+      "title": "Poll expired",
+      "body": "{{username}}'s poll has ended"
     }
   }
 }
