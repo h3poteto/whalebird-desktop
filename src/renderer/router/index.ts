@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Login from '@/components/Login.vue'
+import LoginForm from '@/components/Login/LoginForm.vue'
+import Authorize from '@/components/Login/Authorize.vue'
 import Preferences from '@/components/Preferences.vue'
 import PreferencesGeneral from '@/components/Preferences/General.vue'
 import PreferencesAppearance from '@/components/Preferences/Appearance.vue'
@@ -34,9 +36,21 @@ import TimelineSpaceContentsBookmarks from '@/components/TimelineSpace/Contents/
 
 const routes = [
   {
-    path: '/login',
+    path: '/login/',
     name: 'login',
-    component: Login
+    component: Login,
+    children: [
+      {
+        path: 'form',
+        name: 'login-form',
+        component: LoginForm
+      },
+      {
+        path: 'authorize',
+        name: 'authorize',
+        component: Authorize
+      }
+    ]
   },
   {
     path: '/preferences/',

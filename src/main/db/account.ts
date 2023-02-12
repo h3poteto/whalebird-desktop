@@ -11,7 +11,7 @@ export const insertAccount = (
   clientSecret: string,
   accessToken: string,
   refreshToken: string | null,
-  server: LocalServer
+  serverId: number
 ): Promise<LocalAccount> => {
   return new Promise((resolve, reject) => {
     db.serialize(() => {
@@ -34,13 +34,12 @@ export const insertAccount = (
             }
             const id = this.lastID
 
-            db.run('UPDATE servers SET account_id = ? WHERE id = ?', [id, server.id], err => {
+            db.run('UPDATE servers SET account_id = ? WHERE id = ?', [id, serverId], err => {
               if (err) {
                 reject(err)
               }
 
               db.run('COMMIT')
-
               resolve({
                 id,
                 username,
@@ -164,22 +163,30 @@ FROM accounts INNER JOIN servers ON servers.account_id = accounts.id WHERE accou
 
 export const removeAccount = (db: sqlite3.Database, id: number): Promise<null> => {
   return new Promise((resolve, reject) => {
-    db.run('DELETE FROM accounts WHERE id = ?', id, err => {
-      if (err) {
-        reject(err)
-      }
-      resolve(null)
+    db.serialize(() => {
+      db.run('PRAGMA foreign_keys = ON')
+
+      db.run('DELETE FROM accounts WHERE id = ?', id, err => {
+        if (err) {
+          reject(err)
+        }
+        resolve(null)
+      })
     })
   })
 }
 
 export const removeAllAccounts = (db: sqlite3.Database): Promise<null> => {
   return new Promise((resolve, reject) => {
-    db.run('DELETE FROM accounts', err => {
-      if (err) {
-        reject(err)
-      }
-      resolve(null)
+    db.serialize(() => {
+      db.run('PRAGMA foreign_keys = ON')
+
+      db.run('DELETE FROM accounts', err => {
+        if (err) {
+          reject(err)
+        }
+        resolve(null)
+      })
     })
   })
 }

@@ -53,11 +53,15 @@ export const insertTag = (db: sqlite3.Database, accountId: number, tag: string):
 
 export const removeTag = (db: sqlite3.Database, tag: LocalTag): Promise<null> => {
   return new Promise((resolve, reject) => {
-    db.run('DELETE FROM hashtags WHERE id = ?', tag.id, err => {
-      if (err) {
-        reject(err)
-      }
-      resolve(null)
+    db.serialize(() => {
+      db.run('PRAGMA foreign_keys = ON')
+
+      db.run('DELETE FROM hashtags WHERE id = ?', tag.id, err => {
+        if (err) {
+          reject(err)
+        }
+        resolve(null)
+      })
     })
   })
 }

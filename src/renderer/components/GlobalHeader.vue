@@ -24,7 +24,7 @@
             <FailoverImg :src="`${server.baseURL}/favicon.ico`" :failoverSrc="`${server.baseURL}/favicon.png`" class="instance-icon" />
             <span>{{ server.domain }}</span>
           </el-menu-item>
-          <el-menu-item index="/login" :title="$t('global_header.add_new_account')" role="menuitem" class="add-new-account">
+          <el-menu-item index="/login/form" :title="$t('global_header.add_new_account')" role="menuitem" class="add-new-account">
             <font-awesome-icon icon="plus" />
             <span>New</span>
           </el-menu-item>
@@ -71,7 +71,7 @@ export default defineComponent({
           }
         })
         .catch(_ => {
-          return router.push({ path: '/login' })
+          return router.push({ path: '/login/form' })
         })
     }
 

@@ -4,7 +4,6 @@ import { InjectionKey } from 'vue'
 
 import App, { AppState } from './App'
 import GlobalHeader, { GlobalHeaderState } from './GlobalHeader'
-import Login, { LoginState } from './Login'
 import TimelineSpace, { TimelineSpaceModuleState } from './TimelineSpace'
 import Preferences, { PreferencesModuleState } from './Preferences'
 import Settings, { SettingsModuleState } from './Settings'
@@ -15,7 +14,6 @@ const win = (window as any) as MyWindow
 export interface RootState {
   App: AppState
   GlobalHeader: GlobalHeaderState
-  Login: LoginState
   TimelineSpace: TimelineSpaceModuleState
   Preferences: PreferencesModuleState
   Settings: SettingsModuleState
@@ -34,7 +32,6 @@ export default createStore({
   modules: {
     App,
     GlobalHeader,
-    Login,
     TimelineSpace,
     Preferences,
     Settings
