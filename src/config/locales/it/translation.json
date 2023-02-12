@@ -55,7 +55,7 @@
     "favourite": "Favourited",
     "bookmark": "Bookmarks",
     "local": "Timeline locale",
-    "public": "Timeline pubblica",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "Cerca",
     "lists": "Liste"
@@ -68,20 +68,12 @@
     "follow_requests": "Follow requests",
     "direct_messages": "Direct messages",
     "local": "Timeline locale",
-    "public": "Timeline pubblica",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "Cerca",
     "lists": "Liste",
     "members": "Membri",
-    "option": {
-      "title": "Opzioni",
-      "show_reblogs": "Show boosts",
-      "show_replies": "Mostra risposte",
-      "apply": "Applica"
-    },
-    "new_toot": "Publish",
-    "reload": "Ricarica",
-    "settings": "Impostazioni"
+    "reload": "Ricarica"
   },
   "settings": {
     "title": "Impostazioni",
@@ -104,13 +96,6 @@
     },
     "timeline": {
       "title": "Cronologia",
-      "unread_notification": {
-        "title": "Unread notifications",
-        "description": "Personalizza le notifiche non lette per ciascuna Timeline.",
-        "direct": "Direct messages",
-        "local": "Local timeline",
-        "public": "Public timeline"
-      },
       "use_marker": {
         "title": "Carica la timeline dall'ultima posizione di lettura",
         "home": "Pagina Iniziale",
@@ -280,37 +265,6 @@
     }
   },
   "modals": {
-    "new_toot": {
-      "title": "New post",
-      "cw": "Scrivi il tuo avviso qui",
-      "status": "What's on your mind?",
-      "cancel": "Annulla",
-      "toot": "Publish",
-      "close_confirm": "Are you sure you want to discard this post?",
-      "close_confirm_ok": "Scarta",
-      "close_confirm_cancel": "Continue editing",
-      "description": "Add alternate text for this media",
-      "footer": {
-        "add_image": "Aggiungi immagini",
-        "poll": "Aggiungi un sondaggio",
-        "change_visibility": "Modifica visibilità",
-        "change_sensitive": "Contrassegnare i media come sensibili",
-        "add_cw": "Add content warnings",
-        "pined_hashtag": "Pinned hashtag"
-      },
-      "poll": {
-        "add_choice": "Add an option",
-        "expires": {
-          "5_minutes": "5 minuti",
-          "30_minutes": "30 minuti",
-          "1_hour": "1 ora",
-          "6_hours": "6 ore",
-          "1_day": "1 giorno",
-          "3_days": "3 giorni",
-          "7_days": "7 giorni"
-        }
-      }
-    },
     "jump": {
       "jump_to": "Salta a..."
     },
@@ -331,13 +285,10 @@
       "title": "Scorciatoie da Tastiera",
       "ctrl_number": "Passa ad un altro account",
       "ctrl_k": "Salta ad altre cronologie",
-      "ctrl_n": "Open the new post dialog",
-      "ctrl_enter": "Publish the post",
+      "ctrl_enter": "Send the post",
       "ctrl_r": "Refresh current timeline",
       "j": "Select the next post",
       "k": "Select the previous post",
-      "h": "Abilita focalizzazione sulla colonna sinistra",
-      "l": "Abilita focalizzazione sulla colonna destra",
       "r": "Reply to the selected post",
       "b": "Boost the selected post",
       "f": "Favourite the selected post",
@@ -509,12 +460,12 @@
       "require_domain_name": "È richiesto un nome dominio",
       "domain_format": "Per fovore, inserire solo il nome dominio"
     },
-    "new_toot": {
+    "compose": {
       "toot_length": "Post length should be between {{min}} and {{max}}",
-      "attach_length": "È possibile allegare solo fino a {{max}} immagine",
-      "attach_length_plural": "È possibile allegare solo fino a {{max}} immagini",
-      "attach_image": "È possibile allegare solo immagini o video",
-      "poll_invalid": "Scelte del sondaggio non valide"
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos",
+      "poll_invalid": "Invalid poll choices"
     }
   },
   "notification": {
@@ -553,6 +504,34 @@
     "poll_expired": {
       "title": "Poll expired",
       "body": "{{username}}'s poll has ended"
+    }
+  },
+  "compose": {
+    "title": "New post",
+    "cw": "Write your warning here",
+    "status": "What's on your mind?",
+    "cancel": "Cancel",
+    "toot": "Post",
+    "description": "Add alternate text for this media",
+    "footer": {
+      "add_image": "Add images",
+      "poll": "Add a poll",
+      "change_visibility": "Change visibility",
+      "change_sensitive": "Mark media as sensitive",
+      "add_cw": "Add content warnings",
+      "pined_hashtag": "Pinned hashtag"
+    },
+    "poll": {
+      "add_choice": "Add an option",
+      "expires": {
+        "5_minutes": "5 minutes",
+        "30_minutes": "30 minutes",
+        "1_hour": "1 hour",
+        "6_hours": "6 hours",
+        "1_day": "1 day",
+        "3_days": "3 days",
+        "7_days": "7 days"
+      }
     }
   }
 }
