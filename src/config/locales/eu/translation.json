@@ -55,7 +55,7 @@
     "favourite": "Gogokoak",
     "bookmark": "Laster-markak",
     "local": "Denbora-lerro lokala",
-    "public": "Denbora-lerro publikoa",
+    "public": "Federated timeline",
     "hashtag": "Traolak",
     "search": "Bilaketa",
     "lists": "Zerrendak"
@@ -68,20 +68,12 @@
     "follow_requests": "Jarraipen-eskaerak",
     "direct_messages": "Mezu zuzenak",
     "local": "Denbora-lerro lokala",
-    "public": "Denbora-lerro publikoa",
+    "public": "Federated timeline",
     "hashtag": "Traolak",
     "search": "Bilaketa",
     "lists": "Zerrendak",
     "members": "Kideak",
-    "option": {
-      "title": "Aukerak",
-      "show_reblogs": "Erakutsi bultzadak",
-      "show_replies": "Erakutsi erantzunak",
-      "apply": "Ezarri"
-    },
-    "new_toot": "Argitaratu",
-    "reload": "Birkargatu",
-    "settings": "Ezarpenak"
+    "reload": "Birkargatu"
   },
   "settings": {
     "title": "Ezarpenak",
@@ -104,13 +96,6 @@
     },
     "timeline": {
       "title": "Denbora-lerroa",
-      "unread_notification": {
-        "title": "Irakurri gabeko jakinarazpenak",
-        "description": "Pertsonalizatu irakurri gabeko jakinarazpenak denbora-lerro bakoitzarentzat.",
-        "direct": "Mezu zuzenak",
-        "local": "Denbora-lerro lokala",
-        "public": "Denbora-lerro publikoa"
-      },
       "use_marker": {
         "title": "Kargatu denbora-lerroa irakurritako azken kokapenetik",
         "home": "Hasiera",
@@ -280,37 +265,6 @@
     }
   },
   "modals": {
-    "new_toot": {
-      "title": "Bidalketa berria",
-      "cw": "Idatzi abisua hemen",
-      "status": "Zer duzu buruan?",
-      "cancel": "Utzi",
-      "toot": "Argitaratu",
-      "close_confirm": "Ziur zaude bidalketa hau baztertu nahi duzula?",
-      "close_confirm_ok": "Bai, baztertu",
-      "close_confirm_cancel": "Ez, jarraitu editatzen",
-      "description": "Gehitu multimedia honen deskribapena",
-      "footer": {
-        "add_image": "Gehitu irudiak",
-        "poll": "Gehitu inkesta",
-        "change_visibility": "Aldatu ikusgaitasuna",
-        "change_sensitive": "Markatu multimedia hunkigarri gisa",
-        "add_cw": "Gehitu edukiari buruzko oharra",
-        "pined_hashtag": "Finkatutako traola"
-      },
-      "poll": {
-        "add_choice": "Gehitu aukera bat",
-        "expires": {
-          "5_minutes": "5 minutu",
-          "30_minutes": "30 minutu",
-          "1_hour": "Ordubete",
-          "6_hours": "6 ordu",
-          "1_day": "Egun 1",
-          "3_days": "3 egun",
-          "7_days": "7 egun"
-        }
-      }
-    },
     "jump": {
       "jump_to": "Joan hona…"
     },
@@ -331,13 +285,10 @@
       "title": "Teklatuaren lasterbideak",
       "ctrl_number": "Aldatu kontuak",
       "ctrl_k": "Egin jauzi beste denbora-lerro batzuetara",
-      "ctrl_n": "Ireki bidalketa berria idazteko leihoa",
-      "ctrl_enter": "Argitaratu bidalketa",
+      "ctrl_enter": "Send the post",
       "ctrl_r": "Freskatu oraingo denbora-lerroa",
       "j": "Hautatu hurrengo bidalketa",
       "k": "Hautatu aurreko bidalketa",
-      "h": "Aldatu fokua ezkerreko zutabera",
-      "l": "Aldatu fokua eskumako zutabera",
       "r": "Erantzun hautatutako bidalketari",
       "b": "Bultzatu hautatutako bidalketa",
       "f": "Egin gogoko hautatutako bidalketa",
@@ -509,12 +460,12 @@
       "require_domain_name": "Domeinuaren izena ezinbestekoa da",
       "domain_format": "Sartu domeinuaren izena soilik"
     },
-    "new_toot": {
-      "toot_length": "Bidalketaren luzera {{min}} eta {{max}} artekoa izan behar da",
-      "attach_length": "Irudi bakar {{max}} erantsi dezakezu",
-      "attach_length_plural": "{{max}} irudi soilik erantsi ditzakezu",
-      "attach_image": "Irudiak edo bideoak soilik erantsi ditzakezu",
-      "poll_invalid": "Inkestaren aukerek ez dute balio"
+    "compose": {
+      "toot_length": "Post length should be between {{min}} and {{max}}",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos",
+      "poll_invalid": "Invalid poll choices"
     }
   },
   "notification": {
@@ -553,6 +504,34 @@
     "poll_expired": {
       "title": "Inkesta amaitu da",
       "body": "{{username}}(r)en inkesta amaitu da"
+    }
+  },
+  "compose": {
+    "title": "New post",
+    "cw": "Write your warning here",
+    "status": "What's on your mind?",
+    "cancel": "Cancel",
+    "toot": "Post",
+    "description": "Add alternate text for this media",
+    "footer": {
+      "add_image": "Add images",
+      "poll": "Add a poll",
+      "change_visibility": "Change visibility",
+      "change_sensitive": "Mark media as sensitive",
+      "add_cw": "Add content warnings",
+      "pined_hashtag": "Pinned hashtag"
+    },
+    "poll": {
+      "add_choice": "Add an option",
+      "expires": {
+        "5_minutes": "5 minutes",
+        "30_minutes": "30 minutes",
+        "1_hour": "1 hour",
+        "6_hours": "6 hours",
+        "1_day": "1 day",
+        "3_days": "3 days",
+        "7_days": "7 days"
+      }
     }
   }
 }

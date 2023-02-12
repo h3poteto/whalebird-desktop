@@ -55,7 +55,7 @@
     "favourite": "Favourited",
     "bookmark": "Bookmarks",
     "local": "Loidhne-ama ionadail",
-    "public": "Loidhne-ama phoblach",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "Lorg",
     "lists": "Liostaichean"
@@ -68,20 +68,12 @@
     "follow_requests": "Follow requests",
     "direct_messages": "Direct messages",
     "local": "Loidhne-ama ionadail",
-    "public": "Loidhne-ama phoblach",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "Lorg",
     "lists": "Liostaichean",
     "members": "Buill",
-    "option": {
-      "title": "Roghainnean",
-      "show_reblogs": "Show boosts",
-      "show_replies": "Seall na freagairtean",
-      "apply": "Cuir an sàs"
-    },
-    "new_toot": "Publish",
-    "reload": "Ath-luchdaich",
-    "settings": "Roghainnean"
+    "reload": "Ath-luchdaich"
   },
   "settings": {
     "title": "Roghainnean",
@@ -104,13 +96,6 @@
     },
     "timeline": {
       "title": "Loidhne-ama",
-      "unread_notification": {
-        "title": "Unread notifications",
-        "description": "Gnàthaich na brathan nach deach a leughadh do gach loidhne-ama.",
-        "direct": "Direct messages",
-        "local": "Local timeline",
-        "public": "Public timeline"
-      },
       "use_marker": {
         "title": "Luchdaich an loidhne-ama on ionad-leughaidh mu dheireadh",
         "home": "Dachaigh",
@@ -280,37 +265,6 @@
     }
   },
   "modals": {
-    "new_toot": {
-      "title": "New post",
-      "cw": "Sgrìobh an rabhadh agad an-seo",
-      "status": "What's on your mind?",
-      "cancel": "Sguir dheth",
-      "toot": "Publish",
-      "close_confirm": "Are you sure you want to discard this post?",
-      "close_confirm_ok": "Tilg air falbh",
-      "close_confirm_cancel": "Continue editing",
-      "description": "Add alternate text for this media",
-      "footer": {
-        "add_image": "Cuir dealbhan ris",
-        "poll": "Cuir cunntas-bheachd ris",
-        "change_visibility": "Atharraich an fhaicsinneachd",
-        "change_sensitive": "Mark media as sensitive",
-        "add_cw": "Add content warnings",
-        "pined_hashtag": "Pinned hashtag"
-      },
-      "poll": {
-        "add_choice": "Add an option",
-        "expires": {
-          "5_minutes": "5 mionaidean",
-          "30_minutes": "Leth-uair a thìde",
-          "1_hour": "Uair a thìde",
-          "6_hours": "6 uairean a thìde",
-          "1_day": "Latha",
-          "3_days": "3 làithean",
-          "7_days": "Seachdain"
-        }
-      }
-    },
     "jump": {
       "jump_to": "Leum gu…"
     },
@@ -331,13 +285,10 @@
       "title": "Ath-ghoiridean a’ mheur-chlàir",
       "ctrl_number": "Thoir leum gu cunntas eile",
       "ctrl_k": "Thoir leum gu loidhne-ama eile",
-      "ctrl_n": "Open the new post dialog",
-      "ctrl_enter": "Publish the post",
+      "ctrl_enter": "Send the post",
       "ctrl_r": "Refresh current timeline",
       "j": "Select the next post",
       "k": "Select the previous post",
-      "h": "Cuir am fòcas air a’ cholbh taobh clì",
-      "l": "Cuir am fòcas air a’ cholbh taobh deas",
       "r": "Reply to the selected post",
       "b": "Boost the selected post",
       "f": "Favourite the selected post",
@@ -509,12 +460,12 @@
       "require_domain_name": "Tha feum air ainm àrainne",
       "domain_format": "Na cuir a-steach ach ainm na h-àrainne"
     },
-    "new_toot": {
+    "compose": {
       "toot_length": "Post length should be between {{min}} and {{max}}",
-      "attach_length": "Chan urrainn dhut barrachd air {{max}} dealbh a cheangal ris",
-      "attach_length_plural": "Chan urrainn dhut barrachd air {{max}} dealbh(an) a cheangal ris",
-      "attach_image": "Chan urrainn dhut ach dealbhan no videothan a cheangal ris",
-      "poll_invalid": "Roghainnean mì-dhligheach sa chunntas-bheachd"
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos",
+      "poll_invalid": "Invalid poll choices"
     }
   },
   "notification": {
@@ -553,6 +504,34 @@
     "poll_expired": {
       "title": "Poll expired",
       "body": "{{username}}'s poll has ended"
+    }
+  },
+  "compose": {
+    "title": "New post",
+    "cw": "Write your warning here",
+    "status": "What's on your mind?",
+    "cancel": "Cancel",
+    "toot": "Post",
+    "description": "Add alternate text for this media",
+    "footer": {
+      "add_image": "Add images",
+      "poll": "Add a poll",
+      "change_visibility": "Change visibility",
+      "change_sensitive": "Mark media as sensitive",
+      "add_cw": "Add content warnings",
+      "pined_hashtag": "Pinned hashtag"
+    },
+    "poll": {
+      "add_choice": "Add an option",
+      "expires": {
+        "5_minutes": "5 minutes",
+        "30_minutes": "30 minutes",
+        "1_hour": "1 hour",
+        "6_hours": "6 hours",
+        "1_day": "1 day",
+        "3_days": "3 days",
+        "7_days": "7 days"
+      }
     }
   }
 }

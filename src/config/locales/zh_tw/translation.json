@@ -55,7 +55,7 @@
     "favourite": "Favourited",
     "bookmark": "Bookmarks",
     "local": "本機時間軸",
-    "public": "公開時間軸",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "搜尋",
     "lists": "列表"
@@ -68,20 +68,12 @@
     "follow_requests": "Follow requests",
     "direct_messages": "Direct messages",
     "local": "本機時間軸",
-    "public": "公開時間軸",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "搜尋",
     "lists": "列表",
     "members": "成員",
-    "option": {
-      "title": "選項",
-      "show_reblogs": "Show boosts",
-      "show_replies": "顯示回覆",
-      "apply": "套用"
-    },
-    "new_toot": "Publish",
-    "reload": "重新整理",
-    "settings": "設定"
+    "reload": "重新整理"
   },
   "settings": {
     "title": "設定",
@@ -104,13 +96,6 @@
     },
     "timeline": {
       "title": "時間軸",
-      "unread_notification": {
-        "title": "Unread notifications",
-        "description": "自訂每一個時間軸之未讀通知",
-        "direct": "Direct messages",
-        "local": "Local timeline",
-        "public": "Public timeline"
-      },
       "use_marker": {
         "title": "從上次閱讀位置讀取時間軸",
         "home": "首頁",
@@ -280,37 +265,6 @@
     }
   },
   "modals": {
-    "new_toot": {
-      "title": "New post",
-      "cw": "請在此填入警告訊息",
-      "status": "What's on your mind?",
-      "cancel": "取消",
-      "toot": "Publish",
-      "close_confirm": "Are you sure you want to discard this post?",
-      "close_confirm_ok": "捨棄",
-      "close_confirm_cancel": "Continue editing",
-      "description": "Add alternate text for this media",
-      "footer": {
-        "add_image": "新增圖片",
-        "poll": "新增投票",
-        "change_visibility": "變更可見度",
-        "change_sensitive": "Mark media as sensitive",
-        "add_cw": "Add content warnings",
-        "pined_hashtag": "Pinned hashtag"
-      },
-      "poll": {
-        "add_choice": "Add an option",
-        "expires": {
-          "5_minutes": "5 分鐘",
-          "30_minutes": "30 分鐘",
-          "1_hour": "1 小時",
-          "6_hours": "6 小時",
-          "1_day": "1 天",
-          "3_days": "3 天",
-          "7_days": "7 天"
-        }
-      }
-    },
     "jump": {
       "jump_to": "跳至..."
     },
@@ -331,13 +285,10 @@
       "title": "鍵盤快速鍵",
       "ctrl_number": "切換帳號",
       "ctrl_k": "跳至其他時間軸",
-      "ctrl_n": "Open the new post dialog",
-      "ctrl_enter": "Publish the post",
+      "ctrl_enter": "Send the post",
       "ctrl_r": "Refresh current timeline",
       "j": "Select the next post",
       "k": "Select the previous post",
-      "h": "切換焦點至左方欄",
-      "l": "切換焦點至右方欄",
       "r": "Reply to the selected post",
       "b": "Boost the selected post",
       "f": "Favourite the selected post",
@@ -509,12 +460,12 @@
       "require_domain_name": "請填入網域名稱",
       "domain_format": "請僅輸入網域名稱 (無前綴 https://)"
     },
-    "new_toot": {
+    "compose": {
       "toot_length": "Post length should be between {{min}} and {{max}}",
-      "attach_length": "您只能附加最多 {{max}} 個圖片。",
-      "attach_length_plural": "您只能附加最多 {{max}} 個圖片。",
-      "attach_image": "只能附加圖片或影片",
-      "poll_invalid": "無效的投票選項"
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos",
+      "poll_invalid": "Invalid poll choices"
     }
   },
   "notification": {
@@ -553,6 +504,34 @@
     "poll_expired": {
       "title": "Poll expired",
       "body": "{{username}}'s poll has ended"
+    }
+  },
+  "compose": {
+    "title": "New post",
+    "cw": "Write your warning here",
+    "status": "What's on your mind?",
+    "cancel": "Cancel",
+    "toot": "Post",
+    "description": "Add alternate text for this media",
+    "footer": {
+      "add_image": "Add images",
+      "poll": "Add a poll",
+      "change_visibility": "Change visibility",
+      "change_sensitive": "Mark media as sensitive",
+      "add_cw": "Add content warnings",
+      "pined_hashtag": "Pinned hashtag"
+    },
+    "poll": {
+      "add_choice": "Add an option",
+      "expires": {
+        "5_minutes": "5 minutes",
+        "30_minutes": "30 minutes",
+        "1_hour": "1 hour",
+        "6_hours": "6 hours",
+        "1_day": "1 day",
+        "3_days": "3 days",
+        "7_days": "7 days"
+      }
     }
   }
 }
