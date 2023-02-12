@@ -1,6 +1,6 @@
 {
   "name": "Whalebird",
-  "version": "5.0.0-beta.4",
+  "version": "5.0.0-beta.5",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
   "description": "An Electron based Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
   },
   "config": {
-    "buildVersion": "143",
+    "buildVersion": "144",
     "appVersion": "5.0.0"
   },
   "main": "./dist/electron/main.js",
@@ -28,7 +28,7 @@
     "build": "node .electron-vue/build.js",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
-    "build:mas": "yarn run build:clean && yarn run pack && electron-packager ./ 'Whalebird' --platform=mas --arch=x64 --arch=arm64 --electron-version=20.3.10 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/whalebird.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=social.whalebird.desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --app-category-type=public.app-category.social-networking && node ./packages/universal.js",
+    "build:mas": "yarn run build:clean && yarn run pack && electron-packager ./ 'Whalebird' --platform=mas --arch=x64 --arch=arm64 --electron-version=20.3.12 --asar.unpackDir='build/sounds' --out=packages --ignore='^/src' --ignore='^/.electron-vue' --ignore='^/.envrc' --ignore='^/packages' --ignore='^/plist' --ignore='^/static' --ignore='^/whalebird.db' --ignore='^/screenshot.png' --prune=true --icon=./build/icons/icon.icns --overwrite --app-bundle-id=social.whalebird.desktop --app-version=$npm_package_config_appVersion --build-version=$npm_package_config_buildVersion --extend-info='./plist/team.plist' --app-category-type=public.app-category.social-networking && node ./packages/universal.js",
     "package:mac": "electron-builder --mac --publish never --config electron-builder.json",
     "package:linux": "electron-builder --linux --publish never --config electron-builder.json",
     "package:win32": "electron-builder --win --ia32 --publish never --config electron-builder.json",
