@@ -5157,10 +5157,10 @@ electron-windows-store@^2.1.0:
     multiline "^2.0.0"
     path-exists "^3.0.0"
 
-electron@20.3.11:
-  version "20.3.11"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-20.3.11.tgz#dd3a1a26edecd012a807ae96409d52d0a0cc4f11"
-  integrity sha512-+dZRzUCDIeVcOqha4hW/y/rNOjoM23rcuLQgrdzayj2FHfgs8mud6fAzvTeJN3TT2c6em/u5cZYQXqdrYcZqAg==
+electron@20.3.12:
+  version "20.3.12"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-20.3.12.tgz#5884b848f62daa6a3d07bbb9e29498c2da5da667"
+  integrity sha512-CuCZKhwdSXaUNIoEuPVZ25YH18zmox3wEM8Acwcy9tlpD8Jiuq3ji3RZ98eVWJalrpqbdE9LtTD/sLC86GIkLg==
   dependencies:
     "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
