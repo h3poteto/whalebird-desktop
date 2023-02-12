@@ -540,19 +540,19 @@
     },
     "reaction": {
       "title": "リアクション",
-      "body": "{{username}} reacted to your post"
+      "body": "{{username}} があなたの投稿にリアクションしました"
     },
     "status": {
-      "title": "New reaction",
-      "body": "{{username}} made a new post"
+      "title": "リアクション",
+      "body": "{{username}} が新しい投稿を行いました"
     },
     "poll_vote": {
-      "title": "New poll vote",
-      "body": "{{username}} voted in your poll"
+      "title": "アンケート投票",
+      "body": "{{username}} があなたのアンケートに投票しました"
     },
     "poll_expired": {
-      "title": "Poll expired",
-      "body": "{{username}}'s poll has ended"
+      "title": "アンケート終了",
+      "body": "{{username}} のアンケートが終了しました"
     }
   }
 }
