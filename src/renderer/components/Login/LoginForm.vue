@@ -40,25 +40,28 @@
 import { defineComponent, computed, reactive, ref } from 'vue'
 import { useI18next } from 'vue3-i18next'
 import { ElLoading, ElMessage, FormInstance, FormRules } from 'element-plus'
-import { useStore } from '@/store'
 import { domainFormat } from '@/utils/validator'
-import { ACTION_TYPES } from '@/store/Login'
+import { detector, OAuth } from 'megalodon'
+import { MyWindow } from '~/src/types/global'
+import { useRouter } from 'vue-router'
+import { LocalServer } from '~/src/types/localServer'
 
 export default defineComponent({
   name: 'login-form',
   setup() {
-    const space = 'Login'
-    const store = useStore()
     const i18n = useI18next()
+    const router = useRouter()
+    const win = (window as any) as MyWindow
 
     const form = reactive({
       domainName: ''
     })
     const loginFormRef = ref<FormInstance>()
+    const domain = ref<string>('')
+    const searching = ref<boolean>(false)
+    const allowLogin = computed(() => domain.value && form.domainName == domain.value)
+    const sns = ref<'mastodon' | 'pleroma' | 'misskey'>('mastodon')
 
-    const selectedInstance = computed(() => store.state.Login.domain)
-    const searching = computed(() => store.state.Login.searching)
-    const allowLogin = computed(() => selectedInstance.value && form.domainName === selectedInstance.value)
     const rules = reactive<FormRules>({
       domainName: [
         {
@@ -81,8 +84,20 @@ export default defineComponent({
         background: 'rgba(0, 0, 0, 0.7)'
       })
       try {
-        await store.dispatch(`${space}/${ACTION_TYPES.ADD_SERVER}`)
-        await store.dispatch(`${space}/${ACTION_TYPES.ADD_APP}`)
+        const server: LocalServer = await win.ipcRenderer.invoke('add-server', domain.value)
+        const appData: OAuth.AppData = await win.ipcRenderer.invoke('add-app', `https://${domain.value}`)
+        router.push({
+          path: '/login/authorize',
+          query: {
+            server_id: server.id,
+            base_url: server.baseURL,
+            client_id: appData.client_id,
+            client_secret: appData.client_secret,
+            session_token: appData.session_token,
+            sns: sns.value,
+            url: appData.url
+          }
+        })
       } catch (err) {
         ElMessage({
           message: i18n.t('message.authorize_url_error'),
@@ -96,27 +111,31 @@ export default defineComponent({
 
     const confirm = async (formEl: FormInstance | undefined) => {
       if (!formEl) return
-      await formEl.validate(valid => {
+      await formEl.validate(async valid => {
         if (valid) {
-          return store
-            .dispatch(`${space}/${ACTION_TYPES.CONFIRM_INSTANCE}`, form.domainName)
-            .then(() => {
-              ElMessage({
-                message: i18n.t('message.domain_confirmed', {
-                  domain: form.domainName
-                }),
-                type: 'success'
-              })
+          searching.value = true
+          try {
+            const cleanDomain = form.domainName.trim()
+            sns.value = await detector(`https://${cleanDomain}`)
+            domain.value = cleanDomain
+            ElMessage({
+              message: i18n.t('message.domain_confirmed', {
+                domain: cleanDomain
+              }),
+              type: 'success'
             })
-            .catch(err => {
-              ElMessage({
-                message: i18n.t('message.domain_doesnt_exist', {
-                  domain: form.domainName
-                }),
-                type: 'error'
-              })
-              console.error(err)
+          } catch (err) {
+            console.error(err)
+            ElMessage({
+              message: i18n.t('message.domain_doesnt_exist', {
+                domain: form.domainName
+              }),
+              type: 'error'
             })
+          } finally {
+            searching.value = false
+          }
+          return true
         } else {
           ElMessage({
             message: i18n.t('validation.login.domain_format'),

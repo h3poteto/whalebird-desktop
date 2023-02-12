@@ -13,7 +13,7 @@
       class="authorize-form"
       @submit.prevent="authorizeSubmit"
     >
-      <p v-if="sns === 'misskey'">{{ $t('authorize.misskey_label') }}</p>
+      <p v-if="$route.query.sns === 'misskey'">{{ $t('authorize.misskey_label') }}</p>
       <el-form-item :label="$t('authorize.code_label')" v-else>
         <el-input v-model="authorizeForm.code"></el-input>
       </el-form-item>
@@ -37,27 +37,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { defineComponent, ref, reactive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useI18next } from 'vue3-i18next'
 import { ElMessage } from 'element-plus'
 import { useMagicKeys, whenever } from '@vueuse/core'
-import { useStore } from '@/store'
-import { ACTION_TYPES } from '@/store/Login'
+import { MyWindow } from '~/src/types/global'
+import { LocalAccount } from '~/src/types/localAccount'
 
 export default defineComponent({
   name: 'Authorize',
   setup() {
-    const space = 'Login'
-    const store = useStore()
+    const win = (window as any) as MyWindow
     const router = useRouter()
+    const route = useRoute()
     const i18n = useI18next()
     const { escape } = useMagicKeys()
 
-    const sns = computed(() => store.state.Login.sns)
-
     const authorizeForm = reactive({
-      code: null
+      code: ''
     })
     const submitting = ref<boolean>(false)
 
@@ -65,23 +63,30 @@ export default defineComponent({
       close()
     })
 
-    const authorizeSubmit = () => {
+    const authorizeSubmit = async () => {
       submitting.value = true
-      store
-        .dispatch(`${space}/${ACTION_TYPES.AUTHORIZE}`, authorizeForm.code)
-        .finally(() => {
-          submitting.value = false
+      let code = authorizeForm.code
+      if (route.query.sns === 'misskey' && route.query.session_token) {
+        code = route.query.session_token.toString()
+      }
+      try {
+        const localAccount: LocalAccount = await win.ipcRenderer.invoke('authorize', {
+          serverID: route.query.server_id,
+          baseURL: route.query.base_url,
+          clientID: route.query.client_id,
+          clientSecret: route.query.client_secret,
+          code: code
         })
-        .then(id => {
-          router.push({ path: `/${id}/home` })
+        router.push({ path: `/${localAccount.id}/home` })
+      } catch (err) {
+        console.error(err)
+        ElMessage({
+          message: i18n.t('message.authorize_error'),
+          type: 'error'
         })
-        .catch(err => {
-          console.error(err)
-          ElMessage({
-            message: i18n.t('message.authorize_error'),
-            type: 'error'
-          })
-        })
+      } finally {
+        submitting.value = false
+      }
     }
 
     const close = () => {
@@ -92,8 +97,7 @@ export default defineComponent({
       authorizeForm,
       submitting,
       authorizeSubmit,
-      close,
-      sns
+      close
     }
   }
 })

@@ -463,26 +463,28 @@ ipcMain.handle('add-app', async (_: IpcMainInvokeEvent, url: string) => {
 })
 
 type AuthorizeRequest = {
-  server: LocalServer
-  appData: OAuth.AppData
+  serverID: number
+  baseURL: string
+  clientID: string
+  clientSecret: string
   code: string
 }
 
 ipcMain.handle('authorize', async (_: IpcMainInvokeEvent, req: AuthorizeRequest) => {
   const proxy = await proxyConfiguration.forMastodon()
-  const sns = await detector(req.server.baseURL, proxy)
-  const client = generator(sns, req.server.baseURL, null, 'Whalebird', proxy)
-  const tokenData = await client.fetchAccessToken(req.appData.client_id, req.appData.client_secret, req.code, 'urn:ietf:wg:oauth:2.0:oob')
+  const sns = await detector(req.baseURL, proxy)
+  const client = generator(sns, req.baseURL, null, 'Whalebird', proxy)
+  const tokenData = await client.fetchAccessToken(req.clientID, req.clientSecret, req.code, 'urn:ietf:wg:oauth:2.0:oob')
   let accessToken = tokenData.access_token
   if (sns === 'misskey') {
     // In misskey, access token is sha256(userToken + clientSecret)
     accessToken = crypto
       .createHash('sha256')
-      .update(tokenData.access_token + req.appData.client_secret, 'utf8')
+      .update(tokenData.access_token + req.clientSecret, 'utf8')
       .digest('hex')
   }
 
-  const authorizedClient = generator(sns, req.server.baseURL, accessToken, 'Whalebird', proxy)
+  const authorizedClient = generator(sns, req.baseURL, accessToken, 'Whalebird', proxy)
   const credentials = await authorizedClient.verifyAccountCredentials()
 
   const account = await insertAccount(
@@ -490,11 +492,11 @@ ipcMain.handle('authorize', async (_: IpcMainInvokeEvent, req: AuthorizeRequest)
     credentials.data.username,
     credentials.data.id,
     credentials.data.avatar,
-    req.appData.client_id,
-    req.appData.client_secret,
+    req.clientID,
+    req.clientSecret,
     accessToken,
     tokenData.refresh_token,
-    req.server
+    req.serverID
   )
   return account
 })

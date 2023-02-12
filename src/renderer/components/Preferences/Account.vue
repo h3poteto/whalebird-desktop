@@ -153,7 +153,7 @@ export default defineComponent({
 
     const removeAllAssociations = () => {
       store.dispatch(`${space}/${ACTION_TYPES.REMOVE_ALL_ACCOUNTS}`).then(() => {
-        router.push('/login')
+        router.push('/login/form')
       })
     }
 
