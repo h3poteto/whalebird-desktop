@@ -55,7 +55,7 @@
     "favourite": "Favourited",
     "bookmark": "Bookmarks",
     "local": "로컬",
-    "public": "연합",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "검색",
     "lists": "리스트"
@@ -68,20 +68,12 @@
     "follow_requests": "Follow requests",
     "direct_messages": "Direct messages",
     "local": "로컬",
-    "public": "연합",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "검색",
     "lists": "리스트",
     "members": "멤버",
-    "option": {
-      "title": "Option",
-      "show_reblogs": "Show boosts",
-      "show_replies": "Show replies",
-      "apply": "Apply"
-    },
-    "new_toot": "Publish",
-    "reload": "새로고침",
-    "settings": "설정"
+    "reload": "새로고침"
   },
   "settings": {
     "title": "설정",
@@ -104,13 +96,6 @@
     },
     "timeline": {
       "title": "타임라인",
-      "unread_notification": {
-        "title": "Unread notifications",
-        "description": "각 타임라인마다 새 알림 표시 여부를 설정합니다.",
-        "direct": "Direct messages",
-        "local": "Local timeline",
-        "public": "Public timeline"
-      },
       "use_marker": {
         "title": "Load the timeline from the last reading position",
         "home": "Home",
@@ -280,37 +265,6 @@
     }
   },
   "modals": {
-    "new_toot": {
-      "title": "New post",
-      "cw": "여기에 경고 문구를 입력하세요",
-      "status": "What's on your mind?",
-      "cancel": "취소",
-      "toot": "Publish",
-      "close_confirm": "Are you sure you want to discard this post?",
-      "close_confirm_ok": "Discard",
-      "close_confirm_cancel": "Continue editing",
-      "description": "Add alternate text for this media",
-      "footer": {
-        "add_image": "이미지 추가",
-        "poll": "Add a poll",
-        "change_visibility": "공개 범위 변경",
-        "change_sensitive": "Mark media as sensitive",
-        "add_cw": "Add content warnings",
-        "pined_hashtag": "Pinned hashtag"
-      },
-      "poll": {
-        "add_choice": "Add an option",
-        "expires": {
-          "5_minutes": "5 minutes",
-          "30_minutes": "30 minutes",
-          "1_hour": "1 hour",
-          "6_hours": "6 hours",
-          "1_day": "1 day",
-          "3_days": "3 days",
-          "7_days": "7 days"
-        }
-      }
-    },
     "jump": {
       "jump_to": "이동"
     },
@@ -331,13 +285,10 @@
       "title": "키보드 단축키",
       "ctrl_number": "계정 변경",
       "ctrl_k": "다른 타임라인으로 이동",
-      "ctrl_n": "Open the new post dialog",
-      "ctrl_enter": "Publish the post",
+      "ctrl_enter": "Send the post",
       "ctrl_r": "Refresh current timeline",
       "j": "Select the next post",
       "k": "Select the previous post",
-      "h": "왼쪽 칼럼으로 포커스 이동",
-      "l": "오른쪽 칼럼으로 포커스 이동",
       "r": "Reply to the selected post",
       "b": "Boost the selected post",
       "f": "Favourite the selected post",
@@ -509,11 +460,11 @@
       "require_domain_name": "도메인 주소가 필요합니다",
       "domain_format": "도메인 주소만 입력해주세요"
     },
-    "new_toot": {
+    "compose": {
       "toot_length": "Post length should be between {{min}} and {{max}}",
       "attach_length": "You can only attach up to {{max}} image",
       "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "이미지나 비디오만 첨부할 수 있습니다",
+      "attach_image": "You can only attach images or videos",
       "poll_invalid": "Invalid poll choices"
     }
   },
@@ -553,6 +504,34 @@
     "poll_expired": {
       "title": "Poll expired",
       "body": "{{username}}'s poll has ended"
+    }
+  },
+  "compose": {
+    "title": "New post",
+    "cw": "Write your warning here",
+    "status": "What's on your mind?",
+    "cancel": "Cancel",
+    "toot": "Post",
+    "description": "Add alternate text for this media",
+    "footer": {
+      "add_image": "Add images",
+      "poll": "Add a poll",
+      "change_visibility": "Change visibility",
+      "change_sensitive": "Mark media as sensitive",
+      "add_cw": "Add content warnings",
+      "pined_hashtag": "Pinned hashtag"
+    },
+    "poll": {
+      "add_choice": "Add an option",
+      "expires": {
+        "5_minutes": "5 minutes",
+        "30_minutes": "30 minutes",
+        "1_hour": "1 hour",
+        "6_hours": "6 hours",
+        "1_day": "1 day",
+        "3_days": "3 days",
+        "7_days": "7 days"
+      }
     }
   }
 }
