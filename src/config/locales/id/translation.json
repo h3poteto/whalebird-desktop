@@ -55,7 +55,7 @@
     "favourite": "Favourited",
     "bookmark": "Bookmarks",
     "local": "Linimasa lokal",
-    "public": "Linimasa publik",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "Cari",
     "lists": "Daftar"
@@ -68,20 +68,12 @@
     "follow_requests": "Follow requests",
     "direct_messages": "Direct messages",
     "local": "Linimasa lokal",
-    "public": "Linimasa publik",
+    "public": "Federated timeline",
     "hashtag": "Hashtags",
     "search": "Cari",
     "lists": "Daftar",
     "members": "Anggota",
-    "option": {
-      "title": "Opsi",
-      "show_reblogs": "Show boosts",
-      "show_replies": "Tampilkan balasan",
-      "apply": "Terapkan"
-    },
-    "new_toot": "Publish",
-    "reload": "Muat Ulang",
-    "settings": "Pengaturan"
+    "reload": "Muat Ulang"
   },
   "settings": {
     "title": "Pengaturan",
@@ -104,13 +96,6 @@
     },
     "timeline": {
       "title": "Linimasa",
-      "unread_notification": {
-        "title": "Unread notifications",
-        "description": "Sesuaikan notifikasi belum terbaca untuk setiap linimasa.",
-        "direct": "Direct messages",
-        "local": "Local timeline",
-        "public": "Public timeline"
-      },
       "use_marker": {
         "title": "Muat linimasa dari posisi baca terakhir",
         "home": "Beranda",
@@ -280,37 +265,6 @@
     }
   },
   "modals": {
-    "new_toot": {
-      "title": "New post",
-      "cw": "Tulis peringatanmu disini",
-      "status": "What's on your mind?",
-      "cancel": "Batal",
-      "toot": "Publish",
-      "close_confirm": "Are you sure you want to discard this post?",
-      "close_confirm_ok": "Buang",
-      "close_confirm_cancel": "Continue editing",
-      "description": "Add alternate text for this media",
-      "footer": {
-        "add_image": "Tambahkan gambar",
-        "poll": "Tambahkan polling",
-        "change_visibility": "Atur Visibilitas",
-        "change_sensitive": "Mark media as sensitive",
-        "add_cw": "Add content warnings",
-        "pined_hashtag": "Pinned hashtag"
-      },
-      "poll": {
-        "add_choice": "Add an option",
-        "expires": {
-          "5_minutes": "5 menit",
-          "30_minutes": "30 menit",
-          "1_hour": "1 jam",
-          "6_hours": "6 jam",
-          "1_day": "1 hari",
-          "3_days": "3 hari",
-          "7_days": "7 hari"
-        }
-      }
-    },
     "jump": {
       "jump_to": "Lompat ke..."
     },
@@ -331,13 +285,10 @@
       "title": "Pintasan keyboard",
       "ctrl_number": "Ganti akun",
       "ctrl_k": "Lompat ke linimasa lain",
-      "ctrl_n": "Open the new post dialog",
-      "ctrl_enter": "Publish the post",
+      "ctrl_enter": "Send the post",
       "ctrl_r": "Refresh current timeline",
       "j": "Select the next post",
       "k": "Select the previous post",
-      "h": "Ubah fokus ke kolom kiri",
-      "l": "Ubah fokus ke kolom kanan",
       "r": "Reply to the selected post",
       "b": "Boost the selected post",
       "f": "Favourite the selected post",
@@ -509,12 +460,12 @@
       "require_domain_name": "Nama domain diperlukan",
       "domain_format": "Mohon masukkan nama domain"
     },
-    "new_toot": {
+    "compose": {
       "toot_length": "Post length should be between {{min}} and {{max}}",
-      "attach_length": "Anda hanya dapat melampirkan hingga {{max}} gambar",
-      "attach_length_plural": "Anda hanya dapat melampirkan hingga {{max}} gambar",
-      "attach_image": "Anda hanya dapat melampirkan gambar atau video",
-      "poll_invalid": "Pilihan angket invalid"
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos",
+      "poll_invalid": "Invalid poll choices"
     }
   },
   "notification": {
@@ -553,6 +504,34 @@
     "poll_expired": {
       "title": "Poll expired",
       "body": "{{username}}'s poll has ended"
+    }
+  },
+  "compose": {
+    "title": "New post",
+    "cw": "Write your warning here",
+    "status": "What's on your mind?",
+    "cancel": "Cancel",
+    "toot": "Post",
+    "description": "Add alternate text for this media",
+    "footer": {
+      "add_image": "Add images",
+      "poll": "Add a poll",
+      "change_visibility": "Change visibility",
+      "change_sensitive": "Mark media as sensitive",
+      "add_cw": "Add content warnings",
+      "pined_hashtag": "Pinned hashtag"
+    },
+    "poll": {
+      "add_choice": "Add an option",
+      "expires": {
+        "5_minutes": "5 minutes",
+        "30_minutes": "30 minutes",
+        "1_hour": "1 hour",
+        "6_hours": "6 hours",
+        "1_day": "1 day",
+        "3_days": "3 days",
+        "7_days": "7 days"
+      }
     }
   }
 }
