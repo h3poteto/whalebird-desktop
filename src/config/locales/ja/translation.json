@@ -55,7 +55,7 @@
     "favourite": "お気に入り",
     "bookmark": "ブックマーク",
     "local": "ローカル",
-    "public": "連合",
+    "public": "Federated timeline",
     "hashtag": "ハッシュタグ",
     "search": "検索",
     "lists": "リスト"
@@ -68,20 +68,12 @@
     "follow_requests": "フォロー申請",
     "direct_messages": "ダイレクトメッセージ",
     "local": "ローカルタイムライン",
-    "public": "連合タイムライン",
+    "public": "Federated timeline",
     "hashtag": "ハッシュタグ",
     "search": "検索",
     "lists": "リスト",
     "members": "メンバー",
-    "option": {
-      "title": "設定",
-      "show_reblogs": "ブースト表示",
-      "show_replies": "返信表示",
-      "apply": "適用"
-    },
-    "new_toot": "投稿",
-    "reload": "再読み込み",
-    "settings": "設定"
+    "reload": "再読み込み"
   },
   "settings": {
     "title": "設定",
@@ -104,13 +96,6 @@
     },
     "timeline": {
       "title": "タイムライン",
-      "unread_notification": {
-        "title": "未読管理",
-        "description": "未読管理をするタイムラインを設定",
-        "direct": "ダイレクトメッセージ",
-        "local": "ローカルタイムライン",
-        "public": "連合タイムライン"
-      },
       "use_marker": {
         "title": "前回読んだ位置からタイムラインを読み込む",
         "home": "ホーム",
@@ -280,37 +265,6 @@
     }
   },
   "modals": {
-    "new_toot": {
-      "title": "投稿",
-      "cw": "ここに警告を書いてください",
-      "status": "今なにしてる?",
-      "cancel": "キャンセル",
-      "toot": "投稿",
-      "close_confirm": "この下書きを破棄してよろしいですか？",
-      "close_confirm_ok": "破棄",
-      "close_confirm_cancel": "編集を継続",
-      "description": "メディアの説明を追加",
-      "footer": {
-        "add_image": "画像を添付",
-        "poll": "アンケートを追加",
-        "change_visibility": "プライバシー設定",
-        "change_sensitive": "メディアを閲覧注意にする",
-        "add_cw": "コンテンツ警告を追加",
-        "pined_hashtag": "ハッシュタグを固定する"
-      },
-      "poll": {
-        "add_choice": "選択肢を追加",
-        "expires": {
-          "5_minutes": "5分後",
-          "30_minutes": "30分後",
-          "1_hour": "1時間後",
-          "6_hours": "6時間後",
-          "1_day": "1日後",
-          "3_days": "3日後",
-          "7_days": "7日後"
-        }
-      }
-    },
     "jump": {
       "jump_to": "移動..."
     },
@@ -331,13 +285,10 @@
       "title": "キーボードショートカット",
       "ctrl_number": "アカウントの切り替え",
       "ctrl_k": "タイムラインの移動",
-      "ctrl_n": "トゥートモーダルの表示",
-      "ctrl_enter": "投稿する",
+      "ctrl_enter": "Send the post",
       "ctrl_r": "タイムラインを更新",
       "j": "次の投稿を選択",
       "k": "前の投稿を選択",
-      "h": "右のカラムを選択",
-      "l": "左のカラムを選択",
       "r": "選択した投稿に返信",
       "b": "選択した投稿をブースト",
       "f": "選択した投稿をお気に入り",
@@ -509,12 +460,12 @@
       "require_domain_name": "ドメイン名は必須です",
       "domain_format": "ドメイン名のみを入力してください"
     },
-    "new_toot": {
-      "toot_length": "投稿の長さは {{min}} から {{max}} の間でなければなりません",
-      "attach_length": "添付ファイルは {{max}} つまでです",
-      "attach_length_plural": "添付ファイルは {{max}} つまでです",
-      "attach_image": "画像かビデオしか添付できません",
-      "poll_invalid": "アンケートに不正な選択肢が含まれています"
+    "compose": {
+      "toot_length": "Post length should be between {{min}} and {{max}}",
+      "attach_length": "You can only attach up to {{max}} image",
+      "attach_length_plural": "You can only attach up to {{max}} images",
+      "attach_image": "You can only attach images or videos",
+      "poll_invalid": "Invalid poll choices"
     }
   },
   "notification": {
@@ -553,6 +504,34 @@
     "poll_expired": {
       "title": "アンケート終了",
       "body": "{{username}} のアンケートが終了しました"
+    }
+  },
+  "compose": {
+    "title": "New post",
+    "cw": "Write your warning here",
+    "status": "What's on your mind?",
+    "cancel": "Cancel",
+    "toot": "Post",
+    "description": "Add alternate text for this media",
+    "footer": {
+      "add_image": "Add images",
+      "poll": "Add a poll",
+      "change_visibility": "Change visibility",
+      "change_sensitive": "Mark media as sensitive",
+      "add_cw": "Add content warnings",
+      "pined_hashtag": "Pinned hashtag"
+    },
+    "poll": {
+      "add_choice": "Add an option",
+      "expires": {
+        "5_minutes": "5 minutes",
+        "30_minutes": "30 minutes",
+        "1_hour": "1 hour",
+        "6_hours": "6 hours",
+        "1_day": "1 day",
+        "3_days": "3 days",
+        "7_days": "7 days"
+      }
     }
   }
 }
