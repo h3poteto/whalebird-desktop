@@ -95,7 +95,7 @@
     "emoji-mart-vue-fast": "^12.0.1",
     "i18next": "^22.4.9",
     "megalodon": "5.1.1",
-    "minimist": "^1.2.7",
+    "minimist": "^1.2.8",
     "mitt": "^3.0.0",
     "moment": "^2.29.4",
     "mousetrap": "^1.6.5",
