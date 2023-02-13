@@ -187,7 +187,7 @@
     "style-loader": "^3.3.1",
     "stylelint": "^14.16.1",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-prettier": "^9.0.4",
+    "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard": "^29.0.0",
     "stylelint-scss": "^4.3.0",
     "timers-browserify": "^2.0.12",
