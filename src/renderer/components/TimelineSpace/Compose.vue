@@ -16,7 +16,7 @@
       </div>
       <div class="poll" v-if="poll.options.length > 0">
         <ul class="options-list">
-          <li class="option" v-for="(option, index) in poll.options" :key="index">
+          <li class="option" v-for="(_, index) in poll.options" :key="index">
             <el-radio :disabled="true" :label="index">
               <el-input :placeholder="`Choice ${index}`" v-model="poll.options[index]" size="small"></el-input>
               <el-button class="remove-poll" link size="small" @click="removePollOption(index)"
@@ -262,6 +262,47 @@ export default defineComponent({
       if (!client.value) {
         return
       }
+
+      // Validation
+      if (form.status.length < 1 || form.status.length + form.spoiler.length > maxStatusChars.value) {
+        ElMessage({
+          message: i18n.t('validation.compose.toot_length', {
+            min: 1,
+            max: maxStatusChars.value
+          }),
+          type: 'error'
+        })
+        return
+      }
+      if (attachments.value.length > 4) {
+        ElMessage({
+          message: i18n.t('validation.compose.attach_length', {
+            max: 4
+          }),
+          type: 'error'
+        })
+        return
+      }
+      if (poll.options.length > 0) {
+        let mes: Array<any> = []
+        poll.options.forEach(option => {
+          if (option.length < 1) {
+            mes = [
+              ...mes,
+              {
+                message: i18n.t('validation.compose.poll_invalid'),
+                type: 'error'
+              }
+            ]
+          }
+        })
+        if (mes.length > 0) {
+          ElMessage(mes[0])
+          return
+        }
+      }
+
+      // Post
       let options = {
         visibility: visibility.value
       }
