@@ -395,7 +395,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Ongi etorri Whalebird-era! Idatzi zerbitzari baten domeinua kontu batean saioa hasteko.",
+    "domain_name_label": "Ongi etorri Whalebird-era! Saioa hasteko idatzi zerbitzariaren domeinua.",
     "proxy_info": "Proxy zerbitzaria behar baduzu, konfiguratu",
     "proxy_here": " hemen",
     "search": "Bilatu",
