@@ -132,7 +132,7 @@
     "@types/node": "^18.13.0",
     "@types/parse-link-header": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.51.0",
+    "@typescript-eslint/parser": "^5.52.0",
     "@vue/compiler-sfc": "^3.2.47",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
