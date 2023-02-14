@@ -461,11 +461,11 @@
       "domain_format": "ドメイン名のみを入力してください"
     },
     "compose": {
-      "toot_length": "Post length should be between {{min}} and {{max}}",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "toot_length": "投稿の長さは {{min}} から {{max}} の間でなければなりません",
+      "attach_length": "添付ファイルは {{max}} 個までです",
+      "attach_length_plural": "添付ファイルは {{max}} 個までです",
+      "attach_image": "画像または動画のみ添付できます",
+      "poll_invalid": "アンケートに不正な選択肢が含まれています"
     }
   },
   "notification": {
@@ -507,30 +507,30 @@
     }
   },
   "compose": {
-    "title": "New post",
-    "cw": "Write your warning here",
-    "status": "What's on your mind?",
-    "cancel": "Cancel",
-    "toot": "Post",
-    "description": "Add alternate text for this media",
+    "title": "投稿",
+    "cw": "ここに警告を書いてください",
+    "status": "今なにしてる?",
+    "cancel": "キャンセル",
+    "toot": "投稿",
+    "description": "メディアの説明を追加",
     "footer": {
-      "add_image": "Add images",
-      "poll": "Add a poll",
-      "change_visibility": "Change visibility",
-      "change_sensitive": "Mark media as sensitive",
-      "add_cw": "Add content warnings",
-      "pined_hashtag": "Pinned hashtag"
+      "add_image": "画像を添付",
+      "poll": "アンケートを追加",
+      "change_visibility": "公開範囲を変更",
+      "change_sensitive": "メディアを閲覧注意にする",
+      "add_cw": "コンテンツ警告を追加",
+      "pined_hashtag": "ハッシュタグを固定する"
     },
     "poll": {
-      "add_choice": "Add an option",
+      "add_choice": "選択肢を追加",
       "expires": {
-        "5_minutes": "5 minutes",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "1_day": "1 day",
-        "3_days": "3 days",
-        "7_days": "7 days"
+        "5_minutes": "5分後",
+        "30_minutes": "30分後",
+        "1_hour": "1時間後",
+        "6_hours": "6時間後",
+        "1_day": "1日後",
+        "3_days": "3日後",
+        "7_days": "7日後"
       }
     }
   }
