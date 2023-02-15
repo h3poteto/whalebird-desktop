@@ -55,7 +55,7 @@
     "favourite": "Gogokoak",
     "bookmark": "Laster-markak",
     "local": "Denbora-lerro lokala",
-    "public": "Federated timeline",
+    "public": "Federatutako denbora-lerroa",
     "hashtag": "Traolak",
     "search": "Bilaketa",
     "lists": "Zerrendak"
@@ -68,7 +68,7 @@
     "follow_requests": "Jarraipen-eskaerak",
     "direct_messages": "Mezu zuzenak",
     "local": "Denbora-lerro lokala",
-    "public": "Federated timeline",
+    "public": "Federatutako denbora-lerroa",
     "hashtag": "Traolak",
     "search": "Bilaketa",
     "lists": "Zerrendak",
@@ -143,15 +143,15 @@
       "sounds": {
         "title": "Soinuak",
         "description": "Jo soinuak",
-        "fav_rb": "Bidalketa bat gogoko egiten edo bultzatzen duzunean",
+        "fav_rb": "Bidalketa bat gogoko egin edo bultzatzerakoan",
         "toot": "Bidalketa bat argitaratzerakoan"
       },
       "timeline": {
         "title": "Denbora-lerroa",
         "description": "Erabaki nola erakutsiko diren denbora-lerroak",
-        "cw": "Hedatu beti edukiari buruzko oharra duten publikazioak.",
-        "nsfw": "Erakutsi multimedia beti.",
-        "hideAllAttachments": "Ezkutatu multimedia beti."
+        "cw": "Hedatu beti edukiari buruzko oharra duten bidalketak.",
+        "nsfw": "Erakutsi beti multimedia.",
+        "hideAllAttachments": "Ezkutatu beti multimedia."
       },
       "other": {
         "title": "Beste aukera batzuk",
@@ -164,7 +164,7 @@
     },
     "appearance": {
       "title": "Itxura",
-      "theme_color": "Colour themes",
+      "theme_color": "Kolorea",
       "theme": {
         "system": "Sistemak darabilena",
         "light": "Argia",
@@ -184,7 +184,7 @@
         "secondary_color": "Bigarren mailako letra-tipoa",
         "border_color": "Ertza",
         "header_menu_color": "Goiburuko menua",
-        "wrapper_mask_color": "Dialog wrapper"
+        "wrapper_mask_color": "Goiburuko hondoa"
       },
       "font_size": "Letraren tamaina",
       "font_family": "Letra-tipoaren familia",
@@ -213,7 +213,7 @@
         "follow_request": "Jarraipen-eskaerak",
         "status": "Egoera jakinarazpenak",
         "poll_vote": "Inkestaren botoak",
-        "poll_expired": "Bozketa bat amaitzerakoan"
+        "poll_expired": "Bozketen amaiera"
       }
     },
     "account": {
@@ -285,7 +285,7 @@
       "title": "Teklatuaren lasterbideak",
       "ctrl_number": "Aldatu kontuak",
       "ctrl_k": "Egin jauzi beste denbora-lerro batzuetara",
-      "ctrl_enter": "Send the post",
+      "ctrl_enter": "Argitaratu",
       "ctrl_r": "Freskatu oraingo denbora-lerroa",
       "j": "Hautatu hurrengo bidalketa",
       "k": "Hautatu aurreko bidalketa",
@@ -369,9 +369,9 @@
     "reject": "Baztertu"
   },
   "hashtag": {
-    "tag_name": "Etiketaren izena",
-    "delete_tag": "Ezabatu etiketa",
-    "save_tag": "Gorde etiketa"
+    "tag_name": "Bilatu traola",
+    "delete_tag": "Ezabatu traola",
+    "save_tag": "Gorde traola"
   },
   "search": {
     "search": "Bilatu",
@@ -395,7 +395,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Ongi etorri Whalebird-era! Idatzi zerbitzari baten domeinua kontu batean saioa hasteko.",
+    "domain_name_label": "Ongi etorri Whalebird-era! Saioa hasteko idatzi zerbitzariaren domeinua.",
     "proxy_info": "Proxy zerbitzaria behar baduzu, konfiguratu",
     "proxy_here": " hemen",
     "search": "Bilatu",
@@ -461,11 +461,11 @@
       "domain_format": "Sartu domeinuaren izena soilik"
     },
     "compose": {
-      "toot_length": "Post length should be between {{min}} and {{max}}",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "toot_length": "Bidalketaren luzera {{min}} eta {{max}} artekoa izan behar da",
+      "attach_length": "Irudi bakar {{max}} erantsi dezakezu",
+      "attach_length_plural": "{{max}} irudi soilik erantsi ditzakezu",
+      "attach_image": "Irudiak edo bideoak soilik erantsi ditzakezu",
+      "poll_invalid": "Inkestaren aukerek ez dute balio"
     }
   },
   "notification": {
@@ -507,30 +507,30 @@
     }
   },
   "compose": {
-    "title": "New post",
-    "cw": "Write your warning here",
-    "status": "What's on your mind?",
-    "cancel": "Cancel",
-    "toot": "Post",
-    "description": "Add alternate text for this media",
+    "title": "Bidalketa berria",
+    "cw": "Idatzi ohartarazpena hemen",
+    "status": "Zer duzu buruan?",
+    "cancel": "Utzi",
+    "toot": "Argitaratu",
+    "description": "Gehitu multimedia honen deskribapena",
     "footer": {
-      "add_image": "Add images",
-      "poll": "Add a poll",
-      "change_visibility": "Change visibility",
-      "change_sensitive": "Mark media as sensitive",
-      "add_cw": "Add content warnings",
-      "pined_hashtag": "Pinned hashtag"
+      "add_image": "Gehitu irudiak",
+      "poll": "Gehitu inkesta",
+      "change_visibility": "Aldatu ikusgaitasuna",
+      "change_sensitive": "Markatu multimedia hunkigarri gisa",
+      "add_cw": "Gehitu edukiari buruzko oharra",
+      "pined_hashtag": "Finkatutako traola"
     },
     "poll": {
-      "add_choice": "Add an option",
+      "add_choice": "Gehitu aukera bat",
       "expires": {
-        "5_minutes": "5 minutes",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "1_day": "1 day",
-        "3_days": "3 days",
-        "7_days": "7 days"
+        "5_minutes": "5 minutu",
+        "30_minutes": "30 minutu",
+        "1_hour": "Ordubete",
+        "6_hours": "6 ordu",
+        "1_day": "Egun 1",
+        "3_days": "3 egun",
+        "7_days": "7 egun"
       }
     }
   }
