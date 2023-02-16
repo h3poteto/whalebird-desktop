@@ -30,7 +30,7 @@
       "toggle_full_screen": "フルスクリーンの切り替え"
     },
     "window": {
-      "always_show_menu_bar": "メニュー ボタンを常に表示する",
+      "always_show_menu_bar": "メニューを常に表示する",
       "name": "ウィンドウ",
       "close": "ウィンドウを閉じる",
       "open": "ウィンドウを表示",
