@@ -30,7 +30,7 @@
       "toggle_full_screen": "Toggle full screen"
     },
     "window": {
-      "always_show_menu_bar": "Always show menubar",
+      "always_show_menu_bar": "Always show menu bar",
       "name": "Window",
       "close": "Close Window",
       "open": "Open Window",
@@ -494,7 +494,7 @@
       "body": "{{username}} reacted to your post"
     },
     "status": {
-      "title": "New reaction",
+      "title": "New post",
       "body": "{{username}} made a new post"
     },
     "poll_vote": {
