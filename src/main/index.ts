@@ -14,7 +14,8 @@ import {
   Notification,
   NotificationConstructorOptions,
   nativeTheme,
-  IpcMainInvokeEvent
+  IpcMainInvokeEvent,
+  dialog
 } from 'electron'
 import Datastore from 'nedb'
 import { isEmpty } from 'lodash'
@@ -56,6 +57,8 @@ import Marker from './marker'
 import newDB from './database'
 import Settings from './settings'
 import { BaseSettings, Setting } from '~/src/types/setting'
+import packageJson from '../../package.json'
+import axios from 'axios'
 
 /**
  * Context menu
@@ -173,6 +176,25 @@ if (process.platform !== 'darwin') {
     path: appPath
   })
 }
+
+async function checkRelease() {
+  const version = packageJson.config.buildVersion
+  const res = await axios.get('https://whalebird.social/desktop/releases')
+  const min_ver = res.data.minimum_support_ver
+  const update_url = res.data.download_url
+  if (min_ver > version) {
+    dialog
+      .showMessageBox({
+        title: 'Need to update',
+        message: `This version is no longer supported.\nPlease update Whalebird.`
+      })
+      .then(() => {
+        shell.openExternal(update_url)
+      })
+  }
+}
+
+checkRelease()
 
 async function listAccounts(): Promise<Array<LocalAccount>> {
   try {
