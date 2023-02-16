@@ -30,7 +30,7 @@
       "toggle_full_screen": "Pantaila osoa bai/ez"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "Erakutsi beti menu barra",
       "name": "Leihoa",
       "close": "Itxi leihoa",
       "open": "Ireki leihoa",
@@ -494,7 +494,7 @@
       "body": "{{username}}(e)k erreakzionatu du"
     },
     "status": {
-      "title": "New post",
+      "title": "Bidalketa berria",
       "body": "{{username}}(e)k ibidalketa berria egin du"
     },
     "poll_vote": {
