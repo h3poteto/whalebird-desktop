@@ -30,7 +30,7 @@
       "toggle_full_screen": "フルスクリーンの切り替え"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "メニューを常に表示する",
       "name": "ウィンドウ",
       "close": "ウィンドウを閉じる",
       "open": "ウィンドウを表示",
@@ -494,7 +494,7 @@
       "body": "{{username}} があなたの投稿にリアクションしました"
     },
     "status": {
-      "title": "New post",
+      "title": "投稿",
       "body": "{{username}} が新しい投稿を行いました"
     },
     "poll_vote": {
