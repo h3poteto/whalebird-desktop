@@ -84,7 +84,7 @@ jobs:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "build/Whalebird-*.shasum"
       - name: Release to WinGet
-        uses: vedantmgoyal2009/winget-releaser@v1
+        uses: vedantmgoyal2009/winget-releaser@v2
         if: github.event_name == 'release' && github.event.release.prerelease == false
         with:
           identifier: h3poteto.whalebird-desktop
