@@ -2211,14 +2211,14 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.47.tgz#e597ef75086c6e896ff5478a6bfc0a7aa4bbd14c"
   integrity sha512-BHGyyGN3Q97EZx0taMQ+OLNuZcW3d37ZEVmEAyeoA9ERdGvm9Irc/0Fua8SNyOtV1w6BS4q25wbMzJujO9HIfQ==
 
-"@vueuse/core@9.12.0", "@vueuse/core@^9.1.0":
-  version "9.12.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-9.12.0.tgz#e5b20f901e081c7ae5fe0e5f3af217929034eefe"
-  integrity sha512-h/Di8Bvf6xRcvS/PvUVheiMYYz3U0tH3X25YxONSaAUBa841ayMwxkuzx/DGUMCW/wHWzD8tRy2zYmOC36r4sg==
+"@vueuse/core@9.13.0", "@vueuse/core@^9.1.0":
+  version "9.13.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-9.13.0.tgz#2f69e66d1905c1e4eebc249a01759cf88ea00cf4"
+  integrity sha512-pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==
   dependencies:
     "@types/web-bluetooth" "^0.0.16"
-    "@vueuse/metadata" "9.12.0"
-    "@vueuse/shared" "9.12.0"
+    "@vueuse/metadata" "9.13.0"
+    "@vueuse/shared" "9.13.0"
     vue-demi "*"
 
 "@vueuse/math@^9.12.0":
@@ -2229,15 +2229,22 @@
     "@vueuse/shared" "9.12.0"
     vue-demi "*"
 
-"@vueuse/metadata@9.12.0":
-  version "9.12.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-9.12.0.tgz#19a0fefcba6a66a2382af10a7a67ebad6eec1f27"
-  integrity sha512-9oJ9MM9lFLlmvxXUqsR1wLt1uF7EVbP5iYaHJYqk+G2PbMjY6EXvZeTjbdO89HgoF5cI6z49o2zT/jD9SVoNpQ==
+"@vueuse/metadata@9.13.0":
+  version "9.13.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-9.13.0.tgz#bc25a6cdad1b1a93c36ce30191124da6520539ff"
+  integrity sha512-gdU7TKNAUVlXXLbaF+ZCfte8BjRJQWPCa2J55+7/h+yDtzw3vOoGQDRXzI6pyKyo6bXFT5/QoPE4hAknExjRLQ==
 
 "@vueuse/shared@9.12.0":
   version "9.12.0"
   resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-9.12.0.tgz#e6597da80084cba8fc3d6545f4c2fa9817b80428"
   integrity sha512-TWuJLACQ0BVithVTRbex4Wf1a1VaRuSpVeyEd4vMUWl54PzlE0ciFUshKCXnlLuD0lxIaLK4Ypj3NXYzZh4+SQ==
+  dependencies:
+    vue-demi "*"
+
+"@vueuse/shared@9.13.0":
+  version "9.13.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-9.13.0.tgz#089ff4cc4e2e7a4015e57a8f32e4b39d096353b9"
+  integrity sha512-UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==
   dependencies:
     vue-demi "*"
 
@@ -2873,15 +2880,6 @@ available-typed-arrays@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
-
-axios@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.2.tgz#72681724c6e6a43a9fea860fc558127dbe32f9f1"
-  integrity sha512-bz/J4gS2S3I7mpN/YZfGFTqhXTYzRho8Ay38w2otuuDR322KzFIWm/4W2K6gIwvWaws5n+mnb7D1lN9uD+QH6Q==
-  dependencies:
-    follow-redirects "^1.15.0"
-    form-data "^4.0.0"
-    proxy-from-env "^1.1.0"
 
 axios@1.3.3:
   version "1.3.3"
