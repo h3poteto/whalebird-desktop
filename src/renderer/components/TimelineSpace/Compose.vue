@@ -11,6 +11,7 @@
         :popper-options="popperOptions()"
         ref="suggestRef"
         v-model:visible="suggestOpened"
+        :teleported="false"
       >
         <ul class="suggest-list">
           <li
@@ -29,11 +30,14 @@
             {{ item.name }}
           </li>
         </ul>
+        <!-- dummy object to open suggest popper -->
         <template #reference>
-          <el-input v-model="form.spoiler" class="spoiler" :placeholder="$t('compose.cw')" v-if="cw" />
-          <el-input v-model="form.status" type="textarea" :autosize="{ minRows: 2 }" :placeholder="$t('compose.status')" ref="statusRef" />
+          <div></div>
         </template>
       </el-popover>
+      <el-input v-model="form.spoiler" class="spoiler" :placeholder="$t('compose.cw')" v-if="cw" />
+      <el-input v-model="form.status" type="textarea" :autosize="{ minRows: 2 }" :placeholder="$t('compose.status')" ref="statusRef" />
+
       <div class="preview" ref="previewRef">
         <div class="image-wrapper" v-for="media in attachments" :key="media.id">
           <img :src="media.preview_url" class="preview-image" />
@@ -832,9 +836,8 @@ export default defineComponent({
 }
 
 .suggest-popper {
-  // These color is not applied because popper append outside of app.
-  background-color: var(--theme-background-color);
-  border: 1px solid var(--theme-header-menu-color);
+  background-color: var(--theme-background-color) !important;
+  border: 1px solid var(--theme-header-menu-color) !important;
 
   .suggest-list {
     list-style: none;
@@ -865,6 +868,10 @@ export default defineComponent({
     .highlighted {
       background-color: var(--theme-selected-background-color);
     }
+  }
+
+  .el-popper__arrow {
+    display: none;
   }
 }
 </style>
