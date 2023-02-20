@@ -610,6 +610,23 @@ export default defineComponent({
       }
     }
 
+    const suggestHashtag = async (start: number, word: string) => {
+      if (!client.value) {
+        return
+      }
+      try {
+        const result = await client.value.search(word, 'hashtags')
+        startIndex.value = start
+        matchWord.value = word
+        filteredSuggestion.value = result.data.hashtags.map(tag => ({ name: `#${tag.name}` }))
+        suggestOpened.value = true
+        return true
+      } catch (err) {
+        console.error(err)
+        return false
+      }
+    }
+
     const suggest = async (current: string) => {
       const target = statusRef.value.textarea as HTMLInputElement
       // e.target.sectionStart: Cursor position
@@ -633,7 +650,7 @@ export default defineComponent({
           await suggestAccount(start, word)
           return true
         case '#':
-          // await suggestHashtag(start, word)
+          await suggestHashtag(start, word)
           return true
         default:
           return false
