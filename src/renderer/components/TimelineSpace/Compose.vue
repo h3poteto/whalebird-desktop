@@ -591,6 +591,25 @@ export default defineComponent({
       }
     }
 
+    const suggestAccount = async (start: number, word: string) => {
+      if (!client.value) {
+        return
+      }
+      try {
+        const result = await client.value.searchAccount(word.replace('@', ''))
+        startIndex.value = start
+        matchWord.value = word
+        filteredSuggestion.value = result.data.map(a => ({
+          name: `@${a.acct}`
+        }))
+        suggestOpened.value = true
+        return true
+      } catch (err) {
+        console.error(err)
+        return false
+      }
+    }
+
     const suggest = async (current: string) => {
       const target = statusRef.value.textarea as HTMLInputElement
       // e.target.sectionStart: Cursor position
@@ -611,7 +630,7 @@ export default defineComponent({
           await suggestEmoji(start, word)
           return true
         case '@':
-          //await suggestAccount(start, word)
+          await suggestAccount(start, word)
           return true
         case '#':
           // await suggestHashtag(start, word)
