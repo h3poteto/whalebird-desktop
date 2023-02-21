@@ -131,7 +131,7 @@
     "@types/jsdom": "^21.1.0",
     "@types/node": "^18.14.0",
     "@types/parse-link-header": "^2.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.52.0",
     "@vue/compiler-sfc": "^3.2.47",
     "@vue/eslint-config-prettier": "^7.0.0",
