@@ -146,6 +146,7 @@ import { MUTATION_TYPES } from '@/store/TimelineSpace/Compose'
 import ReceiveDrop from './ReceiveDrop.vue'
 import Quote from './Compose/Quote.vue'
 import suggestText from '@/utils/suggestText'
+import { useMagicKeys, whenever } from '@vueuse/core'
 
 type Expire = {
   label: string
@@ -165,6 +166,14 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const i18n = useI18next()
+    const { up, down, enter, escape } = useMagicKeys({
+      passive: false,
+      onEventFired(e) {
+        if (e.key === 'Enter' && suggestOpened.value) e.preventDefault()
+        if (e.key === 'ArrowUp' && suggestOpened.value) e.preventDefault()
+        if (e.key === 'ArrowDown' && suggestOpened.value) e.preventDefault()
+      }
+    })
     const space = 'TimelineSpace/Compose'
     const win = (window as any) as MyWindow
 
@@ -306,6 +315,19 @@ export default defineComponent({
 
     watch(form, async current => {
       await suggest(current.status)
+    })
+
+    whenever(up, () => {
+      if (suggestOpened.value) suggestHighlight(highlightedIndex.value - 1)
+    })
+    whenever(down, () => {
+      if (suggestOpened.value) suggestHighlight(highlightedIndex.value + 1)
+    })
+    whenever(enter, () => {
+      if (suggestOpened.value) selectCurrentItem()
+    })
+    whenever(escape, () => {
+      closeSuggest()
     })
 
     const post = async () => {
@@ -659,6 +681,11 @@ export default defineComponent({
         default:
           return false
       }
+    }
+
+    const selectCurrentItem = () => {
+      const item = filteredSuggestion.value[highlightedIndex.value]
+      insertItem(item)
     }
 
     return {
