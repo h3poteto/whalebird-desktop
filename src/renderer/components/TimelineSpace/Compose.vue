@@ -3,8 +3,41 @@
     <Quote v-if="inReplyTo" :message="inReplyTo" @close="clearReply" />
     <Quote v-if="quoteTo" :message="quoteTo" @close="clearQuote" />
     <el-form :model="form" class="compose-form">
+      <el-popover
+        placement="top-start"
+        width="300"
+        trigger="manual"
+        popper-class="suggest-popper"
+        :popper-options="popperOptions()"
+        ref="suggestRef"
+        v-model:visible="suggestOpened"
+        :teleported="false"
+      >
+        <ul class="suggest-list">
+          <li
+            v-for="(item, index) in filteredSuggestion"
+            :key="index"
+            @click="insertItem(item)"
+            @mouseover="suggestHighlight(index)"
+            :class="{ highlighted: highlightedIndex === index }"
+          >
+            <span v-if="item.image">
+              <img :src="item.image" class="icon" />
+            </span>
+            <span v-if="item.code">
+              {{ item.code }}
+            </span>
+            {{ item.name }}
+          </li>
+        </ul>
+        <!-- dummy object to open suggest popper -->
+        <template #reference>
+          <div></div>
+        </template>
+      </el-popover>
       <el-input v-model="form.spoiler" class="spoiler" :placeholder="$t('compose.cw')" v-if="cw" />
       <el-input v-model="form.status" type="textarea" :autosize="{ minRows: 2 }" :placeholder="$t('compose.status')" ref="statusRef" />
+
       <div class="preview" ref="previewRef">
         <div class="image-wrapper" v-for="media in attachments" :key="media.id">
           <img :src="media.preview_url" class="preview-image" />
@@ -101,7 +134,7 @@ import { defineComponent, reactive, computed, ref, onMounted, onBeforeUnmount, w
 import { useRoute } from 'vue-router'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import emojiDefault from 'emoji-mart-vue-fast/data/all.json'
-import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
+import { Picker, EmojiIndex, EmojiData } from 'emoji-mart-vue-fast/src'
 import { useI18next } from 'vue3-i18next'
 import { ElMessage } from 'element-plus'
 import { useStore } from '@/store'
@@ -112,10 +145,18 @@ import visibilityList from '~/src/constants/visibility'
 import { MUTATION_TYPES } from '@/store/TimelineSpace/Compose'
 import ReceiveDrop from './ReceiveDrop.vue'
 import Quote from './Compose/Quote.vue'
+import suggestText from '@/utils/suggestText'
+import { useMagicKeys, whenever } from '@vueuse/core'
 
 type Expire = {
   label: string
   value: number
+}
+
+type SuggestItem = {
+  name: string
+  image?: string
+  code?: string
 }
 
 export default defineComponent({
@@ -125,6 +166,14 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const i18n = useI18next()
+    const { up, down, enter, escape } = useMagicKeys({
+      passive: false,
+      onEventFired(e) {
+        if (e.key === 'Enter' && suggestOpened.value) e.preventDefault()
+        if (e.key === 'ArrowUp' && suggestOpened.value) e.preventDefault()
+        if (e.key === 'ArrowDown' && suggestOpened.value) e.preventDefault()
+      }
+    })
     const space = 'TimelineSpace/Compose'
     const win = (window as any) as MyWindow
 
@@ -203,6 +252,12 @@ export default defineComponent({
     const maxStatusChars = ref<number>(500)
     const statusChars = computed(() => maxStatusChars.value - (form.status.length + form.spoiler.length))
 
+    const suggestOpened = ref<boolean>(false)
+    const filteredSuggestion = ref<Array<SuggestItem>>([])
+    const highlightedIndex = ref(0)
+    const startIndex = ref(0)
+    const matchWord = ref('')
+
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
       const c = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
@@ -256,6 +311,23 @@ export default defineComponent({
       if (current) {
         form.status = `@${current.account.acct} `
       }
+    })
+
+    watch(form, async current => {
+      await suggest(current.status)
+    })
+
+    whenever(up, () => {
+      if (suggestOpened.value) suggestHighlight(highlightedIndex.value - 1)
+    })
+    whenever(down, () => {
+      if (suggestOpened.value) suggestHighlight(highlightedIndex.value + 1)
+    })
+    whenever(enter, () => {
+      if (suggestOpened.value) selectCurrentItem()
+    })
+    whenever(escape, () => {
+      closeSuggest()
     })
 
     const post = async () => {
@@ -471,6 +543,151 @@ export default defineComponent({
       store.commit(`${space}/${MUTATION_TYPES.CLEAR_QUOTE_TO}`)
     }
 
+    const popperOptions = () => {
+      const element = document.querySelector('#status_textarea')
+      return {
+        modifiers: [
+          {
+            name: 'preventOverflow',
+            options: {
+              boundary: element,
+              rootBoundary: 'viewport',
+              altBoundary: true
+            }
+          }
+        ]
+      }
+    }
+
+    const suggestHighlight = (index: number) => {
+      if (index < 0) {
+        highlightedIndex.value = 0
+      } else if (index >= filteredSuggestion.value.length) {
+        highlightedIndex.value = filteredSuggestion.value.length - 1
+      } else {
+        highlightedIndex.value = index
+      }
+    }
+
+    const insertItem = (item: SuggestItem) => {
+      if (!item) return
+      if (item.code) {
+        const str = `${form.status.slice(0, startIndex.value - 1)}${item.code} ${form.status.slice(
+          startIndex.value + matchWord.value.length
+        )}`
+        form.status = str
+      } else {
+        const str = `${form.status.slice(0, startIndex.value - 1)}${item.name} ${form.status.slice(
+          startIndex.value + matchWord.value.length
+        )}`
+        form.status = str
+      }
+      closeSuggest()
+    }
+
+    const closeSuggest = () => {
+      highlightedIndex.value = 0
+      suggestOpened.value = false
+      filteredSuggestion.value = []
+    }
+
+    const suggestEmoji = async (start: number, word: string) => {
+      try {
+        const find: Array<EmojiData> = emojiData.value.search(word.replace(':', ''))
+        startIndex.value = start
+        matchWord.value = word
+        filteredSuggestion.value = find.map(e => {
+          if (e.native) {
+            return {
+              name: e.colons,
+              code: e.native
+            }
+          } else {
+            return {
+              name: e.id,
+              image: e.imageUrl
+            }
+          }
+        })
+        suggestOpened.value = true
+        return true
+      } catch (err) {
+        console.error(err)
+        return false
+      }
+    }
+
+    const suggestAccount = async (start: number, word: string) => {
+      if (!client.value) {
+        return
+      }
+      try {
+        const result = await client.value.searchAccount(word.replace('@', ''))
+        startIndex.value = start
+        matchWord.value = word
+        filteredSuggestion.value = result.data.map(a => ({
+          name: `@${a.acct}`
+        }))
+        suggestOpened.value = true
+        return true
+      } catch (err) {
+        console.error(err)
+        return false
+      }
+    }
+
+    const suggestHashtag = async (start: number, word: string) => {
+      if (!client.value) {
+        return
+      }
+      try {
+        const result = await client.value.search(word, 'hashtags')
+        startIndex.value = start
+        matchWord.value = word
+        filteredSuggestion.value = result.data.hashtags.map(tag => ({ name: `#${tag.name}` }))
+        suggestOpened.value = true
+        return true
+      } catch (err) {
+        console.error(err)
+        return false
+      }
+    }
+
+    const suggest = async (current: string) => {
+      const target = statusRef.value.textarea as HTMLInputElement
+      // e.target.sectionStart: Cursor position
+      // e.target.value: current value of the textarea
+      if (current !== target.value) {
+        return
+      }
+      if (!target.selectionStart) {
+        return
+      }
+      const [start, word] = suggestText(target.value, target.selectionStart)
+      if (!start || !word) {
+        closeSuggest()
+        return false
+      }
+      switch (word.charAt(0)) {
+        case ':':
+          await suggestEmoji(start, word)
+          return true
+        case '@':
+          await suggestAccount(start, word)
+          return true
+        case '#':
+          await suggestHashtag(start, word)
+          return true
+        default:
+          return false
+      }
+    }
+
+    const selectCurrentItem = () => {
+      const item = filteredSuggestion.value[highlightedIndex.value]
+      insertItem(item)
+    }
+
     return {
       form,
       post,
@@ -499,7 +716,14 @@ export default defineComponent({
       quoteTo,
       clearReply,
       clearQuote,
-      statusChars
+      statusChars,
+      suggestOpened,
+      popperOptions,
+      filteredSuggestion,
+      suggestHighlight,
+      insertItem,
+      highlightedIndex,
+      suggest
     }
   }
 })
@@ -632,6 +856,46 @@ export default defineComponent({
 .new-toot-emoji-picker {
   background-color: transparent !important;
   border: none !important;
+
+  .el-popper__arrow {
+    display: none;
+  }
+}
+
+.suggest-popper {
+  background-color: var(--theme-background-color) !important;
+  border: 1px solid var(--theme-header-menu-color) !important;
+
+  .suggest-list {
+    list-style: none;
+    padding: 6px 0;
+    margin: 0;
+    box-sizing: border-box;
+
+    li {
+      font-size: var(--base-font-size);
+      padding: 0 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 34px;
+      line-height: 34px;
+      box-sizing: border-box;
+      cursor: pointer;
+      color: var(--theme-regular-color);
+
+      .icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .highlighted {
+      background-color: var(--theme-selected-background-color);
+    }
+  }
 
   .el-popper__arrow {
     display: none;
