@@ -35,7 +35,7 @@ import sanitizeHtml from 'sanitize-html'
 import { backwardAccount, forwardAccount, getAccount, insertAccount, listAccounts, removeAccount, removeAllAccounts } from './db/account'
 import { insertTag, listTags, removeTag } from './db/hashtags'
 import { createOrUpdateSetting, getSetting } from './db/setting'
-import { insertServer } from './db/server'
+import { getServer, insertServer } from './db/server'
 
 import { DirectStreaming, ListStreaming, LocalStreaming, PublicStreaming, StreamingURL, TagStreaming, UserStreaming } from './websocket'
 import Preferences from './preferences'
@@ -403,10 +403,10 @@ app.on('ready', async () => {
   createWindow()
   const accounts = await listAccounts(db)
   const preferences = new Preferences(preferencesDBPath)
-  startUserStreamings(accounts, proxyConfiguration, preferences)
-  startDirectStreamings(accounts, proxyConfiguration)
-  startLocalStreamings(accounts, proxyConfiguration)
-  startPublicStreamings(accounts, proxyConfiguration)
+  startUserStreamings(accounts, preferences)
+  startDirectStreamings(accounts)
+  startLocalStreamings(accounts)
+  startPublicStreamings(accounts)
 })
 
 app.on('window-all-closed', () => {
@@ -498,6 +498,13 @@ ipcMain.handle('authorize', async (_: IpcMainInvokeEvent, req: AuthorizeRequest)
     tokenData.refresh_token,
     req.serverID
   )
+  const server = await getServer(db, req.serverID)
+  const preferences = new Preferences(preferencesDBPath)
+  startUserStreaming(account, server, preferences)
+  startDirectStreaming(account, server)
+  startLocalStreaming(account, server)
+  startPublicStreaming(account, server)
+
   return account
 })
 
@@ -512,6 +519,10 @@ ipcMain.handle('get-local-account', async (_: IpcMainInvokeEvent, id: number) =>
 })
 
 ipcMain.handle('remove-account', async (_: IpcMainInvokeEvent, id: number) => {
+  userStreamings[id].stop()
+  directStreamings[id].stop()
+  localStreamings[id].stop()
+  publicStreamings[id].stop()
   await removeAccount(db, id)
 
   const accounts = await listAccounts(db)
@@ -539,6 +550,7 @@ ipcMain.handle('backward-account', async (_: IpcMainInvokeEvent, id: number) => 
 })
 
 ipcMain.handle('remove-all-accounts', async (_: IpcMainInvokeEvent) => {
+  stopAllStreamings()
   await removeAllAccounts(db)
   const accounts = await listAccounts(db)
   const accountsChange: Array<MenuItemConstructorOptions> = accounts.map(([account, server], index) => {
@@ -1105,6 +1117,96 @@ const directStreamings: { [key: number]: DirectStreaming } = {}
 const localStreamings: { [key: number]: DirectStreaming } = {}
 const publicStreamings: { [key: number]: DirectStreaming } = {}
 
+const startUserStreaming = async (account: LocalAccount, server: LocalServer, preferences: Preferences) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  const url = await StreamingURL(server.sns, account, server, proxy)
+  userStreamings[account.id] = new UserStreaming(server.sns, account, url, proxy)
+  userStreamings[account.id].start(
+    async (update: Entity.Status) => {
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`update-user-streamings-${account.id}`, update)
+      }
+    },
+    async (notification: Entity.Notification) => {
+      await publishNotification(notification, account.id, preferences)
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`notification-user-streamings-${account.id}`, notification)
+      }
+    },
+    (statusId: string) => {
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`delete-user-streamings-${account.id}`, statusId)
+      }
+    },
+    (err: Error) => {
+      log.error(err)
+    }
+  )
+}
+
+const startDirectStreaming = async (account: LocalAccount, server: LocalServer) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  const url = await StreamingURL(server.sns, account, server, proxy)
+  directStreamings[account.id] = new DirectStreaming(server.sns, account, url, proxy)
+  directStreamings[account.id].start(
+    (update: Entity.Status) => {
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`update-direct-streamings-${account.id}`, update)
+      }
+    },
+    (id: string) => {
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`delete-direct-streamings-${account.id}`, id)
+      }
+    },
+    (err: Error) => {
+      log.error(err)
+    }
+  )
+}
+
+const startLocalStreaming = async (account: LocalAccount, server: LocalServer) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  const url = await StreamingURL(server.sns, account, server, proxy)
+  localStreamings[account.id] = new LocalStreaming(server.sns, account, url, proxy)
+  localStreamings[account.id].start(
+    (update: Entity.Status) => {
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`update-local-streamings-${account.id}`, update)
+      }
+    },
+    (id: string) => {
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`delete-local-streamings-${account.id}`, id)
+      }
+    },
+    (err: Error) => {
+      log.error(err)
+    }
+  )
+}
+
+const startPublicStreaming = async (account: LocalAccount, server: LocalServer) => {
+  const proxy = await proxyConfiguration.forMastodon()
+  const url = await StreamingURL(server.sns, account, server, proxy)
+  publicStreamings[account.id] = new PublicStreaming(server.sns, account, url, proxy)
+  publicStreamings[account.id].start(
+    (update: Entity.Status) => {
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`update-public-streamings-${account.id}`, update)
+      }
+    },
+    (id: string) => {
+      if (!mainWindow?.webContents.isDestroyed()) {
+        mainWindow?.webContents.send(`delete-public-streamings-${account.id}`, id)
+      }
+    },
+    (err: Error) => {
+      log.error(err)
+    }
+  )
+}
+
 const stopAllStreamings = () => {
   Object.keys(userStreamings).forEach((key: string) => {
     userStreamings[parseInt(key)].stop()
@@ -1118,107 +1220,29 @@ const stopAllStreamings = () => {
   })
 }
 
-const startUserStreamings = async (
-  accounts: Array<[LocalAccount, LocalServer]>,
-  proxyConfiguration: ProxyConfiguration,
-  preferences: Preferences
-) => {
-  const proxy = await proxyConfiguration.forMastodon()
+const startUserStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, preferences: Preferences) => {
   accounts.forEach(async ([account, server]) => {
-    const url = await StreamingURL(server.sns, account, server, proxy)
-    userStreamings[account.id] = new UserStreaming(server.sns, account, url, proxy)
-    userStreamings[account.id].start(
-      async (update: Entity.Status) => {
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`update-user-streamings-${account.id}`, update)
-        }
-      },
-      async (notification: Entity.Notification) => {
-        await publishNotification(notification, account.id, preferences)
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`notification-user-streamings-${account.id}`, notification)
-        }
-      },
-      (statusId: string) => {
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`delete-user-streamings-${account.id}`, statusId)
-        }
-      },
-      (err: Error) => {
-        log.error(err)
-      }
-    )
+    await startUserStreaming(account, server, preferences)
   })
 
   return userStreamings
 }
 
-const startDirectStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
-  const proxy = await proxyConfiguration.forMastodon()
+const startDirectStreamings = async (accounts: Array<[LocalAccount, LocalServer]>) => {
   accounts.forEach(async ([account, server]) => {
-    const url = await StreamingURL(server.sns, account, server, proxy)
-    directStreamings[account.id] = new DirectStreaming(server.sns, account, url, proxy)
-    directStreamings[account.id].start(
-      (update: Entity.Status) => {
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`update-direct-streamings-${account.id}`, update)
-        }
-      },
-      (id: string) => {
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`delete-direct-streamings-${account.id}`, id)
-        }
-      },
-      (err: Error) => {
-        log.error(err)
-      }
-    )
+    await startDirectStreaming(account, server)
   })
 }
 
-const startLocalStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
-  const proxy = await proxyConfiguration.forMastodon()
+const startLocalStreamings = async (accounts: Array<[LocalAccount, LocalServer]>) => {
   accounts.forEach(async ([account, server]) => {
-    const url = await StreamingURL(server.sns, account, server, proxy)
-    localStreamings[account.id] = new LocalStreaming(server.sns, account, url, proxy)
-    localStreamings[account.id].start(
-      (update: Entity.Status) => {
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`update-local-streamings-${account.id}`, update)
-        }
-      },
-      (id: string) => {
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`delete-local-streamings-${account.id}`, id)
-        }
-      },
-      (err: Error) => {
-        log.error(err)
-      }
-    )
+    await startLocalStreaming(account, server)
   })
 }
 
-const startPublicStreamings = async (accounts: Array<[LocalAccount, LocalServer]>, proxyConfiguration: ProxyConfiguration) => {
-  const proxy = await proxyConfiguration.forMastodon()
+const startPublicStreamings = async (accounts: Array<[LocalAccount, LocalServer]>) => {
   accounts.forEach(async ([account, server]) => {
-    const url = await StreamingURL(server.sns, account, server, proxy)
-    publicStreamings[account.id] = new PublicStreaming(server.sns, account, url, proxy)
-    publicStreamings[account.id].start(
-      (update: Entity.Status) => {
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`update-public-streamings-${account.id}`, update)
-        }
-      },
-      (id: string) => {
-        if (!mainWindow?.webContents.isDestroyed()) {
-          mainWindow?.webContents.send(`delete-public-streamings-${account.id}`, id)
-        }
-      },
-      (err: Error) => {
-        log.error(err)
-      }
-    )
+    await startPublicStreaming(account, server)
   })
 }
 
