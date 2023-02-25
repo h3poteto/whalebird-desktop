@@ -108,7 +108,7 @@ if (process.platform !== 'darwin') {
   }
 }
 
-const appId = 'social.whalebird.desktop'
+const appId = 'social.whalebird.app'
 
 const splashURL =
   process.env.NODE_ENV === 'development'
