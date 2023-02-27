@@ -2,6 +2,7 @@
   "productName": "Whalebird",
   "appId": "social.whalebird.app",
   "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+  "buildVersion": "150",
   "directories": {
     "output": "build"
   },
@@ -35,6 +36,7 @@
     "entitlements": "plist/parent.plist",
     "entitlementsInherit": "plist/child.plist",
     "entitlementsLoginHelper": "plist/loginhelper.plist",
+    "provisioningProfile": "socialwhalebirdapp_MAS.provisionprofile",
     "hardenedRuntime": false,
     "identity": null
   },

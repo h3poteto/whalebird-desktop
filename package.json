@@ -14,10 +14,6 @@
     "type": "git",
     "url": "https://github.com/h3poteto/whalebird-desktop.git"
   },
-  "config": {
-    "buildVersion": "149",
-    "appVersion": "5.0.0"
-  },
   "main": "./dist/electron/main.js",
   "scripts": {
     "dev": "node .electron-vue/dev-runner.js",
