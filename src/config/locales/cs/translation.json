@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "Ukončit"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "Upravit",
       "undo": "Vrátit zpět",
@@ -36,6 +32,9 @@
       "open": "Otevřít okno",
       "minimize": "Minimalizovat",
       "jump_to": "Jump to"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {
