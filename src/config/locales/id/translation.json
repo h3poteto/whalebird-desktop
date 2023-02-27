@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "Keluar"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "Sunting",
       "undo": "Urungkan",
@@ -36,6 +32,9 @@
       "open": "Buka jendela",
       "minimize": "Perkecil",
       "jump_to": "Lompat ke"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {
