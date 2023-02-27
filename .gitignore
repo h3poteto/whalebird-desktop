@@ -11,3 +11,4 @@ thumbs.db
 packages/*
 !.gitkeep
 *.db
+*.provisionprofile

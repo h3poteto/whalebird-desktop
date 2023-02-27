@@ -30,6 +30,14 @@
       }
     ]
   },
+  "mas": {
+    "type": "distribution",
+    "entitlements": "plist/parent.plist",
+    "entitlementsInherit": "plist/child.plist",
+    "entitlementsLoginHelper": "plist/loginhelper.plist",
+    "hardenedRuntime": false,
+    "identity": null
+  },
   "mac": {
     "icon": "build/icons/icon.icns",
     "target": [
@@ -45,8 +53,11 @@
     "category": "public.app-category.social-networking",
     "entitlements": "plist/entitlements.mac.plist",
     "entitlementsInherit": "plist/entitlements.mac.plist",
+    "entitlementsLoginHelper": "plist/loginhelper.plist",
     "hardenedRuntime": true,
-    "gatekeeperAssess": false
+    "gatekeeperAssess": false,
+    "darkModeSupport": true,
+    "singleArchFiles": "*/binding/napi-v6-darwin-unknown-*"
   },
   "win": {
     "icon": "build/icons/icon.ico",
