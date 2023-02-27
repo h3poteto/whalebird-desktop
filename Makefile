@@ -20,6 +20,7 @@ mac:
 mas:
 	yarn run build:clean
 	yarn run build:mas
+	./appStore.sh
 
 linux:
 	yarn run package:linux
