@@ -12,10 +12,6 @@
       "open": "ウィンドウを開く",
       "quit": "終了"
     },
-    "toot": {
-      "name": "投稿",
-      "new": "投稿"
-    },
     "edit": {
       "name": "編集",
       "undo": "取り消す",
@@ -36,6 +32,9 @@
       "open": "ウィンドウを表示",
       "minimize": "縮小",
       "jump_to": "移動"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {
