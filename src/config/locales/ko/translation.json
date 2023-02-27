@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "나가기"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "수정",
       "undo": "되돌리기",
@@ -36,6 +32,9 @@
       "open": "창 열기",
       "minimize": "최소화",
       "jump_to": "이동"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {
