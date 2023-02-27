@@ -422,15 +422,11 @@ app.on('window-all-closed', () => {
         // Preferences
         menu.items[0].submenu.items[2].enabled = false
       }
-      if (menu.items[1].submenu) {
-        // New Toot
-        menu.items[1].submenu.items[0].enabled = false
-      }
-      if (menu.items[4].submenu) {
+      if (menu.items[3].submenu) {
         // Open Window
-        menu.items[4].submenu.items[1].enabled = true
+        menu.items[3].submenu.items[1].enabled = true
         // Jump to
-        menu.items[4].submenu.items[4].enabled = false
+        menu.items[3].submenu.items[4].enabled = false
       }
     }
   }
@@ -949,13 +945,6 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
             mainWindow!.webContents.send('open-preferences')
           }
         },
-        {
-          label: i18n.t<string>('main_menu.application.shortcuts'),
-          accelerator: 'Shift+?',
-          click: () => {
-            mainWindow!.webContents.send('open-shortcuts-list')
-          }
-        },
         ...macGeneralMenu,
         {
           type: 'separator'
@@ -1044,6 +1033,19 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
           type: 'separator'
         },
         ...accountsChange
+      ]
+    },
+    {
+      label: i18n.t<string>("main_menu.help.name"),
+      role: "help",
+      submenu: [
+        {
+          label: i18n.t<string>('main_menu.application.shortcuts'),
+          accelerator: 'Shift+?',
+          click: () => {
+            mainWindow!.webContents.send('open-shortcuts-list')
+          }
+        },
       ]
     }
   ]
