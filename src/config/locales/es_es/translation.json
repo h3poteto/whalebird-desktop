@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "Salir"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "Editar",
       "undo": "Deshacer",
@@ -36,6 +32,9 @@
       "open": "Abrir ventana",
       "minimize": "Minimizar",
       "jump_to": "Ir a"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {
