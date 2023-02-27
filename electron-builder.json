@@ -2,7 +2,7 @@
   "productName": "Whalebird",
   "appId": "social.whalebird.app",
   "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
-  "buildVersion": "150",
+  "buildVersion": "151",
   "directories": {
     "output": "build"
   },
@@ -36,9 +36,10 @@
     "entitlements": "plist/parent.plist",
     "entitlementsInherit": "plist/child.plist",
     "entitlementsLoginHelper": "plist/loginhelper.plist",
-    "provisioningProfile": "socialwhalebirdapp_MAS.provisionprofile",
     "hardenedRuntime": false,
-    "identity": null
+    "extendInfo": {
+      "ITSAppUsesNonExemptEncryption": "false"
+    }
   },
   "mac": {
     "icon": "build/icons/icon.icns",
@@ -59,7 +60,10 @@
     "hardenedRuntime": true,
     "gatekeeperAssess": false,
     "darkModeSupport": true,
-    "singleArchFiles": "*/binding/napi-v6-darwin-unknown-*"
+    "singleArchFiles": "*/binding/napi-v6-darwin-unknown-*",
+    "extendInfo": {
+      "ITSAppUsesNonExemptEncryption": "false"
+    }
   },
   "win": {
     "icon": "build/icons/icon.ico",
