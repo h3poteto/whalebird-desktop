@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "Quit"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "Breyta",
       "undo": "Afturkalla",
@@ -36,6 +32,9 @@
       "open": "Opna glugga",
       "minimize": "Lágmarka",
       "jump_to": "Hoppa í"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {
