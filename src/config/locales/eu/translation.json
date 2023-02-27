@@ -12,10 +12,6 @@
       "open": "Ireki leihoa",
       "quit": "Itxi"
     },
-    "toot": {
-      "name": "Bidalketak",
-      "new": "Bidalketa berria…"
-    },
     "edit": {
       "name": "Editatu",
       "undo": "Desegin",
@@ -36,6 +32,9 @@
       "open": "Ireki leihoa",
       "minimize": "Minimizatu",
       "jump_to": "Joan hona"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {
