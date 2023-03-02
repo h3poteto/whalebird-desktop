@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "Avslutt"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "Rediger",
       "undo": "Angre",
@@ -36,6 +32,9 @@
       "open": "Åpne vindu",
       "minimize": "Minimer",
       "jump_to": "Gå til"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {

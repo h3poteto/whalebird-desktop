@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "退出"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "编辑",
       "undo": "撤销",
@@ -36,6 +32,9 @@
       "open": "打开窗口",
       "minimize": "最小化",
       "jump_to": "跳转至"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {

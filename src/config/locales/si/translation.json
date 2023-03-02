@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "ඉවත් වන්න"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "සංස්කරණය",
       "undo": "පෙර සේ",
@@ -36,6 +32,9 @@
       "open": "Open Window",
       "minimize": "Minimize",
       "jump_to": "Jump to"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {

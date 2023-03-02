@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "Ffeɣ"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "Senfel",
       "undo": "Sser",
@@ -36,6 +32,9 @@
       "open": "Ṛẓem Asatm",
       "minimize": "Semẓi",
       "jump_to": "Ddu ɣer"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {

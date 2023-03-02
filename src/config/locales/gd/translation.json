@@ -12,10 +12,6 @@
       "open": "Open window",
       "quit": "Fàg an-seo"
     },
-    "toot": {
-      "name": "Posts",
-      "new": "New post..."
-    },
     "edit": {
       "name": "Deasaich",
       "undo": "Neo-dhèan",
@@ -36,6 +32,9 @@
       "open": "Fosgail ann an uinneag",
       "minimize": "Fìor-lùghdaich",
       "jump_to": "Leum gu"
+    },
+    "help": {
+      "name": "Help"
     }
   },
   "global_header": {
