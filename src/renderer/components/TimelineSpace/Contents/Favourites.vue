@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted, onUnmounted, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
-import { useMagicKeys, whenever } from '@vueuse/core'
+import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ElMessage } from 'element-plus'
 import { useI18next } from 'vue3-i18next'
@@ -50,6 +50,7 @@ export default defineComponent({
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>()
     const { j, k, Ctrl_r } = useMagicKeys()
+    const activeElement = useActiveElement()
 
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
@@ -67,7 +68,9 @@ export default defineComponent({
     const nextMaxId = ref<string | null>(null)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => favourites.value.findIndex(status => focusedId.value === status.uri))
-    const shortcutEnabled = computed(() => !modalOpened.value)
+    const shortcutEnabled = computed(
+      () => activeElement.value?.tagName !== 'INPUT' && activeElement.value?.tagName !== 'TEXTAREA' && !modalOpened.value
+    )
     const userAgent = computed(() => store.state.App.userAgent)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
 

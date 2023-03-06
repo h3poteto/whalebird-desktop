@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onBeforeUpdate, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
-import { useMagicKeys, whenever } from '@vueuse/core'
+import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
@@ -46,6 +46,7 @@ export default defineComponent({
     const route = useRoute()
     const i18n = useI18next()
     const { j, k } = useMagicKeys()
+    const activeElement = useActiveElement()
 
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
@@ -62,7 +63,9 @@ export default defineComponent({
     const timeline = computed(() => store.state.TimelineSpace.Contents.DirectMessages.timeline[id.value])
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => timeline.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
-    const shortcutEnabled = computed(() => !modalOpened.value)
+    const shortcutEnabled = computed(
+      () => activeElement.value?.tagName !== 'INPUT' && activeElement.value?.tagName !== 'TEXTAREA' && !modalOpened.value
+    )
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)

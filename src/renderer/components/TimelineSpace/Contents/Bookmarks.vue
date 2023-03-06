@@ -24,7 +24,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
-import { useMagicKeys, whenever } from '@vueuse/core'
+import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { useI18next } from 'vue3-i18next'
 import { useRoute } from 'vue-router'
@@ -52,6 +52,7 @@ export default defineComponent({
     const loading = ref(false)
     const lazyLoading = ref(false)
     const { j, k, Ctrl_r } = useMagicKeys()
+    const activeElement = useActiveElement()
 
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
@@ -67,7 +68,9 @@ export default defineComponent({
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => bookmarks.value.findIndex(toot => focusedId.value === toot.uri))
-    const shortcutEnabled = computed(() => !modalOpened.value)
+    const shortcutEnabled = computed(
+      () => activeElement.value?.tagName !== 'INPUT' && activeElement.value?.tagName !== 'TEXTAREA' && !modalOpened.value
+    )
     const userAgent = computed(() => store.state.App.userAgent)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
 

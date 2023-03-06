@@ -25,7 +25,7 @@
 <script lang="ts">
 import { computed, defineComponent, onBeforeUnmount, onMounted, ref, toRefs, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
-import { useMagicKeys, whenever } from '@vueuse/core'
+import { useMagicKeys, whenever, useActiveElement } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useI18next } from 'vue3-i18next'
@@ -46,6 +46,7 @@ export default defineComponent({
     const route = useRoute()
     const i18n = useI18next()
     const { j, k, Ctrl_r } = useMagicKeys()
+    const activeElement = useActiveElement()
 
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
@@ -66,7 +67,9 @@ export default defineComponent({
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => statuses.value.findIndex(toot => focusedId.value === toot.uri + toot.id))
-    const shortcutEnabled = computed(() => !modalOpened.value)
+    const shortcutEnabled = computed(
+      () => activeElement.value?.tagName !== 'INPUT' && activeElement.value?.tagName !== 'TEXTAREA' && !modalOpened.value
+    )
     const userAgent = computed(() => store.state.App.userAgent)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
 
