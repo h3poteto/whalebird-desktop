@@ -33,9 +33,12 @@
     </screenshot>
   </screenshots>
   <releases>
-      <release version="4.7.4" date="2022-12-30">
+      <release version="5.0.1" date="2023-3-7">
           <description>
               <p>Updated</p>
+              <ul>
+                <li>Whalebird 5.x doesn't migrate your local databases from version 4. So please re-authenticate all servers when you upgrade Whalebird from 4.7.4.</li>
+              </ul>
           </description>
       </release>
   </releases>
