@@ -30,7 +30,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onBeforeUpdate, onUnmounted, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
-import { useMagicKeys, whenever } from '@vueuse/core'
+import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
 import Notification from '@/components/organisms/Notification.vue'
@@ -54,6 +54,7 @@ export default defineComponent({
     const route = useRoute()
     const i18n = useI18next()
     const { j, k } = useMagicKeys()
+    const activeElement = useActiveElement()
 
     const win = (window as any) as MyWindow
 
@@ -73,7 +74,9 @@ export default defineComponent({
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const filters = computed(() => store.getters[`${space}/filters}`])
     const currentFocusedIndex = computed(() => notifications.value.findIndex(notification => focusedId.value === notification.id))
-    const shortcutEnabled = computed(() => !modalOpened.value)
+    const shortcutEnabled = computed(
+      () => activeElement.value?.tagName !== 'INPUT' && activeElement.value?.tagName !== 'TEXTAREA' && !modalOpened.value
+    )
 
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
