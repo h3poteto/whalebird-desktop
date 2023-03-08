@@ -7,9 +7,9 @@
 [![Crowdin](https://badges.crowdin.net/whalebird/localized.svg)](https://crowdin.com/project/whalebird)
 
 
-Whalebird is a mastodon client for desktop application.
+Whalebird is a Fediverse client app for desktop.
 
-![demo](screenshot_1.png)
+![demo](screenshot.png)
 
 ## Feature
 
@@ -18,6 +18,10 @@ Whalebird is a mastodon client for desktop application.
 - Streaming
 - Many keyboard shortcuts
 - Manage multiple accounts
+- Supporting
+    - Mastodon
+    - Pleroma
+    - Misskey
 
 ### Shortcuts
 
@@ -29,17 +33,14 @@ Whalebird is a mastodon client for desktop application.
 <tr><td> Toot, Reply                     </td><td>             <kbd>Cmd + Enter</kbd>         </td><td> <kbd>Ctrl + Enter</kbd>      </td></tr>
 <tr><td> Change accounts                 </td><td>             <kbd>Cmd + 1, 2, 3...</kbd>    </td><td> <kbd>Ctrl + 1, 2, 3...</kbd> </td></tr>
 <tr><td> Jump to another timeline        </td><td>             <kbd>Cmd + k</kbd>             </td><td> <kbd>Ctrl + k</kbd>          </td></tr>
-<tr><td> Open new toot window            </td><td>             <kbd>Cmd + n</kbd>             </td><td> <kbd>Ctrl + n</kbd>          </td></tr>
 <tr><td> Reload current timeline         </td><td>             <kbd>Cmd + r</kbd>             </td><td> <kbd>Ctrl + r</kbd>          </td></tr>
-<tr><td> Select next toot                </td><td>             <kbd>j</kbd>                   </td><td> <kbd>j</kbd>          </td></tr>
-<tr><td> Select previous toot            </td><td>             <kbd>k</kbd>                   </td><td> <kbd>k</kbd>          </td></tr>
-<tr><td> Switch focus to left column     </td><td>             <kbd>h</kbd>                   </td><td> <kbd>h</kbd>          </td></tr>
-<tr><td> Switch focus to right column    </td><td>             <kbd>l</kbd>                   </td><td> <kbd>l</kbd>          </td></tr>
-<tr><td> Reply to the toot               </td><td>             <kbd>r</kbd>                   </td><td> <kbd>r</kbd>          </td></tr>
-<tr><td> Reblog the toot                 </td><td>             <kbd>b</kbd>                   </td><td> <kbd>b</kbd>          </td></tr>
-<tr><td> Favourite the toot              </td><td>             <kbd>f</kbd>                   </td><td> <kbd>f</kbd>          </td></tr>
-<tr><td> Open details of the toot        </td><td>             <kbd>o</kbd>                   </td><td> <kbd>o</kbd>          </td></tr>
-<tr><td> Open account profile of the toot</td><td>             <kbd>p</kbd>                   </td><td> <kbd>p</kbd>          </td></tr>
+<tr><td> Select next post                </td><td>             <kbd>j</kbd>                   </td><td> <kbd>j</kbd>          </td></tr>
+<tr><td> Select previous post            </td><td>             <kbd>k</kbd>                   </td><td> <kbd>k</kbd>          </td></tr>
+<tr><td> Reply to the post               </td><td>             <kbd>r</kbd>                   </td><td> <kbd>r</kbd>          </td></tr>
+<tr><td> Reblog the post                 </td><td>             <kbd>b</kbd>                   </td><td> <kbd>b</kbd>          </td></tr>
+<tr><td> Favourite the post              </td><td>             <kbd>f</kbd>                   </td><td> <kbd>f</kbd>          </td></tr>
+<tr><td> Open details of the post        </td><td>             <kbd>o</kbd>                   </td><td> <kbd>o</kbd>          </td></tr>
+<tr><td> Open account profile of the post</td><td>             <kbd>p</kbd>                   </td><td> <kbd>p</kbd>          </td></tr>
 <tr><td> Open the images                 </td><td>             <kbd>i</kbd>                   </td><td> <kbd>i</kbd>          </td></tr>
 <tr><td> Show/hide CW and NSFW           </td><td>             <kbd>x</kbd>                   </td><td> <kbd>x</kbd>          </td></tr>
 <tr><td> Close current page              </td><td>             <kbd>esc</kbd>                 </td><td> <kbd>esc</kbd>        </td></tr>
@@ -79,9 +80,17 @@ Or you can install from [Arch User Repository](https://aur.archlinux.org/package
 $ yay -S whalebird
 ```
 
-### Windows
 
-You can download `.exe` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+### Windows
+<a href="https://apps.microsoft.com/store/detail/whalebird/9NBW4CSDV5HC"><img src="./windows-store.svg" alt= "Windows Store" width="156" height="auto"></a>
+
+
+We prepared winget package and `.exe` [files](https://github.com/h3poteto/whalebird-desktop/releases), **but we don't recommend these ways**.
+Because these binary is not code signed, so you will get warnings when you launch. Only Windows Store version is signed, so please use it.
+
+```
+$ winget show "Whalebird" --versions
+```
 
 ## Translation
 If you can speak multiple languages, could you please help with translation in [Crowdin](https://crowdin.com/project/whalebird)?
@@ -116,12 +125,3 @@ $ yarn run dev
 
 # License
 The software is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-# Donate
-
-[GitHub Sponsor](https://github.com/sponsors/h3poteto)
-
-
-[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=15085320)
-
-[![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/h3poteto/donate)
