@@ -79,9 +79,17 @@ Or you can install from [Arch User Repository](https://aur.archlinux.org/package
 $ yay -S whalebird
 ```
 
-### Windows
 
-You can download `.exe` from [release page](https://github.com/h3poteto/whalebird-desktop/releases).
+### Windows
+<a href="https://apps.microsoft.com/store/detail/whalebird/9NBW4CSDV5HC"><img src="./windows-store.svg" alt= "Windows Store" width="156" height="auto"></a>
+
+
+We prepared winget package and `.exe` [files](https://github.com/h3poteto/whalebird-desktop/releases), **but we don't recommend these ways**.
+Because these binary is not code signed, so you will get warnings when you launch. Only Windows Store version is signed, so please use it.
+
+```
+$ winget show "Notion" --versions
+```
 
 ## Translation
 If you can speak multiple languages, could you please help with translation in [Crowdin](https://crowdin.com/project/whalebird)?
