@@ -7,7 +7,7 @@
 [![Crowdin](https://badges.crowdin.net/whalebird/localized.svg)](https://crowdin.com/project/whalebird)
 
 
-Whalebird is a mastodon client for desktop application.
+Whalebird is a Fediverse client for desktop application.
 
 ![demo](screenshot.png)
 
@@ -18,6 +18,10 @@ Whalebird is a mastodon client for desktop application.
 - Streaming
 - Many keyboard shortcuts
 - Manage multiple accounts
+- Supporting
+    - Mastodon
+    - Pleroma
+    - Misskey
 
 ### Shortcuts
 
