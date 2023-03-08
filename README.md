@@ -7,7 +7,7 @@
 [![Crowdin](https://badges.crowdin.net/whalebird/localized.svg)](https://crowdin.com/project/whalebird)
 
 
-Whalebird is a Fediverse client for desktop application.
+Whalebird is a Fediverse client app for desktop.
 
 ![demo](screenshot.png)
 
@@ -125,12 +125,3 @@ $ yarn run dev
 
 # License
 The software is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-# Donate
-
-[GitHub Sponsor](https://github.com/sponsors/h3poteto)
-
-
-[![Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=15085320)
-
-[![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/h3poteto/donate)
