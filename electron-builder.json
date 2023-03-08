@@ -2,7 +2,6 @@
   "productName": "Whalebird",
   "appId": "social.whalebird.app",
   "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
-  "buildVersion": "152",
   "directories": {
     "output": "build"
   },
@@ -12,9 +11,9 @@
   ],
   "files": [
     "dist/electron/**/*",
-    "build/icons/*"
+    "build/icons/*",
+    "!node_modules/**/*.{mk,a,o,h,forge-meta}"
   ],
-  "afterSign": "build/notarize.js",
   "dmg": {
     "sign": false,
     "contents": [
@@ -30,16 +29,6 @@
         "type": "file"
       }
     ]
-  },
-  "mas": {
-    "type": "distribution",
-    "entitlements": "plist/parent.plist",
-    "entitlementsInherit": "plist/child.plist",
-    "entitlementsLoginHelper": "plist/loginhelper.plist",
-    "hardenedRuntime": false,
-    "extendInfo": {
-      "ITSAppUsesNonExemptEncryption": "false"
-    }
   },
   "mac": {
     "icon": "build/icons/icon.icns",
@@ -60,10 +49,13 @@
     "hardenedRuntime": true,
     "gatekeeperAssess": false,
     "darkModeSupport": true,
-    "singleArchFiles": "*/binding/napi-v6-darwin-unknown-*",
     "extendInfo": {
       "ITSAppUsesNonExemptEncryption": "false"
-    }
+    },
+    "notarize": {
+      "teamId": "HB4N6B2YVM"
+    },
+    "singleArchFiles": "*"
   },
   "win": {
     "icon": "build/icons/icon.ico",

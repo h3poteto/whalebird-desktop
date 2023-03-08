@@ -94,7 +94,7 @@ jobs:
   release-darwin:
     name: Release for MacOS
 
-    runs-on: macos-11
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -116,7 +116,7 @@ jobs:
         env:
           VERSION: ${{ github.event.release.name }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           ASC_PROVIDER: ${{ secrets.ASC_PROVIDER }}
           TEAM_ID: ${{ secrets.ASC_PROVIDER }}
         run: |

@@ -1,0 +1,49 @@
+{
+  "productName": "Whalebird",
+  "appId": "social.whalebird.app",
+  "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+  "buildVersion": "154",
+  "directories": {
+    "output": "build"
+  },
+  "extraResources": [
+    "build/sounds/*",
+    "build/icons/*"
+  ],
+  "files": [
+    "dist/electron/**/*",
+    "build/icons/*",
+    "!node_modules/**/*.{mk,a,o,h,forge-meta}"
+  ],
+  "mas": {
+    "type": "distribution",
+    "entitlements": "plist/parent.plist",
+    "entitlementsInherit": "plist/child.plist",
+    "entitlementsLoginHelper": "plist/loginhelper.plist",
+    "hardenedRuntime": false,
+    "gatekeeperAssess": false,
+    "extendInfo": {
+      "ITSAppUsesNonExemptEncryption": "false"
+    }
+  },
+  "mac": {
+    "icon": "build/icons/icon.icns",
+    "target": [
+      {
+        "target": "mas",
+        "arch": [
+          "universal"
+        ]
+      }
+    ],
+    "category": "public.app-category.social-networking",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "darkModeSupport": true,
+    "extendInfo": {
+      "ITSAppUsesNonExemptEncryption": "false"
+    },
+    "notarize": false,
+    "singleArchFiles": "*"
+  }
+}
