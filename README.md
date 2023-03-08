@@ -9,7 +9,7 @@
 
 Whalebird is a mastodon client for desktop application.
 
-![demo](screenshot_1.png)
+![demo](screenshot.png)
 
 ## Feature
 
