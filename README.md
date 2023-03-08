@@ -1,7 +1,7 @@
 # Whalebird
 [![Build](https://github.com/h3poteto/whalebird-desktop/actions/workflows/build.yml/badge.svg)](https://github.com/h3poteto/whalebird-desktop/actions/workflows/build.yml)
 [![GitHub release](http://img.shields.io/github/release/h3poteto/whalebird-desktop.svg)](https://github.com/h3poteto/whalebird-desktop/releases)
-[![App Store](https://img.shields.io/itunes/v/1378283354.svg)](https://itunes.apple.com/us/app/whalebird/id1378283354)
+[![Mac App Store](https://img.shields.io/itunes/v/6445864587)](https://apps.apple.com/us/app/whalebird/id6445864587)
 [![AUR version](https://img.shields.io/aur/version/whalebird)](https://aur.archlinux.org/packages/whalebird/)
 [![Dependabot](https://img.shields.io/badge/Dependabot-enabled-blue.svg)](https://dependabot.com)
 [![Crowdin](https://badges.crowdin.net/whalebird/localized.svg)](https://crowdin.com/project/whalebird)
