@@ -24,7 +24,7 @@
     "build": "node .electron-vue/build.js",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
-    "package:mas": "electron-builder --mac --publish never --config electron-builder.mas.json",
+    "package:mas": "yarn run build:clean && yarn run pack && node packager.js",
     "package:mac": "electron-builder --mac --publish never --config electron-builder.json",
     "package:linux": "electron-builder --linux --publish never --config electron-builder.json",
     "package:win32": "electron-builder --win --ia32 --publish never --config electron-builder.json",
@@ -36,6 +36,10 @@
     "pack:renderer": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.renderer.config.js",
     "typecheck": "tsc -p . --noEmit",
     "spec": "NODE_ENV=test jest -u --maxWorkers=3"
+  },
+  "resolutions": {
+    "**/**/fsevents": "^1.2.9",
+    "**/**/node-gyp": "^8.4.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -99,7 +103,7 @@
     "parse-link-header": "^2.0.0",
     "sanitize-html": "^2.10.0",
     "simplayer": "0.0.8",
-    "sqlite3": "^5.1.4",
+    "sqlite3": "5.0.0",
     "system-font-families": "^0.6.0",
     "unicode-emoji-json": "^0.4.0",
     "vue": "^3.2.47",
@@ -120,6 +124,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.21.0",
     "@babel/runtime": "7.21.0",
+    "@electron/rebuild": "^3.2.10",
     "@types/auto-launch": "^5.0.2",
     "@types/electron-json-storage": "^4.5.0",
     "@types/jest": "27.4.1",
@@ -153,6 +158,7 @@
     "electron-debug": "^3.2.0",
     "electron-devtools-installer": "^3.2.0",
     "electron-mock-ipc": "^0.3.12",
+    "electron-packager": "^17.1.1",
     "electron-windows-store": "^2.1.0",
     "eslint": "^8.35.0",
     "eslint-plugin-vue": "^9.9.0",
