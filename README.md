@@ -119,10 +119,6 @@ $ sudo apt-get install libfontconfig-dev
 # install dependencies
 $ yarn install
 
-# You need to rebuild because of better-sqlite3
-# Refs: https://github.com/WiseLibs/better-sqlite3/issues/919
-$ ./node_modules/.bin/electron-rebuild
-
 # serve with hot reload at localhost:9080
 $ yarn run dev
 ```

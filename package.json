@@ -35,7 +35,8 @@
     "pack:main": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.renderer.config.js",
     "typecheck": "tsc -p . --noEmit",
-    "spec": "NODE_ENV=test jest -u --maxWorkers=3"
+    "spec": "NODE_ENV=test jest -u --maxWorkers=3",
+    "postinstall": "electron-builder install-app-deps"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -120,7 +121,6 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.21.0",
     "@babel/runtime": "7.21.0",
-    "@electron/rebuild": "^3.2.10",
     "@types/auto-launch": "^5.0.2",
     "@types/better-sqlite3": "^7.6.3",
     "@types/electron-json-storage": "^4.5.0",
