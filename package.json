@@ -90,7 +90,7 @@
     "element-plus": "^2.2.36",
     "emoji-mart-vue-fast": "^12.0.1",
     "i18next": "^22.4.11",
-    "megalodon": "5.2.0",
+    "megalodon": "5.4.1",
     "minimist": "^1.2.8",
     "mitt": "^3.0.0",
     "moment": "^2.29.4",
