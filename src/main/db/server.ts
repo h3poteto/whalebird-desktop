@@ -1,44 +1,44 @@
-import sqlite3 from 'sqlite3'
+import { Database } from 'better-sqlite3'
 import { LocalServer } from '~/src/types/localServer'
 
 export const insertServer = (
-  db: sqlite3.Database,
+  db: Database,
   baseURL: string,
   domain: string,
   sns: 'mastodon' | 'pleroma' | 'misskey',
   accountId: number | null
 ): Promise<LocalServer> => {
   return new Promise((resolve, reject) => {
-    db.serialize(() => {
-      db.run('INSERT INTO servers(domain, base_url, sns, account_id) values (?, ?, ?, ?)', [domain, baseURL, sns, accountId], function (
-        err
-      ) {
-        if (err) {
-          reject(err)
-        }
-        resolve({
-          id: this.lastID,
-          baseURL,
-          domain,
-          sns,
-          accountId
-        })
+    try {
+      const res = db
+        .prepare('INSERT INTO servers(domain, base_url, sns, account_id) values (?, ?, ?, ?)')
+        .run(domain, baseURL, sns, accountId)
+      resolve({
+        id: res.lastInsertRowid as number,
+        baseURL,
+        domain,
+        sns,
+        accountId
       })
-    })
+    } catch (err) {
+      reject(err)
+    }
   })
 }
 
-export const getServer = (db: sqlite3.Database, id: number): Promise<LocalServer> => {
+export const getServer = (db: Database, id: number): Promise<LocalServer> => {
   return new Promise((resolve, reject) => {
-    db.get('SELECT id, base_url, domain, sns, account_id FROM servers WHERE id = ?', id, (err, r) => {
-      if (err) reject(err)
+    const row = db.prepare('SELECT id, base_url, domain, sns, account_id FROM servers WHERE id = ?').get(id)
+    if (row) {
       resolve({
-        id: r.id,
-        baseURL: r.base_url,
-        domain: r.domain,
-        sns: r.sns,
-        accountId: r.account_id
+        id: row.id,
+        baseURL: row.base_url,
+        domain: row.domain,
+        sns: row.sns,
+        accountId: row.account_id
       } as LocalServer)
-    })
+    } else {
+      reject()
+    }
   })
 }
