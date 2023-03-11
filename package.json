@@ -121,6 +121,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.21.0",
     "@babel/runtime": "7.21.0",
+    "@electron/notarize": "^1.2.3",
     "@types/auto-launch": "^5.0.2",
     "@types/better-sqlite3": "^7.6.3",
     "@types/electron-json-storage": "^4.5.0",

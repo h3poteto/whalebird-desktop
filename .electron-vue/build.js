@@ -21,7 +21,7 @@ if (process.env.BUILD_TARGET === 'clean') clean()
 else build()
 
 function clean() {
-  del.sync(['build/*', '!build/icons', '!build/icons/icon.*', '!build/sounds', '!build/sounds/*'])
+  del.sync(['build/*', '!build/icons', '!build/icons/icon.*', '!build/sounds', '!build/sounds/*', '!build/notarize.js'])
   del.sync(['packages/*'])
   console.log(`\n${doneLog}\n`)
   process.exit()
