@@ -11,8 +11,7 @@
   ],
   "files": [
     "dist/electron/**/*",
-    "build/icons/*",
-    "!node_modules/**/*.{mk,a,o,h,forge-meta}"
+    "build/icons/*"
   ],
   "dmg": {
     "sign": false,
