@@ -1,6 +1,6 @@
 const packager = require('electron-packager')
 const { rebuild } = require('@electron/rebuild')
-const path = require("path")
+
 
 packager({
   appBundleId: "social.whalebird.app",
@@ -9,22 +9,30 @@ packager({
   appVersion: "5.0.2",
   arch: ["universal"],
   asar: {
-    unpackDir: path.join('**', '{build/sounds,build/icons}', '*')
+    unpackDir: "build/sounds"
   },
-  buildVersion: "157",
+  buildVersion: "158",
   dir: "./",
   electronVersion: "20.3.12",
   extendInfo: "plist/team.plist",
   icon: "build/icons/icon.icns",
+  ignore: [
+    "^/src",
+    "^/\.electron-vue",
+    "^/\.envrc",
+    "^/packages",
+    "^/plist",
+    "^/static",
+  ],
   name: "Whalebird",
   out: "packages",
   overwrite: true,
   platform: "mas",
+  prune: true,
   afterCopy: [(buildPath, electronVersion, platform, arch, callback) => {
-    console.log("rebuilding")
+    console.log(`rebuilding native dependency electronVersion=${electronVersion} platform=${platform} arch=${arch}`)
     rebuild({ buildPath, electronVersion, arch })
       .then(() => callback())
       .catch((error) => callback(error));
   }],
-  // … other options
 });
