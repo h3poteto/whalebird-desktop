@@ -55,7 +55,7 @@
     "notarize": {
       "teamId": "HB4N6B2YVM"
     },
-    "singleArchFiles": "*"
+    "mergeASARs": false
   },
   "win": {
     "icon": "build/icons/icon.ico",
