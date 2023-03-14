@@ -22,7 +22,7 @@ else build()
 
 function clean() {
   del.sync(['build/*', '!build/icons', '!build/icons/icon.*', '!build/sounds', '!build/sounds/*'])
-  del.sync(['packages/*'])
+  del.sync(['packages/*', '!packages/universal.js', '!packages/packager.js', "!packages/socialwhalebirdapp_MAS.provisionprofile"])
   console.log(`\n${doneLog}\n`)
   process.exit()
 }
