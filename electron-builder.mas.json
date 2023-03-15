@@ -43,6 +43,7 @@
     "extendInfo": {
       "ITSAppUsesNonExemptEncryption": "false"
     },
-    "mergeASARs": false
+    "mergeASARs": false,
+    "asarUnpack": "node_modules/**/*.node"
   }
 }
