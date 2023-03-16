@@ -22,7 +22,7 @@ jobs:
           exempt-issue-labels: 'dependencies,security'
           exempt-all-assignees: true
           exempt-draft-pr: true
-          days-before-issue-stale: 90
-          days-before-issue-close: 7
+          days-before-issue-stale: 120
+          days-before-issue-close: 30
           days-before-pr-stale: -1
           days-before-pr-close: -1
