@@ -11,9 +11,9 @@
   ],
   "files": [
     "dist/electron/**/*",
-    "build/icons/*",
-    "!node_modules/**/*.{mk,a,o,h,forge-meta}"
+    "build/icons/*"
   ],
+  "afterSign": "build/notarize.js",
   "dmg": {
     "sign": false,
     "contents": [
@@ -52,10 +52,8 @@
     "extendInfo": {
       "ITSAppUsesNonExemptEncryption": "false"
     },
-    "notarize": {
-      "teamId": "HB4N6B2YVM"
-    },
-    "singleArchFiles": "*"
+    "mergeASARs": false,
+    "asarUnpack": "node_modules/**/*.node"
   },
   "win": {
     "icon": "build/icons/icon.ico",

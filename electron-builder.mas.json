@@ -2,7 +2,7 @@
   "productName": "Whalebird",
   "appId": "social.whalebird.app",
   "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
-  "buildVersion": "154",
+  "buildVersion": "161",
   "directories": {
     "output": "build"
   },
@@ -12,8 +12,7 @@
   ],
   "files": [
     "dist/electron/**/*",
-    "build/icons/*",
-    "!node_modules/**/*.{mk,a,o,h,forge-meta}"
+    "build/icons/*"
   ],
   "mas": {
     "type": "distribution",
@@ -24,7 +23,8 @@
     "gatekeeperAssess": false,
     "extendInfo": {
       "ITSAppUsesNonExemptEncryption": "false"
-    }
+    },
+    "provisioningProfile": "./packages/socialwhalebirdapp_MAS.provisionprofile"
   },
   "mac": {
     "icon": "build/icons/icon.icns",
@@ -43,7 +43,7 @@
     "extendInfo": {
       "ITSAppUsesNonExemptEncryption": "false"
     },
-    "notarize": false,
-    "singleArchFiles": "*"
+    "mergeASARs": false,
+    "asarUnpack": "node_modules/**/*.node"
   }
 }
