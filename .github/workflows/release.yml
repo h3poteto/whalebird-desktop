@@ -107,6 +107,9 @@ jobs:
         with:
           p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
           p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+      - name: gyp
+        run: |
+          npm install -g node-gyp
       - name: Build
         run: |
           make install

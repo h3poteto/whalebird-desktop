@@ -1,6 +1,6 @@
 {
   "name": "Whalebird",
-  "version": "5.0.2",
+  "version": "5.0.3-beta.0",
   "author": "AkiraFukushima <h3.poteto@gmail.com>",
   "description": "An Electron based Mastodon client for Windows, Mac and Linux",
   "license": "MIT",
