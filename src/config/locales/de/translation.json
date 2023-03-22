@@ -3,8 +3,8 @@
     "application": {
       "name": "Whalebird",
       "about": "Über Whalebird",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "Einstellungen",
+      "shortcuts": "Tastenkürzel",
       "services": "Dienste",
       "hide": "Whalebird ausblenden",
       "hide_others": "Hide others",
@@ -23,10 +23,10 @@
     },
     "view": {
       "name": "Ansicht",
-      "toggle_full_screen": "Toggle full screen"
+      "toggle_full_screen": "Vollbildmodus umschalten"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "Menüleiste immer anzeigen",
       "name": "Fenster",
       "close": "Fenster schließen",
       "open": "Fenster öffnen",
@@ -48,26 +48,26 @@
     "collapse": "Einklappen",
     "expand": "Ausklappen",
     "home": "Start",
-    "notification": "Notifications",
+    "notification": "Mitteilungen",
     "direct": "Direktnachrichten",
     "follow_requests": "Follow requests",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "favourite": "Favoriten",
+    "bookmark": "Lesezeichen",
     "local": "Lokale Timeline",
-    "public": "Federated timeline",
+    "public": "Föderierte Timeline",
     "hashtag": "Hashtags",
     "search": "Suche",
     "lists": "Listen"
   },
   "header_menu": {
     "home": "Start",
-    "notification": "Notifications",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "notification": "Mitteilungen",
+    "favourite": "Favoriten",
+    "bookmark": "Lesezeichen",
     "follow_requests": "Follow requests",
     "direct_messages": "Direct messages",
     "local": "Lokale Timeline",
-    "public": "Federated timeline",
+    "public": "Föderierte Timeline",
     "hashtag": "Hashtags",
     "search": "Suche",
     "lists": "Listen",
@@ -201,12 +201,12 @@
       }
     },
     "notification": {
-      "title": "Notifications",
+      "title": "Mitteilungen",
       "enable": {
         "description": "Notify me when I receive...",
         "reply": "Replies",
         "reblog": "Boosts",
-        "favourite": "Favourites",
+        "favourite": "Favoriten",
         "follow": "New followers",
         "reaction": "Emoji reactions",
         "follow_request": "Follow requests",
@@ -508,7 +508,7 @@
   "compose": {
     "title": "New post",
     "cw": "Write your warning here",
-    "status": "What's on your mind?",
+    "status": "Was gibt's Neues?",
     "cancel": "Cancel",
     "toot": "Post",
     "description": "Add alternate text for this media",
