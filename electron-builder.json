@@ -37,8 +37,7 @@
         "target": "dmg",
         "arch": [
           "x64",
-          "arm64",
-          "universal"
+          "arm64"
         ]
       }
     ],
@@ -49,9 +48,6 @@
     "hardenedRuntime": true,
     "gatekeeperAssess": false,
     "darkModeSupport": true,
-    "extendInfo": {
-      "ITSAppUsesNonExemptEncryption": "false"
-    },
     "mergeASARs": false,
     "asarUnpack": "node_modules/**/*.node"
   },
