@@ -127,7 +127,7 @@
     "@types/electron-json-storage": "^4.5.0",
     "@types/jest": "27.4.1",
     "@types/jsdom": "^21.1.0",
-    "@types/node": "^18.15.0",
+    "@types/node": "^18.15.7",
     "@types/parse-link-header": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
