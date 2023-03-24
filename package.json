@@ -158,7 +158,7 @@
     "electron-mock-ipc": "^0.3.12",
     "electron-windows-store": "^2.1.0",
     "eslint": "^8.35.0",
-    "eslint-plugin-vue": "^9.9.0",
+    "eslint-plugin-vue": "^9.10.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "https-browserify": "^1.0.0",
