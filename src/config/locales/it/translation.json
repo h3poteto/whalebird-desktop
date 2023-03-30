@@ -3,13 +3,13 @@
     "application": {
       "name": "Whalebird",
       "about": "A Proposito di Whalebird",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "Preferenze",
+      "shortcuts": "Scorciatoie da tastiera",
       "services": "Servizi",
       "hide": "Nascondi Whalebird",
       "hide_others": "Hide others",
-      "show_all": "Show all",
-      "open": "Open window",
+      "show_all": "Mostra tutto",
+      "open": "Apri finestra",
       "quit": "Esci"
     },
     "edit": {
@@ -23,10 +23,10 @@
     },
     "view": {
       "name": "Visualizza",
-      "toggle_full_screen": "Toggle full screen"
+      "toggle_full_screen": "Attiva/disattiva schermo intero"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "Mostra sempre la barra dei menu",
       "name": "Finestra",
       "close": "Chiudi Finestra",
       "open": "Apri Finestra",
@@ -34,7 +34,7 @@
       "jump_to": "Salta a"
     },
     "help": {
-      "name": "Help"
+      "name": "Aiuto"
     }
   },
   "global_header": {
@@ -44,31 +44,31 @@
     "profile": "Profilo",
     "show_profile": "Mostra profilo",
     "edit_profile": "Modifica profilo",
-    "settings": "Account settings",
+    "settings": "Impostazioni account",
     "collapse": "Riduci",
     "expand": "Espandi",
     "home": "Pagina Iniziale",
-    "notification": "Notifications",
+    "notification": "Notifiche",
     "direct": "Messaggi diretti",
-    "follow_requests": "Follow requests",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "follow_requests": "Richieste di seguirti",
+    "favourite": "Preferiti",
+    "bookmark": "Segnalibri",
     "local": "Timeline locale",
-    "public": "Federated timeline",
-    "hashtag": "Hashtags",
+    "public": "Timeline federata",
+    "hashtag": "Hashtag",
     "search": "Cerca",
     "lists": "Liste"
   },
   "header_menu": {
     "home": "Pagina Iniziale",
-    "notification": "Notifications",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
-    "follow_requests": "Follow requests",
-    "direct_messages": "Direct messages",
+    "notification": "Notifiche",
+    "favourite": "Preferiti",
+    "bookmark": "Segnalibri",
+    "follow_requests": "Richieste di seguirti",
+    "direct_messages": "Messaggi diretti",
     "local": "Timeline locale",
-    "public": "Federated timeline",
-    "hashtag": "Hashtags",
+    "public": "Timeline federata",
+    "hashtag": "Hashtag",
     "search": "Cerca",
     "lists": "Liste",
     "members": "Membri",
@@ -79,10 +79,10 @@
     "general": {
       "title": "Generali",
       "toot": {
-        "title": "Posts",
+        "title": "Post",
         "visibility": {
-          "description": "Default post visibility",
-          "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
+          "description": "Visibilità predefinita del post",
+          "notice": "Questa impostazione si applica solo ai nuovi post; le risposte seguiranno le impostazioni di visibilità del post principale.",
           "public": "Pubblico",
           "unlisted": "Non elencato",
           "private": "Privato",
@@ -129,7 +129,7 @@
       },
       "delete": {
         "title": "Elimina",
-        "confirm": "Are you sure you want to delete this filter?",
+        "confirm": "Sei sicuro di voler eliminare questo filtro?",
         "confirm_ok": "Elimina",
         "confirm_cancel": "Annulla"
       }
@@ -141,14 +141,14 @@
       "title": "Generali",
       "sounds": {
         "title": "Suoni",
-        "description": "Play sounds when",
-        "fav_rb": "You favourite or boost a post",
+        "description": "Riproduci suoni quando",
+        "fav_rb": "Hai preferito o potenziato un post",
         "toot": "You make a post"
       },
       "timeline": {
         "title": "Cronologia",
-        "description": "Customize how your timelines are displayed",
-        "cw": "Always expand posts tagged with content warnings.",
+        "description": "Personalizza la visualizzazione delle tue timeline",
+        "cw": "Espandere sempre i post contrassegnati da avvisi di contenuto.",
         "nsfw": "Always show media.",
         "hideAllAttachments": "Always hide media."
       },
