@@ -43,7 +43,7 @@ const actions: ActionTree<ReportState, RootState> = {
       rootState.TimelineSpace.account!.accessToken,
       rootState.App.userAgent
     )
-    return client.report(account_id, comment, { status_ids: [status_id] })
+    return client.report(account_id, { comment: comment, status_ids: [status_id] })
   }
 }
 
