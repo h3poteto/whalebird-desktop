@@ -531,8 +531,8 @@ export default defineComponent({
       if (message.reblogged) {
         client.value
           ?.unreblogStatus(message.id)
-          .then(data => {
-            ctx.emit('update', data)
+          .then(res => {
+            ctx.emit('update', res.data)
           })
           .catch(err => {
             console.error(err)
@@ -544,8 +544,9 @@ export default defineComponent({
       } else {
         client.value
           ?.reblogStatus(message.id)
-          .then(data => {
-            ctx.emit('update', data)
+          .then(res => {
+            win.ipcRenderer.send('fav-rt-action-sound')
+            ctx.emit('update', res.data)
           })
           .catch(err => {
             console.error(err)
@@ -560,8 +561,8 @@ export default defineComponent({
       if (message.favourited) {
         client.value
           ?.unfavouriteStatus(message.id)
-          .then(data => {
-            ctx.emit('update', data)
+          .then(res => {
+            ctx.emit('update', res.data)
           })
           .catch(err => {
             console.error(err)
@@ -573,8 +574,9 @@ export default defineComponent({
       } else {
         client.value
           ?.favouriteStatus(message.id)
-          .then(data => {
-            ctx.emit('update', data)
+          .then(res => {
+            win.ipcRenderer.send('fav-rt-action-sound')
+            ctx.emit('update', res.data)
           })
           .catch(err => {
             console.error(err)
@@ -589,8 +591,8 @@ export default defineComponent({
       if (message.bookmarked) {
         client.value
           ?.unbookmarkStatus(message.id)
-          .then(data => {
-            ctx.emit('update', data)
+          .then(res => {
+            ctx.emit('update', res.data)
           })
           .catch(err => {
             console.error(err)
@@ -602,8 +604,9 @@ export default defineComponent({
       } else {
         client.value
           ?.bookmarkStatus(message.id)
-          .then(data => {
-            ctx.emit('update', data)
+          .then(res => {
+            win.ipcRenderer.send('fav-rt-action-sound')
+            ctx.emit('update', res.data)
           })
           .catch(err => {
             console.error(err)
