@@ -146,7 +146,8 @@ import { MUTATION_TYPES } from '@/store/TimelineSpace/Compose'
 import ReceiveDrop from './ReceiveDrop.vue'
 import Quote from './Compose/Quote.vue'
 import suggestText from '@/utils/suggestText'
-import { useMagicKeys, whenever } from '@vueuse/core'
+import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
+import { logicAnd } from '@vueuse/math'
 
 type Expire = {
   label: string
@@ -166,7 +167,7 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const i18n = useI18next()
-    const { up, down, enter, escape } = useMagicKeys({
+    const { up, down, enter, Ctrl_Enter, escape } = useMagicKeys({
       passive: false,
       onEventFired(e) {
         if (e.key === 'Enter' && suggestOpened.value) e.preventDefault()
@@ -174,6 +175,7 @@ export default defineComponent({
         if (e.key === 'ArrowDown' && suggestOpened.value) e.preventDefault()
       }
     })
+    const activeElement = useActiveElement()
     const space = 'TimelineSpace/Compose'
     const win = (window as any) as MyWindow
 
@@ -258,6 +260,8 @@ export default defineComponent({
     const startIndex = ref(0)
     const matchWord = ref('')
 
+    const shortcutEnabled = computed(() => activeElement.value?.tagName === 'TEXTAREA')
+
     onMounted(async () => {
       const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
       const c = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
@@ -325,6 +329,9 @@ export default defineComponent({
     })
     whenever(enter, () => {
       if (suggestOpened.value) selectCurrentItem()
+    })
+    whenever(logicAnd(Ctrl_Enter, shortcutEnabled), async () => {
+      await post()
     })
     whenever(escape, () => {
       closeSuggest()
