@@ -274,8 +274,8 @@ export default defineComponent({
       }
 
       const instance = await c.getInstance()
-      if (instance.data.max_toot_chars) {
-        maxStatusChars.value = instance.data.max_toot_chars
+      if (instance.data.configuration) {
+        maxStatusChars.value = instance.data.configuration.statuses.max_characters
       }
 
       const emojis = await c.getInstanceCustomEmojis()

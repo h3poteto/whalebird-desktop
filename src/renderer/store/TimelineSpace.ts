@@ -184,9 +184,6 @@ const actions: ActionTree<TimelineSpaceState, RootState> = {
     }
     const client = generator(state.server.sns, state.server.baseURL, null, rootState.App.userAgent)
     const res = await client.getInstance()
-    if (res.data.max_toot_chars) {
-      commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.max_toot_chars)
-    }
     if (res.data.configuration) {
       commit(MUTATION_TYPES.UPDATE_TOOT_MAX, res.data.configuration.statuses.max_characters)
     }
