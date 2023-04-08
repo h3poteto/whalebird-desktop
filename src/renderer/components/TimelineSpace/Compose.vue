@@ -413,6 +413,7 @@ export default defineComponent({
         }
 
         await client.value.postStatus(form.status, options)
+        win.ipcRenderer.send('toot-action-sound')
         clear()
       } catch (err) {
         console.error(err)
