@@ -84,7 +84,6 @@
     "auto-launch": "^5.0.5",
     "axios": "1.3.4",
     "better-sqlite3": "^8.2.0",
-    "blueimp-load-image": "^5.16.0",
     "electron-context-menu": "^3.6.1",
     "electron-json-storage": "^4.6.0",
     "electron-log": "^4.4.8",

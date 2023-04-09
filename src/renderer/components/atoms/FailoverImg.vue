@@ -13,7 +13,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, toRefs, onMounted, watch } from 'vue'
-import exifImageUrl from '@/components/utils/exifImageUrl'
 
 export default defineComponent({
   name: 'FailoverImg',
@@ -30,10 +29,6 @@ export default defineComponent({
       type: String,
       default: ''
     },
-    readExif: {
-      type: Boolean,
-      default: false
-    },
     failoverSrc: {
       type: String,
       default:
@@ -41,29 +36,16 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { src, readExif, failoverSrc } = toRefs(props)
+    const { src, failoverSrc } = toRefs(props)
     const loading = ref<boolean>(false)
     const originalSrc = ref<string>(src.value)
 
     onMounted(async () => {
-      if (readExif.value) {
-        try {
-          const transformed = await exifImageUrl(src.value)
-          originalSrc.value = transformed
-        } catch (err) {
-          console.warn(err)
-        }
-      }
+      originalSrc.value = src.value
     })
 
     watch(src, async (newSrc, _oldSrc) => {
       originalSrc.value = newSrc
-      if (readExif.value) {
-        try {
-          const transformed = await exifImageUrl(newSrc)
-          originalSrc.value = transformed
-        } catch (err) {}
-      }
     })
 
     const failover = () => {
