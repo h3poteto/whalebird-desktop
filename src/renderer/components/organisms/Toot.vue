@@ -67,7 +67,6 @@
                 :src="media.preview_url ? media.preview_url : originalMessage.account.avatar"
                 @click="openImage(media.url, mediaAttachments)"
                 :title="media.description"
-                :readExif="true"
               />
               <el-tag class="media-label" size="small" v-if="media.type === 'gifv'">GIF</el-tag>
               <el-tag class="media-label" size="small" v-else-if="media.type === 'video'">VIDEO</el-tag>

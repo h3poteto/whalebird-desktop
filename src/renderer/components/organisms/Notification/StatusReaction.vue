@@ -71,7 +71,7 @@
                 <font-awesome-icon icon="eye" class="hide" />
               </el-button>
               <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
-                <FailoverImg :srzc="media.preview_url" :title="media.description" :readExif="true" />
+                <FailoverImg :srzc="media.preview_url" :title="media.description" />
                 <el-tag class="media-label" size="small" v-if="media.type == 'gifv'">GIF</el-tag>
                 <el-tag class="media-label" size="small" v-else-if="media.type == 'video'">VIDEO</el-tag>
               </div>

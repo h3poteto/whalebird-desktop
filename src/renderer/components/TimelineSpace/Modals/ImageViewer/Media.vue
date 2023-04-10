@@ -11,7 +11,6 @@
 import { defineComponent, ref, toRefs, watch, computed } from 'vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/ImageViewer'
-import exifImageUrl from '@/components/utils/exifImageUrl'
 
 export default defineComponent({
   name: 'Media',
@@ -39,14 +38,6 @@ export default defineComponent({
 
     watch(srcRef, async (newSrc, _oldSrc) => {
       imageSrc.value = newSrc
-      if (newSrc && !isMovie() && !isGIF() && !isAudio()) {
-        try {
-          const transformed = await exifImageUrl(newSrc)
-          imageSrc.value = transformed
-        } catch (err) {
-          console.error(err)
-        }
-      }
     })
 
     const loaded = () => store.dispatch(`TimelineSpace/Modals/ImageViewer/${ACTION_TYPES.LOADED}`)
