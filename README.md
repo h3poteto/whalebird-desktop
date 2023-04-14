@@ -74,6 +74,13 @@ If you are using snap, please install from [snapcraft.io](https://snapcraft.io/w
 $ sudo snap install whalebird
 ```
 
+If you are using flatpak, please install from
+[flathub.org](https://flathub.org/apps/details/social.whalebird.WhalebirdDesktop).
+
+```
+$ flatpak install social.whalebird.WhalebirdDesktop
+```
+
 Or you can install from [Arch User Repository](https://aur.archlinux.org/packages/whalebird/).
 
 ```
