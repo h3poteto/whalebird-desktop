@@ -1036,16 +1036,15 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
       ]
     },
     {
-      label: i18n.t<string>("main_menu.help.name"),
-      role: "help",
+      label: i18n.t<string>('main_menu.help.name'),
+      role: 'help',
       submenu: [
         {
           label: i18n.t<string>('main_menu.application.shortcuts'),
-          accelerator: 'Shift+?',
           click: () => {
             mainWindow!.webContents.send('open-shortcuts-list')
           }
-        },
+        }
       ]
     }
   ]

@@ -9,6 +9,9 @@ import { defineComponent, computed, onMounted, onUnmounted } from 'vue'
 import { useI18next } from 'vue3-i18next'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/App'
+import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
+import { logicAnd } from '@vueuse/math'
+import { MUTATION_TYPES } from '@/store/TimelineSpace/Modals/Shortcut'
 
 export default defineComponent({
   name: 'Whalebird',
@@ -16,6 +19,8 @@ export default defineComponent({
     const space = 'App'
     const store = useStore()
     const i18n = useI18next()
+    const { Shift_Slash } = useMagicKeys()
+    const activeElement = useActiveElement()
 
     const theme = computed(() => ({
       '--theme-background-color': store.state.App.theme.background_color,
@@ -33,6 +38,7 @@ export default defineComponent({
       '--base-font-size': `${store.state.App.fontSize}px`,
       '--specified-fonts': store.state.App.defaultFonts.join(', ')
     }))
+    const shortcutEnabled = computed(() => activeElement.value?.tagName !== 'TEXTAREA' && activeElement.value?.tagName !== 'INPUT')
 
     onMounted(() => {
       store.dispatch(`${space}/${ACTION_TYPES.WATCH_SHORTCUT_EVENTS}`)
@@ -42,6 +48,10 @@ export default defineComponent({
     })
     onUnmounted(() => {
       store.dispatch(`${space}/${ACTION_TYPES.REMOVE_SHORTCUT_EVENTS}`)
+    })
+
+    whenever(logicAnd(Shift_Slash, shortcutEnabled), async () => {
+      store.commit(`TimelineSpace/Modals/Shortcut/${MUTATION_TYPES.CHANGE_MODAL}`, true)
     })
 
     return {

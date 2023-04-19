@@ -12,10 +12,6 @@
             <td>{{ $t('modals.shortcut.ctrl_k') }}</td>
           </tr>
           <tr>
-            <td><kbd>Ctrl(Cmd) + n</kbd></td>
-            <td>{{ $t('modals.shortcut.ctrl_n') }}</td>
-          </tr>
-          <tr>
             <td><kbd>Ctrl(Cmd) + Enter</kbd></td>
             <td>{{ $t('modals.shortcut.ctrl_enter') }}</td>
           </tr>
