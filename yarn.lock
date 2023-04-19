@@ -4715,10 +4715,10 @@ electron-windows-store@^2.1.0:
     multiline "^2.0.0"
     path-exists "^3.0.0"
 
-electron@20.3.12:
-  version "20.3.12"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-20.3.12.tgz#5884b848f62daa6a3d07bbb9e29498c2da5da667"
-  integrity sha512-CuCZKhwdSXaUNIoEuPVZ25YH18zmox3wEM8Acwcy9tlpD8Jiuq3ji3RZ98eVWJalrpqbdE9LtTD/sLC86GIkLg==
+electron@21.4.4:
+  version "21.4.4"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-21.4.4.tgz#46f24eae1ff99416312f4dfecf64b021524bb8e2"
+  integrity sha512-N5O7y7Gtt7mDgkJLkW49ETiT8M3myZ9tNIEvGTKhpBduX4WdgMj6c3hYeYBD6XW7SvbRkWEQaTl25RNday8Xpw==
   dependencies:
     "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
