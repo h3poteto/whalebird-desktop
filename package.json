@@ -173,7 +173,7 @@
     "postcss": "^8.4.22",
     "postcss-html": "^1.5.0",
     "postcss-scss": "^4.0.6",
-    "prettier": "^2.8.7",
+    "prettier": "^2.8.8",
     "process": "^0.11.10",
     "regenerator-runtime": "^0.13.11",
     "sass-loader": "^13.2.2",
