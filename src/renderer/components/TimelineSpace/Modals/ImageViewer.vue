@@ -3,7 +3,7 @@
     <div id="image" v-show="modalOpen" :aria-hidden="!modalOpen" aria-modal="true" role="dialog">
       <div class="image-wrapper">
         <div class="image-header">
-          <el-button class="close-button" link @click="close">
+          <el-button class="close-button" color="#1c1c1c" circle dark @click="close">
             <font-awesome-icon icon="xmark" />
           </el-button>
         </div>
