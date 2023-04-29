@@ -441,6 +441,9 @@ app.on('activate', () => {
 ipcMain.handle('add-server', async (_: IpcMainInvokeEvent, domain: string) => {
   const proxy = await proxyConfiguration.forMastodon()
   const sns = await detector(`https://${domain}`, proxy)
+  if (sns === 'friendica') {
+    return new Promise((_resolve, reject) => reject('friendica is not supported yet'))
+  }
   const server = await insertServer(db, `https://${domain}`, domain, sns, null)
   return server
 })

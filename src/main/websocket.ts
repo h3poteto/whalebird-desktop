@@ -14,7 +14,10 @@ const StreamingURL = async (
   }
   const client = generator(sns, server.baseURL, account.accessToken, 'Whalebird', proxy)
   const res = await client.getInstance()
-  return res.data.urls.streaming_api
+  if (res.data.urls) {
+    return res.data.urls.streaming_api
+  }
+  return new Promise((_resolve, reject) => reject('streaming URL does not exist'))
 }
 
 export { StreamingURL }

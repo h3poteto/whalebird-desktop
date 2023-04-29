@@ -70,6 +70,7 @@ const account: Entity.Account = {
   acct: 'h3poteto@pleroma.io',
   display_name: 'h3poteto',
   locked: false,
+  group: false,
   created_at: '2019-03-26T21:30:32',
   followers_count: 10,
   following_count: 10,
