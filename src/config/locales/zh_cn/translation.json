@@ -183,7 +183,7 @@
         "secondary_color": "次要文字",
         "border_color": "边界",
         "header_menu_color": "标题菜单",
-        "wrapper_mask_color": "Dialog wrapper"
+        "wrapper_mask_color": "对话框包装器"
       },
       "font_size": "字体大小",
       "font_family": "字体",
@@ -275,7 +275,7 @@
       "title": "列表成员"
     },
     "mute_confirm": {
-      "title": "隐藏用户的帖子",
+      "title": "隐藏该用户的帖子",
       "body": "您确定要隐藏该用户发布的帖子吗？",
       "cancel": "取消",
       "ok": "确定"
@@ -312,7 +312,7 @@
       "sensitive": "显示敏感内容",
       "view_toot_detail": "查看帖子详细信息",
       "open_in_browser": "在浏览器中打开",
-      "copy_link_to_toot": "复制帖子网址",
+      "copy_link_to_toot": "复制帖子链接",
       "mute": "隐藏",
       "block": "屏蔽",
       "report": "举报",
@@ -320,7 +320,7 @@
       "via": "来自 {{application}}",
       "reply": "回复",
       "reblog": "转发",
-      "fav": "收藏",
+      "fav": "喜欢",
       "detail": "更多",
       "bookmark": "书签",
       "pinned": "置顶帖",
@@ -351,11 +351,11 @@
       "unfollow": "取消关注此用户",
       "subscribe": "订阅此用户",
       "unsubscribe": "取消订阅此用户",
-      "follow_requested": "已请求关注",
+      "follow_requested": "已发送关注请求",
       "open_in_browser": "在浏览器中打开",
       "manage_list_memberships": "从列表中添加或删除",
       "mute": "隐藏",
-      "unmute": "不再隐藏",
+      "unmute": "解除隐藏",
       "unblock": "解除屏蔽",
       "block": "屏蔽",
       "toots": "帖子",
@@ -386,7 +386,7 @@
       "delete": {
         "confirm": {
           "title": "确定",
-          "message": "This list will be permanently deleted. Are you sure you want to continue?",
+          "message": "此列表将被永久删除。您确定要继续吗？",
           "ok": "删除",
           "cancel": "取消"
         }
@@ -414,13 +414,13 @@
     "account_load_error": "读取账户失败",
     "account_remove_error": "移除账户失败",
     "preferences_load_error": "读取首选项失败",
-    "timeline_fetch_error": "获取时间线失败",
-    "notification_fetch_error": "获取通知失败",
-    "favourite_fetch_error": "获取收藏失败",
+    "timeline_fetch_error": "加载时间轴失败",
+    "notification_fetch_error": "加载通知失败",
+    "favourite_fetch_error": "加载喜欢失败",
     "bookmark_fetch_error": "获取书签失败",
     "follow_request_accept_error": "接受请求失败",
     "follow_request_reject_error": "拒绝请求失败",
-    "attach_error": "附加文件失败",
+    "attach_error": "添加文件失败",
     "authorize_duplicate_error": "不能重复登录同一域名的同一帐户",
     "authorize_error": "认证失败",
     "followers_fetch_error": "读取关注者列表失败",
@@ -437,8 +437,8 @@
     "find_account_error": "找不到用户",
     "reblog_error": "转发失败",
     "unreblog_error": "取消转发失败",
-    "favourite_error": "收藏失败",
-    "unfavourite_error": "取消收藏失败",
+    "favourite_error": "喜欢失败",
+    "unfavourite_error": "取消喜欢失败",
     "bookmark_error": "添加书签失败",
     "unbookmark_error": "移除书签失败",
     "delete_error": "删除帖子失败",
