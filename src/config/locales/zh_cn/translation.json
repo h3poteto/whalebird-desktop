@@ -3,13 +3,13 @@
     "application": {
       "name": "Whalebird",
       "about": "关于 Whalebird",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "首选项",
+      "shortcuts": "快捷键",
       "services": "服务",
       "hide": "隐藏 Whalebird",
       "hide_others": "Hide others",
-      "show_all": "Show all",
-      "open": "Open window",
+      "show_all": "显示全部",
+      "open": "打开窗口",
       "quit": "退出"
     },
     "edit": {
@@ -23,10 +23,10 @@
     },
     "view": {
       "name": "视图",
-      "toggle_full_screen": "Toggle full screen"
+      "toggle_full_screen": "切换全屏"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "始终显示菜单栏",
       "name": "窗口",
       "close": "关闭窗口",
       "open": "打开窗口",
@@ -34,7 +34,7 @@
       "jump_to": "跳转至"
     },
     "help": {
-      "name": "Help"
+      "name": "帮助"
     }
   },
   "global_header": {
@@ -44,31 +44,31 @@
     "profile": "个人资料",
     "show_profile": "查看个人资料",
     "edit_profile": "修改个人资料",
-    "settings": "Account settings",
+    "settings": "账户设置",
     "collapse": "折叠",
     "expand": "展开",
     "home": "主页",
-    "notification": "Notifications",
+    "notification": "通知",
     "direct": "私信",
     "follow_requests": "Follow requests",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "favourite": "收藏",
+    "bookmark": "书签",
     "local": "本站",
-    "public": "Federated timeline",
-    "hashtag": "Hashtags",
+    "public": "跨站时间轴",
+    "hashtag": "话题",
     "search": "搜索",
     "lists": "列表"
   },
   "header_menu": {
     "home": "主页",
-    "notification": "Notifications",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "notification": "通知",
+    "favourite": "收藏",
+    "bookmark": "书签",
     "follow_requests": "Follow requests",
-    "direct_messages": "Direct messages",
+    "direct_messages": "私信",
     "local": "本站",
-    "public": "Federated timeline",
-    "hashtag": "Hashtags",
+    "public": "跨站时间轴",
+    "hashtag": "话题",
     "search": "搜索",
     "lists": "列表",
     "members": "成员",
@@ -143,19 +143,19 @@
         "title": "音效",
         "description": "Play sounds when",
         "fav_rb": "You favourite or boost a post",
-        "toot": "You make a post"
+        "toot": "您发布了一个帖子"
       },
       "timeline": {
         "title": "时间线",
-        "description": "Customize how your timelines are displayed",
-        "cw": "Always expand posts tagged with content warnings.",
-        "nsfw": "Always show media.",
-        "hideAllAttachments": "Always hide media."
+        "description": "自定义时间线的显示方式",
+        "cw": "总是展开含有警告标记的帖子.",
+        "nsfw": "总是显示所有媒体",
+        "hideAllAttachments": "总是隐藏所有媒体"
       },
       "other": {
         "title": "其它选项",
-        "launch": "Launch Whalebird on startup",
-        "hideOnLaunch": "Hide the Whalebird window on launch"
+        "launch": "开机启动",
+        "hideOnLaunch": "启动时隐藏 Whalebird 窗口"
       },
       "reset": {
         "button": "重置首选项"
@@ -163,7 +163,7 @@
     },
     "appearance": {
       "title": "外观",
-      "theme_color": "Colour themes",
+      "theme_color": "颜色主题",
       "theme": {
         "system": "系统",
         "light": "明亮",
@@ -189,7 +189,7 @@
       "font_family": "字体族",
       "toot_padding": "Padding around posts",
       "display_style": {
-        "title": "Username display style",
+        "title": "用户名显示样式",
         "display_name_and_username": "昵称和用户名",
         "display_name": "昵称",
         "username": "用户名"
@@ -201,10 +201,10 @@
       }
     },
     "notification": {
-      "title": "Notifications",
+      "title": "通知",
       "enable": {
         "description": "Notify me when I receive...",
-        "reply": "Replies",
+        "reply": "回复",
         "reblog": "Boosts",
         "favourite": "Favourites",
         "follow": "New followers",
