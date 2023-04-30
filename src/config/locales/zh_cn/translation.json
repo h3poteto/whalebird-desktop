@@ -7,7 +7,7 @@
       "shortcuts": "快捷键",
       "services": "服务",
       "hide": "隐藏 Whalebird",
-      "hide_others": "Hide others",
+      "hide_others": "隐藏其他",
       "show_all": "显示全部",
       "open": "打开窗口",
       "quit": "退出"
@@ -50,10 +50,10 @@
     "home": "主页",
     "notification": "通知",
     "direct": "私信",
-    "follow_requests": "Follow requests",
-    "favourite": "收藏",
+    "follow_requests": "关注请求",
+    "favourite": "喜欢",
     "bookmark": "书签",
-    "local": "本站",
+    "local": "本站时间轴",
     "public": "跨站时间轴",
     "hashtag": "话题",
     "search": "搜索",
@@ -62,11 +62,11 @@
   "header_menu": {
     "home": "主页",
     "notification": "通知",
-    "favourite": "收藏",
+    "favourite": "喜欢",
     "bookmark": "书签",
-    "follow_requests": "Follow requests",
+    "follow_requests": "关注请求",
     "direct_messages": "私信",
-    "local": "本站",
+    "local": "本站时间轴",
     "public": "跨站时间轴",
     "hashtag": "话题",
     "search": "搜索",
@@ -77,12 +77,12 @@
   "settings": {
     "title": "设置",
     "general": {
-      "title": "一般",
+      "title": "通用",
       "toot": {
-        "title": "Posts",
+        "title": "帖子",
         "visibility": {
-          "description": "Default post visibility",
-          "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
+          "description": "默认帖子可见性",
+          "notice": "此设置仅适用于新帖子；回复将遵循父帖子的可见性设置。",
           "public": "公开",
           "unlisted": "不公开",
           "private": "仅关注者",
@@ -94,15 +94,15 @@
       }
     },
     "timeline": {
-      "title": "时间线",
+      "title": "时间轴",
       "use_marker": {
-        "title": "从最后阅读位置加载时间线",
+        "title": "从最后阅读位置加载时间轴",
         "home": "主页",
         "notifications": "通知"
       }
     },
     "filters": {
-      "title": "过滤器",
+      "title": "过滤规则",
       "form": {
         "phrase": "关键字或词组",
         "expire": "过期于",
@@ -129,7 +129,7 @@
       },
       "delete": {
         "title": "删除",
-        "confirm": "Are you sure you want to delete this filter?",
+        "confirm": "您确定要删除这个过滤规则吗？",
         "confirm_ok": "删除",
         "confirm_cancel": "取消"
       }
@@ -141,14 +141,14 @@
       "title": "一般",
       "sounds": {
         "title": "音效",
-        "description": "Play sounds when",
-        "fav_rb": "You favourite or boost a post",
-        "toot": "您发布了一个帖子"
+        "description": "当……时播放通知铃声",
+        "fav_rb": "您喜欢或转发了帖子",
+        "toot": "您发布了一条帖子"
       },
       "timeline": {
-        "title": "时间线",
-        "description": "自定义时间线的显示方式",
-        "cw": "总是展开含有警告标记的帖子.",
+        "title": "时间轴",
+        "description": "自定义时间轴的显示方式",
+        "cw": "总是展开含有警告标记的帖子",
         "nsfw": "总是显示所有媒体",
         "hideAllAttachments": "总是隐藏所有媒体"
       },
@@ -186,8 +186,8 @@
         "wrapper_mask_color": "Dialog wrapper"
       },
       "font_size": "字体大小",
-      "font_family": "字体族",
-      "toot_padding": "Padding around posts",
+      "font_family": "字体",
+      "toot_padding": "帖子间距",
       "display_style": {
         "title": "用户名显示样式",
         "display_name_and_username": "昵称和用户名",
@@ -203,35 +203,35 @@
     "notification": {
       "title": "通知",
       "enable": {
-        "description": "Notify me when I receive...",
+        "description": "当我收到……时通知我",
         "reply": "回复",
-        "reblog": "Boosts",
-        "favourite": "Favourites",
-        "follow": "New followers",
-        "reaction": "Emoji reactions",
-        "follow_request": "Follow requests",
-        "status": "Status notifications",
-        "poll_vote": "Poll votes",
-        "poll_expired": "When a poll expires"
+        "reblog": "转发",
+        "favourite": "喜欢",
+        "follow": "新粉丝",
+        "reaction": "Emoji 回应",
+        "follow_request": "关注请求",
+        "status": "状态通知",
+        "poll_vote": "投票",
+        "poll_expired": "投票过期时"
       }
     },
     "account": {
       "title": "账户",
-      "connected": "Connected accounts",
+      "connected": "已关联的账户",
       "username": "用户名",
       "domain": "域名",
       "association": "关联",
       "order": "顺序",
-      "remove_association": "移除关联",
-      "remove_all_associations": "移除所有关联",
+      "remove_association": "移除账户",
+      "remove_all_associations": "移除所有账户",
       "confirm": "确定",
       "cancel": "取消",
-      "confirm_message": "Are you sure you want to remove all associations?"
+      "confirm_message": "确定移除所有账户吗？"
     },
     "network": {
       "title": "网络",
       "proxy": {
-        "title": "Proxy configuration",
+        "title": "代理配置",
         "no": "不使用代理",
         "system": "使用系统代理",
         "manual": "手动配置代理",
@@ -259,7 +259,7 @@
       },
       "spellchecker": {
         "title": "拼写检查",
-        "enabled": "Enable spell checker"
+        "enabled": "启用拼写检查"
       }
     }
   },
@@ -268,15 +268,15 @@
       "jump_to": "跳转至..."
     },
     "add_list_member": {
-      "title": "Add member to List",
+      "title": "向列表添加成员",
       "account_name": "用户名"
     },
     "list_membership": {
-      "title": "List memberships"
+      "title": "列表成员"
     },
     "mute_confirm": {
-      "title": "Mute user",
-      "body": "Are you sure you want to mute notifications from this user?",
+      "title": "隐藏用户的帖子",
+      "body": "您确定要隐藏该用户发布的帖子吗？",
       "cancel": "取消",
       "ok": "确定"
     },
@@ -284,23 +284,23 @@
       "title": "快捷键",
       "ctrl_number": "切换账户",
       "ctrl_k": "跳转至其他时间线",
-      "ctrl_enter": "Send the post",
-      "ctrl_r": "Refresh current timeline",
-      "j": "Select the next post",
-      "k": "Select the previous post",
-      "r": "Reply to the selected post",
-      "b": "Boost the selected post",
-      "f": "Favourite the selected post",
-      "o": "View the selected post's details",
-      "p": "Display the profile of the selected post's author",
-      "i": "Open the selected post's images",
-      "x": "Show/hide a content warned post",
-      "?": "Show this dialog",
+      "ctrl_enter": "发送帖子",
+      "ctrl_r": "重新加载当前时间线",
+      "j": "选择下一条帖子",
+      "k": "选择上一条帖子",
+      "r": "回复选中的帖子",
+      "b": "转发选中的帖子",
+      "f": "收藏所选帖子",
+      "o": "查看选中帖子的详细信息",
+      "p": "显示选中帖子作者的个人资料",
+      "i": "打开选中帖子的图像",
+      "x": "显示/隐藏被警告的帖子",
+      "?": "显示本快捷键帮助",
       "esc": "关闭当前页"
     },
     "report": {
-      "title": "Report this user",
-      "comment": "附言",
+      "title": "举报该用户",
+      "comment": "备注",
       "cancel": "取消",
       "ok": "举报"
     }
@@ -310,20 +310,20 @@
       "show_more": "显示",
       "hide": "隐藏",
       "sensitive": "显示敏感内容",
-      "view_toot_detail": "View post details",
-      "open_in_browser": "Open in browser",
-      "copy_link_to_toot": "Copy post link",
+      "view_toot_detail": "查看帖子详细信息",
+      "open_in_browser": "在浏览器中打开",
+      "copy_link_to_toot": "复制帖子网址",
       "mute": "隐藏",
       "block": "屏蔽",
       "report": "举报",
       "delete": "删除",
       "via": "来自 {{application}}",
       "reply": "回复",
-      "reblog": "Boost",
+      "reblog": "转发",
       "fav": "收藏",
-      "detail": "Post details",
+      "detail": "更多",
       "bookmark": "书签",
-      "pinned": "Pinned post",
+      "pinned": "置顶帖",
       "poll": {
         "vote": "投票",
         "votes_count": "投票计数",
@@ -332,10 +332,10 @@
         "refresh": "刷新"
       },
       "open_account": {
-        "title": "Account not found",
-        "text": "Could not find {{account}} on the server. Do you want to open the account in a browser instead?",
-        "ok": "Open",
-        "cancel": "Cancel"
+        "title": "未找到该用户",
+        "text": "在本服务器上找不到 {{account}} 。您想要在浏览器中打开吗？",
+        "ok": "打开",
+        "cancel": "取消"
       }
     },
     "status_loading": {
@@ -349,16 +349,16 @@
       "detail": "更多",
       "follow": "关注此用户",
       "unfollow": "取消关注此用户",
-      "subscribe": "Subscribe to this user",
-      "unsubscribe": "Unsubscribe from this user",
+      "subscribe": "订阅此用户",
+      "unsubscribe": "取消订阅此用户",
       "follow_requested": "已请求关注",
-      "open_in_browser": "Open in browser",
-      "manage_list_memberships": "Manage list memberships",
+      "open_in_browser": "在浏览器中打开",
+      "manage_list_memberships": "从列表中添加或删除",
       "mute": "隐藏",
       "unmute": "不再隐藏",
       "unblock": "解除屏蔽",
       "block": "屏蔽",
-      "toots": "Posts",
+      "toots": "帖子",
       "follows": "正在关注",
       "followers": "关注者"
     }
@@ -376,8 +376,8 @@
     "search": "搜索",
     "account": "用户",
     "tag": "话题",
-    "keyword": "Keyword",
-    "toot": "Post"
+    "keyword": "关键词",
+    "toot": "帖子"
   },
   "lists": {
     "index": {
@@ -394,21 +394,21 @@
     }
   },
   "login": {
-    "domain_name_label": "Welcome to Whalebird! Enter a server domain name to log into an account.",
-    "proxy_info": "If you need to use a proxy server, please set it up",
+    "domain_name_label": "欢迎使用 Whalebird ！请输入一个服务器域名来登录帐户。",
+    "proxy_info": "如果您需要使用代理服务器，请设置",
     "proxy_here": " 这里进行设置",
     "search": "搜索",
     "login": "登录"
   },
   "authorize": {
     "manually_1": "一个认证页面已经在浏览器中打开。",
-    "manually_2": "If it has not yet opened, please go to the following URL manually:",
-    "code_label": "Enter your authorization code:",
+    "manually_2": "如果页面没有打开，请手动进入下列 URL：",
+    "code_label": "输入身份验证码",
     "misskey_label": "在提交后请在您的浏览器里进行授权。",
     "submit": "提交"
   },
   "receive_drop": {
-    "drop_message": "Drop here to attach a file"
+    "drop_message": "拖放到此处以添加附件"
   },
   "message": {
     "account_load_error": "读取账户失败",
@@ -416,8 +416,8 @@
     "preferences_load_error": "读取首选项失败",
     "timeline_fetch_error": "获取时间线失败",
     "notification_fetch_error": "获取通知失败",
-    "favourite_fetch_error": "Failed to fetch favourite",
-    "bookmark_fetch_error": "Failed to fetch bookmarks",
+    "favourite_fetch_error": "获取收藏失败",
+    "bookmark_fetch_error": "获取书签失败",
     "follow_request_accept_error": "接受请求失败",
     "follow_request_reject_error": "拒绝请求失败",
     "attach_error": "附加文件失败",
@@ -425,7 +425,7 @@
     "authorize_error": "认证失败",
     "followers_fetch_error": "读取关注者列表失败",
     "follows_fetch_error": "读取关注列表失败",
-    "toot_fetch_error": "Failed to fetch the post details",
+    "toot_fetch_error": "获取帖子失败",
     "follow_error": "关注失败",
     "unfollow_error": "取消关注失败",
     "subscribe_error": "订阅用户失败",
@@ -435,22 +435,22 @@
     "members_fetch_error": "读取成员失败",
     "remove_user_error": "移除用户失败",
     "find_account_error": "找不到用户",
-    "reblog_error": "Failed to boost",
-    "unreblog_error": "Failed to unboost",
+    "reblog_error": "转发失败",
+    "unreblog_error": "取消转发失败",
     "favourite_error": "收藏失败",
     "unfavourite_error": "取消收藏失败",
     "bookmark_error": "添加书签失败",
     "unbookmark_error": "移除书签失败",
-    "delete_error": "Failed to delete the post",
+    "delete_error": "删除帖子失败",
     "search_error": "搜索失败",
-    "toot_error": "Failed to create the post",
+    "toot_error": "创建新帖失败",
     "update_list_memberships_error": "更新列表成员失败",
     "add_user_error": "添加用户失败",
     "authorize_url_error": "无法获取认证 URL",
-    "domain_confirmed": "{{domain}} is confirmed, please log in",
-    "domain_doesnt_exist": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
+    "domain_confirmed": "{{domain}} 已确认，请登录",
+    "domain_doesnt_exist": "连接到 {{domain}} 失败，请确认服务器 URL 是有效或正确的。",
     "loading": "加载中...",
-    "language_not_support_spellchecker_error": "This language is not supported by the spell checker",
+    "language_not_support_spellchecker_error": "此语言暂时不支持拼写检查",
     "update_filter_error": "更新过滤器失败",
     "create_filter_error": "创建过滤器失败"
   },
@@ -460,76 +460,76 @@
       "domain_format": "只能输入域名"
     },
     "compose": {
-      "toot_length": "Post length should be between {{min}} and {{max}}",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "toot_length": "帖子长度应在 {{min}} 和 {{max}} 之间",
+      "attach_length": "您只能添加最多 {{max}} 张图片",
+      "attach_length_plural": "您只能添加最多 {{max}} 张图片",
+      "attach_image": "您只能上传图片或视频",
+      "poll_invalid": "投票选项无效"
     }
   },
   "notification": {
     "favourite": {
-      "title": "New favourite",
-      "body": "{{username}} favourited your post"
+      "title": "新的喜欢",
+      "body": "{{username}} 喜欢了你的帖子"
     },
     "follow": {
-      "title": "New follower",
+      "title": "新粉丝",
       "body": "{{username}} 正在关注你"
     },
     "follow_request": {
-      "title": "New follow request",
-      "body": "Received a follow request from {{username}}"
+      "title": "新关注请求",
+      "body": "收到来自 {{username}} 的关注请求"
     },
     "reblog": {
-      "title": "New boost",
-      "body": "{{username}} boosted your post"
+      "title": "新的转发",
+      "body": "{{username}} 转发了你的帖子"
     },
     "quote": {
-      "title": "New quote",
-      "body": "{{username}} quoted your post"
+      "title": "新回复",
+      "body": "{{username}} 回复了你的帖子"
     },
     "reaction": {
-      "title": "New reaction",
-      "body": "{{username}} reacted to your post"
+      "title": "新回应",
+      "body": "{{username}} 回应了你的帖子"
     },
     "status": {
-      "title": "New post",
-      "body": "{{username}} made a new post"
+      "title": "新建帖子",
+      "body": "{{username}} 发布了一条新帖子"
     },
     "poll_vote": {
-      "title": "New poll vote",
-      "body": "{{username}} voted in your poll"
+      "title": "新投票",
+      "body": "来自 {{username}} 的投票"
     },
     "poll_expired": {
-      "title": "Poll expired",
-      "body": "{{username}}'s poll has ended"
+      "title": "投票已过期",
+      "body": "{{username}} 的投票已截止"
     }
   },
   "compose": {
-    "title": "New post",
-    "cw": "Write your warning here",
-    "status": "What's on your mind?",
-    "cancel": "Cancel",
-    "toot": "Post",
-    "description": "Add alternate text for this media",
+    "title": "新建帖子",
+    "cw": "在此写下您的警告",
+    "status": "在想啥？",
+    "cancel": "取消",
+    "toot": "发布",
+    "description": "为此媒体添加备用文本",
     "footer": {
-      "add_image": "Add images",
-      "poll": "Add a poll",
-      "change_visibility": "Change visibility",
-      "change_sensitive": "Mark media as sensitive",
-      "add_cw": "Add content warnings",
-      "pined_hashtag": "Pinned hashtag"
+      "add_image": "上传图片",
+      "poll": "发起投票",
+      "change_visibility": "更改可见性",
+      "change_sensitive": "标记媒体为敏感内容",
+      "add_cw": "添加内容警告",
+      "pined_hashtag": "已保留的话题标签"
     },
     "poll": {
-      "add_choice": "Add an option",
+      "add_choice": "添加选项",
       "expires": {
-        "5_minutes": "5 minutes",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "1_day": "1 day",
-        "3_days": "3 days",
-        "7_days": "7 days"
+        "5_minutes": "5 分钟",
+        "30_minutes": "30 分钟",
+        "1_hour": "1 小时",
+        "6_hours": "6 小时",
+        "1_day": "1 天",
+        "3_days": "3 天",
+        "7_days": "7 天"
       }
     }
   }
