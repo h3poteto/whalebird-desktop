@@ -22,11 +22,14 @@ jobs:
           make clean
           make build
 
+
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v2
+
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
-        with:
-          # Log in to Snap Store
-          snapcraft_token: ${{ secrets.STORE_LOGIN }}
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
 
       - name:  Release
         uses: samuelmeuli/action-electron-builder@v1
