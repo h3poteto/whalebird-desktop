@@ -1,14 +1,14 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   release-linux:
-    name: Release for Linux
-
     runs-on: ubuntu-latest
+    timeout-minutes: 40
 
     steps:
       - uses: actions/checkout@v2
@@ -21,42 +21,28 @@ jobs:
           make install
           make clean
           make build
-      - name: Package
-        env:
-          VERSION: ${{ github.event.release.name }}
-        run: |
-          make -e linux
-      - uses: snapcore/action-publish@v1
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
+
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
         with:
-          snap: "build/Whalebird-${{ github.event.release.name }}-linux-amd64.snap"
-          release: beta
-      - uses: shogo82148/actions-upload-release-asset@v1
+          # Log in to Snap Store
+          snapcraft_token: ${{ secrets.STORE_LOGIN }}
+
+      - name:  Release
+        uses: samuelmeuli/action-electron-builder@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.tar.bz2"
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.AppImage"
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.deb"
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.rpm"
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.shasum"
+          skip_build: true
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.github_token }}
+
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
   release-windows:
-    name: Release for Windows
-
     runs-on: windows-latest
+    timeout-minutes: 40
 
     steps:
       - uses: actions/checkout@v2
@@ -69,32 +55,23 @@ jobs:
           make install
           make clean
           make build
-      - name: Package
-        env:
-          VERSION: ${{ github.event.release.name }}
-        run: |
-          make -e win32
-          make -e win64
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.exe"
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.shasum"
-      - name: Release to WinGet
-        uses: vedantmgoyal2009/winget-releaser@v2
-        if: github.event_name == 'release' && github.event.release.prerelease == false
-        with:
-          identifier: h3poteto.whalebird-desktop
-          version: ${{ github.event.release.tag_name }}
-          token: ${{ secrets.WINGET_TOKEN }}
 
-  release-darwin:
-    name: Release for MacOS
+      - name: Release
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          skip_build: true
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.github_token }}
 
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+
+  release-macos:
     runs-on: macos-latest
+    timeout-minutes: 40
 
     steps:
       - uses: actions/checkout@v2
@@ -102,30 +79,32 @@ jobs:
         with:
           node-version: '18'
           cache: yarn
+
       - name: Apple Codesigning
         uses: apple-actions/import-codesign-certs@v1
         with:
           p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
           p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+
       - name: Build
         run: |
           make install
           make clean
           make build
-      - name: Package
+
+      - name: Release
+        uses: samuelmeuli/action-electron-builder@v1
         env:
-          VERSION: ${{ github.event.release.name }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           ASC_PROVIDER: ${{ secrets.ASC_PROVIDER }}
           TEAM_ID: ${{ secrets.ASC_PROVIDER }}
-        run: |
-          make -e mac
-      - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.dmg"
-      - uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "build/Whalebird-*.shasum"
+          skip_build: true
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.github_token }}
+
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
