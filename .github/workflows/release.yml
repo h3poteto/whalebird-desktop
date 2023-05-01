@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
 
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -24,8 +27,6 @@ jobs:
 
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v2
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
 
       - name:  Release
         uses: samuelmeuli/action-electron-builder@v1
