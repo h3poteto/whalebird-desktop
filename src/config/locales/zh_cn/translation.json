@@ -45,7 +45,7 @@
     "show_profile": "查看个人资料",
     "edit_profile": "修改个人资料",
     "settings": "账户设置",
-    "collapse": "折叠",
+    "collapse": "收起",
     "expand": "展开",
     "home": "主页",
     "notification": "通知",
@@ -79,10 +79,10 @@
     "general": {
       "title": "通用",
       "toot": {
-        "title": "帖子",
+        "title": "嘟文",
         "visibility": {
-          "description": "默认帖子可见性",
-          "notice": "此设置仅适用于新帖子；回复将遵循父帖子的可见性设置。",
+          "description": "默认发嘟可见性",
+          "notice": "此设置仅适用于新嘟文；回复将遵循父嘟文的可见性设置。",
           "public": "公开",
           "unlisted": "不公开",
           "private": "仅关注者",
@@ -142,13 +142,13 @@
       "sounds": {
         "title": "音效",
         "description": "当……时播放通知铃声",
-        "fav_rb": "您喜欢或转发了帖子",
-        "toot": "您发布了一条帖子"
+        "fav_rb": "您喜欢或者转嘟了",
+        "toot": "您发布了一条嘟文"
       },
       "timeline": {
         "title": "时间轴",
         "description": "自定义时间轴的显示方式",
-        "cw": "总是展开含有警告标记的帖子",
+        "cw": "总是显示敏感嘟文",
         "nsfw": "总是显示所有媒体",
         "hideAllAttachments": "总是隐藏所有媒体"
       },
@@ -175,7 +175,7 @@
       },
       "custom_theme": {
         "background_color": "基本背景",
-        "selected_background_color": "选中的背景",
+        "selected_background_color": "聚焦背景",
         "global_header_color": "账户菜单",
         "side_menu_color": "侧边栏",
         "primary_color": "首要文字",
@@ -187,7 +187,7 @@
       },
       "font_size": "字体大小",
       "font_family": "字体",
-      "toot_padding": "帖子间距",
+      "toot_padding": "嘟文上下间距",
       "display_style": {
         "title": "用户名显示样式",
         "display_name_and_username": "昵称和用户名",
@@ -205,7 +205,7 @@
       "enable": {
         "description": "当我收到……时通知我",
         "reply": "回复",
-        "reblog": "转发",
+        "reblog": "转嘟",
         "favourite": "喜欢",
         "follow": "新粉丝",
         "reaction": "Emoji 回应",
@@ -275,8 +275,8 @@
       "title": "列表成员"
     },
     "mute_confirm": {
-      "title": "隐藏该用户的帖子",
-      "body": "您确定要隐藏该用户发布的帖子吗？",
+      "title": "静音该用户的嘟文",
+      "body": "您确定要静音该用户吗？",
       "cancel": "取消",
       "ok": "确定"
     },
@@ -284,18 +284,18 @@
       "title": "快捷键",
       "ctrl_number": "切换账户",
       "ctrl_k": "跳转至其他时间线",
-      "ctrl_enter": "发送帖子",
+      "ctrl_enter": "发送嘟文",
       "ctrl_r": "重新加载当前时间线",
-      "j": "选择下一条帖子",
-      "k": "选择上一条帖子",
-      "r": "回复选中的帖子",
-      "b": "转发选中的帖子",
-      "f": "收藏所选帖子",
-      "o": "查看选中帖子的详细信息",
-      "p": "显示选中帖子作者的个人资料",
-      "i": "打开选中帖子的图像",
-      "x": "显示/隐藏被警告的帖子",
-      "?": "显示本快捷键帮助",
+      "j": "选择下一条嘟文",
+      "k": "选择上一条嘟文",
+      "r": "回复选中的嘟文",
+      "b": "转发所选嘟文",
+      "f": "喜欢所选嘟文",
+      "o": "查看选中嘟文的详细信息",
+      "p": "显示选中嘟文作者的个人资料",
+      "i": "打开选中嘟文的图像",
+      "x": "显示/隐藏敏感嘟文",
+      "?": "显示快捷键帮助",
       "esc": "关闭当前页"
     },
     "report": {
@@ -310,20 +310,20 @@
       "show_more": "显示",
       "hide": "隐藏",
       "sensitive": "显示敏感内容",
-      "view_toot_detail": "查看帖子详细信息",
+      "view_toot_detail": "查看嘟文详细信息",
       "open_in_browser": "在浏览器中打开",
-      "copy_link_to_toot": "复制帖子链接",
-      "mute": "隐藏",
+      "copy_link_to_toot": "复制嘟文链接",
+      "mute": "静音",
       "block": "屏蔽",
       "report": "举报",
       "delete": "删除",
       "via": "来自 {{application}}",
       "reply": "回复",
-      "reblog": "转发",
+      "reblog": "转嘟",
       "fav": "喜欢",
       "detail": "更多",
       "bookmark": "书签",
-      "pinned": "置顶帖",
+      "pinned": "置顶嘟文",
       "poll": {
         "vote": "投票",
         "votes_count": "投票计数",
@@ -344,7 +344,7 @@
   },
   "side_bar": {
     "account_profile": {
-      "follows_you": "关注你",
+      "follows_you": "关注了你",
       "doesnt_follow_you": "没有关注你",
       "detail": "更多",
       "follow": "关注此用户",
@@ -354,13 +354,13 @@
       "follow_requested": "已发送关注请求",
       "open_in_browser": "在浏览器中打开",
       "manage_list_memberships": "从列表中添加或删除",
-      "mute": "隐藏",
-      "unmute": "解除隐藏",
-      "unblock": "解除屏蔽",
+      "mute": "静音",
+      "unmute": "取消静音",
+      "unblock": "取消屏蔽",
       "block": "屏蔽",
-      "toots": "帖子",
-      "follows": "正在关注",
-      "followers": "关注者"
+      "toots": "嘟文",
+      "follows": "关注",
+      "followers": "粉丝"
     }
   },
   "follow_requests": {
@@ -377,7 +377,7 @@
     "account": "用户",
     "tag": "话题",
     "keyword": "关键词",
-    "toot": "帖子"
+    "toot": "嘟文"
   },
   "lists": {
     "index": {
@@ -394,7 +394,7 @@
     }
   },
   "login": {
-    "domain_name_label": "欢迎使用 Whalebird ！请输入一个服务器域名来登录帐户。",
+    "domain_name_label": "欢迎使用 Whalebird ！请输入一个服务器域名来登录你的账号​。",
     "proxy_info": "如果您需要使用代理服务器，请设置",
     "proxy_here": " 这里进行设置",
     "search": "搜索",
@@ -402,7 +402,7 @@
   },
   "authorize": {
     "manually_1": "一个认证页面已经在浏览器中打开。",
-    "manually_2": "如果页面没有打开，请手动进入下列 URL：",
+    "manually_2": "如果页面没有打开，请手动进入以下链接：",
     "code_label": "输入身份验证码",
     "misskey_label": "在提交后请在您的浏览器里进行授权。",
     "submit": "提交"
@@ -413,42 +413,42 @@
   "message": {
     "account_load_error": "读取账户失败",
     "account_remove_error": "移除账户失败",
-    "preferences_load_error": "读取首选项失败",
+    "preferences_load_error": "加载首选项失败",
     "timeline_fetch_error": "加载时间轴失败",
     "notification_fetch_error": "加载通知失败",
     "favourite_fetch_error": "加载喜欢失败",
-    "bookmark_fetch_error": "获取书签失败",
+    "bookmark_fetch_error": "加载书签失败",
     "follow_request_accept_error": "接受请求失败",
     "follow_request_reject_error": "拒绝请求失败",
     "attach_error": "添加文件失败",
     "authorize_duplicate_error": "不能重复登录同一域名的同一帐户",
     "authorize_error": "认证失败",
-    "followers_fetch_error": "读取关注者列表失败",
+    "followers_fetch_error": "读取粉丝列表失败",
     "follows_fetch_error": "读取关注列表失败",
-    "toot_fetch_error": "获取帖子失败",
+    "toot_fetch_error": "加载嘟文失败",
     "follow_error": "关注失败",
     "unfollow_error": "取消关注失败",
     "subscribe_error": "订阅用户失败",
     "unsubscribe_error": "取消订阅用户失败",
-    "lists_fetch_error": "读取列表失败",
+    "lists_fetch_error": "加载列表失败",
     "list_create_error": "创建列表失败",
-    "members_fetch_error": "读取成员失败",
+    "members_fetch_error": "加载成员失败",
     "remove_user_error": "移除用户失败",
     "find_account_error": "找不到用户",
-    "reblog_error": "转发失败",
-    "unreblog_error": "取消转发失败",
+    "reblog_error": "转嘟失败",
+    "unreblog_error": "取消转嘟失败",
     "favourite_error": "喜欢失败",
     "unfavourite_error": "取消喜欢失败",
     "bookmark_error": "添加书签失败",
     "unbookmark_error": "移除书签失败",
-    "delete_error": "删除帖子失败",
+    "delete_error": "删除嘟文失败",
     "search_error": "搜索失败",
-    "toot_error": "创建新帖失败",
+    "toot_error": "创建新嘟失败",
     "update_list_memberships_error": "更新列表成员失败",
     "add_user_error": "添加用户失败",
-    "authorize_url_error": "无法获取认证 URL",
+    "authorize_url_error": "无法获取认证链接",
     "domain_confirmed": "{{domain}} 已确认，请登录",
-    "domain_doesnt_exist": "连接到 {{domain}} 失败，请确认服务器 URL 是有效或正确的。",
+    "domain_doesnt_exist": "连接到 {{domain}} 失败，请确认服务器链接是有效或正确的。",
     "loading": "加载中...",
     "language_not_support_spellchecker_error": "此语言暂时不支持拼写检查",
     "update_filter_error": "更新过滤器失败",
@@ -460,7 +460,7 @@
       "domain_format": "只能输入域名"
     },
     "compose": {
-      "toot_length": "帖子长度应在 {{min}} 和 {{max}} 之间",
+      "toot_length": "嘟文长度应在 {{min}} 和 {{max}} 之间",
       "attach_length": "您只能添加最多 {{max}} 张图片",
       "attach_length_plural": "您只能添加最多 {{max}} 张图片",
       "attach_image": "您只能上传图片或视频",
@@ -470,7 +470,7 @@
   "notification": {
     "favourite": {
       "title": "新的喜欢",
-      "body": "{{username}} 喜欢了你的帖子"
+      "body": "{{username}} 喜欢了你的嘟文"
     },
     "follow": {
       "title": "新粉丝",
@@ -481,20 +481,20 @@
       "body": "收到来自 {{username}} 的关注请求"
     },
     "reblog": {
-      "title": "新的转发",
-      "body": "{{username}} 转发了你的帖子"
+      "title": "新转嘟",
+      "body": "{{username}} 转发了你的嘟文"
     },
     "quote": {
       "title": "新回复",
-      "body": "{{username}} 回复了你的帖子"
+      "body": "{{username}} 引用了你的嘟文"
     },
     "reaction": {
       "title": "新回应",
-      "body": "{{username}} 回应了你的帖子"
+      "body": "{{username}} 回应了你的嘟文"
     },
     "status": {
-      "title": "新建帖子",
-      "body": "{{username}} 发布了一条新帖子"
+      "title": "新建嘟文",
+      "body": "{{username}} 发了一条新嘟嘟"
     },
     "poll_vote": {
       "title": "新投票",
@@ -506,22 +506,22 @@
     }
   },
   "compose": {
-    "title": "新建帖子",
+    "title": "新建嘟文",
     "cw": "在此写下您的警告",
     "status": "在想啥？",
     "cancel": "取消",
-    "toot": "发布",
+    "toot": "发嘟嘟",
     "description": "为此媒体添加备用文本",
     "footer": {
       "add_image": "上传图片",
       "poll": "发起投票",
       "change_visibility": "更改可见性",
       "change_sensitive": "标记媒体为敏感内容",
-      "add_cw": "添加内容警告",
+      "add_cw": "添加敏感内容警告",
       "pined_hashtag": "已保留的话题标签"
     },
     "poll": {
-      "add_choice": "添加选项",
+      "add_choice": "添加一个选项",
       "expires": {
         "5_minutes": "5 分钟",
         "30_minutes": "30 分钟",
