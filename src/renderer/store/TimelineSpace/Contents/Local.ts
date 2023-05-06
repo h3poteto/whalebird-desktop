@@ -92,7 +92,7 @@ const actions: ActionTree<LocalState, RootState> = {
   ): Promise<Array<Entity.Status> | null> => {
     const client = generator(req.server.sns, req.server.baseURL, req.account.accessToken, rootState.App.userAgent)
     return client.getLocalTimeline({ max_id: req.lastStatus.id, limit: 20 }).then(res => {
-      commit(MUTATION_TYPES.INSERT_TIMELINE, res.data)
+      commit(MUTATION_TYPES.INSERT_TIMELINE, { statuses: res.data, accountId: req.account.id })
       return res.data
     })
   }
