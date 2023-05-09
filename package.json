@@ -35,7 +35,8 @@
     "pack:renderer": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.renderer.config.js",
     "typecheck": "tsc -p . --noEmit",
     "spec": "NODE_ENV=test jest -u --maxWorkers=3",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "thirdparty": "license-checker --production --json > thirdparty.json && node scripts/thirdparty.js"
   },
   "jest": {
     "moduleFileExtensions": [
