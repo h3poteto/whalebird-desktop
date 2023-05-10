@@ -302,6 +302,8 @@ async function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: false,
+      // To prevent CORS in renderer process.
+      webSecurity: false,
       preload: path.resolve(__dirname, './preload.js'),
       spellcheck: spellcheck
     }
@@ -790,22 +792,16 @@ ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
 })
 
 // Settings
-ipcMain.handle(
-  'get-account-setting',
-  async (_: IpcMainInvokeEvent, accountId: number): Promise<Setting> => {
-    const setting = await getSetting(db, accountId)
-    return setting
-  }
-)
+ipcMain.handle('get-account-setting', async (_: IpcMainInvokeEvent, accountId: number): Promise<Setting> => {
+  const setting = await getSetting(db, accountId)
+  return setting
+})
 
-ipcMain.handle(
-  'update-account-setting',
-  async (_: IpcMainInvokeEvent, setting: Setting): Promise<Setting> => {
-    console.log(setting)
-    const res = await createOrUpdateSetting(db, setting)
-    return res
-  }
-)
+ipcMain.handle('update-account-setting', async (_: IpcMainInvokeEvent, setting: Setting): Promise<Setting> => {
+  console.log(setting)
+  const res = await createOrUpdateSetting(db, setting)
+  return res
+})
 
 // Cache
 ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
