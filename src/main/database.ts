@@ -32,7 +32,7 @@ id INTEGER PRIMARY KEY, \
 tag TEXT NOT NULL, \
 account_id INTEGER UNIQUE NOT NULL, \
 FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE)'
-  ).run
+  ).run()
   db.prepare(
     'CREATE TABLE IF NOT EXISTS settings(\
 id INTEGER PRIMARY KEY, \
