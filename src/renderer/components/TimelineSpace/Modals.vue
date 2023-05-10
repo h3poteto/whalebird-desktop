@@ -7,6 +7,7 @@
     <mute-confirm v-if="muteConfirmModal"></mute-confirm>
     <shortcut></shortcut>
     <report v-if="reportModal"></report>
+    <thirdparty />
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import AddListMember from './Modals/AddListMember.vue'
 import MuteConfirm from './Modals/MuteConfirm.vue'
 import Shortcut from './Modals/Shortcut.vue'
 import Report from './Modals/Report.vue'
+import Thirdparty from './Modals/Thirdparty.vue'
 
 export default defineComponent({
   name: 'modals',
@@ -30,7 +32,8 @@ export default defineComponent({
     AddListMember,
     MuteConfirm,
     Shortcut,
-    Report
+    Report,
+    Thirdparty
   },
   setup() {
     const store = useStore()
