@@ -5066,10 +5066,10 @@ eslint-plugin-prettier@^4.0.0:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-vue@^9.11.0:
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.11.0.tgz#99a247455c02181f24d9240d422380fd16dd630c"
-  integrity sha512-bBCJAZnkBV7ATH4Z1E7CvN3nmtS4H7QUU3UBxPdo8WohRU+yHjnQRALpTbxMVcz0e4Mx3IyxIdP5HYODMxK9cQ==
+eslint-plugin-vue@^9.12.0:
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.12.0.tgz#3174eaaedc143bf7b392b3defa3f18889606bb73"
+  integrity sha512-xH8PgpDW2WwmFSmRfs/3iWogef1CJzQqX264I65zz77jDuxF2yLy7+GA2diUM8ZNATuSl1+UehMQkb5YEyau5w==
   dependencies:
     "@eslint-community/eslint-utils" "^4.3.0"
     natural-compare "^1.4.0"
