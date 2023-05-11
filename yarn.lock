@@ -3596,10 +3596,10 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-cfonts@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-3.1.1.tgz#81bf9cfce2fcee581046d8912a55bab4366f9cfc"
-  integrity sha512-PFknL/y+QVzoVmnm4X/PLd+t5Bt4aSvFBebpvyjcVUb81jHIVHFKvAopADbTk9tnfLLC2RHFZgdVa9YAwQp1mw==
+cfonts@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-3.2.0.tgz#3c72b79679e48d19c620614d1134326a1f22cdec"
+  integrity sha512-CFGxRY6aBuOgK85bceCpmMMhuyO6IwcAyyeapB//DtRzm7NbAEsDuuZzBoQxVonz+C2BmZ3swqB/YgcmW+rh3A==
   dependencies:
     supports-color "^8"
     window-size "^1.1.1"
