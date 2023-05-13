@@ -1,6 +1,6 @@
 <template>
   <div class="shortcut">
-    <el-dialog :title="$t('modals.shortcut.title')" v-model="shortcutModal" width="500px" custom-class="shortcut-modal">
+    <el-dialog :title="$t('modals.shortcut.title')" v-model="shortcutModal" width="500px">
       <table class="shortcuts">
         <tbody>
           <tr>

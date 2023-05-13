@@ -790,22 +790,16 @@ ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
 })
 
 // Settings
-ipcMain.handle(
-  'get-account-setting',
-  async (_: IpcMainInvokeEvent, accountId: number): Promise<Setting> => {
-    const setting = await getSetting(db, accountId)
-    return setting
-  }
-)
+ipcMain.handle('get-account-setting', async (_: IpcMainInvokeEvent, accountId: number): Promise<Setting> => {
+  const setting = await getSetting(db, accountId)
+  return setting
+})
 
-ipcMain.handle(
-  'update-account-setting',
-  async (_: IpcMainInvokeEvent, setting: Setting): Promise<Setting> => {
-    console.log(setting)
-    const res = await createOrUpdateSetting(db, setting)
-    return res
-  }
-)
+ipcMain.handle('update-account-setting', async (_: IpcMainInvokeEvent, setting: Setting): Promise<Setting> => {
+  console.log(setting)
+  const res = await createOrUpdateSetting(db, setting)
+  return res
+})
 
 // Cache
 ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {
@@ -1046,6 +1040,12 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
           label: i18n.t<string>('main_menu.application.shortcuts'),
           click: () => {
             mainWindow!.webContents.send('open-shortcuts-list')
+          }
+        },
+        {
+          label: i18n.t<string>('main_menu.help.thirdparty'),
+          click: () => {
+            mainWindow?.webContents.send('open-thirdparty-modal')
           }
         }
       ]

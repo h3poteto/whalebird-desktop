@@ -12,3 +12,4 @@ packages/*
 !.gitkeep
 *.db
 *.provisionprofile
+/thirdparty.json
