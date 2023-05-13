@@ -302,6 +302,8 @@ async function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: false,
+      // To prevent CORS in renderer process.
+      webSecurity: false,
       preload: path.resolve(__dirname, './preload.js'),
       spellcheck: spellcheck
     }
