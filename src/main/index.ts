@@ -1045,7 +1045,7 @@ const ApplicationMenu = (accountsChange: Array<MenuItemConstructorOptions>, menu
         {
           label: i18n.t<string>('main_menu.help.thirdparty'),
           click: () => {
-            mainWindow!.webContents.send('open-thirdparty-modal')
+            mainWindow?.webContents.send('open-thirdparty-modal')
           }
         }
       ]

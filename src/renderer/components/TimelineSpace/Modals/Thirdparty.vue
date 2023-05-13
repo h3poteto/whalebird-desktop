@@ -3,12 +3,10 @@
     <el-dialog :title="$t('modals.thirdparty.title')" v-model="modalOpen" width="500px" class="thirdparty-modal">
       <table class="licenses">
         <tbody>
-          <template v-for="lib in thirdparty">
-            <tr>
-              <td>{{ lib.package_name }}</td>
-              <td>{{ lib.license }}</td>
-            </tr>
-          </template>
+          <tr v-for="lib in thirdparty" :key="lib">
+            <td>{{ lib.package_name }}</td>
+            <td>{{ lib.license }}</td>
+          </tr>
         </tbody>
       </table>
     </el-dialog>
@@ -21,7 +19,7 @@ import { MyWindow } from '~/src/types/global'
 import thirdparty from '~/src/config/thirdparty.json'
 
 export default defineComponent({
-  name: 'thirdparty',
+  name: 'Thirdparty',
   setup() {
     const win = window as any as MyWindow
     const modalOpen = ref(false)
