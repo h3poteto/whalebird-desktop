@@ -34,7 +34,8 @@
       "jump_to": "Перейти к"
     },
     "help": {
-      "name": "Help"
+      "name": "Help",
+      "thirdparty": "Thirdparty licenses"
     }
   },
   "global_header": {
@@ -303,6 +304,9 @@
       "comment": "Дополнительные комментарии",
       "cancel": "Отмена",
       "ok": "Жалоба"
+    },
+    "thirdparty": {
+      "title": "Thirdparty licenses"
     }
   },
   "cards": {
