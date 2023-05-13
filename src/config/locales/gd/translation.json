@@ -34,7 +34,8 @@
       "jump_to": "Leum gu"
     },
     "help": {
-      "name": "Help"
+      "name": "Help",
+      "thirdparty": "Thirdparty licenses"
     }
   },
   "global_header": {
@@ -303,6 +304,9 @@
       "comment": "Beachdan a bharrachd",
       "cancel": "Sguir dheth",
       "ok": "Dèan gearan"
+    },
+    "thirdparty": {
+      "title": "Thirdparty licenses"
     }
   },
   "cards": {
