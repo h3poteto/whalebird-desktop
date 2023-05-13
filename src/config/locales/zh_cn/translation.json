@@ -34,7 +34,8 @@
       "jump_to": "跳转至"
     },
     "help": {
-      "name": "帮助"
+      "name": "帮助",
+      "thirdparty": "Thirdparty licenses"
     }
   },
   "global_header": {
@@ -303,6 +304,9 @@
       "comment": "备注",
       "cancel": "取消",
       "ok": "举报"
+    },
+    "thirdparty": {
+      "title": "Thirdparty licenses"
     }
   },
   "cards": {
