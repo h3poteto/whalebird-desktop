@@ -34,7 +34,8 @@
       "jump_to": "Jump to"
     },
     "help": {
-      "name": "Help"
+      "name": "Help",
+      "thirdparty": "Thirdparty licenses"
     }
   },
   "global_header": {
@@ -303,6 +304,9 @@
       "comment": "Additional comments",
       "cancel": "අවලංගු",
       "ok": "වාර්තා කරන්න"
+    },
+    "thirdparty": {
+      "title": "Thirdparty licenses"
     }
   },
   "cards": {
