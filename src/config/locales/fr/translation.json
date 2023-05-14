@@ -34,7 +34,8 @@
       "jump_to": "Aller à"
     },
     "help": {
-      "name": "Help"
+      "name": "Help",
+      "thirdparty": "Thirdparty licenses"
     }
   },
   "global_header": {
@@ -303,6 +304,9 @@
       "comment": "Observations supplémentaires",
       "cancel": "Annuler",
       "ok": "Signaler"
+    },
+    "thirdparty": {
+      "title": "Thirdparty licenses"
     }
   },
   "cards": {

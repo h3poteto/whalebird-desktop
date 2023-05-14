@@ -34,7 +34,8 @@
       "jump_to": "Joan hona"
     },
     "help": {
-      "name": "Laguntza"
+      "name": "Laguntza",
+      "thirdparty": "Thirdparty licenses"
     }
   },
   "global_header": {
@@ -303,6 +304,9 @@
       "comment": "Iruzkin gehigarriak",
       "cancel": "Utzi",
       "ok": "Salatu"
+    },
+    "thirdparty": {
+      "title": "Thirdparty licenses"
     }
   },
   "cards": {

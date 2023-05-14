@@ -34,7 +34,8 @@
       "jump_to": "Gehe zu"
     },
     "help": {
-      "name": "Help"
+      "name": "Help",
+      "thirdparty": "Thirdparty licenses"
     }
   },
   "global_header": {
@@ -303,6 +304,9 @@
       "comment": "Warum soll geblockt werden?",
       "cancel": "Abbrechen",
       "ok": "Senden"
+    },
+    "thirdparty": {
+      "title": "Thirdparty licenses"
     }
   },
   "cards": {
