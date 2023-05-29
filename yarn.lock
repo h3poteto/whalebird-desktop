@@ -11427,10 +11427,10 @@ vue-html-loader@^1.2.4:
     loader-utils "^1.0.2"
     object-assign "^4.1.0"
 
-vue-loader@^17.1.0:
-  version "17.1.0"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-17.1.0.tgz#f48c1f4d416e905b098bc250e2e8ae1c4acc43f7"
-  integrity sha512-zAjrT+TNWTpgRODxqDfzbDyvuTf5kCP9xmMk8aspQKuYNnTY2r0XK/bHu1DKLpSpk0I6fkQph5OLKB7HcRIPZw==
+vue-loader@^17.1.2:
+  version "17.1.2"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-17.1.2.tgz#dc7af8573913308d374104d6c2a4796135782f93"
+  integrity sha512-AxCiJ2aPPwJC5CWtsQH3d5WSw67v55oLFHBmzrc5kjSr6i1dn5uoj5QsuokApirvWBCegRmfnE/MYFyhKMUwxw==
   dependencies:
     chalk "^4.1.0"
     hash-sum "^2.0.0"
