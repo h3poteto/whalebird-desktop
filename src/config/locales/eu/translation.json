@@ -35,7 +35,7 @@
     },
     "help": {
       "name": "Laguntza",
-      "thirdparty": "Thirdparty licenses"
+      "thirdparty": "Hirugarrenen lizentziak"
     }
   },
   "global_header": {
@@ -306,7 +306,7 @@
       "ok": "Salatu"
     },
     "thirdparty": {
-      "title": "Thirdparty licenses"
+      "title": "Hirugarrenen lizentziak"
     }
   },
   "cards": {
