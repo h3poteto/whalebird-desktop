@@ -6,19 +6,22 @@ describe('emojify', () => {
       shortcode: 'python',
       static_url: 'https://example.com/python',
       url: 'https://example.com/python',
-      visible_in_picker: true
+      visible_in_picker: true,
+      category: ''
     },
     {
       shortcode: 'nodejs',
       static_url: 'https://example.com/nodejs',
       url: 'https://example.com/nodejs',
-      visible_in_picker: true
+      visible_in_picker: true,
+      category: ''
     },
     {
       shortcode: 'slack',
       static_url: 'https://example.com/slack',
       url: 'https://example.com/slack',
-      visible_in_picker: true
+      visible_in_picker: true,
+      category: ''
     }
   ]
   describe('Does not contain shortcode', () => {
