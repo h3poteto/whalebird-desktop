@@ -141,7 +141,7 @@
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "bufferutil": "^4.0.7",
-    "cfonts": "^3.1.1",
+    "cfonts": "^3.2.0",
     "cli-color": "^2.0.3",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.30.1",
