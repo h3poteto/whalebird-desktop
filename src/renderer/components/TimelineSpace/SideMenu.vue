@@ -510,7 +510,7 @@ export default defineComponent({
     height: calc(100% - 82px);
     width: 180px;
     border: none;
-    overflow: hidden;
+    overflow-x: hidden;
 
     .menu-item-title {
       color: rgb(144, 147, 153);
