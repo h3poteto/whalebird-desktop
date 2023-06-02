@@ -4869,10 +4869,10 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ==
 
-emoji-mart-vue-fast@^12.0.1:
-  version "12.0.1"
-  resolved "https://registry.yarnpkg.com/emoji-mart-vue-fast/-/emoji-mart-vue-fast-12.0.1.tgz#0bbc5f110c5d6c607e9a178619821c18c6a91057"
-  integrity sha512-qO8F9aduHwPGEU2U1YobOH3lRXEMvrjej6KdhGMnSoMJ+OFSmNf+pUal/MbrEn0RUy+Uqc7U9sPopA+3ipK4+g==
+emoji-mart-vue-fast@^12.0.4:
+  version "12.0.4"
+  resolved "https://registry.yarnpkg.com/emoji-mart-vue-fast/-/emoji-mart-vue-fast-12.0.4.tgz#9d2f9111d341ba9da6fc6273659e23fe6ea8bb51"
+  integrity sha512-C1h5Srs3VR4KVFcJFyuR6rfmsjYF3TUwOlRsSNoAl5ShC5yp293uOueAnLtadARnXIeXdDSx/Y07FEj887UwEw==
   dependencies:
     "@babel/runtime" "^7.18.6"
     core-js "^3.23.5"
