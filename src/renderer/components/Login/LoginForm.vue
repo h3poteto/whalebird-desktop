@@ -116,7 +116,11 @@ export default defineComponent({
           searching.value = true
           try {
             const cleanDomain = form.domainName.trim()
-            sns.value = await detector(`https://${cleanDomain}`)
+            const res = await detector(`https://${cleanDomain}`)
+            if (res === 'friendica') {
+              throw new Error('Friendica is not supported')
+            }
+            sns.value = res
             domain.value = cleanDomain
             ElMessage({
               message: t('message.domain_confirmed', {

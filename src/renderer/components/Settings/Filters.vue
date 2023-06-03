@@ -44,12 +44,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue'
+import { defineComponent, computed, onMounted, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Settings/Filters'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'Filters',
@@ -59,13 +62,23 @@ export default defineComponent({
     const route = useRoute()
     const { t } = useTranslation()
 
+    const win = (window as any) as MyWindow
+
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
+
     const filters = computed(() => store.state.Settings.Filters.filters)
     const filtersLoading = computed(() => store.state.Settings.Filters.filtersLoading)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
-    const sns = computed(() => store.state.TimelineSpace.sns)
     const id = computed(() => route.params.id)
+    const sns = computed(() => account.server?.sns)
 
     onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
       await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FILTERS}`)
     })
 
@@ -83,9 +96,9 @@ export default defineComponent({
       filters,
       filtersLoading,
       backgroundColor,
-      sns,
       id,
       deleteFilter,
+      sns,
       $t: t
     }
   }

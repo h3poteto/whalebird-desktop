@@ -64,7 +64,7 @@ export default defineComponent({
     const client = ref<MegalodonInterface | null>(null)
 
     const bookmarks = ref<Array<Entity.Status>>([])
-    const nextMaxId = ref<string | null>(null)
+    const nextMaxId = ref<string | undefined>(undefined)
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => bookmarks.value.findIndex(toot => focusedId.value === toot.uri))
@@ -90,7 +90,7 @@ export default defineComponent({
         if (link !== null && link.next) {
           nextMaxId.value = link.next.max_id
         } else {
-          nextMaxId.value = null
+          nextMaxId.value = undefined
         }
       } catch (err) {
         console.error(err)
@@ -143,7 +143,7 @@ export default defineComponent({
             if (link !== null && link.next) {
               nextMaxId.value = link.next.max_id
             } else {
-              nextMaxId.value = null
+              nextMaxId.value = undefined
             }
           })
           .catch(err => {
@@ -174,7 +174,7 @@ export default defineComponent({
         if (link !== null && link.next) {
           nextMaxId.value = link.next.max_id
         } else {
-          nextMaxId.value = null
+          nextMaxId.value = undefined
         }
       } finally {
         store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)

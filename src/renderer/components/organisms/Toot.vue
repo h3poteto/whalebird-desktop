@@ -62,11 +62,11 @@
             <el-button v-if="sensitive && isShowAttachments" class="hide-sensitive" link :title="$t('cards.toot.hide')" @click="toggleCW()">
               <font-awesome-icon icon="eye" class="hide" />
             </el-button>
-            <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
+            <div class="media" v-for="media in mediaAttachments" :key="media.id">
               <FailoverImg
                 :src="media.preview_url ? media.preview_url : originalMessage.account.avatar"
                 @click="openImage(media.url, mediaAttachments)"
-                :title="media.description"
+                :title="media.description ? media.description : ''"
               />
               <el-tag class="media-label" size="small" v-if="media.type === 'gifv'">GIF</el-tag>
               <el-tag class="media-label" size="small" v-else-if="media.type === 'video'">VIDEO</el-tag>

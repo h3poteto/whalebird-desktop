@@ -1,7 +1,14 @@
 <template>
   <div id="follow-requests">
     <template v-for="account in requests">
-      <user :user="account" :request="true" @acceptRequest="accept" @rejectRequest="reject"></user>
+      <user
+        :key="account.id"
+        v-if="isAccount(account)"
+        :user="account"
+        :request="true"
+        @accept-equest="accept"
+        @reject-request="reject"
+      ></user>
     </template>
   </div>
 </template>
@@ -36,7 +43,7 @@ export default defineComponent({
     })
     const client = ref<MegalodonInterface | null>(null)
 
-    const requests = ref<Array<Entity.Account>>([])
+    const requests = ref<Array<Entity.Account | Entity.FollowRequest>>([])
 
     onMounted(async () => {
       await initialize()
@@ -84,10 +91,15 @@ export default defineComponent({
         })
     }
 
+    const isAccount = (req: any): req is Entity.Account => {
+      return (req as Entity.Account)?.moved !== undefined
+    }
+
     return {
       requests,
       accept,
-      reject
+      reject,
+      isAccount
     }
   }
 })

@@ -9,10 +9,10 @@
         <div class="clearfix"></div>
       </el-form>
     </div>
-    <div class="search-result">
+    <div class="search-result" v-if="account.account && account.server">
       <search-account v-if="target === 'account'" :results="accounts"></search-account>
-      <search-tag v-else-if="target === 'tag'" :results="tags"></search-tag>
-      <search-toots v-else-if="target === 'toot'" :results="statuses"></search-toots>
+      <search-tag v-else-if="target === 'tag'" :tags="tags"></search-tag>
+      <search-toots v-else-if="target === 'toot'" :statuses="statuses" :account="account.account" :server="account.server"></search-toots>
     </div>
   </div>
 </template>
@@ -140,7 +140,8 @@ export default defineComponent({
       accounts,
       tags,
       statuses,
-      $t: t
+      $t: t,
+      account
     }
   }
 })

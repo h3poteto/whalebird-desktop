@@ -13,7 +13,7 @@ import { useTranslation } from 'i18next-vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'receive-drop',
+  name: 'ReceiveDrop',
   setup() {
     const { t } = useTranslation()
     return { $t: t }

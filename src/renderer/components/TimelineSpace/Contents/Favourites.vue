@@ -65,7 +65,7 @@ export default defineComponent({
 
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const favourites = ref<Array<Entity.Status>>([])
-    const nextMaxId = ref<string | null>(null)
+    const nextMaxId = ref<string | undefined>(undefined)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => favourites.value.findIndex(status => focusedId.value === status.uri))
     const shortcutEnabled = computed(
@@ -90,7 +90,7 @@ export default defineComponent({
         if (link !== null && link.next) {
           nextMaxId.value = link.next.max_id
         } else {
-          nextMaxId.value = null
+          nextMaxId.value = undefined
         }
       } catch (err) {
         console.error(err)
@@ -151,7 +151,7 @@ export default defineComponent({
             if (link !== null && link.next) {
               nextMaxId.value = link.next.max_id
             } else {
-              nextMaxId.value = null
+              nextMaxId.value = undefined
             }
           })
           .catch(err => {
@@ -197,7 +197,7 @@ export default defineComponent({
         if (link !== null && link.next) {
           nextMaxId.value = link.next.max_id
         } else {
-          nextMaxId.value = null
+          nextMaxId.value = undefined
         }
       } finally {
         store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)

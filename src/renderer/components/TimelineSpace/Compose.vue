@@ -40,7 +40,7 @@
 
       <div class="preview" ref="previewRef">
         <div class="image-wrapper" v-for="media in attachments" :key="media.id">
-          <img :src="media.preview_url" class="preview-image" />
+          <img v-if="media.preview_url" :src="media.preview_url" class="preview-image" />
           <el-button class="remove-image" link @click="removeAttachment(media)"><font-awesome-icon icon="circle-xmark" /></el-button>
         </div>
       </div>
@@ -235,7 +235,7 @@ export default defineComponent({
     const attachments = ref<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
     const cw = ref<boolean>(false)
     const visibility = ref(visibilityList.Public.key)
-    const nsfw = ref<boolean>(false)
+    const nsfw = ref<boolean | null>(false)
     const inReplyTo = computed(() => store.state.TimelineSpace.Compose.inReplyTo)
     const quoteTo = computed(() => store.state.TimelineSpace.Compose.quoteTo)
     const poll = reactive<{ options: Array<string>; expires_in: number }>({
@@ -269,8 +269,11 @@ export default defineComponent({
 
       const credentials = await c.verifyAccountCredentials()
       if (credentials.data.source) {
-        visibility.value = credentials.data.source.privacy
         nsfw.value = credentials.data.source.sensitive
+        const privacy = credentials.data.source.privacy
+        if (privacy && (privacy === 'public' || privacy === 'unlisted' || privacy === 'private' || privacy === 'direct')) {
+          visibility.value = privacy
+        }
       }
 
       const instance = await c.getInstance()

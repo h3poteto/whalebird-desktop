@@ -2,7 +2,7 @@
   <div id="list">
     <table class="tag-list">
       <tbody>
-        <tr v-for="tag in tags" :key="tag._id" @click.stop.prevent="openTimeline(tag.tagName)">
+        <tr v-for="tag in tags" :key="tag.id" @click.stop.prevent="openTimeline(tag.tagName)">
           <td>
             {{ tag.tagName }}
           </td>

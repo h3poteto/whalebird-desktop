@@ -1,5 +1,5 @@
 <template>
-  <div id="contents" :style="customWidth" @mouseup="dragEnd" @mousemove="resize">
+  <div id="contents">
     <div
       class="timeline-wrapper"
       v-loading="loading"
