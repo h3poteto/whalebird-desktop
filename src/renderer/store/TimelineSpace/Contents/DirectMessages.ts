@@ -39,6 +39,7 @@ const mutations: MutationTree<DirectMessagesState> = {
     }
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, obj: { status: Entity.Status; accountId: number }) => {
+    if (!state.timeline[obj.accountId]) return
     // Replace target message in DirectMessagesTimeline and notifications
     state.timeline[obj.accountId] = state.timeline[obj.accountId].map(toot => {
       if (toot.id === obj.status.id) {
@@ -56,6 +57,7 @@ const mutations: MutationTree<DirectMessagesState> = {
     })
   },
   [MUTATION_TYPES.DELETE_TOOT]: (state, obj: { statusId: string; accountId: number }) => {
+    if (!state.timeline[obj.accountId]) return
     state.timeline[obj.accountId] = state.timeline[obj.accountId].filter(toot => {
       if (toot.reblog !== null && toot.reblog.id === obj.statusId) {
         return false

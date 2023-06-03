@@ -41,6 +41,7 @@ const mutations: MutationTree<HomeState> = {
     }
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, obj: { status: Entity.Status; accountId: number }) => {
+    if (!state.timeline[obj.accountId]) return
     // Replace target message in homeTimeline and notifications
     state.timeline[obj.accountId] = state.timeline[obj.accountId].map(status => {
       if (status.id === 'loading-card') {
@@ -62,6 +63,7 @@ const mutations: MutationTree<HomeState> = {
     })
   },
   [MUTATION_TYPES.DELETE_TOOT]: (state, obj: { statusId: string; accountId: number }) => {
+    if (!state.timeline[obj.accountId]) return
     state.timeline[obj.accountId] = state.timeline[obj.accountId].filter(status => {
       if (status.id === 'loading-card') {
         return true
@@ -78,6 +80,7 @@ const mutations: MutationTree<HomeState> = {
     state,
     obj: { statuses: Array<Entity.Status | LoadingCard>; accountId: number }
   ) => {
+    if (!state.timeline[obj.accountId]) return
     const tl = state.timeline[obj.accountId].flatMap(status => {
       if (status.id !== 'loading-card') {
         return status

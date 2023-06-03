@@ -44,6 +44,7 @@ const mutations: MutationTree<NotificationsState> = {
     }
   },
   [MUTATION_TYPES.UPDATE_TOOT]: (state, obj: { status: Entity.Status; accountId: number }) => {
+    if (!state.notifications[obj.accountId]) return
     state.notifications[obj.accountId] = state.notifications[obj.accountId].map(notification => {
       // I want to update toot only mention.
       // Because Toot component don't use status information when other patterns.
@@ -58,6 +59,7 @@ const mutations: MutationTree<NotificationsState> = {
     })
   },
   [MUTATION_TYPES.DELETE_TOOT]: (state, obj: { statusId: string; accountId: number }) => {
+    if (!state.notifications[obj.accountId]) return
     state.notifications[obj.accountId] = state.notifications[obj.accountId].filter(notify => {
       if (notify.id === 'loading-card') {
         return true
@@ -78,6 +80,7 @@ const mutations: MutationTree<NotificationsState> = {
     state,
     obj: { notifications: Array<Entity.Notification | LoadingCard>; accountId: number }
   ) => {
+    if (!state.notifications[obj.accountId]) return
     const n = state.notifications[obj.accountId].flatMap(notify => {
       if (notify.id !== 'loading-card') {
         return notify
