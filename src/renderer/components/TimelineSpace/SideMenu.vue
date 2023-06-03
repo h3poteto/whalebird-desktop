@@ -89,7 +89,7 @@
         </template>
       </el-menu-item>
       <el-menu-item
-        v-if="unreadFollowRequests"
+        v-if="followRequests.length > 0"
         :index="`/${id}/follow-requests`"
         role="menuitem"
         :title="$t('side_menu.follow_requests')"
@@ -271,6 +271,7 @@ export default defineComponent({
 
     const lists = ref<Array<Entity.List>>([])
     const tags = ref<Array<LocalTag>>([])
+    const followRequests = ref<Array<Entity.FollowRequest | Entity.Account>>([])
     const enabledTimelines = reactive({
       home: true,
       notification: true,
@@ -292,7 +293,6 @@ export default defineComponent({
     const unreadLocalTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadLocalTimeline)
     const unreadDirectMessagesTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadDirectMessagesTimeline)
     const unreadPublicTimeline = computed(() => store.state.TimelineSpace.SideMenu.unreadPublicTimeline)
-    const unreadFollowRequests = computed(() => store.state.TimelineSpace.SideMenu.unreadFollowRequests)
     const collapse = computed(() => store.state.TimelineSpace.SideMenu.collapse)
     const themeColor = computed(() => store.state.App.theme.side_menu_color)
     const hideGlobalHeader = computed(() => store.state.GlobalHeader.hide)
@@ -307,10 +307,16 @@ export default defineComponent({
       account.server = s
 
       const client = generator(s.sns, s.baseURL, a.accessToken, userAgent.value)
+      await fetchFollowRequests(client)
       await fetchLists(client)
       await fetchTags(a)
       await confirmTimelines(client)
     })
+
+    const fetchFollowRequests = async (client: MegalodonInterface) => {
+      const res = await client.getFollowRequests()
+      followRequests.value = res.data
+    }
 
     const fetchLists = async (client: MegalodonInterface) => {
       const res = await client.getLists()
@@ -391,7 +397,7 @@ export default defineComponent({
       unreadLocalTimeline,
       unreadDirectMessagesTimeline,
       unreadPublicTimeline,
-      unreadFollowRequests,
+      followRequests,
       lists,
       tags,
       collapse,
