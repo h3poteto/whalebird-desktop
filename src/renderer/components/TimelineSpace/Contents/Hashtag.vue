@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts">
+import { useTranslation } from 'i18next-vue'
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -27,6 +28,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const { t } = useTranslation()
 
     const tag = ref<string>('')
     const id = computed(() => route.params.id)
@@ -56,7 +58,8 @@ export default defineComponent({
       tagPage,
       tag,
       back,
-      search
+      search,
+      $t: t
     }
   },
   methods: {}

@@ -2,7 +2,7 @@
   <div id="list">
     <table class="tag-list">
       <tbody>
-        <tr v-for="tag in tags" :key="tag._id" @click.stop.prevent="openTimeline(tag.tagName)">
+        <tr v-for="tag in tags" :key="tag.id" @click.stop.prevent="openTimeline(tag.tagName)">
           <td>
             {{ tag.tagName }}
           </td>
@@ -22,12 +22,14 @@ import { defineComponent, computed, onMounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { LocalTag } from '~/src/types/localTag'
 import { MyWindow } from '~/src/types/global'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'list',
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const { t } = useTranslation()
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
     const tags = ref<Array<LocalTag>>([])
@@ -48,7 +50,8 @@ export default defineComponent({
     return {
       tags,
       openTimeline,
-      deleteTag
+      deleteTag,
+      $t: t
     }
   }
 })

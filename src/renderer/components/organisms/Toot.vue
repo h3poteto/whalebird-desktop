@@ -62,11 +62,11 @@
             <el-button v-if="sensitive && isShowAttachments" class="hide-sensitive" link :title="$t('cards.toot.hide')" @click="toggleCW()">
               <font-awesome-icon icon="eye" class="hide" />
             </el-button>
-            <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
+            <div class="media" v-for="media in mediaAttachments" :key="media.id">
               <FailoverImg
                 :src="media.preview_url ? media.preview_url : originalMessage.account.avatar"
                 @click="openImage(media.url, mediaAttachments)"
-                :title="media.description"
+                :title="media.description ? media.description : ''"
               />
               <el-tag class="media-label" size="small" v-if="media.type === 'gifv'">GIF</el-tag>
               <el-tag class="media-label" size="small" v-else-if="media.type === 'video'">VIDEO</el-tag>
@@ -237,7 +237,7 @@ import data from 'emoji-mart-vue-fast/data/all.json'
 import moment from 'moment'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRoute, useRouter } from 'vue-router'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useStore } from '@/store'
 import { Picker, EmojiIndex } from 'emoji-mart-vue-fast/src'
@@ -305,7 +305,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const win = (window as any) as MyWindow
     const { focused, message, filters, account, server } = toRefs(props)
     const { r, b, f, o, p, i, x } = useMagicKeys()
@@ -453,15 +453,11 @@ export default defineComponent({
           })
           .catch(err => {
             console.error(err)
-            ElMessageBox.confirm(
-              i18n.t('cards.toot.open_account.text', { account: parsedAccount.acct }),
-              i18n.t('cards.toot.open_account.title'),
-              {
-                confirmButtonText: i18n.t('cards.toot.open_account.ok'),
-                cancelButtonText: i18n.t('cards.toot.open_account.cancel'),
-                type: 'Warning'
-              }
-            ).then(() => {
+            ElMessageBox.confirm(t('cards.toot.open_account.text', { account: parsedAccount.acct }), t('cards.toot.open_account.title'), {
+              confirmButtonText: t('cards.toot.open_account.ok'),
+              cancelButtonText: t('cards.toot.open_account.cancel'),
+              type: 'warning'
+            }).then(() => {
               openLink(e)
             })
           })
@@ -536,7 +532,7 @@ export default defineComponent({
           .catch(err => {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.unreblog_error'),
+              message: t('message.unreblog_error'),
               type: 'error'
             })
           })
@@ -550,7 +546,7 @@ export default defineComponent({
           .catch(err => {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.reblog_error'),
+              message: t('message.reblog_error'),
               type: 'error'
             })
           })
@@ -566,7 +562,7 @@ export default defineComponent({
           .catch(err => {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.unfavourite_error'),
+              message: t('message.unfavourite_error'),
               type: 'error'
             })
           })
@@ -580,7 +576,7 @@ export default defineComponent({
           .catch(err => {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.favourite_error'),
+              message: t('message.favourite_error'),
               type: 'error'
             })
           })
@@ -596,7 +592,7 @@ export default defineComponent({
           .catch(err => {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.unbookmark_error'),
+              message: t('message.unbookmark_error'),
               type: 'error'
             })
           })
@@ -610,7 +606,7 @@ export default defineComponent({
           .catch(err => {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.bookmark_error'),
+              message: t('message.bookmark_error'),
               type: 'error'
             })
           })
@@ -637,7 +633,7 @@ export default defineComponent({
         })
         .catch(() => {
           ElMessage({
-            message: i18n.t('message.delete_error'),
+            message: t('message.delete_error'),
             type: 'error'
           })
         })
@@ -746,7 +742,8 @@ export default defineComponent({
       toggleCW,
       emojiPickerOpened,
       emojiPickerShow,
-      emojiPickerHide
+      emojiPickerHide,
+      $t: t
     }
   }
 })

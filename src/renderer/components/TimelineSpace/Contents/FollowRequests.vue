@@ -1,7 +1,14 @@
 <template>
   <div id="follow-requests">
     <template v-for="account in requests">
-      <user :user="account" :request="true" @acceptRequest="accept" @rejectRequest="reject"></user>
+      <user
+        :key="account.id"
+        v-if="isAccount(account)"
+        :user="account"
+        :request="true"
+        @accept-equest="accept"
+        @reject-request="reject"
+      ></user>
     </template>
   </div>
 </template>
@@ -9,7 +16,7 @@
 <script lang="ts">
 import { defineComponent, computed, onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useStore } from '@/store'
 import User from '@/components/molecules/User.vue'
@@ -24,7 +31,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
@@ -36,7 +43,7 @@ export default defineComponent({
     })
     const client = ref<MegalodonInterface | null>(null)
 
-    const requests = ref<Array<Entity.Account>>([])
+    const requests = ref<Array<Entity.Account | Entity.FollowRequest>>([])
 
     onMounted(async () => {
       await initialize()
@@ -62,7 +69,7 @@ export default defineComponent({
         .catch(err => {
           console.error(err)
           ElMessage({
-            message: i18n.t('message.follow_request_accept_error'),
+            message: t('message.follow_request_accept_error'),
             type: 'error'
           })
         })
@@ -78,16 +85,21 @@ export default defineComponent({
         .catch(err => {
           console.error(err)
           ElMessage({
-            message: i18n.t('message.follow_request_reject_error'),
+            message: t('message.follow_request_reject_error'),
             type: 'error'
           })
         })
     }
 
+    const isAccount = (req: any): req is Entity.Account => {
+      return (req as Entity.Account)?.moved !== undefined
+    }
+
     return {
       requests,
       accept,
-      reject
+      reject,
+      isAccount
     }
   }
 })

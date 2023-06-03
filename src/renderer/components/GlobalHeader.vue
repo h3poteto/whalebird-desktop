@@ -30,7 +30,7 @@
           </el-menu-item>
         </el-menu>
       </el-aside>
-      <router-view :key="$route.params.id"></router-view>
+      <router-view :key="$route.params.id as string"></router-view>
     </el-container>
   </div>
 </template>
@@ -41,6 +41,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import { ACTION_TYPES } from '@/store/GlobalHeader'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   components: {
@@ -52,6 +53,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
+    const { t } = useTranslation()
 
     const accounts = computed(() => store.state.GlobalHeader.accounts)
     const hide = computed(() => store.state.GlobalHeader.hide)
@@ -79,7 +81,8 @@ export default defineComponent({
       accounts,
       hide,
       themeColor,
-      activeRoute
+      activeRoute,
+      $t: t
     }
   },
   methods: {}

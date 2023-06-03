@@ -37,7 +37,7 @@
 import { defineComponent, computed, ref } from 'vue'
 import { Entity } from 'megalodon'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/AddListMember'
@@ -47,7 +47,7 @@ export default defineComponent({
   setup() {
     const space = 'TimelineSpace/Modals/AddListMember'
     const store = useStore()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { enter } = useMagicKeys()
 
     const name = ref<string>('')
@@ -81,7 +81,7 @@ export default defineComponent({
         })
         .catch(() => {
           ElMessage({
-            message: i18n.t('message.add_user_error'),
+            message: t('message.add_user_error'),
             type: 'error'
           })
         })
@@ -94,7 +94,8 @@ export default defineComponent({
       addListMemberModal,
       username,
       search,
-      add
+      add,
+      $t: t
     }
   }
 })

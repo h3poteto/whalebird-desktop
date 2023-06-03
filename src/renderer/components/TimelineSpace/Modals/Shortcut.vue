@@ -73,19 +73,22 @@
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
 import { MUTATION_TYPES } from '@/store/TimelineSpace/Modals/Shortcut'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'shortcut',
   setup() {
     const space = 'TimelineSpace/Modals/Shortcut'
     const store = useStore()
+    const { t } = useTranslation()
     const shortcutModal = computed({
       get: () => store.state.TimelineSpace.Modals.Shortcut.modalOpen,
       set: (value: boolean) => store.commit(`${space}/${MUTATION_TYPES.CHANGE_MODAL}`, value)
     })
 
     return {
-      shortcutModal
+      shortcutModal,
+      $t: t
     }
   }
 })

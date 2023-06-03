@@ -26,7 +26,7 @@ import { defineComponent, ref, computed, onMounted, onBeforeUpdate, watch, react
 import { logicAnd } from '@vueuse/math'
 import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
@@ -44,7 +44,7 @@ export default defineComponent({
     const space = 'TimelineSpace/Contents/DirectMessages'
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { j, k } = useMagicKeys()
     const activeElement = useActiveElement()
 
@@ -114,7 +114,7 @@ export default defineComponent({
           })
           .catch(() => {
             ElMessage({
-              message: i18n.t('message.timeline_fetch_error'),
+              message: t('message.timeline_fetch_error'),
               type: 'error'
             })
           })

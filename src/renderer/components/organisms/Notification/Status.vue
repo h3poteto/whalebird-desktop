@@ -47,6 +47,7 @@ import { usernameWithStyle } from '@/utils/username'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
 import { useRouter } from 'vue-router'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'mention',
@@ -76,6 +77,7 @@ export default defineComponent({
   setup(_props, ctx) {
     const store = useStore()
     const router = useRouter()
+    const { t } = useTranslation()
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
 
     const updateToot = (message: Entity.Status) => {
@@ -93,7 +95,8 @@ export default defineComponent({
       updateToot,
       deleteToot,
       username,
-      openUser
+      openUser,
+      $t: t
     }
   }
 })

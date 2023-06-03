@@ -23,12 +23,14 @@ import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Settings/General'
 import Visibility from '~/src/constants/visibility'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'General',
   setup() {
     const space = 'Settings/General'
     const store = useStore()
+    const { t } = useTranslation()
 
     const visibilities = [Visibility.Public, Visibility.Unlisted, Visibility.Private]
 
@@ -57,7 +59,8 @@ export default defineComponent({
       tootVisibility,
       tootSensitive,
       changeVisibility,
-      changeSensitive
+      changeSensitive,
+      $t: t
     }
   }
 })

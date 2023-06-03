@@ -6,13 +6,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted, toRefs } from 'vue'
+import { defineComponent, computed, onMounted, toRefs, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useStore } from '@/store'
-import { useRouter } from 'vue-router'
-import { useI18next } from 'vue3-i18next'
+import { useRoute, useRouter } from 'vue-router'
+import { useTranslation } from 'i18next-vue'
 import FilterForm from './form.vue'
 import { ACTION_TYPES } from '@/store/Settings/Filters/Edit'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'EditFilter',
@@ -22,17 +25,29 @@ export default defineComponent({
     const space = 'Settings/Filters/Edit'
     const store = useStore()
     const router = useRouter()
-    const i18n = useI18next()
+    const route = useRoute()
+    const { t } = useTranslation()
     const { filter_id } = toRefs(props)
 
+    const win = (window as any) as MyWindow
+    const id = computed(() => parseInt(route.params.id as string))
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
+
     const loading = computed(() => store.state.Settings.Filters.Edit.loading)
-    const sns = computed(() => store.state.TimelineSpace.sns)
     const filter = computed({
       get: () => store.state.Settings.Filters.Edit.filter,
       set: value => store.dispatch(`${space}/${ACTION_TYPES.EDIT_FILTER}`, value)
     })
+    const sns = computed(() => account.server?.sns)
 
-    onMounted(() => {
+    onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
+
       store.dispatch(`${space}/${ACTION_TYPES.FETCH_FILTER}`, filter_id.value)
     })
 
@@ -46,7 +61,7 @@ export default defineComponent({
         .catch(err => {
           console.error(err)
           ElMessage({
-            message: i18n.t('message.update_filter_error'),
+            message: t('message.update_filter_error'),
             type: 'error'
           })
         })
@@ -54,10 +69,11 @@ export default defineComponent({
 
     return {
       loading,
-      sns,
       filter,
       cancel,
-      onSubmit
+      onSubmit,
+      sns,
+      $t: t
     }
   }
 })

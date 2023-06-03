@@ -65,7 +65,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { sync } from 'vuex-router-sync'
-import { createI18n } from 'vue3-i18next'
+import I18NextVue from 'i18next-vue'
 import 'vue-resize/dist/vue-resize.css'
 import VueResize from 'vue-resize'
 import VueVirtualScroller from 'vue-virtual-scroller'
@@ -139,8 +139,6 @@ library.add(
   faLink
 )
 
-const i18n = createI18n(i18next)
-
 const app = createApp(App)
 app.use(store, key)
 app.use(router)
@@ -148,7 +146,7 @@ app.use(ElementPlus)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueVirtualScroller)
 app.use(VueResize)
-app.use(i18n)
+app.use(I18NextVue, { i18next })
 
 app.directive('focus', {
   mounted(el) {

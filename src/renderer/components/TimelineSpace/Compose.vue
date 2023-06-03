@@ -40,7 +40,7 @@
 
       <div class="preview" ref="previewRef">
         <div class="image-wrapper" v-for="media in attachments" :key="media.id">
-          <img :src="media.preview_url" class="preview-image" />
+          <img v-if="media.preview_url" :src="media.preview_url" class="preview-image" />
           <el-button class="remove-image" link @click="removeAttachment(media)"><font-awesome-icon icon="circle-xmark" /></el-button>
         </div>
       </div>
@@ -135,7 +135,7 @@ import { useRoute } from 'vue-router'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import emojiDefault from 'emoji-mart-vue-fast/data/all.json'
 import { Picker, EmojiIndex, EmojiData } from 'emoji-mart-vue-fast/src'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { ElMessage } from 'element-plus'
 import { useStore } from '@/store'
 import { MyWindow } from '~/src/types/global'
@@ -166,7 +166,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const store = useStore()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { up, down, enter, Ctrl_Enter, escape } = useMagicKeys({
       passive: false,
       onEventFired(e) {
@@ -197,31 +197,31 @@ export default defineComponent({
     })
     const expiresList = reactive<Array<Expire>>([
       {
-        label: i18n.t('compose.poll.expires.5_minutes'),
+        label: t('compose.poll.expires.5_minutes'),
         value: 60 * 5
       },
       {
-        label: i18n.t('compose.poll.expires.30_minutes'),
+        label: t('compose.poll.expires.30_minutes'),
         value: 60 * 30
       },
       {
-        label: i18n.t('compose.poll.expires.1_hour'),
+        label: t('compose.poll.expires.1_hour'),
         value: 3600
       },
       {
-        label: i18n.t('compose.poll.expires.6_hours'),
+        label: t('compose.poll.expires.6_hours'),
         value: 3600 * 6
       },
       {
-        label: i18n.t('compose.poll.expires.1_day'),
+        label: t('compose.poll.expires.1_day'),
         value: 3600 * 24
       },
       {
-        label: i18n.t('compose.poll.expires.3_days'),
+        label: t('compose.poll.expires.3_days'),
         value: 3600 * 24 * 3
       },
       {
-        label: i18n.t('compose.poll.expires.7_days'),
+        label: t('compose.poll.expires.7_days'),
         value: 3600 * 24 * 7
       }
     ])
@@ -235,7 +235,7 @@ export default defineComponent({
     const attachments = ref<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
     const cw = ref<boolean>(false)
     const visibility = ref(visibilityList.Public.key)
-    const nsfw = ref<boolean>(false)
+    const nsfw = ref<boolean | null>(false)
     const inReplyTo = computed(() => store.state.TimelineSpace.Compose.inReplyTo)
     const quoteTo = computed(() => store.state.TimelineSpace.Compose.quoteTo)
     const poll = reactive<{ options: Array<string>; expires_in: number }>({
@@ -269,8 +269,11 @@ export default defineComponent({
 
       const credentials = await c.verifyAccountCredentials()
       if (credentials.data.source) {
-        visibility.value = credentials.data.source.privacy
         nsfw.value = credentials.data.source.sensitive
+        const privacy = credentials.data.source.privacy
+        if (privacy && (privacy === 'public' || privacy === 'unlisted' || privacy === 'private' || privacy === 'direct')) {
+          visibility.value = privacy
+        }
       }
 
       const instance = await c.getInstance()
@@ -345,7 +348,7 @@ export default defineComponent({
       // Validation
       if (form.status.length < 1 || form.status.length + form.spoiler.length > maxStatusChars.value) {
         ElMessage({
-          message: i18n.t('validation.compose.toot_length', {
+          message: t('validation.compose.toot_length', {
             min: 1,
             max: maxStatusChars.value
           }),
@@ -355,7 +358,7 @@ export default defineComponent({
       }
       if (attachments.value.length > 4) {
         ElMessage({
-          message: i18n.t('validation.compose.attach_length', {
+          message: t('validation.compose.attach_length', {
             max: 4
           }),
           type: 'error'
@@ -369,7 +372,7 @@ export default defineComponent({
             mes = [
               ...mes,
               {
-                message: i18n.t('validation.compose.poll_invalid'),
+                message: t('validation.compose.poll_invalid'),
                 type: 'error'
               }
             ]
@@ -514,7 +517,7 @@ export default defineComponent({
       const file = e.dataTransfer?.files.item(0)
       if (file === null || (!file.type.includes('image') && !file.type.includes('video'))) {
         ElMessage({
-          message: i18n.t('validation.compose.attach_image'),
+          message: t('validation.compose.attach_image'),
           type: 'error'
         })
         return false
@@ -522,7 +525,7 @@ export default defineComponent({
       uploadImage(file).catch(err => {
         console.error(err)
         ElMessage({
-          message: i18n.t('message.attach_error'),
+          message: t('message.attach_error'),
           type: 'error'
         })
       })
@@ -731,7 +734,8 @@ export default defineComponent({
       suggestHighlight,
       insertItem,
       highlightedIndex,
-      suggest
+      suggest,
+      $t: t
     }
   }
 })

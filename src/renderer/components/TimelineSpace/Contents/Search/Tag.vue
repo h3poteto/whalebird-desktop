@@ -1,6 +1,6 @@
 <template>
   <div id="search_tag">
-    <DynamicScroller :items="results" :min-item-size="46" key-field="name" class="scroller" page-mode>
+    <DynamicScroller :items="tags" :min-item-size="46" key-field="name" class="scroller" page-mode>
       <template v-slot="{ item, index, active }">
         <DynamicScrollerItem :item="item" :active="active" :size-dependencies="[item.name]" :data-index="index" :watchData="true">
           <tag :tag="item"></tag>
@@ -19,8 +19,8 @@ export default defineComponent({
   name: 'search-tag',
   components: { Tag },
   props: {
-    results: {
-      type: Object as PropType<Array<Entity.Account>>,
+    tags: {
+      type: Object as PropType<Array<Entity.Tag>>,
       required: true
     }
   }

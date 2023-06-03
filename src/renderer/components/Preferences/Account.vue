@@ -83,7 +83,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/Preferences/Account'
@@ -94,7 +94,7 @@ export default defineComponent({
   setup() {
     const space = 'Preferences/Account'
     const store = useStore()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const router = useRouter()
 
     const accounts = computed(() =>
@@ -117,7 +117,7 @@ export default defineComponent({
         await store.dispatch(`${space}/${ACTION_TYPES.LOAD_ACCOUNTS}`)
       } catch (err) {
         ElMessage({
-          message: i18n.t('message.account_load_error'),
+          message: t('message.account_load_error'),
           type: 'error'
         })
       } finally {
@@ -133,7 +133,7 @@ export default defineComponent({
         })
         .catch(() => {
           ElMessage({
-            message: i18n.t('message.account_remove_error'),
+            message: t('message.account_remove_error'),
             type: 'error'
           })
         })
@@ -164,7 +164,8 @@ export default defineComponent({
       removeAccount,
       forward,
       backward,
-      removeAllAssociations
+      removeAllAssociations,
+      $t: t
     }
   }
 })

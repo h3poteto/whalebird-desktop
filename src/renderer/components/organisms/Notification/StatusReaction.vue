@@ -70,8 +70,8 @@
               >
                 <font-awesome-icon icon="eye" class="hide" />
               </el-button>
-              <div class="media" v-bind:key="media.preview_url" v-for="media in mediaAttachments">
-                <FailoverImg :srzc="media.preview_url" :title="media.description" />
+              <div class="media" v-for="media in mediaAttachments" :key="media.id">
+                <FailoverImg :srzc="media.preview_url" :title="media.description ? media.description : ''" />
                 <el-tag class="media-label" size="small" v-if="media.type == 'gifv'">GIF</el-tag>
                 <el-tag class="media-label" size="small" v-else-if="media.type == 'video'">VIDEO</el-tag>
               </div>
@@ -107,6 +107,7 @@ import Filtered from '@/utils/filter'
 import { parseDatetime } from '@/utils/datetime'
 import { usernameWithStyle } from '@/utils/username'
 import { MyWindow } from '~/src/types/global'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'status-reaction',
@@ -137,6 +138,7 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
+    const { t } = useTranslation()
     const win = (window as any) as MyWindow
     const { focused, message, filters, reactionType } = toRefs(props)
 
@@ -262,7 +264,8 @@ export default defineComponent({
       spoilerText,
       reactionMessage,
       reactionClass,
-      reactionIcon
+      reactionIcon,
+      $t: t
     }
   }
 })

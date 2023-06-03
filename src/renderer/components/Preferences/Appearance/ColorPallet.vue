@@ -47,12 +47,14 @@
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Preferences/Appearance'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'color-pallet',
   setup() {
     const space = 'Preferences/Appearance'
     const store = useStore()
+    const { t } = useTranslation()
 
     const background = computed({
       get: () => store.state.Preferences.Appearance.appearance.customThemeColor.background_color,
@@ -135,7 +137,8 @@ export default defineComponent({
       secondary,
       border,
       headerMenu,
-      wrapperMask
+      wrapperMask,
+      $t: t
     }
   }
 })

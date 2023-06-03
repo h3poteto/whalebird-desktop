@@ -28,7 +28,7 @@ import { logicAnd } from '@vueuse/math'
 import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import parse from 'parse-link-header'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import Toot from '@/components/organisms/Toot.vue'
@@ -45,7 +45,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const focusedId = ref<string | null>(null)
     const scroller = ref<any>()
@@ -65,7 +65,7 @@ export default defineComponent({
 
     const startReload = computed(() => store.state.TimelineSpace.HeaderMenu.reload)
     const favourites = ref<Array<Entity.Status>>([])
-    const nextMaxId = ref<string | null>(null)
+    const nextMaxId = ref<string | undefined>(undefined)
     const modalOpened = computed<boolean>(() => store.getters[`TimelineSpace/Modals/modalOpened`])
     const currentFocusedIndex = computed(() => favourites.value.findIndex(status => focusedId.value === status.uri))
     const shortcutEnabled = computed(
@@ -90,12 +90,12 @@ export default defineComponent({
         if (link !== null && link.next) {
           nextMaxId.value = link.next.max_id
         } else {
-          nextMaxId.value = null
+          nextMaxId.value = undefined
         }
       } catch (err) {
         console.error(err)
         ElMessage({
-          message: i18n.t('message.favourite_fetch_error'),
+          message: t('message.favourite_fetch_error'),
           type: 'error'
         })
       } finally {
@@ -151,13 +151,13 @@ export default defineComponent({
             if (link !== null && link.next) {
               nextMaxId.value = link.next.max_id
             } else {
-              nextMaxId.value = null
+              nextMaxId.value = undefined
             }
           })
           .catch(err => {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.favourite_fetch_error'),
+              message: t('message.favourite_fetch_error'),
               type: 'error'
             })
           })
@@ -197,7 +197,7 @@ export default defineComponent({
         if (link !== null && link.next) {
           nextMaxId.value = link.next.max_id
         } else {
-          nextMaxId.value = null
+          nextMaxId.value = undefined
         }
       } finally {
         store.commit(`TimelineSpace/${TIMELINE_MUTATION.CHANGE_LOADING}`, false)

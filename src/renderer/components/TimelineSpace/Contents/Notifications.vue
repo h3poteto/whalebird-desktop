@@ -37,7 +37,7 @@ import Notification from '@/components/organisms/Notification.vue'
 import StatusLoading from '@/components/organisms/StatusLoading.vue'
 import { useStore } from '@/store'
 import { useRoute } from 'vue-router'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/Contents/Notifications'
 import { MUTATION_TYPES as SIDE_MENU_MUTATION } from '@/store/TimelineSpace/SideMenu'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -52,7 +52,7 @@ export default defineComponent({
     const space = 'TimelineSpace/Contents/Notifications'
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { j, k } = useMagicKeys()
     const activeElement = useActiveElement()
 
@@ -146,7 +146,7 @@ export default defineComponent({
           })
           .catch(() => {
             ElMessage({
-              message: i18n.t('message.notification_fetch_error'),
+              message: t('message.notification_fetch_error'),
               type: 'error'
             })
           })

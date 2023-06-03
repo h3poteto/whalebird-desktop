@@ -54,6 +54,7 @@ import { Entity } from 'megalodon'
 import FailoverImg from '~/src/renderer/components/atoms/FailoverImg.vue'
 import emojify from '~/src/renderer/utils/emojify'
 import { useRouter } from 'vue-router'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'user',
@@ -80,6 +81,7 @@ export default defineComponent({
   },
   setup(_props, ctx) {
     const router = useRouter()
+    const { t } = useTranslation()
     const username = (account: Entity.Account) => {
       if (account.display_name !== '') {
         return emojify(account.display_name, account.emojis)
@@ -113,7 +115,8 @@ export default defineComponent({
       unfollowAccount,
       followAccount,
       acceptRequest,
-      rejectRequest
+      rejectRequest,
+      $t: t
     }
   }
 })

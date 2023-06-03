@@ -27,12 +27,14 @@ import { defineComponent, computed, ref, watch, onMounted, onBeforeUnmount, next
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
 import { MUTATION_TYPES, ACTION_TYPES, Channel } from '@/store/TimelineSpace/Modals/Jump'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'jump',
   setup() {
     const space = 'TimelineSpace/Modals/Jump'
     const store = useStore()
+    const { t } = useTranslation()
     const { up, down, enter } = useMagicKeys()
 
     const channelForm = ref<HTMLInputElement>()
@@ -109,7 +111,8 @@ export default defineComponent({
       filteredChannel,
       jump,
       changeSelected,
-      jumpCurrentSelected
+      jumpCurrentSelected,
+      $t: t
     }
   }
 })

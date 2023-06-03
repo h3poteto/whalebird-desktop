@@ -17,7 +17,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/ListMembership'
 
@@ -27,7 +27,7 @@ export default defineComponent({
     const space = 'TimelineSpace/Modals/ListMembership'
     const loading = ref<boolean>(false)
     const store = useStore()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const account = computed(() => store.state.TimelineSpace.Modals.ListMembership.account)
     const lists = computed(() => store.state.TimelineSpace.Modals.ListMembership.lists)
@@ -43,7 +43,7 @@ export default defineComponent({
           .dispatch(`${space}/${ACTION_TYPES.CHANGE_BELONG_TO_LISTS}`, value)
           .catch(() => {
             ElMessage({
-              message: i18n.t('message.update_list_memberships_error'),
+              message: t('message.update_list_memberships_error'),
               type: 'error'
             })
           })
@@ -58,7 +58,7 @@ export default defineComponent({
         await store.dispatch(`${space}/${ACTION_TYPES.FETCH_LIST_MEMBERSHIP}`, account.value)
       } catch (err) {
         ElMessage({
-          message: i18n.t('message.lists_fetch_error'),
+          message: t('message.lists_fetch_error'),
           type: 'error'
         })
       } finally {
@@ -70,7 +70,8 @@ export default defineComponent({
       loading,
       lists,
       listMembershipModal,
-      belongToLists
+      belongToLists,
+      $t: t
     }
   }
 })

@@ -16,12 +16,14 @@
 import { defineComponent, ref, computed } from 'vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/TimelineSpace/Modals/MuteConfirm'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'MuteConfirm',
   setup() {
     const space = 'TimelineSpace/Modals/MuteConfirm'
     const store = useStore()
+    const { t } = useTranslation()
 
     const notify = ref<boolean>(true)
 
@@ -42,7 +44,8 @@ export default defineComponent({
       notify,
       muteConfirmModal,
       closeModal,
-      submit
+      submit,
+      $t: t
     }
   }
 })

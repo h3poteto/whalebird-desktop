@@ -57,6 +57,7 @@ import DisplayStyle from '~/src/constants/displayStyle'
 import Theme from '~/src/constants/theme'
 import TimeFormat from '~/src/constants/timeFormat'
 import { ACTION_TYPES } from '@/store/Preferences/Appearance'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'appearance',
@@ -67,6 +68,7 @@ export default defineComponent({
   setup() {
     const space = 'Preferences/Appearance'
     const store = useStore()
+    const { t } = useTranslation()
 
     const nameStyles = [DisplayStyle.DisplayNameAndUsername, DisplayStyle.DisplayName, DisplayStyle.Username]
     const themes = [Theme.System, Theme.Light, Theme.Dark, Theme.SolarizedLight, Theme.SolarizedDark, Theme.KimbieDark, Theme.Custom]
@@ -117,7 +119,8 @@ export default defineComponent({
       customizeThemeColor,
       font,
       updateFontSize,
-      updateTootPadding
+      updateTootPadding,
+      $t: t
     }
   }
 })

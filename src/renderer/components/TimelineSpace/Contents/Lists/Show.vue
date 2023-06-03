@@ -27,7 +27,7 @@ import { defineComponent, toRefs, ref, computed, onMounted, watch, onUnmounted, 
 import { logicAnd } from '@vueuse/math'
 import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
@@ -44,7 +44,7 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { j, k, Ctrl_r, Cmd_r } = useMagicKeys()
     const activeElement = useActiveElement()
 
@@ -141,7 +141,7 @@ export default defineComponent({
       } catch (err) {
         console.error(err)
         ElMessage({
-          message: i18n.t('message.timeline_fetch_error'),
+          message: t('message.timeline_fetch_error'),
           type: 'error'
         })
       }
@@ -171,7 +171,7 @@ export default defineComponent({
           ?.getListTimeline(list_id.value, { max_id: lastStatus.id, limit: 20 })
           .catch(() => {
             ElMessage({
-              message: i18n.t('message.timeline_fetch_error'),
+              message: t('message.timeline_fetch_error'),
               type: 'error'
             })
           })

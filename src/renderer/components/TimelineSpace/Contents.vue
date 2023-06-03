@@ -1,5 +1,5 @@
 <template>
-  <div id="contents" :style="customWidth" @mouseup="dragEnd" @mousemove="resize">
+  <div id="contents">
     <div
       class="timeline-wrapper"
       v-loading="loading"
@@ -15,16 +15,19 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'Contents',
   setup() {
     const store = useStore()
+    const { t } = useTranslation()
 
     const loading = computed(() => store.state.TimelineSpace.Contents.loading)
 
     return {
-      loading
+      loading,
+      $t: t
     }
   }
 })

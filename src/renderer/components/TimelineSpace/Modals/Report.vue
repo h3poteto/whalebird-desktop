@@ -14,12 +14,14 @@
 import { defineComponent, computed, ref } from 'vue'
 import { useStore } from '@/store'
 import { MUTATION_TYPES, ACTION_TYPES } from '@/store/TimelineSpace/Modals/Report'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'Report',
   setup() {
     const space = 'TimelineSpace/Modals/Report'
     const store = useStore()
+    const { t } = useTranslation()
 
     const comment = ref<string>('')
 
@@ -45,7 +47,8 @@ export default defineComponent({
       comment,
       reportModal,
       closeModal,
-      submit
+      submit,
+      $t: t
     }
   }
 })

@@ -3,7 +3,7 @@
     <el-dialog :title="$t('modals.thirdparty.title')" v-model="modalOpen" width="500px" class="thirdparty-modal">
       <table class="licenses">
         <tbody>
-          <tr v-for="lib in thirdparty" :key="lib">
+          <tr v-for="lib in thirdparty" :key="lib.package_name">
             <td>{{ lib.package_name }}</td>
             <td>{{ lib.license }}</td>
           </tr>
@@ -17,11 +17,13 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import { MyWindow } from '~/src/types/global'
 import thirdparty from '~/src/config/thirdparty.json'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'Thirdparty',
   setup() {
-    const win = window as any as MyWindow
+    const win = (window as any) as MyWindow
+    const { t } = useTranslation()
     const modalOpen = ref(false)
 
     onMounted(() => {
@@ -32,7 +34,8 @@ export default defineComponent({
 
     return {
       modalOpen,
-      thirdparty
+      thirdparty,
+      $t: t
     }
   }
 })

@@ -14,7 +14,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, toRefs, ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useStore } from '@/store'
 import User from '@/components/molecules/User.vue'
@@ -35,7 +35,7 @@ export default defineComponent({
     const { list_id } = toRefs(props)
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const win = (window as any) as MyWindow
     const id = computed(() => parseInt(route.params.id as string))
@@ -66,7 +66,7 @@ export default defineComponent({
       } catch (err) {
         console.error(err)
         ElMessage({
-          message: i18n.t('message.members_fetch_error'),
+          message: t('message.members_fetch_error'),
           type: 'error'
         })
       }
@@ -79,7 +79,7 @@ export default defineComponent({
         await load()
       } catch (err) {
         ElMessage({
-          message: i18n.t('message.remove_user_error'),
+          message: t('message.remove_user_error'),
           type: 'error'
         })
       }

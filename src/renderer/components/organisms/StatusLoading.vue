@@ -7,6 +7,7 @@
 </template>
 
 <script lang="ts">
+import { useTranslation } from 'i18next-vue'
 import { defineComponent, toRefs } from 'vue'
 
 export default defineComponent({
@@ -26,6 +27,7 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
+    const { t } = useTranslation()
     const { loading, since_id, max_id } = toRefs(props)
     const onClick = () => {
       if (loading.value) {
@@ -39,11 +41,9 @@ export default defineComponent({
     }
 
     return {
-      onClick
+      onClick,
+      $t: t
     }
-  },
-  methods: {
-    onClick() {}
   }
 })
 </script>

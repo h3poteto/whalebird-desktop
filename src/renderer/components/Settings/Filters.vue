@@ -44,12 +44,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue'
+import { defineComponent, computed, onMounted, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Settings/Filters'
+import { LocalAccount } from '~/src/types/localAccount'
+import { LocalServer } from '~/src/types/localServer'
+import { MyWindow } from '~/src/types/global'
 
 export default defineComponent({
   name: 'Filters',
@@ -57,22 +60,32 @@ export default defineComponent({
     const space = 'Settings/Filters'
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
+
+    const win = (window as any) as MyWindow
+
+    const account = reactive<{ account: LocalAccount | null; server: LocalServer | null }>({
+      account: null,
+      server: null
+    })
 
     const filters = computed(() => store.state.Settings.Filters.filters)
     const filtersLoading = computed(() => store.state.Settings.Filters.filtersLoading)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
-    const sns = computed(() => store.state.TimelineSpace.sns)
     const id = computed(() => route.params.id)
+    const sns = computed(() => account.server?.sns)
 
     onMounted(async () => {
+      const [a, s]: [LocalAccount, LocalServer] = await win.ipcRenderer.invoke('get-local-account', id.value)
+      account.account = a
+      account.server = s
       await store.dispatch(`${space}/${ACTION_TYPES.FETCH_FILTERS}`)
     })
 
     const deleteFilter = (id: string) => {
-      ElMessageBox.confirm(i18n.t('settings.filters.delete.confirm'), 'Warning', {
-        confirmButtonText: i18n.t('settings.filters.delete.confirm_ok'),
-        cancelButtonText: i18n.t('settings.filters.delete.confirm_cancel'),
+      ElMessageBox.confirm(t('settings.filters.delete.confirm'), 'Warning', {
+        confirmButtonText: t('settings.filters.delete.confirm_ok'),
+        cancelButtonText: t('settings.filters.delete.confirm_cancel'),
         type: 'warning'
       }).then(() => {
         return store.dispatch(`${space}/${ACTION_TYPES.DELETE_FILTER}`, id)
@@ -83,9 +96,10 @@ export default defineComponent({
       filters,
       filtersLoading,
       backgroundColor,
-      sns,
       id,
-      deleteFilter
+      deleteFilter,
+      sns,
+      $t: t
     }
   }
 })

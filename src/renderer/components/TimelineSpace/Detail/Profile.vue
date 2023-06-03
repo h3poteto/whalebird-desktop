@@ -123,6 +123,7 @@ import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import Posts from './Profile/Posts.vue'
 import Following from './Profile/Following.vue'
 import Followers from './Profile/Followers.vue'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'Profile',
@@ -136,6 +137,7 @@ export default defineComponent({
     const win = (window as any) as MyWindow
     const store = useStore()
     const route = useRoute()
+    const { t } = useTranslation()
 
     const theme = computed(() => {
       return {
@@ -321,7 +323,8 @@ export default defineComponent({
       metadataClick,
       precision,
       activeTab,
-      account
+      account,
+      $t: t
     }
   }
 })
