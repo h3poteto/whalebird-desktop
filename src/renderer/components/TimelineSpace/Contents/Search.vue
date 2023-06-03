@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, computed, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import generator, { MegalodonInterface, Entity } from 'megalodon'
 import { useStore } from '@/store'
 import SearchAccount from './Search/Account.vue'
@@ -36,7 +36,7 @@ export default defineComponent({
   components: { SearchAccount, SearchTag, SearchToots },
   setup() {
     const store = useStore()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const route = useRoute()
 
     const win = (window as any) as MyWindow
@@ -52,15 +52,15 @@ export default defineComponent({
     const searchTargets = [
       {
         target: 'account',
-        label: i18n.t('search.account')
+        label: t('search.account')
       },
       {
         target: 'tag',
-        label: i18n.t('search.tag')
+        label: t('search.tag')
       },
       {
         target: 'toot',
-        label: i18n.t('search.toot')
+        label: t('search.toot')
       }
     ]
     const userAgent = computed(() => store.state.App.userAgent)
@@ -94,7 +94,7 @@ export default defineComponent({
             .catch(err => {
               console.error(err)
               ElMessage({
-                message: i18n.t('message.search_error'),
+                message: t('message.search_error'),
                 type: 'error'
               })
             })
@@ -108,7 +108,7 @@ export default defineComponent({
             .catch(err => {
               console.error(err)
               ElMessage({
-                message: i18n.t('message.search_error'),
+                message: t('message.search_error'),
                 type: 'error'
               })
             })
@@ -122,7 +122,7 @@ export default defineComponent({
             .catch(err => {
               console.error(err)
               ElMessage({
-                message: i18n.t('message.search_error'),
+                message: t('message.search_error'),
                 type: 'error'
               })
             })

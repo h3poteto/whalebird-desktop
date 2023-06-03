@@ -91,6 +91,7 @@
     "element-plus": "^2.3.4",
     "emoji-mart-vue-fast": "^12.0.4",
     "i18next": "^22.4.15",
+    "i18next-vue": "^2.1.1",
     "megalodon": "6.0.3",
     "minimist": "^1.2.8",
     "mitt": "^3.0.0",
@@ -107,7 +108,6 @@
     "vue-resize": "^2.0.0-alpha.1",
     "vue-router": "^4.2.2",
     "vue-virtual-scroller": "2.0.0-beta.8",
-    "vue3-i18next": "^0.2.2",
     "vuex": "^4.1.0",
     "vuex-router-sync": "^6.0.0-rc.1"
   },

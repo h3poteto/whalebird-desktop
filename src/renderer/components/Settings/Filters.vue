@@ -47,7 +47,7 @@
 import { defineComponent, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Settings/Filters'
 
@@ -57,7 +57,7 @@ export default defineComponent({
     const space = 'Settings/Filters'
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const filters = computed(() => store.state.Settings.Filters.filters)
     const filtersLoading = computed(() => store.state.Settings.Filters.filtersLoading)
@@ -70,9 +70,9 @@ export default defineComponent({
     })
 
     const deleteFilter = (id: string) => {
-      ElMessageBox.confirm(i18n.t('settings.filters.delete.confirm'), 'Warning', {
-        confirmButtonText: i18n.t('settings.filters.delete.confirm_ok'),
-        cancelButtonText: i18n.t('settings.filters.delete.confirm_cancel'),
+      ElMessageBox.confirm(t('settings.filters.delete.confirm'), 'Warning', {
+        confirmButtonText: t('settings.filters.delete.confirm_ok'),
+        cancelButtonText: t('settings.filters.delete.confirm_cancel'),
         type: 'warning'
       }).then(() => {
         return store.dispatch(`${space}/${ACTION_TYPES.DELETE_FILTER}`, id)

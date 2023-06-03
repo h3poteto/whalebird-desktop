@@ -46,7 +46,7 @@
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Preferences/General'
 
@@ -55,7 +55,7 @@ export default defineComponent({
   setup() {
     const space = 'Preferences/General'
     const store = useStore()
-    const i18n = useI18next()
+    const { t, i18next } = useTranslation()
 
     const loading = computed(() => store.state.Preferences.General.loading)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
@@ -113,7 +113,7 @@ export default defineComponent({
     onMounted(() => {
       store.dispatch(`${space}/${ACTION_TYPES.LOAD_GENERAL}`).catch(() => {
         ElMessage({
-          message: i18n.t('message.preferences_load_error'),
+          message: t('message.preferences_load_error'),
           type: 'error'
         })
       })
@@ -123,11 +123,11 @@ export default defineComponent({
       store
         .dispatch(`${space}/${ACTION_TYPES.RESET}`)
         .then(language => {
-          i18n.changeLanguage(language)
+          i18next.changeLanguage(language)
         })
         .catch(() => {
           ElMessage({
-            message: i18n.t('message.preferences_load_error'),
+            message: t('message.preferences_load_error'),
             type: 'error'
           })
         })

@@ -24,7 +24,7 @@
 import { defineComponent, computed, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import SideMenu from './TimelineSpace/SideMenu.vue'
 import HeaderMenu from './TimelineSpace/HeaderMenu.vue'
 import Contents from './TimelineSpace/Contents.vue'
@@ -46,7 +46,7 @@ export default defineComponent({
     const space = 'TimelineSpace'
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const contentsRef = ref<HTMLElement | null>(null)
 
@@ -77,12 +77,12 @@ export default defineComponent({
       } catch (err) {
         if (err instanceof AccountLoadError) {
           ElMessage({
-            message: i18n.t('message.account_load_error'),
+            message: t('message.account_load_error'),
             type: 'error'
           })
         } else if (err instanceof TimelineFetchError) {
           ElMessage({
-            message: i18n.t('message.timeline_fetch_error'),
+            message: t('message.timeline_fetch_error'),
             type: 'error'
           })
         }

@@ -10,7 +10,7 @@ import { defineComponent, computed, onMounted, toRefs } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useStore } from '@/store'
 import { useRouter } from 'vue-router'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import FilterForm from './form.vue'
 import { ACTION_TYPES } from '@/store/Settings/Filters/Edit'
 
@@ -22,7 +22,7 @@ export default defineComponent({
     const space = 'Settings/Filters/Edit'
     const store = useStore()
     const router = useRouter()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { filter_id } = toRefs(props)
 
     const loading = computed(() => store.state.Settings.Filters.Edit.loading)
@@ -46,7 +46,7 @@ export default defineComponent({
         .catch(err => {
           console.error(err)
           ElMessage({
-            message: i18n.t('message.update_filter_error'),
+            message: t('message.update_filter_error'),
             type: 'error'
           })
         })

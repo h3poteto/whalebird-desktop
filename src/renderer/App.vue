@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, onMounted, onUnmounted } from 'vue'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/App'
 import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
@@ -18,7 +18,7 @@ export default defineComponent({
   setup() {
     const space = 'App'
     const store = useStore()
-    const i18n = useI18next()
+    const { i18next } = useTranslation()
     const { Shift_Slash } = useMagicKeys()
     const activeElement = useActiveElement()
 
@@ -43,7 +43,7 @@ export default defineComponent({
     onMounted(() => {
       store.dispatch(`${space}/${ACTION_TYPES.WATCH_SHORTCUT_EVENTS}`)
       store.dispatch(`${space}/${ACTION_TYPES.LOAD_PREFERENCES}`).then(conf => {
-        i18n.changeLanguage(conf.language.language)
+        i18next.changeLanguage(conf.language.language)
       })
     })
     onUnmounted(() => {

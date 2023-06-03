@@ -29,7 +29,7 @@
 import { computed, defineComponent, onMounted, ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { LocalAccount } from '~/src/types/localAccount'
@@ -42,7 +42,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const title = ref<string>('')
     const loading = ref<boolean>(false)
@@ -77,7 +77,7 @@ export default defineComponent({
       } catch (err) {
         console.error(err)
         ElMessage({
-          message: i18n.t('message.lists_fetch_error'),
+          message: t('message.lists_fetch_error'),
           type: 'error'
         })
       }
@@ -92,7 +92,7 @@ export default defineComponent({
       } catch (err) {
         console.error(err)
         ElMessage({
-          message: i18n.t('message.list_create_error'),
+          message: t('message.list_create_error'),
           type: 'error'
         })
       } finally {
@@ -103,9 +103,9 @@ export default defineComponent({
       return router.push(`/${id.value}/lists/${list.id}/edit`)
     }
     const del = (list: Entity.List) => {
-      ElMessageBox.confirm(i18n.t('lists.index.delete.confirm.message'), i18n.t('lists.index.delete.confirm.title'), {
-        confirmButtonText: i18n.t('lists.index.delete.confirm.ok'),
-        cancelButtonText: i18n.t('lists.index.delete.confirm.cancel'),
+      ElMessageBox.confirm(t('lists.index.delete.confirm.message'), t('lists.index.delete.confirm.title'), {
+        confirmButtonText: t('lists.index.delete.confirm.ok'),
+        cancelButtonText: t('lists.index.delete.confirm.cancel'),
         type: 'warning'
       }).then(async () => {
         if (!client.value) return

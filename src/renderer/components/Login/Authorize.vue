@@ -39,7 +39,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { ElMessage } from 'element-plus'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { MyWindow } from '~/src/types/global'
@@ -51,7 +51,7 @@ export default defineComponent({
     const win = (window as any) as MyWindow
     const router = useRouter()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { escape } = useMagicKeys()
 
     const authorizeForm = reactive({
@@ -81,7 +81,7 @@ export default defineComponent({
       } catch (err) {
         console.error(err)
         ElMessage({
-          message: i18n.t('message.authorize_error'),
+          message: t('message.authorize_error'),
           type: 'error'
         })
       } finally {

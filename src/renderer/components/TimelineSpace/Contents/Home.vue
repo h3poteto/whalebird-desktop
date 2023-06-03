@@ -34,7 +34,7 @@ import { logicAnd } from '@vueuse/math'
 import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
 import { Entity } from 'megalodon'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import Toot from '@/components/organisms/Toot.vue'
@@ -52,7 +52,7 @@ export default defineComponent({
     const space = 'TimelineSpace/Contents/Home'
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { j, k } = useMagicKeys()
     const activeElement = useActiveElement()
 
@@ -162,7 +162,7 @@ export default defineComponent({
           })
           .catch(() => {
             ElMessage({
-              message: i18n.t('message.timeline_fetch_error'),
+              message: t('message.timeline_fetch_error'),
               type: 'error'
             })
           })

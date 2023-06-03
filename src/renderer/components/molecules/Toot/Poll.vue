@@ -30,7 +30,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, toRefs, PropType } from 'vue'
 import { Entity } from 'megalodon'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import moment from 'moment'
 import TimeFormat from '~/src/constants/timeFormat'
@@ -44,7 +44,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const store = useStore()
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { poll } = toRefs(props)
 
     const timeFormat = computed(() => store.state.App.timeFormat)
@@ -57,11 +57,11 @@ export default defineComponent({
       switch (timeFormat.value) {
         case TimeFormat.Relative.value:
           moment.locale(language.value)
-          return i18n.t('cards.toot.poll.left', {
+          return t('cards.toot.poll.left', {
             datetime: moment(datetime).from(epoch)
           })
         default:
-          return i18n.t('cards.toot.poll.until', {
+          return t('cards.toot.poll.until', {
             datetime: moment(datetime).format('YYYY-MM-DD HH:mm:ss')
           })
       }

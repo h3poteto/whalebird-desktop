@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, toRefs, PropType } from 'vue'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { Entity } from 'megalodon'
 
 export default defineComponent({
@@ -52,36 +52,36 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const { modelValue, sns } = toRefs(props)
 
     const expires = [
       {
-        label: i18n.t('settings.filters.expires.never'),
+        label: t('settings.filters.expires.never'),
         value: null
       },
       {
-        label: i18n.t('settings.filters.expires.30_minutes'),
+        label: t('settings.filters.expires.30_minutes'),
         value: 60 * 30
       },
       {
-        label: i18n.t('settings.filters.expires.1_hour'),
+        label: t('settings.filters.expires.1_hour'),
         value: 3600
       },
       {
-        label: i18n.t('settings.filters.expires.6_hours'),
+        label: t('settings.filters.expires.6_hours'),
         value: 3600 * 6
       },
       {
-        label: i18n.t('settings.filters.expires.12_hours'),
+        label: t('settings.filters.expires.12_hours'),
         value: 3600 * 12
       },
       {
-        label: i18n.t('settings.filters.expires.1_day'),
+        label: t('settings.filters.expires.1_day'),
         value: 3600 * 24
       },
       {
-        label: i18n.t('settings.filters.expires.1_week'),
+        label: t('settings.filters.expires.1_week'),
         value: 3600 * 24 * 7
       }
     ]

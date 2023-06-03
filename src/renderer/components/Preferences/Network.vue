@@ -43,7 +43,7 @@
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Preferences/Network'
 
@@ -52,7 +52,7 @@ export default defineComponent({
   setup() {
     const space = 'Preferences/Network'
     const store = useStore()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const manualProxyConfiguration = computed(() => store.getters[`${space}/manualProxyConfiguration`])
     const source = computed({
@@ -83,7 +83,7 @@ export default defineComponent({
     onMounted(() => {
       store.dispatch(`${space}/${ACTION_TYPES.LOAD_PROXY}`).catch(() => {
         ElMessage({
-          message: i18n.t('message.preferences_load_error'),
+          message: t('message.preferences_load_error'),
           type: 'error'
         })
       })

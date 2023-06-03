@@ -26,7 +26,7 @@ import { computed, defineComponent, onMounted, ref, watch, reactive } from 'vue'
 import { logicAnd } from '@vueuse/math'
 import { useActiveElement, useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import parse from 'parse-link-header'
@@ -44,7 +44,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const focusedId = ref<string | null>(null)
     const heading = ref<boolean>(true)
@@ -95,7 +95,7 @@ export default defineComponent({
       } catch (err) {
         console.error(err)
         ElMessage({
-          message: i18n.t('message.bookmark_fetch_error'),
+          message: t('message.bookmark_fetch_error'),
           type: 'error'
         })
       } finally {
@@ -149,7 +149,7 @@ export default defineComponent({
           .catch(err => {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.bookmark_fetch_error'),
+              message: t('message.bookmark_fetch_error'),
               type: 'error'
             })
           })

@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { ElMessage } from 'element-plus'
 import { useStore } from '@/store'
 import Language from '~/src/constants/language'
@@ -43,7 +43,7 @@ export default defineComponent({
   setup() {
     const space = 'Preferences/Language'
     const store = useStore()
-    const i18n = useI18next()
+    const { t, i18next } = useTranslation()
 
     const languages = [
       Language.cs,
@@ -75,7 +75,7 @@ export default defineComponent({
       get: () => store.state.Preferences.Language.language.language,
       set: (value: string) =>
         store.dispatch(`${space}/${ACTION_TYPES.CHANGE_LANGUAGE}`, value).then(key => {
-          i18n.changeLanguage(key)
+          i18next.changeLanguage(key)
         })
     })
 
@@ -89,7 +89,7 @@ export default defineComponent({
       set: (value: Array<string>) =>
         store.dispatch('Preferences/Language/updateSpellcheckerLanguages', value).catch(() => {
           ElMessage({
-            message: i18n.t('message.language_not_support_spellchecker_error'),
+            message: t('message.language_not_support_spellchecker_error'),
             type: 'error'
           })
         })

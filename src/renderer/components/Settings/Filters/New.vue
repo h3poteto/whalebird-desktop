@@ -9,7 +9,7 @@
 import { defineComponent, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import FilterForm from './form.vue'
 import { ACTION_TYPES } from '@/store/Settings/Filters/New'
@@ -21,7 +21,7 @@ export default defineComponent({
     const space = 'Settings/Filters/New'
     const store = useStore()
     const router = useRouter()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const loading = computed(() => store.state.Settings.Filters.New.loading)
     const sns = computed(() => store.state.TimelineSpace.sns)
@@ -40,7 +40,7 @@ export default defineComponent({
         .catch(err => {
           console.error(err)
           ElMessage({
-            message: i18n.t('message.create_filter_error'),
+            message: t('message.create_filter_error'),
             type: 'error'
           })
         })

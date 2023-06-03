@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES, MUTATION_TYPES } from '@/store/TimelineSpace/HeaderMenu'
 
@@ -25,7 +25,7 @@ export default defineComponent({
     const space = 'TimelineSpace/HeaderMenu'
     const store = useStore()
     const route = useRoute()
-    const i18n = useI18next()
+    const { t } = useTranslation()
 
     const title = computed(() => store.state.TimelineSpace.HeaderMenu.title)
     const loading = computed(() => store.state.TimelineSpace.HeaderMenu.loading)
@@ -43,50 +43,50 @@ export default defineComponent({
     const channelName = () => {
       switch (route.name) {
         case 'home':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.home'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.home'))
           break
         case 'notifications':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.notification'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.notification'))
           break
         case 'favourites':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.favourite'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.favourite'))
           break
         case 'bookmarks':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.bookmark'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.bookmark'))
           break
         case 'follow-requests':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.follow_requests'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.follow_requests'))
           break
         case 'local':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.local'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.local'))
           break
         case 'public':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.public'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.public'))
           break
         case 'hashtag-list':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.hashtag'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.hashtag'))
           break
         case 'tag':
           store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, `#${route.params.tag}`)
           break
         case 'search':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.search'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.search'))
           break
         case 'lists':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.lists'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.lists'))
           break
         case 'direct-messages':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.direct_messages'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.direct_messages'))
           break
         case 'edit-list':
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.members'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.members'))
           break
         case 'list':
           store.dispatch(`${space}/${ACTION_TYPES.FETCH_LIST}`, route.params.list_id)
           break
         default:
           console.debug(route)
-          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, i18n.t('header_menu.home'))
+          store.commit(`${space}/${MUTATION_TYPES.UPDATE_TITLE}`, t('header_menu.home'))
           break
       }
     }

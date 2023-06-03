@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, reactive, ref } from 'vue'
-import { useI18next } from 'vue3-i18next'
+import { useTranslation } from 'i18next-vue'
 import { ElLoading, ElMessage, FormInstance, FormRules } from 'element-plus'
 import { domainFormat } from '@/utils/validator'
 import { detector, OAuth } from 'megalodon'
@@ -49,7 +49,7 @@ import { LocalServer } from '~/src/types/localServer'
 export default defineComponent({
   name: 'login-form',
   setup() {
-    const i18n = useI18next()
+    const { t } = useTranslation()
     const router = useRouter()
     const win = (window as any) as MyWindow
 
@@ -67,12 +67,12 @@ export default defineComponent({
         {
           type: 'string',
           required: true,
-          message: i18n.t('validation.login.require_domain_name')
+          message: t('validation.login.require_domain_name')
         },
         {
           pattern: domainFormat,
           trigger: 'change',
-          message: i18n.t('validation.login.domain_format')
+          message: t('validation.login.domain_format')
         }
       ]
     })
@@ -80,7 +80,7 @@ export default defineComponent({
     const login = async () => {
       const loading = ElLoading.service({
         lock: true,
-        text: i18n.t('message.loading'),
+        text: t('message.loading'),
         background: 'rgba(0, 0, 0, 0.7)'
       })
       try {
@@ -100,7 +100,7 @@ export default defineComponent({
         })
       } catch (err) {
         ElMessage({
-          message: i18n.t('message.authorize_url_error'),
+          message: t('message.authorize_url_error'),
           type: 'error'
         })
         console.error(err)
@@ -119,7 +119,7 @@ export default defineComponent({
             sns.value = await detector(`https://${cleanDomain}`)
             domain.value = cleanDomain
             ElMessage({
-              message: i18n.t('message.domain_confirmed', {
+              message: t('message.domain_confirmed', {
                 domain: cleanDomain
               }),
               type: 'success'
@@ -127,7 +127,7 @@ export default defineComponent({
           } catch (err) {
             console.error(err)
             ElMessage({
-              message: i18n.t('message.domain_doesnt_exist', {
+              message: t('message.domain_doesnt_exist', {
                 domain: form.domainName
               }),
               type: 'error'
@@ -138,7 +138,7 @@ export default defineComponent({
           return true
         } else {
           ElMessage({
-            message: i18n.t('validation.login.domain_format'),
+            message: t('validation.login.domain_format'),
             type: 'error'
           })
           return false
