@@ -92,7 +92,7 @@ export default defineComponent({
     }
 
     const isAccount = (req: any): req is Entity.Account => {
-      return (req as Entity.Account)?.moved !== undefined
+      return !(typeof req.id === 'number')
     }
 
     return {
