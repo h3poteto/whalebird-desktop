@@ -45,7 +45,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const i18n = useI18next()
-    const { j, k, Ctrl_r } = useMagicKeys()
+    const { j, k, Ctrl_r, Cmd_r } = useMagicKeys()
     const activeElement = useActiveElement()
 
     const win = (window as any) as MyWindow
@@ -117,6 +117,9 @@ export default defineComponent({
       focusPrev()
     })
     whenever(logicAnd(Ctrl_r, shortcutEnabled), () => {
+      reload()
+    })
+    whenever(logicAnd(Cmd_r, shortcutEnabled), () => {
       reload()
     })
 
