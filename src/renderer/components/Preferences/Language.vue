@@ -103,7 +103,8 @@ export default defineComponent({
       languages,
       displayLanguage,
       spellcheck,
-      spellcheckLanguages
+      spellcheckLanguages,
+      $t: t
     }
   }
 })

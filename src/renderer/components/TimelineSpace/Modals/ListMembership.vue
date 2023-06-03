@@ -70,7 +70,8 @@ export default defineComponent({
       loading,
       lists,
       listMembershipModal,
-      belongToLists
+      belongToLists,
+      $t: t
     }
   }
 })

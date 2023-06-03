@@ -132,7 +132,8 @@ export default defineComponent({
       notifyReaction,
       notifyStatus,
       notifyPollVote,
-      notifyPollExpired
+      notifyPollExpired,
+      $t: t
     }
   }
 })

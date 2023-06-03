@@ -85,7 +85,8 @@ export default defineComponent({
       backgroundColor,
       sns,
       id,
-      deleteFilter
+      deleteFilter,
+      $t: t
     }
   }
 })

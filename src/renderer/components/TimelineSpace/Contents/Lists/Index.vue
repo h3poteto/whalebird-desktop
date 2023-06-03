@@ -122,7 +122,8 @@ export default defineComponent({
       backgroundColor,
       createList,
       edit,
-      del
+      del,
+      $t: t
     }
   }
 })

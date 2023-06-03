@@ -49,6 +49,7 @@ import { defineComponent, computed, toRefs } from 'vue'
 import moment from 'moment'
 import DisplayStyle from '~/src/constants/displayStyle'
 import TimeFormat from '~/src/constants/timeFormat'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'toot',
@@ -64,6 +65,7 @@ export default defineComponent({
   },
   setup(props) {
     const { displayNameStyle, timeFormat } = toRefs(props)
+    const { t } = useTranslation()
 
     const sampleIcon = 'https://github.com/h3poteto/whalebird-desktop/raw/master/build/icons/256x256.png'
     const status = '<p>Sample status</p>'
@@ -105,7 +107,8 @@ export default defineComponent({
       timestamp,
       status,
       reblogsCount,
-      favouritesCount
+      favouritesCount,
+      $t: t
     }
   }
 })

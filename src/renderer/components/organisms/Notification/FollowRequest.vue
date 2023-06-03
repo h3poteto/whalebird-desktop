@@ -34,6 +34,7 @@ import { useStore } from '@/store'
 import FailoverImg from '@/components/atoms/FailoverImg.vue'
 import { usernameWithStyle } from '@/utils/username'
 import { useRouter } from 'vue-router'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'follow-request',
@@ -55,6 +56,7 @@ export default defineComponent({
     const { focused } = toRefs(props)
     const store = useStore()
     const router = useRouter()
+    const { t } = useTranslation()
     const notificationRef = ref<any>(null)
 
     const displayNameStyle = computed(() => store.state.App.displayNameStyle)
@@ -79,7 +81,8 @@ export default defineComponent({
     return {
       notificationRef,
       username,
-      openUser
+      openUser,
+      $t: t
     }
   }
 })

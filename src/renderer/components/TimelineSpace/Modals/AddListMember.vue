@@ -94,7 +94,8 @@ export default defineComponent({
       addListMemberModal,
       username,
       search,
-      add
+      add,
+      $t: t
     }
   }
 })

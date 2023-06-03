@@ -256,6 +256,7 @@ import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~/src/types/localServer'
 import { LocalTag } from '~/src/types/localTag'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'side-menu',
@@ -264,6 +265,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
+    const { t } = useTranslation()
 
     const win = (window as any) as MyWindow
 
@@ -402,7 +404,8 @@ export default defineComponent({
       handleProfile,
       doCollapse,
       releaseCollapse,
-      changeGlobalHeader
+      changeGlobalHeader,
+      $t: t
     }
   }
 })

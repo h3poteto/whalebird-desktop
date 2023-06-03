@@ -119,7 +119,8 @@ export default defineComponent({
       title,
       loading,
       reloadable,
-      reload
+      reload,
+      $t: t
     }
   }
 })

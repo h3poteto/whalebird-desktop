@@ -9,10 +9,15 @@
 </template>
 
 <script lang="ts">
+import { useTranslation } from 'i18next-vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'receive-drop'
+  name: 'receive-drop',
+  setup() {
+    const { t } = useTranslation()
+    return { $t: t }
+  }
 })
 </script>
 

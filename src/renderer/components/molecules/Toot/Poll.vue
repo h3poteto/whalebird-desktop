@@ -94,7 +94,8 @@ export default defineComponent({
       percentage,
       vote,
       progress,
-      refresh
+      refresh,
+      $t: t
     }
   }
 })

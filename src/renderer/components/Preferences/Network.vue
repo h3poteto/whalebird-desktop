@@ -99,7 +99,8 @@ export default defineComponent({
       proxyPort,
       proxyUsername,
       proxyPassword,
-      onSave
+      onSave,
+      $t: t
     }
   },
   methods: {}

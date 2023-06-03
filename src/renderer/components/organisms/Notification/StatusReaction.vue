@@ -107,6 +107,7 @@ import Filtered from '@/utils/filter'
 import { parseDatetime } from '@/utils/datetime'
 import { usernameWithStyle } from '@/utils/username'
 import { MyWindow } from '~/src/types/global'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'status-reaction',
@@ -137,6 +138,7 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
+    const { t } = useTranslation()
     const win = (window as any) as MyWindow
     const { focused, message, filters, reactionType } = toRefs(props)
 
@@ -262,7 +264,8 @@ export default defineComponent({
       spoilerText,
       reactionMessage,
       reactionClass,
-      reactionIcon
+      reactionIcon,
+      $t: t
     }
   }
 })

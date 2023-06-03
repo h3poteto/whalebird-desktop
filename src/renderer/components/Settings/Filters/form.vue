@@ -145,7 +145,8 @@ export default defineComponent({
       filterWholeWord,
       cancel,
       onSubmit,
-      accountDisabled
+      accountDisabled,
+      $t: t
     }
   }
 })

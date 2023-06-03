@@ -51,7 +51,8 @@ export default defineComponent({
       sns,
       filter,
       cancel,
-      onSubmit
+      onSubmit,
+      $t: t
     }
   }
 })

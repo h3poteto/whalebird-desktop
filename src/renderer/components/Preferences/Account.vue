@@ -164,7 +164,8 @@ export default defineComponent({
       removeAccount,
       forward,
       backward,
-      removeAllAssociations
+      removeAllAssociations,
+      $t: t
     }
   }
 })

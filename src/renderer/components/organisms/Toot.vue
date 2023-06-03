@@ -456,7 +456,7 @@ export default defineComponent({
             ElMessageBox.confirm(t('cards.toot.open_account.text', { account: parsedAccount.acct }), t('cards.toot.open_account.title'), {
               confirmButtonText: t('cards.toot.open_account.ok'),
               cancelButtonText: t('cards.toot.open_account.cancel'),
-              type: 'Warning'
+              type: 'warning'
             }).then(() => {
               openLink(e)
             })
@@ -742,7 +742,8 @@ export default defineComponent({
       toggleCW,
       emojiPickerOpened,
       emojiPickerShow,
-      emojiPickerHide
+      emojiPickerHide,
+      $t: t
     }
   }
 })

@@ -139,7 +139,8 @@ export default defineComponent({
       search,
       accounts,
       tags,
-      statuses
+      statuses,
+      $t: t
     }
   }
 })

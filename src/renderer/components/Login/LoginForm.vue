@@ -153,7 +153,8 @@ export default defineComponent({
       allowLogin,
       rules,
       login,
-      confirm
+      confirm,
+      $t: t
     }
   }
 })

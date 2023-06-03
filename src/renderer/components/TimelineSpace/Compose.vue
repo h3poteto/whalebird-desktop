@@ -731,7 +731,8 @@ export default defineComponent({
       suggestHighlight,
       insertItem,
       highlightedIndex,
-      suggest
+      suggest,
+      $t: t
     }
   }
 })

@@ -144,7 +144,8 @@ export default defineComponent({
       timeline_hide_attachments,
       other_launch,
       other_hideOnLaunch,
-      reset
+      reset,
+      $t: t
     }
   }
 })

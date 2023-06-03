@@ -17,12 +17,14 @@
 import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from '@/store'
 import { ACTION_TYPES } from '@/store/Settings/Timeline'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'Timeline',
   setup() {
     const space = 'Settings/Timeline'
     const store = useStore()
+    const { t } = useTranslation()
 
     const marker_home = computed({
       get: () => store.state.Settings.Timeline.setting.markerHome,
@@ -45,7 +47,8 @@ export default defineComponent({
 
     return {
       marker_home,
-      marker_notifications
+      marker_notifications,
+      $t: t
     }
   }
 })

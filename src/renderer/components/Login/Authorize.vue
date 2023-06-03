@@ -97,7 +97,8 @@ export default defineComponent({
       authorizeForm,
       submitting,
       authorizeSubmit,
-      close
+      close,
+      $t: t
     }
   }
 })

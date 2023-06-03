@@ -59,6 +59,7 @@ import { defineComponent, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { useStore } from '@/store'
+import { useTranslation } from 'i18next-vue'
 
 export default defineComponent({
   name: 'preferences',
@@ -67,6 +68,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const { escape } = useMagicKeys()
+    const { t } = useTranslation()
 
     const primaryColor = computed(() => store.state.App.theme.primary_color)
     const backgroundColor = computed(() => store.state.App.theme.background_color)
@@ -84,7 +86,8 @@ export default defineComponent({
       primaryColor,
       backgroundColor,
       close,
-      activeRoute
+      activeRoute,
+      $t: t
     }
   }
 })
