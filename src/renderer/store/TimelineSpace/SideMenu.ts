@@ -10,7 +10,6 @@ export type SideMenuState = {
   unreadLocalTimeline: boolean
   unreadDirectMessagesTimeline: boolean
   unreadPublicTimeline: boolean
-  unreadFollowRequests: boolean
   collapse: boolean
 }
 
@@ -20,7 +19,6 @@ const state = (): SideMenuState => ({
   unreadLocalTimeline: false,
   unreadDirectMessagesTimeline: false,
   unreadPublicTimeline: false,
-  unreadFollowRequests: false,
   collapse: false
 })
 
@@ -30,7 +28,6 @@ export const MUTATION_TYPES = {
   CHANGE_UNREAD_LOCAL_TIMELINE: 'changeUnreadLocalTimeline',
   CHANGE_UNREAD_DIRECT_MESSAGES_TIMELINE: 'changeUnreadDirectMessagesTimeline',
   CHANGE_UNREAD_PUBLIC_TIMELINE: 'changeUnreadPublicTimeline',
-  CHANGE_UNREAD_FOLLOW_REQUESTS: 'changeUnreadFollowRequests',
   CHANGE_COLLAPSE: 'changeCollapse'
 }
 
@@ -49,9 +46,6 @@ const mutations: MutationTree<SideMenuState> = {
   },
   [MUTATION_TYPES.CHANGE_UNREAD_PUBLIC_TIMELINE]: (state, value: boolean) => {
     state.unreadPublicTimeline = value
-  },
-  [MUTATION_TYPES.CHANGE_UNREAD_FOLLOW_REQUESTS]: (state, value: boolean) => {
-    state.unreadFollowRequests = value
   },
   [MUTATION_TYPES.CHANGE_COLLAPSE]: (state, collapse: boolean) => {
     state.collapse = collapse
