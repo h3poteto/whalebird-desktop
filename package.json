@@ -165,7 +165,7 @@
     "jsdom": "^22.1.0",
     "json-loader": "^0.5.7",
     "listr": "^0.14.3",
-    "mini-css-extract-plugin": "^2.7.5",
+    "mini-css-extract-plugin": "^2.7.6",
     "node-loader": "^2.0.0",
     "node-sass": "^8.0.0",
     "os-browserify": "^0.3.0",
