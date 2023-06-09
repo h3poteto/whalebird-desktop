@@ -4225,10 +4225,15 @@ date-fns@^1.27.2:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
 
-dayjs@^1.11.3, dayjs@^1.11.7:
+dayjs@^1.11.3:
   version "1.11.7"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
   integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
+
+dayjs@^1.11.8:
+  version "1.11.8"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.8.tgz#4282f139c8c19dd6d0c7bd571e30c2d0ba7698ea"
+  integrity sha512-LcgxzFoWMEPO7ggRv1Y2N31hUf2R0Vj7fuy/m+Bg1K8rr+KAs1AEy4y9jd5DXe8pbHgX+srkHNS7TH6Q6ZhYeQ==
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -7954,15 +7959,15 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-megalodon@6.0.4:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-6.0.4.tgz#209b7bc921acbfa899fb8c7f5c7bbf824ba05c87"
-  integrity sha512-OF+SpfaMEqRS/FYIJb0tv1z6MlbLJI7/dzQCUExM8JIvt1W0cBlu3Qa7DAxZU8gsNlW4ZP0HSe5d+pT830V1qQ==
+megalodon@6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-6.1.0.tgz#42a1008c0e702a528f07fcbe143969a82d1d3a56"
+  integrity sha512-LHmy9sU6BMSRaNlMaomCLLDBYhouYNU99P6nRw6LdMYcWt2Pgwd8q+5Y0isCEZIlhDg3sJbCKRRN1L0d4raOnQ==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^8.5.4"
     axios "1.4.0"
-    dayjs "^1.11.7"
+    dayjs "^1.11.8"
     form-data "^4.0.0"
     https-proxy-agent "^7.0.0"
     oauth "^0.10.0"
