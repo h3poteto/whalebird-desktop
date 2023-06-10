@@ -2,7 +2,7 @@
   "productName": "Whalebird",
   "appId": "social.whalebird.app",
   "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
-  "buildVersion": "164",
+  "buildVersion": "165",
   "directories": {
     "output": "build"
   },
