@@ -12,3 +12,5 @@ updates:
       update-types: ["version-update:semver-major"]
     - dependency-name: "electron-builder"
       versions: "^23.4"
+    - dependency-name: "better-sqlite3"
+      versions: "^8.2"
