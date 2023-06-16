@@ -1637,9 +1637,9 @@
     "@babel/types" "^7.3.0"
 
 "@types/better-sqlite3@^7.6.3":
-  version "7.6.3"
-  resolved "https://registry.yarnpkg.com/@types/better-sqlite3/-/better-sqlite3-7.6.3.tgz#117c3c182e300799b84d1b7e1781c27d8d536505"
-  integrity sha512-YS64N9SNDT/NAvou3QNdzAu3E2om/W/0dhORimtPGLef+zSK5l1vDzfsWb4xgXOgfhtOI5ZDTRxnvRPb22AIVQ==
+  version "7.6.4"
+  resolved "https://registry.yarnpkg.com/@types/better-sqlite3/-/better-sqlite3-7.6.4.tgz#102462611e67aadf950d3ccca10292de91e6f35b"
+  integrity sha512-dzrRZCYPXIXfSR1/surNbJ/grU3scTaygS0OMzjlGf71i9sc2fGyHPXXiXmEvNIoE0cGwsanEFMVJxPXmco9Eg==
   dependencies:
     "@types/node" "*"
 
@@ -1832,15 +1832,20 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*", "@types/node@^20.2.5":
-  version "20.2.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.2.5.tgz#26d295f3570323b2837d322180dfbf1ba156fefb"
-  integrity sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==
+"@types/node@*":
+  version "20.3.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.1.tgz#e8a83f1aa8b649377bb1fb5d7bac5cb90e784dfe"
+  integrity sha512-EhcH/wvidPy1WeML3TtYFGR83UzjxeWRen9V402T8aUGYsCHOmfoisV3ZSg03gAFIbLq8TnWOJ0f4cALtnSEUg==
 
 "@types/node@^16.11.26":
   version "16.18.12"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.12.tgz#e3bfea80e31523fde4292a6118f19ffa24fd6f65"
   integrity sha512-vzLe5NaNMjIE3mcddFVGlAXN1LEWueUsMsOJWaT6wWMJGyljHAWHznqfnKUQWGzu7TLPrGvWdNAsvQYW+C0xtw==
+
+"@types/node@^20.2.5":
+  version "20.2.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.2.5.tgz#26d295f3570323b2837d322180dfbf1ba156fefb"
+  integrity sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
