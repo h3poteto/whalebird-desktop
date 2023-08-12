@@ -3,13 +3,13 @@
     "application": {
       "name": "Whalebird (鯨鳥)",
       "about": "關於 Whalebird (鯨鳥)",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "偏好設定",
+      "shortcuts": "鍵盤快捷鍵",
       "services": "服務",
       "hide": "隱藏 Whalebird (鯨鳥)",
-      "hide_others": "Hide others",
-      "show_all": "Show all",
-      "open": "Open window",
+      "hide_others": "隱藏其他",
+      "show_all": "全部顯示",
+      "open": "開啟視窗",
       "quit": "離開"
     },
     "edit": {
@@ -23,10 +23,10 @@
     },
     "view": {
       "name": "檢視",
-      "toggle_full_screen": "Toggle full screen"
+      "toggle_full_screen": "切換至全螢幕顯示"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "總是顯示功能選單",
       "name": "視窗",
       "close": "關閉視窗",
       "open": "開啟視窗",
@@ -34,7 +34,7 @@
       "jump_to": "跳至"
     },
     "help": {
-      "name": "Help",
+      "name": "幫助",
       "thirdparty": "Thirdparty licenses"
     }
   },
@@ -45,15 +45,15 @@
     "profile": "個人檔案",
     "show_profile": "顯示個人檔案",
     "edit_profile": "編輯個人檔案",
-    "settings": "Account settings",
+    "settings": "帳號設定",
     "collapse": "收合",
     "expand": "展開",
     "home": "首頁",
-    "notification": "Notifications",
+    "notification": "通知",
     "direct": "私訊",
-    "follow_requests": "Follow requests",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "follow_requests": "追隨請求",
+    "favourite": "我的最愛",
+    "bookmark": "書籤",
     "local": "本機時間軸",
     "public": "Federated timeline",
     "hashtag": "Hashtags",
