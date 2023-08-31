@@ -55,7 +55,7 @@
     "favourite": "Favourited",
     "bookmark": "Signets",
     "local": "Fil public local",
-    "public": "Federated timeline",
+    "public": "Fil fédéré",
     "hashtag": "Hashtags",
     "search": "Rechercher",
     "lists": "Listes"
@@ -190,7 +190,7 @@
       "font_family": "Famille de polices",
       "toot_padding": "Padding around posts",
       "display_style": {
-        "title": "Username display style",
+        "title": "Style d'affichage du nom d'utilisateur",
         "display_name_and_username": "Nom et utilisateur⋅trice",
         "display_name": "Nom affiché",
         "username": "Utilisateur⋅trice"
@@ -213,7 +213,7 @@
         "follow_request": "Demandes d’abonnement",
         "status": "Status notifications",
         "poll_vote": "Poll votes",
-        "poll_expired": "When a poll expires"
+        "poll_expired": "Lorsqu’un sondage expire"
       }
     },
     "account": {
@@ -260,7 +260,7 @@
       },
       "spellchecker": {
         "title": "Vérification orthographique",
-        "enabled": "Enable spell checker"
+        "enabled": "Activer le correcteur orthographique"
       }
     }
   },
@@ -505,7 +505,7 @@
       "body": "{{username}} voted in your poll"
     },
     "poll_expired": {
-      "title": "Poll expired",
+      "title": "Sondage expiré",
       "body": "{{username}}'s poll has ended"
     }
   },
