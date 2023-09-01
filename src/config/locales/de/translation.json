@@ -34,8 +34,8 @@
       "jump_to": "Gehe zu"
     },
     "help": {
-      "name": "Help",
-      "thirdparty": "Thirdparty licenses"
+      "name": "Hilfe",
+      "thirdparty": "Drittanbieter-Lizenzen"
     }
   },
   "global_header": {
@@ -51,7 +51,7 @@
     "home": "Start",
     "notification": "Mitteilungen",
     "direct": "Direktnachrichten",
-    "follow_requests": "Follow requests",
+    "follow_requests": "Follower-Anfragen",
     "favourite": "Favoriten",
     "bookmark": "Lesezeichen",
     "local": "Lokale Timeline",
