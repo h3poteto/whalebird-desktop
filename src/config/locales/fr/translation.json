@@ -3,13 +3,13 @@
     "application": {
       "name": "Whalebird",
       "about": "À propos de Whalebird",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "Préférences",
+      "shortcuts": "Raccourcis clavier",
       "services": "Services",
       "hide": "Cacher Whalebird",
-      "hide_others": "Hide others",
-      "show_all": "Show all",
-      "open": "Open window",
+      "hide_others": "Masquer les autres",
+      "show_all": "Tout afficher",
+      "open": "Ouvrir la fenêtre",
       "quit": "Quitter"
     },
     "edit": {
@@ -23,10 +23,10 @@
     },
     "view": {
       "name": "Afficher",
-      "toggle_full_screen": "Toggle full screen"
+      "toggle_full_screen": "Basculer en mode plein écran"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "Toujours afficher la barre de menu",
       "name": "Fenêtre",
       "close": "Fermer la fenêtre",
       "open": "Ouvrir la fenêtre",
@@ -34,8 +34,8 @@
       "jump_to": "Aller à"
     },
     "help": {
-      "name": "Help",
-      "thirdparty": "Thirdparty licenses"
+      "name": "Aide",
+      "thirdparty": "Licences tierces"
     }
   },
   "global_header": {
@@ -45,17 +45,17 @@
     "profile": "Profil",
     "show_profile": "Voir le profil",
     "edit_profile": "Éditer mon profil",
-    "settings": "Account settings",
+    "settings": "Paramètres du compte",
     "collapse": "Réduire",
     "expand": "Développer",
     "home": "Accueil",
     "notification": "Notifications",
     "direct": "Messages directs",
-    "follow_requests": "Follow requests",
+    "follow_requests": "Demandes d’abonnement",
     "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "bookmark": "Signets",
     "local": "Fil public local",
-    "public": "Federated timeline",
+    "public": "Fil fédéré",
     "hashtag": "Hashtags",
     "search": "Rechercher",
     "lists": "Listes"
@@ -64,11 +64,11 @@
     "home": "Accueil",
     "notification": "Notifications",
     "favourite": "Favourited",
-    "bookmark": "Bookmarks",
-    "follow_requests": "Follow requests",
-    "direct_messages": "Direct messages",
+    "bookmark": "Signets",
+    "follow_requests": "Demandes d’abonnement",
+    "direct_messages": "Messages directs",
     "local": "Fil public local",
-    "public": "Federated timeline",
+    "public": "Fil fédéré",
     "hashtag": "Hashtags",
     "search": "Rechercher",
     "lists": "Listes",
@@ -80,9 +80,9 @@
     "general": {
       "title": "Général",
       "toot": {
-        "title": "Posts",
+        "title": "Publications",
         "visibility": {
-          "description": "Default post visibility",
+          "description": "Visibilité par défaut des publications",
           "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "Public",
           "unlisted": "Public sans être affiché sur le fil public",
@@ -90,7 +90,7 @@
           "direct": "Message direct"
         },
         "sensitive": {
-          "description": "Marquez vos médias comme sensibles par défaut"
+          "description": "Marquer vos médias comme sensibles par défaut"
         }
       }
     },
@@ -98,41 +98,41 @@
       "title": "Fil d'actualité",
       "use_marker": {
         "title": "Load the timeline from the last reading position",
-        "home": "Home",
+        "home": "Accueil",
         "notifications": "Notifications"
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Filtres",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
-        "context": "Filter contexts",
-        "irreversible": "Drop instead of hide",
-        "whole_word": "Whole word",
-        "submit": "Submit",
-        "cancel": "Cancel"
+        "phrase": "Mot-clé ou expression",
+        "expire": "Expire après",
+        "context": "Filtrer les contextes",
+        "irreversible": "Supprimer plutôt que cacher",
+        "whole_word": "Mot entier",
+        "submit": "Envoyer",
+        "cancel": "Annuler"
       },
       "expires": {
-        "never": "Never",
+        "never": "Jamais",
         "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "12_hours": "12 hours",
-        "1_day": "1 day",
-        "1_week": "1 week"
+        "1_hour": "1 heure",
+        "6_hours": "6 heures",
+        "12_hours": "12 heures",
+        "1_day": "1 jour",
+        "1_week": "1 semaine"
       },
       "new": {
-        "title": "New"
+        "title": "Nouveau"
       },
       "edit": {
-        "title": "Edit"
+        "title": "Modifier"
       },
       "delete": {
-        "title": "Delete",
+        "title": "Supprimer",
         "confirm": "Are you sure you want to delete this filter?",
-        "confirm_ok": "Delete",
-        "confirm_cancel": "Cancel"
+        "confirm_ok": "Supprimer",
+        "confirm_cancel": "Annuler"
       }
     }
   },
@@ -142,37 +142,37 @@
       "title": "Général",
       "sounds": {
         "title": "Sons",
-        "description": "Play sounds when",
+        "description": "Jouer un son lorsque",
         "fav_rb": "You favourite or boost a post",
-        "toot": "You make a post"
+        "toot": "Vous publiez un message"
       },
       "timeline": {
         "title": "Fil d'actualité",
-        "description": "Customize how your timelines are displayed",
+        "description": "Personnaliser l’affichage de vos fils",
         "cw": "Always expand posts tagged with content warnings.",
-        "nsfw": "Always show media.",
-        "hideAllAttachments": "Always hide media."
+        "nsfw": "Toujours afficher les médias.",
+        "hideAllAttachments": "Toujours masquer les médias."
       },
       "other": {
         "title": "Autres options",
-        "launch": "Launch Whalebird on startup",
-        "hideOnLaunch": "Hide the Whalebird window on launch"
+        "launch": "Lancer Whalebird au démarrage",
+        "hideOnLaunch": "Masquer la fenêtre Whalebird au lancement"
       },
       "reset": {
-        "button": "Reset preferences"
+        "button": "Réinitialiser les préférences"
       }
     },
     "appearance": {
       "title": "Apparence",
-      "theme_color": "Colour themes",
+      "theme_color": "Couleurs du thème",
       "theme": {
-        "system": "System",
+        "system": "Système",
         "light": "Clair",
         "dark": "Foncé",
         "solarized_light": "Lumière solaire",
         "solarized_dark": "Solarisé Sombre",
         "kimbie_dark": "KimbieDark",
-        "custom": "Personalisée"
+        "custom": "Personalisé"
       },
       "custom_theme": {
         "background_color": "Arrière plan de base",
@@ -184,13 +184,13 @@
         "secondary_color": "Couleur du texte secondaire",
         "border_color": "Bordures",
         "header_menu_color": "Menu en tête",
-        "wrapper_mask_color": "Dialog wrapper"
+        "wrapper_mask_color": "Fenêtre de dialogue"
       },
       "font_size": "Taille des caractères",
       "font_family": "Famille de polices",
       "toot_padding": "Padding around posts",
       "display_style": {
-        "title": "Username display style",
+        "title": "Style d'affichage du nom d'utilisateur",
         "display_name_and_username": "Nom et utilisateur⋅trice",
         "display_name": "Nom affiché",
         "username": "Utilisateur⋅trice"
@@ -205,20 +205,20 @@
       "title": "Notifications",
       "enable": {
         "description": "Notify me when I receive...",
-        "reply": "Replies",
-        "reblog": "Boosts",
-        "favourite": "Favourites",
-        "follow": "New followers",
+        "reply": "Réponses",
+        "reblog": "Partages",
+        "favourite": "Favoris",
+        "follow": "Nouveaux⋅elles abonné⋅e⋅s",
         "reaction": "Emoji reactions",
-        "follow_request": "Follow requests",
+        "follow_request": "Demandes d’abonnement",
         "status": "Status notifications",
         "poll_vote": "Poll votes",
-        "poll_expired": "When a poll expires"
+        "poll_expired": "Lorsqu’un sondage expire"
       }
     },
     "account": {
       "title": "Compte",
-      "connected": "Connected accounts",
+      "connected": "Comptes associés",
       "username": "Utilisateur⋅trice",
       "domain": "Domaine",
       "association": "Association",
@@ -232,7 +232,7 @@
     "network": {
       "title": "Réseau",
       "proxy": {
-        "title": "Proxy configuration",
+        "title": "Configuration du proxy",
         "no": "Aucun proxy",
         "system": "Utiliser le proxy du système",
         "manual": "Configuration manuelle du proxy",
@@ -255,12 +255,12 @@
     "language": {
       "title": "Langue",
       "language": {
-        "title": "Language",
-        "description": "Choose the language you would like to use with Whalebird."
+        "title": "Langue",
+        "description": "Choisissez la langue que vous souhaitez utiliser sur Whalebird."
       },
       "spellchecker": {
-        "title": "Spellcheck",
-        "enabled": "Enable spell checker"
+        "title": "Vérification orthographique",
+        "enabled": "Activer le correcteur orthographique"
       }
     }
   },
@@ -269,14 +269,14 @@
       "jump_to": "Aller à..."
     },
     "add_list_member": {
-      "title": "Add member to List",
+      "title": "Ajouter un membre à la liste",
       "account_name": "Nom du compte"
     },
     "list_membership": {
-      "title": "List memberships"
+      "title": "Liste des membres"
     },
     "mute_confirm": {
-      "title": "Mute user",
+      "title": "Masquer l’utilisateur·rice",
       "body": "Are you sure you want to mute notifications from this user?",
       "cancel": "Annuler",
       "ok": "Muter"
@@ -285,7 +285,7 @@
       "title": "Raccourcis clavier",
       "ctrl_number": "Changer de compte",
       "ctrl_k": "Aller aux autres fils",
-      "ctrl_enter": "Send the post",
+      "ctrl_enter": "Envoyer un message",
       "ctrl_r": "Refresh current timeline",
       "j": "Select the next post",
       "k": "Select the previous post",
@@ -296,17 +296,17 @@
       "p": "Display the profile of the selected post's author",
       "i": "Open the selected post's images",
       "x": "Show/hide a content warned post",
-      "?": "Show this dialog",
+      "?": "Afficher cette boîte de dialogue",
       "esc": "Fermer la page en cours"
     },
     "report": {
-      "title": "Report this user",
+      "title": "Signaler cet·te utilisateur·rice",
       "comment": "Observations supplémentaires",
       "cancel": "Annuler",
       "ok": "Signaler"
     },
     "thirdparty": {
-      "title": "Thirdparty licenses"
+      "title": "Licences tierces"
     }
   },
   "cards": {
@@ -314,20 +314,20 @@
       "show_more": "Voir plus",
       "hide": "Cacher",
       "sensitive": "Afficher le contenu sensible",
-      "view_toot_detail": "View post details",
-      "open_in_browser": "Open in browser",
-      "copy_link_to_toot": "Copy post link",
+      "view_toot_detail": "Voir les détails de la publication",
+      "open_in_browser": "Ouvrir dans le navigateur",
+      "copy_link_to_toot": "Copier le lien de la publication",
       "mute": "Muter",
       "block": "Bloquer",
       "report": "Signaler",
       "delete": "Supprimer",
       "via": "via {{application}}",
       "reply": "Répondre",
-      "reblog": "Boost",
+      "reblog": "Partager",
       "fav": "Préféré",
-      "detail": "Post details",
+      "detail": "Détails de la publication",
       "bookmark": "Favori",
-      "pinned": "Pinned post",
+      "pinned": "Publication épinglée",
       "poll": {
         "vote": "Vote",
         "votes_count": "voix",
@@ -336,14 +336,14 @@
         "refresh": "Actualiser"
       },
       "open_account": {
-        "title": "Account not found",
+        "title": "Compte non trouvé",
         "text": "Could not find {{account}} on the server. Do you want to open the account in a browser instead?",
-        "ok": "Open",
-        "cancel": "Cancel"
+        "ok": "Ouvrir",
+        "cancel": "Annuler"
       }
     },
     "status_loading": {
-      "message": "Load more status"
+      "message": "Charger plus de publications"
     }
   },
   "side_bar": {
@@ -351,18 +351,18 @@
       "follows_you": "Abonné⋅e",
       "doesnt_follow_you": "Pas abonné⋅e",
       "detail": "Détail",
-      "follow": "Follow this user",
-      "unfollow": "Unfollow this user",
+      "follow": "S’abonner",
+      "unfollow": "Se désabonner",
       "subscribe": "Subscribe to this user",
       "unsubscribe": "Unsubscribe from this user",
       "follow_requested": "Suivre demande",
-      "open_in_browser": "Open in browser",
-      "manage_list_memberships": "Manage list memberships",
+      "open_in_browser": "Ouvrir dans le navigateur",
+      "manage_list_memberships": "Gérer la liste des membres",
       "mute": "Muter",
       "unmute": "Dé-muter",
       "unblock": "Dé-Bloquer",
       "block": "Bloquer",
-      "toots": "Posts",
+      "toots": "Publications",
       "follows": "Abonnements",
       "followers": "Abonné⋅e⋅s"
     }
@@ -380,8 +380,8 @@
     "search": "Rechercher",
     "account": "Compte",
     "tag": "Hashtag",
-    "keyword": "Keyword",
-    "toot": "Post"
+    "keyword": "Mot-clé",
+    "toot": "Publication"
   },
   "lists": {
     "index": {
@@ -398,7 +398,7 @@
     }
   },
   "login": {
-    "domain_name_label": "Welcome to Whalebird! Enter a server domain name to log into an account.",
+    "domain_name_label": "Bienvenue sur Whalebird ! Entrez un nom de domaine pour vous connecter à un compte.",
     "proxy_info": "If you need to use a proxy server, please set it up",
     "proxy_here": " ici",
     "search": "Rechercher",
@@ -407,12 +407,12 @@
   "authorize": {
     "manually_1": "La page d'autorisation est à présent affichée dans votre navigateur.",
     "manually_2": "If it has not yet opened, please go to the following URL manually:",
-    "code_label": "Enter your authorization code:",
+    "code_label": "Entrez votre code d’autorisation :",
     "misskey_label": "Veuillez soumettre une fois que vous avez autorisé dans votre navigateur.",
     "submit": "Envoyer"
   },
   "receive_drop": {
-    "drop_message": "Drop here to attach a file"
+    "drop_message": "Déposez ici pour joindre un fichier"
   },
   "message": {
     "account_load_error": "Erreur au chargement des comptes",
@@ -451,10 +451,10 @@
     "update_list_memberships_error": "Erreur lors de la mise à jour de la liste",
     "add_user_error": "Erreur lors de l'ajout d'un utilisateur⋅trice",
     "authorize_url_error": "Erreur à la récupération de l'URL d'autorisation",
-    "domain_confirmed": "{{domain}} is confirmed, please log in",
-    "domain_doesnt_exist": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
+    "domain_confirmed": "{{domain}} est confirmé, veuillez vous connecter",
+    "domain_doesnt_exist": "Impossible de se connecter à {{domain}}, assurez-vous que l’URL du serveur est valide ou correcte.",
     "loading": "Chargement...",
-    "language_not_support_spellchecker_error": "This language is not supported by the spell checker",
+    "language_not_support_spellchecker_error": "Cette langue n’est pas prise en charge par le correcteur orthographique",
     "update_filter_error": "Failed to update the filter",
     "create_filter_error": "Failed to create the filter"
   },
@@ -473,67 +473,67 @@
   },
   "notification": {
     "favourite": {
-      "title": "New favourite",
-      "body": "{{username}} favourited your post"
+      "title": "Nouveau favori",
+      "body": "{{username}} a mis votre message en favori"
     },
     "follow": {
-      "title": "New follower",
+      "title": "Nouveau⋅elle abonné⋅e",
       "body": "{{username}} vous suit"
     },
     "follow_request": {
-      "title": "New follow request",
+      "title": "Nouvelle demande d’abonnement",
       "body": "Received a follow request from {{username}}"
     },
     "reblog": {
-      "title": "New boost",
-      "body": "{{username}} boosted your post"
+      "title": "Nouveau partage",
+      "body": "{{username}} a partagé votre publication"
     },
     "quote": {
-      "title": "New quote",
+      "title": "Nouvelle citation",
       "body": "{{username}} quoted your post"
     },
     "reaction": {
-      "title": "New reaction",
+      "title": "Nouvelle réaction",
       "body": "{{username}} reacted to your post"
     },
     "status": {
-      "title": "New post",
-      "body": "{{username}} made a new post"
+      "title": "Nouvelle publication",
+      "body": "{{username}} a publié un nouveau message"
     },
     "poll_vote": {
       "title": "New poll vote",
       "body": "{{username}} voted in your poll"
     },
     "poll_expired": {
-      "title": "Poll expired",
+      "title": "Sondage expiré",
       "body": "{{username}}'s poll has ended"
     }
   },
   "compose": {
-    "title": "New post",
-    "cw": "Write your warning here",
-    "status": "What's on your mind?",
-    "cancel": "Cancel",
-    "toot": "Post",
-    "description": "Add alternate text for this media",
+    "title": "Nouvelle publication",
+    "cw": "Rédigez votre avertissement ici",
+    "status": "Qu’avez-vous en tête ?",
+    "cancel": "Annuler",
+    "toot": "Publier",
+    "description": "Ajouter un texte alternatif pour ce média",
     "footer": {
-      "add_image": "Add images",
-      "poll": "Add a poll",
-      "change_visibility": "Change visibility",
-      "change_sensitive": "Mark media as sensitive",
-      "add_cw": "Add content warnings",
-      "pined_hashtag": "Pinned hashtag"
+      "add_image": "Ajouter des images",
+      "poll": "Créer un sondage",
+      "change_visibility": "Modifier la visibilité",
+      "change_sensitive": "Marquer le média comme sensible",
+      "add_cw": "Ajouter un avertissement de contenu",
+      "pined_hashtag": "Hashtag épinglé"
     },
     "poll": {
-      "add_choice": "Add an option",
+      "add_choice": "Ajouter une option",
       "expires": {
         "5_minutes": "5 minutes",
         "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "1_day": "1 day",
-        "3_days": "3 days",
-        "7_days": "7 days"
+        "1_hour": "1 heure",
+        "6_hours": "6 heures",
+        "1_day": "1 jour",
+        "3_days": "3 jours",
+        "7_days": "7 jours"
       }
     }
   }
