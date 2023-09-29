@@ -18,7 +18,6 @@ import {
   clipboard
 } from 'electron'
 import fs from 'fs'
-import crypto from 'crypto'
 import log from 'electron-log'
 import windowStateKeeper from 'electron-window-state'
 import simplayer from 'simplayer'
