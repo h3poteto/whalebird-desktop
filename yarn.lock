@@ -1695,14 +1695,14 @@
     "@types/ms" "*"
 
 "@types/electron-json-storage@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@types/electron-json-storage/-/electron-json-storage-4.5.0.tgz#c0ca8fd6a694c5a0fa28ffccd5cafc8f538f2b61"
-  integrity sha512-wzDtkJHEENo4yLARfPjdYD6Foa7IORXFiNYLacZ6lJThkrGUWh5vlSSMu925ov5zv8tQHtajn2O7BpHcBtqU3g==
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@types/electron-json-storage/-/electron-json-storage-4.5.1.tgz#82ed27c02943ef0e93575ea79cefcfca50baf502"
+  integrity sha512-zVcapjNXAmPlVMUc8DkgYzb7f8CQCNT30CwNmyQ0/3WFkP3kOLAMcfIhQIDPW5AtMe16Ne4cDBjQbFcF2g4+iw==
 
 "@types/eslint-scope@^3.7.3":
-  version "3.7.4"
-  resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.4.tgz#37fc1223f0786c39627068a12e94d6e6fc61de16"
-  integrity sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.5.tgz#e28b09dbb1d9d35fdfa8a884225f00440dfc5a3e"
+  integrity sha512-JNvhIEyxVW6EoMIFIvj93ZOywYFatlpu9deeH6eSx6PE3WHYvHaQtmHmQeNw7aA81bYGBPPQqdtBm6b1SsQMmA==
   dependencies:
     "@types/eslint" "*"
     "@types/estree" "*"
