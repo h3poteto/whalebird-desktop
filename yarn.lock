@@ -7642,6 +7642,11 @@ known-css-properties@^0.26.0:
   resolved "https://registry.yarnpkg.com/known-css-properties/-/known-css-properties-0.26.0.tgz#008295115abddc045a9f4ed7e2a84dc8b3a77649"
   integrity sha512-5FZRzrZzNTBruuurWpvZnvP9pum+fe0HcK8z/ooo+U+Hmp4vtbyp1/QDsqmufirXy4egGzbaH/y2uCZf+6W5Kg==
 
+known-css-properties@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/known-css-properties/-/known-css-properties-0.28.0.tgz#8a8be010f368b3036fe6ab0ef4bbbed972bd6274"
+  integrity sha512-9pSL5XB4J+ifHP0e0jmmC98OGC1nL8/JjS+fi6mnTlIf//yt/MfVLtKg7S6nCtj/8KTcWX7nRlY0XywoYY1ISQ==
+
 launch-editor@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/launch-editor/-/launch-editor-2.6.0.tgz#4c0c1a6ac126c572bd9ff9a30da1d2cae66defd7"
@@ -10631,10 +10636,11 @@ stylelint-config-standard@^29.0.0:
     stylelint-config-recommended "^9.0.0"
 
 stylelint-scss@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-5.2.0.tgz#08a85ab5fe6196fa9bbe4723fb9536f2b05dcbc1"
-  integrity sha512-m/os6B7xHKakM9TkEbnity0gnDEqNbISpclvjOwIU+xIHk/8dQNGcTI2UlC5/QLzaG+tzQ9eMFZH8Iq7roQI2w==
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-5.2.1.tgz#810299e4141fa38852bd14536a90e4942c8f387f"
+  integrity sha512-ZoTJUM85/qqpQHfEppjW/St//8s6p9Qsg8deWlYlr56F9iUgC9vXeIDQvH4odkRRJLTLFQzYMALSOFCQ3MDkgw==
   dependencies:
+    known-css-properties "^0.28.0"
     postcss-media-query-parser "^0.2.3"
     postcss-resolve-nested-selector "^0.1.1"
     postcss-selector-parser "^6.0.13"
