@@ -2,7 +2,7 @@
   <div id="filters">
     <h2>{{ $t('settings.filters.title') }}</h2>
     <div class="new-filter">
-      <el-button type="primary" :disabled="sns === 'misskey'">
+      <el-button type="primary">
         <router-link :to="`/${id}/settings/filters/new`">
           {{ $t('settings.filters.new.title') }}
         </router-link>

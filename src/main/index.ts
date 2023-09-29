@@ -385,7 +385,7 @@ async function createWindow() {
 const args = minimist(process.argv.slice(process.env.NODE_ENV === 'development' ? 2 : 1))
 if (args.help) {
   console.log(`
-Whalebird is Mastodon, Pleroma and Misskey client for desktop.
+Whalebird is a Fediverse client for desktop.
 
 Usage
  $ whalebird
@@ -446,6 +446,9 @@ ipcMain.handle('add-server', async (_: IpcMainInvokeEvent, domain: string) => {
   if (sns === 'friendica') {
     return new Promise((_resolve, reject) => reject('friendica is not supported yet'))
   }
+  if (sns === 'misskey') {
+    return new Promise((_resolve, reject) => reject('misskey is not supported yet'))
+  }
   const server = await insertServer(db, `https://${domain}`, domain, sns, null)
   return server
 })
@@ -477,13 +480,6 @@ ipcMain.handle('authorize', async (_: IpcMainInvokeEvent, req: AuthorizeRequest)
   const client = generator(sns, req.baseURL, null, 'Whalebird', proxy)
   const tokenData = await client.fetchAccessToken(req.clientID, req.clientSecret, req.code, 'urn:ietf:wg:oauth:2.0:oob')
   let accessToken = tokenData.access_token
-  if (sns === 'misskey') {
-    // In misskey, access token is sha256(userToken + clientSecret)
-    accessToken = crypto
-      .createHash('sha256')
-      .update(tokenData.access_token + req.clientSecret, 'utf8')
-      .digest('hex')
-  }
 
   const authorizedClient = generator(sns, req.baseURL, accessToken, 'Whalebird', proxy)
   const credentials = await authorizedClient.verifyAccountCredentials()
@@ -792,16 +788,22 @@ ipcMain.handle('list-fonts', async (_: IpcMainInvokeEvent) => {
 })
 
 // Settings
-ipcMain.handle('get-account-setting', async (_: IpcMainInvokeEvent, accountId: number): Promise<Setting> => {
-  const setting = await getSetting(db, accountId)
-  return setting
-})
+ipcMain.handle(
+  'get-account-setting',
+  async (_: IpcMainInvokeEvent, accountId: number): Promise<Setting> => {
+    const setting = await getSetting(db, accountId)
+    return setting
+  }
+)
 
-ipcMain.handle('update-account-setting', async (_: IpcMainInvokeEvent, setting: Setting): Promise<Setting> => {
-  console.log(setting)
-  const res = await createOrUpdateSetting(db, setting)
-  return res
-})
+ipcMain.handle(
+  'update-account-setting',
+  async (_: IpcMainInvokeEvent, setting: Setting): Promise<Setting> => {
+    console.log(setting)
+    const res = await createOrUpdateSetting(db, setting)
+    return res
+  }
+)
 
 // Cache
 ipcMain.handle('get-cache-hashtags', async (_: IpcMainInvokeEvent) => {

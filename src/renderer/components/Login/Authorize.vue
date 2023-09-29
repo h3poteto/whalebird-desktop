@@ -13,8 +13,7 @@
       class="authorize-form"
       @submit.prevent="authorizeSubmit"
     >
-      <p v-if="$route.query.sns === 'misskey'">{{ $t('authorize.misskey_label') }}</p>
-      <el-form-item :label="$t('authorize.code_label')" v-else>
+      <el-form-item :label="$t('authorize.code_label')">
         <el-input v-model="authorizeForm.code"></el-input>
       </el-form-item>
       <!-- Dummy form to guard submitting with enter -->
@@ -65,10 +64,7 @@ export default defineComponent({
 
     const authorizeSubmit = async () => {
       submitting.value = true
-      let code = authorizeForm.code
-      if (route.query.sns === 'misskey' && route.query.session_token) {
-        code = route.query.session_token.toString()
-      }
+      const code = authorizeForm.code
       try {
         const localAccount: LocalAccount = await win.ipcRenderer.invoke('authorize', {
           serverID: route.query.server_id,

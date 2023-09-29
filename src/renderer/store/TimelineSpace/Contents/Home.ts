@@ -222,9 +222,6 @@ const actions: ActionTree<HomeState, RootState> = {
     if (timeline.length === 0 || timeline[0].id === 'loading-card') {
       return
     }
-    if (req.server.sns === 'misskey') {
-      return
-    }
     const client = generator(req.server.sns, req.server.baseURL, req.account.accessToken, rootState.App.userAgent)
     const res = await client.saveMarkers({ home: { last_read_id: timeline[0].id } })
     return res.data

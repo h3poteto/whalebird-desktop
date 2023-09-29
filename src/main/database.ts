@@ -41,6 +41,9 @@ marker_home BOOLEAN NOT NULL DEFAULT false, \
 marker_notifications BOOLEAN NOT NULL DEFAULT true, \
 FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE)'
   ).run()
+  db.prepare(
+    "DELETE FROM accounts WHERE id IN (SELECT accounts.id FROM accounts INNER JOIN servers ON servers.account_id = accounts.id WHERE servers.sns = 'misskey')"
+  ).run()
 
   return db
 }
