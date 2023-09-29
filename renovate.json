@@ -4,5 +4,15 @@
     "config:base"
   ],
   "prConcurrentLimit": 20,
-  "prHourlyLimit": 20
+  "prHourlyLimit": 20,
+  "packageRules": [
+    {
+    "matchPackageNames": ["better-sqlite3"],
+    "allowedVersions": "< 8.3.0"
+  },{
+    "matchPackageNames": ["electron"],
+    "matchUpdateTypes": ["minor", "patch", "pin", "pinDigest"],
+    "enabled": false
+  }
+  ]
 }
