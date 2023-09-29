@@ -3,13 +3,13 @@
     "application": {
       "name": "Whalebird",
       "about": "Um Whalebird",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "Kjörstillingar",
+      "shortcuts": "Flýtileiðir á lyklaborði",
       "services": "Þjónustur",
       "hide": "Fela Whalebird",
-      "hide_others": "Hide others",
-      "show_all": "Show all",
-      "open": "Open window",
+      "hide_others": "Fela annað",
+      "show_all": "Sýna allt",
+      "open": "Opna glugga",
       "quit": "Quit"
     },
     "edit": {
@@ -23,7 +23,7 @@
     },
     "view": {
       "name": "Skoðun",
-      "toggle_full_screen": "Toggle full screen"
+      "toggle_full_screen": "Víxla skjáfylli af/á"
     },
     "window": {
       "always_show_menu_bar": "Always show menu bar",
@@ -34,7 +34,7 @@
       "jump_to": "Hoppa í"
     },
     "help": {
-      "name": "Help",
+      "name": "Hjálp",
       "thirdparty": "Thirdparty licenses"
     }
   },
@@ -49,27 +49,27 @@
     "collapse": "Fella saman",
     "expand": "Fletta út",
     "home": "Heim",
-    "notification": "Notifications",
+    "notification": "Tilkynningar",
     "direct": "Bein skilaboð",
-    "follow_requests": "Follow requests",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "follow_requests": "Beiðnir um að fylgjast með",
+    "favourite": "Eftirlæti",
+    "bookmark": "Bókamerki",
     "local": "Staðvær tímalína",
-    "public": "Federated timeline",
-    "hashtag": "Hashtags",
+    "public": "Sameiginleg tímalína",
+    "hashtag": "Myllumerki",
     "search": "Leita",
     "lists": "Listar"
   },
   "header_menu": {
     "home": "Heim",
-    "notification": "Notifications",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
-    "follow_requests": "Follow requests",
-    "direct_messages": "Direct messages",
+    "notification": "Tilkynningar",
+    "favourite": "Eftirlæti",
+    "bookmark": "Bókamerki",
+    "follow_requests": "Beiðnir um að fylgjast með",
+    "direct_messages": "Bein skilaboð",
     "local": "Staðvær tímalína",
-    "public": "Federated timeline",
-    "hashtag": "Hashtags",
+    "public": "Sameiginleg tímalína",
+    "hashtag": "Myllumerki",
     "search": "Leita",
     "lists": "Listar",
     "members": "Meðlimir",
@@ -80,9 +80,9 @@
     "general": {
       "title": "Almennt",
       "toot": {
-        "title": "Posts",
+        "title": "Færslur",
         "visibility": {
-          "description": "Default post visibility",
+          "description": "Sjálfgefinn sýnileiki færslna",
           "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "Opinbert",
           "unlisted": "Óskráð",
@@ -130,7 +130,7 @@
       },
       "delete": {
         "title": "Eyða",
-        "confirm": "Are you sure you want to delete this filter?",
+        "confirm": "Ertu viss um að þú viljir eyða þessari síu?",
         "confirm_ok": "Eyða",
         "confirm_cancel": "Hætta við"
       }
@@ -149,9 +149,9 @@
       "timeline": {
         "title": "Tímalína",
         "description": "Customize how your timelines are displayed",
-        "cw": "Always expand posts tagged with content warnings.",
-        "nsfw": "Always show media.",
-        "hideAllAttachments": "Always hide media."
+        "cw": "Alltaf fletta út færslum sem eru með aðvörun vegna efnis.",
+        "nsfw": "Alltaf birta myndefni.",
+        "hideAllAttachments": "Alltaf fela myndefni."
       },
       "other": {
         "title": "Aðrir valkostir",
@@ -164,7 +164,7 @@
     },
     "appearance": {
       "title": "Útlit",
-      "theme_color": "Colour themes",
+      "theme_color": "Litastef",
       "theme": {
         "system": "Kerfis",
         "light": "Ljóst",
@@ -188,7 +188,7 @@
       },
       "font_size": "Leturstærð",
       "font_family": "Leturgerð",
-      "toot_padding": "Padding around posts",
+      "toot_padding": "Fylling í kringum færslur",
       "display_style": {
         "title": "Username display style",
         "display_name_and_username": "Birtingarnafn og notandanafn",
@@ -202,15 +202,15 @@
       }
     },
     "notification": {
-      "title": "Notifications",
+      "title": "Tilkynningar",
       "enable": {
-        "description": "Notify me when I receive...",
-        "reply": "Replies",
-        "reblog": "Boosts",
-        "favourite": "Favourites",
-        "follow": "New followers",
+        "description": "Láta mig vita þegar ég fæ...",
+        "reply": "Svör",
+        "reblog": "Endurbirtingar",
+        "favourite": "Eftirlæti",
+        "follow": "Nýja fylgjendur",
         "reaction": "Emoji reactions",
-        "follow_request": "Follow requests",
+        "follow_request": "Beiðnir um að fylgjast með",
         "status": "Status notifications",
         "poll_vote": "Poll votes",
         "poll_expired": "When a poll expires"
@@ -323,7 +323,7 @@
       "delete": "Eyða",
       "via": "með {{application}}",
       "reply": "Svara",
-      "reblog": "Boost",
+      "reblog": "Endurbirta",
       "fav": "Eftirlæti",
       "detail": "Post details",
       "bookmark": "Bókamerki",
@@ -362,7 +362,7 @@
       "unmute": "Ekki þagga",
       "unblock": "Aflétta útilokun",
       "block": "Útiloka",
-      "toots": "Posts",
+      "toots": "Færslur",
       "follows": "Fylgist með",
       "followers": "Fylgjendur"
     }
@@ -420,7 +420,7 @@
     "preferences_load_error": "Mistókst að hlaða inn kjörstillingum",
     "timeline_fetch_error": "Mistókst að sækja tímalínu",
     "notification_fetch_error": "Mistókst að sækja tilkynningar",
-    "favourite_fetch_error": "Failed to fetch favourite",
+    "favourite_fetch_error": "Mistókst að sækja eftirlæti",
     "bookmark_fetch_error": "Mistókst að sækja bókamerki",
     "follow_request_accept_error": "Mistókst að samþykkja beiðnina",
     "follow_request_reject_error": "Mistókst að hafna beiðninni",
@@ -473,19 +473,19 @@
   },
   "notification": {
     "favourite": {
-      "title": "New favourite",
+      "title": "Nýtt eftirlæti",
       "body": "{{username}} favourited your post"
     },
     "follow": {
-      "title": "New follower",
+      "title": "Nýr fylgjandi",
       "body": "{{username}}  er núna að fylgjast með þér"
     },
     "follow_request": {
-      "title": "New follow request",
-      "body": "Received a follow request from {{username}}"
+      "title": "Ný beiðni um að fylgjast með",
+      "body": "Fékkst fylgjendabeiðni frá {{username}}"
     },
     "reblog": {
-      "title": "New boost",
+      "title": "Ný endurbirting",
       "body": "{{username}} boosted your post"
     },
     "quote": {
@@ -513,11 +513,11 @@
     "title": "New post",
     "cw": "Write your warning here",
     "status": "What's on your mind?",
-    "cancel": "Cancel",
+    "cancel": "Hætta við",
     "toot": "Post",
     "description": "Add alternate text for this media",
     "footer": {
-      "add_image": "Add images",
+      "add_image": "Bæta við myndum",
       "poll": "Add a poll",
       "change_visibility": "Change visibility",
       "change_sensitive": "Mark media as sensitive",
