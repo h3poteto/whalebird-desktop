@@ -124,6 +124,10 @@ export default defineComponent({
     color: var(--theme-primary-color);
   }
 
+  #spellcheck_languages .el-checkbox {
+    color: var(--theme-regular-color);
+  }
+
   .selection {
     margin: 12px 0;
 
