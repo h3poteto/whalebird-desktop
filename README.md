@@ -1,4 +1,4 @@
-# Whalebird
+https://github.com/h3poteto/megalodon/pull/1920# Whalebird
 [![Build](https://github.com/h3poteto/whalebird-desktop/actions/workflows/build.yml/badge.svg)](https://github.com/h3poteto/whalebird-desktop/actions/workflows/build.yml)
 [![GitHub release](http://img.shields.io/github/release/h3poteto/whalebird-desktop.svg)](https://github.com/h3poteto/whalebird-desktop/releases)
 [![Mac App Store](https://img.shields.io/itunes/v/6445864587)](https://apps.apple.com/us/app/whalebird/id6445864587)
@@ -21,7 +21,6 @@ Whalebird is a Fediverse client app for desktop.
 - Supporting
     - Mastodon
     - Pleroma
-    - Misskey
 
 ### Shortcuts
 

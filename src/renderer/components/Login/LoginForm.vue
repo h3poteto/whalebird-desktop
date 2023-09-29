@@ -60,7 +60,7 @@ export default defineComponent({
     const domain = ref<string>('')
     const searching = ref<boolean>(false)
     const allowLogin = computed(() => domain.value && form.domainName == domain.value)
-    const sns = ref<'mastodon' | 'pleroma' | 'misskey'>('mastodon')
+    const sns = ref<'mastodon' | 'pleroma'>('mastodon')
 
     const rules = reactive<FormRules>({
       domainName: [
@@ -119,6 +119,9 @@ export default defineComponent({
             const res = await detector(`https://${cleanDomain}`)
             if (res === 'friendica') {
               throw new Error('Friendica is not supported')
+            }
+            if (res === 'misskey') {
+              throw new Error('Misskey is not supported')
             }
             sns.value = res
             domain.value = cleanDomain

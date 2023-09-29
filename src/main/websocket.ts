@@ -4,7 +4,7 @@ import { LocalAccount } from '~/src/types/localAccount'
 import { LocalServer } from '~src/types/localServer'
 
 const StreamingURL = async (
-  sns: 'mastodon' | 'pleroma' | 'misskey',
+  sns: 'mastodon' | 'pleroma',
   account: LocalAccount,
   server: LocalServer,
   proxy: ProxyConfig | false
@@ -26,7 +26,7 @@ class WebSocket {
   public client: MegalodonInterface
   public listener: WebSocketInterface | null
 
-  constructor(sns: 'mastodon' | 'pleroma' | 'misskey', account: LocalAccount, streamingURL: string, proxy: ProxyConfig | false) {
+  constructor(sns: 'mastodon' | 'pleroma', account: LocalAccount, streamingURL: string, proxy: ProxyConfig | false) {
     const url = streamingURL.replace(/^https:\/\//, 'wss://')
     this.client = generator(sns, url, account.accessToken, 'Whalebird', proxy)
     this.listener = null

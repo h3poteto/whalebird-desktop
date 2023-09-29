@@ -215,9 +215,6 @@ const actions: ActionTree<NotificationsState, RootState> = {
       return
     }
 
-    if (req.server.sns === 'misskey') {
-      return
-    }
     const client = generator(req.server.sns, req.server.baseURL, req.account.accessToken, rootState.App.userAgent)
     const res = await client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
     if (rootState.TimelineSpace.server!.sns === 'pleroma') {
