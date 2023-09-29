@@ -6691,9 +6691,9 @@ humanize-plus@^1.8.1:
   integrity sha512-jaLeQyyzjjINGv7O9JJegjsaUcWjSj/1dcXvLEgU3pGdqCdP1PiC/uwr+saJXhTNBHZtmKnmpXyazgh+eceRxA==
 
 i18next-vue@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/i18next-vue/-/i18next-vue-2.1.1.tgz#acef6865e33d35ad0a515493c6242d3d2ae83207"
-  integrity sha512-1JKLKkd+WxBhbYadTQi2fK0UoWgHimn0dU5XTnpfCur9sQ1oEBKd5sGyF4eu6DyIM1hnPrEdrivT/wLGaueUXg==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/i18next-vue/-/i18next-vue-2.2.1.tgz#409affaabb692cdf9362eab1c0c66f91ab38cae2"
+  integrity sha512-C8iotPy4YhhEDSG1QFzn5zGu8Xkpai5O8UFPS9swELccl3qpbkYwBCi8CfcsUCIIgBX7wUIqsG8f0cViGhqScw==
 
 i18next@^22.4.15:
   version "22.4.15"
