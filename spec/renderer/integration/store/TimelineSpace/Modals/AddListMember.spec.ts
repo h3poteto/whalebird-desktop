@@ -54,7 +54,10 @@ const account: Entity.Account = {
   emojis: [],
   moved: null,
   fields: [],
-  bot: false
+  bot: false,
+  noindex: null,
+  suspended: null,
+  limited: null
 }
 
 const state = (): AddListMemberState => {

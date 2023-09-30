@@ -652,7 +652,7 @@ export default defineComponent({
         return
       }
       try {
-        const result = await client.value.search(word, 'hashtags')
+        const result = await client.value.search(word, { type: 'hashtags' })
         startIndex.value = start
         matchWord.value = word
         filteredSuggestion.value = result.data.hashtags.map(tag => ({ name: `#${tag.name}` }))

@@ -5,7 +5,7 @@ export const insertServer = (
   db: Database,
   baseURL: string,
   domain: string,
-  sns: 'mastodon' | 'pleroma',
+  sns: 'mastodon' | 'pleroma' | 'firefish' | 'friendica',
   accountId: number | null
 ): Promise<LocalServer> => {
   return new Promise((resolve, reject) => {

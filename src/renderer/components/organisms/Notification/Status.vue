@@ -5,11 +5,11 @@
         <font-awesome-icon icon="home" size="sm" />
       </div>
       <div class="action-detail">
-        <span class="bold" @click="openUser(message.account)">
+        <span class="bold" @click="openUser(message.account!)">
           <bdi
             v-html="
               $t('notification.status.body', {
-                username: username(message.account),
+                username: username(message.account!),
                 interpolation: { escapeValue: false }
               })
             "
@@ -17,7 +17,7 @@
         </span>
       </div>
       <div class="action-icon" role="presentation">
-        <FailoverImg :src="message.account.avatar" :alt="`Avatar of ${message.account.username}`" />
+        <FailoverImg :src="message.account!.avatar" :alt="`Avatar of ${message.account!.username}`" />
       </div>
     </div>
     <div class="clearfix"></div>

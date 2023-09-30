@@ -101,7 +101,7 @@ export default defineComponent({
           break
         case 'tag':
           client.value
-            ?.search(`#${query.value}`, 'hashtags', { resolve: true })
+            ?.search(`#${query.value}`, { type: 'hashtags', resolve: true })
             .then(res => {
               tags.value = res.data.hashtags
             })
@@ -115,7 +115,7 @@ export default defineComponent({
           break
         case 'toot':
           client.value
-            ?.search(query.value, 'statuses', { resolve: true })
+            ?.search(query.value, { type: 'statuses', resolve: true })
             .then(res => {
               statuses.value = res.data.statuses
             })

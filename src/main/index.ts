@@ -442,10 +442,7 @@ app.on('activate', () => {
 ipcMain.handle('add-server', async (_: IpcMainInvokeEvent, domain: string) => {
   const proxy = await proxyConfiguration.forMastodon()
   const sns = await detector(`https://${domain}`, proxy)
-  if (sns === 'friendica') {
-    return new Promise((_resolve, reject) => reject('friendica is not supported yet'))
-  }
-  if (sns === 'misskey') {
+  if ((sns as string) === 'misskey') {
     return new Promise((_resolve, reject) => reject('misskey is not supported yet'))
   }
   const server = await insertServer(db, `https://${domain}`, domain, sns, null)
@@ -1126,6 +1123,7 @@ const publicStreamings: { [key: number]: DirectStreaming } = {}
 
 const startUserStreaming = async (account: LocalAccount, server: LocalServer, preferences: Preferences) => {
   const proxy = await proxyConfiguration.forMastodon()
+  if (server.sns === 'friendica') return
   const url = await StreamingURL(server.sns, account, server, proxy)
   userStreamings[account.id] = new UserStreaming(server.sns, account, url, proxy)
   userStreamings[account.id].start(
@@ -1153,6 +1151,7 @@ const startUserStreaming = async (account: LocalAccount, server: LocalServer, pr
 
 const startDirectStreaming = async (account: LocalAccount, server: LocalServer) => {
   const proxy = await proxyConfiguration.forMastodon()
+  if (server.sns === 'friendica') return
   const url = await StreamingURL(server.sns, account, server, proxy)
   directStreamings[account.id] = new DirectStreaming(server.sns, account, url, proxy)
   directStreamings[account.id].start(
@@ -1174,6 +1173,7 @@ const startDirectStreaming = async (account: LocalAccount, server: LocalServer) 
 
 const startLocalStreaming = async (account: LocalAccount, server: LocalServer) => {
   const proxy = await proxyConfiguration.forMastodon()
+  if (server.sns === 'friendica') return
   const url = await StreamingURL(server.sns, account, server, proxy)
   localStreamings[account.id] = new LocalStreaming(server.sns, account, url, proxy)
   localStreamings[account.id].start(
@@ -1195,6 +1195,7 @@ const startLocalStreaming = async (account: LocalAccount, server: LocalServer) =
 
 const startPublicStreaming = async (account: LocalAccount, server: LocalServer) => {
   const proxy = await proxyConfiguration.forMastodon()
+  if (server.sns === 'friendica') return
   const url = await StreamingURL(server.sns, account, server, proxy)
   publicStreamings[account.id] = new PublicStreaming(server.sns, account, url, proxy)
   publicStreamings[account.id].start(
@@ -1271,6 +1272,7 @@ const publishNotification = async (notification: Entity.Notification, accountId:
 }
 
 const createNotification = (notification: Entity.Notification, notifyConfig: Notify): NotificationConstructorOptions | null => {
+  if (!notification.account) return null
   switch (notification.type) {
     case NotificationType.Favourite:
       if (notifyConfig.favourite) {
@@ -1398,6 +1400,7 @@ ipcMain.on('start-list-streaming', async (event: IpcMainEvent, obj: ListStreamin
       listStreamings[accountId].stop()
     }
     const proxy = await proxyConfiguration.forMastodon()
+    if (server.sns === 'friendica') return
     const url = await StreamingURL(server.sns, account, server, proxy)
     listStreamings[accountId] = new ListStreaming(server.sns, account, url, proxy)
     listStreamings[accountId].start(
@@ -1441,6 +1444,7 @@ ipcMain.on('start-tag-streaming', async (event: IpcMainEvent, obj: TagStreamingO
       tagStreamings[accountId].stop()
     }
     const proxy = await proxyConfiguration.forMastodon()
+    if (server.sns === 'friendica') return
     const url = await StreamingURL(server.sns, account, server, proxy)
     tagStreamings[accountId] = new TagStreaming(server.sns, account, url, proxy)
     tagStreamings[accountId].start(
