@@ -85,7 +85,7 @@
         />
         <LinkPreview
           v-if="originalMessage.card && originalMessage.card.type === 'link' && isShowContent"
-          :icon="originalMessage.card.image"
+          :icon="originalMessage.card.image!"
           :title="originalMessage.card.title"
           :description="originalMessage.card.description"
           :url="originalMessage.card.url"

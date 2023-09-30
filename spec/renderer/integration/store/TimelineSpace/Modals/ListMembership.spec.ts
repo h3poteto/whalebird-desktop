@@ -84,22 +84,28 @@ const account: Entity.Account = {
   emojis: [],
   moved: null,
   fields: [],
-  bot: false
+  bot: false,
+  noindex: null,
+  suspended: null,
+  limited: null
 }
 
 const list1: Entity.List = {
   id: '1',
-  title: 'list1'
+  title: 'list1',
+  replies_policy: null
 }
 
 const list2: Entity.List = {
   id: '2',
-  title: 'list2'
+  title: 'list2',
+  replies_policy: null
 }
 
 const list3: Entity.List = {
   id: '3',
-  title: 'list3'
+  title: 'list3',
+  replies_policy: null
 }
 
 let state = (): ListMembershipState => {

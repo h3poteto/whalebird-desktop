@@ -5,7 +5,8 @@ import HeaderMenu, { HeaderMenuState } from '~/src/renderer/store/TimelineSpace/
 
 const list: Entity.List = {
   id: '1',
-  title: 'example'
+  title: 'example',
+  replies_policy: null
 }
 
 const mockClient = {
