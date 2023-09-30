@@ -132,7 +132,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "@vue/compiler-sfc": "^3.3.4",
     "@vue/eslint-config-prettier": "^7.1.0",
-    "@vue/eslint-config-typescript": "^11.0.3",
+    "@vue/eslint-config-typescript": "^12.0.0",
     "all-object-keys": "^2.2.0",
     "assert": "^2.0.0",
     "babel-jest": "^29.5.0",
