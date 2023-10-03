@@ -29,7 +29,7 @@
     "package:win32": "electron-builder --win --ia32 --publish never --config electron-builder.json",
     "package:win64": "electron-builder --win --x64 --publish never --config electron-builder.json",
     "package:pacman": "electron-builder --linux pacman --publish never --config electron-builder.json",
-    "package:appx2": "electron-builder --win --x64 --config electron-builder.json && electron-windows-store --assets .\\build\\icons --input-directory .\\build\\win-unpacked --output-directory .\\build\\appx --package-name Whalebird --package-display-name Whalebird --package-version 5.0.7.0 --publisher-display-name h3poteto --identity-name 45610h3poteto.Whalebird",
+    "package:appx2": "electron-builder --win --x64 --config electron-builder.json && electron-windows-store --assets .\\build\\icons --input-directory .\\build\\win-unpacked --output-directory .\\build\\appx --package-name Whalebird --package-display-name Whalebird --package-version 5.1.0.0 --publisher-display-name h3poteto --identity-name 45610h3poteto.Whalebird",
     "pack": "yarn run pack:main && yarn run pack:renderer",
     "pack:main": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "webpack --node-env=production --mode production --progress --config .electron-vue/webpack.renderer.config.js",
