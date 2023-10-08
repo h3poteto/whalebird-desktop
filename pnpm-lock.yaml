@@ -14,6 +14,9 @@ dependencies:
   flowbite-svelte:
     specifier: ^0.44.17
     version: 0.44.17(svelte@4.2.1)
+  flowbite-svelte-icons:
+    specifier: ^0.4.4
+    version: 0.4.4(svelte@4.2.1)(tailwind-merge@1.14.0)(tailwindcss@3.3.3)
   megalodon:
     specifier: 8.1.3
     version: 8.1.3
@@ -1742,6 +1745,18 @@ packages:
       locate-path: 6.0.0
       path-exists: 4.0.0
     dev: true
+
+  /flowbite-svelte-icons@0.4.4(svelte@4.2.1)(tailwind-merge@1.14.0)(tailwindcss@3.3.3):
+    resolution: {integrity: sha512-fOZri6HYYyo13olXQzvoid19hlYR/HjzQobpzBPkj8QseCJ9R1uWR7bNlhPl5vFCElqcfm3UooYiwT4rKKiqzQ==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0
+      tailwind-merge: ^1.13.2
+      tailwindcss: ^3.3.2
+    dependencies:
+      svelte: 4.2.1
+      tailwind-merge: 1.14.0
+      tailwindcss: 3.3.3
+    dev: false
 
   /flowbite-svelte@0.44.17(svelte@4.2.1):
     resolution: {integrity: sha512-Ig7K/obOQ/6uwR2zkg0NT4u5dvcqAXcM0ZkMWVGBkfCD5refnvGsS2q6lflefN+cFxXaDi9J/Rorgp6KwP9JPw==}

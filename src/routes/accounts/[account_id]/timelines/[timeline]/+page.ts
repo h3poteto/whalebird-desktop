@@ -20,6 +20,11 @@ export async function load({ params }: { params: any }) {
   client = generator(account.sns, account.url, account.access_token, 'Whalebird')
 
   switch (params.timeline as string) {
+    case 'public': {
+      const res = await client.getPublicTimeline()
+      statuses = res.data
+      break
+    }
     case 'local': {
       const res = await client.getLocalTimeline()
       statuses = res.data

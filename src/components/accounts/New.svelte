@@ -23,7 +23,6 @@
     clientSecret = appData.client_secret
     authURL = appData.url
     window.ipcRenderer.invoke('open-browser', authURL)
-    closeFunc()
   }
 
   const authorize = async () => {
@@ -53,7 +52,10 @@
         <span>Domain</span>
         <Input type="text" name="domain" placeholder="mastodon.social" bind:value={domain} required />
       </Label>
-      <Button type="submit" class="w-full1" on:click={checkDomain}>Login</Button>
+      <div class="flex">
+        <Button class="w-1/2 mx-1" color="alternative" on:click={closeFunc}>Cancel</Button>
+        <Button type="submit" class="w-1/2 mx-1" on:click={checkDomain}>Login</Button>
+      </div>
     </form>
   {:else}
     <form class="flex flex-col space-y-6" action="#">
@@ -62,7 +64,10 @@
         <span>Authorization Code</span>
         <Input type="text" name="authorizationCode" bind:value={authorizationCode} required />
       </Label>
-      <Button type="submit" class="w-full1" on:click={authorize}>Authorize</Button>
+      <div class="flex">
+        <Button class="w-1/2 mx-1" color="alternative" on:click={closeFunc}>Cancel</Button>
+        <Button type="submit" class="w-1/2 mx-1" on:click={authorize}>Authorize</Button>
+      </div>
     </form>
   {/if}
 </Modal>

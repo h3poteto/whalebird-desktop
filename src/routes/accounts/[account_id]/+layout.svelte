@@ -4,28 +4,32 @@
   import { onMount } from 'svelte'
   import { page } from '$app/stores'
 
-  export let data
-
   let account: Account | undefined
-  const pages = [
+  $: pages = [
     {
       title: 'Home',
-      path: `/accounts/${data.id}/timelines/home`
+      path: `/accounts/${accountId}/timelines/home`
     },
     {
       title: 'Local',
-      path: `/accounts/${data.id}/timelines/local`
+      path: `/accounts/${accountId}/timelines/local`
     },
     {
       title: 'Public',
-      path: `/accounts/${data.id}/timelines/public`
+      path: `/accounts/${accountId}/timelines/public`
     }
   ]
 
   $: activeUrl = $page.url.pathname
+  $: accountId = $page.params.account_id
+  $: accountId, updateAccount(accountId)
+
+  const updateAccount = async (accountId: string) => {
+    account = await db.accounts.get(parseInt(accountId))
+  }
 
   onMount(async () => {
-    account = await db.accounts.get(parseInt(data.id))
+    account = await db.accounts.get(parseInt(accountId))
   })
 </script>
 
@@ -36,7 +40,7 @@
     nonActiveClass="flex items-center p-2 text-base font-normal text-blue-200 rounded-lg hover:bg-blue-900"
     activeClass="flex items-center p-2 text-base font-normal text-gray-800 bg-blue-400 rounded-lg hover:bg-blue-300"
   >
-    <SidebarWrapper divClass="overflow-y-auto py-4 px-3 bg-blue-950 h-screen">
+    <SidebarWrapper divClass="overflow-y-auto py-4 px-3 bg-blue-950 h-screen w-56">
       <div class="max-w-full pl-4 mt-2 mb-4">
         <p>{account?.username}</p>
         <p>@{account?.domain}</p>

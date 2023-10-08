@@ -16,8 +16,14 @@
     }
   })
 
-  const closeNewAccount = () => {
+  const closeNewAccount = async () => {
     newAccount = false
+    const accounts = await db.accounts.toArray()
+    if (accounts.length === 0) {
+      newAccount = true
+    } else {
+      goto(`/accounts/${accounts[0].id}`)
+    }
   }
 </script>
 
