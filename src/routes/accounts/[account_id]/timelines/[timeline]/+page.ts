@@ -4,7 +4,8 @@ import { browser } from '$app/environment'
 
 export async function load({ params }: { params: any }) {
   let client: MegalodonInterface
-  let statuses: Array<Entity.Status>
+  let statuses: Array<Entity.Status> = []
+  let notifications: Array<Entity.Notification> = []
 
   if (browser) {
     localStorage.setItem(`${params.account_id}_lastTimeline`, params.timeline)
@@ -14,12 +15,18 @@ export async function load({ params }: { params: any }) {
   if (!account)
     return {
       statuses: [],
+      notifications: [],
       client: undefined
     }
 
   client = generator(account.sns, account.url, account.access_token, 'Whalebird')
 
   switch (params.timeline as string) {
+    case 'notifications': {
+      const res = await client.getNotifications()
+      notifications = res.data
+      break
+    }
     case 'public': {
       const res = await client.getPublicTimeline()
       statuses = res.data
@@ -43,6 +50,7 @@ export async function load({ params }: { params: any }) {
     account_id: params.account_id,
     account,
     client,
-    statuses
+    statuses,
+    notifications
   }
 }

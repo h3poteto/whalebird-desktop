@@ -11,6 +11,10 @@
       path: `/accounts/${accountId}/timelines/home`
     },
     {
+      title: 'Notifications',
+      path: `/accounts/${accountId}/timelines/notifications`
+    },
+    {
       title: 'Local',
       path: `/accounts/${accountId}/timelines/local`
     },
