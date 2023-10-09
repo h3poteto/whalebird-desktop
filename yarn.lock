@@ -7209,6 +7209,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==
 
+isomorphic-ws@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-5.0.0.tgz#e5529148912ecb9b451b46ed44d53dae1ce04bbf"
+  integrity sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==
+
 istanbul-lib-coverage@^3.0.0, istanbul-lib-coverage@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-3.2.0.tgz#189e7909d0a39fa5a3dfad5b03f71947770191d3"
@@ -8341,10 +8346,10 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-megalodon@8.1.1:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-8.1.1.tgz#36c254aeca980aa4147cdec68aaae79e25e31056"
-  integrity sha512-K7YjGmRbNkJao2E0hadJCW3IDloufVPUbYA/3+RFDFZvZO5v1MBz3rU4OixIgrHHY74PVTkSU8YHzyv7KA4rhA==
+megalodon@8.1.4:
+  version "8.1.4"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-8.1.4.tgz#bf660307f964a77306a9a443dc1b318382ebe909"
+  integrity sha512-9XYogBMY/Fc01QedqKRwFB/VrxfARYAEk4BCEK7/iU9iN39JN0ioA927KpwmLghShSiKYupFwnYcCb/a/IkO5A==
   dependencies:
     "@types/oauth" "^0.9.2"
     "@types/ws" "^8.5.5"
@@ -8352,6 +8357,7 @@ megalodon@8.1.1:
     dayjs "^1.11.10"
     form-data "^4.0.0"
     https-proxy-agent "^7.0.2"
+    isomorphic-ws "^5.0.0"
     oauth "^0.10.0"
     object-assign-deep "^0.4.0"
     parse-link-header "^2.0.0"
