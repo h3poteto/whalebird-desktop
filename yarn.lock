@@ -6717,10 +6717,10 @@ humanize-plus@^1.8.1:
   resolved "https://registry.yarnpkg.com/humanize-plus/-/humanize-plus-1.8.2.tgz#a65b34459ad6367adbb3707a82a3c9f916167030"
   integrity sha512-jaLeQyyzjjINGv7O9JJegjsaUcWjSj/1dcXvLEgU3pGdqCdP1PiC/uwr+saJXhTNBHZtmKnmpXyazgh+eceRxA==
 
-i18next-vue@^2.1.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/i18next-vue/-/i18next-vue-2.2.1.tgz#409affaabb692cdf9362eab1c0c66f91ab38cae2"
-  integrity sha512-C8iotPy4YhhEDSG1QFzn5zGu8Xkpai5O8UFPS9swELccl3qpbkYwBCi8CfcsUCIIgBX7wUIqsG8f0cViGhqScw==
+i18next-vue@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/i18next-vue/-/i18next-vue-3.0.0.tgz#2ea9fde287a83ed7b0f3ddd3abe125ae4b270fe8"
+  integrity sha512-YGsrJa6IXq9VcaE2Ot5we8Zb4hLjzzdqd6HZORsWNVFNXK82nZ0BAC/bavkF1kpj+aD1dxz8KWRAtOe6LuI7Fw==
 
 i18next@^23.0.0:
   version "23.5.1"
