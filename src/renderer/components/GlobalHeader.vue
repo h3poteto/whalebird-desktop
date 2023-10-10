@@ -93,14 +93,13 @@ export default defineComponent({
 .account-menu :deep(.el-menu-item) {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
   padding: 0 !important;
 }
 
 #global_header {
   .account-menu {
     height: 100%;
-    padding-top: 24px;
+    padding-top: 12px;
     border: 0;
 
     .avatar {
@@ -115,7 +114,8 @@ export default defineComponent({
       height: 18px;
       mix-blend-mode: overlay;
       vertical-align: bottom;
-      margin-left: -18px;
+      margin-left: -16px;
+      margin-bottom: -24px;
     }
 
     .is-active {

@@ -88,7 +88,7 @@ body,
     color: #409eff;
   }
 
-  --toot-padding: 8px;
+  --toot-padding: 4px;
   --base-font-size: 14px;
 
   font-size: var(--base-font-size);
@@ -138,8 +138,12 @@ body,
   }
 }
 
+p:first-child, p:last-child {
+  margin: 0;
+}
+
 p {
-  margin: 8px 0;
+  margin: 5px 0px;
 }
 
 .clearfix::after {

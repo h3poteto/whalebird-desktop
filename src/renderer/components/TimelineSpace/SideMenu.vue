@@ -421,7 +421,7 @@ export default defineComponent({
 #side_menu {
   .profile-wrapper {
     background-color: var(--theme-side-menu-color);
-    width: 180px;
+    width: 200px;
     height: 82px;
     font-size: 16px;
     display: flex;
@@ -517,7 +517,7 @@ export default defineComponent({
 
   .timeline-menu {
     height: calc(100% - 82px);
-    width: 180px;
+    width: 200px;
     border: none;
     overflow-x: hidden;
 
@@ -540,11 +540,16 @@ export default defineComponent({
     .menu-item {
       display: flex;
       align-items: center;
+      height: 44px;
 
       .menu-item-icon {
         text-align: center;
-        padding-right: 2px;
+        padding-right: 6px;
         width: 18px;
+
+        svg {
+          width: var(--fa-fw-width, 1.25em);
+        }
       }
     }
 

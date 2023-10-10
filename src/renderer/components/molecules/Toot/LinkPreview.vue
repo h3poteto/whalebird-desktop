@@ -54,7 +54,7 @@ export default defineComponent({
   display: flex;
   border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   border: 1px solid var(--theme-selected-background-color);
   cursor: pointer;
 
@@ -83,7 +83,7 @@ export default defineComponent({
   .contents {
     box-sizing: border-box;
     height: 60px;
-    padding: 4px 0 0 10px;
+    padding: 8px 11px;
     color: var(--theme-secondary-color);
     overflow: hidden;
 

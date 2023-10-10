@@ -9,3 +9,35 @@
 		url("./NotoSans-Regular.ttf") format("truetype");
 }
 
+/* === Noto Sans - bold */
+@font-face {
+	font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 700;
+	src: url("./NotoSans-Bold.ttf");
+	src: local("Noto Sans Bold"),
+		local("NotoSans-Bold"),
+		url("./NotoSans-Bold.ttf") format("truetype");
+}
+
+/* === Noto Sans - bold italic */
+@font-face {
+	font-family: 'Noto Sans';
+	font-style: italic;
+	font-weight: 700;
+	src: url("./NotoSans-BoldItalic.ttf");
+	src: local("Noto Sans BoldItalic"),
+		local("NotoSans-BoldItalic"),
+		url("./NotoSans-BoldItalic.ttf") format("truetype");
+}
+
+/* === Noto Sans - italic */
+@font-face {
+	font-family: 'Noto Sans';
+	font-style: italic;
+	font-weight: 400;
+	src: url("./NotoSans-Italic.ttf");
+	src: local("Noto Sans Italic"),
+		local("NotoSans-Italic"),
+		url("./NotoSans-Italic.ttf") format("truetype");
+}

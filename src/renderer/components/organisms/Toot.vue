@@ -756,7 +756,7 @@ export default defineComponent({
 }
 
 .toot {
-  padding: 8px 0 0 16px;
+  padding: 8px 0 5px 16px;
   position: relative;
 
   .fa-icon {
@@ -771,6 +771,7 @@ export default defineComponent({
     float: left;
 
     img {
+      margin-top: 3px;
       width: 36px;
       height: 36px;
       border-radius: 4px;
@@ -788,7 +789,7 @@ export default defineComponent({
     .reblogger-icon {
       width: 16px;
       height: 16px;
-      margin: 0 4px;
+      margin-right: 8px;
 
       img {
         width: 16px;
@@ -865,8 +866,9 @@ export default defineComponent({
         }
 
         .display-name :deep(.emojione) {
-          max-width: 14px;
-          max-height: 14px;
+          max-width: 16px;
+          max-height: 16px;
+          vertical-align: sub;
         }
 
         .acct {
@@ -966,9 +968,13 @@ export default defineComponent({
 
       button {
         display: block;
-        padding: 4px 8px;
+        padding: 4px 12px;
         margin: 0;
         color: #909399;
+      }
+
+      button:first-child {
+        padding-left: 0px;
       }
 
       .reblogged {
