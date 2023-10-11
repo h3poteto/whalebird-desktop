@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   dexie:
     specifier: 4.0.1-alpha.25
     version: 4.0.1-alpha.25

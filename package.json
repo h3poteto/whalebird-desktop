@@ -30,6 +30,7 @@
   "type": "module",
   "main": "main.cjs",
   "dependencies": {
+    "dayjs": "^1.11.10",
     "dexie": "4.0.1-alpha.25",
     "flowbite": "^1.8.1",
     "flowbite-svelte": "^0.44.17",
