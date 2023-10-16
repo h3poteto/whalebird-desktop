@@ -35,7 +35,7 @@
     },
     "help": {
       "name": "Aiuto",
-      "thirdparty": "Thirdparty licenses"
+      "thirdparty": "Licenze di terze parti"
     }
   },
   "global_header": {
@@ -306,7 +306,7 @@
       "ok": "Segnala"
     },
     "thirdparty": {
-      "title": "Thirdparty licenses"
+      "title": "Licenze di terze parti"
     }
   },
   "cards": {
