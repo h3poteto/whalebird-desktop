@@ -6,6 +6,7 @@
   import { Avatar } from 'flowbite-svelte'
   import { PlusSolid } from 'flowbite-svelte-icons'
   import New from '../components/accounts/New.svelte'
+  import NavAccount from '@/components/navigation/Account.svelte'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
 
@@ -31,6 +32,12 @@
       goto(`/accounts/${id}`)
     }
   }
+
+  const removeAccount = async (id: number | undefined) => {
+    if (!id) return
+    await db.accounts.delete(id)
+    accounts = await db.accounts.toArray()
+  }
 </script>
 
 <div class="app">
@@ -42,11 +49,7 @@
             <Avatar src={account.avatar} size="md" class="mx-auto" />
           </div>
         {:else}
-          <div class="bg-gray-900 py-2 w-16 cursor-pointer">
-            <button class="mx-auto w-16" on:click={() => openAccount(account.id)}>
-              <Avatar src={account.avatar} size="md" class="mx-auto" />
-            </button>
-          </div>
+          <NavAccount {account} {openAccount} {removeAccount} />
         {/if}
       {/each}
       <div class="text-gray-400 my-auto w-16 cursor-pointer">
