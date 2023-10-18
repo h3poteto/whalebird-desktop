@@ -7,27 +7,29 @@
 </script>
 
 {#if notification.account}
-  <div class="flex items-center">
-    <div class="ml-2">
-      <UserSolid class="text-cyan-500 mr-2 ml-auto" strokeWidth="1" size="sm" />
+  <div class="border-b">
+    <div class="flex items-center">
+      <div class="ml-2">
+        <UserSolid class="text-cyan-500 mr-2 ml-auto" strokeWidth="1" size="sm" />
+      </div>
+      <div class="text-gray-600">{notification.account.username} followed you</div>
     </div>
-    <div class="text-gray-600">{notification.account.username} followed you</div>
-  </div>
-  <div class="flex">
-    <div class="avatar m-2">
-      <Avatar src={notification.account.avatar} rounded />
-    </div>
-    <div class="body">
-      <div class="flex">
-        <div class="text-gray-800 mr-1">
-          {notification.account.display_name}
+    <div class="flex">
+      <div class="avatar p-2">
+        <Avatar src={notification.account.avatar} rounded />
+      </div>
+      <div class="body">
+        <div class="flex">
+          <div class="text-gray-800 mr-1">
+            {notification.account.display_name}
+          </div>
+          <div>
+            @{notification.account.acct}
+          </div>
         </div>
         <div>
-          @{notification.account.acct}
+          {notification.account.followers_count} followers
         </div>
-      </div>
-      <div>
-        {notification.account.followers_count} followers
       </div>
     </div>
   </div>
