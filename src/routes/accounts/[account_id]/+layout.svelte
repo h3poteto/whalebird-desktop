@@ -3,6 +3,8 @@
   import { Sidebar, SidebarItem, SidebarWrapper, SidebarGroup } from 'flowbite-svelte'
   import { onMount } from 'svelte'
   import { page } from '$app/stores'
+  import generator, { type WebSocketInterface, type Entity } from 'megalodon'
+  import { generateNotification } from '@/components/utils/generateNotification'
 
   let account: Account | undefined
   $: pages = [
@@ -27,9 +29,22 @@
   $: activeUrl = $page.url.pathname
   $: accountId = $page.params.account_id
   $: accountId, updateAccount(accountId)
+  let stream: WebSocketInterface | null = null
 
   const updateAccount = async (accountId: string) => {
     account = await db.accounts.get(parseInt(accountId))
+    if (!account) return
+    const c = generator(account.sns, account.url, account.access_token, 'Whalebird')
+    const instance = await c.getInstance()
+    if (!instance.data.urls?.streaming_api) return
+    const client = generator(account.sns, instance.data.urls.streaming_api, account.access_token, 'Whalebird')
+    stream = client.userSocket()
+    stream.on('notification', async (notification: Entity.Notification) => {
+      const [title, body] = generateNotification(notification)
+      if (title.length > 0) {
+        new Notification(title, { body })
+      }
+    })
   }
 
   onMount(async () => {
