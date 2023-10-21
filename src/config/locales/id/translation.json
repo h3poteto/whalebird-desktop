@@ -3,13 +3,13 @@
     "application": {
       "name": "Whalebird",
       "about": "Tentang Whalebird",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "Preferensi",
+      "shortcuts": "Pintasan papan ketik",
       "services": "Layanan",
       "hide": "Sembunyikan Whalebird",
-      "hide_others": "Hide others",
-      "show_all": "Show all",
-      "open": "Open window",
+      "hide_others": "Sembunyikan lainnya",
+      "show_all": "Tampilkan semua",
+      "open": "Buka jendela",
       "quit": "Keluar"
     },
     "edit": {
@@ -23,10 +23,10 @@
     },
     "view": {
       "name": "Tampilan",
-      "toggle_full_screen": "Toggle full screen"
+      "toggle_full_screen": "Beralih ke layar penuh"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "Selalu tampilkan bilah menu",
       "name": "Jendela",
       "close": "Tutup jendela",
       "open": "Buka jendela",
@@ -34,7 +34,7 @@
       "jump_to": "Lompat ke"
     },
     "help": {
-      "name": "Help",
+      "name": "Bantuan",
       "thirdparty": "Thirdparty licenses"
     }
   },
