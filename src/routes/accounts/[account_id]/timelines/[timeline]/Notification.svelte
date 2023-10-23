@@ -7,6 +7,7 @@
   import Notification from '@/components/notifications/Notification.svelte'
   import { onMount } from 'svelte'
   import { onNavigate } from '$app/navigation'
+  import { _ } from 'svelte-i18n'
 
   export let account: Account | undefined
   export let notifications: Array<Entity.Notification>
@@ -71,10 +72,15 @@
 
 <section class="h-full notification-wrapper">
   <div class="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
-    <div class="text-lg font-bold">Notifications</div>
+    <div class="text-lg font-bold">{$_('timeline.notifications')}</div>
     <div class="w-64 text-xs">
       <form>
-        <Input type="text" placeholder="Search" class="px-4 py-1 bg-blue-800 border-0 text-blue-100 placeholder:text-blue-300" disabled />
+        <Input
+          type="text"
+          placeholder={$_('search.title')}
+          class="px-4 py-1 bg-blue-800 border-0 text-blue-100 placeholder:text-blue-300"
+          disabled
+        />
       </form>
     </div>
   </div>

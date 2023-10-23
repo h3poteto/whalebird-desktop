@@ -5,23 +5,24 @@
   import { page } from '$app/stores'
   import generator, { type WebSocketInterface, type Entity } from 'megalodon'
   import { generateNotification } from '@/components/utils/generateNotification'
+  import { _ } from 'svelte-i18n'
 
   let account: Account | undefined
   $: pages = [
     {
-      title: 'Home',
+      title: $_('timeline.home'),
       path: `/accounts/${accountId}/timelines/home`
     },
     {
-      title: 'Notifications',
+      title: $_('timeline.notifications'),
       path: `/accounts/${accountId}/timelines/notifications`
     },
     {
-      title: 'Local',
+      title: $_('timeline.local'),
       path: `/accounts/${accountId}/timelines/local`
     },
     {
-      title: 'Public',
+      title: $_('timeline.public'),
       path: `/accounts/${accountId}/timelines/public`
     }
   ]
@@ -40,7 +41,7 @@
     const client = generator(account.sns, instance.data.urls.streaming_api, account.access_token, 'Whalebird')
     stream = client.userSocket()
     stream.on('notification', async (notification: Entity.Notification) => {
-      const [title, body] = generateNotification(notification)
+      const [title, body] = generateNotification(notification, $_)
       if (title.length > 0) {
         new Notification(title, { body })
       }

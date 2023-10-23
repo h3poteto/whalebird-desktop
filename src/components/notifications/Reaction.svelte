@@ -6,6 +6,7 @@
   import { StarSolid, ArrowsRepeatSolid, BarsSolid, HomeSolid, PenSolid } from 'flowbite-svelte-icons'
   import Card from '../statuses/Card.svelte'
   import Attachments from '../statuses/Attachments.svelte'
+  import { _ } from 'svelte-i18n'
 
   export let notification: Entity.Notification
 </script>
@@ -18,14 +19,14 @@
           <StarSolid class="text-amber-500 mr-2 ml-auto" size="sm" />
         </div>
         <div class="text-gray-600">
-          {notification.account.username} favourited your post
+          {$_('notifications.favourite', { values: { user: notification.account.username } })}
         </div>
       {:else if notification.type === 'reblog' || notification.type === 'quote'}
         <div class="ml-2">
           <ArrowsRepeatSolid class="text-blue-500 mr-2 ml-auto" size="sm" />
         </div>
         <div class="text-gray-600">
-          {notification.account.username} boosted your post
+          {$_('notifications.reblog', { values: { user: notification.account.username } })}
         </div>
       {:else if notification.type === 'poll_expired' || notification.type === 'poll_vote'}
         <div class="ml-2">
@@ -33,9 +34,9 @@
         </div>
         <div class="text-gray-600">
           {#if notification.type === 'poll_expired'}
-            poll is expired
+            {$_('notifications.poll_expired', { values: { user: notification.account.username } })}
           {:else}
-            voted your poll
+            {$_('notifications.poll_vote', { values: { user: notification.account.username } })}
           {/if}
         </div>
       {:else if notification.type === 'status'}
@@ -43,14 +44,14 @@
           <HomeSolid class="mr-2 ml-auto" size="sm" />
         </div>
         <div class="text-gray-600">
-          {notification.account.username} just post
+          {$_('notifications.status', { values: { user: notification.account.username } })}
         </div>
       {:else if notification.type === 'update'}
         <div class="ml-2">
           <PenSolid class="text-amber-500 mr-2 ml-auto" size="sm" />
         </div>
         <div class="text-gray-600">
-          {notification.account.username} update the post
+          {$_('notifications.update', { values: { user: notification.account.username } })}
         </div>
       {:else if notification.type === 'emoji_reaction'}
         <div class="ml-2">
@@ -59,7 +60,7 @@
           </span>
         </div>
         <div class="text-gray-600">
-          {notification.account.username} react your post
+          {$_('notifications.reaction', { values: { user: notification.account.username } })}
         </div>
       {/if}
     </div>
@@ -71,13 +72,13 @@
         <div class="header flex justify-between">
           <div class="account-name flex">
             <span class="text-gray-600 text-ellipsis break-all overflow-hidden">
-              {@html emojify(notification.account.display_name, notification.account.emojis)}</span
+              {@html emojify(notification.status.account.display_name, notification.status.account.emojis)}</span
             >
-            <span class="text-gray-600 text-ellipsis break-all overflow-hidden">@{notification.account.acct}</span>
+            <span class="text-gray-600 text-ellipsis break-all overflow-hidden">@{notification.status.account.acct}</span>
           </div>
           <div class="date text-gray-600 text-right">
-            <time datetime={notification.created_at}>
-              {dayjs(notification.created_at).format('YYYY-MM-DD HH:mm:ss')}
+            <time datetime={notification.status.created_at}>
+              {dayjs(notification.status.created_at).format('YYYY-MM-DD HH:mm:ss')}
             </time>
           </div>
         </div>

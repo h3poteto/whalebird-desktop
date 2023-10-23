@@ -1,0 +1,37 @@
+{
+  "servers": {
+    "new": {
+      "domain": "Domain",
+      "cancel": "Cancel",
+      "login": "Login",
+      "description": "Please approve in your browser",
+      "authorization_code": "Authorization Code",
+      "authorize": "Authorize"
+    }
+  },
+  "navigation": {
+    "remove": "Remove"
+  },
+  "timeline": {
+    "home": "Home",
+    "notifications": "Notifications",
+    "local": "Local",
+    "public": "Public"
+  },
+  "notifications": {
+    "follow": "{user} followed you",
+    "follow_request": "{user} requested to follow you",
+    "favourite": "{user} favourited your post",
+    "reblog": "{user} boosted your post",
+    "poll_expired": "{user}'s poll is expired",
+    "poll_vote": "{user}'s voted your poll",
+    "quote": "{user} quoted your post",
+    "status": "{user} just post",
+    "update": "{user} updated the post",
+    "reaction": "{user} reacted your post",
+    "move": "{user} migrated to"
+  },
+  "search": {
+    "title": "Search"
+  }
+}

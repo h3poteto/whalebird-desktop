@@ -6,6 +6,7 @@
   import generator, { type WebSocketInterface, type Entity, type MegalodonInterface } from 'megalodon'
   import { onNavigate } from '$app/navigation'
   import type { Account } from '@/db'
+  import { _ } from 'svelte-i18n'
 
   export let timeline: string
   export let account: Account | undefined
@@ -117,11 +118,16 @@
 <section class="h-full timeline-wrapper">
   <div class="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
     <div class="text-lg font-bold">
-      {timeline}
+      {$_(`timeline.${timeline}`)}
     </div>
     <div class="w-64 text-xs">
       <form>
-        <Input type="text" placeholder="Search" class="px-4 py-1 bg-blue-800 border-0 text-blue-100 placeholder:text-blue-300" disabled />
+        <Input
+          type="text"
+          placeholder={$_('search.title')}
+          class="px-4 py-1 bg-blue-800 border-0 text-blue-100 placeholder:text-blue-300"
+          disabled
+        />
       </form>
     </div>
   </div>

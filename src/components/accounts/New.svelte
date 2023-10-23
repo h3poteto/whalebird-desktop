@@ -2,6 +2,7 @@
   import { Button, Modal, Label, Input } from 'flowbite-svelte'
   import generator, { detector, type MegalodonInterface } from 'megalodon'
   import { db } from '../../db'
+  import { _ } from 'svelte-i18n'
 
   export let opened: boolean
   export let closeFunc: () => void
@@ -49,24 +50,24 @@
   {#if sns === undefined}
     <form class="flex flex-col space-y-6" action="#">
       <Label class="space-y-2">
-        <span>Domain</span>
+        <span>{$_('servers.new.domain')}</span>
         <Input type="text" name="domain" placeholder="mastodon.social" bind:value={domain} required />
       </Label>
       <div class="flex">
-        <Button class="w-1/2 mx-1" color="alternative" on:click={closeFunc}>Cancel</Button>
-        <Button type="submit" class="w-1/2 mx-1" on:click={checkDomain}>Login</Button>
+        <Button class="w-1/2 mx-1" color="alternative" on:click={closeFunc}>{$_('servers.new.cancel')}</Button>
+        <Button type="submit" class="w-1/2 mx-1" on:click={checkDomain}>{$_('servers.new.login')}</Button>
       </div>
     </form>
   {:else}
     <form class="flex flex-col space-y-6" action="#">
-      <p>Please approve in your browser</p>
+      <p>{$_('servers.new.description')}</p>
       <Label class="space-y-2">
-        <span>Authorization Code</span>
+        <span>{$_('servers.new.authorization_code')}</span>
         <Input type="text" name="authorizationCode" bind:value={authorizationCode} required />
       </Label>
       <div class="flex">
-        <Button class="w-1/2 mx-1" color="alternative" on:click={closeFunc}>Cancel</Button>
-        <Button type="submit" class="w-1/2 mx-1" on:click={authorize}>Authorize</Button>
+        <Button class="w-1/2 mx-1" color="alternative" on:click={closeFunc}>{$_('servers.new.cancel')}</Button>
+        <Button type="submit" class="w-1/2 mx-1" on:click={authorize}>{$_('servers.new.authorize')}</Button>
       </div>
     </form>
   {/if}

@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Account } from '@/db'
   import { Avatar, Dropdown, DropdownItem } from 'flowbite-svelte'
+  import { _ } from 'svelte-i18n'
 
   export let account: Account
   export let openAccount: (id: number | undefined) => void
@@ -33,6 +34,8 @@
   </button>
   <div id="dummy"></div>
   <Dropdown bind:open triggeredBy="#dummy" placement="right" containerClass="bg-indigo-900 shadow shadow-indigo-950">
-    <DropdownItem defaultClass="font-medium py-2 px-4 text-gray-200 text-sm hover:bg-indigo-700" on:click={remove}>Remove</DropdownItem>
+    <DropdownItem defaultClass="font-medium py-2 px-4 text-gray-200 text-sm hover:bg-indigo-700" on:click={remove}
+      >{$_('navigation.remove')}</DropdownItem
+    >
   </Dropdown>
 </div>
