@@ -11,7 +11,7 @@
 
   export let account: Account | undefined
   export let notifications: Array<Entity.Notification>
-  export let client: MegalodonInterface | undefined
+  export let client: MegalodonInterface
   let list: VirtualScroll
   let stream: WebSocketInterface | null = null
   let unreadNotifications: Array<Entity.Notification> = []
@@ -68,6 +68,25 @@
     const res = await client.getNotifications(options)
     return res.data
   }
+
+  const updateStatus = async (id: string) => {
+    if (!client) return
+    const res = await client.getStatus(id)
+    const status = res.data
+    const renew = notifications.map(n => {
+      if (n.status === undefined || n.status === null) {
+        return n
+      }
+      if (n.status.id === status.id) {
+        return Object.assign({}, n, { status })
+      } else if (n.status.reblog && n.status.reblog.id === status.id) {
+        const s = Object.assign({}, n.status, { reblog: status })
+        return Object.assign({}, n, { status: s })
+      }
+      return n
+    })
+    notifications = renew
+  }
 </script>
 
 <section class="h-full notification-wrapper">
@@ -96,7 +115,7 @@
         start={0}
         pageMode={false}
       >
-        <Notification notification={data} />
+        <Notification notification={data} {updateStatus} {client} />
       </VirtualScroll>
     </div>
   </div>

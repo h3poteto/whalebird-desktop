@@ -1,12 +1,15 @@
 <script lang="ts">
   import { Avatar } from 'flowbite-svelte'
-  import type { Entity } from 'megalodon'
+  import type { Entity, MegalodonInterface } from 'megalodon'
   import dayjs from 'dayjs'
   import emojify from '@/components/utils/emojify'
   import Card from './Card.svelte'
   import Attachments from './Attachments.svelte'
+  import Poll from './Poll.svelte'
 
   export let status: Entity.Status
+  export let client: MegalodonInterface
+  export let onRefresh: (id: string) => void
   $: originalStatus = status.reblog && !status.quote ? status.reblog : status
 </script>
 
@@ -42,6 +45,9 @@
       <div class="body text-gray-950 break-all overflow-hidden">
         {@html emojify(originalStatus.content, originalStatus.emojis)}
       </div>
+      {#if originalStatus.poll}
+        <Poll poll={originalStatus.poll} onRefresh={() => onRefresh(status.id)} {client} />
+      {/if}
       {#if originalStatus.card}
         <Card card={originalStatus.card} />
       {/if}

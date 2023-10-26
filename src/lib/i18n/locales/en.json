@@ -16,7 +16,13 @@
     "home": "Home",
     "notifications": "Notifications",
     "local": "Local",
-    "public": "Public"
+    "public": "Public",
+    "poll": {
+      "refresh": "Refresh",
+      "people": "{count} people",
+      "closed": "Closed",
+      "vote": "Vote"
+    }
   },
   "notifications": {
     "follow": "{user} followed you",

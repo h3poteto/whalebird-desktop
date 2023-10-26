@@ -11,7 +11,7 @@
   export let timeline: string
   export let account: Account | undefined
   export let statuses: Array<Entity.Status>
-  export let client: MegalodonInterface | undefined
+  export let client: MegalodonInterface
   let list: VirtualScroll
   let stream: WebSocketInterface | null = null
   let unreadStatuses: Array<Entity.Status> = []
@@ -113,6 +113,26 @@
         return []
     }
   }
+
+  const onRefresh = async (id: string) => {
+    if (!client) return
+    const res = await client.getStatus(id)
+    const status = res.data
+    const renew = statuses.map(s => {
+      if (s.id === status.id) {
+        return status
+      } else if (s.reblog && s.reblog.id === status.id) {
+        return Object.assign({}, s, { reblog: status })
+      } else if (status.reblog && s.id === status.reblog.id) {
+        return status.reblog
+      } else if (status.reblog && s.reblog && s.reblog.id === status.reblog.id) {
+        return Object.assign({}, s, { reblog: status.reblog })
+      } else {
+        return s
+      }
+    })
+    statuses = renew
+  }
 </script>
 
 <section class="h-full timeline-wrapper">
@@ -143,7 +163,7 @@
         start={0}
         pageMode={false}
       >
-        <Status status={data} />
+        <Status status={data} {onRefresh} {client} />
       </VirtualScroll>
     </div>
   </div>

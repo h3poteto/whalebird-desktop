@@ -1,14 +1,17 @@
 <script lang="ts">
   import { Avatar } from 'flowbite-svelte'
   import dayjs from 'dayjs'
-  import type { Entity } from 'megalodon'
+  import type { Entity, MegalodonInterface } from 'megalodon'
   import emojify from '@/components/utils/emojify'
   import { StarSolid, ArrowsRepeatSolid, BarsSolid, HomeSolid, PenSolid } from 'flowbite-svelte-icons'
   import Card from '../statuses/Card.svelte'
   import Attachments from '../statuses/Attachments.svelte'
+  import Poll from '../statuses/Poll.svelte'
   import { _ } from 'svelte-i18n'
 
   export let notification: Entity.Notification
+  export let client: MegalodonInterface
+  export let updateStatus: (id: string) => void
 </script>
 
 {#if notification.account && notification.status}
@@ -85,6 +88,9 @@
         <div class="body text-gray-600 break-all overflow-hidden">
           {@html emojify(notification.status.content, notification.status.emojis)}
         </div>
+        {#if notification.status.poll}
+          <Poll poll={notification.status.poll} onRefresh={() => notification.status && updateStatus(notification.status.id)} {client} />
+        {/if}
         {#if notification.status.card}
           <Card card={notification.status.card} />
         {/if}
