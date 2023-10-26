@@ -6,22 +6,27 @@
   import generator, { type WebSocketInterface, type Entity } from 'megalodon'
   import { generateNotification } from '@/components/utils/generateNotification'
   import { _ } from 'svelte-i18n'
+  import { BellSolid, GlobeSolid, HomeSolid, UsersSolid } from 'flowbite-svelte-icons'
 
   let account: Account | undefined
   $: pages = [
     {
+      id: 'home',
       title: $_('timeline.home'),
       path: `/accounts/${accountId}/timelines/home`
     },
     {
+      id: 'notifications',
       title: $_('timeline.notifications'),
       path: `/accounts/${accountId}/timelines/notifications`
     },
     {
+      id: 'local',
       title: $_('timeline.local'),
       path: `/accounts/${accountId}/timelines/local`
     },
     {
+      id: 'public',
       title: $_('timeline.public'),
       path: `/accounts/${accountId}/timelines/public`
     }
@@ -66,8 +71,20 @@
         <p>@{account?.domain}</p>
       </div>
       <SidebarGroup>
-        {#each pages as { title, path }}
-          <SidebarItem label={title} href={path} />
+        {#each pages as { id, title, path }}
+          <SidebarItem label={title} href={path}>
+            <svelte:fragment slot="icon">
+              {#if id === 'home'}
+                <HomeSolid size="sm" />
+              {:else if id === 'notifications'}
+                <BellSolid size="sm" />
+              {:else if id === 'local'}
+                <UsersSolid size="sm" />
+              {:else if id === 'public'}
+                <GlobeSolid size="sm" />
+              {/if}
+            </svelte:fragment>
+          </SidebarItem>
         {/each}
       </SidebarGroup>
     </SidebarWrapper>

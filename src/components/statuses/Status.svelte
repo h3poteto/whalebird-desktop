@@ -6,6 +6,7 @@
   import Card from './Card.svelte'
   import Attachments from './Attachments.svelte'
   import Poll from './Poll.svelte'
+  import Actions from './Actions.svelte'
 
   export let status: Entity.Status
   export let client: MegalodonInterface
@@ -54,6 +55,7 @@
       {#if originalStatus.media_attachments.length > 0}
         <Attachments attachments={originalStatus.media_attachments} />
       {/if}
+      <Actions />
     </div>
   </div>
 </div>
