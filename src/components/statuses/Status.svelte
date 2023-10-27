@@ -55,7 +55,7 @@
       {#if originalStatus.media_attachments.length > 0}
         <Attachments attachments={originalStatus.media_attachments} />
       {/if}
-      <Actions />
+      <Actions {client} {status} onRefresh={() => onRefresh(status.id)} />
     </div>
   </div>
 </div>

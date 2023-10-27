@@ -22,6 +22,9 @@
       "people": "{count} people",
       "closed": "Closed",
       "vote": "Vote"
+    },
+    "actions": {
+      "open_in_browser": "Open in browser"
     }
   },
   "notifications": {
