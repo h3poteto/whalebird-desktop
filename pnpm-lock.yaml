@@ -24,8 +24,8 @@ dependencies:
     specifier: ^9.0.5
     version: 9.0.5
   megalodon:
-    specifier: 8.1.5
-    version: 8.1.5
+    specifier: 9.0.1
+    version: 9.0.1
   svelte-i18n:
     specifier: ^4.0.0
     version: 4.0.0(svelte@4.2.1)
@@ -901,7 +901,12 @@ packages:
 
   /@types/node@20.8.0:
     resolution: {integrity: sha512-LzcWltT83s1bthcvjBmiBvGJiiUe84NWRHkw+ZV6Fr41z2FbIzvc815dk2nQ3RAKMuN2fkenM/z3Xv2QzEpYxQ==}
-    dev: true
+
+  /@types/oauth@0.9.3:
+    resolution: {integrity: sha512-avZiwxSz/WS6EaEjhchzXKgWtlGGYGnEVJoHuQuDLHf7gIW1Gmm9eIxOMuJ6umQNNKZkJ3Uy+C/rLzEvL3I8Sw==}
+    dependencies:
+      '@types/node': 20.8.0
+    dev: false
 
   /@types/plist@3.0.3:
     resolution: {integrity: sha512-DXkBoKc7jwUR0p439icInmXXMJNhoImdpOrrgA5/nDFK7LVtcJ9MyQNKhJEKpEztnHGWnNWMWLOIR62By0Ln0A==}
@@ -923,6 +928,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@types/ws@8.5.8:
+    resolution: {integrity: sha512-flUksGIQCnJd6sZ1l5dqCEG/ksaoAg/eUwiLAGTJQcfgvZJKF++Ta4bJA6A5aPSJmsr+xlseHn4KLgVlNnvPTg==}
+    dependencies:
+      '@types/node': 20.8.0
+    dev: false
 
   /@types/yauzl@2.10.1:
     resolution: {integrity: sha512-CHzgNU3qYBnp/O4S3yv2tXPlvMTq0YWSTVg2/JYLqWZGHwwgJGAwd00poay/11asPq8wLFwHzubyInqHIFmmiw==}
@@ -2791,10 +2802,12 @@ packages:
   /mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
 
-  /megalodon@8.1.5:
-    resolution: {integrity: sha512-k0oZG48tyPU8Jf3xsYqlDB9zrWbthuRjyQ50hka4NQ3nZNPj7eRz/YCLubbME5W6myPRZ2LI7TD2U5QRcuYipg==}
+  /megalodon@9.0.1:
+    resolution: {integrity: sha512-kiP9/jTOcGg7vmLigJtFmGsRioA7Y62iw8ixNgwtUuX9elPdnDftAx0lkToHOeq49rbPuv0jCk1B6Y/C1sUfhQ==}
     engines: {node: '>=15.0.0'}
     dependencies:
+      '@types/oauth': 0.9.3
+      '@types/ws': 8.5.8
       axios: 1.5.1
       dayjs: 1.11.10
       form-data: 4.0.0
@@ -2804,6 +2817,7 @@ packages:
       object-assign-deep: 0.4.0
       parse-link-header: 2.0.0
       socks-proxy-agent: 8.0.2
+      typescript: 5.2.2
       uuid: 9.0.1
       ws: 8.14.2
     transitivePeerDependencies:
@@ -3990,7 +4004,6 @@ packages:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /undici@5.25.2:
     resolution: {integrity: sha512-tch8RbCfn1UUH1PeVCXva4V8gDpGAud/w0WubD6sHC46vYQ3KDxL+xv1A2UxK0N6jrVedutuPHxe1XIoqerwMw==}
