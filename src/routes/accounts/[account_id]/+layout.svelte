@@ -6,7 +6,7 @@
   import generator, { type WebSocketInterface, type Entity } from 'megalodon'
   import { generateNotification } from '@/components/utils/generateNotification'
   import { _ } from 'svelte-i18n'
-  import { BellSolid, GlobeSolid, HomeSolid, UsersSolid } from 'flowbite-svelte-icons'
+  import { BellSolid, EnvelopeSolid, GlobeSolid, HomeSolid, UsersSolid } from 'flowbite-svelte-icons'
 
   let account: Account | undefined
   $: pages = [
@@ -19,6 +19,11 @@
       id: 'notifications',
       title: $_('timeline.notifications'),
       path: `/accounts/${accountId}/timelines/notifications`
+    },
+    {
+      id: 'direct',
+      title: $_('timeline.direct'),
+      path: `/accounts/${accountId}/timelines/direct`
     },
     {
       id: 'local',
@@ -78,6 +83,8 @@
                 <HomeSolid size="sm" />
               {:else if id === 'notifications'}
                 <BellSolid size="sm" />
+              {:else if id === 'direct'}
+                <EnvelopeSolid size="sm" />
               {:else if id === 'local'}
                 <UsersSolid size="sm" />
               {:else if id === 'public'}

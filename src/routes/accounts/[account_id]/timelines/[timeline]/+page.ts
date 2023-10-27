@@ -6,6 +6,7 @@ export async function load({ params }: { params: any }) {
   let client: MegalodonInterface
   let statuses: Array<Entity.Status> = []
   let notifications: Array<Entity.Notification> = []
+  let conversations: Array<Entity.Conversation> = []
 
   if (browser) {
     localStorage.setItem(`${params.account_id}_lastTimeline`, params.timeline)
@@ -16,6 +17,7 @@ export async function load({ params }: { params: any }) {
     return {
       statuses: [],
       notifications: [],
+      conversations: [],
       client: undefined
     }
 
@@ -25,6 +27,11 @@ export async function load({ params }: { params: any }) {
     case 'notifications': {
       const res = await client.getNotifications()
       notifications = res.data
+      break
+    }
+    case 'direct': {
+      const res = await client.getConversationTimeline()
+      conversations = res.data
       break
     }
     case 'public': {
@@ -51,6 +58,7 @@ export async function load({ params }: { params: any }) {
     account,
     client,
     statuses,
-    notifications
+    notifications,
+    conversations
   }
 }
