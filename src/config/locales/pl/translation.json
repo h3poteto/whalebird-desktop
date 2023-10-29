@@ -3,13 +3,13 @@
     "application": {
       "name": "Whalebird",
       "about": "O Whalebird",
-      "preferences": "Preferences",
-      "shortcuts": "Keyboard shortcuts",
+      "preferences": "Preferencje",
+      "shortcuts": "Skróty klawiszowe",
       "services": "Usługi",
       "hide": "Ukryj Whalebird",
-      "hide_others": "Hide others",
-      "show_all": "Show all",
-      "open": "Open window",
+      "hide_others": "Ukryj inne",
+      "show_all": "Pokaż wszystko",
+      "open": "Otwórz okno",
       "quit": "Wyjdź"
     },
     "edit": {
@@ -23,10 +23,10 @@
     },
     "view": {
       "name": "Widok",
-      "toggle_full_screen": "Toggle full screen"
+      "toggle_full_screen": "Przełącz tryb pełnoekranowy"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "Zawsze pokazuj pasek menu",
       "name": "Okno",
       "close": "Zamknij okno",
       "open": "Otwórz okno",
@@ -34,8 +34,8 @@
       "jump_to": "Przejdź do"
     },
     "help": {
-      "name": "Help",
-      "thirdparty": "Thirdparty licenses"
+      "name": "Pomoc",
+      "thirdparty": "Licencje stron trzecich"
     }
   },
   "global_header": {
@@ -45,31 +45,31 @@
     "profile": "Profil",
     "show_profile": "Pokaż profil",
     "edit_profile": "Edytuj profil",
-    "settings": "Account settings",
+    "settings": "Ustawienia konta",
     "collapse": "Zawalić się",
     "expand": "Rozszerzać",
     "home": "Strona główna",
-    "notification": "Notifications",
+    "notification": "Powiadomienia",
     "direct": "Bezpośrednie wiadomości",
-    "follow_requests": "Follow requests",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
+    "follow_requests": "Prośby o obserwację",
+    "favourite": "Ulubione",
+    "bookmark": "Zakładki",
     "local": "Lokalna oś czasu",
     "public": "Federated timeline",
-    "hashtag": "Hashtags",
+    "hashtag": "Hasztagi",
     "search": "Wyszukiwanie",
     "lists": "Listy"
   },
   "header_menu": {
     "home": "Strona główna",
-    "notification": "Notifications",
-    "favourite": "Favourited",
-    "bookmark": "Bookmarks",
-    "follow_requests": "Follow requests",
-    "direct_messages": "Direct messages",
+    "notification": "Powiadomienia",
+    "favourite": "Ulubione",
+    "bookmark": "Zakładki",
+    "follow_requests": "Prośby o obserwację",
+    "direct_messages": "Wiadomości prywatne",
     "local": "Lokalna oś czasu",
     "public": "Federated timeline",
-    "hashtag": "Hashtags",
+    "hashtag": "Hasztagi",
     "search": "Wyszukiwanie",
     "lists": "Listy",
     "members": "Użytkownicy",
@@ -80,9 +80,9 @@
     "general": {
       "title": "Ogólne",
       "toot": {
-        "title": "Posts",
+        "title": "Wpisy",
         "visibility": {
-          "description": "Default post visibility",
+          "description": "Domyślna widoczność wpisów",
           "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
           "public": "Publiczne",
           "unlisted": "Niewidoczne",
@@ -98,19 +98,19 @@
       "title": "Oś czasu",
       "use_marker": {
         "title": "Load the timeline from the last reading position",
-        "home": "Home",
-        "notifications": "Notifications"
+        "home": "Strona główna",
+        "notifications": "Powiadomienia"
       }
     },
     "filters": {
-      "title": "Filters",
+      "title": "Filtry",
       "form": {
-        "phrase": "Keyword or phrase",
-        "expire": "Expire after",
+        "phrase": "Słowo kluczowe lub fraza",
+        "expire": "Wygasa po",
         "context": "Filter contexts",
         "irreversible": "Drop instead of hide",
         "whole_word": "Całe słowo",
-        "submit": "Submit",
+        "submit": "Wyślij",
         "cancel": "Anuluj"
       },
       "expires": {
