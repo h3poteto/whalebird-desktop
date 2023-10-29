@@ -10,7 +10,7 @@ import path from 'node:path'
 // │ │ ├── main.js
 // │ │ └── preload.js
 // │
-process.env.DIST = path.join(__dirname, '../dist')
+process.env.DIST = path.join(__dirname, '../build')
 process.env.VITE_PUBLIC = app.isPackaged ? process.env.DIST : path.join(process.env.DIST, '../public')
 
 let win: BrowserWindow | null
@@ -21,7 +21,7 @@ function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
-      preload: path.resolve(__dirname, './dist-electron/preload.js'),
+      preload: path.resolve(__dirname, './preload.js'),
       webSecurity: false
     }
   })
@@ -36,7 +36,7 @@ function createWindow() {
     win.webContents.openDevTools()
   } else {
     // win.loadFile('dist/index.html')
-    win.loadFile(path.join(process.env.DIST, 'app.html'))
+    win.loadFile(path.join(process.env.DIST, 'index.html'))
   }
 }
 

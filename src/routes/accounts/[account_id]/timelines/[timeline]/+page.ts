@@ -2,6 +2,8 @@ import { db } from '@/db'
 import generator, { type Entity, type MegalodonInterface } from 'megalodon'
 import { browser } from '$app/environment'
 
+export const prerender = 'auto'
+
 export async function load({ params }: { params: any }) {
   let client: MegalodonInterface
   let statuses: Array<Entity.Status> = []

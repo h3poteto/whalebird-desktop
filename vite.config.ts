@@ -2,12 +2,10 @@ import { defineConfig } from 'vite'
 import path from 'node:path'
 import electron from 'vite-plugin-electron/simple'
 import { sveltekit } from '@sveltejs/kit/vite'
-import nodePolyfills from 'vite-plugin-node-stdlib-browser'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    nodePolyfills(),
     sveltekit(),
     electron({
       main: {

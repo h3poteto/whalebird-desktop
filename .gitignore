@@ -25,3 +25,4 @@ release
 *.sln
 *.sw?
 .svelte-kit
+build
