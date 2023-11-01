@@ -1,0 +1,15 @@
+appId: social.whalebird.app
+productName: Whalebird
+copyright: Copyright © 2023 Akira Fukushima
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+linux:
+  target: AppImage
+  category: Network
+publish: null
