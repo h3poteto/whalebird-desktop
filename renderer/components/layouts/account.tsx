@@ -56,12 +56,20 @@ export default function Layout({ children }: LayoutProps) {
     }
   }
 
+  const selectedClassName = (id: number) => {
+    if (id === parseInt(router.query.id as string)) {
+      return 'bg-blue-950 cursor-pointer'
+    } else {
+      return 'cursor-pointer'
+    }
+  }
+
   return (
     <div className="app flex flex-col min-h-screen">
       <main className="flex w-full box-border my-0 mx-auto min-h-screen">
         <aside className="w-16 bg-gray-900">
           {accounts.map(account => (
-            <div key={account.id}>
+            <div key={account.id} className={selectedClassName(account.id)}>
               <Avatar
                 alt={account.domain}
                 img={account.avatar}
