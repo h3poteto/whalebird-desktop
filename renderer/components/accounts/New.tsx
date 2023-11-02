@@ -15,6 +15,15 @@ export default function New(props: NewProps) {
   const [clientId, setClientId] = useState<string>()
   const [clientSecret, setClientSecret] = useState<string>()
 
+  const close = () => {
+    setSNS(null)
+    setDomain('')
+    setClient(undefined)
+    setClientId(undefined)
+    setClientSecret(undefined)
+    props.close()
+  }
+
   const checkDomain = async () => {
     const input = document.getElementById('domain') as HTMLInputElement
     setDomain(input.value)
@@ -48,13 +57,12 @@ export default function New(props: NewProps) {
       domain: domain,
       sns: sns
     })
-    props.close()
-    // TODO: jump to authorized account page
+    close()
   }
 
   return (
     <>
-      <Modal dismissible={false} show={props.opened} onClose={() => props.close()}>
+      <Modal dismissible={false} show={props.opened} onClose={close}>
         <Modal.Header>Add account</Modal.Header>
         <Modal.Body>
           <form className="flex max-w-md flex-col gap-2">
