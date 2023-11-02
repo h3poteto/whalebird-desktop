@@ -49,6 +49,7 @@ export default function New(props: NewProps) {
       sns: sns
     })
     props.close()
+    // TODO: jump to authorized account page
   }
 
   return (
