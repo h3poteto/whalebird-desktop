@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import Body from './Body'
 import Media from './Media'
 import emojify from '@/utils/emojify'
+import Card from './Card'
 
 type Props = {
   status: Entity.Status
@@ -34,6 +35,7 @@ export default function Status(props: Props) {
             </div>
           </div>
           <Body status={status} />
+          {status.card && <Card card={status.card} />}
           <Media media={status.media_attachments} />
         </div>
       </div>
