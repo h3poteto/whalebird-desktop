@@ -2,6 +2,7 @@ import { Avatar } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import dayjs from 'dayjs'
 import Body from './Body'
+import Media from './Media'
 import emojify from '@/utils/emojify'
 
 type Props = {
@@ -33,6 +34,7 @@ export default function Status(props: Props) {
             </div>
           </div>
           <Body status={status} />
+          <Media media={status.media_attachments} />
         </div>
       </div>
     </div>
