@@ -11,12 +11,14 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "dayjs": "^1.11.10",
     "dexie": "^3.2.4",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
     "flowbite": "^2.0.0",
     "flowbite-react": "^0.6.4",
-    "megalodon": "^9.1.1"
+    "megalodon": "^9.1.1",
+    "react-virtuoso": "^4.6.2"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.23.2",
