@@ -2,6 +2,7 @@ import { Account, db } from '@/db'
 import { CustomFlowbiteTheme, Flowbite, Sidebar } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useIntl } from 'react-intl'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -21,6 +22,7 @@ const customTheme: CustomFlowbiteTheme = {
 
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter()
+  const { formatMessage } = useIntl()
 
   const [account, setAccount] = useState<Account | null>(null)
   useEffect(() => {
@@ -37,22 +39,22 @@ export default function Layout({ children }: LayoutProps) {
   const pages = [
     {
       id: 'home',
-      title: 'Home',
+      title: formatMessage({ id: 'timeline.home' }),
       path: `/accounts/${router.query.id}/home`
     },
     {
       id: 'notifications',
-      title: 'Notifications',
+      title: formatMessage({ id: 'timeline.notifications' }),
       path: `/accounts/${router.query.id}/notifications`
     },
     {
       id: 'local',
-      title: 'Local',
+      title: formatMessage({ id: 'timeline.local' }),
       path: `/accounts/${router.query.id}/local`
     },
     {
       id: 'public',
-      title: 'Public',
+      title: formatMessage({ id: 'timeline.public' }),
       path: `/accounts/${router.query.id}/public`
     }
   ]

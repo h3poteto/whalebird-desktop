@@ -6,6 +6,7 @@ import Media from './Media'
 import emojify from '@/utils/emojify'
 import Card from './Card'
 import Poll from './Poll'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   status: Entity.Status
@@ -66,7 +67,9 @@ const rebloggedHeader = (status: Entity.Status) => {
         <div className="grid justify-items-end pr-2" style={{ width: '56px' }}>
           <Avatar img={status.account.avatar} size="xs" />
         </div>
-        <div style={{ width: 'calc(100% - 56px)' }}>{status.account.username} boosted</div>
+        <div style={{ width: 'calc(100% - 56px)' }}>
+          <FormattedMessage id="timeline.status.boosted" values={{ user: status.account.username }} />
+        </div>
       </div>
     )
   } else {

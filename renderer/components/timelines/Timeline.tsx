@@ -4,6 +4,7 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import Status from './status/Status'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   timeline: string
@@ -12,6 +13,7 @@ type Props = {
 }
 export default function Timeline(props: Props) {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
+  const { formatMessage } = useIntl()
 
   useEffect(() => {
     const f = async () => {
@@ -65,10 +67,12 @@ export default function Timeline(props: Props) {
   return (
     <section className="h-full w-full">
       <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
-        <div className="text-lg font-bold">{props.timeline}</div>
+        <div className="text-lg font-bold">
+          <FormattedMessage id={`timeline.${props.timeline}`} />
+        </div>
         <div className="w-64 text-xs">
           <form>
-            <TextInput type="text" placeholder="search" disabled sizing="sm" />
+            <TextInput type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled sizing="sm" />
           </form>
         </div>
       </div>

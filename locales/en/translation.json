@@ -1,0 +1,25 @@
+{
+  "timeline": {
+    "home": "Home",
+    "notifications": "Notifications",
+    "local": "Local",
+    "public": "Public",
+    "search": "Search",
+    "status": {
+      "boosted": "{user} boosted",
+      "poll": {
+        "refresh": "Refresh",
+        "vote": "Vote",
+        "peolpe": "{num} people",
+        "closed": "Closed"
+      }
+    }
+  },
+  "accounts": {
+    "new": {
+      "title": "Add account",
+      "sign_in": "Sign in",
+      "authorize": "Authorize"
+    }
+  }
+}

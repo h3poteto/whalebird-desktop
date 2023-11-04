@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { Progress, Button, Radio, Label, Checkbox } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   poll: Entity.Poll
@@ -41,9 +42,11 @@ function SimplePoll(props: Props) {
       ))}
       <div className="flex gap-2 items-center mt-2">
         <Button outline={true} size="xs" onClick={vote}>
-          Vote
+          <FormattedMessage id="timeline.status.poll.vote" />
         </Button>
-        <div>{props.poll.votes_count} people</div>
+        <div>
+          <FormattedMessage id="timeline.status.poll.people" values={{ num: props.poll.votes_count }} />
+        </div>
         <div>
           <time dateTime={props.poll.expires_at}>{dayjs(props.poll.expires_at).format('YYYY-MM-DD HH:mm:ss')}</time>
         </div>
@@ -77,9 +80,11 @@ function MultiplePoll(props: Props) {
       ))}
       <div className="flex gap-2 items-center mt-2">
         <Button outline={true} size="xs" onClick={vote}>
-          Vote
+          <FormattedMessage id="timeline.status.poll.vote" />
         </Button>
-        <div>{props.poll.votes_count} people</div>
+        <div>
+          <FormattedMessage id="timeline.status.poll.people" values={{ num: props.poll.votes_count }} />
+        </div>
         <div>
           <time dateTime={props.poll.expires_at}>{dayjs(props.poll.expires_at).format('YYYY-MM-DD HH:mm:ss')}</time>
         </div>
@@ -100,11 +105,15 @@ function PollResult(props: Props) {
       ))}
       <div className="flex gap-2 items-center mt-2">
         <Button outline={true} size="xs" onClick={props.onRefresh}>
-          Refresh
+          <FormattedMessage id="timeline.status.poll.refresh" />
         </Button>
-        <div>{props.poll.votes_count} people</div>
+        <div>
+          <FormattedMessage id="timeline.status.poll.people" values={{ num: props.poll.votes_count }} />
+        </div>
         {props.poll.expired ? (
-          <div>Closed</div>
+          <div>
+            <FormattedMessage id="timeline.status.poll.closed" />
+          </div>
         ) : (
           <div>
             <time dateTime={props.poll.expires_at}>{dayjs(props.poll.expires_at).format('YYYY-MM-DD HH:mm:ss')}</time>

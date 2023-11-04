@@ -2,6 +2,7 @@ import { Label, Modal, TextInput, Button } from 'flowbite-react'
 import generator, { MegalodonInterface, detector } from 'megalodon'
 import { useState } from 'react'
 import { db } from '@/db'
+import { FormattedMessage } from 'react-intl'
 
 type NewProps = {
   opened: boolean
@@ -63,7 +64,9 @@ export default function New(props: NewProps) {
   return (
     <>
       <Modal dismissible={false} show={props.opened} onClose={close}>
-        <Modal.Header>Add account</Modal.Header>
+        <Modal.Header>
+          <FormattedMessage id="accounts.new.title" />
+        </Modal.Header>
         <Modal.Body>
           <form className="flex max-w-md flex-col gap-2">
             {sns === null && (
@@ -72,7 +75,9 @@ export default function New(props: NewProps) {
                   <Label htmlFor="domain" value="Domain" />
                 </div>
                 <TextInput id="domain" placeholder="mastodon.social" required type="text" />
-                <Button onClick={checkDomain}>Sign In</Button>{' '}
+                <Button onClick={checkDomain}>
+                  <FormattedMessage id="accounts.new.sign_in" />
+                </Button>
               </>
             )}
             {sns && (
@@ -81,7 +86,9 @@ export default function New(props: NewProps) {
                   <Label htmlFor="authorization" value="Authorization Code" />
                 </div>
                 <TextInput id="authorization" required type="text" />
-                <Button onClick={authorize}>Authorize</Button>{' '}
+                <Button onClick={authorize}>
+                  <FormattedMessage id="accounts.new.authorize" />
+                </Button>
               </>
             )}
           </form>
