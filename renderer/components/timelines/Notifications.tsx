@@ -1,7 +1,7 @@
 import { Account } from '@/db'
 import { TextInput } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Virtuoso } from 'react-virtuoso'
 import Notification from './notification/Notification'
@@ -48,6 +48,16 @@ export default function Notifications(props: Props) {
     setNotifications(renew)
   }
 
+  const loadMore = useCallback(async () => {
+    console.debug('appending')
+    try {
+      const append = await loadNotifications(props.client, notifications[notifications.length - 1].id)
+      setNotifications(last => [...last, ...append])
+    } catch (err) {
+      console.error(err)
+    }
+  }, [props.client, notifications, setNotifications])
+
   return (
     <section className="h-full w-full">
       <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
@@ -64,6 +74,7 @@ export default function Notifications(props: Props) {
         <Virtuoso
           style={{ height: '100%' }}
           data={notifications}
+          endReached={loadMore}
           itemContent={(_, notification) => (
             <Notification client={props.client} notification={notification} onRefresh={updateStatus} key={notification.id} />
           )}

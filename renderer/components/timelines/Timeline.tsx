@@ -1,7 +1,7 @@
 import { Account } from '@/db'
 import { TextInput } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import Status from './status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -64,6 +64,14 @@ export default function Timeline(props: Props) {
     return renew
   }
 
+  const loadMore = useCallback(async () => {
+    console.debug('appending')
+    const maxId = statuses[statuses.length - 1].id
+
+    const append = await loadTimeline(props.timeline, props.client, maxId)
+    setStatuses(last => [...last, ...append])
+  }, [props.client, statuses, setStatuses])
+
   return (
     <section className="h-full w-full">
       <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
@@ -80,6 +88,7 @@ export default function Timeline(props: Props) {
         <Virtuoso
           style={{ height: '100%' }}
           data={statuses}
+          endReached={loadMore}
           itemContent={(_, status) => (
             <Status
               client={props.client}
