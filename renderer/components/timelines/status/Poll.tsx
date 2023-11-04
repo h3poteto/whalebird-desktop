@@ -1,13 +1,15 @@
 import dayjs from 'dayjs'
 import { Progress, Button, Radio, Label, Checkbox } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
+import { HTMLAttributes } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 type Props = {
   poll: Entity.Poll
   client: MegalodonInterface
   onRefresh: () => void
-}
+} & HTMLAttributes<HTMLElement>
+
 export default function Poll(props: Props) {
   if (props.poll.voted || props.poll.expired) {
     return <PollResult {...props} />
@@ -33,7 +35,7 @@ function SimplePoll(props: Props) {
     }
   }
   return (
-    <div className="my-2">
+    <div className={props.className + ' my-2'}>
       {props.poll.options.map((option, index) => (
         <div key={index} className="flex items-center gap-2 my-2 pl-1">
           <Radio id={option.title} name={props.poll.id} value={option.title} />
@@ -71,7 +73,7 @@ function MultiplePoll(props: Props) {
   }
 
   return (
-    <div className="my-2">
+    <div className={props.className + ' my-2'}>
       {props.poll.options.map((option, index) => (
         <div key={index} className="flex items-center gap-2 my-2 pl-1">
           <Checkbox id={option.title} />
@@ -95,7 +97,7 @@ function MultiplePoll(props: Props) {
 
 function PollResult(props: Props) {
   return (
-    <div className="my-2">
+    <div className={props.className + ' my-2'}>
       {props.poll.options.map((option, index) => (
         <div key={index}>
           <span className="pr-2">{percent(option.votes_count ?? 0, props.poll.votes_count)}%</span>

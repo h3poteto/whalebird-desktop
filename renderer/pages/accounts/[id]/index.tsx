@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
+import Image from 'next/image'
+import Icon from '@/assets/256x256.png'
 
-type AccountProps = {}
-
-export default function Account(props: AccountProps) {
+export default function Account() {
   const router = useRouter()
   if (typeof localStorage !== 'undefined') {
     const lastTimeline = localStorage.getItem(`${router.query.id}_lastTimeline`)
@@ -13,5 +13,9 @@ export default function Account(props: AccountProps) {
     }
   }
 
-  return <>{router.query.id}</>
+  return (
+    <div className="h-screen w-full flex justify-center items-center">
+      <Image src={Icon} alt="icon" width={128} height={128} />
+    </div>
+  )
 }

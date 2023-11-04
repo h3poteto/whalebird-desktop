@@ -10,7 +10,7 @@
       "poll": {
         "refresh": "Refresh",
         "vote": "Vote",
-        "peolpe": "{num} people",
+        "people": "{num} people",
         "closed": "Closed"
       }
     }
@@ -20,6 +20,39 @@
       "title": "Add account",
       "sign_in": "Sign in",
       "authorize": "Authorize"
+    }
+  },
+  "notification": {
+    "favourite": {
+      "body": "{user} favourited your post"
+    },
+    "reblog": {
+      "body": "{user} boosted your post"
+    },
+    "quote": {
+      "body": "{user} quoted your post"
+    },
+    "poll_expired": {
+      "body": "{user} poll has ended"
+    },
+    "poll_vote": {
+      "body": "{user} voted your poll"
+    },
+    "status": {
+      "body": "{user} just posted"
+    },
+    "update": {
+      "body": "{user} updated the post"
+    },
+    "emoji_reaction": {
+      "body": "{user} reacted your post"
+    },
+    "follow": {
+      "body": "{user} followed you",
+      "followers": "{num} followers"
+    },
+    "follow_request": {
+      "body": "{user} requested to follow you"
     }
   }
 }

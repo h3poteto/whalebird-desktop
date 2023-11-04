@@ -3,6 +3,7 @@ import Timeline from '@/components/timelines/Timeline'
 import { useEffect, useState } from 'react'
 import { Account, db } from '@/db'
 import generator, { MegalodonInterface } from 'megalodon'
+import Notifications from '@/components/timelines/Notifications'
 
 export default function Page() {
   const router = useRouter()
@@ -23,5 +24,13 @@ export default function Page() {
     }
   }, [router.query.id])
 
-  return <>{account && client && <Timeline timeline={router.query.timeline as string} account={account} client={client} />}</>
+  if (!account || !client) return null
+  switch (router.query.timeline as string) {
+    case 'notifications': {
+      return <Notifications account={account} client={client} />
+    }
+    default: {
+      return <Timeline timeline={router.query.timeline as string} account={account} client={client} />
+    }
+  }
 }

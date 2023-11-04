@@ -18,6 +18,7 @@
     "flowbite": "^2.0.0",
     "flowbite-react": "^0.6.4",
     "megalodon": "^9.1.1",
+    "react-icons": "^4.11.0",
     "react-intl": "^6.5.1",
     "react-virtuoso": "^4.6.2"
   },

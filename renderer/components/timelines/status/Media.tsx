@@ -8,6 +8,7 @@ export default function Media(props: Props) {
     <div className="mt-2 flex flex-wrap">
       {props.media.map((media, key) => (
         <img
+          key={key}
           src={media.preview_url}
           className="h-36 mr-2 mb-2 rounded-md max-w-full cursor-pointer"
           alt={media.description}
