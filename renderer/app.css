@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 .emojione {
+  display: inline-block;
   width: 1.2rem;
   height: 1.2rem;
 }

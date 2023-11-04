@@ -45,6 +45,23 @@ export default function Timeline(props: Props) {
     }
   }
 
+  const updateStatus = (current: Array<Entity.Status>, status: Entity.Status) => {
+    const renew = current.map(s => {
+      if (s.id === status.id) {
+        return status
+      } else if (s.reblog && s.reblog.id === status.id) {
+        return Object.assign({}, s, { reblog: status })
+      } else if (status.reblog && s.id === status.reblog.id) {
+        return status.reblog
+      } else if (status.reblog && s.reblog && s.reblog.id === status.reblog.id) {
+        return Object.assign({}, s, { reblog: status.reblog })
+      } else {
+        return s
+      }
+    })
+    return renew
+  }
+
   return (
     <section className="h-full w-full">
       <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
@@ -59,7 +76,14 @@ export default function Timeline(props: Props) {
         <Virtuoso
           style={{ height: '100%' }}
           data={statuses}
-          itemContent={(_, status) => <Status client={props.client} status={status} key={status.id} />}
+          itemContent={(_, status) => (
+            <Status
+              client={props.client}
+              status={status}
+              key={status.id}
+              onRefresh={status => setStatuses(current => updateStatus(current, status))}
+            />
+          )}
         />
       </div>
     </section>

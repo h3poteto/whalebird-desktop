@@ -5,14 +5,21 @@ import Body from './Body'
 import Media from './Media'
 import emojify from '@/utils/emojify'
 import Card from './Card'
+import Poll from './Poll'
 
 type Props = {
   status: Entity.Status
   client: MegalodonInterface
+  onRefresh: (status: Entity.Status) => void
 }
 
 export default function Status(props: Props) {
   const status = originalStatus(props.status)
+
+  const onRefresh = async () => {
+    const res = await props.client.getStatus(status.id)
+    props.onRefresh(res.data)
+  }
 
   return (
     <div className="border-b mr-2 py-1">
@@ -35,6 +42,7 @@ export default function Status(props: Props) {
             </div>
           </div>
           <Body status={status} />
+          {status.poll && <Poll poll={status.poll} onRefresh={onRefresh} client={props.client} />}
           {status.card && <Card card={status.card} />}
           <Media media={status.media_attachments} />
         </div>
