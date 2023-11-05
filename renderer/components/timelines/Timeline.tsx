@@ -6,7 +6,7 @@ import { Virtuoso } from 'react-virtuoso'
 import Status from './status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
 
-const TIMELINE_STATUSES_COUNT = 3
+const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
 
 type Props = {
