@@ -1,6 +1,7 @@
 appId: social.whalebird.app
 productName: Whalebird
 copyright: Copyright © 2023 Akira Fukushima
+artifactName: "${productName}-${version}-${os}-${arch}.${ext}"
 directories:
   output: dist
   buildResources: resources
@@ -9,7 +10,36 @@ files:
     filter:
       - package.json
       - app
+mac:
+  icon: resources/icons/icon.icns
+  target:
+    - target: dmg
+      arch:
+        - universal
+  category: "public.app-category.social-networking"
+  entitlements: "plist/entitlements.mac.plist"
+  entitlementsInherit: "plist/entitlements.mac.plist"
+  entitlementsLoginHelper: "plist/loginhelper.plist"
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  darkModeSupport: false
+win:
+  icon: resources/icons/icon.ico
+  target:
+    - nsis
 linux:
-  target: AppImage
+  icon: resources/icons
+  target:
+    - AppImage
+    - deb
+    - rpm
+    - tar.bz2
+    - snap
   category: Network
 publish: null
+afterSign: "notarize.js"
+dmg:
+  sign: false
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
