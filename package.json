@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "typecheck": "tsc -p renderer --noEmit && tsc -p main --noEmit"
   },
   "dependencies": {
     "dayjs": "^1.11.10",
