@@ -23,6 +23,7 @@ mac:
   hardenedRuntime: true
   gatekeeperAssess: false
   darkModeSupport: false
+  notarize: false
 win:
   icon: resources/icons/icon.ico
   target:
