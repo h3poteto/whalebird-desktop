@@ -53,6 +53,13 @@ jobs:
         run: |
           yarn install
           yarn build
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            dist/*.exe
+
 
   release-macos:
     runs-on: macos-latest
@@ -80,3 +87,9 @@ jobs:
         run: |
           yarn install
           yarn build
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            dist/*.dmg
