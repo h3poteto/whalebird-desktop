@@ -1,0 +1,82 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release-linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: yarn
+
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v2
+      - name: Build
+        run: |
+          yarn install
+          yarn build
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            dist/*.deb
+            dist/*.rpm
+            dist/*.tar.bz2
+            dist/*.AppImage
+
+  release-windows:
+    runs-on: windows-latest
+    timeout-minutes: 40
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: yarn
+      - name: Build
+        run: |
+          yarn install
+          yarn build
+
+  release-macos:
+    runs-on: macos-latest
+    timeout-minutes: 40
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: yarn
+
+      - name: Apple Codesigning
+        uses: apple-actions/import-codesign-certs@v2
+        with:
+          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+
+      - name: Build
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          ASC_PROVIDER: ${{ secrets.ASC_PROVIDER }}
+          TEAM_ID: ${{ secrets.ASC_PROVIDER }}
+        run: |
+          yarn install
+          yarn build
