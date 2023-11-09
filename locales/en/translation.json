@@ -24,34 +24,44 @@
   },
   "notification": {
     "favourite": {
+      "title": "Favourite",
       "body": "{user} favourited your post"
     },
     "reblog": {
+      "title": "Boost",
       "body": "{user} boosted your post"
     },
     "quote": {
+      "title": "Quote",
       "body": "{user} quoted your post"
     },
     "poll_expired": {
+      "title": "Poll",
       "body": "{user} poll has ended"
     },
     "poll_vote": {
+      "title": "Poll",
       "body": "{user} voted your poll"
     },
     "status": {
+      "title": "Status",
       "body": "{user} just posted"
     },
     "update": {
+      "title": "Update",
       "body": "{user} updated the post"
     },
     "emoji_reaction": {
+      "title": "Reaction",
       "body": "{user} reacted your post"
     },
     "follow": {
+      "title": "Follow",
       "body": "{user} followed you",
       "followers": "{num} followers"
     },
     "follow_request": {
+      "title": "Follow Request",
       "body": "{user} requested to follow you"
     }
   }

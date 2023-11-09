@@ -47,6 +47,7 @@ export default function Notifications(props: Props) {
       if (streaming.current) {
         streaming.current.removeAllListeners()
         streaming.current.stop()
+        streaming.current = null
         console.log('closed notifications')
       }
     }

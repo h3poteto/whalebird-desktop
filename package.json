@@ -21,13 +21,15 @@
     "megalodon": "^9.1.1",
     "react-icons": "^4.11.0",
     "react-intl": "^6.5.1",
-    "react-virtuoso": "^4.6.2"
+    "react-virtuoso": "^4.6.2",
+    "sanitize-html": "^2.11.0"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.23.2",
     "@electron/notarize": "^2.1.0",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
+    "@types/sanitize-html": "^2.9.4",
     "autoprefixer": "^10.4.16",
     "electron": "^26.2.2",
     "electron-builder": "^24.6.4",

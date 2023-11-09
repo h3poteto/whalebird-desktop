@@ -62,6 +62,7 @@ export default function Timeline(props: Props) {
       if (streaming.current) {
         streaming.current.removeAllListeners()
         streaming.current.stop()
+        streaming.current = null
         console.log(`closed ${props.timeline}`)
       }
     }
