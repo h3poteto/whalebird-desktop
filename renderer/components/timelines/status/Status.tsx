@@ -7,6 +7,7 @@ import emojify from '@/utils/emojify'
 import Card from './Card'
 import Poll from './Poll'
 import { FormattedMessage } from 'react-intl'
+import Actions from './Actions'
 
 type Props = {
   status: Entity.Status
@@ -46,6 +47,7 @@ export default function Status(props: Props) {
           {status.poll && <Poll poll={status.poll} onRefresh={onRefresh} client={props.client} />}
           {status.card && <Card card={status.card} />}
           <Media media={status.media_attachments} />
+          <Actions />
         </div>
       </div>
     </div>
