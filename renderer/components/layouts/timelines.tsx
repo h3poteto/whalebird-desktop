@@ -70,7 +70,7 @@ export default function Layout({ children }: LayoutProps) {
           <Sidebar.Items>
             <Sidebar.ItemGroup>
               {pages.map(page => (
-                <Sidebar.Item key={page.id} active={`${page.path}/` === router.asPath} onClick={() => router.push(page.path)}>
+                <Sidebar.Item key={page.id} active={router.asPath.includes(page.path)} onClick={() => router.push(page.path)}>
                   {page.title}
                 </Sidebar.Item>
               ))}

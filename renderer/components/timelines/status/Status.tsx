@@ -8,6 +8,7 @@ import Card from './Card'
 import Poll from './Poll'
 import { FormattedMessage } from 'react-intl'
 import Actions from './Actions'
+import { useRouter } from 'next/router'
 
 type Props = {
   status: Entity.Status
@@ -17,10 +18,15 @@ type Props = {
 
 export default function Status(props: Props) {
   const status = originalStatus(props.status)
+  const router = useRouter()
 
   const onRefresh = async () => {
     const res = await props.client.getStatus(status.id)
     props.onRefresh(res.data)
+  }
+
+  const openStatus = () => {
+    router.push({ query: { id: router.query.id, timeline: router.query.timeline, status_id: status.id } })
   }
 
   return (
@@ -39,7 +45,7 @@ export default function Status(props: Props) {
               ></span>
               <span className="text-gray-600 text-ellipsis break-all overflow-hidden">@{status.account.acct}</span>
             </div>
-            <div className="text-gray-600 text-right">
+            <div className="text-gray-600 text-right cursor-pointer" onClick={openStatus}>
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>

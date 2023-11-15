@@ -16,6 +16,7 @@ export default function Page() {
 
   useEffect(() => {
     if (router.query.id) {
+      console.log(router)
       const f = async () => {
         const a = await db.accounts.get(parseInt(router.query.id as string))
         if (a) {

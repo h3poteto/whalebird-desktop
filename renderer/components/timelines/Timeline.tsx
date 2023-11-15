@@ -5,6 +5,7 @@ import { useEffect, useState, useCallback, useRef } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import Status from './status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
+import Detail from '../detail/Detail'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -159,6 +160,7 @@ export default function Timeline(props: Props) {
           )}
         />
       </div>
+      <Detail client={props.client} />
     </section>
   )
 }
