@@ -6,6 +6,7 @@ import { Virtuoso } from 'react-virtuoso'
 import Status from './status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
 import Detail from '../detail/Detail'
+import { useRouter } from 'next/router'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -20,6 +21,7 @@ export default function Timeline(props: Props) {
   const [unreads, setUnreads] = useState<Array<Entity.Status>>([])
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
 
+  const router = useRouter()
   const { formatMessage } = useIntl()
   const scrollerRef = useRef<HTMLElement | null>(null)
   const streaming = useRef<WebSocketInterface | null>(null)
@@ -128,39 +130,48 @@ export default function Timeline(props: Props) {
     return false
   }, [firstItemIndex, statuses, setStatuses, unreads])
 
+  const timelineClass = () => {
+    if (router.query.status_id) {
+      return 'timeline-with-drawer'
+    }
+    return 'timeline'
+  }
+
   return (
-    <section className="h-full w-full">
-      <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
-        <div className="text-lg font-bold">
-          <FormattedMessage id={`timeline.${props.timeline}`} />
+    <div className="flex w-full">
+      <section className={`h-full ${timelineClass()}`}>
+        <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
+          <div className="text-lg font-bold">
+            <FormattedMessage id={`timeline.${props.timeline}`} />
+          </div>
+          <div className="w-64 text-xs">
+            <form>
+              <TextInput type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled sizing="sm" />
+            </form>
+          </div>
         </div>
-        <div className="w-64 text-xs">
-          <form>
-            <TextInput type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled sizing="sm" />
-          </form>
+        <div className={`overflow-x-hidden`} style={{ height: 'calc(100% - 50px)' }}>
+          <Virtuoso
+            style={{ height: '100%' }}
+            scrollerRef={ref => {
+              scrollerRef.current = ref as HTMLElement
+            }}
+            firstItemIndex={firstItemIndex}
+            atTopStateChange={prependUnreads}
+            data={statuses}
+            endReached={loadMore}
+            itemContent={(_, status) => (
+              <Status
+                client={props.client}
+                status={status}
+                key={status.id}
+                onRefresh={status => setStatuses(current => updateStatus(current, status))}
+              />
+            )}
+          />
         </div>
-      </div>
-      <div className="timeline overflow-y-auto w-full overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
-        <Virtuoso
-          style={{ height: '100%' }}
-          scrollerRef={ref => {
-            scrollerRef.current = ref as HTMLElement
-          }}
-          firstItemIndex={firstItemIndex}
-          atTopStateChange={prependUnreads}
-          data={statuses}
-          endReached={loadMore}
-          itemContent={(_, status) => (
-            <Status
-              client={props.client}
-              status={status}
-              key={status.id}
-              onRefresh={status => setStatuses(current => updateStatus(current, status))}
-            />
-          )}
-        />
-      </div>
-      <Detail client={props.client} />
-    </section>
+      </section>
+      <Detail client={props.client} className="detail" />
+    </div>
   )
 }

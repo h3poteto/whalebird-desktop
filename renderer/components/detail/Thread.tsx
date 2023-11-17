@@ -29,7 +29,7 @@ export default function Thread(props: Props) {
   return (
     <>
       <Virtuoso
-        style={{ height: '100%' }}
+        style={{ height: 'calc(100% - 50px)' }}
         data={[...ancestors, status, ...descendants].filter(s => s !== null)}
         itemContent={(_, status) => <Status client={props.client} status={status} key={status.id} onRefresh={() => {}} />}
       />

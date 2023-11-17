@@ -7,3 +7,27 @@
   width: 1.2rem;
   height: 1.2rem;
 }
+
+.timeline {
+  width: 100%;
+}
+
+
+.timeline-with-drawer {
+  width: calc(100% - 384px);
+}
+
+.detail {
+  width: 384px;
+}
+
+@media screen and (max-width: 996px) {
+  .timeline-with-drawer {
+    width: 0;
+    display: none;
+  }
+
+  .detail {
+    width: 100%;
+  }
+}
