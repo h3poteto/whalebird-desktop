@@ -451,7 +451,7 @@
     "update_list_memberships_error": "Error al actualizar la lista de miembros",
     "add_user_error": "Error al agregar usuario",
     "authorize_url_error": "Error al obtener la url autorizada",
-    "domain_confirmed": "{{dominio}} está confirmado, por favor conéctese",
+    "domain_confirmed": "{{domain}} está confirmado, por favor conéctese",
     "domain_doesnt_exist": "Error al conectar con {{domain}}, asegúrese de que la URL del servidor es válida o correcta.",
     "loading": "Cargando...",
     "language_not_support_spellchecker_error": "Este idioma no es compatible con el corrector ortográfico",
