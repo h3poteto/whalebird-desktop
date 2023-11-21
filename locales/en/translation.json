@@ -64,5 +64,17 @@
       "title": "Follow Request",
       "body": "{user} requested to follow you"
     }
+  },
+  "compose": {
+    "placeholder": "What's on your mind?",
+    "spoiler": {
+      "placeholder": "Write your warning here"
+    },
+    "visibility": {
+      "public": "Public",
+      "unlisted": "Unlisted",
+      "private": "Private",
+      "direct": "Direct"
+    }
   }
 }

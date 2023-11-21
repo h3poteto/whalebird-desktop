@@ -7,6 +7,7 @@ import Status from './status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
 import Detail from '../detail/Detail'
 import { useRouter } from 'next/router'
+import Compose from '../compose/Compose'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -20,6 +21,7 @@ export default function Timeline(props: Props) {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [unreads, setUnreads] = useState<Array<Entity.Status>>([])
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
+  const [composeHeight, setComposeHeight] = useState(120)
 
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -152,7 +154,7 @@ export default function Timeline(props: Props) {
         </div>
         <div className={`overflow-x-hidden`} style={{ height: 'calc(100% - 50px)' }}>
           <Virtuoso
-            style={{ height: '100%' }}
+            style={{ height: `calc(100% - ${composeHeight}px)` }}
             scrollerRef={ref => {
               scrollerRef.current = ref as HTMLElement
             }}
@@ -169,6 +171,7 @@ export default function Timeline(props: Props) {
               />
             )}
           />
+          <Compose style={{ height: `${composeHeight}px` }} client={props.client} setComposeHeight={setComposeHeight} />
         </div>
       </section>
       <Detail client={props.client} className="detail" />
