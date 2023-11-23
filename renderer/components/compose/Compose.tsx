@@ -1,4 +1,4 @@
-import { Dropdown, FileInput, Spinner, TextInput, Textarea } from 'flowbite-react'
+import { Checkbox, Dropdown, Label, Spinner, TextInput, Textarea } from 'flowbite-react'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FaEnvelope, FaGlobe, FaListCheck, FaLock, FaLockOpen, FaPaperPlane, FaPaperclip, FaXmark } from 'react-icons/fa6'
@@ -38,6 +38,12 @@ export default function Compose(props: Props) {
     if (attachments.length > 0) {
       options = Object.assign({}, options, {
         media_ids: attachments.map(m => m.id)
+      })
+    }
+    const sensitive = document.getElementById('sensitive') as HTMLInputElement
+    if (sensitive.checked) {
+      options = Object.assign({}, options, {
+        sensitive: sensitive.checked
       })
     }
     setLoading(true)
@@ -119,6 +125,16 @@ export default function Compose(props: Props) {
           </div>
         ))}
       </div>
+
+      {attachments.length > 0 && (
+        <div>
+          <Checkbox id="sensitive" className="focus:ring-0" />
+          <Label htmlFor="sensitive" className="pl-2 text-gray-600">
+            <FormattedMessage id="compose.nsfw" />
+          </Label>
+        </div>
+      )}
+
       <div className="w-full flex justify-between mt-1 items-center h-5">
         <div className="ml-1 flex gap-3">
           <input type="file" id="file" className="hidden" ref={uploaderRef} onChange={fileChanged} />

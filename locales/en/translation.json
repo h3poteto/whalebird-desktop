@@ -75,7 +75,8 @@
       "unlisted": "Unlisted",
       "private": "Private",
       "direct": "Direct"
-    }
+    },
+    "nsfw": "Sensitive"
   },
   "alert": {
     "validation": {
