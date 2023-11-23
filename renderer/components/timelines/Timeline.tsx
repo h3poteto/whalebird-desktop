@@ -27,6 +27,21 @@ export default function Timeline(props: Props) {
   const { formatMessage } = useIntl()
   const scrollerRef = useRef<HTMLElement | null>(null)
   const streaming = useRef<WebSocketInterface | null>(null)
+  const composeRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const observer = new ResizeObserver(entries => {
+      entries.forEach(el => {
+        setComposeHeight(el.contentRect.height)
+      })
+    })
+    if (composeRef.current) {
+      observer.observe(composeRef.current)
+    }
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
 
   useEffect(() => {
     const f = async () => {
@@ -171,7 +186,9 @@ export default function Timeline(props: Props) {
               />
             )}
           />
-          <Compose style={{ height: `${composeHeight}px` }} client={props.client} setComposeHeight={setComposeHeight} />
+          <div ref={composeRef}>
+            <Compose client={props.client} />
+          </div>
         </div>
       </section>
       <Detail client={props.client} className="detail" />

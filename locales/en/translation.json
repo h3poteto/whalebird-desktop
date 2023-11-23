@@ -76,5 +76,11 @@
       "private": "Private",
       "direct": "Direct"
     }
+  },
+  "alert": {
+    "validation": {
+      "attachment_type": "You can attach only images or videos"
+    },
+    "upload_error": "Failed to upload the file"
   }
 }

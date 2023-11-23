@@ -3,15 +3,18 @@ import '../app.css'
 import AccountLayout from '@/components/layouts/account'
 import TimelineLayout from '@/components/layouts/timelines'
 import { IntlProviderWrapper } from '@/utils/i18n'
+import { ToastProvider } from '@/utils/toast'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <IntlProviderWrapper>
-      <AccountLayout>
-        <TimelineLayout>
-          <Component {...pageProps} />
-        </TimelineLayout>
-      </AccountLayout>
+      <ToastProvider>
+        <AccountLayout>
+          <TimelineLayout>
+            <Component {...pageProps} />
+          </TimelineLayout>
+        </AccountLayout>
+      </ToastProvider>
     </IntlProviderWrapper>
   )
 }
