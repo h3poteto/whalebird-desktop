@@ -9,6 +9,7 @@ import Poll from './Poll'
 import { FormattedMessage } from 'react-intl'
 import Actions from './Actions'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 type Props = {
   status: Entity.Status
@@ -18,6 +19,7 @@ type Props = {
 
 export default function Status(props: Props) {
   const status = originalStatus(props.status)
+  const [spoilered, setSpoilered] = useState(status.spoiler_text.length > 0)
   const router = useRouter()
 
   const onRefresh = async () => {
@@ -49,10 +51,15 @@ export default function Status(props: Props) {
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>
-          <Body status={status} />
-          {status.poll && <Poll poll={status.poll} onRefresh={onRefresh} client={props.client} />}
-          {status.card && <Card card={status.card} />}
-          <Media media={status.media_attachments} />
+          <Body status={status} spoilered={spoilered} setSpoilered={setSpoilered} />
+          {!spoilered && (
+            <>
+              {status.poll && <Poll poll={status.poll} onRefresh={onRefresh} client={props.client} />}
+              {status.card && <Card card={status.card} />}
+              <Media media={status.media_attachments} />
+            </>
+          )}
+
           <Actions status={status} client={props.client} onRefresh={onRefresh} />
         </div>
       </div>

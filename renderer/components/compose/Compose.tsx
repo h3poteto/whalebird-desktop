@@ -41,7 +41,7 @@ export default function Compose(props: Props) {
       })
     }
     const sensitive = document.getElementById('sensitive') as HTMLInputElement
-    if (sensitive.checked) {
+    if (sensitive && sensitive.checked) {
       options = Object.assign({}, options, {
         sensitive: sensitive.checked
       })

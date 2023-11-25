@@ -12,7 +12,9 @@
         "vote": "Vote",
         "people": "{num} people",
         "closed": "Closed"
-      }
+      },
+      "show_more": "Show more",
+      "show_less": "Show less"
     }
   },
   "accounts": {
