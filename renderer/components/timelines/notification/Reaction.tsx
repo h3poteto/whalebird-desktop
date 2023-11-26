@@ -8,6 +8,7 @@ import Card from '../status/Card'
 import Media from '../status/Media'
 import { FaBarsProgress, FaHouse, FaPenToSquare, FaRetweet, FaStar } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
+import { useState } from 'react'
 
 type Props = {
   notification: Entity.Notification
@@ -17,6 +18,7 @@ type Props = {
 
 export default function Reaction(props: Props) {
   const status = props.notification.status
+  const [spoilered, setSpoilered] = useState(status.spoiler_text.length > 0)
   const { formatMessage } = useIntl()
 
   const refresh = async () => {
@@ -61,10 +63,14 @@ export default function Reaction(props: Props) {
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>
-          <Body status={status} className="text-gray-600" />
-          {status.poll && <Poll poll={status.poll} onRefresh={refresh} client={props.client} className="text-gray-600" />}
-          {status.card && <Card card={status.card} />}
-          <Media media={status.media_attachments} />
+          <Body status={status} className="text-gray-600" spoilered={spoilered} setSpoilered={setSpoilered} />
+          {!spoilered && (
+            <>
+              {status.poll && <Poll poll={status.poll} onRefresh={refresh} client={props.client} className="text-gray-600" />}
+              {status.card && <Card card={status.card} />}
+              <Media media={status.media_attachments} sensitive={status.sensitive} />
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -56,7 +56,7 @@ export default function Status(props: Props) {
             <>
               {status.poll && <Poll poll={status.poll} onRefresh={onRefresh} client={props.client} />}
               {status.card && <Card card={status.card} />}
-              <Media media={status.media_attachments} />
+              <Media media={status.media_attachments} sensitive={status.sensitive} />
             </>
           )}
 
