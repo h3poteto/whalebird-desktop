@@ -3,18 +3,21 @@ import { HTMLAttributes, useEffect, useState } from 'react'
 import { FaChevronLeft, FaX } from 'react-icons/fa6'
 import Thread from './Thread'
 import { MegalodonInterface } from 'megalodon'
+import Reply from './Reply'
 
 type Props = {
   client: MegalodonInterface
 } & HTMLAttributes<HTMLElement>
 
 export default function Detail(props: Props) {
-  const [target, setTarget] = useState<'status' | null>(null)
+  const [target, setTarget] = useState<'status' | 'reply' | null>(null)
   const router = useRouter()
 
   useEffect(() => {
     if (router.query.status_id) {
       setTarget('status')
+    } else if (router.query.reply_target_id) {
+      setTarget('reply')
     } else {
       setTarget(null)
     }
@@ -37,6 +40,7 @@ export default function Detail(props: Props) {
             <FaX onClick={close} className="cursor-pointer text-lg" />
           </div>
           {target === 'status' && <Thread client={props.client} status_id={router.query.status_id as string} />}
+          {target === 'reply' && <Reply client={props.client} status_id={router.query.reply_target_id as string} />}
         </div>
       )}
     </>

@@ -1,4 +1,5 @@
 import { Entity, MegalodonInterface } from 'megalodon'
+import { useRouter } from 'next/router'
 import { FaBookmark, FaEllipsis, FaReply, FaRetweet, FaStar } from 'react-icons/fa6'
 
 type Props = {
@@ -8,6 +9,12 @@ type Props = {
 }
 
 export default function Actions(props: Props) {
+  const router = useRouter()
+
+  const reply = async () => {
+    router.push({ query: { id: router.query.id, timeline: router.query.timeline, reply_target_id: props.status.id, detail: true } })
+  }
+
   const reblog = async () => {
     if (props.status.reblogged) {
       await props.client.unreblogStatus(props.status.id)
@@ -37,7 +44,7 @@ export default function Actions(props: Props) {
 
   return (
     <div className="flex gap-6">
-      <FaReply className={`w-4 text-gray-400 cursor-pointer hover:text-gray-600`} />
+      <FaReply className={`w-4 text-gray-400 cursor-pointer hover:text-gray-600`} onClick={reply} />
       <FaRetweet className={`${retweetColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={reblog} />
       <FaStar className={`${favouriteColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={favourite} />
       <FaBookmark className={`${bookmarkColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={bookmark} />

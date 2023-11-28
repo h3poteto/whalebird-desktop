@@ -148,7 +148,7 @@ export default function Timeline(props: Props) {
   }, [firstItemIndex, statuses, setStatuses, unreads])
 
   const timelineClass = () => {
-    if (router.query.status_id) {
+    if (router.query.detail) {
       return 'timeline-with-drawer'
     }
     return 'timeline'
@@ -167,7 +167,7 @@ export default function Timeline(props: Props) {
             </form>
           </div>
         </div>
-        <div className={`overflow-x-hidden`} style={{ height: 'calc(100% - 50px)' }}>
+        <div className="overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
           <Virtuoso
             style={{ height: `calc(100% - ${composeHeight}px)` }}
             scrollerRef={ref => {

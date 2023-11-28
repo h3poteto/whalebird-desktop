@@ -28,7 +28,7 @@ export default function Status(props: Props) {
   }
 
   const openStatus = () => {
-    router.push({ query: { id: router.query.id, timeline: router.query.timeline, status_id: status.id } })
+    router.push({ query: { id: router.query.id, timeline: router.query.timeline, status_id: status.id, detail: true } })
   }
 
   return (

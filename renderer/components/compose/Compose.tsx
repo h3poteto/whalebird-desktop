@@ -7,6 +7,7 @@ import { useToast } from '@/utils/toast'
 
 type Props = {
   client: MegalodonInterface
+  in_reply_to?: Entity.Status
 }
 
 export default function Compose(props: Props) {
@@ -26,6 +27,20 @@ export default function Compose(props: Props) {
       setSpoiler('')
     }
   }, [cw])
+
+  useEffect(() => {
+    if (props.in_reply_to) {
+      const f = async () => {
+        const myself = await props.client.verifyAccountCredentials()
+        const mentionAccounts = [props.in_reply_to.account.acct, ...props.in_reply_to.mentions.map(a => a.acct)]
+          .filter((a, i, self) => self.indexOf(a) === i)
+          .filter(a => a !== myself.data.username)
+        setBody(`${mentionAccounts.map(m => `@${m}`).join(' ')} `)
+        setVisibility(props.in_reply_to.visibility)
+      }
+      f()
+    }
+  }, [props.in_reply_to])
 
   const post = async () => {
     if (body.length === 0) return
