@@ -1,5 +1,5 @@
-import { Checkbox, Dropdown, Label, Spinner, TextInput, Textarea } from 'flowbite-react'
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { Button, Checkbox, Dropdown, Label, Radio, Select, Spinner, TextInput, Textarea, ToggleSwitch } from 'flowbite-react'
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FaEnvelope, FaGlobe, FaListCheck, FaLock, FaLockOpen, FaPaperPlane, FaPaperclip, FaXmark } from 'react-icons/fa6'
 import { Entity, MegalodonInterface } from 'megalodon'
@@ -10,12 +10,19 @@ type Props = {
   in_reply_to?: Entity.Status
 }
 
+type Poll = {
+  options: Array<string>
+  expires_in: number
+  multiple: boolean
+}
+
 export default function Compose(props: Props) {
   const [body, setBody] = useState('')
   const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
   const [cw, setCW] = useState(false)
   const [spoiler, setSpoiler] = useState('')
   const [attachments, setAttachments] = useState<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
+  const [poll, setPoll] = useState<Poll | null>(null)
   const [loading, setLoading] = useState(false)
 
   const { formatMessage } = useIntl()
@@ -61,6 +68,11 @@ export default function Compose(props: Props) {
         sensitive: sensitive.checked
       })
     }
+    if (poll && poll.options.length > 0) {
+      options = Object.assign({}, options, {
+        poll: poll
+      })
+    }
     setLoading(true)
     try {
       await props.client.postStatus(body, options)
@@ -75,6 +87,7 @@ export default function Compose(props: Props) {
     setSpoiler('')
     setCW(false)
     setAttachments([])
+    setPoll(null)
   }
 
   const selectFile = () => {
@@ -107,6 +120,14 @@ export default function Compose(props: Props) {
     setAttachments(current => current.filter((_, i) => i !== index))
   }
 
+  const togglePoll = () => {
+    if (poll) {
+      setPoll(null)
+    } else {
+      setPoll(defaultPoll())
+    }
+  }
+
   return (
     <div className="px-4 pb-4">
       <form id="form">
@@ -130,6 +151,7 @@ export default function Compose(props: Props) {
           onChange={ev => setBody(ev.target.value)}
         />
       </form>
+      {poll && <PollForm poll={poll} setPoll={setPoll} />}
       <div className="attachments flex gap-2">
         {attachments.map((f, index) => (
           <div className="py-2 relative" key={index}>
@@ -154,7 +176,7 @@ export default function Compose(props: Props) {
         <div className="ml-1 flex gap-3">
           <input type="file" id="file" className="hidden" ref={uploaderRef} onChange={fileChanged} />
           <FaPaperclip className="text-gray-400 hover:text-gray-600 cursor-pointer" onClick={selectFile} />
-          <FaListCheck className="text-gray-400 hover:text-gray-600 cursor-pointer" />
+          <FaListCheck className="text-gray-400 hover:text-gray-600 cursor-pointer" onClick={togglePoll} />
           <Dropdown label="" dismissOnClick={true} placement="top" renderTrigger={() => visibilityIcon(visibility)}>
             <Dropdown.Item onClick={() => setVisibility('public')}>
               <FormattedMessage id="compose.visibility.public" />
@@ -215,4 +237,99 @@ const visibilityIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct'
         </span>
       )
   }
+}
+
+const defaultPoll = () => ({
+  options: ['', ''],
+  expires_in: 86400,
+  multiple: false
+})
+
+type PollProps = {
+  poll: Poll
+  setPoll: Dispatch<SetStateAction<Poll>>
+}
+
+const PollForm = (props: PollProps) => {
+  const { formatMessage } = useIntl()
+
+  const expiresList = [
+    { label: formatMessage({ id: 'compose.poll.5min' }), value: 300 },
+    { label: formatMessage({ id: 'compose.poll.30min' }), value: 1800 },
+    { label: formatMessage({ id: 'compose.poll.1h' }), value: 3600 },
+    { label: formatMessage({ id: 'compose.poll.6h' }), value: 21600 },
+    { label: formatMessage({ id: 'compose.poll.1d' }), value: 86400 },
+    { label: formatMessage({ id: 'compose.poll.3d' }), value: 259200 },
+    { label: formatMessage({ id: 'compose.poll.7d' }), value: 604800 }
+  ]
+
+  const addOption = () => {
+    props.setPoll(current =>
+      Object.assign({}, current, {
+        options: [...current.options, '']
+      })
+    )
+  }
+
+  const removeOption = (index: number) => {
+    props.setPoll(current =>
+      Object.assign({}, current, {
+        options: current.options.filter((_, i) => i !== index)
+      })
+    )
+  }
+
+  const updateOption = (index: number, value: string) => {
+    props.setPoll(current =>
+      Object.assign({}, current, {
+        options: current.options.map((original, i) => (i === index ? value : original))
+      })
+    )
+  }
+
+  const changeMultiple = (value: boolean) => {
+    props.setPoll(current =>
+      Object.assign({}, current, {
+        multiple: value
+      })
+    )
+  }
+
+  const changeExpire = (value: number) => {
+    props.setPoll(current =>
+      Object.assign({}, current, {
+        expires_in: value
+      })
+    )
+  }
+
+  return (
+    <div className="pt-1">
+      {props.poll.options.map((option, index) => (
+        <div className="flex items-center gap-3 py-1" key={index}>
+          {props.poll.multiple ? <Checkbox disabled /> : <Radio disabled />}
+          <TextInput sizing="sm" value={option} onChange={ev => updateOption(index, ev.target.value)} />
+          <FaXmark className="text-gray-400 cursor-pointer" onClick={() => removeOption(index)} />
+        </div>
+      ))}
+      <div className="flex gap-3 pt-2">
+        <Button onClick={addOption} color="light">
+          <FormattedMessage id="compose.poll.add" />
+        </Button>
+        <Select id="expires" onChange={e => changeExpire(parseInt(e.target.value))}>
+          {expiresList.map((expire, index) => (
+            <option value={expire.value} key={index}>
+              {expire.label}
+            </option>
+          ))}
+        </Select>
+      </div>
+      <ToggleSwitch
+        checked={props.poll.multiple}
+        onChange={v => changeMultiple(v)}
+        className="mt-2"
+        label={formatMessage({ id: 'compose.poll.multiple' })}
+      />
+    </div>
+  )
 }

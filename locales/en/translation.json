@@ -79,7 +79,18 @@
       "private": "Private",
       "direct": "Direct"
     },
-    "nsfw": "Sensitive"
+    "nsfw": "Sensitive",
+    "poll": {
+      "add": "Add a choice",
+      "5min": "5 minutes",
+      "30min": "30 minutes",
+      "1h": "1 hour",
+      "6h": "6 hours",
+      "1d": "1 day",
+      "3d": "3 days",
+      "7d": "7 days",
+      "multiple": "multiple"
+    }
   },
   "alert": {
     "validation": {
