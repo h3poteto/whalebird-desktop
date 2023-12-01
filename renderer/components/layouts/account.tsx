@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FaPlus } from 'react-icons/fa6'
 import { Account, db } from '@/db'
 import NewAccount from '@/components/accounts/New'
 import { Avatar, Dropdown } from 'flowbite-react'
 import { useRouter } from 'next/router'
+import { useIntl } from 'react-intl'
+import generateNotification from '@/utils/notification'
+import generator, { Entity, WebSocketInterface } from 'megalodon'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -13,6 +16,8 @@ export default function Layout({ children }: LayoutProps) {
   const [accounts, setAccounts] = useState<Array<Account>>([])
   const [openNewModal, setOpenNewModal] = useState(false)
   const router = useRouter()
+  const { formatMessage } = useIntl()
+  const streamings = useRef<Array<WebSocketInterface>>([])
 
   useEffect(() => {
     const fn = async () => {
@@ -21,8 +26,34 @@ export default function Layout({ children }: LayoutProps) {
       if (acct.length === 0) {
         setOpenNewModal(true)
       }
+      acct.forEach(async account => {
+        // Start user streaming for notification
+        const client = generator(account.sns, account.url, account.access_token, 'Whalebird')
+        const instance = await client.getInstance()
+        const ws = generator(account.sns, instance.data.urls.streaming_api, account.access_token, 'Whalebird')
+        const socket = ws.userSocket()
+        streamings.current = [...streamings.current, socket]
+        socket.on('connect', () => {
+          console.log(`connect to user streaming for ${account.domain}`)
+        })
+        socket.on('notification', (notification: Entity.Notification) => {
+          const [title, body] = generateNotification(notification, formatMessage)
+          if (title.length > 0) {
+            new window.Notification(title, { body: body })
+          }
+        })
+      })
     }
     fn()
+
+    return () => {
+      streamings.current.forEach(streaming => {
+        streaming.removeAllListeners()
+        streaming.stop()
+      })
+      streamings.current = []
+      console.log('close user streaming')
+    }
   }, [])
 
   const closeNewModal = async () => {
