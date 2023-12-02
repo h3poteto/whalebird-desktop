@@ -33,7 +33,7 @@
     "@types/react": "^18.0.26",
     "@types/sanitize-html": "^2.9.4",
     "autoprefixer": "^10.4.16",
-    "electron": "^26.2.2",
+    "electron": "^27.0.0",
     "electron-builder": "^24.6.4",
     "next": "^12.3.4",
     "nextron": "^8.12.0",
