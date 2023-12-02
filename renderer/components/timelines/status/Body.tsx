@@ -8,6 +8,7 @@ type Props = {
   status: Entity.Status
   spoilered: boolean
   setSpoilered: Dispatch<SetStateAction<boolean>>
+  onClick?: (e: any) => void
 } & HTMLAttributes<HTMLElement>
 
 export default function Body(props: Props) {
@@ -41,6 +42,7 @@ export default function Body(props: Props) {
           className={`${props.className} raw-html`}
           style={Object.assign({ wordWrap: 'break-word' }, props.style)}
           dangerouslySetInnerHTML={{ __html: emojify(props.status.content, props.status.emojis) }}
+          onClick={props.onClick}
         />
       )}
     </>
