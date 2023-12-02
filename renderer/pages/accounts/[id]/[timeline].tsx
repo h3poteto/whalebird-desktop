@@ -2,13 +2,15 @@ import { useRouter } from 'next/router'
 import Timeline from '@/components/timelines/Timeline'
 import { useEffect, useState } from 'react'
 import { Account, db } from '@/db'
-import generator, { MegalodonInterface } from 'megalodon'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import Notifications from '@/components/timelines/Notifications'
+import Media from '@/components/Media'
 
 export default function Page() {
   const router = useRouter()
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>(null)
+  const [attachment, setAttachment] = useState<Entity.Attachment | null>(null)
 
   useEffect(() => {
     if (router.query.id) {
@@ -28,10 +30,15 @@ export default function Page() {
   if (!account || !client) return null
   switch (router.query.timeline as string) {
     case 'notifications': {
-      return <Notifications account={account} client={client} />
+      return <Notifications account={account} client={client} setAttachment={setAttachment} />
     }
     default: {
-      return <Timeline timeline={router.query.timeline as string} account={account} client={client} />
+      return (
+        <>
+          <Timeline timeline={router.query.timeline as string} account={account} client={client} setAttachment={setAttachment} />
+          <Media open={attachment !== null} close={() => setAttachment(null)} attachment={attachment} />
+        </>
+      )
     }
   }
 }

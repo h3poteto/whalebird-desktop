@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 type Props = {
   client: MegalodonInterface
   user_id: string
+  openMedia: (media: Entity.Attachment) => void
 }
 
 export default function Timeline(props: Props) {
@@ -45,6 +46,7 @@ export default function Timeline(props: Props) {
           status={status}
           key={index}
           onRefresh={status => setStatuses(current => updateStatus(current, status))}
+          openMedia={props.openMedia}
         />
       ))}
     </>
