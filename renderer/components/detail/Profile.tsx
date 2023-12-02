@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FormattedMessage, useIntl } from 'react-intl'
 import Timeline from './profile/Timeline'
+import Followings from './profile/Followings'
 
 type Props = {
   client: MegalodonInterface
@@ -88,7 +89,7 @@ export default function Profile(props: Props) {
                 </div>
               </div>
               <div className="pt-4">
-                <div className="font-bold">{user.display_name}</div>
+                <div className="font-bold" dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
                 <div className="text-gray-500">@{user.acct}</div>
                 <div className="mt-4 raw-html">
                   <span
@@ -111,7 +112,9 @@ export default function Profile(props: Props) {
                 <Tabs.Item active title={formatMessage({ id: 'profile.timeline' })}>
                   <Timeline client={props.client} user_id={props.user_id} />
                 </Tabs.Item>
-                <Tabs.Item title={formatMessage({ id: 'profile.followings' })}>followings</Tabs.Item>
+                <Tabs.Item title={formatMessage({ id: 'profile.followings' })}>
+                  <Followings client={props.client} user_id={props.user_id} />
+                </Tabs.Item>
                 <Tabs.Item title={formatMessage({ id: 'profile.followers' })} className="focus:ring-0">
                   followers
                 </Tabs.Item>
