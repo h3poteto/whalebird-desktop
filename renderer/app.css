@@ -35,3 +35,30 @@
 .raw-html .invisible {
   display: none;
 }
+
+.timeline-scrollable {
+  overflow-y: auto;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(203 213 225);
+    border-radius: 4px !important;
+    opacity: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 4px !important;
+    background-color: rgb(241 245 249);
+  }
+
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      opacity: 1;
+    }
+  }
+}

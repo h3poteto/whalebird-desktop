@@ -173,6 +173,7 @@ export default function Timeline(props: Props) {
             scrollerRef={ref => {
               scrollerRef.current = ref as HTMLElement
             }}
+            className="timeline-scrollable"
             firstItemIndex={firstItemIndex}
             atTopStateChange={prependUnreads}
             data={statuses}

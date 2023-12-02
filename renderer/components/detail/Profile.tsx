@@ -55,7 +55,7 @@ export default function Profile(props: Props) {
   }
 
   return (
-    <div style={{ height: 'calc(100% - 50px)' }} className="overflow-y-auto">
+    <div style={{ height: 'calc(100% - 50px)' }} className="overflow-y-auto timeline-scrollable">
       <Flowbite theme={{ theme: customTheme }}>
         {user && relationship && (
           <>
