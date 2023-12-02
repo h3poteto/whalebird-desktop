@@ -31,16 +31,20 @@ export default function Status(props: Props) {
     router.push({ query: { id: router.query.id, timeline: router.query.timeline, status_id: status.id, detail: true } })
   }
 
+  const openUser = (id: string) => {
+    router.push({ query: { id: router.query.id, timeline: router.query.timeline, user_id: id, detail: true } })
+  }
+
   return (
     <div className="border-b mr-2 py-1">
       {rebloggedHeader(props.status)}
       <div className="flex">
-        <div className="p-2" style={{ width: '56px' }}>
-          <Avatar img={status.account.avatar} />
+        <div className="p-2 cursor-pointer" style={{ width: '56px' }}>
+          <Avatar img={status.account.avatar} onClick={() => openUser(status.account.id)} />
         </div>
         <div className="text-gray-950 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex justify-between">
-            <div className="flex">
+            <div className="flex cursor-pointer" onClick={() => openUser(status.account.id)}>
               <span
                 className="text-gray-950 text-ellipsis break-all overflow-hidden"
                 dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }}

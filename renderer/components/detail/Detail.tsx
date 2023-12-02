@@ -4,13 +4,14 @@ import { FaChevronLeft, FaX } from 'react-icons/fa6'
 import Thread from './Thread'
 import { MegalodonInterface } from 'megalodon'
 import Reply from './Reply'
+import Profile from './Profile'
 
 type Props = {
   client: MegalodonInterface
 } & HTMLAttributes<HTMLElement>
 
 export default function Detail(props: Props) {
-  const [target, setTarget] = useState<'status' | 'reply' | null>(null)
+  const [target, setTarget] = useState<'status' | 'reply' | 'profile' | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -18,6 +19,8 @@ export default function Detail(props: Props) {
       setTarget('status')
     } else if (router.query.reply_target_id) {
       setTarget('reply')
+    } else if (router.query.user_id) {
+      setTarget('profile')
     } else {
       setTarget(null)
     }
@@ -41,6 +44,7 @@ export default function Detail(props: Props) {
           </div>
           {target === 'status' && <Thread client={props.client} status_id={router.query.status_id as string} />}
           {target === 'reply' && <Reply client={props.client} status_id={router.query.reply_target_id as string} />}
+          {target === 'profile' && <Profile client={props.client} user_id={router.query.user_id as string} />}
         </div>
       )}
     </>

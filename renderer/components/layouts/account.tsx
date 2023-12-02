@@ -52,7 +52,7 @@ export default function Layout({ children }: LayoutProps) {
         streaming.stop()
       })
       streamings.current = []
-      console.log('close user streaming')
+      console.log('close user streamings')
     }
   }, [])
 

@@ -31,3 +31,7 @@
     width: 100%;
   }
 }
+
+.raw-html .invisible {
+  display: none;
+}

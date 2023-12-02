@@ -97,5 +97,10 @@
       "attachment_type": "You can attach only images or videos"
     },
     "upload_error": "Failed to upload the file"
+  },
+  "profile": {
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "open_original": "Open original page"
   }
 }
