@@ -1,0 +1,24 @@
+name: Lint
+
+on:
+  pull_request:
+
+jobs:
+  reviewdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install
+        run: |
+          yarn install
+      - uses: reviewdog/action-setup@v1
+      - name: Run eslint
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ github.token }}
+        run: |
+          yarn run lint | reviewdog -f=eslint -reporter=github-pr-review -fail-on-error=true
