@@ -3,7 +3,7 @@
 [![GitHub release](http://img.shields.io/github/release/h3poteto/whalebird-desktop.svg)](https://github.com/h3poteto/whalebird-desktop/releases)
 [![Mac App Store](https://img.shields.io/itunes/v/6445864587)](https://apps.apple.com/us/app/whalebird/id6445864587)
 [![AUR version](https://img.shields.io/aur/version/whalebird)](https://aur.archlinux.org/packages/whalebird/)
-[![Crowdin](https://badges.crowdin.net/whalebird/localized.svg)](https://crowdin.com/project/whalebird)
+[![Crowdin](https://badges.crowdin.net/whalebird-desktop/localized.svg)](https://crowdin.com/project/whalebird-desktop)
 
 
 Whalebird is a Fediverse client app for desktop.
@@ -72,7 +72,7 @@ $ winget show "Whalebird" --versions
 ```
 
 ## Translation
-If you can speak multiple languages, could you please help with translation in [Crowdin](https://crowdin.com/project/whalebird)?
+If you can speak multiple languages, could you please help with translation in [Crowdin](https://crowdin.com/project/whalebird-desktop)?
 
 Or if you want add new language, please create an issue. I will add it.
 
