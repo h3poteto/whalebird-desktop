@@ -26,7 +26,7 @@
       "toggle_full_screen": "Víxla skjáfylli af/á"
     },
     "window": {
-      "always_show_menu_bar": "Always show menu bar",
+      "always_show_menu_bar": "Alltaf sýna valmyndastiku",
       "name": "Gluggi",
       "close": "Loka glugga",
       "open": "Opna glugga",
@@ -35,7 +35,7 @@
     },
     "help": {
       "name": "Hjálp",
-      "thirdparty": "Thirdparty licenses"
+      "thirdparty": "Notkunarleyfi utanaðkomandi aðila"
     }
   },
   "global_header": {
@@ -45,7 +45,7 @@
     "profile": "Notandasnið",
     "show_profile": "Birta notandasnið",
     "edit_profile": "Breyta notandasniði",
-    "settings": "Account settings",
+    "settings": "Stillingar aðgangs",
     "collapse": "Fella saman",
     "expand": "Fletta út",
     "home": "Heim",
@@ -83,7 +83,7 @@
         "title": "Færslur",
         "visibility": {
           "description": "Sjálfgefinn sýnileiki færslna",
-          "notice": "This setting applies only to new posts; replies will follow the visibility settings of the parent post.",
+          "notice": "Þessi stilling á aðeins við nýjar færslur, svör taka mið af sýnileika upprunalegra færslna.",
           "public": "Opinbert",
           "unlisted": "Óskráð",
           "private": "Einka",
@@ -142,21 +142,21 @@
       "title": "Almennt",
       "sounds": {
         "title": "Hljóð",
-        "description": "Play sounds when",
-        "fav_rb": "You favourite or boost a post",
-        "toot": "You make a post"
+        "description": "Spila hljóð þegar",
+        "fav_rb": "Þú setur færslu í eftirlæti eða endurbirtir",
+        "toot": "Þú birtir færslu"
       },
       "timeline": {
         "title": "Tímalína",
-        "description": "Customize how your timelines are displayed",
+        "description": "Sérsníddu hvernig tímalínurnar þínar birtast",
         "cw": "Alltaf fletta út færslum sem eru með aðvörun vegna efnis.",
         "nsfw": "Alltaf birta myndefni.",
         "hideAllAttachments": "Alltaf fela myndefni."
       },
       "other": {
         "title": "Aðrir valkostir",
-        "launch": "Launch Whalebird on startup",
-        "hideOnLaunch": "Hide the Whalebird window on launch"
+        "launch": "Keyra Whalebird í ræsingu",
+        "hideOnLaunch": "Fela Whalebird-gluggann við ræsingu"
       },
       "reset": {
         "button": "Frumstilla kjörstillingar"
@@ -184,13 +184,13 @@
         "secondary_color": "Aukaletur",
         "border_color": "Jaðar",
         "header_menu_color": "Valmynd í haus",
-        "wrapper_mask_color": "Dialog wrapper"
+        "wrapper_mask_color": "Rammi samskiptaglugga"
       },
       "font_size": "Leturstærð",
       "font_family": "Leturgerð",
       "toot_padding": "Fylling í kringum færslur",
       "display_style": {
-        "title": "Username display style",
+        "title": "Snið birtingarnafns",
         "display_name_and_username": "Birtingarnafn og notandanafn",
         "display_name": "Birtingarnafn",
         "username": "Notandanafn"
@@ -209,16 +209,16 @@
         "reblog": "Endurbirtingar",
         "favourite": "Eftirlæti",
         "follow": "Nýja fylgjendur",
-        "reaction": "Emoji reactions",
+        "reaction": "Viðbrögð með emoji-táknum",
         "follow_request": "Beiðnir um að fylgjast með",
-        "status": "Status notifications",
-        "poll_vote": "Poll votes",
-        "poll_expired": "When a poll expires"
+        "status": "Stöðutilkynningar",
+        "poll_vote": "Atkvæði í könnun",
+        "poll_expired": "Þegar könnun lýkur"
       }
     },
     "account": {
       "title": "Notandaaðgangur",
-      "connected": "Connected accounts",
+      "connected": "Tengdir aðgangar",
       "username": "Notandanafn",
       "domain": "Lén",
       "association": "Tengsl",
@@ -227,12 +227,12 @@
       "remove_all_associations": "Fjarlægja öll tengsl",
       "confirm": "Staðfesta",
       "cancel": "Hætta við",
-      "confirm_message": "Are you sure you want to remove all associations?"
+      "confirm_message": "Ertu viss um að þú viljir fjarlægja öll tengsl ?"
     },
     "network": {
       "title": "Netkerfi",
       "proxy": {
-        "title": "Proxy configuration",
+        "title": "Uppsetning milliþjóns (proxy)",
         "no": "Enginn milliþjónn",
         "system": "Nota milliþjón kerfis",
         "manual": "Handvirk uppsetning milliþjóns (proxy)\n",
@@ -260,7 +260,7 @@
       },
       "spellchecker": {
         "title": "Yfirfara stafsetningu",
-        "enabled": "Enable spell checker"
+        "enabled": "Virkja stafsetningarleiðréttingu"
       }
     }
   },
@@ -269,15 +269,15 @@
       "jump_to": "Hoppa á..."
     },
     "add_list_member": {
-      "title": "Add member to List",
+      "title": "Bæta meðlimi á lista",
       "account_name": "Heiti notandaaðgangs"
     },
     "list_membership": {
-      "title": "List memberships"
+      "title": "Listi yfir meðlimi"
     },
     "mute_confirm": {
-      "title": "Mute user",
-      "body": "Are you sure you want to mute notifications from this user?",
+      "title": "Þagga niður í notanda",
+      "body": "Ertu viss um að þú viljir þagga tilkynningar frá þessum notanda?",
       "cancel": "Hætta við",
       "ok": "Þagga niður"
     },
@@ -285,28 +285,28 @@
       "title": "Flýtileiðir á lyklaborði",
       "ctrl_number": "Skipta um notandaaðgang",
       "ctrl_k": "Hoppa á aðrar tímalínur",
-      "ctrl_enter": "Send the post",
-      "ctrl_r": "Refresh current timeline",
-      "j": "Select the next post",
-      "k": "Select the previous post",
-      "r": "Reply to the selected post",
-      "b": "Boost the selected post",
-      "f": "Favourite the selected post",
-      "o": "View the selected post's details",
-      "p": "Display the profile of the selected post's author",
-      "i": "Open the selected post's images",
-      "x": "Show/hide a content warned post",
-      "?": "Show this dialog",
+      "ctrl_enter": "Senda færsluna",
+      "ctrl_r": "Endurlesa núverandi tímalínu",
+      "j": "Velja næstu færslu",
+      "k": "Velja fyrri færslu",
+      "r": "Svara valinni færslu",
+      "b": "Endurbirta valda færslu",
+      "f": "Setja valda færslu í eftirlæti",
+      "o": "Sjá nánari upplýsingar um valda færslu",
+      "p": "Birta notandasnið höfundar valinnar færslu",
+      "i": "Opna myndir í valinni færslu",
+      "x": "Sýna/Fela færslu með aðvörun vegna efnis",
+      "?": "Sýna þennan glugga",
       "esc": "Loka núverandi síðu"
     },
     "report": {
-      "title": "Report this user",
+      "title": "Kæra þennan notanda",
       "comment": "Aðrar athugasemdir",
       "cancel": "Hætta við",
       "ok": "Tilkynna"
     },
     "thirdparty": {
-      "title": "Thirdparty licenses"
+      "title": "Notkunarleyfi utanaðkomandi aðila"
     }
   },
   "cards": {
@@ -314,9 +314,9 @@
       "show_more": "Sýna meira",
       "hide": "Fela",
       "sensitive": "Birta viðkvæmt myndefni",
-      "view_toot_detail": "View post details",
-      "open_in_browser": "Open in browser",
-      "copy_link_to_toot": "Copy post link",
+      "view_toot_detail": "Sjá nánar um færsluna",
+      "open_in_browser": "Opna í vafra",
+      "copy_link_to_toot": "Afrita tengil færslu",
       "mute": "Þagga niður",
       "block": "Útiloka",
       "report": "Tilkynna",
@@ -325,9 +325,9 @@
       "reply": "Svara",
       "reblog": "Endurbirta",
       "fav": "Eftirlæti",
-      "detail": "Post details",
+      "detail": "Nánar um færslu",
       "bookmark": "Bókamerki",
-      "pinned": "Pinned post",
+      "pinned": "Fest færsla",
       "poll": {
         "vote": "Greiða atkvæði",
         "votes_count": "atkvæði",
@@ -337,7 +337,7 @@
       },
       "open_account": {
         "title": "Notandaaðgangur fannst ekki",
-        "text": "Could not find {{account}} on the server. Do you want to open the account in a browser instead?",
+        "text": "Fann ekki {{account}} á netþjóninum. Viltu í staðinn opna aðganginn í vafra?",
         "ok": "Opna",
         "cancel": "Hætta við"
       }
@@ -353,11 +353,11 @@
       "detail": "Nánar",
       "follow": "Fylgjast með þessum notanda",
       "unfollow": "Hætta að fylgjast með þessum notanda",
-      "subscribe": "Subscribe to this user",
-      "unsubscribe": "Unsubscribe from this user",
+      "subscribe": "Gerast áskrifandi að þessum notanda",
+      "unsubscribe": "Hætta sem áskrifandi að þessum notanda",
       "follow_requested": "Beðið um að fylgja",
-      "open_in_browser": "Open in browser",
-      "manage_list_memberships": "Manage list memberships",
+      "open_in_browser": "Opna í vafra",
+      "manage_list_memberships": "Sýsla með lista yfir meðlimi",
       "mute": "Þagga niður",
       "unmute": "Ekki þagga",
       "unblock": "Aflétta útilokun",
@@ -380,8 +380,8 @@
     "search": "Leita",
     "account": "Notandaaðgangur",
     "tag": "Myllumerki",
-    "keyword": "Keyword",
-    "toot": "Post"
+    "keyword": "Stikkorð",
+    "toot": "Færsla"
   },
   "lists": {
     "index": {
@@ -390,7 +390,7 @@
       "delete": {
         "confirm": {
           "title": "Staðfesta",
-          "message": "This list will be permanently deleted. Are you sure you want to continue?",
+          "message": "Þessum lista verður endanlega eytt. Ertu viss um að þú viljir halda áfram?",
           "ok": "Eyða",
           "cancel": "Hætta við"
         }
@@ -398,21 +398,21 @@
     }
   },
   "login": {
-    "domain_name_label": "Welcome to Whalebird! Enter a server domain name to log into an account.",
-    "proxy_info": "If you need to use a proxy server, please set it up",
+    "domain_name_label": "Velkomin í Whalebird! Settu inn nafn á lénsþjóni til að skrá inn á notandaaðgang.",
+    "proxy_info": "Ef þú ætlar að nota milliþjón (proxy), skaltu setja hann upp",
     "proxy_here": " hér",
     "search": "Leita",
     "login": "Innskráning"
   },
   "authorize": {
     "manually_1": "Auðkenningarsíða hefur opnast í vafranum þínum.",
-    "manually_2": "If it has not yet opened, please go to the following URL manually:",
-    "code_label": "Enter your authorization code:",
+    "manually_2": "Ef hún hefur ekki opnast sjálfkrafa, skaltu fara handvirkt á eftirfarandi slóð:",
+    "code_label": "Settu inn auðkenningarkóðann þinn:",
     "misskey_label": "Sendu inn eftir að þú hefur auðkennt þig í vafranum þínum.",
     "submit": "Senda inn"
   },
   "receive_drop": {
-    "drop_message": "Drop here to attach a file"
+    "drop_message": "Slepptu hér til að hengja við skrá"
   },
   "message": {
     "account_load_error": "Mistókst að hlaða inn notendaaðgöngum",
@@ -429,7 +429,7 @@
     "authorize_error": "Tókst ekki að auðkenna",
     "followers_fetch_error": "Mistókst að sækja fylgjendur",
     "follows_fetch_error": "Mistókst að sækja þá sem fylgst er með",
-    "toot_fetch_error": "Failed to fetch the post details",
+    "toot_fetch_error": "Mistókst að sækja nánari upplýsingar um færslu",
     "follow_error": "Mistókst að fylgjast með notandanum",
     "unfollow_error": "Mistókst að hætta að fylgjast með notandanum",
     "subscribe_error": "Mistókst að gerast áskrifandi að þessum notanda",
@@ -439,22 +439,22 @@
     "members_fetch_error": "Mistókst að sækja meðlimi",
     "remove_user_error": "Mistókst að fjarlægja notandann",
     "find_account_error": "Notandaaðgangur fannst ekki",
-    "reblog_error": "Failed to boost",
-    "unreblog_error": "Failed to unboost",
+    "reblog_error": "Mistókst að endurbirta",
+    "unreblog_error": "Mistókst að taka úr endurbirtingu",
     "favourite_error": "Mistókst að setja í eftirlæti",
     "unfavourite_error": "FMistókst að taka úr eftirlætum",
     "bookmark_error": "Mistókst að vista bókamerki",
     "unbookmark_error": "Mistókst að fjarlægja bókamerki",
-    "delete_error": "Failed to delete the post",
+    "delete_error": "Mistókst að eyða færslunni",
     "search_error": "Tókst ekki að leita",
-    "toot_error": "Failed to create the post",
+    "toot_error": "Mistókst að útbúa færsluna",
     "update_list_memberships_error": "Mistókst að uppfæra lista yfir meðlimi",
     "add_user_error": "Mistókst að bæta við notanda",
     "authorize_url_error": "Tókst ekki að fá auðkenningarslóð",
-    "domain_confirmed": "{{domain}} is confirmed, please log in",
-    "domain_doesnt_exist": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
+    "domain_confirmed": "{{domain}} er staðfest, skráðu þig inn",
+    "domain_doesnt_exist": "Mistókst að tengjast við {{domain}}, yfirfarðu slóð netþjónsins.",
     "loading": "Hleð inn...",
-    "language_not_support_spellchecker_error": "This language is not supported by the spell checker",
+    "language_not_support_spellchecker_error": "Þetta tungumál er ekki stutt af stafsetningaryfirferðinni",
     "update_filter_error": "Mistókst að uppfæra síuna",
     "create_filter_error": "Mistókst að útbúa síuna"
   },
@@ -464,17 +464,17 @@
       "domain_format": "Settu einungis inn heiti lénsins"
     },
     "compose": {
-      "toot_length": "Post length should be between {{min}} and {{max}}",
-      "attach_length": "You can only attach up to {{max}} image",
-      "attach_length_plural": "You can only attach up to {{max}} images",
-      "attach_image": "You can only attach images or videos",
-      "poll_invalid": "Invalid poll choices"
+      "toot_length": "Lengd færslu ætti að vera á milli {{min}} og {{max}}",
+      "attach_length": "Þú getur einungis hengt við {{max}} mynd",
+      "attach_length_plural": "Þú getur einungis hengt við {{max}} myndir",
+      "attach_image": "Þú getur einungis hengt við myndir eða myndskeið",
+      "poll_invalid": "Ógildir valkostir í könnun"
     }
   },
   "notification": {
     "favourite": {
       "title": "Nýtt eftirlæti",
-      "body": "{{username}} favourited your post"
+      "body": "{{username}} setti færsluna þína í eftirlæti"
     },
     "follow": {
       "title": "Nýr fylgjandi",
@@ -486,54 +486,54 @@
     },
     "reblog": {
       "title": "Ný endurbirting",
-      "body": "{{username}} boosted your post"
+      "body": "{{username}} endurbirti færsluna þína"
     },
     "quote": {
-      "title": "New quote",
-      "body": "{{username}} quoted your post"
+      "title": "Ný tilvitnun",
+      "body": "{{username}} vitnaði í færsluna þína"
     },
     "reaction": {
-      "title": "New reaction",
-      "body": "{{username}} reacted to your post"
+      "title": "Ný viðbrögð",
+      "body": "{{username}} brást við færslunni þinni"
     },
     "status": {
-      "title": "New post",
-      "body": "{{username}} made a new post"
+      "title": "Ný færsla",
+      "body": "{{username}} birti nýja færslu"
     },
     "poll_vote": {
-      "title": "New poll vote",
-      "body": "{{username}} voted in your poll"
+      "title": "Nýtt atkvæði í könnun",
+      "body": "{{username}} greiddi atkvæði í könnuninni þinni"
     },
     "poll_expired": {
-      "title": "Poll expired",
-      "body": "{{username}}'s poll has ended"
+      "title": "Útrunnin könnun",
+      "body": "Könnun hjá {{username}} er lokið"
     }
   },
   "compose": {
-    "title": "New post",
-    "cw": "Write your warning here",
-    "status": "What's on your mind?",
+    "title": "Ný færsla",
+    "cw": "Skrifaðu aðvörunina þína hér",
+    "status": "Hvað liggur þér á hjarta?",
     "cancel": "Hætta við",
-    "toot": "Post",
-    "description": "Add alternate text for this media",
+    "toot": "Birta",
+    "description": "Bættu við skýringatexta fyrir þetta myndefni",
     "footer": {
       "add_image": "Bæta við myndum",
-      "poll": "Add a poll",
-      "change_visibility": "Change visibility",
-      "change_sensitive": "Mark media as sensitive",
-      "add_cw": "Add content warnings",
-      "pined_hashtag": "Pinned hashtag"
+      "poll": "Bæta við könnun",
+      "change_visibility": "Breyta sýnileika",
+      "change_sensitive": "Merkja myndefni sem viðkvæmt",
+      "add_cw": "Bæta við aðvörun vegna efnis",
+      "pined_hashtag": "Fest myllumerki"
     },
     "poll": {
-      "add_choice": "Add an option",
+      "add_choice": "Bæta við valkosti",
       "expires": {
-        "5_minutes": "5 minutes",
-        "30_minutes": "30 minutes",
-        "1_hour": "1 hour",
-        "6_hours": "6 hours",
-        "1_day": "1 day",
-        "3_days": "3 days",
-        "7_days": "7 days"
+        "5_minutes": "5 mínútur",
+        "30_minutes": "30 mínútur",
+        "1_hour": "1 klukkustund",
+        "6_hours": "6 klukkustundir",
+        "1_day": "1 dagur",
+        "3_days": "3 dagar",
+        "7_days": "7 dagar"
       }
     }
   }
