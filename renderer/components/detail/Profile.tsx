@@ -1,12 +1,13 @@
 import emojify from '@/utils/emojify'
 import { Avatar, Button, CustomFlowbiteTheme, Dropdown, Flowbite, Tabs } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { useEffect, useState } from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FormattedMessage, useIntl } from 'react-intl'
 import Timeline from './profile/Timeline'
 import Followings from './profile/Followings'
 import Followers from './profile/Followers'
+import { findLink } from '@/utils/statusParser'
 
 type Props = {
   client: MegalodonInterface
@@ -55,6 +56,15 @@ export default function Profile(props: Props) {
     global.ipc.invoke('open-browser', url)
   }
 
+  const profileClicked: MouseEventHandler<HTMLDivElement> = async e => {
+    const url = findLink(e.target as HTMLElement, 'profile')
+    if (url) {
+      global.ipc.invoke('open-browser', url)
+      e.preventDefault()
+      e.stopPropagation()
+    }
+  }
+
   return (
     <div style={{ height: 'calc(100% - 50px)' }} className="overflow-y-auto timeline-scrollable">
       <Flowbite theme={{ theme: customTheme }}>
@@ -93,13 +103,13 @@ export default function Profile(props: Props) {
               <div className="pt-4">
                 <div className="font-bold" dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
                 <div className="text-gray-500">@{user.acct}</div>
-                <div className="mt-4 raw-html">
+                <div className="mt-4 raw-html profile" onClick={profileClicked}>
                   <span
                     dangerouslySetInnerHTML={{ __html: emojify(user.note, user.emojis) }}
                     className="overflow-hidden break-all text-gray-800"
                   />
                 </div>
-                <div className="bg-gray-100 overflow-hidden break-all raw-html mt-2">
+                <div className="bg-gray-100 overflow-hidden break-all raw-html mt-2 profile" onClick={profileClicked}>
                   {user.fields.map((data, index) => (
                     <dl key={index} className="px-4 py-2 border-gray-200 border-b">
                       <dt className="text-gray-500">{data.name}</dt>

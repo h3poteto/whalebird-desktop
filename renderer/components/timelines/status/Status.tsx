@@ -9,7 +9,8 @@ import Poll from './Poll'
 import { FormattedMessage } from 'react-intl'
 import Actions from './Actions'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { MouseEventHandler, useState } from 'react'
+import { findLink } from '@/utils/statusParser'
 
 type Props = {
   status: Entity.Status
@@ -36,6 +37,15 @@ export default function Status(props: Props) {
     router.push({ query: { id: router.query.id, timeline: router.query.timeline, user_id: id, detail: true } })
   }
 
+  const statusClicked: MouseEventHandler<HTMLDivElement> = async e => {
+    const url = findLink(e.target as HTMLElement, 'status-body')
+    if (url) {
+      global.ipc.invoke('open-browser', url)
+      e.preventDefault()
+      e.stopPropagation()
+    }
+  }
+
   return (
     <div className="border-b mr-2 py-1">
       {rebloggedHeader(props.status)}
@@ -56,7 +66,9 @@ export default function Status(props: Props) {
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>
-          <Body status={status} spoilered={spoilered} setSpoilered={setSpoilered} />
+          <div className="status-body">
+            <Body status={status} spoilered={spoilered} setSpoilered={setSpoilered} onClick={statusClicked} />
+          </div>
           {!spoilered && (
             <>
               {status.poll && <Poll poll={status.poll} onRefresh={onRefresh} client={props.client} />}
