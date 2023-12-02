@@ -11,6 +11,7 @@ import Followers from './profile/Followers'
 type Props = {
   client: MegalodonInterface
   user_id: string
+  openMedia: (media: Entity.Attachment) => void
 }
 
 const customTheme: CustomFlowbiteTheme = {
@@ -111,7 +112,7 @@ export default function Profile(props: Props) {
             <div>
               <Tabs.Group aria-label="Tabs with icons" style="underline">
                 <Tabs.Item active title={formatMessage({ id: 'profile.timeline' })}>
-                  <Timeline client={props.client} user_id={props.user_id} />
+                  <Timeline client={props.client} user_id={props.user_id} openMedia={props.openMedia} />
                 </Tabs.Item>
                 <Tabs.Item title={formatMessage({ id: 'profile.followings' })}>
                   <Followings client={props.client} user_id={props.user_id} />

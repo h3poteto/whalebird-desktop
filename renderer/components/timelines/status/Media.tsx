@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl'
 type Props = {
   media: Array<Entity.Attachment>
   sensitive: boolean
+  openMedia: (media: Entity.Attachment) => void
 }
 export default function Media(props: Props) {
   const [sensitive, setSensitive] = useState(props.sensitive)
@@ -26,7 +27,7 @@ export default function Media(props: Props) {
             <div className="mt-2 flex flex-wrap gap-2">
               {props.media.map((media, key) => (
                 <div key={key}>
-                  <Attachment attachment={media} />
+                  <Attachment attachment={media} openMedia={() => props.openMedia(media)} />
                 </div>
               ))}
             </div>
@@ -41,6 +42,7 @@ export default function Media(props: Props) {
 
 type AttachmentProps = {
   attachment: Entity.Attachment
+  openMedia: () => void
 }
 
 function Attachment(props: AttachmentProps) {
@@ -51,6 +53,7 @@ function Attachment(props: AttachmentProps) {
       style={{ height: '144px' }}
       alt={props.attachment.description}
       title={props.attachment.description}
+      onClick={props.openMedia}
     />
   )
 }

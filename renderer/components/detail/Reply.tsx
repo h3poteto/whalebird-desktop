@@ -7,6 +7,7 @@ import Compose from '../compose/Compose'
 type Props = {
   client: MegalodonInterface
   status_id: string
+  openMedia: (media: Entity.Attachment) => void
 }
 
 export default function Reply(props: Props) {
@@ -47,7 +48,9 @@ export default function Reply(props: Props) {
       <Virtuoso
         style={{ height: `calc(100% - ${composeHeight}px)` }}
         data={[...ancestors, status].filter(s => s !== null)}
-        itemContent={(_, status) => <Status client={props.client} status={status} key={status.id} onRefresh={() => {}} />}
+        itemContent={(_, status) => (
+          <Status client={props.client} status={status} key={status.id} onRefresh={() => {}} openMedia={props.openMedia} />
+        )}
       />
       <div ref={composeRef}>
         <Compose client={props.client} in_reply_to={status} />

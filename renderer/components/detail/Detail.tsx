@@ -2,12 +2,13 @@ import { useRouter } from 'next/router'
 import { HTMLAttributes, useEffect, useState } from 'react'
 import { FaChevronLeft, FaX } from 'react-icons/fa6'
 import Thread from './Thread'
-import { MegalodonInterface } from 'megalodon'
+import { Entity, MegalodonInterface } from 'megalodon'
 import Reply from './Reply'
 import Profile from './Profile'
 
 type Props = {
   client: MegalodonInterface
+  openMedia: (media: Entity.Attachment) => void
 } & HTMLAttributes<HTMLElement>
 
 export default function Detail(props: Props) {
@@ -42,9 +43,11 @@ export default function Detail(props: Props) {
             <FaChevronLeft onClick={back} className="cursor-pointer text-lg" />
             <FaX onClick={close} className="cursor-pointer text-lg" />
           </div>
-          {target === 'status' && <Thread client={props.client} status_id={router.query.status_id as string} />}
-          {target === 'reply' && <Reply client={props.client} status_id={router.query.reply_target_id as string} />}
-          {target === 'profile' && <Profile client={props.client} user_id={router.query.user_id as string} />}
+          {target === 'status' && <Thread client={props.client} status_id={router.query.status_id as string} openMedia={props.openMedia} />}
+          {target === 'reply' && (
+            <Reply client={props.client} status_id={router.query.reply_target_id as string} openMedia={props.openMedia} />
+          )}
+          {target === 'profile' && <Profile client={props.client} user_id={router.query.user_id as string} openMedia={props.openMedia} />}
         </div>
       )}
     </>

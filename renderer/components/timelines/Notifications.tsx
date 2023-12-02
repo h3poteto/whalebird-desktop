@@ -1,7 +1,7 @@
 import { Account } from '@/db'
 import { TextInput } from 'flowbite-react'
 import generator, { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useCallback, useRef, Dispatch, SetStateAction } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Virtuoso } from 'react-virtuoso'
 import Notification from './notification/Notification'
@@ -12,6 +12,7 @@ const TIMELINE_MAX_STATUSES = 2147483647
 type Props = {
   account: Account
   client: MegalodonInterface
+  setAttachment: Dispatch<SetStateAction<Entity.Attachment | null>>
 }
 
 export default function Notifications(props: Props) {
@@ -121,7 +122,13 @@ export default function Notifications(props: Props) {
           data={notifications}
           endReached={loadMore}
           itemContent={(_, notification) => (
-            <Notification client={props.client} notification={notification} onRefresh={updateStatus} key={notification.id} />
+            <Notification
+              client={props.client}
+              notification={notification}
+              onRefresh={updateStatus}
+              key={notification.id}
+              openMedia={media => props.setAttachment(media)}
+            />
           )}
         />
       </div>

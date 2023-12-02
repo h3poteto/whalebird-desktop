@@ -6,6 +6,7 @@ import Status from '../timelines/status/Status'
 type Props = {
   client: MegalodonInterface
   status_id: string
+  openMedia: (media: Entity.Attachment) => void
 }
 
 export default function Thread(props: Props) {
@@ -31,7 +32,9 @@ export default function Thread(props: Props) {
       <Virtuoso
         style={{ height: 'calc(100% - 50px)' }}
         data={[...ancestors, status, ...descendants].filter(s => s !== null)}
-        itemContent={(_, status) => <Status client={props.client} status={status} key={status.id} onRefresh={() => {}} />}
+        itemContent={(_, status) => (
+          <Status client={props.client} status={status} key={status.id} onRefresh={() => {}} openMedia={props.openMedia} />
+        )}
       />
     </>
   )

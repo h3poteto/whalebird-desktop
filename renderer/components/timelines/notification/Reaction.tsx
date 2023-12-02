@@ -14,6 +14,7 @@ type Props = {
   notification: Entity.Notification
   client: MegalodonInterface
   onRefresh: (status: Entity.Status) => void
+  openMedia: (media: Entity.Attachment) => void
 }
 
 export default function Reaction(props: Props) {
@@ -68,7 +69,7 @@ export default function Reaction(props: Props) {
             <>
               {status.poll && <Poll poll={status.poll} onRefresh={refresh} client={props.client} className="text-gray-600" />}
               {status.card && <Card card={status.card} />}
-              <Media media={status.media_attachments} sensitive={status.sensitive} />
+              <Media media={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
             </>
           )}
         </div>
