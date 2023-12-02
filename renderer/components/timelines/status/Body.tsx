@@ -16,7 +16,7 @@ export default function Body(props: Props) {
   const spoiler = () => {
     if (props.status.spoiler_text.length > 0) {
       return (
-        <div>
+        <div className="raw-html">
           <div
             className="spoiler-text"
             style={Object.assign({ wordWrap: 'break-word' }, props.style)}
@@ -38,7 +38,7 @@ export default function Body(props: Props) {
       {spoiler()}
       {!spoilered && (
         <div
-          className={props.className}
+          className={`${props.className} raw-html`}
           style={Object.assign({ wordWrap: 'break-word' }, props.style)}
           dangerouslySetInnerHTML={{ __html: emojify(props.status.content, props.status.emojis) }}
         />

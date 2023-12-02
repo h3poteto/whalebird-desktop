@@ -101,6 +101,9 @@
   "profile": {
     "follow": "Follow",
     "unfollow": "Unfollow",
-    "open_original": "Open original page"
+    "open_original": "Open original page",
+    "timeline": "Timeline",
+    "followers": "Followers",
+    "followings": "Followings"
   }
 }
