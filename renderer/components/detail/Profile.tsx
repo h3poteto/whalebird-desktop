@@ -6,6 +6,7 @@ import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FormattedMessage, useIntl } from 'react-intl'
 import Timeline from './profile/Timeline'
 import Followings from './profile/Followings'
+import Followers from './profile/Followers'
 
 type Props = {
   client: MegalodonInterface
@@ -116,7 +117,7 @@ export default function Profile(props: Props) {
                   <Followings client={props.client} user_id={props.user_id} />
                 </Tabs.Item>
                 <Tabs.Item title={formatMessage({ id: 'profile.followers' })} className="focus:ring-0">
-                  followers
+                  <Followers client={props.client} user_id={props.user_id} />
                 </Tabs.Item>
               </Tabs.Group>
             </div>
