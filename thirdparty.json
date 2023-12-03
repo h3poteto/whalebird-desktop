@@ -1,0 +1,1483 @@
+{
+  "@alloc/quick-lru@5.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/quick-lru",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@alloc/quick-lru",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@alloc/quick-lru/license"
+  },
+  "@badgateway/oauth2-client@2.2.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/badgateway/oauth2-client",
+    "publisher": "Evert Pot",
+    "url": "https://evertpot.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@badgateway/oauth2-client",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@badgateway/oauth2-client/LICENSE"
+  },
+  "@floating-ui/core@1.5.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "publisher": "atomiks",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/core",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/core/LICENSE"
+  },
+  "@floating-ui/dom@1.5.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "publisher": "atomiks",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/dom",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/dom/LICENSE"
+  },
+  "@floating-ui/react-dom@2.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "publisher": "atomiks",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/react-dom",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/react-dom/LICENSE"
+  },
+  "@floating-ui/react@0.24.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "publisher": "atomiks",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/react",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/react/LICENSE"
+  },
+  "@floating-ui/utils@0.1.6": {
+    "licenses": "MIT",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "publisher": "atomiks",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/utils",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@floating-ui/utils/LICENSE"
+  },
+  "@formatjs/ecma402-abstract@1.17.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/formatjs/formatjs",
+    "publisher": "Long Ho",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/ecma402-abstract",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/ecma402-abstract/LICENSE.md"
+  },
+  "@formatjs/fast-memoize@2.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/formatjs/formatjs",
+    "publisher": "Long Ho",
+    "email": "holevietlong@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/fast-memoize",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/fast-memoize/LICENSE.md"
+  },
+  "@formatjs/icu-messageformat-parser@2.7.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/formatjs/formatjs",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/icu-messageformat-parser",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/icu-messageformat-parser/LICENSE.md"
+  },
+  "@formatjs/icu-skeleton-parser@1.6.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/formatjs/formatjs",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/icu-skeleton-parser",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/icu-skeleton-parser/LICENSE.md"
+  },
+  "@formatjs/intl-displaynames@6.6.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/formatjs/formatjs",
+    "publisher": "Linjie Ding",
+    "email": "pyrocat101@users.noreply.github.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/intl-displaynames",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/intl-displaynames/LICENSE.md"
+  },
+  "@formatjs/intl-listformat@7.5.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/formatjs/formatjs",
+    "publisher": "Long Ho",
+    "email": "holevietlong@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/intl-listformat",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/intl-listformat/LICENSE.md"
+  },
+  "@formatjs/intl-localematcher@0.4.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/formatjs/formatjs",
+    "publisher": "Long Ho",
+    "email": "holevietlong@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/intl-localematcher",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/intl-localematcher/LICENSE.md"
+  },
+  "@formatjs/intl@2.9.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/formatjs/formatjs",
+    "publisher": "Long Ho",
+    "email": "holevietlong@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/intl",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@formatjs/intl/LICENSE.md"
+  },
+  "@jridgewell/gen-mapping@0.3.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/gen-mapping",
+    "publisher": "Justin Ridgewell",
+    "email": "justin@ridgewell.name",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/gen-mapping",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/gen-mapping/LICENSE"
+  },
+  "@jridgewell/resolve-uri@3.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/resolve-uri",
+    "publisher": "Justin Ridgewell",
+    "email": "justin@ridgewell.name",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/resolve-uri",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/resolve-uri/LICENSE"
+  },
+  "@jridgewell/set-array@1.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/set-array",
+    "publisher": "Justin Ridgewell",
+    "email": "justin@ridgewell.name",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/set-array",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/set-array/LICENSE"
+  },
+  "@jridgewell/sourcemap-codec@1.4.15": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/sourcemap-codec",
+    "publisher": "Rich Harris",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/sourcemap-codec",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/sourcemap-codec/LICENSE"
+  },
+  "@jridgewell/trace-mapping@0.3.20": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/trace-mapping",
+    "publisher": "Justin Ridgewell",
+    "email": "justin@ridgewell.name",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/trace-mapping",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@jridgewell/trace-mapping/LICENSE"
+  },
+  "@nodelib/fs.scandir@2.1.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/nodelib/nodelib/tree/master/packages/fs/fs.scandir",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@nodelib/fs.scandir",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@nodelib/fs.scandir/LICENSE"
+  },
+  "@nodelib/fs.stat@2.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/nodelib/nodelib/tree/master/packages/fs/fs.stat",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@nodelib/fs.stat",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@nodelib/fs.stat/LICENSE"
+  },
+  "@nodelib/fs.walk@1.2.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/nodelib/nodelib/tree/master/packages/fs/fs.walk",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@nodelib/fs.walk",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@nodelib/fs.walk/LICENSE"
+  },
+  "@popperjs/core@2.11.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/popperjs/popper-core",
+    "publisher": "Federico Zivolo",
+    "email": "federico.zivolo@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@popperjs/core",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@popperjs/core/LICENSE.md"
+  },
+  "@types/hoist-non-react-statics@3.3.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
+  },
+  "@types/node@20.8.10": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/ws/node_modules/@types/node",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/ws/node_modules/@types/node/LICENSE"
+  },
+  "@types/prop-types@15.7.9": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/prop-types",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/prop-types/LICENSE"
+  },
+  "@types/react@18.2.34": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/hoist-non-react-statics/node_modules/@types/react",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/hoist-non-react-statics/node_modules/@types/react/LICENSE"
+  },
+  "@types/scheduler@0.16.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/scheduler",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/scheduler/LICENSE"
+  },
+  "@types/ws@8.5.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/ws",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/@types/ws/LICENSE"
+  },
+  "ajv-formats@2.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ajv-validator/ajv-formats",
+    "publisher": "Evgeny Poberezkin",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/node_modules/ajv-formats",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/node_modules/ajv-formats/LICENSE"
+  },
+  "ajv@8.12.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ajv-validator/ajv",
+    "publisher": "Evgeny Poberezkin",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/node_modules/ajv",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/node_modules/ajv/LICENSE"
+  },
+  "any-promise@1.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/kevinbeaty/any-promise",
+    "publisher": "Kevin Beaty",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/any-promise",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/any-promise/LICENSE"
+  },
+  "anymatch@3.1.3": {
+    "licenses": "ISC",
+    "repository": "https://github.com/micromatch/anymatch",
+    "publisher": "Elan Shanker",
+    "url": "https://github.com/es128",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/anymatch",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/anymatch/LICENSE"
+  },
+  "arg@5.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/vercel/arg",
+    "publisher": "Josh Junon",
+    "email": "junon@wavetilt.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/arg",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/arg/LICENSE.md"
+  },
+  "aria-hidden@1.2.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/theKashey/aria-hidden",
+    "publisher": "Anton Korzunov",
+    "email": "thekashey@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/aria-hidden",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/aria-hidden/LICENSE"
+  },
+  "asynckit@0.4.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/alexindigo/asynckit",
+    "publisher": "Alex Indigo",
+    "email": "iam@alexindigo.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/asynckit",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/asynckit/LICENSE"
+  },
+  "atomically@1.7.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/fabiospampinato/atomically",
+    "publisher": "Fabio Spampinato",
+    "email": "spampinabio@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/atomically",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/atomically/LICENSE"
+  },
+  "axios@1.5.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/axios/axios",
+    "publisher": "Matt Zabriskie",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/axios",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/axios/LICENSE"
+  },
+  "balanced-match@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/juliangruber/balanced-match",
+    "publisher": "Julian Gruber",
+    "email": "mail@juliangruber.com",
+    "url": "http://juliangruber.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/balanced-match",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/balanced-match/LICENSE.md"
+  },
+  "binary-extensions@2.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/binary-extensions",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/binary-extensions",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/binary-extensions/license"
+  },
+  "blurhash@2.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/woltapp/blurhash/tree/master/TypeScript",
+    "publisher": "omahlama",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/blurhash",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/blurhash/README.md"
+  },
+  "brace-expansion@1.1.11": {
+    "licenses": "MIT",
+    "repository": "https://github.com/juliangruber/brace-expansion",
+    "publisher": "Julian Gruber",
+    "email": "mail@juliangruber.com",
+    "url": "http://juliangruber.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/brace-expansion",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/brace-expansion/LICENSE"
+  },
+  "braces@3.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/braces",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/braces",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/braces/LICENSE"
+  },
+  "camelcase-css@2.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/stevenvachon/camelcase-css",
+    "publisher": "Steven Vachon",
+    "email": "contact@svachon.com",
+    "url": "https://www.svachon.com/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/camelcase-css",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/camelcase-css/license"
+  },
+  "chokidar@3.5.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/paulmillr/chokidar",
+    "publisher": "Paul Miller",
+    "url": "https://paulmillr.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/chokidar",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/chokidar/LICENSE"
+  },
+  "classnames@2.3.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/JedWatson/classnames",
+    "publisher": "Jed Watson",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/classnames",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/classnames/LICENSE"
+  },
+  "combined-stream@1.0.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/felixge/node-combined-stream",
+    "publisher": "Felix Geisendörfer",
+    "email": "felix@debuggable.com",
+    "url": "http://debuggable.com/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/combined-stream",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/combined-stream/License"
+  },
+  "commander@4.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tj/commander.js",
+    "publisher": "TJ Holowaychuk",
+    "email": "tj@vision-media.ca",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/commander",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/commander/LICENSE"
+  },
+  "concat-map@0.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/substack/node-concat-map",
+    "publisher": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/concat-map",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/concat-map/LICENSE"
+  },
+  "conf@10.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/conf",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/license"
+  },
+  "cssesc@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/cssesc",
+    "publisher": "Mathias Bynens",
+    "url": "https://mathiasbynens.be/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/cssesc",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/cssesc/LICENSE-MIT.txt"
+  },
+  "csstype@3.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/frenic/csstype",
+    "publisher": "Fredrik Nicol",
+    "email": "fredrik.nicol@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/csstype",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/csstype/LICENSE"
+  },
+  "dayjs@1.11.10": {
+    "licenses": "MIT",
+    "repository": "https://github.com/iamkun/dayjs",
+    "publisher": "iamkun",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dayjs",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dayjs/LICENSE"
+  },
+  "debounce-fn@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/debounce-fn",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/debounce-fn",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/debounce-fn/license"
+  },
+  "debounce@1.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/component/debounce",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/debounce",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/debounce/LICENSE"
+  },
+  "deepmerge@4.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/TehShrike/deepmerge",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/deepmerge",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/deepmerge/license.txt"
+  },
+  "delayed-stream@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/felixge/node-delayed-stream",
+    "publisher": "Felix Geisendörfer",
+    "email": "felix@debuggable.com",
+    "url": "http://debuggable.com/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/delayed-stream",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/delayed-stream/License"
+  },
+  "dexie@3.2.4": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/dfahlander/Dexie.js",
+    "publisher": "David Fahlander",
+    "email": "https://github.com/dfahlander",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dexie",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dexie/LICENSE",
+    "noticeFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dexie/NOTICE"
+  },
+  "didyoumean@1.2.2": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/dcporter/didyoumean.js",
+    "publisher": "Dave Porter",
+    "email": "dcporter@gmail.com",
+    "url": "http://dcporter.net/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/didyoumean",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/didyoumean/LICENSE"
+  },
+  "dlv@1.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/developit/dlv",
+    "publisher": "Jason Miller",
+    "email": "jason@developit.ca",
+    "url": "http://jasonformat.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dlv",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dlv/README.md"
+  },
+  "dom-serializer@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cheeriojs/dom-serializer",
+    "publisher": "Felix Boehm",
+    "email": "me@feedic.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dom-serializer",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dom-serializer/LICENSE"
+  },
+  "domelementtype@2.3.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/domelementtype",
+    "publisher": "Felix Boehm",
+    "email": "me@feedic.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/domelementtype",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/domelementtype/LICENSE"
+  },
+  "domhandler@5.0.3": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/domhandler",
+    "publisher": "Felix Boehm",
+    "email": "me@feedic.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/domhandler",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/domhandler/LICENSE"
+  },
+  "domutils@3.1.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/domutils",
+    "publisher": "Felix Boehm",
+    "email": "me@feedic.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/domutils",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/domutils/LICENSE"
+  },
+  "dot-prop@6.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/dot-prop",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dot-prop",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/dot-prop/license"
+  },
+  "easy-bem@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Norserium/easy-bem",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/easy-bem",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/easy-bem/README.md"
+  },
+  "electron-serve@1.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/electron-serve",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/electron-serve",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/electron-serve/license"
+  },
+  "electron-store@8.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/electron-store",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/electron-store",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/electron-store/license"
+  },
+  "entities@4.5.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/entities",
+    "publisher": "Felix Boehm",
+    "email": "me@feedic.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/entities",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/entities/LICENSE"
+  },
+  "env-paths@2.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/env-paths",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/env-paths",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/env-paths/license"
+  },
+  "escape-string-regexp@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/escape-string-regexp",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/escape-string-regexp",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/escape-string-regexp/license"
+  },
+  "events@3.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Gozala/events",
+    "publisher": "Irakli Gozalishvili",
+    "email": "rfobic@gmail.com",
+    "url": "http://jeditoolkit.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/events",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/events/LICENSE"
+  },
+  "fast-deep-equal@3.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/epoberezkin/fast-deep-equal",
+    "publisher": "Evgeny Poberezkin",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fast-deep-equal",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fast-deep-equal/LICENSE"
+  },
+  "fast-glob@3.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mrmlnc/fast-glob",
+    "publisher": "Denis Malinochkin",
+    "url": "https://mrmlnc.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fast-glob",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fast-glob/LICENSE"
+  },
+  "fastq@1.15.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/mcollina/fastq",
+    "publisher": "Matteo Collina",
+    "email": "hello@matteocollina.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fastq",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fastq/LICENSE"
+  },
+  "fill-range@7.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/fill-range",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fill-range",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fill-range/LICENSE"
+  },
+  "find-up@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/find-up",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/find-up",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/find-up/license"
+  },
+  "flowbite-react@0.6.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/themesberg/flowbite-react",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/flowbite-react",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/flowbite-react/LICENSE"
+  },
+  "flowbite@1.8.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/themesberg/flowbite",
+    "publisher": "Bergside Inc.",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/flowbite-react/node_modules/flowbite",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/flowbite-react/node_modules/flowbite/LICENSE.md"
+  },
+  "flowbite@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/themesberg/flowbite",
+    "publisher": "Bergside Inc.",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/flowbite",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/flowbite/LICENSE.md"
+  },
+  "follow-redirects@1.15.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/follow-redirects/follow-redirects",
+    "publisher": "Ruben Verborgh",
+    "email": "ruben@verborgh.org",
+    "url": "https://ruben.verborgh.org/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/follow-redirects",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/follow-redirects/LICENSE"
+  },
+  "form-data@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/form-data/form-data",
+    "publisher": "Felix Geisendörfer",
+    "email": "felix@debuggable.com",
+    "url": "http://debuggable.com/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/form-data",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/form-data/License"
+  },
+  "fs.realpath@1.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/fs.realpath",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fs.realpath",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/fs.realpath/LICENSE"
+  },
+  "function-bind@1.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Raynos/function-bind",
+    "publisher": "Raynos",
+    "email": "raynos2@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/function-bind",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/function-bind/LICENSE"
+  },
+  "glob-parent@5.1.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/gulpjs/glob-parent",
+    "publisher": "Gulp Team",
+    "email": "team@gulpjs.com",
+    "url": "https://gulpjs.com/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/glob-parent",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/glob-parent/LICENSE"
+  },
+  "glob-parent@6.0.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/gulpjs/glob-parent",
+    "publisher": "Gulp Team",
+    "email": "team@gulpjs.com",
+    "url": "https://gulpjs.com/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tailwindcss/node_modules/glob-parent",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tailwindcss/node_modules/glob-parent/LICENSE"
+  },
+  "glob@7.1.6": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/node-glob",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/sucrase/node_modules/glob",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/sucrase/node_modules/glob/LICENSE"
+  },
+  "hasown@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/inspect-js/hasOwn",
+    "publisher": "Jordan Harband",
+    "email": "ljharb@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/hasown",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/hasown/LICENSE"
+  },
+  "hoist-non-react-statics@3.3.2": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/mridgway/hoist-non-react-statics",
+    "publisher": "Michael Ridgway",
+    "email": "mcridgway@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/hoist-non-react-statics",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/hoist-non-react-statics/LICENSE.md"
+  },
+  "htmlparser2@8.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/fb55/htmlparser2",
+    "publisher": "Felix Boehm",
+    "email": "me@feedic.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/htmlparser2",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/htmlparser2/LICENSE"
+  },
+  "inflight@1.0.6": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/inflight",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/inflight",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/inflight/LICENSE"
+  },
+  "inherits@2.0.4": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/inherits",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/inherits",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/inherits/LICENSE"
+  },
+  "intl-messageformat@10.5.4": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/formatjs/formatjs",
+    "publisher": "Eric Ferraiuolo",
+    "email": "eferraiuolo@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/intl-messageformat",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/intl-messageformat/LICENSE.md"
+  },
+  "is-binary-path@2.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/is-binary-path",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-binary-path",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-binary-path/license"
+  },
+  "is-core-module@2.13.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/inspect-js/is-core-module",
+    "publisher": "Jordan Harband",
+    "email": "ljharb@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-core-module",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-core-module/LICENSE"
+  },
+  "is-extglob@2.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/is-extglob",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-extglob",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-extglob/LICENSE"
+  },
+  "is-glob@4.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/is-glob",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-glob",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-glob/LICENSE"
+  },
+  "is-number@7.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/is-number",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-number",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-number/LICENSE"
+  },
+  "is-obj@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/is-obj",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-obj",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-obj/license"
+  },
+  "is-plain-object@5.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/is-plain-object",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-plain-object",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/is-plain-object/LICENSE"
+  },
+  "isomorphic-ws@5.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/heineiuo/isomorphic-ws",
+    "publisher": "@heineiuo",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/isomorphic-ws",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/isomorphic-ws/LICENSE"
+  },
+  "jiti@1.21.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/unjs/jiti",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/jiti",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/jiti/LICENSE"
+  },
+  "js-tokens@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lydell/js-tokens",
+    "publisher": "Simon Lydell",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/js-tokens",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/js-tokens/LICENSE"
+  },
+  "json-schema-traverse@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/epoberezkin/json-schema-traverse",
+    "publisher": "Evgeny Poberezkin",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/node_modules/json-schema-traverse",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/node_modules/json-schema-traverse/LICENSE"
+  },
+  "json-schema-typed@7.0.3": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/typeslick/json-schema-typed",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/json-schema-typed",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/json-schema-typed/LICENSE"
+  },
+  "lilconfig@2.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/antonk52/lilconfig",
+    "publisher": "antonk52",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/lilconfig",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/lilconfig/LICENSE"
+  },
+  "lines-and-columns@1.2.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/eventualbuddha/lines-and-columns",
+    "publisher": "Brian Donovan",
+    "email": "brian@donovans.cc",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/lines-and-columns",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/lines-and-columns/LICENSE"
+  },
+  "locate-path@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/locate-path",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/locate-path",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/locate-path/license"
+  },
+  "loose-envify@1.4.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/zertosh/loose-envify",
+    "publisher": "Andres Suarez",
+    "email": "zertosh@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/loose-envify",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/loose-envify/LICENSE"
+  },
+  "lru-cache@6.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/node-lru-cache",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/lru-cache",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/lru-cache/LICENSE"
+  },
+  "megalodon@9.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/h3poteto/megalodon",
+    "publisher": "h3poteto",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/megalodon",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/megalodon/LICENSE.txt"
+  },
+  "merge2@1.4.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/teambition/merge2",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/merge2",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/merge2/LICENSE"
+  },
+  "micromatch@4.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/micromatch",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/micromatch",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/micromatch/LICENSE"
+  },
+  "mime-db@1.52.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jshttp/mime-db",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mime-db",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mime-db/LICENSE"
+  },
+  "mime-types@2.1.35": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jshttp/mime-types",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mime-types",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mime-types/LICENSE"
+  },
+  "mimic-fn@2.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/mimic-fn",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mimic-fn",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mimic-fn/license"
+  },
+  "mimic-fn@3.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/mimic-fn",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/debounce-fn/node_modules/mimic-fn",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/debounce-fn/node_modules/mimic-fn/license"
+  },
+  "mini-svg-data-uri@1.4.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tigt/mini-svg-data-uri",
+    "publisher": "Taylor “Tigt” Hunt",
+    "email": "holla@ti.gt",
+    "url": "https://ti.gt/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mini-svg-data-uri",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mini-svg-data-uri/LICENSE"
+  },
+  "minimatch@3.1.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/minimatch",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/minimatch",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/minimatch/LICENSE"
+  },
+  "mz@2.7.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/normalize/mz",
+    "publisher": "Jonathan Ong",
+    "email": "me@jongleberry.com",
+    "url": "http://jongleberry.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mz",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/mz/LICENSE"
+  },
+  "nanoid@3.3.6": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ai/nanoid",
+    "publisher": "Andrey Sitnik",
+    "email": "andrey@sitnik.ru",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/nanoid",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/nanoid/LICENSE"
+  },
+  "normalize-path@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/normalize-path",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/normalize-path",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/normalize-path/LICENSE"
+  },
+  "object-assign-deep@0.4.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/saikojosh/Object-Assign-Deep",
+    "publisher": "Josh Cole",
+    "email": "saikojosh@gmail.com",
+    "url": "http://www.JoshuaCole.me",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/object-assign-deep",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/object-assign-deep/README.md"
+  },
+  "object-assign@4.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/object-assign",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/object-assign",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/object-assign/license"
+  },
+  "object-hash@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/puleos/object-hash",
+    "publisher": "Scott Puleo",
+    "email": "puleos@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/object-hash",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/object-hash/LICENSE"
+  },
+  "once@1.4.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/once",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/once",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/once/LICENSE"
+  },
+  "onetime@5.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/onetime",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/onetime",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/onetime/license"
+  },
+  "p-limit@2.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/p-limit",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/p-limit",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/p-limit/license"
+  },
+  "p-locate@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/p-locate",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/p-locate",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/p-locate/license"
+  },
+  "p-try@2.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/p-try",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/p-try",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/p-try/license"
+  },
+  "parse-srcset@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/albell/parse-srcset",
+    "publisher": "Alex Bell",
+    "email": "alex@bellandwhistle.net",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/parse-srcset",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/parse-srcset/LICENSE"
+  },
+  "path-exists@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/path-exists",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/path-exists",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/node_modules/path-exists/license"
+  },
+  "path-is-absolute@1.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/path-is-absolute",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/path-is-absolute",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/path-is-absolute/license"
+  },
+  "path-parse@1.0.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jbgutierrez/path-parse",
+    "publisher": "Javier Blanco",
+    "email": "http://jbgutierrez.info",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/path-parse",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/path-parse/LICENSE"
+  },
+  "picocolors@1.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/alexeyraspopov/picocolors",
+    "publisher": "Alexey Raspopov",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/picocolors",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/picocolors/LICENSE"
+  },
+  "picomatch@2.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/picomatch",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/picomatch",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/picomatch/LICENSE"
+  },
+  "pify@2.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/pify",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pify",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pify/license"
+  },
+  "pirates@4.0.6": {
+    "licenses": "MIT",
+    "repository": "https://github.com/danez/pirates",
+    "publisher": "Ari Porad",
+    "email": "ari@ariporad.com",
+    "url": "http://ariporad.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pirates",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pirates/LICENSE"
+  },
+  "pkg-up@3.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/pkg-up",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/pkg-up/license"
+  },
+  "postcss-import@15.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss-import",
+    "publisher": "Maxime Thirouin",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-import",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-import/LICENSE"
+  },
+  "postcss-js@4.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss-js",
+    "publisher": "Andrey Sitnik",
+    "email": "andrey@sitnik.ru",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-js",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-js/LICENSE"
+  },
+  "postcss-load-config@4.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss-load-config",
+    "publisher": "Michael Ciniawky",
+    "email": "michael.ciniawsky@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-load-config",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-load-config/LICENSE"
+  },
+  "postcss-nested@6.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss-nested",
+    "publisher": "Andrey Sitnik",
+    "email": "andrey@sitnik.ru",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-nested",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-nested/LICENSE"
+  },
+  "postcss-selector-parser@6.0.13": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss-selector-parser",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-selector-parser",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-selector-parser/LICENSE-MIT"
+  },
+  "postcss-value-parser@4.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/TrySound/postcss-value-parser",
+    "publisher": "Bogdan Chadkin",
+    "email": "trysound@yandex.ru",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-value-parser",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss-value-parser/LICENSE"
+  },
+  "postcss@8.4.31": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss",
+    "publisher": "Andrey Sitnik",
+    "email": "andrey@sitnik.ru",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/postcss/LICENSE"
+  },
+  "proxy-from-env@1.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Rob--W/proxy-from-env",
+    "publisher": "Rob Wu",
+    "email": "rob@robwu.nl",
+    "url": "https://robwu.nl/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/proxy-from-env",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/proxy-from-env/LICENSE"
+  },
+  "punycode@2.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/punycode.js",
+    "publisher": "Mathias Bynens",
+    "url": "https://mathiasbynens.be/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/punycode",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/punycode/LICENSE-MIT.txt"
+  },
+  "queue-microtask@1.2.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/feross/queue-microtask",
+    "publisher": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "https://feross.org",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/queue-microtask",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/queue-microtask/LICENSE"
+  },
+  "react-blurhash@0.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/woltapp/react-blurhash",
+    "publisher": "nygardk",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-blurhash",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-blurhash/README.md"
+  },
+  "react-dom@18.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-dom",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-dom/LICENSE"
+  },
+  "react-icons@4.11.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/react-icons/react-icons",
+    "publisher": "Goran Gajic",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-icons",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-icons/LICENSE"
+  },
+  "react-indiana-drag-scroll@2.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/norserium/react-indiana-drag-scroll",
+    "publisher": "Norserium",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-indiana-drag-scroll",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-indiana-drag-scroll/LICENSE"
+  },
+  "react-intl@6.5.1": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/formatjs/formatjs",
+    "publisher": "Eric Ferraiuolo",
+    "email": "edf@ericf.me",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-intl",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-intl/LICENSE.md"
+  },
+  "react-is@16.13.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-is",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-is/LICENSE"
+  },
+  "react-virtuoso@4.6.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/petyosi/react-virtuoso",
+    "publisher": "Petyo Ivanov",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-virtuoso",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react-virtuoso/LICENSE"
+  },
+  "react@18.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/react/LICENSE"
+  },
+  "read-cache@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/TrySound/read-cache",
+    "publisher": "Bogdan Chadkin",
+    "email": "trysound@yandex.ru",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/read-cache",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/read-cache/LICENSE"
+  },
+  "readdirp@3.6.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/paulmillr/readdirp",
+    "publisher": "Thorsten Lorenz",
+    "email": "thlorenz@gmx.de",
+    "url": "thlorenz.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/readdirp",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/readdirp/LICENSE"
+  },
+  "require-from-string@2.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/floatdrop/require-from-string",
+    "publisher": "Vsevolod Strukchinsky",
+    "email": "floatdrop@gmail.com",
+    "url": "github.com/floatdrop",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/require-from-string",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/require-from-string/license"
+  },
+  "resolve@1.22.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/browserify/resolve",
+    "publisher": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/resolve",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/resolve/LICENSE"
+  },
+  "reusify@1.0.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mcollina/reusify",
+    "publisher": "Matteo Collina",
+    "email": "hello@matteocollina.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/reusify",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/reusify/LICENSE"
+  },
+  "run-parallel@1.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/feross/run-parallel",
+    "publisher": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "https://feross.org",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/run-parallel",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/run-parallel/LICENSE"
+  },
+  "sanitize-html@2.11.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/apostrophecms/sanitize-html",
+    "publisher": "Apostrophe Technologies, Inc.",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/sanitize-html",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/sanitize-html/LICENSE"
+  },
+  "scheduler@0.23.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/scheduler",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/scheduler/LICENSE"
+  },
+  "semver@7.5.4": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/node-semver",
+    "publisher": "GitHub Inc.",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/node_modules/semver",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/conf/node_modules/semver/LICENSE"
+  },
+  "source-map-js@1.0.2": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/7rulnik/source-map-js",
+    "publisher": "Valentin 7rulnik Semirulnik",
+    "email": "v7rulnik@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/source-map-js",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/source-map-js/LICENSE"
+  },
+  "sucrase@3.34.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/alangpierce/sucrase",
+    "publisher": "Alan Pierce",
+    "email": "alangpierce@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/sucrase",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/sucrase/LICENSE"
+  },
+  "supports-preserve-symlinks-flag@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/inspect-js/node-supports-preserve-symlinks-flag",
+    "publisher": "Jordan Harband",
+    "email": "ljharb@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/supports-preserve-symlinks-flag",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/supports-preserve-symlinks-flag/LICENSE"
+  },
+  "tabbable@6.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/focus-trap/tabbable",
+    "publisher": "David Clark",
+    "url": "http://davidtheclark.com/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tabbable",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tabbable/LICENSE"
+  },
+  "tailwind-merge@1.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/dcastil/tailwind-merge",
+    "publisher": "Dany Castillo",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tailwind-merge",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tailwind-merge/LICENSE.md"
+  },
+  "tailwindcss@3.3.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tailwindlabs/tailwindcss",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tailwindcss",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tailwindcss/LICENSE"
+  },
+  "thenify-all@1.6.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/thenables/thenify-all",
+    "publisher": "Jonathan Ong",
+    "email": "me@jongleberry.com",
+    "url": "http://jongleberry.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/thenify-all",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/thenify-all/LICENSE"
+  },
+  "thenify@3.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/thenables/thenify",
+    "publisher": "Jonathan Ong",
+    "email": "me@jongleberry.com",
+    "url": "http://jongleberry.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/thenify",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/thenify/LICENSE"
+  },
+  "to-regex-range@5.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/to-regex-range",
+    "publisher": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/to-regex-range",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/to-regex-range/LICENSE"
+  },
+  "ts-interface-checker@0.1.13": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/gristlabs/ts-interface-checker",
+    "publisher": "Dmitry S, Grist Labs",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/ts-interface-checker",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/ts-interface-checker/LICENSE"
+  },
+  "tslib@2.6.2": {
+    "licenses": "0BSD",
+    "repository": "https://github.com/Microsoft/tslib",
+    "publisher": "Microsoft Corp.",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tslib",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/tslib/LICENSE.txt"
+  },
+  "type-fest@2.19.0": {
+    "licenses": "(MIT OR CC0-1.0)",
+    "repository": "https://github.com/sindresorhus/type-fest",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/type-fest",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/type-fest/readme.md"
+  },
+  "typescript@5.2.2": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/Microsoft/TypeScript",
+    "publisher": "Microsoft Corp.",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/typescript",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/typescript/LICENSE.txt"
+  },
+  "undici-types@5.26.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/nodejs/undici",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/undici-types",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/undici-types/README.md"
+  },
+  "uri-js@4.4.1": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/garycourt/uri-js",
+    "publisher": "Gary Court",
+    "email": "gary.court@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/uri-js",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/uri-js/LICENSE"
+  },
+  "util-deprecate@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/TooTallNate/util-deprecate",
+    "publisher": "Nathan Rajlich",
+    "email": "nathan@tootallnate.net",
+    "url": "http://n8.io/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/util-deprecate",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/util-deprecate/LICENSE"
+  },
+  "uuid@9.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/uuidjs/uuid",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/uuid",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/uuid/LICENSE.md"
+  },
+  "whalebird@6.0.0-beta.0": {
+    "licenses": "UNLICENSED",
+    "private": true,
+    "publisher": "Akira Fukushima",
+    "email": "h3.poteto@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/LICENSE"
+  },
+  "wrappy@1.0.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/wrappy",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/wrappy",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/wrappy/LICENSE"
+  },
+  "ws@8.14.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/websockets/ws",
+    "publisher": "Einar Otto Stangvik",
+    "email": "einaros@gmail.com",
+    "url": "http://2x.io",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/ws",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/ws/LICENSE"
+  },
+  "yallist@4.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/yallist",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/yallist",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/yallist/LICENSE"
+  },
+  "yaml@2.3.3": {
+    "licenses": "ISC",
+    "repository": "https://github.com/eemeli/yaml",
+    "publisher": "Eemeli Aro",
+    "email": "eemeli@gmail.com",
+    "path": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/yaml",
+    "licenseFile": "/run/media/h3poteto/ssd1/dev/src/github.com/h3poteto/whalebird-desktop/node_modules/yaml/LICENSE"
+  }
+}
+

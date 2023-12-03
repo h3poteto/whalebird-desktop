@@ -10,7 +10,8 @@
     "build": "nextron build",
     "postinstall": "electron-builder install-app-deps",
     "typecheck": "tsc -p renderer --noEmit && tsc -p main --noEmit",
-    "lint": "eslint renderer --ext ts,tsx"
+    "lint": "eslint renderer --ext ts,tsx",
+    "thirdparty": "license-checker --production --json > thirdparty.json"
   },
   "dependencies": {
     "blurhash": "^2.0.5",
