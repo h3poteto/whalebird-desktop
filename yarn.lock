@@ -1514,9 +1514,9 @@
     undici-types "~5.26.4"
 
 "@types/node@^18.11.18":
-  version "18.18.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.18.8.tgz#2b285361f2357c8c8578ec86b5d097c7f464cfd6"
-  integrity sha512-OLGBaaK5V3VRBS1bAkMVP2/W9B+H8meUfl866OrMNQqt7wDgdpWPp5o6gmIc9pB+lIQHSq4ZL8ypeH1vPxcPaQ==
+  version "18.19.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.1.tgz#e3ed7d5ab5ea21f33a4503decb2171e0d8f53070"
+  integrity sha512-mZJ9V11gG5Vp0Ox2oERpeFDl+JvCwK24PGy76vVY/UgBtjwJWc5rYBThFxmbnYOm9UPZNm6wEl/sxHt2SU7x9A==
   dependencies:
     undici-types "~5.26.4"
 
