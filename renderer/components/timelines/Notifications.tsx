@@ -100,7 +100,7 @@ export default function Notifications(props: Props) {
   }, [firstItemIndex, notifications, setNotifications, unreads])
 
   return (
-    <section className="h-full" style={{ width: 'calc(100% - 16rem)' }}>
+    <section className="h-full timeline-wrapper">
       <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
         <div className="text-lg font-bold">
           <FormattedMessage id="timeline.notifications" />
@@ -119,6 +119,7 @@ export default function Notifications(props: Props) {
           }}
           firstItemIndex={firstItemIndex}
           atTopStateChange={prependUnreads}
+          className="timeline-scrollable"
           data={notifications}
           endReached={loadMore}
           itemContent={(_, notification) => (
