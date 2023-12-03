@@ -1550,9 +1550,9 @@
     "@types/node" "*"
 
 "@types/sanitize-html@^2.9.4":
-  version "2.9.4"
-  resolved "https://registry.yarnpkg.com/@types/sanitize-html/-/sanitize-html-2.9.4.tgz#bfc2df463ec35904fecc57b29ba080e53732a140"
-  integrity sha512-Ym4hjmAFxF/eux7nW2yDPAj2o9RYh0vP/9V5ECoHtgJ/O9nPGslUd20CMn6WatRMlFVfjMTg3lMcWq8YyO6QnA==
+  version "2.9.5"
+  resolved "https://registry.yarnpkg.com/@types/sanitize-html/-/sanitize-html-2.9.5.tgz#e8b2214c8afc7bb88d62f9c3bbbc5b4ecc80a25d"
+  integrity sha512-2Sr1vd8Dw+ypsg/oDDfZ57OMSG2Befs+l2CMyCC5bVSK3CpE7lTB2aNlbbWzazgVA+Qqfuholwom6x/mWd1qmw==
   dependencies:
     htmlparser2 "^8.0.0"
 
