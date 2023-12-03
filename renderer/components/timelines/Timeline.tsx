@@ -156,7 +156,7 @@ export default function Timeline(props: Props) {
   }
 
   return (
-    <div className="flex w-full">
+    <div className="flex timeline-wrapper">
       <section className={`h-full ${timelineClass()}`}>
         <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
           <div className="text-lg font-bold">
