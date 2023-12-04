@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { FaPlus } from 'react-icons/fa6'
+import { FaGear, FaPlus } from 'react-icons/fa6'
 import { Account, db } from '@/db'
 import NewAccount from '@/components/accounts/New'
+import Settings from '@/components/Settings'
 import { Avatar, Dropdown } from 'flowbite-react'
 import { useRouter } from 'next/router'
-import { useIntl } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import generateNotification from '@/utils/notification'
 import generator, { Entity, WebSocketInterface } from 'megalodon'
 
@@ -15,6 +16,7 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   const [accounts, setAccounts] = useState<Array<Account>>([])
   const [openNewModal, setOpenNewModal] = useState(false)
+  const [openSettings, setOpenSettings] = useState(false)
   const router = useRouter()
   const { formatMessage } = useIntl()
   const streamings = useRef<Array<WebSocketInterface>>([])
@@ -98,29 +100,52 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="app flex flex-col min-h-screen">
       <main className="flex w-full box-border my-0 mx-auto min-h-screen">
-        <aside className="w-16 bg-gray-900">
-          {accounts.map(account => (
-            <div key={account.id} className={selectedClassName(account.id)}>
-              <Avatar
-                alt={account.domain}
-                img={account.avatar}
-                rounded
-                key={account.id}
-                className="py-2"
-                onClick={() => openAccount(account.id)}
-                onContextMenu={() => openContextMenu(account.id)}
-              />
-              <Dropdown label="" dismissOnClick={true} renderTrigger={() => dropdownTrigger(account.id)}>
-                <Dropdown.Item onClick={() => removeAccount(account.id)}>Remove</Dropdown.Item>
+        <aside className="w-16 bg-gray-900 flex flex-col justify-between">
+          <div>
+            {accounts.map(account => (
+              <div key={account.id} className={selectedClassName(account.id)}>
+                <Avatar
+                  alt={account.domain}
+                  img={account.avatar}
+                  rounded
+                  key={account.id}
+                  className="py-2"
+                  onClick={() => openAccount(account.id)}
+                  onContextMenu={() => openContextMenu(account.id)}
+                />
+                <Dropdown label="" dismissOnClick={true} renderTrigger={() => dropdownTrigger(account.id)}>
+                  <Dropdown.Item onClick={() => removeAccount(account.id)}>
+                    <FormattedMessage id="accounts.remove" />
+                  </Dropdown.Item>
+                </Dropdown>
+              </div>
+            ))}
+            <button className="py-4 px-6 items-center" onClick={() => setOpenNewModal(true)}>
+              <FaPlus className="text-gray-400" />
+            </button>
+            <NewAccount opened={openNewModal} close={closeNewModal} />
+          </div>
+          <div className="settings text-gray-400 py-4 px-6 items-center">
+            <div className="relative">
+              <Dropdown
+                label=""
+                dismissOnClick
+                renderTrigger={() => (
+                  <span>
+                    <FaGear />
+                  </span>
+                )}
+                placement="right-start"
+              >
+                <Dropdown.Item onClick={() => setOpenSettings(true)}>
+                  <FormattedMessage id="settings.title" />{' '}
+                </Dropdown.Item>
               </Dropdown>
             </div>
-          ))}
-          <button className="py-4 px-6 items-center" onClick={() => setOpenNewModal(true)}>
-            <FaPlus className="text-gray-400" />
-          </button>
-          <NewAccount opened={openNewModal} close={closeNewModal} />
+          </div>
         </aside>
         {children}
+        <Settings opened={openSettings} close={() => setOpenSettings(false)} />
       </main>
     </div>
   )
