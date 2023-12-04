@@ -8,10 +8,14 @@
   height: 1.2rem;
 }
 
+
+.timeline-wrapper {
+  width: calc(100% - 16rem);
+}
+
 .timeline {
   width: 100%;
 }
-
 
 .timeline-with-drawer {
   width: calc(100% - 384px);
@@ -21,9 +25,30 @@
   width: 384px;
 }
 
+@media screen and (max-width: 1112px) {
+  .sidebar-menu {
+    display: none;
+  }
+
+  .my-profile {
+    visibility: hidden;
+  }
+
+  .sidebar {
+    width: 64px;
+  }
+
+  .timeline-wrapper {
+    width: calc(100% - 64px);
+  }
+
+  .sidebar-menu-item > span {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 996px) {
   .timeline-with-drawer {
-    width: 0;
     display: none;
   }
 

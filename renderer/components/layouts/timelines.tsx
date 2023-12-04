@@ -2,6 +2,7 @@ import { Account, db } from '@/db'
 import { CustomFlowbiteTheme, Flowbite, Sidebar } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { FaBell, FaGlobe, FaHouse, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 
 type LayoutProps = {
@@ -15,7 +16,11 @@ const customTheme: CustomFlowbiteTheme = {
     },
     item: {
       base: 'flex items-center justify-center rounded-lg p-2 text-base font-normal text-blue-200 hover:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-900 cursor-pointer',
-      active: 'bg-blue-400 text-gray-800 hover:bg-blue-300'
+      active: 'bg-blue-400 text-gray-800 hover:bg-blue-300',
+      icon: {
+        base: 'h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 text-blue-200 group-hover:text-blue-900 dark:text-blue-200 dark:group-hover:text-blue-900',
+        active: 'text-gray-800'
+      }
     }
   }
 }
@@ -40,38 +45,48 @@ export default function Layout({ children }: LayoutProps) {
     {
       id: 'home',
       title: formatMessage({ id: 'timeline.home' }),
+      icon: FaHouse,
       path: `/accounts/${router.query.id}/home`
     },
     {
       id: 'notifications',
       title: formatMessage({ id: 'timeline.notifications' }),
+      icon: FaBell,
       path: `/accounts/${router.query.id}/notifications`
     },
     {
       id: 'local',
       title: formatMessage({ id: 'timeline.local' }),
+      icon: FaUsers,
       path: `/accounts/${router.query.id}/local`
     },
     {
       id: 'public',
       title: formatMessage({ id: 'timeline.public' }),
+      icon: FaGlobe,
       path: `/accounts/${router.query.id}/public`
     }
   ]
 
   return (
-    <section className="flex h-screen w-full">
+    <section className="flex h-screen w-full overflow-hidden">
       <Flowbite theme={{ theme: customTheme }}>
-        <Sidebar className="text-blue-200">
-          <div className="max-w-full pl-4 mt-2 mb-4">
+        <Sidebar className="text-blue-200 sidebar">
+          <div className="max-w-full pl-4 mt-2 mb-4 my-profile">
             <p>{account?.username}</p>
             <p>@{account?.domain}</p>
           </div>
           <Sidebar.Items>
             <Sidebar.ItemGroup>
               {pages.map(page => (
-                <Sidebar.Item key={page.id} active={router.asPath.includes(page.path)} onClick={() => router.push(page.path)}>
-                  {page.title}
+                <Sidebar.Item
+                  key={page.id}
+                  active={router.asPath.includes(page.path)}
+                  onClick={() => router.push(page.path)}
+                  icon={page.icon}
+                  className="sidebar-menu-item"
+                >
+                  <span className="sidebar-menu">{page.title}</span>
                 </Sidebar.Item>
               ))}
             </Sidebar.ItemGroup>
