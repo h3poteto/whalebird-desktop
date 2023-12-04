@@ -29,6 +29,6 @@ jobs:
       with:
         commit-message: "[Auto update] Thirdparty libraries list"
         branch: auto-update/thirdparty
-        base: master
+        base: main
         delete-branch: true
         title: "[Auto update] Thirdparty libraries list"
