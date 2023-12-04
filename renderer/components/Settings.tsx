@@ -1,11 +1,12 @@
-import { Context, localeType } from '@/utils/i18n'
+import { localeType } from '@/utils/i18n'
 import { Label, Modal, Select } from 'flowbite-react'
-import { ChangeEvent, useContext, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 type Props = {
   opened: boolean
   close: () => void
+  reloadSettings: () => void
 }
 
 const languages = [
@@ -21,7 +22,6 @@ const languages = [
 
 export default function Settings(props: Props) {
   const [language, setLanguage] = useState<localeType>('en')
-  const { switchLang } = useContext(Context)
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
@@ -35,14 +35,7 @@ export default function Settings(props: Props) {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('language', e.target.value)
     }
-    reloadSettings()
-  }
-
-  const reloadSettings = () => {
-    if (typeof localStorage !== 'undefined') {
-      const lang = localStorage.getItem('language')
-      switchLang(lang)
-    }
+    props.reloadSettings()
   }
 
   return (

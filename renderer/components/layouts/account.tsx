@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { FaGear, FaPlus } from 'react-icons/fa6'
 import { Account, db } from '@/db'
 import NewAccount from '@/components/accounts/New'
@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
 import generateNotification from '@/utils/notification'
 import generator, { Entity, WebSocketInterface } from 'megalodon'
+import { Context } from '@/utils/i18n'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -17,11 +18,13 @@ export default function Layout({ children }: LayoutProps) {
   const [accounts, setAccounts] = useState<Array<Account>>([])
   const [openNewModal, setOpenNewModal] = useState(false)
   const [openSettings, setOpenSettings] = useState(false)
+  const { switchLang } = useContext(Context)
   const router = useRouter()
   const { formatMessage } = useIntl()
   const streamings = useRef<Array<WebSocketInterface>>([])
 
   useEffect(() => {
+    loadSettings()
     const fn = async () => {
       const acct = await db.accounts.toArray()
       setAccounts(acct)
@@ -97,6 +100,13 @@ export default function Layout({ children }: LayoutProps) {
     }
   }
 
+  const loadSettings = () => {
+    if (typeof localStorage !== 'undefined') {
+      const lang = localStorage.getItem('language')
+      switchLang(lang)
+    }
+  }
+
   return (
     <div className="app flex flex-col min-h-screen">
       <main className="flex w-full box-border my-0 mx-auto min-h-screen">
@@ -126,7 +136,7 @@ export default function Layout({ children }: LayoutProps) {
             <NewAccount opened={openNewModal} close={closeNewModal} />
           </div>
           <div className="settings text-gray-400 py-4 px-6 items-center">
-            <div className="relative">
+            <div className="relative cursor-pointer">
               <Dropdown
                 label=""
                 dismissOnClick
@@ -145,7 +155,7 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </aside>
         {children}
-        <Settings opened={openSettings} close={() => setOpenSettings(false)} />
+        <Settings opened={openSettings} close={() => setOpenSettings(false)} reloadSettings={loadSettings} />
       </main>
     </div>
   )

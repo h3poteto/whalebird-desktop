@@ -21,6 +21,7 @@
   "accounts": {
     "new": {
       "title": "Add account",
+      "domain": "Domain",
       "sign_in": "Sign in",
       "authorize": "Authorize"
     },
