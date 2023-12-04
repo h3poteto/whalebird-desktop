@@ -1,109 +1,109 @@
 {
   "timeline": {
-    "home": "Home",
-    "notifications": "Notifications",
-    "local": "Local",
-    "public": "Public",
-    "search": "Search",
+    "home": "ホーム",
+    "notifications": "通知",
+    "local": "ローカル",
+    "public": "連合",
+    "search": "検索",
     "status": {
-      "boosted": "{user} boosted",
+      "boosted": "{user} がブーストしました",
       "poll": {
-        "refresh": "Refresh",
-        "vote": "Vote",
-        "people": "{num} people",
-        "closed": "Closed"
+        "refresh": "更新",
+        "vote": "投票",
+        "people": "{num} 人",
+        "closed": "終了"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "cw": "Media hidden"
+      "show_more": "もっと見る",
+      "show_less": "隠す",
+      "cw": "非表示のメディア"
     }
   },
   "accounts": {
     "new": {
-      "title": "Add account",
-      "sign_in": "Sign in",
-      "authorize": "Authorize"
+      "title": "アカウントを追加",
+      "sign_in": "ログイン",
+      "authorize": "認証"
     }
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{user} favourited your post"
+      "title": "お気に入り",
+      "body": "{user} があなたの投稿をお気に入りに登録しました"
     },
     "reblog": {
-      "title": "Boost",
-      "body": "{user} boosted your post"
+      "title": "ブースト",
+      "body": "{user} があなたの投稿をブーストしました"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{user} quoted your post"
+      "title": "引用",
+      "body": "{user} があなたの投稿を引用しました"
     },
     "poll_expired": {
-      "title": "Poll",
-      "body": "{user} poll has ended"
+      "title": "アンケート",
+      "body": "{user} のアンケートが終了しました"
     },
     "poll_vote": {
-      "title": "Poll",
-      "body": "{user} voted your poll"
+      "title": "アンケート",
+      "body": "{user} があなたのアンケートに投票しました"
     },
     "status": {
-      "title": "Status",
-      "body": "{user} just posted"
+      "title": "投稿",
+      "body": "{user} が投稿しました"
     },
     "update": {
-      "title": "Update",
-      "body": "{user} updated the post"
+      "title": "更新",
+      "body": "{user} が投稿を編集しました"
     },
     "emoji_reaction": {
-      "title": "Reaction",
-      "body": "{user} reacted your post"
+      "title": "リアクション",
+      "body": "{user} があなたの投稿にリアクションしました"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{user} followed you",
-      "followers": "{num} followers"
+      "title": "フォロー",
+      "body": "{user} があなたをフォローしました",
+      "followers": "{num} フォロワー"
     },
     "follow_request": {
-      "title": "Follow Request",
-      "body": "{user} requested to follow you"
+      "title": "フォローリクエスト",
+      "body": "{user} からフォローリクエストを受け取りました"
     }
   },
   "compose": {
-    "placeholder": "What's on your mind?",
+    "placeholder": "今なにしてる?",
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "ここに警告を書いてください"
     },
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct"
+      "public": "連合",
+      "unlisted": "未収載",
+      "private": "フォロワー限定",
+      "direct": "ダイレクト"
     },
-    "nsfw": "Sensitive",
+    "nsfw": "閲覧注意にする",
     "poll": {
-      "add": "Add a choice",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days",
-      "multiple": "multiple"
+      "add": "選択肢を追加",
+      "5min": "5分",
+      "30min": "30分",
+      "1h": "1時間",
+      "6h": "6時間",
+      "1d": "1日",
+      "3d": "3日",
+      "7d": "7日",
+      "multiple": "複数選択"
     }
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos"
+      "attachment_type": "画像または動画のみ添付できます"
     },
-    "upload_error": "Failed to upload the file"
+    "upload_error": "ファイルのアップロードに失敗しました"
   },
   "profile": {
-    "follow": "Follow",
-    "unfollow": "Unfollow",
-    "open_original": "Open original page",
-    "timeline": "Timeline",
-    "followers": "Followers",
-    "followings": "Followings"
+    "follow": "フォロー",
+    "unfollow": "フォローを解除",
+    "open_original": "元のページを開く",
+    "timeline": "タイムライン",
+    "followers": "フォロワー",
+    "followings": "フォロー中"
   }
 }
