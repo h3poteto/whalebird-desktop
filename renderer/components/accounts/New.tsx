@@ -72,7 +72,9 @@ export default function New(props: NewProps) {
             {sns === null && (
               <>
                 <div className="block">
-                  <Label htmlFor="domain" value="Domain" />
+                  <Label htmlFor="domain">
+                    <FormattedMessage id="accounts.new.domain" />
+                  </Label>
                 </div>
                 <TextInput id="domain" placeholder="mastodon.social" required type="text" />
                 <Button onClick={checkDomain}>
