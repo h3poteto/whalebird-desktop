@@ -1,5 +1,5 @@
 import { Label, Modal, TextInput, Button } from 'flowbite-react'
-import generator, { MegalodonInterface, detector } from 'megalodon'
+import generator, { MegalodonInterface, OAuth, detector } from 'megalodon'
 import { useState } from 'react'
 import { db } from '@/db'
 import { FormattedMessage } from 'react-intl'
@@ -13,15 +13,13 @@ export default function New(props: NewProps) {
   const [sns, setSNS] = useState<'mastodon' | 'pleroma' | 'firefish' | 'friendica' | null>(null)
   const [domain, setDomain] = useState<string>('')
   const [client, setClient] = useState<MegalodonInterface>()
-  const [clientId, setClientId] = useState<string>()
-  const [clientSecret, setClientSecret] = useState<string>()
+  const [appData, setAppData] = useState<OAuth.AppData>()
 
   const close = () => {
     setSNS(null)
     setDomain('')
     setClient(undefined)
-    setClientId(undefined)
-    setClientSecret(undefined)
+    setAppData(undefined)
     props.close()
   }
 
@@ -34,15 +32,20 @@ export default function New(props: NewProps) {
     const client = generator(sns, url)
     setClient(client)
     const appData = await client.registerApp('Whalebird', {})
-    setClientId(appData.client_id)
-    setClientSecret(appData.client_secret)
+    setAppData(appData)
     global.ipc.invoke('open-browser', appData.url)
   }
 
   const authorize = async () => {
+    if (!client || !appData) return
     const input = document.getElementById('authorization') as HTMLInputElement
-    if (!client || !clientId || !clientSecret) return
-    const tokenData = await client.fetchAccessToken(clientId, clientSecret, input.value)
+    let authorizationCode = null
+    if (appData.session_token) {
+      authorizationCode = appData.session_token
+    } else {
+      authorizationCode = input.value
+    }
+    const tokenData = await client.fetchAccessToken(appData.client_id, appData.client_secret, authorizationCode)
     if (!sns) return
     const cli = generator(sns, `https://${domain}`, tokenData.access_token, 'Whalebird')
     const acct = await cli.verifyAccountCredentials()
@@ -50,8 +53,8 @@ export default function New(props: NewProps) {
       username: acct.data.username,
       account_id: acct.data.id,
       avatar: acct.data.avatar,
-      client_id: clientId,
-      client_secret: clientSecret,
+      client_id: appData.client_id,
+      client_secret: appData.client_secret,
       access_token: tokenData.access_token,
       refresh_token: tokenData.refresh_token,
       url: `https://${domain}`,
@@ -82,12 +85,28 @@ export default function New(props: NewProps) {
                 </Button>
               </>
             )}
-            {sns && (
+            {sns && appData && (
               <>
-                <div className="block">
-                  <Label htmlFor="authorization" value="Authorization Code" />
-                </div>
-                <TextInput id="authorization" required type="text" />
+                {appData.session_token ? (
+                  <>
+                    <div className="block text-gray-600">
+                      <FormattedMessage id="accounts.new.without_code_authorize" />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="block">
+                      <Label htmlFor="authorization">
+                        <FormattedMessage id="accounts.new.authorization_code" />
+                      </Label>
+                      <p className="text-sm text-gray-600">
+                        <FormattedMessage id="accounts.new.authorization_helper" />
+                      </p>
+                    </div>
+                    <TextInput id="authorization" required type="text" />
+                  </>
+                )}
+
                 <Button onClick={authorize}>
                   <FormattedMessage id="accounts.new.authorize" />
                 </Button>
