@@ -21,9 +21,11 @@
   "accounts": {
     "new": {
       "title": "Add account",
+      "domain": "Domain",
       "sign_in": "Sign in",
       "authorize": "Authorize"
-    }
+    },
+    "remove": "Remove"
   },
   "notification": {
     "favourite": {
@@ -105,5 +107,9 @@
     "timeline": "Timeline",
     "followers": "Followers",
     "followings": "Followings"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language"
   }
 }

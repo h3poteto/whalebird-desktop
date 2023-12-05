@@ -21,9 +21,11 @@
   "accounts": {
     "new": {
       "title": "アカウントを追加",
+      "domain": "Domain",
       "sign_in": "ログイン",
       "authorize": "認証"
-    }
+    },
+    "remove": "Remove"
   },
   "notification": {
     "favourite": {
@@ -105,5 +107,9 @@
     "timeline": "タイムライン",
     "followers": "フォロワー",
     "followings": "フォロー中"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language"
   }
 }
