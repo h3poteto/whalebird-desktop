@@ -11,7 +11,16 @@ export default function Index() {
     const f = async () => {
       const accounts = await db.accounts.toArray()
       if (accounts.length > 0) {
-        router.push(`/accounts/${accounts[0].id}`)
+        if (typeof localStorage !== 'undefined') {
+          const lastAccount = localStorage.getItem(`lastAccount`)
+          if (lastAccount) {
+            router.push(`/accounts/${lastAccount}`)
+          } else {
+            router.push(`/accounts/${accounts[0].id}`)
+          }
+        } else {
+          router.push(`/accounts/${accounts[0].id}`)
+        }
       }
     }
     f()
