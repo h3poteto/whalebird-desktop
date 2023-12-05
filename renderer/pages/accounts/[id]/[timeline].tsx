@@ -27,6 +27,12 @@ export default function Page() {
     }
   }, [router.query.id])
 
+  useEffect(() => {
+    if (router.query.timeline && router.query.id && typeof localStorage !== 'undefined') {
+      localStorage.setItem(`${router.query.id}_lastTimeline`, router.query.timeline as string)
+    }
+  }, [router.query.id, router.query.timeline])
+
   if (!account || !client) return null
   switch (router.query.timeline as string) {
     case 'notifications': {
