@@ -23,7 +23,10 @@
       "title": "アカウントを追加",
       "domain": "ドメイン",
       "sign_in": "ログイン",
-      "authorize": "認証"
+      "authorize": "認証",
+      "authorization_code": "Authorization Code",
+      "authorization_helper": "Please paste the authorization code from your browser",
+      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize"
     },
     "remove": "削除"
   },
