@@ -14,7 +14,9 @@ export default function Page() {
 
   useEffect(() => {
     if (router.query.id) {
-      console.log(router)
+      if (router.query.id && typeof localStorage !== 'undefined') {
+        localStorage.setItem('lastAccount', router.query.id as string)
+      }
       const f = async () => {
         const a = await db.accounts.get(parseInt(router.query.id as string))
         if (a) {
