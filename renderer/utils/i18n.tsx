@@ -25,7 +25,6 @@ export const IntlProviderWrapper: React.FC<Props> = props => {
 
   const switchLang = (locale: string) => {
     const changeLang = langs.find(lang => lang.locale === locale)
-    console.log(changeLang)
     if (changeLang == null) {
       return
     }
