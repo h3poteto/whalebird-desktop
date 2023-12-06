@@ -74,6 +74,12 @@ export default function Status(props: Props) {
               {status.poll && <Poll poll={status.poll} onRefresh={onRefresh} client={props.client} />}
               {status.card && <Card card={status.card} />}
               <Media media={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
+              {status.emoji_reactions &&
+                status.emoji_reactions.map(e => (
+                  <button key={e.name} className="py-1">
+                    {e.url ? <img src={e.url} style={{ height: '24px' }} /> : <span>{e.name}</span>}
+                  </button>
+                ))}
             </>
           )}
 
