@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { CSSProperties, useContext, useEffect, useRef, useState } from 'react'
 import { FaGear, FaPlus } from 'react-icons/fa6'
 import { Account, db } from '@/db'
 import NewAccount from '@/components/accounts/New'
@@ -18,6 +18,7 @@ export default function Layout({ children }: LayoutProps) {
   const [accounts, setAccounts] = useState<Array<Account>>([])
   const [openNewModal, setOpenNewModal] = useState(false)
   const [openSettings, setOpenSettings] = useState(false)
+  const [style, setStyle] = useState<CSSProperties>({})
   const { switchLang } = useContext(Context)
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -104,11 +105,17 @@ export default function Layout({ children }: LayoutProps) {
     if (typeof localStorage !== 'undefined') {
       const lang = localStorage.getItem('language')
       switchLang(lang)
+      const fontSize = localStorage.getItem('fontSize')
+      if (parseInt(fontSize)) {
+        setStyle({
+          fontSize: `${fontSize}px`
+        })
+      }
     }
   }
 
   return (
-    <div className="app flex flex-col min-h-screen">
+    <div className="app flex flex-col min-h-screen" style={style}>
       <main className="flex w-full box-border my-0 mx-auto min-h-screen">
         <aside className="w-16 bg-gray-900 flex flex-col justify-between">
           <div>
