@@ -113,6 +113,7 @@
   },
   "settings": {
     "title": "Settings",
-    "language": "Language"
+    "language": "Language",
+    "font_size": "Font size"
   }
 }
