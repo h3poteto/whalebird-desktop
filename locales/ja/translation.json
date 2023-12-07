@@ -113,6 +113,7 @@
   },
   "settings": {
     "title": "設定",
-    "language": "言語"
+    "language": "言語",
+    "font_size": "Font size"
   }
 }

@@ -23,7 +23,10 @@
       "title": "Add account",
       "domain": "Domain",
       "sign_in": "Sign in",
-      "authorize": "Authorize"
+      "authorize": "Authorize",
+      "authorization_code": "Authorization Code",
+      "authorization_helper": "Please paste the authorization code from your browser",
+      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize"
     },
     "remove": "Remove"
   },
@@ -110,6 +113,7 @@
   },
   "settings": {
     "title": "Settings",
-    "language": "Language"
+    "language": "Language",
+    "font_size": "Font size"
   }
 }
