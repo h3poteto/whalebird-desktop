@@ -24,9 +24,9 @@
       "domain": "ドメイン",
       "sign_in": "ログイン",
       "authorize": "認証",
-      "authorization_code": "Authorization Code",
-      "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize"
+      "authorization_code": "認証コード",
+      "authorization_helper": "ブラウザに表示された認証コードを貼り付けてください",
+      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize"
     },
     "remove": "削除"
   },
@@ -114,6 +114,6 @@
   "settings": {
     "title": "設定",
     "language": "言語",
-    "font_size": "Font size"
+    "font_size": "フォントサイズ"
   }
 }
