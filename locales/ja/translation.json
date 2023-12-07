@@ -26,7 +26,7 @@
       "authorize": "認証",
       "authorization_code": "認証コード",
       "authorization_helper": "ブラウザに表示された認証コードを貼り付けてください",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize"
+      "without_code_authorize": "お使いのブラウザでWhalebirdを許可してください。その後、認証ボタンを押してください"
     },
     "remove": "削除"
   },
