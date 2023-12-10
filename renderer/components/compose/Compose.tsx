@@ -1,9 +1,24 @@
-import { Button, Checkbox, Dropdown, Label, Radio, Select, Spinner, TextInput, Textarea, ToggleSwitch } from 'flowbite-react'
+import {
+  Button,
+  Checkbox,
+  CustomFlowbiteTheme,
+  Dropdown,
+  Flowbite,
+  Label,
+  Radio,
+  Select,
+  Spinner,
+  TextInput,
+  Textarea,
+  ToggleSwitch
+} from 'flowbite-react'
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FaEnvelope, FaGlobe, FaListCheck, FaLock, FaLockOpen, FaPaperPlane, FaPaperclip, FaXmark } from 'react-icons/fa6'
+import { FaEnvelope, FaFaceLaughBeam, FaGlobe, FaListCheck, FaLock, FaLockOpen, FaPaperPlane, FaPaperclip, FaXmark } from 'react-icons/fa6'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useToast } from '@/utils/toast'
+import Picker from '@emoji-mart/react'
+import { data } from '@/utils/emojiData'
 
 type Props = {
   client: MegalodonInterface
@@ -14,6 +29,17 @@ type Poll = {
   options: Array<string>
   expires_in: number
   multiple: boolean
+}
+
+const customTheme: CustomFlowbiteTheme = {
+  dropdown: {
+    content: 'focus:outline-none',
+    floating: {
+      item: {
+        base: ''
+      }
+    }
+  }
 }
 
 export default function Compose(props: Props) {
@@ -128,6 +154,16 @@ export default function Compose(props: Props) {
     }
   }
 
+  const onEmojiSelect = emoji => {
+    const textarea = document.getElementById('body') as HTMLTextAreaElement
+    const cursor = textarea.selectionStart
+    if (emoji.native) {
+      setBody(current => `${current.slice(0, cursor)}${emoji.native} ${current.slice(cursor)}`)
+    } else if (emoji.shortcodes) {
+      setBody(current => `${current.slice(0, cursor)}${emoji.shortcodes} ${current.slice(cursor)}`)
+    }
+  }
+
   return (
     <div className="px-4 pb-4">
       <form id="form">
@@ -142,14 +178,31 @@ export default function Compose(props: Props) {
             placeholder={formatMessage({ id: 'compose.spoiler.placeholder' })}
           />
         )}
-        <Textarea
-          id="body"
-          className="resize-none focus:ring-0"
-          placeholder={formatMessage({ id: 'compose.placeholder' })}
-          rows={3}
-          value={body}
-          onChange={ev => setBody(ev.target.value)}
-        />
+        <div className="relative">
+          <Textarea
+            id="body"
+            className="resize-none focus:ring-0"
+            placeholder={formatMessage({ id: 'compose.placeholder' })}
+            rows={3}
+            value={body}
+            onChange={ev => setBody(ev.target.value)}
+          />
+          <Flowbite theme={{ theme: customTheme }}>
+            <Dropdown
+              label=""
+              dismissOnClick
+              renderTrigger={() => (
+                <span className="absolute top-1 right-1 text-gray-600 cursor-pointer">
+                  <FaFaceLaughBeam />
+                </span>
+              )}
+            >
+              <Dropdown.Item>
+                <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" theme="light" />
+              </Dropdown.Item>
+            </Dropdown>
+          </Flowbite>
+        </div>
       </form>
       {poll && <PollForm poll={poll} setPoll={setPoll} />}
       <div className="attachments flex gap-2">
