@@ -14,11 +14,13 @@
     "thirdparty": "license-checker --production --json > thirdparty.json"
   },
   "dependencies": {
+    "@emoji-mart/react": "^1.1.1",
     "blurhash": "^2.0.5",
     "dayjs": "^1.11.10",
     "dexie": "^3.2.4",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
+    "emoji-mart": "^5.5.2",
     "flowbite": "^2.0.0",
     "flowbite-react": "^0.6.4",
     "megalodon": "^9.1.1",
