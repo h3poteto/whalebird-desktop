@@ -2,9 +2,11 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
+import { Account } from '@/db'
 
 type Props = {
   client: MegalodonInterface
+  account: Account
   status_id: string
   openMedia: (media: Entity.Attachment) => void
 }
@@ -33,7 +35,14 @@ export default function Thread(props: Props) {
         style={{ height: 'calc(100% - 50px)' }}
         data={[...ancestors, status, ...descendants].filter(s => s !== null)}
         itemContent={(_, status) => (
-          <Status client={props.client} status={status} key={status.id} onRefresh={() => {}} openMedia={props.openMedia} />
+          <Status
+            client={props.client}
+            account={props.account}
+            status={status}
+            key={status.id}
+            onRefresh={() => {}}
+            openMedia={props.openMedia}
+          />
         )}
       />
     </>

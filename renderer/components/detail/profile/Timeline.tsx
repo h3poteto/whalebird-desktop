@@ -1,9 +1,11 @@
 import Status from '@/components/timelines/status/Status'
+import { Account } from '@/db'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
 
 type Props = {
   client: MegalodonInterface
+  account: Account
   user_id: string
   openMedia: (media: Entity.Attachment) => void
 }
@@ -43,6 +45,7 @@ export default function Timeline(props: Props) {
       {statuses.map((status, index) => (
         <Status
           client={props.client}
+          account={props.account}
           status={status}
           key={index}
           onRefresh={status => setStatuses(current => updateStatus(current, status))}

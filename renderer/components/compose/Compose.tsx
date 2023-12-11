@@ -36,7 +36,7 @@ const customTheme: CustomFlowbiteTheme = {
     content: 'focus:outline-none',
     floating: {
       item: {
-        base: ''
+        base: 'hidden'
       }
     }
   }
@@ -162,6 +162,8 @@ export default function Compose(props: Props) {
     } else if (emoji.shortcodes) {
       setBody(current => `${current.slice(0, cursor)}${emoji.shortcodes} ${current.slice(cursor)}`)
     }
+    const dummy = document.getElementById('dummy-emoji-picker')
+    dummy.click()
   }
 
   return (
@@ -197,8 +199,9 @@ export default function Compose(props: Props) {
                 </span>
               )}
             >
+              <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" theme="light" />
               <Dropdown.Item>
-                <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" theme="light" />
+                <span id="dummy-emoji-picker" />
               </Dropdown.Item>
             </Dropdown>
           </Flowbite>

@@ -11,9 +11,11 @@ import Actions from './Actions'
 import { useRouter } from 'next/router'
 import { MouseEventHandler, useState } from 'react'
 import { findLink } from '@/utils/statusParser'
+import { Account } from '@/db'
 
 type Props = {
   status: Entity.Status
+  account: Account
   client: MegalodonInterface
   onRefresh: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
@@ -74,16 +76,18 @@ export default function Status(props: Props) {
               {status.poll && <Poll poll={status.poll} onRefresh={onRefresh} client={props.client} />}
               {status.card && <Card card={status.card} />}
               <Media media={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
-              {status.emoji_reactions &&
-                status.emoji_reactions.map(e => (
-                  <button key={e.name} className="py-1">
-                    {e.url ? <img src={e.url} style={{ height: '24px' }} /> : <span>{e.name}</span>}
-                  </button>
-                ))}
+              <div className="flex items-center gap-2">
+                {status.emoji_reactions &&
+                  status.emoji_reactions.map(e => (
+                    <button key={e.name} className="py-1">
+                      {e.url ? <img src={e.url} style={{ height: '24px' }} /> : <span>{e.name}</span>}
+                    </button>
+                  ))}
+              </div>
             </>
           )}
 
-          <Actions status={status} client={props.client} onRefresh={onRefresh} />
+          <Actions status={status} client={props.client} account={props.account} onRefresh={onRefresh} />
         </div>
       </div>
     </div>

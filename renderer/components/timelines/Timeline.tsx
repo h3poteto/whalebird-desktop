@@ -182,6 +182,7 @@ export default function Timeline(props: Props) {
             itemContent={(_, status) => (
               <Status
                 client={props.client}
+                account={props.account}
                 status={status}
                 key={status.id}
                 onRefresh={status => setStatuses(current => updateStatus(current, status))}
@@ -194,7 +195,7 @@ export default function Timeline(props: Props) {
           </div>
         </div>
       </section>
-      <Detail client={props.client} className="detail" openMedia={media => props.setAttachment(media)} />
+      <Detail client={props.client} account={props.account} className="detail" openMedia={media => props.setAttachment(media)} />
     </div>
   )
 }
