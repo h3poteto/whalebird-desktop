@@ -1,11 +1,27 @@
+import { CustomFlowbiteTheme, Dropdown, Flowbite } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
-import { FaBookmark, FaEllipsis, FaReply, FaRetweet, FaStar } from 'react-icons/fa6'
+import { FaBookmark, FaEllipsis, FaFaceLaughBeam, FaReply, FaRetweet, FaStar } from 'react-icons/fa6'
+import Picker from '@emoji-mart/react'
+import { data } from '@/utils/emojiData'
+import { Account } from '@/db'
 
 type Props = {
   status: Entity.Status
+  account: Account
   client: MegalodonInterface
   onRefresh: () => void
+}
+
+const customTheme: CustomFlowbiteTheme = {
+  dropdown: {
+    content: 'focus:outline-none',
+    floating: {
+      item: {
+        base: 'hidden'
+      }
+    }
+  }
 }
 
 export default function Actions(props: Props) {
@@ -42,12 +58,39 @@ export default function Actions(props: Props) {
     props.onRefresh()
   }
 
+  const onEmojiSelect = async emoji => {
+    await props.client.createEmojiReaction(props.status.id, emoji.native)
+    const dummy = document.getElementById('dummy-emoji-picker')
+    dummy.click()
+    props.onRefresh()
+  }
+
   return (
     <div className="flex gap-6">
       <FaReply className={`w-4 text-gray-400 cursor-pointer hover:text-gray-600`} onClick={reply} />
       <FaRetweet className={`${retweetColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={reblog} />
       <FaStar className={`${favouriteColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={favourite} />
       <FaBookmark className={`${bookmarkColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={bookmark} />
+      {props.account.sns !== 'mastodon' && (
+        <Flowbite theme={{ theme: customTheme }}>
+          <Dropdown
+            disabled
+            label=""
+            dismissOnClick
+            renderTrigger={() => (
+              <span className="text-gray-400 hover:text-gray-600 cursor-pointer">
+                <FaFaceLaughBeam />
+              </span>
+            )}
+          >
+            <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" theme="light" />
+            <Dropdown.Item>
+              <span id="dummy-emoji-picker" />
+            </Dropdown.Item>
+          </Dropdown>
+        </Flowbite>
+      )}
+
       <FaEllipsis className="w-4 text-gray-400 cursor-pointer hover:text-gray-600" />
     </div>
   )

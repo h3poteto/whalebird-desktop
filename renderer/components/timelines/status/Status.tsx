@@ -11,9 +11,11 @@ import Actions from './Actions'
 import { useRouter } from 'next/router'
 import { MouseEventHandler, useState } from 'react'
 import { findLink } from '@/utils/statusParser'
+import { Account } from '@/db'
 
 type Props = {
   status: Entity.Status
+  account: Account
   client: MegalodonInterface
   onRefresh: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
@@ -83,7 +85,7 @@ export default function Status(props: Props) {
             </>
           )}
 
-          <Actions status={status} client={props.client} onRefresh={onRefresh} />
+          <Actions status={status} client={props.client} account={props.account} onRefresh={onRefresh} />
         </div>
       </div>
     </div>

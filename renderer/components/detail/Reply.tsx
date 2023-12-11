@@ -3,9 +3,11 @@ import { useEffect, useRef, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
 import Compose from '../compose/Compose'
+import { Account } from '@/db'
 
 type Props = {
   client: MegalodonInterface
+  account: Account
   status_id: string
   openMedia: (media: Entity.Attachment) => void
 }
@@ -49,7 +51,14 @@ export default function Reply(props: Props) {
         style={{ height: `calc(100% - ${composeHeight}px)` }}
         data={[...ancestors, status].filter(s => s !== null)}
         itemContent={(_, status) => (
-          <Status client={props.client} status={status} key={status.id} onRefresh={() => {}} openMedia={props.openMedia} />
+          <Status
+            client={props.client}
+            account={props.account}
+            status={status}
+            key={status.id}
+            onRefresh={() => {}}
+            openMedia={props.openMedia}
+          />
         )}
       />
       <div ref={composeRef}>

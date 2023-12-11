@@ -8,9 +8,11 @@ import Timeline from './profile/Timeline'
 import Followings from './profile/Followings'
 import Followers from './profile/Followers'
 import { findLink } from '@/utils/statusParser'
+import { Account } from '@/db'
 
 type Props = {
   client: MegalodonInterface
+  account: Account
   user_id: string
   openMedia: (media: Entity.Attachment) => void
 }
@@ -122,7 +124,7 @@ export default function Profile(props: Props) {
             <div>
               <Tabs.Group aria-label="Tabs with icons" style="underline">
                 <Tabs.Item active title={formatMessage({ id: 'profile.timeline' })}>
-                  <Timeline client={props.client} user_id={props.user_id} openMedia={props.openMedia} />
+                  <Timeline client={props.client} account={props.account} user_id={props.user_id} openMedia={props.openMedia} />
                 </Tabs.Item>
                 <Tabs.Item title={formatMessage({ id: 'profile.followings' })}>
                   <Followings client={props.client} user_id={props.user_id} />

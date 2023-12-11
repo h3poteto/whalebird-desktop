@@ -125,6 +125,7 @@ export default function Notifications(props: Props) {
           itemContent={(_, notification) => (
             <Notification
               client={props.client}
+              account={props.account}
               notification={notification}
               onRefresh={updateStatus}
               key={notification.id}
