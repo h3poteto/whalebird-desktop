@@ -15,7 +15,8 @@
       },
       "show_more": "もっと見る",
       "show_less": "隠す",
-      "cw": "非表示のメディア"
+      "cw": "非表示のメディア",
+      "report": "Report {user}"
     }
   },
   "accounts": {
@@ -115,5 +116,10 @@
     "title": "設定",
     "language": "言語",
     "font_size": "フォントサイズ"
+  },
+  "report": {
+    "title": "Report {user}",
+    "detail": "Detail",
+    "submit": "Submit"
   }
 }
