@@ -16,6 +16,12 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@badgateway/oauth2-client",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@badgateway/oauth2-client/LICENSE"
   },
+  "@emoji-mart/react@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/missive/emoji-mart",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@emoji-mart/react",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@emoji-mart/react/LICENSE"
+  },
   "@floating-ui/core@1.5.0": {
     "licenses": "MIT",
     "repository": "https://github.com/floating-ui/floating-ui",
@@ -525,6 +531,12 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/electron-store",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/electron-store/license"
   },
+  "emoji-mart@5.5.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/missive/emoji-mart",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/emoji-mart",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/emoji-mart/LICENSE"
+  },
   "entities@4.5.0": {
     "licenses": "BSD-2-Clause",
     "repository": "https://github.com/fb55/entities",
@@ -567,7 +579,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/fast-deep-equal",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/fast-deep-equal/LICENSE"
   },
-  "fast-glob@3.3.1": {
+  "fast-glob@3.3.2": {
     "licenses": "MIT",
     "repository": "https://github.com/mrmlnc/fast-glob",
     "publisher": "Denis Malinochkin",
@@ -826,6 +838,13 @@
     "publisher": "antonk52",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/lilconfig",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/lilconfig/LICENSE"
+  },
+  "lilconfig@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/antonk52/lilconfig",
+    "publisher": "antonk52",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss-load-config/node_modules/lilconfig",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss-load-config/node_modules/lilconfig/LICENSE"
   },
   "lines-and-columns@1.2.4": {
     "licenses": "MIT",
@@ -1116,7 +1135,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss-js",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss-js/LICENSE"
   },
-  "postcss-load-config@4.0.1": {
+  "postcss-load-config@4.0.2": {
     "licenses": "MIT",
     "repository": "https://github.com/postcss/postcss-load-config",
     "publisher": "Michael Ciniawky",
@@ -1345,7 +1364,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tailwind-merge",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tailwind-merge/LICENSE.md"
   },
-  "tailwindcss@3.3.5": {
+  "tailwindcss@3.3.6": {
     "licenses": "MIT",
     "repository": "https://github.com/tailwindlabs/tailwindcss",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tailwindcss",
@@ -1436,7 +1455,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid/LICENSE.md"
   },
-  "whalebird@6.0.0-beta.0": {
+  "whalebird@6.0.0-beta.2": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -1471,7 +1490,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/yallist",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/yallist/LICENSE"
   },
-  "yaml@2.3.3": {
+  "yaml@2.3.4": {
     "licenses": "ISC",
     "repository": "https://github.com/eemeli/yaml",
     "publisher": "Eemeli Aro",
