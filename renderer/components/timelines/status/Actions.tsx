@@ -5,6 +5,7 @@ import { FaBookmark, FaEllipsis, FaFaceLaughBeam, FaReply, FaRetweet, FaStar } f
 import Picker from '@emoji-mart/react'
 import { data } from '@/utils/emojiData'
 import { Account } from '@/db'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   status: Entity.Status
@@ -65,6 +66,10 @@ export default function Actions(props: Props) {
     props.onRefresh()
   }
 
+  const report = () => {
+    router.push({ query: { id: router.query.id, timeline: router.query.timeline, report_target_id: props.status.id, modal: true } })
+  }
+
   return (
     <div className="flex gap-6">
       <FaReply className={`w-4 text-gray-400 cursor-pointer hover:text-gray-600`} onClick={reply} />
@@ -74,7 +79,6 @@ export default function Actions(props: Props) {
       {props.account.sns !== 'mastodon' && (
         <Flowbite theme={{ theme: customTheme }}>
           <Dropdown
-            disabled
             label=""
             dismissOnClick
             renderTrigger={() => (
@@ -91,7 +95,19 @@ export default function Actions(props: Props) {
         </Flowbite>
       )}
 
-      <FaEllipsis className="w-4 text-gray-400 cursor-pointer hover:text-gray-600" />
+      <Dropdown
+        label=""
+        dismissOnClick
+        renderTrigger={() => (
+          <span className="text-gray-400 hover:text-gray-600 cursor-pointer">
+            <FaEllipsis className="w-4" />
+          </span>
+        )}
+      >
+        <Dropdown.Item onClick={report}>
+          <FormattedMessage id="timeline.status.report" values={{ user: `@${props.status.account.acct}` }} />
+        </Dropdown.Item>
+      </Dropdown>
     </div>
   )
 }
