@@ -5,12 +5,14 @@ import { Account, db } from '@/db'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import Notifications from '@/components/timelines/Notifications'
 import Media from '@/components/Media'
+import Report from '@/components/report/Report'
 
 export default function Page() {
   const router = useRouter()
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>(null)
   const [attachment, setAttachment] = useState<Entity.Attachment | null>(null)
+  const [report, setReport] = useState<Entity.Status | null>(null)
 
   useEffect(() => {
     if (router.query.id) {
@@ -35,6 +37,16 @@ export default function Page() {
     }
   }, [router.query.id, router.query.timeline])
 
+  useEffect(() => {
+    if (router.query.modal && router.query.report_target_id) {
+      const f = async () => {
+        const res = await client.getStatus(router.query.report_target_id as string)
+        setReport(res.data)
+      }
+      f()
+    }
+  }, [router.query.modal, router.query.report_target_id])
+
   if (!account || !client) return null
   switch (router.query.timeline as string) {
     case 'notifications': {
@@ -45,6 +57,7 @@ export default function Page() {
         <>
           <Timeline timeline={router.query.timeline as string} account={account} client={client} setAttachment={setAttachment} />
           <Media open={attachment !== null} close={() => setAttachment(null)} attachment={attachment} />
+          {report && <Report open={report !== null} close={() => setReport(null)} status={report} client={client} />}
         </>
       )
     }
