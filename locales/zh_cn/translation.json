@@ -15,7 +15,8 @@
       },
       "show_more": "Show more",
       "show_less": "Show less",
-      "cw": "Media hidden"
+      "cw": "Media hidden",
+      "report": "Report {user}"
     }
   },
   "accounts": {
@@ -115,5 +116,10 @@
     "title": "Settings",
     "language": "Language",
     "font_size": "Font size"
+  },
+  "report": {
+    "title": "Report {user}",
+    "detail": "Detail",
+    "submit": "Submit"
   }
 }
