@@ -12,7 +12,7 @@ import {
   Textarea,
   ToggleSwitch
 } from 'flowbite-react'
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FaEnvelope, FaFaceLaughBeam, FaGlobe, FaListCheck, FaLock, FaLockOpen, FaPaperPlane, FaPaperclip, FaXmark } from 'react-icons/fa6'
 import { Entity, MegalodonInterface } from 'megalodon'
@@ -54,6 +54,7 @@ export default function Compose(props: Props) {
   const { formatMessage } = useIntl()
   const uploaderRef = useRef(null)
   const showToast = useToast()
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     if (!cw) {
@@ -115,6 +116,23 @@ export default function Compose(props: Props) {
     setAttachments([])
     setPoll(null)
   }
+
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.ctrlKey === true && event.key === 'Enter') {
+        post()
+      }
+    },
+    [post]
+  )
+
+  useEffect(() => {
+    textareaRef.current?.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      textareaRef.current?.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [handleKeyPress])
 
   const selectFile = () => {
     if (uploaderRef.current) {
@@ -188,6 +206,7 @@ export default function Compose(props: Props) {
             rows={3}
             value={body}
             onChange={ev => setBody(ev.target.value)}
+            ref={textareaRef}
           />
           <Flowbite theme={{ theme: customTheme }}>
             <Dropdown
