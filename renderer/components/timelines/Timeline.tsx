@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import Detail from '../detail/Detail'
 import { useRouter } from 'next/router'
 import Compose from '../compose/Compose'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -18,6 +19,7 @@ type Props = {
   client: MegalodonInterface
   setAttachment: Dispatch<SetStateAction<Entity.Attachment | null>>
 }
+
 export default function Timeline(props: Props) {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [unreads, setUnreads] = useState<Array<Entity.Status>>([])
@@ -29,6 +31,7 @@ export default function Timeline(props: Props) {
   const scrollerRef = useRef<HTMLElement | null>(null)
   const streaming = useRef<WebSocketInterface | null>(null)
   const composeRef = useRef<HTMLDivElement | null>(null)
+  useHotkeys('ctrl+r', () => reload())
 
   useEffect(() => {
     const observer = new ResizeObserver(entries => {
@@ -129,6 +132,11 @@ export default function Timeline(props: Props) {
     })
     return renew
   }
+
+  const reload = useCallback(async () => {
+    const res = await loadTimeline(props.timeline, props.client)
+    setStatuses(res)
+  }, [props.timeline, props.client, setStatuses])
 
   const loadMore = useCallback(async () => {
     console.debug('appending')
