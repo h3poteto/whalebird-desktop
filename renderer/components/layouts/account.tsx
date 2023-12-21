@@ -9,6 +9,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import generateNotification from '@/utils/notification'
 import generator, { Entity, WebSocketInterface } from 'megalodon'
 import { Context } from '@/utils/i18n'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -23,6 +24,15 @@ export default function Layout({ children }: LayoutProps) {
   const router = useRouter()
   const { formatMessage } = useIntl()
   const streamings = useRef<Array<WebSocketInterface>>([])
+
+  for (let i = 1; i < 9; i++) {
+    useHotkeys(`ctrl+${i}`, () => {
+      const acct = accounts[i - 1]
+      if (acct && acct.id) {
+        router.push(`/accounts/${acct.id}`)
+      }
+    })
+  }
 
   useEffect(() => {
     loadSettings()
