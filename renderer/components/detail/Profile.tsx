@@ -18,7 +18,7 @@ type Props = {
 }
 
 const customTheme: CustomFlowbiteTheme = {
-  tab: {
+  tabs: {
     tablist: {
       tabitem: {
         base: 'flex items-center justify-center p-4 rounded-t-lg text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500'
@@ -122,7 +122,7 @@ export default function Profile(props: Props) {
               </div>
             </div>
             <div>
-              <Tabs.Group aria-label="Tabs with icons" style="underline">
+              <Tabs aria-label="Tabs with icons" style="underline">
                 <Tabs.Item active title={formatMessage({ id: 'profile.timeline' })}>
                   <Timeline client={props.client} account={props.account} user_id={props.user_id} openMedia={props.openMedia} />
                 </Tabs.Item>
@@ -132,7 +132,7 @@ export default function Profile(props: Props) {
                 <Tabs.Item title={formatMessage({ id: 'profile.followers' })} className="focus:ring-0">
                   <Followers client={props.client} user_id={props.user_id} />
                 </Tabs.Item>
-              </Tabs.Group>
+              </Tabs>
             </div>
           </>
         )}
