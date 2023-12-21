@@ -2,8 +2,10 @@ import { Account, db } from '@/db'
 import { CustomFlowbiteTheme, Flowbite, Sidebar } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { FaBell, FaGlobe, FaHouse, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
+import Jump from '../Jump'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -26,8 +28,10 @@ const customTheme: CustomFlowbiteTheme = {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const [openJump, setOpenJump] = useState(false)
   const router = useRouter()
   const { formatMessage } = useIntl()
+  useHotkeys('ctrl+k', () => setOpenJump(current => !current))
 
   const [account, setAccount] = useState<Account | null>(null)
   useEffect(() => {
@@ -70,6 +74,7 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <section className="flex h-screen w-full overflow-hidden">
+      <Jump opened={openJump} close={() => setOpenJump(false)} />
       <Flowbite theme={{ theme: customTheme }}>
         <Sidebar className="text-blue-200 sidebar">
           <div className="max-w-full pl-4 mt-2 mb-4 my-profile">

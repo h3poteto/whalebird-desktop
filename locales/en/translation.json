@@ -121,5 +121,8 @@
     "title": "Report {user}",
     "detail": "Detail",
     "submit": "Submit"
+  },
+  "jump": {
+    "placeholder": "Timelines"
   }
 }
