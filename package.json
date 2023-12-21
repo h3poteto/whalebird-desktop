@@ -22,7 +22,7 @@
     "electron-store": "^8.1.0",
     "emoji-mart": "^5.5.2",
     "flowbite": "^2.0.0",
-    "flowbite-react": "^0.6.4",
+    "flowbite-react": "^0.7.0",
     "megalodon": "^9.1.1",
     "react-blurhash": "^0.3.0",
     "react-icons": "^4.11.0",
