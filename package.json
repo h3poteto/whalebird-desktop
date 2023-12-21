@@ -25,6 +25,7 @@
     "flowbite-react": "^0.7.0",
     "megalodon": "^9.1.1",
     "react-blurhash": "^0.3.0",
+    "react-hotkeys-hook": "^4.4.1",
     "react-icons": "^4.11.0",
     "react-intl": "^6.5.1",
     "react-virtuoso": "^4.6.2",
