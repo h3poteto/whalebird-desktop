@@ -7,7 +7,7 @@ import { IntlProvider } from 'react-intl'
 export type localeType = 'en' | 'ja'
 
 type Props = {
-  children: React.ReactNode
+  children: any // React.ReactNode
 }
 
 interface Lang {
