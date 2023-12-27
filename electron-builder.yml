@@ -24,6 +24,7 @@ mac:
   gatekeeperAssess: false
   darkModeSupport: false
   notarize: false
+  singleArchFiles: "*"
 win:
   icon: resources/icons/icon.ico
   target:
