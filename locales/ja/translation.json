@@ -96,6 +96,11 @@
       "3d": "3日",
       "7d": "7日",
       "multiple": "複数選択"
+    },
+    "edit_media": {
+      "title": "Edit media",
+      "label": "Describe for people who are blind or have low vision",
+      "submit": "Apply"
     }
   },
   "alert": {
