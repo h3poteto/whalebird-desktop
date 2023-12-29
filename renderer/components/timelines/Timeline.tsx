@@ -25,6 +25,7 @@ export default function Timeline(props: Props) {
   const [unreads, setUnreads] = useState<Array<Entity.Status>>([])
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [composeHeight, setComposeHeight] = useState(120)
+  const [list, setList] = useState<Entity.List | null>(null)
 
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -53,6 +54,7 @@ export default function Timeline(props: Props) {
       setStatuses(res)
       const instance = await props.client.getInstance()
       const c = generator(props.account.sns, instance.data.urls.streaming_api, props.account.access_token, 'Whalebird')
+      setList(null)
       switch (props.timeline) {
         case 'home': {
           streaming.current = c.userSocket()
@@ -64,6 +66,15 @@ export default function Timeline(props: Props) {
         }
         case 'public': {
           streaming.current = c.publicSocket()
+          break
+        }
+        default: {
+          const match = props.timeline.match(/list_(\d+)/)
+          if (match[1] && typeof match[1] === 'string') {
+            const res = await props.client.getList(match[1])
+            streaming.current = c.listSocket(match[1])
+            setList(res.data)
+          }
           break
         }
       }
@@ -111,6 +122,12 @@ export default function Timeline(props: Props) {
         return res.data
       }
       default: {
+        // Check list
+        const match = tl.match(/list_(\d+)/)
+        if (match[1] && typeof match[1] === 'string') {
+          const res = await client.getListTimeline(match[1], options)
+          return res.data
+        }
         return []
       }
     }
@@ -168,7 +185,7 @@ export default function Timeline(props: Props) {
       <section className={`h-full ${timelineClass()}`}>
         <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
           <div className="text-lg font-bold">
-            <FormattedMessage id={`timeline.${props.timeline}`} />
+            {props.timeline.match(/list_(\d+)/) ? <>{list && list.title}</> : <FormattedMessage id={`timeline.${props.timeline}`} />}
           </div>
           <div className="w-64 text-xs">
             <form>
