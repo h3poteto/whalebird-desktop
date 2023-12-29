@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl'
 import Actions from './Actions'
 import { useRouter } from 'next/router'
 import { MouseEventHandler, useState } from 'react'
-import { findLink } from '@/utils/statusParser'
+import { findAccount, findLink, ParsedAccount, accountMatch } from '@/utils/statusParser'
 import { Account } from '@/db'
 
 type Props = {
@@ -40,6 +40,22 @@ export default function Status(props: Props) {
   }
 
   const statusClicked: MouseEventHandler<HTMLDivElement> = async e => {
+    const parsedAccount = findAccount(e.target as HTMLElement, 'status-body')
+    if (parsedAccount) {
+      e.preventDefault()
+      e.stopPropagation()
+
+      const account = await searchAccount(parsedAccount, props.status, props.client, props.account.domain)
+      if (account) {
+        router.push({ query: { id: router.query.id, timeline: router.query.timeline, user_id: account.id, detail: true } })
+      } else {
+        console.warn('account not found', parsedAccount)
+      }
+      return
+    }
+
+    // TODO: find tag
+
     const url = findLink(e.target as HTMLElement, 'status-body')
     if (url) {
       global.ipc.invoke('open-browser', url)
@@ -117,4 +133,27 @@ const rebloggedHeader = (status: Entity.Status) => {
   } else {
     return null
   }
+}
+
+async function searchAccount(account: ParsedAccount, status: Entity.Status, client: MegalodonInterface, domain: string) {
+  if (status.in_reply_to_account_id) {
+    const res = await client.getAccount(status.in_reply_to_account_id)
+    if (res.status === 200) {
+      const user = accountMatch([res.data], account, domain)
+      if (user) return user
+    }
+  }
+  if (status.in_reply_to_id) {
+    const res = await client.getStatusContext(status.id)
+    if (res.status === 200) {
+      const accounts: Array<Entity.Account> = res.data.ancestors.map(s => s.account).concat(res.data.descendants.map(s => s.account))
+      const user = accountMatch(accounts, account, domain)
+      if (user) return user
+    }
+  }
+  const res = await client.searchAccount(account.url, { resolve: true })
+  if (res.data.length === 0) return null
+  const user = accountMatch(res.data, account, domain)
+  if (user) return user
+  return null
 }
