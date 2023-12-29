@@ -96,6 +96,11 @@
       "3d": "3 days",
       "7d": "7 days",
       "multiple": "multiple"
+    },
+    "edit_media": {
+      "title": "Edit media",
+      "label": "Describe for people who are blind or have low vision",
+      "submit": "Apply"
     }
   },
   "alert": {
