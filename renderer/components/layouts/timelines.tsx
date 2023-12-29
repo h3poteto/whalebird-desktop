@@ -1,8 +1,9 @@
 import { Account, db } from '@/db'
 import { CustomFlowbiteTheme, Flowbite, Sidebar } from 'flowbite-react'
+import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { FaBell, FaGlobe, FaHouse, FaUsers } from 'react-icons/fa6'
+import { FaBell, FaGlobe, FaHashtag, FaHouse, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 
 type LayoutProps = {
@@ -30,6 +31,8 @@ export default function Layout({ children }: LayoutProps) {
   const { formatMessage } = useIntl()
 
   const [account, setAccount] = useState<Account | null>(null)
+  const [lists, setLists] = useState<Array<Entity.List>>([])
+
   useEffect(() => {
     if (router.query.id) {
       const f = async () => {
@@ -40,6 +43,16 @@ export default function Layout({ children }: LayoutProps) {
       f()
     }
   }, [router.query.id])
+
+  useEffect(() => {
+    if (!account) return
+    const c = generator(account.sns, account.url, account.access_token, 'Whalebird')
+    const f = async () => {
+      const res = await c.getLists()
+      setLists(res.data)
+    }
+    f()
+  }, [account])
 
   const pages = [
     {
@@ -87,6 +100,17 @@ export default function Layout({ children }: LayoutProps) {
                   className="sidebar-menu-item"
                 >
                   <span className="sidebar-menu">{page.title}</span>
+                </Sidebar.Item>
+              ))}
+              {lists.map(list => (
+                <Sidebar.Item
+                  key={list.id}
+                  active={router.asPath.includes(`list_${list.id}`)}
+                  onClick={() => router.push({ pathname: `/accounts/${router.query.id}/list_${list.id}` })}
+                  icon={FaHashtag}
+                  className="sidebar-menu-item"
+                >
+                  <span className="sidebar-menu">{list.title}</span>
                 </Sidebar.Item>
               ))}
             </Sidebar.ItemGroup>
