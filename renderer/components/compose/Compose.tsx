@@ -14,11 +14,23 @@ import {
 } from 'flowbite-react'
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FaEnvelope, FaFaceLaughBeam, FaGlobe, FaListCheck, FaLock, FaLockOpen, FaPaperPlane, FaPaperclip, FaXmark } from 'react-icons/fa6'
+import {
+  FaEnvelope,
+  FaFaceLaughBeam,
+  FaGlobe,
+  FaListCheck,
+  FaLock,
+  FaLockOpen,
+  FaPaperPlane,
+  FaPaperclip,
+  FaPencil,
+  FaXmark
+} from 'react-icons/fa6'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useToast } from '@/utils/toast'
 import Picker from '@emoji-mart/react'
 import { data } from '@/utils/emojiData'
+import EditMedia from './EditMedia'
 
 type Props = {
   client: MegalodonInterface
@@ -50,6 +62,7 @@ export default function Compose(props: Props) {
   const [attachments, setAttachments] = useState<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
   const [poll, setPoll] = useState<Poll | null>(null)
   const [loading, setLoading] = useState(false)
+  const [editMedia, setEditMedia] = useState<Entity.Attachment>()
 
   const { formatMessage } = useIntl()
   const uploaderRef = useRef(null)
@@ -164,6 +177,14 @@ export default function Compose(props: Props) {
     setAttachments(current => current.filter((_, i) => i !== index))
   }
 
+  const openDescription = (index: number) => {
+    setEditMedia(attachments[index])
+  }
+
+  const closeDescription = () => {
+    setEditMedia(undefined)
+  }
+
   const togglePoll = () => {
     if (poll) {
       setPoll(null)
@@ -233,6 +254,9 @@ export default function Compose(props: Props) {
             <button className="absolute bg-gray-600 rounded" onClick={() => removeFile(index)}>
               <FaXmark className="text-gray-200" />
             </button>
+            <button className="absolute right-0 bg-gray-600 rounded" onClick={() => openDescription(index)}>
+              <FaPencil className="text-gray-200" />
+            </button>
             <img src={f.preview_url} style={{ width: '80px', height: '80px' }} className="rounded-md" />
           </div>
         ))}
@@ -281,6 +305,7 @@ export default function Compose(props: Props) {
           {loading ? <Spinner size="sm" /> : <FaPaperPlane className="text-gray-400 hover:text-gray-600 cursor-pointer" onClick={post} />}
         </div>
       </div>
+      <EditMedia media={editMedia} close={closeDescription} client={props.client} />
     </div>
   )
 }
