@@ -8,13 +8,13 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@alloc/quick-lru",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@alloc/quick-lru/license"
   },
-  "@babel/runtime@7.23.6": {
+  "@babel/runtime@7.23.7": {
     "licenses": "MIT",
     "repository": "https://github.com/babel/babel",
     "publisher": "The Babel Team",
     "url": "https://babel.dev/team",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdx-bundler/node_modules/@babel/runtime",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdx-bundler/node_modules/@babel/runtime/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@babel/runtime",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@babel/runtime/LICENSE"
   },
   "@badgateway/oauth2-client@2.2.4": {
     "licenses": "MIT",
@@ -212,6 +212,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@grpc/proto-loader",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@grpc/proto-loader/LICENSE"
   },
+  "@isaacs/cliui@8.0.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/yargs/cliui",
+    "publisher": "Ben Coe",
+    "email": "ben@npmjs.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/LICENSE.txt"
+  },
   "@jridgewell/gen-mapping@0.3.3": {
     "licenses": "MIT",
     "repository": "https://github.com/jridgewell/gen-mapping",
@@ -289,11 +297,6 @@
     "licenses": "MIT",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@next/swc-linux-x64-gnu",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@next/swc-linux-x64-gnu/README.md"
-  },
-  "@next/swc-linux-x64-musl@12.3.4": {
-    "licenses": "MIT",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@next/swc-linux-x64-musl",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@next/swc-linux-x64-musl/README.md"
   },
   "@nodelib/fs.scandir@2.1.5": {
     "licenses": "MIT",
@@ -453,6 +456,12 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@opentelemetry/semantic-conventions",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@opentelemetry/semantic-conventions/LICENSE"
   },
+  "@pkgjs/parseargs@0.11.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/pkgjs/parseargs",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@pkgjs/parseargs",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@pkgjs/parseargs/LICENSE"
+  },
   "@popperjs/core@2.11.8": {
     "licenses": "MIT",
     "repository": "https://github.com/popperjs/popper-core",
@@ -572,7 +581,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/estree",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/estree/LICENSE"
   },
-  "@types/hast@2.3.8": {
+  "@types/hast@2.3.9": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hast",
@@ -614,11 +623,11 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ms",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ms/LICENSE"
   },
-  "@types/node@20.10.5": {
+  "@types/node@20.10.6": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/protobufjs/node_modules/@types/node",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/protobufjs/node_modules/@types/node/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node/LICENSE"
   },
   "@types/parse5@6.0.3": {
     "licenses": "MIT",
@@ -632,13 +641,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/prop-types",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/prop-types/LICENSE"
   },
-  "@types/react@18.2.40": {
-    "licenses": "MIT",
-    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/node_modules/@types/react",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/node_modules/@types/react/LICENSE"
-  },
-  "@types/react@18.2.45": {
+  "@types/react@18.2.46": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/react",
@@ -668,7 +671,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-markdown/node_modules/@types/unist",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-markdown/node_modules/@types/unist/LICENSE"
   },
-  "@types/ws@8.5.8": {
+  "@types/ws@8.5.10": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
@@ -687,7 +690,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/acorn-jsx",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/acorn-jsx/LICENSE"
   },
-  "acorn@8.11.2": {
+  "acorn@8.11.3": {
     "licenses": "MIT",
     "repository": "https://github.com/acornjs/acorn",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/acorn",
@@ -697,15 +700,15 @@
     "licenses": "MIT",
     "repository": "https://github.com/ajv-validator/ajv-formats",
     "publisher": "Evgeny Poberezkin",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/ajv-formats",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/ajv-formats/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ajv-formats",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ajv-formats/LICENSE"
   },
   "ajv@8.12.0": {
     "licenses": "MIT",
     "repository": "https://github.com/ajv-validator/ajv",
     "publisher": "Evgeny Poberezkin",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/ajv",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/ajv/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ajv",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ajv/LICENSE"
   },
   "ansi-red@0.1.1": {
     "licenses": "MIT",
@@ -724,6 +727,15 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ansi-regex",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ansi-regex/license"
   },
+  "ansi-regex@6.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/ansi-regex",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/ansi-regex",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/ansi-regex/license"
+  },
   "ansi-styles@4.3.0": {
     "licenses": "MIT",
     "repository": "https://github.com/chalk/ansi-styles",
@@ -732,6 +744,15 @@
     "url": "sindresorhus.com",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ansi-styles",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ansi-styles/license"
+  },
+  "ansi-styles@6.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/ansi-styles",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/ansi-styles",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/ansi-styles/license"
   },
   "ansi-wrap@0.1.0": {
     "licenses": "MIT",
@@ -814,7 +835,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/autolinker",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/autolinker/LICENSE"
   },
-  "axios@1.5.1": {
+  "axios@1.6.3": {
     "licenses": "MIT",
     "repository": "https://github.com/axios/axios",
     "publisher": "Matt Zabriskie",
@@ -877,14 +898,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/blurhash",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/blurhash/README.md"
   },
-  "brace-expansion@1.1.11": {
+  "brace-expansion@2.0.1": {
     "licenses": "MIT",
     "repository": "https://github.com/juliangruber/brace-expansion",
     "publisher": "Julian Gruber",
     "email": "mail@juliangruber.com",
     "url": "http://juliangruber.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/minimatch/node_modules/brace-expansion",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/minimatch/node_modules/brace-expansion/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/brace-expansion",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/brace-expansion/LICENSE"
   },
   "braces@3.0.2": {
     "licenses": "MIT",
@@ -927,7 +948,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/camelcase-css",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/camelcase-css/license"
   },
-  "caniuse-lite@1.0.30001559": {
+  "caniuse-lite@1.0.30001572": {
     "licenses": "CC-BY-4.0",
     "repository": "https://github.com/browserslist/caniuse-lite",
     "publisher": "Ben Briggs",
@@ -995,10 +1016,10 @@
     "publisher": "Isaac Z. Schlueter",
     "email": "i@izs.me",
     "url": "http://blog.izs.me/",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/prebuild-install/node_modules/chownr",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/prebuild-install/node_modules/chownr/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-fs/node_modules/chownr",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-fs/node_modules/chownr/LICENSE"
   },
-  "classnames@2.3.2": {
+  "classnames@2.5.1": {
     "licenses": "MIT",
     "repository": "https://github.com/JedWatson/classnames",
     "publisher": "Jed Watson",
@@ -1079,8 +1100,8 @@
     "repository": "https://github.com/tj/commander.js",
     "publisher": "TJ Holowaychuk",
     "email": "tj@vision-media.ca",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/commander",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/commander/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sucrase/node_modules/commander",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sucrase/node_modules/commander/LICENSE"
   },
   "comment-json@4.2.3": {
     "licenses": "MIT",
@@ -1088,15 +1109,6 @@
     "publisher": "kaelzhang",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/comment-json",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/comment-json/LICENSE"
-  },
-  "concat-map@0.0.1": {
-    "licenses": "MIT",
-    "repository": "https://github.com/substack/node-concat-map",
-    "publisher": "James Halliday",
-    "email": "mail@substack.net",
-    "url": "http://substack.net",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/concat-map",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/concat-map/LICENSE"
   },
   "concat-stream@1.6.2": {
     "licenses": "MIT",
@@ -1138,6 +1150,14 @@
     "url": "http://blog.izs.me/",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/core-util-is",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/core-util-is/LICENSE"
+  },
+  "cross-spawn@7.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/moxystudio/node-cross-spawn",
+    "publisher": "André Cruz",
+    "email": "andre@moxy.studio",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/cross-spawn",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/cross-spawn/LICENSE"
   },
   "cssesc@3.0.0": {
     "licenses": "MIT",
@@ -1343,6 +1363,13 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/dot-prop",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/dot-prop/license"
   },
+  "eastasianwidth@0.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/komagata/eastasianwidth",
+    "publisher": "Masaki Komagata",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/eastasianwidth",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/eastasianwidth/README.md"
+  },
   "easy-bem@1.1.1": {
     "licenses": "MIT",
     "repository": "https://github.com/Norserium/easy-bem",
@@ -1380,6 +1407,14 @@
     "url": "https://mathiasbynens.be/",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/emoji-regex",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/emoji-regex/LICENSE-MIT.txt"
+  },
+  "emoji-regex@9.2.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/emoji-regex",
+    "publisher": "Mathias Bynens",
+    "url": "https://mathiasbynens.be/",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/emoji-regex",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/emoji-regex/LICENSE-MIT.txt"
   },
   "end-of-stream@1.4.4": {
     "licenses": "MIT",
@@ -1629,8 +1664,8 @@
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/find-up",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/find-up/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/find-up",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/find-up/license"
   },
   "flowbite-react@0.7.2": {
     "licenses": "MIT",
@@ -1661,6 +1696,15 @@
     "url": "https://github.com/jonschlinkert",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/for-in",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/for-in/LICENSE"
+  },
+  "foreground-child@3.1.1": {
+    "licenses": "ISC",
+    "repository": "https://github.com/tapjs/foreground-child",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/foreground-child",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/foreground-child/LICENSE"
   },
   "form-data@4.0.0": {
     "licenses": "MIT",
@@ -1700,15 +1744,6 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/fs-monkey",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/fs-monkey/LICENSE"
   },
-  "fs.realpath@1.0.0": {
-    "licenses": "ISC",
-    "repository": "https://github.com/isaacs/fs.realpath",
-    "publisher": "Isaac Z. Schlueter",
-    "email": "i@izs.me",
-    "url": "http://blog.izs.me/",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/fs.realpath",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/fs.realpath/LICENSE"
-  },
   "function-bind@1.1.2": {
     "licenses": "MIT",
     "repository": "https://github.com/Raynos/function-bind",
@@ -1739,8 +1774,8 @@
     "publisher": "Gulp Team",
     "email": "team@gulpjs.com",
     "url": "https://gulpjs.com/",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/glob-parent",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/glob-parent/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/chokidar/node_modules/glob-parent",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/chokidar/node_modules/glob-parent/LICENSE"
   },
   "glob-parent@6.0.2": {
     "licenses": "ISC",
@@ -1748,17 +1783,17 @@
     "publisher": "Gulp Team",
     "email": "team@gulpjs.com",
     "url": "https://gulpjs.com/",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tailwindcss/node_modules/glob-parent",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tailwindcss/node_modules/glob-parent/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/glob-parent",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/glob-parent/LICENSE"
   },
-  "glob@7.1.6": {
+  "glob@10.3.10": {
     "licenses": "ISC",
     "repository": "https://github.com/isaacs/node-glob",
     "publisher": "Isaac Z. Schlueter",
     "email": "i@izs.me",
-    "url": "http://blog.izs.me/",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sucrase/node_modules/glob",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sucrase/node_modules/glob/LICENSE"
+    "url": "https://blog.izs.me/",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/glob",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/glob/LICENSE"
   },
   "gray-matter@2.1.1": {
     "licenses": "MIT",
@@ -1960,15 +1995,6 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/inflection",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/inflection/LICENSE"
   },
-  "inflight@1.0.6": {
-    "licenses": "ISC",
-    "repository": "https://github.com/npm/inflight",
-    "publisher": "Isaac Z. Schlueter",
-    "email": "i@izs.me",
-    "url": "http://blog.izs.me/",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/inflight",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/inflight/LICENSE"
-  },
   "inherits@2.0.4": {
     "licenses": "ISC",
     "repository": "https://github.com/isaacs/inherits",
@@ -1987,14 +2013,14 @@
   "inline-style-parser@0.1.1": {
     "licenses": "MIT",
     "repository": "https://github.com/remarkablemark/inline-style-parser",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-estree/node_modules/inline-style-parser",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-estree/node_modules/inline-style-parser/README.md"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/inline-style-parser",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/inline-style-parser/README.md"
   },
   "inline-style-parser@0.2.2": {
     "licenses": "MIT",
     "repository": "https://github.com/remarkablemark/inline-style-parser",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/inline-style-parser",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/inline-style-parser/README.md"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/inline-style-parser",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/inline-style-parser/README.md"
   },
   "intl-messageformat@10.5.8": {
     "licenses": "BSD-3-Clause",
@@ -2204,8 +2230,17 @@
     "publisher": "Julian Gruber",
     "email": "mail@juliangruber.com",
     "url": "http://juliangruber.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/isarray",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/isarray/README.md"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/readable-stream/node_modules/isarray",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/readable-stream/node_modules/isarray/README.md"
+  },
+  "isexe@2.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/isexe",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/isexe",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/isexe/LICENSE"
   },
   "isobject@2.1.0": {
     "licenses": "MIT",
@@ -2229,6 +2264,14 @@
     "publisher": "@heineiuo",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/isomorphic-ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/isomorphic-ws/LICENSE"
+  },
+  "jackspeak@2.3.6": {
+    "licenses": "BlueOak-1.0.0",
+    "repository": "https://github.com/isaacs/jackspeak",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/jackspeak",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/jackspeak/LICENSE.md"
   },
   "jiti@1.21.0": {
     "licenses": "MIT",
@@ -2269,8 +2312,8 @@
     "licenses": "MIT",
     "repository": "https://github.com/epoberezkin/json-schema-traverse",
     "publisher": "Evgeny Poberezkin",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/json-schema-traverse",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/json-schema-traverse/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ajv/node_modules/json-schema-traverse",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ajv/node_modules/json-schema-traverse/LICENSE"
   },
   "json-schema-typed@7.0.3": {
     "licenses": "BSD-2-Clause",
@@ -2347,8 +2390,8 @@
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/locate-path",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/locate-path/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/locate-path",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/locate-path/license"
   },
   "lodash._reinterpolate@3.0.0": {
     "licenses": "MIT",
@@ -2426,13 +2469,21 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/lower-case",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/lower-case/LICENSE"
   },
-  "lru-cache@6.0.0": {
+  "lru-cache@10.1.0": {
     "licenses": "ISC",
     "repository": "https://github.com/isaacs/node-lru-cache",
     "publisher": "Isaac Z. Schlueter",
     "email": "i@izs.me",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/lru-cache",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/lru-cache/LICENSE"
+  },
+  "lru-cache@6.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/node-lru-cache",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/semver/node_modules/lru-cache",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/semver/node_modules/lru-cache/LICENSE"
   },
   "markdown-extensions@1.1.1": {
     "licenses": "MIT",
@@ -2526,8 +2577,8 @@
     "publisher": "Titus Wormer",
     "email": "tituswormer@gmail.com",
     "url": "https://wooorm.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx/node_modules/mdast-util-mdx-jsx",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx/node_modules/mdast-util-mdx-jsx/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx-jsx",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx-jsx/license"
   },
   "mdast-util-mdx-jsx@3.0.0": {
     "licenses": "MIT",
@@ -2535,8 +2586,8 @@
     "publisher": "Titus Wormer",
     "email": "tituswormer@gmail.com",
     "url": "https://wooorm.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx-jsx",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx-jsx/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/mdast-util-mdx-jsx",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/mdast-util-mdx-jsx/license"
   },
   "mdast-util-mdx@2.0.1": {
     "licenses": "MIT",
@@ -2646,14 +2697,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdx-bundler",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdx-bundler/LICENSE"
   },
-  "megalodon@9.1.1": {
+  "megalodon@9.1.2": {
     "licenses": "MIT",
     "repository": "https://github.com/h3poteto/megalodon",
     "publisher": "h3poteto",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/LICENSE.txt"
   },
-  "memfs@3.6.0": {
+  "memfs@3.5.3": {
     "licenses": "Unlicense",
     "repository": "https://github.com/streamich/memfs",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/memfs",
@@ -3141,8 +3192,8 @@
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mimic-fn",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mimic-fn/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/onetime/node_modules/mimic-fn",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/onetime/node_modules/mimic-fn/license"
   },
   "mimic-fn@3.1.0": {
     "licenses": "MIT",
@@ -3150,8 +3201,8 @@
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/debounce-fn/node_modules/mimic-fn",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/debounce-fn/node_modules/mimic-fn/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mimic-fn",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mimic-fn/license"
   },
   "mimic-response@3.1.0": {
     "licenses": "MIT",
@@ -3159,8 +3210,8 @@
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "https://sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mimic-response",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mimic-response/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/decompress-response/node_modules/mimic-response",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/decompress-response/node_modules/mimic-response/license"
   },
   "mini-svg-data-uri@1.4.4": {
     "licenses": "MIT",
@@ -3171,14 +3222,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mini-svg-data-uri",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mini-svg-data-uri/LICENSE"
   },
-  "minimatch@3.1.2": {
+  "minimatch@9.0.3": {
     "licenses": "ISC",
     "repository": "https://github.com/isaacs/minimatch",
     "publisher": "Isaac Z. Schlueter",
     "email": "i@izs.me",
     "url": "http://blog.izs.me",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/minimatch",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/minimatch/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/glob/node_modules/minimatch",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/glob/node_modules/minimatch/LICENSE"
   },
   "minimist@1.2.8": {
     "licenses": "MIT",
@@ -3188,6 +3239,15 @@
     "url": "http://substack.net",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/minimist",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/minimist/LICENSE"
+  },
+  "minipass@7.0.4": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/minipass",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/minipass",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/minipass/LICENSE"
   },
   "mixin-deep@1.3.2": {
     "licenses": "MIT",
@@ -3228,14 +3288,6 @@
     "url": "http://jongleberry.com",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mz",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mz/LICENSE"
-  },
-  "nanoid@3.3.6": {
-    "licenses": "MIT",
-    "repository": "https://github.com/ai/nanoid",
-    "publisher": "Andrey Sitnik",
-    "email": "andrey@sitnik.ru",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/next/node_modules/nanoid",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/next/node_modules/nanoid/LICENSE"
   },
   "nanoid@3.3.7": {
     "licenses": "MIT",
@@ -3375,8 +3427,8 @@
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/p-limit",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/p-limit/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/p-limit",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/p-limit/license"
   },
   "p-locate@3.0.0": {
     "licenses": "MIT",
@@ -3384,8 +3436,8 @@
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/p-locate",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/p-locate/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/p-locate",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/p-locate/license"
   },
   "p-try@2.2.0": {
     "licenses": "MIT",
@@ -3437,17 +3489,17 @@
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/path-exists",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/pkg-up/node_modules/path-exists/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-exists",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-exists/license"
   },
-  "path-is-absolute@1.0.1": {
+  "path-key@3.1.1": {
     "licenses": "MIT",
-    "repository": "https://github.com/sindresorhus/path-is-absolute",
+    "repository": "https://github.com/sindresorhus/path-key",
     "publisher": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-is-absolute",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-is-absolute/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-key",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-key/license"
   },
   "path-parse@1.0.7": {
     "licenses": "MIT",
@@ -3456,6 +3508,15 @@
     "email": "http://jbgutierrez.info",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-parse",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-parse/LICENSE"
+  },
+  "path-scurry@1.10.1": {
+    "licenses": "BlueOak-1.0.0",
+    "repository": "https://github.com/isaacs/path-scurry",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "https://blog.izs.me",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-scurry",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-scurry/LICENSE.md"
   },
   "periscopic@3.1.0": {
     "licenses": "MIT",
@@ -3536,7 +3597,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss-nested",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss-nested/LICENSE"
   },
-  "postcss-selector-parser@6.0.13": {
+  "postcss-selector-parser@6.0.15": {
     "licenses": "MIT",
     "repository": "https://github.com/postcss/postcss-selector-parser",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss-selector-parser",
@@ -3970,6 +4031,32 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sharp",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sharp/LICENSE"
   },
+  "shebang-command@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/kevva/shebang-command",
+    "publisher": "Kevin Mårtensson",
+    "email": "kevinmartensson@gmail.com",
+    "url": "github.com/kevva",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/shebang-command",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/shebang-command/license"
+  },
+  "shebang-regex@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/shebang-regex",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/shebang-regex",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/shebang-regex/license"
+  },
+  "signal-exit@4.1.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/tapjs/signal-exit",
+    "publisher": "Ben Coe",
+    "email": "ben@npmjs.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/signal-exit",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/signal-exit/LICENSE.txt"
+  },
   "simple-concat@1.0.1": {
     "licenses": "MIT",
     "repository": "https://github.com/feross/simple-concat",
@@ -4041,8 +4128,8 @@
     "publisher": "Alexandru Marasteanu",
     "email": "hello@alexei.ro",
     "url": "http://alexei.ro/",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sprintf-js",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sprintf-js/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/argparse/node_modules/sprintf-js",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/argparse/node_modules/sprintf-js/LICENSE"
   },
   "streamx@2.15.6": {
     "licenses": "MIT",
@@ -4060,6 +4147,15 @@
     "url": "sindresorhus.com",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/string-width",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/string-width/license"
+  },
+  "string-width@5.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/string-width",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/string-width",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/string-width/license"
   },
   "string_decoder@1.1.1": {
     "licenses": "MIT",
@@ -4091,6 +4187,15 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/strip-ansi",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/strip-ansi/license"
   },
+  "strip-ansi@7.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/strip-ansi",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/strip-ansi",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/strip-ansi/license"
+  },
   "strip-bom-string@1.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/jonschlinkert/strip-bom-string",
@@ -4121,16 +4226,16 @@
     "repository": "https://github.com/remarkablemark/style-to-object",
     "publisher": "Mark",
     "email": "mark@remarkablemark.org",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-estree/node_modules/style-to-object",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-estree/node_modules/style-to-object/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/style-to-object",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/style-to-object/LICENSE"
   },
   "style-to-object@1.0.5": {
     "licenses": "MIT",
     "repository": "https://github.com/remarkablemark/style-to-object",
     "publisher": "Mark",
     "email": "mark@remarkablemark.org",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/style-to-object",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/style-to-object/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/style-to-object",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/style-to-object/LICENSE"
   },
   "styled-jsx@5.0.7": {
     "licenses": "MIT",
@@ -4138,7 +4243,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/styled-jsx",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/styled-jsx/license.md"
   },
-  "sucrase@3.34.0": {
+  "sucrase@3.35.0": {
     "licenses": "MIT",
     "repository": "https://github.com/alangpierce/sucrase",
     "publisher": "Alan Pierce",
@@ -4162,7 +4267,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tabbable",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tabbable/LICENSE"
   },
-  "tailwind-merge@2.1.0": {
+  "tailwind-merge@2.2.0": {
     "licenses": "MIT",
     "repository": "https://github.com/dcastil/tailwind-merge",
     "publisher": "Dany Castillo",
@@ -4179,31 +4284,31 @@
     "licenses": "MIT",
     "repository": "https://github.com/mafintosh/tar-fs",
     "publisher": "Mathias Buus",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/prebuild-install/node_modules/tar-fs",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/prebuild-install/node_modules/tar-fs/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-fs",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-fs/LICENSE"
   },
   "tar-fs@3.0.4": {
     "licenses": "MIT",
     "repository": "https://github.com/mafintosh/tar-fs",
     "publisher": "Mathias Buus",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-fs",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-fs/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sharp/node_modules/tar-fs",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sharp/node_modules/tar-fs/LICENSE"
   },
   "tar-stream@2.2.0": {
     "licenses": "MIT",
     "repository": "https://github.com/mafintosh/tar-stream",
     "publisher": "Mathias Buus",
     "email": "mathiasbuus@gmail.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/prebuild-install/node_modules/tar-stream",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/prebuild-install/node_modules/tar-stream/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-stream",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-stream/LICENSE"
   },
   "tar-stream@3.1.6": {
     "licenses": "MIT",
     "repository": "https://github.com/mafintosh/tar-stream",
     "publisher": "Mathias Buus",
     "email": "mathiasbuus@gmail.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-stream",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/tar-stream/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sharp/node_modules/tar-stream",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sharp/node_modules/tar-stream/LICENSE"
   },
   "thenify-all@1.6.0": {
     "licenses": "MIT",
@@ -4253,16 +4358,16 @@
     "repository": "https://github.com/BinaryMuse/toml-node",
     "publisher": "Michelle Tilley",
     "email": "michelle@michelletilley.net",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/toml",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/toml/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/markdown-toc/node_modules/toml",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/markdown-toc/node_modules/toml/LICENSE"
   },
   "toml@3.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/BinaryMuse/toml-node",
     "publisher": "Michelle Tilley",
     "email": "michelle@michelletilley.net",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/remark-mdx-frontmatter/node_modules/toml",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/remark-mdx-frontmatter/node_modules/toml/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/toml",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/toml/LICENSE"
   },
   "trim-lines@3.0.1": {
     "licenses": "MIT",
@@ -4436,8 +4541,8 @@
     "publisher": "Titus Wormer",
     "email": "tituswormer@gmail.com",
     "url": "https://wooorm.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx/node_modules/unist-util-remove-position",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx/node_modules/unist-util-remove-position/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/unist-util-remove-position",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/unist-util-remove-position/license"
   },
   "unist-util-remove-position@5.0.0": {
     "licenses": "MIT",
@@ -4445,8 +4550,8 @@
     "publisher": "Titus Wormer",
     "email": "tituswormer@gmail.com",
     "url": "https://wooorm.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/unist-util-remove-position",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/unist-util-remove-position/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/unist-util-remove-position",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/unist-util-remove-position/license"
   },
   "unist-util-stringify-position@3.0.3": {
     "licenses": "MIT",
@@ -4567,8 +4672,8 @@
     "publisher": "Titus Wormer",
     "email": "tituswormer@gmail.com",
     "url": "https://wooorm.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx-jsx/node_modules/vfile-message",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mdast-util-mdx-jsx/node_modules/vfile-message/license"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/vfile-message",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/hast-util-to-jsx-runtime/node_modules/vfile-message/license"
   },
   "vfile@5.3.7": {
     "licenses": "MIT",
@@ -4605,13 +4710,22 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/web-streams-polyfill",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/web-streams-polyfill/LICENSE"
   },
-  "whalebird@6.0.0-beta.3": {
+  "whalebird@6.0.0-beta.4": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
     "email": "h3.poteto@gmail.com",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/LICENSE"
+  },
+  "which@2.0.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/node-which",
+    "publisher": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/which",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/which/LICENSE"
   },
   "wrap-ansi@7.0.0": {
     "licenses": "MIT",
@@ -4621,6 +4735,15 @@
     "url": "https://sindresorhus.com",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/wrap-ansi",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/wrap-ansi/license"
+  },
+  "wrap-ansi@8.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/wrap-ansi",
+    "publisher": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/wrap-ansi",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@isaacs/cliui/node_modules/wrap-ansi/license"
   },
   "wrappy@1.0.2": {
     "licenses": "ISC",
