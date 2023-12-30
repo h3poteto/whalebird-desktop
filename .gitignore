@@ -4,3 +4,5 @@ node_modules
 app
 dist
 tsconfig.tsbuildinfo
+.yarn/*
+!.yarn/releases
