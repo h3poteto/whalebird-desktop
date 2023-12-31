@@ -6,3 +6,4 @@ dist
 tsconfig.tsbuildinfo
 .yarn/*
 !.yarn/releases
+profile/*

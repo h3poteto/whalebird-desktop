@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
+    "build:mas": "nextron build --config ./electron-builder.mas.yml",
     "postinstall": "electron-builder install-app-deps",
     "typecheck": "tsc -p renderer --noEmit && tsc -p main --noEmit",
     "lint": "eslint renderer --ext ts,tsx",
