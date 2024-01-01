@@ -27,7 +27,11 @@
       "authorize": "Authorize",
       "authorization_code": "Authorization Code",
       "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize"
+      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
+      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
+      "register_error": "Failed to add application.",
+      "token_error": "Failed to authorize.",
+      "credential_error": "Failed to confirm access token."
     },
     "remove": "Remove"
   },

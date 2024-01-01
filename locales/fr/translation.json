@@ -15,7 +15,8 @@
       },
       "show_more": "Show more",
       "show_less": "Show less",
-      "cw": "Media hidden"
+      "cw": "Media hidden",
+      "report": "Report {user}"
     }
   },
   "accounts": {
@@ -26,7 +27,11 @@
       "authorize": "Authorize",
       "authorization_code": "Authorization Code",
       "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize"
+      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
+      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
+      "register_error": "Failed to add application.",
+      "token_error": "Failed to authorize.",
+      "credential_error": "Failed to confirm access token."
     },
     "remove": "Remove"
   },
@@ -95,6 +100,11 @@
       "3d": "3 days",
       "7d": "7 days",
       "multiple": "multiple"
+    },
+    "edit_media": {
+      "title": "Edit media",
+      "label": "Describe for people who are blind or have low vision",
+      "submit": "Apply"
     }
   },
   "alert": {
@@ -115,5 +125,10 @@
     "title": "Settings",
     "language": "Language",
     "font_size": "Font size"
+  },
+  "report": {
+    "title": "Report {user}",
+    "detail": "Detail",
+    "submit": "Submit"
   }
 }

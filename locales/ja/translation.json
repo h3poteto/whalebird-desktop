@@ -27,7 +27,11 @@
       "authorize": "認証",
       "authorization_code": "認証コード",
       "authorization_helper": "ブラウザに表示された認証コードを貼り付けてください",
-      "without_code_authorize": "お使いのブラウザでWhalebirdを許可してください。その後、認証ボタンを押してください"
+      "without_code_authorize": "お使いのブラウザでWhalebirdを許可してください。その後、認証ボタンを押してください",
+      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
+      "register_error": "Failed to add application.",
+      "token_error": "Failed to authorize.",
+      "credential_error": "Failed to confirm access token."
     },
     "remove": "削除"
   },
