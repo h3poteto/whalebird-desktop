@@ -63,11 +63,24 @@ export default function Compose(props: Props) {
   const [poll, setPoll] = useState<Poll | null>(null)
   const [loading, setLoading] = useState(false)
   const [editMedia, setEditMedia] = useState<Entity.Attachment>()
+  const [maxCharacters, setMaxCharacters] = useState<number | null>(null)
+  const [remaining, setRemaining] = useState<number | null>(null)
 
   const { formatMessage } = useIntl()
   const uploaderRef = useRef(null)
   const showToast = useToast()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    if (!props.client) return
+    const f = async () => {
+      const instance = await props.client.getInstance()
+      if (instance.data.configuration.statuses.max_characters) {
+        setMaxCharacters(instance.data.configuration.statuses.max_characters)
+      }
+    }
+    f()
+  }, [props.client])
 
   useEffect(() => {
     if (!cw) {
@@ -88,6 +101,12 @@ export default function Compose(props: Props) {
       f()
     }
   }, [props.in_reply_to])
+
+  useEffect(() => {
+    if (maxCharacters) {
+      setRemaining(maxCharacters - body.length - spoiler.length)
+    }
+  }, [maxCharacters, body, spoiler])
 
   const post = async () => {
     if (body.length === 0) return
@@ -117,6 +136,9 @@ export default function Compose(props: Props) {
     try {
       await props.client.postStatus(body, options)
       reset()
+    } catch (err) {
+      console.error(err)
+      showToast({ text: formatMessage({ id: 'alert.compose.post_failed' }), type: 'failure' })
     } finally {
       setLoading(false)
     }
@@ -128,6 +150,7 @@ export default function Compose(props: Props) {
     setCW(false)
     setAttachments([])
     setPoll(null)
+    setMaxCharacters(null)
   }
 
   const handleKeyPress = useCallback(
@@ -156,6 +179,10 @@ export default function Compose(props: Props) {
   const fileChanged = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.item(0)
     if (file === null || file === undefined) {
+      return
+    }
+    if (attachments.length >= 4) {
+      showToast({ text: formatMessage({ id: 'alert.validation.attachment_length' }, { limit: 4 }), type: 'failure' })
       return
     }
     if (!file.type.includes('image') && !file.type.includes('video')) {
@@ -302,7 +329,10 @@ export default function Compose(props: Props) {
           )}
         </div>
         <div className="mr-1">
-          {loading ? <Spinner size="sm" /> : <FaPaperPlane className="text-gray-400 hover:text-gray-600 cursor-pointer" onClick={post} />}
+          <span className="text-gray-400">{remaining}</span>
+          <button className="ml-2 text-gray-400 hover:text-gray-600" disabled={loading} onClick={post}>
+            {loading ? <Spinner size="sm" /> : <FaPaperPlane />}
+          </button>
         </div>
       </div>
       <EditMedia media={editMedia} close={closeDescription} client={props.client} />
