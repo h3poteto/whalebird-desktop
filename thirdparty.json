@@ -4710,7 +4710,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/web-streams-polyfill",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/web-streams-polyfill/LICENSE"
   },
-  "whalebird@6.0.0-beta.4": {
+  "whalebird@6.0.0-rc.0": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
