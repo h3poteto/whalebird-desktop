@@ -49,6 +49,7 @@ export default function Reply(props: Props) {
     <div className="overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
       <Virtuoso
         style={{ height: `calc(100% - ${composeHeight}px)` }}
+        className="timeline-scrollable"
         data={[...ancestors, status].filter(s => s !== null)}
         itemContent={(_, status) => (
           <Status

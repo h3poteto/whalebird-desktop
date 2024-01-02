@@ -3,7 +3,7 @@ import { CustomFlowbiteTheme, Flowbite, Sidebar } from 'flowbite-react'
 import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { FaBell, FaGlobe, FaHashtag, FaHouse, FaUsers } from 'react-icons/fa6'
+import { FaBell, FaGlobe, FaHouse, FaList, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 
 type LayoutProps = {
@@ -107,7 +107,7 @@ export default function Layout({ children }: LayoutProps) {
                   key={list.id}
                   active={router.asPath.includes(`list_${list.id}`)}
                   onClick={() => router.push({ pathname: `/accounts/${router.query.id}/list_${list.id}` })}
-                  icon={FaHashtag}
+                  icon={FaList}
                   className="sidebar-menu-item"
                 >
                   <span className="sidebar-menu">{list.title}</span>

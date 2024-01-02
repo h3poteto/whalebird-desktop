@@ -5,6 +5,7 @@ import Thread from './Thread'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Reply from './Reply'
 import Profile from './Profile'
+import Tag from './Tag'
 import { Account } from '@/db'
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 export default function Detail(props: Props) {
-  const [target, setTarget] = useState<'status' | 'reply' | 'profile' | null>(null)
+  const [target, setTarget] = useState<'status' | 'reply' | 'profile' | 'tag' | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -24,6 +25,8 @@ export default function Detail(props: Props) {
       setTarget('reply')
     } else if (router.query.user_id) {
       setTarget('profile')
+    } else if (router.query.tag) {
+      setTarget('tag')
     } else {
       setTarget(null)
     }
@@ -42,8 +45,13 @@ export default function Detail(props: Props) {
       {target && (
         <div className={`bg-white ${props.className}`} style={props.style}>
           <div className="bg-blue-900 text-gray-200 flex justify-between p-2 items-center" style={{ height: '50px' }}>
-            <FaChevronLeft onClick={back} className="cursor-pointer text-lg" />
-            <FaX onClick={close} className="cursor-pointer text-lg" />
+            <div className="flex gap-4 items-center">
+              <FaChevronLeft onClick={back} className="cursor-pointer text-lg" />
+              {target === 'tag' && `#${router.query.tag}`}
+            </div>
+            <div>
+              <FaX onClick={close} className="cursor-pointer text-lg" />
+            </div>
           </div>
           {target === 'status' && (
             <Thread
@@ -63,6 +71,9 @@ export default function Detail(props: Props) {
           )}
           {target === 'profile' && (
             <Profile client={props.client} account={props.account} user_id={router.query.user_id as string} openMedia={props.openMedia} />
+          )}
+          {target === 'tag' && (
+            <Tag client={props.client} account={props.account} tag={router.query.tag as string} openMedia={props.openMedia} />
           )}
         </div>
       )}

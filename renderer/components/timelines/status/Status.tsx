@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl'
 import Actions from './Actions'
 import { useRouter } from 'next/router'
 import { MouseEventHandler, useState } from 'react'
-import { findAccount, findLink, ParsedAccount, accountMatch } from '@/utils/statusParser'
+import { findAccount, findLink, ParsedAccount, accountMatch, findTag } from '@/utils/statusParser'
 import { Account } from '@/db'
 
 type Props = {
@@ -54,7 +54,13 @@ export default function Status(props: Props) {
       return
     }
 
-    // TODO: find tag
+    const parsedTag = findTag(e.target as HTMLElement, 'status-body')
+    if (parsedTag) {
+      e.preventDefault()
+      e.stopPropagation()
+      router.push({ query: { id: router.query.id, timeline: router.query.timeline, tag: parsedTag, detail: true } })
+      return
+    }
 
     const url = findLink(e.target as HTMLElement, 'status-body')
     if (url) {
