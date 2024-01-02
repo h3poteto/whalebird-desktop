@@ -109,9 +109,13 @@
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos"
+      "attachment_type": "You can attach only images or videos",
+      "attachment_length": "You can't attach over {limit} files"
     },
-    "upload_error": "Failed to upload the file"
+    "upload_error": "Failed to upload the file",
+    "compose": {
+      "post_failed": "Failed to post a status"
+    }
   },
   "profile": {
     "follow": "Follow",

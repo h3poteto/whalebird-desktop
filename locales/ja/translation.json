@@ -109,9 +109,13 @@
   },
   "alert": {
     "validation": {
-      "attachment_type": "画像または動画のみ添付できます"
+      "attachment_type": "画像または動画のみ添付できます",
+      "attachment_length": "You can't attach over {limit} files"
     },
-    "upload_error": "ファイルのアップロードに失敗しました"
+    "upload_error": "ファイルのアップロードに失敗しました",
+    "compose": {
+      "post_failed": "Failed to post a status"
+    }
   },
   "profile": {
     "follow": "フォロー",
