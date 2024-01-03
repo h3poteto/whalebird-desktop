@@ -1,8 +1,7 @@
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import Icon from '@/assets/256x256.png'
 import { db } from '@/db'
+import { Spinner } from 'flowbite-react'
 
 export default function Index() {
   const router = useRouter()
@@ -28,7 +27,7 @@ export default function Index() {
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <Image src={Icon} alt="icon" width={128} height={128} />
+      <Spinner color="info" />
     </div>
   )
 }
