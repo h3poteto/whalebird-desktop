@@ -80,11 +80,11 @@ export default function Profile(props: Props) {
                 <Avatar img={user.avatar} size="lg" stacked />
                 <div className="flex gap-2">
                   {relationship.following ? (
-                    <Button onClick={() => unfollow(user.id)}>
+                    <Button color="failure" onClick={() => unfollow(user.id)}>
                       <FormattedMessage id="profile.unfollow" />
                     </Button>
                   ) : (
-                    <Button onClick={() => follow(user.id)}>
+                    <Button color="blue" onClick={() => follow(user.id)}>
                       <FormattedMessage id="profile.follow" />
                     </Button>
                   )}
