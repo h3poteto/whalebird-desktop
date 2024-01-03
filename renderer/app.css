@@ -85,3 +85,15 @@
 .timeline-scrollable:hover::-webkit-scrollbar-thumb {
   opacity: 1;
 }
+
+button:focus {
+  outline: none;
+}
+
+a {
+  color: blue;
+}
+
+ a:hover {
+  text-decoration: underline;
+}

@@ -33,7 +33,7 @@ export default function Report(props: Props) {
             </Label>
             <Textarea id="comment" rows={4} />
           </div>
-          <Button className="mt-2" onClick={submit}>
+          <Button color="blue" className="mt-2" onClick={submit}>
             <FormattedMessage id="report.submit" />
           </Button>
         </form>

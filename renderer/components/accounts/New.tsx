@@ -14,7 +14,7 @@ export default function New(props: NewProps) {
   const [domain, setDomain] = useState<string>('')
   const [client, setClient] = useState<MegalodonInterface>()
   const [appData, setAppData] = useState<OAuth.AppData>()
-  const [error, setError] = useState("")
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const { formatMessage } = useIntl()
@@ -24,19 +24,19 @@ export default function New(props: NewProps) {
     setDomain('')
     setClient(undefined)
     setAppData(undefined)
-    setError("")
+    setError('')
     setLoading(false)
     props.close()
   }
 
   const checkDomain = async () => {
-    setError("")
+    setError('')
     setLoading(true)
     const input = document.getElementById('domain') as HTMLInputElement
     setDomain(input.value)
     const url = `https://${input.value}`
     const sns = await detector(url).catch(() => {
-      setError(formatMessage({ id: 'accounts.new.detector_error' }, { domain: input.value}))
+      setError(formatMessage({ id: 'accounts.new.detector_error' }, { domain: input.value }))
       return undefined
     })
     if (!sns) {
@@ -47,7 +47,7 @@ export default function New(props: NewProps) {
     const client = generator(sns, url)
     setClient(client)
     const appData = await client.registerApp('Whalebird', {}).catch(() => {
-      setError(formatMessage({ id: "accounts.new.register_error" }))
+      setError(formatMessage({ id: 'accounts.new.register_error' }))
       return undefined
     })
     setLoading(false)
@@ -59,7 +59,7 @@ export default function New(props: NewProps) {
   }
 
   const authorize = async () => {
-    setError("")
+    setError('')
     setLoading(true)
     if (!client || !appData) return
     const input = document.getElementById('authorization') as HTMLInputElement
@@ -70,7 +70,7 @@ export default function New(props: NewProps) {
       authorizationCode = input.value
     }
     const tokenData = await client.fetchAccessToken(appData.client_id, appData.client_secret, authorizationCode).catch(() => {
-      setError(formatMessage({ id: "accounts.new.token_error" }))
+      setError(formatMessage({ id: 'accounts.new.token_error' }))
       return undefined
     })
     if (!tokenData) {
@@ -80,10 +80,10 @@ export default function New(props: NewProps) {
     if (!sns) {
       setLoading(false)
       return
-      }
+    }
     const cli = generator(sns, `https://${domain}`, tokenData.access_token, 'Whalebird')
     const acct = await cli.verifyAccountCredentials().catch(() => {
-      setError(formatMessage({ id: "accounts.new.credential_error" }))
+      setError(formatMessage({ id: 'accounts.new.credential_error' }))
       return undefined
     })
     setLoading(false)
@@ -107,7 +107,7 @@ export default function New(props: NewProps) {
 
   return (
     <>
-      <Modal dismissible={false} show={props.opened} onClose={close}>
+      <Modal dismissible={false} show={props.opened} onClose={close} size="lg">
         <Modal.Header>
           <FormattedMessage id="accounts.new.title" />
         </Modal.Header>
@@ -126,7 +126,7 @@ export default function New(props: NewProps) {
                   </Label>
                 </div>
                 <TextInput id="domain" placeholder="mastodon.social" required type="text" />
-                <Button onClick={checkDomain} disabled={loading}>
+                <Button color="blue" onClick={checkDomain} disabled={loading}>
                   <FormattedMessage id="accounts.new.sign_in" />
                 </Button>
               </>
@@ -164,7 +164,6 @@ export default function New(props: NewProps) {
                   </div>
                 )}
               </>
-
             )}
           </form>
         </Modal.Body>

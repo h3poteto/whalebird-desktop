@@ -50,7 +50,7 @@ export default function EditMedia(props: Props) {
                   <FormattedMessage id="compose.edit_media.label" />
                 </Label>
                 <Textarea id="description" rows={4} value={description} onChange={ev => setDescription(ev.target.value)} />
-                <Button className="mt-2" onClick={submit}>
+                <Button color="blue" className="mt-2" onClick={submit}>
                   <FormattedMessage id="compose.edit_media.submit" />
                 </Button>
               </div>
