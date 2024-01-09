@@ -1,15 +1,15 @@
 import { CSSProperties, useContext, useEffect, useRef, useState } from 'react'
-import { FaGear, FaPlus } from 'react-icons/fa6'
+import { FaGear, FaPlus, FaTrash } from 'react-icons/fa6'
 import { Account, db } from '@/db'
 import NewAccount from '@/components/accounts/New'
 import Settings from '@/components/Settings'
-import { Avatar, Dropdown } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
 import generateNotification from '@/utils/notification'
 import generator, { Entity, WebSocketInterface } from 'megalodon'
 import { Context } from '@/utils/i18n'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { Avatar, IconButton, List, ListItem, ListItemPrefix, Popover, PopoverContent, PopoverHandler } from '@material-tailwind/react'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -20,6 +20,8 @@ export default function Layout({ children }: LayoutProps) {
   const [openNewModal, setOpenNewModal] = useState(false)
   const [openSettings, setOpenSettings] = useState(false)
   const [style, setStyle] = useState<CSSProperties>({})
+  const [openPopover, setOpenPopover] = useState(false)
+
   const { switchLang } = useContext(Context)
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -91,8 +93,6 @@ export default function Layout({ children }: LayoutProps) {
     document.getElementById(`${id}`).click()
   }
 
-  const dropdownTrigger = (accountId: number) => <span id={`${accountId}`} className="" />
-
   const removeAccount = async (id: number) => {
     await db.accounts.delete(id)
     const acct = await db.accounts.toArray()
@@ -105,9 +105,9 @@ export default function Layout({ children }: LayoutProps) {
 
   const selectedClassName = (id: number) => {
     if (id === parseInt(router.query.id as string)) {
-      return 'bg-blue-950 cursor-pointer'
+      return 'bg-blue-950 cursor-pointer text-center'
     } else {
-      return 'cursor-pointer'
+      return 'cursor-pointer text-center'
     }
   }
 
@@ -131,44 +131,61 @@ export default function Layout({ children }: LayoutProps) {
           <div>
             {accounts.map(account => (
               <div key={account.id} className={selectedClassName(account.id)}>
+                <Popover>
+                  <PopoverHandler>
+                    <span id={`${account.id}`} />
+                  </PopoverHandler>
+                  <PopoverContent>
+                    <List className="py-2 px-0">
+                      <ListItem onClick={() => removeAccount(account.id)} className="py-2 px-4 rounded-none">
+                        <ListItemPrefix>
+                          <FaTrash />
+                        </ListItemPrefix>
+                        <FormattedMessage id="accounts.remove" />
+                      </ListItem>
+                    </List>
+                  </PopoverContent>
+                </Popover>
                 <Avatar
                   alt={account.domain}
-                  img={account.avatar}
-                  rounded
-                  key={account.id}
-                  className="py-2"
+                  src={account.avatar}
+                  className="p-1"
                   onClick={() => openAccount(account.id)}
                   onContextMenu={() => openContextMenu(account.id)}
                 />
-                <Dropdown label="" dismissOnClick={true} renderTrigger={() => dropdownTrigger(account.id)}>
-                  <Dropdown.Item onClick={() => removeAccount(account.id)}>
-                    <FormattedMessage id="accounts.remove" />
-                  </Dropdown.Item>
-                </Dropdown>
               </div>
             ))}
-            <button className="py-4 px-6 items-center" onClick={() => setOpenNewModal(true)}>
-              <FaPlus className="text-gray-400" />
-            </button>
+            <div className="flex flex-col items-center">
+              <IconButton variant="text" size="lg" onClick={() => setOpenNewModal(true)}>
+                <FaPlus className="text-gray-400 text-xl" />
+              </IconButton>
+            </div>
             <NewAccount opened={openNewModal} close={closeNewModal} />
           </div>
-          <div className="settings text-gray-400 py-4 px-6 items-center">
-            <div className="relative cursor-pointer">
-              <Dropdown
-                label=""
-                dismissOnClick
-                renderTrigger={() => (
-                  <span>
-                    <FaGear />
-                  </span>
-                )}
-                placement="right-start"
-              >
-                <Dropdown.Item onClick={() => setOpenSettings(true)}>
-                  <FormattedMessage id="settings.title" />{' '}
-                </Dropdown.Item>
-              </Dropdown>
-            </div>
+          <div className="settings text-gray-400 flex flex-col items-center mb-2">
+            <Popover open={openPopover} handler={setOpenPopover}>
+              <PopoverHandler>
+                <IconButton variant="text" size="lg">
+                  <FaGear className="text-gray-400 text-xl" />
+                </IconButton>
+              </PopoverHandler>
+              <PopoverContent>
+                <List className="py-2 px-0">
+                  <ListItem
+                    onClick={() => {
+                      setOpenSettings(true)
+                      setOpenPopover(false)
+                    }}
+                    className="py-2 px-4 rounded-none"
+                  >
+                    <ListItemPrefix>
+                      <FaGear />
+                    </ListItemPrefix>
+                    <FormattedMessage id="settings.title" />
+                  </ListItem>
+                </List>
+              </PopoverContent>
+            </Popover>
           </div>
         </aside>
         {children}

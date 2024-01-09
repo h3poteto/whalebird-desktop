@@ -1,5 +1,4 @@
 import { Account } from '@/db'
-import { TextInput } from 'flowbite-react'
 import generator, { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
 import { useEffect, useState, useCallback, useRef, Dispatch, SetStateAction } from 'react'
 import { Virtuoso } from 'react-virtuoso'
@@ -9,6 +8,7 @@ import Detail from '../detail/Detail'
 import { useRouter } from 'next/router'
 import Compose from '../compose/Compose'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { Input, Spinner } from '@material-tailwind/react'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -189,32 +189,46 @@ export default function Timeline(props: Props) {
           </div>
           <div className="w-64 text-xs">
             <form>
-              <TextInput type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled sizing="sm" />
+              <Input
+                type="text"
+                label={formatMessage({ id: 'timeline.search' })}
+                disabled
+                containerProps={{ className: 'h-7' }}
+                className="!py-1 !px-2 !text-xs"
+                labelProps={{ className: '!leading-10' }}
+              />
             </form>
           </div>
         </div>
         <div className="overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
-          <Virtuoso
-            style={{ height: `calc(100% - ${composeHeight}px)` }}
-            scrollerRef={ref => {
-              scrollerRef.current = ref as HTMLElement
-            }}
-            className="timeline-scrollable"
-            firstItemIndex={firstItemIndex}
-            atTopStateChange={prependUnreads}
-            data={statuses}
-            endReached={loadMore}
-            itemContent={(_, status) => (
-              <Status
-                client={props.client}
-                account={props.account}
-                status={status}
-                key={status.id}
-                onRefresh={status => setStatuses(current => updateStatus(current, status))}
-                openMedia={media => props.setAttachment(media)}
-              />
-            )}
-          />
+          {statuses.length > 0 ? (
+            <Virtuoso
+              style={{ height: `calc(100% - ${composeHeight}px)` }}
+              scrollerRef={ref => {
+                scrollerRef.current = ref as HTMLElement
+              }}
+              className="timeline-scrollable"
+              firstItemIndex={firstItemIndex}
+              atTopStateChange={prependUnreads}
+              data={statuses}
+              endReached={loadMore}
+              itemContent={(_, status) => (
+                <Status
+                  client={props.client}
+                  account={props.account}
+                  status={status}
+                  key={status.id}
+                  onRefresh={status => setStatuses(current => updateStatus(current, status))}
+                  openMedia={media => props.setAttachment(media)}
+                />
+              )}
+            />
+          ) : (
+            <div className="w-full" style={{ height: `calc(100% - ${composeHeight}px)` }}>
+              <Spinner className="m-auto mt-6" />
+            </div>
+          )}
+
           <div ref={composeRef}>
             <Compose client={props.client} />
           </div>

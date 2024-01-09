@@ -1,4 +1,3 @@
-import { CustomFlowbiteTheme, Dropdown, Flowbite } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { FaBookmark, FaEllipsis, FaFaceLaughBeam, FaReply, FaRetweet, FaStar } from 'react-icons/fa6'
@@ -6,6 +5,8 @@ import Picker from '@emoji-mart/react'
 import { data } from '@/utils/emojiData'
 import { Account } from '@/db'
 import { FormattedMessage } from 'react-intl'
+import { IconButton, List, ListItem, Popover, PopoverContent, PopoverHandler } from '@material-tailwind/react'
+import { useState } from 'react'
 
 type Props = {
   status: Entity.Status
@@ -14,18 +15,9 @@ type Props = {
   onRefresh: () => void
 }
 
-const customTheme: CustomFlowbiteTheme = {
-  dropdown: {
-    content: 'focus:outline-none',
-    floating: {
-      item: {
-        base: 'hidden'
-      }
-    }
-  }
-}
-
 export default function Actions(props: Props) {
+  const [popoverDetail, setPopoverDetail] = useState(false)
+  const [popoverEmoji, setPopoverEmoji] = useState(false)
   const router = useRouter()
 
   const reply = async () => {
@@ -61,53 +53,56 @@ export default function Actions(props: Props) {
 
   const onEmojiSelect = async emoji => {
     await props.client.createEmojiReaction(props.status.id, emoji.native)
-    const dummy = document.getElementById('dummy-emoji-picker')
-    dummy.click()
+    setPopoverDetail(false)
     props.onRefresh()
   }
 
   const report = () => {
+    setPopoverDetail(false)
     router.push({ query: { id: router.query.id, timeline: router.query.timeline, report_target_id: props.status.id, modal: true } })
   }
 
   return (
-    <div className="flex gap-6">
-      <FaReply className={`w-4 text-gray-400 cursor-pointer hover:text-gray-600`} onClick={reply} />
-      <FaRetweet className={`${retweetColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={reblog} />
-      <FaStar className={`${favouriteColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={favourite} />
-      <FaBookmark className={`${bookmarkColor(props.status)} w-4 cursor-pointer hover:text-gray-600`} onClick={bookmark} />
+    <div className="flex gap-2">
+      <IconButton variant="text" size="sm" onClick={reply} className="text-gray-400 text-base hover:text-gray-600">
+        <FaReply className="w-4" />
+      </IconButton>
+      <IconButton variant="text" size="sm" onClick={reblog} className={`${retweetColor(props.status)} text-base hover:text-gray-600`}>
+        <FaRetweet className="w-4" />
+      </IconButton>
+      <IconButton variant="text" size="sm" onClick={favourite} className={`${favouriteColor(props.status)} text-base hover:text-gray-600`}>
+        <FaStar className="w-4" />
+      </IconButton>
+      <IconButton variant="text" size="sm" onClick={bookmark} className={`${bookmarkColor(props.status)} text-base hover:text-gray-600`}>
+        <FaBookmark className="w-4" />
+      </IconButton>
       {props.account.sns !== 'mastodon' && (
-        <Flowbite theme={{ theme: customTheme }}>
-          <Dropdown
-            label=""
-            dismissOnClick
-            renderTrigger={() => (
-              <span className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                <FaFaceLaughBeam />
-              </span>
-            )}
-          >
+        <Popover open={popoverEmoji} handler={setPopoverEmoji}>
+          <PopoverHandler>
+            <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base">
+              <FaFaceLaughBeam />
+            </IconButton>
+          </PopoverHandler>
+          <PopoverContent className="z-10">
             <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" theme="light" />
-            <Dropdown.Item>
-              <span id="dummy-emoji-picker" />
-            </Dropdown.Item>
-          </Dropdown>
-        </Flowbite>
+          </PopoverContent>
+        </Popover>
       )}
 
-      <Dropdown
-        label=""
-        dismissOnClick
-        renderTrigger={() => (
-          <span className="text-gray-400 hover:text-gray-600 cursor-pointer">
+      <Popover open={popoverDetail} handler={setPopoverDetail}>
+        <PopoverHandler>
+          <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base">
             <FaEllipsis className="w-4" />
-          </span>
-        )}
-      >
-        <Dropdown.Item onClick={report}>
-          <FormattedMessage id="timeline.status.report" values={{ user: `@${props.status.account.acct}` }} />
-        </Dropdown.Item>
-      </Dropdown>
+          </IconButton>
+        </PopoverHandler>
+        <PopoverContent className="z-10">
+          <List className="py-2 px-0">
+            <ListItem onClick={report} className="rounded-none">
+              <FormattedMessage id="timeline.status.report" values={{ user: `@${props.status.account.acct}` }} />
+            </ListItem>
+          </List>
+        </PopoverContent>
+      </Popover>
     </div>
   )
 }
@@ -130,7 +125,7 @@ const favouriteColor = (status: Entity.Status) => {
 
 const bookmarkColor = (status: Entity.Status) => {
   if (status.bookmarked) {
-    return 'text-rose-500'
+    return 'text-red-500'
   } else {
     return 'text-gray-400'
   }

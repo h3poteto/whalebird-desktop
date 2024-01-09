@@ -1,8 +1,8 @@
-import { Label, Modal, TextInput, Button, Alert, Spinner } from 'flowbite-react'
 import generator, { MegalodonInterface, OAuth, detector } from 'megalodon'
 import { useState } from 'react'
 import { db } from '@/db'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { Alert, Button, Dialog, DialogBody, DialogHeader, Input, Spinner, Typography } from '@material-tailwind/react'
 
 type NewProps = {
   opened: boolean
@@ -107,13 +107,13 @@ export default function New(props: NewProps) {
 
   return (
     <>
-      <Modal dismissible={false} show={props.opened} onClose={close} size="lg">
-        <Modal.Header>
+      <Dialog open={props.opened} handler={close} size="xs">
+        <DialogHeader>
           <FormattedMessage id="accounts.new.title" />
-        </Modal.Header>
-        <Modal.Body>
+        </DialogHeader>
+        <DialogBody>
           {error && (
-            <Alert color="failure">
+            <Alert color="red">
               <span>{error}</span>
             </Alert>
           )}
@@ -121,12 +121,12 @@ export default function New(props: NewProps) {
             {sns === null ? (
               <>
                 <div className="block">
-                  <Label htmlFor="domain">
+                  <Typography>
                     <FormattedMessage id="accounts.new.domain" />
-                  </Label>
+                  </Typography>
                 </div>
-                <TextInput id="domain" placeholder="mastodon.social" required type="text" />
-                <Button color="blue" onClick={checkDomain} disabled={loading}>
+                <Input type="text" id="domain" placeholder="mastodon.social" />
+                <Button onClick={checkDomain} loading={loading} color="blue">
                   <FormattedMessage id="accounts.new.sign_in" />
                 </Button>
               </>
@@ -143,31 +143,31 @@ export default function New(props: NewProps) {
                     ) : (
                       <>
                         <div className="block">
-                          <Label htmlFor="authorization">
+                          <Typography>
                             <FormattedMessage id="accounts.new.authorization_code" />
-                          </Label>
-                          <p className="text-sm text-gray-600">
+                          </Typography>
+                          <Typography variant="small">
                             <FormattedMessage id="accounts.new.authorization_helper" />
-                          </p>
+                          </Typography>
                         </div>
-                        <TextInput id="authorization" required type="text" />
+                        <Input id="authorization" type="text" />
                       </>
                     )}
 
-                    <Button onClick={authorize} disabled={loading}>
+                    <Button onClick={authorize} disabled={loading} color="blue">
                       <FormattedMessage id="accounts.new.authorize" />
                     </Button>
                   </>
                 ) : (
                   <div className="text-center">
-                    <Spinner aria-label="Loading" />
+                    <Spinner />
                   </div>
                 )}
               </>
             )}
           </form>
-        </Modal.Body>
-      </Modal>
+        </DialogBody>
+      </Dialog>
     </>
   )
 }

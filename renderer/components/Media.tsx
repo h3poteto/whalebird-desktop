@@ -1,4 +1,4 @@
-import { Modal } from 'flowbite-react'
+import { Dialog, DialogBody } from '@material-tailwind/react'
 import { Entity } from 'megalodon'
 
 type Props = {
@@ -9,9 +9,8 @@ type Props = {
 
 export default function Media(props: Props) {
   return (
-    <Modal show={props.open} onClose={props.close} size="6xl">
-      <Modal.Header />
-      <Modal.Body className="max-h-full max-w-full">
+    <Dialog open={props.open} handler={props.close} size="lg">
+      <DialogBody className="max-h-full max-w-full">
         {props.attachment && (
           <img
             src={props.attachment.url}
@@ -20,7 +19,8 @@ export default function Media(props: Props) {
             className="object-contain max-h-full max-w-full m-auto"
           />
         )}
-      </Modal.Body>
-    </Modal>
+        <></>
+      </DialogBody>
+    </Dialog>
   )
 }

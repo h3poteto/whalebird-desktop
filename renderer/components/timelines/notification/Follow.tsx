@@ -1,8 +1,8 @@
-import { Avatar } from 'flowbite-react'
 import { Entity } from 'megalodon'
 import { FaUserPlus } from 'react-icons/fa6'
 import { FormattedMessage, useIntl } from 'react-intl'
 import emojify from '@/utils/emojify'
+import { Avatar } from '@material-tailwind/react'
 
 type Props = {
   notification: Entity.Notification
@@ -35,7 +35,7 @@ export default function Follow(props: Props) {
       </div>
       <div className="flex">
         <div className="p-2" style={{ width: '56px' }}>
-          <Avatar img={props.notification.account.avatar} />
+          <Avatar src={props.notification.account.avatar} />
         </div>
         <div style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex">

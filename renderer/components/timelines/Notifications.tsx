@@ -1,10 +1,10 @@
 import { Account } from '@/db'
-import { TextInput } from 'flowbite-react'
 import generator, { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
 import { useEffect, useState, useCallback, useRef, Dispatch, SetStateAction } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Virtuoso } from 'react-virtuoso'
 import Notification from './notification/Notification'
+import { Input, Spinner } from '@material-tailwind/react'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -107,32 +107,38 @@ export default function Notifications(props: Props) {
         </div>
         <div className="w-64 text-xs">
           <form>
-            <TextInput type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled sizing="sm" />
+            <Input type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled />
           </form>
         </div>
       </div>
       <div className="timeline overflow-y-auto w-full overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
-        <Virtuoso
-          style={{ height: '100%' }}
-          scrollerRef={ref => {
-            scrollerRef.current = ref as HTMLElement
-          }}
-          firstItemIndex={firstItemIndex}
-          atTopStateChange={prependUnreads}
-          className="timeline-scrollable"
-          data={notifications}
-          endReached={loadMore}
-          itemContent={(_, notification) => (
-            <Notification
-              client={props.client}
-              account={props.account}
-              notification={notification}
-              onRefresh={updateStatus}
-              key={notification.id}
-              openMedia={media => props.setAttachment(media)}
-            />
-          )}
-        />
+        {notifications.length > 0 ? (
+          <Virtuoso
+            style={{ height: '100%' }}
+            scrollerRef={ref => {
+              scrollerRef.current = ref as HTMLElement
+            }}
+            firstItemIndex={firstItemIndex}
+            atTopStateChange={prependUnreads}
+            className="timeline-scrollable"
+            data={notifications}
+            endReached={loadMore}
+            itemContent={(_, notification) => (
+              <Notification
+                client={props.client}
+                account={props.account}
+                notification={notification}
+                onRefresh={updateStatus}
+                key={notification.id}
+                openMedia={media => props.setAttachment(media)}
+              />
+            )}
+          />
+        ) : (
+          <div className="w-full" style={{ height: '100%' }}>
+            <Spinner className="m-auto mt-6" />
+          </div>
+        )}
       </div>
     </section>
   )

@@ -1,4 +1,4 @@
-import { Label, Modal, Textarea, Button } from 'flowbite-react'
+import { Button, Dialog, DialogBody, DialogHeader, Textarea, Typography } from '@material-tailwind/react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -37,20 +37,20 @@ export default function EditMedia(props: Props) {
   }
 
   return (
-    <Modal show={props.media !== undefined} onClose={onClose} size="2xl">
+    <Dialog open={props.media !== undefined} handler={onClose} size="xl">
       {props.media && (
         <>
-          <Modal.Header>
+          <DialogHeader>
             <FormattedMessage id="compose.edit_media.title" />
-          </Modal.Header>
-          <Modal.Body className="max-h-full max-w-full">
+          </DialogHeader>
+          <DialogBody className="max-h-full max-w-full">
             <div className="flex gap-2">
               <div className="w-1/4">
-                <Label htmlFor="description" className="mb-2 block">
+                <Typography>
                   <FormattedMessage id="compose.edit_media.label" />
-                </Label>
+                </Typography>
                 <Textarea id="description" rows={4} value={description} onChange={ev => setDescription(ev.target.value)} />
-                <Button color="blue" className="mt-2" onClick={submit}>
+                <Button className="mt-2" onClick={submit}>
                   <FormattedMessage id="compose.edit_media.submit" />
                 </Button>
               </div>
@@ -58,9 +58,10 @@ export default function EditMedia(props: Props) {
                 <img src={props.media.preview_url} className="object-cover m-auto" />
               </div>
             </div>
-          </Modal.Body>
+          </DialogBody>
         </>
       )}
-    </Modal>
+      <></>
+    </Dialog>
   )
 }

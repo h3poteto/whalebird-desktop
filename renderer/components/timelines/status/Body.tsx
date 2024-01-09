@@ -1,8 +1,8 @@
 import { Entity } from 'megalodon'
 import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
 import emojify from '@/utils/emojify'
-import { Button } from 'flowbite-react'
 import { FormattedMessage } from 'react-intl'
+import { Button } from '@material-tailwind/react'
 
 type Props = {
   status: Entity.Status
@@ -24,7 +24,7 @@ export default function Body(props: Props) {
             dangerouslySetInnerHTML={{ __html: emojify(props.status.spoiler_text, props.status.emojis) }}
             onClick={props.onClick}
           />
-          <Button size="xs" color="gray" className="focus:ring-0 my-1" onClick={() => setSpoilered(current => !current)}>
+          <Button size="sm" onClick={() => setSpoilered(current => !current)} variant="outlined" color="blue-gray">
             {spoilered ? <FormattedMessage id="timeline.status.show_more" /> : <FormattedMessage id="timeline.status.show_less" />}
           </Button>
         </div>

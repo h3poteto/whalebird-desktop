@@ -1,5 +1,5 @@
+import { Button, Checkbox, Progress, Radio } from '@material-tailwind/react'
 import dayjs from 'dayjs'
-import { Progress, Button, Radio, Label, Checkbox } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { HTMLAttributes } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -38,12 +38,11 @@ function SimplePoll(props: Props) {
     <div className={props.className + ' my-2'}>
       {props.poll.options.map((option, index) => (
         <div key={index} className="flex items-center gap-2 my-2 pl-1">
-          <Radio id={option.title} name={props.poll.id} value={option.title} />
-          <Label htmlFor={option.title}>{option.title}</Label>
+          <Radio id={option.title} name={props.poll.id} value={option.title} label={option.title} />
         </div>
       ))}
       <div className="flex gap-2 items-center mt-2">
-        <Button color="blue" outline={true} size="xs" onClick={vote}>
+        <Button size="sm" onClick={vote} variant="outlined">
           <FormattedMessage id="timeline.status.poll.vote" />
         </Button>
         <div>
@@ -76,12 +75,11 @@ function MultiplePoll(props: Props) {
     <div className={props.className + ' my-2'}>
       {props.poll.options.map((option, index) => (
         <div key={index} className="flex items-center gap-2 my-2 pl-1">
-          <Checkbox id={option.title} />
-          <Label htmlFor={option.title}>{option.title}</Label>
+          <Checkbox id={option.title} label={option.title} />
         </div>
       ))}
       <div className="flex gap-2 items-center mt-2">
-        <Button color="blue" outline={true} size="xs" onClick={vote}>
+        <Button size="sm" onClick={vote} variant="outlined">
           <FormattedMessage id="timeline.status.poll.vote" />
         </Button>
         <div>
@@ -102,11 +100,11 @@ function PollResult(props: Props) {
         <div key={index}>
           <span className="pr-2">{percent(option.votes_count ?? 0, props.poll.votes_count)}%</span>
           <span>{option.title}</span>
-          <Progress progress={percent(option.votes_count ?? 0, props.poll.votes_count)} />
+          <Progress value={percent(option.votes_count ?? 0, props.poll.votes_count)} color="blue" />
         </div>
       ))}
       <div className="flex gap-2 items-center mt-2">
-        <Button color="gray" outline={true} size="xs" onClick={props.onRefresh}>
+        <Button size="sm" onClick={props.onRefresh} variant="outlined">
           <FormattedMessage id="timeline.status.poll.refresh" />
         </Button>
         <div>
