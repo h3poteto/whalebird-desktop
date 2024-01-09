@@ -1,4 +1,4 @@
-import { Alert } from 'flowbite-react'
+import { Alert } from '@material-tailwind/react'
 import React, { useState, createContext, useContext } from 'react'
 
 type ToastTypes = 'info' | 'success' | 'failure' | 'warning'
@@ -28,11 +28,24 @@ export const ToastProvider: React.FC<Props> = ({ children }) => {
     }, 10000)
   }
 
+  const color = (toastType: ToastTypes) => {
+    switch (toastType) {
+      case 'success':
+        return 'green'
+      case 'failure':
+        return 'red'
+      case 'warning':
+        return 'amber'
+      default:
+        return 'blue'
+    }
+  }
+
   return (
     <ToastContext.Provider value={showToast}>
       {children}
       <div className={`${showable ? 'block' : 'hidden'} fixed top-2 -translate-x-1/2`} style={{ left: '50%' }}>
-        <Alert color={toastType} className="w96">
+        <Alert color={color(toastType)} className="w96">
           <span>{toastText}</span>
         </Alert>
       </div>

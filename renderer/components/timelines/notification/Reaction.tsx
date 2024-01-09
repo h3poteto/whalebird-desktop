@@ -1,4 +1,3 @@
-import { Avatar } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import dayjs from 'dayjs'
 import emojify from '@/utils/emojify'
@@ -9,6 +8,7 @@ import Media from '../status/Media'
 import { FaBarsProgress, FaHouse, FaPenToSquare, FaRetweet, FaStar } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import { useState } from 'react'
+import { Avatar } from '@material-tailwind/react'
 
 type Props = {
   notification: Entity.Notification
@@ -49,7 +49,7 @@ export default function Reaction(props: Props) {
       </div>
       <div className="flex">
         <div className="p-2" style={{ width: '56px' }}>
-          <Avatar img={status.account.avatar} />
+          <Avatar src={status.account.avatar} />
         </div>
         <div className="text-gray-600 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex justify-between">

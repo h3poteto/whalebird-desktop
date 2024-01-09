@@ -1,4 +1,4 @@
-import { Button, Label, Modal, Textarea } from 'flowbite-react'
+import { Button, Dialog, DialogBody, DialogHeader, Textarea, Typography } from '@material-tailwind/react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { FormattedMessage } from 'react-intl'
 
@@ -21,23 +21,24 @@ export default function Report(props: Props) {
   }
 
   return (
-    <Modal show={props.open} onClose={props.close} size="xl">
-      <Modal.Header>
+    <Dialog open={props.open} handler={props.close} size="md">
+      <DialogHeader>
         <FormattedMessage id="report.title" values={{ user: `@${props.status.account.username}` }} />
-      </Modal.Header>
-      <Modal.Body className="max-h-full max-w-full">
+      </DialogHeader>
+      <DialogBody className="max-h-full max-w-full">
         <form>
           <div className="block">
-            <Label htmlFor="comment">
+            <Typography>
               <FormattedMessage id="report.detail" />
-            </Label>
+            </Typography>
+            <Textarea id="comment" />
             <Textarea id="comment" rows={4} />
           </div>
-          <Button color="blue" className="mt-2" onClick={submit}>
+          <Button className="mt-2" onClick={submit}>
             <FormattedMessage id="report.submit" />
           </Button>
         </form>
-      </Modal.Body>
-    </Modal>
+      </DialogBody>
+    </Dialog>
   )
 }

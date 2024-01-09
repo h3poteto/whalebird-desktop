@@ -1,5 +1,5 @@
+import { Spinner } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
-import { Spinner } from 'flowbite-react'
 
 export default function Account() {
   const router = useRouter()
@@ -14,7 +14,7 @@ export default function Account() {
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <Spinner color="info" />
+      <Spinner />
     </div>
   )
 }

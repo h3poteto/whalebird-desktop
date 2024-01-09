@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { db } from '@/db'
-import { Spinner } from 'flowbite-react'
+import { Spinner } from '@material-tailwind/react'
 
 export default function Index() {
   const router = useRouter()
@@ -27,7 +27,7 @@ export default function Index() {
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <Spinner color="info" />
+      <Spinner />
     </div>
   )
 }

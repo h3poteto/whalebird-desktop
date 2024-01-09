@@ -1,5 +1,5 @@
 import emojify from '@/utils/emojify'
-import { Avatar } from 'flowbite-react'
+import { Avatar } from '@material-tailwind/react'
 import { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
 
@@ -18,7 +18,7 @@ export default function User(props: Props) {
     <div className="border-b mr-2 py-1">
       <div className="flex" onClick={() => openUser(props.user.id)}>
         <div className="p2 cursor-pointer" style={{ width: '56px' }}>
-          <Avatar img={props.user.avatar} />
+          <Avatar src={props.user.avatar} />
         </div>
         <div>
           <p className="text-gray-800" dangerouslySetInnerHTML={{ __html: emojify(props.user.display_name, props.user.emojis) }} />

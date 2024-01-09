@@ -1,5 +1,5 @@
 import { localeType } from '@/utils/i18n'
-import { Label, Modal, Select, TextInput } from 'flowbite-react'
+import { Dialog, DialogBody, DialogHeader, Input, Option, Select, Typography } from '@material-tailwind/react'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
@@ -31,10 +31,9 @@ export default function Settings(props: Props) {
     }
   }, [])
 
-  const languageChanged = (e: ChangeEvent<HTMLSelectElement>) => {
-    setLanguage(e.target.value as localeType)
+  const languageChanged = (e: string) => {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('language', e.target.value)
+      localStorage.setItem('language', e)
     }
     props.reloadSettings()
   }
@@ -48,40 +47,40 @@ export default function Settings(props: Props) {
   }
 
   return (
-    <Modal show={props.opened} onClose={props.close}>
-      <Modal.Header>
+    <Dialog open={props.opened} handler={props.close} size="sm">
+      <DialogHeader>
         <FormattedMessage id="settings.title" />
-      </Modal.Header>
-      <Modal.Body>
+      </DialogHeader>
+      <DialogBody>
         <div className="flex flex-col gap-4">
           <div>
             <div className="mb-2">
-              <Label htmlFor="fontsize">
+              <Typography>
                 <FormattedMessage id="settings.font_size" />
-              </Label>
+              </Typography>
             </div>
             <div>
-              <TextInput type="number" value={fontSize} onChange={fontSizeChanged} />
+              <Input type="number" value={fontSize} onChange={fontSizeChanged} />
             </div>
           </div>
           <div>
             <div className="mb-2">
-              <Label htmlFor="language">
+              <Typography>
                 <FormattedMessage id="settings.language" />
-              </Label>
+              </Typography>
             </div>
             <div>
-              <Select id="language" onChange={languageChanged} defaultValue={language}>
+              <Select id="language" onChange={languageChanged} value={language}>
                 {languages.map(lang => (
-                  <option key={lang.value} value={lang.value}>
+                  <Option key={lang.value} value={lang.value}>
                     {lang.label}
-                  </option>
+                  </Option>
                 ))}
               </Select>
             </div>
           </div>
         </div>
-      </Modal.Body>
-    </Modal>
+      </DialogBody>
+    </Dialog>
   )
 }

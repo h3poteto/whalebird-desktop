@@ -1,4 +1,4 @@
-import { Button } from 'flowbite-react'
+import { Button } from '@material-tailwind/react'
 import { Entity } from 'megalodon'
 import { useState } from 'react'
 import { FaEyeSlash } from 'react-icons/fa6'
@@ -16,7 +16,7 @@ export default function Media(props: Props) {
     return (
       <div className="relative">
         {sensitive ? (
-          <Button size="xs" color="gray" className="focus:ring-0 my-1" onClick={() => setSensitive(false)}>
+          <Button size="sm" onClick={() => setSensitive(false)} variant="outlined" className="my-1" color="blue-gray">
             <FormattedMessage id="timeline.status.cw" />
           </Button>
         ) : (

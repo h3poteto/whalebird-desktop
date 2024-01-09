@@ -1,14 +1,28 @@
 import emojify from '@/utils/emojify'
-import { Avatar, Button, CustomFlowbiteTheme, Dropdown, Flowbite, Tabs } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { MouseEventHandler, useEffect, useState } from 'react'
 import { FaEllipsisVertical } from 'react-icons/fa6'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import Timeline from './profile/Timeline'
 import Followings from './profile/Followings'
 import Followers from './profile/Followers'
 import { findLink } from '@/utils/statusParser'
 import { Account } from '@/db'
+import {
+  Avatar,
+  Button,
+  IconButton,
+  List,
+  ListItem,
+  Popover,
+  PopoverContent,
+  PopoverHandler,
+  Tab,
+  TabPanel,
+  Tabs,
+  TabsBody,
+  TabsHeader
+} from '@material-tailwind/react'
 
 type Props = {
   client: MegalodonInterface
@@ -17,20 +31,10 @@ type Props = {
   openMedia: (media: Entity.Attachment) => void
 }
 
-const customTheme: CustomFlowbiteTheme = {
-  tabs: {
-    tablist: {
-      tabitem: {
-        base: 'flex items-center justify-center p-4 rounded-t-lg text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500'
-      }
-    }
-  }
-}
-
 export default function Profile(props: Props) {
   const [user, setUser] = useState<Entity.Account | null>(null)
   const [relationship, setRelationship] = useState<Entity.Relationship | null>(null)
-  const { formatMessage } = useIntl()
+  const [popoverDetail, setPopoverDetail] = useState(false)
 
   useEffect(() => {
     const f = async () => {
@@ -69,74 +73,92 @@ export default function Profile(props: Props) {
 
   return (
     <div style={{ height: 'calc(100% - 50px)' }} className="overflow-y-auto timeline-scrollable">
-      <Flowbite theme={{ theme: customTheme }}>
-        {user && relationship && (
-          <>
-            <div className="header-image w-full bg-gray-100">
-              <img src={user.header} alt="header image" className="w-full object-cover h-40" />
-            </div>
-            <div className="p-5">
-              <div className="flex items-end justify-between" style={{ marginTop: '-50px' }}>
-                <Avatar img={user.avatar} size="lg" stacked />
-                <div className="flex gap-2">
-                  {relationship.following ? (
-                    <Button color="failure" onClick={() => unfollow(user.id)}>
-                      <FormattedMessage id="profile.unfollow" />
-                    </Button>
-                  ) : (
-                    <Button color="blue" onClick={() => follow(user.id)}>
-                      <FormattedMessage id="profile.follow" />
-                    </Button>
-                  )}
-                  <Dropdown
-                    label=""
-                    renderTrigger={() => (
-                      <Button color="gray">
-                        <FaEllipsisVertical />
-                      </Button>
-                    )}
-                  >
-                    <Dropdown.Item onClick={() => openOriginal(user.url)}>
-                      <FormattedMessage id="profile.open_original" />
-                    </Dropdown.Item>
-                  </Dropdown>
-                </div>
-              </div>
-              <div className="pt-4">
-                <div className="font-bold" dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
-                <div className="text-gray-500">@{user.acct}</div>
-                <div className="mt-4 raw-html profile" onClick={profileClicked}>
-                  <span
-                    dangerouslySetInnerHTML={{ __html: emojify(user.note, user.emojis) }}
-                    className="overflow-hidden break-all text-gray-800"
-                  />
-                </div>
-                <div className="bg-gray-100 overflow-hidden break-all raw-html mt-2 profile" onClick={profileClicked}>
-                  {user.fields.map((data, index) => (
-                    <dl key={index} className="px-4 py-2 border-gray-200 border-b">
-                      <dt className="text-gray-500">{data.name}</dt>
-                      <dd className="text-gray-700" dangerouslySetInnerHTML={{ __html: emojify(data.value, user.emojis) }} />
-                    </dl>
-                  ))}
-                </div>
+      {user && relationship && (
+        <>
+          <div className="header-image w-full bg-gray-100">
+            <img src={user.header} alt="header image" className="w-full object-cover h-40" />
+          </div>
+          <div className="p-5">
+            <div className="flex items-end justify-between" style={{ marginTop: '-50px' }}>
+              <Avatar src={user.avatar} size="xl" variant="rounded" />
+              <div className="flex gap-2">
+                {relationship.following ? (
+                  <Button color="red" onClick={() => unfollow(user.id)}>
+                    <FormattedMessage id="profile.unfollow" />
+                  </Button>
+                ) : (
+                  <Button color="blue" onClick={() => follow(user.id)}>
+                    <FormattedMessage id="profile.follow" />
+                  </Button>
+                )}
+                <Popover open={popoverDetail} handler={setPopoverDetail}>
+                  <PopoverHandler>
+                    <IconButton variant="outlined">
+                      <FaEllipsisVertical />
+                    </IconButton>
+                  </PopoverHandler>
+                  <PopoverContent>
+                    <List>
+                      <ListItem
+                        onClick={() => {
+                          openOriginal(user.url)
+                          setPopoverDetail(false)
+                        }}
+                      >
+                        <FormattedMessage id="profile.open_original" />
+                      </ListItem>
+                    </List>
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
-            <div>
-              <Tabs aria-label="Tabs with icons" style="underline">
-                <Tabs.Item active title={formatMessage({ id: 'profile.timeline' })}>
+            <div className="pt-4">
+              <div className="font-bold" dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
+              <div className="text-gray-500">@{user.acct}</div>
+              <div className="mt-4 raw-html profile" onClick={profileClicked}>
+                <span
+                  dangerouslySetInnerHTML={{ __html: emojify(user.note, user.emojis) }}
+                  className="overflow-hidden break-all text-gray-800"
+                />
+              </div>
+              <div className="bg-gray-100 overflow-hidden break-all raw-html mt-2 profile" onClick={profileClicked}>
+                {user.fields.map((data, index) => (
+                  <dl key={index} className="px-4 py-2 border-gray-200 border-b">
+                    <dt className="text-gray-500">{data.name}</dt>
+                    <dd className="text-gray-700" dangerouslySetInnerHTML={{ __html: emojify(data.value, user.emojis) }} />
+                  </dl>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div>
+            <Tabs value="timeline">
+              <TabsHeader>
+                <Tab value="timeline">
+                  <FormattedMessage id="profile.timeline" />
+                </Tab>
+                <Tab value="followings">
+                  <FormattedMessage id="profile.followings" />
+                </Tab>
+                <Tab value="followers">
+                  <FormattedMessage id="profile.followers" />
+                </Tab>
+              </TabsHeader>
+              <TabsBody>
+                <TabPanel value="timeline">
                   <Timeline client={props.client} account={props.account} user_id={props.user_id} openMedia={props.openMedia} />
-                </Tabs.Item>
-                <Tabs.Item title={formatMessage({ id: 'profile.followings' })}>
+                </TabPanel>
+                <TabPanel value="followings">
                   <Followings client={props.client} user_id={props.user_id} />
-                </Tabs.Item>
-                <Tabs.Item title={formatMessage({ id: 'profile.followers' })} className="focus:ring-0">
+                </TabPanel>
+                <TabPanel value="followers">
                   <Followers client={props.client} user_id={props.user_id} />
-                </Tabs.Item>
-              </Tabs>
-            </div>
-          </>
-        )}
-      </Flowbite>
+                </TabPanel>
+              </TabsBody>
+            </Tabs>
+          </div>
+        </>
+      )}
     </div>
   )
 }

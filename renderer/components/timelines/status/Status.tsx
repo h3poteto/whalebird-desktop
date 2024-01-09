@@ -1,4 +1,3 @@
-import { Avatar } from 'flowbite-react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import dayjs from 'dayjs'
 import Body from './Body'
@@ -12,6 +11,7 @@ import { useRouter } from 'next/router'
 import { MouseEventHandler, useState } from 'react'
 import { findAccount, findLink, ParsedAccount, accountMatch, findTag } from '@/utils/statusParser'
 import { Account } from '@/db'
+import { Avatar } from '@material-tailwind/react'
 
 type Props = {
   status: Entity.Status
@@ -75,7 +75,12 @@ export default function Status(props: Props) {
       {rebloggedHeader(props.status)}
       <div className="flex">
         <div className="p-2 cursor-pointer" style={{ width: '56px' }}>
-          <Avatar img={status.account.avatar} onClick={() => openUser(status.account.id)} />
+          <Avatar
+            src={status.account.avatar}
+            onClick={() => openUser(status.account.id)}
+            variant="rounded"
+            style={{ width: '40px', height: '40px' }}
+          />
         </div>
         <div className="text-gray-950 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex justify-between">
@@ -129,7 +134,7 @@ const rebloggedHeader = (status: Entity.Status) => {
     return (
       <div className="flex text-gray-600">
         <div className="grid justify-items-end pr-2" style={{ width: '56px' }}>
-          <Avatar img={status.account.avatar} size="xs" />
+          <Avatar src={status.account.avatar} size="xs" variant="rounded" />
         </div>
         <div style={{ width: 'calc(100% - 56px)' }}>
           <FormattedMessage id="timeline.status.boosted" values={{ user: status.account.username }} />

@@ -1,17 +1,3 @@
-import {
-  Button,
-  Checkbox,
-  CustomFlowbiteTheme,
-  Dropdown,
-  Flowbite,
-  Label,
-  Radio,
-  Select,
-  Spinner,
-  TextInput,
-  Textarea,
-  ToggleSwitch
-} from 'flowbite-react'
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import {
@@ -31,6 +17,22 @@ import { useToast } from '@/utils/toast'
 import Picker from '@emoji-mart/react'
 import { data } from '@/utils/emojiData'
 import EditMedia from './EditMedia'
+import {
+  Button,
+  Checkbox,
+  IconButton,
+  Input,
+  List,
+  ListItem,
+  Option,
+  Popover,
+  PopoverContent,
+  PopoverHandler,
+  Radio,
+  Select,
+  Switch,
+  Textarea
+} from '@material-tailwind/react'
 
 type Props = {
   client: MegalodonInterface
@@ -41,17 +43,6 @@ type Poll = {
   options: Array<string>
   expires_in: number
   multiple: boolean
-}
-
-const customTheme: CustomFlowbiteTheme = {
-  dropdown: {
-    content: 'focus:outline-none',
-    floating: {
-      item: {
-        base: 'hidden'
-      }
-    }
-  }
 }
 
 export default function Compose(props: Props) {
@@ -65,11 +56,13 @@ export default function Compose(props: Props) {
   const [editMedia, setEditMedia] = useState<Entity.Attachment>()
   const [maxCharacters, setMaxCharacters] = useState<number | null>(null)
   const [remaining, setRemaining] = useState<number | null>(null)
+  const [popoverVisibility, setPopoverVisibility] = useState(false)
+  const [popoverEmoji, setPopoverEmoji] = useState(false)
 
   const { formatMessage } = useIntl()
   const uploaderRef = useRef(null)
   const showToast = useToast()
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const textareaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!props.client) return
@@ -228,19 +221,18 @@ export default function Compose(props: Props) {
     } else if (emoji.shortcodes) {
       setBody(current => `${current.slice(0, cursor)}${emoji.shortcodes} ${current.slice(cursor)}`)
     }
-    const dummy = document.getElementById('dummy-emoji-picker')
-    dummy.click()
+    setPopoverEmoji(false)
   }
 
   return (
     <div className="px-4 pb-4">
       <form id="form">
         {cw && (
-          <TextInput
+          <Input
             id="spoiler"
             type="text"
-            sizing="sm"
-            className="mb-2"
+            color="blue"
+            containerProps={{ className: 'mb-2' }}
             value={spoiler}
             onChange={ev => setSpoiler(ev.target.value)}
             placeholder={formatMessage({ id: 'compose.spoiler.placeholder' })}
@@ -249,6 +241,7 @@ export default function Compose(props: Props) {
         <div className="relative">
           <Textarea
             id="body"
+            color="blue"
             className="resize-none focus:ring-0"
             placeholder={formatMessage({ id: 'compose.placeholder' })}
             rows={3}
@@ -256,22 +249,16 @@ export default function Compose(props: Props) {
             onChange={ev => setBody(ev.target.value)}
             ref={textareaRef}
           />
-          <Flowbite theme={{ theme: customTheme }}>
-            <Dropdown
-              label=""
-              dismissOnClick
-              renderTrigger={() => (
-                <span className="absolute top-1 right-1 text-gray-600 cursor-pointer">
-                  <FaFaceLaughBeam />
-                </span>
-              )}
-            >
+          <Popover open={popoverEmoji} handler={setPopoverEmoji}>
+            <PopoverHandler>
+              <span className="absolute top-1 right-1 text-gray-600 cursor-pointer">
+                <FaFaceLaughBeam />
+              </span>
+            </PopoverHandler>
+            <PopoverContent>
               <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" theme="light" />
-              <Dropdown.Item>
-                <span id="dummy-emoji-picker" />
-              </Dropdown.Item>
-            </Dropdown>
-          </Flowbite>
+            </PopoverContent>
+          </Popover>
         </div>
       </form>
       {poll && <PollForm poll={poll} setPoll={setPoll} />}
@@ -291,48 +278,84 @@ export default function Compose(props: Props) {
 
       {attachments.length > 0 && (
         <div>
-          <Checkbox id="sensitive" className="focus:ring-0" />
-          <Label htmlFor="sensitive" className="pl-2 text-gray-600">
-            <FormattedMessage id="compose.nsfw" />
-          </Label>
+          <Checkbox id="sensitive" label={formatMessage({ id: 'compose.nsfw' })} />
         </div>
       )}
 
       <div className="w-full flex justify-between mt-1 items-center h-5">
         <div className="ml-1 flex gap-3">
           <input type="file" id="file" className="hidden" ref={uploaderRef} onChange={fileChanged} />
-          <FaPaperclip className="text-gray-400 hover:text-gray-600 cursor-pointer" onClick={selectFile} />
-          <FaListCheck className="text-gray-400 hover:text-gray-600 cursor-pointer" onClick={togglePoll} />
-          <Dropdown label="" dismissOnClick={true} placement="top" renderTrigger={() => visibilityIcon(visibility)}>
-            <Dropdown.Item onClick={() => setVisibility('public')}>
-              <FormattedMessage id="compose.visibility.public" />
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => setVisibility('unlisted')}>
-              <FormattedMessage id="compose.visibility.unlisted" />
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => setVisibility('private')}>
-              <FormattedMessage id="compose.visibility.private" />
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => setVisibility('direct')}>
-              <FormattedMessage id="compose.visibility.direct" />
-            </Dropdown.Item>
-          </Dropdown>
+          <IconButton variant="text" size="sm" onClick={selectFile} className="text-gray-400 hover:text-gray-600 text-base">
+            <FaPaperclip />
+          </IconButton>
+          <IconButton variant="text" size="sm" onClick={togglePoll} className="text-gray-400 hover:text-gray-600 text-base">
+            <FaListCheck />
+          </IconButton>
+          <Popover open={popoverVisibility} handler={setPopoverVisibility}>
+            <PopoverHandler>{visibilityIcon(visibility)}</PopoverHandler>
+            <PopoverContent>
+              <List>
+                <ListItem
+                  onClick={() => {
+                    setVisibility('public')
+                    setPopoverVisibility(false)
+                  }}
+                >
+                  <FormattedMessage id="compose.visibility.public" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    setVisibility('unlisted')
+                    setPopoverVisibility(false)
+                  }}
+                >
+                  <FormattedMessage id="compose.visibility.unlisted" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    setVisibility('private')
+                    setPopoverVisibility(false)
+                  }}
+                >
+                  <FormattedMessage id="compose.visibility.private" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    setVisibility('direct')
+                    setPopoverVisibility(false)
+                  }}
+                >
+                  <FormattedMessage id="compose.visibility.direct" />
+                </ListItem>
+              </List>
+            </PopoverContent>
+          </Popover>
 
           {cw ? (
-            <span className="text-blue-400 hover:text-blue-600 leading-4 cursor-pointer" onClick={() => setCW(false)}>
+            <IconButton
+              variant="text"
+              size="sm"
+              className="text-blue-400 hover:text-blue-600 leading-4 text-base"
+              onClick={() => setCW(false)}
+            >
               CW
-            </span>
+            </IconButton>
           ) : (
-            <span className="text-gray-400 hover:text-gray-600 leading-4 cursor-pointer" onClick={() => setCW(true)}>
+            <IconButton
+              variant="text"
+              size="sm"
+              className="text-gray-400 hover:text-gray-600 leading-4 text-base"
+              onClick={() => setCW(true)}
+            >
               CW
-            </span>
+            </IconButton>
           )}
         </div>
-        <div className="mr-1">
+        <div className="mr-1 flex items-center gap-2">
           <span className="text-gray-400">{remaining}</span>
-          <button className="ml-2 text-gray-400 hover:text-gray-600" disabled={loading} onClick={post}>
-            {loading ? <Spinner size="sm" /> : <FaPaperPlane />}
-          </button>
+          <IconButton disabled={loading} onClick={post} variant="text" size="sm">
+            <FaPaperPlane className="text-base text-gray-600" />
+          </IconButton>
         </div>
       </div>
       <EditMedia media={editMedia} close={closeDescription} client={props.client} />
@@ -344,27 +367,27 @@ const visibilityIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct'
   switch (visibility) {
     case 'public':
       return (
-        <span>
-          <FaGlobe className="text-gray-400 hover:text-gray-600 cursor-pointer" />
-        </span>
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600  text-base">
+          <FaGlobe />
+        </IconButton>
       )
     case 'unlisted':
       return (
-        <span>
-          <FaLockOpen className="text-gray-400 hover:text-gray-600 cursor-pointer" />
-        </span>
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base">
+          <FaLockOpen />
+        </IconButton>
       )
     case 'private':
       return (
-        <span>
-          <FaLock className="text-gray-400 hover:text-gray-600 cursor-pointer" />
-        </span>
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600  text-base">
+          <FaLock />
+        </IconButton>
       )
     case 'direct':
       return (
-        <span>
-          <FaEnvelope className="text-gray-400 hover:text-gray-600 cursor-pointer" />
-        </span>
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base">
+          <FaEnvelope />
+        </IconButton>
       )
   }
 }
@@ -417,10 +440,11 @@ const PollForm = (props: PollProps) => {
     )
   }
 
-  const changeMultiple = (value: boolean) => {
+  const changeMultiple = (ev: ChangeEvent<HTMLInputElement>) => {
+    console.log(ev)
     props.setPoll(current =>
       Object.assign({}, current, {
-        multiple: value
+        multiple: ev.target.checked
       })
     )
   }
@@ -437,29 +461,42 @@ const PollForm = (props: PollProps) => {
     <div className="pt-1">
       {props.poll.options.map((option, index) => (
         <div className="flex items-center gap-3 py-1" key={index}>
-          {props.poll.multiple ? <Checkbox disabled /> : <Radio disabled />}
-          <TextInput sizing="sm" value={option} onChange={ev => updateOption(index, ev.target.value)} />
+          {props.poll.multiple ? (
+            <Checkbox disabled containerProps={{ className: 'p-1' }} />
+          ) : (
+            <Radio disabled containerProps={{ className: 'p-1' }} />
+          )}
+          <Input
+            type="text"
+            color="blue"
+            value={option}
+            onChange={ev => updateOption(index, ev.target.value)}
+            containerProps={{ className: 'h-8' }}
+          />
           <FaXmark className="text-gray-400 cursor-pointer" onClick={() => removeOption(index)} />
         </div>
       ))}
       <div className="flex gap-3 pt-2">
-        <Button onClick={addOption} color="light">
+        <Button onClick={addOption} size="sm" color="indigo" variant="outlined">
           <FormattedMessage id="compose.poll.add" />
         </Button>
-        <Select id="expires" onChange={e => changeExpire(parseInt(e.target.value))}>
+        <Select
+          id="expires"
+          color="blue"
+          value={`${props.poll.expires_in}`}
+          onChange={e => changeExpire(parseInt(e))}
+          containerProps={{ className: 'h-8' }}
+        >
           {expiresList.map((expire, index) => (
-            <option value={expire.value} key={index}>
+            <Option value={`${expire.value}`} key={index}>
               {expire.label}
-            </option>
+            </Option>
           ))}
         </Select>
       </div>
-      <ToggleSwitch
-        checked={props.poll.multiple}
-        onChange={v => changeMultiple(v)}
-        className="mt-2"
-        label={formatMessage({ id: 'compose.poll.multiple' })}
-      />
+      <div className="mt-2">
+        <Switch checked={props.poll.multiple} onChange={v => changeMultiple(v)} label={formatMessage({ id: 'compose.poll.multiple' })} />
+      </div>
     </div>
   )
 }
