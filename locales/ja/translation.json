@@ -16,7 +16,7 @@
       "show_more": "もっと見る",
       "show_less": "隠す",
       "cw": "非表示のメディア",
-      "report": "Report {user}"
+      "report": "{user} を通報"
     }
   },
   "accounts": {
@@ -28,10 +28,10 @@
       "authorization_code": "認証コード",
       "authorization_helper": "ブラウザに表示された認証コードを貼り付けてください",
       "without_code_authorize": "お使いのブラウザでWhalebirdを許可してください。その後、認証ボタンを押してください",
-      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-      "register_error": "Failed to add application.",
-      "token_error": "Failed to authorize.",
-      "credential_error": "Failed to confirm access token."
+      "detector_error": "{domain} への接続に失敗しました。サーバーの URL が正しいか正しいか確認してください。",
+      "register_error": "アプリケーションの追加に失敗しました。",
+      "token_error": "認証に失敗しました。",
+      "credential_error": "アクセストークンの確認に失敗しました。"
     },
     "remove": "削除"
   },
@@ -91,7 +91,7 @@
     },
     "nsfw": "閲覧注意にする",
     "poll": {
-      "add": "Add",
+      "add": "追加",
       "5min": "5分",
       "30min": "30分",
       "1h": "1時間",
@@ -102,19 +102,19 @@
       "multiple": "複数選択"
     },
     "edit_media": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "メディアを編集",
+      "label": "視覚的に閲覧が難しいユーザーへの説明",
+      "submit": "適用"
     }
   },
   "alert": {
     "validation": {
       "attachment_type": "画像または動画のみ添付できます",
-      "attachment_length": "You can't attach over {limit} files"
+      "attachment_length": "{limit} 個以上のファイルを添付できません。"
     },
     "upload_error": "ファイルのアップロードに失敗しました",
     "compose": {
-      "post_failed": "Failed to post a status"
+      "post_failed": "投稿に失敗"
     }
   },
   "profile": {
@@ -131,8 +131,8 @@
     "font_size": "フォントサイズ"
   },
   "report": {
-    "title": "Report {user}",
-    "detail": "Detail",
-    "submit": "Submit"
+    "title": "{user} を通報",
+    "detail": "詳細",
+    "submit": "送信"
   }
 }
