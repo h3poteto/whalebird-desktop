@@ -134,5 +134,8 @@
     "title": "Report {user}",
     "detail": "Detail",
     "submit": "Submit"
+  },
+  "search": {
+    "placeholder": "Search timeline"
   }
 }

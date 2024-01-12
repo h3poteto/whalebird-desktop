@@ -134,5 +134,8 @@
     "title": "{user} を通報",
     "detail": "詳細",
     "submit": "送信"
+  },
+  "search": {
+    "placeholder": "Search timeline"
   }
 }
