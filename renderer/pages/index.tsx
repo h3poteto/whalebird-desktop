@@ -12,7 +12,7 @@ export default function Index() {
       if (accounts.length > 0) {
         if (typeof localStorage !== 'undefined') {
           const lastAccount = localStorage.getItem(`lastAccount`)
-          if (lastAccount) {
+          if (parseInt(lastAccount) >= 0) {
             router.push(`/accounts/${lastAccount}`)
           } else {
             router.push(`/accounts/${accounts[0].id}`)

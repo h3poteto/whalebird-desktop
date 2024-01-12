@@ -224,8 +224,8 @@ export default function Timeline(props: Props) {
               )}
             />
           ) : (
-            <div className="w-full" style={{ height: `calc(100% - ${composeHeight}px)` }}>
-              <Spinner className="m-auto mt-6" />
+            <div className="w-full pt-6" style={{ height: `calc(100% - ${composeHeight}px)` }}>
+              <Spinner className="m-auto" />
             </div>
           )}
 
