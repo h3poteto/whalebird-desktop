@@ -135,8 +135,8 @@ export default function Notifications(props: Props) {
             )}
           />
         ) : (
-          <div className="w-full" style={{ height: '100%' }}>
-            <Spinner className="m-auto mt-6" />
+          <div className="w-full pt-6" style={{ height: '100%' }}>
+            <Spinner className="m-auto" />
           </div>
         )}
       </div>

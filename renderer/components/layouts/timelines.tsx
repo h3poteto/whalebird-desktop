@@ -3,8 +3,10 @@ import { Card, List, ListItem, ListItemPrefix } from '@material-tailwind/react'
 import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { FaBell, FaGlobe, FaHouse, FaList, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
+import Jump from '../Jump'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -16,6 +18,9 @@ export default function Layout({ children }: LayoutProps) {
 
   const [account, setAccount] = useState<Account | null>(null)
   const [lists, setLists] = useState<Array<Entity.List>>([])
+  const [openJump, setOpenJump] = useState(false)
+
+  useHotkeys('ctrl+k', () => setOpenJump(current => !current))
 
   useEffect(() => {
     if (router.query.id) {
@@ -67,6 +72,7 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <section className="flex h-screen w-full overflow-hidden">
+      <Jump opened={openJump} close={() => setOpenJump(false)} />
       <Card className="text-blue-100 sidebar w-64 bg-blue-950 rounded-none">
         <div className="max-w-full pl-4 mt-2 mb-4 my-profile">
           <p>{account?.username}</p>
