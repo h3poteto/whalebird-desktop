@@ -6946,12 +6946,12 @@ __metadata:
   linkType: hard
 
 "react-hotkeys-hook@npm:^4.4.1":
-  version: 4.4.3
-  resolution: "react-hotkeys-hook@npm:4.4.3"
+  version: 4.4.4
+  resolution: "react-hotkeys-hook@npm:4.4.4"
   peerDependencies:
     react: ">=16.8.1"
     react-dom: ">=16.8.1"
-  checksum: 51adb76dc3a1e60b5f1a5f89a31c8fc0c7606c8fc1b569a5cbcafda923afdef427283e756d4c815906bf7162ea7c2b2e6d5a48db99d5ff7de730329352a20924
+  checksum: 0ab785caf4028a6405d9cf9d892350a4a3afe13a5040c16318679a04df04d7946fa912842446ae0a1ee6d4fed1d84c7abecd03a8dd3ab7baeba6ae14937181c8
   languageName: node
   linkType: hard
 
