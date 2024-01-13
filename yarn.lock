@@ -2675,6 +2675,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"Whalebird@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "Whalebird@workspace:."
+  dependencies:
+    "@babel/runtime-corejs3": ^7.23.2
+    "@electron/notarize": ^2.1.0
+    "@emoji-mart/react": ^1.1.1
+    "@material-tailwind/react": ^2.1.8
+    "@types/node": ^20.0.0
+    "@types/react": 18.2.19
+    "@types/sanitize-html": ^2.9.4
+    "@typescript-eslint/eslint-plugin": ^6.13.1
+    "@typescript-eslint/parser": ^6.13.1
+    autoprefixer: ^10.4.16
+    blurhash: ^2.0.5
+    dayjs: ^1.11.10
+    dexie: ^3.2.4
+    electron: ^26.6.3
+    electron-builder: ^24.6.4
+    electron-serve: ^1.1.0
+    electron-store: ^8.1.0
+    emoji-mart: ^5.5.2
+    eslint: ^8.55.0
+    eslint-config-prettier: ^9.0.0
+    eslint-plugin-react: ^7.33.2
+    megalodon: ^9.1.1
+    next: ^12.3.4
+    nextron: ^8.12.0
+    postcss: ^8.4.31
+    react: ^18.2.0
+    react-blurhash: ^0.3.0
+    react-dom: ^18.2.0
+    react-hotkeys-hook: ^4.4.1
+    react-icons: ^4.11.0
+    react-intl: ^6.5.1
+    react-virtuoso: ^4.6.2
+    sanitize-html: ^2.11.0
+    tailwindcss: ^3.3.3
+    typescript: ^5.2.2
+  languageName: unknown
+  linkType: soft
+
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -8337,48 +8379,6 @@ __metadata:
   checksum: 43fe0dbc30e168a685ef5a86759d5016a705f6563b39a240aa00826a80637d4a3deeb8062e709d6a4b05c63e796278244c84b04174704dc4a37bedb0f565c5ed
   languageName: node
   linkType: hard
-
-"whalebird@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "whalebird@workspace:."
-  dependencies:
-    "@babel/runtime-corejs3": ^7.23.2
-    "@electron/notarize": ^2.1.0
-    "@emoji-mart/react": ^1.1.1
-    "@material-tailwind/react": ^2.1.8
-    "@types/node": ^20.0.0
-    "@types/react": 18.2.19
-    "@types/sanitize-html": ^2.9.4
-    "@typescript-eslint/eslint-plugin": ^6.13.1
-    "@typescript-eslint/parser": ^6.13.1
-    autoprefixer: ^10.4.16
-    blurhash: ^2.0.5
-    dayjs: ^1.11.10
-    dexie: ^3.2.4
-    electron: ^26.6.3
-    electron-builder: ^24.6.4
-    electron-serve: ^1.1.0
-    electron-store: ^8.1.0
-    emoji-mart: ^5.5.2
-    eslint: ^8.55.0
-    eslint-config-prettier: ^9.0.0
-    eslint-plugin-react: ^7.33.2
-    megalodon: ^9.1.1
-    next: ^12.3.4
-    nextron: ^8.12.0
-    postcss: ^8.4.31
-    react: ^18.2.0
-    react-blurhash: ^0.3.0
-    react-dom: ^18.2.0
-    react-hotkeys-hook: ^4.4.1
-    react-icons: ^4.11.0
-    react-intl: ^6.5.1
-    react-virtuoso: ^4.6.2
-    sanitize-html: ^2.11.0
-    tailwindcss: ^3.3.3
-    typescript: ^5.2.2
-  languageName: unknown
-  linkType: soft
 
 "which-boxed-primitive@npm:^1.0.2":
   version: 1.0.2

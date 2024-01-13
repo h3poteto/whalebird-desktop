@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "whalebird",
+  "name": "Whalebird",
   "description": "Electron based Fediverse client application",
   "version": "6.0.0-rc.2",
   "author": "Akira Fukushima <h3.poteto@gmail.com>",
@@ -12,7 +12,7 @@
     "postinstall": "electron-builder install-app-deps",
     "typecheck": "tsc -p renderer --noEmit && tsc -p main --noEmit",
     "lint": "eslint renderer --ext ts,tsx",
-    "thirdparty": "license-checker --production --json > thirdparty.json"
+    "thirdparty": "license-checker --production --json > renderer/thirdparty.json"
   },
   "dependencies": {
     "@emoji-mart/react": "^1.1.1",

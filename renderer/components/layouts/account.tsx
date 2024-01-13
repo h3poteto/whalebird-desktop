@@ -1,5 +1,5 @@
 import { CSSProperties, useContext, useEffect, useRef, useState } from 'react'
-import { FaGear, FaPlus, FaTrash } from 'react-icons/fa6'
+import { FaGear, FaIdCard, FaPlus, FaTrash } from 'react-icons/fa6'
 import { Account, db } from '@/db'
 import NewAccount from '@/components/accounts/New'
 import Settings from '@/components/Settings'
@@ -10,6 +10,7 @@ import generator, { Entity, WebSocketInterface } from 'megalodon'
 import { Context } from '@/utils/i18n'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Avatar, IconButton, List, ListItem, ListItemPrefix, Popover, PopoverContent, PopoverHandler } from '@material-tailwind/react'
+import Thirdparty from '../Thirdparty'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -19,6 +20,7 @@ export default function Layout({ children }: LayoutProps) {
   const [accounts, setAccounts] = useState<Array<Account>>([])
   const [openNewModal, setOpenNewModal] = useState(false)
   const [openSettings, setOpenSettings] = useState(false)
+  const [openThirdparty, setOpenThirdparty] = useState(false)
   const [style, setStyle] = useState<CSSProperties>({})
   const [openPopover, setOpenPopover] = useState(false)
 
@@ -183,6 +185,18 @@ export default function Layout({ children }: LayoutProps) {
                     </ListItemPrefix>
                     <FormattedMessage id="settings.title" />
                   </ListItem>
+                  <ListItem
+                    onClick={() => {
+                      setOpenThirdparty(true)
+                      setOpenPopover(false)
+                    }}
+                    className="py-2 px-4 rounded-none"
+                  >
+                    <ListItemPrefix>
+                      <FaIdCard />
+                    </ListItemPrefix>
+                    <FormattedMessage id="thirdparty.title" />
+                  </ListItem>
                 </List>
               </PopoverContent>
             </Popover>
@@ -190,6 +204,7 @@ export default function Layout({ children }: LayoutProps) {
         </aside>
         {children}
         <Settings opened={openSettings} close={() => setOpenSettings(false)} reloadSettings={loadSettings} />
+        <Thirdparty opened={openThirdparty} close={() => setOpenThirdparty(false)} />
       </main>
     </div>
   )
