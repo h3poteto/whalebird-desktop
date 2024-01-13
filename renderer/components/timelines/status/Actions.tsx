@@ -53,8 +53,13 @@ export default function Actions(props: Props) {
 
   const onEmojiSelect = async emoji => {
     await props.client.createEmojiReaction(props.status.id, emoji.native)
-    setPopoverDetail(false)
+    setPopoverEmoji(false)
     props.onRefresh()
+  }
+
+  const original = () => {
+    setPopoverDetail(false)
+    global.ipc.invoke('open-browser', props.status.url)
   }
 
   const report = () => {
@@ -97,6 +102,9 @@ export default function Actions(props: Props) {
         </PopoverHandler>
         <PopoverContent className="z-10">
           <List className="py-2 px-0">
+            <ListItem onClick={original} className="rounded-none">
+              <FormattedMessage id="timeline.status.open_original" />
+            </ListItem>
             <ListItem onClick={report} className="rounded-none">
               <FormattedMessage id="timeline.status.report" values={{ user: `@${props.status.account.acct}` }} />
             </ListItem>
