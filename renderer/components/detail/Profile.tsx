@@ -23,6 +23,7 @@ import {
   TabsBody,
   TabsHeader
 } from '@material-tailwind/react'
+import { domainFromAcct } from '@/utils/domain'
 
 type Props = {
   client: MegalodonInterface
@@ -35,18 +36,24 @@ export default function Profile(props: Props) {
   const [user, setUser] = useState<Entity.Account | null>(null)
   const [relationship, setRelationship] = useState<Entity.Relationship | null>(null)
   const [popoverDetail, setPopoverDetail] = useState(false)
+  const [domain, setDomain] = useState<string | null>(null)
 
   useEffect(() => {
     const f = async () => {
       if (props.user_id) {
         const res = await props.client.getAccount(props.user_id)
         setUser(res.data)
-        const rel = await props.client.getRelationship(props.user_id)
-        setRelationship(rel.data)
+        setDomain(domainFromAcct(res.data.acct))
+        await refresh()
       }
     }
     f()
   }, [props.user_id, props.client])
+
+  const refresh = async () => {
+    const rel = await props.client.getRelationship(props.user_id)
+    setRelationship(rel.data)
+  }
 
   const follow = async (id: string) => {
     const rel = await props.client.followAccount(id)
@@ -60,6 +67,48 @@ export default function Profile(props: Props) {
 
   const openOriginal = async (url: string) => {
     global.ipc.invoke('open-browser', url)
+  }
+
+  const block = async () => {
+    if (user) {
+      await props.client.blockAccount(user.id)
+      await refresh()
+    }
+  }
+
+  const unblock = async () => {
+    if (user) {
+      await props.client.unblockAccount(user.id)
+      await refresh()
+    }
+  }
+
+  const mute = async () => {
+    if (user) {
+      await props.client.muteAccount(user.id, false)
+      await refresh()
+    }
+  }
+
+  const unmute = async () => {
+    if (user) {
+      await props.client.unmuteAccount(user.id)
+      await refresh()
+    }
+  }
+
+  const blockDomain = async () => {
+    if (user && domain) {
+      await props.client.blockDomain(domain)
+      await refresh()
+    }
+  }
+
+  const unblockDomain = async () => {
+    if (user && domain) {
+      await props.client.unblockDomain(domain)
+      await refresh()
+    }
   }
 
   const profileClicked: MouseEventHandler<HTMLDivElement> = async e => {
@@ -107,6 +156,63 @@ export default function Profile(props: Props) {
                       >
                         <FormattedMessage id="profile.open_original" />
                       </ListItem>
+                      {relationship.blocking ? (
+                        <ListItem
+                          onClick={() => {
+                            unblock()
+                            setPopoverDetail(false)
+                          }}
+                        >
+                          <FormattedMessage id="profile.unblock" />
+                        </ListItem>
+                      ) : (
+                        <ListItem
+                          onClick={() => {
+                            block()
+                            setPopoverDetail(false)
+                          }}
+                        >
+                          <FormattedMessage id="profile.block" />
+                        </ListItem>
+                      )}
+                      {relationship.muting ? (
+                        <ListItem
+                          onClick={() => {
+                            unmute()
+                            setPopoverDetail(false)
+                          }}
+                        >
+                          <FormattedMessage id="profile.unmute" />
+                        </ListItem>
+                      ) : (
+                        <ListItem
+                          onClick={() => {
+                            mute()
+                            setPopoverDetail(false)
+                          }}
+                        >
+                          <FormattedMessage id="profile.mute" />
+                        </ListItem>
+                      )}
+                      {relationship.domain_blocking ? (
+                        <ListItem
+                          onClick={() => {
+                            blockDomain()
+                            setPopoverDetail(false)
+                          }}
+                        >
+                          <FormattedMessage id="profile.unblock_domain" values={{ server: domain }} />
+                        </ListItem>
+                      ) : (
+                        <ListItem
+                          onClick={() => {
+                            unblockDomain()
+                            setPopoverDetail(false)
+                          }}
+                        >
+                          <FormattedMessage id="profile.block_domain" values={{ server: domain }} />
+                        </ListItem>
+                      )}
                     </List>
                   </PopoverContent>
                 </Popover>
