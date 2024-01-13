@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.10.7": {
+  "@types/node@20.11.0": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -202,6 +202,14 @@
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
+  },
+  "Whalebird@6.0.0-rc.2": {
+    "licenses": "UNLICENSED",
+    "private": true,
+    "publisher": "Akira Fukushima",
+    "email": "h3.poteto@gmail.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/LICENSE"
   },
   "ajv-formats@2.1.1": {
     "licenses": "MIT",
@@ -772,7 +780,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom/LICENSE"
   },
-  "react-hotkeys-hook@4.4.3": {
+  "react-hotkeys-hook@4.4.4": {
     "licenses": "MIT",
     "repository": "https://github.com/JohannesKlauss/react-keymap-hook",
     "publisher": "Johannes Klauss",
@@ -914,14 +922,6 @@
     "repository": "https://github.com/uuidjs/uuid",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid/LICENSE.md"
-  },
-  "whalebird@6.0.0-rc.1": {
-    "licenses": "UNLICENSED",
-    "private": true,
-    "publisher": "Akira Fukushima",
-    "email": "h3.poteto@gmail.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/LICENSE"
   },
   "ws@8.14.2": {
     "licenses": "MIT",
