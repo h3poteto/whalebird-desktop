@@ -32,7 +32,7 @@ export default function Timeline(props: Props) {
   const scrollerRef = useRef<HTMLElement | null>(null)
   const streaming = useRef<WebSocketInterface | null>(null)
   const composeRef = useRef<HTMLDivElement | null>(null)
-  useHotkeys('ctrl+r', () => reload())
+  useHotkeys('mod+r', () => reload())
 
   useEffect(() => {
     const observer = new ResizeObserver(entries => {

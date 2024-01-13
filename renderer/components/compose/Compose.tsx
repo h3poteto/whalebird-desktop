@@ -148,7 +148,7 @@ export default function Compose(props: Props) {
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
-      if (event.ctrlKey === true && event.key === 'Enter') {
+      if ((event.ctrlKey === true && event.key === 'Enter') || (event.metaKey === true && event.key === 'Enter')) {
         post()
       }
     },
