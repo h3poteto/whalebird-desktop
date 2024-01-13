@@ -16,7 +16,8 @@
       "show_more": "もっと見る",
       "show_less": "隠す",
       "cw": "非表示のメディア",
-      "report": "{user} を通報"
+      "report": "{user} を通報",
+      "open_original": "Open original page"
     }
   },
   "accounts": {
@@ -121,6 +122,12 @@
     "follow": "フォロー",
     "unfollow": "フォローを解除",
     "open_original": "元のページを開く",
+    "block": "Block",
+    "unblock": "Unblock",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "block_domain": "Block domain {server}",
+    "unblock_domain": "Unblock domain {server}",
     "timeline": "タイムライン",
     "followers": "フォロワー",
     "followings": "フォロー中"
