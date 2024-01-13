@@ -130,6 +130,9 @@
     "language": "言語",
     "font_size": "フォントサイズ"
   },
+  "thirdparty": {
+    "title": "Third-party licenses"
+  },
   "report": {
     "title": "{user} を通報",
     "detail": "詳細",
