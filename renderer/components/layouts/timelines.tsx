@@ -20,7 +20,7 @@ export default function Layout({ children }: LayoutProps) {
   const [lists, setLists] = useState<Array<Entity.List>>([])
   const [openJump, setOpenJump] = useState(false)
 
-  useHotkeys('ctrl+k', () => setOpenJump(current => !current))
+  useHotkeys('mod+k', () => setOpenJump(current => !current))
 
   useEffect(() => {
     if (router.query.id) {

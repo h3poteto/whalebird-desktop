@@ -28,7 +28,7 @@ export default function Layout({ children }: LayoutProps) {
   const streamings = useRef<Array<WebSocketInterface>>([])
 
   for (let i = 1; i < 9; i++) {
-    useHotkeys(`ctrl+${i}`, () => {
+    useHotkeys(`mod+${i}`, () => {
       const acct = accounts[i - 1]
       if (acct && acct.id) {
         router.push(`/accounts/${acct.id}`)
