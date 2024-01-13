@@ -130,6 +130,9 @@
     "language": "Language",
     "font_size": "Font size"
   },
+  "thirdparty": {
+    "title": "Third-party licenses"
+  },
   "report": {
     "title": "Report {user}",
     "detail": "Detail",
