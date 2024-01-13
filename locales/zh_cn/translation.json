@@ -16,7 +16,8 @@
       "show_more": "Show more",
       "show_less": "Show less",
       "cw": "Media hidden",
-      "report": "Report {user}"
+      "report": "Report {user}",
+      "open_original": "Open original page"
     }
   },
   "accounts": {
@@ -121,6 +122,12 @@
     "follow": "Follow",
     "unfollow": "Unfollow",
     "open_original": "Open original page",
+    "block": "Block",
+    "unblock": "Unblock",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "block_domain": "Block domain {server}",
+    "unblock_domain": "Unblock domain {server}",
     "timeline": "Timeline",
     "followers": "Followers",
     "followings": "Followings"
