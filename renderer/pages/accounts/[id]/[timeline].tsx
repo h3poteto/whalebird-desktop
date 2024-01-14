@@ -48,18 +48,15 @@ export default function Page() {
   }, [router.query.modal, router.query.report_target_id])
 
   if (!account || !client) return null
-  switch (router.query.timeline as string) {
-    case 'notifications': {
-      return <Notifications account={account} client={client} setAttachment={setAttachment} />
-    }
-    default: {
-      return (
-        <>
-          <Timeline timeline={router.query.timeline as string} account={account} client={client} setAttachment={setAttachment} />
-          <Media open={attachment !== null} close={() => setAttachment(null)} attachment={attachment} />
-          {report && <Report open={report !== null} close={() => setReport(null)} status={report} client={client} />}
-        </>
-      )
-    }
-  }
+  return (
+    <>
+      {(router.query.timeline as string) === 'notifications' ? (
+        <Notifications account={account} client={client} setAttachment={setAttachment} />
+      ) : (
+        <Timeline timeline={router.query.timeline as string} account={account} client={client} setAttachment={setAttachment} />
+      )}
+      <Media open={attachment !== null} close={() => setAttachment(null)} attachment={attachment} />
+      {report && <Report open={report !== null} close={() => setReport(null)} status={report} client={client} />}
+    </>
+  )
 }

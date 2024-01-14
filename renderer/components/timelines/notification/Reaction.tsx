@@ -9,6 +9,7 @@ import { FaBarsProgress, FaHouse, FaPenToSquare, FaRetweet, FaStar } from 'react
 import { useIntl } from 'react-intl'
 import { useState } from 'react'
 import { Avatar } from '@material-tailwind/react'
+import { useRouter } from 'next/router'
 
 type Props = {
   notification: Entity.Notification
@@ -21,17 +22,26 @@ export default function Reaction(props: Props) {
   const status = props.notification.status
   const [spoilered, setSpoilered] = useState(status.spoiler_text.length > 0)
   const { formatMessage } = useIntl()
+  const router = useRouter()
 
   const refresh = async () => {
     const res = await props.client.getStatus(status.id)
     props.onRefresh(res.data)
   }
 
+  const openStatus = () => {
+    router.push({ query: { id: router.query.id, timeline: router.query.timeline, status_id: status.id, detail: true } })
+  }
+
+  const openUser = (id: string) => {
+    router.push({ query: { id: router.query.id, timeline: router.query.timeline, user_id: id, detail: true } })
+  }
+
   return (
     <div className="border-b mr-2 py-1">
       <div className="flex items-center">
         <div style={{ width: '56px' }}>{actionIcon(props.notification)}</div>
-        <div style={{ width: 'calc(100% - 56px)' }}>
+        <div className="cursor-pointer" style={{ width: 'calc(100% - 56px)' }} onClick={() => openUser(props.notification.account.id)}>
           <span
             dangerouslySetInnerHTML={{
               __html: emojify(
@@ -48,19 +58,24 @@ export default function Reaction(props: Props) {
         </div>
       </div>
       <div className="flex">
-        <div className="p-2" style={{ width: '56px' }}>
-          <Avatar src={status.account.avatar} />
+        <div className="p-2 cursor-pointer" style={{ width: '56px' }}>
+          <Avatar
+            src={status.account.avatar}
+            onClick={() => openUser(status.account.id)}
+            variant="rounded"
+            style={{ width: '40px', height: '40px' }}
+          />
         </div>
         <div className="text-gray-600 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex justify-between">
-            <div className="flex">
+            <div className="flex cursor-pointer" onClick={() => openUser(status.account.id)}>
               <span
                 className="text-gray-600 text-ellipsis break-all overflow-hidden"
                 dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }}
               ></span>
               <span className="text-gray-600 text-ellipsis break-all overflow-hidden">@{status.account.acct}</span>
             </div>
-            <div className="text-gray-600 text-right">
+            <div className="text-gray-600 text-right cursor-pointer" onClick={openStatus}>
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>
