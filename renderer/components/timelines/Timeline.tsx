@@ -94,6 +94,9 @@ export default function Timeline(props: Props) {
     f()
 
     return () => {
+      setUnreads([])
+      setFirstItemIndex(TIMELINE_MAX_STATUSES)
+      setStatuses([])
       if (streaming.current) {
         streaming.current.removeAllListeners()
         streaming.current.stop()

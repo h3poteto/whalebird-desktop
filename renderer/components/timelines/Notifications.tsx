@@ -48,6 +48,9 @@ export default function Notifications(props: Props) {
     f()
 
     return () => {
+      setUnreads([])
+      setFirstItemIndex(TIMELINE_MAX_STATUSES)
+      setNotifications([])
       if (streaming.current) {
         streaming.current.removeAllListeners()
         streaming.current.stop()
