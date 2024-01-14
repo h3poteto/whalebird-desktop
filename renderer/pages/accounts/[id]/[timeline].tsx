@@ -47,6 +47,15 @@ export default function Page() {
     }
   }, [router.query.modal, router.query.report_target_id])
 
+  const closeReport = () => {
+    setReport(null)
+    router.push({
+      query: Object.assign({}, router.query, {
+        report_target_id: null
+      })
+    })
+  }
+
   if (!account || !client) return null
   return (
     <>
@@ -56,7 +65,7 @@ export default function Page() {
         <Timeline timeline={router.query.timeline as string} account={account} client={client} setAttachment={setAttachment} />
       )}
       <Media open={attachment !== null} close={() => setAttachment(null)} attachment={attachment} />
-      {report && <Report open={report !== null} close={() => setReport(null)} status={report} client={client} />}
+      {report && <Report open={report !== null} close={closeReport} status={report} client={client} />}
     </>
   )
 }
