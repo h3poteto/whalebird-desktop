@@ -5,6 +5,8 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { Virtuoso } from 'react-virtuoso'
 import Notification from './notification/Notification'
 import { Input, Spinner } from '@material-tailwind/react'
+import { useRouter } from 'next/router'
+import Detail from '../detail/Detail'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -23,6 +25,7 @@ export default function Notifications(props: Props) {
   const { formatMessage } = useIntl()
   const scrollerRef = useRef<HTMLElement | null>(null)
   const streaming = useRef<WebSocketInterface | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const f = async () => {
@@ -99,47 +102,57 @@ export default function Notifications(props: Props) {
     return false
   }, [firstItemIndex, notifications, setNotifications, unreads])
 
+  const timelineClass = () => {
+    if (router.query.detail) {
+      return 'timeline-with-drawer'
+    }
+    return 'timeline'
+  }
+
   return (
-    <section className="h-full timeline-wrapper">
-      <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
-        <div className="text-lg font-bold">
-          <FormattedMessage id="timeline.notifications" />
-        </div>
-        <div className="w-64 text-xs">
-          <form>
-            <Input type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled />
-          </form>
-        </div>
-      </div>
-      <div className="timeline overflow-y-auto w-full overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
-        {notifications.length > 0 ? (
-          <Virtuoso
-            style={{ height: '100%' }}
-            scrollerRef={ref => {
-              scrollerRef.current = ref as HTMLElement
-            }}
-            firstItemIndex={firstItemIndex}
-            atTopStateChange={prependUnreads}
-            className="timeline-scrollable"
-            data={notifications}
-            endReached={loadMore}
-            itemContent={(_, notification) => (
-              <Notification
-                client={props.client}
-                account={props.account}
-                notification={notification}
-                onRefresh={updateStatus}
-                key={notification.id}
-                openMedia={media => props.setAttachment(media)}
-              />
-            )}
-          />
-        ) : (
-          <div className="w-full pt-6" style={{ height: '100%' }}>
-            <Spinner className="m-auto" />
+    <div className="flex timeline-wrapper">
+      <section className={`h-full ${timelineClass()}`}>
+        <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
+          <div className="text-lg font-bold">
+            <FormattedMessage id="timeline.notifications" />
           </div>
-        )}
-      </div>
-    </section>
+          <div className="w-64 text-xs">
+            <form>
+              <Input type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled />
+            </form>
+          </div>
+        </div>
+        <div className="timeline overflow-y-auto w-full overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
+          {notifications.length > 0 ? (
+            <Virtuoso
+              style={{ height: '100%' }}
+              scrollerRef={ref => {
+                scrollerRef.current = ref as HTMLElement
+              }}
+              firstItemIndex={firstItemIndex}
+              atTopStateChange={prependUnreads}
+              className="timeline-scrollable"
+              data={notifications}
+              endReached={loadMore}
+              itemContent={(_, notification) => (
+                <Notification
+                  client={props.client}
+                  account={props.account}
+                  notification={notification}
+                  onRefresh={updateStatus}
+                  key={notification.id}
+                  openMedia={media => props.setAttachment(media)}
+                />
+              )}
+            />
+          ) : (
+            <div className="w-full pt-6" style={{ height: '100%' }}>
+              <Spinner className="m-auto" />
+            </div>
+          )}
+        </div>
+      </section>
+      <Detail client={props.client} account={props.account} className="detail" openMedia={media => props.setAttachment(media)} />
+    </div>
   )
 }
