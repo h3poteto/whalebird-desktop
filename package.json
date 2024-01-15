@@ -2,7 +2,7 @@
   "private": true,
   "name": "Whalebird",
   "description": "Electron based Fediverse client application",
-  "version": "6.0.0-rc.2",
+  "version": "6.0.0-rc.3",
   "author": "Akira Fukushima <h3.poteto@gmail.com>",
   "main": "app/background.js",
   "scripts": {
