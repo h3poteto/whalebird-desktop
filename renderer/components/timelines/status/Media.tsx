@@ -21,7 +21,7 @@ export default function Media(props: Props) {
           </Button>
         ) : (
           <>
-            <button className="absolute bg-gray-600 text-gray-200 top-1 left-1 p-1 rounded z-10" onClick={() => setSensitive(true)}>
+            <button className="absolute bg-gray-600 text-gray-200 top-1 left-1 p-1 rounded" onClick={() => setSensitive(true)}>
               <FaEyeSlash />
             </button>
             <div className="mt-2 flex flex-wrap gap-2">

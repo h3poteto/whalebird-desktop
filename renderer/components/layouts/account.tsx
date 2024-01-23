@@ -151,6 +151,8 @@ export default function Layout({ children }: LayoutProps) {
                 <Avatar
                   alt={account.domain}
                   src={account.avatar}
+                  title={`${account.username}@${account.domain}`}
+                  aria-label={`${account.username}@${account.domain}`}
                   className="p-1"
                   onClick={() => openAccount(account.id)}
                   onContextMenu={() => openContextMenu(account.id)}
@@ -158,7 +160,13 @@ export default function Layout({ children }: LayoutProps) {
               </div>
             ))}
             <div className="flex flex-col items-center">
-              <IconButton variant="text" size="lg" onClick={() => setOpenNewModal(true)}>
+              <IconButton
+                variant="text"
+                size="lg"
+                onClick={() => setOpenNewModal(true)}
+                title={formatMessage({ id: 'accounts.new.title' })}
+                aria-label={formatMessage({ id: 'accounts.new.title' })}
+              >
                 <FaPlus className="text-gray-400 text-xl" />
               </IconButton>
             </div>
@@ -167,7 +175,12 @@ export default function Layout({ children }: LayoutProps) {
           <div className="settings text-gray-400 flex flex-col items-center mb-2">
             <Popover open={openPopover} handler={setOpenPopover}>
               <PopoverHandler>
-                <IconButton variant="text" size="lg">
+                <IconButton
+                  variant="text"
+                  size="lg"
+                  title={formatMessage({ id: 'settings.title' })}
+                  aria-label={formatMessage({ id: 'settings.title' })}
+                >
                   <FaGear className="text-gray-400 text-xl" />
                 </IconButton>
               </PopoverHandler>
