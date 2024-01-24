@@ -8,6 +8,10 @@
 
 Whalebird is a Fediverse client app for desktop.
 
+
+![demo](screenshot.png)
+
+
 ## Feature
 
 - An interface like slack
