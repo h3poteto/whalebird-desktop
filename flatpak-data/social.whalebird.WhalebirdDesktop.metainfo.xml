@@ -33,11 +33,11 @@
     </screenshot>
   </screenshots>
   <releases>
-      <release version="5.0.7" date="2023-6-15">
+      <release version="6.0.0" date="2024-1-24">
           <description>
               <p>Updated</p>
               <ul>
-                <li>Whalebird 5.x doesn't migrate your local databases from version 4. So please re-authenticate all servers when you upgrade Whalebird from 4.7.4.</li>
+                <li>Whalebird 6.x doesn't migrate your local databases from version 5.x So please re-authenticate all servers when you upgrade Whalebird from 5.x.</li>
               </ul>
           </description>
       </release>
