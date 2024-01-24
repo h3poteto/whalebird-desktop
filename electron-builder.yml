@@ -35,8 +35,11 @@ linux:
     - AppImage
     - deb
     - rpm
-    - tar.bz2
     - snap
+    - target: tar.bz2
+      arch:
+        - x64
+        - arm64
   category: Network
 publish: null
 afterSign: "notarize.js"
