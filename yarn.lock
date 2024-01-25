@@ -2900,9 +2900,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"app-builder-lib@npm:24.10.0":
-  version: 24.10.0
-  resolution: "app-builder-lib@npm:24.10.0"
+"app-builder-lib@npm:24.12.0":
+  version: 24.12.0
+  resolution: "app-builder-lib@npm:24.12.0"
   dependencies:
     "@develar/schema-utils": ~2.6.5
     "@electron/notarize": 2.1.0
@@ -2931,7 +2931,7 @@ __metadata:
     semver: ^7.3.8
     tar: ^6.1.12
     temp-file: ^3.4.0
-  checksum: 946846920eb940e937f74c406c70fabf0403abb14cc1929209422cda2b31f8be522195a9aa3dcd28fe889015684a4d9a8d28dbd21abf6ac1a7f38378711a9436
+  checksum: 625484ef8be21a92cdd9a6317a33546f0769921a1fc0bb72cdaf4d440da303f2aa4ae1362f2657c788736f50326e556124c37403b8e5d63a947772bf359f4e51
   languageName: node
   linkType: hard
 
@@ -3863,11 +3863,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dmg-builder@npm:24.10.0":
-  version: 24.10.0
-  resolution: "dmg-builder@npm:24.10.0"
+"dmg-builder@npm:24.12.0":
+  version: 24.12.0
+  resolution: "dmg-builder@npm:24.12.0"
   dependencies:
-    app-builder-lib: 24.10.0
+    app-builder-lib: 24.12.0
     builder-util: 24.9.4
     builder-util-runtime: 9.2.3
     dmg-license: ^1.0.11
@@ -3877,7 +3877,7 @@ __metadata:
   dependenciesMeta:
     dmg-license:
       optional: true
-  checksum: 00a93becb854369d5b6e8c9bfd9916db1058ca406e7eb8ddf4549d21d2c061e9de635564ff9ed65fe600688472aa861715d2b401c02e5fdde89099361443d550
+  checksum: 98f851a116d558320eeec6ca94009720f628d2694926e4cf128689a63ba9b6fa87264b81f7afa511f0571198db0aea672fec840a2828447054d73906d20d2caf
   languageName: node
   linkType: hard
 
@@ -3997,14 +3997,14 @@ __metadata:
   linkType: hard
 
 "electron-builder@npm:^24.6.4":
-  version: 24.10.0
-  resolution: "electron-builder@npm:24.10.0"
+  version: 24.12.0
+  resolution: "electron-builder@npm:24.12.0"
   dependencies:
-    app-builder-lib: 24.10.0
+    app-builder-lib: 24.12.0
     builder-util: 24.9.4
     builder-util-runtime: 9.2.3
     chalk: ^4.1.2
-    dmg-builder: 24.10.0
+    dmg-builder: 24.12.0
     fs-extra: ^10.1.0
     is-ci: ^3.0.0
     lazy-val: ^1.0.5
@@ -4014,7 +4014,7 @@ __metadata:
   bin:
     electron-builder: cli.js
     install-app-deps: install-app-deps.js
-  checksum: 5e441b5772dcde0ad7619cc26f596df774529a6576700f8fd2994de7cbcb0bb28b2195d4e7c3c138e77a65b7298dc019239007ddba40012e692742c4d09f574d
+  checksum: 362d70095492674842b5039239435d0fce64f89350b9acf61b8e1ae4b3e83b8996d65629991674f35063a32dd028a3babb99afae925084a0b6ca34da87d464d4
   languageName: node
   linkType: hard
 
