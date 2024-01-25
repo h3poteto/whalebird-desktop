@@ -85,6 +85,7 @@ export default function Layout({ children }: LayoutProps) {
               selected={router.asPath.includes(page.path)}
               onClick={() => router.push(page.path)}
               className="sidebar-menu-item text-blue-100"
+              title={page.title}
             >
               <ListItemPrefix>{page.icon}</ListItemPrefix>
               <span className="sidebar-menu">{page.title}</span>
@@ -96,6 +97,7 @@ export default function Layout({ children }: LayoutProps) {
               selected={router.asPath.includes(`list_${list.id}`)}
               onClick={() => router.push({ pathname: `/accounts/${router.query.id}/list_${list.id}` })}
               className="sidebar-menu-item text-blue-100"
+              title={list.title}
             >
               <ListItemPrefix>
                 <FaList />
