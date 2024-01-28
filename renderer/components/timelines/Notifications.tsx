@@ -4,9 +4,12 @@ import { useEffect, useState, useCallback, useRef, Dispatch, SetStateAction } fr
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Virtuoso } from 'react-virtuoso'
 import Notification from './notification/Notification'
-import { Input, Spinner } from '@material-tailwind/react'
+import { Spinner } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
 import Detail from '../detail/Detail'
+import { Marker } from '@/entities/marker'
+import { FaCheck } from 'react-icons/fa6'
+import { useToast } from '@/utils/toast'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -21,11 +24,15 @@ export default function Notifications(props: Props) {
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
   const [unreads, setUnreads] = useState<Array<Entity.Notification>>([])
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
+  const [marker, setMarker] = useState<Marker | null>(null)
+  const [pleromaUnreads, setPleromaUnreads] = useState<Array<string>>([])
 
-  const { formatMessage } = useIntl()
   const scrollerRef = useRef<HTMLElement | null>(null)
   const streaming = useRef<WebSocketInterface | null>(null)
   const router = useRouter()
+  const showToast = useToast()
+
+  const { formatMessage } = useIntl()
 
   useEffect(() => {
     const f = async () => {
@@ -33,6 +40,7 @@ export default function Notifications(props: Props) {
       setNotifications(res)
       const instance = await props.client.getInstance()
       const c = generator(props.account.sns, instance.data.urls.streaming_api, props.account.access_token, 'Whalebird')
+      updateMarker(props.client)
       streaming.current = c.userSocket()
       streaming.current.on('connect', () => {
         console.log('connected to notifications')
@@ -43,6 +51,7 @@ export default function Notifications(props: Props) {
         } else {
           setNotifications(current => [notification, ...current])
         }
+        updateMarker(props.client)
       })
     }
     f()
@@ -60,6 +69,16 @@ export default function Notifications(props: Props) {
     }
   }, [props.client])
 
+  useEffect(() => {
+    // In pleroma, last_read_id is incorrect.
+    // Items that have not been marked may also be read. So, if marker has unread_count, we should use it for unreads.
+    if (marker && marker.unread_count) {
+      const allNotifications = unreads.concat(notifications)
+      const u = allNotifications.slice(0, marker.unread_count).map(n => n.id)
+      setPleromaUnreads(u)
+    }
+  }, [marker, unreads, notifications])
+
   const loadNotifications = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Notification>> => {
     let options = { limit: 30 }
     if (maxId) {
@@ -67,6 +86,18 @@ export default function Notifications(props: Props) {
     }
     const res = await client.getNotifications(options)
     return res.data
+  }
+
+  const updateMarker = async (client: MegalodonInterface) => {
+    try {
+      const res = await client.getMarkers(['notifications'])
+      const marker = res.data as Entity.Marker
+      if (marker.notifications) {
+        setMarker(marker.notifications)
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const updateStatus = (status: Entity.Status) => {
@@ -83,6 +114,22 @@ export default function Notifications(props: Props) {
       return n
     })
     setNotifications(renew)
+  }
+
+  const read = async () => {
+    try {
+      await props.client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
+      if (props.account.sns === 'pleroma') {
+        await props.client.readNotifications({ max_id: notifications[0].id })
+      }
+      const res = await props.client.getMarkers(['notifications'])
+      const marker = res.data as Entity.Marker
+      if (marker.notifications) {
+        setMarker(marker.notifications)
+      }
+    } catch {
+      showToast({ text: formatMessage({ id: 'alert.failed_mark' }), type: 'failure' })
+    }
   }
 
   const loadMore = useCallback(async () => {
@@ -119,13 +166,13 @@ export default function Notifications(props: Props) {
           <div className="text-lg font-bold">
             <FormattedMessage id="timeline.notifications" />
           </div>
-          <div className="w-64 text-xs">
-            <form>
-              <Input type="text" placeholder={formatMessage({ id: 'timeline.search' })} disabled />
-            </form>
+          <div className="w-64 text-xs text-right">
+            <button className="text-gray-400 text-base py-1" title={formatMessage({ id: 'timeline.mark_as_read' })} onClick={read}>
+              <FaCheck />
+            </button>
           </div>
         </div>
-        <div className="timeline overflow-y-auto w-full overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
+        <div className="timeline overflow-y-auto w-full overflow-x-hidden" style={{ height: 'calc(100% - 44px)' }}>
           {notifications.length > 0 ? (
             <Virtuoso
               style={{ height: '100%' }}
@@ -137,16 +184,29 @@ export default function Notifications(props: Props) {
               className="timeline-scrollable"
               data={notifications}
               endReached={loadMore}
-              itemContent={(_, notification) => (
-                <Notification
-                  client={props.client}
-                  account={props.account}
-                  notification={notification}
-                  onRefresh={updateStatus}
-                  key={notification.id}
-                  openMedia={media => props.setAttachment(media)}
-                />
-              )}
+              itemContent={(_, notification) => {
+                let shadow = {}
+                if (marker) {
+                  if (marker.unread_count && pleromaUnreads.includes(notification.id)) {
+                    shadow = { boxShadow: '4px 0 2px var(--tw-shadow-color) inset' }
+                  } else if (parseInt(marker.last_read_id) < parseInt(notification.id)) {
+                    shadow = { boxShadow: '4px 0 2px var(--tw-shadow-color) inset' }
+                  }
+                }
+
+                return (
+                  <div className="box-border shadow-teal-500/80" style={shadow}>
+                    <Notification
+                      client={props.client}
+                      account={props.account}
+                      notification={notification}
+                      onRefresh={updateStatus}
+                      key={notification.id}
+                      openMedia={media => props.setAttachment(media)}
+                    />
+                  </div>
+                )
+              }}
             />
           ) : (
             <div className="w-full pt-6" style={{ height: '100%' }}>

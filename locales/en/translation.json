@@ -18,7 +18,8 @@
       "cw": "Media hidden",
       "report": "Report {user}",
       "open_original": "Open original page"
-    }
+    },
+    "mark_as_read": "Mark as read"
   },
   "accounts": {
     "new": {
@@ -116,7 +117,8 @@
     "upload_error": "Failed to upload the file",
     "compose": {
       "post_failed": "Failed to post a status"
-    }
+    },
+    "failed_mark": "Failed to mark as read"
   },
   "profile": {
     "follow": "Follow",
