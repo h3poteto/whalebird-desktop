@@ -2708,7 +2708,7 @@ __metadata:
     react-blurhash: ^0.3.0
     react-dom: ^18.2.0
     react-hotkeys-hook: ^4.4.1
-    react-icons: ^4.11.0
+    react-icons: ^5.0.0
     react-intl: ^6.5.1
     react-virtuoso: ^4.6.2
     sanitize-html: ^2.11.0
@@ -7004,12 +7004,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-icons@npm:^4.11.0":
-  version: 4.12.0
-  resolution: "react-icons@npm:4.12.0"
+"react-icons@npm:^5.0.0":
+  version: 5.0.1
+  resolution: "react-icons@npm:5.0.1"
   peerDependencies:
     react: "*"
-  checksum: db82a141117edcd884ade4229f0294b2ce15d82f68e0533294db07765d6dce00b129cf504338ec7081ce364fe899b296cb7752554ea08665b1d6bad811134e79
+  checksum: e5df9c5e3bcdb8d68bd4c5e41650c26d2a3ceda61ded0e2abf7caa0e54c9fb712badcd06f0c240cfc645a5dd15a5dc1eb5dd55f60123d86860f516b1fc456474
   languageName: node
   linkType: hard
 
