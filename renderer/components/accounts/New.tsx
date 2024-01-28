@@ -117,7 +117,7 @@ export default function New(props: NewProps) {
               <span>{error}</span>
             </Alert>
           )}
-          <form className="flex max-w-md flex-col gap-2">
+          <div className="flex max-w-md flex-col gap-2">
             {sns === null ? (
               <>
                 <div className="block">
@@ -165,7 +165,7 @@ export default function New(props: NewProps) {
                 )}
               </>
             )}
-          </form>
+          </div>
         </DialogBody>
       </Dialog>
     </>
