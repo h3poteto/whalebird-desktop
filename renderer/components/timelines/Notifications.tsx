@@ -7,9 +7,10 @@ import Notification from './notification/Notification'
 import { Spinner } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
 import Detail from '../detail/Detail'
-import { Marker } from '@/entities/marker'
+import { Marker, unreadCount } from '@/entities/marker'
 import { FaCheck } from 'react-icons/fa6'
 import { useToast } from '@/utils/toast'
+import { useUnreads } from '@/utils/unreads'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -22,7 +23,7 @@ type Props = {
 
 export default function Notifications(props: Props) {
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
-  const [unreads, setUnreads] = useState<Array<Entity.Notification>>([])
+  const [unreadNotifications, setUnreadNotifications] = useState<Array<Entity.Notification>>([])
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [marker, setMarker] = useState<Marker | null>(null)
   const [pleromaUnreads, setPleromaUnreads] = useState<Array<string>>([])
@@ -31,7 +32,7 @@ export default function Notifications(props: Props) {
   const streaming = useRef<WebSocketInterface | null>(null)
   const router = useRouter()
   const showToast = useToast()
-
+  const { setUnreads } = useUnreads()
   const { formatMessage } = useIntl()
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function Notifications(props: Props) {
       })
       streaming.current.on('notification', (notification: Entity.Notification) => {
         if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
-          setUnreads(current => [notification, ...current])
+          setUnreadNotifications(current => [notification, ...current])
         } else {
           setNotifications(current => [notification, ...current])
         }
@@ -57,7 +58,7 @@ export default function Notifications(props: Props) {
     f()
 
     return () => {
-      setUnreads([])
+      setUnreadNotifications([])
       setFirstItemIndex(TIMELINE_MAX_STATUSES)
       setNotifications([])
       if (streaming.current) {
@@ -73,11 +74,20 @@ export default function Notifications(props: Props) {
     // In pleroma, last_read_id is incorrect.
     // Items that have not been marked may also be read. So, if marker has unread_count, we should use it for unreads.
     if (marker && marker.unread_count) {
-      const allNotifications = unreads.concat(notifications)
+      const allNotifications = unreadNotifications.concat(notifications)
       const u = allNotifications.slice(0, marker.unread_count).map(n => n.id)
       setPleromaUnreads(u)
     }
-  }, [marker, unreads, notifications])
+
+    if (marker) {
+      const count = unreadCount(marker, unreadNotifications.concat(notifications))
+      setUnreads(current =>
+        Object.assign({}, current, {
+          [props.account.id.toString()]: count
+        })
+      )
+    }
+  }, [marker, unreadNotifications, notifications])
 
   const loadNotifications = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Notification>> => {
     let options = { limit: 30 }
@@ -126,6 +136,11 @@ export default function Notifications(props: Props) {
       const marker = res.data as Entity.Marker
       if (marker.notifications) {
         setMarker(marker.notifications)
+        setUnreads(current =>
+          Object.assign({}, current, {
+            [props.account.id?.toString()]: 0
+          })
+        )
       }
     } catch {
       showToast({ text: formatMessage({ id: 'alert.failed_mark' }), type: 'failure' })
@@ -144,13 +159,13 @@ export default function Notifications(props: Props) {
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
-    const u = unreads.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT).reverse()
+    const u = unreadNotifications.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT).reverse()
     const remains = u.slice(0, -1 * TIMELINE_STATUSES_COUNT)
-    setUnreads(() => remains)
+    setUnreadNotifications(() => remains)
     setFirstItemIndex(() => firstItemIndex - u.length)
     setNotifications(() => [...u, ...notifications])
     return false
-  }, [firstItemIndex, notifications, setNotifications, unreads])
+  }, [firstItemIndex, notifications, setNotifications, unreadNotifications])
 
   const timelineClass = () => {
     if (router.query.detail) {

@@ -1,5 +1,5 @@
 import { Account, db } from '@/db'
-import { Card, List, ListItem, ListItemPrefix } from '@material-tailwind/react'
+import { Card, Chip, List, ListItem, ListItemPrefix, ListItemSuffix } from '@material-tailwind/react'
 import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -7,6 +7,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { FaBell, FaGlobe, FaHouse, FaList, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import Jump from '../Jump'
+import { useUnreads } from '@/utils/unreads'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -15,6 +16,7 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter()
   const { formatMessage } = useIntl()
+  const { unreads } = useUnreads()
 
   const [account, setAccount] = useState<Account | null>(null)
   const [lists, setLists] = useState<Array<Entity.List>>([])
@@ -89,6 +91,16 @@ export default function Layout({ children }: LayoutProps) {
             >
               <ListItemPrefix>{page.icon}</ListItemPrefix>
               <span className="sidebar-menu text-ellipsis whitespace-nowrap overflow-hidden">{page.title}</span>
+              {page.id === 'notifications' && unreads[account?.id?.toString()] ? (
+                <ListItemSuffix>
+                  <Chip
+                    value={unreads[account.id.toString()]}
+                    variant="ghost"
+                    size="sm"
+                    className="rounded-full text-blue-100 bg-blue-600"
+                  />
+                </ListItemSuffix>
+              ) : null}
             </ListItem>
           ))}
           {lists.map(list => (
