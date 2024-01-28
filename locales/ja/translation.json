@@ -17,9 +17,9 @@
       "show_less": "隠す",
       "cw": "非表示のメディア",
       "report": "{user} を通報",
-      "open_original": "Open original page"
+      "open_original": "元のページを開く"
     },
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "全て既読にする"
   },
   "accounts": {
     "new": {
@@ -118,18 +118,18 @@
     "compose": {
       "post_failed": "投稿に失敗"
     },
-    "failed_mark": "Failed to mark as read"
+    "failed_mark": "通知を既読にできませんでした。"
   },
   "profile": {
     "follow": "フォロー",
     "unfollow": "フォローを解除",
     "open_original": "元のページを開く",
-    "block": "Block",
-    "unblock": "Unblock",
-    "mute": "Mute",
-    "unmute": "Unmute",
-    "block_domain": "Block domain {server}",
-    "unblock_domain": "Unblock domain {server}",
+    "block": "ブロック",
+    "unblock": "ブロックを解除",
+    "mute": "ミュート",
+    "unmute": "ミュートを解除",
+    "block_domain": "ドメイン {server} をブロック",
+    "unblock_domain": "ドメイン {server} のブロックを解除",
     "timeline": "タイムライン",
     "followers": "フォロワー",
     "followings": "フォロー中"
@@ -140,7 +140,7 @@
     "font_size": "フォントサイズ"
   },
   "thirdparty": {
-    "title": "Third-party licenses"
+    "title": "サードパーティのライセンス"
   },
   "report": {
     "title": "{user} を通報",
@@ -148,6 +148,6 @@
     "submit": "送信"
   },
   "search": {
-    "placeholder": "Search timeline"
+    "placeholder": "タイムラインを検索"
   }
 }
