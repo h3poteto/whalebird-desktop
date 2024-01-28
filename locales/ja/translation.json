@@ -18,7 +18,8 @@
       "cw": "非表示のメディア",
       "report": "{user} を通報",
       "open_original": "Open original page"
-    }
+    },
+    "mark_as_read": "Mark as read"
   },
   "accounts": {
     "new": {
@@ -116,7 +117,8 @@
     "upload_error": "ファイルのアップロードに失敗しました",
     "compose": {
       "post_failed": "投稿に失敗"
-    }
+    },
+    "failed_mark": "Failed to mark as read"
   },
   "profile": {
     "follow": "フォロー",
