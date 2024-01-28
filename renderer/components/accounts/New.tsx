@@ -1,5 +1,5 @@
 import generator, { MegalodonInterface, OAuth, detector } from 'megalodon'
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { db } from '@/db'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Alert, Button, Dialog, DialogBody, DialogHeader, Input, Spinner, Typography } from '@material-tailwind/react'
@@ -18,6 +18,8 @@ export default function New(props: NewProps) {
   const [loading, setLoading] = useState(false)
 
   const { formatMessage } = useIntl()
+  const domainFormRef = useRef<HTMLFormElement>(null)
+  const authorizeFormRef = useRef<HTMLFormElement>(null)
 
   const close = () => {
     setSNS(null)
@@ -57,6 +59,22 @@ export default function New(props: NewProps) {
     setAppData(appData)
     global.ipc.invoke('open-browser', appData.url)
   }
+
+  const handleDomainSubmit = useCallback(
+    (e: SubmitEvent) => {
+      e.preventDefault()
+      checkDomain()
+    },
+    [checkDomain]
+  )
+
+  useEffect(() => {
+    domainFormRef.current?.addEventListener('submit', handleDomainSubmit)
+
+    return () => {
+      domainFormRef.current?.removeEventListener('submit', handleDomainSubmit)
+    }
+  }, [props.opened, sns])
 
   const authorize = async () => {
     setError('')
@@ -105,6 +123,22 @@ export default function New(props: NewProps) {
     close()
   }
 
+  const handleAuthorizeSubmit = useCallback(
+    (e: SubmitEvent) => {
+      e.preventDefault()
+      authorize()
+    },
+    [authorize]
+  )
+
+  useEffect(() => {
+    authorizeFormRef.current?.addEventListener('submit', handleAuthorizeSubmit)
+
+    return () => {
+      authorizeFormRef.current?.removeEventListener('submit', handleAuthorizeSubmit)
+    }
+  }, [props.opened, appData])
+
   return (
     <>
       <Dialog open={props.opened} handler={close} size="xs">
@@ -117,9 +151,9 @@ export default function New(props: NewProps) {
               <span>{error}</span>
             </Alert>
           )}
-          <form className="flex max-w-md flex-col gap-2">
+          <div>
             {sns === null ? (
-              <>
+              <form className="flex max-w-md flex-col gap-2" ref={domainFormRef}>
                 <div className="block">
                   <Typography>
                     <FormattedMessage id="accounts.new.domain" />
@@ -129,11 +163,11 @@ export default function New(props: NewProps) {
                 <Button onClick={checkDomain} loading={loading} color="blue">
                   <FormattedMessage id="accounts.new.sign_in" />
                 </Button>
-              </>
+              </form>
             ) : (
               <>
                 {appData ? (
-                  <>
+                  <form className="flex max-w-md flex-col gap-2" ref={authorizeFormRef}>
                     {appData.session_token ? (
                       <>
                         <div className="block text-gray-600">
@@ -157,7 +191,7 @@ export default function New(props: NewProps) {
                     <Button onClick={authorize} disabled={loading} color="blue">
                       <FormattedMessage id="accounts.new.authorize" />
                     </Button>
-                  </>
+                  </form>
                 ) : (
                   <div className="text-center">
                     <Spinner />
@@ -165,7 +199,7 @@ export default function New(props: NewProps) {
                 )}
               </>
             )}
-          </form>
+          </div>
         </DialogBody>
       </Dialog>
     </>
