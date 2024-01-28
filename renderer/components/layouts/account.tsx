@@ -9,8 +9,20 @@ import generateNotification from '@/utils/notification'
 import generator, { Entity, WebSocketInterface } from 'megalodon'
 import { Context } from '@/utils/i18n'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { Avatar, IconButton, List, ListItem, ListItemPrefix, Popover, PopoverContent, PopoverHandler } from '@material-tailwind/react'
+import {
+  Avatar,
+  Badge,
+  IconButton,
+  List,
+  ListItem,
+  ListItemPrefix,
+  Popover,
+  PopoverContent,
+  PopoverHandler
+} from '@material-tailwind/react'
 import Thirdparty from '../Thirdparty'
+import { useUnreads } from '@/utils/unreads'
+import { unreadCount } from '@/entities/marker'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -28,6 +40,7 @@ export default function Layout({ children }: LayoutProps) {
   const router = useRouter()
   const { formatMessage } = useIntl()
   const streamings = useRef<Array<WebSocketInterface>>([])
+  const { unreads, setUnreads } = useUnreads()
 
   for (let i = 1; i < 9; i++) {
     useHotkeys(`mod+${i}`, () => {
@@ -50,6 +63,18 @@ export default function Layout({ children }: LayoutProps) {
         // Start user streaming for notification
         const client = generator(account.sns, account.url, account.access_token, 'Whalebird')
         const instance = await client.getInstance()
+        const notifications = (await client.getNotifications()).data
+        const res = await client.getMarkers(['notifications'])
+        const marker = res.data as Entity.Marker
+        if (marker.notifications) {
+          const count = unreadCount(marker.notifications, notifications)
+          setUnreads(current =>
+            Object.assign({}, current, {
+              [account.id?.toString()]: count
+            })
+          )
+        }
+
         const ws = generator(account.sns, instance.data.urls.streaming_api, account.access_token, 'Whalebird')
         const socket = ws.userSocket()
         streamings.current = [...streamings.current, socket]
@@ -148,15 +173,17 @@ export default function Layout({ children }: LayoutProps) {
                     </List>
                   </PopoverContent>
                 </Popover>
-                <Avatar
-                  alt={account.domain}
-                  src={account.avatar}
-                  title={`${account.username}@${account.domain}`}
-                  aria-label={`${account.username}@${account.domain}`}
-                  className="p-1"
-                  onClick={() => openAccount(account.id)}
-                  onContextMenu={() => openContextMenu(account.id)}
-                />
+                <Badge className="mt-1" color="green" invisible={!(unreads[account.id.toString()] > 0)}>
+                  <Avatar
+                    alt={account.domain}
+                    src={account.avatar}
+                    title={`${account.username}@${account.domain}`}
+                    aria-label={`${account.username}@${account.domain}`}
+                    className="p-1"
+                    onClick={() => openAccount(account.id)}
+                    onContextMenu={() => openContextMenu(account.id)}
+                  />
+                </Badge>
               </div>
             ))}
             <div className="flex flex-col items-center">
