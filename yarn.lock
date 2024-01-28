@@ -4034,9 +4034,9 @@ __metadata:
   linkType: hard
 
 "electron-serve@npm:^1.1.0":
-  version: 1.2.0
-  resolution: "electron-serve@npm:1.2.0"
-  checksum: 1bc08407d5f5a64a5e670b5743dff8c92b0a3c0a1ba44229af6522b291695c23a89ea8820acc76e061922159415a60a181a7b5717a9b93ded44f46281fb946bf
+  version: 1.3.0
+  resolution: "electron-serve@npm:1.3.0"
+  checksum: 06db8d1d71f866abc2dbe62ea5b50c1e467383d18f598e856e2c54d709dfdea255203c9d52397b4d4bb476cb5f336626a88cf5e0a1cb64488a7ff70b01d4a828
   languageName: node
   linkType: hard
 
