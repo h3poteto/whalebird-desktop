@@ -43,12 +43,12 @@ export const ToastProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <ToastContext.Provider value={showToast}>
-      {children}
       <div className={`${showable ? 'block' : 'hidden'} fixed top-2 -translate-x-1/2`} style={{ left: '50%' }}>
         <Alert color={color(toastType)} className="w96">
           <span>{toastText}</span>
         </Alert>
       </div>
+      {children}
     </ToastContext.Provider>
   )
 }
