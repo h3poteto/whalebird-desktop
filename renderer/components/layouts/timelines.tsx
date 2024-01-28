@@ -84,11 +84,11 @@ export default function Layout({ children }: LayoutProps) {
               key={page.id}
               selected={router.asPath.includes(page.path)}
               onClick={() => router.push(page.path)}
-              className="sidebar-menu-item text-blue-100"
+              className="sidebar-menu-item text-blue-100 overflow-hidden whitespace-nowrap"
               title={page.title}
             >
               <ListItemPrefix>{page.icon}</ListItemPrefix>
-              <span className="sidebar-menu">{page.title}</span>
+              <span className="sidebar-menu text-ellipsis whitespace-nowrap overflow-hidden">{page.title}</span>
             </ListItem>
           ))}
           {lists.map(list => (
@@ -96,13 +96,13 @@ export default function Layout({ children }: LayoutProps) {
               key={list.id}
               selected={router.asPath.includes(`list_${list.id}`)}
               onClick={() => router.push({ pathname: `/accounts/${router.query.id}/list_${list.id}` })}
-              className="sidebar-menu-item text-blue-100"
+              className="sidebar-menu-item text-blue-100 overflow-hidden whitespace-nowrap"
               title={list.title}
             >
               <ListItemPrefix>
                 <FaList />
               </ListItemPrefix>
-              <span className="sidebar-menu">{list.title}</span>
+              <div className="sidebar-menu text-ellipsis whitespace-nowrap overflow-hidden">{list.title}</div>
             </ListItem>
           ))}
         </List>
