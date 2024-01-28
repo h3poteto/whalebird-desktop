@@ -4,6 +4,7 @@ import AccountLayout from '@/components/layouts/account'
 import TimelineLayout from '@/components/layouts/timelines'
 import { IntlProviderWrapper } from '@/utils/i18n'
 import { ThemeProvider } from '@material-tailwind/react'
+import { ToastProvider } from '@/utils/toast'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const customTheme = {
@@ -102,11 +103,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider value={customTheme}>
       <IntlProviderWrapper>
-        <AccountLayout>
-          <TimelineLayout>
-            <Component {...pageProps} />
-          </TimelineLayout>
-        </AccountLayout>
+        <ToastProvider>
+          <AccountLayout>
+            <TimelineLayout>
+              <Component {...pageProps} />
+            </TimelineLayout>
+          </AccountLayout>
+        </ToastProvider>
       </IntlProviderWrapper>
     </ThemeProvider>
   )
