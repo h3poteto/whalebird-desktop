@@ -2,10 +2,11 @@ import type { AppProps } from 'next/app'
 import '../app.css'
 import AccountLayout from '@/components/layouts/account'
 import TimelineLayout from '@/components/layouts/timelines'
-import { IntlProviderWrapper } from '@/utils/i18n'
+import { IntlProviderWrapper } from '@/provider/i18n'
 import { ThemeProvider } from '@material-tailwind/react'
-import { ToastProvider } from '@/utils/toast'
-import { UnreadsProvider } from '@/utils/unreads'
+import { ToastProvider } from '@/provider/toast'
+import { UnreadsProvider } from '@/provider/unreads'
+import { AccountsProvider } from '@/provider/accounts'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const customTheme = {
@@ -106,11 +107,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <IntlProviderWrapper>
         <ToastProvider>
           <UnreadsProvider>
-            <AccountLayout>
-              <TimelineLayout>
-                <Component {...pageProps} />
-              </TimelineLayout>
-            </AccountLayout>
+            <AccountsProvider>
+              <AccountLayout>
+                <TimelineLayout>
+                  <Component {...pageProps} />
+                </TimelineLayout>
+              </AccountLayout>
+            </AccountsProvider>
           </UnreadsProvider>
         </ToastProvider>
       </IntlProviderWrapper>

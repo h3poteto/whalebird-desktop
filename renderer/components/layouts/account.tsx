@@ -5,9 +5,7 @@ import NewAccount from '@/components/accounts/New'
 import Settings from '@/components/Settings'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
-import generateNotification from '@/utils/notification'
-import generator, { Entity, WebSocketInterface } from 'megalodon'
-import { Context } from '@/utils/i18n'
+import { Context } from '@/provider/i18n'
 import { useHotkeys } from 'react-hotkeys-hook'
 import {
   Avatar,
@@ -21,8 +19,8 @@ import {
   PopoverHandler
 } from '@material-tailwind/react'
 import Thirdparty from '../Thirdparty'
-import { useUnreads } from '@/utils/unreads'
-import { unreadCount } from '@/entities/marker'
+import { useUnreads } from '@/provider/unreads'
+import { useAccounts } from '@/provider/accounts'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -39,8 +37,8 @@ export default function Layout({ children }: LayoutProps) {
   const { switchLang } = useContext(Context)
   const router = useRouter()
   const { formatMessage } = useIntl()
-  const streamings = useRef<Array<WebSocketInterface>>([])
-  const { unreads, setUnreads } = useUnreads()
+  const { unreads } = useUnreads()
+  const { addAccount, removeAccount, removeAll } = useAccounts()
 
   for (let i = 1; i < 9; i++) {
     useHotkeys(`mod+${i}`, () => {
@@ -60,44 +58,13 @@ export default function Layout({ children }: LayoutProps) {
         setOpenNewModal(true)
       }
       acct.forEach(async account => {
-        // Start user streaming for notification
-        const client = generator(account.sns, account.url, account.access_token, 'Whalebird')
-        const instance = await client.getInstance()
-        const notifications = (await client.getNotifications()).data
-        const res = await client.getMarkers(['notifications'])
-        const marker = res.data as Entity.Marker
-        if (marker.notifications) {
-          const count = unreadCount(marker.notifications, notifications)
-          setUnreads(current =>
-            Object.assign({}, current, {
-              [account.id?.toString()]: count
-            })
-          )
-        }
-
-        const ws = generator(account.sns, instance.data.urls.streaming_api, account.access_token, 'Whalebird')
-        const socket = ws.userSocket()
-        streamings.current = [...streamings.current, socket]
-        socket.on('connect', () => {
-          console.log(`connect to user streaming for ${account.domain}`)
-        })
-        socket.on('notification', (notification: Entity.Notification) => {
-          const [title, body] = generateNotification(notification, formatMessage)
-          if (title.length > 0) {
-            new window.Notification(title, { body: body })
-          }
-        })
+        addAccount(account)
       })
     }
     fn()
 
     return () => {
-      streamings.current.forEach(streaming => {
-        streaming.removeAllListeners()
-        streaming.stop()
-      })
-      streamings.current = []
-      console.log('close user streamings')
+      removeAll()
     }
   }, [])
 
@@ -120,8 +87,9 @@ export default function Layout({ children }: LayoutProps) {
     document.getElementById(`${id}`).click()
   }
 
-  const removeAccount = async (id: number) => {
-    await db.accounts.delete(id)
+  const deleteAccount = async (account: Account) => {
+    removeAccount(account)
+    await db.accounts.delete(account.id)
     const acct = await db.accounts.toArray()
     setAccounts(acct)
     if (acct.length === 0) {
@@ -164,7 +132,7 @@ export default function Layout({ children }: LayoutProps) {
                   </PopoverHandler>
                   <PopoverContent>
                     <List className="py-2 px-0">
-                      <ListItem onClick={() => removeAccount(account.id)} className="py-2 px-4 rounded-none">
+                      <ListItem onClick={() => deleteAccount(account)} className="py-2 px-4 rounded-none">
                         <ListItemPrefix>
                           <FaTrash />
                         </ListItemPrefix>

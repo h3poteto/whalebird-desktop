@@ -7,7 +7,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { FaBell, FaGlobe, FaHouse, FaList, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import Jump from '../Jump'
-import { useUnreads } from '@/utils/unreads'
+import { useUnreads } from '@/provider/unreads'
 
 type LayoutProps = {
   children: React.ReactNode

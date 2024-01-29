@@ -13,7 +13,7 @@ import {
   FaXmark
 } from 'react-icons/fa6'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { useToast } from '@/utils/toast'
+import { useToast } from '@/provider/toast'
 import Picker from '@emoji-mart/react'
 import { data } from '@/utils/emojiData'
 import EditMedia from './EditMedia'

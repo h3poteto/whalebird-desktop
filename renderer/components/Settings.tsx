@@ -1,4 +1,4 @@
-import { localeType } from '@/utils/i18n'
+import { localeType } from '@/provider/i18n'
 import { Dialog, DialogBody, DialogHeader, Input, Option, Select, Typography } from '@material-tailwind/react'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'

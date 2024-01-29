@@ -1,6 +1,6 @@
 import en from '../../locales/en/translation.json'
 import ja from '../../locales/ja/translation.json'
-import { flattenMessages } from './flattenMessage'
+import { flattenMessages } from '../utils/flattenMessage'
 import { createContext, useState } from 'react'
 import { IntlProvider } from 'react-intl'
 
