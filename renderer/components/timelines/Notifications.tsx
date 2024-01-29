@@ -9,8 +9,8 @@ import { useRouter } from 'next/router'
 import Detail from '../detail/Detail'
 import { Marker, unreadCount } from '@/entities/marker'
 import { FaCheck } from 'react-icons/fa6'
-import { useToast } from '@/utils/toast'
-import { useUnreads } from '@/utils/unreads'
+import { useToast } from '@/provider/toast'
+import { useUnreads } from '@/provider/unreads'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647

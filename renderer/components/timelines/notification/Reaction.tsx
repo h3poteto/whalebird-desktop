@@ -113,7 +113,11 @@ const actionIcon = (notification: Entity.Notification) => {
       return <FaPenToSquare className="text-blue-600 w-4 mr-2 ml-auto" />
     }
     case 'emoji_reaction': {
-      return <span dangerouslySetInnerHTML={{ __html: notification.emoji }} />
+      return (
+        <div className="w-5 mr-2 ml-auto">
+          <span dangerouslySetInnerHTML={{ __html: notification.emoji }} />
+        </div>
+      )
     }
     default:
       return null
@@ -136,7 +140,7 @@ const actionId = (notification: Entity.Notification) => {
       return 'notification.status.body'
     case 'update':
       return 'notification.update.body'
-    case 'emoji_reqction':
+    case 'emoji_reaction':
       return 'notification.emoji_reaction.body'
 
     default:
