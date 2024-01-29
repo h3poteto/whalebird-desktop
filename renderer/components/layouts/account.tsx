@@ -1,4 +1,4 @@
-import { CSSProperties, useContext, useEffect, useRef, useState } from 'react'
+import { CSSProperties, useContext, useEffect, useState } from 'react'
 import { FaGear, FaIdCard, FaPlus, FaTrash } from 'react-icons/fa6'
 import { Account, db } from '@/db'
 import NewAccount from '@/components/accounts/New'
