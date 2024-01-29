@@ -75,13 +75,13 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/fast-memoize",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/fast-memoize/LICENSE.md"
   },
-  "@formatjs/icu-messageformat-parser@2.7.5": {
+  "@formatjs/icu-messageformat-parser@2.7.6": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-messageformat-parser",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-messageformat-parser/LICENSE.md"
   },
-  "@formatjs/icu-skeleton-parser@1.7.2": {
+  "@formatjs/icu-skeleton-parser@1.8.0": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-skeleton-parser",
@@ -111,7 +111,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/intl-localematcher",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/intl-localematcher/LICENSE.md"
   },
-  "@formatjs/intl@2.9.11": {
+  "@formatjs/intl@2.10.0": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Long Ho",
@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.11.5": {
+  "@types/node@20.11.8": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -203,7 +203,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.0.0-rc.3": {
+  "Whalebird@6.0.0": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -383,7 +383,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/dot-prop",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/dot-prop/license"
   },
-  "electron-serve@1.2.0": {
+  "electron-serve@1.3.0": {
     "licenses": "MIT",
     "repository": "https://github.com/sindresorhus/electron-serve",
     "publisher": "Sindre Sorhus",
@@ -513,7 +513,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/htmlparser2",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/htmlparser2/LICENSE"
   },
-  "intl-messageformat@10.5.10": {
+  "intl-messageformat@10.5.11": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Eric Ferraiuolo",
@@ -787,14 +787,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-hotkeys-hook",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-hotkeys-hook/LICENSE"
   },
-  "react-icons@4.12.0": {
+  "react-icons@5.0.1": {
     "licenses": "MIT",
     "repository": "https://github.com/react-icons/react-icons",
     "publisher": "Goran Gajic",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-icons",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-icons/LICENSE"
   },
-  "react-intl@6.6.1": {
+  "react-intl@6.6.2": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Eric Ferraiuolo",
