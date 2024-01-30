@@ -2,7 +2,7 @@ import emojify from '@/utils/emojify'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { MouseEventHandler, useEffect, useState } from 'react'
 import { FaEllipsisVertical } from 'react-icons/fa6'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import Timeline from './profile/Timeline'
 import Followings from './profile/Followings'
 import Followers from './profile/Followers'
@@ -37,6 +37,7 @@ export default function Profile(props: Props) {
   const [relationship, setRelationship] = useState<Entity.Relationship | null>(null)
   const [popoverDetail, setPopoverDetail] = useState(false)
   const [domain, setDomain] = useState<string | null>(null)
+  const { formatMessage } = useIntl()
 
   useEffect(() => {
     const f = async () => {
@@ -125,11 +126,20 @@ export default function Profile(props: Props) {
       {user && relationship && (
         <>
           <div className="header-image w-full bg-gray-100">
-            <img src={user.header} alt="header image" className="w-full object-cover h-40" />
+            <img
+              src={user.header}
+              className="w-full object-cover h-40"
+              alt={formatMessage({ id: 'profile.header' }, { user: user.username })}
+            />
           </div>
           <div className="p-5">
             <div className="flex items-end justify-between" style={{ marginTop: '-50px' }}>
-              <Avatar src={user.avatar} size="xl" variant="rounded" />
+              <Avatar
+                src={user.avatar}
+                size="xl"
+                variant="rounded"
+                alt={formatMessage({ id: 'profile.avatar' }, { user: user.username })}
+              />
               <div className="flex gap-2">
                 {relationship.following ? (
                   <Button color="red" onClick={() => unfollow(user.id)}>
@@ -142,7 +152,7 @@ export default function Profile(props: Props) {
                 )}
                 <Popover open={popoverDetail} handler={setPopoverDetail}>
                   <PopoverHandler>
-                    <IconButton variant="outlined">
+                    <IconButton variant="outlined" title={formatMessage({ id: 'profile.detail' })}>
                       <FaEllipsisVertical />
                     </IconButton>
                   </PopoverHandler>

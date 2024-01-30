@@ -46,6 +46,7 @@ export default function Follow(props: Props) {
             onClick={() => openUser(props.notification.account.id)}
             variant="rounded"
             style={{ width: '40px', height: '40px' }}
+            alt={formatMessage({ id: 'timeline.status.avatar' }, { user: props.notification.account.username })}
           />
         </div>
         <div style={{ width: 'calc(100% - 56px)' }}>

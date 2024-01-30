@@ -5,7 +5,7 @@ import Media from './Media'
 import emojify from '@/utils/emojify'
 import Card from './Card'
 import Poll from './Poll'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import Actions from './Actions'
 import { useRouter } from 'next/router'
 import { MouseEventHandler, useState } from 'react'
@@ -25,6 +25,7 @@ export default function Status(props: Props) {
   const status = originalStatus(props.status)
   const [spoilered, setSpoilered] = useState(status.spoiler_text.length > 0)
   const router = useRouter()
+  const { formatMessage } = useIntl()
 
   const onRefresh = async () => {
     const res = await props.client.getStatus(status.id)
@@ -72,7 +73,15 @@ export default function Status(props: Props) {
 
   return (
     <div className="border-b mr-2 py-1">
-      {rebloggedHeader(props.status)}
+      {rebloggedHeader(
+        props.status,
+        formatMessage(
+          {
+            id: 'timeline.status.avatar'
+          },
+          { user: status.account.username }
+        )
+      )}
       <div className="flex">
         <div className="p-2 cursor-pointer" style={{ width: '56px' }}>
           <Avatar
@@ -80,6 +89,12 @@ export default function Status(props: Props) {
             onClick={() => openUser(status.account.id)}
             variant="rounded"
             style={{ width: '40px', height: '40px' }}
+            alt={formatMessage(
+              {
+                id: 'timeline.status.avatar'
+              },
+              { user: status.account.username }
+            )}
           />
         </div>
         <div className="text-gray-950 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
@@ -129,12 +144,12 @@ const originalStatus = (status: Entity.Status) => {
   }
 }
 
-const rebloggedHeader = (status: Entity.Status) => {
+const rebloggedHeader = (status: Entity.Status, alt: string) => {
   if (status.reblog && !status.quote) {
     return (
       <div className="flex text-gray-600">
         <div className="grid justify-items-end pr-2" style={{ width: '56px' }}>
-          <Avatar src={status.account.avatar} size="xs" variant="rounded" />
+          <Avatar src={status.account.avatar} size="xs" variant="rounded" alt={alt} />
         </div>
         <div style={{ width: 'calc(100% - 56px)' }}>
           <FormattedMessage id="timeline.status.boosted" values={{ user: status.account.username }} />

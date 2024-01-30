@@ -4,7 +4,7 @@ import { FaBookmark, FaEllipsis, FaFaceLaughBeam, FaReply, FaRetweet, FaStar } f
 import Picker from '@emoji-mart/react'
 import { data } from '@/utils/emojiData'
 import { Account } from '@/db'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { IconButton, List, ListItem, Popover, PopoverContent, PopoverHandler } from '@material-tailwind/react'
 import { useState } from 'react'
 
@@ -19,6 +19,7 @@ export default function Actions(props: Props) {
   const [popoverDetail, setPopoverDetail] = useState(false)
   const [popoverEmoji, setPopoverEmoji] = useState(false)
   const router = useRouter()
+  const { formatMessage } = useIntl()
 
   const reply = async () => {
     router.push({ query: { id: router.query.id, timeline: router.query.timeline, reply_target_id: props.status.id, detail: true } })
@@ -69,22 +70,51 @@ export default function Actions(props: Props) {
 
   return (
     <div className="flex gap-2">
-      <IconButton variant="text" size="sm" onClick={reply} className="text-gray-400 text-base hover:text-gray-600">
+      <IconButton
+        variant="text"
+        size="sm"
+        onClick={reply}
+        className="text-gray-400 text-base hover:text-gray-600"
+        title={formatMessage({ id: 'timeline.status.actions.reply' })}
+      >
         <FaReply className="w-4" />
       </IconButton>
-      <IconButton variant="text" size="sm" onClick={reblog} className={`${retweetColor(props.status)} text-base hover:text-gray-600`}>
+      <IconButton
+        variant="text"
+        size="sm"
+        onClick={reblog}
+        className={`${retweetColor(props.status)} text-base hover:text-gray-600`}
+        title={formatMessage({ id: 'timeline.status.actions.reblog' })}
+      >
         <FaRetweet className="w-4" />
       </IconButton>
-      <IconButton variant="text" size="sm" onClick={favourite} className={`${favouriteColor(props.status)} text-base hover:text-gray-600`}>
+      <IconButton
+        variant="text"
+        size="sm"
+        onClick={favourite}
+        className={`${favouriteColor(props.status)} text-base hover:text-gray-600`}
+        title={formatMessage({ id: 'timeline.status.actions.favourite' })}
+      >
         <FaStar className="w-4" />
       </IconButton>
-      <IconButton variant="text" size="sm" onClick={bookmark} className={`${bookmarkColor(props.status)} text-base hover:text-gray-600`}>
+      <IconButton
+        variant="text"
+        size="sm"
+        onClick={bookmark}
+        className={`${bookmarkColor(props.status)} text-base hover:text-gray-600`}
+        title={formatMessage({ id: 'timeline.status.actions.bookmark' })}
+      >
         <FaBookmark className="w-4" />
       </IconButton>
       {props.account.sns !== 'mastodon' && (
         <Popover open={popoverEmoji} handler={setPopoverEmoji}>
           <PopoverHandler>
-            <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base">
+            <IconButton
+              variant="text"
+              size="sm"
+              className="text-gray-400 hover:text-gray-600 text-base"
+              title={formatMessage({ id: 'timeline.status.actions.emoji_reaction' })}
+            >
               <FaFaceLaughBeam />
             </IconButton>
           </PopoverHandler>
@@ -96,7 +126,12 @@ export default function Actions(props: Props) {
 
       <Popover open={popoverDetail} handler={setPopoverDetail}>
         <PopoverHandler>
-          <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base">
+          <IconButton
+            variant="text"
+            size="sm"
+            className="text-gray-400 hover:text-gray-600 text-base"
+            title={formatMessage({ id: 'timeline.status.actions.detail' })}
+          >
             <FaEllipsis className="w-4" />
           </IconButton>
         </PopoverHandler>
