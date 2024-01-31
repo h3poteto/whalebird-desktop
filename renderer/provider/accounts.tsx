@@ -1,7 +1,7 @@
 import { Account } from '@/db'
 import generateNotification from '@/utils/notification'
 import { unreadCount } from '@/entities/marker'
-import generator, { Entity, WebSocketInterface } from 'megalodon'
+import generator, { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
 import { createContext, useContext, useRef, useState } from 'react'
 import { useUnreads } from './unreads'
 import { useIntl } from 'react-intl'
@@ -88,7 +88,26 @@ export const AccountsProvider: React.FC<Props> = ({ children }) => {
       if (title.length > 0) {
         new window.Notification(title, { body: body })
       }
+      updateUnreads(account, client)
     })
+  }
+
+  const updateUnreads = async (account: Account, client: MegalodonInterface) => {
+    try {
+      const res = await client.getMarkers(['notifications'])
+      const marker = res.data as Entity.Marker
+      if (marker.notifications) {
+        const notifications = (await client.getNotifications()).data
+        const count = unreadCount(marker.notifications, notifications)
+        setUnreads(current =>
+          Object.assign({}, current, {
+            [account.id?.toString()]: count
+          })
+        )
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return <AccountsContext.Provider value={{ addAccount, removeAccount, removeAll }}>{children}</AccountsContext.Provider>
