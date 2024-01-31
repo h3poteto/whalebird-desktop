@@ -7,7 +7,7 @@ import Notification from './notification/Notification'
 import { Spinner } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
 import Detail from '../detail/Detail'
-import { Marker, unreadCount } from '@/entities/marker'
+import { Marker } from '@/entities/marker'
 import { FaCheck } from 'react-icons/fa6'
 import { useToast } from '@/provider/toast'
 import { useUnreads } from '@/provider/unreads'
@@ -77,15 +77,6 @@ export default function Notifications(props: Props) {
       const allNotifications = unreadNotifications.concat(notifications)
       const u = allNotifications.slice(0, marker.unread_count).map(n => n.id)
       setPleromaUnreads(u)
-    }
-
-    if (marker) {
-      const count = unreadCount(marker, unreadNotifications.concat(notifications))
-      setUnreads(current =>
-        Object.assign({}, current, {
-          [props.account.id.toString()]: count
-        })
-      )
     }
   }, [marker, unreadNotifications, notifications])
 
