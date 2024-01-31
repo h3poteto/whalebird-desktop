@@ -92,7 +92,7 @@ export default function Layout({ children }: LayoutProps) {
               <ListItemPrefix>{page.icon}</ListItemPrefix>
               <span className="sidebar-menu text-ellipsis whitespace-nowrap overflow-hidden">{page.title}</span>
               {page.id === 'notifications' && unreads[account?.id?.toString()] ? (
-                <ListItemSuffix>
+                <ListItemSuffix className="sidebar-toolchip">
                   <Chip
                     value={unreads[account.id.toString()]}
                     variant="ghost"

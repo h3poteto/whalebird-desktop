@@ -42,8 +42,23 @@
     width: calc(100% - 64px);
   }
 
+  .sidebar-menu-item {
+    position: relative;
+  }
+
   .sidebar-menu-item > span {
     display: none;
+  }
+
+  .sidebar-toolchip {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 7px;
+  }
+
+  .sidebar-toolchip > div {
+    padding: 2px 4px;
   }
 }
 
