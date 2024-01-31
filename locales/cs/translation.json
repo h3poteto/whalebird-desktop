@@ -6,6 +6,7 @@
     "public": "Public",
     "search": "Search",
     "status": {
+      "avatar": "Aavtar of {user}",
       "boosted": "{user} boosted",
       "poll": {
         "refresh": "Refresh",
@@ -16,8 +17,17 @@
       "show_more": "Show more",
       "show_less": "Show less",
       "cw": "Media hidden",
+      "hide_media": "Hide media",
       "report": "Report {user}",
-      "open_original": "Open original page"
+      "open_original": "Open original page",
+      "actions": {
+        "reply": "Reply",
+        "reblog": "reblog",
+        "favourite": "Favourite",
+        "bookmark": "Bookmark",
+        "emoji_reaction": "Emoji reaction",
+        "detail": "Details"
+      }
     },
     "mark_as_read": "Mark as read"
   },
@@ -85,6 +95,14 @@
     "spoiler": {
       "placeholder": "Write your warning here"
     },
+    "emoji": "Add emoji",
+    "actions": {
+      "attachment": "Add attachment",
+      "poll": "Add poll",
+      "visibility": "Change visibility",
+      "cw": "Set content warning",
+      "post": "Post"
+    },
     "visibility": {
       "public": "Public",
       "unlisted": "Unlisted",
@@ -120,6 +138,10 @@
     },
     "failed_mark": "Failed to mark as read"
   },
+  "detail": {
+    "back": "Back",
+    "close": "Close"
+  },
   "profile": {
     "follow": "Follow",
     "unfollow": "Unfollow",
@@ -132,7 +154,10 @@
     "unblock_domain": "Unblock domain {server}",
     "timeline": "Timeline",
     "followers": "Followers",
-    "followings": "Followings"
+    "followings": "Followings",
+    "header": "Header image of {user}",
+    "avatar": "Avatar of {user}",
+    "detail": "Details"
   },
   "settings": {
     "title": "Settings",
