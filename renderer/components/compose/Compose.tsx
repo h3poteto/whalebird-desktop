@@ -251,9 +251,9 @@ export default function Compose(props: Props) {
           />
           <Popover open={popoverEmoji} handler={setPopoverEmoji}>
             <PopoverHandler>
-              <span className="absolute top-1 right-1 text-gray-600 cursor-pointer">
+              <button className="absolute top-1 right-1 text-gray-600 cursor-pointer" title={formatMessage({ id: 'compose.emoji' })}>
                 <FaFaceLaughBeam />
-              </span>
+              </button>
             </PopoverHandler>
             <PopoverContent>
               <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" theme="light" />
@@ -285,14 +285,26 @@ export default function Compose(props: Props) {
       <div className="w-full flex justify-between mt-1 items-center h-5">
         <div className="ml-1 flex gap-3">
           <input type="file" id="file" className="hidden" ref={uploaderRef} onChange={fileChanged} />
-          <IconButton variant="text" size="sm" onClick={selectFile} className="text-gray-400 hover:text-gray-600 text-base">
+          <IconButton
+            variant="text"
+            size="sm"
+            onClick={selectFile}
+            className="text-gray-400 hover:text-gray-600 text-base"
+            title={formatMessage({ id: 'compose.actions.attachment' })}
+          >
             <FaPaperclip />
           </IconButton>
-          <IconButton variant="text" size="sm" onClick={togglePoll} className="text-gray-400 hover:text-gray-600 text-base">
+          <IconButton
+            variant="text"
+            size="sm"
+            onClick={togglePoll}
+            className="text-gray-400 hover:text-gray-600 text-base"
+            title={formatMessage({ id: 'compose.actions.poll' })}
+          >
             <FaListCheck />
           </IconButton>
           <Popover open={popoverVisibility} handler={setPopoverVisibility}>
-            <PopoverHandler>{visibilityIcon(visibility)}</PopoverHandler>
+            <PopoverHandler>{visibilityIcon(visibility, formatMessage({ id: 'compose.actions.visibility' }))}</PopoverHandler>
             <PopoverContent>
               <List>
                 <ListItem
@@ -346,6 +358,7 @@ export default function Compose(props: Props) {
               size="sm"
               className="text-gray-400 hover:text-gray-600 leading-4 text-base"
               onClick={() => setCW(true)}
+              title={formatMessage({ id: 'compose.actions.cw' })}
             >
               CW
             </IconButton>
@@ -353,7 +366,7 @@ export default function Compose(props: Props) {
         </div>
         <div className="mr-1 flex items-center gap-2">
           <span className="text-gray-400">{remaining}</span>
-          <IconButton disabled={loading} onClick={post} variant="text" size="sm">
+          <IconButton disabled={loading} onClick={post} variant="text" size="sm" title={formatMessage({ id: 'compose.actions.post' })}>
             <FaPaperPlane className="text-base text-gray-600" />
           </IconButton>
         </div>
@@ -363,29 +376,29 @@ export default function Compose(props: Props) {
   )
 }
 
-const visibilityIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct') => {
+const visibilityIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct', title: string) => {
   switch (visibility) {
     case 'public':
       return (
-        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600  text-base">
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600  text-base" title={title}>
           <FaGlobe />
         </IconButton>
       )
     case 'unlisted':
       return (
-        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base">
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base" title={title}>
           <FaLockOpen />
         </IconButton>
       )
     case 'private':
       return (
-        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600  text-base">
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600  text-base" title={title}>
           <FaLock />
         </IconButton>
       )
     case 'direct':
       return (
-        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base">
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base" title={title}>
           <FaEnvelope />
         </IconButton>
       )

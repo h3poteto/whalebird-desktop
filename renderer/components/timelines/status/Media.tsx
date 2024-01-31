@@ -2,7 +2,7 @@ import { Button } from '@material-tailwind/react'
 import { Entity } from 'megalodon'
 import { useState } from 'react'
 import { FaEyeSlash } from 'react-icons/fa6'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   media: Array<Entity.Attachment>
@@ -11,6 +11,7 @@ type Props = {
 }
 export default function Media(props: Props) {
   const [sensitive, setSensitive] = useState(props.sensitive)
+  const { formatMessage } = useIntl()
 
   if (props.media.length > 0) {
     return (
@@ -21,7 +22,11 @@ export default function Media(props: Props) {
           </Button>
         ) : (
           <>
-            <button className="absolute bg-gray-600 text-gray-200 top-1 left-1 p-1 rounded" onClick={() => setSensitive(true)}>
+            <button
+              className="absolute bg-gray-600 text-gray-200 top-1 left-1 p-1 rounded"
+              onClick={() => setSensitive(true)}
+              title={formatMessage({ id: 'timeline.status.hide_media' })}
+            >
               <FaEyeSlash />
             </button>
             <div className="mt-2 flex flex-wrap gap-2">

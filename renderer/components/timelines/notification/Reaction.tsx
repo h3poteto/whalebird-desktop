@@ -64,6 +64,7 @@ export default function Reaction(props: Props) {
             onClick={() => openUser(status.account.id)}
             variant="rounded"
             style={{ width: '40px', height: '40px' }}
+            alt={formatMessage({ id: 'timeline.status.avatar' }, { user: status.account.username })}
           />
         </div>
         <div className="text-gray-600 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
