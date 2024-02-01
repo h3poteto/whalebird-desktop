@@ -1,40 +1,40 @@
 {
   "timeline": {
-    "home": "Home",
-    "notifications": "Notifications",
+    "home": "Página inicial",
+    "notifications": "Notificações",
     "local": "Local",
-    "public": "Public",
-    "search": "Search",
+    "public": "Público",
+    "search": "Procurar",
     "status": {
-      "avatar": "Aavtar of {user}",
+      "avatar": "Avatar de {user}",
       "boosted": "{user} boosted",
       "poll": {
-        "refresh": "Refresh",
-        "vote": "Vote",
-        "people": "{num} people",
-        "closed": "Closed"
+        "refresh": "Atualizar",
+        "vote": "Voto",
+        "people": "{num} pessoas",
+        "closed": "Fechado"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "cw": "Media hidden",
-      "hide_media": "Hide media",
+      "show_more": "Mostrar mais",
+      "show_less": "Mostrar menos",
+      "cw": "Conteúdo oculto",
+      "hide_media": "Ocultar conteúdo",
       "report": "Report {user}",
       "open_original": "Open original page",
       "actions": {
-        "reply": "Reply",
+        "reply": "Responder",
         "reblog": "reblog",
         "favourite": "Favourite",
         "bookmark": "Bookmark",
         "emoji_reaction": "Emoji reaction",
-        "detail": "Details"
+        "detail": "Detalhes"
       }
     },
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "Marcar como lido"
   },
   "accounts": {
     "new": {
-      "title": "Add account",
-      "domain": "Domain",
+      "title": "Adicionar conta",
+      "domain": "Domínio",
       "sign_in": "Sign in",
       "authorize": "Authorize",
       "authorization_code": "Authorization Code",
@@ -45,12 +45,12 @@
       "token_error": "Failed to authorize.",
       "credential_error": "Failed to confirm access token."
     },
-    "remove": "Remove"
+    "remove": "Remover"
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{user} favourited your post"
+      "title": "Favorito",
+      "body": "{user} Adicionou a sua publicação aos favoritos "
     },
     "reblog": {
       "title": "Boost",
@@ -61,15 +61,15 @@
       "body": "{user} quoted your post"
     },
     "poll_expired": {
-      "title": "Poll",
+      "title": "Sondagem",
       "body": "{user} poll has ended"
     },
     "poll_vote": {
-      "title": "Poll",
+      "title": "Sondagem",
       "body": "{user} voted your poll"
     },
     "status": {
-      "title": "Status",
+      "title": "Estado",
       "body": "{user} just posted"
     },
     "update": {
@@ -106,7 +106,7 @@
     "visibility": {
       "public": "Public",
       "unlisted": "Unlisted",
-      "private": "Private",
+      "private": "Privado",
       "direct": "Direct"
     },
     "nsfw": "Sensitive",
@@ -114,11 +114,11 @@
       "add": "Add",
       "5min": "5 minutes",
       "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days",
+      "1h": "1 hora",
+      "6h": "6 horas",
+      "1d": "1 dia",
+      "3d": "3 dias",
+      "7d": "7 dias",
       "multiple": "multiple"
     },
     "edit_media": {
@@ -153,15 +153,15 @@
     "block_domain": "Block domain {server}",
     "unblock_domain": "Unblock domain {server}",
     "timeline": "Timeline",
-    "followers": "Followers",
-    "followings": "Followings",
+    "followers": "Seguidores",
+    "followings": "A seguir",
     "header": "Header image of {user}",
-    "avatar": "Avatar of {user}",
-    "detail": "Details"
+    "avatar": "Avatar de {user}",
+    "detail": "Detalhes"
   },
   "settings": {
-    "title": "Settings",
-    "language": "Language",
+    "title": "Definições",
+    "language": "Idioma",
     "font_size": "Font size"
   },
   "thirdparty": {
@@ -169,10 +169,10 @@
   },
   "report": {
     "title": "Report {user}",
-    "detail": "Detail",
-    "submit": "Submit"
+    "detail": "Detalhes",
+    "submit": "Submeter"
   },
   "search": {
-    "placeholder": "Search timeline"
+    "placeholder": "Pesquisar na timeline"
   }
 }
