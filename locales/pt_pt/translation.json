@@ -18,12 +18,12 @@
       "show_less": "Mostrar menos",
       "cw": "Conteúdo oculto",
       "hide_media": "Ocultar conteúdo",
-      "report": "Report {user}",
-      "open_original": "Open original page",
+      "report": "Denunciar {user}",
+      "open_original": "Abrir a página original",
       "actions": {
         "reply": "Responder",
         "reblog": "reblog",
-        "favourite": "Favourite",
+        "favourite": "Favorito",
         "bookmark": "Bookmark",
         "emoji_reaction": "Emoji reaction",
         "detail": "Detalhes"
@@ -35,14 +35,14 @@
     "new": {
       "title": "Adicionar conta",
       "domain": "Domínio",
-      "sign_in": "Sign in",
+      "sign_in": "Inscreva-se",
       "authorize": "Authorize",
-      "authorization_code": "Authorization Code",
-      "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
+      "authorization_code": "Código de autorização",
+      "authorization_helper": "Por favor, coloque o código de autorização oriundo do seu navegador",
+      "without_code_authorize": "Por favor, aprove o Whalebird no seu navegador e, de seguida, ative as suas autorizações",
       "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-      "register_error": "Failed to add application.",
-      "token_error": "Failed to authorize.",
+      "register_error": "Falha ao adicionar aplicação.",
+      "token_error": "Falha ao autorizar.",
       "credential_error": "Failed to confirm access token."
     },
     "remove": "Remover"
@@ -62,69 +62,69 @@
     },
     "poll_expired": {
       "title": "Sondagem",
-      "body": "{user} poll has ended"
+      "body": "{user} a sondagem terminou"
     },
     "poll_vote": {
       "title": "Sondagem",
-      "body": "{user} voted your poll"
+      "body": "{user} votou na sua sondagem"
     },
     "status": {
       "title": "Estado",
-      "body": "{user} just posted"
+      "body": "{user} acabou de postar"
     },
     "update": {
-      "title": "Update",
+      "title": "Atualizar",
       "body": "{user} updated the post"
     },
     "emoji_reaction": {
-      "title": "Reaction",
-      "body": "{user} reacted your post"
+      "title": "Reação",
+      "body": "{user} Reagiu à sua publicação"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{user} followed you",
-      "followers": "{num} followers"
+      "title": "Seguir",
+      "body": "{user} começou a seguir-lhe",
+      "followers": "{num} Seguidores "
     },
     "follow_request": {
-      "title": "Follow Request",
-      "body": "{user} requested to follow you"
+      "title": "Pedido para seguir",
+      "body": "{user} enviou um pedido para o(a) seguir."
     }
   },
   "compose": {
-    "placeholder": "What's on your mind?",
+    "placeholder": "No que está a pensar?",
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "Escreva o seu aviso aqui"
     },
-    "emoji": "Add emoji",
+    "emoji": "Adicionar Emoji",
     "actions": {
-      "attachment": "Add attachment",
-      "poll": "Add poll",
-      "visibility": "Change visibility",
+      "attachment": "Adicionar anexo",
+      "poll": "Adicionar sondagem",
+      "visibility": "Alterar visibilidade",
       "cw": "Set content warning",
-      "post": "Post"
+      "post": "Publicar"
     },
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
+      "public": "Público",
+      "unlisted": "Não listado",
       "private": "Privado",
       "direct": "Direct"
     },
-    "nsfw": "Sensitive",
+    "nsfw": "Conteúdo sensível",
     "poll": {
-      "add": "Add",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
+      "add": "Adicionar",
+      "5min": "5 minutos",
+      "30min": "30 minutos",
       "1h": "1 hora",
       "6h": "6 horas",
       "1d": "1 dia",
       "3d": "3 dias",
       "7d": "7 dias",
-      "multiple": "multiple"
+      "multiple": "múltiplo"
     },
     "edit_media": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "Editar multimédia",
+      "label": "Descrição para pessoas invisuais ou que possuem capacidades diminutas de visão. ",
+      "submit": "Aplicar"
     }
   },
   "alert": {
@@ -136,39 +136,39 @@
     "compose": {
       "post_failed": "Failed to post a status"
     },
-    "failed_mark": "Failed to mark as read"
+    "failed_mark": "Falha ao marcar como lido"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close"
+    "back": "Retroceder",
+    "close": "Fechar"
   },
   "profile": {
-    "follow": "Follow",
-    "unfollow": "Unfollow",
-    "open_original": "Open original page",
-    "block": "Block",
+    "follow": "Seguir",
+    "unfollow": "Deixar de seguir",
+    "open_original": "Abrir a página original",
+    "block": "Bloquear",
     "unblock": "Unblock",
-    "mute": "Mute",
-    "unmute": "Unmute",
-    "block_domain": "Block domain {server}",
-    "unblock_domain": "Unblock domain {server}",
+    "mute": "Silenciar",
+    "unmute": "Desativar o silêncio",
+    "block_domain": "Bloquear domínio {server}",
+    "unblock_domain": "Desbloquear domínio {server}",
     "timeline": "Timeline",
     "followers": "Seguidores",
     "followings": "A seguir",
-    "header": "Header image of {user}",
+    "header": "Imagem de cabeçalho de {user}",
     "avatar": "Avatar de {user}",
     "detail": "Detalhes"
   },
   "settings": {
     "title": "Definições",
     "language": "Idioma",
-    "font_size": "Font size"
+    "font_size": "Tamanho da fonte de letra"
   },
   "thirdparty": {
     "title": "Third-party licenses"
   },
   "report": {
-    "title": "Report {user}",
+    "title": "Denunciar {user}",
     "detail": "Detalhes",
     "submit": "Submeter"
   },
