@@ -25,7 +25,7 @@
         "reblog": "reblog",
         "favourite": "Favorito",
         "bookmark": "Bookmark",
-        "emoji_reaction": "Emoji reaction",
+        "emoji_reaction": "Reações (emoji)",
         "detail": "Detalhes"
       }
     },
@@ -36,14 +36,14 @@
       "title": "Adicionar conta",
       "domain": "Domínio",
       "sign_in": "Inscreva-se",
-      "authorize": "Authorize",
+      "authorize": "Autorizar",
       "authorization_code": "Código de autorização",
       "authorization_helper": "Por favor, coloque o código de autorização oriundo do seu navegador",
       "without_code_authorize": "Por favor, aprove o Whalebird no seu navegador e, de seguida, ative as suas autorizações",
-      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
+      "detector_error": "Falha ao conectar ao {domain}, verifique se o URL do servidor é válido ou correto.",
       "register_error": "Falha ao adicionar aplicação.",
       "token_error": "Falha ao autorizar.",
-      "credential_error": "Failed to confirm access token."
+      "credential_error": "Não foi possível confirmar o token de acesso."
     },
     "remove": "Remover"
   },
@@ -74,7 +74,7 @@
     },
     "update": {
       "title": "Atualizar",
-      "body": "{user} updated the post"
+      "body": "{user} atualizou a publicação"
     },
     "emoji_reaction": {
       "title": "Reação",
@@ -100,7 +100,7 @@
       "attachment": "Adicionar anexo",
       "poll": "Adicionar sondagem",
       "visibility": "Alterar visibilidade",
-      "cw": "Set content warning",
+      "cw": "Definir aviso de conteúdo",
       "post": "Publicar"
     },
     "visibility": {
@@ -129,12 +129,12 @@
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos",
-      "attachment_length": "You can't attach over {limit} files"
+      "attachment_type": "Apenas pode anexar imagens ou vídeos",
+      "attachment_length": "Não pode anexar ficheiros acima de {limit}"
     },
-    "upload_error": "Failed to upload the file",
+    "upload_error": "Ocorreu um erro ao tentar carregar o ficheiro",
     "compose": {
-      "post_failed": "Failed to post a status"
+      "post_failed": "Ocorreu um erro ao publicar um status"
     },
     "failed_mark": "Falha ao marcar como lido"
   },
@@ -165,7 +165,7 @@
     "font_size": "Tamanho da fonte de letra"
   },
   "thirdparty": {
-    "title": "Third-party licenses"
+    "title": "Licenças de terceiros"
   },
   "report": {
     "title": "Denunciar {user}",
