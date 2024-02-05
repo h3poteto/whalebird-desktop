@@ -6,7 +6,7 @@
     "public": "連合",
     "search": "検索",
     "status": {
-      "avatar": "Aavtar of {user}",
+      "avatar": "{user} のAavtar",
       "boosted": "{user} がブーストしました",
       "poll": {
         "refresh": "更新",
@@ -17,16 +17,16 @@
       "show_more": "もっと見る",
       "show_less": "隠す",
       "cw": "非表示のメディア",
-      "hide_media": "Hide media",
+      "hide_media": "メディアを隠す",
       "report": "{user} を通報",
       "open_original": "元のページを開く",
       "actions": {
-        "reply": "Reply",
-        "reblog": "reblog",
-        "favourite": "Favourite",
-        "bookmark": "Bookmark",
-        "emoji_reaction": "Emoji reaction",
-        "detail": "Details"
+        "reply": "返信",
+        "reblog": "ブースト",
+        "favourite": "お気に入り",
+        "bookmark": "ブックマーク",
+        "emoji_reaction": "絵文字リアクション",
+        "detail": "詳細"
       }
     },
     "mark_as_read": "全て既読にする"
@@ -95,13 +95,13 @@
     "spoiler": {
       "placeholder": "ここに警告を書いてください"
     },
-    "emoji": "Add emoji",
+    "emoji": "絵文字を追加",
     "actions": {
-      "attachment": "Add attachment",
-      "poll": "Add poll",
-      "visibility": "Change visibility",
-      "cw": "Set content warning",
-      "post": "Post"
+      "attachment": "添付ファイルを追加",
+      "poll": "アンケートを追加",
+      "visibility": "公開範囲を変更",
+      "cw": "閲覧注意を追加",
+      "post": "投稿"
     },
     "visibility": {
       "public": "連合",
@@ -139,8 +139,8 @@
     "failed_mark": "通知を既読にできませんでした。"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close"
+    "back": "戻る",
+    "close": "閉じる"
   },
   "profile": {
     "follow": "フォロー",
@@ -155,9 +155,9 @@
     "timeline": "タイムライン",
     "followers": "フォロワー",
     "followings": "フォロー中",
-    "header": "Header image of {user}",
-    "avatar": "Avatar of {user}",
-    "detail": "Details"
+    "header": "{user} のヘッダー画像",
+    "avatar": "{user} のアバター",
+    "detail": "詳細"
   },
   "settings": {
     "title": "設定",
