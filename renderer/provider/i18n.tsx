@@ -1,10 +1,11 @@
 import en from '../../locales/en/translation.json'
 import ja from '../../locales/ja/translation.json'
+import pt_pt from '../../locales/pt_pt/translation.json'
 import { flattenMessages } from '../utils/flattenMessage'
 import { createContext, useState } from 'react'
 import { IntlProvider } from 'react-intl'
 
-export type localeType = 'en' | 'ja'
+export type localeType = 'en' | 'ja' | 'pt-PT'
 
 type Props = {
   children: React.ReactNode
@@ -19,7 +20,8 @@ export const Context = createContext<Lang>({} as Lang)
 export const IntlProviderWrapper: React.FC<Props> = props => {
   const langs = [
     { locale: 'en', messages: flattenMessages(en) },
-    { locale: 'ja', messages: flattenMessages(ja) }
+    { locale: 'ja', messages: flattenMessages(ja) },
+    { locale: 'pt-PT', messages: flattenMessages(pt_pt) }
   ]
   const [lang, setLang] = useState(langs[0])
 

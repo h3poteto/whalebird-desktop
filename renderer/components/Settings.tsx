@@ -17,6 +17,10 @@ const languages = [
   {
     label: '日本語',
     value: 'ja'
+  },
+  {
+    label: 'Português',
+    value: 'pt-PT'
   }
 ]
 
@@ -27,11 +31,16 @@ export default function Settings(props: Props) {
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
       const lang = localStorage.getItem('language')
-      setLanguage(lang as localeType)
+      if (lang) {
+        setLanguage(lang as localeType)
+      } else {
+        setLanguage('en')
+      }
     }
   }, [])
 
   const languageChanged = (e: string) => {
+    setLanguage(e as localeType)
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('language', e)
     }
