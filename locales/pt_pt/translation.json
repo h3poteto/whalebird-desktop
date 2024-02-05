@@ -1,56 +1,56 @@
 {
   "timeline": {
-    "home": "Home",
-    "notifications": "Notifications",
+    "home": "Página inicial",
+    "notifications": "Notificações",
     "local": "Local",
-    "public": "Public",
-    "search": "Search",
+    "public": "Público",
+    "search": "Procurar",
     "status": {
-      "avatar": "Aavtar of {user}",
+      "avatar": "Avatar de {user}",
       "boosted": "{user} boosted",
       "poll": {
-        "refresh": "Refresh",
-        "vote": "Vote",
-        "people": "{num} people",
-        "closed": "Closed"
+        "refresh": "Atualizar",
+        "vote": "Voto",
+        "people": "{num} pessoas",
+        "closed": "Fechado"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "cw": "Media hidden",
-      "hide_media": "Hide media",
-      "report": "Report {user}",
-      "open_original": "Open original page",
+      "show_more": "Mostrar mais",
+      "show_less": "Mostrar menos",
+      "cw": "Conteúdo oculto",
+      "hide_media": "Ocultar conteúdo",
+      "report": "Denunciar {user}",
+      "open_original": "Abrir a página original",
       "actions": {
-        "reply": "Reply",
+        "reply": "Responder",
         "reblog": "reblog",
-        "favourite": "Favourite",
+        "favourite": "Favorito",
         "bookmark": "Bookmark",
-        "emoji_reaction": "Emoji reaction",
-        "detail": "Details"
+        "emoji_reaction": "Reações (emoji)",
+        "detail": "Detalhes"
       }
     },
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "Marcar como lido"
   },
   "accounts": {
     "new": {
-      "title": "Add account",
-      "domain": "Domain",
-      "sign_in": "Sign in",
-      "authorize": "Authorize",
-      "authorization_code": "Authorization Code",
-      "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
-      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-      "register_error": "Failed to add application.",
-      "token_error": "Failed to authorize.",
-      "credential_error": "Failed to confirm access token."
+      "title": "Adicionar conta",
+      "domain": "Domínio",
+      "sign_in": "Inscreva-se",
+      "authorize": "Autorizar",
+      "authorization_code": "Código de autorização",
+      "authorization_helper": "Por favor, coloque o código de autorização oriundo do seu navegador",
+      "without_code_authorize": "Por favor, aprove o Whalebird no seu navegador e, de seguida, ative as suas autorizações",
+      "detector_error": "Falha ao conectar ao {domain}, verifique se o URL do servidor é válido ou correto.",
+      "register_error": "Falha ao adicionar aplicação.",
+      "token_error": "Falha ao autorizar.",
+      "credential_error": "Não foi possível confirmar o token de acesso."
     },
-    "remove": "Remove"
+    "remove": "Remover"
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{user} favourited your post"
+      "title": "Favorito",
+      "body": "{user} Adicionou a sua publicação aos favoritos "
     },
     "reblog": {
       "title": "Boost",
@@ -61,118 +61,118 @@
       "body": "{user} quoted your post"
     },
     "poll_expired": {
-      "title": "Poll",
-      "body": "{user} poll has ended"
+      "title": "Sondagem",
+      "body": "{user} a sondagem terminou"
     },
     "poll_vote": {
-      "title": "Poll",
-      "body": "{user} voted your poll"
+      "title": "Sondagem",
+      "body": "{user} votou na sua sondagem"
     },
     "status": {
-      "title": "Status",
-      "body": "{user} just posted"
+      "title": "Estado",
+      "body": "{user} acabou de postar"
     },
     "update": {
-      "title": "Update",
-      "body": "{user} updated the post"
+      "title": "Atualizar",
+      "body": "{user} atualizou a publicação"
     },
     "emoji_reaction": {
-      "title": "Reaction",
-      "body": "{user} reacted your post"
+      "title": "Reação",
+      "body": "{user} Reagiu à sua publicação"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{user} followed you",
-      "followers": "{num} followers"
+      "title": "Seguir",
+      "body": "{user} começou a seguir-lhe",
+      "followers": "{num} Seguidores "
     },
     "follow_request": {
-      "title": "Follow Request",
-      "body": "{user} requested to follow you"
+      "title": "Pedido para seguir",
+      "body": "{user} enviou um pedido para o(a) seguir."
     }
   },
   "compose": {
-    "placeholder": "What's on your mind?",
+    "placeholder": "No que está a pensar?",
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "Escreva o seu aviso aqui"
     },
-    "emoji": "Add emoji",
+    "emoji": "Adicionar Emoji",
     "actions": {
-      "attachment": "Add attachment",
-      "poll": "Add poll",
-      "visibility": "Change visibility",
-      "cw": "Set content warning",
-      "post": "Post"
+      "attachment": "Adicionar anexo",
+      "poll": "Adicionar sondagem",
+      "visibility": "Alterar visibilidade",
+      "cw": "Definir aviso de conteúdo",
+      "post": "Publicar"
     },
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
+      "public": "Público",
+      "unlisted": "Não listado",
+      "private": "Privado",
       "direct": "Direct"
     },
-    "nsfw": "Sensitive",
+    "nsfw": "Conteúdo sensível",
     "poll": {
-      "add": "Add",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days",
-      "multiple": "multiple"
+      "add": "Adicionar",
+      "5min": "5 minutos",
+      "30min": "30 minutos",
+      "1h": "1 hora",
+      "6h": "6 horas",
+      "1d": "1 dia",
+      "3d": "3 dias",
+      "7d": "7 dias",
+      "multiple": "múltiplo"
     },
     "edit_media": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "Editar multimédia",
+      "label": "Descrição para pessoas invisuais ou que possuem capacidades diminutas de visão. ",
+      "submit": "Aplicar"
     }
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos",
-      "attachment_length": "You can't attach over {limit} files"
+      "attachment_type": "Apenas pode anexar imagens ou vídeos",
+      "attachment_length": "Não pode anexar ficheiros acima de {limit}"
     },
-    "upload_error": "Failed to upload the file",
+    "upload_error": "Ocorreu um erro ao tentar carregar o ficheiro",
     "compose": {
-      "post_failed": "Failed to post a status"
+      "post_failed": "Ocorreu um erro ao publicar um status"
     },
-    "failed_mark": "Failed to mark as read"
+    "failed_mark": "Falha ao marcar como lido"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close"
+    "back": "Retroceder",
+    "close": "Fechar"
   },
   "profile": {
-    "follow": "Follow",
-    "unfollow": "Unfollow",
-    "open_original": "Open original page",
-    "block": "Block",
+    "follow": "Seguir",
+    "unfollow": "Deixar de seguir",
+    "open_original": "Abrir a página original",
+    "block": "Bloquear",
     "unblock": "Unblock",
-    "mute": "Mute",
-    "unmute": "Unmute",
-    "block_domain": "Block domain {server}",
-    "unblock_domain": "Unblock domain {server}",
+    "mute": "Silenciar",
+    "unmute": "Desativar o silêncio",
+    "block_domain": "Bloquear domínio {server}",
+    "unblock_domain": "Desbloquear domínio {server}",
     "timeline": "Timeline",
-    "followers": "Followers",
-    "followings": "Followings",
-    "header": "Header image of {user}",
-    "avatar": "Avatar of {user}",
-    "detail": "Details"
+    "followers": "Seguidores",
+    "followings": "A seguir",
+    "header": "Imagem de cabeçalho de {user}",
+    "avatar": "Avatar de {user}",
+    "detail": "Detalhes"
   },
   "settings": {
-    "title": "Settings",
-    "language": "Language",
-    "font_size": "Font size"
+    "title": "Definições",
+    "language": "Idioma",
+    "font_size": "Tamanho da fonte de letra"
   },
   "thirdparty": {
-    "title": "Third-party licenses"
+    "title": "Licenças de terceiros"
   },
   "report": {
-    "title": "Report {user}",
-    "detail": "Detail",
-    "submit": "Submit"
+    "title": "Denunciar {user}",
+    "detail": "Detalhes",
+    "submit": "Submeter"
   },
   "search": {
-    "placeholder": "Search timeline"
+    "placeholder": "Pesquisar na timeline"
   }
 }
