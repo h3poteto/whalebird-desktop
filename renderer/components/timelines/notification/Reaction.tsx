@@ -113,12 +113,25 @@ const actionIcon = (notification: Entity.Notification) => {
     case 'update': {
       return <FaPenToSquare className="text-blue-600 w-4 mr-2 ml-auto" />
     }
+    case 'reaction':
     case 'emoji_reaction': {
-      return (
-        <div className="w-5 mr-2 ml-auto">
-          <span dangerouslySetInnerHTML={{ __html: notification.emoji }} />
-        </div>
-      )
+      if (notification.reaction) {
+        if (notification.reaction.url) {
+          return (
+            <div className="w-5 mr-2 ml-auto">
+              <img src={notification.reaction.url} style={{ height: '18px' }} />
+            </div>
+          )
+        } else {
+          return (
+            <div className="w-5 mr-2 ml-auto">
+              <span dangerouslySetInnerHTML={{ __html: notification.reaction.name }} />
+            </div>
+          )
+        }
+      } else {
+        return null
+      }
     }
     default:
       return null
@@ -141,6 +154,7 @@ const actionId = (notification: Entity.Notification) => {
       return 'notification.status.body'
     case 'update':
       return 'notification.update.body'
+    case 'reaction':
     case 'emoji_reaction':
       return 'notification.emoji_reaction.body'
 

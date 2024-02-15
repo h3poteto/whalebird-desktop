@@ -1465,10 +1465,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@badgateway/oauth2-client@npm:^2.2.4":
-  version: 2.2.4
-  resolution: "@badgateway/oauth2-client@npm:2.2.4"
-  checksum: b9651b682020d622b6f0b2bb418a760cfc56a625a41a72cb4008e801ac7d29076ae9664eda918a6f8eda4e2e7ea45bea2deff9de3319bf7cb268f2c330b43cac
+"@badgateway/oauth2-client@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@badgateway/oauth2-client@npm:2.3.0"
+  checksum: 65b47feeefacd5a130d5cda0c8ad666d56bd2803e92617c37d6939ab5f5d49e37bebd55c7a59e3105a568545ffc940ea9ec76a5b692a6027be84ecaaa3126f48
   languageName: node
   linkType: hard
 
@@ -2700,7 +2700,7 @@ __metadata:
     eslint: ^8.55.0
     eslint-config-prettier: ^9.0.0
     eslint-plugin-react: ^7.33.2
-    megalodon: ^9.1.1
+    megalodon: 9.2.2
     next: ^12.3.4
     nextron: ^8.12.0
     postcss: ^8.4.31
@@ -3123,14 +3123,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.3":
-  version: 1.6.3
-  resolution: "axios@npm:1.6.3"
+"axios@npm:1.6.7":
+  version: 1.6.7
+  resolution: "axios@npm:1.6.7"
   dependencies:
-    follow-redirects: ^1.15.0
+    follow-redirects: ^1.15.4
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 07ef3bb83fc2dacc1ae2c97f2bbd04ef7701f5655f9037789d79ee78b698ffa50eaa8465c2017d4d3e9ce7d94cb779f730acaab32ce9036d0a4933c1e89df4da
+  checksum: 87d4d429927d09942771f3b3a6c13580c183e31d7be0ee12f09be6d5655304996bb033d85e54be81606f4e89684df43be7bf52d14becb73a12727bf33298a082
   languageName: node
   linkType: hard
 
@@ -4628,13 +4628,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.0":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
+"follow-redirects@npm:^1.15.4":
+  version: 1.15.5
+  resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
+  checksum: 5ca49b5ce6f44338cbfc3546823357e7a70813cecc9b7b768158a1d32c1e62e7407c944402a918ea8c38ae2e78266312d617dc68783fac502cbb55e1047b34ec
   languageName: node
   linkType: hard
 
@@ -5997,21 +5997,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"megalodon@npm:^9.1.1":
-  version: 9.1.2
-  resolution: "megalodon@npm:9.1.2"
+"megalodon@npm:9.2.2":
+  version: 9.2.2
+  resolution: "megalodon@npm:9.2.2"
   dependencies:
-    "@badgateway/oauth2-client": ^2.2.4
+    "@badgateway/oauth2-client": ^2.3.0
     "@types/ws": ^8.5.10
-    axios: 1.6.3
+    axios: 1.6.7
     dayjs: ^1.11.10
     events: ^3.3.0
     form-data: ^4.0.0
     isomorphic-ws: ^5.0.0
     object-assign-deep: ^0.4.0
     uuid: ^9.0.1
-    ws: 8.14.2
-  checksum: 9c91ca473690655376517e1f6bd1f8d00aba457e683104c4d5f41dd8272e80a042e4d6d793bd55bd0fab5177e794a073f3292208048a5fa3b876835eb56c7a19
+    ws: 8.16.0
+  checksum: d527d74e6bce72a07918354eb01f36bc9212b5740ee8e31ab9be0862fd9b4f5154073f1a3fbff153f2063fa7827928067fd5d59f59fda3cb8ccff0a4f96f443f
   languageName: node
   linkType: hard
 
@@ -8503,9 +8503,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.14.2":
-  version: 8.14.2
-  resolution: "ws@npm:8.14.2"
+"ws@npm:8.16.0":
+  version: 8.16.0
+  resolution: "ws@npm:8.16.0"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -8514,7 +8514,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 3ca0dad26e8cc6515ff392b622a1467430814c463b3368b0258e33696b1d4bed7510bc7030f7b72838b9fdeb8dbd8839cbf808367d6aae2e1d668ce741d4308b
+  checksum: feb3eecd2bae82fa8a8beef800290ce437d8b8063bdc69712725f21aef77c49cb2ff45c6e5e7fce622248f9c7abaee506bae0a9064067ffd6935460c7357321b
   languageName: node
   linkType: hard
 
