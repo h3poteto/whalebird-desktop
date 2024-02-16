@@ -1,5 +1,5 @@
 {
-  "@badgateway/oauth2-client@2.2.4": {
+  "@badgateway/oauth2-client@2.3.0": {
     "licenses": "MIT",
     "repository": "https://github.com/badgateway/oauth2-client",
     "publisher": "Evert Pot",
@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.11.8": {
+  "@types/node@20.11.13": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -203,7 +203,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.0.0": {
+  "Whalebird@6.0.1": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -249,7 +249,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/atomically",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/atomically/LICENSE"
   },
-  "axios@1.6.3": {
+  "axios@1.6.7": {
     "licenses": "MIT",
     "repository": "https://github.com/axios/axios",
     "publisher": "Matt Zabriskie",
@@ -458,7 +458,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/find-up",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/find-up/license"
   },
-  "follow-redirects@1.15.3": {
+  "follow-redirects@1.15.5": {
     "licenses": "MIT",
     "repository": "https://github.com/follow-redirects/follow-redirects",
     "publisher": "Ruben Verborgh",
@@ -597,7 +597,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects/LICENSE"
   },
-  "megalodon@9.1.2": {
+  "megalodon@9.2.2": {
     "licenses": "MIT",
     "repository": "https://github.com/h3poteto/megalodon",
     "publisher": "h3poteto",
@@ -808,7 +808,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-is",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-is/LICENSE"
   },
-  "react-virtuoso@4.6.2": {
+  "react-virtuoso@4.6.3": {
     "licenses": "MIT",
     "repository": "https://github.com/petyosi/react-virtuoso",
     "publisher": "Petyo Ivanov",
@@ -923,7 +923,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid/LICENSE.md"
   },
-  "ws@8.14.2": {
+  "ws@8.16.0": {
     "licenses": "MIT",
     "repository": "https://github.com/websockets/ws",
     "publisher": "Einar Otto Stangvik",
