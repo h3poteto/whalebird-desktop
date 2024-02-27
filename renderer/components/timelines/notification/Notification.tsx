@@ -10,6 +10,7 @@ type Props = {
   client: MegalodonInterface
   onRefresh: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
+  filters: Array<Entity.Filter>
 }
 
 export default function Notification(props: Props) {
@@ -23,6 +24,7 @@ export default function Notification(props: Props) {
             status={props.notification.status}
             onRefresh={props.onRefresh}
             openMedia={props.openMedia}
+            filters={props.filters}
           />
         )
       } else {

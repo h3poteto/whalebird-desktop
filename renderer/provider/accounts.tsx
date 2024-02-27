@@ -64,15 +64,19 @@ export const AccountsProvider: React.FC<Props> = ({ children }) => {
     const client = generator(account.sns, account.url, account.access_token, 'Whalebird')
     const instance = await client.getInstance()
     const notifications = (await client.getNotifications()).data
-    const res = await client.getMarkers(['notifications'])
-    const marker = res.data as Entity.Marker
-    if (marker.notifications) {
-      const count = unreadCount(marker.notifications, notifications)
-      setUnreads(current =>
-        Object.assign({}, current, {
-          [account.id?.toString()]: count
-        })
-      )
+    try {
+      const res = await client.getMarkers(['notifications'])
+      const marker = res.data as Entity.Marker
+      if (marker.notifications) {
+        const count = unreadCount(marker.notifications, notifications)
+        setUnreads(current =>
+          Object.assign({}, current, {
+            [account.id?.toString()]: count
+          })
+        )
+      }
+    } catch (err) {
+      console.error(err)
     }
 
     const ws = generator(account.sns, instance.data.urls.streaming_api, account.access_token, 'Whalebird')

@@ -26,6 +26,7 @@ export default function Timeline(props: Props) {
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [composeHeight, setComposeHeight] = useState(120)
   const [list, setList] = useState<Entity.List | null>(null)
+  const [filters, setFilters] = useState<Array<Entity.Filter>>([])
 
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -50,6 +51,8 @@ export default function Timeline(props: Props) {
 
   useEffect(() => {
     const f = async () => {
+      const f = await loadFilter(props.timeline, props.client)
+      setFilters(f)
       const res = await loadTimeline(props.timeline, props.client)
       setStatuses(res)
       const instance = await props.client.getInstance()
@@ -105,6 +108,24 @@ export default function Timeline(props: Props) {
       }
     }
   }, [props.timeline, props.client, props.account])
+
+  const loadFilter = async (tl: string, client: MegalodonInterface): Promise<Array<Entity.Filter>> => {
+    const res = await client.getFilters()
+    let context = 'home'
+    switch (tl) {
+      case 'home':
+        context = 'home'
+        break
+      case 'local':
+      case 'public':
+        context = 'public'
+        break
+      default:
+        context = 'home'
+        break
+    }
+    return res.data.filter(f => f.context.includes(context))
+  }
 
   const loadTimeline = async (tl: string, client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Status>> => {
     let options = { limit: 30 }
@@ -223,6 +244,7 @@ export default function Timeline(props: Props) {
                   key={status.id}
                   onRefresh={status => setStatuses(current => updateStatus(current, status))}
                   openMedia={media => props.setAttachment(media)}
+                  filters={filters}
                 />
               )}
             />
