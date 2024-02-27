@@ -20,6 +20,8 @@
       "hide_media": "Hide media",
       "report": "Report {user}",
       "open_original": "Open original page",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway",
       "actions": {
         "reply": "Reply",
         "reblog": "reblog",

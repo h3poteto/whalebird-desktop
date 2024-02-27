@@ -20,6 +20,8 @@
       "hide_media": "Ocultar conteúdo",
       "report": "Denunciar {user}",
       "open_original": "Abrir a página original",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway",
       "actions": {
         "reply": "Responder",
         "reblog": "reblog",

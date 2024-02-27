@@ -20,6 +20,8 @@
       "hide_media": "メディアを隠す",
       "report": "{user} を通報",
       "open_original": "元のページを開く",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway",
       "actions": {
         "reply": "返信",
         "reblog": "ブースト",
