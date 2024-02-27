@@ -19,11 +19,13 @@ type Props = {
   client: MegalodonInterface
   onRefresh: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
+  filters: Array<Entity.Filter>
 }
 
 export default function Status(props: Props) {
   const status = originalStatus(props.status)
   const [spoilered, setSpoilered] = useState(status.spoiler_text.length > 0)
+  const [ignoreFilter, setIgnoreFilter] = useState(false)
   const router = useRouter()
   const { formatMessage } = useIntl()
 
@@ -69,6 +71,20 @@ export default function Status(props: Props) {
       e.preventDefault()
       e.stopPropagation()
     }
+  }
+
+  if (
+    !ignoreFilter &&
+    props.filters.map(f => f.phrase).filter(keyword => props.status.content.toLowerCase().includes(keyword.toLowerCase())).length > 0
+  ) {
+    return (
+      <div className="border-b mr-2 py-2 text-center">
+        <FormattedMessage id="timeline.status.filtered" />
+        <span className="text-blue-700 cursor-pointer pl-4" onClick={() => setIgnoreFilter(true)}>
+          <FormattedMessage id="timeline.status.show_anyway" />
+        </span>
+      </div>
+    )
   }
 
   return (

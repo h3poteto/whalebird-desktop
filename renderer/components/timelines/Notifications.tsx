@@ -27,6 +27,7 @@ export default function Notifications(props: Props) {
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [marker, setMarker] = useState<Marker | null>(null)
   const [pleromaUnreads, setPleromaUnreads] = useState<Array<string>>([])
+  const [filters, setFilters] = useState<Array<Entity.Filter>>([])
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const streaming = useRef<WebSocketInterface | null>(null)
@@ -37,6 +38,8 @@ export default function Notifications(props: Props) {
 
   useEffect(() => {
     const f = async () => {
+      const f = await loadFilter(props.client)
+      setFilters(f)
       const res = await loadNotifications(props.client)
       setNotifications(res)
       const instance = await props.client.getInstance()
@@ -79,6 +82,11 @@ export default function Notifications(props: Props) {
       setPleromaUnreads(u)
     }
   }, [marker, unreadNotifications, notifications])
+
+  const loadFilter = async (client: MegalodonInterface): Promise<Array<Entity.Filter>> => {
+    const res = await client.getFilters()
+    return res.data.filter(f => f.context.includes('notifications'))
+  }
 
   const loadNotifications = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Notification>> => {
     let options = { limit: 30 }
@@ -209,6 +217,7 @@ export default function Notifications(props: Props) {
                       onRefresh={updateStatus}
                       key={notification.id}
                       openMedia={media => props.setAttachment(media)}
+                      filters={filters}
                     />
                   </div>
                 )

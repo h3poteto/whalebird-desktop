@@ -43,6 +43,7 @@ export default function Thread(props: Props) {
             key={status.id}
             onRefresh={() => {}}
             openMedia={props.openMedia}
+            filters={[]}
           />
         )}
       />

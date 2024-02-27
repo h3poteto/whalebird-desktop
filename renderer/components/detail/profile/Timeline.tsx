@@ -50,6 +50,7 @@ export default function Timeline(props: Props) {
           key={index}
           onRefresh={status => setStatuses(current => updateStatus(current, status))}
           openMedia={props.openMedia}
+          filters={[]}
         />
       ))}
     </>

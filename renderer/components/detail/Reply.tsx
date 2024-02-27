@@ -59,6 +59,7 @@ export default function Reply(props: Props) {
             key={status.id}
             onRefresh={() => {}}
             openMedia={props.openMedia}
+            filters={[]}
           />
         )}
       />
