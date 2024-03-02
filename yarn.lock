@@ -1367,13 +1367,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime-corejs3@npm:7.23.9, @babel/runtime-corejs3@npm:^7.23.2":
+"@babel/runtime-corejs3@npm:7.23.9":
   version: 7.23.9
   resolution: "@babel/runtime-corejs3@npm:7.23.9"
   dependencies:
     core-js-pure: ^3.30.2
     regenerator-runtime: ^0.14.0
   checksum: 715d916b6cf60013597aa9a5823fd04a9c6cc6ba6221bb8611e76c369cbf1b4baf1d0ad63b6522736593a38e89a6502213a38f57a9c24e5586628e930c4fd52c
+  languageName: node
+  linkType: hard
+
+"@babel/runtime-corejs3@npm:^7.23.2":
+  version: 7.24.0
+  resolution: "@babel/runtime-corejs3@npm:7.24.0"
+  dependencies:
+    core-js-pure: ^3.30.2
+    regenerator-runtime: ^0.14.0
+  checksum: cd4f2cde0878c911b2eeebf1cb48df819c862492da163bb9001ba690c82e9addd1d14087a8b0dd87fb1da2d916fa3b85d9a8cece4d46f8e5c51d734acda5a8bd
   languageName: node
   linkType: hard
 
