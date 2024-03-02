@@ -193,8 +193,8 @@ export default function New(props: NewProps) {
                     </Button>
                   </form>
                 ) : (
-                  <div className="text-center">
-                    <Spinner />
+                  <div className="text-center pt-2">
+                    <Spinner className="m-auto" />
                   </div>
                 )}
               </>
