@@ -104,6 +104,11 @@ export default function Compose(props: Props) {
   const post = async () => {
     if (body.length === 0) return
     let options = { visibility: visibility }
+    if (props.in_reply_to) {
+      options = Object.assign({}, options, {
+        in_reply_to_id: props.in_reply_to.id
+      })
+    }
     if (cw) {
       options = Object.assign({}, options, {
         spoiler_text: spoiler
