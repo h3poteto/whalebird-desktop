@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.11.13": {
+  "@types/node@20.11.24": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -333,7 +333,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream/License"
   },
-  "dexie@3.2.4": {
+  "dexie@3.2.5": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/dfahlander/Dexie.js",
     "publisher": "David Fahlander",
@@ -565,6 +565,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/json-schema-typed",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/json-schema-typed/LICENSE"
   },
+  "karma-safari-launcher@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/karma-runner/karma-safari-launcher",
+    "publisher": "Vojta Jina",
+    "email": "vojta.jina@gmail.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/karma-safari-launcher",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/karma-safari-launcher/LICENSE"
+  },
   "locate-path@3.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/sindresorhus/locate-path",
@@ -736,7 +744,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/popmotion",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/popmotion/LICENSE.md"
   },
-  "postcss@8.4.33": {
+  "postcss@8.4.35": {
     "licenses": "MIT",
     "repository": "https://github.com/postcss/postcss",
     "publisher": "Andrey Sitnik",
@@ -780,7 +788,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom/LICENSE"
   },
-  "react-hotkeys-hook@4.4.4": {
+  "react-hotkeys-hook@4.5.0": {
     "licenses": "MIT",
     "repository": "https://github.com/JohannesKlauss/react-keymap-hook",
     "publisher": "Johannes Klauss",
@@ -830,7 +838,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/require-from-string",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/require-from-string/license"
   },
-  "sanitize-html@2.11.0": {
+  "sanitize-html@2.12.1": {
     "licenses": "MIT",
     "repository": "https://github.com/apostrophecms/sanitize-html",
     "publisher": "Apostrophe Technologies, Inc.",
