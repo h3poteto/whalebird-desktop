@@ -7,13 +7,16 @@
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
+    "dev:web": "next dev renderer",
     "build": "nextron build",
+    "build:web": "cd renderer && next build",
     "build:mas": "nextron build --config ./electron-builder.mas.yml",
-    "package:appx2": "nextron build --win --x64 && electron-windows-store --assets ./resources/icons --input-directory ./dist/win-unpacked --output-directory ./dist/appx --package-name Whalebird --package-display-name Whalebird --package-version 6.0.3.0 --publisher-display-name h3poteto --identity-name 45610h3poteto.Whalebird",
+    "build:appx2": "nextron build --win --x64 && electron-windows-store --assets ./resources/icons --input-directory ./dist/win-unpacked --output-directory ./dist/appx --package-name Whalebird --package-display-name Whalebird --package-version 6.0.3.0 --publisher-display-name h3poteto --identity-name 45610h3poteto.Whalebird",
     "postinstall": "electron-builder install-app-deps",
     "typecheck": "tsc -p renderer --noEmit && tsc -p main --noEmit",
     "lint": "eslint renderer --ext ts,tsx",
-    "thirdparty": "license-checker --production --json > renderer/thirdparty.json"
+    "thirdparty": "license-checker --production --json > renderer/thirdparty.json",
+    "start:web": "cd renderer && next start"
   },
   "dependencies": {
     "@emoji-mart/react": "^1.1.1",
