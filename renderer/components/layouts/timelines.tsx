@@ -4,7 +4,7 @@ import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaUsers } from 'react-icons/fa6'
+import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaStar, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import Jump from '../Jump'
 import { useUnreads } from '@/provider/unreads'
@@ -76,6 +76,12 @@ export default function Layout({ children }: LayoutProps) {
       title: formatMessage({ id: 'timeline.public' }),
       icon: <FaGlobe />,
       path: `/accounts/${router.query.id}/public`
+    },
+    {
+      id: 'favourites',
+      title: formatMessage({ id: 'timeline.favourites' }),
+      icon: <FaStar />,
+      path: `/accounts/${router.query.id}/favourites`
     },
     {
       id: 'bookmarks',
