@@ -204,11 +204,18 @@ export default function Timeline(props: Props) {
     return 'timeline'
   }
 
+  const backToTop = () => {
+    scrollerRef.current.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <div className="flex timeline-wrapper">
       <section className={`h-full ${timelineClass()}`}>
         <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
-          <div className="text-lg font-bold">
+          <div className="text-lg font-bold cursor-pointer" onClick={() => backToTop()}>
             {props.timeline.match(/list_(\d+)/) ? <>{list && list.title}</> : <FormattedMessage id={`timeline.${props.timeline}`} />}
           </div>
           <div className="w-64 text-xs">
