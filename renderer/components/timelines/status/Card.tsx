@@ -1,3 +1,4 @@
+import { invoke } from '@/utils/invoke'
 import { Entity } from 'megalodon'
 
 type Props = {
@@ -6,7 +7,7 @@ type Props = {
 
 export default function Card(props: Props) {
   const openCard = () => {
-    global.ipc.invoke('open-browser', props.card.url)
+    invoke('open-browser', props.card.url)
   }
 
   return (

@@ -22,3 +22,6 @@ jobs:
       - name: typecheck
         run: |
           yarn run typecheck
+      - name: Build web
+        run: |
+          yarn run build:web

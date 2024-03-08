@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { db } from '@/db'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Alert, Button, Dialog, DialogBody, DialogHeader, Input, Spinner, Typography } from '@material-tailwind/react'
+import { invoke } from '@/utils/invoke'
 
 type NewProps = {
   opened: boolean
@@ -57,7 +58,7 @@ export default function New(props: NewProps) {
       return
     }
     setAppData(appData)
-    global.ipc.invoke('open-browser', appData.url)
+    invoke('open-browser', appData.url)
   }
 
   const handleDomainSubmit = useCallback(
