@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import Compose from '../compose/Compose'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Input, Spinner } from '@material-tailwind/react'
+import parse from 'parse-link-header'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -27,6 +28,7 @@ export default function Timeline(props: Props) {
   const [composeHeight, setComposeHeight] = useState(120)
   const [list, setList] = useState<Entity.List | null>(null)
   const [filters, setFilters] = useState<Array<Entity.Filter>>([])
+  const [nextMaxId, setNextMaxId] = useState<string | null>(null)
 
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -147,11 +149,18 @@ export default function Timeline(props: Props) {
       }
       case 'favourites': {
         const res = await client.getFavourites(options)
-        // TODO: handle next_id in link header to get more posts
+        const link = parse(res.headers.link)
+        if (link !== null && link.next) {
+          setNextMaxId(link.next.max_id)
+        }
         return res.data
       }
       case 'bookmarks': {
         const res = await client.getBookmarks(options)
+        const link = parse(res.headers.link)
+        if (link !== null && link.next) {
+          setNextMaxId(link.next.max_id)
+        }
         return res.data
       }
       default: {
@@ -190,11 +199,23 @@ export default function Timeline(props: Props) {
 
   const loadMore = useCallback(async () => {
     console.debug('appending')
-    const maxId = statuses[statuses.length - 1].id
+    let maxId = null
+    switch (props.timeline) {
+      case 'favourites':
+      case 'bookmarks':
+        if (!nextMaxId) {
+          return
+        }
+        maxId = nextMaxId
+        break
+      default:
+        maxId = statuses[statuses.length - 1].id
+        break
+    }
 
     const append = await loadTimeline(props.timeline, props.client, maxId)
     setStatuses(last => [...last, ...append])
-  }, [props.client, statuses, setStatuses])
+  }, [props.client, statuses, setStatuses, nextMaxId])
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
