@@ -7,6 +7,7 @@ import { Account } from '@/db'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { IconButton, List, ListItem, Popover, PopoverContent, PopoverHandler } from '@material-tailwind/react'
 import { useState } from 'react'
+import { invoke } from '@/utils/invoke'
 
 type Props = {
   status: Entity.Status
@@ -60,7 +61,7 @@ export default function Actions(props: Props) {
 
   const original = () => {
     setPopoverDetail(false)
-    global.ipc.invoke('open-browser', props.status.url)
+    invoke('open-browser', props.status.url)
   }
 
   const report = () => {

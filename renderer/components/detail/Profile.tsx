@@ -24,6 +24,7 @@ import {
   TabsHeader
 } from '@material-tailwind/react'
 import { domainFromAcct } from '@/utils/domain'
+import { invoke } from '@/utils/invoke'
 
 type Props = {
   client: MegalodonInterface
@@ -67,7 +68,7 @@ export default function Profile(props: Props) {
   }
 
   const openOriginal = async (url: string) => {
-    global.ipc.invoke('open-browser', url)
+    invoke('open-browser', url)
   }
 
   const block = async () => {
@@ -115,7 +116,7 @@ export default function Profile(props: Props) {
   const profileClicked: MouseEventHandler<HTMLDivElement> = async e => {
     const url = findLink(e.target as HTMLElement, 'profile')
     if (url) {
-      global.ipc.invoke('open-browser', url)
+      invoke('open-browser', url)
       e.preventDefault()
       e.stopPropagation()
     }

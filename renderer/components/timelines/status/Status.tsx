@@ -12,6 +12,7 @@ import { MouseEventHandler, useState } from 'react'
 import { findAccount, findLink, ParsedAccount, accountMatch, findTag } from '@/utils/statusParser'
 import { Account } from '@/db'
 import { Avatar } from '@material-tailwind/react'
+import { invoke } from '@/utils/invoke'
 
 type Props = {
   status: Entity.Status
@@ -67,7 +68,7 @@ export default function Status(props: Props) {
 
     const url = findLink(e.target as HTMLElement, 'status-body')
     if (url) {
-      global.ipc.invoke('open-browser', url)
+      invoke('open-browser', url)
       e.preventDefault()
       e.stopPropagation()
     }
