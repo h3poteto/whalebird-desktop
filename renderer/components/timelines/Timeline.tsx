@@ -73,7 +73,7 @@ export default function Timeline(props: Props) {
         }
         default: {
           const match = props.timeline.match(/list_(\d+)/)
-          if (match[1] && typeof match[1] === 'string') {
+          if (match && match[1] && typeof match[1] === 'string') {
             const res = await props.client.getList(match[1])
             streaming.current = c.listSocket(match[1])
             setList(res.data)
@@ -143,6 +143,10 @@ export default function Timeline(props: Props) {
       }
       case 'public': {
         const res = await client.getPublicTimeline(options)
+        return res.data
+      }
+      case 'bookmarks': {
+        const res = await client.getBookmarks(options)
         return res.data
       }
       default: {
