@@ -145,6 +145,11 @@ export default function Timeline(props: Props) {
         const res = await client.getPublicTimeline(options)
         return res.data
       }
+      case 'favourites': {
+        const res = await client.getFavourites(options)
+        // TODO: handle next_id in link header to get more posts
+        return res.data
+      }
       case 'bookmarks': {
         const res = await client.getBookmarks(options)
         return res.data
