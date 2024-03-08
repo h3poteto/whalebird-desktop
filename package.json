@@ -27,7 +27,7 @@
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
     "emoji-mart": "^5.5.2",
-    "megalodon": "9.2.2",
+    "megalodon": "9.2.3",
     "parse-link-header": "^2.0.0",
     "react-blurhash": "^0.3.0",
     "react-hotkeys-hook": "^4.4.1",
