@@ -4,13 +4,20 @@ import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { FaBell, FaGlobe, FaHouse, FaList, FaUsers } from 'react-icons/fa6'
+import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaUsers } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import Jump from '../Jump'
 import { useUnreads } from '@/provider/unreads'
 
 type LayoutProps = {
   children: React.ReactNode
+}
+
+export type Timeline = {
+  id: string
+  title: string
+  icon: JSX.Element
+  path: string
 }
 
 export default function Layout({ children }: LayoutProps) {
@@ -45,7 +52,7 @@ export default function Layout({ children }: LayoutProps) {
     f()
   }, [account])
 
-  const pages = [
+  const pages: Array<Timeline> = [
     {
       id: 'home',
       title: formatMessage({ id: 'timeline.home' }),
@@ -69,12 +76,18 @@ export default function Layout({ children }: LayoutProps) {
       title: formatMessage({ id: 'timeline.public' }),
       icon: <FaGlobe />,
       path: `/accounts/${router.query.id}/public`
+    },
+    {
+      id: 'bookmarks',
+      title: formatMessage({ id: 'timeline.bookmarks' }),
+      icon: <FaBookmark />,
+      path: `/accounts/${router.query.id}/bookmarks`
     }
   ]
 
   return (
     <section className="flex h-screen w-full overflow-hidden">
-      <Jump opened={openJump} close={() => setOpenJump(false)} />
+      <Jump opened={openJump} close={() => setOpenJump(false)} timelines={pages} />
       <Card className="text-blue-100 sidebar w-64 bg-blue-950 rounded-none">
         <div className="max-w-full pl-4 mt-2 mb-4 my-profile">
           <p>{account?.username}</p>

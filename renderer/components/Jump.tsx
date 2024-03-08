@@ -2,15 +2,12 @@ import { Dialog, DialogBody, Input, List, ListItem } from '@material-tailwind/re
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useIntl } from 'react-intl'
+import { Timeline } from './layouts/timelines'
 
 type Props = {
   opened: boolean
   close: () => void
-}
-
-type Timeline = {
-  title: string
-  path: string
+  timelines: Array<Timeline>
 }
 
 export default function Jump(props: Props) {
@@ -65,13 +62,8 @@ export default function Jump(props: Props) {
   }, [keyword, timelines])
 
   useEffect(() => {
-    setTimelines([
-      { title: formatMessage({ id: 'timeline.home' }), path: `/accounts/${router.query.id}/home` },
-      { title: formatMessage({ id: 'timeline.notifications' }), path: `/accounts/${router.query.id}/notifications` },
-      { title: formatMessage({ id: 'timeline.local' }), path: `/accounts/${router.query.id}/local` },
-      { title: formatMessage({ id: 'timeline.public' }), path: `/accounts/${router.query.id}/public` }
-    ])
-  }, [router.query.id])
+    setTimelines(props.timelines)
+  }, [router.query.id, props.timelines])
 
   const jump = (path: string) => {
     props.close()

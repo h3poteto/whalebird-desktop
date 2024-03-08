@@ -4,6 +4,7 @@
     "notifications": "Notifications",
     "local": "Local",
     "public": "Public",
+    "bookmarks": "Bookmarks",
     "search": "Search",
     "status": {
       "avatar": "Aavtar of {user}",
