@@ -4,6 +4,8 @@
     "notifications": "Notificações",
     "local": "Local",
     "public": "Público",
+    "favourites": "Favourites",
+    "bookmarks": "Bookmarks",
     "search": "Procurar",
     "status": {
       "avatar": "Avatar de {user}",
