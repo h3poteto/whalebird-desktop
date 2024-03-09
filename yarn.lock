@@ -2703,7 +2703,7 @@ __metadata:
     eslint: ^8.55.0
     eslint-config-prettier: ^9.0.0
     eslint-plugin-react: ^7.33.2
-    megalodon: 9.2.2
+    megalodon: 9.2.3
     next: ^12.3.4
     nextron: ^8.12.0
     parse-link-header: ^2.0.0
@@ -6466,9 +6466,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"megalodon@npm:9.2.2":
-  version: 9.2.2
-  resolution: "megalodon@npm:9.2.2"
+"megalodon@npm:9.2.3":
+  version: 9.2.3
+  resolution: "megalodon@npm:9.2.3"
   dependencies:
     "@badgateway/oauth2-client": ^2.3.0
     "@types/ws": ^8.5.10
@@ -6480,7 +6480,7 @@ __metadata:
     object-assign-deep: ^0.4.0
     uuid: ^9.0.1
     ws: 8.16.0
-  checksum: d527d74e6bce72a07918354eb01f36bc9212b5740ee8e31ab9be0862fd9b4f5154073f1a3fbff153f2063fa7827928067fd5d59f59fda3cb8ccff0a4f96f443f
+  checksum: 19a861b3b58f7bbdb6126a8981353e6fe650a2e0b302f1fc832982e7e9648749132ecb6f162408bb2c35f2601363e4adad2964f55d3076a6ae149b47f810dbdf
   languageName: node
   linkType: hard
 
