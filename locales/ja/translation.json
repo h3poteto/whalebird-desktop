@@ -166,7 +166,8 @@
   "settings": {
     "title": "設定",
     "language": "言語",
-    "font_size": "フォントサイズ"
+    "font_size": "フォントサイズ",
+    "theme": "Color theme"
   },
   "thirdparty": {
     "title": "サードパーティのライセンス"
