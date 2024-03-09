@@ -1,6 +1,6 @@
 import { Account } from '@/db'
 import generator, { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
-import { useEffect, useState, useCallback, useRef, Dispatch, SetStateAction } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import Status from './status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -18,7 +18,7 @@ type Props = {
   timeline: string
   account: Account
   client: MegalodonInterface
-  setAttachment: Dispatch<SetStateAction<Entity.Attachment | null>>
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 export default function Timeline(props: Props) {
@@ -280,7 +280,7 @@ export default function Timeline(props: Props) {
                   status={status}
                   key={status.id}
                   onRefresh={status => setStatuses(current => updateStatus(current, status))}
-                  openMedia={media => props.setAttachment(media)}
+                  openMedia={props.openMedia}
                   filters={filters}
                 />
               )}
@@ -296,7 +296,7 @@ export default function Timeline(props: Props) {
           </div>
         </div>
       </section>
-      <Detail client={props.client} account={props.account} className="detail" openMedia={media => props.setAttachment(media)} />
+      <Detail client={props.client} account={props.account} className="detail" openMedia={props.openMedia} />
     </div>
   )
 }

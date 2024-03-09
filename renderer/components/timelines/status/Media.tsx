@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 type Props = {
   media: Array<Entity.Attachment>
   sensitive: boolean
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 export default function Media(props: Props) {
   const [sensitive, setSensitive] = useState(props.sensitive)
@@ -32,7 +32,7 @@ export default function Media(props: Props) {
             <div className="mt-2 flex flex-wrap gap-2">
               {props.media.map((media, key) => (
                 <div key={key}>
-                  <Attachment attachment={media} openMedia={() => props.openMedia(media)} />
+                  <Attachment attachment={media} openMedia={() => props.openMedia(props.media, key)} />
                 </div>
               ))}
             </div>

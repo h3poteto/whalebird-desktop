@@ -1,6 +1,6 @@
 import { Account } from '@/db'
 import generator, { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
-import { useEffect, useState, useCallback, useRef, Dispatch, SetStateAction } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Virtuoso } from 'react-virtuoso'
 import Notification from './notification/Notification'
@@ -18,7 +18,7 @@ const TIMELINE_MAX_STATUSES = 2147483647
 type Props = {
   account: Account
   client: MegalodonInterface
-  setAttachment: Dispatch<SetStateAction<Entity.Attachment | null>>
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 export default function Notifications(props: Props) {
@@ -223,7 +223,7 @@ export default function Notifications(props: Props) {
                       notification={notification}
                       onRefresh={updateStatus}
                       key={notification.id}
-                      openMedia={media => props.setAttachment(media)}
+                      openMedia={props.openMedia}
                       filters={filters}
                     />
                   </div>
@@ -237,7 +237,7 @@ export default function Notifications(props: Props) {
           )}
         </div>
       </section>
-      <Detail client={props.client} account={props.account} className="detail" openMedia={media => props.setAttachment(media)} />
+      <Detail client={props.client} account={props.account} className="detail" openMedia={props.openMedia} />
     </div>
   )
 }
