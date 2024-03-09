@@ -33,6 +33,7 @@ export default function Layout({ children }: LayoutProps) {
   const [openThirdparty, setOpenThirdparty] = useState(false)
   const [style, setStyle] = useState<CSSProperties>({})
   const [openPopover, setOpenPopover] = useState(false)
+  const [theme, setTheme] = useState('theme-blue')
 
   const { switchLang } = useContext(Context)
   const router = useRouter()
@@ -116,11 +117,15 @@ export default function Layout({ children }: LayoutProps) {
           fontSize: `${fontSize}px`
         })
       }
+      const t = localStorage.getItem('theme')
+      if (t && t.length > 0) {
+        setTheme(t)
+      }
     }
   }
 
   return (
-    <div className="app flex flex-col min-h-screen theme-blue" style={style}>
+    <div className={`app flex flex-col min-h-screen ${theme}`} style={style}>
       <main className="flex w-full box-border my-0 mx-auto min-h-screen">
         <aside className="w-16 theme-account-bg flex flex-col justify-between">
           <div>
