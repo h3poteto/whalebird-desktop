@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.11.24": {
+  "@types/node@20.11.25": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -203,7 +203,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.0.2": {
+  "Whalebird@6.0.3": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -333,7 +333,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream/License"
   },
-  "dexie@3.2.5": {
+  "dexie@3.2.6": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/dfahlander/Dexie.js",
     "publisher": "David Fahlander",
@@ -904,7 +904,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/type-fest",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/type-fest/readme.md"
   },
-  "typescript@5.3.3": {
+  "typescript@5.4.2": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/Microsoft/TypeScript",
     "publisher": "Microsoft Corp.",
