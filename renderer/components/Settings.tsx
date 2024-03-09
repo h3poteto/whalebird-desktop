@@ -32,6 +32,22 @@ const themes = [
   {
     label: 'Orange',
     value: 'theme-orange'
+  },
+  {
+    label: 'Purple',
+    value: 'theme-purple'
+  },
+  {
+    label: 'Green',
+    value: 'theme-green'
+  },
+  {
+    label: 'Brown',
+    value: 'theme-brown'
+  },
+  {
+    label: 'Gray',
+    value: 'theme-gray'
   }
 ]
 

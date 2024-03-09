@@ -185,3 +185,147 @@ a {
     @apply text-deep-orange-600;
   }
 }
+
+.theme-purple {
+  .theme-account-bg {
+    @apply bg-gradient-to-b;
+    @apply from-purple-900;
+    @apply to-purple-800;
+  }
+
+  .theme-bg {
+    @apply bg-deep-purple-900;
+  }
+
+  .theme-bg-secondary {
+    @apply bg-purple-900;
+  }
+
+  .theme-text-primary {
+    @apply text-deep-purple-100;
+  }
+
+  .theme-text-subtle {
+    @apply text-deep-purple-600;
+  }
+
+  .theme-badge {
+    @apply bg-deep-purple-600;
+  }
+
+  .theme-enabled {
+    @apply text-deep-purple-400;
+  }
+
+  .theme-enabled:hover {
+    @apply text-deep-purple-600;
+  }
+}
+
+.theme-green {
+  .theme-account-bg {
+    @apply bg-gradient-to-b;
+    @apply from-teal-900;
+    @apply to-teal-800;
+  }
+
+  .theme-bg {
+    @apply bg-green-900;
+  }
+
+  .theme-bg-secondary {
+    @apply bg-green-900;
+  }
+
+  .theme-text-primary {
+    @apply text-green-100;
+  }
+
+  .theme-text-subtle {
+    @apply text-green-600;
+  }
+
+  .theme-badge {
+    @apply bg-green-600;
+  }
+
+  .theme-enabled {
+    @apply text-green-400;
+  }
+
+  .theme-enabled:hover {
+    @apply text-green-600;
+  }
+}
+
+.theme-brown {
+  .theme-account-bg {
+    @apply bg-gradient-to-b;
+    @apply from-gray-900;
+    @apply to-gray-800;
+  }
+
+  .theme-bg {
+    @apply bg-brown-900;
+  }
+
+  .theme-bg-secondary {
+    @apply bg-brown-900;
+  }
+
+  .theme-text-primary {
+    @apply text-brown-100;
+  }
+
+  .theme-text-subtle {
+    @apply text-brown-600;
+  }
+
+  .theme-badge {
+    @apply bg-brown-600;
+  }
+
+  .theme-enabled {
+    @apply text-brown-400;
+  }
+
+  .theme-enabled:hover {
+    @apply text-brown-600;
+  }
+}
+
+.theme-gray {
+  .theme-account-bg {
+    @apply bg-gradient-to-b;
+    @apply from-gray-900;
+    @apply to-gray-800;
+  }
+
+  .theme-bg {
+    @apply bg-blue-gray-900;
+  }
+
+  .theme-bg-secondary {
+    @apply bg-blue-gray-900;
+  }
+
+  .theme-text-primary {
+    @apply text-blue-gray-100;
+  }
+
+  .theme-text-subtle {
+    @apply text-blue-gray-600;
+  }
+
+  .theme-badge {
+    @apply bg-blue-gray-600;
+  }
+
+  .theme-enabled {
+    @apply text-blue-gray-400;
+  }
+
+  .theme-enabled:hover {
+    @apply text-blue-gray-600;
+  }
+}
