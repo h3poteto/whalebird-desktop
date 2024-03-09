@@ -605,7 +605,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects/LICENSE"
   },
-  "megalodon@9.2.2": {
+  "megalodon@9.2.3": {
     "licenses": "MIT",
     "repository": "https://github.com/h3poteto/megalodon",
     "publisher": "h3poteto",
@@ -703,6 +703,15 @@
     "url": "sindresorhus.com",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/p-try",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/p-try/license"
+  },
+  "parse-link-header@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/thlorenz/parse-link-header",
+    "publisher": "Thorsten Lorenz",
+    "email": "thlorenz@gmx.de",
+    "url": "http://thlorenz.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/parse-link-header",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/parse-link-header/LICENSE"
   },
   "parse-srcset@1.0.2": {
     "licenses": "MIT",
@@ -939,6 +948,14 @@
     "url": "http://2x.io",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/ws/LICENSE"
+  },
+  "xtend@4.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Raynos/xtend",
+    "publisher": "Raynos",
+    "email": "raynos2@gmail.com",
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/xtend",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/xtend/LICENSE"
   },
   "yallist@4.0.0": {
     "licenses": "ISC",
