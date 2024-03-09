@@ -24,9 +24,37 @@ const languages = [
   }
 ]
 
+const themes = [
+  {
+    label: 'Blue',
+    value: 'theme-blue'
+  },
+  {
+    label: 'Orange',
+    value: 'theme-orange'
+  },
+  {
+    label: 'Purple',
+    value: 'theme-purple'
+  },
+  {
+    label: 'Green',
+    value: 'theme-green'
+  },
+  {
+    label: 'Brown',
+    value: 'theme-brown'
+  },
+  {
+    label: 'Gray',
+    value: 'theme-gray'
+  }
+]
+
 export default function Settings(props: Props) {
   const [language, setLanguage] = useState<localeType>('en')
   const [fontSize, setFontSize] = useState<number>(16)
+  const [theme, setTheme] = useState<string>('theme-blue')
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
@@ -51,6 +79,14 @@ export default function Settings(props: Props) {
     setFontSize(parseInt(e.target.value))
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('fontSize', e.target.value)
+    }
+    props.reloadSettings()
+  }
+
+  const themeChanged = (e: string) => {
+    setTheme(e)
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('theme', e)
     }
     props.reloadSettings()
   }
@@ -83,6 +119,22 @@ export default function Settings(props: Props) {
                 {languages.map(lang => (
                   <Option key={lang.value} value={lang.value}>
                     {lang.label}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+          </div>
+          <div>
+            <div className="mb-2">
+              <Typography>
+                <FormattedMessage id="settings.theme" />
+              </Typography>
+            </div>
+            <div>
+              <Select id="theme" onChange={themeChanged} value={theme}>
+                {themes.map(t => (
+                  <Option key={t.value} value={t.value}>
+                    {t.label}
                   </Option>
                 ))}
               </Select>

@@ -46,7 +46,7 @@ export default function Detail(props: Props) {
     <>
       {target && (
         <div className={`bg-white ${props.className}`} style={props.style}>
-          <div className="bg-blue-900 text-gray-200 flex justify-between p-2 items-center" style={{ height: '44px' }}>
+          <div className="theme-bg-secondary text-gray-200 flex justify-between p-2 items-center" style={{ height: '44px' }}>
             <div className="flex gap-4 items-center">
               <button className="text-lg" title={formatMessage({ id: 'detail.back' })}>
                 <FaChevronLeft onClick={back} />

@@ -349,12 +349,7 @@ export default function Compose(props: Props) {
           </Popover>
 
           {cw ? (
-            <IconButton
-              variant="text"
-              size="sm"
-              className="text-blue-400 hover:text-blue-600 leading-4 text-base"
-              onClick={() => setCW(false)}
-            >
+            <IconButton variant="text" size="sm" className="theme-enabled leading-4 text-base" onClick={() => setCW(false)}>
               CW
             </IconButton>
           ) : (

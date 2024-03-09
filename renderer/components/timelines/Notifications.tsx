@@ -183,7 +183,7 @@ export default function Notifications(props: Props) {
   return (
     <div className="flex timeline-wrapper">
       <section className={`h-full ${timelineClass()}`}>
-        <div className="w-full bg-blue-950 text-blue-100 p-2 flex justify-between">
+        <div className="w-full theme-bg theme-text-primary p-2 flex justify-between">
           <div className="text-lg font-bold cursor-pointer" onClick={() => backToTop()}>
             <FormattedMessage id="timeline.notifications" />
           </div>

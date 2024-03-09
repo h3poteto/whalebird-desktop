@@ -94,7 +94,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <section className="flex h-screen w-full overflow-hidden">
       <Jump opened={openJump} close={() => setOpenJump(false)} timelines={pages} />
-      <Card className="text-blue-100 sidebar w-64 bg-blue-950 rounded-none">
+      <Card className="theme-text-primary sidebar w-64 theme-bg rounded-none">
         <div className="max-w-full pl-4 mt-2 mb-4 my-profile">
           <p>{account?.username}</p>
           <p>@{account?.domain}</p>
@@ -105,7 +105,7 @@ export default function Layout({ children }: LayoutProps) {
               key={page.id}
               selected={router.asPath.includes(page.path)}
               onClick={() => router.push(page.path)}
-              className="sidebar-menu-item text-blue-100 overflow-hidden whitespace-nowrap"
+              className="sidebar-menu-item theme-text-primary overflow-hidden whitespace-nowrap"
               title={page.title}
             >
               <ListItemPrefix>{page.icon}</ListItemPrefix>
@@ -116,7 +116,7 @@ export default function Layout({ children }: LayoutProps) {
                     value={unreads[account.id.toString()]}
                     variant="ghost"
                     size="sm"
-                    className="rounded-full text-blue-100 bg-blue-600"
+                    className="rounded-full theme-text-primary theme-badge"
                   />
                 </ListItemSuffix>
               ) : null}
@@ -127,7 +127,7 @@ export default function Layout({ children }: LayoutProps) {
               key={list.id}
               selected={router.asPath.includes(`list_${list.id}`)}
               onClick={() => router.push({ pathname: `/accounts/${router.query.id}/list_${list.id}` })}
-              className="sidebar-menu-item text-blue-100 overflow-hidden whitespace-nowrap"
+              className="sidebar-menu-item theme-text-primary overflow-hidden whitespace-nowrap"
               title={list.title}
             >
               <ListItemPrefix>

@@ -81,7 +81,7 @@ export default function Status(props: Props) {
     return (
       <div className="border-b mr-2 py-2 text-center">
         <FormattedMessage id="timeline.status.filtered" />
-        <span className="text-blue-700 cursor-pointer pl-4" onClick={() => setIgnoreFilter(true)}>
+        <span className="theme-text-subtle cursor-pointer pl-4" onClick={() => setIgnoreFilter(true)}>
           <FormattedMessage id="timeline.status.show_anyway" />
         </span>
       </div>
