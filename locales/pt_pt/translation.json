@@ -166,7 +166,8 @@
   "settings": {
     "title": "Definições",
     "language": "Idioma",
-    "font_size": "Tamanho da fonte de letra"
+    "font_size": "Tamanho da fonte de letra",
+    "theme": "Color theme"
   },
   "thirdparty": {
     "title": "Licenças de terceiros"
