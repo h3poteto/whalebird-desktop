@@ -2279,6 +2279,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/parse-link-header@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@types/parse-link-header@npm:2.0.3"
+  checksum: 600093cd66fcc3841e799837581ba9d33ae49c299c00ad3d55791a90f5baa876511cf39aecbf06bc07c60eb7ccd6766ecc8feff52ecae241621f7b1e6c6cdcbc
+  languageName: node
+  linkType: hard
+
 "@types/plist@npm:^3.0.1":
   version: 3.0.5
   resolution: "@types/plist@npm:3.0.5"
@@ -2686,6 +2693,7 @@ __metadata:
     "@emoji-mart/react": ^1.1.1
     "@material-tailwind/react": ^2.1.8
     "@types/node": ^20.0.0
+    "@types/parse-link-header": ^2.0.3
     "@types/react": 18.2.19
     "@types/sanitize-html": ^2.9.4
     "@typescript-eslint/eslint-plugin": ^7.0.0
