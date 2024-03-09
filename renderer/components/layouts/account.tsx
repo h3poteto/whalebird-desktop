@@ -100,7 +100,7 @@ export default function Layout({ children }: LayoutProps) {
 
   const selectedClassName = (id: number) => {
     if (id === parseInt(router.query.id as string)) {
-      return 'bg-blue-950 cursor-pointer text-center'
+      return 'theme-bg cursor-pointer text-center'
     } else {
       return 'cursor-pointer text-center'
     }
@@ -120,9 +120,9 @@ export default function Layout({ children }: LayoutProps) {
   }
 
   return (
-    <div className="app flex flex-col min-h-screen" style={style}>
+    <div className="app flex flex-col min-h-screen theme-blue" style={style}>
       <main className="flex w-full box-border my-0 mx-auto min-h-screen">
-        <aside className="w-16 bg-gray-900 flex flex-col justify-between">
+        <aside className="w-16 theme-account-bg flex flex-col justify-between">
           <div>
             {accounts.map(account => (
               <div key={account.id} className={selectedClassName(account.id)}>

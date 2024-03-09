@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app'
-import '../app.css'
+import '../app.scss'
 import AccountLayout from '@/components/layouts/account'
 import TimelineLayout from '@/components/layouts/timelines'
 import { IntlProviderWrapper } from '@/provider/i18n'

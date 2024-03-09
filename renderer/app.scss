@@ -112,3 +112,76 @@ a {
  a:hover {
   text-decoration: underline;
 }
+
+.theme-blue {
+  .theme-account-bg {
+    @apply bg-gradient-to-b;
+    @apply from-indigo-800;
+    @apply to-indigo-700;
+  }
+
+  .theme-bg {
+    @apply bg-blue-950;
+  }
+
+  .theme-bg-secondary {
+    @apply bg-blue-900;
+  }
+
+  .theme-text-primary {
+    @apply text-blue-100;
+  }
+
+  .theme-text-subtle {
+    @apply text-blue-600;
+  }
+
+  .theme-badge {
+    @apply bg-blue-600;
+  }
+
+  .theme-enabled {
+    @apply text-blue-400;
+  }
+
+  .theme-enabled:hover {
+    @apply text-blue-600;
+  }
+
+}
+
+.theme-orange {
+  .theme-account-bg {
+    @apply bg-gradient-to-b;
+    @apply from-orange-900;
+    @apply to-orange-800;
+  }
+
+  .theme-bg {
+    @apply bg-deep-orange-900;
+  }
+
+  .theme-bg-secondary {
+    @apply bg-orange-900;
+  }
+
+  .theme-text-primary {
+    @apply text-deep-orange-100;
+  }
+
+  .theme-text-subtle {
+    @apply text-deep-orange-600;
+  }
+
+  .theme-badge {
+    @apply bg-deep-orange-600;
+  }
+
+  .theme-enabled {
+    @apply text-deep-orange-400;
+  }
+
+  .theme-enabled:hover {
+    @apply text-deep-orange-600;
+  }
+}
