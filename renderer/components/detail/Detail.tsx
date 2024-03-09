@@ -12,7 +12,7 @@ import { useIntl } from 'react-intl'
 type Props = {
   client: MegalodonInterface
   account: Account
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 } & HTMLAttributes<HTMLElement>
 
 export default function Detail(props: Props) {

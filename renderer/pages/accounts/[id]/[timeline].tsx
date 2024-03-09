@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import Timeline from '@/components/timelines/Timeline'
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import { Account, db } from '@/db'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import Notifications from '@/components/timelines/Notifications'
@@ -11,8 +11,9 @@ export default function Page() {
   const router = useRouter()
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>(null)
-  const [attachment, setAttachment] = useState<Entity.Attachment | null>(null)
   const [report, setReport] = useState<Entity.Status | null>(null)
+
+  const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
 
   useEffect(() => {
     if (router.query.id) {
@@ -60,12 +61,55 @@ export default function Page() {
   return (
     <>
       {(router.query.timeline as string) === 'notifications' ? (
-        <Notifications account={account} client={client} setAttachment={setAttachment} />
+        <Notifications
+          account={account}
+          client={client}
+          openMedia={(media: Array<Entity.Attachment>, index: number) =>
+            dispatch({ target: 'media', value: true, object: media, index: index })
+          }
+        />
       ) : (
-        <Timeline timeline={router.query.timeline as string} account={account} client={client} setAttachment={setAttachment} />
+        <Timeline
+          timeline={router.query.timeline as string}
+          account={account}
+          client={client}
+          openMedia={(media: Array<Entity.Attachment>, index: number) =>
+            dispatch({ target: 'media', value: true, object: media, index: index })
+          }
+        />
       )}
-      <Media open={attachment !== null} close={() => setAttachment(null)} attachment={attachment} />
+      <Media
+        open={modalState.media.opened}
+        close={() => dispatch({ target: 'media', value: false, object: [], index: -1 })}
+        media={modalState.media.object}
+        index={modalState.media.index}
+      />
       {report && <Report open={report !== null} close={closeReport} status={report} client={client} />}
     </>
   )
+}
+
+type ModalState = {
+  media: {
+    opened: boolean
+    object: Array<Entity.Attachment>
+    index: number
+  }
+}
+
+const initialModalState: ModalState = {
+  media: {
+    opened: false,
+    object: [],
+    index: 0
+  }
+}
+
+const modalReducer = (current: ModalState, action: { target: string; value: boolean; object?: any; index?: number }): ModalState => {
+  switch (action.target) {
+    case 'media':
+      return { ...current, media: { opened: action.value, object: action.object, index: action.index } }
+    default:
+      return current
+  }
 }

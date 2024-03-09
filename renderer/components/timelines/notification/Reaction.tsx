@@ -15,7 +15,7 @@ type Props = {
   notification: Entity.Notification
   client: MegalodonInterface
   onRefresh: (status: Entity.Status) => void
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 export default function Reaction(props: Props) {

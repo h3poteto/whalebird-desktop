@@ -9,7 +9,7 @@ type Props = {
   client: MegalodonInterface
   account: Account
   status_id: string
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 export default function Reply(props: Props) {

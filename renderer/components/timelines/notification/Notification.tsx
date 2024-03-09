@@ -9,7 +9,7 @@ type Props = {
   account: Account
   client: MegalodonInterface
   onRefresh: (status: Entity.Status) => void
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
   filters: Array<Entity.Filter>
 }
 

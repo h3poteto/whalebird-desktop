@@ -8,7 +8,7 @@ type Props = {
   client: MegalodonInterface
   account: Account
   tag: string
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 export default function Tag(props: Props) {
