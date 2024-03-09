@@ -4,6 +4,8 @@
     "notifications": "通知",
     "local": "ローカル",
     "public": "連合",
+    "favourites": "Favourites",
+    "bookmarks": "Bookmarks",
     "search": "検索",
     "status": {
       "avatar": "{user} のAavtar",
