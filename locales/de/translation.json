@@ -166,7 +166,8 @@
   "settings": {
     "title": "Settings",
     "language": "Language",
-    "font_size": "Font size"
+    "font_size": "Font size",
+    "theme": "Color theme"
   },
   "thirdparty": {
     "title": "Third-party licenses"
