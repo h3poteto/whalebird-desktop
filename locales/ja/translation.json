@@ -4,8 +4,8 @@
     "notifications": "通知",
     "local": "ローカル",
     "public": "連合",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
+    "favourites": "お気に入り",
+    "bookmarks": "ブックマーク",
     "search": "検索",
     "status": {
       "avatar": "{user} のAavtar",
@@ -22,8 +22,8 @@
       "hide_media": "メディアを隠す",
       "report": "{user} を通報",
       "open_original": "元のページを開く",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway",
+      "filtered": "フィルターされました",
+      "show_anyway": "表示する",
       "actions": {
         "reply": "返信",
         "reblog": "ブースト",
@@ -167,7 +167,7 @@
     "title": "設定",
     "language": "言語",
     "font_size": "フォントサイズ",
-    "theme": "Color theme"
+    "theme": "カラーテーマ"
   },
   "thirdparty": {
     "title": "サードパーティのライセンス"
