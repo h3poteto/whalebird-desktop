@@ -1,5 +1,5 @@
 import { localeType } from '@/provider/i18n'
-import { Dialog, DialogBody, DialogHeader, Input, Option, Select, Typography } from '@material-tailwind/react'
+import { Dialog, DialogBody, DialogHeader, Input, Option, Radio, Select, Typography } from '@material-tailwind/react'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
@@ -55,6 +55,7 @@ export default function Settings(props: Props) {
   const [language, setLanguage] = useState<localeType>('en')
   const [fontSize, setFontSize] = useState<number>(16)
   const [theme, setTheme] = useState<string>('theme-blue')
+  const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
@@ -63,6 +64,12 @@ export default function Settings(props: Props) {
         setLanguage(lang as localeType)
       } else {
         setLanguage('en')
+      }
+      const dark = localStorage.getItem('color-mode')
+      if (dark === 'dark') {
+        setIsDark(true)
+      } else {
+        setIsDark(false)
       }
     }
   }, [])
@@ -87,6 +94,18 @@ export default function Settings(props: Props) {
     setTheme(e)
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('theme', e)
+    }
+    props.reloadSettings()
+  }
+
+  const modeChanged = (isDark: boolean) => {
+    setIsDark(isDark)
+    if (typeof localStorage !== 'undefined') {
+      if (isDark) {
+        localStorage.setItem('color-mode', 'dark')
+      } else {
+        localStorage.setItem('color-mode', 'light')
+      }
     }
     props.reloadSettings()
   }
@@ -122,6 +141,27 @@ export default function Settings(props: Props) {
                   </Option>
                 ))}
               </Select>
+            </div>
+          </div>
+          <div>
+            <div className="mb-2">
+              <Typography>
+                <FormattedMessage id="settings.mode" />
+              </Typography>
+            </div>
+            <div>
+              <Radio
+                name="mode"
+                label={<FormattedMessage id="settings.dark_mode" />}
+                onClick={() => modeChanged(true)}
+                defaultChecked={isDark}
+              />
+              <Radio
+                name="mode"
+                label={<FormattedMessage id="settings.light_mode" />}
+                onClick={() => modeChanged(false)}
+                defaultChecked={!isDark}
+              />
             </div>
           </div>
           <div>

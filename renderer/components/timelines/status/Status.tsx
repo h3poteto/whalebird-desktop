@@ -79,7 +79,7 @@ export default function Status(props: Props) {
     props.filters.map(f => f.phrase).filter(keyword => props.status.content.toLowerCase().includes(keyword.toLowerCase())).length > 0
   ) {
     return (
-      <div className="border-b mr-2 py-2 text-center">
+      <div className="border-b border-gray-200 dark:border-gray-800 mr-2 py-2 text-center">
         <FormattedMessage id="timeline.status.filtered" />
         <span className="theme-text-subtle cursor-pointer pl-4" onClick={() => setIgnoreFilter(true)}>
           <FormattedMessage id="timeline.status.show_anyway" />
@@ -89,7 +89,7 @@ export default function Status(props: Props) {
   }
 
   return (
-    <div className="border-b mr-2 py-1">
+    <div className="border-b border-gray-200 dark:border-gray-800 mr-2 py-1">
       {rebloggedHeader(
         props.status,
         formatMessage(
@@ -114,16 +114,16 @@ export default function Status(props: Props) {
             )}
           />
         </div>
-        <div className="text-gray-950 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
+        <div className="text-gray-950 dark:text-gray-300 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex justify-between">
             <div className="flex cursor-pointer" onClick={() => openUser(status.account.id)}>
               <span
-                className="text-gray-950 text-ellipsis break-all overflow-hidden"
+                className="text-gray-950 dark:text-gray-300 text-ellipsis break-all overflow-hidden"
                 dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }}
               ></span>
-              <span className="text-gray-600 text-ellipsis break-all overflow-hidden">@{status.account.acct}</span>
+              <span className="text-gray-600 dark:text-gray-500 text-ellipsis break-all overflow-hidden">@{status.account.acct}</span>
             </div>
-            <div className="text-gray-600 text-right cursor-pointer" onClick={openStatus}>
+            <div className="text-gray-600 dark:text-gray-500 text-right cursor-pointer" onClick={openStatus}>
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>
@@ -164,7 +164,7 @@ const originalStatus = (status: Entity.Status) => {
 const rebloggedHeader = (status: Entity.Status, alt: string) => {
   if (status.reblog && !status.quote) {
     return (
-      <div className="flex text-gray-600">
+      <div className="flex text-gray-600 dark:text-gray-500">
         <div className="grid justify-items-end pr-2" style={{ width: '56px' }}>
           <Avatar src={status.account.avatar} size="xs" variant="rounded" alt={alt} />
         </div>
