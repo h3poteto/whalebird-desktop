@@ -18,12 +18,16 @@ export default function Follow(props: Props) {
   }
 
   return (
-    <div className="border-b mr-2 py-1">
+    <div className="border-b border-gray-200 dark:border-gray-800 mr-2 py-1">
       <div className="flex items-center">
         <div style={{ width: '56px' }}>
           <FaUserPlus className="text-blue-600 w-4 mr-2 ml-auto" />
         </div>
-        <div className="cursor-pointer" style={{ width: 'calc(100% - 56px)' }} onClick={() => openUser(props.notification.account.id)}>
+        <div
+          className="cursor-pointer text-gray-950 dark:text-gray-300"
+          style={{ width: 'calc(100% - 56px)' }}
+          onClick={() => openUser(props.notification.account.id)}
+        >
           <span
             dangerouslySetInnerHTML={{
               __html: emojify(
@@ -52,12 +56,14 @@ export default function Follow(props: Props) {
         <div style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex cursor-pointer" onClick={() => openUser(props.notification.account.id)}>
             <span
-              className="text-gray-950 text-ellipsis break-all overflow-hidden"
+              className="text-gray-950 dark:text-gray-300 text-ellipsis break-all overflow-hidden"
               dangerouslySetInnerHTML={{ __html: emojify(props.notification.account.display_name, props.notification.account.emojis) }}
             ></span>
-            <span className="text-gray-600 text-ellipsis break-all overflow-hidden">@{props.notification.account.acct}</span>
+            <span className="text-gray-600 dark:text-gray-500 text-ellipsis break-all overflow-hidden">
+              @{props.notification.account.acct}
+            </span>
           </div>
-          <div className="text-gray-600">
+          <div className="text-gray-600 dark:text-gray-500">
             <FormattedMessage id="notification.follow.followers" values={{ num: props.notification.account.followers_count }} />
           </div>
         </div>

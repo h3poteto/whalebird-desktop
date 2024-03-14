@@ -124,7 +124,7 @@ export default function Settings(props: Props) {
               </Typography>
             </div>
             <div>
-              <Input type="number" value={fontSize} onChange={fontSizeChanged} />
+              <Input type="number" color="blue-gray" value={fontSize} onChange={fontSizeChanged} />
             </div>
           </div>
           <div>
@@ -134,7 +134,7 @@ export default function Settings(props: Props) {
               </Typography>
             </div>
             <div>
-              <Select id="language" onChange={languageChanged} value={language}>
+              <Select id="language" color="blue-gray" onChange={languageChanged} value={language}>
                 {languages.map(lang => (
                   <Option key={lang.value} value={lang.value}>
                     {lang.label}
@@ -152,12 +152,14 @@ export default function Settings(props: Props) {
             <div>
               <Radio
                 name="mode"
+                color="blue"
                 label={<FormattedMessage id="settings.dark_mode" />}
                 onClick={() => modeChanged(true)}
                 defaultChecked={isDark}
               />
               <Radio
                 name="mode"
+                color="blue"
                 label={<FormattedMessage id="settings.light_mode" />}
                 onClick={() => modeChanged(false)}
                 defaultChecked={!isDark}
@@ -171,7 +173,7 @@ export default function Settings(props: Props) {
               </Typography>
             </div>
             <div>
-              <Select id="theme" onChange={themeChanged} value={theme}>
+              <Select id="theme" color="blue-gray" onChange={themeChanged} value={theme}>
                 {themes.map(t => (
                   <Option key={t.value} value={t.value}>
                     {t.label}

@@ -153,7 +153,7 @@ export default function Profile(props: Props) {
                 )}
                 <Popover open={popoverDetail} handler={setPopoverDetail}>
                   <PopoverHandler>
-                    <IconButton variant="outlined" title={formatMessage({ id: 'profile.detail' })}>
+                    <IconButton variant="outlined" color="teal" title={formatMessage({ id: 'profile.detail' })}>
                       <FaEllipsisVertical />
                     </IconButton>
                   </PopoverHandler>
@@ -230,19 +230,25 @@ export default function Profile(props: Props) {
               </div>
             </div>
             <div className="pt-4">
-              <div className="font-bold" dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
-              <div className="text-gray-500">@{user.acct}</div>
+              <div
+                className="font-bold text-gray-950 dark:text-gray-300"
+                dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }}
+              />
+              <div className="text-gray-600 dark:text-gray-500">@{user.acct}</div>
               <div className="mt-4 raw-html profile" onClick={profileClicked}>
                 <span
                   dangerouslySetInnerHTML={{ __html: emojify(user.note, user.emojis) }}
-                  className="overflow-hidden break-all text-gray-800"
+                  className="overflow-hidden break-all text-gray-800 dark:text-gray-400"
                 />
               </div>
-              <div className="bg-gray-100 overflow-hidden break-all raw-html mt-2 profile" onClick={profileClicked}>
+              <div className="bg-gray-100 dark:bg-gray-800 overflow-hidden break-all raw-html mt-2 profile" onClick={profileClicked}>
                 {user.fields.map((data, index) => (
-                  <dl key={index} className="px-4 py-2 border-gray-200 border-b">
-                    <dt className="text-gray-500">{data.name}</dt>
-                    <dd className="text-gray-700" dangerouslySetInnerHTML={{ __html: emojify(data.value, user.emojis) }} />
+                  <dl key={index} className="px-4 py-2 border-gray-200 dark:border-gray-600 border-b">
+                    <dt className="text-gray-500 dark:text-gray-500">{data.name}</dt>
+                    <dd
+                      className="text-gray-700 dark:text-gray-400"
+                      dangerouslySetInnerHTML={{ __html: emojify(data.value, user.emojis) }}
+                    />
                   </dl>
                 ))}
               </div>

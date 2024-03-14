@@ -79,7 +79,7 @@ export default function Status(props: Props) {
     props.filters.map(f => f.phrase).filter(keyword => props.status.content.toLowerCase().includes(keyword.toLowerCase())).length > 0
   ) {
     return (
-      <div className="border-b border-gray-200 dark:border-gray-800 mr-2 py-2 text-center">
+      <div className="border-b border-gray-200 dark:border-gray-800 text-gray-950 dark:text-gray-300 mr-2 py-2 text-center">
         <FormattedMessage id="timeline.status.filtered" />
         <span className="theme-text-subtle cursor-pointer pl-4" onClick={() => setIgnoreFilter(true)}>
           <FormattedMessage id="timeline.status.show_anyway" />

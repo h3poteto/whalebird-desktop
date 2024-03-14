@@ -97,6 +97,19 @@
   background-color: rgb(241 245 249);
 }
 
+.dark {
+  .timeline-scrollable::-webkit-scrollbar-thumb {
+    background-color: #616161;
+    border-radius: 4px !important;
+    opacity: 0;
+  }
+
+  .timeline-scrollable::-webkit-scrollbar-track {
+    border-radius: 4px !important;
+    background-color: #424242;
+  }
+}
+
 .timeline-scrollable:hover::-webkit-scrollbar-thumb {
   opacity: 1;
 }
@@ -327,5 +340,11 @@ a {
 
   .theme-enabled:hover {
     @apply text-blue-gray-600;
+  }
+}
+
+.dark {
+  a {
+    @apply text-blue-400;
   }
 }
