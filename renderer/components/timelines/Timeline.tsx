@@ -112,21 +112,26 @@ export default function Timeline(props: Props) {
   }, [props.timeline, props.client, props.account])
 
   const loadFilter = async (tl: string, client: MegalodonInterface): Promise<Array<Entity.Filter>> => {
-    const res = await client.getFilters()
-    let context = 'home'
-    switch (tl) {
-      case 'home':
-        context = 'home'
-        break
-      case 'local':
-      case 'public':
-        context = 'public'
-        break
-      default:
-        context = 'home'
-        break
+    try {
+      const res = await client.getFilters()
+      let context = 'home'
+      switch (tl) {
+        case 'home':
+          context = 'home'
+          break
+        case 'local':
+        case 'public':
+          context = 'public'
+          break
+        default:
+          context = 'home'
+          break
+      }
+      return res.data.filter(f => f.context.includes(context))
+    } catch (e) {
+      console.error(e)
+      return []
     }
-    return res.data.filter(f => f.context.includes(context))
   }
 
   const loadTimeline = async (tl: string, client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Status>> => {
