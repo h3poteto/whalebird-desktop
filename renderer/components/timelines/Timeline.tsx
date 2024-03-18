@@ -1,5 +1,5 @@
 import { Account } from '@/db'
-import generator, { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
+import { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import Status from './status/Status'
@@ -57,27 +57,25 @@ export default function Timeline(props: Props) {
       setFilters(f)
       const res = await loadTimeline(props.timeline, props.client)
       setStatuses(res)
-      const instance = await props.client.getInstance()
-      const c = generator(props.account.sns, instance.data.urls.streaming_api, props.account.access_token, 'Whalebird')
       setList(null)
       switch (props.timeline) {
         case 'home': {
-          streaming.current = c.userSocket()
+          streaming.current = await props.client.userStreaming()
           break
         }
         case 'local': {
-          streaming.current = c.localSocket()
+          streaming.current = await props.client.localStreaming()
           break
         }
         case 'public': {
-          streaming.current = c.publicSocket()
+          streaming.current = await props.client.publicStreaming()
           break
         }
         default: {
           const match = props.timeline.match(/list_(\d+)/)
           if (match && match[1] && typeof match[1] === 'string') {
             const res = await props.client.getList(match[1])
-            streaming.current = c.listSocket(match[1])
+            streaming.current = await props.client.listStreaming(match[1])
             setList(res.data)
           }
           break
