@@ -1,5 +1,5 @@
 import { Account } from '@/db'
-import generator, { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
+import { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Virtuoso } from 'react-virtuoso'
@@ -42,10 +42,8 @@ export default function Notifications(props: Props) {
       setFilters(f)
       const res = await loadNotifications(props.client)
       setNotifications(res)
-      const instance = await props.client.getInstance()
-      const c = generator(props.account.sns, instance.data.urls.streaming_api, props.account.access_token, 'Whalebird')
       updateMarker(props.client)
-      streaming.current = c.userSocket()
+      streaming.current = await props.client.userStreaming()
       streaming.current.on('connect', () => {
         console.log('connected to notifications')
       })

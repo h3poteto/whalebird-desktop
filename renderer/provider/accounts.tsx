@@ -62,7 +62,6 @@ export const AccountsProvider: React.FC<Props> = ({ children }) => {
     if (!account.id) return
     // Start user streaming for notification
     const client = generator(account.sns, account.url, account.access_token, 'Whalebird')
-    const instance = await client.getInstance()
     const notifications = (await client.getNotifications()).data
     try {
       const res = await client.getMarkers(['notifications'])
@@ -79,8 +78,7 @@ export const AccountsProvider: React.FC<Props> = ({ children }) => {
       console.error(err)
     }
 
-    const ws = generator(account.sns, instance.data.urls.streaming_api, account.access_token, 'Whalebird')
-    const socket = ws.userSocket()
+    const socket = await client.userStreaming()
     streamings.current = Object.assign({}, streamings.current, {
       [account.id]: socket
     })
