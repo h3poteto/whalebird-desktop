@@ -80,6 +80,7 @@ export default function Jump(props: Props) {
           value={keyword}
           onChange={e => setKeyword(e.target.value)}
           size="lg"
+          color="blue-gray"
           label={formatMessage({ id: 'search.placeholder' })}
           ref={inputRef}
         />

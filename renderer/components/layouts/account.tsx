@@ -34,6 +34,7 @@ export default function Layout({ children }: LayoutProps) {
   const [style, setStyle] = useState<CSSProperties>({})
   const [openPopover, setOpenPopover] = useState(false)
   const [theme, setTheme] = useState('theme-blue')
+  const [isDark, setIsDark] = useState(false)
 
   const { switchLang } = useContext(Context)
   const router = useRouter()
@@ -68,6 +69,11 @@ export default function Layout({ children }: LayoutProps) {
       removeAll()
     }
   }, [])
+
+  useEffect(() => {
+    console.log('isDark', isDark)
+    document.body.className = isDark ? 'dark' : 'light'
+  }, [isDark])
 
   const closeNewModal = async () => {
     const acct = await db.accounts.toArray()
@@ -121,12 +127,19 @@ export default function Layout({ children }: LayoutProps) {
       if (t && t.length > 0) {
         setTheme(t)
       }
+      const dark = localStorage.getItem('color-mode')
+      console.log(dark)
+      if (dark && dark === 'dark') {
+        setIsDark(true)
+      } else {
+        setIsDark(false)
+      }
     }
   }
 
   return (
     <div className={`app flex flex-col min-h-screen ${theme}`} style={style}>
-      <main className="flex w-full box-border my-0 mx-auto min-h-screen">
+      <main className="flex w-full box-border my-0 mx-auto min-h-screen bg-white dark:bg-gray-900">
         <aside className="w-16 theme-account-bg flex flex-col justify-between">
           <div>
             {accounts.map(account => (

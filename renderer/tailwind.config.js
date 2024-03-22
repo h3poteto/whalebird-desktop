@@ -1,6 +1,7 @@
 const withMT = require('@material-tailwind/react/utils/withMT')
 
 module.exports = withMT({
+  darkMode: 'selector',
   content: ['./renderer/pages/**/*.{js,ts,jsx,tsx}', './renderer/components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {

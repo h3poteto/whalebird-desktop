@@ -1,5 +1,5 @@
 import { localeType } from '@/provider/i18n'
-import { Dialog, DialogBody, DialogHeader, Input, Option, Select, Typography } from '@material-tailwind/react'
+import { Dialog, DialogBody, DialogHeader, Input, Option, Radio, Select, Typography } from '@material-tailwind/react'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
@@ -55,6 +55,7 @@ export default function Settings(props: Props) {
   const [language, setLanguage] = useState<localeType>('en')
   const [fontSize, setFontSize] = useState<number>(16)
   const [theme, setTheme] = useState<string>('theme-blue')
+  const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
@@ -63,6 +64,12 @@ export default function Settings(props: Props) {
         setLanguage(lang as localeType)
       } else {
         setLanguage('en')
+      }
+      const dark = localStorage.getItem('color-mode')
+      if (dark === 'dark') {
+        setIsDark(true)
+      } else {
+        setIsDark(false)
       }
     }
   }, [])
@@ -91,6 +98,18 @@ export default function Settings(props: Props) {
     props.reloadSettings()
   }
 
+  const modeChanged = (isDark: boolean) => {
+    setIsDark(isDark)
+    if (typeof localStorage !== 'undefined') {
+      if (isDark) {
+        localStorage.setItem('color-mode', 'dark')
+      } else {
+        localStorage.setItem('color-mode', 'light')
+      }
+    }
+    props.reloadSettings()
+  }
+
   return (
     <Dialog open={props.opened} handler={props.close} size="sm">
       <DialogHeader>
@@ -105,7 +124,7 @@ export default function Settings(props: Props) {
               </Typography>
             </div>
             <div>
-              <Input type="number" value={fontSize} onChange={fontSizeChanged} />
+              <Input type="number" color="blue-gray" value={fontSize} onChange={fontSizeChanged} />
             </div>
           </div>
           <div>
@@ -115,7 +134,7 @@ export default function Settings(props: Props) {
               </Typography>
             </div>
             <div>
-              <Select id="language" onChange={languageChanged} value={language}>
+              <Select id="language" color="blue-gray" onChange={languageChanged} value={language}>
                 {languages.map(lang => (
                   <Option key={lang.value} value={lang.value}>
                     {lang.label}
@@ -127,11 +146,34 @@ export default function Settings(props: Props) {
           <div>
             <div className="mb-2">
               <Typography>
+                <FormattedMessage id="settings.mode" />
+              </Typography>
+            </div>
+            <div>
+              <Radio
+                name="mode"
+                color="blue"
+                label={<FormattedMessage id="settings.dark_mode" />}
+                onClick={() => modeChanged(true)}
+                defaultChecked={isDark}
+              />
+              <Radio
+                name="mode"
+                color="blue"
+                label={<FormattedMessage id="settings.light_mode" />}
+                onClick={() => modeChanged(false)}
+                defaultChecked={!isDark}
+              />
+            </div>
+          </div>
+          <div>
+            <div className="mb-2">
+              <Typography>
                 <FormattedMessage id="settings.theme" />
               </Typography>
             </div>
             <div>
-              <Select id="theme" onChange={themeChanged} value={theme}>
+              <Select id="theme" color="blue-gray" onChange={themeChanged} value={theme}>
                 {themes.map(t => (
                   <Option key={t.value} value={t.value}>
                     {t.label}

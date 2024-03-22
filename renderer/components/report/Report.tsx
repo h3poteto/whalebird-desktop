@@ -31,7 +31,7 @@ export default function Report(props: Props) {
             <Typography>
               <FormattedMessage id="report.detail" />
             </Typography>
-            <Textarea id="comment" rows={4} />
+            <Textarea id="comment" color="blue-gray" rows={4} />
           </div>
           <Button className="mt-2" onClick={submit}>
             <FormattedMessage id="report.submit" />

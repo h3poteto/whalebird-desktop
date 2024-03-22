@@ -56,8 +56,8 @@ export default function Media(props: Props) {
     <Dialog open={props.open} handler={props.close} size="lg">
       <DialogBody className="max-h-full max-w-full">
         <div className="flex">
-          <Button variant="text" onClick={previous} disabled={index < 1}>
-            <FaChevronLeft />
+          <Button variant="text" color="teal" onClick={previous} disabled={index < 1}>
+            <FaChevronLeft className="text-lg" />
           </Button>
           {props.media[index] && (
             <img
@@ -68,8 +68,8 @@ export default function Media(props: Props) {
               style={{ maxWidth: '85%' }}
             />
           )}
-          <Button variant="text" onClick={next} disabled={index >= props.media.length - 1}>
-            <FaChevronRight />
+          <Button variant="text" color="teal" onClick={next} disabled={index >= props.media.length - 1}>
+            <FaChevronRight className="text-lg" />
           </Button>
         </div>
       </DialogBody>

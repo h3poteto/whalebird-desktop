@@ -236,7 +236,7 @@ export default function Compose(props: Props) {
           <Input
             id="spoiler"
             type="text"
-            color="blue"
+            color="blue-gray"
             containerProps={{ className: 'mb-2' }}
             value={spoiler}
             onChange={ev => setSpoiler(ev.target.value)}
@@ -246,7 +246,7 @@ export default function Compose(props: Props) {
         <div className="relative">
           <Textarea
             id="body"
-            color="blue"
+            color="blue-gray"
             className="resize-none focus:ring-0"
             placeholder={formatMessage({ id: 'compose.placeholder' })}
             rows={3}
@@ -481,7 +481,7 @@ const PollForm = (props: PollProps) => {
           )}
           <Input
             type="text"
-            color="blue"
+            color="blue-gray"
             value={option}
             onChange={ev => updateOption(index, ev.target.value)}
             containerProps={{ className: 'h-8' }}
@@ -495,7 +495,7 @@ const PollForm = (props: PollProps) => {
         </Button>
         <Select
           id="expires"
-          color="blue"
+          color="blue-gray"
           value={`${props.poll.expires_in}`}
           onChange={e => changeExpire(parseInt(e))}
           containerProps={{ className: 'h-8' }}

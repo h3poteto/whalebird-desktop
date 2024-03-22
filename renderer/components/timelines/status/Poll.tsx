@@ -42,7 +42,7 @@ function SimplePoll(props: Props) {
         </div>
       ))}
       <div className="flex gap-2 items-center mt-2">
-        <Button size="sm" onClick={vote} variant="outlined">
+        <Button size="sm" color="teal" onClick={vote} variant="outlined">
           <FormattedMessage id="timeline.status.poll.vote" />
         </Button>
         <div>
@@ -79,7 +79,7 @@ function MultiplePoll(props: Props) {
         </div>
       ))}
       <div className="flex gap-2 items-center mt-2">
-        <Button size="sm" onClick={vote} variant="outlined">
+        <Button size="sm" color="teal" onClick={vote} variant="outlined">
           <FormattedMessage id="timeline.status.poll.vote" />
         </Button>
         <div>
@@ -104,7 +104,7 @@ function PollResult(props: Props) {
         </div>
       ))}
       <div className="flex gap-2 items-center mt-2">
-        <Button size="sm" onClick={props.onRefresh} variant="outlined">
+        <Button size="sm" color="teal" onClick={props.onRefresh} variant="outlined">
           <FormattedMessage id="timeline.status.poll.refresh" />
         </Button>
         <div>

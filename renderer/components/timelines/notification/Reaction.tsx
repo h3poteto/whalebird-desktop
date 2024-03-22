@@ -38,10 +38,14 @@ export default function Reaction(props: Props) {
   }
 
   return (
-    <div className="border-b mr-2 py-1">
+    <div className="border-b border-gray-200 dark:border-gray-800 mr-2 py-1">
       <div className="flex items-center">
         <div style={{ width: '56px' }}>{actionIcon(props.notification)}</div>
-        <div className="cursor-pointer" style={{ width: 'calc(100% - 56px)' }} onClick={() => openUser(props.notification.account.id)}>
+        <div
+          className="cursor-pointer text-gray-950 dark:text-gray-300"
+          style={{ width: 'calc(100% - 56px)' }}
+          onClick={() => openUser(props.notification.account.id)}
+        >
           <span
             dangerouslySetInnerHTML={{
               __html: emojify(
@@ -67,20 +71,20 @@ export default function Reaction(props: Props) {
             alt={formatMessage({ id: 'timeline.status.avatar' }, { user: status.account.username })}
           />
         </div>
-        <div className="text-gray-600 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
+        <div className="text-gray-600 dark:text-gray-500 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex justify-between">
             <div className="flex cursor-pointer" onClick={() => openUser(status.account.id)}>
               <span
-                className="text-gray-600 text-ellipsis break-all overflow-hidden"
+                className="text-ellipsis break-all overflow-hidden"
                 dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }}
               ></span>
-              <span className="text-gray-600 text-ellipsis break-all overflow-hidden">@{status.account.acct}</span>
+              <span className="text-ellipsis break-all overflow-hidden">@{status.account.acct}</span>
             </div>
-            <div className="text-gray-600 text-right cursor-pointer" onClick={openStatus}>
+            <div className="text-right cursor-pointer" onClick={openStatus}>
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>
-          <Body status={status} className="text-gray-600" spoilered={spoilered} setSpoilered={setSpoilered} />
+          <Body status={status} className="text-gray-600 dark:text-gray-500" spoilered={spoilered} setSpoilered={setSpoilered} />
           {!spoilered && (
             <>
               {status.poll && <Poll poll={status.poll} onRefresh={refresh} client={props.client} className="text-gray-600" />}

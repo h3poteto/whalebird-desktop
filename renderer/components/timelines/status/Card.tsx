@@ -12,7 +12,7 @@ export default function Card(props: Props) {
 
   return (
     <div
-      className="flex border-inherit border border-solid rounded-md w-full cursor-pointer overflow-hidden text-ellipsis mb-1"
+      className="flex border-inherit border border-solid border-gray-200 dark:border-gray-800 rounded-md w-full cursor-pointer overflow-hidden text-ellipsis mb-1"
       onClick={openCard}
     >
       <div style={{ height: '60px', width: '60px' }}>

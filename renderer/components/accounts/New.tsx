@@ -160,7 +160,7 @@ export default function New(props: NewProps) {
                     <FormattedMessage id="accounts.new.domain" />
                   </Typography>
                 </div>
-                <Input type="text" id="domain" placeholder="mastodon.social" />
+                <Input type="text" color="blue-gray" id="domain" placeholder="mastodon.social" />
                 <Button onClick={checkDomain} loading={loading} color="blue">
                   <FormattedMessage id="accounts.new.sign_in" />
                 </Button>
@@ -185,7 +185,7 @@ export default function New(props: NewProps) {
                             <FormattedMessage id="accounts.new.authorization_helper" />
                           </Typography>
                         </div>
-                        <Input id="authorization" type="text" />
+                        <Input id="authorization" color="blue-gray" type="text" />
                       </>
                     )}
 
