@@ -167,6 +167,9 @@
     "title": "Definições",
     "language": "Idioma",
     "font_size": "Tamanho da fonte de letra",
+    "mode": "Color mode",
+    "dark_mode": "Dark mode",
+    "light_mode": "Light mode",
     "theme": "Color theme"
   },
   "thirdparty": {

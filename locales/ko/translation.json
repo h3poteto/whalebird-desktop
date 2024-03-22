@@ -167,6 +167,9 @@
     "title": "Settings",
     "language": "Language",
     "font_size": "Font size",
+    "mode": "Color mode",
+    "dark_mode": "Dark mode",
+    "light_mode": "Light mode",
     "theme": "Color theme"
   },
   "thirdparty": {
