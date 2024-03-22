@@ -167,6 +167,9 @@
     "title": "設定",
     "language": "言語",
     "font_size": "フォントサイズ",
+    "mode": "Color mode",
+    "dark_mode": "Dark mode",
+    "light_mode": "Light mode",
     "theme": "カラーテーマ"
   },
   "thirdparty": {
