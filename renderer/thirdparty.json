@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.11.25": {
+  "@types/node@20.11.28": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -203,7 +203,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.0.5": {
+  "Whalebird@6.1.0": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -605,7 +605,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects/LICENSE"
   },
-  "megalodon@9.2.3": {
+  "megalodon@10.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/h3poteto/megalodon",
     "publisher": "h3poteto",
@@ -753,7 +753,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/popmotion",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/popmotion/LICENSE.md"
   },
-  "postcss@8.4.35": {
+  "postcss@8.4.36": {
     "licenses": "MIT",
     "repository": "https://github.com/postcss/postcss",
     "publisher": "Andrey Sitnik",
@@ -867,13 +867,13 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/semver",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/semver/LICENSE"
   },
-  "source-map-js@1.0.2": {
+  "source-map-js@1.1.0": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/7rulnik/source-map-js",
     "publisher": "Valentin 7rulnik Semirulnik",
     "email": "v7rulnik@gmail.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/source-map-js",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/source-map-js/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss/node_modules/source-map-js",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss/node_modules/source-map-js/LICENSE"
   },
   "style-value-types@5.0.0": {
     "licenses": "MIT",
