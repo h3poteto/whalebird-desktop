@@ -1894,8 +1894,8 @@ __metadata:
   linkType: hard
 
 "@material-tailwind/react@npm:^2.1.8":
-  version: 2.1.8
-  resolution: "@material-tailwind/react@npm:2.1.8"
+  version: 2.1.9
+  resolution: "@material-tailwind/react@npm:2.1.9"
   dependencies:
     "@floating-ui/react": 0.19.0
     classnames: 2.3.2
@@ -1909,7 +1909,7 @@ __metadata:
   peerDependencies:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
-  checksum: 65b7fbac90405f31fcb536fba93a446ed28767fd3081f8bb6b18a74bd81c2549125becc0de9a884770a96f2ede79e3910d1212025b0e17ef05c762cac7ea7e9b
+  checksum: e6860be97e338e281a7a7a5039f0f8594de9e80b5d30a1b6c05d1c8451640ae09d0bed5ec89e93091afa29aad30491f5071a1fb413a5c52cb8ef0a2933b28f0f
   languageName: node
   linkType: hard
 
