@@ -3,7 +3,7 @@
     "home": "首頁",
     "notifications": "通知",
     "local": "本機",
-    "public": "Public",
+    "public": "公開",
     "favourites": "Favourites",
     "bookmarks": "Bookmarks",
     "search": "搜尋",
@@ -65,8 +65,8 @@
       "body": "{user} quoted your post"
     },
     "poll_expired": {
-      "title": "Poll",
-      "body": "{user} poll has ended"
+      "title": "投票",
+      "body": "{user} 的投票已結束"
     },
     "poll_vote": {
       "title": "投票",
@@ -77,7 +77,7 @@
       "body": "{user} just posted"
     },
     "update": {
-      "title": "Update",
+      "title": "更新",
       "body": "{user} updated the post"
     },
     "emoji_reaction": {
@@ -97,18 +97,18 @@
   "compose": {
     "placeholder": "What's on your mind?",
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "在此處寫下你的警告訊息"
     },
     "emoji": "Add emoji",
     "actions": {
-      "attachment": "Add attachment",
-      "poll": "Add poll",
-      "visibility": "Change visibility",
+      "attachment": "新增附件",
+      "poll": "新增投票",
+      "visibility": "變更可見度",
       "cw": "Set content warning",
-      "post": "Post"
+      "post": "發佈"
     },
     "visibility": {
-      "public": "Public",
+      "public": "公開",
       "unlisted": "Unlisted",
       "private": "Private",
       "direct": "Direct"
@@ -143,30 +143,30 @@
     "failed_mark": "Failed to mark as read"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close"
+    "back": "返回",
+    "close": "關閉"
   },
   "profile": {
     "follow": "Follow",
     "unfollow": "Unfollow",
     "open_original": "Open original page",
-    "block": "Block",
-    "unblock": "Unblock",
-    "mute": "Mute",
-    "unmute": "Unmute",
+    "block": "封鎖",
+    "unblock": "解除封鎖",
+    "mute": "靜音",
+    "unmute": "取消靜音",
     "block_domain": "Block domain {server}",
     "unblock_domain": "Unblock domain {server}",
-    "timeline": "Timeline",
-    "followers": "Followers",
-    "followings": "Followings",
+    "timeline": "時間軸",
+    "followers": "跟隨者",
+    "followings": "正在關注",
     "header": "Header image of {user}",
     "avatar": "Avatar of {user}",
     "detail": "Details"
   },
   "settings": {
-    "title": "Settings",
-    "language": "Language",
-    "font_size": "Font size",
+    "title": "設定",
+    "language": "語言",
+    "font_size": "字型大小",
     "mode": "Color mode",
     "dark_mode": "Dark mode",
     "light_mode": "Light mode",
@@ -176,9 +176,9 @@
     "title": "Third-party licenses"
   },
   "report": {
-    "title": "Report {user}",
-    "detail": "Detail",
-    "submit": "Submit"
+    "title": "舉報 {user}",
+    "detail": "詳細資料",
+    "submit": "提交"
   },
   "search": {
     "placeholder": "Search timeline"
