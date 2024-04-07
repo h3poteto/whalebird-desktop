@@ -1,45 +1,45 @@
 {
   "timeline": {
-    "home": "Home",
-    "notifications": "Notifications",
-    "local": "Local",
+    "home": "首頁",
+    "notifications": "通知",
+    "local": "本機",
     "public": "Public",
     "favourites": "Favourites",
     "bookmarks": "Bookmarks",
-    "search": "Search",
+    "search": "搜尋",
     "status": {
       "avatar": "Aavtar of {user}",
       "boosted": "{user} boosted",
       "poll": {
-        "refresh": "Refresh",
-        "vote": "Vote",
-        "people": "{num} people",
-        "closed": "Closed"
+        "refresh": "重新整理",
+        "vote": "投票",
+        "people": "{num} 人",
+        "closed": "已關閉"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "cw": "Media hidden",
-      "hide_media": "Hide media",
-      "report": "Report {user}",
+      "show_more": "顯示更多",
+      "show_less": "顯示更少",
+      "cw": "媒體已隱藏",
+      "hide_media": "隱藏媒體",
+      "report": "舉報 {user}",
       "open_original": "Open original page",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway",
+      "filtered": "已過濾",
+      "show_anyway": "仍要顯示",
       "actions": {
-        "reply": "Reply",
-        "reblog": "reblog",
+        "reply": "回覆",
+        "reblog": "轉嘟",
         "favourite": "Favourite",
         "bookmark": "Bookmark",
         "emoji_reaction": "Emoji reaction",
         "detail": "Details"
       }
     },
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "標記為已讀"
   },
   "accounts": {
     "new": {
-      "title": "Add account",
-      "domain": "Domain",
-      "sign_in": "Sign in",
+      "title": "新增帳號",
+      "domain": "網域",
+      "sign_in": "登入",
       "authorize": "Authorize",
       "authorization_code": "Authorization Code",
       "authorization_helper": "Please paste the authorization code from your browser",
@@ -49,7 +49,7 @@
       "token_error": "Failed to authorize.",
       "credential_error": "Failed to confirm access token."
     },
-    "remove": "Remove"
+    "remove": "移除"
   },
   "notification": {
     "favourite": {
@@ -61,7 +61,7 @@
       "body": "{user} boosted your post"
     },
     "quote": {
-      "title": "Quote",
+      "title": "引用",
       "body": "{user} quoted your post"
     },
     "poll_expired": {
@@ -69,11 +69,11 @@
       "body": "{user} poll has ended"
     },
     "poll_vote": {
-      "title": "Poll",
+      "title": "投票",
       "body": "{user} voted your poll"
     },
     "status": {
-      "title": "Status",
+      "title": "狀態",
       "body": "{user} just posted"
     },
     "update": {
@@ -116,19 +116,19 @@
     "nsfw": "Sensitive",
     "poll": {
       "add": "Add",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days",
+      "5min": "5 分鐘",
+      "30min": "30 分鐘",
+      "1h": "1 小時",
+      "6h": "6 小時",
+      "1d": "1 天",
+      "3d": "3 天",
+      "7d": "7 天",
       "multiple": "multiple"
     },
     "edit_media": {
-      "title": "Edit media",
+      "title": "編輯媒體",
       "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "submit": "套用"
     }
   },
   "alert": {
