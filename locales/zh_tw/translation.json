@@ -29,7 +29,7 @@
         "reblog": "轉嘟",
         "favourite": "最愛",
         "bookmark": "書籤",
-        "emoji_reaction": "Emoji reaction",
+        "emoji_reaction": "表情符號反應",
         "detail": "Details"
       }
     },
@@ -40,21 +40,21 @@
       "title": "新增帳號",
       "domain": "網域",
       "sign_in": "登入",
-      "authorize": "Authorize",
-      "authorization_code": "Authorization Code",
-      "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
-      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-      "register_error": "Failed to add application.",
-      "token_error": "Failed to authorize.",
-      "credential_error": "Failed to confirm access token."
+      "authorize": "授權",
+      "authorization_code": "授權碼",
+      "authorization_helper": "請貼上你瀏覽器中的授權碼",
+      "without_code_authorize": "請在你的瀏覽器中批准 Whalebird，批准後請授權",
+      "detector_error": "無法連線到 {domain}，請確保伺服器網址是有效或正確。",
+      "register_error": "無法新增應用程式。",
+      "token_error": "無法授權。",
+      "credential_error": "無法確認存取令牌。"
     },
     "remove": "移除"
   },
   "notification": {
     "favourite": {
       "title": "最愛",
-      "body": "{user} favourited your post"
+      "body": "{user} 已將你的嘟文加入最愛"
     },
     "reblog": {
       "title": "Boost",
@@ -62,7 +62,7 @@
     },
     "quote": {
       "title": "引用",
-      "body": "{user} quoted your post"
+      "body": "{user} 引用了你的嘟文"
     },
     "poll_expired": {
       "title": "投票",
@@ -74,7 +74,7 @@
     },
     "status": {
       "title": "狀態",
-      "body": "{user} just posted"
+      "body": "{user} 剛剛發佈了嘟文"
     },
     "update": {
       "title": "更新",
@@ -85,13 +85,13 @@
       "body": "{user} reacted your post"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{user} followed you",
-      "followers": "{num} followers"
+      "title": "追蹤",
+      "body": "{user} 已追蹤你",
+      "followers": "{num} 個追蹤者"
     },
     "follow_request": {
-      "title": "Follow Request",
-      "body": "{user} requested to follow you"
+      "title": "追蹤請求",
+      "body": "{user} 請求追蹤你"
     }
   },
   "compose": {
@@ -104,13 +104,13 @@
       "attachment": "新增附件",
       "poll": "新增投票",
       "visibility": "變更可見度",
-      "cw": "Set content warning",
+      "cw": "設置內容警告",
       "post": "發佈"
     },
     "visibility": {
       "public": "公開",
-      "unlisted": "Unlisted",
-      "private": "Private",
+      "unlisted": "不列出",
+      "private": "私密",
       "direct": "Direct"
     },
     "nsfw": "Sensitive",
@@ -168,12 +168,12 @@
     "language": "語言",
     "font_size": "字型大小",
     "mode": "Color mode",
-    "dark_mode": "Dark mode",
-    "light_mode": "Light mode",
+    "dark_mode": "深色模式",
+    "light_mode": "淺色模式",
     "theme": "Color theme"
   },
   "thirdparty": {
-    "title": "Third-party licenses"
+    "title": "第三方授權條款"
   },
   "report": {
     "title": "舉報 {user}",
@@ -181,6 +181,6 @@
     "submit": "提交"
   },
   "search": {
-    "placeholder": "Search timeline"
+    "placeholder": "搜尋時間軸"
   }
 }
