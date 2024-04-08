@@ -4,11 +4,11 @@
     "notifications": "通知",
     "local": "本機",
     "public": "公開",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
+    "favourites": "最愛",
+    "bookmarks": "書籤",
     "search": "搜尋",
     "status": {
-      "avatar": "Aavtar of {user}",
+      "avatar": "{user} 的頭像",
       "boosted": "{user} boosted",
       "poll": {
         "refresh": "重新整理",
@@ -21,14 +21,14 @@
       "cw": "媒體已隱藏",
       "hide_media": "隱藏媒體",
       "report": "舉報 {user}",
-      "open_original": "Open original page",
+      "open_original": "開啟原始頁面",
       "filtered": "已過濾",
       "show_anyway": "仍要顯示",
       "actions": {
         "reply": "回覆",
         "reblog": "轉嘟",
-        "favourite": "Favourite",
-        "bookmark": "Bookmark",
+        "favourite": "最愛",
+        "bookmark": "書籤",
         "emoji_reaction": "Emoji reaction",
         "detail": "Details"
       }
@@ -53,7 +53,7 @@
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
+      "title": "最愛",
       "body": "{user} favourited your post"
     },
     "reblog": {
@@ -127,35 +127,35 @@
     },
     "edit_media": {
       "title": "編輯媒體",
-      "label": "Describe for people who are blind or have low vision",
+      "label": "為視障人士增加文字描述",
       "submit": "套用"
     }
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos",
-      "attachment_length": "You can't attach over {limit} files"
+      "attachment_type": "你只能附加圖片或影片",
+      "attachment_length": "你無法附加超過 {limit} 個檔案"
     },
-    "upload_error": "Failed to upload the file",
+    "upload_error": "無法上載檔案",
     "compose": {
-      "post_failed": "Failed to post a status"
+      "post_failed": "無法發佈狀態"
     },
-    "failed_mark": "Failed to mark as read"
+    "failed_mark": "無法標記為已讀"
   },
   "detail": {
     "back": "返回",
     "close": "關閉"
   },
   "profile": {
-    "follow": "Follow",
-    "unfollow": "Unfollow",
-    "open_original": "Open original page",
+    "follow": "追蹤",
+    "unfollow": "取消追蹤",
+    "open_original": "開啟原始頁面",
     "block": "封鎖",
     "unblock": "解除封鎖",
     "mute": "靜音",
     "unmute": "取消靜音",
-    "block_domain": "Block domain {server}",
-    "unblock_domain": "Unblock domain {server}",
+    "block_domain": "封鎖網域 {server}",
+    "unblock_domain": "取消封鎖網域 {server}",
     "timeline": "時間軸",
     "followers": "跟隨者",
     "followings": "正在關注",
