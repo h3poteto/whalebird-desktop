@@ -2701,7 +2701,7 @@ __metadata:
     autoprefixer: ^10.4.16
     blurhash: ^2.0.5
     dayjs: ^1.11.10
-    dexie: ^3.2.4
+    dexie: ^4.0.0
     electron: ^27.3.0
     electron-builder: ^24.6.4
     electron-serve: ^1.1.0
@@ -4016,10 +4016,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dexie@npm:^3.2.4":
-  version: 3.2.7
-  resolution: "dexie@npm:3.2.7"
-  checksum: 257504ed23cea2e5ed5c18a17a031c0a44aff70c5b3d6a63536b544cec9027c4c492a608165d5e7a44a104570c92dec2aa59c7bcec0c65f52000f979e1193dfd
+"dexie@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "dexie@npm:4.0.1"
+  checksum: 3080b9bbb970964e75a90493a2c2cae0194c82e10837c92e16a371e7d76c95b762193fe98b2038af9ac8017f2d864ea0e756276d46c475a2ffcd89051e2cbb35
   languageName: node
   linkType: hard
 

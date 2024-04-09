@@ -23,7 +23,7 @@
     "@material-tailwind/react": "^2.1.8",
     "blurhash": "^2.0.5",
     "dayjs": "^1.11.10",
-    "dexie": "^3.2.4",
+    "dexie": "^4.0.0",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
     "emoji-mart": "^5.5.2",
