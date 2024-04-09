@@ -1,83 +1,83 @@
 {
   "timeline": {
-    "home": "Home",
-    "notifications": "Notifications",
-    "local": "Local",
-    "public": "Public",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "search": "Search",
+    "home": "首頁",
+    "notifications": "通知",
+    "local": "本機",
+    "public": "公開",
+    "favourites": "最愛",
+    "bookmarks": "書籤",
+    "search": "搜尋",
     "status": {
-      "avatar": "Aavtar of {user}",
+      "avatar": "{user} 的頭像",
       "boosted": "{user} boosted",
       "poll": {
-        "refresh": "Refresh",
-        "vote": "Vote",
-        "people": "{num} people",
-        "closed": "Closed"
+        "refresh": "重新整理",
+        "vote": "投票",
+        "people": "{num} 人",
+        "closed": "已關閉"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "cw": "Media hidden",
-      "hide_media": "Hide media",
-      "report": "Report {user}",
-      "open_original": "Open original page",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway",
+      "show_more": "顯示更多",
+      "show_less": "顯示更少",
+      "cw": "媒體已隱藏",
+      "hide_media": "隱藏媒體",
+      "report": "舉報 {user}",
+      "open_original": "開啟原始頁面",
+      "filtered": "已過濾",
+      "show_anyway": "仍要顯示",
       "actions": {
-        "reply": "Reply",
-        "reblog": "reblog",
-        "favourite": "Favourite",
-        "bookmark": "Bookmark",
-        "emoji_reaction": "Emoji reaction",
+        "reply": "回覆",
+        "reblog": "轉嘟",
+        "favourite": "最愛",
+        "bookmark": "書籤",
+        "emoji_reaction": "表情符號反應",
         "detail": "Details"
       }
     },
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "標記為已讀"
   },
   "accounts": {
     "new": {
-      "title": "Add account",
-      "domain": "Domain",
-      "sign_in": "Sign in",
-      "authorize": "Authorize",
-      "authorization_code": "Authorization Code",
-      "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
-      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-      "register_error": "Failed to add application.",
-      "token_error": "Failed to authorize.",
-      "credential_error": "Failed to confirm access token."
+      "title": "新增帳號",
+      "domain": "網域",
+      "sign_in": "登入",
+      "authorize": "授權",
+      "authorization_code": "授權碼",
+      "authorization_helper": "請貼上你瀏覽器中的授權碼",
+      "without_code_authorize": "請在你的瀏覽器中批准 Whalebird，批准後請授權",
+      "detector_error": "無法連線到 {domain}，請確保伺服器網址是有效或正確。",
+      "register_error": "無法新增應用程式。",
+      "token_error": "無法授權。",
+      "credential_error": "無法確認存取令牌。"
     },
-    "remove": "Remove"
+    "remove": "移除"
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{user} favourited your post"
+      "title": "最愛",
+      "body": "{user} 已將你的嘟文加入最愛"
     },
     "reblog": {
       "title": "Boost",
       "body": "{user} boosted your post"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{user} quoted your post"
+      "title": "引用",
+      "body": "{user} 引用了你的嘟文"
     },
     "poll_expired": {
-      "title": "Poll",
-      "body": "{user} poll has ended"
+      "title": "投票",
+      "body": "{user} 的投票已結束"
     },
     "poll_vote": {
-      "title": "Poll",
+      "title": "投票",
       "body": "{user} voted your poll"
     },
     "status": {
-      "title": "Status",
-      "body": "{user} just posted"
+      "title": "狀態",
+      "body": "{user} 剛剛發佈了嘟文"
     },
     "update": {
-      "title": "Update",
+      "title": "更新",
       "body": "{user} updated the post"
     },
     "emoji_reaction": {
@@ -85,102 +85,102 @@
       "body": "{user} reacted your post"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{user} followed you",
-      "followers": "{num} followers"
+      "title": "追蹤",
+      "body": "{user} 已追蹤你",
+      "followers": "{num} 個追蹤者"
     },
     "follow_request": {
-      "title": "Follow Request",
-      "body": "{user} requested to follow you"
+      "title": "追蹤請求",
+      "body": "{user} 請求追蹤你"
     }
   },
   "compose": {
     "placeholder": "What's on your mind?",
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "在此處寫下你的警告訊息"
     },
     "emoji": "Add emoji",
     "actions": {
-      "attachment": "Add attachment",
-      "poll": "Add poll",
-      "visibility": "Change visibility",
-      "cw": "Set content warning",
-      "post": "Post"
+      "attachment": "新增附件",
+      "poll": "新增投票",
+      "visibility": "變更可見度",
+      "cw": "設置內容警告",
+      "post": "發佈"
     },
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
+      "public": "公開",
+      "unlisted": "不列出",
+      "private": "私密",
       "direct": "Direct"
     },
     "nsfw": "Sensitive",
     "poll": {
       "add": "Add",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days",
+      "5min": "5 分鐘",
+      "30min": "30 分鐘",
+      "1h": "1 小時",
+      "6h": "6 小時",
+      "1d": "1 天",
+      "3d": "3 天",
+      "7d": "7 天",
       "multiple": "multiple"
     },
     "edit_media": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "編輯媒體",
+      "label": "為視障人士增加文字描述",
+      "submit": "套用"
     }
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos",
-      "attachment_length": "You can't attach over {limit} files"
+      "attachment_type": "你只能附加圖片或影片",
+      "attachment_length": "你無法附加超過 {limit} 個檔案"
     },
-    "upload_error": "Failed to upload the file",
+    "upload_error": "無法上載檔案",
     "compose": {
-      "post_failed": "Failed to post a status"
+      "post_failed": "無法發佈狀態"
     },
-    "failed_mark": "Failed to mark as read"
+    "failed_mark": "無法標記為已讀"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close"
+    "back": "返回",
+    "close": "關閉"
   },
   "profile": {
-    "follow": "Follow",
-    "unfollow": "Unfollow",
-    "open_original": "Open original page",
-    "block": "Block",
-    "unblock": "Unblock",
-    "mute": "Mute",
-    "unmute": "Unmute",
-    "block_domain": "Block domain {server}",
-    "unblock_domain": "Unblock domain {server}",
-    "timeline": "Timeline",
-    "followers": "Followers",
-    "followings": "Followings",
+    "follow": "追蹤",
+    "unfollow": "取消追蹤",
+    "open_original": "開啟原始頁面",
+    "block": "封鎖",
+    "unblock": "解除封鎖",
+    "mute": "靜音",
+    "unmute": "取消靜音",
+    "block_domain": "封鎖網域 {server}",
+    "unblock_domain": "取消封鎖網域 {server}",
+    "timeline": "時間軸",
+    "followers": "跟隨者",
+    "followings": "正在關注",
     "header": "Header image of {user}",
     "avatar": "Avatar of {user}",
     "detail": "Details"
   },
   "settings": {
-    "title": "Settings",
-    "language": "Language",
-    "font_size": "Font size",
+    "title": "設定",
+    "language": "語言",
+    "font_size": "字型大小",
     "mode": "Color mode",
-    "dark_mode": "Dark mode",
-    "light_mode": "Light mode",
+    "dark_mode": "深色模式",
+    "light_mode": "淺色模式",
     "theme": "Color theme"
   },
   "thirdparty": {
-    "title": "Third-party licenses"
+    "title": "第三方授權條款"
   },
   "report": {
-    "title": "Report {user}",
-    "detail": "Detail",
-    "submit": "Submit"
+    "title": "舉報 {user}",
+    "detail": "詳細資料",
+    "submit": "提交"
   },
   "search": {
-    "placeholder": "Search timeline"
+    "placeholder": "搜尋時間軸"
   }
 }
