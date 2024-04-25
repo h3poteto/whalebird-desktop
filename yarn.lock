@@ -4290,9 +4290,9 @@ __metadata:
   linkType: hard
 
 "emoji-mart@npm:^5.5.2":
-  version: 5.5.2
-  resolution: "emoji-mart@npm:5.5.2"
-  checksum: a9d8db731443581baebafbcb8494086e9d02b1475ddee9901fc657a7e8f08c14594a810605a3abe8d52627b75f5d78ea19adf3166fb0f38cea174694f86635f9
+  version: 5.6.0
+  resolution: "emoji-mart@npm:5.6.0"
+  checksum: 59b9336f09112580993a42ba3decbd91a026a7fe6615be87a8f57e067592e5adcb7a8403f0f8d90e85513b3f3256d8b8b0992d9d9e07b48ad220e0d341325cc6
   languageName: node
   linkType: hard
 
