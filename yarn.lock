@@ -7609,12 +7609,12 @@ __metadata:
   linkType: hard
 
 "react-virtuoso@npm:^4.6.2":
-  version: 4.6.3
-  resolution: "react-virtuoso@npm:4.6.3"
+  version: 4.7.11
+  resolution: "react-virtuoso@npm:4.7.11"
   peerDependencies:
     react: ">=16 || >=17 || >= 18"
     react-dom: ">=16 || >=17 || >= 18"
-  checksum: 7279f41005339dfa597ef154f971b518e88eb8a32a2850df369864de02482426e47e6b9aa881cf4f907bcb847252ed755e7d0fc8451088d164716af469fa2ad0
+  checksum: 3e9b56e8bd2ae88b04563ff3ce221c95db493741ff89667475e390a8abfb202a9b0692cbe9edd822316a27c902c835ce0e287b036df6644909317c7a6c1462fc
   languageName: node
   linkType: hard
 
