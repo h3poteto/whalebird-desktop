@@ -25,7 +25,7 @@
     "dayjs": "^1.11.10",
     "dexie": "^4.0.0",
     "electron-serve": "^1.1.0",
-    "electron-store": "^8.1.0",
+    "electron-store": "^9.0.0",
     "emoji-mart": "^5.5.2",
     "megalodon": "10.0.1",
     "parse-link-header": "^2.0.0",
