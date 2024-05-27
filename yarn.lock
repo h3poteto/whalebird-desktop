@@ -2774,7 +2774,7 @@ __metadata:
     eslint: ^8.55.0
     eslint-config-prettier: ^9.0.0
     eslint-plugin-react: ^7.33.2
-    megalodon: 10.0.0
+    megalodon: 10.0.1
     next: ^12.3.4
     nextron: ^8.12.0
     parse-link-header: ^2.0.0
@@ -3283,14 +3283,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.7":
-  version: 1.6.7
-  resolution: "axios@npm:1.6.7"
+"axios@npm:1.6.8":
+  version: 1.6.8
+  resolution: "axios@npm:1.6.8"
   dependencies:
-    follow-redirects: ^1.15.4
+    follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 87d4d429927d09942771f3b3a6c13580c183e31d7be0ee12f09be6d5655304996bb033d85e54be81606f4e89684df43be7bf52d14becb73a12727bf33298a082
+  checksum: bf007fa4b207d102459300698620b3b0873503c6d47bf5a8f6e43c0c64c90035a4f698b55027ca1958f61ab43723df2781c38a99711848d232cad7accbcdfcdd
   languageName: node
   linkType: hard
 
@@ -3967,7 +3967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.10":
+"dayjs@npm:^1.11.10, dayjs@npm:^1.11.11":
   version: 1.11.11
   resolution: "dayjs@npm:1.11.11"
   checksum: 84788275aad8a87fee4f1ce4be08861df29687aae6b7b43dd65350118a37dda56772a3902f802cb2dc651dfed447a5a8df62d88f0fb900dba8333e411190a5d5
@@ -5028,13 +5028,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.4":
-  version: 1.15.5
-  resolution: "follow-redirects@npm:1.15.5"
+"follow-redirects@npm:^1.15.6":
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 5ca49b5ce6f44338cbfc3546823357e7a70813cecc9b7b768158a1d32c1e62e7407c944402a918ea8c38ae2e78266312d617dc68783fac502cbb55e1047b34ec
+  checksum: a62c378dfc8c00f60b9c80cab158ba54e99ba0239a5dd7c81245e5a5b39d10f0c35e249c3379eae719ff0285fff88c365dd446fab19dee771f1d76252df1bbf5
   languageName: node
   linkType: hard
 
@@ -6570,21 +6570,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"megalodon@npm:10.0.0":
-  version: 10.0.0
-  resolution: "megalodon@npm:10.0.0"
+"megalodon@npm:10.0.1":
+  version: 10.0.1
+  resolution: "megalodon@npm:10.0.1"
   dependencies:
     "@badgateway/oauth2-client": ^2.3.0
     "@types/ws": ^8.5.10
-    axios: 1.6.7
-    dayjs: ^1.11.10
+    axios: 1.6.8
+    dayjs: ^1.11.11
     events: ^3.3.0
     form-data: ^4.0.0
     isomorphic-ws: ^5.0.0
     object-assign-deep: ^0.4.0
     uuid: ^9.0.1
-    ws: 8.16.0
-  checksum: 668ec90e2b24d037b58c223acc0590185882ad901481276e4d48856241dfdc09bd6b9d2eee18e5e1ece3d0e0be74e00a792cec3113a999242fb08782b77d684f
+    ws: 8.17.0
+  checksum: f28b844931ff622745311facb1a66daf4978cf70c7c3b3168644b7d6b4362a41b41234a17777d519a6e7ab66b77d14e783c7ae04dd5112f5b11418b1dcc94863
   languageName: node
   linkType: hard
 
@@ -9348,9 +9348,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.16.0":
-  version: 8.16.0
-  resolution: "ws@npm:8.16.0"
+"ws@npm:8.17.0":
+  version: 8.17.0
+  resolution: "ws@npm:8.17.0"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -9359,7 +9359,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: feb3eecd2bae82fa8a8beef800290ce437d8b8063bdc69712725f21aef77c49cb2ff45c6e5e7fce622248f9c7abaee506bae0a9064067ffd6935460c7357321b
+  checksum: 147ef9eab0251364e1d2c55338ad0efb15e6913923ccbfdf20f7a8a6cb8f88432bcd7f4d8f66977135bfad35575644f9983201c1a361019594a4e53977bf6d4e
   languageName: node
   linkType: hard
 
