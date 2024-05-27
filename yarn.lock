@@ -2336,21 +2336,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.0.0":
+"@types/node@npm:*, @types/node@npm:^20.0.0, @types/node@npm:^20.9.0":
   version: 20.12.12
   resolution: "@types/node@npm:20.12.12"
   dependencies:
     undici-types: ~5.26.4
   checksum: 5373983874b9af7c216e7ca5d26b32a8d9829c703a69f1e66f2113598b5be8582c0e009ca97369f1ec9a6282b3f92812208d06eb1e9fc3bd9b939b022303d042
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^18.11.18":
-  version: 18.19.33
-  resolution: "@types/node@npm:18.19.33"
-  dependencies:
-    undici-types: ~5.26.4
-  checksum: b6db87d095bc541d64a410fa323a35c22c6113220b71b608bbe810b2397932d0f0a51c3c0f3ef90c20d8180a1502d950a7c5314b907e182d9cc10b36efd2a44e
   languageName: node
   linkType: hard
 
@@ -2765,7 +2756,7 @@ __metadata:
     blurhash: ^2.0.5
     dayjs: ^1.11.10
     dexie: ^4.0.0
-    electron: 28
+    electron: 30
     electron-builder: ^24.6.4
     electron-serve: ^2.0.0
     electron-store: ^8.1.0
@@ -4339,16 +4330,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:28":
-  version: 28.3.3
-  resolution: "electron@npm:28.3.3"
+"electron@npm:30":
+  version: 30.0.8
+  resolution: "electron@npm:30.0.8"
   dependencies:
     "@electron/get": ^2.0.0
-    "@types/node": ^18.11.18
+    "@types/node": ^20.9.0
     extract-zip: ^2.0.1
   bin:
     electron: cli.js
-  checksum: 87a27def565817626bbb6c153fc8a731d5d0caf6470260652f4514a592c796bc947f4a7c11b27d26b50230e91b20bb0c2904b49a11793a89b90c3d432def2613
+  checksum: 78acf060341b46a81e4fb69cb3c65760d8876889f2fc29811648745ea6f4eb21e5ad7906a0c17741d6fc45c53d22f75fec62b0bde7a61646037c9bb6ad1484b5
   languageName: node
   linkType: hard
 
