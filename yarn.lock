@@ -2777,7 +2777,7 @@ __metadata:
     dexie: ^4.0.0
     electron: 28
     electron-builder: ^24.6.4
-    electron-serve: ^2.0.0
+    electron-serve: ^1.1.0
     electron-store: ^8.1.0
     electron-windows-store: ^2.1.0
     emoji-mart: ^5.5.2
@@ -4290,10 +4290,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-serve@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "electron-serve@npm:2.0.0"
-  checksum: 3cbd5641bba30897ddbad3bcd83a0ce79075d5524f23f0bf4eba90d72c16200b7f08d32c61095bee4e8060ea6ebe240ce1e87f9359da90b4bd035a2b6693611f
+"electron-serve@npm:^1.1.0":
+  version: 1.3.0
+  resolution: "electron-serve@npm:1.3.0"
+  checksum: 06db8d1d71f866abc2dbe62ea5b50c1e467383d18f598e856e2c54d709dfdea255203c9d52397b4d4bb476cb5f336626a88cf5e0a1cb64488a7ff70b01d4a828
   languageName: node
   linkType: hard
 
