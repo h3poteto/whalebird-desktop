@@ -60,7 +60,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@floating-ui/utils",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@floating-ui/utils/LICENSE"
   },
-  "@formatjs/ecma402-abstract@1.18.2": {
+  "@formatjs/ecma402-abstract@2.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Long Ho",
@@ -75,19 +75,19 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/fast-memoize",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/fast-memoize/LICENSE.md"
   },
-  "@formatjs/icu-messageformat-parser@2.7.6": {
+  "@formatjs/icu-messageformat-parser@2.7.8": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-messageformat-parser",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-messageformat-parser/LICENSE.md"
   },
-  "@formatjs/icu-skeleton-parser@1.8.0": {
+  "@formatjs/icu-skeleton-parser@1.8.2": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-skeleton-parser",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-skeleton-parser/LICENSE.md"
   },
-  "@formatjs/intl-displaynames@6.6.6": {
+  "@formatjs/intl-displaynames@6.6.8": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Linjie Ding",
@@ -95,7 +95,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/intl-displaynames",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/intl-displaynames/LICENSE.md"
   },
-  "@formatjs/intl-listformat@7.5.5": {
+  "@formatjs/intl-listformat@7.5.7": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Long Ho",
@@ -111,7 +111,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/intl-localematcher",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/intl-localematcher/LICENSE.md"
   },
-  "@formatjs/intl@2.10.1": {
+  "@formatjs/intl@2.10.4": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Long Ho",
@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.12.6": {
+  "@types/node@20.12.12": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -249,7 +249,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/atomically",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/atomically/LICENSE"
   },
-  "axios@1.6.7": {
+  "axios@1.6.8": {
     "licenses": "MIT",
     "repository": "https://github.com/axios/axios",
     "publisher": "Matt Zabriskie",
@@ -296,7 +296,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/csstype",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/csstype/LICENSE"
   },
-  "dayjs@1.11.10": {
+  "dayjs@1.11.11": {
     "licenses": "MIT",
     "repository": "https://github.com/iamkun/dayjs",
     "publisher": "iamkun",
@@ -333,9 +333,9 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream/License"
   },
-  "dexie@3.2.7": {
+  "dexie@4.0.7": {
     "licenses": "Apache-2.0",
-    "repository": "https://github.com/dfahlander/Dexie.js",
+    "repository": "https://github.com/dexie/Dexie.js",
     "publisher": "David Fahlander",
     "email": "https://github.com/dfahlander",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/dexie",
@@ -401,7 +401,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/electron-store",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/electron-store/license"
   },
-  "emoji-mart@5.5.2": {
+  "emoji-mart@5.6.0": {
     "licenses": "MIT",
     "repository": "https://github.com/missive/emoji-mart",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/emoji-mart",
@@ -458,7 +458,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/find-up",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/find-up/license"
   },
-  "follow-redirects@1.15.5": {
+  "follow-redirects@1.15.6": {
     "licenses": "MIT",
     "repository": "https://github.com/follow-redirects/follow-redirects",
     "publisher": "Ruben Verborgh",
@@ -513,7 +513,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/htmlparser2",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/htmlparser2/LICENSE"
   },
-  "intl-messageformat@10.5.11": {
+  "intl-messageformat@10.5.14": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Eric Ferraiuolo",
@@ -597,7 +597,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects/LICENSE"
   },
-  "megalodon@10.0.0": {
+  "megalodon@10.0.1": {
     "licenses": "MIT",
     "repository": "https://github.com/h3poteto/megalodon",
     "publisher": "h3poteto",
@@ -796,14 +796,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-hotkeys-hook",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-hotkeys-hook/LICENSE"
   },
-  "react-icons@5.0.1": {
+  "react-icons@5.2.1": {
     "licenses": "MIT",
     "repository": "https://github.com/react-icons/react-icons",
     "publisher": "Goran Gajic",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-icons",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-icons/LICENSE"
   },
-  "react-intl@6.6.5": {
+  "react-intl@6.6.8": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Eric Ferraiuolo",
@@ -817,7 +817,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-is",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-is/LICENSE"
   },
-  "react-virtuoso@4.6.3": {
+  "react-virtuoso@4.7.11": {
     "licenses": "MIT",
     "repository": "https://github.com/petyosi/react-virtuoso",
     "publisher": "Petyo Ivanov",
@@ -905,7 +905,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/type-fest",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/type-fest/readme.md"
   },
-  "typescript@5.4.4": {
+  "typescript@5.4.5": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/Microsoft/TypeScript",
     "publisher": "Microsoft Corp.",
@@ -932,7 +932,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid/LICENSE.md"
   },
-  "ws@8.16.0": {
+  "ws@8.17.0": {
     "licenses": "MIT",
     "repository": "https://github.com/websockets/ws",
     "publisher": "Einar Otto Stangvik",
