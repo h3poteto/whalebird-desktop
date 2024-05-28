@@ -2,7 +2,7 @@ appId: social.whalebird.app
 productName: Whalebird
 copyright: Copyright © 2018 Akira Fukushima
 artifactName: "${productName}-${version}-${os}-${arch}.${ext}"
-buildVersion: "177"
+buildVersion: "178"
 directories:
   output: dist
   buildResources: resources
@@ -21,6 +21,7 @@ mas:
   extendInfo:
     ITSAppUsesNonExemptEncryption: "false"
   provisioningProfile: "profile/socialwhalebirdapp_MAS.provisionprofile"
+  minimumSystemVersion: "14.0"
 mac:
   icon: resources/icons/icon.icns
   target:

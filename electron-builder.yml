@@ -25,6 +25,7 @@ mac:
   darkModeSupport: false
   notarize: false
   singleArchFiles: "*"
+  minimumSystemVersion: "14.0"
 win:
   icon: resources/icons/icon.ico
   target:
