@@ -1,0 +1,186 @@
+{
+  "timeline": {
+    "home": "Home",
+    "notifications": "Notifications",
+    "local": "Local",
+    "public": "Public",
+    "favourites": "Favourites",
+    "bookmarks": "Bookmarks",
+    "search": "Search",
+    "status": {
+      "avatar": "Aavtar of {user}",
+      "boosted": "{user} boosted",
+      "poll": {
+        "refresh": "Refresh",
+        "vote": "Vote",
+        "people": "{num} people",
+        "closed": "Closed"
+      },
+      "show_more": "Show more",
+      "show_less": "Show less",
+      "cw": "Media hidden",
+      "hide_media": "Hide media",
+      "report": "Report {user}",
+      "open_original": "Open original page",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway",
+      "actions": {
+        "reply": "Reply",
+        "reblog": "reblog",
+        "favourite": "Favourite",
+        "bookmark": "Bookmark",
+        "emoji_reaction": "Emoji reaction",
+        "detail": "Details"
+      }
+    },
+    "mark_as_read": "Mark as read"
+  },
+  "accounts": {
+    "new": {
+      "title": "Add account",
+      "domain": "Domain",
+      "sign_in": "Sign in",
+      "authorize": "Authorize",
+      "authorization_code": "Authorization Code",
+      "authorization_helper": "Please paste the authorization code from your browser",
+      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
+      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
+      "register_error": "Failed to add application.",
+      "token_error": "Failed to authorize.",
+      "credential_error": "Failed to confirm access token."
+    },
+    "remove": "Remove"
+  },
+  "notification": {
+    "favourite": {
+      "title": "Favourite",
+      "body": "{user} favourited your post"
+    },
+    "reblog": {
+      "title": "Boost",
+      "body": "{user} boosted your post"
+    },
+    "quote": {
+      "title": "Quote",
+      "body": "{user} quoted your post"
+    },
+    "poll_expired": {
+      "title": "Poll",
+      "body": "{user} poll has ended"
+    },
+    "poll_vote": {
+      "title": "Poll",
+      "body": "{user} voted your poll"
+    },
+    "status": {
+      "title": "Status",
+      "body": "{user} just posted"
+    },
+    "update": {
+      "title": "Update",
+      "body": "{user} updated the post"
+    },
+    "emoji_reaction": {
+      "title": "Reaction",
+      "body": "{user} reacted your post"
+    },
+    "follow": {
+      "title": "Follow",
+      "body": "{user} followed you",
+      "followers": "{num} followers"
+    },
+    "follow_request": {
+      "title": "Follow Request",
+      "body": "{user} requested to follow you"
+    }
+  },
+  "compose": {
+    "placeholder": "What's on your mind?",
+    "spoiler": {
+      "placeholder": "Write your warning here"
+    },
+    "emoji": "Add emoji",
+    "actions": {
+      "attachment": "Add attachment",
+      "poll": "Add poll",
+      "visibility": "Change visibility",
+      "cw": "Set content warning",
+      "post": "Post"
+    },
+    "visibility": {
+      "public": "Public",
+      "unlisted": "Unlisted",
+      "private": "Private",
+      "direct": "Direct"
+    },
+    "nsfw": "Sensitive",
+    "poll": {
+      "add": "Add",
+      "5min": "5 minutes",
+      "30min": "30 minutes",
+      "1h": "1 hour",
+      "6h": "6 hours",
+      "1d": "1 day",
+      "3d": "3 days",
+      "7d": "7 days",
+      "multiple": "multiple"
+    },
+    "edit_media": {
+      "title": "Edit media",
+      "label": "Describe for people who are blind or have low vision",
+      "submit": "Apply"
+    }
+  },
+  "alert": {
+    "validation": {
+      "attachment_type": "You can attach only images or videos",
+      "attachment_length": "You can't attach over {limit} files"
+    },
+    "upload_error": "Failed to upload the file",
+    "compose": {
+      "post_failed": "Failed to post a status"
+    },
+    "failed_mark": "Failed to mark as read"
+  },
+  "detail": {
+    "back": "Back",
+    "close": "Close"
+  },
+  "profile": {
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "open_original": "Open original page",
+    "block": "Block",
+    "unblock": "Unblock",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "block_domain": "Block domain {server}",
+    "unblock_domain": "Unblock domain {server}",
+    "timeline": "Timeline",
+    "followers": "Followers",
+    "followings": "Followings",
+    "header": "Header image of {user}",
+    "avatar": "Avatar of {user}",
+    "detail": "Details"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "font_size": "Font size",
+    "mode": "Color mode",
+    "dark_mode": "Dark mode",
+    "light_mode": "Light mode",
+    "theme": "Color theme"
+  },
+  "thirdparty": {
+    "title": "Third-party licenses"
+  },
+  "report": {
+    "title": "Report {user}",
+    "detail": "Detail",
+    "submit": "Submit"
+  },
+  "search": {
+    "placeholder": "Search timeline"
+  }
+}
