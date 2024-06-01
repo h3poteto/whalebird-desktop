@@ -1,14 +1,14 @@
 {
   "timeline": {
-    "home": "Home",
-    "notifications": "Notifications",
+    "home": "Inicio",
+    "notifications": "Notificaciones",
     "local": "Local",
-    "public": "Public",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "search": "Search",
+    "public": "Publico",
+    "favourites": "Favoritos",
+    "bookmarks": "Marcadores",
+    "search": "Buscar",
     "status": {
-      "avatar": "Aavtar of {user}",
+      "avatar": "Avatar de",
       "boosted": "{user} boosted",
       "poll": {
         "refresh": "Refresh",
@@ -16,13 +16,13 @@
         "people": "{num} people",
         "closed": "Closed"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "cw": "Media hidden",
-      "hide_media": "Hide media",
-      "report": "Report {user}",
-      "open_original": "Open original page",
-      "filtered": "Filtered",
+      "show_more": "Mostrar más",
+      "show_less": "Mostrar menos",
+      "cw": "Medio oculto",
+      "hide_media": "Ocultar medio",
+      "report": "Reportar",
+      "open_original": "Abrir página original",
+      "filtered": "Filtrado",
       "show_anyway": "Show anyway",
       "actions": {
         "reply": "Reply",
