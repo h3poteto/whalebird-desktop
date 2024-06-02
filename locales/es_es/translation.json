@@ -9,12 +9,12 @@
     "search": "Buscar",
     "status": {
       "avatar": "Avatar de",
-      "boosted": "{user} boosted",
+      "boosted": "{user} impulsado",
       "poll": {
-        "refresh": "Refresh",
-        "vote": "Vote",
-        "people": "{num} people",
-        "closed": "Closed"
+        "refresh": "Refrescar",
+        "vote": "Votar",
+        "people": "{num} personas",
+        "closed": "Cerrado"
       },
       "show_more": "Mostrar más",
       "show_less": "Mostrar menos",
@@ -23,164 +23,164 @@
       "report": "Reportar",
       "open_original": "Abrir página original",
       "filtered": "Filtrado",
-      "show_anyway": "Show anyway",
+      "show_anyway": "Mostrar de todos modos",
       "actions": {
-        "reply": "Reply",
-        "reblog": "reblog",
-        "favourite": "Favourite",
-        "bookmark": "Bookmark",
-        "emoji_reaction": "Emoji reaction",
-        "detail": "Details"
+        "reply": "Respuesta",
+        "reblog": "rebloguear",
+        "favourite": "Favorito",
+        "bookmark": "Marcador",
+        "emoji_reaction": "Reacción emoji",
+        "detail": "Detalles"
       }
     },
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "Marcar como leído"
   },
   "accounts": {
     "new": {
-      "title": "Add account",
-      "domain": "Domain",
-      "sign_in": "Sign in",
-      "authorize": "Authorize",
-      "authorization_code": "Authorization Code",
-      "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
-      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-      "register_error": "Failed to add application.",
-      "token_error": "Failed to authorize.",
-      "credential_error": "Failed to confirm access token."
+      "title": "Agregar cuenta",
+      "domain": "Dominio",
+      "sign_in": "Iniciar seción",
+      "authorize": "Autorizar",
+      "authorization_code": "Código de autorización",
+      "authorization_helper": "Por favor pegue el código de autorización desde su navegador",
+      "without_code_authorize": "Por favor apruebe Whalebird en su navegador, y luego de aprobarlo por favor autorícelo",
+      "detector_error": "No se pudo conectar a {domain}, compruebe que el servidor URL es válido o correcto.",
+      "register_error": "No se pudo agregar la aplicación.",
+      "token_error": "No se pudo autorizar.",
+      "credential_error": "No se pudo confirmar token de acceso."
     },
-    "remove": "Remove"
+    "remove": "Quitar"
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{user} favourited your post"
+      "title": "Favorito",
+      "body": "{user} marcó tu publicación como favorita"
     },
     "reblog": {
-      "title": "Boost",
-      "body": "{user} boosted your post"
+      "title": "Impulsar",
+      "body": "{user} impulsó tu publicación"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{user} quoted your post"
+      "title": "Citar",
+      "body": "{user} citó tu publicación"
     },
     "poll_expired": {
-      "title": "Poll",
-      "body": "{user} poll has ended"
+      "title": "Encuesta",
+      "body": "La encuesta de {user} ha finalizado"
     },
     "poll_vote": {
-      "title": "Poll",
-      "body": "{user} voted your poll"
+      "title": "Encuesta",
+      "body": "{user} votó tu encuesta"
     },
     "status": {
-      "title": "Status",
-      "body": "{user} just posted"
+      "title": "Estado",
+      "body": "{user} recién publicado"
     },
     "update": {
-      "title": "Update",
-      "body": "{user} updated the post"
+      "title": "Actualizar",
+      "body": "{user} actualizó la publicación"
     },
     "emoji_reaction": {
-      "title": "Reaction",
-      "body": "{user} reacted your post"
+      "title": "Reacción",
+      "body": "{user} reaccionó a tu publicación"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{user} followed you",
-      "followers": "{num} followers"
+      "title": "Seguir",
+      "body": "{user} te siguió",
+      "followers": "{num} seguidores"
     },
     "follow_request": {
-      "title": "Follow Request",
-      "body": "{user} requested to follow you"
+      "title": "Solicitud de seguimiento",
+      "body": "{user} ha solicitado seguirte"
     }
   },
   "compose": {
-    "placeholder": "What's on your mind?",
+    "placeholder": "¿Qué estás pensando?",
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "Escribe tu advertencia aquí"
     },
-    "emoji": "Add emoji",
+    "emoji": "Agregar emoji",
     "actions": {
-      "attachment": "Add attachment",
-      "poll": "Add poll",
-      "visibility": "Change visibility",
-      "cw": "Set content warning",
-      "post": "Post"
+      "attachment": "Adjuntar archivo",
+      "poll": "Agregar encuesta",
+      "visibility": "Cambiar visibilidad",
+      "cw": "Establecer advertencia de contenido",
+      "post": "Publicar"
     },
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct"
+      "public": "Público",
+      "unlisted": "Fuera de lista",
+      "private": "Privado",
+      "direct": "Directo"
     },
-    "nsfw": "Sensitive",
+    "nsfw": "Sensible",
     "poll": {
-      "add": "Add",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days",
-      "multiple": "multiple"
+      "add": "Agregar",
+      "5min": "5 minutos",
+      "30min": "30 minutos",
+      "1h": "1 hora",
+      "6h": "6 horas",
+      "1d": "1 día",
+      "3d": "3 días",
+      "7d": "7 días",
+      "multiple": "múltiple"
     },
     "edit_media": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "Editar medio",
+      "label": "Describir para personas ciegas o con baja visión",
+      "submit": "Aplicar"
     }
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos",
-      "attachment_length": "You can't attach over {limit} files"
+      "attachment_type": "Solo puedes adjuntar imágenes o vídeos",
+      "attachment_length": "No puedes adjuntar mas de {limit} archivos"
     },
-    "upload_error": "Failed to upload the file",
+    "upload_error": "No se pudo cargar el archivo",
     "compose": {
-      "post_failed": "Failed to post a status"
+      "post_failed": "No se pudo publicar un estado"
     },
-    "failed_mark": "Failed to mark as read"
+    "failed_mark": "No se pudo marcar como leído"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close"
+    "back": "Atrás",
+    "close": "Cerrar"
   },
   "profile": {
-    "follow": "Follow",
-    "unfollow": "Unfollow",
-    "open_original": "Open original page",
-    "block": "Block",
-    "unblock": "Unblock",
-    "mute": "Mute",
-    "unmute": "Unmute",
-    "block_domain": "Block domain {server}",
-    "unblock_domain": "Unblock domain {server}",
-    "timeline": "Timeline",
-    "followers": "Followers",
-    "followings": "Followings",
-    "header": "Header image of {user}",
-    "avatar": "Avatar of {user}",
-    "detail": "Details"
+    "follow": "Seguir",
+    "unfollow": "Dejar de seguir",
+    "open_original": "Abrir página original",
+    "block": "Bloquear",
+    "unblock": "Desbloquear",
+    "mute": "Silenciar",
+    "unmute": "Desilenciar",
+    "block_domain": "Bloquear dominio {server}",
+    "unblock_domain": "Desbloquear dominio {server}",
+    "timeline": "Línea de tiempo",
+    "followers": "Seguidores",
+    "followings": "Siguiendo",
+    "header": "Imagen de cabecera de {user}",
+    "avatar": "Avatar de {user}",
+    "detail": "Detalles"
   },
   "settings": {
-    "title": "Settings",
-    "language": "Language",
-    "font_size": "Font size",
-    "mode": "Color mode",
-    "dark_mode": "Dark mode",
-    "light_mode": "Light mode",
-    "theme": "Color theme"
+    "title": "Configuraciones",
+    "language": "Lenguaje",
+    "font_size": "Tamaño de fuente",
+    "mode": "Modo de color",
+    "dark_mode": "Modo oscuro",
+    "light_mode": "Modo claro",
+    "theme": "Tema de color"
   },
   "thirdparty": {
-    "title": "Third-party licenses"
+    "title": "Licencias de terceros"
   },
   "report": {
-    "title": "Report {user}",
-    "detail": "Detail",
-    "submit": "Submit"
+    "title": "Reportar {user}",
+    "detail": "Detalle",
+    "submit": "Enviar"
   },
   "search": {
-    "placeholder": "Search timeline"
+    "placeholder": "Buscar línea de tiempo"
   }
 }
