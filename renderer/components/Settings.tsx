@@ -25,6 +25,10 @@ const languages = [
   {
     label: '繁体字',
     value: 'zh-TW'
+  },
+  {
+    label: 'español',
+    value: 'es-ES'
   }
 ]
 
