@@ -23,6 +23,7 @@ Whalebird is a Fediverse client app for desktop.
     - Pleroma
     - Friendica
     - Firefish
+    - Gotosocial
 
 ## Install
 ### Mac
