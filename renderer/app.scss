@@ -114,6 +114,10 @@
   opacity: 1;
 }
 
+.no-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 button:focus {
   outline: none;
 }

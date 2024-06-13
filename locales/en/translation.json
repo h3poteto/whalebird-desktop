@@ -41,6 +41,7 @@
       "domain": "Domain",
       "sign_in": "Sign in",
       "authorize": "Authorize",
+      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
       "authorization_code": "Authorization Code",
       "authorization_helper": "Please paste the authorization code from your browser",
       "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",

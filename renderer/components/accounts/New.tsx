@@ -2,8 +2,9 @@ import generator, { MegalodonInterface, OAuth, detector } from 'megalodon'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { db } from '@/db'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Alert, Button, Dialog, DialogBody, DialogHeader, Input, Spinner, Typography } from '@material-tailwind/react'
+import { Alert, Button, Dialog, DialogBody, DialogHeader, IconButton, Input, Spinner, Typography } from '@material-tailwind/react'
 import { invoke } from '@/utils/invoke'
+import { FaPaperclip } from 'react-icons/fa6'
 
 type NewProps = {
   opened: boolean
@@ -76,6 +77,10 @@ export default function New(props: NewProps) {
       domainFormRef.current?.removeEventListener('submit', handleDomainSubmit)
     }
   }, [props.opened, sns])
+
+  const copyText = (text: string) => {
+    navigator.clipboard.writeText(text)
+  }
 
   const authorize = async () => {
     setError('')
@@ -169,6 +174,19 @@ export default function New(props: NewProps) {
               <>
                 {appData ? (
                   <form className="flex max-w-md flex-col gap-2" ref={authorizeFormRef}>
+                    <div>
+                      <Typography>
+                        <FormattedMessage id="accounts.new.authorization_url" />
+                      </Typography>
+                    </div>
+                    <div className="w-full px-1 flex justify-between">
+                      <span className="whitespace-nowrap overflow-x-auto w-11/12 p-1 bg-gray-200 dark:bg-gray-800 no-scroll">
+                        {appData.url}
+                      </span>
+                      <IconButton size="sm" variant="text" color="blue" onClick={() => copyText(appData.url)}>
+                        <FaPaperclip className="text-xl" />
+                      </IconButton>
+                    </div>
                     {appData.session_token ? (
                       <>
                         <div className="block text-gray-600">
