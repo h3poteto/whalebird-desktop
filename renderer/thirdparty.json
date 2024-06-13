@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.12.12": {
+  "@types/node@20.14.2": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
