@@ -4,7 +4,7 @@ import { db } from '@/db'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Alert, Button, Dialog, DialogBody, DialogHeader, IconButton, Input, Spinner, Typography } from '@material-tailwind/react'
 import { invoke } from '@/utils/invoke'
-import { FaPaperclip } from 'react-icons/fa6'
+import { FaClipboard } from 'react-icons/fa6'
 
 type NewProps = {
   opened: boolean
@@ -183,8 +183,14 @@ export default function New(props: NewProps) {
                       <span className="whitespace-nowrap overflow-x-auto w-11/12 p-1 bg-gray-200 dark:bg-gray-800 no-scroll">
                         {appData.url}
                       </span>
-                      <IconButton size="sm" variant="text" color="blue" onClick={() => copyText(appData.url)}>
-                        <FaPaperclip className="text-xl" />
+                      <IconButton
+                        size="sm"
+                        variant="text"
+                        color="blue"
+                        title={formatMessage({ id: 'accounts.copy_authorization_url' })}
+                        onClick={() => copyText(appData.url)}
+                      >
+                        <FaClipboard className="text-xl" />
                       </IconButton>
                     </div>
                     {appData.session_token ? (
