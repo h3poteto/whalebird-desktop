@@ -41,6 +41,8 @@
       "domain": "ドメイン",
       "sign_in": "ログイン",
       "authorize": "認証",
+      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
+      "copy_authorization_url": "Copy authorization URL",
       "authorization_code": "認証コード",
       "authorization_helper": "ブラウザに表示された認証コードを貼り付けてください",
       "without_code_authorize": "お使いのブラウザでWhalebirdを許可してください。その後、認証ボタンを押してください",

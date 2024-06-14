@@ -41,6 +41,8 @@
       "domain": "網域",
       "sign_in": "登入",
       "authorize": "授權",
+      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
+      "copy_authorization_url": "Copy authorization URL",
       "authorization_code": "授權碼",
       "authorization_helper": "請貼上你瀏覽器中的授權碼",
       "without_code_authorize": "請在你的瀏覽器中批准 Whalebird，批准後請授權",

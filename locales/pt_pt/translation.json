@@ -41,6 +41,8 @@
       "domain": "Domínio",
       "sign_in": "Inscreva-se",
       "authorize": "Autorizar",
+      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
+      "copy_authorization_url": "Copy authorization URL",
       "authorization_code": "Código de autorização",
       "authorization_helper": "Por favor, coloque o código de autorização oriundo do seu navegador",
       "without_code_authorize": "Por favor, aprove o Whalebird no seu navegador e, de seguida, ative as suas autorizações",
