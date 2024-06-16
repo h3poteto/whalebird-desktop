@@ -53,7 +53,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "^7.33.2",
     "next": "^12.3.4",
-    "nextron": "^8.12.0",
+    "nextron": "^9.0.0",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
