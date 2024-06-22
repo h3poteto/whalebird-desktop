@@ -30,7 +30,7 @@
         "favourite": "最愛",
         "bookmark": "書籤",
         "emoji_reaction": "表情符號反應",
-        "detail": "Details"
+        "detail": "詳細資訊"
       }
     },
     "mark_as_read": "標記為已讀"
@@ -41,8 +41,8 @@
       "domain": "網域",
       "sign_in": "登入",
       "authorize": "授權",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
-      "copy_authorization_url": "Copy authorization URL",
+      "authorization_url": "通常瀏覽器會自動開啟，但是如果沒有，請在瀏覽器中開啟以下網址並核准。",
+      "copy_authorization_url": "複製授權網址",
       "authorization_code": "授權碼",
       "authorization_helper": "請貼上你瀏覽器中的授權碼",
       "without_code_authorize": "請在你的瀏覽器中批准 Whalebird，批准後請授權",
@@ -72,7 +72,7 @@
     },
     "poll_vote": {
       "title": "投票",
-      "body": "{user} voted your poll"
+      "body": "{user} 參與了你的投票"
     },
     "status": {
       "title": "狀態",
@@ -83,8 +83,8 @@
       "body": "{user} updated the post"
     },
     "emoji_reaction": {
-      "title": "Reaction",
-      "body": "{user} reacted your post"
+      "title": "反應",
+      "body": "{user} 反應了你的嘟文"
     },
     "follow": {
       "title": "追蹤",
@@ -101,7 +101,7 @@
     "spoiler": {
       "placeholder": "在此處寫下你的警告訊息"
     },
-    "emoji": "Add emoji",
+    "emoji": "新增表情符號",
     "actions": {
       "attachment": "新增附件",
       "poll": "新增投票",
@@ -113,9 +113,9 @@
       "public": "公開",
       "unlisted": "不列出",
       "private": "私密",
-      "direct": "Direct"
+      "direct": "直接"
     },
-    "nsfw": "Sensitive",
+    "nsfw": "敏感",
     "poll": {
       "add": "Add",
       "5min": "5 分鐘",
@@ -161,18 +161,18 @@
     "timeline": "時間軸",
     "followers": "跟隨者",
     "followings": "正在關注",
-    "header": "Header image of {user}",
-    "avatar": "Avatar of {user}",
-    "detail": "Details"
+    "header": "{user} 的標題圖片",
+    "avatar": "{user} 的頭像",
+    "detail": "詳細資訊"
   },
   "settings": {
     "title": "設定",
     "language": "語言",
     "font_size": "字型大小",
-    "mode": "Color mode",
+    "mode": "色彩模式",
     "dark_mode": "深色模式",
     "light_mode": "淺色模式",
-    "theme": "Color theme"
+    "theme": "色彩主題"
   },
   "thirdparty": {
     "title": "第三方授權條款"
