@@ -256,7 +256,12 @@ export default function Profile(props: Props) {
           </div>
           <div>
             <Tabs value="timeline">
-              <TabsHeader>
+              <TabsHeader
+                indicatorProps={{
+                  className:
+                    'bg-blue-gray-50 dark:bg-blue-gray-900 border-b-2 border-blue-400 dark:border-blue-600 shadow-none rounded-none'
+                }}
+              >
                 <Tab value="timeline">
                   <FormattedMessage id="profile.timeline" />
                 </Tab>
