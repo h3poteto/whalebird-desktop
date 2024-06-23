@@ -8,6 +8,7 @@ type Props = {
   client: MegalodonInterface
   account: Account
   statuses: Array<Entity.Status>
+  loading: boolean
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
@@ -33,9 +34,13 @@ export default function Statuses(props: Props) {
             )}
           />
         ) : (
-          <div className="py-4">
-            <Spinner className="m-auto" />
-          </div>
+          <>
+            {props.loading && (
+              <div className="py-4">
+                <Spinner className="m-auto" />
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

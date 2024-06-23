@@ -6,6 +6,7 @@ import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { FormattedMessage, useIntl } from 'react-intl'
 import Statuses from './search/Statuses'
 import { Account } from '@/db'
+import Accounts from './search/Accounts'
 
 type Props = {
   client: MegalodonInterface
@@ -24,6 +25,7 @@ export default function Search(props: Props) {
     hashtags: [],
     statuses: []
   })
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (router.query.q) {
@@ -33,14 +35,20 @@ export default function Search(props: Props) {
   }, [router.query.q])
 
   const search = (query: string) => {
+    setLoading(true)
     setResults({
       accounts: [],
       hashtags: [],
       statuses: []
     })
-    props.client.search(query).then(res => {
-      setResults(res.data)
-    })
+    props.client
+      .search(query)
+      .then(res => {
+        setResults(res.data)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   const submit = (ev: FormEvent<HTMLFormElement>) => {
@@ -91,9 +99,17 @@ export default function Search(props: Props) {
             </TabsHeader>
             <TabsBody style={{ height: 'calc(100% - 35px)' }}>
               <TabPanel value="statuses" className="h-full p-0">
-                <Statuses statuses={results.statuses} client={props.client} account={props.account} openMedia={props.openMedia} />
+                <Statuses
+                  statuses={results.statuses}
+                  client={props.client}
+                  account={props.account}
+                  openMedia={props.openMedia}
+                  loading={loading}
+                />
               </TabPanel>
-              <TabPanel value="accounts">accounts</TabPanel>
+              <TabPanel value="accounts">
+                <Accounts client={props.client} users={results.accounts} loading={loading} />
+              </TabPanel>
               <TabPanel value="hashtags">hashtags</TabPanel>
             </TabsBody>
           </Tabs>
