@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import Statuses from './search/Statuses'
 import { Account } from '@/db'
 import Accounts from './search/Accounts'
+import Hashtags from './search/Hashtags'
 
 type Props = {
   client: MegalodonInterface
@@ -108,9 +109,11 @@ export default function Search(props: Props) {
                 />
               </TabPanel>
               <TabPanel value="accounts">
-                <Accounts client={props.client} users={results.accounts} loading={loading} />
+                <Accounts users={results.accounts} loading={loading} />
               </TabPanel>
-              <TabPanel value="hashtags">hashtags</TabPanel>
+              <TabPanel value="hashtags">
+                <Hashtags hashtags={results.hashtags} loading={loading} />
+              </TabPanel>
             </TabsBody>
           </Tabs>
         </section>

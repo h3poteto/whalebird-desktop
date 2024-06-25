@@ -1,11 +1,9 @@
 import { Avatar, Spinner } from '@material-tailwind/react'
-import { Entity, MegalodonInterface } from 'megalodon'
+import { Entity } from 'megalodon'
 import emojify from '@/utils/emojify'
-import { Virtuoso } from 'react-virtuoso'
 import { useRouter } from 'next/router'
 
 type Props = {
-  client: MegalodonInterface
   users: Array<Entity.Account>
   loading: boolean
 }
@@ -21,12 +19,11 @@ export default function Accounts(props: Props) {
     <>
       <div className="overflow-x-hidden h-full w-full">
         {props.users.length > 0 ? (
-          <Virtuoso
-            style={{ height: 'calc(100vh - 64px)' }}
-            data={props.users}
-            className="timeline-scrollable"
-            itemContent={(index, user) => <User key={index} user={user} openUser={openUser} />}
-          />
+          <>
+            {props.users.map((user, index) => (
+              <User key={index} user={user} openUser={openUser} />
+            ))}
+          </>
         ) : (
           <>
             {props.loading && (
