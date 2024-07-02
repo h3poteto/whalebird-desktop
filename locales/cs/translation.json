@@ -183,6 +183,9 @@
     "submit": "Submit"
   },
   "search": {
-    "placeholder": "Search timeline"
+    "placeholder": "Search timeline",
+    "statuses": "Statuses",
+    "accounts": "Accounts",
+    "hashtags": "Hashtags"
   }
 }

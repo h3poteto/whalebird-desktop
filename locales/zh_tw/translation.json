@@ -183,6 +183,9 @@
     "submit": "提交"
   },
   "search": {
-    "placeholder": "搜尋時間軸"
+    "placeholder": "搜尋時間軸",
+    "statuses": "Statuses",
+    "accounts": "Accounts",
+    "hashtags": "Hashtags"
   }
 }

@@ -183,6 +183,9 @@
     "submit": "Submeter"
   },
   "search": {
-    "placeholder": "Pesquisar na timeline"
+    "placeholder": "Pesquisar na timeline",
+    "statuses": "Statuses",
+    "accounts": "Accounts",
+    "hashtags": "Hashtags"
   }
 }
