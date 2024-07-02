@@ -183,6 +183,9 @@
     "submit": "送信"
   },
   "search": {
-    "placeholder": "タイムラインを検索"
+    "placeholder": "タイムラインを検索",
+    "statuses": "Statuses",
+    "accounts": "Accounts",
+    "hashtags": "Hashtags"
   }
 }
