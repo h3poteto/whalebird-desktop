@@ -183,6 +183,9 @@
     "submit": "Enviar"
   },
   "search": {
-    "placeholder": "Buscar línea de tiempo"
+    "placeholder": "Buscar línea de tiempo",
+    "statuses": "Statuses",
+    "accounts": "Accounts",
+    "hashtags": "Hashtags"
   }
 }
