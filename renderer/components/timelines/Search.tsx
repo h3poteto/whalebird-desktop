@@ -8,6 +8,7 @@ import Statuses from './search/Statuses'
 import { Account } from '@/db'
 import Accounts from './search/Accounts'
 import Hashtags from './search/Hashtags'
+import Detail from '../detail/Detail'
 
 type Props = {
   client: MegalodonInterface
@@ -65,10 +66,17 @@ export default function Search(props: Props) {
     }
   }
 
+  const timelineClass = () => {
+    if (router.query.detail) {
+      return 'timeline-with-drawer'
+    }
+    return 'timeline'
+  }
+
   return (
     <>
-      <div className="search w-full h-full">
-        <section className="h-full w-full">
+      <div className="flex timeline-wrapper">
+        <section className={`h-full ${timelineClass()}`}>
           <div className="w-full theme-text-primary p-2 flex justify-center" style={{ height: '56px' }}>
             <form onSubmit={ev => submit(ev)}>
               <Input
@@ -117,6 +125,7 @@ export default function Search(props: Props) {
             </TabsBody>
           </Tabs>
         </section>
+        <Detail client={props.client} account={props.account} className="detail" openMedia={props.openMedia} />
       </div>
     </>
   )

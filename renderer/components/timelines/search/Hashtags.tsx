@@ -12,7 +12,7 @@ export default function Hashtags(props: Props) {
   const router = useRouter()
 
   const openTag = (tag: string) => {
-    router.push({ query: { id: router.query.id, timeline: router.query.timeline, hashtag: tag, detail: true } })
+    router.push({ query: { id: router.query.id, timeline: router.query.timeline, tag: tag, detail: true } })
   }
 
   return (
