@@ -239,6 +239,7 @@ export default function Compose(props: Props) {
             color="blue-gray"
             containerProps={{ className: 'mb-2' }}
             value={spoiler}
+            className="placeholder:opacity-100"
             onChange={ev => setSpoiler(ev.target.value)}
             placeholder={formatMessage({ id: 'compose.spoiler.placeholder' })}
           />

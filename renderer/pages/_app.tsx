@@ -340,12 +340,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     },
     tabsHeader: {
       defaultProps: {
-        className: ''
-      },
-      styles: {
-        base: {
-          bg: 'bg-blue-gray-50 dark:bg-blue-gray-800'
-        }
+        className: 'rounded-none border-b border-blue-gray-50 dark:border-blue-gray-900 bg-transparent p-0'
       }
     },
     tab: {
@@ -360,9 +355,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             initial: {
               color: 'text-blue-gray-900 dark:text-blue-gray-200'
             }
-          },
-          indicator: {
-            bg: 'bg-white dark:bg-gray-700'
           }
         }
       }

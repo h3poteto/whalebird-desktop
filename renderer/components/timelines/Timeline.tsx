@@ -1,6 +1,6 @@
 import { Account } from '@/db'
 import { Entity, MegalodonInterface, WebSocketInterface } from 'megalodon'
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useCallback, useRef, FormEvent } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import Status from './status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -244,6 +244,19 @@ export default function Timeline(props: Props) {
     })
   }
 
+  const search = (ev: FormEvent<HTMLFormElement>) => {
+    ev.preventDefault()
+    const word = ((ev.target as HTMLFormElement).elements[0] as HTMLInputElement).value
+    if (word.length > 0) {
+      router.push({
+        query: Object.assign({}, router.query, {
+          timeline: 'search',
+          q: word
+        })
+      })
+    }
+  }
+
   return (
     <div className="flex timeline-wrapper">
       <section className={`h-full ${timelineClass()}`}>
@@ -252,14 +265,13 @@ export default function Timeline(props: Props) {
             {props.timeline.match(/list_(\d+)/) ? <>{list && list.title}</> : <FormattedMessage id={`timeline.${props.timeline}`} />}
           </div>
           <div className="w-64 text-xs">
-            <form>
+            <form onSubmit={ev => search(ev)}>
               <Input
                 type="text"
-                label={formatMessage({ id: 'timeline.search' })}
-                disabled
+                color="blue-gray"
+                placeholder={formatMessage({ id: 'timeline.search' })}
                 containerProps={{ className: 'h-7' }}
-                className="!py-1 !px-2 !text-xs"
-                labelProps={{ className: '!leading-10' }}
+                className="!py-1 !px-2 !text-xs placeholder:opacity-100"
               />
             </form>
           </div>

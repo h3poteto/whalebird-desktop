@@ -4,6 +4,7 @@ import { useEffect, useReducer, useState } from 'react'
 import { Account, db } from '@/db'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import Notifications from '@/components/timelines/Notifications'
+import Search from '@/components/timelines/Search'
 import Media from '@/components/Media'
 import Report from '@/components/report/Report'
 
@@ -69,14 +70,26 @@ export default function Page() {
           }
         />
       ) : (
-        <Timeline
-          timeline={router.query.timeline as string}
-          account={account}
-          client={client}
-          openMedia={(media: Array<Entity.Attachment>, index: number) =>
-            dispatch({ target: 'media', value: true, object: media, index: index })
-          }
-        />
+        <>
+          {(router.query.timeline as string) === 'search' ? (
+            <Search
+              client={client}
+              account={account}
+              openMedia={(media: Array<Entity.Attachment>, index: number) =>
+                dispatch({ target: 'media', value: true, object: media, index: index })
+              }
+            />
+          ) : (
+            <Timeline
+              timeline={router.query.timeline as string}
+              account={account}
+              client={client}
+              openMedia={(media: Array<Entity.Attachment>, index: number) =>
+                dispatch({ target: 'media', value: true, object: media, index: index })
+              }
+            />
+          )}
+        </>
       )}
       <Media
         open={modalState.media.opened}
