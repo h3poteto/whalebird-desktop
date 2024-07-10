@@ -7085,8 +7085,8 @@ __metadata:
   linkType: hard
 
 "nextron@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "nextron@npm:9.0.0"
+  version: 9.1.0
+  resolution: "nextron@npm:9.1.0"
   dependencies:
     "@babel/core": 7.24.7
     "@babel/plugin-transform-class-properties": 7.24.7
@@ -7108,7 +7108,7 @@ __metadata:
     webpack-merge: 5.10.0
   bin:
     nextron: bin/nextron.js
-  checksum: 2136542b95798b621177a5d862cb0e164f3d2fe6dce5239bd83afaa0dd09af26ec56c41ab3178198e777c8aa500e1ad5727e310e74702478708a51fe7890c6a3
+  checksum: ec35962c137476772c3a1f6210392f85d7498e0e5c6bbcaf593758650faaba68bd48a303a1228ecacd95f3fa278f9dc91c0ef2d2e23617b49015887dd9e94b4d
   languageName: node
   linkType: hard
 
