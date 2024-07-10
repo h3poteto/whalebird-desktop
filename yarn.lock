@@ -2767,7 +2767,7 @@ __metadata:
     eslint: ^9.0.0
     eslint-config-prettier: ^9.0.0
     eslint-plugin-react: ^7.33.2
-    megalodon: 10.0.1
+    megalodon: 10.0.2
     next: ^14.0.0
     nextron: ^9.0.0
     parse-link-header: ^2.0.0
@@ -3291,14 +3291,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.8":
-  version: 1.6.8
-  resolution: "axios@npm:1.6.8"
+"axios@npm:1.7.2":
+  version: 1.7.2
+  resolution: "axios@npm:1.7.2"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: bf007fa4b207d102459300698620b3b0873503c6d47bf5a8f6e43c0c64c90035a4f698b55027ca1958f61ab43723df2781c38a99711848d232cad7accbcdfcdd
+  checksum: e457e2b0ab748504621f6fa6609074ac08c824bf0881592209dfa15098ece7e88495300e02cd22ba50b3468fd712fe687e629dcb03d6a3f6a51989727405aedf
   languageName: node
   linkType: hard
 
@@ -6716,21 +6716,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"megalodon@npm:10.0.1":
-  version: 10.0.1
-  resolution: "megalodon@npm:10.0.1"
+"megalodon@npm:10.0.2":
+  version: 10.0.2
+  resolution: "megalodon@npm:10.0.2"
   dependencies:
     "@badgateway/oauth2-client": ^2.3.0
     "@types/ws": ^8.5.10
-    axios: 1.6.8
+    axios: 1.7.2
     dayjs: ^1.11.11
     events: ^3.3.0
     form-data: ^4.0.0
     isomorphic-ws: ^5.0.0
     object-assign-deep: ^0.4.0
-    uuid: ^9.0.1
-    ws: 8.17.0
-  checksum: f28b844931ff622745311facb1a66daf4978cf70c7c3b3168644b7d6b4362a41b41234a17777d519a6e7ab66b77d14e783c7ae04dd5112f5b11418b1dcc94863
+    uuid: ^10.0.0
+    ws: 8.17.1
+  checksum: 19ac1bc0fdba1c35018496ca05b758a6665ba34dd39c1ddf194467dbb4cc082d45ad290d131eff191eec4b8dcd556a9f5c920ef496ab3946afe1f610e7662154
   languageName: node
   linkType: hard
 
@@ -9272,11 +9272,11 @@ __metadata:
 
 "typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>, typescript@patch:typescript@^5.3.3#~builtin<compat/typescript>":
   version: 5.5.3
-  resolution: "typescript@patch:typescript@npm%3A5.5.3#~builtin<compat/typescript>::version=5.5.3&hash=b45daf"
+  resolution: "typescript@patch:typescript@npm%3A5.5.3#~builtin<compat/typescript>::version=5.5.3&hash=379a07"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 6853be4607706cc1ad2f16047cf1cd72d39f79acd5f9716e1d23bc0e462c7f59be7458fe58a21665e7657a05433d7ab8419d093a5a4bd5f3a33f879b35d2769b
+  checksum: 3c0f7fe66e0e3a5f6b531b3e20bfe4a846718d20c299a49f39d4594e0bedcf5820cb98b49a9c883f2dde7dc6942affa2c95a775ee0221ca1ef143147761b0e80
   languageName: node
   linkType: hard
 
@@ -9399,12 +9399,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^9.0.1":
-  version: 9.0.1
-  resolution: "uuid@npm:9.0.1"
+"uuid@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "uuid@npm:10.0.0"
   bin:
     uuid: dist/bin/uuid
-  checksum: 39931f6da74e307f51c0fb463dc2462807531dc80760a9bff1e35af4316131b4fc3203d16da60ae33f07fdca5b56f3f1dd662da0c99fea9aaeab2004780cc5f4
+  checksum: 4b81611ade2885d2313ddd8dc865d93d8dccc13ddf901745edca8f86d99bc46d7a330d678e7532e7ebf93ce616679fb19b2e3568873ac0c14c999032acb25869
   languageName: node
   linkType: hard
 
@@ -9626,9 +9626,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.17.0":
-  version: 8.17.0
-  resolution: "ws@npm:8.17.0"
+"ws@npm:8.17.1":
+  version: 8.17.1
+  resolution: "ws@npm:8.17.1"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -9637,7 +9637,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 147ef9eab0251364e1d2c55338ad0efb15e6913923ccbfdf20f7a8a6cb8f88432bcd7f4d8f66977135bfad35575644f9983201c1a361019594a4e53977bf6d4e
+  checksum: 442badcce1f1178ec87a0b5372ae2e9771e07c4929a3180321901f226127f252441e8689d765aa5cfba5f50ac60dd830954afc5aeae81609aefa11d3ddf5cecf
   languageName: node
   linkType: hard
 
