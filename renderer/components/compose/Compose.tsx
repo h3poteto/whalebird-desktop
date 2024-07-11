@@ -257,7 +257,11 @@ export default function Compose(props: Props) {
           />
           <Popover open={popoverEmoji} handler={setPopoverEmoji}>
             <PopoverHandler>
-              <button className="absolute top-1 right-1 text-gray-600 cursor-pointer" title={formatMessage({ id: 'compose.emoji' })}>
+              <button
+                className="absolute top-1 right-1 text-gray-600 cursor-pointer"
+                type="button"
+                title={formatMessage({ id: 'compose.emoji' })}
+              >
                 <FaFaceLaughBeam />
               </button>
             </PopoverHandler>
