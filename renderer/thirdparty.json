@@ -167,7 +167,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@20.14.2": {
+  "@types/node@20.14.10": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -203,7 +203,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.1.1": {
+  "Whalebird@6.1.2": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -249,7 +249,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/atomically",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/atomically/LICENSE"
   },
-  "axios@1.6.8": {
+  "axios@1.7.2": {
     "licenses": "MIT",
     "repository": "https://github.com/axios/axios",
     "publisher": "Matt Zabriskie",
@@ -333,7 +333,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream/License"
   },
-  "dexie@4.0.7": {
+  "dexie@4.0.8": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/dexie/Dexie.js",
     "publisher": "David Fahlander",
@@ -597,7 +597,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects/LICENSE"
   },
-  "megalodon@10.0.1": {
+  "megalodon@10.0.2": {
     "licenses": "MIT",
     "repository": "https://github.com/h3poteto/megalodon",
     "publisher": "h3poteto",
@@ -722,12 +722,12 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-exists",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/path-exists/license"
   },
-  "picocolors@1.0.0": {
+  "picocolors@1.0.1": {
     "licenses": "ISC",
     "repository": "https://github.com/alexeyraspopov/picocolors",
     "publisher": "Alexey Raspopov",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/picocolors",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/picocolors/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss/node_modules/picocolors",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss/node_modules/picocolors/LICENSE"
   },
   "pkg-up@3.1.0": {
     "licenses": "MIT",
@@ -745,7 +745,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/popmotion",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/popmotion/LICENSE.md"
   },
-  "postcss@8.4.38": {
+  "postcss@8.4.39": {
     "licenses": "MIT",
     "repository": "https://github.com/postcss/postcss",
     "publisher": "Andrey Sitnik",
@@ -783,7 +783,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-blurhash",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-blurhash/README.md"
   },
-  "react-dom@18.2.0": {
+  "react-dom@18.3.1": {
     "licenses": "MIT",
     "repository": "https://github.com/facebook/react",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom",
@@ -824,7 +824,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-virtuoso",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-virtuoso/LICENSE"
   },
-  "react@18.2.0": {
+  "react@18.3.1": {
     "licenses": "MIT",
     "repository": "https://github.com/facebook/react",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react",
@@ -846,7 +846,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sanitize-html",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sanitize-html/LICENSE"
   },
-  "scheduler@0.23.0": {
+  "scheduler@0.23.2": {
     "licenses": "MIT",
     "repository": "https://github.com/facebook/react",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/scheduler",
@@ -905,7 +905,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/type-fest",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/type-fest/readme.md"
   },
-  "typescript@5.4.5": {
+  "typescript@5.5.3": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/Microsoft/TypeScript",
     "publisher": "Microsoft Corp.",
@@ -926,13 +926,13 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uri-js",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uri-js/LICENSE"
   },
-  "uuid@9.0.1": {
+  "uuid@10.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/uuidjs/uuid",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/uuid/LICENSE.md"
   },
-  "ws@8.17.0": {
+  "ws@8.17.1": {
     "licenses": "MIT",
     "repository": "https://github.com/websockets/ws",
     "publisher": "Einar Otto Stangvik",
