@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import { MouseEventHandler, useState } from 'react'
 import { findAccount, findLink, ParsedAccount, accountMatch, findTag } from '@/utils/statusParser'
 import { Account } from '@/db'
-import { Avatar } from '@material-tailwind/react'
+import { Avatar, List, ListItem, Card as MaterialCard } from '@material-tailwind/react'
 import { invoke } from '@/utils/invoke'
 
 type Props = {
@@ -88,6 +88,33 @@ export default function Status(props: Props) {
     )
   }
 
+  const onContextMenu: MouseEventHandler<HTMLDivElement> = e => {
+    e.preventDefault()
+    hideOthers()
+    const context = document.getElementById(`context-${props.status.id}`)
+    if (context) {
+      context.style.left = `${e.clientX}px`
+      context.style.top = `${e.clientY}px`
+      context.style.display = 'block'
+    }
+  }
+
+  const onClick: MouseEventHandler<HTMLDivElement> = e => {
+    e.preventDefault()
+    hideOthers()
+  }
+
+  const hideOthers = () => {
+    const menu = document.getElementsByClassName('context-menu')
+    for (let i = 0; i < menu.length; i++) {
+      ;(menu[i] as HTMLElement).style.display = 'none'
+    }
+  }
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(status.url)
+  }
+
   return (
     <div className="border-b border-gray-200 dark:border-gray-800 mr-2 py-1">
       {rebloggedHeader(
@@ -114,7 +141,12 @@ export default function Status(props: Props) {
             )}
           />
         </div>
-        <div className="text-gray-950 dark:text-gray-300 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
+        <div
+          className="text-gray-950 dark:text-gray-300 break-all overflow-hidden"
+          style={{ width: 'calc(100% - 56px)' }}
+          onContextMenu={onContextMenu}
+          onClick={onClick}
+        >
           <div className="flex justify-between">
             <div className="flex cursor-pointer" onClick={() => openUser(status.account.id)}>
               <span
@@ -145,6 +177,18 @@ export default function Status(props: Props) {
               </div>
             </>
           )}
+          <div className="fixed hidden context-menu z-50" id={`context-${status.id}`}>
+            <MaterialCard className="rounded-md bg-white dark:bg-gray-800">
+              <List className="my-2 p-0">
+                <ListItem className="ground rounded-none py-1.5 px-3 text-sm" onClick={copyLink}>
+                  <FormattedMessage id="timeline.status.context_menu.copy_link" />
+                </ListItem>
+                <ListItem className="ground rounded-none py-1.5 px-3 text-sm" onClick={openStatus}>
+                  <FormattedMessage id="timeline.status.context_menu.open_detail" />
+                </ListItem>
+              </List>
+            </MaterialCard>
+          </div>
 
           <Actions status={status} client={props.client} account={props.account} onRefresh={onRefresh} />
         </div>
