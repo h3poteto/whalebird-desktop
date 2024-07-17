@@ -31,6 +31,10 @@
         "bookmark": "ブックマーク",
         "emoji_reaction": "絵文字リアクション",
         "detail": "詳細"
+      },
+      "context_menu": {
+        "copy_link": "Copy link",
+        "open_detail": "Open original page"
       }
     },
     "mark_as_read": "全て既読にする"
@@ -41,8 +45,8 @@
       "domain": "ドメイン",
       "sign_in": "ログイン",
       "authorize": "認証",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
-      "copy_authorization_url": "Copy authorization URL",
+      "authorization_url": "通常、ブラウザは自動的に開きますが、そうでない場合は、以下のURLをブラウザで開いて承認してください。",
+      "copy_authorization_url": "認証URLをコピー",
       "authorization_code": "認証コード",
       "authorization_helper": "ブラウザに表示された認証コードを貼り付けてください",
       "without_code_authorize": "お使いのブラウザでWhalebirdを許可してください。その後、認証ボタンを押してください",
@@ -169,9 +173,9 @@
     "title": "設定",
     "language": "言語",
     "font_size": "フォントサイズ",
-    "mode": "Color mode",
-    "dark_mode": "Dark mode",
-    "light_mode": "Light mode",
+    "mode": "カラーモード",
+    "dark_mode": "ダークモード",
+    "light_mode": "ライトモード",
     "theme": "カラーテーマ"
   },
   "thirdparty": {
@@ -184,8 +188,8 @@
   },
   "search": {
     "placeholder": "タイムラインを検索",
-    "statuses": "Statuses",
-    "accounts": "Accounts",
-    "hashtags": "Hashtags"
+    "statuses": "投稿",
+    "accounts": "アカウント",
+    "hashtags": "ハッシュタグ"
   }
 }
