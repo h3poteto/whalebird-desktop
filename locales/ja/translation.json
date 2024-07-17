@@ -33,8 +33,8 @@
         "detail": "詳細"
       },
       "context_menu": {
-        "copy_link": "Copy link",
-        "open_detail": "Open original page"
+        "copy_link": "リンクをコピー",
+        "open_detail": "元のページを開く"
       }
     },
     "mark_as_read": "全て既読にする"
