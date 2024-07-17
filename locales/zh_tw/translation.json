@@ -31,6 +31,10 @@
         "bookmark": "書籤",
         "emoji_reaction": "表情符號反應",
         "detail": "詳細資訊"
+      },
+      "context_menu": {
+        "copy_link": "Copy link",
+        "open_detail": "Open original page"
       }
     },
     "mark_as_read": "標記為已讀"
