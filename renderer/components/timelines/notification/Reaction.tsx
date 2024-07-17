@@ -6,9 +6,9 @@ import Poll from '../status/Poll'
 import Card from '../status/Card'
 import Media from '../status/Media'
 import { FaBarsProgress, FaHouse, FaPenToSquare, FaRetweet, FaStar } from 'react-icons/fa6'
-import { useIntl } from 'react-intl'
-import { useState } from 'react'
-import { Avatar } from '@material-tailwind/react'
+import { FormattedMessage, useIntl } from 'react-intl'
+import { MouseEventHandler, useState } from 'react'
+import { Avatar, List, ListItem, Card as MaterialCard } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
 
 type Props = {
@@ -35,6 +35,33 @@ export default function Reaction(props: Props) {
 
   const openUser = (id: string) => {
     router.push({ query: { id: router.query.id, timeline: router.query.timeline, user_id: id, detail: true } })
+  }
+
+  const onContextMenu: MouseEventHandler<HTMLDivElement> = e => {
+    e.preventDefault()
+    hideOthers()
+    const context = document.getElementById(`context-${status.id}`)
+    if (context) {
+      context.style.left = `${e.clientX}px`
+      context.style.top = `${e.clientY}px`
+      context.style.display = 'block'
+    }
+  }
+
+  const onClick: MouseEventHandler<HTMLDivElement> = e => {
+    e.preventDefault()
+    hideOthers()
+  }
+
+  const hideOthers = () => {
+    const menu = document.getElementsByClassName('context-menu')
+    for (let i = 0; i < menu.length; i++) {
+      ;(menu[i] as HTMLElement).style.display = 'none'
+    }
+  }
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(status.url)
   }
 
   return (
@@ -71,7 +98,12 @@ export default function Reaction(props: Props) {
             alt={formatMessage({ id: 'timeline.status.avatar' }, { user: status.account.username })}
           />
         </div>
-        <div className="text-gray-600 dark:text-gray-500 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
+        <div
+          className="text-gray-600 dark:text-gray-500 break-all overflow-hidden"
+          style={{ width: 'calc(100% - 56px)' }}
+          onContextMenu={onContextMenu}
+          onClick={onClick}
+        >
           <div className="flex justify-between">
             <div className="flex cursor-pointer" onClick={() => openUser(status.account.id)}>
               <span
@@ -92,6 +124,18 @@ export default function Reaction(props: Props) {
               <Media media={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
             </>
           )}
+          <div className="fixed hidden context-menu z-50" id={`context-${status.id}`}>
+            <MaterialCard className="rounded-md bg-white dark:bg-gray-800">
+              <List className="my-2 p-0">
+                <ListItem className="ground rounded-none py-1.5 px-3 text-sm" onClick={copyLink}>
+                  <FormattedMessage id="timeline.status.context_menu.copy_link" />
+                </ListItem>
+                <ListItem className="ground rounded-none py-1.5 px-3 text-sm" onClick={openStatus}>
+                  <FormattedMessage id="timeline.status.context_menu.open_detail" />
+                </ListItem>
+              </List>
+            </MaterialCard>
+          </div>
         </div>
       </div>
     </div>
