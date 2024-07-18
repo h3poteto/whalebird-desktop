@@ -31,6 +31,10 @@
         "bookmark": "Bookmark",
         "emoji_reaction": "Emoji reaction",
         "detail": "Details"
+      },
+      "context_menu": {
+        "copy_link": "Copy link",
+        "open_detail": "Open original page"
       }
     },
     "mark_as_read": "Mark as read"
