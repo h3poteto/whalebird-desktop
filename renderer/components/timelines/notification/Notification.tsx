@@ -41,7 +41,15 @@ export default function Notification(props: Props) {
     case 'emoji_reaction':
     case 'reaction': {
       if (props.notification.status) {
-        return <Reaction client={props.client} notification={props.notification} onRefresh={props.onRefresh} openMedia={props.openMedia} />
+        return (
+          <Reaction
+            client={props.client}
+            notification={props.notification}
+            onRefresh={props.onRefresh}
+            openMedia={props.openMedia}
+            account={props.account}
+          />
+        )
       } else {
         return null
       }
