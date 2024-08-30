@@ -1598,13 +1598,13 @@ __metadata:
   linkType: hard
 
 "@electron/notarize@npm:^2.1.0":
-  version: 2.3.2
-  resolution: "@electron/notarize@npm:2.3.2"
+  version: 2.4.0
+  resolution: "@electron/notarize@npm:2.4.0"
   dependencies:
     debug: "npm:^4.1.1"
     fs-extra: "npm:^9.0.1"
     promise-retry: "npm:^2.0.1"
-  checksum: 10/c391c5b005496f3ad504fe323083d9ae1a14d4cbf7db03d7823b92dcad0815f9bd9d01732d9f748c933dae1b5d5ba98360df0ceedff4dd1814937376fc75be31
+  checksum: 10/fe97ac96e6cc93dae2cd5095bd157f5d9cb49c1a9606f0cb06216518e1c15fcfa76923de3d541544b63c5ff985c1ae43065453197a284352df95599e635877ac
   languageName: node
   linkType: hard
 
