@@ -5,15 +5,19 @@ import Body from '../status/Body'
 import Poll from '../status/Poll'
 import Card from '../status/Card'
 import Media from '../status/Media'
+import { findAccount, findLink, ParsedAccount, accountMatch, findTag } from '@/utils/statusParser'
 import { FaBarsProgress, FaHouse, FaPenToSquare, FaRetweet, FaStar } from 'react-icons/fa6'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { MouseEventHandler, useState } from 'react'
 import { Avatar, List, ListItem, Card as MaterialCard } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
+import { invoke } from '@/utils/invoke'
+import { Account } from '@/db'
 
 type Props = {
   notification: Entity.Notification
   client: MegalodonInterface
+  account: Account
   onRefresh: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
@@ -35,6 +39,37 @@ export default function Reaction(props: Props) {
 
   const openUser = (id: string) => {
     router.push({ query: { id: router.query.id, timeline: router.query.timeline, user_id: id, detail: true } })
+  }
+
+  const statusClicked: MouseEventHandler<HTMLDivElement> = async e => {
+    const parsedAccount = findAccount(e.target as HTMLElement, 'status-body')
+    if (parsedAccount) {
+      e.preventDefault()
+      e.stopPropagation()
+
+      const account = await searchAccount(parsedAccount, status, props.client, props.account.domain)
+      if (account) {
+        router.push({ query: { id: router.query.id, timeline: router.query.timeline, user_id: account.id, detail: true } })
+      } else {
+        console.warn('account not found', parsedAccount)
+      }
+      return
+    }
+
+    const parsedTag = findTag(e.target as HTMLElement, 'status-body')
+    if (parsedTag) {
+      e.preventDefault()
+      e.stopPropagation()
+      router.push({ query: { id: router.query.id, timeline: router.query.timeline, tag: parsedTag, detail: true } })
+      return
+    }
+
+    const url = findLink(e.target as HTMLElement, 'status-body')
+    if (url) {
+      invoke('open-browser', url)
+      e.preventDefault()
+      e.stopPropagation()
+    }
   }
 
   const onContextMenu: MouseEventHandler<HTMLDivElement> = e => {
@@ -116,7 +151,15 @@ export default function Reaction(props: Props) {
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>
-          <Body status={status} className="text-gray-600 dark:text-gray-500" spoilered={spoilered} setSpoilered={setSpoilered} />
+          <div className="status-body">
+            <Body
+              status={status}
+              className="text-gray-600 dark:text-gray-500"
+              spoilered={spoilered}
+              setSpoilered={setSpoilered}
+              onClick={statusClicked}
+            />
+          </div>
           {!spoilered && (
             <>
               {status.poll && <Poll poll={status.poll} onRefresh={refresh} client={props.client} className="text-gray-600" />}
@@ -209,4 +252,27 @@ const actionId = (notification: Entity.Notification) => {
     default:
       return ''
   }
+}
+
+async function searchAccount(account: ParsedAccount, status: Entity.Status, client: MegalodonInterface, domain: string) {
+  if (status.in_reply_to_account_id) {
+    const res = await client.getAccount(status.in_reply_to_account_id)
+    if (res.status === 200) {
+      const user = accountMatch([res.data], account, domain)
+      if (user) return user
+    }
+  }
+  if (status.in_reply_to_id) {
+    const res = await client.getStatusContext(status.id)
+    if (res.status === 200) {
+      const accounts: Array<Entity.Account> = res.data.ancestors.map(s => s.account).concat(res.data.descendants.map(s => s.account))
+      const user = accountMatch(accounts, account, domain)
+      if (user) return user
+    }
+  }
+  const res = await client.searchAccount(account.url, { resolve: true })
+  if (res.data.length === 0) return null
+  const user = accountMatch(res.data, account, domain)
+  if (user) return user
+  return null
 }
