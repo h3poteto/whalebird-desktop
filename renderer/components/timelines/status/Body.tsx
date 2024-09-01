@@ -19,7 +19,7 @@ export default function Body(props: Props) {
       return (
         <div className="raw-html">
           <div
-            className="spoiler-text"
+            className="spoiler-text font-thin"
             style={Object.assign({ wordWrap: 'break-word' }, props.style)}
             dangerouslySetInnerHTML={{ __html: emojify(props.status.spoiler_text, props.status.emojis) }}
             onClick={props.onClick}
@@ -39,7 +39,7 @@ export default function Body(props: Props) {
       {spoiler()}
       {!spoilered && (
         <div
-          className={`${props.className} raw-html`}
+          className={`${props.className} raw-html font-thin`}
           style={Object.assign({ wordWrap: 'break-word' }, props.style)}
           dangerouslySetInnerHTML={{ __html: emojify(props.status.content, props.status.emojis) }}
           onClick={props.onClick}

@@ -290,7 +290,7 @@ export default function Timeline(props: Props) {
                 color="blue-gray"
                 placeholder={formatMessage({ id: 'timeline.search' })}
                 containerProps={{ className: 'h-7' }}
-                className="!py-1 !px-2 !text-xs placeholder:opacity-100"
+                className="!py-1 !px-2 !text-xs placeholder:opacity-100 text-white"
               />
             </form>
           </div>
