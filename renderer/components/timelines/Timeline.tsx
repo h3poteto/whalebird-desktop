@@ -27,6 +27,7 @@ export default function Timeline(props: Props) {
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [composeHeight, setComposeHeight] = useState(120)
   const [list, setList] = useState<Entity.List | null>(null)
+  const [tag, setTag] = useState<Entity.Tag | null>(null)
   const [filters, setFilters] = useState<Array<Entity.Filter>>([])
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
 
@@ -58,6 +59,7 @@ export default function Timeline(props: Props) {
       const res = await loadTimeline(props.timeline, props.client)
       setStatuses(res)
       setList(null)
+      setTag(null)
       switch (props.timeline) {
         case 'home': {
           streaming.current = await props.client.userStreaming()
@@ -77,6 +79,13 @@ export default function Timeline(props: Props) {
             const res = await props.client.getList(match[1])
             streaming.current = await props.client.listStreaming(match[1])
             setList(res.data)
+          } else {
+            const tag_match = props.timeline.match(/tag_(\w+)/)
+            if (tag_match && tag_match[1] && typeof tag_match[1] === 'string') {
+              const res = await props.client.getTag(tag_match[1])
+              streaming.current = await props.client.tagStreaming(tag_match[1])
+              setTag(res.data)
+            }
           }
           break
         }
@@ -169,9 +178,16 @@ export default function Timeline(props: Props) {
       default: {
         // Check list
         const match = tl.match(/list_(\d+)/)
-        if (match[1] && typeof match[1] === 'string') {
+        if (match && match[1] && typeof match[1] === 'string') {
           const res = await client.getListTimeline(match[1], options)
           return res.data
+        } else {
+          // Check tag
+          const tag_match = tl.match(/tag_(\w+)/)
+          if (tag_match && tag_match[1] && typeof tag_match[1] === 'string') {
+            const res = await client.getTagTimeline(tag_match[1], options)
+            return res.data
+          }
         }
         return []
       }
@@ -262,7 +278,10 @@ export default function Timeline(props: Props) {
       <section className={`h-full ${timelineClass()}`}>
         <div className="w-full theme-bg theme-text-primary p-2 flex justify-between">
           <div className="text-lg font-bold cursor-pointer" onClick={() => backToTop()}>
-            {props.timeline.match(/list_(\d+)/) ? <>{list && list.title}</> : <FormattedMessage id={`timeline.${props.timeline}`} />}
+            {
+              props.timeline.match(/list_(\d+)/) ? <>{list && list.title}</> : 
+                (props.timeline.match(/tag_(\w+)/) ? <>{tag && `# ${tag.name}`}</> : 
+                  <FormattedMessage id={`timeline.${props.timeline}`} />)}
           </div>
           <div className="w-64 text-xs">
             <form onSubmit={ev => search(ev)}>

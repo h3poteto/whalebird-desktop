@@ -4,7 +4,7 @@ import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaStar, FaUsers } from 'react-icons/fa6'
+import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaStar, FaUsers, FaHashtag } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import Jump from '../Jump'
 import { useUnreads } from '@/provider/unreads'
@@ -27,6 +27,7 @@ export default function Layout({ children }: LayoutProps) {
 
   const [account, setAccount] = useState<Account | null>(null)
   const [lists, setLists] = useState<Array<Entity.List>>([])
+  const [followedTags, setFollowedTags] = useState<Array<Entity.Tag>>([])
   const [openJump, setOpenJump] = useState(false)
 
   useHotkeys('mod+k', () => setOpenJump(current => !current))
@@ -50,6 +51,11 @@ export default function Layout({ children }: LayoutProps) {
       setLists(res.data)
     }
     f()
+    const g = async () => {
+      const res = await c.getFollowedTags()
+      setFollowedTags(res.data)
+    }
+    g()
   }, [account])
 
   const pages: Array<Timeline> = [
@@ -134,6 +140,21 @@ export default function Layout({ children }: LayoutProps) {
                 <FaList />
               </ListItemPrefix>
               <div className="sidebar-menu text-ellipsis whitespace-nowrap overflow-hidden">{list.title}</div>
+            </ListItem>
+          ))}
+
+          {followedTags.map(tag => (
+            <ListItem
+              key={tag.name}
+              selected={router.asPath.includes(`tag_${tag.name}`)}
+              onClick={() => router.push({ pathname: `/accounts/${router.query.id}/tag_${tag.name}` })}
+              className="sidebar-menu-item theme-text-primary overflow-hidden whitespace-nowrap"
+              title={tag.name}
+            >
+              <ListItemPrefix>
+                <FaHashtag />
+              </ListItemPrefix>
+              <div className="sidebar-menu text-ellipsis whitespace-nowrap overflow-hidden">{tag.name}</div>
             </ListItem>
           ))}
         </List>
