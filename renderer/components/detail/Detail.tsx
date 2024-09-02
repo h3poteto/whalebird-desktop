@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { HTMLAttributes, useEffect, useState } from 'react'
-import { FaChevronLeft, FaX } from 'react-icons/fa6'
+import { FaChevronLeft, FaUserPlus, FaUserXmark, FaX } from 'react-icons/fa6'
 import Thread from './Thread'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Reply from './Reply'
@@ -19,6 +19,7 @@ export default function Detail(props: Props) {
   const [target, setTarget] = useState<'status' | 'reply' | 'profile' | 'tag' | null>(null)
   const router = useRouter()
   const { formatMessage } = useIntl()
+  const [tagFollowing, setTagFollowing] = useState(false)
 
   useEffect(() => {
     if (router.query.status_id) {
@@ -34,12 +35,39 @@ export default function Detail(props: Props) {
     }
   }, [router.query])
 
+  useEffect(() => {
+    if (router.query.tag) {
+      refreshFollowing(router.query.tag as string)
+    } else {
+      setTagFollowing(false)
+    }
+  }, [router.query.tag])
+
+  const refreshFollowing = async (tag: string) => {
+    const res = await props.client.getTag(tag)
+    if (res.data.following) {
+      setTagFollowing(true)
+    } else {
+      setTagFollowing(false)
+    }
+  }
+
   const back = () => {
     router.back()
   }
 
   const close = () => {
     router.push({ query: { id: router.query.id, timeline: router.query.timeline } })
+  }
+
+  const followTag = async (tag: string) => {
+    await props.client.followTag(tag)
+    await refreshFollowing(tag)
+  }
+
+  const unfollowTag = async (tag: string) => {
+    await props.client.unfollowTag(tag)
+    await refreshFollowing(tag)
   }
 
   return (
@@ -54,6 +82,28 @@ export default function Detail(props: Props) {
               {target === 'tag' && `#${router.query.tag}`}
             </div>
             <div className="flex items-center">
+              {target === 'tag' && (
+                <>
+                  {tagFollowing ? (
+                    <button
+                      className="text-lg mr-4"
+                      title={formatMessage({ id: 'detail.unfollow_tag' })}
+                      onClick={() => unfollowTag(router.query.tag as string)}
+                    >
+                      <FaUserXmark />
+                    </button>
+                  ) : (
+                    <button
+                      className="text-lg mr-4"
+                      title={formatMessage({ id: 'detail.follow_tag' })}
+                      onClick={() => followTag(router.query.tag as string)}
+                    >
+                      <FaUserPlus />
+                    </button>
+                  )}
+                </>
+              )}
+
               <button className="text-lg" title={formatMessage({ id: 'detail.close' })}>
                 <FaX onClick={close} />
               </button>
