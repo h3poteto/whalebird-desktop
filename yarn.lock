@@ -7833,12 +7833,12 @@ __metadata:
   linkType: hard
 
 "react-hotkeys-hook@npm:^4.4.1":
-  version: 4.5.0
-  resolution: "react-hotkeys-hook@npm:4.5.0"
+  version: 4.5.1
+  resolution: "react-hotkeys-hook@npm:4.5.1"
   peerDependencies:
     react: ">=16.8.1"
     react-dom: ">=16.8.1"
-  checksum: 10/f83d4ef7d56e40717f293d936101fb9d72f83b92568d5eb85594cf99e2b7c66556ff8f94e6dd9008813c7d097185593ff1b716b941ccf7ebf1969fecb4dc4b84
+  checksum: 10/cf988ad62be77dc68482d39f0c90f3afff2b066d9f7250d2885d4e387dfd59cc55f3c2382b1fbb496d2ea4db6ec38bba7376902f62b7695fa384a05326c2922d
   languageName: node
   linkType: hard
 
