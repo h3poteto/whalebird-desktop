@@ -8,6 +8,7 @@ import Profile from './Profile'
 import Tag from './Tag'
 import { Account } from '@/db'
 import { useIntl } from 'react-intl'
+import { useTimelines } from '../layouts/timelines'
 
 type Props = {
   client: MegalodonInterface
@@ -20,6 +21,7 @@ export default function Detail(props: Props) {
   const router = useRouter()
   const { formatMessage } = useIntl()
   const [tagFollowing, setTagFollowing] = useState(false)
+  const { reloadMenu } = useTimelines()
 
   useEffect(() => {
     if (router.query.status_id) {
@@ -63,11 +65,13 @@ export default function Detail(props: Props) {
   const followTag = async (tag: string) => {
     await props.client.followTag(tag)
     await refreshFollowing(tag)
+    await reloadMenu()
   }
 
   const unfollowTag = async (tag: string) => {
     await props.client.unfollowTag(tag)
     await refreshFollowing(tag)
+    await reloadMenu()
   }
 
   return (
