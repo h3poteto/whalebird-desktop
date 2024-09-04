@@ -150,7 +150,9 @@
   },
   "detail": {
     "back": "Back",
-    "close": "Close"
+    "close": "Close",
+    "follow_tag": "Follow hashtag",
+    "unfollow_tag": "Unfollow hashtag"
   },
   "profile": {
     "follow": "Follow",

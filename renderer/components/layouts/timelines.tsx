@@ -1,13 +1,27 @@
 import { Account, db } from '@/db'
 import { Card, Chip, List, ListItem, ListItemPrefix, ListItemSuffix } from '@material-tailwind/react'
-import generator, { Entity } from 'megalodon'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaStar, FaUsers, FaHashtag } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import Jump from '../Jump'
 import { useUnreads } from '@/provider/unreads'
+
+type Context = {
+  reloadMenu: () => Promise<void>
+}
+
+const TimelinesContext = createContext<Context>({
+  reloadMenu: async () => {}
+})
+
+TimelinesContext.displayName = 'TimelinesContext'
+
+export const useTimelines = () => {
+  return useContext(TimelinesContext)
+}
 
 type LayoutProps = {
   children: React.ReactNode
@@ -29,6 +43,7 @@ export default function Layout({ children }: LayoutProps) {
   const [lists, setLists] = useState<Array<Entity.List>>([])
   const [followedTags, setFollowedTags] = useState<Array<Entity.Tag>>([])
   const [openJump, setOpenJump] = useState(false)
+  const [client, setClient] = useState<MegalodonInterface>()
 
   useHotkeys('mod+k', () => setOpenJump(current => !current))
 
@@ -46,6 +61,7 @@ export default function Layout({ children }: LayoutProps) {
   useEffect(() => {
     if (!account) return
     const c = generator(account.sns, account.url, account.access_token, 'Whalebird')
+    setClient(c)
     const f = async () => {
       const res = await c.getLists()
       setLists(res.data)
@@ -96,6 +112,11 @@ export default function Layout({ children }: LayoutProps) {
       path: `/accounts/${router.query.id}/bookmarks`
     }
   ]
+
+  const reloadMenu = async () => {
+    const res = await client.getFollowedTags()
+    setFollowedTags(res.data)
+  }
 
   return (
     <section className="flex h-screen w-full overflow-hidden">
@@ -159,7 +180,7 @@ export default function Layout({ children }: LayoutProps) {
           ))}
         </List>
       </Card>
-      {children}
+      <TimelinesContext.Provider value={{ reloadMenu }}>{children}</TimelinesContext.Provider>
     </section>
   )
 }
