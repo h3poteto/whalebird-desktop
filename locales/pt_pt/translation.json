@@ -150,7 +150,9 @@
   },
   "detail": {
     "back": "Retroceder",
-    "close": "Fechar"
+    "close": "Fechar",
+    "follow_tag": "Follow hashtag",
+    "unfollow_tag": "Unfollow hashtag"
   },
   "profile": {
     "follow": "Seguir",
