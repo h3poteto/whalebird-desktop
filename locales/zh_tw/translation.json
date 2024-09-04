@@ -150,7 +150,9 @@
   },
   "detail": {
     "back": "返回",
-    "close": "關閉"
+    "close": "關閉",
+    "follow_tag": "Follow hashtag",
+    "unfollow_tag": "Unfollow hashtag"
   },
   "profile": {
     "follow": "追蹤",
