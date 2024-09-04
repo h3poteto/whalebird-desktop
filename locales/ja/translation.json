@@ -150,7 +150,9 @@
   },
   "detail": {
     "back": "戻る",
-    "close": "閉じる"
+    "close": "閉じる",
+    "follow_tag": "Follow hashtag",
+    "unfollow_tag": "Unfollow hashtag"
   },
   "profile": {
     "follow": "フォロー",
