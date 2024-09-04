@@ -1537,10 +1537,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@badgateway/oauth2-client@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@badgateway/oauth2-client@npm:2.3.0"
-  checksum: 10/5bb571e0e10fc0c2fa3116405901bc4290b1b626aa82bd84c20c63f4b4cb59d5451c898e48d69a8f8d791ac6e302b9a8c7aa57aea9fe7f1e6e41a0ff1a6387c0
+"@badgateway/oauth2-client@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@badgateway/oauth2-client@npm:2.4.1"
+  checksum: 10/13ae31757de1b74ded66364ef9273d0bb2b1001ba02812fd8ebcc9a6fbaf2e8bc7541ba9b54ad9c39bbc72fd94f46b0d6ca156a87feb9130836d154b3197d88a
   languageName: node
   linkType: hard
 
@@ -2449,12 +2449,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:^8.5.10":
-  version: 8.5.10
-  resolution: "@types/ws@npm:8.5.10"
+"@types/ws@npm:^8.5.12":
+  version: 8.5.12
+  resolution: "@types/ws@npm:8.5.12"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10/9b414dc5e0b6c6f1ea4b1635b3568c58707357f68076df9e7cd33194747b7d1716d5189c0dbdd68c8d2521b148e88184cf881bac7429eb0e5c989b001539ed31
+  checksum: 10/d8a3ddfb5ff8fea992a043113579d61ac1ea21e8464415af9e2b01b205ed19d817821ad64ca1b3a90062d1df1c23b0f586d8351d25ca6728844df99a74e8f76d
   languageName: node
   linkType: hard
 
@@ -2784,7 +2784,7 @@ __metadata:
     eslint: "npm:^9.0.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-react: "npm:^7.33.2"
-    megalodon: "npm:10.0.2"
+    megalodon: "npm:10.0.3"
     next: "npm:^14.0.0"
     nextron: "npm:^9.0.0"
     parse-link-header: "npm:^2.0.0"
@@ -3296,14 +3296,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.2":
-  version: 1.7.2
-  resolution: "axios@npm:1.7.2"
+"axios@npm:1.7.7":
+  version: 1.7.7
+  resolution: "axios@npm:1.7.7"
   dependencies:
     follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/6ae80dda9736bb4762ce717f1a26ff997d94672d3a5799ad9941c24d4fb019c1dff45be8272f08d1975d7950bac281f3ba24aff5ecd49ef5a04d872ec428782f
+  checksum: 10/7f875ea13b9298cd7b40fd09985209f7a38d38321f1118c701520939de2f113c4ba137832fe8e3f811f99a38e12c8225481011023209a77b0c0641270e20cde1
   languageName: node
   linkType: hard
 
@@ -4050,7 +4050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.10, dayjs@npm:^1.11.11":
+"dayjs@npm:^1.11.10, dayjs@npm:^1.11.13":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: 10/7374d63ab179b8d909a95e74790def25c8986e329ae989840bacb8b1888be116d20e1c4eee75a69ea0dfbae13172efc50ef85619d304ee7ca3c01d5878b704f5
@@ -6754,21 +6754,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"megalodon@npm:10.0.2":
-  version: 10.0.2
-  resolution: "megalodon@npm:10.0.2"
+"megalodon@npm:10.0.3":
+  version: 10.0.3
+  resolution: "megalodon@npm:10.0.3"
   dependencies:
-    "@badgateway/oauth2-client": "npm:^2.3.0"
-    "@types/ws": "npm:^8.5.10"
-    axios: "npm:1.7.2"
-    dayjs: "npm:^1.11.11"
+    "@badgateway/oauth2-client": "npm:^2.4.1"
+    "@types/ws": "npm:^8.5.12"
+    axios: "npm:1.7.7"
+    dayjs: "npm:^1.11.13"
     events: "npm:^3.3.0"
     form-data: "npm:^4.0.0"
     isomorphic-ws: "npm:^5.0.0"
     object-assign-deep: "npm:^0.4.0"
     uuid: "npm:^10.0.0"
-    ws: "npm:8.17.1"
-  checksum: 10/aa320075cace5d2c679ce86e14769c6cac850cd22a7c6af769005b68bcee2cf0ca96dff58eeece3c15633054c88823f1a8f962aee38ddfdcef1343dec2e9f996
+    ws: "npm:8.18.0"
+  checksum: 10/8bc579c0dd72ce72c10ed08417b556e02c2b19604c22ca7b1ad6f46996384f059d67ca29245933024b0a2a8250dc76ce7e8303fc3c172bd429a53a3e8d618746
   languageName: node
   linkType: hard
 
@@ -9684,9 +9684,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.17.1":
-  version: 8.17.1
-  resolution: "ws@npm:8.17.1"
+"ws@npm:8.18.0":
+  version: 8.18.0
+  resolution: "ws@npm:8.18.0"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -9695,7 +9695,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10/4264ae92c0b3e59c7e309001e93079b26937aab181835fb7af79f906b22cd33b6196d96556dafb4e985742dd401e99139572242e9847661fdbc96556b9e6902d
+  checksum: 10/70dfe53f23ff4368d46e4c0b1d4ca734db2c4149c6f68bc62cb16fc21f753c47b35fcc6e582f3bdfba0eaeb1c488cddab3c2255755a5c3eecb251431e42b3ff6
   languageName: node
   linkType: hard
 
