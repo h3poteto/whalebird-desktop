@@ -1,7 +1,7 @@
 import { localeType } from '@/provider/i18n'
 import { Dialog, DialogBody, DialogHeader, Input, Option, Radio, Select, Typography } from '@material-tailwind/react'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   opened: boolean
@@ -59,11 +59,18 @@ const themes = [
   }
 ]
 
+type ProxyValue = 'no' | 'os' | 'manual'
+
 export default function Settings(props: Props) {
   const [language, setLanguage] = useState<localeType>('en')
   const [fontSize, setFontSize] = useState<number>(16)
   const [theme, setTheme] = useState<string>('theme-blue')
   const [isDark, setIsDark] = useState(false)
+  const [proxy, setProxy] = useState<ProxyValue>('no')
+  const [proxyProtocol, setProxyProtocol] = useState<string | null>(null)
+  const [proxyHost, setProxyHost] = useState<string | null>(null)
+  const [proxyPort, setProxyPort] = useState<string | null>(null)
+  const { formatMessage } = useIntl()
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
@@ -78,6 +85,22 @@ export default function Settings(props: Props) {
         setIsDark(true)
       } else {
         setIsDark(false)
+      }
+      const proxyMode = localStorage.getItem('proxyMode')
+      if (proxyMode) {
+        setProxy(proxyMode as ProxyValue)
+      }
+      const proxyProtocol = localStorage.getItem('proxyProtocol')
+      if (proxyProtocol) {
+        setProxyProtocol(proxyProtocol)
+      }
+      const proxyHost = localStorage.getItem('proxyHost')
+      if (proxyHost) {
+        setProxyHost(proxyHost)
+      }
+      const proxyPort = localStorage.getItem('proxyPort')
+      if (proxyPort) {
+        setProxyPort(proxyPort)
       }
     }
   }, [])
@@ -114,6 +137,38 @@ export default function Settings(props: Props) {
       } else {
         localStorage.setItem('color-mode', 'light')
       }
+    }
+    props.reloadSettings()
+  }
+
+  const proxyModeChanged = (mode: ProxyValue) => {
+    setProxy(mode)
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('proxyMode', mode)
+    }
+    props.reloadSettings()
+  }
+
+  const proxyProtocolChanged = (protocol: string) => {
+    setProxyProtocol(protocol)
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('proxyProtocol', proxyProtocol)
+    }
+    props.reloadSettings()
+  }
+
+  const proxyHostChanged = (host: string) => {
+    setProxyHost(host)
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('proxyHost', proxyHost)
+    }
+    props.reloadSettings()
+  }
+
+  const proxyPortChanged = (port: string) => {
+    setProxyPort(port)
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('proxyPort', proxyPort)
     }
     props.reloadSettings()
   }
@@ -188,6 +243,76 @@ export default function Settings(props: Props) {
                   </Option>
                 ))}
               </Select>
+            </div>
+          </div>
+          <div>
+            <div className="mb-2">
+              <Typography>
+                <FormattedMessage id="settings.proxy.title" />
+              </Typography>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Radio
+                name="proxy"
+                color="blue"
+                label={<FormattedMessage id="settings.proxy.no" />}
+                defaultChecked={proxy === 'no'}
+                onClick={() => proxyModeChanged('no')}
+              />
+              <Radio
+                name="proxy"
+                color="blue"
+                label={<FormattedMessage id="settings.proxy.os" />}
+                defaultChecked={proxy === 'os'}
+                onClick={() => proxyModeChanged('os')}
+              />
+              <Radio
+                name="proxy"
+                color="blue"
+                label={
+                  <div>
+                    <FormattedMessage id="settings.proxy.manual" />
+                    <div className="flex gap-2">
+                      <div className="w-1/5">
+                        <Select
+                          label={formatMessage({ id: 'settings.proxy.protocol' })}
+                          containerProps={{
+                            className: '!min-w-2'
+                          }}
+                          value={proxyProtocol}
+                          onChange={val => proxyProtocolChanged(val)}
+                        >
+                          <Option value="http">
+                            <FormattedMessage id="settings.proxy.http" />
+                          </Option>
+                          <Option value="socks">
+                            <FormattedMessage id="settings.proxy.socks" />
+                          </Option>
+                        </Select>
+                      </div>
+                      <div className="w-3/5">
+                        <Input
+                          defaultValue={proxyHost}
+                          label={formatMessage({ id: 'settings.proxy.host' })}
+                          onChange={e => proxyHostChanged(e.target.value)}
+                        />
+                      </div>
+                      <div className="w-1/5">
+                        <Input
+                          defaultValue={proxyPort}
+                          label={formatMessage({ id: 'settings.proxy.port' })}
+                          containerProps={{
+                            className: '!min-w-2'
+                          }}
+                          onChange={e => proxyPortChanged(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                }
+                defaultChecked={proxy === 'manual'}
+                onClick={() => proxyModeChanged('manual')}
+              />
             </div>
           </div>
         </div>
