@@ -173,12 +173,25 @@
   },
   "settings": {
     "title": "設定",
+    "cancel": "Cancel",
+    "save": "Save",
     "language": "言語",
     "font_size": "フォントサイズ",
     "mode": "カラーモード",
     "dark_mode": "ダークモード",
     "light_mode": "ライトモード",
-    "theme": "カラーテーマ"
+    "theme": "カラーテーマ",
+    "proxy": {
+      "title": "Proxy",
+      "no": "No proxy",
+      "os": "Use system proxy settings",
+      "manual": "Manual proxy configuration",
+      "protocol": "Protocol",
+      "http": "http",
+      "socks": "socks",
+      "host": "Host",
+      "port": "Port"
+    }
   },
   "thirdparty": {
     "title": "サードパーティのライセンス"

@@ -173,12 +173,25 @@
   },
   "settings": {
     "title": "Configuraciones",
+    "cancel": "Cancel",
+    "save": "Save",
     "language": "Lenguaje",
     "font_size": "Tamaño de fuente",
     "mode": "Modo de color",
     "dark_mode": "Modo oscuro",
     "light_mode": "Modo claro",
-    "theme": "Tema de color"
+    "theme": "Tema de color",
+    "proxy": {
+      "title": "Proxy",
+      "no": "No proxy",
+      "os": "Use system proxy settings",
+      "manual": "Manual proxy configuration",
+      "protocol": "Protocol",
+      "http": "http",
+      "socks": "socks",
+      "host": "Host",
+      "port": "Port"
+    }
   },
   "thirdparty": {
     "title": "Licencias de terceros"
