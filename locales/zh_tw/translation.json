@@ -173,12 +173,25 @@
   },
   "settings": {
     "title": "設定",
+    "cancel": "Cancel",
+    "save": "Save",
     "language": "語言",
     "font_size": "字型大小",
     "mode": "色彩模式",
     "dark_mode": "深色模式",
     "light_mode": "淺色模式",
-    "theme": "色彩主題"
+    "theme": "色彩主題",
+    "proxy": {
+      "title": "Proxy",
+      "no": "No proxy",
+      "os": "Use system proxy settings",
+      "manual": "Manual proxy configuration",
+      "protocol": "Protocol",
+      "http": "http",
+      "socks": "socks",
+      "host": "Host",
+      "port": "Port"
+    }
   },
   "thirdparty": {
     "title": "第三方授權條款"
