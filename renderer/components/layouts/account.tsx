@@ -21,6 +21,7 @@ import {
 import Thirdparty from '../Thirdparty'
 import { useUnreads } from '@/provider/unreads'
 import { useAccounts } from '@/provider/accounts'
+import { invoke } from '@/utils/invoke'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -128,12 +129,16 @@ export default function Layout({ children }: LayoutProps) {
         setTheme(t)
       }
       const dark = localStorage.getItem('color-mode')
-      console.log(dark)
       if (dark && dark === 'dark') {
         setIsDark(true)
       } else {
         setIsDark(false)
       }
+      const proxyMode = localStorage.getItem('proxyMode')
+      const proxyProtocol = localStorage.getItem('proxyProtocol')
+      const proxyHost = localStorage.getItem('proxyHost')
+      const proxyPort = localStorage.getItem('proxyPort')
+      invoke('set-proxy', { mode: proxyMode, protocol: proxyProtocol, host: proxyHost, port: proxyPort })
     }
   }
 
