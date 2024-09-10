@@ -1,5 +1,5 @@
 import { localeType } from '@/provider/i18n'
-import { Dialog, DialogBody, DialogHeader, Input, Option, Radio, Select, Typography } from '@material-tailwind/react'
+import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Input, Option, Radio, Select, Typography } from '@material-tailwind/react'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 
@@ -141,36 +141,15 @@ export default function Settings(props: Props) {
     props.reloadSettings()
   }
 
-  const proxyModeChanged = (mode: ProxyValue) => {
-    setProxy(mode)
+  const save = () => {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('proxyMode', mode)
-    }
-    props.reloadSettings()
-  }
-
-  const proxyProtocolChanged = (protocol: string) => {
-    setProxyProtocol(protocol)
-    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('proxyMode', proxy)
       localStorage.setItem('proxyProtocol', proxyProtocol)
-    }
-    props.reloadSettings()
-  }
-
-  const proxyHostChanged = (host: string) => {
-    setProxyHost(host)
-    if (typeof localStorage !== 'undefined') {
       localStorage.setItem('proxyHost', proxyHost)
-    }
-    props.reloadSettings()
-  }
-
-  const proxyPortChanged = (port: string) => {
-    setProxyPort(port)
-    if (typeof localStorage !== 'undefined') {
       localStorage.setItem('proxyPort', proxyPort)
     }
     props.reloadSettings()
+    props.close()
   }
 
   return (
@@ -257,14 +236,14 @@ export default function Settings(props: Props) {
                 color="blue"
                 label={<FormattedMessage id="settings.proxy.no" />}
                 defaultChecked={proxy === 'no'}
-                onClick={() => proxyModeChanged('no')}
+                onClick={() => setProxy('no')}
               />
               <Radio
                 name="proxy"
                 color="blue"
                 label={<FormattedMessage id="settings.proxy.os" />}
                 defaultChecked={proxy === 'os'}
-                onClick={() => proxyModeChanged('os')}
+                onClick={() => setProxy('os')}
               />
               <Radio
                 name="proxy"
@@ -280,7 +259,7 @@ export default function Settings(props: Props) {
                             className: '!min-w-2'
                           }}
                           value={proxyProtocol}
-                          onChange={val => proxyProtocolChanged(val)}
+                          onChange={val => setProxyProtocol(val)}
                         >
                           <Option value="http">
                             <FormattedMessage id="settings.proxy.http" />
@@ -294,7 +273,7 @@ export default function Settings(props: Props) {
                         <Input
                           defaultValue={proxyHost}
                           label={formatMessage({ id: 'settings.proxy.host' })}
-                          onChange={e => proxyHostChanged(e.target.value)}
+                          onChange={e => setProxyHost(e.target.value)}
                         />
                       </div>
                       <div className="w-1/5">
@@ -304,19 +283,27 @@ export default function Settings(props: Props) {
                           containerProps={{
                             className: '!min-w-2'
                           }}
-                          onChange={e => proxyPortChanged(e.target.value)}
+                          onChange={e => setProxyPort(e.target.value)}
                         />
                       </div>
                     </div>
                   </div>
                 }
                 defaultChecked={proxy === 'manual'}
-                onClick={() => proxyModeChanged('manual')}
+                onClick={() => setProxy('manual')}
               />
             </div>
           </div>
         </div>
       </DialogBody>
+      <DialogFooter>
+        <Button variant="text" color="red" onClick={props.close}>
+          <FormattedMessage id="settings.cancel" />
+        </Button>
+        <Button variant="gradient" color="blue" onClick={save}>
+          <FormattedMessage id="settings.save" />
+        </Button>
+      </DialogFooter>
     </Dialog>
   )
 }

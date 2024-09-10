@@ -173,6 +173,8 @@
   },
   "settings": {
     "title": "Settings",
+    "cancel": "Cancel",
+    "save": "Save",
     "language": "Language",
     "font_size": "Font size",
     "mode": "Color mode",
