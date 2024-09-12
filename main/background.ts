@@ -1,7 +1,8 @@
 import path from 'path'
-import { app, ipcMain, shell, IpcMainInvokeEvent, BrowserWindow } from 'electron'
+import { app, ipcMain, shell, IpcMainInvokeEvent, BrowserWindow, Menu } from 'electron'
 import serve from 'electron-serve'
 import { createWindow } from './helpers'
+import { menu } from './menu'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -15,6 +16,8 @@ let main: BrowserWindow = null
 
 ;(async () => {
   await app.whenReady()
+
+  Menu.setApplicationMenu(menu)
 
   const mainWindow = createWindow('main', {
     width: 1000,
