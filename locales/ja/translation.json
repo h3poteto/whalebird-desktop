@@ -151,8 +151,8 @@
   "detail": {
     "back": "戻る",
     "close": "閉じる",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag"
+    "follow_tag": "ハッシュタグをフォローする",
+    "unfollow_tag": "ハッシュタグのフォローを解除"
   },
   "profile": {
     "follow": "フォロー",
@@ -173,8 +173,8 @@
   },
   "settings": {
     "title": "設定",
-    "cancel": "Cancel",
-    "save": "Save",
+    "cancel": "キャンセル",
+    "save": "保存",
     "language": "言語",
     "font_size": "フォントサイズ",
     "mode": "カラーモード",
@@ -182,15 +182,15 @@
     "light_mode": "ライトモード",
     "theme": "カラーテーマ",
     "proxy": {
-      "title": "Proxy",
-      "no": "No proxy",
-      "os": "Use system proxy settings",
-      "manual": "Manual proxy configuration",
-      "protocol": "Protocol",
+      "title": "プロキシ",
+      "no": "プロキシなし",
+      "os": "システムプロキシ設定を使用",
+      "manual": "プロキシを手動で設定する",
+      "protocol": "プロトコル",
       "http": "http",
       "socks": "socks",
-      "host": "Host",
-      "port": "Port"
+      "host": "ホスト",
+      "port": "ポート"
     }
   },
   "thirdparty": {
