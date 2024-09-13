@@ -2,7 +2,7 @@ appId: social.whalebird.app
 productName: Whalebird
 copyright: Copyright © 2018 Akira Fukushima
 artifactName: "${productName}-${version}-${os}-${arch}.${ext}"
-buildVersion: "181"
+buildVersion: "182"
 directories:
   output: dist
   buildResources: resources
