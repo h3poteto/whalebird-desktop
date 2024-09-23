@@ -177,6 +177,7 @@
     "save": "保存",
     "language": "言語",
     "font_size": "フォントサイズ",
+    "font_family": "Font family",
     "mode": "カラーモード",
     "dark_mode": "ダークモード",
     "light_mode": "ライトモード",

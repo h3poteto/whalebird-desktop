@@ -177,6 +177,7 @@
     "save": "Save",
     "language": "Language",
     "font_size": "Font size",
+    "font_family": "Font family",
     "mode": "Color mode",
     "dark_mode": "Dark mode",
     "light_mode": "Light mode",
