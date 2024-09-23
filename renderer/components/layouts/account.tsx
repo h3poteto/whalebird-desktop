@@ -23,6 +23,19 @@ import { useUnreads } from '@/provider/unreads'
 import { useAccounts } from '@/provider/accounts'
 import { invoke } from '@/utils/invoke'
 
+const defaultFontFamily = [
+  'Apple-System',
+  'Hiragino Kaku Gothic ProN',
+  'Hiragino Sans GB',
+  'Arial',
+  'Helvetica',
+  'PingFang SC',
+  'Meiryo',
+  'Microsoft YaHei',
+  'STXihei',
+  'sans-serif'
+]
+
 type LayoutProps = {
   children: React.ReactNode
 }
@@ -122,6 +135,15 @@ export default function Layout({ children }: LayoutProps) {
       if (parseInt(fontSize)) {
         setStyle({
           fontSize: `${fontSize}px`
+        })
+      }
+      const fontFamily = localStorage.getItem('fontFamily')
+      if (fontFamily) {
+        setStyle({
+          fontFamily: [fontFamily]
+            .concat(defaultFontFamily)
+            .filter(f => f !== null)
+            .join(',')
         })
       }
       const t = localStorage.getItem('theme')

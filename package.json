@@ -34,7 +34,8 @@
     "react-icons": "^5.0.0",
     "react-intl": "^6.5.1",
     "react-virtuoso": "^4.6.2",
-    "sanitize-html": "^2.11.0"
+    "sanitize-html": "^2.11.0",
+    "system-font-families": "^0.6.0"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.23.2",

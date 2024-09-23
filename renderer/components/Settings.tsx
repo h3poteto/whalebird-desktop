@@ -1,4 +1,5 @@
 import { localeType } from '@/provider/i18n'
+import { invoke } from '@/utils/invoke'
 import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Input, Option, Radio, Select, Typography } from '@material-tailwind/react'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -70,15 +71,32 @@ export default function Settings(props: Props) {
   const [proxyProtocol, setProxyProtocol] = useState<string | null>(null)
   const [proxyHost, setProxyHost] = useState<string | null>(null)
   const [proxyPort, setProxyPort] = useState<string | null>(null)
+  const [fontFamilies, setFontFamilies] = useState<Array<string>>([])
+  const [fontFamily, setFontFamily] = useState<string | null>(null)
   const { formatMessage } = useIntl()
 
   useEffect(() => {
+    const f = async () => {
+      const lists = await invoke('list-fonts', null)
+      if (lists) {
+        setFontFamilies(lists)
+      }
+    }
+    f()
     if (typeof localStorage !== 'undefined') {
       const lang = localStorage.getItem('language')
       if (lang) {
         setLanguage(lang as localeType)
       } else {
         setLanguage('en')
+      }
+      const fontSize = localStorage.getItem('fontSize')
+      if (fontSize) {
+        setFontSize(parseInt(fontSize))
+      }
+      const fontFamily = localStorage.getItem('fontFamily')
+      if (fontFamily) {
+        setFontFamily(fontFamily)
       }
       const dark = localStorage.getItem('color-mode')
       if (dark === 'dark') {
@@ -117,6 +135,14 @@ export default function Settings(props: Props) {
     setFontSize(parseInt(e.target.value))
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('fontSize', e.target.value)
+    }
+    props.reloadSettings()
+  }
+
+  const fontFamilyChanged = (e: string) => {
+    setFontFamily(e)
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('fontFamily', e)
     }
     props.reloadSettings()
   }
@@ -167,6 +193,20 @@ export default function Settings(props: Props) {
             </div>
             <div>
               <Input type="number" color="blue-gray" value={fontSize} onChange={fontSizeChanged} />
+            </div>
+            <div className="mb-2">
+              <Typography>
+                <FormattedMessage id="settings.font_family" />
+              </Typography>
+            </div>
+            <div>
+              <Select onChange={fontFamilyChanged} value={fontFamily}>
+                {fontFamilies.map((font, index) => (
+                  <Option key={index} value={font}>
+                    {font}
+                  </Option>
+                ))}
+              </Select>
             </div>
           </div>
           <div>
