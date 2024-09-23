@@ -3,6 +3,7 @@ import { app, ipcMain, shell, IpcMainInvokeEvent, BrowserWindow, Menu } from 'el
 import serve from 'electron-serve'
 import { createWindow } from './helpers'
 import { menu } from './menu'
+import SystemFonts from 'system-font-families'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -71,4 +72,10 @@ ipcMain.handle('set-proxy', (_event: IpcMainInvokeEvent, data: any) => {
       main.webContents.session.setProxy({ mode: 'direct' })
       break
   }
+})
+
+ipcMain.handle('list-fonts', async (_event: IpcMainInvokeEvent) => {
+  const systemFonts = new SystemFonts()
+  const res = await systemFonts.getFonts()
+  return Array.from(new Set(res)).sort()
 })

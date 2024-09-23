@@ -1,7 +1,6 @@
-export function invoke(event: string, data: any) {
+export function invoke(event: string, data: any): Promise<any> {
   if (process.env.NEXT_PUBLIC_CLIENT_ENV !== 'browser') {
-    global.ipc.invoke(event, data)
-    return
+    return global.ipc.invoke(event, data)
   }
   switch (event) {
     case 'open-browser':
