@@ -177,6 +177,7 @@
     "save": "Save",
     "language": "語言",
     "font_size": "字型大小",
+    "font_family": "Font family",
     "mode": "色彩模式",
     "dark_mode": "深色模式",
     "light_mode": "淺色模式",
