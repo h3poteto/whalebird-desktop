@@ -1801,13 +1801,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/ecma402-abstract@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@formatjs/ecma402-abstract@npm:2.0.0"
+"@formatjs/ecma402-abstract@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@formatjs/ecma402-abstract@npm:2.1.0"
   dependencies:
+    "@formatjs/fast-memoize": "npm:2.2.0"
     "@formatjs/intl-localematcher": "npm:0.5.4"
     tslib: "npm:^2.4.0"
-  checksum: 10/41543ba509ea3c7d6530d57b888115f7ca242f13462a951fae4d1d1f28bae10c999f4dea28a71d2f08366d4889a3f5276cae3a16c6f6417b841a84fd314c2234
+  checksum: 10/8e25d2739c03913c61f0ec12a71ab7baf03386cff540e7470bee73e78e4fe9f09c9dfa860223f1177acdcfd0fa341041d25b2fe4e0a77e7209d0680831982bac
   languageName: node
   linkType: hard
 
@@ -1820,46 +1821,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/icu-messageformat-parser@npm:2.7.8":
-  version: 2.7.8
-  resolution: "@formatjs/icu-messageformat-parser@npm:2.7.8"
+"@formatjs/icu-messageformat-parser@npm:2.7.9":
+  version: 2.7.9
+  resolution: "@formatjs/icu-messageformat-parser@npm:2.7.9"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.0.0"
-    "@formatjs/icu-skeleton-parser": "npm:1.8.2"
+    "@formatjs/ecma402-abstract": "npm:2.1.0"
+    "@formatjs/icu-skeleton-parser": "npm:1.8.3"
     tslib: "npm:^2.4.0"
-  checksum: 10/292fd36268ad84337c0e798fc73b58e8f3cf3f362cea031f710fd78053d29b420526ab766a95745e162ae4a11bf846bc2f7ae5c2c0a3288d3bc9daa97a3be8c1
+  checksum: 10/8bffac5e5b832e18786f383fb60966cfa53da7c94aa9bc5e1b19bb4772aacbfbccd128e599395d1a3a1642930debfc41c6198a178437d98b9a8804dd875c6755
   languageName: node
   linkType: hard
 
-"@formatjs/icu-skeleton-parser@npm:1.8.2":
-  version: 1.8.2
-  resolution: "@formatjs/icu-skeleton-parser@npm:1.8.2"
+"@formatjs/icu-skeleton-parser@npm:1.8.3":
+  version: 1.8.3
+  resolution: "@formatjs/icu-skeleton-parser@npm:1.8.3"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.0.0"
+    "@formatjs/ecma402-abstract": "npm:2.1.0"
     tslib: "npm:^2.4.0"
-  checksum: 10/a06b61cf6c298bbbc23349e391bad8a1cf0a6a32dc4928a4681a3aa6f38dd8c6a181dc4067e228f67584d4dc181d862704095e65c38cfac077c984dc24ba54d3
+  checksum: 10/9105170d65d6793be39f5b085c295bd773e5254c781e5d2c3ad389f21c96afaee1fc7f126b7d36a75a044283458f1cd9a4abdd0b8cca9241e72161fa71e2020b
   languageName: node
   linkType: hard
 
-"@formatjs/intl-displaynames@npm:6.6.8":
-  version: 6.6.8
-  resolution: "@formatjs/intl-displaynames@npm:6.6.8"
+"@formatjs/intl-displaynames@npm:6.6.9":
+  version: 6.6.9
+  resolution: "@formatjs/intl-displaynames@npm:6.6.9"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.0.0"
+    "@formatjs/ecma402-abstract": "npm:2.1.0"
     "@formatjs/intl-localematcher": "npm:0.5.4"
     tslib: "npm:^2.4.0"
-  checksum: 10/d305787fe2a35f9725b1293f70a2ccc454310c5df48ad62613d674a648dd318bec2a3ccd8656047443d1e438bb1cf8140e354d9c4a4101ec38df00614e0244b7
+  checksum: 10/b235a85fb0295b64e9b7bb033309aff0652bd06695c08ead38a5c717464c59e99d2003a50b8e936a627dd7e772254b9fd5da165a24f42c3c5c292fdcf67cb9af
   languageName: node
   linkType: hard
 
-"@formatjs/intl-listformat@npm:7.5.7":
-  version: 7.5.7
-  resolution: "@formatjs/intl-listformat@npm:7.5.7"
+"@formatjs/intl-listformat@npm:7.5.8":
+  version: 7.5.8
+  resolution: "@formatjs/intl-listformat@npm:7.5.8"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.0.0"
+    "@formatjs/ecma402-abstract": "npm:2.1.0"
     "@formatjs/intl-localematcher": "npm:0.5.4"
     tslib: "npm:^2.4.0"
-  checksum: 10/ba7e1ee9c29f2a8cfc66d51c5f273f279ced048b427533aa3d502cf7d12d510e79965d0471a158fd41d7cc7314f688c56d863c3ebec8e5e550d687f64d210794
+  checksum: 10/761de6c738758550ea3007bac20cda648aaa45e114597c0ecdd30624c2eafbc76b5003ae011a6fe96c797b747a745aad4c88347a81aa0e5ab640e8636bd6fbb2
   languageName: node
   linkType: hard
 
@@ -1872,23 +1873,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl@npm:2.10.4":
-  version: 2.10.4
-  resolution: "@formatjs/intl@npm:2.10.4"
+"@formatjs/intl@npm:2.10.7":
+  version: 2.10.7
+  resolution: "@formatjs/intl@npm:2.10.7"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.0.0"
+    "@formatjs/ecma402-abstract": "npm:2.1.0"
     "@formatjs/fast-memoize": "npm:2.2.0"
-    "@formatjs/icu-messageformat-parser": "npm:2.7.8"
-    "@formatjs/intl-displaynames": "npm:6.6.8"
-    "@formatjs/intl-listformat": "npm:7.5.7"
-    intl-messageformat: "npm:10.5.14"
+    "@formatjs/icu-messageformat-parser": "npm:2.7.9"
+    "@formatjs/intl-displaynames": "npm:6.6.9"
+    "@formatjs/intl-listformat": "npm:7.5.8"
+    intl-messageformat: "npm:10.6.0"
     tslib: "npm:^2.4.0"
   peerDependencies:
     typescript: ^4.7 || 5
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/1d4e60cfb3edecb51a5f8dd2c2b1c784c1a9bfcbc1b6240323d8009e5f375e5c526c9eb19149b42e0e50f6a473e9709378071658ed25a62dc3923dd7fc6a2843
+  checksum: 10/f0fe8c8861c1919e7b6fef8d2f1458073cdab105a4c033594e03ebabaa9b78afa814dfe564fd5bc5b31f47068454709a782c6bd36393fe9ea15056b436a5637b
   languageName: node
   linkType: hard
 
@@ -6018,15 +6019,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"intl-messageformat@npm:10.5.14":
-  version: 10.5.14
-  resolution: "intl-messageformat@npm:10.5.14"
+"intl-messageformat@npm:10.6.0":
+  version: 10.6.0
+  resolution: "intl-messageformat@npm:10.6.0"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.0.0"
+    "@formatjs/ecma402-abstract": "npm:2.1.0"
     "@formatjs/fast-memoize": "npm:2.2.0"
-    "@formatjs/icu-messageformat-parser": "npm:2.7.8"
+    "@formatjs/icu-messageformat-parser": "npm:2.7.9"
     tslib: "npm:^2.4.0"
-  checksum: 10/01692e92671b00d2423a7db405e6bb8e42bea52445dec931abaa8a8c47e3a7da17dddd3cd0faa33cb6a614370ea230b2c3980ae106cafa8b760e50ac4db0952f
+  checksum: 10/14e6eeaebfbbcd8c7032a6dab623438575aa4407b509cac5ee69b126209faf0f0717e566e223fa60608d7dd5f4ec5459d0dd9c6c89adda302cb008d67b536466
   languageName: node
   linkType: hard
 
@@ -7908,18 +7909,18 @@ __metadata:
   linkType: hard
 
 "react-intl@npm:^6.5.1":
-  version: 6.6.8
-  resolution: "react-intl@npm:6.6.8"
+  version: 6.7.2
+  resolution: "react-intl@npm:6.7.2"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.0.0"
-    "@formatjs/icu-messageformat-parser": "npm:2.7.8"
-    "@formatjs/intl": "npm:2.10.4"
-    "@formatjs/intl-displaynames": "npm:6.6.8"
-    "@formatjs/intl-listformat": "npm:7.5.7"
+    "@formatjs/ecma402-abstract": "npm:2.1.0"
+    "@formatjs/icu-messageformat-parser": "npm:2.7.9"
+    "@formatjs/intl": "npm:2.10.7"
+    "@formatjs/intl-displaynames": "npm:6.6.9"
+    "@formatjs/intl-listformat": "npm:7.5.8"
     "@types/hoist-non-react-statics": "npm:^3.3.1"
     "@types/react": "npm:16 || 17 || 18"
     hoist-non-react-statics: "npm:^3.3.2"
-    intl-messageformat: "npm:10.5.14"
+    intl-messageformat: "npm:10.6.0"
     tslib: "npm:^2.4.0"
   peerDependencies:
     react: ^16.6.0 || 17 || 18
@@ -7927,7 +7928,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/5233b57fb0376291b4ec0a880d034c6b3e9431b61f153641f567f16ae04449c5b0ee643af4e53511f9b15991228d6f2ccd089290c4b0221391f5a2b9f338d460
+  checksum: 10/cf5961000e1b307e2497d56272fe81104a70a8136af301354e845913bfc8efb27737d89473d8201604290973bd2b8868704f1099d82910ed4c962be3bb54d5cc
   languageName: node
   linkType: hard
 
