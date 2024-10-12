@@ -6,7 +6,7 @@
     "public": "連合",
     "favourites": "お気に入り",
     "bookmarks": "ブックマーク",
-    "follow_requests": "Follow Requests",
+    "follow_requests": "フォローリクエスト",
     "search": "検索",
     "status": {
       "avatar": "{user} のAavtar",
@@ -102,8 +102,8 @@
     }
   },
   "follow_requests": {
-    "authorize": "Authorize",
-    "reject": "Reject"
+    "authorize": "許可",
+    "reject": "却下"
   },
   "compose": {
     "placeholder": "今なにしてる?",
@@ -182,7 +182,7 @@
     "save": "保存",
     "language": "言語",
     "font_size": "フォントサイズ",
-    "font_family": "Font family",
+    "font_family": "フォント",
     "mode": "カラーモード",
     "dark_mode": "ダークモード",
     "light_mode": "ライトモード",
