@@ -7,6 +7,7 @@ import Notifications from '@/components/timelines/Notifications'
 import Search from '@/components/timelines/Search'
 import Media from '@/components/Media'
 import Report from '@/components/report/Report'
+import FollowRequests from '@/components/timelines/FollowRequests'
 
 export default function Page() {
   const router = useRouter()
@@ -58,39 +59,56 @@ export default function Page() {
     })
   }
 
+  const timeline = (timeline: string) => {
+    switch (timeline) {
+      case 'notifications':
+        return (
+          <Notifications
+            account={account}
+            client={client}
+            openMedia={(media: Array<Entity.Attachment>, index: number) =>
+              dispatch({ target: 'media', value: true, object: media, index: index })
+            }
+          />
+        )
+      case 'search':
+        return (
+          <Search
+            client={client}
+            account={account}
+            openMedia={(media: Array<Entity.Attachment>, index: number) =>
+              dispatch({ target: 'media', value: true, object: media, index: index })
+            }
+          />
+        )
+      case 'follow_requests':
+        return (
+          <FollowRequests
+            client={client}
+            account={account}
+            openMedia={(media: Array<Entity.Attachment>, index: number) =>
+              dispatch({ target: 'media', value: true, object: media, index: index })
+            }
+          />
+        )
+      default:
+        return (
+          <Timeline
+            timeline={router.query.timeline as string}
+            account={account}
+            client={client}
+            openMedia={(media: Array<Entity.Attachment>, index: number) =>
+              dispatch({ target: 'media', value: true, object: media, index: index })
+            }
+          />
+        )
+    }
+  }
+
   if (!account || !client) return null
   return (
     <>
-      {(router.query.timeline as string) === 'notifications' ? (
-        <Notifications
-          account={account}
-          client={client}
-          openMedia={(media: Array<Entity.Attachment>, index: number) =>
-            dispatch({ target: 'media', value: true, object: media, index: index })
-          }
-        />
-      ) : (
-        <>
-          {(router.query.timeline as string) === 'search' ? (
-            <Search
-              client={client}
-              account={account}
-              openMedia={(media: Array<Entity.Attachment>, index: number) =>
-                dispatch({ target: 'media', value: true, object: media, index: index })
-              }
-            />
-          ) : (
-            <Timeline
-              timeline={router.query.timeline as string}
-              account={account}
-              client={client}
-              openMedia={(media: Array<Entity.Attachment>, index: number) =>
-                dispatch({ target: 'media', value: true, object: media, index: index })
-              }
-            />
-          )}
-        </>
-      )}
+      {timeline(router.query.timeline as string)}
       <Media
         open={modalState.media.opened}
         close={() => dispatch({ target: 'media', value: false, object: [], index: -1 })}
