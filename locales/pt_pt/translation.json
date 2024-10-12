@@ -6,6 +6,7 @@
     "public": "Público",
     "favourites": "Favourites",
     "bookmarks": "Bookmarks",
+    "follow_requests": "Follow Requests",
     "search": "Procurar",
     "status": {
       "avatar": "Avatar de {user}",
@@ -99,6 +100,10 @@
       "title": "Pedido para seguir",
       "body": "{user} enviou um pedido para o(a) seguir."
     }
+  },
+  "follow_requests": {
+    "authorize": "Authorize",
+    "reject": "Reject"
   },
   "compose": {
     "placeholder": "No que está a pensar?",
