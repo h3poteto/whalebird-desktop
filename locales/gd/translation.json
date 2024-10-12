@@ -6,6 +6,7 @@
     "public": "Public",
     "favourites": "Favourites",
     "bookmarks": "Bookmarks",
+    "follow_requests": "Follow Requests",
     "search": "Search",
     "status": {
       "avatar": "Aavtar of {user}",
@@ -99,6 +100,10 @@
       "title": "Follow Request",
       "body": "{user} requested to follow you"
     }
+  },
+  "follow_requests": {
+    "authorize": "Authorize",
+    "reject": "Reject"
   },
   "compose": {
     "placeholder": "What's on your mind?",
