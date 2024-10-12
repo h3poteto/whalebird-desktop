@@ -187,7 +187,7 @@ export default function New(props: NewProps) {
                         size="sm"
                         variant="text"
                         color="blue"
-                        title={formatMessage({ id: 'accounts.copy_authorization_url' })}
+                        title={formatMessage({ id: 'accounts.new.copy_authorization_url' })}
                         onClick={() => copyText(appData.url)}
                       >
                         <FaClipboard className="text-xl" />

@@ -4,7 +4,7 @@ import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaStar, FaUsers, FaHashtag } from 'react-icons/fa6'
+import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaStar, FaUsers, FaHashtag, FaUserPlus } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import Jump from '../Jump'
 import { useUnreads } from '@/provider/unreads'
@@ -37,13 +37,14 @@ export type Timeline = {
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter()
   const { formatMessage } = useIntl()
-  const { unreads } = useUnreads()
+  const { unreads, setUnreads } = useUnreads()
 
   const [account, setAccount] = useState<Account | null>(null)
   const [lists, setLists] = useState<Array<Entity.List>>([])
   const [followedTags, setFollowedTags] = useState<Array<Entity.Tag>>([])
   const [openJump, setOpenJump] = useState(false)
   const [client, setClient] = useState<MegalodonInterface>()
+  const [followRequests, setFollowRequests] = useState<Array<Timeline>>([])
 
   useHotkeys('mod+k', () => setOpenJump(current => !current))
 
@@ -68,10 +69,37 @@ export default function Layout({ children }: LayoutProps) {
     }
     f()
     const g = async () => {
-      const res = await c.getFollowedTags()
-      setFollowedTags(res.data)
+      try {
+        const res = await c.getFollowedTags()
+        setFollowedTags(res.data)
+      } catch (err) {
+        setFollowedTags([])
+        console.error(err)
+      }
     }
     g()
+    const r = async () => {
+      const res = await c.getFollowRequests()
+      if (res.data.length > 0) {
+        setUnreads(current =>
+          Object.assign({}, current, {
+            [`${account.id?.toString()}_follow_requests`]: res.data.length
+          })
+        )
+        console.log(unreads)
+        setFollowRequests([
+          {
+            id: 'follow_requests',
+            title: formatMessage({ id: 'timeline.follow_requests' }),
+            icon: <FaUserPlus />,
+            path: `/accounts/${router.query.id}/follow_requests`
+          }
+        ])
+      } else {
+        setFollowRequests([])
+      }
+    }
+    r()
   }, [account])
 
   const pages: Array<Timeline> = [
@@ -127,7 +155,7 @@ export default function Layout({ children }: LayoutProps) {
           <p>@{account?.domain}</p>
         </div>
         <List className="min-w-[64px]">
-          {pages.map(page => (
+          {pages.concat(followRequests).map(page => (
             <ListItem
               key={page.id}
               selected={router.asPath.includes(page.path)}
@@ -137,10 +165,11 @@ export default function Layout({ children }: LayoutProps) {
             >
               <ListItemPrefix>{page.icon}</ListItemPrefix>
               <span className="sidebar-menu text-ellipsis whitespace-nowrap overflow-hidden">{page.title}</span>
-              {page.id === 'notifications' && unreads[account?.id?.toString()] ? (
+              {(page.id === 'notifications' && unreads[account?.id?.toString()]) ||
+              (page.id === 'follow_requests' && unreads[`${account.id.toString()}_follow_requests`]) ? (
                 <ListItemSuffix className="sidebar-toolchip">
                   <Chip
-                    value={unreads[account.id.toString()]}
+                    value={unreads[account.id.toString()] || unreads[`${account.id.toString()}_follow_requests`]}
                     variant="ghost"
                     size="sm"
                     className="rounded-full theme-text-primary theme-badge"
