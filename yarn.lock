@@ -1537,10 +1537,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@badgateway/oauth2-client@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "@badgateway/oauth2-client@npm:2.4.1"
-  checksum: 10/13ae31757de1b74ded66364ef9273d0bb2b1001ba02812fd8ebcc9a6fbaf2e8bc7541ba9b54ad9c39bbc72fd94f46b0d6ca156a87feb9130836d154b3197d88a
+"@badgateway/oauth2-client@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "@badgateway/oauth2-client@npm:2.4.2"
+  checksum: 10/ae897202a4701fefcbfdcb173a3d58b418eafdd91f14630dc99e16e8ba066b45a060afff69dd299f223798fe79aa0be9c29f8e62b6b484b70f0bbacc347f45ce
   languageName: node
   linkType: hard
 
@@ -2830,7 +2830,7 @@ __metadata:
     eslint: "npm:^9.0.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-react: "npm:^7.33.2"
-    megalodon: "npm:10.0.4"
+    megalodon: "npm:10.0.5"
     next: "npm:^14.0.0"
     nextron: "npm:^9.0.0"
     parse-link-header: "npm:^2.0.0"
@@ -6797,11 +6797,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"megalodon@npm:10.0.4":
-  version: 10.0.4
-  resolution: "megalodon@npm:10.0.4"
+"megalodon@npm:10.0.5":
+  version: 10.0.5
+  resolution: "megalodon@npm:10.0.5"
   dependencies:
-    "@badgateway/oauth2-client": "npm:^2.4.1"
+    "@badgateway/oauth2-client": "npm:^2.4.2"
     "@types/ws": "npm:^8.5.12"
     axios: "npm:1.7.7"
     dayjs: "npm:^1.11.13"
@@ -6811,7 +6811,7 @@ __metadata:
     object-assign-deep: "npm:^0.4.0"
     uuid: "npm:^10.0.0"
     ws: "npm:8.18.0"
-  checksum: 10/51a243640016a584ac1c4c7795f2339b93ef12f0182abb949bb30c216c5c9568e1ea1f3b7753b8fbe84cf91f49ce1118404745c1ddfe38853f4c3234cae48176
+  checksum: 10/5837e98cef1cd445dd50cbbeb38636c3cb81f03e7179dfbc230e86f91573d8102ab03eba59edbac258a25debf711ea84dece09dbe47aad467920588feb7cf8fe
   languageName: node
   linkType: hard
 
