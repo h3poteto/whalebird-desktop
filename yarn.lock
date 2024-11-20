@@ -1537,10 +1537,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@badgateway/oauth2-client@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "@badgateway/oauth2-client@npm:2.4.1"
-  checksum: 10/13ae31757de1b74ded66364ef9273d0bb2b1001ba02812fd8ebcc9a6fbaf2e8bc7541ba9b54ad9c39bbc72fd94f46b0d6ca156a87feb9130836d154b3197d88a
+"@badgateway/oauth2-client@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "@badgateway/oauth2-client@npm:2.4.2"
+  checksum: 10/ae897202a4701fefcbfdcb173a3d58b418eafdd91f14630dc99e16e8ba066b45a060afff69dd299f223798fe79aa0be9c29f8e62b6b484b70f0bbacc347f45ce
   languageName: node
   linkType: hard
 
@@ -2497,12 +2497,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:^8.5.12":
-  version: 8.5.12
-  resolution: "@types/ws@npm:8.5.12"
+"@types/ws@npm:^8.5.13":
+  version: 8.5.13
+  resolution: "@types/ws@npm:8.5.13"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10/d8a3ddfb5ff8fea992a043113579d61ac1ea21e8464415af9e2b01b205ed19d817821ad64ca1b3a90062d1df1c23b0f586d8351d25ca6728844df99a74e8f76d
+  checksum: 10/21369beafa75c91ae3b00d3a2671c7408fceae1d492ca2abd5ac7c8c8bf4596d513c1599ebbddeae82c27c4a2d248976d0d714c4b3d34362b2ae35b964e2e637
   languageName: node
   linkType: hard
 
@@ -2830,7 +2830,7 @@ __metadata:
     eslint: "npm:^9.0.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-react: "npm:^7.33.2"
-    megalodon: "npm:10.0.4"
+    megalodon: "npm:10.0.7"
     next: "npm:^14.0.0"
     nextron: "npm:^9.0.0"
     parse-link-header: "npm:^2.0.0"
@@ -6797,21 +6797,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"megalodon@npm:10.0.4":
-  version: 10.0.4
-  resolution: "megalodon@npm:10.0.4"
+"megalodon@npm:10.0.7":
+  version: 10.0.7
+  resolution: "megalodon@npm:10.0.7"
   dependencies:
-    "@badgateway/oauth2-client": "npm:^2.4.1"
-    "@types/ws": "npm:^8.5.12"
+    "@badgateway/oauth2-client": "npm:^2.4.2"
+    "@types/ws": "npm:^8.5.13"
     axios: "npm:1.7.7"
     dayjs: "npm:^1.11.13"
     events: "npm:^3.3.0"
     form-data: "npm:^4.0.0"
     isomorphic-ws: "npm:^5.0.0"
     object-assign-deep: "npm:^0.4.0"
-    uuid: "npm:^10.0.0"
+    uuid: "npm:^11.0.2"
     ws: "npm:8.18.0"
-  checksum: 10/51a243640016a584ac1c4c7795f2339b93ef12f0182abb949bb30c216c5c9568e1ea1f3b7753b8fbe84cf91f49ce1118404745c1ddfe38853f4c3234cae48176
+  checksum: 10/e350386aa294182b308498d2f614f165f79aa875691cef5839223b9f4c0cc5441576a184e000b3cccbd5a3a3244c4f6df6b80016a2bd4123b5978f3222dccd8c
   languageName: node
   linkType: hard
 
@@ -9557,12 +9557,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "uuid@npm:10.0.0"
+"uuid@npm:^11.0.2":
+  version: 11.0.3
+  resolution: "uuid@npm:11.0.3"
   bin:
-    uuid: dist/bin/uuid
-  checksum: 10/35aa60614811a201ff90f8ca5e9ecb7076a75c3821e17f0f5ff72d44e36c2d35fcbc2ceee9c4ac7317f4cc41895da30e74f3885e30313bee48fda6338f250538
+    uuid: dist/esm/bin/uuid
+  checksum: 10/251385563195709eb0697c74a834764eef28e1656d61174e35edbd129288acb4d95a43f4ce8a77b8c2fc128e2b55924296a0945f964b05b9173469d045625ff2
   languageName: node
   linkType: hard
 
