@@ -203,7 +203,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.1.6": {
+  "Whalebird@6.1.7": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
