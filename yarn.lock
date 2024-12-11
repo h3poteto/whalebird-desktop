@@ -2319,7 +2319,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^22.0.0":
   version: 22.10.2
   resolution: "@types/node@npm:22.10.2"
   dependencies:
@@ -2328,7 +2328,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.0.0, @types/node@npm:^20.9.0":
+"@types/node@npm:^20.9.0":
   version: 20.17.10
   resolution: "@types/node@npm:20.17.10"
   dependencies:
@@ -2725,7 +2725,7 @@ __metadata:
     "@electron/notarize": "npm:^2.1.0"
     "@emoji-mart/react": "npm:^1.1.1"
     "@material-tailwind/react": "npm:^2.1.8"
-    "@types/node": "npm:^20.0.0"
+    "@types/node": "npm:^22.0.0"
     "@types/parse-link-header": "npm:^2.0.3"
     "@types/react": "npm:18.2.19"
     "@types/sanitize-html": "npm:^2.9.4"
@@ -7570,7 +7570,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.1.1":
+"picocolors@npm:^1.1.0, picocolors@npm:^1.1.1":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
   checksum: 10/e1cf46bf84886c79055fdfa9dcb3e4711ad259949e3565154b004b260cd356c5d54b31a1437ce9782624bf766272fe6b0154f5f0c744fb7af5d454d2b60db045
