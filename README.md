@@ -19,11 +19,16 @@ Whalebird is a Fediverse client app for desktop.
 - Streaming
 - Manage multiple accounts
 - Supporting
-    - Mastodon
-    - Pleroma
-    - Friendica
-    - Firefish
-    - Gotosocial
+    - [x] Mastodon <img src="https://cdn.simpleicons.org/mastodon" alt="Mastodon" width=16 height=16>
+    - [x] Pleroma <img src="https://cdn.simpleicons.org/pleroma" alt="Pleroma" width=16 height=16>
+    - [x] Friendica
+    - [x] Firefish <img src="https://cdn.simpleicons.org/firefish" alt="Firefish" width=16 height=16>
+    - [x] Gotosocial
+    - [x] Akkoma (Unofficial)
+    - [x] Sharkey (Unofficial)
+    - [x] Hometown (Unofficial)
+    - [x] Iceshrimp (Unofficial)
+
 
 ## Install
 ### Mac
