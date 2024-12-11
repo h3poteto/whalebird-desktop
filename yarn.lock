@@ -5092,13 +5092,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "eslint-visitor-keys@npm:4.2.0"
-  checksum: 10/9651b3356b01760e586b4c631c5268c0e1a85236e3292bf754f0472f465bf9a856c0ddc261fceace155334118c0151778effafbab981413dbf9288349343fa25
-  languageName: node
-  linkType: hard
-
 "eslint@npm:^9.0.0":
   version: 9.16.0
   resolution: "eslint@npm:9.16.0"
@@ -7033,7 +7026,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.8":
+"micromatch@npm:^4.0.5, micromatch@npm:^4.0.8":
   version: 4.0.8
   resolution: "micromatch@npm:4.0.8"
   dependencies:
@@ -8131,11 +8124,11 @@ __metadata:
   linkType: hard
 
 "react-icons@npm:^5.0.0":
-  version: 5.3.0
-  resolution: "react-icons@npm:5.3.0"
+  version: 5.4.0
+  resolution: "react-icons@npm:5.4.0"
   peerDependencies:
     react: "*"
-  checksum: 10/7f315d2a5e0eee7fefe01eac5cbe818b9592d88964f6c99ba454539a78cd2efd4430152e88113585c5a54bca6a5e1e7e7978df9cf69a03d8479a8d3d106a027c
+  checksum: 10/c900d475c64852b316d16bdc1a436c93e18e0ffb321ebc43a1d8741191baba736e0ef4c6d871399056832b69413cd13b56ae6a18eaa5ad17041df805d803651c
   languageName: node
   linkType: hard
 
