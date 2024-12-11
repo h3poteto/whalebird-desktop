@@ -24,7 +24,7 @@ jobs:
           cache: yarn
 
       - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v2
+        uses: samuelmeuli/action-snapcraft@v3
       - name: Build
         run: |
           yarn install
