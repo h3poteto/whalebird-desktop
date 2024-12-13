@@ -39,6 +39,26 @@ let main: BrowserWindow = null
     await mainWindow.loadURL(`http://localhost:${port}/`)
     mainWindow.webContents.openDevTools()
   }
+
+  mainWindow.webContents.on('context-menu', (_event, properties) => {
+    const contextMenu = Menu.buildFromTemplate([
+      {
+        label: 'Select All',
+        click: () => {
+          mainWindow.webContents.selectAll()
+        }
+      },
+      {
+        label: 'Save Image As',
+        visible: properties.mediaType === 'image',
+        click: () => {
+          console.log(properties.srcURL)
+          mainWindow.webContents.downloadURL(properties.srcURL)
+        }
+      }
+    ])
+    contextMenu.popup({ window: mainWindow })
+  })
 })()
 
 app.on('window-all-closed', () => {

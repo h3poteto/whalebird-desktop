@@ -54,17 +54,15 @@ export default function FollowRequests(props: Props) {
           </div>
           <div className="timeline overflow-y-auto w-full overflow-x-hidden" style={{ height: 'calc(100% - 44px)' }}>
             {requests.map(r => (
-              <>
-                <User
-                  key={r.id}
-                  user={r}
-                  client={props.client}
-                  refresh={async () => {
-                    const data = await refreshRequests()
-                    updateUnreads(data.length)
-                  }}
-                />
-              </>
+              <User
+                key={r.id}
+                user={r}
+                client={props.client}
+                refresh={async () => {
+                  const data = await refreshRequests()
+                  updateUnreads(data.length)
+                }}
+              />
             ))}
           </div>
         </section>
