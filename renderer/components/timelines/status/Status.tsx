@@ -88,29 +88,6 @@ export default function Status(props: Props) {
     )
   }
 
-  const onContextMenu: MouseEventHandler<HTMLDivElement> = e => {
-    e.preventDefault()
-    hideOthers()
-    const context = document.getElementById(`context-${props.status.id}`)
-    if (context) {
-      context.style.left = `${e.clientX}px`
-      context.style.top = `${e.clientY}px`
-      context.style.display = 'block'
-    }
-  }
-
-  const onClick: MouseEventHandler<HTMLDivElement> = e => {
-    e.preventDefault()
-    hideOthers()
-  }
-
-  const hideOthers = () => {
-    const menu = document.getElementsByClassName('context-menu')
-    for (let i = 0; i < menu.length; i++) {
-      ;(menu[i] as HTMLElement).style.display = 'none'
-    }
-  }
-
   const copyLink = () => {
     navigator.clipboard.writeText(status.url)
   }
@@ -141,12 +118,7 @@ export default function Status(props: Props) {
             )}
           />
         </div>
-        <div
-          className="text-gray-950 dark:text-gray-300 break-all overflow-hidden"
-          style={{ width: 'calc(100% - 56px)' }}
-          onContextMenu={onContextMenu}
-          onClick={onClick}
-        >
+        <div className="text-gray-950 dark:text-gray-300 break-all overflow-hidden" style={{ width: 'calc(100% - 56px)' }}>
           <div className="flex justify-between">
             <div className="flex cursor-pointer hover:underline" onClick={() => openUser(status.account.id)}>
               <span

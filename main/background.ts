@@ -1,5 +1,5 @@
 import path from 'path'
-import { app, ipcMain, shell, IpcMainInvokeEvent, BrowserWindow, Menu } from 'electron'
+import { app, ipcMain, shell, IpcMainInvokeEvent, BrowserWindow, Menu, clipboard } from 'electron'
 import serve from 'electron-serve'
 import { createWindow } from './helpers'
 import { menu } from './menu'
@@ -41,6 +41,9 @@ let main: BrowserWindow = null
   }
 
   mainWindow.webContents.on('context-menu', (_event, properties) => {
+    const { editFlags } = properties
+    const hasText = properties.selectionText.length > 0
+    const can = (type: string) => editFlags[`can${type}`] && hasText
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'Select All',
@@ -49,11 +52,58 @@ let main: BrowserWindow = null
         }
       },
       {
+        label: 'Copy',
+        enabled: can('Copy'),
+        visible: properties.isEditable || hasText,
+        click: () => {
+          const target = mainWindow.webContents
+          if (target) {
+            target.copy()
+          } else {
+            clipboard.writeText(properties.selectionText)
+          }
+        }
+      },
+      {
+        label: 'Cut',
+        enabled: can('Cut'),
+        visible: properties.isEditable || hasText,
+        click: () => {
+          const target = mainWindow.webContents
+          if (target) {
+            target.cut()
+          } else {
+            clipboard.writeText(properties.selectionText)
+          }
+        }
+      },
+      {
+        label: 'Paste',
+        enabled: editFlags.canPaste,
+        visible: properties.isEditable,
+        click: () => {
+          const target = mainWindow.webContents
+          if (target) {
+            target.paste()
+          }
+        }
+      },
+      {
         label: 'Save Image As',
         visible: properties.mediaType === 'image',
         click: () => {
           console.log(properties.srcURL)
           mainWindow.webContents.downloadURL(properties.srcURL)
+        }
+      },
+      {
+        label: 'Copy Link',
+        visible: properties.linkURL.length > 0 && properties.mediaType === 'none',
+        click: () => {
+          clipboard.write({
+            bookmark: properties.linkText,
+            text: properties.linkURL
+          })
         }
       }
     ])
