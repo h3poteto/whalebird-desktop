@@ -157,7 +157,7 @@ export default function Profile(props: Props) {
                       <FaEllipsisVertical />
                     </IconButton>
                   </PopoverHandler>
-                  <PopoverContent>
+                  <PopoverContent className="z-30">
                     <List>
                       <ListItem
                         onClick={() => {
