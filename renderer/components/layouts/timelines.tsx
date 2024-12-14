@@ -65,7 +65,15 @@ export default function Layout({ children }: LayoutProps) {
     setClient(c)
     const f = async () => {
       const res = await c.getLists()
-      setLists(res.data)
+      setLists(
+        res.data.sort((a, b) => {
+          if (a.title > b.title) {
+            return 1
+          } else {
+            return -1
+          }
+        })
+      )
     }
     f()
     const g = async () => {
