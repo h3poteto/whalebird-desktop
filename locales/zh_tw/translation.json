@@ -34,7 +34,7 @@
         "detail": "詳細資訊"
       },
       "context_menu": {
-        "copy_link": "Copy link",
+        "copy_link": "複製連結",
         "open_detail": "Open original page"
       }
     },
@@ -103,7 +103,7 @@
   },
   "follow_requests": {
     "authorize": "Authorize",
-    "reject": "Reject"
+    "reject": "拒絕"
   },
   "compose": {
     "placeholder": "What's on your mind?",
@@ -126,7 +126,7 @@
     },
     "nsfw": "敏感",
     "poll": {
-      "add": "Add",
+      "add": "新增",
       "5min": "5 分鐘",
       "30min": "30 分鐘",
       "1h": "1 小時",
@@ -178,8 +178,8 @@
   },
   "settings": {
     "title": "設定",
-    "cancel": "Cancel",
-    "save": "Save",
+    "cancel": "取消",
+    "save": "儲存",
     "language": "語言",
     "font_size": "字型大小",
     "font_family": "Font family",
@@ -188,8 +188,8 @@
     "light_mode": "淺色模式",
     "theme": "色彩主題",
     "proxy": {
-      "title": "Proxy",
-      "no": "No proxy",
+      "title": "代理伺服器",
+      "no": "沒有代理伺服器",
       "os": "Use system proxy settings",
       "manual": "Manual proxy configuration",
       "protocol": "Protocol",
@@ -210,7 +210,7 @@
   "search": {
     "placeholder": "搜尋時間軸",
     "statuses": "Statuses",
-    "accounts": "Accounts",
-    "hashtags": "Hashtags"
+    "accounts": "帳號",
+    "hashtags": "主題標籤"
   }
 }
