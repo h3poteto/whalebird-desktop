@@ -2358,14 +2358,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.19":
-  version: 18.2.19
-  resolution: "@types/react@npm:18.2.19"
+"@types/react@npm:19.0.2":
+  version: 19.0.2
+  resolution: "@types/react@npm:19.0.2"
   dependencies:
-    "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/cec0bcd18cc5d76553e39c7684db1efbbfe91e8f438f6e97a6e911fe1ac2b6e5f107895dd78b7d3674d40f09cabe4c8b9580656d6ca26df236718ed8a89c6db2
+  checksum: 10/b355cfa22814e934b381c4f6de67c66652255377c3ddc6a757ea195ccbd0e7095aadfe1a28713d8ab1221222b8f2ec237903f4ec0e54eaf656ac832782d25dd2
   languageName: node
   linkType: hard
 
@@ -2713,7 +2711,7 @@ __metadata:
     "@material-tailwind/react": "npm:^2.1.8"
     "@types/node": "npm:^22.0.0"
     "@types/parse-link-header": "npm:^2.0.3"
-    "@types/react": "npm:18.2.19"
+    "@types/react": "npm:19.0.2"
     "@types/sanitize-html": "npm:^2.9.4"
     "@typescript-eslint/eslint-plugin": "npm:^8.0.0"
     "@typescript-eslint/parser": "npm:^8.0.0"
@@ -2737,7 +2735,7 @@ __metadata:
     postcss: "npm:^8.4.31"
     react: "npm:^18.2.0"
     react-blurhash: "npm:^0.3.0"
-    react-dom: "npm:^18.2.0"
+    react-dom: "npm:^19.0.0"
     react-hotkeys-hook: "npm:^4.4.1"
     react-icons: "npm:^5.0.0"
     react-intl: "npm:^7.0.0"
@@ -7849,15 +7847,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
-  version: 18.3.1
-  resolution: "react-dom@npm:18.3.1"
+"react-dom@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "react-dom@npm:19.0.0"
   dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.2"
+    scheduler: "npm:^0.25.0"
   peerDependencies:
-    react: ^18.3.1
-  checksum: 10/3f4b73a3aa083091173b29812b10394dd06f4ac06aff410b74702cfb3aa29d7b0ced208aab92d5272919b612e5cda21aeb1d54191848cf6e46e9e354f3541f81
+    react: ^19.0.0
+  checksum: 10/aa64a2f1991042f516260e8b0eca0ae777b6c8f1aa2b5ae096e80bbb6ac9b005aef2bca697969841d34f7e1819556263476bdfea36c35092e8d9aefde3de2d9a
   languageName: node
   linkType: hard
 
@@ -8426,12 +8423,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.2":
-  version: 0.23.2
-  resolution: "scheduler@npm:0.23.2"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10/e8d68b89d18d5b028223edf090092846868a765a591944760942b77ea1f69b17235f7e956696efbb62c8130ab90af7e0949bfb8eba7896335507317236966bc9
+"scheduler@npm:^0.25.0":
+  version: 0.25.0
+  resolution: "scheduler@npm:0.25.0"
+  checksum: 10/e661e38503ab29a153429a99203fefa764f28b35c079719eb5efdd2c1c1086522f6653d8ffce388209682c23891a6d1d32fa6badf53c35fb5b9cd0c55ace42de
   languageName: node
   linkType: hard
 
