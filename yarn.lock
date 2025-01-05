@@ -2730,7 +2730,7 @@ __metadata:
     eslint: "npm:^9.0.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-react: "npm:^7.33.2"
-    megalodon: "npm:10.0.7"
+    megalodon: "npm:10.1.0"
     next: "npm:^14.0.0"
     nextron: "npm:^9.0.0"
     parse-link-header: "npm:^2.0.0"
@@ -3252,14 +3252,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.7":
-  version: 1.7.7
-  resolution: "axios@npm:1.7.7"
+"axios@npm:1.7.9":
+  version: 1.7.9
+  resolution: "axios@npm:1.7.9"
   dependencies:
     follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/7f875ea13b9298cd7b40fd09985209f7a38d38321f1118c701520939de2f113c4ba137832fe8e3f811f99a38e12c8225481011023209a77b0c0641270e20cde1
+  checksum: 10/b7a5f660ea53ba9c2a745bf5ad77ad8bf4f1338e13ccc3f9f09f810267d6c638c03dac88b55dae8dc98b79c57d2d6835be651d58d2af97c174f43d289a9fd007
   languageName: node
   linkType: hard
 
@@ -5402,6 +5402,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"form-data@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "form-data@npm:4.0.1"
+  dependencies:
+    asynckit: "npm:^0.4.0"
+    combined-stream: "npm:^1.0.8"
+    mime-types: "npm:^2.1.12"
+  checksum: 10/6adb1cff557328bc6eb8a68da205f9ae44ab0e88d4d9237aaf91eed591ffc64f77411efb9016af7d87f23d0a038c45a788aa1c6634e51175c4efa36c2bc53774
+  languageName: node
+  linkType: hard
+
 "fraction.js@npm:^4.3.7":
   version: 4.3.7
   resolution: "fraction.js@npm:4.3.7"
@@ -7131,21 +7142,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"megalodon@npm:10.0.7":
-  version: 10.0.7
-  resolution: "megalodon@npm:10.0.7"
+"megalodon@npm:10.1.0":
+  version: 10.1.0
+  resolution: "megalodon@npm:10.1.0"
   dependencies:
     "@badgateway/oauth2-client": "npm:^2.4.2"
     "@types/ws": "npm:^8.5.13"
-    axios: "npm:1.7.7"
+    axios: "npm:1.7.9"
     dayjs: "npm:^1.11.13"
     events: "npm:^3.3.0"
-    form-data: "npm:^4.0.0"
+    form-data: "npm:^4.0.1"
     isomorphic-ws: "npm:^5.0.0"
     object-assign-deep: "npm:^0.4.0"
-    uuid: "npm:^11.0.2"
+    uuid: "npm:^11.0.3"
     ws: "npm:8.18.0"
-  checksum: 10/e350386aa294182b308498d2f614f165f79aa875691cef5839223b9f4c0cc5441576a184e000b3cccbd5a3a3244c4f6df6b80016a2bd4123b5978f3222dccd8c
+  checksum: 10/d564cc43e371ab15faf27f7235855ed5a220660943eee6180ddfee395777bc3861dd66ccfd7b7f2405561a0fed79a18fc42682eb3a8f647c9a0907b6b42d251e
   languageName: node
   linkType: hard
 
@@ -10178,7 +10189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^11.0.2":
+"uuid@npm:^11.0.3":
   version: 11.0.3
   resolution: "uuid@npm:11.0.3"
   bin:
