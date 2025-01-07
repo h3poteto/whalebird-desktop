@@ -38,7 +38,8 @@
         "open_detail": "Open original page"
       }
     },
-    "mark_as_read": "標記為已讀"
+    "mark_as_read": "標記為已讀",
+    "reload": "Reload"
   },
   "accounts": {
     "new": {
