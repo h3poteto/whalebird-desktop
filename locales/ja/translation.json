@@ -38,7 +38,8 @@
         "open_detail": "元のページを開く"
       }
     },
-    "mark_as_read": "全て既読にする"
+    "mark_as_read": "全て既読にする",
+    "reload": "Reload"
   },
   "accounts": {
     "new": {
