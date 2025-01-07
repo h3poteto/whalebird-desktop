@@ -64,7 +64,7 @@ export default function Reply(props: Props) {
         )}
       />
       <div ref={composeRef}>
-        <Compose client={props.client} in_reply_to={status} />
+        <Compose client={props.client} in_reply_to={status} account={props.account} />
       </div>
     </div>
   )
