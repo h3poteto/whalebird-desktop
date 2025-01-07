@@ -145,7 +145,8 @@
   "alert": {
     "validation": {
       "attachment_type": "画像または動画のみ添付できます",
-      "attachment_length": "{limit} 個以上のファイルを添付できません。"
+      "attachment_length": "{limit} 個以上のファイルを添付できません。",
+      "attachment_required": "Please attache images or videos"
     },
     "upload_error": "ファイルのアップロードに失敗しました",
     "compose": {
