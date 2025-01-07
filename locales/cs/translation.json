@@ -38,7 +38,8 @@
         "open_detail": "Open original page"
       }
     },
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "Mark as read",
+    "reload": "Reload"
   },
   "accounts": {
     "new": {
