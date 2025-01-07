@@ -30,6 +30,7 @@ export default function Timeline(props: Props) {
   const [tag, setTag] = useState<Entity.Tag | null>(null)
   const [filters, setFilters] = useState<Array<Entity.Filter>>([])
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
+  const [reached, setReached] = useState(false)
 
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -217,6 +218,7 @@ export default function Timeline(props: Props) {
   }, [props.timeline, props.client, setStatuses])
 
   const loadMore = useCallback(async () => {
+    if (reached) return
     console.debug('appending')
     let maxId = null
     switch (props.timeline) {
@@ -233,8 +235,11 @@ export default function Timeline(props: Props) {
     }
 
     const append = await loadTimeline(props.timeline, props.client, maxId)
+    if (append.length === 0) {
+      setReached(true)
+    }
     setStatuses(last => [...last, ...append])
-  }, [props.client, statuses, setStatuses, nextMaxId])
+  }, [props.client, statuses, setStatuses, nextMaxId, reached, setReached])
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
