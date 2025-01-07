@@ -145,7 +145,8 @@
   "alert": {
     "validation": {
       "attachment_type": "Solo puedes adjuntar imágenes o vídeos",
-      "attachment_length": "No puedes adjuntar mas de {limit} archivos"
+      "attachment_length": "No puedes adjuntar mas de {limit} archivos",
+      "attachment_required": "Please attache images or videos"
     },
     "upload_error": "No se pudo cargar el archivo",
     "compose": {
