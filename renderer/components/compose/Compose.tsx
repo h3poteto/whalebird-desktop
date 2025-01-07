@@ -10,7 +10,8 @@ import {
   FaPaperPlane,
   FaPaperclip,
   FaPencil,
-  FaXmark
+  FaXmark,
+  FaRotateRight
 } from 'react-icons/fa6'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useToast } from '@/provider/toast'
