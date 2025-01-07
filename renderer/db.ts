@@ -11,7 +11,7 @@ export type Account = {
   refresh_token: string | null
   url: string
   domain: string
-  sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish'
+  sns: 'mastodon' | 'pleroma' | 'friendica' | 'firefish' | 'pixelfed'
 }
 
 export class SubClassedDexie extends Dexie {

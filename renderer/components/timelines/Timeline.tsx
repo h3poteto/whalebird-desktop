@@ -278,10 +278,13 @@ export default function Timeline(props: Props) {
       <section className={`h-full ${timelineClass()}`}>
         <div className="w-full theme-bg theme-text-primary p-2 flex justify-between">
           <div className="text-lg font-bold cursor-pointer" onClick={() => backToTop()}>
-            {
-              props.timeline.match(/list_(\d+)/) ? <>{list && list.title}</> : 
-                (props.timeline.match(/tag_(\w+)/) ? <>{tag && `# ${tag.name}`}</> : 
-                  <FormattedMessage id={`timeline.${props.timeline}`} />)}
+            {props.timeline.match(/list_(\d+)/) ? (
+              <>{list && list.title}</>
+            ) : props.timeline.match(/tag_(\w+)/) ? (
+              <>{tag && `# ${tag.name}`}</>
+            ) : (
+              <FormattedMessage id={`timeline.${props.timeline}`} />
+            )}
           </div>
           <div className="w-64 text-xs">
             <form onSubmit={ev => search(ev)}>
@@ -326,7 +329,7 @@ export default function Timeline(props: Props) {
           )}
 
           <div ref={composeRef}>
-            <Compose client={props.client} />
+            <Compose client={props.client} account={props.account} />
           </div>
         </div>
       </section>

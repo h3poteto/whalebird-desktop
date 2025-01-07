@@ -33,10 +33,12 @@ import {
   Switch,
   Textarea
 } from '@material-tailwind/react'
+import { Account } from '@/db'
 
 type Props = {
   client: MegalodonInterface
   in_reply_to?: Entity.Status
+  account: Account
 }
 
 type Poll = {
@@ -102,7 +104,11 @@ export default function Compose(props: Props) {
   }, [maxCharacters, body, spoiler])
 
   const post = async () => {
-    if (body.length === 0) return
+    if (props.account.sns !== 'pixelfed' && body.length === 0) return
+    if (props.account.sns === 'pixelfed' && attachments.length === 0) {
+      showToast({ text: formatMessage({ id: 'alert.validation.attachment_required' }), type: 'failure' })
+      return
+    }
     let options = { visibility: visibility }
     if (props.in_reply_to) {
       options = Object.assign({}, options, {
