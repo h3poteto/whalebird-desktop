@@ -8,7 +8,7 @@ import { Spinner } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
 import Detail from '../detail/Detail'
 import { Marker } from '@/entities/marker'
-import { FaCheck } from 'react-icons/fa6'
+import { FaCheck, FaRotateRight } from 'react-icons/fa6'
 import { useToast } from '@/provider/toast'
 import { useUnreads } from '@/provider/unreads'
 
@@ -28,6 +28,7 @@ export default function Notifications(props: Props) {
   const [marker, setMarker] = useState<Marker | null>(null)
   const [pleromaUnreads, setPleromaUnreads] = useState<Array<string>>([])
   const [filters, setFilters] = useState<Array<Entity.Filter>>([])
+  const [reached, setReached] = useState(false)
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const streaming = useRef<WebSocketInterface | null>(null)
@@ -144,15 +145,24 @@ export default function Notifications(props: Props) {
     }
   }
 
+  const reload = useCallback(async () => {
+    const res = await loadNotifications(props.client)
+    setNotifications(res)
+  }, [props.client])
+
   const loadMore = useCallback(async () => {
+    if (reached) true
     console.debug('appending')
     try {
       const append = await loadNotifications(props.client, notifications[notifications.length - 1].id)
+      if (append.length === 0) {
+        setReached(true)
+      }
       setNotifications(last => [...last, ...append])
     } catch (err) {
       console.error(err)
     }
-  }, [props.client, notifications, setNotifications])
+  }, [props.client, notifications, setNotifications, reached, setReached])
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
@@ -188,6 +198,9 @@ export default function Notifications(props: Props) {
           <div className="w-64 text-xs text-right">
             <button className="text-gray-400 text-base py-1" title={formatMessage({ id: 'timeline.mark_as_read' })} onClick={read}>
               <FaCheck />
+            </button>
+            <button className="text-gray-400 text-base py-1 px-2" title={formatMessage({ id: 'timeline.reload' })} onClick={reload}>
+              <FaRotateRight />
             </button>
           </div>
         </div>

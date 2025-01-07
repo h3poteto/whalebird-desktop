@@ -10,6 +10,7 @@ import Compose from '../compose/Compose'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Input, Spinner } from '@material-tailwind/react'
 import parse from 'parse-link-header'
+import { FaRotateRight } from 'react-icons/fa6'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -291,7 +292,7 @@ export default function Timeline(props: Props) {
               <FormattedMessage id={`timeline.${props.timeline}`} />
             )}
           </div>
-          <div className="w-64 text-xs">
+          <div className="text-xs flex">
             <form onSubmit={ev => search(ev)}>
               <Input
                 type="text"
@@ -301,6 +302,11 @@ export default function Timeline(props: Props) {
                 className="!py-1 !px-2 !text-xs placeholder:opacity-100 text-white"
               />
             </form>
+            <div>
+              <button className="text-gray-400 text-base py-1 px-2" title={formatMessage({ id: 'timeline.reload' })} onClick={reload}>
+                <FaRotateRight />
+              </button>
+            </div>
           </div>
         </div>
         <div className="overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
