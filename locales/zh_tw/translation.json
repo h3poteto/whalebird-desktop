@@ -38,7 +38,8 @@
         "open_detail": "Open original page"
       }
     },
-    "mark_as_read": "標記為已讀"
+    "mark_as_read": "標記為已讀",
+    "reload": "Reload"
   },
   "accounts": {
     "new": {
@@ -145,7 +146,8 @@
   "alert": {
     "validation": {
       "attachment_type": "你只能附加圖片或影片",
-      "attachment_length": "你無法附加超過 {limit} 個檔案"
+      "attachment_length": "你無法附加超過 {limit} 個檔案",
+      "attachment_required": "Please attache images or videos"
     },
     "upload_error": "無法上載檔案",
     "compose": {

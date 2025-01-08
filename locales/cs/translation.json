@@ -38,7 +38,8 @@
         "open_detail": "Open original page"
       }
     },
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "Mark as read",
+    "reload": "Reload"
   },
   "accounts": {
     "new": {
@@ -145,7 +146,8 @@
   "alert": {
     "validation": {
       "attachment_type": "You can attach only images or videos",
-      "attachment_length": "You can't attach over {limit} files"
+      "attachment_length": "You can't attach over {limit} files",
+      "attachment_required": "Please attache images or videos"
     },
     "upload_error": "Failed to upload the file",
     "compose": {
