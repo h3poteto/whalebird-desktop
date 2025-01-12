@@ -24,6 +24,7 @@ Whalebird is a Fediverse client app for desktop.
     - [x] Friendica
     - [x] Firefish <img src="https://cdn.simpleicons.org/firefish" alt="Firefish" width=16 height=16>
     - [x] Gotosocial
+    - [x] Pixelfed
     - [x] Akkoma (Unofficial)
     - [x] Sharkey (Unofficial)
     - [x] Hometown (Unofficial)
