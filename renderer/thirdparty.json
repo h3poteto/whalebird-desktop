@@ -187,7 +187,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.1.8": {
+  "Whalebird@6.2.0": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -629,7 +629,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/material-ripple-effects/LICENSE"
   },
-  "megalodon@10.1.0": {
+  "megalodon@10.1.1": {
     "licenses": "MIT",
     "repository": "https://github.com/h3poteto/megalodon",
     "publisher": "h3poteto",
