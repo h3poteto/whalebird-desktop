@@ -51,7 +51,7 @@
     "electron-builder": "^24.6.4",
     "electron-windows-store": "^2.1.0",
     "eslint": "^9.0.0",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-react": "^7.33.2",
     "next": "^14.0.0",
     "nextron": "^9.0.0",
