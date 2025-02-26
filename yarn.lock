@@ -8326,12 +8326,12 @@ __metadata:
   linkType: hard
 
 "react-virtuoso@npm:^4.6.2":
-  version: 4.12.3
-  resolution: "react-virtuoso@npm:4.12.3"
+  version: 4.12.5
+  resolution: "react-virtuoso@npm:4.12.5"
   peerDependencies:
-    react: ">=16 || >=17 || >= 18"
-    react-dom: ">=16 || >=17 || >= 18"
-  checksum: 10/6e43800c23b8f12dba9e304462410dc2bfe82eecfa0bea97c89929a7d14d469709f69b0ba7da4e37de6bc98dacecd656fea208a1ef05cae579bb5a41181607cd
+    react: ">=16 || >=17 || >= 18 || >= 19"
+    react-dom: ">=16 || >=17 || >= 18 || >=19"
+  checksum: 10/09f28ca7940c301899e9d0aa83bf0c7fcb499ca7daaef0545c4aad07164aa22b37391c007f361ae4618ed2a49a1b88c8efe62f6875aaead0995cc99ee6b6f1d9
   languageName: node
   linkType: hard
 
