@@ -22,6 +22,7 @@ import Thirdparty from '../Thirdparty'
 import { useUnreads } from '@/provider/unreads'
 import { useAccounts } from '@/provider/accounts'
 import { invoke } from '@/utils/invoke'
+import generator from 'megalodon'
 
 const defaultFontFamily = [
   'Apple-System',
@@ -75,6 +76,9 @@ export default function Layout({ children }: LayoutProps) {
       }
       acct.forEach(async account => {
         addAccount(account)
+        const cli = generator(account.sns, account.url, account.access_token, 'Whalebird')
+        const a = await cli.verifyAccountCredentials()
+        await db.accounts.update(account.id, { avatar: a.data.avatar })
       })
     }
     fn()
