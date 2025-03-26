@@ -1,7 +1,7 @@
 import { Button } from '@material-tailwind/react'
 import { Entity } from 'megalodon'
 import { useState } from 'react'
-import { FaEyeSlash } from 'react-icons/fa6'
+import { FaArrowUpRightFromSquare, FaEyeSlash } from 'react-icons/fa6'
 import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
@@ -13,6 +13,10 @@ export default function Media(props: Props) {
   const [sensitive, setSensitive] = useState(props.sensitive)
   const { formatMessage } = useIntl()
 
+  const openMediaWindow = (url: string) => {
+    window.open(url, '_blank', 'frame=false')
+  }
+
   if (props.media.length > 0) {
     return (
       <div className="relative">
@@ -22,17 +26,24 @@ export default function Media(props: Props) {
           </Button>
         ) : (
           <>
-            <button
-              className="absolute bg-gray-600 text-gray-200 top-1 left-1 p-1 rounded"
-              onClick={() => setSensitive(true)}
-              title={formatMessage({ id: 'timeline.status.hide_media' })}
-            >
-              <FaEyeSlash />
-            </button>
             <div className="mt-2 flex flex-wrap gap-2">
               {props.media.map((media, key) => (
-                <div key={key}>
+                <div key={key} className="relative">
+                  <button
+                    className="absolute bg-gray-600 text-gray-200 top-1 left-1 p-1 rounded"
+                    onClick={() => setSensitive(true)}
+                    title={formatMessage({ id: 'timeline.status.hide_media' })}
+                  >
+                    <FaEyeSlash />
+                  </button>
                   <Attachment attachment={media} openMedia={() => props.openMedia(props.media, key)} />
+                  <button
+                    className="absolute bg-gray-600 text-gray-200 top-1 right-1 p-1 rounded"
+                    onClick={() => openMediaWindow(props.media[key].url)}
+                    title={formatMessage({ id: 'timeline.status.open_media_window' })}
+                  >
+                    <FaArrowUpRightFromSquare />
+                  </button>
                 </div>
               ))}
             </div>

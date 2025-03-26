@@ -44,6 +44,10 @@ export default function Media(props: Props) {
     [props.open, previous, next]
   )
 
+  const imageOpen = (url: string) => {
+    window.open(url, '_blank', 'frame=false')
+  }
+
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
 
@@ -64,8 +68,9 @@ export default function Media(props: Props) {
               src={props.media[index].url}
               alt={props.media[index].description}
               title={props.media[index].description}
-              className="object-contain max-h-full m-auto"
+              className="object-contain max-h-full m-auto cursor-pointer"
               style={{ maxWidth: '85%' }}
+              onClick={() => imageOpen(props.media[index].url)}
             />
           )}
           <Button variant="text" color="teal" onClick={next} disabled={index >= props.media.length - 1}>
