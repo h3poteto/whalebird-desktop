@@ -60,14 +60,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@floating-ui/utils",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@floating-ui/utils/LICENSE"
   },
-  "@formatjs/ecma402-abstract@2.3.3": {
+  "@formatjs/ecma402-abstract@2.3.4": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Long Ho",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/ecma402-abstract",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/ecma402-abstract/LICENSE.md"
   },
-  "@formatjs/fast-memoize@2.2.6": {
+  "@formatjs/fast-memoize@2.2.7": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Long Ho",
@@ -75,19 +75,19 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/fast-memoize",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/fast-memoize/LICENSE.md"
   },
-  "@formatjs/icu-messageformat-parser@2.11.1": {
+  "@formatjs/icu-messageformat-parser@2.11.2": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-messageformat-parser",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-messageformat-parser/LICENSE.md"
   },
-  "@formatjs/icu-skeleton-parser@1.8.13": {
+  "@formatjs/icu-skeleton-parser@1.8.14": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-skeleton-parser",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/icu-skeleton-parser/LICENSE.md"
   },
-  "@formatjs/intl-localematcher@0.6.0": {
+  "@formatjs/intl-localematcher@0.6.1": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Long Ho",
@@ -95,7 +95,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/intl-localematcher",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@formatjs/intl-localematcher/LICENSE.md"
   },
-  "@formatjs/intl@3.1.4": {
+  "@formatjs/intl@3.1.6": {
     "licenses": "MIT",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Long Ho",
@@ -145,13 +145,13 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@motionone/utils",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@motionone/utils/LICENSE"
   },
-  "@types/hoist-non-react-statics@3.3.5": {
+  "@types/hoist-non-react-statics@3.3.6": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@22.13.5": {
+  "@types/node@22.13.13": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -187,7 +187,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.2.0": {
+  "Whalebird@6.2.1": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -318,7 +318,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/debounce-fn",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/debounce-fn/license"
   },
-  "decimal.js@10.4.3": {
+  "decimal.js@10.5.0": {
     "licenses": "MIT",
     "repository": "https://github.com/MikeMcl/decimal.js",
     "publisher": "Michael Mclaughlin",
@@ -545,7 +545,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/htmlparser2",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/htmlparser2/LICENSE"
   },
-  "intl-messageformat@10.7.15": {
+  "intl-messageformat@10.7.16": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Eric Ferraiuolo",
@@ -767,8 +767,8 @@
     "licenses": "ISC",
     "repository": "https://github.com/alexeyraspopov/picocolors",
     "publisher": "Alexey Raspopov",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss/node_modules/picocolors",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss/node_modules/picocolors/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/picocolors",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/picocolors/LICENSE"
   },
   "pify@4.0.1": {
     "licenses": "MIT",
@@ -853,7 +853,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-icons",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-icons/LICENSE"
   },
-  "react-intl@7.1.6": {
+  "react-intl@7.1.10": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Eric Ferraiuolo",
@@ -914,7 +914,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/require-from-string",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/require-from-string/license"
   },
-  "sanitize-html@2.14.0": {
+  "sanitize-html@2.15.0": {
     "licenses": "MIT",
     "repository": "https://github.com/apostrophecms/sanitize-html",
     "publisher": "Apostrophe Technologies, Inc.",
