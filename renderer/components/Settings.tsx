@@ -12,24 +12,64 @@ type Props = {
 
 const languages = [
   {
+    label: 'Čeština',
+    value: 'cs'
+  },
+  {
+    label: 'Deutsch',
+    value: 'de'
+  },
+  {
     label: 'English',
     value: 'en'
+  },
+  {
+    label: 'español',
+    value: 'es-ES'
+  },
+  {
+    label: 'français',
+    value: 'fr'
+  },
+  {
+    label: 'Gàidhlig',
+    value: 'gd'
+  },
+  {
+    label: 'magyar nyelv',
+    value: 'hu'
+  },
+  {
+    label: 'Bahasa Indonesia',
+    value: 'id'
+  },
+  {
+    label: 'Italiano',
+    value: 'it'
   },
   {
     label: '日本語',
     value: 'ja'
   },
   {
+    label: '한국어',
+    value: 'ko'
+  },
+  {
+    label: 'norsk',
+    value: 'no'
+  },
+  {
     label: 'Português',
     value: 'pt-PT'
   },
   {
-    label: '繁体字',
-    value: 'zh-TW'
+    label: '简体字',
+    value: 'zh-CN'
   },
   {
-    label: 'español',
-    value: 'es-ES'
+    label: '繁体字',
+    value: 'zh-TW'
   }
 ]
 
