@@ -1370,7 +1370,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron/notarize@npm:2.5.0, @electron/notarize@npm:^2.1.0":
+"@electron/notarize@npm:2.5.0":
   version: 2.5.0
   resolution: "@electron/notarize@npm:2.5.0"
   dependencies:
@@ -1378,6 +1378,16 @@ __metadata:
     fs-extra: "npm:^9.0.1"
     promise-retry: "npm:^2.0.1"
   checksum: 10/16380675e47e272d481b14a4e66326e7bbc4cb7183d40e4eb146440183bc5dc45f5bc4cf75dfeb4c7b2574919f343fc678ae20512b59427216512470c3942ab2
+  languageName: node
+  linkType: hard
+
+"@electron/notarize@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "@electron/notarize@npm:3.0.1"
+  dependencies:
+    debug: "npm:^4.4.0"
+    promise-retry: "npm:^2.0.1"
+  checksum: 10/d908dd1d5db9499072e65a518de722dd85b23b8dacc8992e48d37adf2ee9b92f589b08e105d46ffa574b0713efa5b25744ea4ef03c0de99398ee655029dec3bf
   languageName: node
   linkType: hard
 
@@ -2797,7 +2807,7 @@ __metadata:
   resolution: "Whalebird@workspace:."
   dependencies:
     "@babel/runtime-corejs3": "npm:^7.23.2"
-    "@electron/notarize": "npm:^2.1.0"
+    "@electron/notarize": "npm:^3.0.0"
     "@emoji-mart/react": "npm:^1.1.1"
     "@eslint/eslintrc": "npm:^3.3.1"
     "@eslint/js": "npm:^9.23.0"
