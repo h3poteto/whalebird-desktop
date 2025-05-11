@@ -9203,12 +9203,12 @@ __metadata:
   linkType: hard
 
 "react-hotkeys-hook@npm:^4.4.1":
-  version: 4.6.1
-  resolution: "react-hotkeys-hook@npm:4.6.1"
+  version: 4.6.2
+  resolution: "react-hotkeys-hook@npm:4.6.2"
   peerDependencies:
     react: ">=16.8.1"
     react-dom: ">=16.8.1"
-  checksum: 10/fc7449c72899c1adcb67d4d3d5130411a6ea26a9dc862f1599d2542201b57612b0add169ad0037a2de9e5a5db588c308a32f421ad47221f44eb88ab01018e750
+  checksum: 10/23fc4673b1ec07fb3c2990ccf092eaf76f434ed11b48bb6dbaba16cff4c5a38fc6769af1f9381e931ba1fe9ea8832db3451b0b2060813eed531be77d6268114f
   languageName: node
   linkType: hard
 
