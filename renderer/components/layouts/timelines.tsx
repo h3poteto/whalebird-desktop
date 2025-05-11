@@ -157,7 +157,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <section className="flex h-screen w-full overflow-hidden">
       <Jump opened={openJump} close={() => setOpenJump(false)} timelines={pages} />
-      <Card className="theme-text-primary sidebar w-64 theme-bg rounded-none">
+      <Card className="theme-text-primary sidebar w-64 theme-bg rounded-none timeline-scrollable overflow-y-hidden">
         <div className="max-w-full pl-4 mt-2 mb-4 my-profile">
           <p>{account?.username}</p>
           <p>@{account?.domain}</p>
