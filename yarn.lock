@@ -2829,7 +2829,7 @@ __metadata:
     react: "npm:^18.2.0"
     react-blurhash: "npm:^0.3.0"
     react-dom: "npm:^18.2.0"
-    react-hotkeys-hook: "npm:^4.4.1"
+    react-hotkeys-hook: "npm:^5.0.0"
     react-icons: "npm:^5.0.0"
     react-intl: "npm:^7.0.0"
     react-virtuoso: "npm:^4.6.2"
@@ -9259,13 +9259,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hotkeys-hook@npm:^4.4.1":
-  version: 4.6.2
-  resolution: "react-hotkeys-hook@npm:4.6.2"
+"react-hotkeys-hook@npm:^5.0.0":
+  version: 5.0.1
+  resolution: "react-hotkeys-hook@npm:5.0.1"
   peerDependencies:
-    react: ">=16.8.1"
-    react-dom: ">=16.8.1"
-  checksum: 10/23fc4673b1ec07fb3c2990ccf092eaf76f434ed11b48bb6dbaba16cff4c5a38fc6769af1f9381e931ba1fe9ea8832db3451b0b2060813eed531be77d6268114f
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 10/396e324971bfc19853cf99df1fef02fdd5b41bdad5802fceceda73fcb040f36c2c057852c65647dbadcb0ebe85614f774cac1a1ff5c4e0fd69bc969cf5b3a663
   languageName: node
   linkType: hard
 
