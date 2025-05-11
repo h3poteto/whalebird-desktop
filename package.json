@@ -30,7 +30,7 @@
     "megalodon": "10.1.1",
     "parse-link-header": "^2.0.0",
     "react-blurhash": "^0.3.0",
-    "react-hotkeys-hook": "^4.4.1",
+    "react-hotkeys-hook": "^5.0.0",
     "react-icons": "^5.0.0",
     "react-intl": "^7.0.0",
     "react-virtuoso": "^4.6.2",
