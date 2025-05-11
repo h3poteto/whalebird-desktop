@@ -151,7 +151,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@22.13.13": {
+  "@types/node@22.15.17": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
@@ -329,14 +329,14 @@
   "deepmerge@4.2.2": {
     "licenses": "MIT",
     "repository": "https://github.com/TehShrike/deepmerge",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@material-tailwind/react/node_modules/deepmerge",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@material-tailwind/react/node_modules/deepmerge/license.txt"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/deepmerge",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/deepmerge/license.txt"
   },
   "deepmerge@4.3.1": {
     "licenses": "MIT",
     "repository": "https://github.com/TehShrike/deepmerge",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/deepmerge",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/deepmerge/license.txt"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sanitize-html/node_modules/deepmerge",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/sanitize-html/node_modules/deepmerge/license.txt"
   },
   "delayed-stream@1.0.0": {
     "licenses": "MIT",
@@ -645,8 +645,8 @@
   "mime-types@2.1.35": {
     "licenses": "MIT",
     "repository": "https://github.com/jshttp/mime-types",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mime-types",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mime-types/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/mime-types",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/mime-types/LICENSE"
   },
   "mimic-fn@2.1.0": {
     "licenses": "MIT",
@@ -671,8 +671,8 @@
     "repository": "https://github.com/ai/nanoid",
     "publisher": "Andrey Sitnik",
     "email": "andrey@sitnik.ru",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/nanoid",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/nanoid/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss/node_modules/nanoid",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/postcss/node_modules/nanoid/LICENSE"
   },
   "object-assign-deep@0.4.0": {
     "licenses": "MIT",
@@ -839,7 +839,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom/LICENSE"
   },
-  "react-hotkeys-hook@4.6.1": {
+  "react-hotkeys-hook@4.6.2": {
     "licenses": "MIT",
     "repository": "https://github.com/JohannesKlauss/react-keymap-hook",
     "publisher": "Johannes Klauss",
@@ -853,7 +853,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-icons",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-icons/LICENSE"
   },
-  "react-intl@7.1.10": {
+  "react-intl@7.1.11": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/formatjs/formatjs",
     "publisher": "Eric Ferraiuolo",
@@ -867,7 +867,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-is",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-is/LICENSE"
   },
-  "react-virtuoso@4.12.5": {
+  "react-virtuoso@4.12.7": {
     "licenses": "MIT",
     "repository": "https://github.com/petyosi/react-virtuoso",
     "publisher": "Petyo Ivanov",
@@ -914,7 +914,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/require-from-string",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/require-from-string/license"
   },
-  "sanitize-html@2.15.0": {
+  "sanitize-html@2.16.0": {
     "licenses": "MIT",
     "repository": "https://github.com/apostrophecms/sanitize-html",
     "publisher": "Apostrophe Technologies, Inc.",
@@ -1002,14 +1002,14 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/type-fest",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/type-fest/readme.md"
   },
-  "typescript@5.7.3": {
+  "typescript@5.8.3": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/microsoft/TypeScript",
     "publisher": "Microsoft Corp.",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/typescript",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/typescript/LICENSE.txt"
   },
-  "undici-types@6.20.0": {
+  "undici-types@6.21.0": {
     "licenses": "MIT",
     "repository": "https://github.com/nodejs/undici",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/undici-types",
