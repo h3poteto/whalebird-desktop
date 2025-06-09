@@ -33,6 +33,7 @@ export default function Timeline(props: Props) {
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
   const [reached, setReached] = useState(false)
   const [showBoosts, setShowBoosts] = useState(true)
+  const [showReplies, setShowReplies] = useState(true)
 
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -43,17 +44,28 @@ export default function Timeline(props: Props) {
 
   useEffect(() => {
     const savedBoostVisibility = localStorage.getItem(`timeline_show_boosts_${props.timeline}`)
-    console.log('showBoosts', savedBoostVisibility)
     if (savedBoostVisibility !== null) {
       setShowBoosts(JSON.parse(savedBoostVisibility))
     } else {
       setShowBoosts(true)
+    }
+
+    const savedRepliesVisibility = localStorage.getItem(`timeline_show_replies_${props.timeline}`)
+    if (savedRepliesVisibility !== null) {
+      setShowReplies(JSON.parse(savedRepliesVisibility))
+    } else {
+      setShowReplies(true)
     }
   }, [props.timeline])
 
   const toggleShowBoosts = (value: boolean) => {
     setShowBoosts(value)
     localStorage.setItem(`timeline_show_boosts_${props.timeline}`, JSON.stringify(value))
+  }
+
+  const toggleShowReplies = (value: boolean) => {
+    setShowReplies(value)
+    localStorage.setItem(`timeline_show_replies_${props.timeline}`, JSON.stringify(value))
   }
 
   useEffect(() => {
@@ -338,6 +350,14 @@ export default function Timeline(props: Props) {
                     label={formatMessage({ id: 'timeline.options.show_boosts' })}
                   />
                 </MenuItem>
+                <MenuItem className="p-2">
+                  <Switch
+                    checked={showReplies}
+                    onChange={e => toggleShowReplies(e.target.checked)}
+                    color="blue"
+                    label={formatMessage({ id: 'timeline.options.show_replies' })}
+                  />
+                </MenuItem>
               </MenuList>
             </Menu>
           </div>
@@ -352,7 +372,11 @@ export default function Timeline(props: Props) {
               className="timeline-scrollable"
               firstItemIndex={firstItemIndex}
               atTopStateChange={prependUnreads}
-              data={statuses.filter(status => showBoosts || !(status.reblog && !status.quote))}
+              data={statuses.filter(status => {
+                const isBoost = status.reblog && !status.quote
+                const isReply = status.in_reply_to_id !== null
+                return (showBoosts || !isBoost) && (showReplies || !isReply)
+              })}
               endReached={loadMore}
               itemContent={(_, status) => (
                 <Status

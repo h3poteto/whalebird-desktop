@@ -10,7 +10,8 @@
     "search": "Search",
     "options": {
       "title": "Options",
-      "show_boosts": "Show boosts"
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
     },
     "status": {
       "avatar": "Aavtar of {user}",
