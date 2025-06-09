@@ -8,6 +8,10 @@
     "bookmarks": "Bookmarks",
     "follow_requests": "Follow Requests",
     "search": "Search",
+    "options": {
+      "title": "Options",
+      "show_boosts": "Show boosts"
+    },
     "status": {
       "avatar": "Aavtar of {user}",
       "boosted": "{user} boosted",
