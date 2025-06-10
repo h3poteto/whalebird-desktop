@@ -8,9 +8,9 @@ import Detail from '../detail/Detail'
 import { useRouter } from 'next/router'
 import Compose from '../compose/Compose'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { Input, Spinner } from '@material-tailwind/react'
+import { Input, Spinner, Menu, MenuHandler, MenuList, MenuItem, Switch } from '@material-tailwind/react'
 import parse from 'parse-link-header'
-import { FaRotateRight } from 'react-icons/fa6'
+import { FaRotateRight, FaEllipsisVertical } from 'react-icons/fa6'
 
 const TIMELINE_STATUSES_COUNT = 30
 const TIMELINE_MAX_STATUSES = 2147483647
@@ -32,6 +32,8 @@ export default function Timeline(props: Props) {
   const [filters, setFilters] = useState<Array<Entity.Filter>>([])
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
   const [reached, setReached] = useState(false)
+  const [showBoosts, setShowBoosts] = useState(true)
+  const [showReplies, setShowReplies] = useState(true)
 
   const router = useRouter()
   const { formatMessage } = useIntl()
@@ -39,6 +41,32 @@ export default function Timeline(props: Props) {
   const streaming = useRef<WebSocketInterface | null>(null)
   const composeRef = useRef<HTMLDivElement | null>(null)
   useHotkeys('mod+r', () => reload())
+
+  useEffect(() => {
+    const savedBoostVisibility = localStorage.getItem(`timeline_show_boosts_${props.timeline}`)
+    if (savedBoostVisibility !== null) {
+      setShowBoosts(JSON.parse(savedBoostVisibility))
+    } else {
+      setShowBoosts(true)
+    }
+
+    const savedRepliesVisibility = localStorage.getItem(`timeline_show_replies_${props.timeline}`)
+    if (savedRepliesVisibility !== null) {
+      setShowReplies(JSON.parse(savedRepliesVisibility))
+    } else {
+      setShowReplies(true)
+    }
+  }, [props.timeline])
+
+  const toggleShowBoosts = (value: boolean) => {
+    setShowBoosts(value)
+    localStorage.setItem(`timeline_show_boosts_${props.timeline}`, JSON.stringify(value))
+  }
+
+  const toggleShowReplies = (value: boolean) => {
+    setShowReplies(value)
+    localStorage.setItem(`timeline_show_replies_${props.timeline}`, JSON.stringify(value))
+  }
 
   useEffect(() => {
     const observer = new ResizeObserver(entries => {
@@ -303,10 +331,35 @@ export default function Timeline(props: Props) {
               />
             </form>
             <div>
-              <button className="text-gray-400 text-base py-1 px-2" title={formatMessage({ id: 'timeline.reload' })} onClick={reload}>
+              <button className="text-gray-400 text-base py-2 px-2" title={formatMessage({ id: 'timeline.reload' })} onClick={reload}>
                 <FaRotateRight />
               </button>
             </div>
+            <Menu dismiss={{ itemPress: false }}>
+              <MenuHandler>
+                <button className="text-gray-400 text-base py-1 px-2" title={formatMessage({ id: 'timeline.options.title' })}>
+                  <FaEllipsisVertical />
+                </button>
+              </MenuHandler>
+              <MenuList className="overflow-hidden">
+                <MenuItem className="p-2">
+                  <Switch
+                    checked={showBoosts}
+                    onChange={e => toggleShowBoosts(e.target.checked)}
+                    color="blue"
+                    label={formatMessage({ id: 'timeline.options.show_boosts' })}
+                  />
+                </MenuItem>
+                <MenuItem className="p-2">
+                  <Switch
+                    checked={showReplies}
+                    onChange={e => toggleShowReplies(e.target.checked)}
+                    color="blue"
+                    label={formatMessage({ id: 'timeline.options.show_replies' })}
+                  />
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </div>
         </div>
         <div className="overflow-x-hidden" style={{ height: 'calc(100% - 50px)' }}>
@@ -319,7 +372,11 @@ export default function Timeline(props: Props) {
               className="timeline-scrollable"
               firstItemIndex={firstItemIndex}
               atTopStateChange={prependUnreads}
-              data={statuses}
+              data={statuses.filter(status => {
+                const isBoost = status.reblog && !status.quote
+                const isReply = status.in_reply_to_id !== null
+                return (showBoosts || !isBoost) && (showReplies || !isReply)
+              })}
               endReached={loadMore}
               itemContent={(_, status) => (
                 <Status
