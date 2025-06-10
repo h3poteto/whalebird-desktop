@@ -8,6 +8,11 @@
     "bookmarks": "Bookmarks",
     "follow_requests": "Follow Requests",
     "search": "Procurar",
+    "options": {
+      "title": "Options",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
+    },
     "status": {
       "avatar": "Avatar de {user}",
       "boosted": "{user} boosted",

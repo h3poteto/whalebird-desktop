@@ -8,6 +8,11 @@
     "bookmarks": "書籤",
     "follow_requests": "Follow Requests",
     "search": "搜尋",
+    "options": {
+      "title": "Options",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
+    },
     "status": {
       "avatar": "{user} 的頭像",
       "boosted": "{user} boosted",

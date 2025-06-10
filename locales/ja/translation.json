@@ -8,6 +8,11 @@
     "bookmarks": "ブックマーク",
     "follow_requests": "フォローリクエスト",
     "search": "検索",
+    "options": {
+      "title": "Options",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
+    },
     "status": {
       "avatar": "{user} のAavtar",
       "boosted": "{user} がブーストしました",
