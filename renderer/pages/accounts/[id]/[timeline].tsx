@@ -4,6 +4,7 @@ import { useEffect, useReducer, useState } from 'react'
 import { Account, db } from '@/db'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import Notifications from '@/components/timelines/Notifications'
+import DirectMessages from '@/components/timelines/DirectMessages'
 import Search from '@/components/timelines/Search'
 import Media from '@/components/Media'
 import Report from '@/components/report/Report'
@@ -64,6 +65,16 @@ export default function Page() {
       case 'notifications':
         return (
           <Notifications
+            account={account}
+            client={client}
+            openMedia={(media: Array<Entity.Attachment>, index: number) =>
+              dispatch({ target: 'media', value: true, object: media, index: index })
+            }
+          />
+        )
+      case 'direct_messages':
+        return (
+          <DirectMessages
             account={account}
             client={client}
             openMedia={(media: Array<Entity.Attachment>, index: number) =>
