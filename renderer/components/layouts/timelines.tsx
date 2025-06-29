@@ -4,7 +4,7 @@ import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaStar, FaUsers, FaHashtag, FaUserPlus } from 'react-icons/fa6'
+import { FaBell, FaBookmark, FaGlobe, FaHouse, FaList, FaStar, FaUsers, FaHashtag, FaUserPlus, FaEnvelope } from 'react-icons/fa6'
 import { useIntl } from 'react-intl'
 import Jump from '../Jump'
 import { useUnreads } from '@/provider/unreads'
@@ -122,6 +122,12 @@ export default function Layout({ children }: LayoutProps) {
       title: formatMessage({ id: 'timeline.notifications' }),
       icon: <FaBell />,
       path: `/accounts/${router.query.id}/notifications`
+    },
+    {
+      id: 'direct_messages',
+      title: formatMessage({ id: 'timeline.direct_messages' }),
+      icon: <FaEnvelope />,
+      path: `/accounts/${router.query.id}/direct_messages`
     },
     {
       id: 'local',
