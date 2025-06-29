@@ -6,6 +6,7 @@
     "public": "Public",
     "favourites": "Favourites",
     "bookmarks": "Bookmarks",
+    "direct_messages": "Direct Messages",
     "follow_requests": "Follow Requests",
     "search": "Search",
     "options": {
