@@ -6,6 +6,7 @@
     "public": "Publico",
     "favourites": "Favoritos",
     "bookmarks": "Marcadores",
+    "direct_messages": "Direct Messages",
     "follow_requests": "Follow Requests",
     "search": "Buscar",
     "options": {
