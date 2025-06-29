@@ -23,7 +23,7 @@ mac:
   hardenedRuntime: true
   gatekeeperAssess: false
   darkModeSupport: false
-  notarize: false
+  notarize: true
   singleArchFiles: "*"
   minimumSystemVersion: "14.0"
 win:
@@ -43,7 +43,6 @@ linux:
         - arm64
   category: Network
 publish: null
-afterSign: "notarize.js"
 dmg:
   sign: false
 nsis:
