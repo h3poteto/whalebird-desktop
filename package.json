@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.23.2",
-    "@electron/notarize": "^3.0.0",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
     "@types/node": "^22.0.0",

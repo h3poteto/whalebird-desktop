@@ -82,8 +82,7 @@ jobs:
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          ASC_PROVIDER: ${{ secrets.ASC_PROVIDER }}
-          TEAM_ID: ${{ secrets.ASC_PROVIDER }}
+          APPLE_TEAM_ID: ${{ secrets.ASC_PROVIDER }}
         run: |
           yarn install
           yarn build
