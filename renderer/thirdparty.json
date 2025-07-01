@@ -151,11 +151,11 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@22.15.17": {
+  "@types/node@24.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/node/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/node_modules/@types/node",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/node_modules/@types/node/LICENSE"
   },
   "@types/prop-types@15.7.11": {
     "licenses": "MIT",
@@ -187,7 +187,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.2.2": {
+  "Whalebird@6.2.3": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -645,8 +645,8 @@
   "mime-types@2.1.35": {
     "licenses": "MIT",
     "repository": "https://github.com/jshttp/mime-types",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/mime-types",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/mime-types/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mime-types",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/mime-types/LICENSE"
   },
   "mimic-fn@2.1.0": {
     "licenses": "MIT",
@@ -666,7 +666,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/debounce-fn/node_modules/mimic-fn",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/debounce-fn/node_modules/mimic-fn/license"
   },
-  "nanoid@3.3.8": {
+  "nanoid@3.3.11": {
     "licenses": "MIT",
     "repository": "https://github.com/ai/nanoid",
     "publisher": "Andrey Sitnik",
@@ -795,7 +795,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/popmotion",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/popmotion/LICENSE.md"
   },
-  "postcss@8.5.3": {
+  "postcss@8.5.4": {
     "licenses": "MIT",
     "repository": "https://github.com/postcss/postcss",
     "publisher": "Andrey Sitnik",
@@ -839,7 +839,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-dom/LICENSE"
   },
-  "react-hotkeys-hook@4.6.2": {
+  "react-hotkeys-hook@5.1.0": {
     "licenses": "MIT",
     "repository": "https://github.com/JohannesKlauss/react-keymap-hook",
     "publisher": "Johannes Klauss",
@@ -867,7 +867,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-is",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/react-is/LICENSE"
   },
-  "react-virtuoso@4.12.7": {
+  "react-virtuoso@4.12.8": {
     "licenses": "MIT",
     "repository": "https://github.com/petyosi/react-virtuoso",
     "publisher": "Petyo Ivanov",
@@ -914,7 +914,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/require-from-string",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/require-from-string/license"
   },
-  "sanitize-html@2.16.0": {
+  "sanitize-html@2.17.0": {
     "licenses": "MIT",
     "repository": "https://github.com/apostrophecms/sanitize-html",
     "publisher": "Apostrophe Technologies, Inc.",
@@ -1009,11 +1009,11 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/typescript",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/typescript/LICENSE.txt"
   },
-  "undici-types@6.21.0": {
+  "undici-types@7.8.0": {
     "licenses": "MIT",
     "repository": "https://github.com/nodejs/undici",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/undici-types",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/undici-types/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/node_modules/undici-types",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/node_modules/undici-types/LICENSE"
   },
   "uri-js@4.4.1": {
     "licenses": "BSD-2-Clause",
