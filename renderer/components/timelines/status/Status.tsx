@@ -71,7 +71,11 @@ export default function Status(props: Props) {
       invoke('open-browser', url)
       e.preventDefault()
       e.stopPropagation()
+      return
     }
+
+    // If no special element was clicked, open status detail
+    openStatus()
   }
 
   if (
@@ -131,7 +135,7 @@ export default function Status(props: Props) {
               <time dateTime={status.created_at}>{dayjs(status.created_at).format('YYYY-MM-DD HH:mm:ss')}</time>
             </div>
           </div>
-          <div className="status-body">
+          <div className="status-body cursor-pointer">
             <Body className="my-2" status={status} spoilered={spoilered} setSpoilered={setSpoilered} onClick={statusClicked} />
           </div>
           {!spoilered && (
