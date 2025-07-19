@@ -11,7 +11,7 @@ import {
   FaPaperclip,
   FaPencil,
   FaXmark,
-  FaRotateRight
+  FaUsers
 } from 'react-icons/fa6'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useToast } from '@/provider/toast'
@@ -50,7 +50,7 @@ type Poll = {
 
 export default function Compose(props: Props) {
   const [body, setBody] = useState('')
-  const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
+  const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct' | 'local'>('public')
   const [cw, setCW] = useState(false)
   const [spoiler, setSpoiler] = useState('')
   const [attachments, setAttachments] = useState<Array<Entity.Attachment | Entity.AsyncAttachment>>([])
@@ -334,6 +334,14 @@ export default function Compose(props: Props) {
                 </ListItem>
                 <ListItem
                   onClick={() => {
+                    setVisibility('local')
+                    setPopoverVisibility(false)
+                  }}
+                >
+                  <FormattedMessage id="compose.visibility.local" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
                     setVisibility('unlisted')
                     setPopoverVisibility(false)
                   }}
@@ -388,7 +396,7 @@ export default function Compose(props: Props) {
   )
 }
 
-const visibilityIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct', title: string) => {
+const visibilityIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct' | 'local', title: string) => {
   switch (visibility) {
     case 'public':
       return (
@@ -412,6 +420,12 @@ const visibilityIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct'
       return (
         <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base" title={title}>
           <FaEnvelope />
+        </IconButton>
+      )
+    case 'local':
+      return (
+        <IconButton variant="text" size="sm" className="text-gray-400 hover:text-gray-600 text-base" title={title}>
+          <FaUsers />
         </IconButton>
       )
   }
