@@ -128,6 +128,7 @@
     },
     "visibility": {
       "public": "公開",
+      "local": "Local",
       "unlisted": "不列出",
       "private": "私密",
       "direct": "直接"

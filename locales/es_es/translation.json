@@ -128,6 +128,7 @@
     },
     "visibility": {
       "public": "Público",
+      "local": "Local",
       "unlisted": "Fuera de lista",
       "private": "Privado",
       "direct": "Directo"
