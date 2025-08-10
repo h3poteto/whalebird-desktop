@@ -108,7 +108,8 @@ export default function Layout({ children }: LayoutProps) {
     router.push(`/accounts/${id}`)
   }
 
-  const openContextMenu = (id: number) => {
+  const openContextMenu = (id: number, e: React.MouseEvent) => {
+    e.preventDefault()
     document.getElementById(`${id}`).click()
   }
 
@@ -198,7 +199,7 @@ export default function Layout({ children }: LayoutProps) {
                     aria-label={`${account.username}@${account.domain}`}
                     className="p-1"
                     onClick={() => openAccount(account.id)}
-                    onContextMenu={() => openContextMenu(account.id)}
+                    onContextMenu={(e) => openContextMenu(account.id, e)}
                   />
                 </Badge>
               </div>
