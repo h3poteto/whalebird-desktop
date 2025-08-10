@@ -5301,13 +5301,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "eslint-visitor-keys@npm:4.2.0"
-  checksum: 10/9651b3356b01760e586b4c631c5268c0e1a85236e3292bf754f0472f465bf9a856c0ddc261fceace155334118c0151778effafbab981413dbf9288349343fa25
-  languageName: node
-  linkType: hard
-
 "eslint-visitor-keys@npm:^4.2.1":
   version: 4.2.1
   resolution: "eslint-visitor-keys@npm:4.2.1"
@@ -8896,12 +8889,12 @@ __metadata:
   linkType: hard
 
 "react-virtuoso@npm:^4.6.2":
-  version: 4.13.0
-  resolution: "react-virtuoso@npm:4.13.0"
+  version: 4.14.0
+  resolution: "react-virtuoso@npm:4.14.0"
   peerDependencies:
     react: ">=16 || >=17 || >= 18 || >= 19"
     react-dom: ">=16 || >=17 || >= 18 || >=19"
-  checksum: 10/52e8cd4b34bea10bdbc1b9434a65dc56d36d69b7ed75d956329f730678723c9f8eeb7518f932728ef5ca83385e2feabdd5f964102306af502b19a5963bf89518
+  checksum: 10/09e6f01e394da6a4d6caabd75f48d73717ad9050af44d752a51a8769f2c22c9c091a1d24f11239626c5e69ed94d12f51a22e3a68c1e465925d3824b4fddd44fc
   languageName: node
   linkType: hard
 
