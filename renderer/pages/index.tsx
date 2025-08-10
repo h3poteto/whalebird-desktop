@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { db } from '@/db'
-import { Spinner } from '@material-tailwind/react'
+import { FormattedMessage } from 'react-intl'
 
 export default function Index() {
   const router = useRouter()
@@ -27,7 +27,14 @@ export default function Index() {
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <Spinner />
+      <div className="text-center text-gray-500 dark:text-gray-400">
+        <p className="mb-4">
+          <FormattedMessage id="main.no_accounts_title" />
+        </p>
+        <p className="text-sm">
+          <FormattedMessage id="main.no_accounts_description" />
+        </p>
+      </div>
     </div>
   )
 }

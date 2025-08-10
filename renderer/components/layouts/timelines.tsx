@@ -1,5 +1,5 @@
 import { Account, db } from '@/db'
-import { Card, Chip, List, ListItem, ListItemPrefix, ListItemSuffix } from '@material-tailwind/react'
+import { Card, Chip, List, ListItem, ListItemPrefix, ListItemSuffix, Spinner } from '@material-tailwind/react'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -94,7 +94,6 @@ export default function Layout({ children }: LayoutProps) {
             [`${account.id?.toString()}_follow_requests`]: res.data.length
           })
         )
-        console.log(unreads)
         setFollowRequests([
           {
             id: 'follow_requests',
@@ -158,6 +157,19 @@ export default function Layout({ children }: LayoutProps) {
   const reloadMenu = async () => {
     const res = await client.getFollowedTags()
     setFollowedTags(res.data)
+  }
+
+  if (!router.query.id) {
+    return (
+      <section className="flex h-screen w-full overflow-hidden">
+        <Card className="theme-text-primary sidebar w-64 theme-bg rounded-none timeline-scrollable overflow-y-hidden">
+          <div className="flex justify-center items-center h-full">
+            <Spinner className="h-8 w-8" />
+          </div>
+        </Card>
+        <TimelinesContext.Provider value={{ reloadMenu }}>{children}</TimelinesContext.Provider>
+      </section>
+    )
   }
 
   return (
