@@ -1,4 +1,8 @@
 {
+  "main": {
+    "no_accounts_title": "Add an account to get started",
+    "no_accounts_description": "You can add an account using the + button in the left sidebar"
+  },
   "timeline": {
     "home": "首頁",
     "notifications": "通知",
