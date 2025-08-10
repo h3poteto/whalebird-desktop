@@ -71,9 +71,6 @@ export default function Layout({ children }: LayoutProps) {
     const fn = async () => {
       const acct = await db.accounts.toArray()
       setAccounts(acct)
-      if (acct.length === 0) {
-        setOpenNewModal(true)
-      }
       acct.forEach(async account => {
         addAccount(account)
         const cli = generator(account.sns, account.url, account.access_token, 'Whalebird')
@@ -97,9 +94,7 @@ export default function Layout({ children }: LayoutProps) {
     const acct = await db.accounts.toArray()
     setAccounts(acct)
     setOpenNewModal(false)
-    if (acct.length === 0) {
-      setOpenNewModal(true)
-    } else if (!router.query.id) {
+    if (acct.length > 0 && !router.query.id) {
       router.push(`/accounts/${acct[0].id}`)
     }
   }
@@ -120,7 +115,6 @@ export default function Layout({ children }: LayoutProps) {
     setAccounts(acct)
     if (acct.length === 0) {
       router.push('/')
-      setOpenNewModal(true)
     }
   }
 
