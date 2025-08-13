@@ -2478,14 +2478,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.19":
-  version: 18.2.19
-  resolution: "@types/react@npm:18.2.19"
+"@types/react@npm:18.3.23":
+  version: 18.3.23
+  resolution: "@types/react@npm:18.3.23"
   dependencies:
     "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/cec0bcd18cc5d76553e39c7684db1efbbfe91e8f438f6e97a6e911fe1ac2b6e5f107895dd78b7d3674d40f09cabe4c8b9580656d6ca26df236718ed8a89c6db2
+  checksum: 10/4b965dffe34a1f8aac8e2d7e976f113373f38134f9e37239f7e75d7ac6b3c2e1333a8df21febf1fe7749640f8de5708f7668cdfc70bffebda1cc4d3346724fd5
   languageName: node
   linkType: hard
 
@@ -2859,7 +2858,7 @@ __metadata:
     "@material-tailwind/react": "npm:^2.1.8"
     "@types/node": "npm:^22.0.0"
     "@types/parse-link-header": "npm:^2.0.3"
-    "@types/react": "npm:18.2.19"
+    "@types/react": "npm:18.3.23"
     "@types/sanitize-html": "npm:^2.9.4"
     "@typescript-eslint/eslint-plugin": "npm:^8.0.0"
     "@typescript-eslint/parser": "npm:^8.0.0"
