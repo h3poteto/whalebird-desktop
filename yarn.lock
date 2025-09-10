@@ -2867,7 +2867,7 @@ __metadata:
     blurhash: "npm:^2.0.5"
     dayjs: "npm:^1.11.10"
     dexie: "npm:^4.0.0"
-    electron: "npm:37"
+    electron: "npm:38"
     electron-builder: "npm:^26.0.0"
     electron-serve: "npm:^1.1.0"
     electron-store: "npm:^8.1.0"
@@ -4758,16 +4758,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:37":
-  version: 37.2.6
-  resolution: "electron@npm:37.2.6"
+"electron@npm:38":
+  version: 38.1.0
+  resolution: "electron@npm:38.1.0"
   dependencies:
     "@electron/get": "npm:^2.0.0"
     "@types/node": "npm:^22.7.7"
     extract-zip: "npm:^2.0.1"
   bin:
     electron: cli.js
-  checksum: 10/b70ff62e22b13f9e7a0677d455da1e43e55db4fa7b7dca14ff3f0e5f0b653370d8008bc91881ffa67161528c8ec77e9b067bc155091e2fd4eca810010df97b6e
+  checksum: 10/af70863af514b7a0ab929ef06db2d826ee83a6fcb4628b3599cf5160bcd943215874cd8b6f5f23fb336f22659bbc38c3735199cbf62852841928080ed0228849
   languageName: node
   linkType: hard
 
