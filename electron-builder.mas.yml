@@ -1,8 +1,8 @@
 appId: social.whalebird.app
 productName: Whalebird
 copyright: Copyright © 2018 Akira Fukushima
-artifactName: "${productName}-${version}-${os}-${arch}.${ext}"
-buildVersion: "190"
+artifactName: '${productName}-${version}-${os}-${arch}.${ext}'
+buildVersion: '191'
 directories:
   output: dist
   buildResources: resources
@@ -13,26 +13,26 @@ files:
       - app
 mas:
   type: distribution
-  entitlements: "plist/parent.plist"
-  entitlementsInherit: "plist/child.plist"
-  entitlementsLoginHelper: "plist/loginhelper.plist"
+  entitlements: 'plist/parent.plist'
+  entitlementsInherit: 'plist/child.plist'
+  entitlementsLoginHelper: 'plist/loginhelper.plist'
   hardenedRuntime: false
   gatekeeperAssess: false
   extendInfo:
-    ITSAppUsesNonExemptEncryption: "false"
-  provisioningProfile: "profile/socialwhalebirdapp_MAS.provisionprofile"
-  minimumSystemVersion: "14.0"
+    ITSAppUsesNonExemptEncryption: 'false'
+  provisioningProfile: 'profile/socialwhalebirdapp_MAS.provisionprofile'
+  minimumSystemVersion: '14.0'
 mac:
   icon: resources/icons/icon.icns
   target:
     - target: mas
       arch:
         - universal
-  category: "public.app-category.social-networking"
+  category: 'public.app-category.social-networking'
   hardenedRuntime: true
   gatekeeperAssess: false
   darkModeSupport: false
   notarize: false
-  singleArchFiles: "*"
-  asarUnpack: "node_modules/**/*.node"
+  singleArchFiles: '*'
+  asarUnpack: 'node_modules/**/*.node'
 publish: null
