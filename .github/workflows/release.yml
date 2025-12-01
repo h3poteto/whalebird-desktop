@@ -30,7 +30,7 @@ jobs:
           yarn install
           yarn build
       - name: Release
-        uses: softprops/action-gh-release@v2.0.6
+        uses: softprops/action-gh-release@v2.5.0
         with:
           draft: true
           files: |
@@ -54,7 +54,7 @@ jobs:
           yarn install
           yarn build
       - name: Release
-        uses: softprops/action-gh-release@v2.0.6
+        uses: softprops/action-gh-release@v2.5.0
         with:
           draft: true
           files: |
@@ -87,7 +87,7 @@ jobs:
           yarn install
           yarn build
       - name: Release
-        uses: softprops/action-gh-release@v2.0.6
+        uses: softprops/action-gh-release@v2.5.0
         with:
           draft: true
           files: |
