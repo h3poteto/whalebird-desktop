@@ -49,7 +49,7 @@
     "@typescript-eslint/parser": "^8.0.0",
     "autoprefixer": "^10.4.16",
     "electron": "37",
-    "electron-builder": "^26.0.0",
+    "electron-builder": "26.1.0",
     "electron-windows-store": "^2.1.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.0.0",
