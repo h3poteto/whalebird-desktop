@@ -151,7 +151,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/hoist-non-react-statics/LICENSE"
   },
-  "@types/node@24.2.1": {
+  "@types/node@24.5.2": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/node_modules/@types/node",
@@ -187,7 +187,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.2.4": {
+  "Whalebird@6.2.5": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -310,7 +310,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/csstype",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/csstype/LICENSE"
   },
-  "dayjs@1.11.13": {
+  "dayjs@1.11.18": {
     "licenses": "MIT",
     "repository": "https://github.com/iamkun/dayjs",
     "publisher": "iamkun",
@@ -355,7 +355,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream/License"
   },
-  "dexie@4.0.11": {
+  "dexie@4.2.0": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/dexie/Dexie.js",
     "publisher": "David Fahlander",
@@ -459,8 +459,8 @@
     "repository": "https://github.com/ljharb/es-define-property",
     "publisher": "Jordan Harband",
     "email": "ljharb@gmail.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/es-define-property",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/es-define-property/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/es-define-property",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/es-define-property/LICENSE"
   },
   "es-errors@1.3.0": {
     "licenses": "MIT",
@@ -483,8 +483,8 @@
     "repository": "https://github.com/es-shims/es-set-tostringtag",
     "publisher": "Jordan Harband",
     "email": "ljharb@gmail.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/es-set-tostringtag",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/es-set-tostringtag/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/es-set-tostringtag",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/es-set-tostringtag/LICENSE"
   },
   "escape-string-regexp@4.0.0": {
     "licenses": "MIT",
@@ -538,7 +538,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/follow-redirects",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/follow-redirects/LICENSE"
   },
-  "form-data@4.0.0": {
+  "form-data@4.0.5": {
     "licenses": "MIT",
     "repository": "https://github.com/form-data/form-data",
     "publisher": "Felix Geisendörfer",
@@ -546,15 +546,6 @@
     "url": "http://debuggable.com/",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/License"
-  },
-  "form-data@4.0.3": {
-    "licenses": "MIT",
-    "repository": "https://github.com/form-data/form-data",
-    "publisher": "Felix Geisendörfer",
-    "email": "felix@debuggable.com",
-    "url": "http://debuggable.com/",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/form-data",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/form-data/License"
   },
   "framer-motion@6.5.1": {
     "licenses": "MIT",
@@ -583,8 +574,8 @@
     "repository": "https://github.com/ljharb/get-intrinsic",
     "publisher": "Jordan Harband",
     "email": "ljharb@gmail.com",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/get-intrinsic",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/get-intrinsic/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/get-intrinsic",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/get-intrinsic/LICENSE"
   },
   "gopd@1.2.0": {
     "licenses": "MIT",
@@ -609,8 +600,8 @@
     "publisher": "Jordan Harband",
     "email": "ljharb@gmail.com",
     "url": "http://ljharb.codes",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/has-symbols",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/megalodon/node_modules/has-symbols/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/has-symbols",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/form-data/node_modules/has-symbols/LICENSE"
   },
   "has-tostringtag@1.0.2": {
     "licenses": "MIT",
@@ -1124,7 +1115,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/typescript",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/typescript/LICENSE.txt"
   },
-  "undici-types@7.10.0": {
+  "undici-types@7.12.0": {
     "licenses": "MIT",
     "repository": "https://github.com/nodejs/undici",
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/node_modules/undici-types",
