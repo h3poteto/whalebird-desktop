@@ -187,7 +187,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/@types/ws/LICENSE"
   },
-  "Whalebird@6.2.5": {
+  "Whalebird@6.2.7": {
     "licenses": "UNLICENSED",
     "private": true,
     "publisher": "Akira Fukushima",
@@ -355,7 +355,7 @@
     "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream",
     "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/delayed-stream/License"
   },
-  "dexie@4.2.0": {
+  "dexie@4.2.1": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/dexie/Dexie.js",
     "publisher": "David Fahlander",
@@ -717,8 +717,8 @@
     "repository": "https://github.com/isaacs/node-lru-cache",
     "publisher": "Isaac Z. Schlueter",
     "email": "i@izs.me",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/lru-cache",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/lru-cache/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/lru-cache",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/lru-cache/LICENSE"
   },
   "material-ripple-effects@2.0.1": {
     "licenses": "MIT",
@@ -1037,8 +1037,8 @@
     "licenses": "ISC",
     "repository": "https://github.com/npm/node-semver",
     "publisher": "GitHub Inc.",
-    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/semver",
-    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/semver/LICENSE"
+    "path": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/semver",
+    "licenseFile": "/home/runner/work/whalebird-desktop/whalebird-desktop/node_modules/conf/node_modules/semver/LICENSE"
   },
   "source-map-js@1.2.1": {
     "licenses": "BSD-3-Clause",
