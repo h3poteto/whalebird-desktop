@@ -1,20 +1,20 @@
 {
   "main": {
-    "no_accounts_title": "Add an account to get started",
+    "no_accounts_title": "Füge ein Konto hinzu um loszulegen",
     "no_accounts_description": "You can add an account using the + button in the left sidebar"
   },
   "timeline": {
     "home": "Home",
-    "notifications": "Notifications",
-    "local": "Local",
-    "public": "Public",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct_messages": "Direct Messages",
-    "follow_requests": "Follow Requests",
-    "search": "Search",
+    "notifications": "Benachrichtigungen",
+    "local": "Lokal",
+    "public": "Öffentlich",
+    "favourites": "Favoriten",
+    "bookmarks": "Lesezeichen",
+    "direct_messages": "Privatnachrichten",
+    "follow_requests": "Follower-Anfrage",
+    "search": "Suche",
     "options": {
-      "title": "Options",
+      "title": "Optionen",
       "show_boosts": "Show boosts",
       "show_replies": "Show replies"
     },
