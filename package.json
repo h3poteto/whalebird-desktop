@@ -43,7 +43,7 @@
     "@eslint/js": "^9.23.0",
     "@types/node": "^22.0.0",
     "@types/parse-link-header": "^2.0.3",
-    "@types/react": "18.2.19",
+    "@types/react": "18.3.27",
     "@types/sanitize-html": "^2.9.4",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
