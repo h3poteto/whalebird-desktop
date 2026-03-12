@@ -1,230 +1,230 @@
 {
   "main": {
-    "no_accounts_title": "Add an account to get started",
-    "no_accounts_description": "You can add an account using the + button in the left sidebar"
+    "no_accounts_title": "Aggiungi un account per iniziare",
+    "no_accounts_description": "Puoi aggiungere un account usando il pulsante + nella barra laterale sinistra"
   },
   "timeline": {
-    "home": "Home",
-    "notifications": "Notifications",
-    "local": "Local",
-    "public": "Public",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct_messages": "Direct Messages",
-    "follow_requests": "Follow Requests",
-    "search": "Search",
+    "home": "Pagina Iniziale",
+    "notifications": "Notifiche",
+    "local": "Locale",
+    "public": "Pubblico",
+    "favourites": "Preferiti",
+    "bookmarks": "Segnalibri",
+    "direct_messages": "Messaggi Diretti",
+    "follow_requests": "Richieste di seguirti",
+    "search": "Cerca",
     "options": {
-      "title": "Options",
-      "show_boosts": "Show boosts",
-      "show_replies": "Show replies"
+      "title": "Opzioni",
+      "show_boosts": "Mostra i boost",
+      "show_replies": "Mostra risposte"
     },
     "status": {
-      "avatar": "Aavtar of {user}",
-      "boosted": "{user} boosted",
+      "avatar": "Avatar di {user}",
+      "boosted": "{user} ha ricondiviso",
       "poll": {
-        "refresh": "Refresh",
-        "vote": "Vote",
-        "people": "{num} people",
-        "closed": "Closed"
+        "refresh": "Aggiorna",
+        "vote": "Vota",
+        "people": "{num} persone",
+        "closed": "Chiuso"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "cw": "Media hidden",
-      "hide_media": "Hide media",
-      "open_media_window": "Open media on another window",
-      "report": "Report {user}",
-      "open_original": "Open original page",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway",
+      "show_more": "Mostra di più",
+      "show_less": "Mostra meno",
+      "cw": "File multimediale nascosto",
+      "hide_media": "Nascondi file multimediale",
+      "open_media_window": "Apre il file multimediale su un'altra finestra",
+      "report": "Segnala {user}",
+      "open_original": "Apri pagina originale",
+      "filtered": "Filtrato",
+      "show_anyway": "Mostra comunque",
       "actions": {
-        "reply": "Reply",
-        "reblog": "reblog",
-        "favourite": "Favourite",
-        "bookmark": "Bookmark",
-        "emoji_reaction": "Emoji reaction",
-        "detail": "Details"
+        "reply": "Rispondi",
+        "reblog": "ripubblica",
+        "favourite": "Preferisci",
+        "bookmark": "Segnalibro",
+        "emoji_reaction": "Reazione emoji",
+        "detail": "Dettagli"
       },
       "context_menu": {
-        "copy_link": "Copy link",
-        "open_detail": "Open original page"
+        "copy_link": "Copia collegamento",
+        "open_detail": "Apri pagina originale"
       }
     },
-    "mark_as_read": "Mark as read",
-    "reload": "Reload"
+    "mark_as_read": "Segna come letto",
+    "reload": "Ricarica"
   },
   "accounts": {
     "new": {
-      "title": "Add account",
-      "domain": "Domain",
-      "sign_in": "Sign in",
-      "authorize": "Authorize",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
-      "copy_authorization_url": "Copy authorization URL",
-      "authorization_code": "Authorization Code",
-      "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
-      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-      "register_error": "Failed to add application.",
-      "token_error": "Failed to authorize.",
-      "credential_error": "Failed to confirm access token."
+      "title": "Aggiungi account",
+      "domain": "Dominio",
+      "sign_in": "Accedi",
+      "authorize": "Autorizza",
+      "authorization_url": "Normalmente, il browser si aprirà automaticamente, ma se ciò non dovesse accadere, apri il seguente URL nel tuo browser e approvalo.",
+      "copy_authorization_url": "Copia l'URL di autorizzazione",
+      "authorization_code": "Codice di Autorizzazione",
+      "authorization_helper": "Incolla il codice di autorizzazione dal tuo browser",
+      "without_code_authorize": "Si prega di approvare Whalebird nel browser e, dopo averlo approvato, autorizzarlo",
+      "detector_error": "Impossibile connettersi a {domain}, assicurarsi che l'URL del server sia valido o corretto.",
+      "register_error": "Impossibile aggiungere l'applicazione.",
+      "token_error": "Autorizzazione fallita.",
+      "credential_error": "Impossibile confermare il token di accesso."
     },
-    "remove": "Remove"
+    "remove": "Rimuovi"
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{user} favourited your post"
+      "title": "Preferito",
+      "body": "{user} ha preferito il tuo post"
     },
     "reblog": {
       "title": "Boost",
-      "body": "{user} boosted your post"
+      "body": "{user} ha ripubblicato il tuo post"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{user} quoted your post"
+      "title": "Citazione",
+      "body": "{user} ha citato il tuo post"
     },
     "poll_expired": {
-      "title": "Poll",
-      "body": "{user} poll has ended"
+      "title": "Sondaggio",
+      "body": "Il sondaggio di {user} è terminato"
     },
     "poll_vote": {
-      "title": "Poll",
-      "body": "{user} voted your poll"
+      "title": "Sondaggio",
+      "body": "{user} ha votato il tuo sondaggio"
     },
     "status": {
-      "title": "Status",
-      "body": "{user} just posted"
+      "title": "Stato",
+      "body": "{user} ha pubblicato un post"
     },
     "update": {
-      "title": "Update",
-      "body": "{user} updated the post"
+      "title": "Aggiornamento",
+      "body": "{user} ha aggiornato il post"
     },
     "emoji_reaction": {
-      "title": "Reaction",
-      "body": "{user} reacted your post"
+      "title": "Reazione",
+      "body": "{user} ha reagito al tuo post"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{user} followed you",
-      "followers": "{num} followers"
+      "title": "Seguiti",
+      "body": "{user} ti ha seguito",
+      "followers": "{num} seguaci"
     },
     "follow_request": {
-      "title": "Follow Request",
-      "body": "{user} requested to follow you"
+      "title": "Richieste di seguito",
+      "body": "{user} ha richiesto di seguirti"
     }
   },
   "follow_requests": {
-    "authorize": "Authorize",
-    "reject": "Reject"
+    "authorize": "Autorizza",
+    "reject": "Rifiuta"
   },
   "compose": {
-    "placeholder": "What's on your mind?",
+    "placeholder": "Cosa ti passa per la testa?",
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "Scrivi qui il tuo avviso"
     },
-    "emoji": "Add emoji",
+    "emoji": "Aggiungi emoji",
     "actions": {
-      "attachment": "Add attachment",
-      "poll": "Add poll",
-      "visibility": "Change visibility",
-      "cw": "Set content warning",
-      "post": "Post"
+      "attachment": "Aggiungi allegato",
+      "poll": "Aggiungi sondaggio",
+      "visibility": "Modifica visibilità",
+      "cw": "Imposta avviso contenuto",
+      "post": "Pubblica"
     },
     "visibility": {
-      "public": "Public",
-      "local": "Local",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct"
+      "public": "Pubblico",
+      "local": "Locale",
+      "unlisted": "Non in elenco",
+      "private": "Privato",
+      "direct": "Diretto"
     },
-    "nsfw": "Sensitive",
+    "nsfw": "Sensibile",
     "poll": {
-      "add": "Add",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days",
-      "multiple": "multiple"
+      "add": "Aggiungi",
+      "5min": "5 minuti",
+      "30min": "30 minuti",
+      "1h": "1 ora",
+      "6h": "6 ore",
+      "1d": "1 giorno",
+      "3d": "3 giorni",
+      "7d": "7 giorni",
+      "multiple": "multiplo"
     },
     "edit_media": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "Modifica contenuto multimediale",
+      "label": "Descrivere per le persone non vedenti o ipovedenti",
+      "submit": "Applica"
     }
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos",
-      "attachment_length": "You can't attach over {limit} files",
-      "attachment_required": "Please attache images or videos"
+      "attachment_type": "È possibile allegare solo immagini o video",
+      "attachment_length": "Non puoi allegare più di {limit} file",
+      "attachment_required": "Si prega di allegare immagini o video"
     },
-    "upload_error": "Failed to upload the file",
+    "upload_error": "Impossibile caricare il file",
     "compose": {
-      "post_failed": "Failed to post a status"
+      "post_failed": "Impossibile pubblicare uno stato"
     },
-    "failed_mark": "Failed to mark as read"
+    "failed_mark": "Impossibile contrassegnare come letto"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag"
+    "back": "Indietro",
+    "close": "Chiudi",
+    "follow_tag": "Segui l'hashtag",
+    "unfollow_tag": "Smetti di seguire l'hashtag"
   },
   "profile": {
-    "follow": "Follow",
-    "unfollow": "Unfollow",
-    "open_original": "Open original page",
-    "block": "Block",
-    "unblock": "Unblock",
-    "mute": "Mute",
-    "unmute": "Unmute",
-    "block_domain": "Block domain {server}",
-    "unblock_domain": "Unblock domain {server}",
+    "follow": "Segui",
+    "unfollow": "Non seguire più",
+    "open_original": "Apri pagina originale",
+    "block": "Blocca",
+    "unblock": "Sblocca",
+    "mute": "Silenzia",
+    "unmute": "Non silenziare",
+    "block_domain": "Blocca dominio {server}",
+    "unblock_domain": "Sblocca dominio {server}",
     "timeline": "Timeline",
-    "followers": "Followers",
-    "followings": "Followings",
-    "header": "Header image of {user}",
-    "avatar": "Avatar of {user}",
-    "detail": "Details"
+    "followers": "Seguaci",
+    "followings": "Seguiti",
+    "header": "Immagine intestazione di {user}",
+    "avatar": "Avatar di {user}",
+    "detail": "Dettagli"
   },
   "settings": {
-    "title": "Settings",
-    "cancel": "Cancel",
-    "save": "Save",
-    "language": "Language",
-    "font_size": "Font size",
-    "font_family": "Font family",
-    "mode": "Color mode",
-    "dark_mode": "Dark mode",
-    "light_mode": "Light mode",
-    "theme": "Color theme",
+    "title": "Impostazioni",
+    "cancel": "Annulla",
+    "save": "Salva",
+    "language": "Lingua",
+    "font_size": "Dimensione carattere",
+    "font_family": "Tipo carattere",
+    "mode": "Modalità colore",
+    "dark_mode": "Modalità scura",
+    "light_mode": "Modalità chiara",
+    "theme": "Tema cromatico",
     "proxy": {
       "title": "Proxy",
-      "no": "No proxy",
-      "os": "Use system proxy settings",
-      "manual": "Manual proxy configuration",
-      "protocol": "Protocol",
+      "no": "Nessun proxy",
+      "os": "Usa impostazioni proxy di sistema",
+      "manual": "Configurazione proxy manuale",
+      "protocol": "Protocollo",
       "http": "http",
       "socks": "socks",
       "host": "Host",
-      "port": "Port"
+      "port": "Porta"
     }
   },
   "thirdparty": {
-    "title": "Third-party licenses"
+    "title": "Licenze di terze parti"
   },
   "report": {
-    "title": "Report {user}",
-    "detail": "Detail",
-    "submit": "Submit"
+    "title": "Segnala {user}",
+    "detail": "Dettaglio",
+    "submit": "Invia"
   },
   "search": {
-    "placeholder": "Search timeline",
-    "statuses": "Statuses",
-    "accounts": "Accounts",
-    "hashtags": "Hashtags"
+    "placeholder": "Cerca timeline",
+    "statuses": "Toot",
+    "accounts": "Account",
+    "hashtags": "Hashtag"
   }
 }
