@@ -8820,12 +8820,12 @@ __metadata:
   linkType: hard
 
 "react-virtuoso@npm:^4.6.2":
-  version: 4.14.0
-  resolution: "react-virtuoso@npm:4.14.0"
+  version: 4.18.5
+  resolution: "react-virtuoso@npm:4.18.5"
   peerDependencies:
     react: ">=16 || >=17 || >= 18 || >= 19"
     react-dom: ">=16 || >=17 || >= 18 || >=19"
-  checksum: 10/09e6f01e394da6a4d6caabd75f48d73717ad9050af44d752a51a8769f2c22c9c091a1d24f11239626c5e69ed94d12f51a22e3a68c1e465925d3824b4fddd44fc
+  checksum: 10/47791f5bdf3961eed492122333eaeec6718d5e9d9611d0d4cb4c1024890bbc7f37ef5dfee3c003c6722c1fba6d8ee29a5b8eeda156163a6a7fbefbd548a4ac6d
   languageName: node
   linkType: hard
 
