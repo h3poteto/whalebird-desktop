@@ -151,7 +151,7 @@ export default function Notifications(props: Props) {
   }, [props.client])
 
   const loadMore = useCallback(async () => {
-    if (reached) true
+    if (reached) return
     console.debug('appending')
     try {
       const append = await loadNotifications(props.client, notifications[notifications.length - 1].id)
