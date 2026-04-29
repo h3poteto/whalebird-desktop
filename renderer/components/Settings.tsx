@@ -223,7 +223,7 @@ export default function Settings(props: Props) {
       <DialogHeader>
         <FormattedMessage id="settings.title" />
       </DialogHeader>
-      <DialogBody>
+      <DialogBody className="overflow-y-auto max-h-[70vh]">
         <div className="flex flex-col gap-4">
           <div>
             <div className="mb-2">
