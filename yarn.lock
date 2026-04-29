@@ -1236,13 +1236,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime-corejs3@npm:7.26.0":
-  version: 7.26.0
-  resolution: "@babel/runtime-corejs3@npm:7.26.0"
+"@babel/runtime-corejs3@npm:7.26.10":
+  version: 7.26.10
+  resolution: "@babel/runtime-corejs3@npm:7.26.10"
   dependencies:
     core-js-pure: "npm:^3.30.2"
     regenerator-runtime: "npm:^0.14.0"
-  checksum: 10/fd813d8b5bfc412c083033638c937e13f621b3223161c4a20bb8532d77ae622b620915476bd265670f6a8fc1a76a017ffd738ad25ad24431953e3725247c6520
+  checksum: 10/6da4663c8b1c46410fb698188754ef69d7600c90b47e997a5a002fe069af9bbe5075f7f8c88df3559222536383b47406613e3158d5dcc08b013fc4bcc287324f
   languageName: node
   linkType: hard
 
@@ -1255,12 +1255,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:7.26.0":
-  version: 7.26.0
-  resolution: "@babel/runtime@npm:7.26.0"
+"@babel/runtime@npm:7.26.10":
+  version: 7.26.10
+  resolution: "@babel/runtime@npm:7.26.10"
   dependencies:
     regenerator-runtime: "npm:^0.14.0"
-  checksum: 10/9f4ea1c1d566c497c052d505587554e782e021e6ccd302c2ad7ae8291c8e16e3f19d4a7726fb64469e057779ea2081c28b7dbefec6d813a22f08a35712c0f699
+  checksum: 10/9d7ff8e96abe3791047c1138789c742411e3ef19c4d7ca18ce916f83cec92c06ec5dc64401759f6dd1e377cf8a01bbd2c62e033eb7550f435cf6579768d0d4a5
   languageName: node
   linkType: hard
 
@@ -5619,6 +5619,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"find-up@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "find-up@npm:7.0.0"
+  dependencies:
+    locate-path: "npm:^7.2.0"
+    path-exists: "npm:^5.0.0"
+    unicorn-magic: "npm:^0.1.0"
+  checksum: 10/7e6b08fbc05a10677e25e74bb0a020054a86b31d1806c5e6a9e32e75472bbf177210bc16e5f97453be8bda7ae2e3d97669dbb2901f8c30b39ce53929cbea6746
+  languageName: node
+  linkType: hard
+
 "flat-cache@npm:^4.0.0":
   version: 4.0.1
   resolution: "flat-cache@npm:4.0.1"
@@ -7110,6 +7121,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jiti@npm:^2.5.1":
+  version: 2.6.1
+  resolution: "jiti@npm:2.6.1"
+  bin:
+    jiti: lib/jiti-cli.mjs
+  checksum: 10/8cd72c5fd03a0502564c3f46c49761090f6dadead21fa191b73535724f095ad86c2fa89ee6fe4bc3515337e8d406cc8fb2d37b73fa0c99a34584bac35cd4a4de
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -7323,7 +7343,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"locate-path@npm:^7.1.0":
+"locate-path@npm:^7.1.0, locate-path@npm:^7.2.0":
   version: 7.2.0
   resolution: "locate-path@npm:7.2.0"
   dependencies:
@@ -7926,8 +7946,8 @@ __metadata:
   linkType: hard
 
 "nextron@npm:^9.0.0":
-  version: 9.5.0
-  resolution: "nextron@npm:9.5.0"
+  version: 9.6.0
+  resolution: "nextron@npm:9.6.0"
   dependencies:
     "@babel/core": "npm:7.26.0"
     "@babel/plugin-transform-class-properties": "npm:7.25.9"
@@ -7936,21 +7956,23 @@ __metadata:
     "@babel/plugin-transform-runtime": "npm:7.25.9"
     "@babel/preset-env": "npm:7.26.0"
     "@babel/preset-typescript": "npm:7.26.0"
-    "@babel/runtime": "npm:7.26.0"
-    "@babel/runtime-corejs3": "npm:7.26.0"
+    "@babel/runtime": "npm:7.26.10"
+    "@babel/runtime-corejs3": "npm:7.26.10"
     arg: "npm:5.0.2"
     babel-loader: "npm:9.2.1"
     chalk: "npm:4.1.2"
     execa: "npm:5.1.1"
+    find-up: "npm:^7.0.0"
     fs-extra: "npm:11.3.0"
     get-port-please: "npm:3.1.2"
+    jiti: "npm:^2.5.1"
     terser-webpack-plugin: "npm:5.3.11"
     tsconfig-paths-webpack-plugin: "npm:4.2.0"
     webpack: "npm:5.97.1"
     webpack-merge: "npm:6.0.1"
   bin:
     nextron: bin/nextron.js
-  checksum: 10/60e300192bf8098695300f95c97366701c6c2d38600f03c0b15b3a89fdaae4c02a78e99dce39c26cdb31f111d3300adbda4a9b5668f8d356e914466f5f60e6b1
+  checksum: 10/f54a13a242c1f0d8eddaddde4fe22dd410a648776ecb237bfbfd14231acae5053b3070f26d5ea3cddf407626e3c6e2c96df1f118ed4ba8000ca393e2e1073c68
   languageName: node
   linkType: hard
 
@@ -10798,6 +10820,13 @@ __metadata:
   version: 2.1.0
   resolution: "unicode-property-aliases-ecmascript@npm:2.1.0"
   checksum: 10/243524431893649b62cc674d877bd64ef292d6071dd2fd01ab4d5ad26efbc104ffcd064f93f8a06b7e4ec54c172bf03f6417921a0d8c3a9994161fe1f88f815b
+  languageName: node
+  linkType: hard
+
+"unicorn-magic@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "unicorn-magic@npm:0.1.0"
+  checksum: 10/9b4d0e9809807823dc91d0920a4a4c0cff2de3ebc54ee87ac1ee9bc75eafd609b09d1f14495e0173aef26e01118706196b6ab06a75fe0841028b3983a8af313f
   languageName: node
   linkType: hard
 
