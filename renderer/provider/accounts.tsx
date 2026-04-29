@@ -86,9 +86,9 @@ export const AccountsProvider: React.FC<Props> = ({ children }) => {
       console.log(`connect to user streaming for ${account.domain}`)
     })
     socket.on('notification', (notification: Entity.Notification) => {
-      const [title, body] = generateNotification(notification, formatMessage)
+      const [title, body, icon] = generateNotification(notification, formatMessage)
       if (title.length > 0) {
-        new window.Notification(title, { body: body })
+        new window.Notification(title, { body: body, icon: icon })
       }
       updateUnreads(account, client)
     })
