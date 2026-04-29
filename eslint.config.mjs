@@ -17,6 +17,8 @@ const compat = new FlatCompat({
 });
 
 export default defineConfig([{
+    ignores: ["renderer/next-env.d.ts"],
+}, {
     extends: compat.extends(
         "eslint:recommended",
         "plugin:react/recommended",
