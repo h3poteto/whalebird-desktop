@@ -47,6 +47,12 @@
       "context_menu": {
         "copy_link": "複製連結",
         "open_detail": "Open original page"
+      },
+      "quote": {
+        "pending": "Waiting for approval from the quoted post's author.",
+        "rejected": "The author of the quoted post has rejected this quote.",
+        "deleted": "The quoted post has been deleted.",
+        "unavailable": "The quoted post is unavailable."
       }
     },
     "mark_as_read": "標記為已讀",

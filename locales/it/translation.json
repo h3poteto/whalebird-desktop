@@ -47,6 +47,12 @@
       "context_menu": {
         "copy_link": "Copia collegamento",
         "open_detail": "Apri pagina originale"
+      },
+      "quote": {
+        "pending": "Waiting for approval from the quoted post's author.",
+        "rejected": "The author of the quoted post has rejected this quote.",
+        "deleted": "The quoted post has been deleted.",
+        "unavailable": "The quoted post is unavailable."
       }
     },
     "mark_as_read": "Segna come letto",
