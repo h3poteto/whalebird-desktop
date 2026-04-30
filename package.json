@@ -4,7 +4,7 @@
   "description": "Electron based Fediverse client application",
   "version": "6.3.0",
   "author": "Akira Fukushima <h3.poteto@gmail.com>",
-  "main": "app/background.js",
+  "main": "app/main.js",
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
