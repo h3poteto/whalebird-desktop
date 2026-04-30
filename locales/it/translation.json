@@ -49,10 +49,10 @@
         "open_detail": "Apri pagina originale"
       },
       "quote": {
-        "pending": "Waiting for approval from the quoted post's author.",
-        "rejected": "The author of the quoted post has rejected this quote.",
-        "deleted": "The quoted post has been deleted.",
-        "unavailable": "The quoted post is unavailable."
+        "pending": "In attesa di approvazione da parte dell'autore del post citato.",
+        "rejected": "L'autore del post citato ha respinto questa citazione.",
+        "deleted": "Il post citato è stato eliminato.",
+        "unavailable": "Il post citato non è disponibile."
       }
     },
     "mark_as_read": "Segna come letto",
