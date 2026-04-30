@@ -47,6 +47,12 @@
       "context_menu": {
         "copy_link": "リンクをコピー",
         "open_detail": "元のページを開く"
+      },
+      "quote": {
+        "pending": "引用元の投稿者の承認を待っています。",
+        "rejected": "引用元の投稿者がこの引用を拒否しました。",
+        "deleted": "引用元の投稿は削除されました。",
+        "unavailable": "引用元の投稿は利用できません。"
       }
     },
     "mark_as_read": "全て既読にする",

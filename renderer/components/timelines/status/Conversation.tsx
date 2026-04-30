@@ -4,6 +4,7 @@ import Body from './Body'
 import Media from './Media'
 import emojify from '@/utils/emojify'
 import Card from './Card'
+import Quote from './Quote'
 import Poll from './Poll'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
@@ -91,6 +92,7 @@ export default function Conversation(props: Props) {
           {!spoilered && (
             <>
               {status.poll && <Poll poll={status.poll} onRefresh={() => props.onRefresh(status)} client={props.client} />}
+              {status.quote && <Quote quote={status.quote} />}
               {status.card && <Card card={status.card} />}
               <Media media={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
               <div className="flex items-center gap-2">
