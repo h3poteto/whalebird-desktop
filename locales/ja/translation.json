@@ -1,7 +1,7 @@
 {
   "main": {
-    "no_accounts_title": "Add an account to get started",
-    "no_accounts_description": "You can add an account using the + button in the left sidebar"
+    "no_accounts_title": "アカウントを追加して開始",
+    "no_accounts_description": "左サイドバーの + ボタンを使用してアカウントを追加することができます"
   },
   "timeline": {
     "home": "ホーム",
@@ -10,13 +10,13 @@
     "public": "連合",
     "favourites": "お気に入り",
     "bookmarks": "ブックマーク",
-    "direct_messages": "Direct Messages",
+    "direct_messages": "ダイレクトメッセージ",
     "follow_requests": "フォローリクエスト",
     "search": "検索",
     "options": {
-      "title": "Options",
-      "show_boosts": "Show boosts",
-      "show_replies": "Show replies"
+      "title": "オプション",
+      "show_boosts": "ブーストを表示",
+      "show_replies": "返信を表示"
     },
     "status": {
       "avatar": "{user} のAavtar",
@@ -49,10 +49,10 @@
         "open_detail": "元のページを開く"
       },
       "quote": {
-        "pending": "引用元の投稿者の承認を待っています。",
-        "rejected": "引用元の投稿者がこの引用を拒否しました。",
-        "deleted": "引用元の投稿は削除されました。",
-        "unavailable": "引用元の投稿は利用できません。"
+        "pending": "Waiting for approval from the quoted post's author.",
+        "rejected": "The author of the quoted post has rejected this quote.",
+        "deleted": "The quoted post has been deleted.",
+        "unavailable": "The quoted post is unavailable."
       }
     },
     "mark_as_read": "全て既読にする",
@@ -138,7 +138,7 @@
     },
     "visibility": {
       "public": "連合",
-      "local": "Local",
+      "local": "ローカル",
       "unlisted": "未収載",
       "private": "フォロワー限定",
       "direct": "ダイレクト"
