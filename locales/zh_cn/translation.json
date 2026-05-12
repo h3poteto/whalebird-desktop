@@ -1,236 +1,236 @@
 {
   "main": {
-    "no_accounts_title": "Add an account to get started",
-    "no_accounts_description": "You can add an account using the + button in the left sidebar"
+    "no_accounts_title": "添加帐户以开始",
+    "no_accounts_description": "您可以使用左侧边栏中的\"+\"按钮添加账户"
   },
   "timeline": {
-    "home": "Home",
-    "notifications": "Notifications",
-    "local": "Local",
-    "public": "Public",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct_messages": "Direct Messages",
-    "follow_requests": "Follow Requests",
-    "search": "Search",
+    "home": "主页",
+    "notifications": "通知",
+    "local": "本地",
+    "public": "公开",
+    "favourites": "喜欢",
+    "bookmarks": "书签",
+    "direct_messages": "私信",
+    "follow_requests": "关注请求",
+    "search": "搜索",
     "options": {
-      "title": "Options",
-      "show_boosts": "Show boosts",
-      "show_replies": "Show replies"
+      "title": "选项",
+      "show_boosts": "显示转嘟",
+      "show_replies": "显示回复"
     },
     "status": {
-      "avatar": "Aavtar of {user}",
-      "boosted": "{user} boosted",
+      "avatar": "{user}的头像",
+      "boosted": "{user} 转嘟了",
       "poll": {
-        "refresh": "Refresh",
-        "vote": "Vote",
-        "people": "{num} people",
-        "closed": "Closed"
+        "refresh": "刷新",
+        "vote": "投票",
+        "people": "{num} 人",
+        "closed": "已关闭"
       },
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "cw": "Media hidden",
-      "hide_media": "Hide media",
-      "open_media_window": "Open media on another window",
-      "report": "Report {user}",
-      "open_original": "Open original page",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway",
+      "show_more": "显示更多",
+      "show_less": "显示更少",
+      "cw": "媒体已隐藏",
+      "hide_media": "隐藏媒体",
+      "open_media_window": "在新窗口打开媒体",
+      "report": "举报 {user}",
+      "open_original": "打开原页面",
+      "filtered": "已过滤",
+      "show_anyway": "仍然显示",
       "actions": {
-        "reply": "Reply",
-        "reblog": "reblog",
-        "favourite": "Favourite",
-        "bookmark": "Bookmark",
-        "emoji_reaction": "Emoji reaction",
-        "detail": "Details"
+        "reply": "回复",
+        "reblog": "转嘟",
+        "favourite": "喜欢",
+        "bookmark": "书签",
+        "emoji_reaction": "表情回应",
+        "detail": "详情"
       },
       "context_menu": {
-        "copy_link": "Copy link",
-        "open_detail": "Open original page"
+        "copy_link": "复制链接",
+        "open_detail": "打开原页面"
       },
       "quote": {
-        "pending": "Waiting for approval from the quoted post's author.",
-        "rejected": "The author of the quoted post has rejected this quote.",
-        "deleted": "The quoted post has been deleted.",
-        "unavailable": "The quoted post is unavailable."
+        "pending": "等待引用帖子的作者批准。",
+        "rejected": "引用帖子的作者拒绝了此引用。",
+        "deleted": "引用的帖子已被删除。",
+        "unavailable": "引用的帖子不可用。"
       }
     },
-    "mark_as_read": "Mark as read",
-    "reload": "Reload"
+    "mark_as_read": "标记为已读",
+    "reload": "重新加载"
   },
   "accounts": {
     "new": {
-      "title": "Add account",
-      "domain": "Domain",
-      "sign_in": "Sign in",
-      "authorize": "Authorize",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
-      "copy_authorization_url": "Copy authorization URL",
-      "authorization_code": "Authorization Code",
-      "authorization_helper": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Whalebird in your browser, and after you approve it please authorize",
-      "detector_error": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-      "register_error": "Failed to add application.",
-      "token_error": "Failed to authorize.",
-      "credential_error": "Failed to confirm access token."
+      "title": "添加账户",
+      "domain": "域名",
+      "sign_in": "登录",
+      "authorize": "授权",
+      "authorization_url": "通常情况下，浏览器会自动打开，但如果没有，请在浏览器中打开并批准以下链接。",
+      "copy_authorization_url": "复制授权链接",
+      "authorization_code": "授权码",
+      "authorization_helper": "请从浏览器粘贴授权码",
+      "without_code_authorize": "请在浏览器中批准Whalebird，批准后请授权",
+      "detector_error": "无法连接到 {domain}，请确保服务器地址有效且正确。",
+      "register_error": "添加应用程序失败。",
+      "token_error": "授权失败。",
+      "credential_error": "确认访问令牌失败。"
     },
-    "remove": "Remove"
+    "remove": "移除"
   },
   "notification": {
     "favourite": {
-      "title": "Favourite",
-      "body": "{user} favourited your post"
+      "title": "喜欢",
+      "body": "{user} 喜欢了你的帖子"
     },
     "reblog": {
-      "title": "Boost",
-      "body": "{user} boosted your post"
+      "title": "转发",
+      "body": "{user} 转发了你的帖子"
     },
     "quote": {
-      "title": "Quote",
-      "body": "{user} quoted your post"
+      "title": "引用",
+      "body": "{user} 引用了你的帖子"
     },
     "poll_expired": {
-      "title": "Poll",
-      "body": "{user} poll has ended"
+      "title": "投票",
+      "body": "{user} 的投票已结束"
     },
     "poll_vote": {
-      "title": "Poll",
-      "body": "{user} voted your poll"
+      "title": "投票",
+      "body": "{user} 参与了你的投票"
     },
     "status": {
-      "title": "Status",
-      "body": "{user} just posted"
+      "title": "状态",
+      "body": "{user} 刚刚发布"
     },
     "update": {
-      "title": "Update",
-      "body": "{user} updated the post"
+      "title": "更新",
+      "body": "{user} 更新了帖子"
     },
     "emoji_reaction": {
-      "title": "Reaction",
-      "body": "{user} reacted your post"
+      "title": "回应",
+      "body": "{user} 回应了你的帖子"
     },
     "follow": {
-      "title": "Follow",
-      "body": "{user} followed you",
-      "followers": "{num} followers"
+      "title": "关注",
+      "body": "{user} 关注了你",
+      "followers": "{num} 位关注者"
     },
     "follow_request": {
-      "title": "Follow Request",
-      "body": "{user} requested to follow you"
+      "title": "关注请求",
+      "body": "{user} 请求关注你"
     }
   },
   "follow_requests": {
-    "authorize": "Authorize",
-    "reject": "Reject"
+    "authorize": "授权",
+    "reject": "拒绝"
   },
   "compose": {
-    "placeholder": "What's on your mind?",
+    "placeholder": "你在想什么？",
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "在此处填写你的警告"
     },
-    "emoji": "Add emoji",
+    "emoji": "添加表情符号",
     "actions": {
-      "attachment": "Add attachment",
-      "poll": "Add poll",
-      "visibility": "Change visibility",
-      "cw": "Set content warning",
-      "post": "Post"
+      "attachment": "添加附件",
+      "poll": "添加投票",
+      "visibility": "更改可见性",
+      "cw": "设置内容警告",
+      "post": "发布"
     },
     "visibility": {
-      "public": "Public",
-      "local": "Local",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct"
+      "public": "公开",
+      "local": "本地",
+      "unlisted": "公开，但不列入公共时间线",
+      "private": "仅限关注者",
+      "direct": "紧提及用户"
     },
-    "nsfw": "Sensitive",
+    "nsfw": "敏感内容",
     "poll": {
-      "add": "Add",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days",
-      "multiple": "multiple"
+      "add": "添加",
+      "5min": "5分钟",
+      "30min": "30分钟",
+      "1h": "1小时",
+      "6h": "6小时",
+      "1d": "一天",
+      "3d": "3天",
+      "7d": "7天",
+      "multiple": "多个"
     },
     "edit_media": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "编辑媒体",
+      "label": "为视障或低视力人士提供描述",
+      "submit": "应用"
     }
   },
   "alert": {
     "validation": {
-      "attachment_type": "You can attach only images or videos",
-      "attachment_length": "You can't attach over {limit} files",
-      "attachment_required": "Please attache images or videos"
+      "attachment_type": "只能附加图片或视频",
+      "attachment_length": "不能附加超过 {limit} 个文件",
+      "attachment_required": "请附加图片或视频"
     },
-    "upload_error": "Failed to upload the file",
+    "upload_error": "上传文件失败",
     "compose": {
-      "post_failed": "Failed to post a status"
+      "post_failed": "发布状态失败"
     },
-    "failed_mark": "Failed to mark as read"
+    "failed_mark": "标记为已读失败"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag"
+    "back": "返回",
+    "close": "关闭",
+    "follow_tag": "关注标签",
+    "unfollow_tag": "取消关注标签"
   },
   "profile": {
-    "follow": "Follow",
-    "unfollow": "Unfollow",
-    "open_original": "Open original page",
-    "block": "Block",
-    "unblock": "Unblock",
-    "mute": "Mute",
-    "unmute": "Unmute",
-    "block_domain": "Block domain {server}",
-    "unblock_domain": "Unblock domain {server}",
-    "timeline": "Timeline",
-    "followers": "Followers",
-    "followings": "Followings",
-    "header": "Header image of {user}",
-    "avatar": "Avatar of {user}",
-    "detail": "Details"
+    "follow": "关注",
+    "unfollow": "取消关注",
+    "open_original": "打开原页面",
+    "block": "屏蔽",
+    "unblock": "取消屏蔽",
+    "mute": "静音",
+    "unmute": "取消静音",
+    "block_domain": "屏蔽 {server} 域名",
+    "unblock_domain": "取消屏蔽 {server} 域名",
+    "timeline": "时间线",
+    "followers": "关注者",
+    "followings": "正在关注",
+    "header": "{user} 的头像横幅",
+    "avatar": "{user} 的头像",
+    "detail": "详情"
   },
   "settings": {
-    "title": "Settings",
-    "cancel": "Cancel",
-    "save": "Save",
-    "language": "Language",
-    "font_size": "Font size",
-    "font_family": "Font family",
-    "mode": "Color mode",
-    "dark_mode": "Dark mode",
-    "light_mode": "Light mode",
-    "theme": "Color theme",
+    "title": "设置",
+    "cancel": "取消",
+    "save": "保存",
+    "language": "语言",
+    "font_size": "字体大小",
+    "font_family": "字体家族",
+    "mode": "色彩模式",
+    "dark_mode": "深色模式",
+    "light_mode": "浅色模式",
+    "theme": "颜色主题",
     "proxy": {
-      "title": "Proxy",
-      "no": "No proxy",
-      "os": "Use system proxy settings",
-      "manual": "Manual proxy configuration",
-      "protocol": "Protocol",
+      "title": "代理",
+      "no": "无代理",
+      "os": "使用系统代理设置",
+      "manual": "手动配置代理",
+      "protocol": "协议",
       "http": "http",
       "socks": "socks",
-      "host": "Host",
-      "port": "Port"
+      "host": "主机",
+      "port": "端口"
     }
   },
   "thirdparty": {
-    "title": "Third-party licenses"
+    "title": "第三方许可协议"
   },
   "report": {
-    "title": "Report {user}",
-    "detail": "Detail",
-    "submit": "Submit"
+    "title": "举报 {user}",
+    "detail": "详情",
+    "submit": "提交"
   },
   "search": {
-    "placeholder": "Search timeline",
-    "statuses": "Statuses",
-    "accounts": "Accounts",
-    "hashtags": "Hashtags"
+    "placeholder": "搜索时间线",
+    "statuses": "状态",
+    "accounts": "账户",
+    "hashtags": "话题标签"
   }
 }
