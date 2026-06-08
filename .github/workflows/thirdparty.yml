@@ -21,7 +21,7 @@ jobs:
     - name: Install packages
       run: |
         yarn install
-        npm install -g license-checker
+        npm install -g license-checker-evergreen
     - name: Check
       run: |
         yarn run thirdparty

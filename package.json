@@ -13,7 +13,7 @@
     "postinstall": "electron-builder install-app-deps",
     "typecheck": "tsc -p renderer --noEmit && tsc -p main --noEmit",
     "lint": "eslint renderer --ext ts,tsx --ignore-pattern 'renderer/.next/*'",
-    "thirdparty": "license-checker --production --json > renderer/thirdparty.json",
+    "thirdparty": "license-checker-evergreen --production --json > renderer/thirdparty.json",
     "dev:web": "NEXT_PUBLIC_CLIENT_ENV=browser next dev renderer",
     "build:web": "NEXT_PUBLIC_CLIENT_ENV=browser next build renderer",
     "start:web": "cd renderer && NEXT_PUBLIC_CLIENT_ENV=browser next start"
