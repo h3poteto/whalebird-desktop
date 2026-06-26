@@ -8871,12 +8871,12 @@ __metadata:
   linkType: hard
 
 "react-hotkeys-hook@npm:^5.0.0":
-  version: 5.1.0
-  resolution: "react-hotkeys-hook@npm:5.1.0"
+  version: 5.3.3
+  resolution: "react-hotkeys-hook@npm:5.3.3"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10/e912c0178fbfb04b841007aa3fc50cb326082346f860d3b92a22ff71516dfd487c6f60c0474d9609b982ad15e6b4741c35ca2b38adfeb133789d43ff6b0029c6
+  checksum: 10/3145c62c1ed042d83e036a71d770d177fb98f1b295835fd278dc14dc663678e5ea2e18524e538354e2c5f18d0256c38ac8534251e357fdf95c055c6e13647276
   languageName: node
   linkType: hard
 
