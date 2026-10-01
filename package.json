@@ -54,7 +54,7 @@
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-react": "^7.33.2",
-    "globals": "^16.0.0",
+    "globals": "^17.0.0",
     "next": "^15.5.15",
     "nextron": "^10.0.0",
     "postcss": "^8.4.31",
