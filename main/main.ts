@@ -1,5 +1,5 @@
 import path from 'path'
-import { app, ipcMain, shell, IpcMainInvokeEvent, BrowserWindow, Menu, clipboard } from 'electron'
+import { app, ipcMain, shell, IpcMainInvokeEvent, BrowserWindow, Menu, clipboard, ClipboardItem } from 'electron'
 import serve from 'electron-serve'
 import { createWindow } from './helpers'
 import { menu } from './menu'
@@ -100,10 +100,15 @@ let main: BrowserWindow = null
         label: 'Copy Link',
         visible: properties.linkURL.length > 0 && properties.mediaType === 'none',
         click: () => {
-          clipboard.write({
-            bookmark: properties.linkText,
-            text: properties.linkURL
-          })
+          clipboard.write([
+            new ClipboardItem({
+              'text/plain': properties.linkURL,
+              'electron application/bookmark': {
+                title: properties.titleText,
+                url: properties.linkText
+              }
+            })
+          ])
         }
       }
     ])
