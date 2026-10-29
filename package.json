@@ -64,5 +64,6 @@
     "tailwindcss": "^3.3.3",
     "typescript": "^6.0.3"
   },
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.1",
+  "desktopName": "social.whalebird.app"
 }
