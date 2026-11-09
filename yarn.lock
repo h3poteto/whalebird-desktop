@@ -7468,12 +7468,12 @@ __metadata:
   linkType: hard
 
 "react-hotkeys-hook@npm:^5.0.0":
-  version: 5.1.0
-  resolution: "react-hotkeys-hook@npm:5.1.0"
+  version: 5.4.0
+  resolution: "react-hotkeys-hook@npm:5.4.0"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10/e912c0178fbfb04b841007aa3fc50cb326082346f860d3b92a22ff71516dfd487c6f60c0474d9609b982ad15e6b4741c35ca2b38adfeb133789d43ff6b0029c6
+  checksum: 10/71a140a805843bd6f289ccdda85eb708df62e55fd38453f0d559f36fb4778fb9f83e3eea528498d5955b258ab25f398fdec4620947dabb6d4a78c05542dfd13c
   languageName: node
   linkType: hard
 
